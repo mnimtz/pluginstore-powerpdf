@@ -17,13 +17,15 @@ namespace storedlg {
 class CStoreDialog : public CDialog
 {
 public:
-    CStoreDialog() : CDialog(IDD_PS_DIALOG) {}
+    explicit CStoreDialog(const std::wstring& preselect) : CDialog(IDD_PS_DIALOG), m_preselect(preselect) {}
 
 protected:
     CListCtrl m_list;
     std::vector<PSCatalogEntry> m_entries;
     PSCatalogEntry m_self;          // the store client's own catalog entry
     bool m_selfUpdate = false;
+    std::wstring m_preselect;       // package id from a website link
+    static const UINT WM_ASK_INSTALL = WM_APP + 41;
 
     BOOL OnInitDialog() override
     {
@@ -50,8 +52,34 @@ protected:
         m_list.InsertColumn(6, FPLoc(IDS_PSD_C_CONTACT).c_str(),   LVCFMT_LEFT, 210);
 
         Reload();
+        if (!m_preselect.empty()) ApplyPreselect();
         return TRUE;
     }
+
+    void ApplyPreselect()
+    {
+        for (int row = 0; row < m_list.GetItemCount(); ++row)
+        {
+            size_t idx = (size_t)m_list.GetItemData(row);
+            if (idx >= m_entries.size() || m_entries[idx].id != m_preselect) continue;
+            m_list.SetItemState(-1, 0, LVIS_SELECTED | LVIS_FOCUSED);
+            m_list.SetItemState(row, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
+            m_list.EnsureVisible(row, FALSE);
+            UpdateDescription();
+            const PSCatalogEntry& e = m_entries[idx];
+            if (e.installedVersion.empty() || e.installedVersion != e.version)
+                PostMessage(WM_ASK_INSTALL);
+            return;
+        }
+        if (m_preselect != L"com.tungsten.pluginstore")
+        {
+            wchar_t msg[400];
+            swprintf_s(msg, 400, FPLoc(IDS_PSD_LINK_NOTFOUND).c_str(), m_preselect.c_str());
+            SetDlgItemTextW(IDC_PS_STATUS, msg);
+        }
+    }
+
+    afx_msg LRESULT OnAskInstall(WPARAM, LPARAM) { OnInstall(); return 0; }
 
     void Reload()
     {
@@ -263,13 +291,18 @@ BEGIN_MESSAGE_MAP(CStoreDialog, CDialog)
     ON_BN_CLICKED(IDC_PS_SELFUPDATE, &CStoreDialog::OnSelfUpdateClicked)
     ON_BN_CLICKED(IDC_PS_DISCLAIMER_BTN, &CStoreDialog::OnDisclaimerClicked)
     ON_NOTIFY(LVN_ITEMCHANGED, IDC_PS_LIST, &CStoreDialog::OnListChanged)
+    ON_MESSAGE(CStoreDialog::WM_ASK_INSTALL, &CStoreDialog::OnAskInstall)
 END_MESSAGE_MAP()
 
 } // namespace storedlg
 
-void PSShowStoreDialog()
+void PSShowStoreDialog(const std::wstring& preselectId)
 {
     AFX_MANAGE_MODULE_STATE;
-    storedlg::CStoreDialog dlg;
+    static bool s_open = false;
+    if (s_open) return;
+    s_open = true;
+    storedlg::CStoreDialog dlg(preselectId);
     dlg.DoModal();
+    s_open = false;
 }

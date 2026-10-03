@@ -93,6 +93,23 @@
           </Component>
 
           <Directory Id="PSDIR" Name="PluginStore">
+            <!-- addonstore:// links from the store website ("Install in Power PDF").
+                 The helper only hands a validated package id to the client. -->
+            <Component Id="cmpLink" Guid="{5D7A3E19-2C64-4B8F-9E31-7F0C6A2B8D45}" Win64="yes">
+              <File Id="filLink"
+                    Source="$(var.ProjectDir)\link\Release\AddonStoreLink.exe"
+                    Name="AddonStoreLink.exe" KeyPath="yes" />
+              <RegistryKey Root="HKLM" Key="SOFTWARE\Classes\addonstore">
+                <RegistryValue Type="string" Value="URL:Add-on Store" />
+                <RegistryValue Name="URL Protocol" Type="string" Value="" />
+                <RegistryKey Key="DefaultIcon">
+                  <RegistryValue Type="string" Value="&quot;[#filLink]&quot;,0" />
+                </RegistryKey>
+                <RegistryKey Key="shell\open\command">
+                  <RegistryValue Type="string" Value="&quot;[#filLink]&quot; &quot;%1&quot;" />
+                </RegistryKey>
+              </RegistryKey>
+            </Component>
             <Directory Id="UILAYOUTDIR" Name="UILayout">
               <Component Id="cmpLayout" Guid="{9DF9BE9A-7052-4545-BF1A-AF1ADDD56166}" Win64="yes">
                 <File Id="filNameAndTitle"
@@ -209,6 +226,7 @@
     <Feature Id="Core" Title="Add-on Store" Level="1" Absent="disallow">
       <ComponentRef Id="cmpPlugin" />
       <ComponentRef Id="cmpFreshInstall" />
+      <ComponentRef Id="cmpLink" />
       <ComponentRef Id="cmpLayout" />
       <ComponentRef Id="cmpPublish" />
       <ComponentRef Id="cmpDeu" />

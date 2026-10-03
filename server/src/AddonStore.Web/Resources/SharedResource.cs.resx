@@ -314,4 +314,8 @@
   <data name="No plug-ins match this filter." xml:space="preserve"><value>Tomuto filtru neodpovídají žádné doplňky.</value></data>
   <data name="Recipient" xml:space="preserve"><value>Příjemce</value></data>
   <data name="Please enter a valid email address." xml:space="preserve"><value>Zadejte platnou e-mailovou adresu.</value></data>
+  <data name="Install in Power PDF" xml:space="preserve"><value>Instalovat do Power PDF</value></data>
+  <data name="Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)." xml:space="preserve"><value>Otevře Power PDF s vybraným doplňkem a před instalací se zeptá. Vyžaduje Add-on Store pro Power PDF (verze 0.3.7 nebo novější).</value></data>
+  <data name="The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF." xml:space="preserve"><value>Instalační program zatím není příliš rozšířený, proto může Windows zobrazit „Systém Windows ochránil váš počítač“. Klikněte na „Další informace“ a potom na „Přesto spustit“. Stane se to jen jednou: aktualizace a doplňky se pak instalují přímo v Power PDF.</value></data>
+  <data name="Windows warning?" xml:space="preserve"><value>Upozornění systému Windows?</value></data>
 </root>

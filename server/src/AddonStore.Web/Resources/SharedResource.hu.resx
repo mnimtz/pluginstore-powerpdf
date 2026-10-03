@@ -314,4 +314,8 @@
   <data name="No plug-ins match this filter." xml:space="preserve"><value>Egy bővítmény sem felel meg ennek a szűrőnek.</value></data>
   <data name="Recipient" xml:space="preserve"><value>Címzett</value></data>
   <data name="Please enter a valid email address." xml:space="preserve"><value>Adjon meg egy érvényes e-mail-címet.</value></data>
+  <data name="Install in Power PDF" xml:space="preserve"><value>Telepítés a Power PDF-be</value></data>
+  <data name="Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)." xml:space="preserve"><value>Megnyitja a Power PDF-et a kiválasztott bővítménnyel, és a telepítés előtt rákérdez. Feltétele az Add-on Store a Power PDF-hez (0.3.7-es vagy újabb verzió).</value></data>
+  <data name="The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF." xml:space="preserve"><value>A telepítő még nem elterjedt, ezért a Windows megjelenítheti „A Windows megvédte a számítógépet” üzenetet. Kattintson a „További információ”, majd a „Futtatás mindenképp” lehetőségre. Ez csak egyszer fordul elő: a frissítések és bővítmények ezután a Power PDF-ből települnek.</value></data>
+  <data name="Windows warning?" xml:space="preserve"><value>Windows-figyelmeztetés?</value></data>
 </root>

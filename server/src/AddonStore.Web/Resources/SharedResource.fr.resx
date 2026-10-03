@@ -314,4 +314,8 @@
   <data name="No plug-ins match this filter." xml:space="preserve"><value>Aucun plugin ne correspond à ce filtre.</value></data>
   <data name="Recipient" xml:space="preserve"><value>Destinataire</value></data>
   <data name="Please enter a valid email address." xml:space="preserve"><value>Veuillez saisir une adresse e-mail valide.</value></data>
+  <data name="Install in Power PDF" xml:space="preserve"><value>Installer dans Power PDF</value></data>
+  <data name="Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)." xml:space="preserve"><value>Ouvre Power PDF avec ce module sélectionné et demande confirmation avant l’installation. Nécessite l’Add-on Store pour Power PDF (version 0.3.7 ou ultérieure).</value></data>
+  <data name="The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF." xml:space="preserve"><value>Le programme d’installation est encore peu répandu ; Windows peut donc afficher « Windows a protégé votre ordinateur ». Cliquez sur « Informations complémentaires », puis sur « Exécuter quand même ». Cela n’arrive qu’une fois : les mises à jour et les plug-ins s’installent ensuite depuis Power PDF.</value></data>
+  <data name="Windows warning?" xml:space="preserve"><value>Avertissement Windows ?</value></data>
 </root>

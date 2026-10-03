@@ -13,6 +13,10 @@
             <a class="btn cta" href="@Model.ClientDownloadUrl">@L["Download"]: Add-on Store @L["for Power PDF"] v@(Model.ClientVersion)</a>
             <span style="color:var(--tun-blue-light);font-size:.85rem;max-width:460px">@L["Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date."]</span>
         </div>
+        <p class="smartscreen-hint">
+            <b>@L["Windows warning?"]</b>
+            @L["The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF."]
+        </p>
     }
 </div>
 
@@ -55,6 +59,10 @@ else
                         <text> · </text><a href="mailto:@item.ContactEmail" style="color:var(--tun-blue)">@item.ContactEmail</a>
                     }
                 </span>
+                <span class="pkg-actions win-only">
+                    <a class="btn small" href="addonstore://install/@item.Id"
+                       title="@L["Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)."]">@L["Install in Power PDF"]</a>
+                </span>
             </div>
         }
     </div>
@@ -64,6 +72,9 @@ else
             var chips = document.querySelectorAll('#pkg-chips .chip');
             var cards = document.querySelectorAll('#pkg-grid .pkg');
             var cat = '';
+            // addonstore:// links only work on Windows with the Add-on Store installed.
+            if (!/Windows/i.test(navigator.userAgent))
+                document.querySelectorAll('.win-only').forEach(function (e) { e.style.display = 'none'; });
             function apply() {
                 var q = search.value.toLowerCase();
                 cards.forEach(function (c) {

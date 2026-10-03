@@ -289,6 +289,10 @@ and installs it with ONE administrator prompt:
   tab in the user's layout once, to remove leftovers of uninstalled plugins.
   Your plugin must therefore (re)create its own group in code at every start,
   as required by the ribbon rules above; never rely on the layout keeping it.
+- The catalog website links every plug-in as `addonstore://install/<id>`
+  ("Install in Power PDF"); the client (0.3.7 or later) opens the store dialog
+  with that package selected and asks the user before installing. Keep your
+  package id stable so such links keep working.
 - The client talks to the store over HTTPS only. Your plugin's own network
   traffic is yours: declare it in `complianceAudit.externalServices`.
 

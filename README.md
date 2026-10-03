@@ -107,6 +107,14 @@ built with the Power PDF Plugin SDK):
   HTTPS (port 443) to the configured store host only, through the system proxy.
   The client refuses plain HTTP (except localhost for development) and any
   other host, whatever the catalog says.
+- **"Install in Power PDF" buttons** on the catalog website: the MSI registers
+  the `addonstore://` URL scheme with a small helper (`AddonStoreLink.exe`) that
+  passes a validated package id to the client; Power PDF opens the store dialog
+  with that add-on selected and asks before installing. A website can only open
+  the dialog, never install anything by itself.
+- The first browser download of the unsigned MSI may trigger Windows SmartScreen
+  ("More info" → "Run anyway"); the landing page explains this. Updates and
+  plug-ins installed from the client are not affected.
 - A fresh MSI installation (not an update) clears leftovers of removed plugins
   from the shared *Enhanced Features* tab once per user; installed plugins add
   their groups again on their next start.

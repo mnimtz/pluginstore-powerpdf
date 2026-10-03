@@ -314,4 +314,8 @@
   <data name="No plug-ins match this filter." xml:space="preserve"><value>Mikään lisäosa ei vastaa tätä suodatinta.</value></data>
   <data name="Recipient" xml:space="preserve"><value>Vastaanottaja</value></data>
   <data name="Please enter a valid email address." xml:space="preserve"><value>Anna kelvollinen sähköpostiosoite.</value></data>
+  <data name="Install in Power PDF" xml:space="preserve"><value>Asenna Power PDF:ään</value></data>
+  <data name="Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)." xml:space="preserve"><value>Avaa Power PDF:n tämä lisäosa valittuna ja kysyy ennen asennusta. Edellyttää Add-on Storea Power PDF:lle (versio 0.3.7 tai uudempi).</value></data>
+  <data name="The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF." xml:space="preserve"><value>Asennusohjelma ei ole vielä laajalti tunnettu, joten Windows voi näyttää ilmoituksen "Windows suojasi tietokonettasi". Valitse "Lisätietoja" ja sitten "Suorita silti". Tämä tapahtuu vain kerran: päivitykset ja laajennukset asennetaan sen jälkeen Power PDF:stä.</value></data>
+  <data name="Windows warning?" xml:space="preserve"><value>Windowsin varoitus?</value></data>
 </root>

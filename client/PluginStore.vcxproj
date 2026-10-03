@@ -132,6 +132,7 @@
     <ClInclude Include="store\http.h" />
     <ClInclude Include="store\install.h" />
     <ClInclude Include="store\settings.h" />
+    <ClInclude Include="store\link.h" />
     <ClInclude Include="res\Resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +155,7 @@
     <ClCompile Include="store\install.cpp" />
     <ClCompile Include="store\ribbon.cpp" />
     <ClCompile Include="store\settings.cpp" />
+    <ClCompile Include="store\link.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -18,7 +18,7 @@ static DUText MakeDUText(const std::wstring& s)
 static DCCB1 void DCCB2 OnOpenStore(void* /*data*/)
 {
     AFX_MANAGE_MODULE_STATE;
-    DURING PSShowStoreDialog(); HANDLER END_HANDLER
+    DURING PSShowStoreDialog(std::wstring()); HANDLER END_HANDLER
 }
 
 void PSRegisterUI(RVToolBar bar)

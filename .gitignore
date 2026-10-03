@@ -22,3 +22,6 @@ client/installer/Release/
 *.wixobj
 *.wixpdb
 *.msi
+
+client/link/Release/
+client/link/obj/

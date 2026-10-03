@@ -244,3 +244,7 @@ pre.code {
   table.rtable tr.rsub { margin-top: -10px; border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
   .table-wrap { overflow-x: visible; }
 }
+
+.smartscreen-hint { margin: 12px 0 0; color: var(--tun-blue-light); font-size: .82rem; max-width: 720px; }
+.smartscreen-hint b { color: #fff; }
+.pkg-actions { margin-top: 6px; }

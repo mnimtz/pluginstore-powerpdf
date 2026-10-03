@@ -26,22 +26,22 @@
     "tr": "Power PDF için Add-on Store şeridi: ekip kataloğundan eklentilere göz atın, yükleyin, güncelleyin ve kaldırın."
   },
   "changelog": {
-    "en": "The default store address is now https://addon.power-pdf.de. An address you entered yourself or one set by policy stays unchanged.",
-    "de": "Die Standardadresse des Stores ist jetzt https://addon.power-pdf.de. Eine selbst eingetragene oder per Richtlinie vorgegebene Adresse bleibt unverändert.",
-    "fr": "L'adresse par défaut du store est désormais https://addon.power-pdf.de. Une adresse saisie par vous-même ou imposée par une stratégie reste inchangée.",
-    "it": "L'indirizzo predefinito dello store è ora https://addon.power-pdf.de. Un indirizzo inserito da voi o impostato tramite criterio resta invariato.",
-    "es": "La dirección predeterminada de la tienda es ahora https://addon.power-pdf.de. Una dirección introducida por usted o definida por directiva no cambia.",
-    "nl": "Het standaardadres van de store is nu https://addon.power-pdf.de. Een zelf ingevoerd of via beleid ingesteld adres blijft ongewijzigd.",
-    "pt": "O endereço predefinido da loja é agora https://addon.power-pdf.de. Um endereço introduzido por si ou definido por política mantém-se inalterado.",
-    "da": "Butikkens standardadresse er nu https://addon.power-pdf.de. En adresse, du selv har indtastet, eller som er fastsat via politik, forbliver uændret.",
-    "fi": "Kaupan oletusosoite on nyt https://addon.power-pdf.de. Itse syötetty tai käytännöllä määritetty osoite pysyy ennallaan.",
-    "nb": "Butikkens standardadresse er nå https://addon.power-pdf.de. En adresse du har skrevet inn selv, eller som er satt via policy, forblir uendret.",
-    "sv": "Butikens standardadress är nu https://addon.power-pdf.de. En adress som du själv angett eller som styrs av en princip förblir oförändrad.",
-    "pl": "Domyślny adres sklepu to teraz https://addon.power-pdf.de. Adres wprowadzony samodzielnie lub ustawiony zasadami pozostaje bez zmian.",
-    "cs": "Výchozí adresa obchodu je nyní https://addon.power-pdf.de. Adresa zadaná vámi nebo nastavená zásadou zůstává beze změny.",
-    "hu": "Az áruház alapértelmezett címe mostantól https://addon.power-pdf.de. A saját maga által megadott vagy házirenddel beállított cím változatlan marad.",
-    "ru": "Адрес магазина по умолчанию теперь https://addon.power-pdf.de. Адрес, введенный вами или заданный политикой, не изменяется.",
-    "tr": "Mağazanın varsayılan adresi artık https://addon.power-pdf.de. Kendi girdiğiniz veya ilkeyle belirlenen adres değişmez."
+    "en": "New: \"Install in Power PDF\" buttons on the store website. One click opens Power PDF with the add-on selected and asks whether to install it.",
+    "de": "Neu: Schaltflächen „In Power PDF installieren“ auf der Store-Website. Ein Klick öffnet Power PDF mit dem gewählten Add-on und fragt, ob es installiert werden soll.",
+    "fr": "Nouveau : boutons « Installer dans Power PDF » sur le site du store. Un clic ouvre Power PDF avec le module sélectionné et demande s'il faut l'installer.",
+    "it": "Novità: pulsanti \"Installa in Power PDF\" sul sito dello store. Un clic apre Power PDF con il componente aggiuntivo selezionato e chiede se installarlo.",
+    "es": "Novedad: botones «Instalar en Power PDF» en el sitio web de la tienda. Un clic abre Power PDF con el complemento seleccionado y pregunta si se debe instalar.",
+    "nl": "Nieuw: knoppen \"Installeren in Power PDF\" op de storewebsite. Eén klik opent Power PDF met de gekozen invoegtoepassing en vraagt of deze moet worden geïnstalleerd.",
+    "pt": "Novo: botões \"Instalar no Power PDF\" no site da loja. Um clique abre o Power PDF com o complemento selecionado e pergunta se deve ser instalado.",
+    "da": "Nyt: knapper \"Installér i Power PDF\" på butikkens websted. Ét klik åbner Power PDF med den valgte tilføjelse og spørger, om den skal installeres.",
+    "fi": "Uutta: \"Asenna Power PDF:ään\" -painikkeet kaupan verkkosivustolla. Yksi napsautus avaa Power PDF:n valitun lisäosan kanssa ja kysyy, asennetaanko se.",
+    "nb": "Nytt: knapper \"Installer i Power PDF\" på butikkens nettsted. Ett klikk åpner Power PDF med det valgte tillegget og spør om det skal installeres.",
+    "sv": "Nytt: knappar \"Installera i Power PDF\" på butikens webbplats. Ett klick öppnar Power PDF med det valda tillägget och frågar om det ska installeras.",
+    "pl": "Nowość: przyciski „Zainstaluj w Power PDF” na stronie sklepu. Jedno kliknięcie otwiera Power PDF z wybranym dodatkiem i pyta, czy go zainstalować.",
+    "cs": "Novinka: tlačítka „Instalovat do Power PDF“ na webu obchodu. Jedno kliknutí otevře Power PDF s vybraným doplňkem a zeptá se, zda jej nainstalovat.",
+    "hu": "Új: „Telepítés a Power PDF-be” gombok az áruház webhelyén. Egy kattintás megnyitja a Power PDF-et a kiválasztott bővítménnyel, és rákérdez a telepítésre.",
+    "ru": "Новое: кнопки «Установить в Power PDF» на сайте магазина. Один щелчок открывает Power PDF с выбранной надстройкой и предлагает ее установить.",
+    "tr": "Yeni: Mağaza web sitesinde \"Power PDF'e yükle\" düğmeleri. Tek tıklama, seçilen eklentiyle Power PDF'i açar ve yüklenip yüklenmeyeceğini sorar."
   },
   "minPowerPdfVersion": "5.0",
   "ribbonAtomNamespace": "FeaturePack::PluginStore",
@@ -76,7 +76,7 @@
   "thirdParty": [],
   "complianceAudit": {
     "confirmed": true,
-    "method": "Checked all #include directives and linker inputs of PluginStore.vcxproj (Windows SDK, MFC/ATL, Tungsten Power PDF Plugin SDK only), the bundled UILayout and icon files (own work, icons drawn by client/res/make_icons.py) and the package contents. No third-party code. The bundled MSI is built with the WiX Toolset v3 (build tool; its standard WixUI dialog resources are part of the installer). No credentials, personal data or third-party trademarks in the package. The only network service is the configured Add-on Store server (HTTPS).",
+    "method": "Checked all #include directives and linker inputs of PluginStore.vcxproj (Windows SDK, MFC/ATL, Tungsten Power PDF Plugin SDK only), the bundled UILayout and icon files (own work, icons drawn by client/res/make_icons.py) and the package contents. No third-party code. The bundled MSI is built with the WiX Toolset v3 (build tool; its standard WixUI dialog resources are part of the installer). No credentials, personal data or third-party trademarks in the package. The only network service is the configured Add-on Store server (HTTPS). The MSI also installs AddonStoreLink.exe (own code, no network access), which handles addonstore:// links by passing a validated package id to the client.",
     "externalServices": [
       {
         "name": "Add-on Store server (configurable; default addon.power-pdf.de, Azure address ppdf-store.azurewebsites.net)",

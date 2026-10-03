@@ -66,6 +66,7 @@
 #define IDS_PSO_VERBOSE         156
 #define IDS_PSO_GRP_DIAG        157
 #define IDS_PSO_URL_HTTPS       162
+#define IDS_PSD_LINK_NOTFOUND   163
 
 // ---- bitmaps ----
 #define IDB_STORE               250
