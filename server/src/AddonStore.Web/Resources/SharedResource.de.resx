@@ -452,4 +452,35 @@
   <data name="Type DELETE to confirm." xml:space="preserve"><value>Zur Bestätigung DELETE eingeben.</value></data>
   <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Quellcode einer Version hochladen (nach jedem Upload)</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Admins: Quellcode der neuesten Version, Ausgangspunkt für eine Änderung</value></data>
+  <data name="Share link" xml:space="preserve"><value>Link teilen</value></data>
+  <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>Eigene Seite dieses Add-ons mit einem Link zum Versenden an Kunden</value></data>
+  <data name="Add-on not found" xml:space="preserve"><value>Add-on nicht gefunden</value></data>
+  <data name="This add-on is not (or no longer) in the store." xml:space="preserve"><value>Dieses Add-on ist nicht (mehr) im Store.</value></data>
+  <data name="Show all add-ons" xml:space="preserve"><value>Alle Add-ons anzeigen</value></data>
+  <data name="Add-on for Tungsten Power PDF: {0}" xml:space="preserve"><value>Add-on für Tungsten Power PDF: {0}</value></data>
+  <data name="Hello," xml:space="preserve"><value>Hallo,</value></data>
+  <data name="for Tungsten Power PDF there is the add-on &quot;{0}&quot;:" xml:space="preserve"><value>für Tungsten Power PDF gibt es das Add-on „{0}“:</value></data>
+  <data name="You can look at it and install it directly in Power PDF here:" xml:space="preserve"><value>Hier können Sie es ansehen und direkt in Power PDF installieren:</value></data>
+  <data name="Best regards" xml:space="preserve"><value>Viele Grüße</value></data>
+  <data name="What&#x27;s new in version {0}" xml:space="preserve"><value>Neu in Version {0}</value></data>
+  <data name="First time?" xml:space="preserve"><value>Zum ersten Mal hier?</value></data>
+  <data name="Install the Add-on Store for Power PDF once (administrator rights required)." xml:space="preserve"><value>Installieren Sie einmalig den Add-on Store für Power PDF (Administratorrechte erforderlich).</value></data>
+  <data name="Click &quot;Install in Power PDF&quot; above; Power PDF opens with this add-on selected." xml:space="preserve"><value>Klicken Sie oben auf „In Power PDF installieren“; Power PDF öffnet sich mit diesem Add-on.</value></data>
+  <data name="Confirm the installation and restart Power PDF." xml:space="preserve"><value>Bestätigen Sie die Installation und starten Sie Power PDF neu.</value></data>
+  <data name="Share this add-on" xml:space="preserve"><value>Dieses Add-on teilen</value></data>
+  <data name="Send this link to a customer or colleague; the page shows only this add-on." xml:space="preserve"><value>Senden Sie diesen Link an Kunden oder Kollegen; die Seite zeigt nur dieses Add-on.</value></data>
+  <data name="Link" xml:space="preserve"><value>Link</value></data>
+  <data name="Copy link" xml:space="preserve"><value>Link kopieren</value></data>
+  <data name="Link copied." xml:space="preserve"><value>Link kopiert.</value></data>
+  <data name="Your short name (optional, shows in the reports how often your link was used)" xml:space="preserve"><value>Ihr Kürzel (optional, zeigt in den Berichten, wie oft Ihr Link genutzt wurde)</value></data>
+  <data name="e.g. mmueller" xml:space="preserve"><value>z. B. mmueller</value></data>
+  <data name="Send by email" xml:space="preserve"><value>Per E-Mail senden</value></data>
+  <data name="Shared links" xml:space="preserve"><value>Geteilte Links</value></data>
+  <data name="Calls of the add-on pages (/a/...) per short name: page views without link previews, clicks on &quot;Install in Power PDF&quot; and client installer downloads from that page. Without a short name the link was shared without one." xml:space="preserve"><value>Aufrufe der Add-on-Seiten (/a/...) je Kürzel: Seitenaufrufe ohne Link-Vorschauen, Klicks auf „In Power PDF installieren“ und Downloads des Client-Installers von dieser Seite. Ohne Kürzel wurde der Link ohne Kürzel geteilt.</value></data>
+  <data name="Short name" xml:space="preserve"><value>Kürzel</value></data>
+  <data name="Page views" xml:space="preserve"><value>Seitenaufrufe</value></data>
+  <data name="Install clicks" xml:space="preserve"><value>Installieren-Klicks</value></data>
+  <data name="Client downloads" xml:space="preserve"><value>Client-Downloads</value></data>
+  <data name="without short name" xml:space="preserve"><value>ohne Kürzel</value></data>
+  <data name="Total" xml:space="preserve"><value>Summe</value></data>
 </root>

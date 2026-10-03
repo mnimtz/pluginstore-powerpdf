@@ -17,6 +17,8 @@ public class IndexModel : PageModel
     public List<CatalogItem> Items { get; private set; } = new();
     public string? ClientVersion { get; private set; }
     public string? ClientDownloadUrl { get; private set; }
+    /// <summary>Short page name per add-on for the share links (/a/{slug}).</summary>
+    public Dictionary<string, string> Slugs { get; } = new();
 
     public IndexModel(AppDbContext db) => _db = db;
 
@@ -40,5 +42,9 @@ public class IndexModel : PageModel
         }
 
         Items = items.Where(i => i.Id != ClientPackageId).ToList();
+        // Slugs over live and beta ids, the same set the add-on page resolves against.
+        var all = (await CatalogUi.GetAsync(_db, culture, includeBeta: true))
+            .Where(i => i.Id != ClientPackageId).Select(i => i.Id).ToList();
+        foreach (var i in Items) Slugs[i.Id] = ShareService.Slug(i.Id, all);
     }
 }

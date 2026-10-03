@@ -452,4 +452,35 @@
   <data name="Type DELETE to confirm." xml:space="preserve"><value>Pro potvrzení zadejte DELETE.</value></data>
   <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Nahrát zdrojový kód verze (po každém nahrání)</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Správci: zdrojový kód nejnovější verze, výchozí bod pro změnu</value></data>
+  <data name="Share link" xml:space="preserve"><value>Sdílet odkaz</value></data>
+  <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>Vlastní stránka doplňku s odkazem k odeslání zákazníkům</value></data>
+  <data name="Add-on not found" xml:space="preserve"><value>Doplněk nebyl nalezen</value></data>
+  <data name="This add-on is not (or no longer) in the store." xml:space="preserve"><value>Tento doplněk v obchodě není (už není).</value></data>
+  <data name="Show all add-ons" xml:space="preserve"><value>Zobrazit všechny doplňky</value></data>
+  <data name="Add-on for Tungsten Power PDF: {0}" xml:space="preserve"><value>Doplněk pro Tungsten Power PDF: {0}</value></data>
+  <data name="Hello," xml:space="preserve"><value>Dobrý den,</value></data>
+  <data name="for Tungsten Power PDF there is the add-on &quot;{0}&quot;:" xml:space="preserve"><value>pro Tungsten Power PDF je k dispozici doplněk „{0}“:</value></data>
+  <data name="You can look at it and install it directly in Power PDF here:" xml:space="preserve"><value>Zde si jej můžete prohlédnout a nainstalovat přímo do Power PDF:</value></data>
+  <data name="Best regards" xml:space="preserve"><value>S pozdravem</value></data>
+  <data name="What&#x27;s new in version {0}" xml:space="preserve"><value>Novinky ve verzi {0}</value></data>
+  <data name="First time?" xml:space="preserve"><value>Poprvé?</value></data>
+  <data name="Install the Add-on Store for Power PDF once (administrator rights required)." xml:space="preserve"><value>Jednou nainstalujte Add-on Store pro Power PDF (vyžaduje oprávnění správce).</value></data>
+  <data name="Click &quot;Install in Power PDF&quot; above; Power PDF opens with this add-on selected." xml:space="preserve"><value>Klikněte nahoře na „Nainstalovat do Power PDF“; Power PDF se otevře s vybraným doplňkem.</value></data>
+  <data name="Confirm the installation and restart Power PDF." xml:space="preserve"><value>Potvrďte instalaci a restartujte Power PDF.</value></data>
+  <data name="Share this add-on" xml:space="preserve"><value>Sdílet tento doplněk</value></data>
+  <data name="Send this link to a customer or colleague; the page shows only this add-on." xml:space="preserve"><value>Pošlete tento odkaz zákazníkovi nebo kolegovi; stránka ukazuje jen tento doplněk.</value></data>
+  <data name="Link" xml:space="preserve"><value>Odkaz</value></data>
+  <data name="Copy link" xml:space="preserve"><value>Kopírovat odkaz</value></data>
+  <data name="Link copied." xml:space="preserve"><value>Odkaz zkopírován.</value></data>
+  <data name="Your short name (optional, shows in the reports how often your link was used)" xml:space="preserve"><value>Vaše zkratka (volitelné, v přehledech ukazuje, jak často byl váš odkaz použit)</value></data>
+  <data name="e.g. mmueller" xml:space="preserve"><value>např. mmueller</value></data>
+  <data name="Send by email" xml:space="preserve"><value>Odeslat e-mailem</value></data>
+  <data name="Shared links" xml:space="preserve"><value>Sdílené odkazy</value></data>
+  <data name="Calls of the add-on pages (/a/...) per short name: page views without link previews, clicks on &quot;Install in Power PDF&quot; and client installer downloads from that page. Without a short name the link was shared without one." xml:space="preserve"><value>Návštěvy stránek doplňků (/a/...) podle zkratky: zobrazení bez náhledů odkazů, kliknutí na „Nainstalovat do Power PDF“ a stažení instalačního programu klienta z této stránky. Bez zkratky byl odkaz sdílen bez ní.</value></data>
+  <data name="Short name" xml:space="preserve"><value>Zkratka</value></data>
+  <data name="Page views" xml:space="preserve"><value>Zobrazení</value></data>
+  <data name="Install clicks" xml:space="preserve"><value>Kliknutí na Instalovat</value></data>
+  <data name="Client downloads" xml:space="preserve"><value>Stažení klienta</value></data>
+  <data name="without short name" xml:space="preserve"><value>bez zkratky</value></data>
+  <data name="Total" xml:space="preserve"><value>Celkem</value></data>
 </root>

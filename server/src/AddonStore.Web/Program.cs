@@ -113,6 +113,7 @@ builder.Services.AddRazorPages(o =>
 // --- app services ---------------------------------------------------------
 builder.Services.AddScoped<AuditService>();
 builder.Services.AddScoped<UsageService>();
+builder.Services.AddScoped<ShareService>();
 builder.Services.AddSingleton<GeoService>();
 builder.Services.AddHostedService(sp => sp.GetRequiredService<GeoService>());
 builder.Services.AddHostedService<UsageMaintenance>();

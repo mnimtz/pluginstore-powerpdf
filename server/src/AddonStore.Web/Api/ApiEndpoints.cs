@@ -15,7 +15,18 @@ public static class ApiEndpoints
     {
         // The installer for end users: the MSI inside the newest client package.
         // Stable URL, linked from the landing page; no account needed.
-        app.MapGet("/download/pluginstore.msi", async (AppDbContext db, SubmissionService svc, UsageService usage, HttpContext ctx) =>
+        // Install click on a shared add-on page (/a/{slug}); counted per ref, see ShareService.
+        app.MapPost("/a/{slug}/click", async (string slug, string? what, HttpContext ctx, AppDbContext db, ShareService share) =>
+        {
+            if (what != "install") return Results.NoContent();
+            var ids = await db.PackageVersions.Where(v => v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)
+                .Select(v => v.PackageId).Distinct().ToListAsync();
+            var id = ShareService.Resolve(slug, ids);
+            if (id is not null) await share.CountAsync(id, ctx.Request.Query["ref"].ToString(), "install");
+            return Results.NoContent();
+        });
+
+        app.MapGet("/download/pluginstore.msi", async (AppDbContext db, SubmissionService svc, UsageService usage, ShareService share, HttpContext ctx) =>
         {
             var versions = await db.PackageVersions
                 .Where(v => v.PackageId == SubmissionService.ClientPackageId &&
@@ -41,6 +52,10 @@ public static class ApiEndpoints
             pick.Downloads++;
             await db.SaveChangesAsync();
             await usage.CountAsync(ctx, "msi", pick.PackageId, pick.Version);
+            // Client installer fetched from a shared add-on page: attribute it to that add-on and ref.
+            var fromPkg = ctx.Request.Query["pkg"].ToString();
+            if (fromPkg.Length > 0 && await db.Packages.AnyAsync(p => p.Id == fromPkg))
+                await share.CountAsync(fromPkg, ctx.Request.Query["ref"].ToString(), "client");
             return Results.File(ms, "application/x-msi", $"AddonStore-{pick.Version}.msi");
         });
 
@@ -656,6 +671,9 @@ public static class ApiEndpoints
         var ownerMails = ownerRows.ToDictionary(p => p.Id, p => Services.CatalogUi.PublicEmail(p.Owner));
         var pkgs = ownerRows.ToDictionary(p => p.Id);
         var known = await db.Categories.ToDictionaryAsync(c => c.Slug);
+        // Share page slugs over live and beta ids, the same set /a/{slug} resolves against.
+        var slugIds = (await db.PackageVersions.Where(v => v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)
+            .Select(v => v.PackageId).Distinct().ToListAsync()).Where(i => i != SubmissionService.ClientPackageId).ToList();
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live)
@@ -690,6 +708,8 @@ public static class ApiEndpoints
                 sha256 = pick.Sha256,
                 sizeBytes = pick.SizeBytes,
                 downloads = pick.Downloads,
+                pageUrl = pick.PackageId == SubmissionService.ClientPackageId ? null
+                    : $"{baseUrl}/a/{ShareService.Slug(pick.PackageId, slugIds)}",
                 downloadUrl = $"{baseUrl}/api/packages/{pick.PackageId}/{pick.Version}/download"
             });
         }

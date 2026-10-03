@@ -210,6 +210,32 @@
     </div>
 </div>
 
+<div class="card">
+    <h2>@L["Shared links"]</h2>
+    <p class="muted small">@L["Calls of the add-on pages (/a/...) per short name: page views without link previews, clicks on \"Install in Power PDF\" and client installer downloads from that page. Without a short name the link was shared without one."]</p>
+    @if (Model.ShareLinks.Count == 0)
+    {
+        <p class="muted">@L["No usage data yet in this period."]</p>
+    }
+    else
+    {
+        <div class="table-wrap">
+        <table>
+            <tr><th>@L["Short name"]</th><th>@L["Add-on"]</th><th>@L["Page views"]</th><th>@L["Install clicks"]</th><th>@L["Client downloads"]</th></tr>
+            @foreach (var r in Model.ShareLinks)
+            {
+                <tr>
+                    <td>@(r.Ref == "" ? L["without short name"] : (object)r.Ref)</td>
+                    <td><a href="/a/@r.Id">@r.Name</a></td>
+                    <td>@r.Views</td><td>@r.Installs</td><td>@r.Clients</td>
+                </tr>
+            }
+            <tr><th>@L["Total"]</th><th></th><th>@Model.ShareLinks.Sum(r => r.Views)</th><th>@Model.ShareLinks.Sum(r => r.Installs)</th><th>@Model.ShareLinks.Sum(r => r.Clients)</th></tr>
+        </table>
+        </div>
+    }
+</div>
+
 <div class="grid">
     <div class="card">
         <h2>@L["Clients in use"]</h2>

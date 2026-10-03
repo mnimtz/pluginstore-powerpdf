@@ -64,7 +64,9 @@ public static class SchemaUpgrade
                 "ClientVersion TEXT NOT NULL, HostVersion TEXT NOT NULL, OsVersion TEXT NOT NULL, Arch TEXT NOT NULL, " +
                 "Country TEXT NOT NULL, Region TEXT NOT NULL, City TEXT NOT NULL, Latitude REAL NULL, Longitude REAL NULL, " +
                 "Asn INTEGER NULL, Org TEXT NOT NULL, Ip TEXT NOT NULL, Hostname TEXT NULL, UserAgent TEXT NOT NULL)",
-            "CREATE INDEX IF NOT EXISTS IX_UsageEvents_At ON UsageEvents (At)"
+            "CREATE INDEX IF NOT EXISTS IX_UsageEvents_At ON UsageEvents (At)",
+            "CREATE TABLE IF NOT EXISTS ShareStats (Day TEXT NOT NULL, PackageId TEXT NOT NULL, Ref TEXT NOT NULL, " +
+                "Kind TEXT NOT NULL, Count INTEGER NOT NULL, PRIMARY KEY (Day, PackageId, Ref, Kind))"
         })
         {
             try { db.Database.ExecuteSqlRaw(sql); }

@@ -87,6 +87,7 @@ public class BackupService
                 categories = await _db.Categories.CountAsync(),
                 usageCounterRows = await _db.UsageStats.CountAsync(),
                 ipEvents = await _db.UsageEvents.CountAsync(),
+                shareCounterRows = await _db.ShareStats.CountAsync(),
                 // Everything the server keeps lives in pluginstore.db (users, roles, tokens, settings,
                 // categories, catalog entries, audit) and these folders: packages (incl. *.source.zip),
                 // avatars, devkit. New data must land in one of them, or be added here.

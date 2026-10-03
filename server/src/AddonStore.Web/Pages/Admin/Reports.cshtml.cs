@@ -119,6 +119,8 @@ public class ReportsModel : PageModel
     public record MonthRow(string Month, int Submitted, int Approved, int Rejected, double? MedianReviewHours);
     public record DevRow(string Name, string Email, string Role, int Packages, int Versions, int Downloads, DateTime? LastSubmission);
     public record SourceGap(string Id, string Name, string Version, VersionStatus Status);
+    /// <summary>Shared add-on links (/a/{slug}?ref=) per ref and add-on in the period.</summary>
+    public record ShareRow(string Ref, string Id, string Name, int Views, int Installs, int Clients);
 
     public Kpis K { get; private set; } = new(0, 0, 0, 0, 0, 0, 0);
     public List<DayBar> Daily { get; } = new();
@@ -144,6 +146,7 @@ public class ReportsModel : PageModel
     public List<MonthRow> Months { get; } = new();
     public List<DevRow> Devs { get; } = new();
     public List<SourceGap> SourceGaps { get; } = new();
+    public List<ShareRow> ShareLinks { get; } = new();
     public DateOnly? TrackingSince { get; private set; }
 
     public async Task OnGetAsync()
@@ -284,6 +287,17 @@ public class ReportsModel : PageModel
         HostVersions.AddRange(Shares(fromClient.Select(s => (s.HostVersion == "" ? "?" : s.HostVersion, s.Count))));
         OsVersions.AddRange(Shares(fromClient.Select(s => (s.OsVersion == "" ? "?" : WindowsName(s.OsVersion), s.Count))));
         Archs.AddRange(Shares(fromClient.Select(s => (s.Arch == "" ? "?" : s.Arch, s.Count))));
+
+        // Shared links: views, install clicks and client downloads per ref and add-on
+        var shareStats = await _db.ShareStats.AsNoTracking()
+            .Where(s => string.Compare(s.Day, fromKey) >= 0 && string.Compare(s.Day, toKey) <= 0).ToListAsync();
+        var names = PackageOptions.ToDictionary(o => o.Id, o => o.Name);
+        ShareLinks.AddRange(shareStats.Where(s => filtered || s.PackageId == Pkg)
+            .GroupBy(s => (s.Ref, s.PackageId))
+            .Select(g => new ShareRow(g.Key.Ref, g.Key.PackageId, names.GetValueOrDefault(g.Key.PackageId, g.Key.PackageId),
+                g.Where(x => x.Kind == "view").Sum(x => x.Count), g.Where(x => x.Kind == "install").Sum(x => x.Count),
+                g.Where(x => x.Kind == "client").Sum(x => x.Count)))
+            .OrderByDescending(r => r.Views + r.Installs * 3 + r.Clients * 3));
 
         // IP logging
         IpOn = await _usage.IpLoggingOnAsync();

@@ -324,6 +324,10 @@ it cannot be approved without its source.
     GET {{baseUrl}}/api/packages/{id}/{version}/download
     GET {{baseUrl}}/api/packages/{id}/icon   catalog icon (assets/icon.png of the newest released version)
 
+Each JSON catalog entry also carries `pageUrl`, the public page of the add-on
+(`{{baseUrl}}/a/<short name>`): link it in your documentation or send it to
+users; the page shows only this add-on with its install button.
+
 Verify the download against the catalog's `sha256` before installing. The
 store client shows each package's `assets/icon.png` (square PNG, 128 px
 recommended) and the localized category name, so ship a clear icon.

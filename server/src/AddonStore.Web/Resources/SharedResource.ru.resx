@@ -452,4 +452,35 @@
   <data name="Type DELETE to confirm." xml:space="preserve"><value>Введите DELETE для подтверждения.</value></data>
   <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Загрузить исходный код версии (после каждой загрузки)</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Администраторы: исходный код новейшей версии, отправная точка для изменения</value></data>
+  <data name="Share link" xml:space="preserve"><value>Поделиться ссылкой</value></data>
+  <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>Отдельная страница надстройки со ссылкой для отправки клиентам</value></data>
+  <data name="Add-on not found" xml:space="preserve"><value>Надстройка не найдена</value></data>
+  <data name="This add-on is not (or no longer) in the store." xml:space="preserve"><value>Этой надстройки нет (больше нет) в магазине.</value></data>
+  <data name="Show all add-ons" xml:space="preserve"><value>Показать все надстройки</value></data>
+  <data name="Add-on for Tungsten Power PDF: {0}" xml:space="preserve"><value>Надстройка для Tungsten Power PDF: {0}</value></data>
+  <data name="Hello," xml:space="preserve"><value>Здравствуйте!</value></data>
+  <data name="for Tungsten Power PDF there is the add-on &quot;{0}&quot;:" xml:space="preserve"><value>для Tungsten Power PDF есть надстройка «{0}»:</value></data>
+  <data name="You can look at it and install it directly in Power PDF here:" xml:space="preserve"><value>Здесь можно посмотреть её и установить прямо в Power PDF:</value></data>
+  <data name="Best regards" xml:space="preserve"><value>С уважением</value></data>
+  <data name="What&#x27;s new in version {0}" xml:space="preserve"><value>Новое в версии {0}</value></data>
+  <data name="First time?" xml:space="preserve"><value>Впервые?</value></data>
+  <data name="Install the Add-on Store for Power PDF once (administrator rights required)." xml:space="preserve"><value>Один раз установите Add-on Store для Power PDF (нужны права администратора).</value></data>
+  <data name="Click &quot;Install in Power PDF&quot; above; Power PDF opens with this add-on selected." xml:space="preserve"><value>Нажмите вверху «Установить в Power PDF»; Power PDF откроется с выбранной надстройкой.</value></data>
+  <data name="Confirm the installation and restart Power PDF." xml:space="preserve"><value>Подтвердите установку и перезапустите Power PDF.</value></data>
+  <data name="Share this add-on" xml:space="preserve"><value>Поделиться надстройкой</value></data>
+  <data name="Send this link to a customer or colleague; the page shows only this add-on." xml:space="preserve"><value>Отправьте ссылку клиенту или коллеге; страница показывает только эту надстройку.</value></data>
+  <data name="Link" xml:space="preserve"><value>Ссылка</value></data>
+  <data name="Copy link" xml:space="preserve"><value>Копировать ссылку</value></data>
+  <data name="Link copied." xml:space="preserve"><value>Ссылка скопирована.</value></data>
+  <data name="Your short name (optional, shows in the reports how often your link was used)" xml:space="preserve"><value>Ваше сокращение (необязательно, в отчётах видно, как часто использовалась ваша ссылка)</value></data>
+  <data name="e.g. mmueller" xml:space="preserve"><value>напр. mmueller</value></data>
+  <data name="Send by email" xml:space="preserve"><value>Отправить по эл. почте</value></data>
+  <data name="Shared links" xml:space="preserve"><value>Общие ссылки</value></data>
+  <data name="Calls of the add-on pages (/a/...) per short name: page views without link previews, clicks on &quot;Install in Power PDF&quot; and client installer downloads from that page. Without a short name the link was shared without one." xml:space="preserve"><value>Обращения к страницам надстроек (/a/...) по сокращениям: просмотры без предпросмотров ссылок, нажатия «Установить в Power PDF» и загрузки установщика клиента с этой страницы. Без сокращения ссылкой поделились без него.</value></data>
+  <data name="Short name" xml:space="preserve"><value>Сокращение</value></data>
+  <data name="Page views" xml:space="preserve"><value>Просмотры</value></data>
+  <data name="Install clicks" xml:space="preserve"><value>Нажатия «Установить»</value></data>
+  <data name="Client downloads" xml:space="preserve"><value>Загрузки клиента</value></data>
+  <data name="without short name" xml:space="preserve"><value>без сокращения</value></data>
+  <data name="Total" xml:space="preserve"><value>Итого</value></data>
 </root>

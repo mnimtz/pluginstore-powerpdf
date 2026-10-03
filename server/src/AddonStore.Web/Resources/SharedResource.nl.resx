@@ -452,4 +452,35 @@
   <data name="Type DELETE to confirm." xml:space="preserve"><value>Typ DELETE om te bevestigen.</value></data>
   <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Broncode van een versie uploaden (na elke upload)</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Beheerders: broncode van de nieuwste versie, startpunt voor een wijziging</value></data>
+  <data name="Share link" xml:space="preserve"><value>Link delen</value></data>
+  <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>Eigen pagina van deze invoegtoepassing met een link om naar klanten te sturen</value></data>
+  <data name="Add-on not found" xml:space="preserve"><value>Invoegtoepassing niet gevonden</value></data>
+  <data name="This add-on is not (or no longer) in the store." xml:space="preserve"><value>Deze invoegtoepassing staat niet (meer) in de store.</value></data>
+  <data name="Show all add-ons" xml:space="preserve"><value>Alle invoegtoepassingen tonen</value></data>
+  <data name="Add-on for Tungsten Power PDF: {0}" xml:space="preserve"><value>Invoegtoepassing voor Tungsten Power PDF: {0}</value></data>
+  <data name="Hello," xml:space="preserve"><value>Hallo,</value></data>
+  <data name="for Tungsten Power PDF there is the add-on &quot;{0}&quot;:" xml:space="preserve"><value>voor Tungsten Power PDF is er de invoegtoepassing “{0}”:</value></data>
+  <data name="You can look at it and install it directly in Power PDF here:" xml:space="preserve"><value>Hier kunt u deze bekijken en direct in Power PDF installeren:</value></data>
+  <data name="Best regards" xml:space="preserve"><value>Met vriendelijke groet</value></data>
+  <data name="What&#x27;s new in version {0}" xml:space="preserve"><value>Nieuw in versie {0}</value></data>
+  <data name="First time?" xml:space="preserve"><value>De eerste keer?</value></data>
+  <data name="Install the Add-on Store for Power PDF once (administrator rights required)." xml:space="preserve"><value>Installeer eenmalig de Add-on Store voor Power PDF (beheerdersrechten vereist).</value></data>
+  <data name="Click &quot;Install in Power PDF&quot; above; Power PDF opens with this add-on selected." xml:space="preserve"><value>Klik hierboven op “Installeren in Power PDF”; Power PDF opent met deze invoegtoepassing geselecteerd.</value></data>
+  <data name="Confirm the installation and restart Power PDF." xml:space="preserve"><value>Bevestig de installatie en start Power PDF opnieuw.</value></data>
+  <data name="Share this add-on" xml:space="preserve"><value>Deze invoegtoepassing delen</value></data>
+  <data name="Send this link to a customer or colleague; the page shows only this add-on." xml:space="preserve"><value>Stuur deze link naar een klant of collega; de pagina toont alleen deze invoegtoepassing.</value></data>
+  <data name="Link" xml:space="preserve"><value>Link</value></data>
+  <data name="Copy link" xml:space="preserve"><value>Link kopiëren</value></data>
+  <data name="Link copied." xml:space="preserve"><value>Link gekopieerd.</value></data>
+  <data name="Your short name (optional, shows in the reports how often your link was used)" xml:space="preserve"><value>Uw afkorting (optioneel, toont in de rapporten hoe vaak uw link is gebruikt)</value></data>
+  <data name="e.g. mmueller" xml:space="preserve"><value>bijv. mmueller</value></data>
+  <data name="Send by email" xml:space="preserve"><value>Per e-mail versturen</value></data>
+  <data name="Shared links" xml:space="preserve"><value>Gedeelde links</value></data>
+  <data name="Calls of the add-on pages (/a/...) per short name: page views without link previews, clicks on &quot;Install in Power PDF&quot; and client installer downloads from that page. Without a short name the link was shared without one." xml:space="preserve"><value>Bezoeken van de invoegtoepassingspagina's (/a/...) per afkorting: paginaweergaven zonder linkvoorbeelden, klikken op “Installeren in Power PDF” en downloads van het clientinstallatieprogramma vanaf die pagina. Zonder afkorting is de link zonder afkorting gedeeld.</value></data>
+  <data name="Short name" xml:space="preserve"><value>Afkorting</value></data>
+  <data name="Page views" xml:space="preserve"><value>Paginaweergaven</value></data>
+  <data name="Install clicks" xml:space="preserve"><value>Klikken op Installeren</value></data>
+  <data name="Client downloads" xml:space="preserve"><value>Clientdownloads</value></data>
+  <data name="without short name" xml:space="preserve"><value>zonder afkorting</value></data>
+  <data name="Total" xml:space="preserve"><value>Totaal</value></data>
 </root>

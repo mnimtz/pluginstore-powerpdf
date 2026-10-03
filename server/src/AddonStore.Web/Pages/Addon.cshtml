@@ -1,0 +1,150 @@
+@page "/a/{slug}"
+@model AddonStore.Web.Pages.AddonModel
+@{
+    ViewData["Title"] = Model.Item?.Name ?? "Add-on";
+    var item = Model.Item;
+}
+@section Head {
+    @if (item is not null)
+    {
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Add-on Store · Tungsten Power PDF" />
+        <meta property="og:title" content="@item.Name" />
+        <meta property="og:description" content="@item.Description" />
+        <meta property="og:url" content="@Model.PageUrl" />
+        <meta property="og:image" content="@Model.BaseUrl/api/packages/@item.Id/icon" />
+        <meta name="description" content="@item.Description" />
+    }
+}
+
+@if (item is null)
+{
+    <div class="card" style="max-width:640px">
+        <h1 style="margin-top:0">@L["Add-on not found"]</h1>
+        <p>@L["This add-on is not (or no longer) in the store."]</p>
+        <a class="btn" href="/">@L["Show all add-ons"]</a>
+    </div>
+}
+else
+{
+    var mailSubject = L["Add-on for Tungsten Power PDF: {0}", item.Name].Value;
+    var mailBody = string.Join("\n\n", new[]
+    {
+        L["Hello,"].Value,
+        L["for Tungsten Power PDF there is the add-on \"{0}\":", item.Name].Value + "\n" + item.Description,
+        L["You can look at it and install it directly in Power PDF here:"].Value + "\n" + Model.PageUrl,
+        L["Best regards"].Value
+    });
+
+    <div class="addon-page">
+        <div class="card addon-hero">
+            <img class="addon-icon" src="/api/packages/@item.Id/icon" alt="" width="96" height="96"
+                 onerror="this.src='/img/powerpdf-icon.svg'" />
+            <div class="addon-head">
+                <h1>@item.Name</h1>
+                <div class="meta">
+                    <span class="badge live">@item.CategoryName</span>
+                    @if (item.Channel == "beta") { <span class="badge beta">Beta</span> }
+                    v@(item.Version) · @L["Author"]: @item.Author
+                    @if (!string.IsNullOrEmpty(item.MinHost)) { <text> · Power PDF @item.MinHost+</text> }
+                </div>
+                <p class="addon-desc">@item.Description</p>
+                <div class="addon-actions win-only">
+                    <a class="btn cta" id="install-btn" href="addonstore://install/@item.Id"
+                       title="@L["Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)."]">@L["Install in Power PDF"]</a>
+                    <span class="client-hint" id="client-hint" hidden>
+                        @L["Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again."]
+                    </span>
+                </div>
+                <p class="mobile-only muted small">@L["Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF."]</p>
+            </div>
+        </div>
+
+        <div class="grid addon-grid">
+            @if (!string.IsNullOrWhiteSpace(item.Changelog))
+            {
+                <div class="card">
+                    <h2>@L["What's new in version {0}", item.Version]</h2>
+                    <p style="white-space:pre-line">@item.Changelog</p>
+                </div>
+            }
+            <div class="card desktop-only">
+                <h2>@L["First time?"]</h2>
+                <ol class="steps">
+                    <li>@L["Install the Add-on Store for Power PDF once (administrator rights required)."]</li>
+                    <li>@L["Click \"Install in Power PDF\" above; Power PDF opens with this add-on selected."]</li>
+                    <li>@L["Confirm the installation and restart Power PDF."]</li>
+                </ol>
+                @if (Model.ClientDownloadUrl is not null)
+                {
+                    <span class="tip" id="dl-tip">
+                        <a class="btn small secondary" id="dl-btn" href="@Model.ClientDownloadUrl" aria-describedby="dl-tip-text">@L["Download"]: Add-on Store v@(Model.ClientVersion)</a>
+                        <button type="button" class="tip-icon" aria-label="@L["Windows warning?"]" aria-describedby="dl-tip-text">i</button>
+                        <span class="tip-bubble" id="dl-tip-text" role="tooltip">
+                            <b>@L["Windows warning?"]</b>
+                            @L["The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF."]
+                        </span>
+                    </span>
+                }
+            </div>
+            <div class="card share-box">
+                <h2>@L["Share this add-on"]</h2>
+                <p class="muted small">@L["Send this link to a customer or colleague; the page shows only this add-on."]</p>
+                <div class="share-row">
+                    <input type="text" id="share-url" readonly value="@Model.PageUrl@(Model.Ref.Length > 0 ? "?ref=" + Model.Ref : "")" aria-label="@L["Link"]" />
+                    <button type="button" class="btn small" id="copy-btn">@L["Copy link"]</button>
+                </div>
+                <label class="small muted" for="share-ref" style="display:block;margin-top:10px">@L["Your short name (optional, shows in the reports how often your link was used)"]</label>
+                <input type="text" id="share-ref" maxlength="40" placeholder="@L["e.g. mmueller"]" value="@Model.Ref" style="max-width:220px" />
+                <p style="margin:12px 0 0"><a class="btn small secondary" id="mail-btn" href="#">@L["Send by email"]</a>
+                   <span class="muted small" id="copied" hidden>@L["Link copied."]</span></p>
+            </div>
+        </div>
+
+        <div class="alert warn" style="font-size:.85rem">
+            @L["Plugins from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability."]
+            <a href="/Disclaimer">@L["Disclaimer"]</a>
+        </div>
+        <p><a href="/">← @L["Show all add-ons"]</a></p>
+    </div>
+
+    <script>
+        (function () {
+            var base = @Json.Serialize(Model.PageUrl), id = @Json.Serialize(item.Id), slug = @Json.Serialize(Model.Slug);
+            var subject = @Json.Serialize(mailSubject), bodyTpl = @Json.Serialize(mailBody);
+            var refIn = document.getElementById('share-ref'), url = document.getElementById('share-url');
+            var pageRef = @Json.Serialize(Model.Ref);
+            function cleanRef(v) { v = (v || '').trim().toLowerCase(); return /^[a-z0-9][a-z0-9._-]{0,39}$/.test(v) ? v : ''; }
+            function link() { var r = cleanRef(refIn.value); return base + (r ? '?ref=' + encodeURIComponent(r) : ''); }
+            try { if (!refIn.value) refIn.value = localStorage.getItem('addonShareRef') || ''; } catch (e) { }
+            function update() { url.value = link(); try { localStorage.setItem('addonShareRef', cleanRef(refIn.value)); } catch (e) { } }
+            refIn.addEventListener('input', update); update();
+            document.getElementById('copy-btn').addEventListener('click', function () {
+                var done = function () { var c = document.getElementById('copied'); c.hidden = false; setTimeout(function () { c.hidden = true; }, 2500); };
+                if (navigator.clipboard) navigator.clipboard.writeText(url.value).then(done, function () { url.select(); document.execCommand('copy'); done(); });
+                else { url.select(); document.execCommand('copy'); done(); }
+            });
+            document.getElementById('mail-btn').addEventListener('click', function (e) {
+                e.preventDefault();
+                var body = bodyTpl.split(base).join(link());
+                location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+            });
+            // Install click: count it (with the ref of the link the customer opened), then hand over to the client.
+            var btn = document.getElementById('install-btn'), hint = document.getElementById('client-hint');
+            if (btn) btn.addEventListener('click', function () {
+                try { navigator.sendBeacon('/a/' + encodeURIComponent(slug) + '/click?what=install' + (pageRef ? '&ref=' + encodeURIComponent(pageRef) : '')); } catch (e) { }
+                var left = false; function gone() { left = true; }
+                window.addEventListener('blur', gone); document.addEventListener('visibilitychange', gone);
+                setTimeout(function () {
+                    window.removeEventListener('blur', gone); document.removeEventListener('visibilitychange', gone);
+                    if (!left && hint) hint.hidden = false;
+                }, 1800);
+            });
+            var tip = document.getElementById('dl-tip'), dl = document.getElementById('dl-btn');
+            if (tip && dl) {
+                dl.addEventListener('click', function () { tip.classList.add('open'); setTimeout(function () { tip.classList.remove('open'); }, 20000); });
+                document.addEventListener('click', function (e) { if (!tip.contains(e.target)) tip.classList.remove('open'); });
+            }
+        })();
+    </script>
+}

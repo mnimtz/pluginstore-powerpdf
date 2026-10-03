@@ -103,6 +103,16 @@ public class UsageEvent
     public string UserAgent { get; set; } = "";
 }
 
+/// <summary>Daily counter for shared add-on links /a/{slug}?ref= (S0.10.0); Kind: view, install, client.</summary>
+public class ShareStat
+{
+    public string Day { get; set; } = "";
+    public string PackageId { get; set; } = "";
+    public string Ref { get; set; } = "";
+    public string Kind { get; set; } = "";
+    public int Count { get; set; }
+}
+
 /// <summary>An email invitation; only the token hash is stored.</summary>
 public class Invite
 {

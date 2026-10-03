@@ -452,4 +452,35 @@
   <data name="Type DELETE to confirm." xml:space="preserve"><value>Skriv DELETE for å bekrefte.</value></data>
   <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Last opp kildekoden for en versjon (etter hver opplasting)</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Administratorer: kildekoden til nyeste versjon, utgangspunkt for en endring</value></data>
+  <data name="Share link" xml:space="preserve"><value>Del lenke</value></data>
+  <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>Egen side for dette tillegget med en lenke som kan sendes til kunder</value></data>
+  <data name="Add-on not found" xml:space="preserve"><value>Tillegget ble ikke funnet</value></data>
+  <data name="This add-on is not (or no longer) in the store." xml:space="preserve"><value>Dette tillegget finnes ikke (lenger) i butikken.</value></data>
+  <data name="Show all add-ons" xml:space="preserve"><value>Vis alle tillegg</value></data>
+  <data name="Add-on for Tungsten Power PDF: {0}" xml:space="preserve"><value>Tillegg for Tungsten Power PDF: {0}</value></data>
+  <data name="Hello," xml:space="preserve"><value>Hei,</value></data>
+  <data name="for Tungsten Power PDF there is the add-on &quot;{0}&quot;:" xml:space="preserve"><value>for Tungsten Power PDF finnes tillegget «{0}»:</value></data>
+  <data name="You can look at it and install it directly in Power PDF here:" xml:space="preserve"><value>Her kan du se det og installere det direkte i Power PDF:</value></data>
+  <data name="Best regards" xml:space="preserve"><value>Vennlig hilsen</value></data>
+  <data name="What&#x27;s new in version {0}" xml:space="preserve"><value>Nytt i versjon {0}</value></data>
+  <data name="First time?" xml:space="preserve"><value>Første gang?</value></data>
+  <data name="Install the Add-on Store for Power PDF once (administrator rights required)." xml:space="preserve"><value>Installer Add-on Store for Power PDF én gang (krever administratorrettigheter).</value></data>
+  <data name="Click &quot;Install in Power PDF&quot; above; Power PDF opens with this add-on selected." xml:space="preserve"><value>Klikk på «Installer i Power PDF» ovenfor; Power PDF åpnes med dette tillegget valgt.</value></data>
+  <data name="Confirm the installation and restart Power PDF." xml:space="preserve"><value>Bekreft installasjonen og start Power PDF på nytt.</value></data>
+  <data name="Share this add-on" xml:space="preserve"><value>Del dette tillegget</value></data>
+  <data name="Send this link to a customer or colleague; the page shows only this add-on." xml:space="preserve"><value>Send denne lenken til en kunde eller kollega; siden viser bare dette tillegget.</value></data>
+  <data name="Link" xml:space="preserve"><value>Lenke</value></data>
+  <data name="Copy link" xml:space="preserve"><value>Kopier lenke</value></data>
+  <data name="Link copied." xml:space="preserve"><value>Lenke kopiert.</value></data>
+  <data name="Your short name (optional, shows in the reports how often your link was used)" xml:space="preserve"><value>Ditt kortnavn (valgfritt, viser i rapportene hvor ofte lenken din er brukt)</value></data>
+  <data name="e.g. mmueller" xml:space="preserve"><value>f.eks. mmueller</value></data>
+  <data name="Send by email" xml:space="preserve"><value>Send på e-post</value></data>
+  <data name="Shared links" xml:space="preserve"><value>Delte lenker</value></data>
+  <data name="Calls of the add-on pages (/a/...) per short name: page views without link previews, clicks on &quot;Install in Power PDF&quot; and client installer downloads from that page. Without a short name the link was shared without one." xml:space="preserve"><value>Besøk på tilleggssidene (/a/...) per kortnavn: sidevisninger uten lenkeforhåndsvisninger, klikk på «Installer i Power PDF» og nedlastinger av klientinstallasjonsprogrammet fra siden. Uten kortnavn ble lenken delt uten.</value></data>
+  <data name="Short name" xml:space="preserve"><value>Kortnavn</value></data>
+  <data name="Page views" xml:space="preserve"><value>Sidevisninger</value></data>
+  <data name="Install clicks" xml:space="preserve"><value>Installer-klikk</value></data>
+  <data name="Client downloads" xml:space="preserve"><value>Klientnedlastinger</value></data>
+  <data name="without short name" xml:space="preserve"><value>uten kortnavn</value></data>
+  <data name="Total" xml:space="preserve"><value>Totalt</value></data>
 </root>

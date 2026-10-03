@@ -452,4 +452,35 @@
   <data name="Type DELETE to confirm." xml:space="preserve"><value>A megerősítéshez írja be: DELETE.</value></data>
   <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Egy verzió forráskódjának feltöltése (minden feltöltés után)</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Rendszergazdák: a legújabb verzió forráskódja, a módosítás kiindulópontja</value></data>
+  <data name="Share link" xml:space="preserve"><value>Link megosztása</value></data>
+  <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>A bővítmény saját oldala, ügyfeleknek küldhető linkkel</value></data>
+  <data name="Add-on not found" xml:space="preserve"><value>A bővítmény nem található</value></data>
+  <data name="This add-on is not (or no longer) in the store." xml:space="preserve"><value>Ez a bővítmény nincs (már) az áruházban.</value></data>
+  <data name="Show all add-ons" xml:space="preserve"><value>Összes bővítmény megjelenítése</value></data>
+  <data name="Add-on for Tungsten Power PDF: {0}" xml:space="preserve"><value>Bővítmény a Tungsten Power PDF-hez: {0}</value></data>
+  <data name="Hello," xml:space="preserve"><value>Üdvözlöm!</value></data>
+  <data name="for Tungsten Power PDF there is the add-on &quot;{0}&quot;:" xml:space="preserve"><value>a Tungsten Power PDF-hez elérhető a(z) „{0}” bővítmény:</value></data>
+  <data name="You can look at it and install it directly in Power PDF here:" xml:space="preserve"><value>Itt megtekintheti, és közvetlenül telepítheti a Power PDF-be:</value></data>
+  <data name="Best regards" xml:space="preserve"><value>Üdvözlettel</value></data>
+  <data name="What&#x27;s new in version {0}" xml:space="preserve"><value>Újdonságok a(z) {0} verzióban</value></data>
+  <data name="First time?" xml:space="preserve"><value>Először jár itt?</value></data>
+  <data name="Install the Add-on Store for Power PDF once (administrator rights required)." xml:space="preserve"><value>Telepítse egyszer az Add-on Store-t a Power PDF-hez (rendszergazdai jogok szükségesek).</value></data>
+  <data name="Click &quot;Install in Power PDF&quot; above; Power PDF opens with this add-on selected." xml:space="preserve"><value>Kattintson fent a „Telepítés a Power PDF-be” gombra; a Power PDF a kijelölt bővítménnyel nyílik meg.</value></data>
+  <data name="Confirm the installation and restart Power PDF." xml:space="preserve"><value>Erősítse meg a telepítést, és indítsa újra a Power PDF-et.</value></data>
+  <data name="Share this add-on" xml:space="preserve"><value>Bővítmény megosztása</value></data>
+  <data name="Send this link to a customer or colleague; the page shows only this add-on." xml:space="preserve"><value>Küldje el ezt a linket ügyfélnek vagy kollégának; az oldal csak ezt a bővítményt mutatja.</value></data>
+  <data name="Link" xml:space="preserve"><value>Link</value></data>
+  <data name="Copy link" xml:space="preserve"><value>Link másolása</value></data>
+  <data name="Link copied." xml:space="preserve"><value>Link kimásolva.</value></data>
+  <data name="Your short name (optional, shows in the reports how often your link was used)" xml:space="preserve"><value>Az Ön rövid neve (nem kötelező, a jelentésekben mutatja, hányszor használták a linkjét)</value></data>
+  <data name="e.g. mmueller" xml:space="preserve"><value>pl. mmueller</value></data>
+  <data name="Send by email" xml:space="preserve"><value>Küldés e-mailben</value></data>
+  <data name="Shared links" xml:space="preserve"><value>Megosztott linkek</value></data>
+  <data name="Calls of the add-on pages (/a/...) per short name: page views without link previews, clicks on &quot;Install in Power PDF&quot; and client installer downloads from that page. Without a short name the link was shared without one." xml:space="preserve"><value>A bővítményoldalak (/a/...) látogatásai rövid nevenként: oldalmegtekintések linkelőnézetek nélkül, kattintások a „Telepítés a Power PDF-be” gombra és a kliens-telepítő letöltései az oldalról. Rövid név nélkül a linket rövid név nélkül osztották meg.</value></data>
+  <data name="Short name" xml:space="preserve"><value>Rövid név</value></data>
+  <data name="Page views" xml:space="preserve"><value>Oldalmegtekintések</value></data>
+  <data name="Install clicks" xml:space="preserve"><value>Telepítés-kattintások</value></data>
+  <data name="Client downloads" xml:space="preserve"><value>Kliensletöltések</value></data>
+  <data name="without short name" xml:space="preserve"><value>rövid név nélkül</value></data>
+  <data name="Total" xml:space="preserve"><value>Összesen</value></data>
 </root>

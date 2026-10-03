@@ -359,3 +359,22 @@ table.ranking td.rank small.down { color: #B3261E; }
 svg.spark { width: 110px; height: 26px; }
 svg.spark polyline { fill: none; stroke: var(--tun-blue); stroke-width: 1.6; vector-effect: non-scaling-stroke; }
 .share > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---- shared add-on page /a/{slug} (S0.10.0) ---- */
+.addon-page { max-width: 980px; margin: 0 auto; }
+.addon-hero { display: flex; gap: 24px; align-items: flex-start; border-top: 4px solid; border-image: var(--tun-accent-pdf) 1; }
+.addon-icon { width: 96px; height: 96px; border-radius: 18px; object-fit: contain; background: var(--tun-gray-150); padding: 8px; flex: none; }
+.addon-head h1 { margin: 0 0 6px; color: var(--tun-navy); }
+.addon-head .meta { color: var(--tun-slate); font-size: .88rem; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.addon-desc { font-size: 1.05rem; line-height: 1.5; margin: 14px 0 16px; }
+.addon-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.addon-grid { margin: 16px 0; }
+.addon-grid h2 { margin-top: 0; font-size: 1.05rem; }
+ol.steps { padding-left: 20px; margin: 0 0 14px; line-height: 1.6; }
+.share-row { display: flex; gap: 8px; }
+.share-row input { flex: 1; min-width: 0; font-size: .85rem; }
+.pkg-actions .btn + .btn { margin-left: 6px; }
+@media (max-width: 760px) {
+  .addon-hero { flex-direction: column; gap: 12px; }
+  .addon-icon { width: 72px; height: 72px; }
+}

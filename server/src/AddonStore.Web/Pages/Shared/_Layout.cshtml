@@ -16,6 +16,7 @@
             if (/Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) c.add('mobile');
         })(navigator.userAgent, document.documentElement.classList);
     </script>
+    @await RenderSectionAsync("Head", required: false)
 </head>
 <body>
 <header class="site">

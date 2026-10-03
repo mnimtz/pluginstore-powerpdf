@@ -78,9 +78,11 @@ else
                         <text> · </text><a href="mailto:@item.ContactEmail" style="color:var(--tun-blue)">@item.ContactEmail</a>
                     }
                 </span>
-                <span class="pkg-actions win-only">
-                    <a class="btn small" href="addonstore://install/@item.Id"
+                <span class="pkg-actions">
+                    <a class="btn small win-only" href="addonstore://install/@item.Id"
                        title="@L["Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)."]">@L["Install in Power PDF"]</a>
+                    <a class="btn small secondary share-link" href="/a/@Model.Slugs[item.Id]"
+                       title="@L["Own page of this add-on with a link to send to customers"]">@L["Share link"]</a>
                     <span class="client-hint" hidden>
                         @L["Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again."]
                         @if (Model.ClientDownloadUrl is not null)
@@ -101,7 +103,7 @@ else
             // Without a registered addonstore:// handler the browser does nothing.
             // When Power PDF or the "Open Add-on Store?" prompt appears, the page
             // loses focus; if it keeps focus, show how to get the client.
-            document.querySelectorAll('.pkg-actions a.btn').forEach(function (a) {
+            document.querySelectorAll('.pkg-actions a.btn:not(.share-link)').forEach(function (a) {
                 a.addEventListener('click', function () {
                     var hint = a.parentNode.querySelector('.client-hint');
                     var left = false;
