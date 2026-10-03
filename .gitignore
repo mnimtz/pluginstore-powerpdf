@@ -18,3 +18,7 @@ client/Debug/
 *.zxt
 dist/
 packaging/*.ppak
+client/installer/Release/
+*.wixobj
+*.wixpdb
+*.msi
