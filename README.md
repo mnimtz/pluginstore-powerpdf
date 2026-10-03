@@ -98,10 +98,19 @@ with an elevated `client\deploy.cmd`.
 
 ## API in 30 seconds
 
+**One URL is enough for an AI assistant:** tell Claude
+*"Read https://<host>/api/agent-guide and publish the plugin in this folder."*
+The guide explains the token (environment variable `PPAK_TOKEN`), installs the
+Claude Code skill from `/api/skill` on first use and walks through packaging,
+validation and submission. Signed-in users find the same instructions on the
+**API** page of the web UI.
+
 ```bash
 curl https://<host>/api                  # discover all endpoints
 curl https://<host>/api/agent-guide      # the full guide (markdown)
 curl https://<host>/api/schema/manifest  # manifest.json schema
+
+curl https://<host>/api/skill            # Claude Code skill (SKILL.md)
 
 # with a personal token from your profile page:
 curl -H "Authorization: Bearer ppak_..." https://<host>/api/me

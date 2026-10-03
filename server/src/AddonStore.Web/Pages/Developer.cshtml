@@ -16,22 +16,18 @@
 </div>
 
 <div class="card">
-    <h2 style="margin-top:0">2. @L["Install the Claude skill (once)"]</h2>
+    <h2 style="margin-top:0">2. @L["Give Claude one line"]</h2>
+    <pre class="code">Read @(b)/api/agent-guide and publish the plugin in this folder.</pre>
+    <p>@L["That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules."]</p>
+</div>
+
+<details class="card">
+    <summary style="cursor:pointer;font-weight:700;color:var(--tun-navy)">@L["Optional: install the skill manually"]</summary>
     <p>@L["The skill tells Claude where this store is and how to work with it. It always loads the current rules from the server, so it never needs updating."]</p>
     <pre class="code">New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills\powerpdf-plugin-store" | Out-Null
 Invoke-WebRequest @(b)/api/skill -OutFile "$env:USERPROFILE\.claude\skills\powerpdf-plugin-store\SKILL.md"</pre>
     <p><a class="btn small secondary" href="/api/skill">@L["Download SKILL.md"]</a></p>
-</div>
-
-<div class="card">
-    <h2 style="margin-top:0">3. @L["Tell Claude what to do"]</h2>
-    <p>@L["Example instruction for a Claude session in your plugin's project folder:"]</p>
-    <pre class="code">Publish this Power PDF plugin to our Plugin-Store (@b).
-Follow @(b)/api/agent-guide. My token is in the environment variable PPAK_TOKEN.
-Build the release, create the .ppak with all 16 languages, validate until
-everything passes, then submit it and tell me the result.</pre>
-    <p style="font-size:.88rem;color:var(--tun-slate)">@L["Without the skill, the URL of the agent guide in the instruction is enough."]</p>
-</div>
+</details>
 
 <div class="card">
     <h2 style="margin-top:0">@L["Rules every upload must meet"]</h2>

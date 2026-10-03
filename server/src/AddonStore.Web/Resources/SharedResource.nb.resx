@@ -208,4 +208,7 @@
   <data name="all passed" xml:space="preserve"><value>alle bestått</value></data>
   <data name="failed" xml:space="preserve"><value>ikke bestått</value></data>
   <data name="passed with warnings" xml:space="preserve"><value>bestått med advarsler</value></data>
+  <data name="Give Claude one line" xml:space="preserve"><value>Gi Claude én linje</value></data>
+  <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Mer trenger ikke Claude: den leser veiledningen, setter seg selv opp for fremtidige økter og følger reglene.</value></data>
+  <data name="Optional: install the skill manually" xml:space="preserve"><value>Valgfritt: installer skill manuelt</value></data>
 </root>

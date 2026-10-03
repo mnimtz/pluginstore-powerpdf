@@ -57,6 +57,7 @@ public static class ApiEndpoints
                 {
                     "GET  /api/agent-guide            full instructions for developers and AI agents (markdown)",
                     "GET  /api/schema/manifest        JSON schema of manifest.json",
+                    "GET  /api/skill                  Claude Code skill (SKILL.md) for this store",
                     "GET  /api/me                     verify your token, see your packages (auth)",
                     "GET  /api/catalog?channel=beta   released packages; beta channel includes pre-release versions",
                     "GET  /api/packages/{id}          status and history of one package",

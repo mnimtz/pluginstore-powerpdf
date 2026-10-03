@@ -208,4 +208,7 @@
   <data name="all passed" xml:space="preserve"><value>tümü başarılı</value></data>
   <data name="failed" xml:space="preserve"><value>başarısız</value></data>
   <data name="passed with warnings" xml:space="preserve"><value>uyarılarla başarılı</value></data>
+  <data name="Give Claude one line" xml:space="preserve"><value>Claude'a tek satır verin</value></data>
+  <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Claude'un ihtiyacı olan tek şey bu: kılavuzu okur, gelecekteki oturumlar için kendini ayarlar ve kurallara uyar.</value></data>
+  <data name="Optional: install the skill manually" xml:space="preserve"><value>İsteğe bağlı: beceriyi elle yükleyin</value></data>
 </root>

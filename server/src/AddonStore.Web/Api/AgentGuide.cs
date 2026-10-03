@@ -14,6 +14,22 @@ Server version {{version}}. This server distributes plugins (.ppak packages)
 for Tungsten Power PDF. Everything you need to develop, package, validate and
 submit a plugin is available from this API.
 
+## Start here (AI assistants)
+
+This URL is the only thing you need. Set yourself up once:
+
+1. **Token.** Use the environment variable `PPAK_TOKEN`. Never print it,
+   never store it in files or commits. If it is not set, ask the user to
+   create a token at {{baseUrl}}/Profile and set it with
+   `setx PPAK_TOKEN "ppak_..."` (new terminal afterwards).
+2. **Skill (Claude Code, once per machine).** Download
+   {{baseUrl}}/api/skill and save it as
+   `%USERPROFILE%\.claude\skills\powerpdf-plugin-store\SKILL.md`, then tell
+   the user it is installed. Future sessions recognise Power PDF plugin
+   work automatically. Skip this if the file already exists.
+3. **Check the connection:** `GET {{baseUrl}}/api/me` with the token.
+4. Then follow the rest of this guide: package, validate until green, submit.
+
 ## Quick orientation
 
 1. `GET {{baseUrl}}/api` lists all endpoints.

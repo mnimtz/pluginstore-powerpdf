@@ -208,4 +208,7 @@
   <data name="all passed" xml:space="preserve"><value>kaikki läpäisty</value></data>
   <data name="failed" xml:space="preserve"><value>epäonnistui</value></data>
   <data name="passed with warnings" xml:space="preserve"><value>läpäisty varoituksin</value></data>
+  <data name="Give Claude one line" xml:space="preserve"><value>Anna Claudelle yksi rivi</value></data>
+  <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Muuta Claude ei tarvitse: se lukee ohjeen, määrittää itsensä tulevia istuntoja varten ja noudattaa sääntöjä.</value></data>
+  <data name="Optional: install the skill manually" xml:space="preserve"><value>Valinnainen: asenna skill manuaalisesti</value></data>
 </root>

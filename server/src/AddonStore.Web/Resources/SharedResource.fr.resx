@@ -208,4 +208,7 @@
   <data name="all passed" xml:space="preserve"><value>tous réussis</value></data>
   <data name="failed" xml:space="preserve"><value>échec</value></data>
   <data name="passed with warnings" xml:space="preserve"><value>réussis avec avertissements</value></data>
+  <data name="Give Claude one line" xml:space="preserve"><value>Donner une seule ligne à Claude</value></data>
+  <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>C'est tout ce dont Claude a besoin : il lit le guide, se configure pour les sessions futures et respecte les règles.</value></data>
+  <data name="Optional: install the skill manually" xml:space="preserve"><value>Facultatif : installer le skill manuellement</value></data>
 </root>
