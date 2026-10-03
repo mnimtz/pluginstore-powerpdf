@@ -347,4 +347,6 @@
   <data name="stored" xml:space="preserve"><value>vorhanden</value></data>
   <data name="Upload source (ZIP)" xml:space="preserve"><value>Quellcode hochladen (ZIP)</value></data>
   <data name="Replace source" xml:space="preserve"><value>Quellcode ersetzen</value></data>
+  <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>Veröffentlichte Add-ons für Tungsten Power PDF. Installiert werden sie an einem Windows-PC, direkt in Power PDF.</value></data>
+  <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>Add-ons unabhängiger Entwicklerinnen und Entwickler, ohne Gewährleistung und ohne offiziellen Support.</value></data>
 </root>

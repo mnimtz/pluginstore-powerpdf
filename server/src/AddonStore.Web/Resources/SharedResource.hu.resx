@@ -347,4 +347,6 @@
   <data name="stored" xml:space="preserve"><value>tárolva</value></data>
   <data name="Upload source (ZIP)" xml:space="preserve"><value>Forráskód feltöltése (ZIP)</value></data>
   <data name="Replace source" xml:space="preserve"><value>Forráskód cseréje</value></data>
+  <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>Közzétett bővítmények a Tungsten Power PDF-hez. Windowsos számítógépen, közvetlenül a Power PDF-ben telepíthetők.</value></data>
+  <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>Független szerzők bővítményei, garancia és hivatalos támogatás nélkül.</value></data>
 </root>

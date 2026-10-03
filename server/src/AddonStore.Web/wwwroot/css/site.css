@@ -274,3 +274,19 @@ pre.code {
   content: ""; position: absolute; left: 28px; bottom: 100%; border: 8px solid transparent; border-bottom-color: #fff;
 }
 .tip:hover .tip-bubble, .tip:focus-within .tip-bubble, .tip.open .tip-bubble { opacity: 1; visibility: visible; transform: none; }
+
+/* phones and non-Windows devices: no client download, no install buttons */
+.mobile-only, .mobile-only-inline { display: none; }
+@media (max-width: 760px) {
+  .desktop-only, .win-only { display: none !important; }
+  .desktop-only-inline { display: none; }
+  .mobile-only { display: block; }
+  .mobile-only-inline { display: inline; }
+  .hero { padding: 20px 18px; margin-bottom: 16px; }
+  .hero h1 { font-size: 1.3rem; }
+}
+html.no-win .win-only { display: none !important; }
+html.mobile .desktop-only { display: none !important; }
+html.mobile .desktop-only-inline { display: none; }
+html.mobile .mobile-only { display: block; }
+html.mobile .mobile-only-inline { display: inline; }

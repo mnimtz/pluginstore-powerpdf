@@ -347,4 +347,6 @@
   <data name="stored" xml:space="preserve"><value>findes</value></data>
   <data name="Upload source (ZIP)" xml:space="preserve"><value>Upload kildekode (ZIP)</value></data>
   <data name="Replace source" xml:space="preserve"><value>Erstat kildekode</value></data>
+  <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>Udgivne tilføjelser til Tungsten Power PDF. De installeres på en Windows-pc direkte i Power PDF.</value></data>
+  <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>Tilføjelser fra uafhængige udviklere, uden garanti og uden officiel support.</value></data>
 </root>

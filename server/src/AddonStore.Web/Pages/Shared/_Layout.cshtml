@@ -8,6 +8,14 @@
     <title>@(ViewData["Title"] is string t && t.Length > 0 ? t + " · " : "")Add-on Store</title>
     <link rel="icon" href="/img/store-icon.png" />
     <link rel="stylesheet" href="/css/site.css" />
+    <script>
+        // no-win: addonstore:// install links only work on Windows. mobile: phones and
+        // tablets get no client download either (a Mac may still fetch it for a VM).
+        (function (ua, c) {
+            if (!/Windows/i.test(ua)) c.add('no-win');
+            if (/Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) c.add('mobile');
+        })(navigator.userAgent, document.documentElement.classList);
+    </script>
 </head>
 <body>
 <header class="site">

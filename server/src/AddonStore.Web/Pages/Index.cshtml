@@ -6,10 +6,11 @@
 
 <div class="hero">
     <h1>@L["Add-on Store for Tungsten Power PDF"]</h1>
-    <p>@L["Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins."]</p>
+    <p class="desktop-only">@L["Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins."]</p>
+    <p class="mobile-only">@L["Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF."]</p>
     @if (Model.ClientDownloadUrl is not null)
     {
-        <div style="margin-top:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+        <div class="desktop-only" style="margin-top:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
             <span class="tip" id="dl-tip">
                 <a class="btn cta" id="dl-btn" href="@Model.ClientDownloadUrl" aria-describedby="dl-tip-text">@L["Download"]: Add-on Store @L["for Power PDF"] v@(Model.ClientVersion)</a>
                 <button type="button" class="tip-icon" aria-label="@L["Windows warning?"]" aria-describedby="dl-tip-text">i</button>
@@ -38,7 +39,8 @@
 </div>
 
 <div class="alert warn" style="font-size:.88rem">
-    @L["Plugins from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability."]
+    <span class="desktop-only-inline">@L["Plugins from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability."]</span>
+    <span class="mobile-only-inline">@L["Add-ons from independent authors, without warranty or official support."]</span>
     <a href="/Disclaimer">@L["Disclaimer"]</a>
 </div>
 
@@ -96,9 +98,6 @@ else
             var chips = document.querySelectorAll('#pkg-chips .chip');
             var cards = document.querySelectorAll('#pkg-grid .pkg');
             var cat = '';
-            // addonstore:// links only work on Windows with the Add-on Store installed.
-            if (!/Windows/i.test(navigator.userAgent))
-                document.querySelectorAll('.win-only').forEach(function (e) { e.style.display = 'none'; });
             // Without a registered addonstore:// handler the browser does nothing.
             // When Power PDF or the "Open Add-on Store?" prompt appears, the page
             // loses focus; if it keeps focus, show how to get the client.
