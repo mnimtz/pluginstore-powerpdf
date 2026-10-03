@@ -78,6 +78,7 @@ p.lead { color: var(--tun-slate); margin-top: 0; }
   border-radius: 50%; font-size: .75rem; font-weight: 700; color: #fff; margin-right: 6px; flex: none;
 }
 .report-icon.ok { background: #016839; }
+.report-icon.info { background: var(--tun-blue); }
 .report-icon.warning { background: #634E12; }
 .report-icon.error { background: #B3261E; }
 .report-note { color: var(--tun-slate); font-size: .78rem; padding: 0 14px 10px; margin: 0; }

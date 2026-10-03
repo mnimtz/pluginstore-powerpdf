@@ -280,9 +280,6 @@ public class PackageValidator
             }
         }
 
-        report.Warn("MALWARE_SCAN_SKIPPED", "Server-side malware scanning is not configured on this instance yet.",
-            "No action needed by the submitter; admins review packages manually until scanning is enabled.");
-
         if (manifest is not null && manifest.Id.Length > 0)
             await CheckAgainstCatalogAsync(report, manifest, callerUserId);
 

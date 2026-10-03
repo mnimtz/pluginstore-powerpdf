@@ -105,7 +105,7 @@ Kunden/Endanwender (eigene Entscheidung mit Legal/Compliance, Phase 3).
   Versions-Historie mit Changelogs.
 - **Sicherheit**: HTTPS only, SHA-256-Hash je Paket im Katalog, Katalog signiert
   (Client prüft Signatur, damit ein kompromittierter Blob-Store nicht reicht),
-  Upload-Größenlimit, Malware-Scan beim Upload (Defender/ClamAV), keine Secrets im
+  Upload-Größenlimit, kein serverseitiger Malware-Scan (Entscheidung Okt 3, 2026, s. R3), keine Secrets im
   Client, Least Privilege auf Blob (Client bekommt nur zeitlich begrenzte SAS-Links).
 
 ### 3.2 Paketformat ("PPAK", Arbeitsname)
@@ -160,7 +160,7 @@ landet als Report in der Admin-Review-Queue. Geplante Prüfungen:
 | 3 | Version > letzte eingereichte Version derselben ID; ID gehört dem Einreicher | hart |
 | 4 | x64- UND arm64-.zxt vorhanden; PE-Header: Machine-Type stimmt (0x8664/0xAA64), ist DLL, exportiert den Plug-in-Einstiegspunkt | hart |
 | 5 | SHA-256 im Manifest == tatsächliche Dateien | hart |
-| 6 | Malware-Scan (ClamAV im Container, später ggf. Defender-API) | hart |
+| 6 | ~~Malware-Scan~~ entfällt (Entscheidung Okt 3, 2026; s. R3) | – |
 | 7 | LICENSES.md vorhanden; Textscan auf GPL/AGPL-Marker in Manifest/Begleitdateien | weich (Flag für Admin) |
 | 8 | Import-Tabelle der .zxt: fremde DLL-Abhängigkeiten außerhalb Power-PDF-bin + Windows-Systemliste | weich (Flag) |
 | 9 | Ribbon-Atom-Namespace kollidiert nicht mit anderem Katalog-Paket | hart |
@@ -492,7 +492,7 @@ v0.1.0 ist gebaut und lokal verifiziert:
 |---|---|---|
 | R1 | .zxt-Ablage erfordert Adminrechte | GEKLÄRT (S1): ja, Admin nötig. Akzeptiert; Lösung: elevierter Helfer + Info-Hinweis im Client, Silent-Pfad für Enterprise-Deployment (3.5). |
 | R2 | Plug-in-Konflikte (Atom-Cache, doppelte MSI+Store-Installation) | Manifest kennt Atom-Namespace; Client erkennt MSI-installierte Duplikate und warnt. |
-| R3 | Native Code im Store = Malware-Oberfläche | Intern beherrschbar (Review + Scan + nur Entra-Nutzer). Für Kundenphase Pflicht: Signierung. |
+| R3 | Native Code im Store = Malware-Oberfläche | ENTSCHIEDEN (Okt 3, 2026): KEIN serverseitiger Scan. Schutz: Freigabe durch Admin/Prüfer, Audit-Log, SHA-256-Prüfung im Client, Windows Defender beim Herunterladen (Prüfer) und bei der Installation (Anwender). VirusTotal ausgeschlossen (Dateien würden an Dritte gehen). Für die Kundenphase: Microsoft Defender for Storage nachrüsten (Pakete dafür in Blob Storage), mit Security abstimmen; Code-Signing Pflicht. |
 | R4 | Azure-Subscription und Eigentümerschaft | Wessen Subscription, wer betreibt, wer ist Admin? Früh mit IT klären. |
 | R5 | Power PDF lädt Plug-ins nur beim Start | UX: sauberer "Jetzt neu starten"-Flow im Client. |
 | R6 | Mehrsprachigkeit | ENTSCHIEDEN (Dauerregel): immer ALLE europäischen Power-PDF-Sprachen (en de fr it es nl pt da fi no sv pl cs hu ru tr). Store-Client folgt der Power-PDF-Sprache; Server-UI erkennt die Sprache automatisch (Accept-Language, schon beim Login) und ist manuell umschaltbar. Jede Textänderung zieht alle Sprachen mit; Release erst bei Vollständigkeit. |

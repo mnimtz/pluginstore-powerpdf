@@ -27,7 +27,7 @@
         @foreach (var a in areas)
         {
             <div class="report-area">
-                <span class="report-icon @a.Status">@(a.Status == "ok" ? "✓" : a.Status == "warning" ? "!" : "✕")</span>
+                <span class="report-icon @a.Status">@(a.Status == "ok" ? "✓" : a.Status == "info" ? "i" : a.Status == "warning" ? "!" : "✕")</span>
                 <span class="report-label">@L[a.Label]</span>
                 @if (a.Findings.Count > 0)
                 {

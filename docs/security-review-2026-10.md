@@ -9,7 +9,7 @@ email injection, redirects, DoS). Findings and their status:
 | H2 | High | Open redirect via /set-lang returnUrl (`//host`); 500 on invalid culture | **Fixed**: culture validated against the supported list, returnUrl must be a single-slash relative path |
 | M1 | Medium | Devkit path prefix check without separator (sibling-dir leak) | **Fixed**: separator-aware IsUnder() |
 | M2 | Medium | HTML injection into admin mail via display name / token name | **Fixed**: HtmlEncode on both |
-| M3 | Medium | Beta channel = anonymous distribution of unreviewed native code | **Accepted for the internal phase** (documented); the customer phase gates beta behind an access code (see project plan 3.2a) |
+| M3 | Medium | Beta channel = anonymous distribution of unreviewed native code | **Accepted for the internal phase** (documented); the customer phase gates beta behind an access code (see project plan 3.2a). Decision Oct 3, 2026: no server-side malware scan; protection comes from reviewer approval, the audit log, SHA-256 verification in the client and Windows Defender on download/install. Microsoft Defender for Storage is the planned addition before any customer-facing launch. |
 | M4 | Medium | Cookie-authenticated state-changing API endpoints without antiforgery | **Fixed**: POST /api/packages and DELETE are bearer-token only; the web UI uses its own antiforgery-protected page handlers |
 | L1 | Low | Login user enumeration via distinct status messages | **Fixed**: password verified first |
 | L2 | Low | Invite tokens without expiry | **Fixed**: 7-day validity |

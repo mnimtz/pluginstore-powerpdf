@@ -28,7 +28,6 @@ public static class ReportView
         ("Languages", new[] { "LANG_TEXT_INCOMPLETE", "LANGS_INCOMPLETE", "LANG_ATOMS_INCONSISTENT" }),
         ("Licenses", new[] { "LICENSES_MISSING", "LICENSE_GPL_MARKER" }),
         ("Icon", new[] { "ICON_MISSING", "ICON_INVALID", "ICON_NOT_SQUARE", "ICON_TOO_LARGE" }),
-        ("Security scan", new[] { "MALWARE_SCAN_SKIPPED" }),
     };
 
     /// <summary>
@@ -70,10 +69,12 @@ public static class ReportView
         return result;
     }
 
-    /// <summary>"error" &gt; "warning" &gt; "ok" (info findings count as ok).</summary>
+    /// <summary>"error" &gt; "warning" &gt; "info" &gt; "ok". Info marks an area that is
+    /// fine for the submitter but carries a notice (e.g. scan not configured).</summary>
     private static string StatusOf(List<Finding> f) =>
         f.Any(x => x.Severity == "error") ? "error" :
-        f.Any(x => x.Severity == "warning") ? "warning" : "ok";
+        f.Any(x => x.Severity == "warning") ? "warning" :
+        f.Any(x => x.Severity == "info") ? "info" : "ok";
 
     public static (int Errors, int Warnings) Counts(ValidationReport r) =>
         (r.Findings.Count(f => f.Severity == "error"), r.Findings.Count(f => f.Severity == "warning"));
