@@ -248,3 +248,6 @@ pre.code {
 .smartscreen-hint { margin: 12px 0 0; color: var(--tun-blue-light); font-size: .82rem; max-width: 720px; }
 .smartscreen-hint b { color: #fff; }
 .pkg-actions { margin-top: 6px; }
+.client-hint { display: block; margin-top: 8px; padding: 8px 10px; border-radius: 6px; background: #FFDF85; color: #634E12; font-size: .82rem; }
+.client-hint[hidden] { display: none; }
+.client-hint a { color: var(--tun-navy); font-weight: 700; }
