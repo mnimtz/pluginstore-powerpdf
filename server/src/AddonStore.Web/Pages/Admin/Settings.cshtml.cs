@@ -28,11 +28,22 @@ public class SettingsModel : PageModel
         _settings = settings; _users = users; _audit = audit; _notify = notify;
     }
 
-    public async Task OnPostTestMailAsync()
+    public string? TestTo { get; private set; }
+
+    public async Task OnPostTestMailAsync(string? testTo)
     {
         var admin = await _users.GetUserAsync(User);
-        var result = await _notify.SendDirectAsync(admin!.Email ?? "", "[Add-on Store] Test email",
-            "<p>This is a test email from the Add-on Store settings page. Email notifications work.</p>", "Test");
+        TestTo = (testTo ?? "").Trim();
+        if (TestTo.Length == 0) TestTo = admin!.Email ?? "";
+        if (!System.Net.Mail.MailAddress.TryCreate(TestTo, out _))
+        {
+            Notice = "Please enter a valid email address.";
+            NoticeKind = "error";
+            await LoadAsync();
+            return;
+        }
+        var result = await _notify.SendDirectAsync(TestTo, "[Add-on Store] Test email",
+            $"<p>This is a test email from the Add-on Store settings page, sent by {System.Net.WebUtility.HtmlEncode(admin!.DisplayName)}. Email notifications work.</p>", "Test");
         if (result.Sent)
             Notice = "Test email sent. Please check your inbox.";
         else

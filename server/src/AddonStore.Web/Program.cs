@@ -75,7 +75,14 @@ builder.Services.Configure<RequestLocalizationOptions>(o =>
     o.DefaultRequestCulture = new RequestCulture("en");
     o.SupportedCultures = cultures.Select(c => new CultureInfo(c)).ToList();
     o.SupportedUICultures = o.SupportedCultures;
-    // cookie (manual switch) wins over Accept-Language (automatic detection)
+    // cookie (manual switch) wins over Accept-Language (automatic detection).
+    // Norwegian browsers often send "no" or "nn"; both map to our Bokmål texts.
+    o.RequestCultureProviders.Insert(2, new CustomRequestCultureProvider(ctx =>
+    {
+        var first = ctx.Request.Headers.AcceptLanguage.ToString().Split(',')[0].Split(';')[0].Trim().ToLowerInvariant();
+        return Task.FromResult(first is "no" or "nn" or "no-no" or "nn-no"
+            ? new ProviderCultureResult("nb") : (ProviderCultureResult?)null);
+    }));
 });
 
 builder.Services.AddRazorPages(o =>
@@ -89,6 +96,7 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Admin/Backup", "PageAdmin");
         o.Conventions.AuthorizePage("/Dashboard", "PageUser");
         o.Conventions.AuthorizePage("/CatalogEntry", "PageUser");
+        o.Conventions.AuthorizePage("/Plugin", "PageUser");
         o.Conventions.AuthorizePage("/Profile", "PageUser");
         o.Conventions.AuthorizePage("/Developer", "PageUser");
     })
@@ -105,6 +113,7 @@ builder.Services.AddScoped<SettingsService>();
 builder.Services.AddScoped<TimeDisplay>();
 builder.Services.AddScoped<BackupService>();
 builder.Services.AddScoped<PackageMetaService>();
+builder.Services.AddScoped<VersionActionService>();
 builder.Services.AddScoped<IAppEmailSender, ResendEmailSender>();
 
 var versionFile = Path.Combine(AppContext.BaseDirectory, "VERSION");
@@ -135,6 +144,7 @@ using (var scope = app.Services.CreateScope())
             "Email TEXT NOT NULL, TokenHash TEXT NOT NULL, Role TEXT NOT NULL, InvitedBy TEXT NOT NULL, " +
             "CreatedAt TEXT NOT NULL, AcceptedAt TEXT NULL)",
         "CREATE UNIQUE INDEX IF NOT EXISTS IX_Invites_TokenHash ON Invites (TokenHash)",
+        "ALTER TABLE AspNetUsers ADD COLUMN NotifyAboutPlugins INTEGER NOT NULL DEFAULT 1",
         "ALTER TABLE Packages ADD COLUMN NameJson TEXT NULL",
         "ALTER TABLE Packages ADD COLUMN DescriptionJson TEXT NULL",
         "ALTER TABLE Packages ADD COLUMN Author TEXT NULL",

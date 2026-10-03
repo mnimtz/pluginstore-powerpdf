@@ -31,9 +31,10 @@
         </div>
         <button type="submit" class="btn cta">@L["Save"]</button>
     </form>
-    <form method="post" asp-page-handler="TestMail" style="margin-top:12px">
+    <form method="post" asp-page-handler="TestMail" style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <label for="testTo" style="margin:0">@L["Recipient"]</label>
+        <input type="email" id="testTo" name="testTo" value="@(Model.TestTo ?? Model.MyEmail)" required maxlength="200" style="flex:1;min-width:220px;max-width:340px" />
         <button type="submit" class="btn small secondary">@L["Send test email"]</button>
-        <span style="font-size:.85rem;color:var(--tun-slate)">@L["to"] @Model.MyEmail</span>
     </form>
     <p style="font-size:.82rem;color:var(--tun-slate)">@L["Without a verified sender domain, Resend only delivers to the email address of the Resend account owner."]</p>
 </div>

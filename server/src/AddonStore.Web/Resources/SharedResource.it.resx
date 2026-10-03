@@ -278,4 +278,40 @@
   <data name="Catalog entry saved. The catalog and the Power PDF client show it immediately." xml:space="preserve"><value>Voce di catalogo salvata. Il catalogo e il client Power PDF la mostrano immediatamente.</value></data>
   <data name="Catalog entry reset to the values from the package." xml:space="preserve"><value>Voce di catalogo ripristinata ai valori del pacchetto.</value></data>
   <data name="Change name, description, author and contact without a new version" xml:space="preserve"><value>Modifica nome, descrizione, autore e contatto senza una nuova versione</value></data>
+  <data name="Actions" xml:space="preserve"><value>Azioni</value></data>
+  <data name="All plug-ins" xml:space="preserve"><value>Tutti i plugin</value></data>
+  <data name="Awaiting approval" xml:space="preserve"><value>In attesa di approvazione</value></data>
+  <data name="Catalog entry changed by an admin" xml:space="preserve"><value>Voce di catalogo modificata da un amministratore</value></data>
+  <data name="Category" xml:space="preserve"><value>Categoria</value></data>
+  <data name="Contact" xml:space="preserve"><value>Contatto</value></data>
+  <data name="Email me about my plug-ins" xml:space="preserve"><value>Inviami e-mail sui miei plugin</value></data>
+  <data name="Every plug-in in the store. Open Details to approve, withdraw or restore versions and to edit the catalog entry." xml:space="preserve"><value>Tutti i plugin dello store. Apra Dettagli per approvare, ritirare o ripristinare versioni e per modificare la voce di catalogo.</value></data>
+  <data name="In the store" xml:space="preserve"><value>Nello store</value></data>
+  <data name="Last activity" xml:space="preserve"><value>Ultima attività</value></data>
+  <data name="Live plug-ins, older versions, withdrawing and restoring: see the plug-in overview." xml:space="preserve"><value>Plugin pubblicati, versioni precedenti, ritiro e ripristino: vedere la panoramica del plugin.</value></data>
+  <data name="Menu" xml:space="preserve"><value>Menu</value></data>
+  <data name="My plug-ins" xml:space="preserve"><value>I miei plugin</value></data>
+  <data name="Not in the store" xml:space="preserve"><value>Non nello store</value></data>
+  <data name="Older version, no longer offered" xml:space="preserve"><value>Versione precedente, non più offerta</value></data>
+  <data name="Open plug-in overview" xml:space="preserve"><value>Apri panoramica del plugin</value></data>
+  <data name="Plug-in" xml:space="preserve"><value>Plugin</value></data>
+  <data name="Plug-ins" xml:space="preserve"><value>Plugin</value></data>
+  <data name="Restore (beta)" xml:space="preserve"><value>Ripristina (beta)</value></data>
+  <data name="Restore (live)" xml:space="preserve"><value>Ripristina (live)</value></data>
+  <data name="Search name, id or owner" xml:space="preserve"><value>Cerca per nome, ID o proprietario</value></data>
+  <data name="Take out of the store" xml:space="preserve"><value>Togli dallo store</value></data>
+  <data name="Take this plug-in out of the store? All live and beta versions are withdrawn; installed copies keep working." xml:space="preserve"><value>Togliere questo plugin dallo store? Tutte le versioni live e beta vengono ritirate; le copie installate continuano a funzionare.</value></data>
+  <data name="The plug-in was taken out of the store. Installed copies keep working; restore single versions to publish it again." xml:space="preserve"><value>Il plugin è stato tolto dallo store. Le copie installate continuano a funzionare; ripristini singole versioni per pubblicarlo di nuovo.</value></data>
+  <data name="This action is not allowed for this version." xml:space="preserve"><value>Questa azione non è consentita per questa versione.</value></data>
+  <data name="Upload confirmation with check result" xml:space="preserve"><value>Conferma di caricamento con esito dei controlli</value></data>
+  <data name="Upload confirmation, approval or rejection, withdrawn or restored versions and catalog changes made by an admin." xml:space="preserve"><value>Conferma di caricamento, approvazione o rifiuto, versioni ritirate o ripristinate e modifiche al catalogo effettuate da un amministratore.</value></data>
+  <data name="Version restored and live again." xml:space="preserve"><value>Versione ripristinata e di nuovo live.</value></data>
+  <data name="Version restored to the beta channel; it needs approval again." xml:space="preserve"><value>Versione ripristinata nel canale beta; deve essere approvata di nuovo.</value></data>
+  <data name="Version withdrawn or restored, plug-in taken out of the store" xml:space="preserve"><value>Versione ritirata o ripristinata, plugin tolto dallo store</value></data>
+  <data name="Versions" xml:space="preserve"><value>Versioni</value></data>
+  <data name="Withdraw this version?" xml:space="preserve"><value>Ritirare questa versione?</value></data>
+  <data name="Your plug-ins. Open Details for versions, check reports and the catalog entry." xml:space="preserve"><value>I Suoi plugin. Apra Dettagli per versioni, report dei controlli e voce di catalogo.</value></data>
+  <data name="No plug-ins match this filter." xml:space="preserve"><value>Nessun plugin corrisponde a questo filtro.</value></data>
+  <data name="Recipient" xml:space="preserve"><value>Destinatario</value></data>
+  <data name="Please enter a valid email address." xml:space="preserve"><value>Inserisca un indirizzo e-mail valido.</value></data>
 </root>

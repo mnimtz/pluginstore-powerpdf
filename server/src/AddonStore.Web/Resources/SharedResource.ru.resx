@@ -278,4 +278,40 @@
   <data name="Catalog entry saved. The catalog and the Power PDF client show it immediately." xml:space="preserve"><value>Запись каталога сохранена. Каталог и клиент Power PDF сразу отображают ее.</value></data>
   <data name="Catalog entry reset to the values from the package." xml:space="preserve"><value>Запись каталога сброшена до значений из пакета.</value></data>
   <data name="Change name, description, author and contact without a new version" xml:space="preserve"><value>Изменить название, описание, автора и контакт без новой версии</value></data>
+  <data name="Actions" xml:space="preserve"><value>Действия</value></data>
+  <data name="All plug-ins" xml:space="preserve"><value>Все плагины</value></data>
+  <data name="Awaiting approval" xml:space="preserve"><value>Ожидает одобрения</value></data>
+  <data name="Catalog entry changed by an admin" xml:space="preserve"><value>Запись каталога изменена администратором</value></data>
+  <data name="Category" xml:space="preserve"><value>Категория</value></data>
+  <data name="Contact" xml:space="preserve"><value>Контакт</value></data>
+  <data name="Email me about my plug-ins" xml:space="preserve"><value>Присылать мне письма о моих плагинах</value></data>
+  <data name="Every plug-in in the store. Open Details to approve, withdraw or restore versions and to edit the catalog entry." xml:space="preserve"><value>Все плагины в магазине. Откройте «Сведения», чтобы одобрять, отзывать или восстанавливать версии и изменять запись каталога.</value></data>
+  <data name="In the store" xml:space="preserve"><value>В магазине</value></data>
+  <data name="Last activity" xml:space="preserve"><value>Последняя активность</value></data>
+  <data name="Live plug-ins, older versions, withdrawing and restoring: see the plug-in overview." xml:space="preserve"><value>Опубликованные плагины, старые версии, отзыв и восстановление: см. обзор плагина.</value></data>
+  <data name="Menu" xml:space="preserve"><value>Меню</value></data>
+  <data name="My plug-ins" xml:space="preserve"><value>Мои плагины</value></data>
+  <data name="Not in the store" xml:space="preserve"><value>Нет в магазине</value></data>
+  <data name="Older version, no longer offered" xml:space="preserve"><value>Старая версия, больше не предлагается</value></data>
+  <data name="Open plug-in overview" xml:space="preserve"><value>Открыть обзор плагина</value></data>
+  <data name="Plug-in" xml:space="preserve"><value>Плагин</value></data>
+  <data name="Plug-ins" xml:space="preserve"><value>Плагины</value></data>
+  <data name="Restore (beta)" xml:space="preserve"><value>Восстановить (beta)</value></data>
+  <data name="Restore (live)" xml:space="preserve"><value>Восстановить (live)</value></data>
+  <data name="Search name, id or owner" xml:space="preserve"><value>Поиск по названию, ID или владельцу</value></data>
+  <data name="Take out of the store" xml:space="preserve"><value>Убрать из магазина</value></data>
+  <data name="Take this plug-in out of the store? All live and beta versions are withdrawn; installed copies keep working." xml:space="preserve"><value>Убрать этот плагин из магазина? Все live- и beta-версии будут отозваны; установленные копии продолжат работать.</value></data>
+  <data name="The plug-in was taken out of the store. Installed copies keep working; restore single versions to publish it again." xml:space="preserve"><value>Плагин убран из магазина. Установленные копии продолжают работать; восстановите отдельные версии, чтобы снова опубликовать его.</value></data>
+  <data name="This action is not allowed for this version." xml:space="preserve"><value>Это действие недопустимо для этой версии.</value></data>
+  <data name="Upload confirmation with check result" xml:space="preserve"><value>Подтверждение загрузки с результатом проверки</value></data>
+  <data name="Upload confirmation, approval or rejection, withdrawn or restored versions and catalog changes made by an admin." xml:space="preserve"><value>Подтверждение загрузки, одобрение или отклонение, отозванные или восстановленные версии и изменения каталога, внесенные администратором.</value></data>
+  <data name="Version restored and live again." xml:space="preserve"><value>Версия восстановлена и снова опубликована.</value></data>
+  <data name="Version restored to the beta channel; it needs approval again." xml:space="preserve"><value>Версия восстановлена в beta-канале; требуется повторное одобрение.</value></data>
+  <data name="Version withdrawn or restored, plug-in taken out of the store" xml:space="preserve"><value>Версия отозвана или восстановлена, плагин убран из магазина</value></data>
+  <data name="Versions" xml:space="preserve"><value>Версии</value></data>
+  <data name="Withdraw this version?" xml:space="preserve"><value>Отозвать эту версию?</value></data>
+  <data name="Your plug-ins. Open Details for versions, check reports and the catalog entry." xml:space="preserve"><value>Ваши плагины. Откройте «Сведения», чтобы просмотреть версии, отчеты о проверках и запись каталога.</value></data>
+  <data name="No plug-ins match this filter." xml:space="preserve"><value>Нет плагинов, соответствующих этому фильтру.</value></data>
+  <data name="Recipient" xml:space="preserve"><value>Получатель</value></data>
+  <data name="Please enter a valid email address." xml:space="preserve"><value>Введите действительный адрес электронной почты.</value></data>
 </root>

@@ -56,10 +56,12 @@ directly inside Power PDF.
 | 🤖 **Agent-friendly API** | `GET /api/agent-guide` teaches any AI assistant the full workflow with zero prior knowledge. Personal tokens let Claude validate, fix and submit packages in a loop until the report is green. |
 | 📜 **Audit trail** | Registrations, approvals, tokens, submissions (version + changelog are mandatory), reviews and downloads are recorded and searchable. |
 | 💾 **Backup and restore** | One click downloads a full backup (database, packages, avatars, developer kit); restore checks the archive, refuses to lock out the acting admin and keeps an automatic safety backup of the previous state. |
-| ✉️ **Notifications** | Email via Resend with a test button; admins choose which events send mail (access requests, submissions, review results, client releases). Every sent or failed mail is in the audit log. |
+| ✉️ **Notifications** | Email via Resend with a test button (free recipient); admins choose which events send mail: access requests, submissions, client releases, and for authors upload receipts, approval or rejection, withdrawn or restored versions and catalog changes by an admin. Authors can opt out in their profile. Every sent or failed mail is in the audit log. |
+| 🗂️ **Plug-in management** | One compact overview (admins: all plug-ins, authors: their own) with search and filters (awaiting approval, live, not in the store); a details page per plug-in to approve, reject, withdraw or restore versions, take a plug-in out of the store and edit its catalog entry. |
+| 📱 **Phone-ready** | Menu button and card layout on small screens; the whole portal works on a smartphone. |
 | 🛡️ **Licenses, legal and privacy** | Every upload carries a mandatory, truthful compliance statement (`thirdParty` components with SPDX licenses, `complianceAudit` with the external services a plugin contacts). The server verifies independently: copyleft and known-library signatures in binaries, credentials and key files, hosts compiled into the code, third-party brand names. Only MIT/BSD/Apache-2.0 code passes without review; GPL/AGPL/LGPL fails. |
 | ⚖️ **Disclaimer** | Landing page, a dedicated disclaimer page and the Power PDF client state that plugins come from independent authors, without warranty or official support, and that Tungsten Automation accepts no liability. |
-| 🌍 **16 European languages** | Auto-detected from the browser, manually switchable, with localized catalog texts straight from the package manifests. |
+| 🌍 **16 European languages** | Auto-detected from the browser (including `no`/`nn` for Norwegian), manually switchable, with localized catalog texts straight from the package manifests. |
 
 ## Deploy in one click
 

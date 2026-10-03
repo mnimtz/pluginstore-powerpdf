@@ -14,11 +14,15 @@
     <div class="bar">
         <img class="logo" src="/img/tungsten-logo-white.svg" alt="Tungsten Automation" />
         <div class="title">Add-on Store<small>Tungsten Power PDF</small></div>
-        <nav>
+        <button type="button" class="nav-toggle" aria-label="@L["Menu"]" aria-expanded="false" aria-controls="site-nav"
+                onclick="var h=this.closest('header');var o=h.classList.toggle('open');this.setAttribute('aria-expanded',o)">
+            <span></span><span></span><span></span>
+        </button>
+        <nav id="site-nav">
             <a href="/">@L["Catalog"]</a>
             @if (SignInManager.IsSignedIn(User))
             {
-                <a href="/Dashboard">@L["My plugins"]</a>
+                <a href="/Dashboard">@L["Plug-ins"]</a>
                 <a href="/Profile">@L["Profile"]</a>
                 <a href="/Developer">API</a>
                 @if (User.IsInRole("Admin") || User.IsInRole("Reviewer"))
@@ -70,5 +74,27 @@
     <a href="/Disclaimer" style="color:var(--tun-slate)">@L["Disclaimer"]</a>
     <a href="/api/agent-guide" style="color:var(--tun-slate)">API</a>
 </footer>
+<script>
+// Phones: tables whose first row holds only headers become one card per row
+// (CSS in site.css, .rtable); each cell is labelled with its column name.
+document.querySelectorAll('main table').forEach(function (t) {
+    var head = t.rows[0];
+    if (!head || t.classList.contains('no-rtable')) return;
+    var ths = Array.prototype.slice.call(head.cells);
+    if (!ths.length || ths.some(function (c) { return c.tagName !== 'TH'; })) return;
+    t.classList.add('rtable');
+    head.classList.add('rhead');
+    var labels = ths.map(function (c) { return c.textContent.trim(); });
+    Array.prototype.slice.call(t.rows, 1).forEach(function (r) {
+        if (r.cells.length !== labels.length) { r.classList.add('rsub'); return; }
+        Array.prototype.forEach.call(r.cells, function (c, i) {
+            if (labels[i]) c.setAttribute('data-label', labels[i]);
+            if (i === 0) c.classList.add('rtitle');
+            else if (c.textContent.trim().length > 32 || c.querySelector('textarea, input, select, details, table, ul')) c.classList.add('rblock');
+            if (!labels[i] || (i === labels.length - 1 && c.querySelector('form, a.btn, button'))) c.classList.add('actions');
+        });
+    });
+});
+</script>
 </body>
 </html>

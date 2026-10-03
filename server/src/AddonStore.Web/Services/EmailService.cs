@@ -80,7 +80,10 @@ public class NotificationService
     {
         ("AccessRequest",   "New access request",              "Admins"),
         ("Submission",      "New plugin version submitted",    "Admins and reviewers"),
+        ("SubmissionReceipt", "Upload confirmation with check result", "Submitter"),
         ("ReviewResult",    "Plugin version approved or rejected", "Submitter"),
+        ("StatusChange",    "Version withdrawn or restored, plug-in taken out of the store", "Owner"),
+        ("CatalogChange",   "Catalog entry changed by an admin", "Owner"),
         ("AccountDecision", "Access request approved or declined", "Applicant"),
         ("ClientRelease",   "New Add-on Store client released", "Admins"),
     };
@@ -112,10 +115,21 @@ public class NotificationService
             await _mail.SendAsync(u.Email!, subject, html, eventKey);
     }
 
+    /// <summary>Events about a user's own plug-ins; the user can opt out of them in the profile.</summary>
+    public static readonly HashSet<string> PluginEvents = new() { "SubmissionReceipt", "ReviewResult", "StatusChange", "CatalogChange" };
+
     public async Task NotifyUserAsync(string eventKey, AppUser user, string subject, string text)
     {
         if (!await IsEnabledAsync(eventKey) || string.IsNullOrEmpty(user.Email)) return;
+        if (PluginEvents.Contains(eventKey) && !user.NotifyAboutPlugins) return;
         await _mail.SendAsync(user.Email, subject, await WrapAsync(text), eventKey);
+    }
+
+    /// <summary>Link to a plug-in's detail page for mails.</summary>
+    public async Task<string> PluginLinkAsync(string packageId)
+    {
+        var url = $"{await BaseUrlAsync()}/Plugin?id={Uri.EscapeDataString(packageId)}";
+        return $"<p><a href=\"{url}\">{System.Net.WebUtility.HtmlEncode(url)}</a></p>";
     }
 
     /// <summary>Always sent (invitations, test mails); returns the provider result.</summary>

@@ -147,6 +147,14 @@ public class SubmissionService
             "<p>The version passed all automatic checks and is now in the beta channel, awaiting review.</p>",
             includeReviewers: true);
 
+        var warnings = report.Findings.Count(f => f.Severity == "warning");
+        await _notify.NotifyUserAsync("SubmissionReceipt", user,
+            $"[Add-on Store] Received: {manifest.Id} {manifest.Version}",
+            $"<p>Your version <b>{manifest.Id} {manifest.Version}</b> was received (via {System.Net.WebUtility.HtmlEncode(via)}) " +
+            $"and passed all automatic checks{(warnings > 0 ? $" with {warnings} warning(s)" : "")}.</p>" +
+            "<p>It is now in the beta channel and waits for approval. You get another email when it is approved or rejected.</p>" +
+            await _notify.PluginLinkAsync(manifest.Id));
+
         return new SubmissionResult(report, version);
     }
 

@@ -201,8 +201,12 @@ Responses always use the same envelope:
 
 On success (201) the version enters the **beta channel**: visible to Power PDF
 clients that enabled the beta option, while an admin reviews it for the live
-store. You are notified by email on approval or rejection; the rejection
-comment is also visible via `GET /api/packages/{id}`.
+store. The package owner gets emails for the upload receipt, approval or
+rejection, versions withdrawn or restored by an admin, the plug-in being taken
+out of the store and catalog changes made by an admin (opt-out in the
+profile). The rejection comment is also visible via `GET /api/packages/{id}`.
+Withdrawn versions can only be restored by an admin (back to live if they had
+been approved, otherwise to beta).
 
 Submitting the same version again returns 409 VERSION_EXISTS. Withdraw one of
 your own beta versions with `DELETE /api/packages/{id}/{version}`.
@@ -257,7 +261,7 @@ change them.
   names give the warning `THIRDPARTY_TRADEMARK`.
 - `GET /api/packages/{id}` shows the current `catalogEntry` (null fields come
   from the manifest). Every change is in the audit log.
-- In the web UI: My plugins, then "Edit catalog entry".
+- In the web UI: Plug-ins, then Details, then "Edit catalog entry".
 - Versions you upload later keep the edited catalog entry. To let a new
   manifest's texts show again, reset the fields with `null`.
 

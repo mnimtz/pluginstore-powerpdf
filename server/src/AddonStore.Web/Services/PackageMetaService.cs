@@ -36,8 +36,12 @@ public class PackageMetaService
 
     private readonly AppDbContext _db;
     private readonly AuditService _audit;
+    private readonly NotificationService _notify;
 
-    public PackageMetaService(AppDbContext db, AuditService audit) { _db = db; _audit = audit; }
+    public PackageMetaService(AppDbContext db, AuditService audit, NotificationService notify)
+    {
+        _db = db; _audit = audit; _notify = notify;
+    }
 
     public static List<MetaIssue> Validate(MetaChange c)
     {
@@ -108,6 +112,10 @@ public class PackageMetaService
         pkg.MetaUpdatedBy = actor.DisplayName;
         await _db.SaveChangesAsync();
         await _audit.LogAsync(actor.DisplayName, "package.catalog.updated", pkg.Id, string.Join("; ", changed));
+        if (pkg.OwnerId != actor.Id && await _db.Users.FindAsync(pkg.OwnerId) is AppUser owner)
+            await _notify.NotifyUserAsync("CatalogChange", owner, $"[Add-on Store] Catalog entry of {pkg.Id} changed",
+                $"<p><b>{System.Net.WebUtility.HtmlEncode(actor.DisplayName)}</b> changed the catalog entry of <b>{pkg.Id}</b>: " +
+                $"{System.Net.WebUtility.HtmlEncode(string.Join("; ", changed))}.</p>" + await _notify.PluginLinkAsync(pkg.Id));
         return issues;
     }
 

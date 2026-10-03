@@ -1,0 +1,114 @@
+using AddonStore.Web.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace AddonStore.Web.Services;
+
+/// <summary>
+/// Every status change of a version in one place, shared by the review queue
+/// and the plug-in detail page, so permissions, audit entries and mails are
+/// the same wherever an admin clicks.
+/// </summary>
+public class VersionActionService
+{
+    private readonly AppDbContext _db;
+    private readonly AuditService _audit;
+    private readonly NotificationService _notify;
+
+    public VersionActionService(AppDbContext db, AuditService audit, NotificationService notify)
+    {
+        _db = db; _audit = audit; _notify = notify;
+    }
+
+    private static string Enc(string s) => System.Net.WebUtility.HtmlEncode(s);
+
+    /// <summary>Mails the package owner about a change someone else made (event StatusChange).</summary>
+    private async Task TellOwnerAsync(AppUser? owner, AppUser actor, string packageId, string subject, string html)
+    {
+        if (owner is null || owner.Id == actor.Id) return;
+        await _notify.NotifyUserAsync("StatusChange", owner, subject, html + await _notify.PluginLinkAsync(packageId));
+    }
+
+    public static bool CanReview(System.Security.Claims.ClaimsPrincipal u) => u.IsInRole("Admin") || u.IsInRole("Reviewer");
+
+    /// <summary>Owner may withdraw beta versions; admins may withdraw any beta or live version.</summary>
+    public static bool CanWithdraw(PackageVersion v, AppUser user, bool isAdmin) =>
+        (v.Status == VersionStatus.Beta && (isAdmin || v.Package?.OwnerId == user.Id)) ||
+        (v.Status == VersionStatus.Live && isAdmin);
+
+    /// <summary>Only admins bring a withdrawn version back.</summary>
+    public static bool CanRestore(PackageVersion v, bool isAdmin) => isAdmin && v.Status == VersionStatus.Withdrawn;
+
+    /// <summary>Status a withdrawn version returns to: live when it had been approved (or is the client, which never queues), otherwise beta.</summary>
+    public static VersionStatus RestoreTarget(PackageVersion v) =>
+        v.ReviewedAt is not null || v.PackageId == SubmissionService.ClientPackageId ? VersionStatus.Live : VersionStatus.Beta;
+
+    public async Task<string?> DecideAsync(int versionId, AppUser actor, bool approve, string? comment)
+    {
+        var v = await _db.PackageVersions.Include(x => x.Package).ThenInclude(p => p!.Owner)
+            .FirstOrDefaultAsync(x => x.Id == versionId);
+        if (v is null || v.Status != VersionStatus.Beta) return null;
+        v.Status = approve ? VersionStatus.Live : VersionStatus.Rejected;
+        v.ReviewedById = actor.Id;
+        v.ReviewedAt = DateTime.UtcNow;
+        v.ReviewComment = comment;
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(actor.DisplayName, approve ? "version.approved" : "version.rejected",
+            $"{v.PackageId} {v.Version}", comment ?? "");
+        if (v.Package?.Owner is { } owner)
+            await _notify.NotifyUserAsync("ReviewResult", owner,
+                $"[Add-on Store] {v.PackageId} {v.Version} {(approve ? "approved" : "rejected")}",
+                (approve
+                    ? $"<p>Your version <b>{v.PackageId} {v.Version}</b> was approved and is live for all users.</p>"
+                    : $"<p>Your version <b>{v.PackageId} {v.Version}</b> was rejected.</p><p>Reason: {System.Net.WebUtility.HtmlEncode(comment ?? "-")}</p>")
+                + await _notify.PluginLinkAsync(v.PackageId));
+        return approve ? "Version approved and live." : "Version rejected.";
+    }
+
+    public async Task<string?> WithdrawAsync(int versionId, AppUser actor, bool isAdmin)
+    {
+        var v = await _db.PackageVersions.Include(x => x.Package).ThenInclude(p => p!.Owner).FirstOrDefaultAsync(x => x.Id == versionId);
+        if (v is null || !CanWithdraw(v, actor, isAdmin)) return null;
+        var was = v.Status;
+        v.Status = VersionStatus.Withdrawn;
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(actor.DisplayName, "version.withdrawn", $"{v.PackageId} {v.Version}",
+            $"was {was.ToString().ToLowerInvariant()}; by {(isAdmin ? "admin" : "owner")}");
+        await TellOwnerAsync(v.Package?.Owner, actor, v.PackageId, $"[Add-on Store] {v.PackageId} {v.Version} withdrawn",
+            $"<p><b>{Enc(actor.DisplayName)}</b> withdrew version <b>{v.PackageId} {v.Version}</b> (previously {was.ToString().ToLowerInvariant()}). " +
+            "It is no longer offered in the store; installed copies keep working.</p>");
+        return "Version withdrawn.";
+    }
+
+    public async Task<string?> RestoreAsync(int versionId, AppUser actor, bool isAdmin)
+    {
+        var v = await _db.PackageVersions.Include(x => x.Package).ThenInclude(p => p!.Owner).FirstOrDefaultAsync(x => x.Id == versionId);
+        if (v is null || !CanRestore(v, isAdmin)) return null;
+        v.Status = RestoreTarget(v);
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(actor.DisplayName, "version.restored", $"{v.PackageId} {v.Version}",
+            $"now {v.Status.ToString().ToLowerInvariant()}");
+        await TellOwnerAsync(v.Package?.Owner, actor, v.PackageId, $"[Add-on Store] {v.PackageId} {v.Version} restored",
+            $"<p><b>{Enc(actor.DisplayName)}</b> restored version <b>{v.PackageId} {v.Version}</b>. " +
+            (v.Status == VersionStatus.Live ? "It is live again.</p>" : "It is back in the beta channel and needs approval again.</p>"));
+        return v.Status == VersionStatus.Live ? "Version restored and live again." : "Version restored to the beta channel; it needs approval again.";
+    }
+
+    /// <summary>Takes the whole plug-in out of the store: every live and beta version is withdrawn.</summary>
+    public async Task<string?> WithdrawPackageAsync(string packageId, AppUser actor, bool isAdmin)
+    {
+        if (!isAdmin) return null;
+        var versions = await _db.PackageVersions
+            .Where(x => x.PackageId == packageId && (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta))
+            .ToListAsync();
+        if (versions.Count == 0) return null;
+        foreach (var v in versions) v.Status = VersionStatus.Withdrawn;
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(actor.DisplayName, "package.withdrawn", packageId,
+            $"withdrawn versions: {string.Join(", ", versions.Select(v => v.Version))}");
+        var owner = (await _db.Packages.Include(p => p.Owner).FirstOrDefaultAsync(p => p.Id == packageId))?.Owner;
+        await TellOwnerAsync(owner, actor, packageId, $"[Add-on Store] {packageId} taken out of the store",
+            $"<p><b>{Enc(actor.DisplayName)}</b> took <b>{packageId}</b> out of the store (versions {string.Join(", ", versions.Select(v => v.Version))}). " +
+            "Installed copies keep working; an admin can restore single versions.</p>");
+        return "The plug-in was taken out of the store. Installed copies keep working; restore single versions to publish it again.";
+    }
+}

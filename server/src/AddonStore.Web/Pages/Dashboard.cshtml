@@ -2,11 +2,13 @@
 @using System.Text.Json
 @model AddonStore.Web.Pages.DashboardModel
 @{
-    ViewData["Title"] = "My plugins";
+    var isAdmin = User.IsInRole("Admin");
+    var heading = isAdmin ? "All plug-ins" : "My plug-ins";
+    ViewData["Title"] = heading;
 }
 
-<h1>@L["My plugins"]</h1>
-<p class="lead">@L["Upload a .ppak package below, or automate it via the API with a personal token from your profile."]</p>
+<h1>@L[heading]</h1>
+<p class="lead">@L[isAdmin ? "Every plug-in in the store. Open Details to approve, withdraw or restore versions and to edit the catalog entry." : "Your plug-ins. Open Details for versions, check reports and the catalog entry."]</p>
 
 @if (Model.Notice is not null)
 {
@@ -25,8 +27,9 @@
     </ul>
 }
 
-<div class="card">
-    <h2 style="margin-top:0">@L["Submit a package"]</h2>
+<details class="card" @(Model.Findings.Count > 0 ? "open" : "")>
+    <summary style="cursor:pointer;font-weight:600;color:var(--tun-navy)">@L["Submit a package"]</summary>
+    <p style="color:var(--tun-slate);font-size:.9rem">@L["Upload a .ppak package below, or automate it via the API with a personal token from your profile."]</p>
     <form method="post" enctype="multipart/form-data" class="stack">
         <div>
             <label for="package">@L["Package file (.ppak)"]</label>
@@ -34,50 +37,62 @@
         </div>
         <button type="submit" class="btn cta">@L["Upload and validate"]</button>
     </form>
-</div>
+</details>
 
-<h2>@L["My packages"]</h2>
-@if (Model.Packages.Count == 0)
+@{
+    int all = Model.Rows.Count, pending = Model.Rows.Count(r => r.Pending),
+        live = Model.Rows.Count(r => r.Live is not null), offline = Model.Rows.Count(r => !r.InStore);
+    string Chip(string f) => Model.Filter == f || (f == "all" && Model.Filter is not ("pending" or "live" or "offline")) ? "chip active" : "chip";
+}
+<form method="get" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:18px 0 12px">
+    <div class="chips">
+        <a class="@Chip("all")" href="?filter=all&q=@Model.Q">@L["All"] (@all)</a>
+        <a class="@Chip("pending")" href="?filter=pending&q=@Model.Q">@L["Awaiting approval"] (@pending)</a>
+        <a class="@Chip("live")" href="?filter=live&q=@Model.Q">@L["Live"] (@live)</a>
+        <a class="@Chip("offline")" href="?filter=offline&q=@Model.Q">@L["Not in the store"] (@offline)</a>
+    </div>
+    <input type="hidden" name="filter" value="@Model.Filter" />
+    <input type="search" name="q" value="@Model.Q" placeholder="@L["Search name, id or owner"]" style="flex:1;min-width:200px;max-width:320px" />
+</form>
+
+@if (Model.Visible.Count == 0)
 {
-    <div class="card">@L["You have not submitted any packages yet."]</div>
+    <div class="card">@L[Model.Rows.Count == 0 ? "You have not submitted any packages yet." : "No plug-ins match this filter."]</div>
 }
 else
 {
-    @foreach (var pkg in Model.Packages)
-    {
-        <div class="card">
-            @{
-                var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-                var newest = pkg.Versions.FirstOrDefault();
-            }
-            <div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">
-                <strong style="color:var(--tun-navy)">@AddonStore.Web.Services.CatalogUi.DisplayName(pkg, newest, lang)</strong>
-                <span style="color:var(--tun-slate);font-size:.85rem">@pkg.Id</span>
-                @if (pkg.OwnerId != Model.UserId)
-                {
-                    <span style="color:var(--tun-slate);font-size:.85rem">· @L["Owner"]: @pkg.Owner?.DisplayName</span>
-                }
-                <a href="/CatalogEntry?id=@pkg.Id" style="margin-left:auto">@L["Edit catalog entry"]</a>
-            </div>
-            <table style="margin-top:10px">
-                <tr><th>@L["Version"]</th><th>@L["Status"]</th><th>@L["Changelog"]</th><th>@L["Submitted"]</th><th>@L["Downloads"]</th><th>@L["Review comment"]</th></tr>
-                @foreach (var v in pkg.Versions)
-                {
-                    <tr>
-                        <td>@v.Version</td>
-                        <td><span class="badge @v.Status.ToString().ToLowerInvariant()">@L[v.Status.ToString()]</span></td>
-                        <td>@AddonStore.Web.Services.CatalogUi.ManifestText(v, "changelog", lang, v.Changelog)</td>
-                        <td>@Time.Fmt(v.SubmittedAt)</td>
-                        <td>@v.Downloads</td>
-                        <td>@(v.ReviewComment ?? "")</td>
-                    </tr>
-                    <tr>
-                        <td colspan="6" style="padding-top:0">
-                            <partial name="_ValidationReport" model="AddonStore.Web.Validation.ReportView.Parse(v.ValidationReportJson)" />
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
-    }
+    <div class="table-wrap">
+    <table>
+        <tr>
+            <th>@L["Plug-in"]</th>
+            @if (isAdmin) { <th>@L["Owner"]</th> }
+            <th>@L["Live"]</th><th>@L["Status"]</th><th>@L["Downloads"]</th><th>@L["Last activity"]</th><th></th>
+        </tr>
+        @foreach (var r in Model.Visible)
+        {
+            <tr>
+                <td><b style="color:var(--tun-navy)">@r.Name</b><br /><span style="color:var(--tun-slate);font-size:.8rem">@r.Pkg.Id</span></td>
+                @if (isAdmin) { <td>@r.Owner</td> }
+                <td>@(r.Live?.Version ?? "-")</td>
+                <td>
+                    @if (r.Pending)
+                    {
+                        <span class="badge beta">@L["Awaiting approval"] @r.Beta!.Version</span>
+                    }
+                    else if (r.Live is not null)
+                    {
+                        <span class="badge live">@L["Live"]</span>
+                    }
+                    else if (r.Newest is not null)
+                    {
+                        <span class="badge @r.Newest.Status.ToString().ToLowerInvariant()">@L[r.Newest.Status.ToString()]</span>
+                    }
+                </td>
+                <td>@r.Downloads</td>
+                <td>@Time.Fmt(r.LastActivity, false)</td>
+                <td style="text-align:right;white-space:nowrap"><a class="btn small" href="/Plugin?id=@r.Pkg.Id">@L["Details"]</a></td>
+            </tr>
+        }
+    </table>
+    </div>
 }

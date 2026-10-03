@@ -11,61 +11,34 @@ public class ReviewModel : PageModel
 {
     private readonly AppDbContext _db;
     private readonly UserManager<AppUser> _users;
-    private readonly AuditService _audit;
-    private readonly NotificationService _notify;
+    private readonly VersionActionService _actions;
 
     public List<PackageVersion> Queue { get; private set; } = new();
-    public List<PackageVersion> Live { get; private set; } = new();
+    public Dictionary<string, Package> Packages { get; private set; } = new();
     public string? Notice { get; private set; }
 
-    public ReviewModel(AppDbContext db, UserManager<AppUser> users, AuditService audit, NotificationService notify)
+    public ReviewModel(AppDbContext db, UserManager<AppUser> users, VersionActionService actions)
     {
-        _db = db; _users = users; _audit = audit; _notify = notify;
+        _db = db; _users = users; _actions = actions;
     }
 
     public async Task OnGetAsync() => await LoadAsync();
 
-    public async Task OnPostApproveAsync(int id) => await DecideAsync(id, approve: true, comment: null);
-
-    public async Task OnPostRejectAsync(int id, string comment) => await DecideAsync(id, approve: false, comment);
-
-    public async Task OnPostWithdrawAsync(int id)
+    public async Task OnPostApproveAsync(int id)
     {
-        var admin = await _users.GetUserAsync(User);
-        var v = await _db.PackageVersions.FirstOrDefaultAsync(x => x.Id == id);
-        if (v is not null && v.Status == VersionStatus.Live)
-        {
-            v.Status = VersionStatus.Withdrawn;
-            await _db.SaveChangesAsync();
-            await _audit.LogAsync(admin!.DisplayName, "version.withdrawn", $"{v.PackageId} {v.Version}", "by admin");
-            Notice = "Version withdrawn.";
-        }
+        Notice = await _actions.DecideAsync(id, (await _users.GetUserAsync(User))!, approve: true, comment: null);
         await LoadAsync();
     }
 
-    private async Task DecideAsync(int id, bool approve, string? comment)
+    public async Task OnPostRejectAsync(int id, string comment)
     {
-        var admin = await _users.GetUserAsync(User);
-        var v = await _db.PackageVersions.Include(x => x.Package).ThenInclude(p => p!.Owner)
-            .FirstOrDefaultAsync(x => x.Id == id);
-        if (v is not null && v.Status == VersionStatus.Beta)
-        {
-            v.Status = approve ? VersionStatus.Live : VersionStatus.Rejected;
-            v.ReviewedById = admin!.Id;
-            v.ReviewedAt = DateTime.UtcNow;
-            v.ReviewComment = comment;
-            await _db.SaveChangesAsync();
-            await _audit.LogAsync(admin.DisplayName,
-                approve ? "version.approved" : "version.rejected",
-                $"{v.PackageId} {v.Version}", comment ?? "");
-            if (v.Package?.Owner is { } owner)
-                await _notify.NotifyUserAsync("ReviewResult", owner,
-                    $"[Add-on Store] {v.PackageId} {v.Version} {(approve ? "approved" : "rejected")}",
-                    approve
-                        ? $"<p>Your version <b>{v.PackageId} {v.Version}</b> was approved and is live for all users.</p>"
-                        : $"<p>Your version <b>{v.PackageId} {v.Version}</b> was rejected.</p><p>Reason: {System.Net.WebUtility.HtmlEncode(comment ?? "-")}</p>");
-            Notice = approve ? "Version approved and live." : "Version rejected.";
-        }
+        Notice = await _actions.DecideAsync(id, (await _users.GetUserAsync(User))!, approve: false, comment);
+        await LoadAsync();
+    }
+
+    public async Task OnPostWithdrawAsync(int id)
+    {
+        Notice = await _actions.WithdrawAsync(id, (await _users.GetUserAsync(User))!, User.IsInRole("Admin"));
         await LoadAsync();
     }
 
@@ -73,7 +46,7 @@ public class ReviewModel : PageModel
     {
         Queue = await _db.PackageVersions.Where(v => v.Status == VersionStatus.Beta)
             .OrderBy(v => v.SubmittedAt).ToListAsync();
-        Live = await _db.PackageVersions.Where(v => v.Status == VersionStatus.Live)
-            .OrderBy(v => v.PackageId).ThenByDescending(v => v.SubmittedAt).ToListAsync();
+        Packages = await _db.Packages.Where(p => Queue.Select(q => q.PackageId).Contains(p.Id))
+            .ToDictionaryAsync(p => p.Id);
     }
 }

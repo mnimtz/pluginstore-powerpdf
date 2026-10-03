@@ -24,7 +24,7 @@
         @{
             var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
         }
-        <strong style="color:var(--tun-navy)">@AddonStore.Web.Services.CatalogUi.ManifestText(v, "name", lang, v.PackageId)</strong>
+        <strong style="color:var(--tun-navy)"><a href="/Plugin?id=@v.PackageId">@(Model.Packages.TryGetValue(v.PackageId, out var rp) ? AddonStore.Web.Services.CatalogUi.DisplayName(rp, v, lang) : AddonStore.Web.Services.CatalogUi.ManifestText(v, "name", lang, v.PackageId))</a></strong>
         <span style="color:var(--tun-slate)">@v.PackageId</span> v@(v.Version)
         <span class="badge beta">@L["Beta"]</span>
         <div style="color:var(--tun-slate);font-size:.85rem;margin:4px 0 8px">
@@ -48,29 +48,7 @@
     </div>
 }
 
-<h2>@L["Live versions"]</h2>
-@if (Model.Live.Count == 0)
-{
-    <div class="card">@L["No live versions yet."]</div>
-}
-else
-{
-    <table>
-        <tr><th>@L["Package"]</th><th>@L["Version"]</th><th>@L["Approved"]</th><th>@L["Downloads"]</th><th></th></tr>
-        @foreach (var v in Model.Live)
-        {
-            <tr>
-                <td>@v.PackageId</td>
-                <td>@v.Version</td>
-                <td>@Time.Fmt(v.ReviewedAt, false)</td>
-                <td>@v.Downloads</td>
-                <td>
-                    <form method="post" asp-page-handler="Withdraw">
-                        <input type="hidden" name="id" value="@v.Id" />
-                        <button type="submit" class="btn small danger">@L["Withdraw"]</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </table>
-}
+<div class="card" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+    <span>@L["Live plug-ins, older versions, withdrawing and restoring: see the plug-in overview."]</span>
+    <a class="btn small" href="/Dashboard?filter=live">@L["Open plug-in overview"]</a>
+</div>

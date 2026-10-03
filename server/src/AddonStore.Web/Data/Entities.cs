@@ -19,6 +19,8 @@ public class AppUser : IdentityUser
     public string? AvatarFile { get; set; }
     /// <summary>Show name + email as author on the public catalog; off = "Tungsten Automation".</summary>
     public bool ShowContactPublicly { get; set; } = true;
+    /// <summary>Emails about the user's own plug-ins (upload receipt, review result, status changes).</summary>
+    public bool NotifyAboutPlugins { get; set; } = true;
 }
 
 /// <summary>Runtime-editable instance settings (admin area), e.g. the Resend key.</summary>
