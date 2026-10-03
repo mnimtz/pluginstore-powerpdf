@@ -26,22 +26,22 @@
     "tr": "Power PDF için Add-on Store şeridi: ekip kataloğundan eklentilere göz atın, yükleyin, güncelleyin ve kaldırın."
   },
   "changelog": {
-    "en": "The client now talks to the store only over HTTPS (port 443) and only to the configured store server; the Options page rejects other addresses. Neutral disclaimer. A fresh installation clears leftovers of removed plugins from the shared Enhanced Features tab once; updates leave the tab alone.",
-    "de": "Der Client kommuniziert jetzt nur noch per HTTPS (Port 443) und nur mit dem eingestellten Store-Server; die Optionsseite lehnt andere Adressen ab. Neutraler Haftungshinweis. Eine Neuinstallation räumt einmalig Reste entfernter Plug-ins aus dem gemeinsamen Register „Erweiterte Funktionen“ auf; Updates lassen das Register unverändert.",
-    "fr": "Le client communique désormais uniquement en HTTPS (port 443) et uniquement avec le serveur du store configuré ; la page Options refuse les autres adresses. Avertissement neutre. Une nouvelle installation supprime une seule fois les restes de plug-ins désinstallés dans l'onglet partagé Fonctions avancées ; les mises à jour ne modifient pas l'onglet.",
-    "it": "Il client comunica ora solo tramite HTTPS (porta 443) e solo con il server dello store configurato; la pagina Opzioni rifiuta altri indirizzi. Avvertenza neutrale. Una nuova installazione rimuove una sola volta i residui dei plugin disinstallati dalla scheda condivisa Funzioni avanzate; gli aggiornamenti non toccano la scheda.",
-    "es": "El cliente se comunica ahora solo por HTTPS (puerto 443) y solo con el servidor de la tienda configurado; la página Opciones rechaza otras direcciones. Aviso legal neutral. Una instalación nueva elimina una sola vez los restos de complementos desinstalados de la pestaña compartida Funciones avanzadas; las actualizaciones no la modifican.",
-    "nl": "De client communiceert nu alleen via HTTPS (poort 443) en alleen met de ingestelde storeserver; de pagina Opties weigert andere adressen. Neutrale disclaimer. Een nieuwe installatie ruimt eenmalig resten van verwijderde plug-ins op het gedeelde tabblad Geavanceerde functies op; updates laten het tabblad ongemoeid.",
-    "pt": "O cliente comunica agora apenas por HTTPS (porta 443) e apenas com o servidor da loja configurado; a página Opções rejeita outros endereços. Aviso legal neutro. Uma instalação nova remove uma única vez os restos de plugins desinstalados do separador partilhado Funções avançadas; as atualizações não alteram o separador.",
-    "da": "Klienten kommunikerer nu kun via HTTPS (port 443) og kun med den konfigurerede butiksserver; siden Indstillinger afviser andre adresser. Neutral ansvarsfraskrivelse. En ny installation rydder én gang op i rester af fjernede plugins på den fælles fane Avancerede funktioner; opdateringer lader fanen være.",
-    "fi": "Asiakasohjelma käyttää nyt vain HTTPS-yhteyttä (portti 443) ja vain määritettyä kaupan palvelinta; Asetukset-sivu hylkää muut osoitteet. Neutraali vastuuvapauslauseke. Uusi asennus siivoaa kerran poistettujen laajennusten jäänteet jaetulta Lisätoiminnot-välilehdeltä; päivitykset eivät muuta välilehteä.",
-    "nb": "Klienten kommuniserer nå bare via HTTPS (port 443) og bare med den konfigurerte butikkserveren; siden Alternativer avviser andre adresser. Nøytral ansvarsfraskrivelse. En ny installasjon rydder én gang bort rester av fjernede programtillegg fra den felles fanen Avanserte funksjoner; oppdateringer lar fanen være.",
-    "sv": "Klienten kommunicerar nu bara via HTTPS (port 443) och bara med den konfigurerade butiksservern; sidan Alternativ avvisar andra adresser. Neutral ansvarsfriskrivning. En ny installation rensar en gång bort rester av borttagna plugin-program från den delade fliken Avancerade funktioner; uppdateringar lämnar fliken orörd.",
-    "pl": "Klient komunikuje się teraz wyłącznie przez HTTPS (port 443) i tylko ze skonfigurowanym serwerem sklepu; strona Opcje odrzuca inne adresy. Neutralne zastrzeżenie prawne. Nowa instalacja jednorazowo usuwa pozostałości odinstalowanych wtyczek ze wspólnej karty Funkcje zaawansowane; aktualizacje nie zmieniają karty.",
-    "cs": "Klient nyní komunikuje pouze přes HTTPS (port 443) a pouze s nastaveným serverem obchodu; stránka Možnosti jiné adresy odmítne. Neutrální právní upozornění. Nová instalace jednorázově odstraní zbytky odebraných modulů plug-in ze sdílené karty Rozšířené funkce; aktualizace kartu nemění.",
-    "hu": "A kliens mostantól csak HTTPS-en (443-as port) és csak a beállított áruházkiszolgálóval kommunikál; a Beállítások lap más címeket elutasít. Semleges jogi nyilatkozat. Új telepítéskor egyszer eltávolítja a törölt bővítmények maradványait a közös Speciális funkciók lapról; a frissítések nem módosítják a lapot.",
-    "ru": "Клиент теперь обменивается данными только по HTTPS (порт 443) и только с настроенным сервером магазина; страница «Параметры» отклоняет другие адреса. Нейтральная правовая оговорка. Новая установка однократно удаляет остатки удаленных подключаемых модулей с общей вкладки «Расширенные функции»; обновления вкладку не изменяют.",
-    "tr": "İstemci artık yalnızca HTTPS (443 numaralı bağlantı noktası) üzerinden ve yalnızca yapılandırılan mağaza sunucusuyla iletişim kurar; Seçenekler sayfası diğer adresleri reddeder. Tarafsız yasal uyarı. Yeni bir kurulum, kaldırılan eklentilerin kalıntılarını ortak Gelişmiş İşlevler sekmesinden bir kez temizler; güncellemeler sekmeye dokunmaz."
+    "en": "The default store address is now https://addon.power-pdf.de. An address you entered yourself or one set by policy stays unchanged.",
+    "de": "Die Standardadresse des Stores ist jetzt https://addon.power-pdf.de. Eine selbst eingetragene oder per Richtlinie vorgegebene Adresse bleibt unverändert.",
+    "fr": "L'adresse par défaut du store est désormais https://addon.power-pdf.de. Une adresse saisie par vous-même ou imposée par une stratégie reste inchangée.",
+    "it": "L'indirizzo predefinito dello store è ora https://addon.power-pdf.de. Un indirizzo inserito da voi o impostato tramite criterio resta invariato.",
+    "es": "La dirección predeterminada de la tienda es ahora https://addon.power-pdf.de. Una dirección introducida por usted o definida por directiva no cambia.",
+    "nl": "Het standaardadres van de store is nu https://addon.power-pdf.de. Een zelf ingevoerd of via beleid ingesteld adres blijft ongewijzigd.",
+    "pt": "O endereço predefinido da loja é agora https://addon.power-pdf.de. Um endereço introduzido por si ou definido por política mantém-se inalterado.",
+    "da": "Butikkens standardadresse er nu https://addon.power-pdf.de. En adresse, du selv har indtastet, eller som er fastsat via politik, forbliver uændret.",
+    "fi": "Kaupan oletusosoite on nyt https://addon.power-pdf.de. Itse syötetty tai käytännöllä määritetty osoite pysyy ennallaan.",
+    "nb": "Butikkens standardadresse er nå https://addon.power-pdf.de. En adresse du har skrevet inn selv, eller som er satt via policy, forblir uendret.",
+    "sv": "Butikens standardadress är nu https://addon.power-pdf.de. En adress som du själv angett eller som styrs av en princip förblir oförändrad.",
+    "pl": "Domyślny adres sklepu to teraz https://addon.power-pdf.de. Adres wprowadzony samodzielnie lub ustawiony zasadami pozostaje bez zmian.",
+    "cs": "Výchozí adresa obchodu je nyní https://addon.power-pdf.de. Adresa zadaná vámi nebo nastavená zásadou zůstává beze změny.",
+    "hu": "Az áruház alapértelmezett címe mostantól https://addon.power-pdf.de. A saját maga által megadott vagy házirenddel beállított cím változatlan marad.",
+    "ru": "Адрес магазина по умолчанию теперь https://addon.power-pdf.de. Адрес, введенный вами или заданный политикой, не изменяется.",
+    "tr": "Mağazanın varsayılan adresi artık https://addon.power-pdf.de. Kendi girdiğiniz veya ilkeyle belirlenen adres değişmez."
   },
   "minPowerPdfVersion": "5.0",
   "ribbonAtomNamespace": "FeaturePack::PluginStore",
@@ -79,8 +79,8 @@
     "method": "Checked all #include directives and linker inputs of PluginStore.vcxproj (Windows SDK, MFC/ATL, Tungsten Power PDF Plugin SDK only), the bundled UILayout and icon files (own work, icons drawn by client/res/make_icons.py) and the package contents. No third-party code. The bundled MSI is built with the WiX Toolset v3 (build tool; its standard WixUI dialog resources are part of the installer). No credentials, personal data or third-party trademarks in the package. The only network service is the configured Add-on Store server (HTTPS).",
     "externalServices": [
       {
-        "name": "Add-on Store server (configurable)",
-        "url": "https://ppdf-store.azurewebsites.net",
+        "name": "Add-on Store server (configurable; default addon.power-pdf.de, Azure address ppdf-store.azurewebsites.net)",
+        "url": "https://addon.power-pdf.de",
         "data": "Catalog and package downloads; sends the Power PDF UI language and the beta channel flag, no personal data."
       }
     ]

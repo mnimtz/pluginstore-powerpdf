@@ -11,7 +11,7 @@ import subprocess
 import sys
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-STORE = 'https://ppdf-store.azurewebsites.net'
+STORE = 'https://addon.power-pdf.de'
 
 
 def read(rel):

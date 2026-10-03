@@ -177,7 +177,7 @@ dotnet run --project server/src/AddonStore.Web --urls http://localhost:5190
 ```
 
 SQLite and package storage land in `server/src/AddonStore.Web/data/`.
-The client's default server URL is `https://ppdf-store.azurewebsites.net`; point it at `http://localhost:5190` for local development via *File → Options → Add-on Store*.
+The client's default server URL is `https://addon.power-pdf.de` (the Azure address `https://ppdf-store.azurewebsites.net` keeps working); point it at `http://localhost:5190` for local development via *File → Options → Add-on Store*.
 
 ## Versions and releases
 

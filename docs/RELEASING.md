@@ -20,7 +20,7 @@ Server and client have separate version numbers with a visible prefix:
 2. Commit and push to `main`. GitHub Actions builds the container and pushes
    `ghcr.io/mnimtz/pluginstore-powerpdf:latest` (plus `sha-<commit>`).
 3. The App Service picks up `latest`; verify with
-   `GET https://ppdf-store.azurewebsites.net/api/ping` (reports `VERSION`).
+   `GET https://addon.power-pdf.de/api/ping` (reports `VERSION`).
 4. Run `python tools/check_docs.py` (also enforced in CI: the build fails if a
    finding code is not documented in the agent guide's rule reference).
 5. Update the agent/API documentation in the same release for EVERY change a
@@ -62,7 +62,7 @@ Steps (Windows, Visual Studio 2022, WiX v3 in `C:\Claude\Tools\wix314`):
    ```bash
    curl -X POST -H "Authorization: Bearer $PPAK_TOKEN" -H "Content-Type: application/zip" \
         --data-binary @dist/com.tungsten.pluginstore-<version>.ppak \
-        https://ppdf-store.azurewebsites.net/api/packages
+        https://addon.power-pdf.de/api/packages
    ```
    The response status is `live`.
 6. Verify: the landing page button shows the new version, and the downloaded
