@@ -1,0 +1,63 @@
+@using System.Globalization
+@inject AddonStore.Web.Api.AppVersion AppVer
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@(ViewData["Title"] is string t && t.Length > 0 ? t + " · " : "")Plugin-Store</title>
+    <link rel="icon" href="/img/powerpdf-icon.svg" />
+    <link rel="stylesheet" href="/css/site.css" />
+</head>
+<body>
+<header class="site">
+    <div class="bar">
+        <img class="logo" src="/img/tungsten-logo-white.svg" alt="Tungsten Automation" />
+        <div class="title">Plugin-Store<small>Tungsten Power PDF</small></div>
+        <nav>
+            <a href="/">@L["Catalog"]</a>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <a href="/Dashboard">@L["My plugins"]</a>
+                <a href="/Profile">@L["Profile"]</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a href="/Admin/Review">@L["Review"]</a>
+                    <a href="/Admin/Users">@L["Users"]</a>
+                    <a href="/Admin/Audit">@L["Audit"]</a>
+                }
+                <form method="post" action="/Account/Logout" style="display:inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn small secondary">@L["Sign out"]</button>
+                </form>
+            }
+            else
+            {
+                <a href="/Account/Login">@L["Sign in"]</a>
+            }
+            <select onchange="location='/set-lang?culture='+this.value+'&returnUrl='+encodeURIComponent(location.pathname)" aria-label="Language"
+                    style="width:auto;padding:4px 6px;font-size:.82rem">
+                @{
+                    var current = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+                    var langs = new[] { "en", "de", "fr", "it", "es", "nl", "pt", "da", "fi", "nb", "sv", "pl", "cs", "hu", "ru", "tr" };
+                }
+                @foreach (var lang in langs)
+                {
+                    <option value="@lang" selected="@(lang == current || (lang == "nb" && current == "no"))">@lang.ToUpperInvariant()</option>
+                }
+            </select>
+        </nav>
+    </div>
+</header>
+<div class="accent-line"></div>
+<main>
+    @RenderBody()
+</main>
+<footer class="site">
+    <img src="/img/tungsten-logo-navy.svg" alt="Tungsten Automation" />
+    <span>PluginStore-PowerPDF v@(AppVer.Value)</span>
+    <span class="spacer"></span>
+    <a href="/api/agent-guide" style="color:var(--tun-slate)">API</a>
+</footer>
+</body>
+</html>

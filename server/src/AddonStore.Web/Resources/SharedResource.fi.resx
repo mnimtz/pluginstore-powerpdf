@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Access requests" xml:space="preserve"><value>Käyttöoikeuspyynnöt</value></data>
+  <data name="Accounts are for colleagues who develop and publish plugins. An admin reviews every request; you will be notified by email." xml:space="preserve"><value>Tilit on tarkoitettu kollegoille, jotka kehittävät ja julkaisevat lisäosia. Järjestelmänvalvoja tarkistaa jokaisen pyynnön; saat ilmoituksen sähköpostitse.</value></data>
+  <data name="Action" xml:space="preserve"><value>Toiminto</value></data>
+  <data name="Actor" xml:space="preserve"><value>Tekijä</value></data>
+  <data name="All users" xml:space="preserve"><value>Kaikki käyttäjät</value></data>
+  <data name="Approve" xml:space="preserve"><value>Hyväksy</value></data>
+  <data name="Approve for live store" xml:space="preserve"><value>Hyväksy live-kauppaan</value></data>
+  <data name="Approved" xml:space="preserve"><value>Hyväksytty</value></data>
+  <data name="Audit" xml:space="preserve"><value>Auditointi</value></data>
+  <data name="Audit log" xml:space="preserve"><value>Auditointiloki</value></data>
+  <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>Beta-versiot ovat läpäisseet kaikki automaattiset tarkistukset ja näkyvät beta-testaajille. Hyväksy ne live-kauppaan tai hylkää ne perustelun kera.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Selaa julkaistuja lisäosia alla. Asennus tapahtuu suoraan Power PDF:ssä Plugin-Store-valintanauhan kautta; tämä sivusto on tarkoitettu lisäosien kehittäjille ja järjestelmänvalvojille.</value></data>
+  <data name="Catalog" xml:space="preserve"><value>Luettelo</value></data>
+  <data name="Changelog" xml:space="preserve"><value>Muutosloki</value></data>
+  <data name="Create a token" xml:space="preserve"><value>Luo uusi token</value></data>
+  <data name="Create admin account" xml:space="preserve"><value>Luo järjestelmänvalvojan tili</value></data>
+  <data name="Create the first administrator account for this Plugin-Store instance." xml:space="preserve"><value>Luo ensimmäinen järjestelmänvalvojan tili tälle Plugin-Store-instanssille.</value></data>
+  <data name="Create token" xml:space="preserve"><value>Luo token</value></data>
+  <data name="Created" xml:space="preserve"><value>Luotu</value></data>
+  <data name="Details" xml:space="preserve"><value>Tiedot</value></data>
+  <data name="Disable" xml:space="preserve"><value>Poista käytöstä</value></data>
+  <data name="Display name" xml:space="preserve"><value>Näyttönimi</value></data>
+  <data name="Download" xml:space="preserve"><value>Lataa</value></data>
+  <data name="Downloads" xml:space="preserve"><value>Lataukset</value></data>
+  <data name="Email" xml:space="preserve"><value>Sähköposti</value></data>
+  <data name="Enable" xml:space="preserve"><value>Ota käyttöön</value></data>
+  <data name="Every relevant action on this server: registrations, approvals, tokens, submissions, reviews." xml:space="preserve"><value>Kaikki olennaiset toimet tällä palvelimella: rekisteröinnit, hyväksynnät, tokenit, lähetykset, tarkistukset.</value></data>
+  <data name="Filter" xml:space="preserve"><value>Suodatin</value></data>
+  <data name="Filter (actor, action, subject)" xml:space="preserve"><value>Suodatin (tekijä, toiminto, kohde)</value></data>
+  <data name="First-run setup" xml:space="preserve"><value>Ensimmäinen käyttöönotto</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Plugin-Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Lisäosien kehittäjille ja järjestelmänvalvojille. Loppukäyttäjät asentavat lisäosat suoraan Power PDF:n Plugin-Store-valintanauhasta ilman tiliä.</value></data>
+  <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>Anna token Claudellesi yhdessä tämän rivin kanssa:</value></data>
+  <data name="Last used" xml:space="preserve"><value>Viimeksi käytetty</value></data>
+  <data name="Live versions" xml:space="preserve"><value>Live-versiot</value></data>
+  <data name="My packages" xml:space="preserve"><value>Omat paketit</value></data>
+  <data name="My plugins" xml:space="preserve"><value>Omat lisäosat</value></data>
+  <data name="My tokens" xml:space="preserve"><value>Omat tokenit</value></data>
+  <data name="Name" xml:space="preserve"><value>Nimi</value></data>
+  <data name="No account yet?" xml:space="preserve"><value>Eikö sinulla ole vielä tiliä?</value></data>
+  <data name="No live versions yet." xml:space="preserve"><value>Ei vielä live-versioita.</value></data>
+  <data name="No plugins have been released yet." xml:space="preserve"><value>Yhtään lisäosaa ei ole vielä julkaistu.</value></data>
+  <data name="Nothing to review right now." xml:space="preserve"><value>Ei mitään tarkistettavaa juuri nyt.</value></data>
+  <data name="Package" xml:space="preserve"><value>Paketti</value></data>
+  <data name="Package file (.ppak)" xml:space="preserve"><value>Pakettitiedosto (.ppak)</value></data>
+  <data name="Password" xml:space="preserve"><value>Salasana</value></data>
+  <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>Henkilökohtaisten API-tokenien avulla työkalut ja tekoälyavustajat voivat ladata ja päivittää lisäosiasi puolestasi.</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>Lisäosakauppa:</value></data>
+  <data name="Plugin-Store for Tungsten Power PDF" xml:space="preserve"><value>Plugin-Store Tungsten Power PDF:lle</value></data>
+  <data name="Prefix" xml:space="preserve"><value>Etuliite</value></data>
+  <data name="Profile" xml:space="preserve"><value>Profiili</value></data>
+  <data name="Reason (sent to the submitter)" xml:space="preserve"><value>Perustelu (lähetetään lähettäjälle)</value></data>
+  <data name="Reject" xml:space="preserve"><value>Hylkää</value></data>
+  <data name="Released plugins" xml:space="preserve"><value>Julkaistut lisäosat</value></data>
+  <data name="Request access" xml:space="preserve"><value>Pyydä käyttöoikeutta</value></data>
+  <data name="Requested" xml:space="preserve"><value>Pyydetty</value></data>
+  <data name="Review" xml:space="preserve"><value>Tarkistus</value></data>
+  <data name="Review comment" xml:space="preserve"><value>Tarkistuskommentti</value></data>
+  <data name="Review queue" xml:space="preserve"><value>Tarkistusjono</value></data>
+  <data name="Revoke" xml:space="preserve"><value>Mitätöi</value></data>
+  <data name="Role" xml:space="preserve"><value>Rooli</value></data>
+  <data name="Sign in" xml:space="preserve"><value>Kirjaudu sisään</value></data>
+  <data name="Sign out" xml:space="preserve"><value>Kirjaudu ulos</value></data>
+  <data name="Status" xml:space="preserve"><value>Tila</value></data>
+  <data name="Subject" xml:space="preserve"><value>Kohde</value></data>
+  <data name="Submit a package" xml:space="preserve"><value>Lähetä paketti</value></data>
+  <data name="Submit request" xml:space="preserve"><value>Lähetä pyyntö</value></data>
+  <data name="Submitted" xml:space="preserve"><value>Lähetetty</value></data>
+  <data name="Submitted by" xml:space="preserve"><value>Lähettäjä</value></data>
+  <data name="Time (UTC)" xml:space="preserve"><value>Aika (UTC)</value></data>
+  <data name="Token created. Copy it now; it is shown only this once:" xml:space="preserve"><value>Token luotu. Kopioi se nyt; se näytetään vain tämän kerran:</value></data>
+  <data name="Token name (e.g. 'claude', 'build server')" xml:space="preserve"><value>Tokenin nimi (esim. 'claude', 'build server')</value></data>
+  <data name="Upload a .ppak package below, or automate it via the API with a personal token from your profile." xml:space="preserve"><value>Lataa .ppak-paketti alla tai automatisoi lähetys API:n kautta profiilisi henkilökohtaisella tokenilla.</value></data>
+  <data name="Upload and validate" xml:space="preserve"><value>Lataa ja validoi</value></data>
+  <data name="Users" xml:space="preserve"><value>Käyttäjät</value></data>
+  <data name="Version" xml:space="preserve"><value>Versio</value></data>
+  <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>Mitä aiot julkaista? (näytetään järjestelmänvalvojalle)</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>Vedä takaisin</value></data>
+  <data name="You have not submitted any packages yet." xml:space="preserve"><value>Et ole vielä lähettänyt yhtään pakettia.</value></data>
+  <data name="active" xml:space="preserve"><value>aktiivinen</value></data>
+  <data name="downloads" xml:space="preserve"><value>latausta</value></data>
+  <data name="revoked" xml:space="preserve"><value>mitätöity</value></data>
+  <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>Käyttöoikeuspyyntösi on lähetetty. Saat sähköpostin, kun järjestelmänvalvoja on hyväksynyt sen.</value></data>
+  <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>Kirjautuminen epäonnistui. Tarkista sähköposti ja salasana.</value></data>
+  <data name="Your access request is still awaiting admin approval." xml:space="preserve"><value>Käyttöoikeuspyyntösi odottaa vielä järjestelmänvalvojan hyväksyntää.</value></data>
+  <data name="This account is not active. Contact an administrator." xml:space="preserve"><value>Tämä tili ei ole aktiivinen. Ota yhteyttä järjestelmänvalvojaan.</value></data>
+  <data name="Too many failed attempts; the account is temporarily locked." xml:space="preserve"><value>Liian monta epäonnistunutta yritystä; tili on tilapäisesti lukittu.</value></data>
+  <data name="No package received." xml:space="preserve"><value>Pakettia ei vastaanotettu.</value></data>
+  <data name="The package did not pass the automatic checks; nothing was stored. Fix the errors below and upload again." xml:space="preserve"><value>Paketti ei läpäissyt automaattisia tarkistuksia; mitään ei tallennettu. Korjaa alla olevat virheet ja lataa uudelleen.</value></data>
+  <data name="Submitted. The version is in the beta channel now and awaits admin review." xml:space="preserve"><value>Lähetetty. Versio on nyt beta-kanavassa ja odottaa järjestelmänvalvojan tarkistusta.</value></data>
+  <data name="Version withdrawn." xml:space="preserve"><value>Versio vedetty takaisin.</value></data>
+  <data name="Version approved and live." xml:space="preserve"><value>Versio hyväksytty ja live.</value></data>
+  <data name="Version rejected." xml:space="preserve"><value>Versio hylätty.</value></data>
+  <data name="Account approved." xml:space="preserve"><value>Tili hyväksytty.</value></data>
+  <data name="Request rejected." xml:space="preserve"><value>Pyyntö hylätty.</value></data>
+  <data name="Account disabled." xml:space="preserve"><value>Tili poistettu käytöstä.</value></data>
+  <data name="Account enabled." xml:space="preserve"><value>Tili otettu käyttöön.</value></data>
+</root>

@@ -1,0 +1,156 @@
+// PluginStore.rc — Plugin-Store client resource script.
+// UTF-8 with code_page pragma. String ids live in Resource.h; every IDS_
+// exists in every language block below (English is the runtime fallback).
+#pragma code_page(65001)
+#include "resource.h"
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+// Version
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,1,0,0
+ PRODUCTVERSION 0,1,0,0
+ FILEFLAGSMASK 0x3fL
+ FILEFLAGS 0x0L
+ FILEOS 0x40004L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "CompanyName", "Tungsten Automation"
+            VALUE "FileDescription", "Plugin-Store client for Tungsten Power PDF"
+            VALUE "FileVersion", "0.1.0"
+            VALUE "InternalName", "PluginStore"
+            VALUE "OriginalFilename", "PluginStore.zxt"
+            VALUE "ProductName", "PluginStore-PowerPDF"
+            VALUE "ProductVersion", "0.1.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Bitmaps
+IDB_STORE     BITMAP  "icon_store32.bmp"
+IDB_STORE16   BITMAP  "icon_store16.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+// Store dialog
+IDD_PS_DIALOG DIALOGEX 0, 0, 440, 260
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Plugin-Store"
+FONT 9, "Segoe UI", 400, 0, 0x0
+BEGIN
+    CONTROL         "", IDC_PS_LIST, "SysListView32",
+                    LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,
+                    7, 7, 426, 140
+    EDITTEXT        IDC_PS_DESC, 7, 152, 426, 44,
+                    ES_MULTILINE | ES_READONLY | WS_VSCROLL | NOT WS_TABSTOP
+    LTEXT           "", IDC_PS_ADMIN_NOTE, 7, 201, 426, 10
+    LTEXT           "", IDC_PS_STATUS, 7, 214, 426, 18
+    PUSHBUTTON      "Refresh", IDC_PS_REFRESH, 229, 239, 60, 14
+    DEFPUSHBUTTON   "Install", IDC_PS_INSTALL, 293, 239, 70, 14
+    PUSHBUTTON      "Close", IDCANCEL, 367, 239, 66, 14
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Options page (File > Options > Plugin-Store)
+IDD_PS_OPTIONS DIALOGEX 0, 0, 320, 180
+STYLE DS_SETFONT | WS_CHILD
+FONT 9, "Segoe UI", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "", IDC_PSO_GRP, 4, 4, 312, 92
+    LTEXT           "", IDC_PSO_URL_LBL, 12, 18, 296, 10
+    EDITTEXT        IDC_PSO_URL, 12, 30, 296, 13, ES_AUTOHSCROLL
+    CONTROL         "", IDC_PSO_BETA, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 12, 50, 296, 10
+    LTEXT           "", IDC_PSO_HINT, 12, 64, 296, 26
+    GROUPBOX        "", IDC_PSO_GRP_DIAG, 4, 100, 312, 32
+    CONTROL         "", IDC_PSO_VERBOSE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 12, 113, 296, 10
+    LTEXT           "", IDC_PSO_VERSION, 4, 140, 312, 10
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — English (runtime fallback)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Enhanced Features"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Browse and install plugins for Power PDF"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Plugin"
+    IDS_PSD_C_AVAIL     "Available"
+    IDS_PSD_C_INSTALLED "Installed"
+    IDS_PSD_C_STATUS    "Status"
+    IDS_PSD_C_SIZE      "Size"
+    IDS_PSD_BTN_INSTALL "Install"
+    IDS_PSD_BTN_REFRESH "Refresh"
+    IDS_PSD_BTN_CLOSE   "Close"
+    IDS_PSD_ST_NOTINST  "Not installed"
+    IDS_PSD_ST_INSTALLED "Installed"
+    IDS_PSD_ST_UPDATE   "Update available"
+    IDS_PSD_MSG_FAIL    "The plugin store server could not be reached. Check the server URL in File > Options > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Installed. Restart Power PDF to load the plugin."
+    IDS_PSD_MSG_INSTFAIL "Installation failed (code %d)."
+    IDS_PSD_CONFIRM     "Install '%s' version %s now?\nWindows will ask once for administrator approval."
+    IDS_PSD_ADMIN_NOTE  "Installing or updating a plugin requires local administrator rights (one prompt per installation)."
+    IDS_PSD_MSG_HASH    "The downloaded file failed the integrity check (SHA-256). Installation aborted."
+    IDS_PSD_EMPTY       "No plugins are available on the server yet."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSO_PAGE        "General"
+    IDS_PSO_GRP         "Plugin store server"
+    IDS_PSO_URL_LBL     "Server URL:"
+    IDS_PSO_BETA        "Beta: show plugins that are not yet approved"
+    IDS_PSO_VERSIONLBL  "Plugin-Store client version %s"
+    IDS_PSO_HINT        "Beta plugins passed the automatic checks but are not yet reviewed by an admin. Install them at your own risk."
+    IDS_PSO_VERBOSE     "Verbose logging (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnostics"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — German
+LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Erweiterte Funktionen"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Plug-ins für Power PDF durchsuchen und installieren"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Plug-in"
+    IDS_PSD_C_AVAIL     "Verfügbar"
+    IDS_PSD_C_INSTALLED "Installiert"
+    IDS_PSD_C_STATUS    "Status"
+    IDS_PSD_C_SIZE      "Größe"
+    IDS_PSD_BTN_INSTALL "Installieren"
+    IDS_PSD_BTN_REFRESH "Aktualisieren"
+    IDS_PSD_BTN_CLOSE   "Schließen"
+    IDS_PSD_ST_NOTINST  "Nicht installiert"
+    IDS_PSD_ST_INSTALLED "Installiert"
+    IDS_PSD_ST_UPDATE   "Update verfügbar"
+    IDS_PSD_MSG_FAIL    "Der Plugin-Store-Server ist nicht erreichbar. Prüfen Sie die Server-URL unter Datei > Optionen > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Installiert. Starten Sie Power PDF neu, um das Plug-in zu laden."
+    IDS_PSD_MSG_INSTFAIL "Installation fehlgeschlagen (Code %d)."
+    IDS_PSD_CONFIRM     "'%s' Version %s jetzt installieren?\nWindows fragt einmal nach Administrator-Bestätigung."
+    IDS_PSD_ADMIN_NOTE  "Für das Installieren oder Aktualisieren eines Plug-ins sind lokale Administratorrechte erforderlich (eine Abfrage je Installation)."
+    IDS_PSD_MSG_HASH    "Die heruntergeladene Datei hat die Integritätsprüfung (SHA-256) nicht bestanden. Installation abgebrochen."
+    IDS_PSD_EMPTY       "Auf dem Server sind noch keine Plug-ins verfügbar."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSO_PAGE        "Allgemein"
+    IDS_PSO_GRP         "Plugin-Store-Server"
+    IDS_PSO_URL_LBL     "Server-URL:"
+    IDS_PSO_BETA        "Beta: noch nicht freigegebene Plug-ins anzeigen"
+    IDS_PSO_VERSIONLBL  "Plugin-Store-Client Version %s"
+    IDS_PSO_HINT        "Beta-Plug-ins haben die automatische Prüfung bestanden, sind aber noch nicht von einem Admin geprüft. Installation auf eigene Verantwortung."
+    IDS_PSO_VERBOSE     "Ausführliches Protokoll (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnose"
+END

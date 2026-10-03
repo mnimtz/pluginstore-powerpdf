@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Access requests" xml:space="preserve"><value>Wnioski o dostęp</value></data>
+  <data name="Accounts are for colleagues who develop and publish plugins. An admin reviews every request; you will be notified by email." xml:space="preserve"><value>Konta są przeznaczone dla współpracowników, którzy tworzą i publikują wtyczki. Administrator rozpatruje każdy wniosek; powiadomienie otrzymasz e-mailem.</value></data>
+  <data name="Action" xml:space="preserve"><value>Akcja</value></data>
+  <data name="Actor" xml:space="preserve"><value>Wykonawca</value></data>
+  <data name="All users" xml:space="preserve"><value>Wszyscy użytkownicy</value></data>
+  <data name="Approve" xml:space="preserve"><value>Zatwierdź</value></data>
+  <data name="Approve for live store" xml:space="preserve"><value>Zatwierdź do sklepu live</value></data>
+  <data name="Approved" xml:space="preserve"><value>Zatwierdzono</value></data>
+  <data name="Audit" xml:space="preserve"><value>Audyt</value></data>
+  <data name="Audit log" xml:space="preserve"><value>Dziennik audytu</value></data>
+  <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>Wersje beta przeszły wszystkie automatyczne kontrole i są widoczne dla beta-testerów. Zatwierdź je do sklepu live lub odrzuć, podając powód.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Poniżej możesz przeglądać opublikowane wtyczki. Instalacja odbywa się bezpośrednio w Power PDF za pomocą wstążki Plugin-Store; ta witryna jest przeznaczona dla twórców wtyczek i administratorów.</value></data>
+  <data name="Catalog" xml:space="preserve"><value>Katalog</value></data>
+  <data name="Changelog" xml:space="preserve"><value>Dziennik zmian</value></data>
+  <data name="Create a token" xml:space="preserve"><value>Utwórz nowy token</value></data>
+  <data name="Create admin account" xml:space="preserve"><value>Utwórz konto administratora</value></data>
+  <data name="Create the first administrator account for this Plugin-Store instance." xml:space="preserve"><value>Utwórz pierwsze konto administratora dla tej instancji Plugin-Store.</value></data>
+  <data name="Create token" xml:space="preserve"><value>Utwórz token</value></data>
+  <data name="Created" xml:space="preserve"><value>Utworzono</value></data>
+  <data name="Details" xml:space="preserve"><value>Szczegóły</value></data>
+  <data name="Disable" xml:space="preserve"><value>Wyłącz</value></data>
+  <data name="Display name" xml:space="preserve"><value>Nazwa wyświetlana</value></data>
+  <data name="Download" xml:space="preserve"><value>Pobierz</value></data>
+  <data name="Downloads" xml:space="preserve"><value>Pobrania</value></data>
+  <data name="Email" xml:space="preserve"><value>E-mail</value></data>
+  <data name="Enable" xml:space="preserve"><value>Włącz</value></data>
+  <data name="Every relevant action on this server: registrations, approvals, tokens, submissions, reviews." xml:space="preserve"><value>Każda istotna akcja na tym serwerze: rejestracje, zatwierdzenia, tokeny, przesłane pakiety, recenzje.</value></data>
+  <data name="Filter" xml:space="preserve"><value>Filtr</value></data>
+  <data name="Filter (actor, action, subject)" xml:space="preserve"><value>Filtr (wykonawca, akcja, obiekt)</value></data>
+  <data name="First-run setup" xml:space="preserve"><value>Konfiguracja początkowa</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Plugin-Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Dla twórców wtyczek i administratorów. Użytkownicy końcowi instalują wtyczki bezpośrednio ze wstążki Plugin-Store w Power PDF, bez konta.</value></data>
+  <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>Przekaż token swojemu Claude razem z tym wierszem:</value></data>
+  <data name="Last used" xml:space="preserve"><value>Ostatnio użyty</value></data>
+  <data name="Live versions" xml:space="preserve"><value>Wersje live</value></data>
+  <data name="My packages" xml:space="preserve"><value>Moje pakiety</value></data>
+  <data name="My plugins" xml:space="preserve"><value>Moje wtyczki</value></data>
+  <data name="My tokens" xml:space="preserve"><value>Moje tokeny</value></data>
+  <data name="Name" xml:space="preserve"><value>Nazwa</value></data>
+  <data name="No account yet?" xml:space="preserve"><value>Nie masz jeszcze konta?</value></data>
+  <data name="No live versions yet." xml:space="preserve"><value>Brak wersji live.</value></data>
+  <data name="No plugins have been released yet." xml:space="preserve"><value>Nie opublikowano jeszcze żadnych wtyczek.</value></data>
+  <data name="Nothing to review right now." xml:space="preserve"><value>Obecnie nie ma nic do recenzji.</value></data>
+  <data name="Package" xml:space="preserve"><value>Pakiet</value></data>
+  <data name="Package file (.ppak)" xml:space="preserve"><value>Plik pakietu (.ppak)</value></data>
+  <data name="Password" xml:space="preserve"><value>Hasło</value></data>
+  <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>Osobiste tokeny API umożliwiają narzędziom i asystentom AI przesyłanie i aktualizowanie Twoich wtyczek w Twoim imieniu.</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>Sklep z wtyczkami:</value></data>
+  <data name="Plugin-Store for Tungsten Power PDF" xml:space="preserve"><value>Plugin-Store dla Tungsten Power PDF</value></data>
+  <data name="Prefix" xml:space="preserve"><value>Prefiks</value></data>
+  <data name="Profile" xml:space="preserve"><value>Profil</value></data>
+  <data name="Reason (sent to the submitter)" xml:space="preserve"><value>Powód (wysyłany do zgłaszającego)</value></data>
+  <data name="Reject" xml:space="preserve"><value>Odrzuć</value></data>
+  <data name="Released plugins" xml:space="preserve"><value>Opublikowane wtyczki</value></data>
+  <data name="Request access" xml:space="preserve"><value>Poproś o dostęp</value></data>
+  <data name="Requested" xml:space="preserve"><value>Zgłoszono</value></data>
+  <data name="Review" xml:space="preserve"><value>Recenzja</value></data>
+  <data name="Review comment" xml:space="preserve"><value>Komentarz do recenzji</value></data>
+  <data name="Review queue" xml:space="preserve"><value>Kolejka recenzji</value></data>
+  <data name="Revoke" xml:space="preserve"><value>Unieważnij</value></data>
+  <data name="Role" xml:space="preserve"><value>Rola</value></data>
+  <data name="Sign in" xml:space="preserve"><value>Zaloguj się</value></data>
+  <data name="Sign out" xml:space="preserve"><value>Wyloguj się</value></data>
+  <data name="Status" xml:space="preserve"><value>Stan</value></data>
+  <data name="Subject" xml:space="preserve"><value>Obiekt</value></data>
+  <data name="Submit a package" xml:space="preserve"><value>Prześlij pakiet</value></data>
+  <data name="Submit request" xml:space="preserve"><value>Wyślij wniosek</value></data>
+  <data name="Submitted" xml:space="preserve"><value>Przesłano</value></data>
+  <data name="Submitted by" xml:space="preserve"><value>Przesłane przez</value></data>
+  <data name="Time (UTC)" xml:space="preserve"><value>Czas (UTC)</value></data>
+  <data name="Token created. Copy it now; it is shown only this once:" xml:space="preserve"><value>Token utworzony. Skopiuj go teraz; zostanie wyświetlony tylko ten jeden raz:</value></data>
+  <data name="Token name (e.g. 'claude', 'build server')" xml:space="preserve"><value>Nazwa tokenu (np. 'claude', 'build server')</value></data>
+  <data name="Upload a .ppak package below, or automate it via the API with a personal token from your profile." xml:space="preserve"><value>Prześlij poniżej pakiet .ppak lub zautomatyzuj ten proces przez API przy użyciu osobistego tokenu z Twojego profilu.</value></data>
+  <data name="Upload and validate" xml:space="preserve"><value>Prześlij i zweryfikuj</value></data>
+  <data name="Users" xml:space="preserve"><value>Użytkownicy</value></data>
+  <data name="Version" xml:space="preserve"><value>Wersja</value></data>
+  <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>Co planujesz opublikować? (widoczne dla administratora)</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>Wycofaj</value></data>
+  <data name="You have not submitted any packages yet." xml:space="preserve"><value>Nie przesłano jeszcze żadnych pakietów.</value></data>
+  <data name="active" xml:space="preserve"><value>aktywny</value></data>
+  <data name="downloads" xml:space="preserve"><value>pobrania</value></data>
+  <data name="revoked" xml:space="preserve"><value>unieważniony</value></data>
+  <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>Twój wniosek o dostęp został wysłany. Otrzymasz e-mail, gdy administrator go zatwierdzi.</value></data>
+  <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>Logowanie nie powiodło się. Sprawdź e-mail i hasło.</value></data>
+  <data name="Your access request is still awaiting admin approval." xml:space="preserve"><value>Twój wniosek o dostęp wciąż oczekuje na zatwierdzenie przez administratora.</value></data>
+  <data name="This account is not active. Contact an administrator." xml:space="preserve"><value>To konto nie jest aktywne. Skontaktuj się z administratorem.</value></data>
+  <data name="Too many failed attempts; the account is temporarily locked." xml:space="preserve"><value>Zbyt wiele nieudanych prób; konto zostało tymczasowo zablokowane.</value></data>
+  <data name="No package received." xml:space="preserve"><value>Nie otrzymano pakietu.</value></data>
+  <data name="The package did not pass the automatic checks; nothing was stored. Fix the errors below and upload again." xml:space="preserve"><value>Pakiet nie przeszedł automatycznych kontroli; nic nie zostało zapisane. Popraw poniższe błędy i prześlij ponownie.</value></data>
+  <data name="Submitted. The version is in the beta channel now and awaits admin review." xml:space="preserve"><value>Przesłano. Wersja znajduje się teraz w kanale beta i oczekuje na recenzję administratora.</value></data>
+  <data name="Version withdrawn." xml:space="preserve"><value>Wersja wycofana.</value></data>
+  <data name="Version approved and live." xml:space="preserve"><value>Wersja zatwierdzona i live.</value></data>
+  <data name="Version rejected." xml:space="preserve"><value>Wersja odrzucona.</value></data>
+  <data name="Account approved." xml:space="preserve"><value>Konto zatwierdzone.</value></data>
+  <data name="Request rejected." xml:space="preserve"><value>Wniosek odrzucony.</value></data>
+  <data name="Account disabled." xml:space="preserve"><value>Konto wyłączone.</value></data>
+  <data name="Account enabled." xml:space="preserve"><value>Konto włączone.</value></data>
+</root>

@@ -1,0 +1,27 @@
+@page
+@model AddonStore.Web.Pages.Admin.AuditModel
+@{
+    ViewData["Title"] = "Audit";
+}
+
+<h1>@L["Audit log"]</h1>
+<p class="lead">@L["Every relevant action on this server: registrations, approvals, tokens, submissions, reviews."]</p>
+
+<form method="get" style="display:flex;gap:10px;margin-bottom:14px;max-width:480px">
+    <input type="text" name="q" value="@Model.Query" placeholder="@L["Filter (actor, action, subject)"]" />
+    <button type="submit" class="btn small secondary">@L["Filter"]</button>
+</form>
+
+<table>
+    <tr><th>@L["Time (UTC)"]</th><th>@L["Actor"]</th><th>@L["Action"]</th><th>@L["Subject"]</th><th>@L["Details"]</th></tr>
+    @foreach (var e in Model.Entries)
+    {
+        <tr>
+            <td style="white-space:nowrap">@e.At.ToString("MMM d, yyyy HH:mm:ss")</td>
+            <td>@e.Actor</td>
+            <td><code>@e.Action</code></td>
+            <td>@e.Subject</td>
+            <td>@e.Details</td>
+        </tr>
+    }
+</table>

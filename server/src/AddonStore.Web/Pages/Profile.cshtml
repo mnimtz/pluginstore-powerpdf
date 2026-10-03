@@ -1,0 +1,64 @@
+@page
+@model AddonStore.Web.Pages.ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>@L["Profile"]</h1>
+<p class="lead">@L["Personal API tokens let tools and AI assistants upload and update your plugins on your behalf."]</p>
+
+@if (Model.NewToken is not null)
+{
+    <div class="alert ok">
+        @L["Token created. Copy it now; it is shown only this once:"]
+        <div class="token-reveal">@Model.NewToken</div>
+    </div>
+}
+
+<div class="card">
+    <h2 style="margin-top:0">@L["Create a token"]</h2>
+    <form method="post" asp-page-handler="Create" class="stack">
+        <div>
+            <label for="name">@L["Token name (e.g. 'claude', 'build server')"]</label>
+            <input type="text" id="name" name="name" maxlength="60" required />
+        </div>
+        <button type="submit" class="btn cta">@L["Create token"]</button>
+    </form>
+    <p style="font-size:.85rem;color:var(--tun-slate)">
+        @L["Give the token to your Claude together with this line:"]<br />
+        <code>@L["Plugin store:"] @($"{Request.Scheme}://{Request.Host}/api/agent-guide")</code>
+    </p>
+</div>
+
+<h2>@L["My tokens"]</h2>
+<table>
+    <tr><th>@L["Name"]</th><th>@L["Prefix"]</th><th>@L["Created"]</th><th>@L["Last used"]</th><th>@L["Status"]</th><th></th></tr>
+    @foreach (var t in Model.Tokens)
+    {
+        <tr>
+            <td>@t.Name</td>
+            <td><code>@t.Prefix…</code></td>
+            <td>@t.CreatedAt.ToString("MMM d, yyyy")</td>
+            <td>@(t.LastUsedAt?.ToString("MMM d, yyyy HH:mm") ?? "-")</td>
+            <td>
+                @if (t.RevokedAt is null)
+                {
+                    <span class="badge active">@L["active"]</span>
+                }
+                else
+                {
+                    <span class="badge disabled">@L["revoked"]</span>
+                }
+            </td>
+            <td>
+                @if (t.RevokedAt is null)
+                {
+                    <form method="post" asp-page-handler="Revoke" style="display:inline">
+                        <input type="hidden" name="id" value="@t.Id" />
+                        <button type="submit" class="btn small danger">@L["Revoke"]</button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+</table>

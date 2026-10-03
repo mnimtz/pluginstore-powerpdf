@@ -1,0 +1,29 @@
+@page
+@model AddonStore.Web.Pages.IndexModel
+@{
+    ViewData["Title"] = "Catalog";
+}
+
+<div class="hero">
+    <h1>@L["Plugin-Store for Tungsten Power PDF"]</h1>
+    <p>@L["Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins."]</p>
+</div>
+
+<h2>@L["Released plugins"]</h2>
+@if (Model.Items.Count == 0)
+{
+    <div class="card">@L["No plugins have been released yet."]</div>
+}
+else
+{
+    <div class="grid">
+        @foreach (var item in Model.Items)
+        {
+            <div class="card pkg">
+                <span class="name">@item.Name</span>
+                <span class="meta">@item.Id · v@(item.Version) · @(item.SizeBytes / 1024) KB · @item.Downloads @L["downloads"]</span>
+                <span class="desc">@item.Description</span>
+            </div>
+        }
+    </div>
+}

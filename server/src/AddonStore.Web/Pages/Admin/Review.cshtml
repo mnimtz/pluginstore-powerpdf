@@ -1,0 +1,83 @@
+@page
+@using System.Text.Json
+@using AddonStore.Web.Validation
+@model AddonStore.Web.Pages.Admin.ReviewModel
+@{
+    ViewData["Title"] = "Review";
+}
+
+<h1>@L["Review queue"]</h1>
+<p class="lead">@L["Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason."]</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert ok">@L[Model.Notice]</div>
+}
+
+@if (Model.Queue.Count == 0)
+{
+    <div class="card">@L["Nothing to review right now."]</div>
+}
+@foreach (var v in Model.Queue)
+{
+    <div class="card">
+        <strong style="color:var(--tun-navy)">@v.PackageId</strong> v@(v.Version)
+        <span class="badge beta">Beta</span>
+        <div style="color:var(--tun-slate);font-size:.85rem;margin:4px 0 8px">
+            @L["Submitted by"] @v.SubmittedBy · @v.SubmittedVia · @v.SubmittedAt.ToString("MMM d, yyyy HH:mm") · @(v.SizeBytes / 1024) KB · SHA-256 <code>@v.Sha256[..16]…</code>
+        </div>
+        <p style="margin:6px 0"><b>@L["Changelog"]:</b> @v.Changelog</p>
+        @{
+            var report = JsonSerializer.Deserialize<ValidationReport>(v.ValidationReportJson);
+            var warnings = report?.Findings.Where(f => f.Severity != "info").ToList() ?? new List<Finding>();
+        }
+        @if (warnings.Count > 0)
+        {
+            <ul class="findings">
+                @foreach (var f in warnings)
+                {
+                    <li class="@f.Severity"><span class="code">@f.Code</span> @f.Message</li>
+                }
+            </ul>
+        }
+        <div style="display:flex;gap:10px;align-items:flex-start;margin-top:10px;flex-wrap:wrap">
+            <a class="btn small secondary" href="/api/packages/@v.PackageId/@v.Version/download">@L["Download"]</a>
+            <form method="post" asp-page-handler="Approve" style="display:inline">
+                <input type="hidden" name="id" value="@v.Id" />
+                <button type="submit" class="btn small">@L["Approve for live store"]</button>
+            </form>
+            <form method="post" asp-page-handler="Reject" style="display:flex;gap:8px;flex:1;min-width:280px">
+                <input type="hidden" name="id" value="@v.Id" />
+                <input type="text" name="comment" placeholder="@L["Reason (sent to the submitter)"]" required style="flex:1" />
+                <button type="submit" class="btn small danger">@L["Reject"]</button>
+            </form>
+        </div>
+    </div>
+}
+
+<h2>@L["Live versions"]</h2>
+@if (Model.Live.Count == 0)
+{
+    <div class="card">@L["No live versions yet."]</div>
+}
+else
+{
+    <table>
+        <tr><th>@L["Package"]</th><th>@L["Version"]</th><th>@L["Approved"]</th><th>@L["Downloads"]</th><th></th></tr>
+        @foreach (var v in Model.Live)
+        {
+            <tr>
+                <td>@v.PackageId</td>
+                <td>@v.Version</td>
+                <td>@v.ReviewedAt?.ToString("MMM d, yyyy")</td>
+                <td>@v.Downloads</td>
+                <td>
+                    <form method="post" asp-page-handler="Withdraw">
+                        <input type="hidden" name="id" value="@v.Id" />
+                        <button type="submit" class="btn small danger">@L["Withdraw"]</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}

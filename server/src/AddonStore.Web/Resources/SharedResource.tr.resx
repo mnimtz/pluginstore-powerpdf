@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Access requests" xml:space="preserve"><value>Erişim istekleri</value></data>
+  <data name="Accounts are for colleagues who develop and publish plugins. An admin reviews every request; you will be notified by email." xml:space="preserve"><value>Hesaplar, eklenti geliştiren ve yayımlayan çalışma arkadaşları içindir. Her isteği bir yönetici inceler; e-posta ile bilgilendirilirsiniz.</value></data>
+  <data name="Action" xml:space="preserve"><value>Eylem</value></data>
+  <data name="Actor" xml:space="preserve"><value>Aktör</value></data>
+  <data name="All users" xml:space="preserve"><value>Tüm kullanıcılar</value></data>
+  <data name="Approve" xml:space="preserve"><value>Onayla</value></data>
+  <data name="Approve for live store" xml:space="preserve"><value>Canlı mağaza için onayla</value></data>
+  <data name="Approved" xml:space="preserve"><value>Onaylandı</value></data>
+  <data name="Audit" xml:space="preserve"><value>Denetim</value></data>
+  <data name="Audit log" xml:space="preserve"><value>Denetim günlüğü</value></data>
+  <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>Beta sürümleri tüm otomatik denetimlerden geçti ve beta test kullanıcılarına görünür durumda. Bunları canlı mağaza için onaylayın veya bir gerekçeyle reddedin.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Yayımlanan eklentilere aşağıdan göz atın. Kurulum, doğrudan Power PDF içinde Plugin-Store şeridi üzerinden yapılır; bu site eklenti geliştiricileri ve yöneticiler içindir.</value></data>
+  <data name="Catalog" xml:space="preserve"><value>Katalog</value></data>
+  <data name="Changelog" xml:space="preserve"><value>Değişiklik günlüğü</value></data>
+  <data name="Create a token" xml:space="preserve"><value>Yeni belirteç oluştur</value></data>
+  <data name="Create admin account" xml:space="preserve"><value>Yönetici hesabı oluştur</value></data>
+  <data name="Create the first administrator account for this Plugin-Store instance." xml:space="preserve"><value>Bu Plugin-Store örneği için ilk yönetici hesabını oluşturun.</value></data>
+  <data name="Create token" xml:space="preserve"><value>Belirteç oluştur</value></data>
+  <data name="Created" xml:space="preserve"><value>Oluşturuldu</value></data>
+  <data name="Details" xml:space="preserve"><value>Ayrıntılar</value></data>
+  <data name="Disable" xml:space="preserve"><value>Devre dışı bırak</value></data>
+  <data name="Display name" xml:space="preserve"><value>Görünen ad</value></data>
+  <data name="Download" xml:space="preserve"><value>İndir</value></data>
+  <data name="Downloads" xml:space="preserve"><value>İndirmeler</value></data>
+  <data name="Email" xml:space="preserve"><value>E-posta</value></data>
+  <data name="Enable" xml:space="preserve"><value>Etkinleştir</value></data>
+  <data name="Every relevant action on this server: registrations, approvals, tokens, submissions, reviews." xml:space="preserve"><value>Bu sunucudaki tüm ilgili eylemler: kayıtlar, onaylar, belirteçler, gönderimler, incelemeler.</value></data>
+  <data name="Filter" xml:space="preserve"><value>Filtre</value></data>
+  <data name="Filter (actor, action, subject)" xml:space="preserve"><value>Filtre (aktör, eylem, nesne)</value></data>
+  <data name="First-run setup" xml:space="preserve"><value>İlk kurulum</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Plugin-Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Eklenti geliştiricileri ve yöneticiler içindir. Son kullanıcılar eklentileri doğrudan Power PDF içindeki Plugin-Store şeridinden, hesap gerekmeden yükler.</value></data>
+  <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>Belirteci bu satırla birlikte Claude'unuza verin:</value></data>
+  <data name="Last used" xml:space="preserve"><value>Son kullanım</value></data>
+  <data name="Live versions" xml:space="preserve"><value>Canlı sürümler</value></data>
+  <data name="My packages" xml:space="preserve"><value>Paketlerim</value></data>
+  <data name="My plugins" xml:space="preserve"><value>Eklentilerim</value></data>
+  <data name="My tokens" xml:space="preserve"><value>Belirteçlerim</value></data>
+  <data name="Name" xml:space="preserve"><value>Ad</value></data>
+  <data name="No account yet?" xml:space="preserve"><value>Henüz hesabınız yok mu?</value></data>
+  <data name="No live versions yet." xml:space="preserve"><value>Henüz canlı sürüm yok.</value></data>
+  <data name="No plugins have been released yet." xml:space="preserve"><value>Henüz hiçbir eklenti yayımlanmadı.</value></data>
+  <data name="Nothing to review right now." xml:space="preserve"><value>Şu anda incelenecek bir şey yok.</value></data>
+  <data name="Package" xml:space="preserve"><value>Paket</value></data>
+  <data name="Package file (.ppak)" xml:space="preserve"><value>Paket dosyası (.ppak)</value></data>
+  <data name="Password" xml:space="preserve"><value>Parola</value></data>
+  <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>Kişisel API belirteçleri, araçların ve yapay zeka asistanlarının eklentilerinizi sizin adınıza yüklemesine ve güncellemesine olanak tanır.</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>Eklenti mağazası:</value></data>
+  <data name="Plugin-Store for Tungsten Power PDF" xml:space="preserve"><value>Tungsten Power PDF için Plugin-Store</value></data>
+  <data name="Prefix" xml:space="preserve"><value>Önek</value></data>
+  <data name="Profile" xml:space="preserve"><value>Profil</value></data>
+  <data name="Reason (sent to the submitter)" xml:space="preserve"><value>Gerekçe (gönderene iletilir)</value></data>
+  <data name="Reject" xml:space="preserve"><value>Reddet</value></data>
+  <data name="Released plugins" xml:space="preserve"><value>Yayımlanan eklentiler</value></data>
+  <data name="Request access" xml:space="preserve"><value>Erişim iste</value></data>
+  <data name="Requested" xml:space="preserve"><value>İstendi</value></data>
+  <data name="Review" xml:space="preserve"><value>İnceleme</value></data>
+  <data name="Review comment" xml:space="preserve"><value>İnceleme yorumu</value></data>
+  <data name="Review queue" xml:space="preserve"><value>İnceleme kuyruğu</value></data>
+  <data name="Revoke" xml:space="preserve"><value>İptal et</value></data>
+  <data name="Role" xml:space="preserve"><value>Rol</value></data>
+  <data name="Sign in" xml:space="preserve"><value>Oturum aç</value></data>
+  <data name="Sign out" xml:space="preserve"><value>Oturumu kapat</value></data>
+  <data name="Status" xml:space="preserve"><value>Durum</value></data>
+  <data name="Subject" xml:space="preserve"><value>Nesne</value></data>
+  <data name="Submit a package" xml:space="preserve"><value>Paket gönder</value></data>
+  <data name="Submit request" xml:space="preserve"><value>İsteği gönder</value></data>
+  <data name="Submitted" xml:space="preserve"><value>Gönderildi</value></data>
+  <data name="Submitted by" xml:space="preserve"><value>Gönderen</value></data>
+  <data name="Time (UTC)" xml:space="preserve"><value>Saat (UTC)</value></data>
+  <data name="Token created. Copy it now; it is shown only this once:" xml:space="preserve"><value>Belirteç oluşturuldu. Şimdi kopyalayın; yalnızca bu kez gösterilir:</value></data>
+  <data name="Token name (e.g. 'claude', 'build server')" xml:space="preserve"><value>Belirteç adı (örn. 'claude', 'build server')</value></data>
+  <data name="Upload a .ppak package below, or automate it via the API with a personal token from your profile." xml:space="preserve"><value>Aşağıdan bir .ppak paketi yükleyin veya profilinizdeki kişisel bir belirteçle API üzerinden otomatikleştirin.</value></data>
+  <data name="Upload and validate" xml:space="preserve"><value>Yükle ve doğrula</value></data>
+  <data name="Users" xml:space="preserve"><value>Kullanıcılar</value></data>
+  <data name="Version" xml:space="preserve"><value>Sürüm</value></data>
+  <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>Ne yayımlamayı planlıyorsunuz? (yöneticiye gösterilir)</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>Geri çek</value></data>
+  <data name="You have not submitted any packages yet." xml:space="preserve"><value>Henüz hiç paket göndermediniz.</value></data>
+  <data name="active" xml:space="preserve"><value>etkin</value></data>
+  <data name="downloads" xml:space="preserve"><value>indirme</value></data>
+  <data name="revoked" xml:space="preserve"><value>iptal edildi</value></data>
+  <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>Erişim isteğiniz gönderildi. Bir yönetici onayladığında e-posta alacaksınız.</value></data>
+  <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>Oturum açılamadı. E-postayı ve parolayı kontrol edin.</value></data>
+  <data name="Your access request is still awaiting admin approval." xml:space="preserve"><value>Erişim isteğiniz hâlâ yönetici onayı bekliyor.</value></data>
+  <data name="This account is not active. Contact an administrator." xml:space="preserve"><value>Bu hesap etkin değil. Bir yöneticiyle iletişime geçin.</value></data>
+  <data name="Too many failed attempts; the account is temporarily locked." xml:space="preserve"><value>Çok fazla başarısız deneme; hesap geçici olarak kilitlendi.</value></data>
+  <data name="No package received." xml:space="preserve"><value>Paket alınmadı.</value></data>
+  <data name="The package did not pass the automatic checks; nothing was stored. Fix the errors below and upload again." xml:space="preserve"><value>Paket otomatik denetimlerden geçemedi; hiçbir şey kaydedilmedi. Aşağıdaki hataları düzeltin ve yeniden yükleyin.</value></data>
+  <data name="Submitted. The version is in the beta channel now and awaits admin review." xml:space="preserve"><value>Gönderildi. Sürüm artık beta kanalında ve yönetici incelemesini bekliyor.</value></data>
+  <data name="Version withdrawn." xml:space="preserve"><value>Sürüm geri çekildi.</value></data>
+  <data name="Version approved and live." xml:space="preserve"><value>Sürüm onaylandı ve canlıya alındı.</value></data>
+  <data name="Version rejected." xml:space="preserve"><value>Sürüm reddedildi.</value></data>
+  <data name="Account approved." xml:space="preserve"><value>Hesap onaylandı.</value></data>
+  <data name="Request rejected." xml:space="preserve"><value>İstek reddedildi.</value></data>
+  <data name="Account disabled." xml:space="preserve"><value>Hesap devre dışı bırakıldı.</value></data>
+  <data name="Account enabled." xml:space="preserve"><value>Hesap etkinleştirildi.</value></data>
+</root>

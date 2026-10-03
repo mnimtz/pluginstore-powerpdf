@@ -1,0 +1,30 @@
+@page
+@model AddonStore.Web.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Sign in";
+}
+
+<h1>@L["Sign in"]</h1>
+<p class="lead">@L["For plugin developers and admins. End users install plugins directly from the Plugin-Store ribbon in Power PDF, no account needed."]</p>
+
+@if (Model.Message is not null)
+{
+    <div class="alert @Model.MessageKind">@L[Model.Message]</div>
+}
+
+<div class="card" style="max-width:480px">
+    <form method="post" class="stack">
+        <div>
+            <label for="email">@L["Email"]</label>
+            <input type="email" id="email" name="email" required />
+        </div>
+        <div>
+            <label for="password">@L["Password"]</label>
+            <input type="password" id="password" name="password" required />
+        </div>
+        <button type="submit" class="btn">@L["Sign in"]</button>
+    </form>
+    <p style="margin-bottom:0;font-size:.9rem">
+        @L["No account yet?"] <a href="/Account/Register">@L["Request access"]</a>
+    </p>
+</div>

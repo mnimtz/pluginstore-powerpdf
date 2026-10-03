@@ -1,0 +1,159 @@
+// dialog.cpp — the Plugin-Store dialog: catalog list, description, install.
+
+#include "stdafx.h"
+#include "dialog.h"
+#include "catalog.h"
+#include "install.h"
+#include "settings.h"
+#include "loc.h"
+#include "logging.h"
+#include "Resource.h"
+#include <afxcmn.h>
+#include <vector>
+
+namespace storedlg {
+
+class CStoreDialog : public CDialog
+{
+public:
+    CStoreDialog() : CDialog(IDD_PS_DIALOG) {}
+
+protected:
+    CListCtrl m_list;
+    std::vector<PSCatalogEntry> m_entries;
+
+    BOOL OnInitDialog() override
+    {
+        CDialog::OnInitDialog();
+
+        SetWindowTextW(FPLoc(IDS_PSD_TITLE).c_str());
+        SetDlgItemTextW(IDC_PS_REFRESH, FPLoc(IDS_PSD_BTN_REFRESH).c_str());
+        SetDlgItemTextW(IDC_PS_INSTALL, FPLoc(IDS_PSD_BTN_INSTALL).c_str());
+        SetDlgItemTextW(IDCANCEL,       FPLoc(IDS_PSD_BTN_CLOSE).c_str());
+        SetDlgItemTextW(IDC_PS_ADMIN_NOTE, FPLoc(IDS_PSD_ADMIN_NOTE).c_str());
+
+        m_list.SubclassDlgItem(IDC_PS_LIST, this);
+        m_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+        m_list.InsertColumn(0, FPLoc(IDS_PSD_C_NAME).c_str(),      LVCFMT_LEFT, 150);
+        m_list.InsertColumn(1, FPLoc(IDS_PSD_C_AVAIL).c_str(),     LVCFMT_LEFT, 70);
+        m_list.InsertColumn(2, FPLoc(IDS_PSD_C_INSTALLED).c_str(), LVCFMT_LEFT, 70);
+        m_list.InsertColumn(3, FPLoc(IDS_PSD_C_STATUS).c_str(),    LVCFMT_LEFT, 110);
+        m_list.InsertColumn(4, FPLoc(IDS_PSD_C_SIZE).c_str(),      LVCFMT_RIGHT, 70);
+
+        Reload();
+        return TRUE;
+    }
+
+    void Reload()
+    {
+        m_list.DeleteAllItems();
+        m_entries.clear();
+        SetDlgItemTextW(IDC_PS_STATUS, L"");
+        SetDlgItemTextW(IDC_PS_DESC, L"");
+
+        std::wstring error;
+        if (!PSFetchCatalog(m_entries, error))
+        {
+            SetDlgItemTextW(IDC_PS_STATUS, error.c_str());
+            return;
+        }
+        if (m_entries.empty())
+        {
+            SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_EMPTY).c_str());
+            return;
+        }
+
+        for (int i = 0; i < (int)m_entries.size(); ++i)
+        {
+            const PSCatalogEntry& e = m_entries[i];
+            std::wstring name = e.name;
+            if (e.channel == L"beta") name += FPLoc(IDS_PSD_BETA_TAG);
+            int row = m_list.InsertItem(i, name.c_str());
+            m_list.SetItemText(row, 1, e.version.c_str());
+            m_list.SetItemText(row, 2, e.installedVersion.c_str());
+            m_list.SetItemText(row, 3, StatusText(e).c_str());
+            wchar_t size[32];
+            swprintf_s(size, 32, L"%llu KB", e.sizeBytes / 1024);
+            m_list.SetItemText(row, 4, size);
+            m_list.SetItemData(row, (DWORD_PTR)i);
+        }
+        m_list.SetItemState(0, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
+        UpdateDescription();
+    }
+
+    std::wstring StatusText(const PSCatalogEntry& e) const
+    {
+        if (e.installedVersion.empty()) return FPLoc(IDS_PSD_ST_NOTINST);
+        if (e.installedVersion != e.version) return FPLoc(IDS_PSD_ST_UPDATE);
+        return FPLoc(IDS_PSD_ST_INSTALLED);
+    }
+
+    const PSCatalogEntry* Selected() const
+    {
+        POSITION pos = m_list.GetFirstSelectedItemPosition();
+        if (!pos) return nullptr;
+        int row = m_list.GetNextSelectedItem(pos);
+        size_t idx = (size_t)m_list.GetItemData(row);
+        return idx < m_entries.size() ? &m_entries[idx] : nullptr;
+    }
+
+    void UpdateDescription()
+    {
+        const PSCatalogEntry* e = Selected();
+        if (!e) { SetDlgItemTextW(IDC_PS_DESC, L""); return; }
+        std::wstring text = e->description;
+        if (!e->changelog.empty())
+            text += L"\r\n\r\n" + e->version + L": " + e->changelog;
+        SetDlgItemTextW(IDC_PS_DESC, text.c_str());
+    }
+
+    void OnInstall()
+    {
+        const PSCatalogEntry* e = Selected();
+        if (!e) return;
+
+        wchar_t ask[512];
+        swprintf_s(ask, 512, FPLoc(IDS_PSD_CONFIRM).c_str(), e->name.c_str(), e->version.c_str());
+        if (MessageBoxW(ask, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
+            return;
+
+        CWaitCursor wait;
+        int rc = PSInstallPackage(*e, GetSafeHwnd());
+        if (rc == 0)
+        {
+            SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_MSG_INSTOK).c_str());
+            Reload();
+        }
+        else if (rc == 2)
+        {
+            SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_MSG_HASH).c_str());
+        }
+        else
+        {
+            wchar_t msg[256];
+            swprintf_s(msg, 256, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
+            SetDlgItemTextW(IDC_PS_STATUS, msg);
+        }
+    }
+
+    afx_msg void OnRefresh() { Reload(); }
+    afx_msg void OnInstallClicked() { OnInstall(); }
+    afx_msg void OnListChanged(NMHDR*, LRESULT* result) { UpdateDescription(); *result = 0; }
+
+    DECLARE_MESSAGE_MAP()
+};
+
+BEGIN_MESSAGE_MAP(CStoreDialog, CDialog)
+    ON_BN_CLICKED(IDC_PS_REFRESH, &CStoreDialog::OnRefresh)
+    ON_BN_CLICKED(IDC_PS_INSTALL, &CStoreDialog::OnInstallClicked)
+    ON_NOTIFY(LVN_ITEMCHANGED, IDC_PS_LIST, &CStoreDialog::OnListChanged)
+END_MESSAGE_MAP()
+
+} // namespace storedlg
+
+void PSShowStoreDialog()
+{
+    AFX_MANAGE_MODULE_STATE;
+    storedlg::CStoreDialog dlg;
+    dlg.DoModal();
+}

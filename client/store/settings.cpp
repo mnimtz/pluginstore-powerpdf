@@ -1,0 +1,76 @@
+// settings.cpp — see settings.h.
+
+#include "stdafx.h"
+#include "settings.h"
+#include "policy.h"
+#include "logging.h"
+
+const wchar_t* kPSRegKey = L"Software\\Kofax\\PDF\\Tungsten Power PDF\\PluginStore";
+
+// Until the production instance exists this default points at the local dev
+// server; the Options page and the HKLM policy can override it any time.
+static const wchar_t* kDefaultUrl = L"http://localhost:5190";
+
+static std::wstring g_url = kDefaultUrl;
+static bool g_beta = false;
+static bool g_urlLocked = false;
+
+static bool ReadUserString(const wchar_t* name, std::wstring& v)
+{
+    wchar_t buf[1024] = { 0 };
+    DWORD sz = sizeof(buf);
+    if (RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, name, RRF_RT_REG_SZ, NULL, buf, &sz) == ERROR_SUCCESS)
+    { v = buf; return true; }
+    return false;
+}
+
+static bool ReadUserDword(const wchar_t* name, DWORD& v)
+{
+    DWORD sz = sizeof(v);
+    return RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, name, RRF_RT_REG_DWORD, NULL, &v, &sz) == ERROR_SUCCESS;
+}
+
+static std::wstring TrimUrl(std::wstring u)
+{
+    while (!u.empty() && (u.back() == L'/' || u.back() == L' ')) u.pop_back();
+    return u;
+}
+
+void PSSettingsLoad()
+{
+    std::wstring s;
+    DWORD d = 0;
+
+    if (FPPolicyString(L"Store", L"ServerUrl", s) && !s.empty())
+    { g_url = TrimUrl(s); g_urlLocked = true; }
+    else if (ReadUserString(L"ServerUrl", s) && !s.empty())
+        g_url = TrimUrl(s);
+
+    if (FPPolicyDword(L"Store", L"BetaChannel", d))
+        g_beta = d != 0;
+    else if (ReadUserDword(L"BetaChannel", d))
+        g_beta = d != 0;
+
+    DWORD verbose = 0;
+    if (ReadUserDword(L"VerboseLog", verbose))
+        FPLogSetVerbose(verbose != 0);
+}
+
+std::wstring PSServerUrl() { return g_url; }
+bool PSBetaChannel()       { return g_beta; }
+bool PSUrlLocked()         { return g_urlLocked; }
+
+void PSSaveUserSettings(const std::wstring& url, bool beta)
+{
+    HKEY k;
+    if (RegCreateKeyExW(HKEY_CURRENT_USER, kPSRegKey, 0, NULL, 0, KEY_WRITE, NULL, &k, NULL) == ERROR_SUCCESS)
+    {
+        std::wstring u = TrimUrl(url);
+        RegSetValueExW(k, L"ServerUrl", 0, REG_SZ, (const BYTE*)u.c_str(),
+                       (DWORD)((u.size() + 1) * sizeof(wchar_t)));
+        DWORD d = beta ? 1 : 0;
+        RegSetValueExW(k, L"BetaChannel", 0, REG_DWORD, (const BYTE*)&d, sizeof(d));
+        RegCloseKey(k);
+    }
+    PSSettingsLoad();
+}

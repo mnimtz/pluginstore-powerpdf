@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Access requests" xml:space="preserve"><value>Tilgangsforespørsler</value></data>
+  <data name="Accounts are for colleagues who develop and publish plugins. An admin reviews every request; you will be notified by email." xml:space="preserve"><value>Kontoer er for kolleger som utvikler og publiserer programtillegg. En administrator vurderer hver forespørsel; du blir varslet på e-post.</value></data>
+  <data name="Action" xml:space="preserve"><value>Handling</value></data>
+  <data name="Actor" xml:space="preserve"><value>Aktør</value></data>
+  <data name="All users" xml:space="preserve"><value>Alle brukere</value></data>
+  <data name="Approve" xml:space="preserve"><value>Godkjenn</value></data>
+  <data name="Approve for live store" xml:space="preserve"><value>Godkjenn for live-butikken</value></data>
+  <data name="Approved" xml:space="preserve"><value>Godkjent</value></data>
+  <data name="Audit" xml:space="preserve"><value>Revisjon</value></data>
+  <data name="Audit log" xml:space="preserve"><value>Revisjonslogg</value></data>
+  <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>Beta-versjoner har bestått alle automatiske kontroller og er synlige for beta-testere. Godkjenn dem for live-butikken, eller avvis dem med en begrunnelse.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Bla gjennom publiserte programtillegg nedenfor. Installasjonen skjer direkte i Power PDF via Plugin-Store-båndet; dette nettstedet er for utviklere av programtillegg og administratorer.</value></data>
+  <data name="Catalog" xml:space="preserve"><value>Katalog</value></data>
+  <data name="Changelog" xml:space="preserve"><value>Endringslogg</value></data>
+  <data name="Create a token" xml:space="preserve"><value>Opprett et token</value></data>
+  <data name="Create admin account" xml:space="preserve"><value>Opprett administratorkonto</value></data>
+  <data name="Create the first administrator account for this Plugin-Store instance." xml:space="preserve"><value>Opprett den første administratorkontoen for denne Plugin-Store-instansen.</value></data>
+  <data name="Create token" xml:space="preserve"><value>Opprett token</value></data>
+  <data name="Created" xml:space="preserve"><value>Opprettet</value></data>
+  <data name="Details" xml:space="preserve"><value>Detaljer</value></data>
+  <data name="Disable" xml:space="preserve"><value>Deaktiver</value></data>
+  <data name="Display name" xml:space="preserve"><value>Visningsnavn</value></data>
+  <data name="Download" xml:space="preserve"><value>Last ned</value></data>
+  <data name="Downloads" xml:space="preserve"><value>Nedlastinger</value></data>
+  <data name="Email" xml:space="preserve"><value>E-post</value></data>
+  <data name="Enable" xml:space="preserve"><value>Aktiver</value></data>
+  <data name="Every relevant action on this server: registrations, approvals, tokens, submissions, reviews." xml:space="preserve"><value>Alle relevante handlinger på denne serveren: registreringer, godkjenninger, tokener, innsendinger, vurderinger.</value></data>
+  <data name="Filter" xml:space="preserve"><value>Filter</value></data>
+  <data name="Filter (actor, action, subject)" xml:space="preserve"><value>Filter (aktør, handling, emne)</value></data>
+  <data name="First-run setup" xml:space="preserve"><value>Førstegangsoppsett</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Plugin-Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>For utviklere av programtillegg og administratorer. Sluttbrukere installerer programtillegg direkte fra Plugin-Store-båndet i Power PDF, uten konto.</value></data>
+  <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>Gi tokenet til din Claude sammen med denne linjen:</value></data>
+  <data name="Last used" xml:space="preserve"><value>Sist brukt</value></data>
+  <data name="Live versions" xml:space="preserve"><value>Live-versjoner</value></data>
+  <data name="My packages" xml:space="preserve"><value>Mine pakker</value></data>
+  <data name="My plugins" xml:space="preserve"><value>Mine programtillegg</value></data>
+  <data name="My tokens" xml:space="preserve"><value>Mine tokener</value></data>
+  <data name="Name" xml:space="preserve"><value>Navn</value></data>
+  <data name="No account yet?" xml:space="preserve"><value>Har du ikke konto ennå?</value></data>
+  <data name="No live versions yet." xml:space="preserve"><value>Ingen live-versjoner ennå.</value></data>
+  <data name="No plugins have been released yet." xml:space="preserve"><value>Ingen programtillegg er publisert ennå.</value></data>
+  <data name="Nothing to review right now." xml:space="preserve"><value>Ingenting å vurdere akkurat nå.</value></data>
+  <data name="Package" xml:space="preserve"><value>Pakke</value></data>
+  <data name="Package file (.ppak)" xml:space="preserve"><value>Pakkefil (.ppak)</value></data>
+  <data name="Password" xml:space="preserve"><value>Passord</value></data>
+  <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>Personlige API-tokener lar verktøy og AI-assistenter laste opp og oppdatere programtilleggene dine på dine vegne.</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>Butikk for programtillegg:</value></data>
+  <data name="Plugin-Store for Tungsten Power PDF" xml:space="preserve"><value>Plugin-Store for Tungsten Power PDF</value></data>
+  <data name="Prefix" xml:space="preserve"><value>Prefiks</value></data>
+  <data name="Profile" xml:space="preserve"><value>Profil</value></data>
+  <data name="Reason (sent to the submitter)" xml:space="preserve"><value>Begrunnelse (sendes til innsenderen)</value></data>
+  <data name="Reject" xml:space="preserve"><value>Avvis</value></data>
+  <data name="Released plugins" xml:space="preserve"><value>Publiserte programtillegg</value></data>
+  <data name="Request access" xml:space="preserve"><value>Be om tilgang</value></data>
+  <data name="Requested" xml:space="preserve"><value>Forespurt</value></data>
+  <data name="Review" xml:space="preserve"><value>Vurdering</value></data>
+  <data name="Review comment" xml:space="preserve"><value>Vurderingskommentar</value></data>
+  <data name="Review queue" xml:space="preserve"><value>Vurderingskø</value></data>
+  <data name="Revoke" xml:space="preserve"><value>Tilbakekall</value></data>
+  <data name="Role" xml:space="preserve"><value>Rolle</value></data>
+  <data name="Sign in" xml:space="preserve"><value>Logg på</value></data>
+  <data name="Sign out" xml:space="preserve"><value>Logg av</value></data>
+  <data name="Status" xml:space="preserve"><value>Status</value></data>
+  <data name="Subject" xml:space="preserve"><value>Emne</value></data>
+  <data name="Submit a package" xml:space="preserve"><value>Send inn en pakke</value></data>
+  <data name="Submit request" xml:space="preserve"><value>Send forespørsel</value></data>
+  <data name="Submitted" xml:space="preserve"><value>Sendt inn</value></data>
+  <data name="Submitted by" xml:space="preserve"><value>Sendt inn av</value></data>
+  <data name="Time (UTC)" xml:space="preserve"><value>Tidspunkt (UTC)</value></data>
+  <data name="Token created. Copy it now; it is shown only this once:" xml:space="preserve"><value>Token opprettet. Kopier det nå; det vises bare denne ene gangen:</value></data>
+  <data name="Token name (e.g. 'claude', 'build server')" xml:space="preserve"><value>Tokennavn (f.eks. 'claude', 'build server')</value></data>
+  <data name="Upload a .ppak package below, or automate it via the API with a personal token from your profile." xml:space="preserve"><value>Last opp en .ppak-pakke nedenfor, eller automatiser det via API-et med et personlig token fra profilen din.</value></data>
+  <data name="Upload and validate" xml:space="preserve"><value>Last opp og valider</value></data>
+  <data name="Users" xml:space="preserve"><value>Brukere</value></data>
+  <data name="Version" xml:space="preserve"><value>Versjon</value></data>
+  <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>Hva planlegger du å publisere? (vises for administratoren)</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>Trekk tilbake</value></data>
+  <data name="You have not submitted any packages yet." xml:space="preserve"><value>Du har ikke sendt inn noen pakker ennå.</value></data>
+  <data name="active" xml:space="preserve"><value>aktiv</value></data>
+  <data name="downloads" xml:space="preserve"><value>nedlastinger</value></data>
+  <data name="revoked" xml:space="preserve"><value>tilbakekalt</value></data>
+  <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>Tilgangsforespørselen din er sendt. Du får en e-post når en administrator har godkjent den.</value></data>
+  <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>Pålogging mislyktes. Kontroller e-post og passord.</value></data>
+  <data name="Your access request is still awaiting admin approval." xml:space="preserve"><value>Tilgangsforespørselen din venter fortsatt på godkjenning fra en administrator.</value></data>
+  <data name="This account is not active. Contact an administrator." xml:space="preserve"><value>Denne kontoen er ikke aktiv. Kontakt en administrator.</value></data>
+  <data name="Too many failed attempts; the account is temporarily locked." xml:space="preserve"><value>For mange mislykkede forsøk; kontoen er midlertidig låst.</value></data>
+  <data name="No package received." xml:space="preserve"><value>Ingen pakke mottatt.</value></data>
+  <data name="The package did not pass the automatic checks; nothing was stored. Fix the errors below and upload again." xml:space="preserve"><value>Pakken besto ikke de automatiske kontrollene; ingenting ble lagret. Rett feilene nedenfor, og last opp på nytt.</value></data>
+  <data name="Submitted. The version is in the beta channel now and awaits admin review." xml:space="preserve"><value>Sendt inn. Versjonen er nå i beta-kanalen og venter på administratorvurdering.</value></data>
+  <data name="Version withdrawn." xml:space="preserve"><value>Versjon trukket tilbake.</value></data>
+  <data name="Version approved and live." xml:space="preserve"><value>Versjon godkjent og live.</value></data>
+  <data name="Version rejected." xml:space="preserve"><value>Versjon avvist.</value></data>
+  <data name="Account approved." xml:space="preserve"><value>Konto godkjent.</value></data>
+  <data name="Request rejected." xml:space="preserve"><value>Forespørsel avvist.</value></data>
+  <data name="Account disabled." xml:space="preserve"><value>Konto deaktivert.</value></data>
+  <data name="Account enabled." xml:space="preserve"><value>Konto aktivert.</value></data>
+</root>

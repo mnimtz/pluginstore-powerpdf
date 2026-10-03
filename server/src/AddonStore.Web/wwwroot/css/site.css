@@ -1,0 +1,144 @@
+/* PluginStore-PowerPDF, styled per Tungsten Automation Brand Book (Mar 2025). */
+
+@font-face {
+  font-family: "Red Hat Display";
+  src: local("Red Hat Display");
+  font-weight: 300 900;
+  font-display: swap;
+}
+
+:root {
+  --tun-navy: #002854;
+  --tun-navy-deep: #004766;
+  --tun-ink: #231F20;
+  --tun-blue: #00A0FB;
+  --tun-blue-light: #9DDDF9;
+  --tun-green: #00EB86;
+  --tun-yellow: #FFC600;
+  --tun-coral: #FF6D69;
+  --tun-gray-100: #FAFAFA;
+  --tun-gray-150: #F0F0F0;
+  --tun-gray-200: #E4E4E4;
+  --tun-gray-blue: #D9DFE6;
+  --tun-slate: #8094AA;
+  --tun-domain-blue: linear-gradient(135deg, #00123B 0%, #002854 55%, #004766 100%);
+  --tun-accent-pdf: linear-gradient(90deg, #00EB86 0%, #00A0FB 100%);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Red Hat Display", Arial, sans-serif;
+  background: var(--tun-gray-100);
+  color: var(--tun-ink);
+}
+
+header.site {
+  background: var(--tun-domain-blue);
+  color: #fff;
+}
+header.site .bar {
+  max-width: 1080px; margin: 0 auto; padding: 14px 20px;
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+}
+header.site img.logo { height: 34px; }
+header.site .title { font-weight: 700; font-size: 1.05rem; letter-spacing: .02em; }
+header.site .title small { display: block; font-weight: 400; color: var(--tun-blue-light); font-size: .72rem; }
+header.site nav { margin-left: auto; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+header.site nav a { color: #fff; text-decoration: none; font-weight: 500; font-size: .92rem; }
+header.site nav a:hover { color: var(--tun-blue-light); }
+.accent-line { height: 4px; background: var(--tun-accent-pdf); }
+
+main { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
+
+h1 { color: var(--tun-navy); font-weight: 700; font-size: 1.7rem; margin: 0 0 6px; }
+h2 { color: var(--tun-navy); font-weight: 700; font-size: 1.2rem; margin: 26px 0 10px; }
+p.lead { color: var(--tun-slate); margin-top: 0; }
+
+.card {
+  background: #fff; border: 1px solid var(--tun-gray-200); border-radius: 10px;
+  padding: 18px 20px; margin-bottom: 16px;
+}
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+
+.pkg { display: flex; flex-direction: column; gap: 6px; }
+.pkg .name { font-weight: 700; color: var(--tun-navy); font-size: 1.05rem; }
+.pkg .meta { color: var(--tun-slate); font-size: .82rem; }
+.pkg .desc { font-size: .92rem; }
+
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--tun-gray-200); font-size: .9rem; vertical-align: top; }
+th { color: var(--tun-navy); font-weight: 700; background: var(--tun-gray-blue); }
+tr:hover td { background: var(--tun-gray-100); }
+
+.btn {
+  display: inline-block; border: 0; cursor: pointer; text-decoration: none;
+  background: var(--tun-navy); color: #fff; font-family: inherit;
+  font-weight: 700; font-size: .92rem; padding: 9px 18px; border-radius: 6px;
+}
+.btn:hover { background: var(--tun-navy-deep); }
+.btn.secondary { background: var(--tun-gray-150); color: var(--tun-navy); }
+.btn.secondary:hover { background: var(--tun-gray-200); }
+.btn.cta { background: var(--tun-yellow); color: var(--tun-ink); }
+.btn.danger { background: var(--tun-coral); color: #fff; }
+.btn.small { padding: 5px 12px; font-size: .82rem; }
+
+form.stack { display: flex; flex-direction: column; gap: 12px; max-width: 420px; }
+label { font-weight: 500; font-size: .88rem; color: var(--tun-navy); display: block; margin-bottom: 4px; }
+input[type=text], input[type=email], input[type=password], input[type=file], textarea, select {
+  width: 100%; padding: 9px 11px; border: 1px solid var(--tun-gray-200); border-radius: 6px;
+  font-family: inherit; font-size: .92rem; background: #fff; color: var(--tun-ink);
+}
+input:focus, textarea:focus, select:focus { outline: 2px solid var(--tun-blue); border-color: var(--tun-blue); }
+
+.badge {
+  display: inline-block; padding: 2px 10px; border-radius: 999px;
+  font-size: .75rem; font-weight: 700;
+}
+.badge.live { background: #B6FFDE; color: #016839; }
+.badge.beta { background: #FFDF85; color: #634E12; }
+.badge.rejected { background: #FFBDBD; color: #421F1F; }
+.badge.withdrawn { background: var(--tun-gray-200); color: var(--tun-slate); }
+.badge.submitted { background: var(--tun-blue-light); color: var(--tun-navy); }
+.badge.pending { background: #FFDF85; color: #634E12; }
+.badge.active { background: #B6FFDE; color: #016839; }
+.badge.disabled { background: var(--tun-gray-200); color: var(--tun-slate); }
+
+.alert { border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: .92rem; }
+.alert.ok { background: #B6FFDE; color: #016839; }
+.alert.warn { background: #FFDF85; color: #634E12; }
+.alert.error { background: #FFBDBD; color: #421F1F; }
+.alert code { word-break: break-all; }
+
+ul.findings { list-style: none; padding: 0; margin: 10px 0 0; }
+ul.findings li { padding: 8px 12px; border-left: 4px solid var(--tun-gray-200); background: #fff; margin-bottom: 6px; font-size: .88rem; }
+ul.findings li.error { border-color: var(--tun-coral); }
+ul.findings li.warning { border-color: var(--tun-yellow); }
+ul.findings li.info { border-color: var(--tun-blue); }
+ul.findings .code { font-weight: 700; color: var(--tun-navy); margin-right: 6px; }
+ul.findings .hint { color: var(--tun-slate); display: block; margin-top: 2px; }
+
+footer.site {
+  border-top: 1px solid var(--tun-gray-200); color: var(--tun-slate);
+  font-size: .8rem; padding: 18px 20px; display: flex; gap: 14px; align-items: center;
+  max-width: 1080px; margin: 0 auto; flex-wrap: wrap;
+}
+footer.site img { height: 20px; opacity: .8; }
+footer.site .spacer { margin-left: auto; }
+
+.token-reveal {
+  font-family: Consolas, monospace; background: var(--tun-navy); color: var(--tun-green);
+  padding: 10px 14px; border-radius: 6px; word-break: break-all; font-size: .95rem;
+}
+
+.hero {
+  background: var(--tun-domain-blue); color: #fff; border-radius: 12px;
+  padding: 30px 28px; margin-bottom: 24px; position: relative; overflow: hidden;
+}
+.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: var(--tun-accent-pdf); }
+.hero h1 { color: #fff; }
+.hero p { color: var(--tun-blue-light); max-width: 640px; }
+.hero img.product { position: absolute; right: 28px; top: 24px; height: 84px; }
+@media (max-width: 700px) { .hero img.product { display: none; } }

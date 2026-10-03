@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Access requests" xml:space="preserve"><value>Запросы на доступ</value></data>
+  <data name="Accounts are for colleagues who develop and publish plugins. An admin reviews every request; you will be notified by email." xml:space="preserve"><value>Учетные записи предназначены для коллег, которые разрабатывают и публикуют плагины. Администратор рассматривает каждый запрос; вы получите уведомление по электронной почте.</value></data>
+  <data name="Action" xml:space="preserve"><value>Действие</value></data>
+  <data name="Actor" xml:space="preserve"><value>Исполнитель</value></data>
+  <data name="All users" xml:space="preserve"><value>Все пользователи</value></data>
+  <data name="Approve" xml:space="preserve"><value>Одобрить</value></data>
+  <data name="Approve for live store" xml:space="preserve"><value>Одобрить для live-магазина</value></data>
+  <data name="Approved" xml:space="preserve"><value>Одобрено</value></data>
+  <data name="Audit" xml:space="preserve"><value>Аудит</value></data>
+  <data name="Audit log" xml:space="preserve"><value>Журнал аудита</value></data>
+  <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>Beta-версии прошли все автоматические проверки и видны beta-тестировщикам. Одобрите их для live-магазина или отклоните с указанием причины.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Ниже представлены выпущенные плагины. Установка выполняется непосредственно в Power PDF через ленту Plugin-Store; этот сайт предназначен для разработчиков плагинов и администраторов.</value></data>
+  <data name="Catalog" xml:space="preserve"><value>Каталог</value></data>
+  <data name="Changelog" xml:space="preserve"><value>Журнал изменений</value></data>
+  <data name="Create a token" xml:space="preserve"><value>Создать новый токен</value></data>
+  <data name="Create admin account" xml:space="preserve"><value>Создать учетную запись администратора</value></data>
+  <data name="Create the first administrator account for this Plugin-Store instance." xml:space="preserve"><value>Создайте первую учетную запись администратора для этого экземпляра Plugin-Store.</value></data>
+  <data name="Create token" xml:space="preserve"><value>Создать токен</value></data>
+  <data name="Created" xml:space="preserve"><value>Создано</value></data>
+  <data name="Details" xml:space="preserve"><value>Сведения</value></data>
+  <data name="Disable" xml:space="preserve"><value>Отключить</value></data>
+  <data name="Display name" xml:space="preserve"><value>Отображаемое имя</value></data>
+  <data name="Download" xml:space="preserve"><value>Скачать</value></data>
+  <data name="Downloads" xml:space="preserve"><value>Скачивания</value></data>
+  <data name="Email" xml:space="preserve"><value>Электронная почта</value></data>
+  <data name="Enable" xml:space="preserve"><value>Включить</value></data>
+  <data name="Every relevant action on this server: registrations, approvals, tokens, submissions, reviews." xml:space="preserve"><value>Все значимые действия на этом сервере: регистрации, одобрения, токены, отправки, проверки.</value></data>
+  <data name="Filter" xml:space="preserve"><value>Фильтр</value></data>
+  <data name="Filter (actor, action, subject)" xml:space="preserve"><value>Фильтр (исполнитель, действие, объект)</value></data>
+  <data name="First-run setup" xml:space="preserve"><value>Первоначальная настройка</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Plugin-Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Для разработчиков плагинов и администраторов. Конечные пользователи устанавливают плагины непосредственно с ленты Plugin-Store в Power PDF, без учетной записи.</value></data>
+  <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>Передайте токен вашему Claude вместе с этой строкой:</value></data>
+  <data name="Last used" xml:space="preserve"><value>Последнее использование</value></data>
+  <data name="Live versions" xml:space="preserve"><value>Live-версии</value></data>
+  <data name="My packages" xml:space="preserve"><value>Мои пакеты</value></data>
+  <data name="My plugins" xml:space="preserve"><value>Мои плагины</value></data>
+  <data name="My tokens" xml:space="preserve"><value>Мои токены</value></data>
+  <data name="Name" xml:space="preserve"><value>Имя</value></data>
+  <data name="No account yet?" xml:space="preserve"><value>Еще нет учетной записи?</value></data>
+  <data name="No live versions yet." xml:space="preserve"><value>Live-версий пока нет.</value></data>
+  <data name="No plugins have been released yet." xml:space="preserve"><value>Плагины еще не публиковались.</value></data>
+  <data name="Nothing to review right now." xml:space="preserve"><value>Сейчас нечего проверять.</value></data>
+  <data name="Package" xml:space="preserve"><value>Пакет</value></data>
+  <data name="Package file (.ppak)" xml:space="preserve"><value>Файл пакета (.ppak)</value></data>
+  <data name="Password" xml:space="preserve"><value>Пароль</value></data>
+  <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>Личные токены API позволяют инструментам и ИИ-ассистентам загружать и обновлять ваши плагины от вашего имени.</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>Магазин плагинов:</value></data>
+  <data name="Plugin-Store for Tungsten Power PDF" xml:space="preserve"><value>Plugin-Store для Tungsten Power PDF</value></data>
+  <data name="Prefix" xml:space="preserve"><value>Префикс</value></data>
+  <data name="Profile" xml:space="preserve"><value>Профиль</value></data>
+  <data name="Reason (sent to the submitter)" xml:space="preserve"><value>Причина (отправляется отправителю)</value></data>
+  <data name="Reject" xml:space="preserve"><value>Отклонить</value></data>
+  <data name="Released plugins" xml:space="preserve"><value>Выпущенные плагины</value></data>
+  <data name="Request access" xml:space="preserve"><value>Запросить доступ</value></data>
+  <data name="Requested" xml:space="preserve"><value>Запрошено</value></data>
+  <data name="Review" xml:space="preserve"><value>Проверка</value></data>
+  <data name="Review comment" xml:space="preserve"><value>Комментарий проверки</value></data>
+  <data name="Review queue" xml:space="preserve"><value>Очередь проверки</value></data>
+  <data name="Revoke" xml:space="preserve"><value>Аннулировать</value></data>
+  <data name="Role" xml:space="preserve"><value>Роль</value></data>
+  <data name="Sign in" xml:space="preserve"><value>Войти</value></data>
+  <data name="Sign out" xml:space="preserve"><value>Выйти</value></data>
+  <data name="Status" xml:space="preserve"><value>Статус</value></data>
+  <data name="Subject" xml:space="preserve"><value>Объект</value></data>
+  <data name="Submit a package" xml:space="preserve"><value>Отправить пакет</value></data>
+  <data name="Submit request" xml:space="preserve"><value>Отправить запрос</value></data>
+  <data name="Submitted" xml:space="preserve"><value>Отправлено</value></data>
+  <data name="Submitted by" xml:space="preserve"><value>Отправитель</value></data>
+  <data name="Time (UTC)" xml:space="preserve"><value>Время (UTC)</value></data>
+  <data name="Token created. Copy it now; it is shown only this once:" xml:space="preserve"><value>Токен создан. Скопируйте его сейчас; он будет показан только один раз:</value></data>
+  <data name="Token name (e.g. 'claude', 'build server')" xml:space="preserve"><value>Имя токена (например, 'claude', 'build server')</value></data>
+  <data name="Upload a .ppak package below, or automate it via the API with a personal token from your profile." xml:space="preserve"><value>Загрузите пакет .ppak ниже или автоматизируйте процесс через API с помощью личного токена из вашего профиля.</value></data>
+  <data name="Upload and validate" xml:space="preserve"><value>Загрузить и проверить</value></data>
+  <data name="Users" xml:space="preserve"><value>Пользователи</value></data>
+  <data name="Version" xml:space="preserve"><value>Версия</value></data>
+  <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>Что вы планируете публиковать? (видно администратору)</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>Отозвать</value></data>
+  <data name="You have not submitted any packages yet." xml:space="preserve"><value>Вы еще не отправили ни одного пакета.</value></data>
+  <data name="active" xml:space="preserve"><value>активен</value></data>
+  <data name="downloads" xml:space="preserve"><value>скачиваний</value></data>
+  <data name="revoked" xml:space="preserve"><value>аннулирован</value></data>
+  <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>Ваш запрос на доступ отправлен. Вы получите письмо, как только администратор его одобрит.</value></data>
+  <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>Не удалось войти. Проверьте адрес электронной почты и пароль.</value></data>
+  <data name="Your access request is still awaiting admin approval." xml:space="preserve"><value>Ваш запрос на доступ все еще ожидает одобрения администратором.</value></data>
+  <data name="This account is not active. Contact an administrator." xml:space="preserve"><value>Эта учетная запись не активна. Обратитесь к администратору.</value></data>
+  <data name="Too many failed attempts; the account is temporarily locked." xml:space="preserve"><value>Слишком много неудачных попыток; учетная запись временно заблокирована.</value></data>
+  <data name="No package received." xml:space="preserve"><value>Пакет не получен.</value></data>
+  <data name="The package did not pass the automatic checks; nothing was stored. Fix the errors below and upload again." xml:space="preserve"><value>Пакет не прошел автоматические проверки; ничего не сохранено. Исправьте указанные ниже ошибки и загрузите пакет снова.</value></data>
+  <data name="Submitted. The version is in the beta channel now and awaits admin review." xml:space="preserve"><value>Отправлено. Версия теперь находится в beta-канале и ожидает проверки администратором.</value></data>
+  <data name="Version withdrawn." xml:space="preserve"><value>Версия отозвана.</value></data>
+  <data name="Version approved and live." xml:space="preserve"><value>Версия одобрена и опубликована в live-магазине.</value></data>
+  <data name="Version rejected." xml:space="preserve"><value>Версия отклонена.</value></data>
+  <data name="Account approved." xml:space="preserve"><value>Учетная запись одобрена.</value></data>
+  <data name="Request rejected." xml:space="preserve"><value>Запрос отклонен.</value></data>
+  <data name="Account disabled." xml:space="preserve"><value>Учетная запись отключена.</value></data>
+  <data name="Account enabled." xml:space="preserve"><value>Учетная запись включена.</value></data>
+</root>

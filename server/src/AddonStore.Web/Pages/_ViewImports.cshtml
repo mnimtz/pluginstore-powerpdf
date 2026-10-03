@@ -1,0 +1,9 @@
+@using AddonStore.Web
+@using AddonStore.Web.Data
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Localization
+@namespace AddonStore.Web.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IHtmlLocalizer<SharedResource> L
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager

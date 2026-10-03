@@ -1,0 +1,66 @@
+@page
+@using System.Text.Json
+@model AddonStore.Web.Pages.DashboardModel
+@{
+    ViewData["Title"] = "My plugins";
+}
+
+<h1>@L["My plugins"]</h1>
+<p class="lead">@L["Upload a .ppak package below, or automate it via the API with a personal token from your profile."]</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+}
+@if (Model.Findings.Count > 0)
+{
+    <ul class="findings">
+        @foreach (var f in Model.Findings)
+        {
+            <li class="@f.Severity">
+                <span class="code">@f.Code</span> @f.Message
+                <span class="hint">@f.Hint</span>
+            </li>
+        }
+    </ul>
+}
+
+<div class="card">
+    <h2 style="margin-top:0">@L["Submit a package"]</h2>
+    <form method="post" enctype="multipart/form-data" class="stack">
+        <div>
+            <label for="package">@L["Package file (.ppak)"]</label>
+            <input type="file" id="package" name="package" accept=".ppak,.zip" required />
+        </div>
+        <button type="submit" class="btn cta">@L["Upload and validate"]</button>
+    </form>
+</div>
+
+<h2>@L["My packages"]</h2>
+@if (Model.Packages.Count == 0)
+{
+    <div class="card">@L["You have not submitted any packages yet."]</div>
+}
+else
+{
+    @foreach (var pkg in Model.Packages)
+    {
+        <div class="card">
+            <strong style="color:var(--tun-navy)">@pkg.Id</strong>
+            <table style="margin-top:10px">
+                <tr><th>@L["Version"]</th><th>@L["Status"]</th><th>@L["Changelog"]</th><th>@L["Submitted"]</th><th>@L["Downloads"]</th><th>@L["Review comment"]</th></tr>
+                @foreach (var v in pkg.Versions)
+                {
+                    <tr>
+                        <td>@v.Version</td>
+                        <td><span class="badge @v.Status.ToString().ToLowerInvariant()">@v.Status</span></td>
+                        <td>@v.Changelog</td>
+                        <td>@v.SubmittedAt.ToString("MMM d, yyyy HH:mm")</td>
+                        <td>@v.Downloads</td>
+                        <td>@(v.ReviewComment ?? "")</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+}

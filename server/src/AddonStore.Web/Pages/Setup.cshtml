@@ -1,0 +1,31 @@
+@page
+@model AddonStore.Web.Pages.SetupModel
+@{
+    ViewData["Title"] = "Setup";
+}
+
+<h1>@L["First-run setup"]</h1>
+<p class="lead">@L["Create the first administrator account for this Plugin-Store instance."]</p>
+
+@if (Model.Error is not null)
+{
+    <div class="alert error">@Model.Error</div>
+}
+
+<div class="card">
+    <form method="post" class="stack">
+        <div>
+            <label for="name">@L["Display name"]</label>
+            <input type="text" id="name" name="name" required maxlength="100" />
+        </div>
+        <div>
+            <label for="email">@L["Email"]</label>
+            <input type="email" id="email" name="email" required maxlength="200" />
+        </div>
+        <div>
+            <label for="password">@L["Password"]</label>
+            <input type="password" id="password" name="password" required minlength="10" />
+        </div>
+        <button type="submit" class="btn cta">@L["Create admin account"]</button>
+    </form>
+</div>

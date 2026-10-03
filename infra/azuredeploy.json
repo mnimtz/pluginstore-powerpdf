@@ -1,0 +1,138 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "description": "PluginStore-PowerPDF: a private plugin store for Tungsten Power PDF. Provisions a Linux App Service Web App running the container from GHCR, plus a storage account with a File share mounted at /data for the SQLite database, the plugin packages and the developer kit."
+  },
+  "parameters": {
+    "siteName": {
+      "type": "string",
+      "metadata": {
+        "description": "Unique site name. Reachable at https://<siteName>.azurewebsites.net"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Azure region, defaults to the resource group location."
+      }
+    },
+    "sku": {
+      "type": "string",
+      "defaultValue": "B1",
+      "allowedValues": [ "F1", "B1", "B2", "B3", "S1", "P1V3" ],
+      "metadata": {
+        "description": "App Service Plan SKU. B1 (~13 USD/month, always-on) is enough for team use. F1 is free but sleeps when idle. Custom domains with free managed TLS need S1 or higher."
+      }
+    },
+    "containerImage": {
+      "type": "string",
+      "defaultValue": "ghcr.io/mnimtz/pluginstore-powerpdf:latest",
+      "metadata": {
+        "description": "Container image. Pin a versioned tag (e.g. ghcr.io/mnimtz/pluginstore-powerpdf:0.1.0) for reproducible deployments."
+      }
+    },
+    "tz": {
+      "type": "string",
+      "defaultValue": "Europe/Berlin",
+      "metadata": {
+        "description": "IANA timezone for the runtime."
+      }
+    }
+  },
+  "variables": {
+    "planName": "[concat(parameters('siteName'), '-plan')]",
+    "storageAccountName": "[concat('plgstore', uniqueString(resourceGroup().id))]",
+    "dataShareName": "pluginstore-data"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2023-05-01",
+      "name": "[variables('storageAccountName')]",
+      "location": "[parameters('location')]",
+      "sku": { "name": "Standard_LRS" },
+      "kind": "StorageV2",
+      "properties": {
+        "minimumTlsVersion": "TLS1_2",
+        "allowBlobPublicAccess": false,
+        "supportsHttpsTrafficOnly": true
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
+      "apiVersion": "2023-05-01",
+      "name": "[concat(variables('storageAccountName'), '/default/', variables('dataShareName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+      ],
+      "properties": { "shareQuota": 10 }
+    },
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2023-12-01",
+      "name": "[variables('planName')]",
+      "location": "[parameters('location')]",
+      "sku": { "name": "[parameters('sku')]" },
+      "kind": "linux",
+      "properties": { "reserved": true }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2023-12-01",
+      "name": "[parameters('siteName')]",
+      "location": "[parameters('location')]",
+      "kind": "app,linux,container",
+      "identity": { "type": "SystemAssigned" },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts/fileServices/shares', variables('storageAccountName'), 'default', variables('dataShareName'))]"
+      ],
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('planName'))]",
+        "httpsOnly": true,
+        "siteConfig": {
+          "linuxFxVersion": "[concat('DOCKER|', parameters('containerImage'))]",
+          "alwaysOn": "[if(equals(parameters('sku'), 'F1'), false(), true())]",
+          "ftpsState": "Disabled",
+          "minTlsVersion": "1.2",
+          "http20Enabled": true,
+          "appSettings": [
+            { "name": "WEBSITES_PORT", "value": "8080" },
+            { "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE", "value": "false" },
+            { "name": "DOCKER_REGISTRY_SERVER_URL", "value": "https://ghcr.io" },
+            { "name": "DOCKER_ENABLE_CI", "value": "true" },
+            { "name": "ASPNETCORE_ENVIRONMENT", "value": "Production" },
+            { "name": "ASPNETCORE_FORWARDEDHEADERS_ENABLED", "value": "true" },
+            { "name": "ConnectionStrings__Default", "value": "Data Source=/data/pluginstore.db;Cache=Shared" },
+            { "name": "Storage__Data", "value": "/data" },
+            { "name": "Storage__Root", "value": "/data/packages" },
+            { "name": "Storage__Devkit", "value": "/data/devkit" },
+            { "name": "App__PublicBaseUrl", "value": "[concat('https://', parameters('siteName'), '.azurewebsites.net')]" },
+            { "name": "TZ", "value": "[parameters('tz')]" }
+          ],
+          "azureStorageAccounts": {
+            "data": {
+              "type": "AzureFiles",
+              "accountName": "[variables('storageAccountName')]",
+              "shareName": "[variables('dataShareName')]",
+              "mountPath": "/data",
+              "accessKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2023-05-01').keys[0].value]"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "siteUrl": {
+      "type": "string",
+      "value": "[concat('https://', parameters('siteName'), '.azurewebsites.net')]"
+    },
+    "nextSteps": {
+      "type": "string",
+      "value": "Open the site URL. The first-run wizard creates the first admin account. Then create publisher accounts via 'Request access' on the login page, and optionally set Email__ResendApiKey + Email__From in the App Service configuration for notifications."
+    }
+  }
+}

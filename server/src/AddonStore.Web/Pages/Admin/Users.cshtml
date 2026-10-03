@@ -1,0 +1,68 @@
+@page
+@model AddonStore.Web.Pages.Admin.UsersModel
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1>@L["Users"]</h1>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert ok">@L[Model.Notice]</div>
+}
+
+@if (Model.Pending.Count > 0)
+{
+    <h2>@L["Access requests"]</h2>
+    <table>
+        <tr><th>@L["Name"]</th><th>@L["Email"]</th><th>@L["Requested"]</th><th></th></tr>
+        @foreach (var u in Model.Pending)
+        {
+            <tr>
+                <td>@u.DisplayName</td>
+                <td>@u.Email</td>
+                <td>@u.CreatedAt.ToString("MMM d, yyyy HH:mm")</td>
+                <td style="display:flex;gap:8px">
+                    <form method="post" asp-page-handler="Approve">
+                        <input type="hidden" name="id" value="@u.Id" />
+                        <button type="submit" class="btn small">@L["Approve"]</button>
+                    </form>
+                    <form method="post" asp-page-handler="Reject">
+                        <input type="hidden" name="id" value="@u.Id" />
+                        <button type="submit" class="btn small danger">@L["Reject"]</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<h2>@L["All users"]</h2>
+<table>
+    <tr><th>@L["Name"]</th><th>@L["Email"]</th><th>@L["Role"]</th><th>@L["Status"]</th><th></th></tr>
+    @foreach (var row in Model.All)
+    {
+        <tr>
+            <td>@row.User.DisplayName</td>
+            <td>@row.User.Email</td>
+            <td>@row.Role</td>
+            <td><span class="badge @row.User.Status.ToString().ToLowerInvariant()">@row.User.Status</span></td>
+            <td>
+                @if (row.User.Status == UserStatus.Active && row.User.Id != Model.MyId)
+                {
+                    <form method="post" asp-page-handler="Disable">
+                        <input type="hidden" name="id" value="@row.User.Id" />
+                        <button type="submit" class="btn small danger">@L["Disable"]</button>
+                    </form>
+                }
+                else if (row.User.Status == UserStatus.Disabled)
+                {
+                    <form method="post" asp-page-handler="Enable">
+                        <input type="hidden" name="id" value="@row.User.Id" />
+                        <button type="submit" class="btn small">@L["Enable"]</button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+</table>

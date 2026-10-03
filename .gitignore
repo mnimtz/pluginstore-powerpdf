@@ -1,0 +1,16 @@
+bin/
+obj/
+*.user
+data/
+server/dev-credentials.local.txt
+testdata/
+assets/
+.DS_Store
+Thumbs.db
+# plugin client build output
+client/Release/
+client/ARM64/
+client/x64/
+client/Debug/
+*.aps
+*.zxt

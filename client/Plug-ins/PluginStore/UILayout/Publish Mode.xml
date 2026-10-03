@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<GaaihoLayout name="Publish" type="ZeonUILayout" mode="17" version="19">
+<Frisbee>
+    <Top panelcount="0" cursel="0">
+        <toolbar name="FeaturePack" shortKey="U">
+            <PFFGroup name="FeaturePack::PluginStore" GroupType="PFFTitleBlock">
+                <PFFButton name="FeaturePack::PluginStore::Open" IconMode="4"/>
+            </PFFGroup>
+        </toolbar>
+    </Top>
+</Frisbee>
+</GaaihoLayout>
