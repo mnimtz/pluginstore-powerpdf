@@ -8,7 +8,7 @@ namespace AddonStore.Web.Api;
 public static class AgentGuide
 {
     public static string Markdown(string baseUrl, string version) => $$"""
-# PluginStore-PowerPDF, developer and agent guide
+# Add-on Store for Tungsten Power PDF: developer and agent guide
 
 Server version {{version}}. This server distributes plugins (.ppak packages)
 for Tungsten Power PDF. Everything you need to develop, package, validate and
@@ -146,17 +146,123 @@ your own beta versions with `DELETE /api/packages/{id}/{version}`.
 
 Verify the download against the catalog's `sha256` before installing.
 
-## Size limit
+## Versioning and ownership
 
-Packages up to 200 MB. Larger payloads should be fetched at install time by
-the plugin itself, not bundled.
+- `version` is MAJOR.MINOR.PATCH (digits only, no suffixes).
+- Every upload of a package id must carry a version strictly higher than every
+  earlier non-rejected version of that id (withdrawn versions count).
+- The same version cannot be uploaded twice (409 VERSION_EXISTS); fix a
+  mistake by uploading a higher version.
+- The account that first uploads an id owns it; other accounts get
+  PACKAGE_OWNED_BY_OTHER. Admins can withdraw any version.
+- Lifecycle: submitted, then `beta` once all hard checks pass (visible to
+  clients with the beta option), then `live` after an admin or reviewer
+  approves it, or `rejected` with a reason. Exception: the store client itself
+  (`com.tungsten.pluginstore`) may only be uploaded by admins and goes live
+  immediately.
+
+## What the store installs (Power PDF client)
+
+The client downloads the package, verifies its SHA-256 against the catalog
+and installs it with ONE administrator prompt:
+
+    x64/<Name>.zxt     ->  <Power PDF>\bin\Plug-Ins\<Name>.zxt
+    manifest.json      ->  <Power PDF>\bin\Plug-Ins\<Name>\manifest.json
+    UILayout/, assets/, docs/  ->  <Power PDF>\bin\Plug-Ins\<Name>\...
+
+- `<Name>` is the .zxt base name; it is also the data folder name, so your
+  plugin must look for its own files in `Plug-Ins\<Name>\`.
+- The installed `manifest.json` is how the store detects the installed version
+  and offers updates. Keep `id` and the .zxt name stable across versions.
+- Power PDF loads plugins only at start; the client offers a restart after
+  installing, updating or removing.
+- Uninstall removes `<Name>.zxt`, the `<Name>\` folder and the user key
+  `HKCU\Software\Kofax\PDF\Tungsten Power PDF\<Name>`. Store your settings
+  under that key so removal is clean.
+- A plugin that is loaded while being updated or removed is renamed and swept
+  on the next store operation; no reboot is needed.
+
+## Size limits
+
+| What | Limit |
+|---|---|
+| Package (.ppak) | 200 MB |
+| One .zxt, uncompressed | 120 MB |
+| manifest.json | 256 KB |
+| Text files checked (LICENSES.md, UILayout XML) | 1 MB each |
+| assets/icon.png | 4 MB (use a square PNG, 128 to 512 px) |
+| Everything inflated together | 400 MB |
+
+Larger payloads must be downloaded by the plugin at install or first run.
+
+## Complete rule reference
+
+Errors block the upload. Warnings do not block, but packages are expected to
+be free of warnings before review. Info is for information only.
+
+| Code | Severity | Meaning |
+|---|---|---|
+| ZIP_UNREADABLE | error | The upload is not a readable ZIP archive. |
+| ZIP_SLIP | error | An entry uses an unsafe path (.., drive letter, leading slash). |
+| SIZE_LIMIT | error | The package exceeds 200 MB. |
+| MANIFEST_MISSING | error | manifest.json is not at the ZIP root. |
+| MANIFEST_INVALID_JSON | error | manifest.json is not valid JSON. |
+| MANIFEST_TOO_LARGE | error | manifest.json exceeds 256 KB. |
+| ID_INVALID | error | `id` is missing or not lowercase reverse-DNS. |
+| VERSION_INVALID | error | `version` is missing or not MAJOR.MINOR.PATCH. |
+| VERSION_NOT_INCREMENTED | error | `version` is not higher than the latest submitted version. |
+| PACKAGE_OWNED_BY_OTHER | error | The id belongs to another account. |
+| NAME_MISSING | error | `name` is missing or has no language. |
+| CHANGELOG_EMPTY | error | `changelog` is missing or empty. |
+| LANG_TEXT_INCOMPLETE | error | `description` or `changelog` lacks one of the 16 languages. |
+| ARCH_MISSING | error | `x64` is not declared in `architectures`. |
+| ARCH_ARM64_ABSENT | info | No native arm64 build (fine: x64 runs on Windows on ARM). |
+| FILE_DECLARATION_MISSING | error | `files.<arch>` is not declared. |
+| FILE_MISSING | error | A declared .zxt is not in the ZIP. |
+| FILENAME_MISMATCH | error | x64 and arm64 .zxt have different file names. |
+| RESERVED_NAME | error | The .zxt name shadows a plugin Power PDF ships itself. |
+| ENTRY_TOO_LARGE | error | A .zxt inflates beyond 120 MB. |
+| HASH_MISSING | error | `sha256.<arch>` is not declared. |
+| HASH_MISMATCH | error | `sha256.<arch>` does not match the file. |
+| PE_INVALID | error | The .zxt is not a valid Windows PE file. |
+| PE_WRONG_MACHINE | error | The .zxt is built for the wrong CPU (x64 = 0x8664, arm64 = 0xAA64). |
+| PE_NOT_DLL | error | The .zxt is not a DLL. |
+| PE_DEBUG_RUNTIME | error | The .zxt imports a debug C/C++ runtime; ship the Release build. |
+| FOREIGN_DEPENDENCY | warning | The .zxt imports non-system DLLs; bundle them and check their license. |
+| ATOM_NAMESPACE_MISSING | warning | `ribbonAtomNamespace` is not set. |
+| ATOM_NOT_SHARED_TAB | error | The plugin creates its own ribbon tab instead of a group on "FeaturePack". |
+| ATOM_COLLISION | error | Another package already uses this ribbon atom namespace. |
+| RESERVED_PANEL_NS | error | The layout uses the host-owned `panel::` atom namespace. |
+| ICONMODE_SMALL | warning | A ribbon button uses IconMode="1" (small icon); use 4. |
+| LANG_ATOMS_INCONSISTENT | warning | A UILayout language folder declares different atoms than the base file. |
+| LANGS_INCOMPLETE | warning | UILayout language folders are missing (all 16 expected). |
+| CATEGORY_MISSING | warning | `category` is not set. |
+| CATEGORY_UNKNOWN | warning | `category` is not one of the known slugs. |
+| MIN_HOST_VERSION_MISSING | warning | `minPowerPdfVersion` is not set. |
+| LICENSES_MISSING | warning | LICENSES.md is missing. |
+| LICENSE_GPL_MARKER | warning | LICENSES.md mentions a GPL-family license (not allowed). |
+| ICON_MISSING | warning | assets/icon.png is missing. |
+| ICON_INVALID | warning | assets/icon.png is not a readable PNG. |
+| ICON_NOT_SQUARE | warning | The icon is not square. |
+| ICON_TOO_LARGE | warning | The icon is too large. |
+| VERSION_EXISTS | error (409) | This exact version was already uploaded. |
+| CLIENT_ADMIN_ONLY | error (403) | Only admins may publish the store client. |
+| VALIDATION_FAILED | error (422) | Summary code of a rejected upload; see `findings`. |
+| NO_PACKAGE | error (400) | The request carried no package data. |
+| NOT_OWNER | error (403) | You may only withdraw your own versions. |
+| LIVE_VERSION | error (403) | Live versions can only be withdrawn by an admin. |
+| TOKEN_INVALID | error (401) | Unknown token. |
+| TOKEN_REVOKED | error (401) | The token was revoked; create a new one. |
+| USER_NOT_ACTIVE | error (401) | The account is not (yet) active. |
 
 ## Good citizenship
 
 - Never put real credentials, API keys or customer data into a package.
-- Use only MIT/BSD/Apache-2.0 licensed third-party code.
-- Test on both x64 and Windows-on-ARM when you can; the store enforces that
-  both binaries exist, not that they work.
+- Use only MIT/BSD/Apache-2.0 licensed third-party code; list it in LICENSES.md.
+- Ship Release builds; test on x64, and on Windows on ARM when you can (Power
+  PDF runs there as ARM64EC and loads the x64 plugin).
+- Plugins are offered without official support; name a reachable author or
+  contact (`author`, `contactEmail`).
 """;
 
     /// <summary>
@@ -168,10 +274,10 @@ the plugin itself, not bundled.
     public static string SkillMarkdown(string baseUrl) => $$"""
 ---
 name: powerpdf-plugin-store
-description: Build, package, validate and publish Tungsten Power PDF plugins (.zxt, Plugin SDK) to the team Plugin-Store at {{baseUrl}}. Use whenever the user develops a Power PDF plugin, asks to package it as .ppak, upload or update it in the Plugin-Store, or fix store validation findings.
+description: Build, package, validate and publish Tungsten Power PDF plugins (.zxt, Plugin SDK) to the team Add-on Store at {{baseUrl}}. Use whenever the user develops a Power PDF plugin, asks to package it as .ppak, upload or update it in the Add-on Store, or fix store validation findings.
 ---
 
-# Power PDF Plugin-Store
+# Power PDF Add-on Store
 
 Store: {{baseUrl}}
 
@@ -199,7 +305,7 @@ third-party code.
     public const string ManifestSchema = """
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "PluginStore-PowerPDF package manifest (manifest.json)",
+  "title": "Add-on Store package manifest (manifest.json)",
   "type": "object",
   "required": ["id", "version", "name", "changelog", "architectures", "files", "sha256"],
   "properties": {

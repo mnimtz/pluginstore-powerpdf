@@ -20,6 +20,14 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      # The agent guide is the only documentation Claude sessions work from;
+      # a finding code that is not documented there fails the build.
+      - name: Agent guide covers every rule
+        run: python3 tools/check_docs.py
+
+      - name: Read server version
+        run: echo "SERVER_VERSION=S$(tr -d ' \r\n' < VERSION)" >> "$GITHUB_ENV"
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -37,6 +45,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=${{ env.SERVER_VERSION }},enable={{is_default_branch}}
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=sha,prefix=sha-
@@ -50,3 +59,28 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  # Every server (S<version>) and client (C<version>) version gets a Git tag
+  # and a GitHub Release the first time it reaches main.
+  tag-releases:
+    needs: build-and-push
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Tag and release new versions
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for kind in server client; do
+            python3 tools/release_notes.py "$kind" > notes.txt
+            tag=$(sed -n 1p notes.txt); title=$(sed -n 2p notes.txt); tail -n +3 notes.txt > body.md
+            if git ls-remote --exit-code --tags origin "refs/tags/$tag" > /dev/null; then
+              echo "$tag already released"
+            else
+              gh release create "$tag" --target "$GITHUB_SHA" --title "$title" --notes-file body.md
+            fi
+          done

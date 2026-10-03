@@ -1,4 +1,4 @@
-// settings.h — Plugin-Store client settings.
+// settings.h — Add-on Store client settings.
 //
 // Read chain per value, first hit wins:
 //   HKLM\Software\Kofax\PDF\Tungsten Power PDF\PluginStore\Policies\Store  (admin-enforced)

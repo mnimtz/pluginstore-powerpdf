@@ -1,8 +1,8 @@
-// plugininit.cpp — Plugin-Store client lifecycle.
+// plugininit.cpp — Add-on Store client lifecycle.
 //
 // ONE plug-in, ONE handshake, the SHARED ribbon tab (atom "FeaturePack",
 // title "Erweiterte Funktionen"/"Enhanced Features"): all store plug-ins put
-// their group on this one tab; our group is the Plugin-Store button. Everything else is
+// their group on this one tab; our group is the Add-on Store button. Everything else is
 // PluginStore-own and collision-free: extension atom (TUNGSTEN:PluginStore),
 // registry key (...\PluginStore), data folder (Plug-Ins\PluginStore),
 // log (%TEMP%\PluginStore.log).
@@ -74,7 +74,7 @@ DCCB1 DUBool DCCB2 PluginInit()
 }
 
 // Plug-ins initialised after us may have appended their groups behind ours;
-// re-applying at shutdown keeps the Plugin-Store group last for the next start.
+// re-applying at shutdown keeps the Add-on Store group last for the next start.
 DCCB1 DUBool DCCB2 PluginUnload()
 {
     DURING fplayout::ApplyButtons(); HANDLER END_HANDLER

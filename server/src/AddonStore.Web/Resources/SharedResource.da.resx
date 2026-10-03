@@ -15,12 +15,12 @@
   <data name="Audit" xml:space="preserve"><value>Audit</value></data>
   <data name="Audit log" xml:space="preserve"><value>Auditlog</value></data>
   <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>Beta-versioner har bestået alle automatiske kontroller og er synlige for beta-testere. Godkend dem til live-butikken, eller afvis dem med en begrundelse.</value></data>
-  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Gennemse de udgivne plugins nedenfor. Installationen sker direkte i Power PDF via Plugin-Store-båndet; dette websted er til plugin-udviklere og administratorer.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Gennemse de udgivne plugins nedenfor. Installationen sker direkte i Power PDF via Add-on-Store-båndet; dette websted er til plugin-udviklere og administratorer.</value></data>
   <data name="Catalog" xml:space="preserve"><value>Katalog</value></data>
   <data name="Changelog" xml:space="preserve"><value>Ændringslog</value></data>
   <data name="Create a token" xml:space="preserve"><value>Opret et token</value></data>
   <data name="Create admin account" xml:space="preserve"><value>Opret administratorkonto</value></data>
-  <data name="Create the first administrator account for this Plugin-Store instance." xml:space="preserve"><value>Opret den første administratorkonto for denne Plugin-Store-instans.</value></data>
+  <data name="Create the first administrator account for this Add-on Store instance." xml:space="preserve"><value>Opret den første administratorkonto for denne Add-on-Store-instans.</value></data>
   <data name="Create token" xml:space="preserve"><value>Opret token</value></data>
   <data name="Created" xml:space="preserve"><value>Oprettet</value></data>
   <data name="Details" xml:space="preserve"><value>Detaljer</value></data>
@@ -34,7 +34,7 @@
   <data name="Filter" xml:space="preserve"><value>Filter</value></data>
   <data name="Filter (actor, action, subject)" xml:space="preserve"><value>Filter (aktør, handling, emne)</value></data>
   <data name="First-run setup" xml:space="preserve"><value>Førstegangsopsætning</value></data>
-  <data name="For plugin developers and admins. End users install plugins directly from the Plugin-Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Til plugin-udviklere og administratorer. Slutbrugere installerer plugins direkte fra Plugin-Store-båndet i Power PDF, uden konto.</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Add-on Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Til plugin-udviklere og administratorer. Slutbrugere installerer plugins direkte fra Add-on-Store-båndet i Power PDF, uden konto.</value></data>
   <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>Giv tokenet til din Claude sammen med denne linje:</value></data>
   <data name="Last used" xml:space="preserve"><value>Senest brugt</value></data>
   <data name="Live versions" xml:space="preserve"><value>Live-versioner</value></data>
@@ -50,8 +50,8 @@
   <data name="Package file (.ppak)" xml:space="preserve"><value>Pakkefil (.ppak)</value></data>
   <data name="Password" xml:space="preserve"><value>Adgangskode</value></data>
   <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>Personlige API-tokens giver værktøjer og AI-assistenter mulighed for at uploade og opdatere dine plugins på dine vegne.</value></data>
-  <data name="Plugin store:" xml:space="preserve"><value>Plugin-butik:</value></data>
-  <data name="Plugin-Store for Tungsten Power PDF" xml:space="preserve"><value>Plugin-Store til Tungsten Power PDF</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>Add-on Store:</value></data>
+  <data name="Add-on Store for Tungsten Power PDF" xml:space="preserve"><value>Add-on Store til Tungsten Power PDF</value></data>
   <data name="Prefix" xml:space="preserve"><value>Præfiks</value></data>
   <data name="Profile" xml:space="preserve"><value>Profil</value></data>
   <data name="Reason (sent to the submitter)" xml:space="preserve"><value>Begrundelse (sendes til indsenderen)</value></data>
@@ -116,7 +116,7 @@
   <data name="Account created." xml:space="preserve"><value>Konto oprettet.</value></data>
   <data name="Activate account" xml:space="preserve"><value>Aktivér konto</value></data>
   <data name="Admin" xml:space="preserve"><value>Administrator</value></data>
-  <data name="Choose your display name and a password to activate your Plugin-Store account." xml:space="preserve"><value>Vælg dit visningsnavn og en adgangskode for at aktivere din Plugin-Store-konto.</value></data>
+  <data name="Choose your display name and a password to activate your Add-on Store account." xml:space="preserve"><value>Vælg dit visningsnavn og en adgangskode for at aktivere din Add-on-Store-konto.</value></data>
   <data name="Create a user directly" xml:space="preserve"><value>Opret en bruger direkte</value></data>
   <data name="Create account" xml:space="preserve"><value>Opret konto</value></data>
   <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>E-mail er ikke konfigureret; del dette invitationslink direkte:</value></data>
@@ -155,9 +155,9 @@
   <data name="Disabled" xml:space="preserve"><value>Deaktiveret</value></data>
   <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Download og kør installationsprogrammet (administratorrettigheder kræves); derefter holder tilføjelsen sig selv og dine plugins opdateret.</value></data>
   <data name="Live" xml:space="preserve"><value>Live</value></data>
-  <data name="Only administrators can publish new versions of the Plugin-Store client." xml:space="preserve"><value>Kun administratorer kan udgive nye versioner af Plugin-Store-klienten.</value></data>
+  <data name="Only administrators can publish new versions of the Add-on Store client." xml:space="preserve"><value>Kun administratorer kan udgive nye versioner af Add-on-Store-klienten.</value></data>
   <data name="Pending" xml:space="preserve"><value>Afventer</value></data>
-  <data name="Plugin-Store client released. Installed clients offer the update now." xml:space="preserve"><value>Plugin-Store-klienten er udgivet. Installerede klienter tilbyder nu opdateringen.</value></data>
+  <data name="Add-on Store client released. Installed clients offer the update now." xml:space="preserve"><value>Add-on-Store-klienten er udgivet. Installerede klienter tilbyder nu opdateringen.</value></data>
   <data name="Rejected" xml:space="preserve"><value>Afvist</value></data>
   <data name="Time" xml:space="preserve"><value>Tid</value></data>
   <data name="Time zone for displayed times" xml:space="preserve"><value>Tidszone for viste klokkeslæt</value></data>
@@ -211,4 +211,53 @@
   <data name="Give Claude one line" xml:space="preserve"><value>Giv Claude én linje</value></data>
   <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Mere behøver Claude ikke: den læser vejledningen, sætter sig selv op til fremtidige sessioner og følger reglerne.</value></data>
   <data name="Optional: install the skill manually" xml:space="preserve"><value>Valgfrit: installer skill manuelt</value></data>
+  <data name="A backup contains everything: database (accounts, packages, versions, reviews, audit log, settings), all plugin packages, profile pictures and developer kit files." xml:space="preserve"><value>En sikkerhedskopi indeholder alt: database (konti, pakker, versioner, gennemgange, auditlog, indstillinger), alle plugin-pakker, profilbilleder og filer til udviklerkittet.</value></data>
+  <data name="Access request approved or declined" xml:space="preserve"><value>Adgangsanmodning godkendt eller afvist</value></data>
+  <data name="Admins" xml:space="preserve"><value>Administratorer</value></data>
+  <data name="Admins and reviewers" xml:space="preserve"><value>Administratorer og godkendere</value></data>
+  <data name="Applicant" xml:space="preserve"><value>Ansøger</value></data>
+  <data name="Automatic safety backups" xml:space="preserve"><value>Automatiske sikringskopier</value></data>
+  <data name="Backup and restore" xml:space="preserve"><value>Sikkerhedskopiering og gendannelse</value></data>
+  <data name="Backup file (.zip)" xml:space="preserve"><value>Sikkerhedskopifil (.zip)</value></data>
+  <data name="Backup restored. A safety backup of the previous state was kept on the server." xml:space="preserve"><value>Sikkerhedskopien er gendannet. En sikringskopi af den tidligere tilstand er bevaret på serveren.</value></data>
+  <data name="Community plugins by Tungsten Automation employees, not official Tungsten products: provided as is, without warranty or official support. Use at your own risk." xml:space="preserve"><value>Community-plugins fra medarbejdere hos Tungsten Automation, ikke officielle Tungsten-produkter: leveres, som de er og forefindes, uden garanti eller officiel support. Brug sker på eget ansvar.</value></data>
+  <data name="Create backup" xml:space="preserve"><value>Opret sikkerhedskopi</value></data>
+  <data name="Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file." xml:space="preserve"><value>Opretter et konsistent øjebliksbillede, mens Add-on Store fortsat kører, og downloader det som en ZIP-fil.</value></data>
+  <data name="Disclaimer" xml:space="preserve"><value>Ansvarsfraskrivelse</value></data>
+  <data name="Download full backup" xml:space="preserve"><value>Download fuld sikkerhedskopi</value></data>
+  <data name="Event" xml:space="preserve"><value>Hændelse</value></data>
+  <data name="File" xml:space="preserve"><value>Fil</value></data>
+  <data name="Invitation" xml:space="preserve"><value>Invitation</value></data>
+  <data name="Invited person (always sent)" xml:space="preserve"><value>Inviteret person (sendes altid)</value></data>
+  <data name="New Add-on Store client released" xml:space="preserve"><value>Ny Add-on-Store-klient udgivet</value></data>
+  <data name="New access request" xml:space="preserve"><value>Ny adgangsanmodning</value></data>
+  <data name="New plugin version submitted" xml:space="preserve"><value>Ny plugin-version indsendt</value></data>
+  <data name="No backup file received." xml:space="preserve"><value>Der blev ikke modtaget nogen sikkerhedskopifil.</value></data>
+  <data name="Notifications" xml:space="preserve"><value>Notifikationer</value></data>
+  <data name="Plugin version approved or rejected" xml:space="preserve"><value>Plugin-version godkendt eller afvist</value></data>
+  <data name="Recipients" xml:space="preserve"><value>Modtagere</value></data>
+  <data name="Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup." xml:space="preserve"><value>Erstatter ALLE aktuelle data med indholdet af sikkerhedskopien. Forinden gemmer serveren automatisk den aktuelle tilstand som en sikringskopi.</value></data>
+  <data name="Restore" xml:space="preserve"><value>Gendannelse</value></data>
+  <data name="Restore backup" xml:space="preserve"><value>Gendan sikkerhedskopi</value></data>
+  <data name="Send test email" xml:space="preserve"><value>Send test-e-mail</value></data>
+  <data name="Size" xml:space="preserve"><value>Størrelse</value></data>
+  <data name="Submitter" xml:space="preserve"><value>Indsender</value></data>
+  <data name="Test email sent. Please check your inbox." xml:space="preserve"><value>Test-e-mail sendt. Tjek din indbakke.</value></data>
+  <data name="Test plugins before productive use, keep backups of important documents, and make sure their use complies with your organization's IT and data protection policies." xml:space="preserve"><value>Test plugins før produktiv brug, tag sikkerhedskopier af vigtige dokumenter, og sørg for, at brugen overholder din organisations it- og databeskyttelsespolitikker.</value></data>
+  <data name="The archive contains unsafe paths." xml:space="preserve"><value>Arkivet indeholder usikre stier.</value></data>
+  <data name="The backup contains password hashes and settings such as the Resend key. Store it like a password." xml:space="preserve"><value>Sikkerhedskopien indeholder adgangskode-hashes og indstillinger som f.eks. Resend-nøglen. Opbevar den som en adgangskode.</value></data>
+  <data name="The plugins in this store are internal developments by Tungsten Automation employees. They are not part of Tungsten Power PDF and are not official Tungsten Automation products." xml:space="preserve"><value>Plugins i denne Add-on Store er interne udviklinger fra medarbejdere hos Tungsten Automation. De er ikke en del af Tungsten Power PDF og er ikke officielle Tungsten Automation-produkter.</value></data>
+  <data name="The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out." xml:space="preserve"><value>Gendannelsen afvises, hvis din egen konto ikke er en aktiv administrator i sikkerhedskopien, så du ikke kan låse dig selv ude.</value></data>
+  <data name="The test email could not be sent." xml:space="preserve"><value>Test-e-mailen kunne ikke sendes.</value></data>
+  <data name="There is no official support through Tungsten Automation Support. Please contact the author named in the catalog; answers are voluntary and without guaranteed response times." xml:space="preserve"><value>Der ydes ingen officiel support via Tungsten Automation Support. Kontakt den forfatter, der er angivet i kataloget; svar gives frivilligt og uden garanterede svartider.</value></data>
+  <data name="They are provided as is, without warranty of any kind, express or implied, including fitness for a particular purpose, availability or freedom from errors." xml:space="preserve"><value>De leveres, som de er og forefindes, uden garanti af nogen art, hverken udtrykkelig eller stiltiende, herunder for egnethed til et bestemt formål, tilgængelighed eller fejlfrihed.</value></data>
+  <data name="This is not a Add-on Store backup (backup.json or pluginstore.db missing)." xml:space="preserve"><value>Dette er ikke en Add-on-Store-sikkerhedskopi (backup.json eller pluginstore.db mangler).</value></data>
+  <data name="This is not a Add-on Store backup." xml:space="preserve"><value>Dette er ikke en Add-on-Store-sikkerhedskopi.</value></data>
+  <data name="To the extent permitted by law, Tungsten Automation and the authors accept no liability for damage, data loss or downtime caused by installing or using these plugins." xml:space="preserve"><value>I det omfang loven tillader det, påtager Tungsten Automation og forfatterne sig intet ansvar for skader, datatab eller nedetid forårsaget af installation eller brug af disse plugins.</value></data>
+  <data name="Type RESTORE to confirm" xml:space="preserve"><value>Skriv RESTORE for at bekræfte</value></data>
+  <data name="Type RESTORE to confirm." xml:space="preserve"><value>Skriv RESTORE for at bekræfte.</value></data>
+  <data name="Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log." xml:space="preserve"><value>Hvilke e-mails der sendes hvornår, og til hvem. Alle sendte eller mislykkede e-mails registreres i auditloggen.</value></data>
+  <data name="Without a verified sender domain, Resend only delivers to the email address of the Resend account owner." xml:space="preserve"><value>Uden et verificeret afsenderdomæne leverer Resend kun til e-mailadressen for ejeren af Resend-kontoen.</value></data>
+  <data name="Your account is not an active admin in this backup; restoring it would lock you out." xml:space="preserve"><value>Din konto er ikke en aktiv administrator i denne sikkerhedskopi; en gendannelse ville låse dig ude.</value></data>
+  <data name="to" xml:space="preserve"><value>til</value></data>
 </root>

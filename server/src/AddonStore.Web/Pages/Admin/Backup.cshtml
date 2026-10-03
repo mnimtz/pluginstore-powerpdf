@@ -1,0 +1,54 @@
+@page
+@model AddonStore.Web.Pages.Admin.BackupModel
+@{
+    ViewData["Title"] = "Backup";
+}
+
+<h1>@L["Backup and restore"]</h1>
+<p class="lead">@L["A backup contains everything: database (accounts, packages, versions, reviews, audit log, settings), all plugin packages, profile pictures and developer kit files."]</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+}
+
+<div class="card" style="max-width:640px">
+    <h2 style="margin-top:0">@L["Create backup"]</h2>
+    <p>@L["Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file."]</p>
+    <a class="btn cta" href="/Admin/Backup?handler=Download">@L["Download full backup"]</a>
+    <p style="font-size:.82rem;color:var(--tun-slate)">@L["The backup contains password hashes and settings such as the Resend key. Store it like a password."]</p>
+</div>
+
+<div class="card" style="max-width:640px">
+    <h2 style="margin-top:0">@L["Restore"]</h2>
+    <p>@L["Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup."]</p>
+    <form method="post" asp-page-handler="Restore" enctype="multipart/form-data" class="stack">
+        <div>
+            <label>@L["Backup file (.zip)"]</label>
+            <input type="file" name="archive" accept=".zip" required />
+        </div>
+        <div>
+            <label>@L["Type RESTORE to confirm"]</label>
+            <input type="text" name="confirm" autocomplete="off" required pattern="RESTORE" />
+        </div>
+        <button type="submit" class="btn danger">@L["Restore backup"]</button>
+    </form>
+    <p style="font-size:.82rem;color:var(--tun-slate)">@L["The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out."]</p>
+</div>
+
+@if (Model.SafetyBackups.Count > 0)
+{
+    <h2>@L["Automatic safety backups"]</h2>
+    <table style="max-width:640px">
+        <tr><th>@L["File"]</th><th>@L["Created"]</th><th>@L["Size"]</th><th></th></tr>
+        @foreach (var b in Model.SafetyBackups)
+        {
+            <tr>
+                <td><code>@b.Name</code></td>
+                <td>@Time.Fmt(b.Utc)</td>
+                <td>@(b.Size / 1024) KB</td>
+                <td><a class="btn small secondary" href="/Admin/Backup?handler=Safety&amp;name=@b.Name">@L["Download"]</a></td>
+            </tr>
+        }
+    </table>
+}

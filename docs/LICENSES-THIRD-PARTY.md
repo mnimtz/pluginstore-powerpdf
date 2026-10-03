@@ -18,7 +18,7 @@ deliverables; no GPL/AGPL/LGPL. Status: **compliant**. Last audit: Oct 3, 2026.
 `dotnet list package --vulnerable --include-transitive`: **no vulnerable
 packages** (after the SQLitePCLRaw pin).
 
-## Plugin-Store ribbon client (PluginStore.zxt)
+## Add-on Store ribbon client (PluginStore.zxt)
 
 | Component | License | Notes |
 |---|---|---|

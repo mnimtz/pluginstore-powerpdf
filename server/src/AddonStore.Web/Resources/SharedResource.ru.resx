@@ -15,12 +15,12 @@
   <data name="Audit" xml:space="preserve"><value>Аудит</value></data>
   <data name="Audit log" xml:space="preserve"><value>Журнал аудита</value></data>
   <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>Beta-версии прошли все автоматические проверки и видны beta-тестировщикам. Одобрите их для live-магазина или отклоните с указанием причины.</value></data>
-  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Ниже представлены выпущенные плагины. Установка выполняется непосредственно в Power PDF через ленту Plugin-Store; этот сайт предназначен для разработчиков плагинов и администраторов.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Ниже представлены выпущенные плагины. Установка выполняется непосредственно в Power PDF через ленту Add-on Store; этот сайт предназначен для разработчиков плагинов и администраторов.</value></data>
   <data name="Catalog" xml:space="preserve"><value>Каталог</value></data>
   <data name="Changelog" xml:space="preserve"><value>Журнал изменений</value></data>
   <data name="Create a token" xml:space="preserve"><value>Создать новый токен</value></data>
   <data name="Create admin account" xml:space="preserve"><value>Создать учетную запись администратора</value></data>
-  <data name="Create the first administrator account for this Plugin-Store instance." xml:space="preserve"><value>Создайте первую учетную запись администратора для этого экземпляра Plugin-Store.</value></data>
+  <data name="Create the first administrator account for this Add-on Store instance." xml:space="preserve"><value>Создайте первую учетную запись администратора для этого экземпляра Add-on Store.</value></data>
   <data name="Create token" xml:space="preserve"><value>Создать токен</value></data>
   <data name="Created" xml:space="preserve"><value>Создано</value></data>
   <data name="Details" xml:space="preserve"><value>Сведения</value></data>
@@ -34,7 +34,7 @@
   <data name="Filter" xml:space="preserve"><value>Фильтр</value></data>
   <data name="Filter (actor, action, subject)" xml:space="preserve"><value>Фильтр (исполнитель, действие, объект)</value></data>
   <data name="First-run setup" xml:space="preserve"><value>Первоначальная настройка</value></data>
-  <data name="For plugin developers and admins. End users install plugins directly from the Plugin-Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Для разработчиков плагинов и администраторов. Конечные пользователи устанавливают плагины непосредственно с ленты Plugin-Store в Power PDF, без учетной записи.</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Add-on Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Для разработчиков плагинов и администраторов. Конечные пользователи устанавливают плагины непосредственно с ленты Add-on Store в Power PDF, без учетной записи.</value></data>
   <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>Передайте токен вашему Claude вместе с этой строкой:</value></data>
   <data name="Last used" xml:space="preserve"><value>Последнее использование</value></data>
   <data name="Live versions" xml:space="preserve"><value>Live-версии</value></data>
@@ -50,8 +50,8 @@
   <data name="Package file (.ppak)" xml:space="preserve"><value>Файл пакета (.ppak)</value></data>
   <data name="Password" xml:space="preserve"><value>Пароль</value></data>
   <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>Личные токены API позволяют инструментам и ИИ-ассистентам загружать и обновлять ваши плагины от вашего имени.</value></data>
-  <data name="Plugin store:" xml:space="preserve"><value>Магазин плагинов:</value></data>
-  <data name="Plugin-Store for Tungsten Power PDF" xml:space="preserve"><value>Plugin-Store для Tungsten Power PDF</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>Add-on Store:</value></data>
+  <data name="Add-on Store for Tungsten Power PDF" xml:space="preserve"><value>Add-on Store для Tungsten Power PDF</value></data>
   <data name="Prefix" xml:space="preserve"><value>Префикс</value></data>
   <data name="Profile" xml:space="preserve"><value>Профиль</value></data>
   <data name="Reason (sent to the submitter)" xml:space="preserve"><value>Причина (отправляется отправителю)</value></data>
@@ -116,7 +116,7 @@
   <data name="Account created." xml:space="preserve"><value>Учетная запись создана.</value></data>
   <data name="Activate account" xml:space="preserve"><value>Активировать учетную запись</value></data>
   <data name="Admin" xml:space="preserve"><value>Администратор</value></data>
-  <data name="Choose your display name and a password to activate your Plugin-Store account." xml:space="preserve"><value>Выберите отображаемое имя и пароль, чтобы активировать учетную запись Plugin-Store.</value></data>
+  <data name="Choose your display name and a password to activate your Add-on Store account." xml:space="preserve"><value>Выберите отображаемое имя и пароль, чтобы активировать учетную запись Add-on Store.</value></data>
   <data name="Create a user directly" xml:space="preserve"><value>Создать пользователя напрямую</value></data>
   <data name="Create account" xml:space="preserve"><value>Создать учетную запись</value></data>
   <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>Электронная почта не настроена; поделитесь этой ссылкой-приглашением напрямую:</value></data>
@@ -155,9 +155,9 @@
   <data name="Disabled" xml:space="preserve"><value>Отключена</value></data>
   <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Скачайте и запустите установщик (требуются права администратора); после этого надстройка будет обновлять себя и ваши плагины.</value></data>
   <data name="Live" xml:space="preserve"><value>Опубликовано</value></data>
-  <data name="Only administrators can publish new versions of the Plugin-Store client." xml:space="preserve"><value>Публиковать новые версии клиента Plugin-Store могут только администраторы.</value></data>
+  <data name="Only administrators can publish new versions of the Add-on Store client." xml:space="preserve"><value>Публиковать новые версии клиента Add-on Store могут только администраторы.</value></data>
   <data name="Pending" xml:space="preserve"><value>Ожидает</value></data>
-  <data name="Plugin-Store client released. Installed clients offer the update now." xml:space="preserve"><value>Клиент Plugin-Store опубликован. Установленные клиенты теперь предлагают обновление.</value></data>
+  <data name="Add-on Store client released. Installed clients offer the update now." xml:space="preserve"><value>Клиент Add-on Store опубликован. Установленные клиенты теперь предлагают обновление.</value></data>
   <data name="Rejected" xml:space="preserve"><value>Отклонено</value></data>
   <data name="Time" xml:space="preserve"><value>Время</value></data>
   <data name="Time zone for displayed times" xml:space="preserve"><value>Часовой пояс для отображаемого времени</value></data>
@@ -211,4 +211,53 @@
   <data name="Give Claude one line" xml:space="preserve"><value>Дайте Claude одну строку</value></data>
   <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Больше Claude ничего не нужно: он читает руководство, настраивается для будущих сеансов и соблюдает правила.</value></data>
   <data name="Optional: install the skill manually" xml:space="preserve"><value>Необязательно: установить навык вручную</value></data>
+  <data name="A backup contains everything: database (accounts, packages, versions, reviews, audit log, settings), all plugin packages, profile pictures and developer kit files." xml:space="preserve"><value>Резервная копия содержит все данные: базу данных (учетные записи, пакеты, версии, проверки, журнал аудита, настройки), все пакеты плагинов, изображения профилей и файлы комплекта разработчика.</value></data>
+  <data name="Access request approved or declined" xml:space="preserve"><value>Запрос на доступ одобрен или отклонен</value></data>
+  <data name="Admins" xml:space="preserve"><value>Администраторы</value></data>
+  <data name="Admins and reviewers" xml:space="preserve"><value>Администраторы и проверяющие</value></data>
+  <data name="Applicant" xml:space="preserve"><value>Заявитель</value></data>
+  <data name="Automatic safety backups" xml:space="preserve"><value>Автоматические страховочные копии</value></data>
+  <data name="Backup and restore" xml:space="preserve"><value>Резервное копирование и восстановление</value></data>
+  <data name="Backup file (.zip)" xml:space="preserve"><value>Файл резервной копии (.zip)</value></data>
+  <data name="Backup restored. A safety backup of the previous state was kept on the server." xml:space="preserve"><value>Резервная копия восстановлена. Страховочная копия предыдущего состояния сохранена на сервере.</value></data>
+  <data name="Community plugins by Tungsten Automation employees, not official Tungsten products: provided as is, without warranty or official support. Use at your own risk." xml:space="preserve"><value>Плагины сообщества, разработанные сотрудниками Tungsten Automation, не являются официальными продуктами Tungsten: предоставляются «как есть», без гарантий и официальной поддержки. Используйте на свой риск.</value></data>
+  <data name="Create backup" xml:space="preserve"><value>Создать резервную копию</value></data>
+  <data name="Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file." xml:space="preserve"><value>Создает согласованный снимок, пока Add-on Store продолжает работать, и скачивает его в виде ZIP-файла.</value></data>
+  <data name="Disclaimer" xml:space="preserve"><value>Отказ от ответственности</value></data>
+  <data name="Download full backup" xml:space="preserve"><value>Скачать полную резервную копию</value></data>
+  <data name="Event" xml:space="preserve"><value>Событие</value></data>
+  <data name="File" xml:space="preserve"><value>Файл</value></data>
+  <data name="Invitation" xml:space="preserve"><value>Приглашение</value></data>
+  <data name="Invited person (always sent)" xml:space="preserve"><value>Приглашенный (отправляется всегда)</value></data>
+  <data name="New Add-on Store client released" xml:space="preserve"><value>Выпущен новый клиент Add-on Store</value></data>
+  <data name="New access request" xml:space="preserve"><value>Новый запрос на доступ</value></data>
+  <data name="New plugin version submitted" xml:space="preserve"><value>Отправлена новая версия плагина</value></data>
+  <data name="No backup file received." xml:space="preserve"><value>Файл резервной копии не получен.</value></data>
+  <data name="Notifications" xml:space="preserve"><value>Уведомления</value></data>
+  <data name="Plugin version approved or rejected" xml:space="preserve"><value>Версия плагина одобрена или отклонена</value></data>
+  <data name="Recipients" xml:space="preserve"><value>Получатели</value></data>
+  <data name="Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup." xml:space="preserve"><value>Заменяет ВСЕ текущие данные содержимым резервной копии. Перед этим сервер автоматически сохраняет текущее состояние как страховочную копию.</value></data>
+  <data name="Restore" xml:space="preserve"><value>Восстановление</value></data>
+  <data name="Restore backup" xml:space="preserve"><value>Восстановить резервную копию</value></data>
+  <data name="Send test email" xml:space="preserve"><value>Отправить тестовое письмо</value></data>
+  <data name="Size" xml:space="preserve"><value>Размер</value></data>
+  <data name="Submitter" xml:space="preserve"><value>Отправитель</value></data>
+  <data name="Test email sent. Please check your inbox." xml:space="preserve"><value>Тестовое письмо отправлено. Проверьте папку «Входящие».</value></data>
+  <data name="Test plugins before productive use, keep backups of important documents, and make sure their use complies with your organization's IT and data protection policies." xml:space="preserve"><value>Тестируйте плагины перед использованием в рабочей среде, создавайте резервные копии важных документов и убедитесь, что их использование соответствует политикам вашей организации в области ИТ и защиты данных.</value></data>
+  <data name="The archive contains unsafe paths." xml:space="preserve"><value>Архив содержит небезопасные пути.</value></data>
+  <data name="The backup contains password hashes and settings such as the Resend key. Store it like a password." xml:space="preserve"><value>Резервная копия содержит хеши паролей и настройки, например ключ Resend. Храните ее как пароль.</value></data>
+  <data name="The plugins in this store are internal developments by Tungsten Automation employees. They are not part of Tungsten Power PDF and are not official Tungsten Automation products." xml:space="preserve"><value>Плагины в этом Add-on Store являются внутренними разработками сотрудников Tungsten Automation. Они не входят в состав Tungsten Power PDF и не являются официальными продуктами Tungsten Automation.</value></data>
+  <data name="The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out." xml:space="preserve"><value>Восстановление будет отклонено, если ваша собственная учетная запись не является активным администратором в резервной копии, поэтому вы не сможете заблокировать себе доступ.</value></data>
+  <data name="The test email could not be sent." xml:space="preserve"><value>Не удалось отправить тестовое письмо.</value></data>
+  <data name="There is no official support through Tungsten Automation Support. Please contact the author named in the catalog; answers are voluntary and without guaranteed response times." xml:space="preserve"><value>Официальная поддержка через службу поддержки Tungsten Automation не предоставляется. Обращайтесь к автору, указанному в каталоге; ответы даются добровольно и без гарантированных сроков.</value></data>
+  <data name="They are provided as is, without warranty of any kind, express or implied, including fitness for a particular purpose, availability or freedom from errors." xml:space="preserve"><value>Они предоставляются «как есть», без каких-либо явных или подразумеваемых гарантий, включая пригодность для определенной цели, доступность или отсутствие ошибок.</value></data>
+  <data name="This is not a Add-on Store backup (backup.json or pluginstore.db missing)." xml:space="preserve"><value>Это не резервная копия Add-on Store (отсутствует backup.json или pluginstore.db).</value></data>
+  <data name="This is not a Add-on Store backup." xml:space="preserve"><value>Это не резервная копия Add-on Store.</value></data>
+  <data name="To the extent permitted by law, Tungsten Automation and the authors accept no liability for damage, data loss or downtime caused by installing or using these plugins." xml:space="preserve"><value>В пределах, допускаемых законом, Tungsten Automation и авторы не несут ответственности за ущерб, потерю данных или простои, вызванные установкой или использованием этих плагинов.</value></data>
+  <data name="Type RESTORE to confirm" xml:space="preserve"><value>Введите RESTORE для подтверждения</value></data>
+  <data name="Type RESTORE to confirm." xml:space="preserve"><value>Введите RESTORE для подтверждения.</value></data>
+  <data name="Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log." xml:space="preserve"><value>Какие письма, когда и кому отправляются. Каждое отправленное или неотправленное письмо фиксируется в журнале аудита.</value></data>
+  <data name="Without a verified sender domain, Resend only delivers to the email address of the Resend account owner." xml:space="preserve"><value>Без подтвержденного домена отправителя Resend доставляет письма только на адрес электронной почты владельца учетной записи Resend.</value></data>
+  <data name="Your account is not an active admin in this backup; restoring it would lock you out." xml:space="preserve"><value>Ваша учетная запись не является активным администратором в этой резервной копии; ее восстановление лишило бы вас доступа.</value></data>
+  <data name="to" xml:space="preserve"><value>на адрес</value></data>
 </root>

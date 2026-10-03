@@ -15,12 +15,12 @@
   <data name="Audit" xml:space="preserve"><value>Auditointi</value></data>
   <data name="Audit log" xml:space="preserve"><value>Auditointiloki</value></data>
   <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>Beta-versiot ovat läpäisseet kaikki automaattiset tarkistukset ja näkyvät beta-testaajille. Hyväksy ne live-kauppaan tai hylkää ne perustelun kera.</value></data>
-  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Selaa julkaistuja lisäosia alla. Asennus tapahtuu suoraan Power PDF:ssä Plugin-Store-valintanauhan kautta; tämä sivusto on tarkoitettu lisäosien kehittäjille ja järjestelmänvalvojille.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Selaa julkaistuja lisäosia alla. Asennus tapahtuu suoraan Power PDF:ssä Add-on-Store-valintanauhan kautta; tämä sivusto on tarkoitettu lisäosien kehittäjille ja järjestelmänvalvojille.</value></data>
   <data name="Catalog" xml:space="preserve"><value>Luettelo</value></data>
   <data name="Changelog" xml:space="preserve"><value>Muutosloki</value></data>
   <data name="Create a token" xml:space="preserve"><value>Luo uusi token</value></data>
   <data name="Create admin account" xml:space="preserve"><value>Luo järjestelmänvalvojan tili</value></data>
-  <data name="Create the first administrator account for this Plugin-Store instance." xml:space="preserve"><value>Luo ensimmäinen järjestelmänvalvojan tili tälle Plugin-Store-instanssille.</value></data>
+  <data name="Create the first administrator account for this Add-on Store instance." xml:space="preserve"><value>Luo ensimmäinen järjestelmänvalvojan tili tälle Add-on-Store-instanssille.</value></data>
   <data name="Create token" xml:space="preserve"><value>Luo token</value></data>
   <data name="Created" xml:space="preserve"><value>Luotu</value></data>
   <data name="Details" xml:space="preserve"><value>Tiedot</value></data>
@@ -34,7 +34,7 @@
   <data name="Filter" xml:space="preserve"><value>Suodatin</value></data>
   <data name="Filter (actor, action, subject)" xml:space="preserve"><value>Suodatin (tekijä, toiminto, kohde)</value></data>
   <data name="First-run setup" xml:space="preserve"><value>Ensimmäinen käyttöönotto</value></data>
-  <data name="For plugin developers and admins. End users install plugins directly from the Plugin-Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Lisäosien kehittäjille ja järjestelmänvalvojille. Loppukäyttäjät asentavat lisäosat suoraan Power PDF:n Plugin-Store-valintanauhasta ilman tiliä.</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Add-on Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Lisäosien kehittäjille ja järjestelmänvalvojille. Loppukäyttäjät asentavat lisäosat suoraan Power PDF:n Add-on-Store-valintanauhasta ilman tiliä.</value></data>
   <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>Anna token Claudellesi yhdessä tämän rivin kanssa:</value></data>
   <data name="Last used" xml:space="preserve"><value>Viimeksi käytetty</value></data>
   <data name="Live versions" xml:space="preserve"><value>Live-versiot</value></data>
@@ -50,8 +50,8 @@
   <data name="Package file (.ppak)" xml:space="preserve"><value>Pakettitiedosto (.ppak)</value></data>
   <data name="Password" xml:space="preserve"><value>Salasana</value></data>
   <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>Henkilökohtaisten API-tokenien avulla työkalut ja tekoälyavustajat voivat ladata ja päivittää lisäosiasi puolestasi.</value></data>
-  <data name="Plugin store:" xml:space="preserve"><value>Lisäosakauppa:</value></data>
-  <data name="Plugin-Store for Tungsten Power PDF" xml:space="preserve"><value>Plugin-Store Tungsten Power PDF:lle</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>Add-on Store:</value></data>
+  <data name="Add-on Store for Tungsten Power PDF" xml:space="preserve"><value>Add-on Store Tungsten Power PDF:lle</value></data>
   <data name="Prefix" xml:space="preserve"><value>Etuliite</value></data>
   <data name="Profile" xml:space="preserve"><value>Profiili</value></data>
   <data name="Reason (sent to the submitter)" xml:space="preserve"><value>Perustelu (lähetetään lähettäjälle)</value></data>
@@ -116,7 +116,7 @@
   <data name="Account created." xml:space="preserve"><value>Tili luotu.</value></data>
   <data name="Activate account" xml:space="preserve"><value>Aktivoi tili</value></data>
   <data name="Admin" xml:space="preserve"><value>Järjestelmänvalvoja</value></data>
-  <data name="Choose your display name and a password to activate your Plugin-Store account." xml:space="preserve"><value>Valitse näyttönimi ja salasana aktivoidaksesi Plugin-Store-tilisi.</value></data>
+  <data name="Choose your display name and a password to activate your Add-on Store account." xml:space="preserve"><value>Valitse näyttönimi ja salasana aktivoidaksesi Add-on-Store-tilisi.</value></data>
   <data name="Create a user directly" xml:space="preserve"><value>Luo käyttäjä suoraan</value></data>
   <data name="Create account" xml:space="preserve"><value>Luo tili</value></data>
   <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>Sähköpostia ei ole määritetty; jaa tämä kutsulinkki suoraan:</value></data>
@@ -155,9 +155,9 @@
   <data name="Disabled" xml:space="preserve"><value>Poistettu käytöstä</value></data>
   <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Lataa ja suorita asennusohjelma (järjestelmänvalvojan oikeudet vaaditaan); sen jälkeen lisäosa pitää itsensä ja laajennukset ajan tasalla.</value></data>
   <data name="Live" xml:space="preserve"><value>Julkaistu</value></data>
-  <data name="Only administrators can publish new versions of the Plugin-Store client." xml:space="preserve"><value>Vain järjestelmänvalvojat voivat julkaista Plugin-Store-asiakasohjelman uusia versioita.</value></data>
+  <data name="Only administrators can publish new versions of the Add-on Store client." xml:space="preserve"><value>Vain järjestelmänvalvojat voivat julkaista Add-on-Store-asiakasohjelman uusia versioita.</value></data>
   <data name="Pending" xml:space="preserve"><value>Odottaa</value></data>
-  <data name="Plugin-Store client released. Installed clients offer the update now." xml:space="preserve"><value>Plugin-Store-asiakasohjelma julkaistu. Asennetut asiakasohjelmat tarjoavat nyt päivitystä.</value></data>
+  <data name="Add-on Store client released. Installed clients offer the update now." xml:space="preserve"><value>Add-on-Store-asiakasohjelma julkaistu. Asennetut asiakasohjelmat tarjoavat nyt päivitystä.</value></data>
   <data name="Rejected" xml:space="preserve"><value>Hylätty</value></data>
   <data name="Time" xml:space="preserve"><value>Aika</value></data>
   <data name="Time zone for displayed times" xml:space="preserve"><value>Näytettävien aikojen aikavyöhyke</value></data>
@@ -211,4 +211,53 @@
   <data name="Give Claude one line" xml:space="preserve"><value>Anna Claudelle yksi rivi</value></data>
   <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Muuta Claude ei tarvitse: se lukee ohjeen, määrittää itsensä tulevia istuntoja varten ja noudattaa sääntöjä.</value></data>
   <data name="Optional: install the skill manually" xml:space="preserve"><value>Valinnainen: asenna skill manuaalisesti</value></data>
+  <data name="A backup contains everything: database (accounts, packages, versions, reviews, audit log, settings), all plugin packages, profile pictures and developer kit files." xml:space="preserve"><value>Varmuuskopio sisältää kaiken: tietokannan (tilit, paketit, versiot, tarkastukset, auditointiloki, asetukset), kaikki lisäosapaketit, profiilikuvat ja kehityspaketin tiedostot.</value></data>
+  <data name="Access request approved or declined" xml:space="preserve"><value>Käyttöoikeuspyyntö hyväksytty tai hylätty</value></data>
+  <data name="Admins" xml:space="preserve"><value>Järjestelmänvalvojat</value></data>
+  <data name="Admins and reviewers" xml:space="preserve"><value>Järjestelmänvalvojat ja tarkastajat</value></data>
+  <data name="Applicant" xml:space="preserve"><value>Hakija</value></data>
+  <data name="Automatic safety backups" xml:space="preserve"><value>Automaattiset turvavarmuuskopiot</value></data>
+  <data name="Backup and restore" xml:space="preserve"><value>Varmuuskopiointi ja palautus</value></data>
+  <data name="Backup file (.zip)" xml:space="preserve"><value>Varmuuskopiotiedosto (.zip)</value></data>
+  <data name="Backup restored. A safety backup of the previous state was kept on the server." xml:space="preserve"><value>Varmuuskopio palautettu. Edellisestä tilasta säilytettiin turvavarmuuskopio palvelimella.</value></data>
+  <data name="Community plugins by Tungsten Automation employees, not official Tungsten products: provided as is, without warranty or official support. Use at your own risk." xml:space="preserve"><value>Tungsten Automationin työntekijöiden yhteisölisäosia, eivät virallisia Tungsten-tuotteita: toimitetaan sellaisenaan, ilman takuuta tai virallista tukea. Käyttö omalla vastuulla.</value></data>
+  <data name="Create backup" xml:space="preserve"><value>Luo varmuuskopio</value></data>
+  <data name="Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file." xml:space="preserve"><value>Luo yhtenäisen tilannevedoksen Add-on Storen ollessa käynnissä ja lataa sen ZIP-tiedostona.</value></data>
+  <data name="Disclaimer" xml:space="preserve"><value>Vastuuvapauslauseke</value></data>
+  <data name="Download full backup" xml:space="preserve"><value>Lataa täydellinen varmuuskopio</value></data>
+  <data name="Event" xml:space="preserve"><value>Tapahtuma</value></data>
+  <data name="File" xml:space="preserve"><value>Tiedosto</value></data>
+  <data name="Invitation" xml:space="preserve"><value>Kutsu</value></data>
+  <data name="Invited person (always sent)" xml:space="preserve"><value>Kutsuttu henkilö (lähetetään aina)</value></data>
+  <data name="New Add-on Store client released" xml:space="preserve"><value>Uusi Add-on-Store-asiakasohjelma julkaistu</value></data>
+  <data name="New access request" xml:space="preserve"><value>Uusi käyttöoikeuspyyntö</value></data>
+  <data name="New plugin version submitted" xml:space="preserve"><value>Uusi lisäosan versio lähetetty</value></data>
+  <data name="No backup file received." xml:space="preserve"><value>Varmuuskopiotiedostoa ei vastaanotettu.</value></data>
+  <data name="Notifications" xml:space="preserve"><value>Ilmoitukset</value></data>
+  <data name="Plugin version approved or rejected" xml:space="preserve"><value>Lisäosan versio hyväksytty tai hylätty</value></data>
+  <data name="Recipients" xml:space="preserve"><value>Vastaanottajat</value></data>
+  <data name="Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup." xml:space="preserve"><value>Korvaa KAIKKI nykyiset tiedot varmuuskopion sisällöllä. Sitä ennen palvelin tallentaa nykyisen tilan automaattisesti turvavarmuuskopioksi.</value></data>
+  <data name="Restore" xml:space="preserve"><value>Palautus</value></data>
+  <data name="Restore backup" xml:space="preserve"><value>Palauta varmuuskopio</value></data>
+  <data name="Send test email" xml:space="preserve"><value>Lähetä testisähköposti</value></data>
+  <data name="Size" xml:space="preserve"><value>Koko</value></data>
+  <data name="Submitter" xml:space="preserve"><value>Lähettäjä</value></data>
+  <data name="Test email sent. Please check your inbox." xml:space="preserve"><value>Testisähköposti lähetetty. Tarkista saapuneet viestisi.</value></data>
+  <data name="Test plugins before productive use, keep backups of important documents, and make sure their use complies with your organization's IT and data protection policies." xml:space="preserve"><value>Testaa lisäosat ennen tuotantokäyttöä, varmuuskopioi tärkeät asiakirjat ja varmista, että niiden käyttö on organisaatiosi IT- ja tietosuojakäytäntöjen mukaista.</value></data>
+  <data name="The archive contains unsafe paths." xml:space="preserve"><value>Arkisto sisältää vaarallisia polkuja.</value></data>
+  <data name="The backup contains password hashes and settings such as the Resend key. Store it like a password." xml:space="preserve"><value>Varmuuskopio sisältää salasanojen tiivisteet ja asetuksia, kuten Resend-avaimen. Säilytä sitä kuin salasanaa.</value></data>
+  <data name="The plugins in this store are internal developments by Tungsten Automation employees. They are not part of Tungsten Power PDF and are not official Tungsten Automation products." xml:space="preserve"><value>Tämän Add-on Storen lisäosat ovat Tungsten Automationin työntekijöiden sisäisiä kehitystöitä. Ne eivät ole osa Tungsten Power PDF:ää eivätkä Tungsten Automationin virallisia tuotteita.</value></data>
+  <data name="The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out." xml:space="preserve"><value>Palautus estetään, jos oma tilisi ei ole varmuuskopiossa aktiivinen järjestelmänvalvoja, joten et voi lukita itseäsi ulos.</value></data>
+  <data name="The test email could not be sent." xml:space="preserve"><value>Testisähköpostia ei voitu lähettää.</value></data>
+  <data name="There is no official support through Tungsten Automation Support. Please contact the author named in the catalog; answers are voluntary and without guaranteed response times." xml:space="preserve"><value>Virallista tukea ei ole saatavilla Tungsten Automation Supportin kautta. Ota yhteyttä luettelossa mainittuun tekijään; vastaukset ovat vapaaehtoisia, eikä vastausaikoja taata.</value></data>
+  <data name="They are provided as is, without warranty of any kind, express or implied, including fitness for a particular purpose, availability or freedom from errors." xml:space="preserve"><value>Ne toimitetaan sellaisenaan ilman minkäänlaista nimenomaista tai hiljaista takuuta, mukaan lukien soveltuvuus tiettyyn tarkoitukseen, saatavuus tai virheettömyys.</value></data>
+  <data name="This is not a Add-on Store backup (backup.json or pluginstore.db missing)." xml:space="preserve"><value>Tämä ei ole Add-on-Store-varmuuskopio (backup.json tai pluginstore.db puuttuu).</value></data>
+  <data name="This is not a Add-on Store backup." xml:space="preserve"><value>Tämä ei ole Add-on-Store-varmuuskopio.</value></data>
+  <data name="To the extent permitted by law, Tungsten Automation and the authors accept no liability for damage, data loss or downtime caused by installing or using these plugins." xml:space="preserve"><value>Lain sallimissa rajoissa Tungsten Automation ja tekijät eivät vastaa vahingoista, tietojen menetyksestä tai käyttökatkoista, jotka aiheutuvat näiden lisäosien asentamisesta tai käytöstä.</value></data>
+  <data name="Type RESTORE to confirm" xml:space="preserve"><value>Vahvista kirjoittamalla RESTORE</value></data>
+  <data name="Type RESTORE to confirm." xml:space="preserve"><value>Vahvista kirjoittamalla RESTORE.</value></data>
+  <data name="Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log." xml:space="preserve"><value>Mitkä sähköpostit lähetetään, milloin ja kenelle. Jokainen lähetetty tai epäonnistunut sähköposti kirjataan auditointilokiin.</value></data>
+  <data name="Without a verified sender domain, Resend only delivers to the email address of the Resend account owner." xml:space="preserve"><value>Ilman vahvistettua lähettäjän verkkotunnusta Resend toimittaa viestit vain Resend-tilin omistajan sähköpostiosoitteeseen.</value></data>
+  <data name="Your account is not an active admin in this backup; restoring it would lock you out." xml:space="preserve"><value>Tilisi ei ole tässä varmuuskopiossa aktiivinen järjestelmänvalvoja; sen palauttaminen lukitsisi sinut ulos.</value></data>
+  <data name="to" xml:space="preserve"><value>osoitteeseen</value></data>
 </root>

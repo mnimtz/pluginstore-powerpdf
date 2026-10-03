@@ -1,4 +1,4 @@
-// dialog.cpp — the Plugin-Store dialog: catalog list, description, install.
+// dialog.cpp — the Add-on Store dialog: catalog list, description, install.
 
 #include "stdafx.h"
 #include "dialog.h"
@@ -36,6 +36,8 @@ protected:
         SetDlgItemTextW(IDC_PS_INSTALL, FPLoc(IDS_PSD_BTN_INSTALL).c_str());
         SetDlgItemTextW(IDCANCEL,       FPLoc(IDS_PSD_BTN_CLOSE).c_str());
         SetDlgItemTextW(IDC_PS_ADMIN_NOTE, FPLoc(IDS_PSD_ADMIN_NOTE).c_str());
+        SetDlgItemTextW(IDC_PS_DISCLAIMER, FPLoc(IDS_PSD_DISCLAIMER).c_str());
+        SetDlgItemTextW(IDC_PS_DISCLAIMER_BTN, FPLoc(IDS_PSD_BTN_DISCLAIMER).c_str());
 
         m_list.SubclassDlgItem(IDC_PS_LIST, this);
         m_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
@@ -228,6 +230,11 @@ protected:
     afx_msg void OnRefresh() { Reload(); }
     afx_msg void OnInstallClicked() { OnInstall(); }
     afx_msg void OnUninstallClicked() { OnUninstall(); }
+    afx_msg void OnDisclaimerClicked()
+    {
+        MessageBoxW(FPLoc(IDS_PSD_DISCLAIMER_FULL).c_str(), FPLoc(IDS_PSD_BTN_DISCLAIMER).c_str(),
+                    MB_OK | MB_ICONINFORMATION);
+    }
     afx_msg void OnSelfUpdateClicked()
     {
         if (!m_selfUpdate) return;
@@ -254,6 +261,7 @@ BEGIN_MESSAGE_MAP(CStoreDialog, CDialog)
     ON_BN_CLICKED(IDC_PS_INSTALL, &CStoreDialog::OnInstallClicked)
     ON_BN_CLICKED(IDC_PS_UNINSTALL, &CStoreDialog::OnUninstallClicked)
     ON_BN_CLICKED(IDC_PS_SELFUPDATE, &CStoreDialog::OnSelfUpdateClicked)
+    ON_BN_CLICKED(IDC_PS_DISCLAIMER_BTN, &CStoreDialog::OnDisclaimerClicked)
     ON_NOTIFY(LVN_ITEMCHANGED, IDC_PS_LIST, &CStoreDialog::OnListChanged)
 END_MESSAGE_MAP()
 

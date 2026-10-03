@@ -5,15 +5,20 @@
 }
 
 <div class="hero">
-    <h1>@L["Plugin-Store for Tungsten Power PDF"]</h1>
-    <p>@L["Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins."]</p>
+    <h1>@L["Add-on Store for Tungsten Power PDF"]</h1>
+    <p>@L["Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins."]</p>
     @if (Model.ClientDownloadUrl is not null)
     {
         <div style="margin-top:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
-            <a class="btn cta" href="@Model.ClientDownloadUrl">@L["Download"]: Plugin-Store @L["for Power PDF"] v@(Model.ClientVersion)</a>
+            <a class="btn cta" href="@Model.ClientDownloadUrl">@L["Download"]: Add-on Store @L["for Power PDF"] v@(Model.ClientVersion)</a>
             <span style="color:var(--tun-blue-light);font-size:.85rem;max-width:460px">@L["Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date."]</span>
         </div>
     }
+</div>
+
+<div class="alert warn" style="font-size:.88rem">
+    @L["Community plugins by Tungsten Automation employees, not official Tungsten products: provided as is, without warranty or official support. Use at your own risk."]
+    <a href="/Disclaimer">@L["Disclaimer"]</a>
 </div>
 
 <h2>@L["Released plugins"]</h2>

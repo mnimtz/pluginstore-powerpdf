@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Plugin-Store client for Tungsten Power PDF - MSI package.
+  Add-on Store client for Tungsten Power PDF - MSI package.
 
   Installs PluginStore.zxt plus its data folder (UILayout) into the Power PDF
   plug-in folder. The target is not hard-coded: the App Paths entry of
@@ -14,7 +14,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <Product Id="*"
-           Name="Plugin-Store for Tungsten Power PDF"
+           Name="Add-on Store for Tungsten Power PDF"
            Language="1033"
            Codepage="1252"
            Version="$(var.FPVersion)"
@@ -24,13 +24,13 @@
     <Package InstallerVersion="500"
              Compressed="yes"
              InstallScope="perMachine"
-             Description="Plugin-Store for Tungsten Power PDF"
+             Description="Add-on Store for Tungsten Power PDF"
              Manufacturer="Tungsten Automation" />
 
     <MediaTemplate EmbedCab="yes" />
 
     <MajorUpgrade AllowSameVersionUpgrades="yes"
-                  DowngradeErrorMessage="A newer version of the Plugin-Store is already installed." />
+                  DowngradeErrorMessage="A newer version of the Add-on Store is already installed." />
 
     <Property Id="POWERPDFBIN">
       <RegistrySearch Id="PowerPdfAppPath"
@@ -198,7 +198,7 @@
       </Directory>
     </Directory>
 
-    <Feature Id="Core" Title="Plugin-Store" Level="1" Absent="disallow">
+    <Feature Id="Core" Title="Add-on Store" Level="1" Absent="disallow">
       <ComponentRef Id="cmpPlugin" />
       <ComponentRef Id="cmpLayout" />
       <ComponentRef Id="cmpPublish" />

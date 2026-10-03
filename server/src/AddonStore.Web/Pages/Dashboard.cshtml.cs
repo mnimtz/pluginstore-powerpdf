@@ -47,7 +47,7 @@ public class DashboardModel : PageModel
             Findings = result.Report.Findings;
             if (result.ErrorCode == "CLIENT_ADMIN_ONLY")
             {
-                Notice = "Only administrators can publish new versions of the Plugin-Store client.";
+                Notice = "Only administrators can publish new versions of the Add-on Store client.";
                 NoticeKind = "error";
             }
             else if (result.ErrorCode == "VERSION_EXISTS")
@@ -62,7 +62,7 @@ public class DashboardModel : PageModel
             }
             else if (result.Version.Status == VersionStatus.Live)
             {
-                Notice = "Plugin-Store client released. Installed clients offer the update now.";
+                Notice = "Add-on Store client released. Installed clients offer the update now.";
             }
             else
             {

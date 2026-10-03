@@ -63,7 +63,7 @@ public class SubmissionService
         var isClient = manifest.Id == ClientPackageId;
         if (isClient && !await _users.IsInRoleAsync(user, "Admin"))
             return new SubmissionResult(report, null, "CLIENT_ADMIN_ONLY",
-                "Only administrators can publish new versions of the Plugin-Store client.");
+                "Only administrators can publish new versions of the Add-on Store client.");
 
         // Idempotency: the same version again is a clear, named condition.
         var existing = await _db.PackageVersions
@@ -121,6 +121,10 @@ public class SubmissionService
             await _db.SaveChangesAsync();
             await _audit.LogAsync(user.DisplayName, "client.released", manifest.Version,
                 $"via {via}; superseded beta versions: {stale.Count}");
+            await _notify.NotifyStaffAsync("ClientRelease",
+                $"[Add-on Store] Client {manifest.Version} released",
+                $"<p><b>{System.Net.WebUtility.HtmlEncode(user.DisplayName)}</b> released Add-on Store client <b>{manifest.Version}</b>. " +
+                "Installed clients offer the update now; the landing page serves the new installer.</p>");
             return new SubmissionResult(report, version);
         }
 
@@ -130,11 +134,12 @@ public class SubmissionService
             $"{manifest.Id} {manifest.Version}",
             $"via {via}; changelog: {Truncate(manifest.Changelog, 300)}; warnings: {report.Findings.Count(f => f.Severity == "warning")}");
 
-        await _notify.NotifyAdminsAsync(
-            $"[Plugin-Store] New submission: {manifest.Id} {manifest.Version}",
+        await _notify.NotifyStaffAsync("Submission",
+            $"[Add-on Store] New submission: {manifest.Id} {manifest.Version}",
             $"<p><b>{System.Net.WebUtility.HtmlEncode(user.DisplayName)}</b> submitted <b>{manifest.Id} {manifest.Version}</b> (via {System.Net.WebUtility.HtmlEncode(via)}).</p>" +
             $"<p>Changelog: {System.Net.WebUtility.HtmlEncode(manifest.Changelog)}</p>" +
-            "<p>The version passed all automatic checks and is now in the beta channel, awaiting review.</p>");
+            "<p>The version passed all automatic checks and is now in the beta channel, awaiting review.</p>",
+            includeReviewers: true);
 
         return new SubmissionResult(report, version);
     }

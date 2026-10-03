@@ -15,12 +15,12 @@
   <data name="Audit" xml:space="preserve"><value>Denetim</value></data>
   <data name="Audit log" xml:space="preserve"><value>Denetim günlüğü</value></data>
   <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>Beta sürümleri tüm otomatik denetimlerden geçti ve beta test kullanıcılarına görünür durumda. Bunları canlı mağaza için onaylayın veya bir gerekçeyle reddedin.</value></data>
-  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Yayımlanan eklentilere aşağıdan göz atın. Kurulum, doğrudan Power PDF içinde Plugin-Store şeridi üzerinden yapılır; bu site eklenti geliştiricileri ve yöneticiler içindir.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Yayımlanan eklentilere aşağıdan göz atın. Kurulum, doğrudan Power PDF içinde Add-on Store şeridi üzerinden yapılır; bu site eklenti geliştiricileri ve yöneticiler içindir.</value></data>
   <data name="Catalog" xml:space="preserve"><value>Katalog</value></data>
   <data name="Changelog" xml:space="preserve"><value>Değişiklik günlüğü</value></data>
   <data name="Create a token" xml:space="preserve"><value>Yeni belirteç oluştur</value></data>
   <data name="Create admin account" xml:space="preserve"><value>Yönetici hesabı oluştur</value></data>
-  <data name="Create the first administrator account for this Plugin-Store instance." xml:space="preserve"><value>Bu Plugin-Store örneği için ilk yönetici hesabını oluşturun.</value></data>
+  <data name="Create the first administrator account for this Add-on Store instance." xml:space="preserve"><value>Bu Add-on Store örneği için ilk yönetici hesabını oluşturun.</value></data>
   <data name="Create token" xml:space="preserve"><value>Belirteç oluştur</value></data>
   <data name="Created" xml:space="preserve"><value>Oluşturuldu</value></data>
   <data name="Details" xml:space="preserve"><value>Ayrıntılar</value></data>
@@ -34,7 +34,7 @@
   <data name="Filter" xml:space="preserve"><value>Filtre</value></data>
   <data name="Filter (actor, action, subject)" xml:space="preserve"><value>Filtre (aktör, eylem, nesne)</value></data>
   <data name="First-run setup" xml:space="preserve"><value>İlk kurulum</value></data>
-  <data name="For plugin developers and admins. End users install plugins directly from the Plugin-Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Eklenti geliştiricileri ve yöneticiler içindir. Son kullanıcılar eklentileri doğrudan Power PDF içindeki Plugin-Store şeridinden, hesap gerekmeden yükler.</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Add-on Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Eklenti geliştiricileri ve yöneticiler içindir. Son kullanıcılar eklentileri doğrudan Power PDF içindeki Add-on Store şeridinden, hesap gerekmeden yükler.</value></data>
   <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>Belirteci bu satırla birlikte Claude'unuza verin:</value></data>
   <data name="Last used" xml:space="preserve"><value>Son kullanım</value></data>
   <data name="Live versions" xml:space="preserve"><value>Canlı sürümler</value></data>
@@ -50,8 +50,8 @@
   <data name="Package file (.ppak)" xml:space="preserve"><value>Paket dosyası (.ppak)</value></data>
   <data name="Password" xml:space="preserve"><value>Parola</value></data>
   <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>Kişisel API belirteçleri, araçların ve yapay zeka asistanlarının eklentilerinizi sizin adınıza yüklemesine ve güncellemesine olanak tanır.</value></data>
-  <data name="Plugin store:" xml:space="preserve"><value>Eklenti mağazası:</value></data>
-  <data name="Plugin-Store for Tungsten Power PDF" xml:space="preserve"><value>Tungsten Power PDF için Plugin-Store</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>Add-on Store:</value></data>
+  <data name="Add-on Store for Tungsten Power PDF" xml:space="preserve"><value>Tungsten Power PDF için Add-on Store</value></data>
   <data name="Prefix" xml:space="preserve"><value>Önek</value></data>
   <data name="Profile" xml:space="preserve"><value>Profil</value></data>
   <data name="Reason (sent to the submitter)" xml:space="preserve"><value>Gerekçe (gönderene iletilir)</value></data>
@@ -116,7 +116,7 @@
   <data name="Account created." xml:space="preserve"><value>Hesap oluşturuldu.</value></data>
   <data name="Activate account" xml:space="preserve"><value>Hesabı etkinleştir</value></data>
   <data name="Admin" xml:space="preserve"><value>Yönetici</value></data>
-  <data name="Choose your display name and a password to activate your Plugin-Store account." xml:space="preserve"><value>Plugin-Store hesabınızı etkinleştirmek için görünen adınızı ve bir parola seçin.</value></data>
+  <data name="Choose your display name and a password to activate your Add-on Store account." xml:space="preserve"><value>Add-on Store hesabınızı etkinleştirmek için görünen adınızı ve bir parola seçin.</value></data>
   <data name="Create a user directly" xml:space="preserve"><value>Doğrudan kullanıcı oluştur</value></data>
   <data name="Create account" xml:space="preserve"><value>Hesap oluştur</value></data>
   <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>E-posta yapılandırılmamış; bu davet bağlantısını doğrudan paylaşın:</value></data>
@@ -155,9 +155,9 @@
   <data name="Disabled" xml:space="preserve"><value>Devre dışı</value></data>
   <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Yükleyiciyi indirip çalıştırın (yönetici hakları gerekir); ardından eklenti kendini ve eklentilerinizi güncel tutar.</value></data>
   <data name="Live" xml:space="preserve"><value>Yayında</value></data>
-  <data name="Only administrators can publish new versions of the Plugin-Store client." xml:space="preserve"><value>Plugin-Store istemcisinin yeni sürümlerini yalnızca yöneticiler yayımlayabilir.</value></data>
+  <data name="Only administrators can publish new versions of the Add-on Store client." xml:space="preserve"><value>Add-on Store istemcisinin yeni sürümlerini yalnızca yöneticiler yayımlayabilir.</value></data>
   <data name="Pending" xml:space="preserve"><value>Beklemede</value></data>
-  <data name="Plugin-Store client released. Installed clients offer the update now." xml:space="preserve"><value>Plugin-Store istemcisi yayımlandı. Yüklü istemciler artık güncellemeyi sunuyor.</value></data>
+  <data name="Add-on Store client released. Installed clients offer the update now." xml:space="preserve"><value>Add-on Store istemcisi yayımlandı. Yüklü istemciler artık güncellemeyi sunuyor.</value></data>
   <data name="Rejected" xml:space="preserve"><value>Reddedildi</value></data>
   <data name="Time" xml:space="preserve"><value>Saat</value></data>
   <data name="Time zone for displayed times" xml:space="preserve"><value>Gösterilen saatler için saat dilimi</value></data>
@@ -211,4 +211,53 @@
   <data name="Give Claude one line" xml:space="preserve"><value>Claude'a tek satır verin</value></data>
   <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Claude'un ihtiyacı olan tek şey bu: kılavuzu okur, gelecekteki oturumlar için kendini ayarlar ve kurallara uyar.</value></data>
   <data name="Optional: install the skill manually" xml:space="preserve"><value>İsteğe bağlı: beceriyi elle yükleyin</value></data>
+  <data name="A backup contains everything: database (accounts, packages, versions, reviews, audit log, settings), all plugin packages, profile pictures and developer kit files." xml:space="preserve"><value>Yedek her şeyi içerir: veritabanı (hesaplar, paketler, sürümler, incelemeler, denetim günlüğü, ayarlar), tüm eklenti paketleri, profil resimleri ve geliştirici kiti dosyaları.</value></data>
+  <data name="Access request approved or declined" xml:space="preserve"><value>Erişim isteği onaylandı veya reddedildi</value></data>
+  <data name="Admins" xml:space="preserve"><value>Yöneticiler</value></data>
+  <data name="Admins and reviewers" xml:space="preserve"><value>Yöneticiler ve inceleyiciler</value></data>
+  <data name="Applicant" xml:space="preserve"><value>Başvuru sahibi</value></data>
+  <data name="Automatic safety backups" xml:space="preserve"><value>Otomatik güvenlik yedekleri</value></data>
+  <data name="Backup and restore" xml:space="preserve"><value>Yedekleme ve geri yükleme</value></data>
+  <data name="Backup file (.zip)" xml:space="preserve"><value>Yedek dosyası (.zip)</value></data>
+  <data name="Backup restored. A safety backup of the previous state was kept on the server." xml:space="preserve"><value>Yedek geri yüklendi. Önceki durumun bir güvenlik yedeği sunucuda saklandı.</value></data>
+  <data name="Community plugins by Tungsten Automation employees, not official Tungsten products: provided as is, without warranty or official support. Use at your own risk." xml:space="preserve"><value>Tungsten Automation çalışanları tarafından geliştirilen topluluk eklentileri, resmi Tungsten ürünleri değildir: olduğu gibi, garanti veya resmi destek olmaksızın sunulur. Kullanım riski size aittir.</value></data>
+  <data name="Create backup" xml:space="preserve"><value>Yedek oluştur</value></data>
+  <data name="Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file." xml:space="preserve"><value>Add-on Store çalışmaya devam ederken tutarlı bir anlık görüntü oluşturur ve bunu ZIP dosyası olarak indirir.</value></data>
+  <data name="Disclaimer" xml:space="preserve"><value>Sorumluluk reddi</value></data>
+  <data name="Download full backup" xml:space="preserve"><value>Tam yedeği indir</value></data>
+  <data name="Event" xml:space="preserve"><value>Olay</value></data>
+  <data name="File" xml:space="preserve"><value>Dosya</value></data>
+  <data name="Invitation" xml:space="preserve"><value>Davet</value></data>
+  <data name="Invited person (always sent)" xml:space="preserve"><value>Davet edilen kişi (her zaman gönderilir)</value></data>
+  <data name="New Add-on Store client released" xml:space="preserve"><value>Yeni Add-on Store istemcisi yayımlandı</value></data>
+  <data name="New access request" xml:space="preserve"><value>Yeni erişim isteği</value></data>
+  <data name="New plugin version submitted" xml:space="preserve"><value>Yeni eklenti sürümü gönderildi</value></data>
+  <data name="No backup file received." xml:space="preserve"><value>Yedek dosyası alınmadı.</value></data>
+  <data name="Notifications" xml:space="preserve"><value>Bildirimler</value></data>
+  <data name="Plugin version approved or rejected" xml:space="preserve"><value>Eklenti sürümü onaylandı veya reddedildi</value></data>
+  <data name="Recipients" xml:space="preserve"><value>Alıcılar</value></data>
+  <data name="Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup." xml:space="preserve"><value>Mevcut TÜM verileri yedeğin içeriğiyle değiştirir. Bundan önce sunucu mevcut durumu otomatik olarak bir güvenlik yedeği olarak kaydeder.</value></data>
+  <data name="Restore" xml:space="preserve"><value>Geri yükleme</value></data>
+  <data name="Restore backup" xml:space="preserve"><value>Yedeği geri yükle</value></data>
+  <data name="Send test email" xml:space="preserve"><value>Test e-postası gönder</value></data>
+  <data name="Size" xml:space="preserve"><value>Boyut</value></data>
+  <data name="Submitter" xml:space="preserve"><value>Gönderen</value></data>
+  <data name="Test email sent. Please check your inbox." xml:space="preserve"><value>Test e-postası gönderildi. Lütfen gelen kutunuzu kontrol edin.</value></data>
+  <data name="Test plugins before productive use, keep backups of important documents, and make sure their use complies with your organization's IT and data protection policies." xml:space="preserve"><value>Eklentileri üretimde kullanmadan önce test edin, önemli belgelerin yedeklerini alın ve kullanımlarının kuruluşunuzun BT ve veri koruma politikalarına uygun olduğundan emin olun.</value></data>
+  <data name="The archive contains unsafe paths." xml:space="preserve"><value>Arşiv güvenli olmayan yollar içeriyor.</value></data>
+  <data name="The backup contains password hashes and settings such as the Resend key. Store it like a password." xml:space="preserve"><value>Yedek, parola karmalarını ve Resend anahtarı gibi ayarları içerir. Yedeği bir parola gibi saklayın.</value></data>
+  <data name="The plugins in this store are internal developments by Tungsten Automation employees. They are not part of Tungsten Power PDF and are not official Tungsten Automation products." xml:space="preserve"><value>Bu Add-on Store'daki eklentiler, Tungsten Automation çalışanlarının şirket içi geliştirmeleridir. Tungsten Power PDF'in bir parçası değildir ve resmi Tungsten Automation ürünleri değildir.</value></data>
+  <data name="The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out." xml:space="preserve"><value>Kendi hesabınız yedekte etkin bir yönetici değilse geri yükleme reddedilir; böylece kendinizi sistem dışında bırakamazsınız.</value></data>
+  <data name="The test email could not be sent." xml:space="preserve"><value>Test e-postası gönderilemedi.</value></data>
+  <data name="There is no official support through Tungsten Automation Support. Please contact the author named in the catalog; answers are voluntary and without guaranteed response times." xml:space="preserve"><value>Tungsten Automation Destek üzerinden resmi destek sağlanmaz. Lütfen katalogda belirtilen yazarla iletişime geçin; yanıtlar gönüllülük esasına dayanır ve garanti edilen yanıt süreleri yoktur.</value></data>
+  <data name="They are provided as is, without warranty of any kind, express or implied, including fitness for a particular purpose, availability or freedom from errors." xml:space="preserve"><value>Belirli bir amaca uygunluk, kullanılabilirlik veya hatasızlık dahil olmak üzere, açık veya örtülü hiçbir garanti verilmeksizin olduğu gibi sunulurlar.</value></data>
+  <data name="This is not a Add-on Store backup (backup.json or pluginstore.db missing)." xml:space="preserve"><value>Bu bir Add-on Store yedeği değil (backup.json veya pluginstore.db eksik).</value></data>
+  <data name="This is not a Add-on Store backup." xml:space="preserve"><value>Bu bir Add-on Store yedeği değil.</value></data>
+  <data name="To the extent permitted by law, Tungsten Automation and the authors accept no liability for damage, data loss or downtime caused by installing or using these plugins." xml:space="preserve"><value>Yasaların izin verdiği ölçüde, Tungsten Automation ve yazarlar bu eklentilerin yüklenmesi veya kullanılmasından kaynaklanan hasar, veri kaybı veya kesintilerden hiçbir sorumluluk kabul etmez.</value></data>
+  <data name="Type RESTORE to confirm" xml:space="preserve"><value>Onaylamak için RESTORE yazın</value></data>
+  <data name="Type RESTORE to confirm." xml:space="preserve"><value>Onaylamak için RESTORE yazın.</value></data>
+  <data name="Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log." xml:space="preserve"><value>Hangi e-postaların ne zaman ve kime gönderildiği. Gönderilen veya başarısız olan her e-posta denetim günlüğüne kaydedilir.</value></data>
+  <data name="Without a verified sender domain, Resend only delivers to the email address of the Resend account owner." xml:space="preserve"><value>Doğrulanmış bir gönderen etki alanı olmadan Resend yalnızca Resend hesabı sahibinin e-posta adresine teslim eder.</value></data>
+  <data name="Your account is not an active admin in this backup; restoring it would lock you out." xml:space="preserve"><value>Hesabınız bu yedekte etkin bir yönetici değil; geri yüklemek sizi sistem dışında bırakır.</value></data>
+  <data name="to" xml:space="preserve"><value>alıcı:</value></data>
 </root>

@@ -51,6 +51,9 @@
 #define IDS_PSD_ASK_RESTART     147
 #define IDS_PSD_ASK_RESTART_UN  148
 #define IDS_PSD_C_AUTHOR        149
+#define IDS_PSD_DISCLAIMER      159
+#define IDS_PSD_DISCLAIMER_FULL 160
+#define IDS_PSD_BTN_DISCLAIMER  161
 #define IDS_PSD_C_CONTACT       158
 
 // ---- options page ----
@@ -88,3 +91,5 @@
 #define IDC_PS_ADMIN_NOTE       1506
 #define IDC_PS_UNINSTALL        1507
 #define IDC_PS_SELFUPDATE       1508
+#define IDC_PS_DISCLAIMER       1509
+#define IDC_PS_DISCLAIMER_BTN   1510

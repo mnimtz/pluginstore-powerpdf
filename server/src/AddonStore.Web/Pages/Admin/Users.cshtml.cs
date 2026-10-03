@@ -39,13 +39,13 @@ public class UsersModel : PageModel
 
     public async Task OnPostApproveAsync(string id) => await SetStatusAsync(id, UserStatus.Active,
         "user.approved", "Account approved.",
-        "[Plugin-Store] Access approved",
+        "[Add-on Store] Access approved",
         "<p>Your access request was approved. You can sign in and publish plugins now.</p>");
 
     public async Task OnPostRejectAsync(string id) => await SetStatusAsync(id, UserStatus.Rejected,
         "user.rejected", "Request rejected.",
-        "[Plugin-Store] Access request declined",
-        "<p>Your access request to the Plugin-Store was declined. Contact an administrator for details.</p>");
+        "[Add-on Store] Access request declined",
+        "<p>Your access request to the Add-on Store was declined. Contact an administrator for details.</p>");
 
     public async Task OnPostDisableAsync(string id) => await SetStatusAsync(id, UserStatus.Disabled,
         "user.disabled", "Account disabled.", null, null);
@@ -103,10 +103,10 @@ public class UsersModel : PageModel
         var baseUrl = await _notify.BaseUrlAsync();
         if (baseUrl.Length == 0) baseUrl = $"{Request.Scheme}://{Request.Host}";
         InviteLink = $"{baseUrl}/Account/Invite?token={plain}";
-        InviteMailSent = await _notify.SendRawAsync(email,
-            "[Plugin-Store] You are invited",
-            $"<p><b>{System.Net.WebUtility.HtmlEncode(admin.DisplayName)}</b> invites you to the Tungsten Power PDF Plugin-Store ({role}).</p>" +
-            $"<p><a href=\"{InviteLink}\">Accept the invitation and choose a password</a></p>");
+        InviteMailSent = (await _notify.SendDirectAsync(email,
+            "[Add-on Store] You are invited",
+            $"<p><b>{System.Net.WebUtility.HtmlEncode(admin.DisplayName)}</b> invites you to the Tungsten Power PDF Add-on Store ({role}).</p>" +
+            $"<p><a href=\"{InviteLink}\">Accept the invitation and choose a password</a></p>", "Invitation")).Sent;
         await LoadAsync();
     }
 
@@ -163,7 +163,7 @@ public class UsersModel : PageModel
             await _users.UpdateAsync(user);
             await _audit.LogAsync(admin.DisplayName, action, user.Email ?? user.Id);
             if (mailSubject is not null)
-                await _notify.NotifyUserAsync(user, mailSubject, mailBody!);
+                await _notify.NotifyUserAsync("AccountDecision", user, mailSubject, mailBody!);
             Notice = notice;
         }
         await LoadAsync();

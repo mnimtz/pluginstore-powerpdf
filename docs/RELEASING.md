@@ -1,5 +1,19 @@
 # Releasing
 
+## Version naming on GitHub
+
+Server and client have separate version numbers with a visible prefix:
+`S<version>` for the server (`VERSION`), `C<version>` for the client
+(`client/common/version.h`).
+
+- A release commit's title starts with the version(s) it ships, e.g.
+  `S0.5.0: …`, `C0.3.4: …` or `S0.5.0 + C0.3.4: …`. The Actions run list shows
+  the commit title, so every build is identifiable.
+- The `tag-releases` job in `container.yml` runs after a successful build on
+  `main` and creates the Git tag plus a GitHub Release for every S/C version
+  that has none yet (`tools/release_notes.py` writes the notes). The container
+  image is additionally tagged `S<version>`.
+
 ## Server
 
 1. Bump `VERSION` (every release, never ship an unchanged number).
@@ -7,11 +21,15 @@
    `ghcr.io/mnimtz/pluginstore-powerpdf:latest` (plus `sha-<commit>`).
 3. The App Service picks up `latest`; verify with
    `GET https://ppdf-store.azurewebsites.net/api/ping` (reports `VERSION`).
-4. Update the API documentation in the same release: `Api/AgentGuide.cs`
+4. Run `python tools/check_docs.py` (also enforced in CI: the build fails if a
+   finding code is not documented in the agent guide's rule reference).
+5. Update the agent/API documentation in the same release for EVERY change a
+   plugin developer or their Claude session needs to know (rules, manifest
+   fields, limits, lifecycle, install behaviour), not only API changes: `Api/AgentGuide.cs`
    (guide, manifest schema, SKILL.md), the `/api` endpoint list, the API page
    (`Pages/Developer.cshtml`, all 16 languages) and `README.md`.
 
-## Plugin-Store client (ribbon add-on)
+## Add-on Store client (ribbon add-on)
 
 The client is itself a store package (`com.tungsten.pluginstore`) with its
 own lane: only admins may upload it, a new version is **live immediately**

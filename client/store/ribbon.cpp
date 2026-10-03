@@ -1,4 +1,4 @@
-// ribbon.cpp — the Plugin-Store group on the shared "Enhanced Features" tab.
+// ribbon.cpp — the Add-on Store group on the shared "Enhanced Features" tab.
 // One button that opens the store dialog. Per the ribbon governance this group
 // is meant to be the LAST one on the tab.
 

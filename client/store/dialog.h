@@ -1,4 +1,4 @@
-// dialog.h — the Plugin-Store dialog.
+// dialog.h — the Add-on Store dialog.
 #pragma once
 
 void PSShowStoreDialog();

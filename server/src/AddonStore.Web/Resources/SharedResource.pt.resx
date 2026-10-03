@@ -15,12 +15,12 @@
   <data name="Audit" xml:space="preserve"><value>Auditoria</value></data>
   <data name="Audit log" xml:space="preserve"><value>Registo de auditoria</value></data>
   <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>As versões beta passaram todas as verificações automáticas e estão visíveis para os testadores beta. Aprove-as para a loja live ou rejeite-as com um motivo.</value></data>
-  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Consulte abaixo os plugins publicados. A instalação é feita diretamente no Power PDF através do friso Plugin-Store; este site destina-se a programadores de plugins e administradores.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Consulte abaixo os plugins publicados. A instalação é feita diretamente no Power PDF através do friso Add-on Store; este site destina-se a programadores de plugins e administradores.</value></data>
   <data name="Catalog" xml:space="preserve"><value>Catálogo</value></data>
   <data name="Changelog" xml:space="preserve"><value>Registo de alterações</value></data>
   <data name="Create a token" xml:space="preserve"><value>Criar um token</value></data>
   <data name="Create admin account" xml:space="preserve"><value>Criar conta de administrador</value></data>
-  <data name="Create the first administrator account for this Plugin-Store instance." xml:space="preserve"><value>Crie a primeira conta de administrador para esta instância do Plugin-Store.</value></data>
+  <data name="Create the first administrator account for this Add-on Store instance." xml:space="preserve"><value>Crie a primeira conta de administrador para esta instância do Add-on Store.</value></data>
   <data name="Create token" xml:space="preserve"><value>Criar token</value></data>
   <data name="Created" xml:space="preserve"><value>Criado</value></data>
   <data name="Details" xml:space="preserve"><value>Detalhes</value></data>
@@ -34,7 +34,7 @@
   <data name="Filter" xml:space="preserve"><value>Filtro</value></data>
   <data name="Filter (actor, action, subject)" xml:space="preserve"><value>Filtro (ator, ação, objeto)</value></data>
   <data name="First-run setup" xml:space="preserve"><value>Configuração inicial</value></data>
-  <data name="For plugin developers and admins. End users install plugins directly from the Plugin-Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Para programadores de plugins e administradores. Os utilizadores finais instalam os plugins diretamente a partir do friso Plugin-Store no Power PDF, sem necessidade de conta.</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Add-on Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>Para programadores de plugins e administradores. Os utilizadores finais instalam os plugins diretamente a partir do friso Add-on Store no Power PDF, sem necessidade de conta.</value></data>
   <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>Entregue o token ao seu Claude juntamente com esta linha:</value></data>
   <data name="Last used" xml:space="preserve"><value>Última utilização</value></data>
   <data name="Live versions" xml:space="preserve"><value>Versões live</value></data>
@@ -50,8 +50,8 @@
   <data name="Package file (.ppak)" xml:space="preserve"><value>Ficheiro de pacote (.ppak)</value></data>
   <data name="Password" xml:space="preserve"><value>Palavra-passe</value></data>
   <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>Os tokens de API pessoais permitem que ferramentas e assistentes de IA carreguem e atualizem os seus plugins em seu nome.</value></data>
-  <data name="Plugin store:" xml:space="preserve"><value>Loja de plugins:</value></data>
-  <data name="Plugin-Store for Tungsten Power PDF" xml:space="preserve"><value>Plugin-Store para Tungsten Power PDF</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>Add-on Store:</value></data>
+  <data name="Add-on Store for Tungsten Power PDF" xml:space="preserve"><value>Add-on Store para Tungsten Power PDF</value></data>
   <data name="Prefix" xml:space="preserve"><value>Prefixo</value></data>
   <data name="Profile" xml:space="preserve"><value>Perfil</value></data>
   <data name="Reason (sent to the submitter)" xml:space="preserve"><value>Motivo (enviado ao requerente)</value></data>
@@ -116,7 +116,7 @@
   <data name="Account created." xml:space="preserve"><value>Conta criada.</value></data>
   <data name="Activate account" xml:space="preserve"><value>Ativar conta</value></data>
   <data name="Admin" xml:space="preserve"><value>Administrador</value></data>
-  <data name="Choose your display name and a password to activate your Plugin-Store account." xml:space="preserve"><value>Escolha o seu nome de exibição e uma palavra-passe para ativar a sua conta do Plugin-Store.</value></data>
+  <data name="Choose your display name and a password to activate your Add-on Store account." xml:space="preserve"><value>Escolha o seu nome de exibição e uma palavra-passe para ativar a sua conta do Add-on Store.</value></data>
   <data name="Create a user directly" xml:space="preserve"><value>Criar um utilizador diretamente</value></data>
   <data name="Create account" xml:space="preserve"><value>Criar conta</value></data>
   <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>O e-mail não está configurado; partilhe este link de convite diretamente:</value></data>
@@ -155,9 +155,9 @@
   <data name="Disabled" xml:space="preserve"><value>Desativado</value></data>
   <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Transfira e execute o instalador (são necessários direitos de administrador); depois disso, o complemento mantém-se a si próprio e aos seus plugins atualizados.</value></data>
   <data name="Live" xml:space="preserve"><value>Publicado</value></data>
-  <data name="Only administrators can publish new versions of the Plugin-Store client." xml:space="preserve"><value>Apenas administradores podem publicar novas versões do cliente Plugin-Store.</value></data>
+  <data name="Only administrators can publish new versions of the Add-on Store client." xml:space="preserve"><value>Apenas administradores podem publicar novas versões do cliente Add-on Store.</value></data>
   <data name="Pending" xml:space="preserve"><value>Pendente</value></data>
-  <data name="Plugin-Store client released. Installed clients offer the update now." xml:space="preserve"><value>Cliente Plugin-Store publicado. Os clientes instalados já oferecem a atualização.</value></data>
+  <data name="Add-on Store client released. Installed clients offer the update now." xml:space="preserve"><value>Cliente Add-on Store publicado. Os clientes instalados já oferecem a atualização.</value></data>
   <data name="Rejected" xml:space="preserve"><value>Rejeitado</value></data>
   <data name="Time" xml:space="preserve"><value>Hora</value></data>
   <data name="Time zone for displayed times" xml:space="preserve"><value>Fuso horário das horas apresentadas</value></data>
@@ -211,4 +211,53 @@
   <data name="Give Claude one line" xml:space="preserve"><value>Dar uma única linha ao Claude</value></data>
   <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>É tudo o que o Claude precisa: lê o guia, configura-se para sessões futuras e cumpre as regras.</value></data>
   <data name="Optional: install the skill manually" xml:space="preserve"><value>Opcional: instalar o skill manualmente</value></data>
+  <data name="A backup contains everything: database (accounts, packages, versions, reviews, audit log, settings), all plugin packages, profile pictures and developer kit files." xml:space="preserve"><value>Uma cópia de segurança contém tudo: base de dados (contas, pacotes, versões, revisões, registo de auditoria, definições), todos os pacotes de plugins, imagens de perfil e ficheiros do kit de programador.</value></data>
+  <data name="Access request approved or declined" xml:space="preserve"><value>Pedido de acesso aprovado ou recusado</value></data>
+  <data name="Admins" xml:space="preserve"><value>Administradores</value></data>
+  <data name="Admins and reviewers" xml:space="preserve"><value>Administradores e revisores</value></data>
+  <data name="Applicant" xml:space="preserve"><value>Requerente</value></data>
+  <data name="Automatic safety backups" xml:space="preserve"><value>Cópias de segurança preventivas automáticas</value></data>
+  <data name="Backup and restore" xml:space="preserve"><value>Cópia de segurança e restauro</value></data>
+  <data name="Backup file (.zip)" xml:space="preserve"><value>Ficheiro de cópia de segurança (.zip)</value></data>
+  <data name="Backup restored. A safety backup of the previous state was kept on the server." xml:space="preserve"><value>Cópia de segurança restaurada. Foi mantida no servidor uma cópia de segurança preventiva do estado anterior.</value></data>
+  <data name="Community plugins by Tungsten Automation employees, not official Tungsten products: provided as is, without warranty or official support. Use at your own risk." xml:space="preserve"><value>Plugins da comunidade desenvolvidos por colaboradores da Tungsten Automation, que não são produtos oficiais da Tungsten: fornecidos no estado em que se encontram, sem garantia nem suporte oficial. Utilização por sua conta e risco.</value></data>
+  <data name="Create backup" xml:space="preserve"><value>Criar cópia de segurança</value></data>
+  <data name="Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file." xml:space="preserve"><value>Cria um instantâneo consistente enquanto a loja continua em funcionamento e transfere-o como ficheiro ZIP.</value></data>
+  <data name="Disclaimer" xml:space="preserve"><value>Aviso legal</value></data>
+  <data name="Download full backup" xml:space="preserve"><value>Transferir cópia de segurança completa</value></data>
+  <data name="Event" xml:space="preserve"><value>Evento</value></data>
+  <data name="File" xml:space="preserve"><value>Ficheiro</value></data>
+  <data name="Invitation" xml:space="preserve"><value>Convite</value></data>
+  <data name="Invited person (always sent)" xml:space="preserve"><value>Pessoa convidada (envio sempre efetuado)</value></data>
+  <data name="New Add-on Store client released" xml:space="preserve"><value>Novo cliente Add-on Store publicado</value></data>
+  <data name="New access request" xml:space="preserve"><value>Novo pedido de acesso</value></data>
+  <data name="New plugin version submitted" xml:space="preserve"><value>Nova versão de plugin submetida</value></data>
+  <data name="No backup file received." xml:space="preserve"><value>Nenhum ficheiro de cópia de segurança recebido.</value></data>
+  <data name="Notifications" xml:space="preserve"><value>Notificações</value></data>
+  <data name="Plugin version approved or rejected" xml:space="preserve"><value>Versão de plugin aprovada ou rejeitada</value></data>
+  <data name="Recipients" xml:space="preserve"><value>Destinatários</value></data>
+  <data name="Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup." xml:space="preserve"><value>Substitui TODOS os dados atuais pelo conteúdo da cópia de segurança. Antes disso, o servidor guarda automaticamente o estado atual como cópia de segurança preventiva.</value></data>
+  <data name="Restore" xml:space="preserve"><value>Restauro</value></data>
+  <data name="Restore backup" xml:space="preserve"><value>Restaurar cópia de segurança</value></data>
+  <data name="Send test email" xml:space="preserve"><value>Enviar e-mail de teste</value></data>
+  <data name="Size" xml:space="preserve"><value>Tamanho</value></data>
+  <data name="Submitter" xml:space="preserve"><value>Autor da submissão</value></data>
+  <data name="Test email sent. Please check your inbox." xml:space="preserve"><value>E-mail de teste enviado. Verifique a sua caixa de entrada.</value></data>
+  <data name="Test plugins before productive use, keep backups of important documents, and make sure their use complies with your organization's IT and data protection policies." xml:space="preserve"><value>Teste os plugins antes da utilização em produção, mantenha cópias de segurança dos documentos importantes e certifique-se de que a sua utilização cumpre as políticas de TI e de proteção de dados da sua organização.</value></data>
+  <data name="The archive contains unsafe paths." xml:space="preserve"><value>O arquivo contém caminhos não seguros.</value></data>
+  <data name="The backup contains password hashes and settings such as the Resend key. Store it like a password." xml:space="preserve"><value>A cópia de segurança contém hashes de palavras-passe e definições como a chave do Resend. Guarde-a como uma palavra-passe.</value></data>
+  <data name="The plugins in this store are internal developments by Tungsten Automation employees. They are not part of Tungsten Power PDF and are not official Tungsten Automation products." xml:space="preserve"><value>Os plugins desta loja são desenvolvimentos internos de colaboradores da Tungsten Automation. Não fazem parte do Tungsten Power PDF e não são produtos oficiais da Tungsten Automation.</value></data>
+  <data name="The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out." xml:space="preserve"><value>O restauro é recusado se a sua própria conta não for um administrador ativo na cópia de segurança, para que não fique sem acesso.</value></data>
+  <data name="The test email could not be sent." xml:space="preserve"><value>Não foi possível enviar o e-mail de teste.</value></data>
+  <data name="There is no official support through Tungsten Automation Support. Please contact the author named in the catalog; answers are voluntary and without guaranteed response times." xml:space="preserve"><value>Não existe suporte oficial através do Suporte da Tungsten Automation. Contacte o autor indicado no catálogo; as respostas são voluntárias e sem tempos de resposta garantidos.</value></data>
+  <data name="They are provided as is, without warranty of any kind, express or implied, including fitness for a particular purpose, availability or freedom from errors." xml:space="preserve"><value>São fornecidos no estado em que se encontram, sem qualquer tipo de garantia, expressa ou implícita, incluindo a adequação a um fim específico, a disponibilidade ou a ausência de erros.</value></data>
+  <data name="This is not a Add-on Store backup (backup.json or pluginstore.db missing)." xml:space="preserve"><value>Esta não é uma cópia de segurança do Add-on Store (falta backup.json ou pluginstore.db).</value></data>
+  <data name="This is not a Add-on Store backup." xml:space="preserve"><value>Esta não é uma cópia de segurança do Add-on Store.</value></data>
+  <data name="To the extent permitted by law, Tungsten Automation and the authors accept no liability for damage, data loss or downtime caused by installing or using these plugins." xml:space="preserve"><value>Na medida do permitido por lei, a Tungsten Automation e os autores não assumem qualquer responsabilidade por danos, perda de dados ou tempo de inatividade causados pela instalação ou utilização destes plugins.</value></data>
+  <data name="Type RESTORE to confirm" xml:space="preserve"><value>Escreva RESTORE para confirmar</value></data>
+  <data name="Type RESTORE to confirm." xml:space="preserve"><value>Escreva RESTORE para confirmar.</value></data>
+  <data name="Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log." xml:space="preserve"><value>Que e-mails são enviados, quando e a quem. Cada e-mail enviado ou com falha fica registado no registo de auditoria.</value></data>
+  <data name="Without a verified sender domain, Resend only delivers to the email address of the Resend account owner." xml:space="preserve"><value>Sem um domínio de remetente verificado, o Resend só entrega no endereço de e-mail do titular da conta Resend.</value></data>
+  <data name="Your account is not an active admin in this backup; restoring it would lock you out." xml:space="preserve"><value>A sua conta não é um administrador ativo nesta cópia de segurança; restaurá-la iria bloquear o seu acesso.</value></data>
+  <data name="to" xml:space="preserve"><value>para</value></data>
 </root>

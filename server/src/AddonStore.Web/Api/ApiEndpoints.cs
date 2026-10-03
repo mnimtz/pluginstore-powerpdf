@@ -40,7 +40,7 @@ public static class ApiEndpoints
             ms.Position = 0;
             pick.Downloads++;
             await db.SaveChangesAsync();
-            return Results.File(ms, "application/x-msi", $"PluginStore-{pick.Version}.msi");
+            return Results.File(ms, "application/x-msi", $"AddonStore-{pick.Version}.msi");
         });
 
         var api = app.MapGroup("/api");
@@ -50,7 +50,7 @@ public static class ApiEndpoints
             ok = true,
             data = new
             {
-                name = "PluginStore-PowerPDF",
+                name = "Add-on Store for Tungsten Power PDF",
                 version = ver.Value,
                 docs = Base(ctx) + "/api/agent-guide",
                 endpoints = new[]
@@ -241,7 +241,7 @@ public static class ApiEndpoints
                         sizeBytes = v.SizeBytes,
                         downloadUrl = $"{Base(ctx)}/api/packages/{v.PackageId}/{v.Version}/download",
                         next = v.Status == VersionStatus.Live
-                            ? "The Plugin-Store client version is live immediately; installed clients offer it as an update."
+                            ? "The Add-on Store client version is live immediately; installed clients offer it as an update."
                             : "The version is in the beta channel now (visible to clients with the beta option). An admin reviews it for the live store; you will be notified by email. Check GET /api/packages/" + v.PackageId + " for status."
                     }
                 }, statusCode: 201);

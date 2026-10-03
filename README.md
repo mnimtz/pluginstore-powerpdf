@@ -5,11 +5,11 @@
   <img src="docs/img/tungsten-logo-navy.svg" alt="Tungsten Automation" width="320">
 </picture>
 
-# PluginStore-PowerPDF
+# Add-on Store for Tungsten Power PDF
 
 **A private plugin store for Tungsten Power PDF.**
 Publish `.ppak` plugin packages through a reviewed pipeline; end users browse
-and install them with one click from a *Plugin-Store* ribbon inside Power PDF.
+and install them with one click from an *Add-on Store* ribbon inside Power PDF.
 
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmnimtz%2Fpluginstore-powerpdf%2Fmain%2Finfra%2Fazuredeploy.json)
 
@@ -19,7 +19,7 @@ and install them with one click from a *Plugin-Store* ribbon inside Power PDF.
 ![Brand](https://img.shields.io/badge/design-Tungsten%20Brand%20Book-002854?style=flat-square)
 ![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square)
 
-<img src="docs/img/web-catalog.svg" alt="The Plugin-Store web catalog" width="760">
+<img src="docs/img/web-catalog.svg" alt="The Add-on Store web catalog" width="760">
 
 </div>
 
@@ -27,7 +27,7 @@ and install them with one click from a *Plugin-Store* ribbon inside Power PDF.
 
 ## Why
 
-PluginStore-PowerPDF consolidates Power PDF extensions in one place. Anyone who
+The Add-on Store consolidates Power PDF extensions in one place. Anyone who
 builds a plugin with the Plugin SDK can offer it here centrally: it passes
 automatic quality checks and a review, and users find, install and update it
 directly inside Power PDF.
@@ -37,11 +37,11 @@ directly inside Power PDF.
 ```
  Developer (+ Claude, via API token)         Admin                 End user
         │                                      │                       │
-        │ POST /api/packages/validate          │ review queue          │ Plugin-Store ribbon
+        │ POST /api/packages/validate          │ review queue          │ Add-on Store ribbon
         │ POST /api/packages                   │ approve / reject      │ browse · install · update
         ▼                                      ▼                       ▼
   ┌──────────────────────────────────────────────────────────────────────────┐
-  │   PluginStore-PowerPDF · Azure Web App · SQLite + packages on /data      │
+  │   Add-on Store server · Azure Web App · SQLite + packages on /data      │
   │                                                                          │
   │   submitted ──(automatic checks)──▶ BETA channel ──(approval)──▶ LIVE    │
   └──────────────────────────────────────────────────────────────────────────┘
@@ -49,11 +49,14 @@ directly inside Power PDF.
 
 | | |
 |---|---|
-| 🏪 **End users never see this server** | The catalog is read anonymously by the Plugin-Store ribbon add-on. Accounts exist only for plugin publishers and admins; registration is an access *request* that an admin approves. |
+| 🏪 **End users never see this server** | The catalog is read anonymously by the Add-on Store ribbon add-on. Accounts exist only for plugin publishers and admins; registration is an access *request* that an admin approves. |
 | 🔍 **Every upload is validated** | Manifest schema, SemVer monotonicity, x64 + ARM64 PE checks, debug-runtime detection, import-table scan, SHA-256 verification, ribbon governance, reserved names, layout and localization pitfalls. Every finding carries a stable `code` and a concrete `hint`. |
 | 🧪 **Beta channel** | Versions that pass all automatic checks become instantly installable for users who enabled the beta option in Power PDF, while an admin reviews them for the live store. |
 | 🤖 **Agent-friendly API** | `GET /api/agent-guide` teaches any AI assistant the full workflow with zero prior knowledge. Personal tokens let Claude validate, fix and submit packages in a loop until the report is green. |
 | 📜 **Audit trail** | Registrations, approvals, tokens, submissions (version + changelog are mandatory), reviews and downloads are recorded and searchable. |
+| 💾 **Backup and restore** | One click downloads a full backup (database, packages, avatars, developer kit); restore checks the archive, refuses to lock out the acting admin and keeps an automatic safety backup of the previous state. |
+| ✉️ **Notifications** | Email via Resend with a test button; admins choose which events send mail (access requests, submissions, review results, client releases). Every sent or failed mail is in the audit log. |
+| ⚖️ **Disclaimer** | Landing page, a dedicated disclaimer page and the Power PDF client state that plugins are internal developments without warranty or official support. |
 | 🌍 **16 European languages** | Auto-detected from the browser, manually switchable, with localized catalog texts straight from the package manifests. |
 
 ## Deploy in one click
@@ -75,21 +78,26 @@ packages, developer kit). No connection strings, no secrets to manage.
 account. Colleagues use *Request access* on the login page; admins approve on
 the Users page.
 
-**Optional email notifications** via [Resend](https://resend.com), two app
-settings: `Email__ResendApiKey` and `Email__From`. Without them the app runs
-normally, just silently.
+**Email notifications** via [Resend](https://resend.com): enter the API key
+and sender on the admin **Settings** page (or as app settings
+`Email__ResendApiKey` / `Email__From`), use **Send test email** to check the
+setup, and choose which events send mail. Without a key the app runs
+normally; skipped mails are recorded in the audit log.
+
+**Backup and restore:** admin **Settings → Backup and restore**. Store backup
+files like passwords: they contain password hashes and settings.
 
 ## The Power PDF client
 
-The `client/` folder holds the **Plugin-Store ribbon add-on** (C++/MFC `.zxt`,
+The `client/` folder holds the **Add-on Store ribbon add-on** (C++/MFC `.zxt`,
 built with the Power PDF Plugin SDK):
 
-- Adds a *Plugin-Store* group to the shared **Enhanced Features** ribbon tab.
+- Adds an *Add-on Store* group to the shared **Enhanced Features** ribbon tab.
 - Lists the catalog with localized names, changelogs, installed versions and
   update status; installs with SHA-256 verification and a single UAC prompt.
 - Drops each package's `manifest.json` next to the plugin, so updates are
   detected for every plugin, including MSI-deployed ones.
-- Options page under *File → Options → Plugin-Store*: server URL (defaults to
+- Options page under *File → Options → Add-on Store*: server URL (defaults to
   your instance, enforceable via HKLM policy) and the beta-channel switch.
 
 End users install it with the MSI from the store's landing page
@@ -155,7 +163,24 @@ dotnet run --project server/src/AddonStore.Web --urls http://localhost:5190
 ```
 
 SQLite and package storage land in `server/src/AddonStore.Web/data/`.
-The client's default server URL is `https://ppdf-store.azurewebsites.net`; point it at `http://localhost:5190` for local development via *File → Options → Plugin-Store*.
+The client's default server URL is `https://ppdf-store.azurewebsites.net`; point it at `http://localhost:5190` for local development via *File → Options → Add-on Store*.
+
+## Versions and releases
+
+Server and client are versioned independently and are easy to tell apart on GitHub:
+
+| Part | Prefix | Source of the number | Example |
+|---|---|---|---|
+| Server (web app, API) | `S` | `VERSION` | `S0.5.0` |
+| Client (ribbon add-on, MSI) | `C` | `client/common/version.h` | `C0.3.4` |
+
+- Every release commit starts with its version, e.g. `S0.5.0: …` or `S0.5.0 + C0.3.4: …`,
+  so the Actions run list shows which version a build carries.
+- After a successful build on `main`, CI creates the Git tag and a GitHub Release
+  for every server or client version that does not have one yet (*Releases* in
+  the sidebar). Server builds are also pushed as container tag `ghcr.io/mnimtz/pluginstore-powerpdf:S<version>`.
+- The running server shows its version in the page footer (`Add-on Store S0.5.0`)
+  and in `GET /api/ping`.
 
 ## Repository layout
 
@@ -166,7 +191,7 @@ server/src/AddonStore.Web/   ASP.NET Core 8 app (Razor Pages + minimal API)
   Services/                  submission, tokens, audit, notifications, catalog
   Pages/                     publisher + admin web UI, Tungsten-branded
   Resources/                 SharedResource.<lang>.resx, 16 languages
-client/                      Plugin-Store ribbon add-on (C++/MFC .zxt)
+client/                      Add-on Store ribbon add-on (C++/MFC .zxt)
 infra/azuredeploy.json       1-click ARM template
 Dockerfile                   container build, published to GHCR by Actions
 docs/                        project plan, brand guide, images

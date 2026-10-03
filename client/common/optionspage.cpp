@@ -1,4 +1,4 @@
-// optionspage.cpp - the store's page in File > Options > "Plugin-Store".
+// optionspage.cpp - the store's page in File > Options > "Add-on Store".
 //
 // A prefs TYPE must never be registered without at least one page, or Power PDF
 // crashes when the category is opened (see reference: prefs-page-crash). This

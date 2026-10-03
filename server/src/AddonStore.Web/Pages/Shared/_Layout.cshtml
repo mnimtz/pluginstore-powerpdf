@@ -5,15 +5,15 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@(ViewData["Title"] is string t && t.Length > 0 ? t + " · " : "")Plugin-Store</title>
-    <link rel="icon" href="/img/powerpdf-icon.svg" />
+    <title>@(ViewData["Title"] is string t && t.Length > 0 ? t + " · " : "")Add-on Store</title>
+    <link rel="icon" href="/img/store-icon.png" />
     <link rel="stylesheet" href="/css/site.css" />
 </head>
 <body>
 <header class="site">
     <div class="bar">
         <img class="logo" src="/img/tungsten-logo-white.svg" alt="Tungsten Automation" />
-        <div class="title">Plugin-Store<small>Tungsten Power PDF</small></div>
+        <div class="title">Add-on Store<small>Tungsten Power PDF</small></div>
         <nav>
             <a href="/">@L["Catalog"]</a>
             @if (SignInManager.IsSignedIn(User))
@@ -65,8 +65,9 @@
 </main>
 <footer class="site">
     <img src="/img/tungsten-logo-navy.svg" alt="Tungsten Automation" />
-    <span>PluginStore-PowerPDF v@(AppVer.Value)</span>
+    <span>Add-on Store S@(AppVer.Value)</span>
     <span class="spacer"></span>
+    <a href="/Disclaimer" style="color:var(--tun-slate)">@L["Disclaimer"]</a>
     <a href="/api/agent-guide" style="color:var(--tun-slate)">API</a>
 </footer>
 </body>

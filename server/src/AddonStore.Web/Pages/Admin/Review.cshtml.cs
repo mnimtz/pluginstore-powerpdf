@@ -59,8 +59,8 @@ public class ReviewModel : PageModel
                 approve ? "version.approved" : "version.rejected",
                 $"{v.PackageId} {v.Version}", comment ?? "");
             if (v.Package?.Owner is { } owner)
-                await _notify.NotifyUserAsync(owner,
-                    $"[Plugin-Store] {v.PackageId} {v.Version} {(approve ? "approved" : "rejected")}",
+                await _notify.NotifyUserAsync("ReviewResult", owner,
+                    $"[Add-on Store] {v.PackageId} {v.Version} {(approve ? "approved" : "rejected")}",
                     approve
                         ? $"<p>Your version <b>{v.PackageId} {v.Version}</b> was approved and is live for all users.</p>"
                         : $"<p>Your version <b>{v.PackageId} {v.Version}</b> was rejected.</p><p>Reason: {System.Net.WebUtility.HtmlEncode(comment ?? "-")}</p>");

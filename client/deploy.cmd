@@ -1,6 +1,6 @@
 @echo off
 rem ---------------------------------------------------------------------------
-rem  Plugin-Store client - developer deploy (run as Administrator).
+rem  Add-on Store client - developer deploy (run as Administrator).
 rem  Copies the .zxt and the Plug-ins\PluginStore folder into the local
 rem  Power PDF installation. Later this client ships once via MSI and then
 rem  updates itself through the store.
@@ -22,13 +22,13 @@ if not defined PPDF (
 set "DST=%PPDF%\Plug-Ins"
 if not exist "%DST%" set "DST=%PPDF%Plug-Ins"
 
-echo  Deploying Plugin-Store client to %DST% ...
+echo  Deploying Add-on Store client to %DST% ...
 copy /Y "%SRC%Release\PluginStore.zxt" "%DST%\" || goto :fail
 xcopy /E /I /Y "%SRC%Plug-ins\PluginStore" "%DST%\PluginStore" || goto :fail
 
 echo.
-echo Fertig. Power PDF starten - Gruppe "Plugin-Store" erscheint im Tab
-echo "Erweiterte Funktionen". Server-URL unter Datei ^> Optionen ^> Plugin-Store
+echo Fertig. Power PDF starten - Gruppe "Add-on Store" erscheint im Tab
+echo "Erweiterte Funktionen". Server-URL unter Datei ^> Optionen ^> Add-on Store
 echo (Standard: https://ppdf-store.azurewebsites.net).
 echo    %DST%\PluginStore.zxt
 echo    %DST%\PluginStore\...

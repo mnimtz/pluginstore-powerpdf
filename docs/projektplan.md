@@ -528,7 +528,7 @@ Getroffen (Okt 3, 2026):
 
 Noch offen:
 
-5. Name des Projekts/Stores (Arbeitstitel "Add-on Store" / "Plugin-Store").
+5. Name des Projekts/Stores: entschieden am Oct 3, 2026, sichtbarer Name "Add-on Store" (technische Kennungen wie PluginStore.zxt, FeaturePack::PluginStore, com.tungsten.pluginstore bleiben).
 6. Installationsmechanik: Client platziert Dateien direkt (Empfehlung) vs. MSI pro
    Plug-in. Hängt am Ergebnis von Spike S1.
 7. Pilot-Plug-ins für Phase 1.

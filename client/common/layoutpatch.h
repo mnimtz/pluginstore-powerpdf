@@ -181,7 +181,7 @@ inline bool EnsureButtons(std::wstring& text, const GroupDef& g)
     return changed;
 }
 
-// Ribbon governance: the Plugin-Store group is always the LAST group on the
+// Ribbon governance: the Add-on Store group is always the LAST group on the
 // shared tab. Other plug-ins insert their groups before </toolbar>, so after
 // every install we move ours back to the end. Returns true when moved.
 inline bool MoveGroupToEnd(std::wstring& text, const GroupDef& g)

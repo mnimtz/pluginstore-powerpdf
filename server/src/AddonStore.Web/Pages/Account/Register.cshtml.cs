@@ -38,8 +38,8 @@ public class RegisterModel : PageModel
         }
         await _users.AddToRoleAsync(user, "User");
         await _audit.LogAsync(name, "user.access-requested", email, reason ?? "");
-        await _notify.NotifyAdminsAsync(
-            "[Plugin-Store] New access request",
+        await _notify.NotifyStaffAsync("AccessRequest",
+            "[Add-on Store] New access request",
             $"<p><b>{System.Net.WebUtility.HtmlEncode(name)}</b> ({System.Net.WebUtility.HtmlEncode(email)}) requests publisher access.</p>" +
             $"<p>Reason: {System.Net.WebUtility.HtmlEncode(reason ?? "-")}</p><p>Review it on the Users page.</p>");
         return RedirectToPage("/Account/Login", new { registered = "1" });

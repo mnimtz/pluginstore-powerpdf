@@ -6,10 +6,16 @@
 
 <h1>@L["Settings"]</h1>
 <p class="lead">@L["Instance settings; values are stored on the server and take effect immediately."]</p>
+<p><a class="btn small secondary" href="/Admin/Backup">@L["Backup and restore"]</a></p>
 
 @if (Model.Notice is not null)
 {
-    <div class="alert ok">@L[Model.Notice]</div>
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]
+        @if (Model.TestDetail is not null)
+        {
+            <br /><code>@Model.TestDetail</code>
+        }
+    </div>
 }
 
 <div class="card" style="max-width:560px">
@@ -21,13 +27,39 @@
         </div>
         <div>
             <label>@L["Sender address"]</label>
-            <input type="text" name="from" value="@Model.From" placeholder="PluginStore &lt;store@yourdomain.com&gt;" />
+            <input type="text" name="from" value="@Model.From" placeholder="Add-on Store &lt;store@yourdomain.com&gt;" />
         </div>
         <button type="submit" class="btn cta">@L["Save"]</button>
     </form>
-    <p style="font-size:.85rem;color:var(--tun-slate)">
-        @L["Notifications: access requests and new submissions to admins; approvals, rejections and invitations to users."]
-    </p>
+    <form method="post" asp-page-handler="TestMail" style="margin-top:12px">
+        <button type="submit" class="btn small secondary">@L["Send test email"]</button>
+        <span style="font-size:.85rem;color:var(--tun-slate)">@L["to"] @Model.MyEmail</span>
+    </form>
+    <p style="font-size:.82rem;color:var(--tun-slate)">@L["Without a verified sender domain, Resend only delivers to the email address of the Resend account owner."]</p>
+</div>
+
+<div class="card" style="max-width:760px">
+    <h2 style="margin-top:0">@L["Notifications"]</h2>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log."]</p>
+    <form method="post" asp-page-handler="Notifications">
+        <table>
+            <tr><th>@L["Active"]</th><th>@L["Event"]</th><th>@L["Recipients"]</th></tr>
+            @foreach (var (key, label, recipients) in AddonStore.Web.Services.NotificationService.Events)
+            {
+                <tr>
+                    <td><input type="checkbox" name="enabled" value="@key" checked="@Model.EventEnabled[key]" style="width:auto" /></td>
+                    <td>@L[label]</td>
+                    <td>@L[recipients]</td>
+                </tr>
+            }
+            <tr>
+                <td><input type="checkbox" checked disabled style="width:auto" /></td>
+                <td>@L["Invitation"]</td>
+                <td>@L["Invited person (always sent)"]</td>
+            </tr>
+        </table>
+        <button type="submit" class="btn cta" style="margin-top:12px">@L["Save"]</button>
+    </form>
 </div>
 
 <div class="card" style="max-width:560px">

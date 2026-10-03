@@ -3,38 +3,42 @@ using Microsoft.AspNetCore.Identity;
 
 namespace AddonStore.Web.Services;
 
+public record MailResult(bool Sent, string Detail);
+
 public interface IAppEmailSender
 {
-    /// <summary>True when a provider is configured and the mail was handed over.</summary>
-    Task<bool> SendAsync(string to, string subject, string html);
+    /// <summary>Hands the mail to the provider; Detail explains failures (shown on the test button).</summary>
+    Task<MailResult> SendAsync(string to, string subject, string html, string eventKey);
 }
 
 /// <summary>
 /// Sends through Resend when an API key is configured (admin Settings page or
-/// Email__ResendApiKey app setting); otherwise logs and reports false so
-/// callers can fall back to showing information in the UI.
+/// Email__ResendApiKey app setting). Every attempt is written to the audit log
+/// (mail.sent / mail.failed / mail.skipped) so admins can see what went out.
 /// </summary>
 public class ResendEmailSender : IAppEmailSender
 {
     private readonly IHttpClientFactory _httpFactory;
     private readonly SettingsService _settings;
+    private readonly AuditService _audit;
     private readonly ILogger<ResendEmailSender> _log;
 
-    public ResendEmailSender(IHttpClientFactory httpFactory, SettingsService settings, ILogger<ResendEmailSender> log)
+    public ResendEmailSender(IHttpClientFactory httpFactory, SettingsService settings, AuditService audit,
+        ILogger<ResendEmailSender> log)
     {
-        _httpFactory = httpFactory; _settings = settings; _log = log;
+        _httpFactory = httpFactory; _settings = settings; _audit = audit; _log = log;
     }
 
-    public async Task<bool> SendAsync(string to, string subject, string html)
+    public async Task<MailResult> SendAsync(string to, string subject, string html, string eventKey)
     {
         var key = await _settings.GetAsync("Email.ResendApiKey", "Email:ResendApiKey");
         if (string.IsNullOrWhiteSpace(key))
         {
-            _log.LogInformation("Email suppressed (no Resend key configured): to={To} subject={Subject}", to, subject);
-            return false;
+            await _audit.LogAsync("system", "mail.skipped", to, $"{eventKey}: no Resend key configured");
+            return new MailResult(false, "No Resend API key is configured.");
         }
         var from = await _settings.GetAsync("Email.From", "Email:From");
-        if (string.IsNullOrWhiteSpace(from)) from = "PluginStore <onboarding@resend.dev>";
+        if (string.IsNullOrWhiteSpace(from)) from = "Add-on Store <onboarding@resend.dev>";
 
         try
         {
@@ -47,22 +51,40 @@ public class ResendEmailSender : IAppEmailSender
             var resp = await http.SendAsync(req);
             if (!resp.IsSuccessStatusCode)
             {
-                _log.LogWarning("Resend returned {Status} for mail to {To}", resp.StatusCode, to);
-                return false;
+                var body = await resp.Content.ReadAsStringAsync();
+                if (body.Length > 300) body = body[..300];
+                await _audit.LogAsync("system", "mail.failed", to, $"{eventKey}: HTTP {(int)resp.StatusCode} {body}");
+                return new MailResult(false, $"Resend answered HTTP {(int)resp.StatusCode}: {body}");
             }
-            return true;
+            await _audit.LogAsync("system", "mail.sent", to, $"{eventKey}: {subject}");
+            return new MailResult(true, "sent");
         }
         catch (Exception ex)
         {
             _log.LogWarning(ex, "Sending mail to {To} failed", to);
-            return false;
+            await _audit.LogAsync("system", "mail.failed", to, $"{eventKey}: {ex.Message}");
+            return new MailResult(false, ex.Message);
         }
     }
 }
 
-/// <summary>Event notifications; mail failures never break the main flow.</summary>
+/// <summary>
+/// Event notifications. Each event can be switched off on the Settings page
+/// (setting "Notify.&lt;Event&gt;", default on). Mail failures never break the
+/// main flow.
+/// </summary>
 public class NotificationService
 {
+    /// <summary>Configurable events: key, English label (resx key), recipients label.</summary>
+    public static readonly (string Key, string Label, string Recipients)[] Events =
+    {
+        ("AccessRequest",   "New access request",              "Admins"),
+        ("Submission",      "New plugin version submitted",    "Admins and reviewers"),
+        ("ReviewResult",    "Plugin version approved or rejected", "Submitter"),
+        ("AccountDecision", "Access request approved or declined", "Applicant"),
+        ("ClientRelease",   "New Add-on Store client released", "Admins"),
+    };
+
     private readonly IAppEmailSender _mail;
     private readonly UserManager<AppUser> _users;
     private readonly SettingsService _settings;
@@ -75,22 +97,34 @@ public class NotificationService
     public async Task<string> BaseUrlAsync() =>
         (await _settings.GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl")).TrimEnd('/');
 
-    public async Task NotifyAdminsAsync(string subject, string text)
+    public async Task<bool> IsEnabledAsync(string eventKey) =>
+        await _settings.GetAsync("Notify." + eventKey) != "0";
+
+    /// <summary>Admins (and optionally reviewers) for an event, if the event is enabled.</summary>
+    public async Task NotifyStaffAsync(string eventKey, string subject, string text, bool includeReviewers = false)
     {
-        var admins = await _users.GetUsersInRoleAsync("Admin");
-        foreach (var admin in admins.Where(a => a.Status == UserStatus.Active && !string.IsNullOrEmpty(a.Email)))
-            await _mail.SendAsync(admin.Email!, subject, await WrapAsync(text));
+        if (!await IsEnabledAsync(eventKey)) return;
+        var recipients = (await _users.GetUsersInRoleAsync("Admin")).ToList();
+        if (includeReviewers) recipients.AddRange(await _users.GetUsersInRoleAsync("Reviewer"));
+        var html = await WrapAsync(text);
+        foreach (var u in recipients.Where(a => a.Status == UserStatus.Active && !string.IsNullOrEmpty(a.Email))
+                                    .GroupBy(a => a.Id).Select(g => g.First()))
+            await _mail.SendAsync(u.Email!, subject, html, eventKey);
     }
 
-    public async Task<bool> NotifyUserAsync(AppUser user, string subject, string text) =>
-        !string.IsNullOrEmpty(user.Email) && await _mail.SendAsync(user.Email, subject, await WrapAsync(text));
+    public async Task NotifyUserAsync(string eventKey, AppUser user, string subject, string text)
+    {
+        if (!await IsEnabledAsync(eventKey) || string.IsNullOrEmpty(user.Email)) return;
+        await _mail.SendAsync(user.Email, subject, await WrapAsync(text), eventKey);
+    }
 
-    public async Task<bool> SendRawAsync(string to, string subject, string text) =>
-        await _mail.SendAsync(to, subject, await WrapAsync(text));
+    /// <summary>Always sent (invitations, test mails); returns the provider result.</summary>
+    public async Task<MailResult> SendDirectAsync(string to, string subject, string text, string eventKey) =>
+        await _mail.SendAsync(to, subject, await WrapAsync(text), eventKey);
 
     private async Task<string> WrapAsync(string text) => $"""
         <div style="font-family:'Red Hat Display',Arial,sans-serif;color:#231F20">
-          <div style="background:#002854;color:#fff;padding:14px 20px;font-weight:bold">Tungsten Power PDF Plugin-Store</div>
+          <div style="background:#002854;color:#fff;padding:14px 20px;font-weight:bold">Tungsten Power PDF Add-on Store</div>
           <div style="height:4px;background:linear-gradient(90deg,#00EB86,#00A0FB)"></div>
           <div style="padding:20px">{text}</div>
           <div style="padding:0 20px 16px;color:#8094AA;font-size:12px">{await BaseUrlAsync()}</div>

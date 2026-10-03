@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "metadata": {
-    "description": "PluginStore-PowerPDF: a private plugin store for Tungsten Power PDF. Provisions a Linux App Service Web App running the container from GHCR, plus a storage account with a File share mounted at /data for the SQLite database, the plugin packages and the developer kit."
+    "description": "Add-on Store for Tungsten Power PDF: a private plugin store for Tungsten Power PDF. Provisions a Linux App Service Web App running the container from GHCR, plus a storage account with a File share mounted at /data for the SQLite database, the plugin packages and the developer kit."
   },
   "parameters": {
     "siteName": {

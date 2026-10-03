@@ -1,6 +1,6 @@
 @echo off
 rem ---------------------------------------------------------------------------
-rem  Plugin-Store for Tungsten Power PDF - first-time install.
+rem  Add-on Store for Tungsten Power PDF - first-time install.
 rem  Right-click -> "Run as administrator" after extracting the downloaded ZIP.
 rem  Afterwards the add-on updates itself and your plugins through the store.
 rem ---------------------------------------------------------------------------
@@ -20,7 +20,7 @@ if not defined PPDF (
 set "DST=%PPDF%\Plug-Ins"
 if not exist "%DST%" set "DST=%PPDF%Plug-Ins"
 
-echo Installing Plugin-Store to "%DST%" ...
+echo Installing Add-on Store to "%DST%" ...
 copy /Y "%SRC%x64\PluginStore.zxt" "%DST%\" || goto :fail
 if not exist "%DST%\PluginStore" mkdir "%DST%\PluginStore"
 copy /Y "%SRC%manifest.json" "%DST%\PluginStore\" >nul
@@ -28,9 +28,9 @@ if exist "%SRC%UILayout" xcopy /E /I /Y "%SRC%UILayout" "%DST%\PluginStore\UILay
 if exist "%SRC%assets" xcopy /E /I /Y "%SRC%assets" "%DST%\PluginStore\assets" >nul
 
 echo.
-echo Done. Start Power PDF - the "Plugin-Store" group appears on the
+echo Done. Start Power PDF - the "Add-on Store" group appears on the
 echo "Enhanced Features" ribbon tab. Server URL and the beta channel can be
-echo changed under File ^> Options ^> Plugin-Store.
+echo changed under File ^> Options ^> Add-on Store.
 pause
 exit /b 0
 :fail
