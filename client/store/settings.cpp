@@ -36,6 +36,21 @@ static std::wstring TrimUrl(std::wstring u)
     return u;
 }
 
+bool PSIsAllowedServerUrl(const std::wstring& url)
+{
+    std::wstring u = TrimUrl(url);
+    while (!u.empty() && u.front() == L' ') u.erase(u.begin());
+    if (u.empty()) return true;
+    for (auto& c : u) c = (wchar_t)towlower(c);
+    if (u.rfind(L"https://", 0) == 0) return u.size() > 8;
+    for (const wchar_t* host : { L"http://localhost", L"http://127.0.0.1", L"http://[::1]" })
+    {
+        size_t n = wcslen(host);
+        if (u.rfind(host, 0) == 0 && (u.size() == n || u[n] == L':' || u[n] == L'/')) return true;
+    }
+    return false;
+}
+
 void PSSettingsLoad()
 {
     std::wstring s;

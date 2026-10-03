@@ -74,6 +74,14 @@
                            Description="Please close Tungsten Power PDF and continue." />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Fresh installs only (never on an upgrade): the client clears the
+           shared "FeaturePack" tab once per user on its first start, so
+           leftovers of plug-ins that are no longer installed disappear. -->
+      <Component Id="cmpFreshInstall" Guid="{3B5F0B8E-6C2A-4E0B-9F57-2D8B7A1C4E61}" Win64="yes">
+        <Condition><![CDATA[NOT WIX_UPGRADE_DETECTED]]></Condition>
+        <RegistryValue Root="HKLM" Key="SOFTWARE\Kofax\PDF\Tungsten Power PDF\PluginStore"
+                       Name="FreshInstall" Type="string" Value="[ProductCode] [Date] [Time]" KeyPath="yes" />
+      </Component>
       <Directory Id="POWERPDFBIN">
         <Directory Id="PLUGINSDIR" Name="Plug-Ins">
 
@@ -200,6 +208,7 @@
 
     <Feature Id="Core" Title="Add-on Store" Level="1" Absent="disallow">
       <ComponentRef Id="cmpPlugin" />
+      <ComponentRef Id="cmpFreshInstall" />
       <ComponentRef Id="cmpLayout" />
       <ComponentRef Id="cmpPublish" />
       <ComponentRef Id="cmpDeu" />

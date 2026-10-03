@@ -26,22 +26,22 @@
     "tr": "Power PDF için Add-on Store şeridi: ekip kataloğundan eklentilere göz atın, yükleyin, güncelleyin ve kaldırın."
   },
   "changelog": {
-    "en": "New name: Add-on Store. New shopping-bag icon that blends into the ribbon. A disclaimer in the store dialog explains that the plugins are community developments without official support.",
-    "de": "Neuer Name: Add-on Store. Neues Einkaufstaschen-Symbol, das sich ins Menüband einfügt. Ein Haftungshinweis im Store-Dialog erklärt, dass die Plug-ins Community-Entwicklungen ohne offiziellen Support sind.",
-    "fr": "Nouveau nom : Add-on Store. Nouvelle icône en forme de sac de courses, intégrée au ruban. Un avertissement dans la boîte de dialogue précise que les plug-ins sont des développements communautaires sans support officiel.",
-    "it": "Nuovo nome: Add-on Store. Nuova icona a forma di borsa della spesa, integrata nella barra multifunzione. Un'avvertenza nella finestra dello store spiega che i plugin sono sviluppi della community senza supporto ufficiale.",
-    "es": "Nuevo nombre: Add-on Store. Nuevo icono de bolsa de compras que se integra en la cinta. Un aviso en el cuadro de diálogo de la tienda explica que los complementos son desarrollos de la comunidad sin soporte oficial.",
-    "nl": "Nieuwe naam: Add-on Store. Nieuw boodschappentaspictogram dat in het lint opgaat. Een disclaimer in het storevenster legt uit dat de plug-ins communityontwikkelingen zonder officiële ondersteuning zijn.",
-    "pt": "Novo nome: Add-on Store. Novo ícone de saco de compras que se integra no friso. Um aviso na caixa de diálogo da loja explica que os plugins são desenvolvimentos da comunidade sem suporte oficial.",
-    "da": "Nyt navn: Add-on Store. Nyt indkøbsposeikon, der passer ind i båndet. En ansvarsfraskrivelse i butiksdialogen forklarer, at plugins er fællesskabsudviklinger uden officiel support.",
-    "fi": "Uusi nimi: Add-on Store. Uusi ostoskassikuvake, joka sulautuu valintanauhaan. Kaupan valintaikkunan vastuuvapauslauseke kertoo, että laajennukset ovat yhteisön kehittämiä eikä niillä ole virallista tukea.",
-    "nb": "Nytt navn: Add-on Store. Nytt handleposeikon som glir inn i båndet. En ansvarsfraskrivelse i butikkdialogen forklarer at programtilleggene er fellesskapsutviklinger uten offisiell støtte.",
-    "sv": "Nytt namn: Add-on Store. Ny kassikon som smälter in i menyfliksområdet. En ansvarsfriskrivning i butiksdialogen förklarar att plugin-programmen är communityutvecklingar utan officiell support.",
-    "pl": "Nowa nazwa: Add-on Store. Nowa ikona torby na zakupy, dopasowana do wstążki. Zastrzeżenie w oknie sklepu wyjaśnia, że wtyczki są rozwiązaniami społeczności bez oficjalnego wsparcia.",
-    "cs": "Nový název: Add-on Store. Nová ikona nákupní tašky, která zapadá do pásu karet. Právní upozornění v dialogu obchodu vysvětluje, že moduly plug-in jsou komunitní vývoj bez oficiální podpory.",
-    "hu": "Új név: Add-on Store. Új bevásárlótáska-ikon, amely beleolvad a menüszalagba. Az áruház párbeszédpanelén egy jogi nyilatkozat jelzi, hogy a bővítmények közösségi fejlesztések hivatalos támogatás nélkül.",
-    "ru": "Новое название: Add-on Store. Новый значок в виде сумки для покупок, гармонирующий с лентой. Правовая оговорка в окне магазина поясняет, что подключаемые модули разработаны сообществом и не имеют официальной поддержки.",
-    "tr": "Yeni ad: Add-on Store. Şeritle uyumlu yeni alışveriş çantası simgesi. Mağaza iletişim kutusundaki yasal uyarı, eklentilerin resmi desteği olmayan topluluk geliştirmeleri olduğunu açıklar."
+    "en": "The client now talks to the store only over HTTPS (port 443) and only to the configured store server; the Options page rejects other addresses. Neutral disclaimer. A fresh installation clears leftovers of removed plugins from the shared Enhanced Features tab once; updates leave the tab alone.",
+    "de": "Der Client kommuniziert jetzt nur noch per HTTPS (Port 443) und nur mit dem eingestellten Store-Server; die Optionsseite lehnt andere Adressen ab. Neutraler Haftungshinweis. Eine Neuinstallation räumt einmalig Reste entfernter Plug-ins aus dem gemeinsamen Register „Erweiterte Funktionen“ auf; Updates lassen das Register unverändert.",
+    "fr": "Le client communique désormais uniquement en HTTPS (port 443) et uniquement avec le serveur du store configuré ; la page Options refuse les autres adresses. Avertissement neutre. Une nouvelle installation supprime une seule fois les restes de plug-ins désinstallés dans l'onglet partagé Fonctions avancées ; les mises à jour ne modifient pas l'onglet.",
+    "it": "Il client comunica ora solo tramite HTTPS (porta 443) e solo con il server dello store configurato; la pagina Opzioni rifiuta altri indirizzi. Avvertenza neutrale. Una nuova installazione rimuove una sola volta i residui dei plugin disinstallati dalla scheda condivisa Funzioni avanzate; gli aggiornamenti non toccano la scheda.",
+    "es": "El cliente se comunica ahora solo por HTTPS (puerto 443) y solo con el servidor de la tienda configurado; la página Opciones rechaza otras direcciones. Aviso legal neutral. Una instalación nueva elimina una sola vez los restos de complementos desinstalados de la pestaña compartida Funciones avanzadas; las actualizaciones no la modifican.",
+    "nl": "De client communiceert nu alleen via HTTPS (poort 443) en alleen met de ingestelde storeserver; de pagina Opties weigert andere adressen. Neutrale disclaimer. Een nieuwe installatie ruimt eenmalig resten van verwijderde plug-ins op het gedeelde tabblad Geavanceerde functies op; updates laten het tabblad ongemoeid.",
+    "pt": "O cliente comunica agora apenas por HTTPS (porta 443) e apenas com o servidor da loja configurado; a página Opções rejeita outros endereços. Aviso legal neutro. Uma instalação nova remove uma única vez os restos de plugins desinstalados do separador partilhado Funções avançadas; as atualizações não alteram o separador.",
+    "da": "Klienten kommunikerer nu kun via HTTPS (port 443) og kun med den konfigurerede butiksserver; siden Indstillinger afviser andre adresser. Neutral ansvarsfraskrivelse. En ny installation rydder én gang op i rester af fjernede plugins på den fælles fane Avancerede funktioner; opdateringer lader fanen være.",
+    "fi": "Asiakasohjelma käyttää nyt vain HTTPS-yhteyttä (portti 443) ja vain määritettyä kaupan palvelinta; Asetukset-sivu hylkää muut osoitteet. Neutraali vastuuvapauslauseke. Uusi asennus siivoaa kerran poistettujen laajennusten jäänteet jaetulta Lisätoiminnot-välilehdeltä; päivitykset eivät muuta välilehteä.",
+    "nb": "Klienten kommuniserer nå bare via HTTPS (port 443) og bare med den konfigurerte butikkserveren; siden Alternativer avviser andre adresser. Nøytral ansvarsfraskrivelse. En ny installasjon rydder én gang bort rester av fjernede programtillegg fra den felles fanen Avanserte funksjoner; oppdateringer lar fanen være.",
+    "sv": "Klienten kommunicerar nu bara via HTTPS (port 443) och bara med den konfigurerade butiksservern; sidan Alternativ avvisar andra adresser. Neutral ansvarsfriskrivning. En ny installation rensar en gång bort rester av borttagna plugin-program från den delade fliken Avancerade funktioner; uppdateringar lämnar fliken orörd.",
+    "pl": "Klient komunikuje się teraz wyłącznie przez HTTPS (port 443) i tylko ze skonfigurowanym serwerem sklepu; strona Opcje odrzuca inne adresy. Neutralne zastrzeżenie prawne. Nowa instalacja jednorazowo usuwa pozostałości odinstalowanych wtyczek ze wspólnej karty Funkcje zaawansowane; aktualizacje nie zmieniają karty.",
+    "cs": "Klient nyní komunikuje pouze přes HTTPS (port 443) a pouze s nastaveným serverem obchodu; stránka Možnosti jiné adresy odmítne. Neutrální právní upozornění. Nová instalace jednorázově odstraní zbytky odebraných modulů plug-in ze sdílené karty Rozšířené funkce; aktualizace kartu nemění.",
+    "hu": "A kliens mostantól csak HTTPS-en (443-as port) és csak a beállított áruházkiszolgálóval kommunikál; a Beállítások lap más címeket elutasít. Semleges jogi nyilatkozat. Új telepítéskor egyszer eltávolítja a törölt bővítmények maradványait a közös Speciális funkciók lapról; a frissítések nem módosítják a lapot.",
+    "ru": "Клиент теперь обменивается данными только по HTTPS (порт 443) и только с настроенным сервером магазина; страница «Параметры» отклоняет другие адреса. Нейтральная правовая оговорка. Новая установка однократно удаляет остатки удаленных подключаемых модулей с общей вкладки «Расширенные функции»; обновления вкладку не изменяют.",
+    "tr": "İstemci artık yalnızca HTTPS (443 numaralı bağlantı noktası) üzerinden ve yalnızca yapılandırılan mağaza sunucusuyla iletişim kurar; Seçenekler sayfası diğer adresleri reddeder. Tarafsız yasal uyarı. Yeni bir kurulum, kaldırılan eklentilerin kalıntılarını ortak Gelişmiş İşlevler sekmesinden bir kez temizler; güncellemeler sekmeye dokunmaz."
   },
   "minPowerPdfVersion": "5.0",
   "ribbonAtomNamespace": "FeaturePack::PluginStore",
@@ -72,5 +72,17 @@
     ],
     "extraPaths": []
   },
-  "category": "system"
+  "category": "system",
+  "thirdParty": [],
+  "complianceAudit": {
+    "confirmed": true,
+    "method": "Checked all #include directives and linker inputs of PluginStore.vcxproj (Windows SDK, MFC/ATL, Tungsten Power PDF Plugin SDK only), the bundled UILayout and icon files (own work, icons drawn by client/res/make_icons.py) and the package contents. No third-party code. The bundled MSI is built with the WiX Toolset v3 (build tool; its standard WixUI dialog resources are part of the installer). No credentials, personal data or third-party trademarks in the package. The only network service is the configured Add-on Store server (HTTPS).",
+    "externalServices": [
+      {
+        "name": "Add-on Store server (configurable)",
+        "url": "https://ppdf-store.azurewebsites.net",
+        "data": "Catalog and package downloads; sends the Power PDF UI language and the beta channel flag, no personal data."
+      }
+    ]
+  }
 }

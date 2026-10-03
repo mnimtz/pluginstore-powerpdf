@@ -3,6 +3,8 @@
 #include "stdafx.h"
 #include "http.h"
 #include "logging.h"
+#include "settings.h"
+#include "version.h"
 #include <winhttp.h>
 
 #pragma comment(lib, "winhttp.lib")
@@ -39,6 +41,32 @@ bool Crack(const std::wstring& url, Url& out)
     return true;
 }
 
+bool IsLoopback(const std::wstring& host)
+{
+    return _wcsicmp(host.c_str(), L"localhost") == 0 || host == L"127.0.0.1" || host == L"[::1]" || host == L"::1";
+}
+
+// Customers open exactly one firewall rule: HTTPS to the configured store
+// host. Plain HTTP is accepted only for local development, and no request
+// may leave for a different host or port, whatever the catalog says.
+bool Allowed(const Url& u)
+{
+    if (!u.https && !IsLoopback(u.host))
+    {
+        FPLogW(L"[Store] refused non-HTTPS URL for host %s", u.host.c_str());
+        return false;
+    }
+    Url store;
+    if (!Crack(PSServerUrl(), store)) return false;
+    if (_wcsicmp(store.host.c_str(), u.host.c_str()) != 0 || store.port != u.port || store.https != u.https)
+    {
+        FPLogW(L"[Store] refused request to %s:%u, store host is %s:%u",
+               u.host.c_str(), (unsigned)u.port, store.host.c_str(), (unsigned)store.port);
+        return false;
+    }
+    return true;
+}
+
 // Opens the request and receives the response; returns the request handle
 // chain via out-params (caller keeps the session/connect handles alive).
 bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& request, DWORD* status)
@@ -46,7 +74,8 @@ bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& reque
 #ifndef WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY_CONFIG
 #define WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY_CONFIG 4
 #endif
-    session = WinHttpOpen(L"PluginStore-PowerPDF/0.1",
+    if (!Allowed(u)) return false;
+    session = WinHttpOpen(L"AddonStore-PowerPDF/" FP_VERSION_W,
                           WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY_CONFIG,
                           WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
     if (!session) return false;

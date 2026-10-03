@@ -12,6 +12,7 @@
 #include "loc.h"
 #include "version.h"
 #include "layoutpatch.h"
+#include "../store/settings.h"
 #include "logging.h"
 
 void PSRegisterUI(RVToolBar bar);           // store/ribbon.cpp
@@ -67,6 +68,10 @@ DCCB1 DUBool DCCB2 PluginInit()
         RVAppRegisterPrefsType("PluginStore", optTitle);
     HANDLER END_HANDLER
     DURING PSRegisterOptionsPage("PluginStore"); HANDLER END_HANDLER
+
+    int reset = -1;
+    DURING reset = fplayout::ResetSharedTabOnFreshInstall(kPSRegKey); HANDLER END_HANDLER
+    if (reset >= 0) FPLogW(L"[Store] fresh install: shared tab cleared in %d layout file(s)", reset);
 
     int fixed = fplayout::ApplyButtons();
     FPLogW(L"[Store] v%s ready, layout repaired: %d file(s)", FP_VERSION_W, fixed);

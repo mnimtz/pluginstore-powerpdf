@@ -15,12 +15,12 @@
   <data name="Audit" xml:space="preserve"><value>Audit</value></data>
   <data name="Audit log" xml:space="preserve"><value>Auditnapló</value></data>
   <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>A beta verziók minden automatikus ellenőrzésen megfeleltek, és láthatók a beta tesztelők számára. Hagyja jóvá őket az éles áruházba, vagy utasítsa el őket indoklással.</value></data>
-  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Böngésszen az alábbi közzétett bővítmények között. A telepítés közvetlenül a Power PDF-ben történik a Add-on Store menüszalagon keresztül; ez a webhely a bővítményfejlesztőknek és a rendszergazdáknak szól.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>Böngésszen az alábbi közzétett bővítmények között. A telepítés közvetlenül a Power PDF-ben történik az Add-on Store menüszalagon keresztül; ez a webhely a bővítményfejlesztőknek és a rendszergazdáknak szól.</value></data>
   <data name="Catalog" xml:space="preserve"><value>Katalógus</value></data>
   <data name="Changelog" xml:space="preserve"><value>Változásnapló</value></data>
   <data name="Create a token" xml:space="preserve"><value>Új token létrehozása</value></data>
   <data name="Create admin account" xml:space="preserve"><value>Rendszergazdai fiók létrehozása</value></data>
-  <data name="Create the first administrator account for this Add-on Store instance." xml:space="preserve"><value>Hozza létre az első rendszergazdai fiókot ehhez a Add-on-Store-példányhoz.</value></data>
+  <data name="Create the first administrator account for this Add-on Store instance." xml:space="preserve"><value>Hozza létre az első rendszergazdai fiókot ehhez az Add-on-Store-példányhoz.</value></data>
   <data name="Create token" xml:space="preserve"><value>Token létrehozása</value></data>
   <data name="Created" xml:space="preserve"><value>Létrehozva</value></data>
   <data name="Details" xml:space="preserve"><value>Részletek</value></data>
@@ -116,7 +116,7 @@
   <data name="Account created." xml:space="preserve"><value>Fiók létrehozva.</value></data>
   <data name="Activate account" xml:space="preserve"><value>Fiók aktiválása</value></data>
   <data name="Admin" xml:space="preserve"><value>Adminisztrátor</value></data>
-  <data name="Choose your display name and a password to activate your Add-on Store account." xml:space="preserve"><value>Válassza ki megjelenített nevét, és adjon meg egy jelszót a Add-on-Store-fiók aktiválásához.</value></data>
+  <data name="Choose your display name and a password to activate your Add-on Store account." xml:space="preserve"><value>Válassza ki megjelenített nevét, és adjon meg egy jelszót az Add-on-Store-fiók aktiválásához.</value></data>
   <data name="Create a user directly" xml:space="preserve"><value>Felhasználó közvetlen létrehozása</value></data>
   <data name="Create account" xml:space="preserve"><value>Fiók létrehozása</value></data>
   <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>Az e-mail nincs konfigurálva; ossza meg ezt a meghívólinket közvetlenül:</value></data>
@@ -155,9 +155,9 @@
   <data name="Disabled" xml:space="preserve"><value>Letiltva</value></data>
   <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Töltse le és futtassa a telepítőt (rendszergazdai jogosultság szükséges); ezután a bővítmény naprakészen tartja magát és a beépülő modulokat.</value></data>
   <data name="Live" xml:space="preserve"><value>Élő</value></data>
-  <data name="Only administrators can publish new versions of the Add-on Store client." xml:space="preserve"><value>A Add-on Store kliens új verzióit csak rendszergazdák tehetik közzé.</value></data>
+  <data name="Only administrators can publish new versions of the Add-on Store client." xml:space="preserve"><value>Az Add-on Store kliens új verzióit csak rendszergazdák tehetik közzé.</value></data>
   <data name="Pending" xml:space="preserve"><value>Függőben</value></data>
-  <data name="Add-on Store client released. Installed clients offer the update now." xml:space="preserve"><value>A Add-on Store kliens megjelent. A telepített kliensek most felajánlják a frissítést.</value></data>
+  <data name="Add-on Store client released. Installed clients offer the update now." xml:space="preserve"><value>Az Add-on Store kliens megjelent. A telepített kliensek most felajánlják a frissítést.</value></data>
   <data name="Rejected" xml:space="preserve"><value>Elutasítva</value></data>
   <data name="Time" xml:space="preserve"><value>Idő</value></data>
   <data name="Time zone for displayed times" xml:space="preserve"><value>A megjelenített időpontok időzónája</value></data>
@@ -184,6 +184,7 @@
   <data name="Install the Claude skill (once)" xml:space="preserve"><value>A Claude-skill telepítése (egyszer)</value></data>
   <data name="Languages" xml:space="preserve"><value>Nyelvek</value></data>
   <data name="Licenses" xml:space="preserve"><value>Licencek</value></data>
+  <data name="Licenses, legal and privacy" xml:space="preserve"><value>Licencek, jogi kérdések és adatvédelem</value></data>
   <data name="List of all endpoints" xml:space="preserve"><value>Az összes végpont listája</value></data>
   <data name="Manifest and versioning" xml:space="preserve"><value>Manifest és verziókezelés</value></data>
   <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>Kizárólag MIT, BSD vagy Apache-2.0 licencű külső összetevők.</value></data>
@@ -220,9 +221,9 @@
   <data name="Backup and restore" xml:space="preserve"><value>Biztonsági mentés és visszaállítás</value></data>
   <data name="Backup file (.zip)" xml:space="preserve"><value>Biztonsági mentési fájl (.zip)</value></data>
   <data name="Backup restored. A safety backup of the previous state was kept on the server." xml:space="preserve"><value>A biztonsági mentés visszaállítva. Az előző állapotról készült védelmi mentés megmaradt a kiszolgálón.</value></data>
-  <data name="Community plugins by Tungsten Automation employees, not official Tungsten products: provided as is, without warranty or official support. Use at your own risk." xml:space="preserve"><value>A Tungsten Automation munkatársai által készített közösségi bővítmények, nem hivatalos Tungsten-termékek: adott állapotukban, jótállás és hivatalos támogatás nélkül állnak rendelkezésre. Használatuk saját felelősségre történik.</value></data>
+  <data name="Plugins from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Független szerzők bővítményei, nem a Tungsten Automation hivatalos termékei: adott állapotukban, jótállás és hivatalos támogatás nélkül állnak rendelkezésre. Használatuk saját felelősségre történik; a Tungsten Automation nem vállal felelősséget.</value></data>
   <data name="Create backup" xml:space="preserve"><value>Biztonsági mentés készítése</value></data>
-  <data name="Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file." xml:space="preserve"><value>Konzisztens pillanatképet készít, miközben a Add-on Store tovább működik, és ZIP-fájlként letölti.</value></data>
+  <data name="Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file." xml:space="preserve"><value>Konzisztens pillanatképet készít, miközben az Add-on Store tovább működik, és ZIP-fájlként letölti.</value></data>
   <data name="Disclaimer" xml:space="preserve"><value>Felelősségkizárás</value></data>
   <data name="Download full backup" xml:space="preserve"><value>Teljes biztonsági mentés letöltése</value></data>
   <data name="Event" xml:space="preserve"><value>Esemény</value></data>
@@ -246,14 +247,14 @@
   <data name="Test plugins before productive use, keep backups of important documents, and make sure their use complies with your organization's IT and data protection policies." xml:space="preserve"><value>Éles használat előtt tesztelje a bővítményeket, készítsen biztonsági mentést a fontos dokumentumokról, és győződjön meg arról, hogy használatuk megfelel szervezete informatikai és adatvédelmi szabályzatainak.</value></data>
   <data name="The archive contains unsafe paths." xml:space="preserve"><value>Az archívum nem biztonságos elérési utakat tartalmaz.</value></data>
   <data name="The backup contains password hashes and settings such as the Resend key. Store it like a password." xml:space="preserve"><value>A biztonsági mentés jelszókivonatokat és beállításokat, például a Resend-kulcsot tartalmazza. Úgy őrizze, mint egy jelszót.</value></data>
-  <data name="The plugins in this store are internal developments by Tungsten Automation employees. They are not part of Tungsten Power PDF and are not official Tungsten Automation products." xml:space="preserve"><value>Az ebben a Add-on-Store-ban található bővítmények a Tungsten Automation munkatársainak belső fejlesztései. Nem részei a Tungsten Power PDF-nek, és nem a Tungsten Automation hivatalos termékei.</value></data>
+  <data name="The plugins in this store are developed by independent authors, such as employees, partners or other developers. They are not part of Tungsten Power PDF and are not official Tungsten Automation products; the automatic checks and the review before release do not constitute a warranty." xml:space="preserve"><value>Az ebben az Add-on-Store-ban található bővítményeket független szerzők fejlesztik, például munkatársak, partnerek vagy más fejlesztők. Nem részei a Tungsten Power PDF-nek, és nem a Tungsten Automation hivatalos termékei; az automatikus ellenőrzések és a közzététel előtti felülvizsgálat nem jelentenek jótállást.</value></data>
   <data name="The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out." xml:space="preserve"><value>A visszaállítás elutasításra kerül, ha az Ön saját fiókja nem aktív adminisztrátor a biztonsági mentésben, így nem zárhatja ki saját magát.</value></data>
   <data name="The test email could not be sent." xml:space="preserve"><value>A teszt e-mailt nem sikerült elküldeni.</value></data>
   <data name="There is no official support through Tungsten Automation Support. Please contact the author named in the catalog; answers are voluntary and without guaranteed response times." xml:space="preserve"><value>A Tungsten Automation ügyfélszolgálatán keresztül nem érhető el hivatalos támogatás. Kérjük, forduljon a katalógusban megnevezett szerzőhöz; a válaszadás önkéntes, és nincs garantált válaszidő.</value></data>
   <data name="They are provided as is, without warranty of any kind, express or implied, including fitness for a particular purpose, availability or freedom from errors." xml:space="preserve"><value>Adott állapotukban állnak rendelkezésre, mindennemű kifejezett vagy hallgatólagos jótállás nélkül, ideértve az adott célra való alkalmasságot, a rendelkezésre állást és a hibamentességet is.</value></data>
   <data name="This is not a Add-on Store backup (backup.json or pluginstore.db missing)." xml:space="preserve"><value>Ez nem Add-on Store biztonsági mentés (hiányzik a backup.json vagy a pluginstore.db).</value></data>
   <data name="This is not a Add-on Store backup." xml:space="preserve"><value>Ez nem Add-on Store biztonsági mentés.</value></data>
-  <data name="To the extent permitted by law, Tungsten Automation and the authors accept no liability for damage, data loss or downtime caused by installing or using these plugins." xml:space="preserve"><value>A jogszabályok által megengedett mértékben a Tungsten Automation és a szerzők nem vállalnak felelősséget az e bővítmények telepítéséből vagy használatából eredő károkért, adatvesztésért vagy üzemkiesésért.</value></data>
+  <data name="To the extent permitted by law, Tungsten Automation accepts no liability for damage, data loss or downtime caused by installing or using these plugins. Each plugin is the responsibility of its author." xml:space="preserve"><value>A jogszabályok által megengedett mértékben a Tungsten Automation nem vállal felelősséget az e bővítmények telepítéséből vagy használatából eredő károkért, adatvesztésért vagy üzemkiesésért. Minden bővítményért annak szerzője felel.</value></data>
   <data name="Type RESTORE to confirm" xml:space="preserve"><value>A megerősítéshez írja be: RESTORE</value></data>
   <data name="Type RESTORE to confirm." xml:space="preserve"><value>A megerősítéshez írja be: RESTORE.</value></data>
   <data name="Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log." xml:space="preserve"><value>Mely e-mailek mikor és kinek kerülnek elküldésre. Minden elküldött vagy sikertelen e-mailt rögzítünk az auditnaplóban.</value></data>

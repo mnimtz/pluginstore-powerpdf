@@ -56,7 +56,8 @@ directly inside Power PDF.
 | 📜 **Audit trail** | Registrations, approvals, tokens, submissions (version + changelog are mandatory), reviews and downloads are recorded and searchable. |
 | 💾 **Backup and restore** | One click downloads a full backup (database, packages, avatars, developer kit); restore checks the archive, refuses to lock out the acting admin and keeps an automatic safety backup of the previous state. |
 | ✉️ **Notifications** | Email via Resend with a test button; admins choose which events send mail (access requests, submissions, review results, client releases). Every sent or failed mail is in the audit log. |
-| ⚖️ **Disclaimer** | Landing page, a dedicated disclaimer page and the Power PDF client state that plugins are internal developments without warranty or official support. |
+| 🛡️ **Licenses, legal and privacy** | Every upload carries a mandatory, truthful compliance statement (`thirdParty` components with SPDX licenses, `complianceAudit` with the external services a plugin contacts). The server verifies independently: copyleft and known-library signatures in binaries, credentials and key files, hosts compiled into the code, third-party brand names. Only MIT/BSD/Apache-2.0 code passes without review; GPL/AGPL/LGPL fails. |
+| ⚖️ **Disclaimer** | Landing page, a dedicated disclaimer page and the Power PDF client state that plugins come from independent authors, without warranty or official support, and that Tungsten Automation accepts no liability. |
 | 🌍 **16 European languages** | Auto-detected from the browser, manually switchable, with localized catalog texts straight from the package manifests. |
 
 ## Deploy in one click
@@ -99,6 +100,13 @@ built with the Power PDF Plugin SDK):
   detected for every plugin, including MSI-deployed ones.
 - Options page under *File → Options → Add-on Store*: server URL (defaults to
   your instance, enforceable via HKLM policy) and the beta-channel switch.
+- **One firewall rule is enough:** catalog, downloads and self-updates use
+  HTTPS (port 443) to the configured store host only, through the system proxy.
+  The client refuses plain HTTP (except localhost for development) and any
+  other host, whatever the catalog says.
+- A fresh MSI installation (not an update) clears leftovers of removed plugins
+  from the shared *Enhanced Features* tab once per user; installed plugins add
+  their groups again on their next start.
 
 End users install it with the MSI from the store's landing page
 (`/download/pluginstore.msi`); afterwards the client offers its own updates.

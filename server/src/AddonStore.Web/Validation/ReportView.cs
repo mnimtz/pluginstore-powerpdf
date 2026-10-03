@@ -26,7 +26,11 @@ public static class ReportView
         ("Ribbon and layout", new[] { "ATOM_NAMESPACE_MISSING", "ATOM_COLLISION", "ATOM_NOT_SHARED_TAB",
                                       "RESERVED_PANEL_NS", "ICONMODE_SMALL" }),
         ("Languages", new[] { "LANG_TEXT_INCOMPLETE", "LANGS_INCOMPLETE", "LANG_ATOMS_INCONSISTENT" }),
-        ("Licenses", new[] { "LICENSES_MISSING", "LICENSE_GPL_MARKER" }),
+        ("Licenses, legal and privacy", new[] { "LICENSES_MISSING", "LICENSE_GPL_MARKER", "COMPLIANCE_AUDIT_MISSING",
+                                      "COMPLIANCE_AUDIT_CONFIRMED", "EXTERNAL_SERVICES_MISSING", "THIRDPARTY_DECLARATION_MISSING", "THIRDPARTY_INVALID",
+                                      "LICENSE_NOT_ALLOWED", "LICENSE_NEEDS_REVIEW", "LICENSE_COPYLEFT_BINARY",
+                                      "LICENSE_WEAK_COPYLEFT_BINARY", "THIRDPARTY_UNDECLARED", "THIRDPARTY_DETECTED",
+                                      "SECRET_DETECTED", "EXTERNAL_SERVICE_UNDECLARED", "THIRDPARTY_TRADEMARK" }),
         ("Icon", new[] { "ICON_MISSING", "ICON_INVALID", "ICON_NOT_SQUARE", "ICON_TOO_LARGE" }),
     };
 

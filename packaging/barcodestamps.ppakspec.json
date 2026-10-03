@@ -1,0 +1,87 @@
+{
+  "id": "com.tungsten.barcodestamps",
+  "version": "1.0.0",
+  "name": {
+    "en": "Barcode Stamps",
+    "de": "Barcode-Stempel"
+  },
+  "description": {
+    "en": "Creates barcode stamps (QR Code, DataMatrix, PDF417, Aztec, Code 128, EAN and more) with an assistant and adds them to the Power PDF stamp palette, ready to place on any page.",
+    "de": "Erstellt mit einem Assistenten Barcode-Stempel (QR-Code, DataMatrix, PDF417, Aztec, Code 128, EAN und mehr) und fügt sie der Stempelpalette von Power PDF hinzu, bereit zum Platzieren auf jeder Seite.",
+    "fr": "Crée à l'aide d'un assistant des tampons code-barres (QR Code, DataMatrix, PDF417, Aztec, Code 128, EAN et plus) et les ajoute à la palette de tampons de Power PDF, prêts à être placés sur n'importe quelle page.",
+    "it": "Crea con una procedura guidata timbri con codice a barre (QR Code, DataMatrix, PDF417, Aztec, Code 128, EAN e altri) e li aggiunge alla tavolozza dei timbri di Power PDF, pronti per essere inseriti in qualsiasi pagina.",
+    "es": "Crea con un asistente sellos de código de barras (código QR, DataMatrix, PDF417, Aztec, Code 128, EAN y más) y los añade a la paleta de sellos de Power PDF, listos para colocarlos en cualquier página.",
+    "nl": "Maakt met een assistent barcodestempels (QR-code, DataMatrix, PDF417, Aztec, Code 128, EAN en meer) en voegt ze toe aan het stempelpalet van Power PDF, klaar om op elke pagina te plaatsen.",
+    "pt": "Cria, com um assistente, carimbos de código de barras (QR Code, DataMatrix, PDF417, Aztec, Code 128, EAN e outros) e os adiciona à paleta de carimbos do Power PDF, prontos para serem colocados em qualquer página.",
+    "da": "Opretter stregkodestempler med en guide (QR-kode, DataMatrix, PDF417, Aztec, Code 128, EAN m.fl.) og føjer dem til stempelpaletten i Power PDF, klar til at blive placeret på enhver side.",
+    "fi": "Luo ohjatusti viivakoodileimasimia (QR-koodi, DataMatrix, PDF417, Aztec, Code 128, EAN ja muita) ja lisää ne Power PDF:n leimasinpalettiin valmiiksi sijoitettaviksi mille tahansa sivulle.",
+    "nb": "Oppretter strekkodestempler med en veiviser (QR-kode, DataMatrix, PDF417, Aztec, Code 128, EAN med flere) og legger dem til i stempelpaletten i Power PDF, klare til å plasseres på hvilken som helst side.",
+    "sv": "Skapar streckkodsstämplar med en guide (QR-kod, DataMatrix, PDF417, Aztec, Code 128, EAN med flera) och lägger till dem i stämpelpaletten i Power PDF, redo att placeras på valfri sida.",
+    "pl": "Tworzy za pomocą kreatora pieczątki z kodem kreskowym (kod QR, DataMatrix, PDF417, Aztec, Code 128, EAN i inne) i dodaje je do palety pieczątek programu Power PDF, gotowe do umieszczenia na dowolnej stronie.",
+    "cs": "Pomocí průvodce vytváří razítka s čárovým kódem (QR kód, DataMatrix, PDF417, Aztec, Code 128, EAN a další) a přidává je do palety razítek aplikace Power PDF, připravená k umístění na libovolnou stránku.",
+    "hu": "Varázslóval vonalkódos bélyegzőket hoz létre (QR-kód, DataMatrix, PDF417, Aztec, Code 128, EAN és mások), és hozzáadja őket a Power PDF bélyegzőpalettájához, így bármely oldalra elhelyezhetők.",
+    "ru": "С помощью мастера создаёт штампы со штрихкодом (QR-код, DataMatrix, PDF417, Aztec, Code 128, EAN и другие) и добавляет их в палитру штампов Power PDF для размещения на любой странице.",
+    "tr": "Bir sihirbazla barkod damgaları (QR Kod, DataMatrix, PDF417, Aztec, Code 128, EAN ve diğerleri) oluşturur ve bunları herhangi bir sayfaya yerleştirilmeye hazır şekilde Power PDF damga paletine ekler."
+  },
+  "changelog": {
+    "en": "First release as a standalone plug-in in the Plugin-Store.",
+    "de": "Erste Veröffentlichung als eigenständiges Plug-in im Plugin-Store.",
+    "fr": "Première publication en tant que plug-in autonome dans le Plugin-Store.",
+    "it": "Prima pubblicazione come plug-in autonomo nel Plugin-Store.",
+    "es": "Primera publicación como plug-in independiente en el Plugin-Store.",
+    "nl": "Eerste release als zelfstandige plug-in in de Plugin-Store.",
+    "pt": "Primeira versão como plug-in independente na Plugin-Store.",
+    "da": "Første udgivelse som selvstændigt plug-in i Plugin-Store.",
+    "fi": "Ensimmäinen julkaisu itsenäisenä laajennuksena Plugin-Storessa.",
+    "nb": "Første utgivelse som frittstående plugin i Plugin-Store.",
+    "sv": "Första versionen som fristående plugin i Plugin-Store.",
+    "pl": "Pierwsze wydanie jako samodzielna wtyczka w Plugin-Store.",
+    "cs": "První vydání jako samostatný zásuvný modul v Plugin-Store.",
+    "hu": "Első kiadás önálló beépülő modulként a Plugin-Store-ban.",
+    "ru": "Первый выпуск в виде отдельного подключаемого модуля в Plugin-Store.",
+    "tr": "Plugin-Store'da bağımsız bir eklenti olarak ilk sürüm."
+  },
+  "minPowerPdfVersion": "5.0",
+  "ribbonAtomNamespace": "FeaturePack::BarcodeStamps",
+  "zxt": {
+    "x64": "C:/Claude/EnhancedFeaturePack/store/BarcodeStamps/Release/BarcodeStamps.zxt"
+  },
+  "include": [
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/BarcodeStamps/Plug-ins/BarcodeStamps/UILayout",
+      "dst": "UILayout"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/BarcodeStamps/assets",
+      "dst": "assets"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/BarcodeStamps/LICENSES.md",
+      "dst": "LICENSES.md"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/BarcodeStamps/docs",
+      "dst": "docs"
+    }
+  ],
+  "uninstall": {
+    "registryKeys": [
+      "HKCU\\Software\\Kofax\\PDF\\Tungsten Power PDF\\BarcodeStamps"
+    ],
+    "extraPaths": []
+  },
+  "category": "productivity",
+  "thirdParty": [
+    {
+      "name": "ZXing-C++",
+      "version": "2.3.0",
+      "license": "Apache-2.0",
+      "source": "https://github.com/zxing-cpp/zxing-cpp"
+    }
+  ],
+  "complianceAudit": {
+    "confirmed": true,
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; store builds name no contact persons), and all network code. One Apache-2.0 library (ZXing-C++, writer only, statically linked; license text in docs/). Works offline.",
+    "externalServices": []
+  }
+}

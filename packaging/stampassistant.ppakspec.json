@@ -1,0 +1,76 @@
+{
+  "id": "com.tungsten.stampassistant",
+  "version": "1.0.0",
+  "name": {
+    "en": "Stamp Assistant",
+    "de": "Stempel-Assistent"
+  },
+  "description": {
+    "en": "Dynamic stamps without JavaScript: compose the stamp text from building blocks such as date, time, user, page, file name, an input prompt, a CSV lookup, a running counter and a due date, then click on the page to place it. A side panel offers one-click stamps and your saved favorites.",
+    "de": "Dynamische Stempel ohne JavaScript: Stempeltext aus Bausteinen wie Datum, Uhrzeit, Benutzer, Seite, Dateiname, einer Abfrage, einem CSV-Nachschlagen, einem fortlaufenden Zähler und einem Fälligkeitsdatum zusammenstellen und per Klick auf die Seite setzen. Eine Seitenleiste bietet Stempel mit einem Klick und Ihre gespeicherten Favoriten.",
+    "fr": "Tampons dynamiques sans JavaScript : composez le texte du tampon à partir d'éléments tels que la date, l'heure, l'utilisateur, la page, le nom de fichier, une saisie, une recherche CSV, un compteur et une date d'échéance, puis cliquez sur la page pour l'apposer. Un panneau latéral propose des tampons en un clic et vos favoris enregistrés.",
+    "it": "Timbri dinamici senza JavaScript: componi il testo del timbro con elementi come data, ora, utente, pagina, nome file, una richiesta di input, una ricerca CSV, un contatore progressivo e una data di scadenza, poi fai clic sulla pagina per applicarlo. Un pannello laterale offre timbri con un clic e i tuoi preferiti salvati.",
+    "es": "Sellos dinámicos sin JavaScript: componga el texto del sello con elementos como fecha, hora, usuario, página, nombre de archivo, una solicitud de entrada, una búsqueda CSV, un contador correlativo y una fecha de vencimiento, y haga clic en la página para colocarlo. Un panel lateral ofrece sellos con un clic y sus favoritos guardados.",
+    "nl": "Dynamische stempels zonder JavaScript: stel de stempeltekst samen uit bouwstenen zoals datum, tijd, gebruiker, pagina, bestandsnaam, een invoervraag, een CSV-zoekopdracht, een doorlopende teller en een vervaldatum, en klik op de pagina om de stempel te plaatsen. Een zijpaneel biedt stempels met één klik en uw opgeslagen favorieten.",
+    "pt": "Carimbos dinâmicos sem JavaScript: componha o texto do carimbo com elementos como data, hora, usuário, página, nome do arquivo, uma solicitação de entrada, uma pesquisa em CSV, um contador sequencial e uma data de vencimento e clique na página para aplicá-lo. Um painel lateral oferece carimbos com um clique e seus favoritos salvos.",
+    "da": "Dynamiske stempler uden JavaScript: sammensæt stempelteksten af byggeklodser som dato, klokkeslæt, bruger, side, filnavn, en forespørgsel, et CSV-opslag, en løbende tæller og en forfaldsdato, og klik på siden for at placere stemplet. Et sidepanel giver stempler med ét klik og dine gemte favoritter.",
+    "fi": "Dynaamiset leimat ilman JavaScriptiä: kokoa leiman teksti osista, kuten päivämäärä, kellonaika, käyttäjä, sivu, tiedostonimi, syötekysely, CSV-haku, juokseva laskuri ja eräpäivä, ja sijoita leima napsauttamalla sivua. Sivupaneelista löydät yhden napsautuksen leimat ja tallentamasi suosikit.",
+    "nb": "Dynamiske stempler uten JavaScript: sett sammen stempelteksten av byggeklosser som dato, klokkeslett, bruker, side, filnavn, en forespørsel, et CSV-oppslag, en løpende teller og en forfallsdato, og klikk på siden for å plassere stempelet. Et sidepanel gir stempler med ett klikk og dine lagrede favoritter.",
+    "sv": "Dynamiska stämplar utan JavaScript: sätt ihop stämpeltexten av byggstenar som datum, tid, användare, sida, filnamn, en inmatningsfråga, en CSV-sökning, en löpande räknare och ett förfallodatum, och klicka på sidan för att placera stämpeln. En sidopanel erbjuder stämplar med ett klick och dina sparade favoriter.",
+    "pl": "Dynamiczne pieczątki bez JavaScriptu: zbuduj tekst pieczątki z elementów takich jak data, godzina, użytkownik, strona, nazwa pliku, zapytanie o dane, wyszukiwanie w pliku CSV, licznik i termin płatności, a następnie kliknij stronę, aby ją umieścić. Panel boczny oferuje pieczątki jednym kliknięciem i zapisane ulubione.",
+    "cs": "Dynamická razítka bez JavaScriptu: sestavte text razítka z prvků, jako je datum, čas, uživatel, stránka, název souboru, dotaz na vstup, vyhledání v CSV, průběžné počítadlo a datum splatnosti, a kliknutím na stránku razítko umístěte. Boční panel nabízí razítka na jedno kliknutí a vaše uložené oblíbené položky.",
+    "hu": "Dinamikus bélyegzők JavaScript nélkül: állítsa össze a bélyegző szövegét olyan elemekből, mint a dátum, az idő, a felhasználó, az oldal, a fájlnév, egy bekérés, egy CSV-keresés, egy folyamatos számláló és egy határidő, majd kattintson az oldalra az elhelyezéshez. Az oldalpanel egykattintásos bélyegzőket és a mentett kedvenceit kínálja.",
+    "ru": "Динамические штампы без JavaScript: составьте текст штампа из элементов, таких как дата, время, пользователь, страница, имя файла, запрос ввода, поиск в CSV, сквозной счётчик и срок исполнения, затем щёлкните по странице, чтобы разместить его. Боковая панель предлагает штампы в один щелчок и ваши сохранённые избранные.",
+    "tr": "JavaScript gerektirmeyen dinamik damgalar: damga metnini tarih, saat, kullanıcı, sayfa, dosya adı, giriş sorgusu, CSV araması, sıralı sayaç ve son tarih gibi yapı taşlarından oluşturun, ardından yerleştirmek için sayfaya tıklayın. Yan panel tek tıkla damgalar ve kaydettiğiniz favorileri sunar."
+  },
+  "changelog": {
+    "en": "First release as a standalone plug-in in the Plugin-Store.",
+    "de": "Erste Veröffentlichung als eigenständiges Plug-in im Plugin-Store.",
+    "fr": "Première publication en tant que plug-in autonome dans le Plugin-Store.",
+    "it": "Prima pubblicazione come plug-in autonomo nel Plugin-Store.",
+    "es": "Primera publicación como plug-in independiente en el Plugin-Store.",
+    "nl": "Eerste release als zelfstandige plug-in in de Plugin-Store.",
+    "pt": "Primeira versão como plug-in independente no Plugin-Store.",
+    "da": "Første udgivelse som selvstændigt plug-in i Plugin-Store.",
+    "fi": "Ensimmäinen julkaisu itsenäisenä laajennuksena Plugin-Storessa.",
+    "nb": "Første utgivelse som frittstående plugin i Plugin-Store.",
+    "sv": "Första versionen som fristående plugin i Plugin-Store.",
+    "pl": "Pierwsze wydanie jako samodzielna wtyczka w Plugin-Store.",
+    "cs": "První vydání jako samostatný zásuvný modul v Plugin-Store.",
+    "hu": "Első kiadás önálló bővítményként a Plugin-Store-ban.",
+    "ru": "Первый выпуск в виде отдельного плагина в Plugin-Store.",
+    "tr": "Plugin-Store'da bağımsız eklenti olarak ilk sürüm."
+  },
+  "minPowerPdfVersion": "5.0",
+  "ribbonAtomNamespace": "FeaturePack::StampAssistant",
+  "zxt": {
+    "x64": "C:/Claude/FeaturePack2/store/StampAssistant/Release/StampAssistant.zxt"
+  },
+  "include": [
+    {
+      "src": "C:/Claude/FeaturePack2/store/StampAssistant/Plug-ins/StampAssistant/UILayout",
+      "dst": "UILayout"
+    },
+    {
+      "src": "C:/Claude/FeaturePack2/store/StampAssistant/icon.png",
+      "dst": "assets/icon.png"
+    },
+    {
+      "src": "C:/Claude/FeaturePack2/store/StampAssistant/LICENSES.md",
+      "dst": "LICENSES.md"
+    }
+  ],
+  "uninstall": {
+    "registryKeys": [
+      "HKCU\\Software\\Kofax\\PDF\\Tungsten Power PDF\\StampAssistant"
+    ],
+    "extraPaths": []
+  },
+  "category": "productivity",
+  "thirdParty": [],
+  "complianceAudit": {
+    "confirmed": true,
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, CryptoAPI and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and LICENSES.md (icons generated by make_store_icons.py), copied code, secrets and personal data (none in the package), and all network code. No third-party code. Works offline.",
+    "externalServices": []
+  }
+}

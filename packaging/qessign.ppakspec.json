@@ -1,0 +1,87 @@
+{
+  "id": "com.tungsten.qessign",
+  "version": "1.0.0",
+  "name": {
+    "en": "QES Sign",
+    "de": "QES Sign"
+  },
+  "description": {
+    "en": "Qualified electronic signatures straight from the signature card: pick the card certificate, reason and timestamp in one dialog, sign already signed documents incrementally (four-eyes principle), batch-sign several PDFs and add long-term validation data (PAdES LTV).",
+    "de": "Qualifizierte elektronische Signaturen direkt von der Signaturkarte: Kartenzertifikat, Grund und Zeitstempel in einem Dialog wählen, bereits signierte Dokumente inkrementell signieren (Vier-Augen-Prinzip), mehrere PDFs im Stapel signieren und Daten zur Langzeitvalidierung ergänzen (PAdES LTV).",
+    "fr": "Signatures électroniques qualifiées directement depuis la carte de signature : choix du certificat de la carte, du motif et de l'horodatage dans une seule boîte de dialogue, signature incrémentielle des documents déjà signés (principe des quatre yeux), signature par lot de plusieurs PDF et ajout des données de validation à long terme (PAdES LTV).",
+    "it": "Firme elettroniche qualificate direttamente dalla carta di firma: scelta del certificato della carta, del motivo e della marca temporale in un'unica finestra, firma incrementale di documenti già firmati (principio dei quattro occhi), firma in blocco di più PDF e aggiunta dei dati di convalida a lungo termine (PAdES LTV).",
+    "es": "Firmas electrónicas cualificadas directamente desde la tarjeta de firma: elija el certificado de la tarjeta, el motivo y el sello de tiempo en un solo cuadro de diálogo, firme de forma incremental documentos ya firmados (principio de los cuatro ojos), firme varios PDF por lotes y añada datos de validación a largo plazo (PAdES LTV).",
+    "nl": "Gekwalificeerde elektronische handtekeningen rechtstreeks vanaf de handtekeningkaart: kies kaartcertificaat, reden en tijdstempel in één dialoogvenster, onderteken reeds ondertekende documenten incrementeel (vier-ogenprincipe), onderteken meerdere PDF's in batch en voeg gegevens voor langetermijnvalidatie toe (PAdES LTV).",
+    "pt": "Assinaturas eletrônicas qualificadas diretamente do cartão de assinatura: escolha o certificado do cartão, o motivo e o carimbo de tempo em uma única caixa de diálogo, assine documentos já assinados de forma incremental (princípio dos quatro olhos), assine vários PDFs em lote e adicione dados de validação de longo prazo (PAdES LTV).",
+    "da": "Kvalificerede elektroniske signaturer direkte fra signaturkortet: vælg kortcertifikat, årsag og tidsstempel i én dialogboks, signer allerede signerede dokumenter inkrementelt (firøjeprincippet), signer flere PDF-filer i batch, og tilføj data til langtidsvalidering (PAdES LTV).",
+    "fi": "Hyväksytyt sähköiset allekirjoitukset suoraan allekirjoituskortilta: valitse kortin varmenne, syy ja aikaleima yhdessä valintaikkunassa, allekirjoita jo allekirjoitetut asiakirjat inkrementaalisesti (neljän silmän periaate), allekirjoita useita PDF-tiedostoja eränä ja lisää pitkäaikaisen validoinnin tiedot (PAdES LTV).",
+    "nb": "Kvalifiserte elektroniske signaturer direkte fra signaturkortet: velg kortsertifikat, årsak og tidsstempel i én dialogboks, signer allerede signerte dokumenter inkrementelt (firøyeprinsippet), signer flere PDF-filer satsvis og legg til data for langtidsvalidering (PAdES LTV).",
+    "sv": "Kvalificerade elektroniska underskrifter direkt från signaturkortet: välj kortcertifikat, orsak och tidsstämpel i en enda dialogruta, signera redan signerade dokument inkrementellt (fyraögonprincipen), signera flera PDF-filer i en omgång och lägg till data för långtidsvalidering (PAdES LTV).",
+    "pl": "Kwalifikowane podpisy elektroniczne bezpośrednio z karty do podpisu: wybór certyfikatu z karty, powodu i znacznika czasu w jednym oknie, przyrostowe podpisywanie już podpisanych dokumentów (zasada czterech oczu), wsadowe podpisywanie wielu plików PDF oraz dodawanie danych do długoterminowej weryfikacji (PAdES LTV).",
+    "cs": "Kvalifikované elektronické podpisy přímo z podpisové karty: výběr certifikátu karty, důvodu a časového razítka v jednom dialogu, přírůstkové podepisování již podepsaných dokumentů (princip čtyř očí), hromadné podepisování více souborů PDF a doplnění dat pro dlouhodobé ověření (PAdES LTV).",
+    "hu": "Minősített elektronikus aláírások közvetlenül az aláíró kártyáról: a kártya tanúsítványa, az ok és az időbélyeg kiválasztása egyetlen párbeszédpanelen, már aláírt dokumentumok növekményes aláírása (négy szem elve), több PDF kötegelt aláírása és hosszú távú hitelesítési adatok hozzáadása (PAdES LTV).",
+    "ru": "Квалифицированные электронные подписи непосредственно с карты подписи: выбор сертификата карты, причины и метки времени в одном диалоге, инкрементальная подпись уже подписанных документов (принцип четырёх глаз), пакетная подпись нескольких PDF и добавление данных для долгосрочной проверки (PAdES LTV).",
+    "tr": "Doğrudan imza kartından nitelikli elektronik imzalar: kart sertifikasını, nedeni ve zaman damgasını tek bir iletişim kutusunda seçin, zaten imzalanmış belgeleri artımlı olarak imzalayın (dört göz ilkesi), birden çok PDF'yi toplu imzalayın ve uzun vadeli doğrulama verileri ekleyin (PAdES LTV)."
+  },
+  "changelog": {
+    "en": "First release as a standalone plug-in in the Plugin-Store.",
+    "de": "Erste Veröffentlichung als eigenständiges Plug-in im Plugin-Store.",
+    "fr": "Première publication en tant que plug-in autonome dans le Plugin-Store.",
+    "it": "Prima pubblicazione come plug-in autonomo nel Plugin-Store.",
+    "es": "Primera publicación como plug-in independiente en el Plugin-Store.",
+    "nl": "Eerste release als zelfstandige plug-in in de Plugin-Store.",
+    "pt": "Primeira versão como plug-in independente na Plugin-Store.",
+    "da": "Første udgivelse som selvstændigt plug-in i Plugin-Store.",
+    "fi": "Ensimmäinen julkaisu itsenäisenä laajennuksena Plugin-Storessa.",
+    "nb": "Første utgivelse som frittstående plugin i Plugin-Store.",
+    "sv": "Första versionen som fristående plugin i Plugin-Store.",
+    "pl": "Pierwsze wydanie jako samodzielna wtyczka w Plugin-Store.",
+    "cs": "První vydání jako samostatný zásuvný modul v Plugin-Store.",
+    "hu": "Első kiadás önálló beépülő modulként a Plugin-Store-ban.",
+    "ru": "Первый выпуск в виде отдельного подключаемого модуля в Plugin-Store.",
+    "tr": "Plugin-Store'da bağımsız bir eklenti olarak ilk sürüm."
+  },
+  "minPowerPdfVersion": "5.0",
+  "ribbonAtomNamespace": "FeaturePack::QesSign",
+  "zxt": {
+    "x64": "C:/Claude/EnhancedFeaturePack/store/QesSign/Release/QesSign.zxt"
+  },
+  "include": [
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/QesSign/Plug-ins/QesSign/UILayout",
+      "dst": "UILayout"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/QesSign/assets",
+      "dst": "assets"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/QesSign/LICENSES.md",
+      "dst": "LICENSES.md"
+    }
+  ],
+  "uninstall": {
+    "registryKeys": [
+      "HKCU\\Software\\Kofax\\PDF\\Tungsten Power PDF\\QesSign"
+    ],
+    "extraPaths": []
+  },
+  "category": "signing",
+  "thirdParty": [],
+  "complianceAudit": {
+    "confirmed": true,
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; store builds name no contact persons), and all network code. No third-party code. Network only for the optional timestamp and for CRL downloads from the distribution points named in the signer's certificate chain (long-term validation).",
+    "externalServices": [
+      {
+        "name": "Timestamp server (RFC 3161), optional",
+        "url": "configured by the user or admin (TsaUrl), empty by default",
+        "data": "hash of the signature value only, when a timestamp URL is configured"
+      },
+      {
+        "name": "Certificate revocation lists (CRL distribution points)",
+        "url": "taken from the signing certificate chain",
+        "data": "HTTP GET of the CA's public CRL, no document data"
+      }
+    ]
+  }
+}

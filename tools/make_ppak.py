@@ -77,6 +77,10 @@ def main():
         'ribbonAtomNamespace': spec.get('ribbonAtomNamespace', ''),
         'uninstall': spec.get('uninstall', {}),
     }
+    # License declaration is the author's own statement; never invent defaults.
+    for key in ('thirdParty', 'complianceAudit'):
+        if key in spec:
+            manifest[key] = spec[key]
 
     # Guard: an included MSI must carry exactly the package version, otherwise
     # users get "Repair/Remove" instead of an upgrade (happened with 0.3.1).

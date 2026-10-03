@@ -58,7 +58,18 @@ static void*  PsoCreate(void* parent)
     AFX_MANAGE_MODULE_STATE;
     return (void*)CreateDialogParamW(gHINSTANCE, MAKEINTRESOURCEW(IDD_PS_OPTIONS), (HWND)parent, PsoDlgProc, 0);
 }
-static DUBool PsoCheck(void*) { return true; }
+static DUBool PsoCheck(void* hWnd)
+{
+    AFX_MANAGE_MODULE_STATE;
+    HWND h = (HWND)hWnd;
+    if (!IsWindowEnabled(GetDlgItem(h, IDC_PSO_URL))) return true;
+    wchar_t url[1024] = { 0 };
+    GetDlgItemTextW(h, IDC_PSO_URL, url, 1024);
+    if (PSIsAllowedServerUrl(url)) return true;
+    MessageBoxW(h, FPLoc(IDS_PSO_URL_HTTPS).c_str(), FPLoc(IDS_PSO_PAGE).c_str(), MB_OK | MB_ICONWARNING);
+    SetFocus(GetDlgItem(h, IDC_PSO_URL));
+    return false;
+}
 static DUBool PsoUpdate(void* hWnd)
 {
     AFX_MANAGE_MODULE_STATE;

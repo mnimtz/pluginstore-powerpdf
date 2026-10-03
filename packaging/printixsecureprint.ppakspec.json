@@ -1,0 +1,94 @@
+{
+  "id": "com.tungsten.printixsecureprint",
+  "version": "1.0.0",
+  "name": {
+    "en": "Printix Secure Print",
+    "de": "Printix Secure Print"
+  },
+  "description": {
+    "en": "Sends the active, saved PDF directly from Power PDF to your Printix Secure Print queue with one click; release the job at the printer as usual. Tenant, client ID, client secret and default queue are set under Options; the client secret is stored encrypted with Windows DPAPI, and administrators can enforce settings by policy.",
+    "de": "Sendet das aktive, gespeicherte PDF mit einem Klick direkt aus Power PDF in Ihre Printix-Secure-Print-Warteschlange; die Freigabe erfolgt wie gewohnt am Drucker. Tenant, Client-ID, Client-Secret und Standard-Warteschlange werden unter Optionen festgelegt; das Client-Secret wird mit Windows DPAPI verschlüsselt gespeichert, und Administratoren können Einstellungen per Richtlinie vorgeben.",
+    "fr": "Envoie en un clic le PDF actif et enregistré directement depuis Power PDF dans votre file Printix Secure Print ; libérez le travail à l'imprimante comme d'habitude. Le tenant, l'ID client, le secret client et la file par défaut se définissent dans les Options ; le secret client est stocké chiffré avec Windows DPAPI et les administrateurs peuvent imposer les paramètres par stratégie.",
+    "it": "Invia con un clic il PDF attivo e salvato direttamente da Power PDF alla tua coda Printix Secure Print; rilascia il lavoro alla stampante come di consueto. Tenant, ID client, segreto client e coda predefinita si impostano nelle Opzioni; il segreto client viene memorizzato crittografato con Windows DPAPI e gli amministratori possono imporre le impostazioni tramite criteri.",
+    "es": "Envía con un clic el PDF activo y guardado directamente desde Power PDF a su cola Printix Secure Print; libere el trabajo en la impresora como de costumbre. El tenant, el ID de cliente, el secreto de cliente y la cola predeterminada se configuran en Opciones; el secreto de cliente se guarda cifrado con Windows DPAPI y los administradores pueden imponer la configuración mediante directivas.",
+    "nl": "Stuurt het actieve, opgeslagen PDF-bestand met één klik rechtstreeks vanuit Power PDF naar uw Printix Secure Print-wachtrij; geef de taak zoals gewoonlijk vrij bij de printer. Tenant, client-ID, clientgeheim en standaardwachtrij stelt u in onder Opties; het clientgeheim wordt versleuteld opgeslagen met Windows DPAPI en beheerders kunnen instellingen via beleid afdwingen.",
+    "pt": "Envia com um clique o PDF ativo e salvo diretamente do Power PDF para sua fila do Printix Secure Print; libere o trabalho na impressora como de costume. Tenant, ID do cliente, segredo do cliente e fila padrão são definidos em Opções; o segredo do cliente é armazenado criptografado com o Windows DPAPI, e os administradores podem impor configurações por política.",
+    "da": "Sender den aktive, gemte PDF med ét klik direkte fra Power PDF til din Printix Secure Print-kø; frigiv jobbet ved printeren som sædvanligt. Tenant, klient-id, klienthemmelighed og standardkø angives under Indstillinger; klienthemmeligheden gemmes krypteret med Windows DPAPI, og administratorer kan gennemtvinge indstillinger via politik.",
+    "fi": "Lähettää aktiivisen, tallennetun PDF-tiedoston yhdellä napsautuksella suoraan Power PDF:stä Printix Secure Print -jonoosi; vapauta työ tulostimella tavalliseen tapaan. Tenant, asiakastunnus, asiakassalaisuus ja oletusjono määritetään Asetuksissa; asiakassalaisuus tallennetaan salattuna Windows DPAPI:lla, ja järjestelmänvalvojat voivat pakottaa asetukset käytännöillä.",
+    "nb": "Sender den aktive, lagrede PDF-filen med ett klikk direkte fra Power PDF til Printix Secure Print-køen din; frigi jobben ved skriveren som vanlig. Tenant, klient-ID, klienthemmelighet og standardkø angis under Alternativer; klienthemmeligheten lagres kryptert med Windows DPAPI, og administratorer kan håndheve innstillinger via policy.",
+    "sv": "Skickar den aktiva, sparade PDF-filen med ett klick direkt från Power PDF till din Printix Secure Print-kö; frisläpp jobbet vid skrivaren som vanligt. Tenant, klient-ID, klienthemlighet och standardkö anges under Alternativ; klienthemligheten lagras krypterad med Windows DPAPI, och administratörer kan tvinga fram inställningar via princip.",
+    "pl": "Wysyła jednym kliknięciem aktywny, zapisany plik PDF bezpośrednio z Power PDF do Twojej kolejki Printix Secure Print; zadanie zwalniasz przy drukarce jak zwykle. Tenant, identyfikator klienta, klucz tajny klienta i domyślną kolejkę ustawia się w Opcjach; klucz tajny jest przechowywany w postaci zaszyfrowanej za pomocą Windows DPAPI, a administratorzy mogą wymuszać ustawienia zasadami.",
+    "cs": "Jedním kliknutím odešle aktivní uložené PDF přímo z Power PDF do vaší fronty Printix Secure Print; úlohu uvolníte u tiskárny jako obvykle. Tenant, ID klienta, tajný klíč klienta a výchozí fronta se nastavují v Možnostech; tajný klíč klienta se ukládá šifrovaně pomocí Windows DPAPI a správci mohou nastavení vynutit zásadami.",
+    "hu": "Egyetlen kattintással elküldi az aktív, mentett PDF-et közvetlenül a Power PDF-ből a Printix Secure Print sorába; a feladatot a szokásos módon a nyomtatónál adhatja ki. A tenant, az ügyfél-azonosító, az ügyféltitok és az alapértelmezett sor a Beállításokban adható meg; az ügyféltitkot a Windows DPAPI titkosítva tárolja, a rendszergazdák pedig házirenddel kényszeríthetik a beállításokat.",
+    "ru": "Отправляет активный сохранённый PDF одним щелчком прямо из Power PDF в вашу очередь Printix Secure Print; задание выпускается на принтере как обычно. Тенант, идентификатор клиента, секрет клиента и очередь по умолчанию задаются в разделе «Параметры»; секрет клиента хранится в зашифрованном виде с помощью Windows DPAPI, а администраторы могут задавать параметры политиками.",
+    "tr": "Etkin ve kaydedilmiş PDF'yi tek tıkla doğrudan Power PDF'den Printix Secure Print kuyruğunuza gönderir; işi her zamanki gibi yazıcıda serbest bırakırsınız. Kiracı, istemci kimliği, istemci gizli anahtarı ve varsayılan kuyruk Seçenekler'de ayarlanır; istemci gizli anahtarı Windows DPAPI ile şifrelenmiş olarak saklanır ve yöneticiler ayarları ilkeyle zorunlu kılabilir."
+  },
+  "changelog": {
+    "en": "First release as a standalone plug-in in the Plugin-Store.",
+    "de": "Erste Veröffentlichung als eigenständiges Plug-in im Plugin-Store.",
+    "fr": "Première publication en tant que plug-in autonome dans le Plugin-Store.",
+    "it": "Prima pubblicazione come plug-in autonomo nel Plugin-Store.",
+    "es": "Primera publicación como plug-in independiente en el Plugin-Store.",
+    "nl": "Eerste release als zelfstandige plug-in in de Plugin-Store.",
+    "pt": "Primeira versão como plug-in independente no Plugin-Store.",
+    "da": "Første udgivelse som selvstændigt plug-in i Plugin-Store.",
+    "fi": "Ensimmäinen julkaisu itsenäisenä laajennuksena Plugin-Storessa.",
+    "nb": "Første utgivelse som frittstående plugin i Plugin-Store.",
+    "sv": "Första versionen som fristående plugin i Plugin-Store.",
+    "pl": "Pierwsze wydanie jako samodzielna wtyczka w Plugin-Store.",
+    "cs": "První vydání jako samostatný zásuvný modul v Plugin-Store.",
+    "hu": "Első kiadás önálló bővítményként a Plugin-Store-ban.",
+    "ru": "Первый выпуск в виде отдельного плагина в Plugin-Store.",
+    "tr": "Plugin-Store'da bağımsız eklenti olarak ilk sürüm."
+  },
+  "minPowerPdfVersion": "5.0",
+  "ribbonAtomNamespace": "FeaturePack::PrintixSecurePrint",
+  "zxt": {
+    "x64": "C:/Claude/FeaturePack2/store/PrintixSecurePrint/Release/PrintixSecurePrint.zxt"
+  },
+  "include": [
+    {
+      "src": "C:/Claude/FeaturePack2/store/PrintixSecurePrint/Plug-ins/PrintixSecurePrint/UILayout",
+      "dst": "UILayout"
+    },
+    {
+      "src": "C:/Claude/FeaturePack2/store/PrintixSecurePrint/icon.png",
+      "dst": "assets/icon.png"
+    },
+    {
+      "src": "C:/Claude/FeaturePack2/store/PrintixSecurePrint/LICENSES.md",
+      "dst": "LICENSES.md"
+    }
+  ],
+  "uninstall": {
+    "registryKeys": [
+      "HKCU\\Software\\Kofax\\PDF\\Tungsten Power PDF\\PrintixSecurePrint"
+    ],
+    "extraPaths": []
+  },
+  "category": "printing",
+  "thirdParty": [
+    {
+      "name": "nlohmann/json",
+      "version": "3.12.0",
+      "license": "MIT",
+      "source": "https://github.com/nlohmann/json"
+    }
+  ],
+  "complianceAudit": {
+    "confirmed": true,
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, CryptoAPI and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and LICENSES.md (icons generated by make_store_icons.py), copied code, secrets and personal data (none in the package), and all network code. One MIT library (nlohmann/json). The Printix client secret is entered by the user or admin and stored DPAPI-protected, never in the package.",
+    "externalServices": [
+      {
+        "name": "Printix Cloud Print API",
+        "url": "https://api.printix.net",
+        "data": "the PDF print job, document name, the user's email address and the configured tenant and queue"
+      },
+      {
+        "name": "Printix authentication",
+        "url": "https://auth.printix.net",
+        "data": "OAuth client credentials configured by the admin (client ID and secret) to obtain an access token"
+      }
+    ]
+  }
+}

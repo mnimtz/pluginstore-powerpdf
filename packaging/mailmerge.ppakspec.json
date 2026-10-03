@@ -1,0 +1,76 @@
+{
+  "id": "com.tungsten.mailmerge",
+  "version": "1.0.0",
+  "name": {
+    "en": "Mail Merge",
+    "de": "Serienbrief"
+  },
+  "description": {
+    "en": "Creates one PDF per record from a PDF form template and a CSV table: automatic or manual mapping of columns to form fields, file names from a pattern such as {Name}_{ROW}, optional flattening of the filled values.",
+    "de": "Erzeugt aus einer PDF-Formularvorlage und einer CSV-Tabelle ein PDF pro Datensatz: automatische oder manuelle Zuordnung der Spalten zu Formularfeldern, Dateinamen aus einem Muster wie {Name}_{ROW}, optionales Reduzieren (Flatten) der ausgefüllten Werte.",
+    "fr": "Crée un PDF par enregistrement à partir d'un modèle de formulaire PDF et d'un tableau CSV : association automatique ou manuelle des colonnes aux champs de formulaire, noms de fichiers selon un modèle tel que {Name}_{ROW}, aplatissement facultatif des valeurs remplies.",
+    "it": "Crea un PDF per record da un modello di modulo PDF e da una tabella CSV: associazione automatica o manuale delle colonne ai campi del modulo, nomi di file da uno schema come {Name}_{ROW}, appiattimento opzionale dei valori compilati.",
+    "es": "Crea un PDF por registro a partir de una plantilla de formulario PDF y una tabla CSV: asignación automática o manual de columnas a campos de formulario, nombres de archivo según un patrón como {Name}_{ROW} y acoplamiento opcional de los valores rellenados.",
+    "nl": "Maakt één PDF per record op basis van een PDF-formuliersjabloon en een CSV-tabel: automatische of handmatige koppeling van kolommen aan formuliervelden, bestandsnamen volgens een patroon zoals {Name}_{ROW}, optioneel afvlakken van de ingevulde waarden.",
+    "pt": "Cria um PDF por registro a partir de um modelo de formulário PDF e de uma tabela CSV: mapeamento automático ou manual das colunas para os campos do formulário, nomes de arquivo a partir de um padrão como {Name}_{ROW} e nivelamento opcional dos valores preenchidos.",
+    "da": "Opretter én PDF pr. post ud fra en PDF-formularskabelon og en CSV-tabel: automatisk eller manuel tilknytning af kolonner til formularfelter, filnavne efter et mønster som {Name}_{ROW} og valgfri fladgørelse af de udfyldte værdier.",
+    "fi": "Luo yhden PDF-tiedoston tietuetta kohden PDF-lomakepohjasta ja CSV-taulukosta: sarakkeiden automaattinen tai manuaalinen yhdistäminen lomakekenttiin, tiedostonimet mallin, kuten {Name}_{ROW}, mukaan ja täytettyjen arvojen valinnainen litistäminen.",
+    "nb": "Lager én PDF per post fra en PDF-skjemamal og en CSV-tabell: automatisk eller manuell tilordning av kolonner til skjemafelt, filnavn etter et mønster som {Name}_{ROW} og valgfri utflating av de utfylte verdiene.",
+    "sv": "Skapar en PDF per post utifrån en PDF-formulärmall och en CSV-tabell: automatisk eller manuell mappning av kolumner till formulärfält, filnamn enligt ett mönster som {Name}_{ROW} och valfri förenkling (flattening) av de ifyllda värdena.",
+    "pl": "Tworzy jeden plik PDF na rekord na podstawie szablonu formularza PDF i tabeli CSV: automatyczne lub ręczne przypisanie kolumn do pól formularza, nazwy plików według wzorca, np. {Name}_{ROW}, opcjonalne spłaszczenie wypełnionych wartości.",
+    "cs": "Vytvoří jedno PDF na záznam ze šablony formuláře PDF a tabulky CSV: automatické nebo ruční přiřazení sloupců k polím formuláře, názvy souborů podle vzoru, například {Name}_{ROW}, a volitelné sloučení vyplněných hodnot.",
+    "hu": "Rekordonként egy PDF-et hoz létre egy PDF-űrlapsablonból és egy CSV-táblázatból: az oszlopok automatikus vagy kézi hozzárendelése az űrlapmezőkhöz, fájlnevek minta alapján (pl. {Name}_{ROW}), a kitöltött értékek opcionális egybeolvasztása.",
+    "ru": "Создаёт по одному PDF на запись из шаблона PDF-формы и таблицы CSV: автоматическое или ручное сопоставление столбцов с полями формы, имена файлов по шаблону, например {Name}_{ROW}, необязательное сведение заполненных значений.",
+    "tr": "Bir PDF form şablonundan ve bir CSV tablosundan her kayıt için bir PDF oluşturur: sütunların form alanlarına otomatik veya elle eşlenmesi, {Name}_{ROW} gibi bir desene göre dosya adları ve doldurulan değerlerin isteğe bağlı olarak düzleştirilmesi."
+  },
+  "changelog": {
+    "en": "First release as a standalone plug-in in the Plugin-Store.",
+    "de": "Erste Veröffentlichung als eigenständiges Plug-in im Plugin-Store.",
+    "fr": "Première publication en tant que plug-in autonome dans le Plugin-Store.",
+    "it": "Prima pubblicazione come plug-in autonomo nel Plugin-Store.",
+    "es": "Primera publicación como plug-in independiente en el Plugin-Store.",
+    "nl": "Eerste release als zelfstandige plug-in in de Plugin-Store.",
+    "pt": "Primeira versão como plug-in independente na Plugin-Store.",
+    "da": "Første udgivelse som selvstændigt plug-in i Plugin-Store.",
+    "fi": "Ensimmäinen julkaisu itsenäisenä laajennuksena Plugin-Storessa.",
+    "nb": "Første utgivelse som frittstående plugin i Plugin-Store.",
+    "sv": "Första versionen som fristående plugin i Plugin-Store.",
+    "pl": "Pierwsze wydanie jako samodzielna wtyczka w Plugin-Store.",
+    "cs": "První vydání jako samostatný zásuvný modul v Plugin-Store.",
+    "hu": "Első kiadás önálló beépülő modulként a Plugin-Store-ban.",
+    "ru": "Первый выпуск в виде отдельного подключаемого модуля в Plugin-Store.",
+    "tr": "Plugin-Store'da bağımsız bir eklenti olarak ilk sürüm."
+  },
+  "minPowerPdfVersion": "5.0",
+  "ribbonAtomNamespace": "FeaturePack::MailMerge",
+  "zxt": {
+    "x64": "C:/Claude/EnhancedFeaturePack/store/MailMerge/Release/MailMerge.zxt"
+  },
+  "include": [
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/MailMerge/Plug-ins/MailMerge/UILayout",
+      "dst": "UILayout"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/MailMerge/assets",
+      "dst": "assets"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/MailMerge/LICENSES.md",
+      "dst": "LICENSES.md"
+    }
+  ],
+  "uninstall": {
+    "registryKeys": [
+      "HKCU\\Software\\Kofax\\PDF\\Tungsten Power PDF\\MailMerge"
+    ],
+    "extraPaths": []
+  },
+  "category": "forms",
+  "thirdParty": [],
+  "complianceAudit": {
+    "confirmed": true,
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; store builds name no contact persons), and all network code. No third-party code. Works offline; it creates documents only and sends no mail.",
+    "externalServices": []
+  }
+}

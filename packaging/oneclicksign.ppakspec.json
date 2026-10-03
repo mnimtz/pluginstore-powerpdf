@@ -1,0 +1,82 @@
+{
+  "id": "com.tungsten.oneclicksign",
+  "version": "1.0.0",
+  "name": {
+    "en": "1-Click Signing",
+    "de": "1-Klick-Signatur"
+  },
+  "description": {
+    "en": "Signs PDFs with a digital signature in one click: three preconfigured signature area sizes plus a freely drawn area, placement by click with live preview or at a fixed position, automatic certificate selection, optional timestamp and configurable stamp appearance.",
+    "de": "Signiert PDFs mit einem Klick digital: drei vorkonfigurierte Größen für den Signaturbereich plus frei aufgezogener Bereich, Platzierung per Klick mit Live-Vorschau oder an fester Position, automatische Zertifikatsauswahl, optionaler Zeitstempel und konfigurierbares Stempel-Erscheinungsbild.",
+    "fr": "Signe les PDF numériquement en un clic : trois tailles de zone de signature préconfigurées et une zone libre, placement par clic avec aperçu en direct ou à une position fixe, sélection automatique du certificat, horodatage facultatif et apparence du tampon configurable.",
+    "it": "Firma digitalmente i PDF con un clic: tre dimensioni preconfigurate dell'area di firma più un'area libera, posizionamento con un clic e anteprima dal vivo o in una posizione fissa, selezione automatica del certificato, marca temporale opzionale e aspetto del timbro configurabile.",
+    "es": "Firma digitalmente archivos PDF con un clic: tres tamaños de área de firma preconfigurados más un área libre, colocación con un clic con vista previa en vivo o en una posición fija, selección automática del certificado, sello de tiempo opcional y apariencia del sello configurable.",
+    "nl": "Ondertekent PDF's digitaal met één klik: drie vooraf ingestelde formaten voor het handtekeningvak plus een vrij te tekenen vak, plaatsing per klik met live voorbeeld of op een vaste positie, automatische certificaatselectie, optionele tijdstempel en configureerbare stempelweergave.",
+    "pt": "Assina PDFs digitalmente com um clique: três tamanhos de área de assinatura pré-configurados mais uma área livre, posicionamento por clique com visualização ao vivo ou em posição fixa, seleção automática de certificado, carimbo de tempo opcional e aparência do carimbo configurável.",
+    "da": "Signerer PDF-filer digitalt med ét klik: tre forudindstillede størrelser til signaturområdet plus et frit tegnet område, placering med klik og live-eksempel eller på en fast position, automatisk valg af certifikat, valgfrit tidsstempel og konfigurerbart stempeludseende.",
+    "fi": "Allekirjoittaa PDF-tiedostot digitaalisesti yhdellä napsautuksella: kolme valmiiksi määritettyä allekirjoitusalueen kokoa ja vapaasti piirrettävä alue, sijoitus napsauttamalla live-esikatselulla tai kiinteään kohtaan, automaattinen varmenteen valinta, valinnainen aikaleima ja määritettävä leiman ulkoasu.",
+    "nb": "Signerer PDF-filer digitalt med ett klikk: tre forhåndsdefinerte størrelser for signaturområdet pluss et fritt tegnet område, plassering med klikk og direkte forhåndsvisning eller på en fast posisjon, automatisk sertifikatvalg, valgfritt tidsstempel og konfigurerbart stempelutseende.",
+    "sv": "Signerar PDF-filer digitalt med ett klick: tre förinställda storlekar för signaturområdet plus ett fritt ritat område, placering med klick och direktförhandsgranskning eller på en fast position, automatiskt val av certifikat, valfri tidsstämpel och konfigurerbart stämpelutseende.",
+    "pl": "Podpisuje cyfrowo pliki PDF jednym kliknięciem: trzy wstępnie skonfigurowane rozmiary obszaru podpisu oraz obszar rysowany swobodnie, umieszczanie kliknięciem z podglądem na żywo lub w stałym miejscu, automatyczny wybór certyfikatu, opcjonalny znacznik czasu i konfigurowalny wygląd pieczęci.",
+    "cs": "Digitálně podepisuje soubory PDF jedním kliknutím: tři předem nastavené velikosti oblasti podpisu a volně nakreslená oblast, umístění kliknutím s živým náhledem nebo na pevnou pozici, automatický výběr certifikátu, volitelné časové razítko a konfigurovatelný vzhled razítka.",
+    "hu": "Egyetlen kattintással digitálisan aláírja a PDF-fájlokat: három előre beállított aláírásiterület-méret és egy szabadon rajzolható terület, elhelyezés kattintással élő előnézettel vagy rögzített pozícióban, automatikus tanúsítványválasztás, opcionális időbélyeg és testreszabható bélyegzőmegjelenés.",
+    "ru": "Подписывает PDF цифровой подписью одним щелчком: три предварительно настроенных размера области подписи и произвольно выделяемая область, размещение щелчком с предварительным просмотром или в фиксированной позиции, автоматический выбор сертификата, необязательная метка времени и настраиваемый внешний вид штампа.",
+    "tr": "PDF'leri tek tıkla dijital olarak imzalar: önceden yapılandırılmış üç imza alanı boyutu ve serbestçe çizilen bir alan, canlı önizlemeyle tıklayarak veya sabit bir konuma yerleştirme, otomatik sertifika seçimi, isteğe bağlı zaman damgası ve yapılandırılabilir damga görünümü."
+  },
+  "changelog": {
+    "en": "First release as a standalone plug-in in the Plugin-Store.",
+    "de": "Erste Veröffentlichung als eigenständiges Plug-in im Plugin-Store.",
+    "fr": "Première publication en tant que plug-in autonome dans le Plugin-Store.",
+    "it": "Prima pubblicazione come plug-in autonomo nel Plugin-Store.",
+    "es": "Primera publicación como plug-in independiente en el Plugin-Store.",
+    "nl": "Eerste release als zelfstandige plug-in in de Plugin-Store.",
+    "pt": "Primeira versão como plug-in independente na Plugin-Store.",
+    "da": "Første udgivelse som selvstændigt plug-in i Plugin-Store.",
+    "fi": "Ensimmäinen julkaisu itsenäisenä laajennuksena Plugin-Storessa.",
+    "nb": "Første utgivelse som frittstående plugin i Plugin-Store.",
+    "sv": "Första versionen som fristående plugin i Plugin-Store.",
+    "pl": "Pierwsze wydanie jako samodzielna wtyczka w Plugin-Store.",
+    "cs": "První vydání jako samostatný zásuvný modul v Plugin-Store.",
+    "hu": "Első kiadás önálló beépülő modulként a Plugin-Store-ban.",
+    "ru": "Первый выпуск в виде отдельного подключаемого модуля в Plugin-Store.",
+    "tr": "Plugin-Store'da bağımsız bir eklenti olarak ilk sürüm."
+  },
+  "minPowerPdfVersion": "5.0",
+  "ribbonAtomNamespace": "FeaturePack::OneClickSign",
+  "zxt": {
+    "x64": "C:/Claude/EnhancedFeaturePack/store/OneClickSign/Release/OneClickSign.zxt"
+  },
+  "include": [
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/OneClickSign/Plug-ins/OneClickSign/UILayout",
+      "dst": "UILayout"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/OneClickSign/assets",
+      "dst": "assets"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/OneClickSign/LICENSES.md",
+      "dst": "LICENSES.md"
+    }
+  ],
+  "uninstall": {
+    "registryKeys": [
+      "HKCU\\Software\\Kofax\\PDF\\Tungsten Power PDF\\OneClickSign"
+    ],
+    "extraPaths": []
+  },
+  "category": "signing",
+  "thirdParty": [],
+  "complianceAudit": {
+    "confirmed": true,
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; store builds name no contact persons), and all network code. No third-party code. Network only for the optional RFC 3161 timestamp.",
+    "externalServices": [
+      {
+        "name": "Timestamp server (RFC 3161), optional",
+        "url": "configured by the user or admin (TsaUrl), empty by default",
+        "data": "hash of the signature value only, when a timestamp URL is configured"
+      }
+    ]
+  }
+}

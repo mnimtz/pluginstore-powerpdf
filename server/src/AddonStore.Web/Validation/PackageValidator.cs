@@ -276,6 +276,7 @@ public class PackageValidator
 
                 CheckIcon(report, zip);
                 CheckLicenses(report, zip);
+                CheckThirdParty(report, zip, root);
                 CheckUiLayout(report, zip);
             }
         }
@@ -490,6 +491,315 @@ public class PackageValidator
                     "Only MIT/BSD/Apache-2.0 dependencies are allowed in shipped plugins (standing team policy). Replace the dependency or clarify the mention.");
         }
         catch { /* unreadable file was caught by the ZIP checks */ }
+    }
+
+    // Standing team policy: shipped plugins contain only MIT / BSD / Apache-2.0
+    // third-party code. Other permissive licenses go to the reviewer; copyleft fails.
+    private static readonly HashSet<string> AllowedLicenses = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "MIT", "BSD-2-Clause", "BSD-3-Clause", "0BSD", "Apache-2.0"
+    };
+    private static readonly Regex CopyleftLicense = new(
+        @"(^|[^A-Za-z])(A?GPL|LGPL|GPL|MPL|EPL|CDDL|EUPL|OSL|SSPL|CC-BY-SA|CC-BY-NC)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+    private enum LibKind { Copyleft, WeakCopyleft, Permissive }
+
+    /// <summary>
+    /// Signatures of well-known libraries as they appear in compiled binaries
+    /// (version banners, copyright strings, MSVC RTTI names). Aliases are the
+    /// names accepted in the manifest's thirdParty list or in LICENSES.md.
+    /// </summary>
+    private static readonly (string Name, LibKind Kind, string[] Signatures, string[] Aliases)[] KnownLibraries =
+    {
+        ("MuPDF / Ghostscript (AGPL)", LibKind.Copyleft, new[] { "Artifex Software", "MuPDF", "Ghostscript" }, new[] { "mupdf", "ghostscript" }),
+        ("Poppler / Xpdf (GPL)",       LibKind.Copyleft, new[] { "Poppler", "Glyph & Cog" }, new[] { "poppler", "xpdf" }),
+        ("FFmpeg (LGPL/GPL)",          LibKind.WeakCopyleft, new[] { "FFmpeg", "libavcodec" }, new[] { "ffmpeg" }),
+        ("UnRAR (restricted license)", LibKind.WeakCopyleft, new[] { "UnRAR" }, new[] { "unrar" }),
+        ("zlib",          LibKind.Permissive, new[] { "Jean-loup Gailly", "Mark Adler" }, new[] { "zlib" }),
+        ("libpng",        LibKind.Permissive, new[] { "libpng version" }, new[] { "libpng" }),
+        ("libjpeg",       LibKind.Permissive, new[] { "Independent JPEG Group", "libjpeg-turbo" }, new[] { "libjpeg", "ijg" }),
+        ("OpenSSL",       LibKind.Permissive, new[] { "OpenSSL 1.", "OpenSSL 3." }, new[] { "openssl" }),
+        ("curl",          LibKind.Permissive, new[] { "libcurl/" }, new[] { "curl" }),
+        ("SQLite",        LibKind.Permissive, new[] { "SQLite format 3" }, new[] { "sqlite" }),
+        ("nlohmann/json", LibKind.Permissive, new[] { "[json.exception." }, new[] { "nlohmann", "json for modern c++" }),
+        ("FreeType",      LibKind.Permissive, new[] { "FreeType" }, new[] { "freetype" }),
+        ("libtiff",       LibKind.Permissive, new[] { "LIBTIFF, Version" }, new[] { "libtiff" }),
+        ("OpenJPEG",      LibKind.Permissive, new[] { "OpenJPEG" }, new[] { "openjpeg" }),
+        ("Leptonica",     LibKind.Permissive, new[] { "leptonica-" }, new[] { "leptonica" }),
+        ("Tesseract",     LibKind.Permissive, new[] { "@tesseract@@", "Tesseract Open Source OCR Engine" }, new[] { "tesseract" }),
+        ("PDFium",        LibKind.Permissive, new[] { "PDFium" }, new[] { "pdfium" }),
+        ("HarfBuzz",      LibKind.Permissive, new[] { "HarfBuzz" }, new[] { "harfbuzz" }),
+        ("Expat",         LibKind.Permissive, new[] { "expat_2." }, new[] { "expat" }),
+        ("Lua",           LibKind.Permissive, new[] { "$LuaVersion: " }, new[] { "lua" }),
+        ("protobuf",      LibKind.Permissive, new[] { "google/protobuf/" }, new[] { "protobuf" }),
+    };
+
+    private static bool Contains(byte[] haystack, string needle) =>
+        haystack.AsSpan().IndexOf(System.Text.Encoding.ASCII.GetBytes(needle)) >= 0 ||
+        haystack.AsSpan().IndexOf(System.Text.Encoding.Unicode.GetBytes(needle)) >= 0;
+
+    /// <summary>
+    /// Third-party code: the publisher (usually their Claude session) declares
+    /// every component in manifest.thirdParty after a license audit, and the
+    /// server cross-checks binaries and bundled files against that declaration.
+    /// </summary>
+    private void CheckThirdParty(ValidationReport report, ZipArchive zip, JsonElement root)
+    {
+        var declared = new List<string>();
+        var declaredHosts = new List<string>();
+        if (!root.TryGetProperty("complianceAudit", out var audit) || audit.ValueKind != JsonValueKind.Object
+            || !audit.TryGetProperty("confirmed", out var conf) || conf.ValueKind != JsonValueKind.True
+            || string.IsNullOrWhiteSpace(GetString(audit, "method")))
+            report.Error("COMPLIANCE_AUDIT_MISSING", "The manifest has no confirmed compliance audit.",
+                "Before every upload, check the plugin as described in the agent guide (third-party code and licenses, trademarks, assets, secrets, personal data, external services) and confirm truthfully: \"complianceAudit\": {\"confirmed\": true, \"method\": \"what you checked\", \"externalServices\": []}. Never confirm without checking; if you find a problem you cannot fix, declare it and let the check fail.");
+        else
+            report.Info("COMPLIANCE_AUDIT_CONFIRMED", $"Compliance audit confirmed by the uploader: {GetString(audit, "method")}");
+
+        if (audit.ValueKind == JsonValueKind.Object)
+        {
+            if (!audit.TryGetProperty("externalServices", out var svc) || svc.ValueKind != JsonValueKind.Array)
+                report.Error("EXTERNAL_SERVICES_MISSING", "'complianceAudit.externalServices' is missing.",
+                    "List every server the plugin contacts at runtime with the data it sends, e.g. [{\"name\": \"Printix Cloud Print API\", \"url\": \"https://api.printix.net\", \"data\": \"print job, user email\"}]. Use [] when the plugin works fully offline.");
+            else
+                foreach (var s in svc.EnumerateArray())
+                {
+                    var url = s.ValueKind == JsonValueKind.Object ? GetString(s, "url") : null;
+                    if (url is not null && Uri.TryCreate(url, UriKind.Absolute, out var u)) declaredHosts.Add(u.Host);
+                    else if (url is not null) declaredHosts.Add(url);
+                }
+        }
+
+        if (!root.TryGetProperty("thirdParty", out var tp))
+        {
+            report.Error("THIRDPARTY_DECLARATION_MISSING", "The manifest has no 'thirdParty' list.",
+                "Audit the plugin for third-party code (libraries, header-only code, bundled DLLs, copied snippets, fonts, icons) and declare it: \"thirdParty\": [{\"name\": \"nlohmann/json\", \"version\": \"3.12.0\", \"license\": \"MIT\"}]. Use [] when the plugin contains none.");
+        }
+        else if (tp.ValueKind != JsonValueKind.Array)
+        {
+            report.Error("THIRDPARTY_INVALID", "'thirdParty' must be an array.",
+                "Use \"thirdParty\": [] or a list of {name, version, license} objects.");
+        }
+        else
+        {
+            foreach (var item in tp.EnumerateArray())
+            {
+                var name = item.ValueKind == JsonValueKind.Object ? GetString(item, "name") : null;
+                var license = item.ValueKind == JsonValueKind.Object ? GetString(item, "license") : null;
+                if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(license))
+                {
+                    report.Error("THIRDPARTY_INVALID", "Every 'thirdParty' entry needs 'name' and 'license'.",
+                        "Example: {\"name\": \"zlib\", \"version\": \"1.3.1\", \"license\": \"Zlib\"}; 'license' is an SPDX identifier.");
+                    continue;
+                }
+                declared.Add(name);
+                var parts = license.Split(new[] { " OR ", " or " }, StringSplitOptions.TrimEntries);
+                if (parts.Any(p => AllowedLicenses.Contains(p)))
+                    continue;
+                if (CopyleftLicense.IsMatch(license))
+                    report.Error("LICENSE_NOT_ALLOWED", $"'{name}' is licensed under {license}.",
+                        "Shipped plugins may contain only MIT, BSD or Apache-2.0 third-party code. Replace or remove the component; copyleft licenses (GPL, AGPL, LGPL, MPL, EPL, CC-BY-SA ...) are not accepted.");
+                else
+                    report.Warn("LICENSE_NEEDS_REVIEW", $"'{name}' is licensed under {license}, outside the standard list (MIT, BSD, Apache-2.0).",
+                        "Permissive licenses such as Zlib, ISC or BSL-1.0 can be acceptable after review; prefer an MIT/BSD/Apache-2.0 alternative, otherwise explain the choice in LICENSES.md.");
+            }
+        }
+
+        string licensesText = "";
+        var licEntry = zip.GetEntry("LICENSES.md");
+        if (licEntry is not null)
+        {
+            var raw = ReadCapped(licEntry, MaxTextEntryBytes);
+            if (raw is not null) licensesText = System.Text.Encoding.UTF8.GetString(raw);
+        }
+        bool IsDeclared(string[] aliases) =>
+            aliases.Any(a => declared.Any(d => d.Contains(a, StringComparison.OrdinalIgnoreCase))
+                          || licensesText.Contains(a, StringComparison.OrdinalIgnoreCase));
+
+        var hits = new Dictionary<string, (LibKind Kind, string[] Aliases, SortedSet<string> Files)>();
+        void Hit(string name, LibKind kind, string[] aliases, string file)
+        {
+            if (!hits.TryGetValue(name, out var h)) hits[name] = h = (kind, aliases, new SortedSet<string>());
+            h.Files.Add(file);
+        }
+
+        var secrets = new SortedSet<string>();
+        var hosts = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var entry in zip.Entries)
+        {
+            if (entry.FullName.EndsWith('/')) continue;
+            var ext = Path.GetExtension(entry.Name).ToLowerInvariant();
+            if (ext is ".pfx" or ".p12" or ".key" or ".snk")
+            {
+                secrets.Add($"{entry.FullName} (key or certificate container)");
+                continue;
+            }
+            var isBinary = ext is ".zxt" or ".dll" or ".exe";
+            var isText = !isBinary && (ext is ".txt" or ".md" or ".rtf" or ".htm" or ".html" or ".json" or ".xml" or ".ini" or ".cfg"
+                                        or ".config" or ".reg" or ".ps1" or ".cmd" or ".bat" or ".js" or ".pem" or ".cer" or ".crt"
+                                        || entry.Name.StartsWith("COPYING", StringComparison.OrdinalIgnoreCase)
+                                        || entry.Name.StartsWith("LICENSE", StringComparison.OrdinalIgnoreCase));
+            if (!isBinary && !isText) continue;
+
+            var bytes = ReadCapped(entry, isBinary ? MaxZxtBytes : MaxTextEntryBytes);
+            if (bytes is null) continue;
+
+            foreach (var s in ExtractStrings(bytes))
+            {
+                foreach (var (label, rx) in SecretPatterns)
+                    if (rx.IsMatch(s)) secrets.Add($"{label} in {entry.FullName}");
+                if (!isBinary) continue;
+                foreach (Match m in UrlHost.Matches(s))
+                {
+                    var host = m.Groups[1].Value.TrimEnd('.').ToLowerInvariant();
+                    if (!IgnoredHostSuffixes.Any(i => host == i || host.EndsWith("." + i))) hosts.Add(host);
+                }
+                foreach (var known in KnownServiceHosts)
+                    if (s.Contains(known, StringComparison.OrdinalIgnoreCase)) hosts.Add(known);
+            }
+
+            if (entry.FullName.Equals("LICENSES.md", StringComparison.OrdinalIgnoreCase)) continue;
+            if (isText && !(ext is ".txt" or ".md" or ".rtf" or ".htm" or ".html"
+                            || entry.Name.StartsWith("COPYING", StringComparison.OrdinalIgnoreCase)
+                            || entry.Name.StartsWith("LICENSE", StringComparison.OrdinalIgnoreCase)))
+                continue;
+
+            if (isText)
+            {
+                if (Contains(bytes, "GNU LESSER GENERAL PUBLIC LICENSE") || Contains(bytes, "GNU LIBRARY GENERAL PUBLIC LICENSE"))
+                    Hit("LGPL license text", LibKind.WeakCopyleft, Array.Empty<string>(), entry.FullName);
+                else if (Contains(bytes, "GNU GENERAL PUBLIC LICENSE") || Contains(bytes, "GNU AFFERO GENERAL PUBLIC LICENSE"))
+                    Hit("GPL/AGPL license text", LibKind.Copyleft, Array.Empty<string>(), entry.FullName);
+                continue;
+            }
+
+            if (Contains(bytes, "GNU Lesser General Public License") || Contains(bytes, "GNU Library General Public License")
+                || Contains(bytes, "SPDX-License-Identifier: LGPL"))
+                Hit("LGPL-licensed code", LibKind.WeakCopyleft, Array.Empty<string>(), entry.FullName);
+            else if (Contains(bytes, "GNU General Public License") || Contains(bytes, "GNU Affero General Public License")
+                || Contains(bytes, "SPDX-License-Identifier: GPL") || Contains(bytes, "SPDX-License-Identifier: AGPL"))
+                Hit("GPL/AGPL-licensed code", LibKind.Copyleft, Array.Empty<string>(), entry.FullName);
+
+            foreach (var lib in KnownLibraries)
+                if (lib.Signatures.Any(s => Contains(bytes, s)))
+                    Hit(lib.Name, lib.Kind, lib.Aliases, entry.FullName);
+        }
+
+        foreach (var (name, h) in hits)
+        {
+            var where = string.Join(", ", h.Files);
+            switch (h.Kind)
+            {
+                case LibKind.Copyleft:
+                    report.Error("LICENSE_COPYLEFT_BINARY", $"{name} found in {where}.",
+                        "GPL/AGPL code must not ship in a store plugin. Remove the component or replace it with an MIT/BSD/Apache-2.0 alternative. If this is a false positive (e.g. the string only appears in a comment or a compatibility check), explain it to the reviewer.");
+                    break;
+                case LibKind.WeakCopyleft:
+                    report.Warn("LICENSE_WEAK_COPYLEFT_BINARY", $"{name} found in {where}.",
+                        "LGPL or restricted-license code needs a legal review and usually cannot ship. Replace it with an MIT/BSD/Apache-2.0 alternative where possible.");
+                    break;
+                default:
+                    if (IsDeclared(h.Aliases))
+                        report.Info("THIRDPARTY_DETECTED", $"{name} detected in {where} (declared).");
+                    else
+                        report.Warn("THIRDPARTY_UNDECLARED", $"{name} appears to be compiled into {where} but is not declared.",
+                            $"Add {name} to manifest.thirdParty with its SPDX license and include its license text in LICENSES.md. If the plugin does not contain it, explain the false positive to the reviewer.");
+                    break;
+            }
+        }
+
+        if (secrets.Count > 0)
+            report.Error("SECRET_DETECTED", $"Possible credentials in the package: {string.Join("; ", secrets.Take(10))}.",
+                "Never ship keys, tokens, passwords or certificates with private keys. Remove them, rotate the exposed secret, and load credentials at runtime (e.g. per-user, DPAPI-protected).");
+
+        var undeclared = hosts.Where(h => !declaredHosts.Any(d => h.Equals(d, StringComparison.OrdinalIgnoreCase)
+                                                                || h.EndsWith("." + d, StringComparison.OrdinalIgnoreCase))).ToList();
+        if (undeclared.Count > 0)
+            report.Warn("EXTERNAL_SERVICE_UNDECLARED", $"The binaries reference hosts that are not declared: {string.Join(", ", undeclared.Take(15))}.",
+                "Declare every service the plugin contacts in complianceAudit.externalServices (name, url, data sent), so admins can assess data protection. If a host is only a documentation link or an XML namespace, say so in the method text.");
+
+        var texts = new List<string>();
+        foreach (var key in new[] { "name", "description" })
+            if (root.TryGetProperty(key, out var el) && el.ValueKind == JsonValueKind.Object)
+                foreach (var p in el.EnumerateObject())
+                    if (p.Value.ValueKind == JsonValueKind.String) texts.Add(p.Value.GetString() ?? "");
+        var brands = ForeignBrands.Where(b => texts.Any(t => Regex.IsMatch(t, $@"\b{Regex.Escape(b)}\b", RegexOptions.IgnoreCase))).ToList();
+        if (brands.Count > 0)
+            report.Warn("THIRDPARTY_TRADEMARK", $"Name or description mentions third-party brands: {string.Join(", ", brands)}.",
+                "Do not use other companies' product names or trademarks in plugin names and catalog texts; describe the function instead.");
+    }
+
+    private static readonly (string Label, Regex Rx)[] SecretPatterns =
+    {
+        ("private key", new Regex(@"-----BEGIN (RSA |EC |DSA |OPENSSH |ENCRYPTED )?PRIVATE KEY-----", RegexOptions.Compiled)),
+        ("store API token", new Regex(@"ppak_[A-Za-z0-9_\-]{20,}", RegexOptions.Compiled)),
+        ("AWS access key", new Regex(@"\bAKIA[0-9A-Z]{16}\b", RegexOptions.Compiled)),
+        ("Google API key", new Regex(@"\bAIza[0-9A-Za-z_\-]{35}\b", RegexOptions.Compiled)),
+        ("GitHub token", new Regex(@"\bgh[pousr]_[A-Za-z0-9]{36,}\b", RegexOptions.Compiled)),
+        ("Slack token", new Regex(@"\bxox[abprs]-[A-Za-z0-9\-]{10,}", RegexOptions.Compiled)),
+        ("Azure storage key", new Regex(@"AccountKey=[A-Za-z0-9+/=]{40,}", RegexOptions.Compiled)),
+        ("AI API key", new Regex(@"\bsk-(ant-|proj-)?[A-Za-z0-9_\-]{32,}", RegexOptions.Compiled)),
+        ("Stripe key", new Regex(@"\b[sr]k_live_[A-Za-z0-9]{20,}", RegexOptions.Compiled)),
+    };
+
+    private static readonly Regex UrlHost = new(@"https?://([A-Za-z0-9\-]+(?:\.[A-Za-z0-9\-]+)*\.[A-Za-z]{2,})", RegexOptions.Compiled);
+
+    // XML namespaces, code-signing CRL/OCSP endpoints, license links and our own
+    // product domains appear in many binaries without any network traffic.
+    private static readonly string[] IgnoredHostSuffixes =
+    {
+        "microsoft.com", "windows.com", "w3.org", "openxmlformats.org", "purl.org", "xml.org", "json-schema.org",
+        "ns.adobe.com", "iptc.org", "digicert.com", "verisign.com", "symantec.com", "thawte.com", "globalsign.com",
+        "globalsign.net", "sectigo.com", "comodoca.com", "usertrust.com", "entrust.net", "letsencrypt.org",
+        "apache.org", "opensource.org", "gnu.org", "spdx.org", "aiim.org", "npes.org", "etsi.org", "oasis-open.org", "xmlsoap.org", "unece.org", "localhost", "example.com", "example.org", "example.invalid",
+        "tungstenautomation.com", "kofax.com", "nuance.com",
+    };
+
+    // Cloud and AI APIs that code often addresses by bare host name (WinHttpConnect),
+    // so they never show up as a URL. Found anywhere in a binary, they count as used.
+    private static readonly string[] KnownServiceHosts =
+    {
+        "api.openai.com", "openai.azure.com", "generativelanguage.googleapis.com", "aiplatform.googleapis.com",
+        "api.anthropic.com", "api.mistral.ai", "api.cohere.ai", "api.deepl.com", "api-free.deepl.com",
+        "graph.microsoft.com", "login.microsoftonline.com", "api.printix.net", "auth.printix.net",
+        "api.dropboxapi.com", "www.googleapis.com", "api.box.com",
+    };
+
+    private static readonly string[] ForeignBrands =
+    {
+        "Adobe", "Acrobat", "Foxit", "Nitro", "ABBYY", "Bluebeam", "PDF-XChange", "Smallpdf", "iLovePDF", "Wondershare", "PDFelement",
+    };
+
+    /// <summary>Printable ASCII and UTF-16LE runs of at least 8 characters, like `strings`.</summary>
+    private static IEnumerable<string> ExtractStrings(byte[] b)
+    {
+        var sb = new System.Text.StringBuilder();
+        for (int i = 0; i < b.Length; i++)
+        {
+            var c = b[i];
+            if (c >= 0x20 && c < 0x7F) { sb.Append((char)c); continue; }
+            if (sb.Length >= 8) yield return sb.ToString();
+            sb.Clear();
+        }
+        if (sb.Length >= 8) yield return sb.ToString();
+        sb.Clear();
+        for (int i = 0; i + 1 < b.Length; i += 2)
+        {
+            var c = b[i];
+            if (b[i + 1] == 0 && c >= 0x20 && c < 0x7F) { sb.Append((char)c); continue; }
+            if (sb.Length >= 8) yield return sb.ToString();
+            sb.Clear();
+        }
+        if (sb.Length >= 8) yield return sb.ToString();
+        sb.Clear();
+        for (int i = 1; i + 1 < b.Length; i += 2)
+        {
+            var c = b[i];
+            if (b[i + 1] == 0 && c >= 0x20 && c < 0x7F) { sb.Append((char)c); continue; }
+            if (sb.Length >= 8) yield return sb.ToString();
+            sb.Clear();
+        }
+        if (sb.Length >= 8) yield return sb.ToString();
     }
 
     /// <summary>

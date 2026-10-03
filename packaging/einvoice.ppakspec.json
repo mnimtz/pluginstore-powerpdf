@@ -1,0 +1,76 @@
+{
+  "id": "com.tungsten.einvoice",
+  "version": "1.0.0",
+  "name": {
+    "en": "E-Invoice Viewer",
+    "de": "E-Rechnung"
+  },
+  "description": {
+    "en": "Shows the invoice data embedded in hybrid e-invoices (ZUGFeRD, Factur-X, XRechnung): key fields, line items, VAT breakdown and all XML fields; saves the XML and embeds an invoice XML into a PDF to create a hybrid e-invoice copy.",
+    "de": "Zeigt die in hybriden E-Rechnungen (ZUGFeRD, Factur-X, XRechnung) eingebetteten Rechnungsdaten: Kernfelder, Positionen, USt-Aufschlüsselung und alle XML-Felder; speichert die XML und bettet eine Rechnungs-XML in ein PDF ein, um eine hybride E-Rechnungs-Kopie zu erzeugen.",
+    "fr": "Affiche les données de facture intégrées aux factures électroniques hybrides (ZUGFeRD, Factur-X, XRechnung) : champs clés, lignes de facture, ventilation de la TVA et tous les champs XML ; enregistre le XML et intègre un XML de facture dans un PDF pour créer une copie de facture électronique hybride.",
+    "it": "Mostra i dati incorporati nelle fatture elettroniche ibride (ZUGFeRD, Factur-X, XRechnung): campi principali, righe, riepilogo IVA e tutti i campi XML; salva l'XML e incorpora un XML di fattura in un PDF per creare una copia di fattura elettronica ibrida.",
+    "es": "Muestra los datos incrustados en facturas electrónicas híbridas (ZUGFeRD, Factur-X, XRechnung): campos clave, líneas, desglose del IVA y todos los campos XML; guarda el XML e incrusta un XML de factura en un PDF para crear una copia de factura electrónica híbrida.",
+    "nl": "Toont de factuurgegevens die zijn ingesloten in hybride e-facturen (ZUGFeRD, Factur-X, XRechnung): kernvelden, factuurregels, btw-specificatie en alle XML-velden; slaat de XML op en sluit een factuur-XML in een PDF in om een hybride e-factuurkopie te maken.",
+    "pt": "Exibe os dados de fatura incorporados em faturas eletrônicas híbridas (ZUGFeRD, Factur-X, XRechnung): campos principais, itens, discriminação do IVA e todos os campos XML; salva o XML e incorpora um XML de fatura em um PDF para criar uma cópia de fatura eletrônica híbrida.",
+    "da": "Viser de fakturadata, der er integreret i hybride e-fakturaer (ZUGFeRD, Factur-X, XRechnung): nøglefelter, linjer, momsspecifikation og alle XML-felter; gemmer XML-filen og integrerer en faktura-XML i en PDF for at oprette en hybrid e-fakturakopi.",
+    "fi": "Näyttää hybridimuotoisiin e-laskuihin (ZUGFeRD, Factur-X, XRechnung) upotetut laskutiedot: keskeiset kentät, laskurivit, arvonlisäveroerittelyn ja kaikki XML-kentät; tallentaa XML-tiedoston ja upottaa laskun XML:n PDF-tiedostoon hybridin e-laskukopion luomiseksi.",
+    "nb": "Viser fakturadataene som er innebygd i hybride e-fakturaer (ZUGFeRD, Factur-X, XRechnung): nøkkelfelt, linjer, mva-spesifikasjon og alle XML-felt; lagrer XML-filen og bygger inn en faktura-XML i en PDF for å lage en hybrid e-fakturakopi.",
+    "sv": "Visar fakturadata som är inbäddade i hybrida e-fakturor (ZUGFeRD, Factur-X, XRechnung): nyckelfält, rader, momsspecifikation och alla XML-fält; sparar XML-filen och bäddar in en faktura-XML i en PDF för att skapa en hybrid e-fakturakopia.",
+    "pl": "Wyświetla dane osadzone w hybrydowych e-fakturach (ZUGFeRD, Factur-X, XRechnung): pola kluczowe, pozycje, zestawienie VAT i wszystkie pola XML; zapisuje plik XML i osadza XML faktury w pliku PDF, tworząc hybrydową kopię e-faktury.",
+    "cs": "Zobrazuje data faktury vložená do hybridních e-faktur (ZUGFeRD, Factur-X, XRechnung): klíčová pole, položky, rozpis DPH a všechna pole XML; ukládá XML a vkládá XML faktury do PDF, čímž vytvoří hybridní kopii e-faktury.",
+    "hu": "Megjeleníti a hibrid e-számlákba (ZUGFeRD, Factur-X, XRechnung) ágyazott számlaadatokat: fő mezők, tételek, áfa-bontás és az összes XML-mező; menti az XML-t, és számla-XML-t ágyaz egy PDF-be hibrid e-számla-másolat létrehozásához.",
+    "ru": "Показывает данные, встроенные в гибридные электронные счета (ZUGFeRD, Factur-X, XRechnung): основные поля, позиции, разбивку НДС и все поля XML; сохраняет XML и внедряет XML-файл счета в PDF для создания гибридной копии электронного счета.",
+    "tr": "Hibrit e-faturalara (ZUGFeRD, Factur-X, XRechnung) gömülü fatura verilerini gösterir: temel alanlar, kalemler, KDV dökümü ve tüm XML alanları; XML'i kaydeder ve hibrit bir e-fatura kopyası oluşturmak için bir PDF'ye fatura XML'i gömer."
+  },
+  "changelog": {
+    "en": "First release as a standalone plug-in in the Plugin-Store.",
+    "de": "Erste Veröffentlichung als eigenständiges Plug-in im Plugin-Store.",
+    "fr": "Première publication en tant que plug-in autonome dans le Plugin-Store.",
+    "it": "Prima pubblicazione come plug-in autonomo nel Plugin-Store.",
+    "es": "Primera publicación como plug-in independiente en el Plugin-Store.",
+    "nl": "Eerste release als zelfstandige plug-in in de Plugin-Store.",
+    "pt": "Primeira versão como plug-in independente na Plugin-Store.",
+    "da": "Første udgivelse som selvstændigt plug-in i Plugin-Store.",
+    "fi": "Ensimmäinen julkaisu itsenäisenä laajennuksena Plugin-Storessa.",
+    "nb": "Første utgivelse som frittstående plugin i Plugin-Store.",
+    "sv": "Första versionen som fristående plugin i Plugin-Store.",
+    "pl": "Pierwsze wydanie jako samodzielna wtyczka w Plugin-Store.",
+    "cs": "První vydání jako samostatný zásuvný modul v Plugin-Store.",
+    "hu": "Első kiadás önálló beépülő modulként a Plugin-Store-ban.",
+    "ru": "Первый выпуск в виде отдельного подключаемого модуля в Plugin-Store.",
+    "tr": "Plugin-Store'da bağımsız bir eklenti olarak ilk sürüm."
+  },
+  "minPowerPdfVersion": "5.0",
+  "ribbonAtomNamespace": "FeaturePack::EInvoice",
+  "zxt": {
+    "x64": "C:/Claude/EnhancedFeaturePack/store/EInvoice/Release/EInvoice.zxt"
+  },
+  "include": [
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/EInvoice/Plug-ins/EInvoice/UILayout",
+      "dst": "UILayout"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/EInvoice/assets",
+      "dst": "assets"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/EInvoice/LICENSES.md",
+      "dst": "LICENSES.md"
+    }
+  ],
+  "uninstall": {
+    "registryKeys": [
+      "HKCU\\Software\\Kofax\\PDF\\Tungsten Power PDF\\EInvoice"
+    ],
+    "extraPaths": []
+  },
+  "category": "productivity",
+  "thirdParty": [],
+  "complianceAudit": {
+    "confirmed": true,
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; store builds name no contact persons), and all network code. No third-party code. Works offline.",
+    "externalServices": []
+  }
+}

@@ -111,6 +111,12 @@ public class SubmissionService
         };
         _db.PackageVersions.Add(version);
 
+        // The uploader's compliance statement is kept under their name; the
+        // server-side scans do not rely on it.
+        var attestation = report.Findings.FirstOrDefault(f => f.Code == "COMPLIANCE_AUDIT_CONFIRMED");
+        await _audit.LogAsync(user.DisplayName, "compliance.attested", $"{manifest.Id} {manifest.Version}",
+            $"via {via}; {Truncate(attestation?.Message ?? "", 600)}");
+
         if (isClient)
         {
             // Older client versions still waiting in beta are superseded.

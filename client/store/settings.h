@@ -13,5 +13,6 @@ std::wstring PSServerUrl();               // e.g. https://host (no trailing slas
 bool         PSBetaChannel();
 bool         PSUrlLocked();               // true when a policy enforces the URL
 void         PSSaveUserSettings(const std::wstring& url, bool beta);
+bool         PSIsAllowedServerUrl(const std::wstring& url); // https://, or http:// for loopback; empty = default
 
 extern const wchar_t* kPSRegKey;          // HKCU key path

@@ -332,6 +332,63 @@ inline void CollectLayoutFiles(const std::wstring& dir, std::vector<std::wstring
     FindClose(h);
 }
 
+// First start after a FRESH client install (never after an update): empties the
+// shared "FeaturePack" tab so groups of plug-ins that are no longer installed
+// disappear. Installed plug-ins add their groups again on their own start, and
+// ApplyButtons() re-adds ours right after. Returns true when text changed.
+inline bool ClearSharedTab(std::wstring& text)
+{
+    size_t tb = text.find(L"<toolbar name=\"FeaturePack\"");
+    if (tb == std::wstring::npos) return false;
+    size_t open = text.find(L'>', tb);
+    size_t end = text.find(L"</toolbar>", tb);
+    if (open == std::wstring::npos || end == std::wstring::npos || open > end || text[open - 1] == L'/') return false;
+
+    bool empty = true;
+    for (size_t i = open + 1; i < end; ++i)
+        if (!iswspace(text[i])) { empty = false; break; }
+    if (empty) return false;
+    text.replace(open + 1, end - (open + 1), L"\n");
+    return true;
+}
+
+// Marker protocol: the MSI writes HKLM\...\PluginStore\FreshInstall only when it
+// did not upgrade an existing client; each user profile remembers in HKCU which
+// fresh install it has already handled. Returns files written (or -1 = nothing to do).
+inline int ResetSharedTabOnFreshInstall(const wchar_t* regKey)
+{
+    wchar_t machine[256] = { 0 }, user[256] = { 0 };
+    DWORD sz = sizeof(machine);
+    if (RegGetValueW(HKEY_LOCAL_MACHINE, regKey, L"FreshInstall", RRF_RT_REG_SZ,
+                     NULL, machine, &sz) != ERROR_SUCCESS || !machine[0])
+        return -1;
+    sz = sizeof(user);
+    if (RegGetValueW(HKEY_CURRENT_USER, regKey, L"TabResetFor", RRF_RT_REG_SZ, NULL, user, &sz) == ERROR_SUCCESS
+        && wcscmp(machine, user) == 0)
+        return -1;
+
+    int written = 0;
+    std::vector<std::wstring> files;
+    CollectLayoutFiles(UserLayoutDir(), files);
+    for (size_t i = 0; i < files.size(); ++i)
+    {
+        std::wstring text; bool utf16 = false;
+        if (!ReadTextFile(files[i], text, utf16) || !ClearSharedTab(text)) continue;
+        std::wstring bak = files[i] + L".addonstore-before-reset";
+        CopyFileW(files[i].c_str(), bak.c_str(), FALSE);
+        DWORD err = 0;
+        if (WriteTextFile(files[i], text, utf16, &err)) ++written;
+    }
+
+    HKEY k;
+    if (RegCreateKeyExW(HKEY_CURRENT_USER, regKey, 0, NULL, 0, KEY_WRITE, NULL, &k, NULL) == ERROR_SUCCESS)
+    {
+        RegSetValueExW(k, L"TabResetFor", 0, REG_SZ, (const BYTE*)machine, (DWORD)((wcslen(machine) + 1) * sizeof(wchar_t)));
+        RegCloseKey(k);
+    }
+    return written;
+}
+
 // Runs at every start: makes sure our group exists in the merged toolbar and
 // that the buttons carry IconMode="4" — so an installation whose layout was
 // merged before this pack existed repairs itself. Returns files written.

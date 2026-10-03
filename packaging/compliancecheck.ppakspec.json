@@ -1,0 +1,76 @@
+{
+  "id": "com.tungsten.compliancecheck",
+  "version": "1.0.0",
+  "name": {
+    "en": "DORA PDF Check",
+    "de": "DORA-PDF-Prüfung"
+  },
+  "description": {
+    "en": "Checks the document-side requirements that matter in the DORA context (EU 2022/2554): PDF/A identification, encryption, signatures and changes after signing, weak cryptography, JavaScript, risky actions, attachments, XFA, fonts and metadata; shows a traffic-light report and writes a fixed copy where a click can fix it.",
+    "de": "Prüft die dokumentseitigen Anforderungen, die im DORA-Kontext (EU 2022/2554) zählen: PDF/A-Kennzeichnung, Verschlüsselung, Signaturen und Änderungen nach der Signatur, schwache Kryptografie, JavaScript, riskante Aktionen, Anhänge, XFA, Schriften und Metadaten; zeigt einen Ampelbericht und schreibt eine korrigierte Kopie, wo ein Klick genügt.",
+    "fr": "Vérifie les exigences côté document importantes dans le contexte DORA (UE 2022/2554) : identification PDF/A, chiffrement, signatures et modifications après signature, cryptographie faible, JavaScript, actions à risque, pièces jointes, XFA, polices et métadonnées ; affiche un rapport de type feu tricolore et enregistre une copie corrigée lorsqu'un clic suffit.",
+    "it": "Verifica i requisiti lato documento rilevanti nel contesto DORA (UE 2022/2554): identificazione PDF/A, crittografia, firme e modifiche successive alla firma, crittografia debole, JavaScript, azioni a rischio, allegati, XFA, font e metadati; mostra un report a semaforo e salva una copia corretta quando basta un clic.",
+    "es": "Comprueba los requisitos del documento relevantes en el contexto de DORA (UE 2022/2554): identificación PDF/A, cifrado, firmas y cambios posteriores a la firma, criptografía débil, JavaScript, acciones de riesgo, adjuntos, XFA, fuentes y metadatos; muestra un informe tipo semáforo y guarda una copia corregida cuando basta un clic.",
+    "nl": "Controleert de documentvereisten die in de DORA-context (EU 2022/2554) van belang zijn: PDF/A-identificatie, versleuteling, handtekeningen en wijzigingen na ondertekening, zwakke cryptografie, JavaScript, riskante acties, bijlagen, XFA, lettertypen en metagegevens; toont een stoplichtrapport en schrijft een gecorrigeerde kopie waar één klik volstaat.",
+    "pt": "Verifica os requisitos do documento relevantes no contexto do DORA (UE 2022/2554): identificação PDF/A, criptografia, assinaturas e alterações após a assinatura, criptografia fraca, JavaScript, ações de risco, anexos, XFA, fontes e metadados; exibe um relatório em semáforo e grava uma cópia corrigida quando um clique é suficiente.",
+    "da": "Kontrollerer de dokumentkrav, der er vigtige i DORA-sammenhæng (EU 2022/2554): PDF/A-identifikation, kryptering, signaturer og ændringer efter signering, svag kryptografi, JavaScript, risikable handlinger, vedhæftede filer, XFA, skrifttyper og metadata; viser en trafiklysrapport og gemmer en rettet kopi, hvor et klik er nok.",
+    "fi": "Tarkistaa DORA-kontekstissa (EU 2022/2554) olennaiset asiakirjavaatimukset: PDF/A-tunnisteen, salauksen, allekirjoitukset ja allekirjoituksen jälkeiset muutokset, heikon salauksen, JavaScriptin, riskialttiit toiminnot, liitteet, XFA:n, fontit ja metatiedot; näyttää liikennevaloraportin ja tallentaa korjatun kopion, kun korjaus onnistuu yhdellä napsautuksella.",
+    "nb": "Kontrollerer dokumentkravene som er viktige i DORA-sammenheng (EU 2022/2554): PDF/A-identifikasjon, kryptering, signaturer og endringer etter signering, svak kryptografi, JavaScript, risikable handlinger, vedlegg, XFA, skrifter og metadata; viser en trafikklysrapport og lagrer en rettet kopi der ett klikk er nok.",
+    "sv": "Kontrollerar de dokumentkrav som är viktiga i DORA-sammanhang (EU 2022/2554): PDF/A-identifiering, kryptering, underskrifter och ändringar efter signering, svag kryptografi, JavaScript, riskfyllda åtgärder, bilagor, XFA, teckensnitt och metadata; visar en trafikljusrapport och sparar en åtgärdad kopia där ett klick räcker.",
+    "pl": "Sprawdza wymagania dotyczące dokumentu istotne w kontekście DORA (UE 2022/2554): identyfikację PDF/A, szyfrowanie, podpisy i zmiany po podpisaniu, słabą kryptografię, JavaScript, ryzykowne akcje, załączniki, XFA, czcionki i metadane; wyświetla raport w formie sygnalizacji świetlnej i zapisuje poprawioną kopię tam, gdzie wystarczy jedno kliknięcie.",
+    "cs": "Kontroluje požadavky na dokument, které jsou důležité v kontextu DORA (EU 2022/2554): identifikaci PDF/A, šifrování, podpisy a změny po podpisu, slabou kryptografii, JavaScript, rizikové akce, přílohy, XFA, písma a metadata; zobrazí semaforovou zprávu a uloží opravenou kopii tam, kde stačí jedno kliknutí.",
+    "hu": "Ellenőrzi a DORA összefüggésében (EU 2022/2554) fontos, dokumentumra vonatkozó követelményeket: PDF/A-azonosítás, titkosítás, aláírások és az aláírás utáni módosítások, gyenge titkosítás, JavaScript, kockázatos műveletek, mellékletek, XFA, betűtípusok és metaadatok; közlekedési lámpa jellegű jelentést mutat, és javított másolatot ment, ahol egy kattintás elég.",
+    "ru": "Проверяет требования к документу, важные в контексте DORA (ЕС 2022/2554): идентификацию PDF/A, шифрование, подписи и изменения после подписания, слабую криптографию, JavaScript, рискованные действия, вложения, XFA, шрифты и метаданные; показывает отчёт в виде светофора и сохраняет исправленную копию там, где достаточно одного щелчка.",
+    "tr": "DORA bağlamında (AB 2022/2554) önemli olan belge gereksinimlerini denetler: PDF/A tanımlaması, şifreleme, imzalar ve imza sonrası değişiklikler, zayıf kriptografi, JavaScript, riskli eylemler, ekler, XFA, yazı tipleri ve meta veriler; trafik ışığı biçiminde bir rapor gösterir ve tek tıkla düzeltilebilen durumlarda düzeltilmiş bir kopya kaydeder."
+  },
+  "changelog": {
+    "en": "First release as a standalone plug-in in the Plugin-Store.",
+    "de": "Erste Veröffentlichung als eigenständiges Plug-in im Plugin-Store.",
+    "fr": "Première publication en tant que plug-in autonome dans le Plugin-Store.",
+    "it": "Prima pubblicazione come plug-in autonomo nel Plugin-Store.",
+    "es": "Primera publicación como plug-in independiente en el Plugin-Store.",
+    "nl": "Eerste release als zelfstandige plug-in in de Plugin-Store.",
+    "pt": "Primeira versão como plug-in independente na Plugin-Store.",
+    "da": "Første udgivelse som selvstændigt plug-in i Plugin-Store.",
+    "fi": "Ensimmäinen julkaisu itsenäisenä laajennuksena Plugin-Storessa.",
+    "nb": "Første utgivelse som frittstående plugin i Plugin-Store.",
+    "sv": "Första versionen som fristående plugin i Plugin-Store.",
+    "pl": "Pierwsze wydanie jako samodzielna wtyczka w Plugin-Store.",
+    "cs": "První vydání jako samostatný zásuvný modul v Plugin-Store.",
+    "hu": "Első kiadás önálló beépülő modulként a Plugin-Store-ban.",
+    "ru": "Первый выпуск в виде отдельного подключаемого модуля в Plugin-Store.",
+    "tr": "Plugin-Store'da bağımsız bir eklenti olarak ilk sürüm."
+  },
+  "minPowerPdfVersion": "5.0",
+  "ribbonAtomNamespace": "FeaturePack::ComplianceCheck",
+  "zxt": {
+    "x64": "C:/Claude/EnhancedFeaturePack/store/ComplianceCheck/Release/ComplianceCheck.zxt"
+  },
+  "include": [
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/ComplianceCheck/Plug-ins/ComplianceCheck/UILayout",
+      "dst": "UILayout"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/ComplianceCheck/assets",
+      "dst": "assets"
+    },
+    {
+      "src": "C:/Claude/EnhancedFeaturePack/store/ComplianceCheck/LICENSES.md",
+      "dst": "LICENSES.md"
+    }
+  ],
+  "uninstall": {
+    "registryKeys": [
+      "HKCU\\Software\\Kofax\\PDF\\Tungsten Power PDF\\ComplianceCheck"
+    ],
+    "extraPaths": []
+  },
+  "category": "productivity",
+  "thirdParty": [],
+  "complianceAudit": {
+    "confirmed": true,
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; store builds name no contact persons), and all network code. No third-party code. Works offline.",
+    "externalServices": []
+  }
+}
