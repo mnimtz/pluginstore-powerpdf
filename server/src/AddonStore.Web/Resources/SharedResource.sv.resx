@@ -112,4 +112,43 @@
   <data name="Productivity" xml:space="preserve"><value>Produktivitet</value></data>
   <data name="System" xml:space="preserve"><value>System</value></data>
   <data name="Other" xml:space="preserve"><value>Övrigt</value></data>
+  <data name="A user with this email already exists." xml:space="preserve"><value>En användare med den här e-postadressen finns redan.</value></data>
+  <data name="API tokens" xml:space="preserve"><value>API-token</value></data>
+  <data name="Account created." xml:space="preserve"><value>Kontot har skapats.</value></data>
+  <data name="Activate account" xml:space="preserve"><value>Aktivera konto</value></data>
+  <data name="Admin" xml:space="preserve"><value>Administratör</value></data>
+  <data name="Choose your display name and a password to activate your Plugin-Store account." xml:space="preserve"><value>Välj ditt visningsnamn och ett lösenord för att aktivera ditt Plugin-Store-konto.</value></data>
+  <data name="Create a user directly" xml:space="preserve"><value>Skapa en användare direkt</value></data>
+  <data name="Create account" xml:space="preserve"><value>Skapa konto</value></data>
+  <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>E-post är inte konfigurerad; dela denna inbjudningslänk direkt:</value></data>
+  <data name="Email notifications (Resend)" xml:space="preserve"><value>E-postaviseringar (Resend)</value></data>
+  <data name="Initial password" xml:space="preserve"><value>Initialt lösenord</value></data>
+  <data name="Instance settings; values are stored on the server and take effect immediately." xml:space="preserve"><value>Instansinställningar; värdena sparas på servern och börjar gälla omedelbart.</value></data>
+  <data name="Invitation email sent. The link can also be shared directly:" xml:space="preserve"><value>Inbjudningsmejl skickat. Länken kan också delas direkt:</value></data>
+  <data name="Invitation revoked." xml:space="preserve"><value>Inbjudan återkallad.</value></data>
+  <data name="Invite a user" xml:space="preserve"><value>Bjud in en användare</value></data>
+  <data name="Invited by" xml:space="preserve"><value>Inbjuden av</value></data>
+  <data name="My profile" xml:space="preserve"><value>Min profil</value></data>
+  <data name="Notifications: access requests and new submissions to admins; approvals, rejections and invitations to users." xml:space="preserve"><value>Aviseringar: åtkomstförfrågningar och nya bidrag till administratörer; godkännanden, avslag och inbjudningar till användare.</value></data>
+  <data name="Only PNG or JPEG images are accepted." xml:space="preserve"><value>Endast PNG- eller JPEG-bilder accepteras.</value></data>
+  <data name="Open invitations" xml:space="preserve"><value>Öppna inbjudningar</value></data>
+  <data name="Profile picture (PNG or JPEG, max. 512 KB)" xml:space="preserve"><value>Profilbild (PNG eller JPEG, max. 512 KB)</value></data>
+  <data name="Profile updated." xml:space="preserve"><value>Profilen har uppdaterats.</value></data>
+  <data name="Public base URL (used in emails and invite links)" xml:space="preserve"><value>Offentlig bas-URL (används i e-post och inbjudningslänkar)</value></data>
+  <data name="Resend API key" xml:space="preserve"><value>Resend-API-nyckel</value></data>
+  <data name="Reviewer" xml:space="preserve"><value>Granskare</value></data>
+  <data name="Role updated." xml:space="preserve"><value>Rollen har uppdaterats.</value></data>
+  <data name="Save" xml:space="preserve"><value>Spara</value></data>
+  <data name="Send invitation" xml:space="preserve"><value>Skicka inbjudan</value></data>
+  <data name="Sender address" xml:space="preserve"><value>Avsändaradress</value></data>
+  <data name="Server" xml:space="preserve"><value>Server</value></data>
+  <data name="Settings" xml:space="preserve"><value>Inställningar</value></data>
+  <data name="Settings saved." xml:space="preserve"><value>Inställningarna har sparats.</value></data>
+  <data name="The image is too large (maximum 512 KB)." xml:space="preserve"><value>Bilden är för stor (högst 512 KB).</value></data>
+  <data name="The last active admin cannot be demoted." xml:space="preserve"><value>Den sista aktiva administratören kan inte nedgraderas.</value></data>
+  <data name="This invitation link is invalid or was already used." xml:space="preserve"><value>Denna inbjudningslänk är ogiltig eller har redan använts.</value></data>
+  <data name="User" xml:space="preserve"><value>Användare</value></data>
+  <data name="You cannot change your own role." xml:space="preserve"><value>Du kan inte ändra din egen roll.</value></data>
+  <data name="You have been invited" xml:space="preserve"><value>Du har blivit inbjuden</value></data>
+  <data name="configured" xml:space="preserve"><value>konfigurerad</value></data>
 </root>

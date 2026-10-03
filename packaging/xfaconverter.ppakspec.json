@@ -42,7 +42,7 @@
       "dst": "docs/XfaConverter.ini.sample"
     },
     {
-      "src": "C:/Claude/XfaConverter/Plug-ins/XfaConverter/logo.png",
+      "src": "xfa-icon.png",
       "dst": "assets/icon.png"
     },
     {

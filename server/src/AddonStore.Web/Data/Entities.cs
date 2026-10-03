@@ -15,6 +15,27 @@ public class AppUser : IdentityUser
     public string DisplayName { get; set; } = "";
     public UserStatus Status { get; set; } = UserStatus.Pending;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    /// <summary>File name of the avatar under data/avatars, e.g. "<id>.png"; null = none.</summary>
+    public string? AvatarFile { get; set; }
+}
+
+/// <summary>Runtime-editable instance settings (admin area), e.g. the Resend key.</summary>
+public class AppSetting
+{
+    public string Key { get; set; } = "";
+    public string Value { get; set; } = "";
+}
+
+/// <summary>An email invitation; only the token hash is stored.</summary>
+public class Invite
+{
+    public int Id { get; set; }
+    public string Email { get; set; } = "";
+    public string TokenHash { get; set; } = "";
+    public string Role { get; set; } = "User";
+    public string InvitedBy { get; set; } = "";
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? AcceptedAt { get; set; }
 }
 
 /// <summary>Personal API token; only the SHA-256 hash is stored.</summary>

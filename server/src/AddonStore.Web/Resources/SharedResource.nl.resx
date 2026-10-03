@@ -112,4 +112,43 @@
   <data name="Productivity" xml:space="preserve"><value>Productiviteit</value></data>
   <data name="System" xml:space="preserve"><value>Systeem</value></data>
   <data name="Other" xml:space="preserve"><value>Overig</value></data>
+  <data name="A user with this email already exists." xml:space="preserve"><value>Er bestaat al een gebruiker met dit e-mailadres.</value></data>
+  <data name="API tokens" xml:space="preserve"><value>API-tokens</value></data>
+  <data name="Account created." xml:space="preserve"><value>Account aangemaakt.</value></data>
+  <data name="Activate account" xml:space="preserve"><value>Account activeren</value></data>
+  <data name="Admin" xml:space="preserve"><value>Beheerder</value></data>
+  <data name="Choose your display name and a password to activate your Plugin-Store account." xml:space="preserve"><value>Kies uw weergavenaam en een wachtwoord om uw Plugin-Store-account te activeren.</value></data>
+  <data name="Create a user directly" xml:space="preserve"><value>Direct een gebruiker aanmaken</value></data>
+  <data name="Create account" xml:space="preserve"><value>Account aanmaken</value></data>
+  <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>E-mail is niet geconfigureerd; deel deze uitnodigingslink rechtstreeks:</value></data>
+  <data name="Email notifications (Resend)" xml:space="preserve"><value>E-mailmeldingen (Resend)</value></data>
+  <data name="Initial password" xml:space="preserve"><value>Initieel wachtwoord</value></data>
+  <data name="Instance settings; values are stored on the server and take effect immediately." xml:space="preserve"><value>Instance-instellingen; waarden worden op de server opgeslagen en zijn direct van kracht.</value></data>
+  <data name="Invitation email sent. The link can also be shared directly:" xml:space="preserve"><value>Uitnodigingsmail verzonden. De link kan ook rechtstreeks worden gedeeld:</value></data>
+  <data name="Invitation revoked." xml:space="preserve"><value>Uitnodiging ingetrokken.</value></data>
+  <data name="Invite a user" xml:space="preserve"><value>Een gebruiker uitnodigen</value></data>
+  <data name="Invited by" xml:space="preserve"><value>Uitgenodigd door</value></data>
+  <data name="My profile" xml:space="preserve"><value>Mijn profiel</value></data>
+  <data name="Notifications: access requests and new submissions to admins; approvals, rejections and invitations to users." xml:space="preserve"><value>Meldingen: toegangsaanvragen en nieuwe inzendingen naar beheerders; goedkeuringen, afwijzingen en uitnodigingen naar gebruikers.</value></data>
+  <data name="Only PNG or JPEG images are accepted." xml:space="preserve"><value>Alleen PNG- of JPEG-afbeeldingen worden geaccepteerd.</value></data>
+  <data name="Open invitations" xml:space="preserve"><value>Openstaande uitnodigingen</value></data>
+  <data name="Profile picture (PNG or JPEG, max. 512 KB)" xml:space="preserve"><value>Profielfoto (PNG of JPEG, max. 512 KB)</value></data>
+  <data name="Profile updated." xml:space="preserve"><value>Profiel bijgewerkt.</value></data>
+  <data name="Public base URL (used in emails and invite links)" xml:space="preserve"><value>Openbare basis-URL (gebruikt in e-mails en uitnodigingslinks)</value></data>
+  <data name="Resend API key" xml:space="preserve"><value>Resend-API-sleutel</value></data>
+  <data name="Reviewer" xml:space="preserve"><value>Beoordelaar</value></data>
+  <data name="Role updated." xml:space="preserve"><value>Rol bijgewerkt.</value></data>
+  <data name="Save" xml:space="preserve"><value>Opslaan</value></data>
+  <data name="Send invitation" xml:space="preserve"><value>Uitnodiging verzenden</value></data>
+  <data name="Sender address" xml:space="preserve"><value>Afzenderadres</value></data>
+  <data name="Server" xml:space="preserve"><value>Server</value></data>
+  <data name="Settings" xml:space="preserve"><value>Instellingen</value></data>
+  <data name="Settings saved." xml:space="preserve"><value>Instellingen opgeslagen.</value></data>
+  <data name="The image is too large (maximum 512 KB)." xml:space="preserve"><value>De afbeelding is te groot (maximaal 512 KB).</value></data>
+  <data name="The last active admin cannot be demoted." xml:space="preserve"><value>De laatste actieve beheerder kan niet worden gedegradeerd.</value></data>
+  <data name="This invitation link is invalid or was already used." xml:space="preserve"><value>Deze uitnodigingslink is ongeldig of is al gebruikt.</value></data>
+  <data name="User" xml:space="preserve"><value>Gebruiker</value></data>
+  <data name="You cannot change your own role." xml:space="preserve"><value>U kunt uw eigen rol niet wijzigen.</value></data>
+  <data name="You have been invited" xml:space="preserve"><value>U bent uitgenodigd</value></data>
+  <data name="configured" xml:space="preserve"><value>geconfigureerd</value></data>
 </root>

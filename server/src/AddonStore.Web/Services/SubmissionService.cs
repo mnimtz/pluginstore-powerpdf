@@ -102,8 +102,8 @@ public class SubmissionService
             $"via {via}; changelog: {Truncate(manifest.Changelog, 300)}; warnings: {report.Findings.Count(f => f.Severity == "warning")}");
 
         await _notify.NotifyAdminsAsync(
-            $"[Add-on Store] New submission: {manifest.Id} {manifest.Version}",
-            $"<p><b>{user.DisplayName}</b> submitted <b>{manifest.Id} {manifest.Version}</b> (via {via}).</p>" +
+            $"[Plugin-Store] New submission: {manifest.Id} {manifest.Version}",
+            $"<p><b>{System.Net.WebUtility.HtmlEncode(user.DisplayName)}</b> submitted <b>{manifest.Id} {manifest.Version}</b> (via {System.Net.WebUtility.HtmlEncode(via)}).</p>" +
             $"<p>Changelog: {System.Net.WebUtility.HtmlEncode(manifest.Changelog)}</p>" +
             "<p>The version passed all automatic checks and is now in the beta channel, awaiting review.</p>");
 

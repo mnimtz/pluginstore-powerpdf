@@ -112,4 +112,43 @@
   <data name="Productivity" xml:space="preserve"><value>Produktivitás</value></data>
   <data name="System" xml:space="preserve"><value>Rendszer</value></data>
   <data name="Other" xml:space="preserve"><value>Egyéb</value></data>
+  <data name="A user with this email already exists." xml:space="preserve"><value>Ezzel az e-mail-címmel már létezik felhasználó.</value></data>
+  <data name="API tokens" xml:space="preserve"><value>API-tokenek</value></data>
+  <data name="Account created." xml:space="preserve"><value>Fiók létrehozva.</value></data>
+  <data name="Activate account" xml:space="preserve"><value>Fiók aktiválása</value></data>
+  <data name="Admin" xml:space="preserve"><value>Adminisztrátor</value></data>
+  <data name="Choose your display name and a password to activate your Plugin-Store account." xml:space="preserve"><value>Válassza ki megjelenített nevét, és adjon meg egy jelszót a Plugin-Store-fiók aktiválásához.</value></data>
+  <data name="Create a user directly" xml:space="preserve"><value>Felhasználó közvetlen létrehozása</value></data>
+  <data name="Create account" xml:space="preserve"><value>Fiók létrehozása</value></data>
+  <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>Az e-mail nincs konfigurálva; ossza meg ezt a meghívólinket közvetlenül:</value></data>
+  <data name="Email notifications (Resend)" xml:space="preserve"><value>E-mail-értesítések (Resend)</value></data>
+  <data name="Initial password" xml:space="preserve"><value>Kezdeti jelszó</value></data>
+  <data name="Instance settings; values are stored on the server and take effect immediately." xml:space="preserve"><value>Példánybeállítások; az értékek a szerveren tárolódnak, és azonnal érvénybe lépnek.</value></data>
+  <data name="Invitation email sent. The link can also be shared directly:" xml:space="preserve"><value>Meghívó e-mail elküldve. A link közvetlenül is megosztható:</value></data>
+  <data name="Invitation revoked." xml:space="preserve"><value>Meghívás visszavonva.</value></data>
+  <data name="Invite a user" xml:space="preserve"><value>Felhasználó meghívása</value></data>
+  <data name="Invited by" xml:space="preserve"><value>Meghívta</value></data>
+  <data name="My profile" xml:space="preserve"><value>Saját profil</value></data>
+  <data name="Notifications: access requests and new submissions to admins; approvals, rejections and invitations to users." xml:space="preserve"><value>Értesítések: hozzáférési kérelmek és új beküldések az adminisztrátoroknak; jóváhagyások, elutasítások és meghívások a felhasználóknak.</value></data>
+  <data name="Only PNG or JPEG images are accepted." xml:space="preserve"><value>Csak PNG vagy JPEG képek fogadhatók el.</value></data>
+  <data name="Open invitations" xml:space="preserve"><value>Függőben lévő meghívások</value></data>
+  <data name="Profile picture (PNG or JPEG, max. 512 KB)" xml:space="preserve"><value>Profilkép (PNG vagy JPEG, max. 512 KB)</value></data>
+  <data name="Profile updated." xml:space="preserve"><value>Profil frissítve.</value></data>
+  <data name="Public base URL (used in emails and invite links)" xml:space="preserve"><value>Nyilvános alap-URL (e-mailekben és meghívólinkekben használatos)</value></data>
+  <data name="Resend API key" xml:space="preserve"><value>Resend API-kulcs</value></data>
+  <data name="Reviewer" xml:space="preserve"><value>Véleményező</value></data>
+  <data name="Role updated." xml:space="preserve"><value>Szerepkör frissítve.</value></data>
+  <data name="Save" xml:space="preserve"><value>Mentés</value></data>
+  <data name="Send invitation" xml:space="preserve"><value>Meghívó küldése</value></data>
+  <data name="Sender address" xml:space="preserve"><value>Feladó címe</value></data>
+  <data name="Server" xml:space="preserve"><value>Szerver</value></data>
+  <data name="Settings" xml:space="preserve"><value>Beállítások</value></data>
+  <data name="Settings saved." xml:space="preserve"><value>Beállítások mentve.</value></data>
+  <data name="The image is too large (maximum 512 KB)." xml:space="preserve"><value>A kép túl nagy (legfeljebb 512 KB).</value></data>
+  <data name="The last active admin cannot be demoted." xml:space="preserve"><value>Az utolsó aktív adminisztrátor nem fokozható le.</value></data>
+  <data name="This invitation link is invalid or was already used." xml:space="preserve"><value>Ez a meghívólink érvénytelen, vagy már felhasználták.</value></data>
+  <data name="User" xml:space="preserve"><value>Felhasználó</value></data>
+  <data name="You cannot change your own role." xml:space="preserve"><value>Saját szerepkörét nem módosíthatja.</value></data>
+  <data name="You have been invited" xml:space="preserve"><value>Meghívást kapott</value></data>
+  <data name="configured" xml:space="preserve"><value>konfigurálva</value></data>
 </root>

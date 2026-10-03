@@ -8,7 +8,86 @@
 
 @if (Model.Notice is not null)
 {
-    <div class="alert ok">@L[Model.Notice]</div>
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+}
+@if (Model.InviteLink is not null)
+{
+    <div class="alert ok">
+        @(Model.InviteMailSent ? L["Invitation email sent. The link can also be shared directly:"] : L["Email is not configured; share this invitation link directly:"])
+        <div class="token-reveal">@Model.InviteLink</div>
+    </div>
+}
+
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
+    <div class="card">
+        <h2 style="margin-top:0">@L["Invite a user"]</h2>
+        <form method="post" asp-page-handler="Invite" class="stack">
+            <div>
+                <label>@L["Email"]</label>
+                <input type="email" name="email" required maxlength="200" />
+            </div>
+            <div>
+                <label>@L["Role"]</label>
+                <select name="role">
+                    @foreach (var r in AddonStore.Web.Pages.Admin.UsersModel.Roles)
+                    {
+                        <option value="@r">@L[r]</option>
+                    }
+                </select>
+            </div>
+            <button type="submit" class="btn cta">@L["Send invitation"]</button>
+        </form>
+    </div>
+    <div class="card">
+        <h2 style="margin-top:0">@L["Create a user directly"]</h2>
+        <form method="post" asp-page-handler="Create" class="stack">
+            <div>
+                <label>@L["Display name"]</label>
+                <input type="text" name="name" required maxlength="100" />
+            </div>
+            <div>
+                <label>@L["Email"]</label>
+                <input type="email" name="email" required maxlength="200" />
+            </div>
+            <div>
+                <label>@L["Role"]</label>
+                <select name="role">
+                    @foreach (var r in AddonStore.Web.Pages.Admin.UsersModel.Roles)
+                    {
+                        <option value="@r">@L[r]</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label>@L["Initial password"]</label>
+                <input type="password" name="password" required minlength="10" />
+            </div>
+            <button type="submit" class="btn">@L["Create account"]</button>
+        </form>
+    </div>
+</div>
+
+@if (Model.OpenInvites.Count > 0)
+{
+    <h2>@L["Open invitations"]</h2>
+    <table>
+        <tr><th>@L["Email"]</th><th>@L["Role"]</th><th>@L["Invited by"]</th><th>@L["Created"]</th><th></th></tr>
+        @foreach (var i in Model.OpenInvites)
+        {
+            <tr>
+                <td>@i.Email</td>
+                <td>@L[i.Role]</td>
+                <td>@i.InvitedBy</td>
+                <td>@i.CreatedAt.ToString("MMM d, yyyy")</td>
+                <td>
+                    <form method="post" asp-page-handler="RevokeInvite">
+                        <input type="hidden" name="id" value="@i.Id" />
+                        <button type="submit" class="btn small danger">@L["Revoke"]</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
 }
 
 @if (Model.Pending.Count > 0)
@@ -39,13 +118,37 @@
 
 <h2>@L["All users"]</h2>
 <table>
-    <tr><th>@L["Name"]</th><th>@L["Email"]</th><th>@L["Role"]</th><th>@L["Status"]</th><th></th></tr>
+    <tr><th></th><th>@L["Name"]</th><th>@L["Email"]</th><th>@L["Role"]</th><th>@L["Status"]</th><th></th></tr>
     @foreach (var row in Model.All)
     {
         <tr>
+            <td style="width:34px">
+                @if (row.User.AvatarFile is not null)
+                {
+                    <img src="/avatar/@row.User.Id" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover" />
+                }
+            </td>
             <td>@row.User.DisplayName</td>
             <td>@row.User.Email</td>
-            <td>@row.Role</td>
+            <td>
+                @if (row.User.Id == Model.MyId)
+                {
+                    @L[row.Role]
+                }
+                else
+                {
+                    <form method="post" asp-page-handler="SetRole" style="display:flex;gap:6px">
+                        <input type="hidden" name="id" value="@row.User.Id" />
+                        <select name="role" style="width:auto;padding:4px 6px;font-size:.85rem">
+                            @foreach (var r in AddonStore.Web.Pages.Admin.UsersModel.Roles)
+                            {
+                                <option value="@r" selected="@(r == row.Role)">@L[r]</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn small secondary">@L["Save"]</button>
+                    </form>
+                }
+            </td>
             <td><span class="badge @row.User.Status.ToString().ToLowerInvariant()">@row.User.Status</span></td>
             <td>
                 @if (row.User.Status == UserStatus.Active && row.User.Id != Model.MyId)

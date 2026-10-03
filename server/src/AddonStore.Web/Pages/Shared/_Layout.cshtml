@@ -20,11 +20,20 @@
             {
                 <a href="/Dashboard">@L["My plugins"]</a>
                 <a href="/Profile">@L["Profile"]</a>
-                @if (User.IsInRole("Admin"))
+                @if (User.IsInRole("Admin") || User.IsInRole("Reviewer"))
                 {
                     <a href="/Admin/Review">@L["Review"]</a>
+                }
+                @if (User.IsInRole("Admin"))
+                {
                     <a href="/Admin/Users">@L["Users"]</a>
                     <a href="/Admin/Audit">@L["Audit"]</a>
+                    <a href="/Admin/Settings">@L["Settings"]</a>
+                }
+                var me = await UserManager.GetUserAsync(User);
+                @if (me?.AvatarFile is not null)
+                {
+                    <img src="/avatar/@me.Id" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.4)" />
                 }
                 <form method="post" action="/Account/Logout" style="display:inline">
                     @Html.AntiForgeryToken()

@@ -1,0 +1,30 @@
+@page
+@model AddonStore.Web.Pages.Account.InviteModel
+@{
+    ViewData["Title"] = "Invitation";
+}
+
+<h1>@L["You have been invited"]</h1>
+
+@if (Model.Error is not null)
+{
+    <div class="alert error">@L[Model.Error]</div>
+}
+else
+{
+    <p class="lead">@L["Choose your display name and a password to activate your Plugin-Store account."] (@Model.Email, @L[Model.Role])</p>
+    <div class="card" style="max-width:480px">
+        <form method="post" class="stack">
+            <input type="hidden" name="token" value="@Model.Token" />
+            <div>
+                <label for="name">@L["Display name"]</label>
+                <input type="text" id="name" name="name" required maxlength="100" />
+            </div>
+            <div>
+                <label for="password">@L["Password"]</label>
+                <input type="password" id="password" name="password" required minlength="10" />
+            </div>
+            <button type="submit" class="btn cta">@L["Activate account"]</button>
+        </form>
+    </div>
+}

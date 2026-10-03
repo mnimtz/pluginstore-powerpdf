@@ -48,6 +48,12 @@ builder.Services.AddAuthorization(o =>
     o.AddPolicy("AdminOnly", p => p
         .AddAuthenticationSchemes(IdentityConstants.ApplicationScheme, ApiTokenAuthHandler.Scheme)
         .RequireRole("Admin"));
+    o.AddPolicy("BearerOnly", p => p
+        .AddAuthenticationSchemes(ApiTokenAuthHandler.Scheme)
+        .RequireAuthenticatedUser());
+    o.AddPolicy("ReviewerOrAdmin", p => p
+        .AddAuthenticationSchemes(IdentityConstants.ApplicationScheme, ApiTokenAuthHandler.Scheme)
+        .RequireRole("Admin", "Reviewer"));
 });
 
 // --- localization: all European Power PDF languages ----------------------
@@ -63,7 +69,12 @@ builder.Services.Configure<RequestLocalizationOptions>(o =>
 
 builder.Services.AddRazorPages(o =>
     {
-        o.Conventions.AuthorizeFolder("/Admin", "AdminOnly");
+        // Reviewers may use the review queue; everything else under /Admin is
+        // admin-only (users, audit, settings).
+        o.Conventions.AuthorizePage("/Admin/Review", "ReviewerOrAdmin");
+        o.Conventions.AuthorizePage("/Admin/Users", "AdminOnly");
+        o.Conventions.AuthorizePage("/Admin/Audit", "AdminOnly");
+        o.Conventions.AuthorizePage("/Admin/Settings", "AdminOnly");
         o.Conventions.AuthorizePage("/Dashboard");
         o.Conventions.AuthorizePage("/Profile");
     })
@@ -75,15 +86,9 @@ builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<SubmissionService>();
 builder.Services.AddScoped<NotificationService>();
 
-if (!string.IsNullOrEmpty(builder.Configuration["Email:ResendApiKey"]))
-{
-    builder.Services.AddHttpClient<ResendEmailSender>();
-    builder.Services.AddScoped<IAppEmailSender>(sp => sp.GetRequiredService<ResendEmailSender>());
-}
-else
-{
-    builder.Services.AddScoped<IAppEmailSender, NullEmailSender>();
-}
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<SettingsService>();
+builder.Services.AddScoped<IAppEmailSender, ResendEmailSender>();
 
 var versionFile = Path.Combine(AppContext.BaseDirectory, "VERSION");
 builder.Services.AddSingleton(new AppVersion(
@@ -101,11 +106,40 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
+
+    // Poor-man migrations: EnsureCreated never alters an existing database, so
+    // additions arrive as idempotent statements here.
+    foreach (var sql in new[]
+    {
+        "ALTER TABLE AspNetUsers ADD COLUMN AvatarFile TEXT NULL",
+        "CREATE TABLE IF NOT EXISTS AppSettings (Key TEXT NOT NULL PRIMARY KEY, Value TEXT NOT NULL)",
+        "CREATE TABLE IF NOT EXISTS Invites (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+            "Email TEXT NOT NULL, TokenHash TEXT NOT NULL, Role TEXT NOT NULL, InvitedBy TEXT NOT NULL, " +
+            "CreatedAt TEXT NOT NULL, AcceptedAt TEXT NULL)",
+        "CREATE UNIQUE INDEX IF NOT EXISTS IX_Invites_TokenHash ON Invites (TokenHash)"
+    })
+    {
+        try { db.Database.ExecuteSqlRaw(sql); }
+        catch (Microsoft.Data.Sqlite.SqliteException) { /* column/table already there */ }
+    }
+
     var roles = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    foreach (var role in new[] { "Admin", "User" })
+    foreach (var role in new[] { "Admin", "Reviewer", "User" })
         if (!await roles.RoleExistsAsync(role))
             await roles.CreateAsync(new IdentityRole(role));
 }
+
+// Security response headers (TLS/HSTS terminate at App Service).
+app.Use(async (ctx, next) =>
+{
+    ctx.Response.Headers["X-Content-Type-Options"] = "nosniff";
+    ctx.Response.Headers["X-Frame-Options"] = "DENY";
+    ctx.Response.Headers["Referrer-Policy"] = "no-referrer";
+    ctx.Response.Headers["Content-Security-Policy"] =
+        "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; " +
+        "script-src 'self' 'unsafe-inline'; frame-ancestors 'none'";
+    await next();
+});
 
 app.UseRequestLocalization();
 app.UseStaticFiles();
@@ -136,11 +170,33 @@ app.Use(async (ctx, next) =>
 // Manual language switch; the culture cookie outranks Accept-Language.
 app.MapGet("/set-lang", (string culture, string? returnUrl, HttpContext ctx) =>
 {
+    // Only supported cultures (an arbitrary string would throw), and only
+    // same-site relative targets ("//host" and "/\host" are open redirects).
+    if (!cultures.Contains(culture)) culture = "en";
+    var target = returnUrl is not null && returnUrl.StartsWith('/') &&
+                 !(returnUrl.Length > 1 && (returnUrl[1] == '/' || returnUrl[1] == '\\'))
+        ? returnUrl : "/";
     ctx.Response.Cookies.Append(
         CookieRequestCultureProvider.DefaultCookieName,
         CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
         new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1), IsEssential = true });
-    return Results.Redirect(string.IsNullOrEmpty(returnUrl) || !returnUrl.StartsWith('/') ? "/" : returnUrl);
+    return Results.Redirect(target);
+});
+
+// Avatars live under data/avatars and are uploaded on the profile page.
+app.MapGet("/avatar/{id}", (string id, IConfiguration config, IWebHostEnvironment env) =>
+{
+    if (!System.Text.RegularExpressions.Regex.IsMatch(id, "^[A-Za-z0-9-]{1,64}$"))
+        return Results.NotFound();
+    var dataRoot = config["Storage:Data"];
+    if (string.IsNullOrWhiteSpace(dataRoot)) dataRoot = Path.Combine(env.ContentRootPath, "data");
+    foreach (var ext in new[] { "png", "jpg" })
+    {
+        var p = Path.Combine(dataRoot, "avatars", $"{id}.{ext}");
+        if (File.Exists(p))
+            return Results.File(p, ext == "png" ? "image/png" : "image/jpeg");
+    }
+    return Results.NotFound();
 });
 
 app.MapRazorPages();

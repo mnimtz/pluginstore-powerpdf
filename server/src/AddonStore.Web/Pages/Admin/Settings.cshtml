@@ -1,0 +1,42 @@
+@page
+@model AddonStore.Web.Pages.Admin.SettingsModel
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<h1>@L["Settings"]</h1>
+<p class="lead">@L["Instance settings; values are stored on the server and take effect immediately."]</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert ok">@L[Model.Notice]</div>
+}
+
+<div class="card" style="max-width:560px">
+    <h2 style="margin-top:0">@L["Email notifications (Resend)"]</h2>
+    <form method="post" asp-page-handler="Email" class="stack" style="max-width:none">
+        <div>
+            <label>@L["Resend API key"]</label>
+            <input type="password" name="resendKey" placeholder="@(Model.HasResendKey ? "••••••••  (" + L["configured"] + ")" : "re_...")" autocomplete="off" />
+        </div>
+        <div>
+            <label>@L["Sender address"]</label>
+            <input type="text" name="from" value="@Model.From" placeholder="PluginStore &lt;store@yourdomain.com&gt;" />
+        </div>
+        <button type="submit" class="btn cta">@L["Save"]</button>
+    </form>
+    <p style="font-size:.85rem;color:var(--tun-slate)">
+        @L["Notifications: access requests and new submissions to admins; approvals, rejections and invitations to users."]
+    </p>
+</div>
+
+<div class="card" style="max-width:560px">
+    <h2 style="margin-top:0">@L["Server"]</h2>
+    <form method="post" asp-page-handler="Server" class="stack" style="max-width:none">
+        <div>
+            <label>@L["Public base URL (used in emails and invite links)"]</label>
+            <input type="text" name="baseUrl" value="@Model.BaseUrl" placeholder="https://ppdf-store.azurewebsites.net" />
+        </div>
+        <button type="submit" class="btn cta">@L["Save"]</button>
+    </form>
+</div>

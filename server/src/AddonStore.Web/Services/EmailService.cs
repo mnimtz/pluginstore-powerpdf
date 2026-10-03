@@ -1,4 +1,3 @@
-using System.Text.Json;
 using AddonStore.Web.Data;
 using Microsoft.AspNetCore.Identity;
 
@@ -6,51 +5,57 @@ namespace AddonStore.Web.Services;
 
 public interface IAppEmailSender
 {
-    Task SendAsync(string to, string subject, string html);
+    /// <summary>True when a provider is configured and the mail was handed over.</summary>
+    Task<bool> SendAsync(string to, string subject, string html);
 }
 
-/// <summary>Used when no provider is configured; the app stays fully functional.</summary>
-public class NullEmailSender : IAppEmailSender
-{
-    private readonly ILogger<NullEmailSender> _log;
-    public NullEmailSender(ILogger<NullEmailSender> log) => _log = log;
-
-    public Task SendAsync(string to, string subject, string html)
-    {
-        _log.LogInformation("Email suppressed (no provider configured): to={To} subject={Subject}", to, subject);
-        return Task.CompletedTask;
-    }
-}
-
+/// <summary>
+/// Sends through Resend when an API key is configured (admin Settings page or
+/// Email__ResendApiKey app setting); otherwise logs and reports false so
+/// callers can fall back to showing information in the UI.
+/// </summary>
 public class ResendEmailSender : IAppEmailSender
 {
-    private readonly HttpClient _http;
-    private readonly string _from;
+    private readonly IHttpClientFactory _httpFactory;
+    private readonly SettingsService _settings;
     private readonly ILogger<ResendEmailSender> _log;
 
-    public ResendEmailSender(HttpClient http, IConfiguration config, ILogger<ResendEmailSender> log)
+    public ResendEmailSender(IHttpClientFactory httpFactory, SettingsService settings, ILogger<ResendEmailSender> log)
     {
-        _http = http;
-        _from = config["Email:From"] ?? "store@localhost";
-        _http.BaseAddress = new Uri("https://api.resend.com/");
-        _http.DefaultRequestHeaders.Authorization =
-            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", config["Email:ResendApiKey"]);
-        _log = log;
+        _httpFactory = httpFactory; _settings = settings; _log = log;
     }
 
-    public async Task SendAsync(string to, string subject, string html)
+    public async Task<bool> SendAsync(string to, string subject, string html)
     {
+        var key = await _settings.GetAsync("Email.ResendApiKey", "Email:ResendApiKey");
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            _log.LogInformation("Email suppressed (no Resend key configured): to={To} subject={Subject}", to, subject);
+            return false;
+        }
+        var from = await _settings.GetAsync("Email.From", "Email:From");
+        if (string.IsNullOrWhiteSpace(from)) from = "PluginStore <onboarding@resend.dev>";
+
         try
         {
-            var payload = JsonSerializer.Serialize(new { from = _from, to = new[] { to }, subject, html });
-            var resp = await _http.PostAsync("emails",
-                new StringContent(payload, System.Text.Encoding.UTF8, "application/json"));
+            var http = _httpFactory.CreateClient("resend");
+            using var req = new HttpRequestMessage(HttpMethod.Post, "https://api.resend.com/emails");
+            req.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", key);
+            req.Content = new StringContent(
+                System.Text.Json.JsonSerializer.Serialize(new { from, to = new[] { to }, subject, html }),
+                System.Text.Encoding.UTF8, "application/json");
+            var resp = await http.SendAsync(req);
             if (!resp.IsSuccessStatusCode)
+            {
                 _log.LogWarning("Resend returned {Status} for mail to {To}", resp.StatusCode, to);
+                return false;
+            }
+            return true;
         }
         catch (Exception ex)
         {
             _log.LogWarning(ex, "Sending mail to {To} failed", to);
+            return false;
         }
     }
 }
@@ -60,31 +65,35 @@ public class NotificationService
 {
     private readonly IAppEmailSender _mail;
     private readonly UserManager<AppUser> _users;
-    private readonly IConfiguration _config;
+    private readonly SettingsService _settings;
 
-    public NotificationService(IAppEmailSender mail, UserManager<AppUser> users, IConfiguration config)
+    public NotificationService(IAppEmailSender mail, UserManager<AppUser> users, SettingsService settings)
     {
-        _mail = mail; _users = users; _config = config;
+        _mail = mail; _users = users; _settings = settings;
     }
 
-    private string BaseUrl => (_config["App:PublicBaseUrl"] ?? "").TrimEnd('/');
+    public async Task<string> BaseUrlAsync() =>
+        (await _settings.GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl")).TrimEnd('/');
 
     public async Task NotifyAdminsAsync(string subject, string text)
     {
         var admins = await _users.GetUsersInRoleAsync("Admin");
         foreach (var admin in admins.Where(a => a.Status == UserStatus.Active && !string.IsNullOrEmpty(a.Email)))
-            await _mail.SendAsync(admin.Email!, subject, Wrap(text));
+            await _mail.SendAsync(admin.Email!, subject, await WrapAsync(text));
     }
 
-    public Task NotifyUserAsync(AppUser user, string subject, string text) =>
-        string.IsNullOrEmpty(user.Email) ? Task.CompletedTask : _mail.SendAsync(user.Email, subject, Wrap(text));
+    public async Task<bool> NotifyUserAsync(AppUser user, string subject, string text) =>
+        !string.IsNullOrEmpty(user.Email) && await _mail.SendAsync(user.Email, subject, await WrapAsync(text));
 
-    private string Wrap(string text) => $"""
+    public async Task<bool> SendRawAsync(string to, string subject, string text) =>
+        await _mail.SendAsync(to, subject, await WrapAsync(text));
+
+    private async Task<string> WrapAsync(string text) => $"""
         <div style="font-family:'Red Hat Display',Arial,sans-serif;color:#231F20">
           <div style="background:#002854;color:#fff;padding:14px 20px;font-weight:bold">Tungsten Power PDF Plugin-Store</div>
           <div style="height:4px;background:linear-gradient(90deg,#00EB86,#00A0FB)"></div>
           <div style="padding:20px">{text}</div>
-          <div style="padding:0 20px 16px;color:#8094AA;font-size:12px">{BaseUrl}</div>
+          <div style="padding:0 20px 16px;color:#8094AA;font-size:12px">{await BaseUrlAsync()}</div>
         </div>
         """;
 }

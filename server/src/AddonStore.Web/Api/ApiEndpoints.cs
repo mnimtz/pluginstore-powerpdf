@@ -201,7 +201,7 @@ public static class ApiEndpoints
                 }, statusCode: 201);
             }
             finally { TryDelete(tmp); }
-        }).RequireAuthorization("ApiOrCookie");
+        }).RequireAuthorization("BearerOnly");
 
         api.MapDelete("/packages/{id}/{version}", async (string id, string version, HttpContext ctx,
             UserManager<AppUser> users, AppDbContext db, AuditService audit) =>
@@ -222,7 +222,7 @@ public static class ApiEndpoints
             await db.SaveChangesAsync();
             await audit.LogAsync(user.DisplayName, "version.withdrawn", $"{id} {version}", $"previous status reverted by {(isAdmin ? "admin" : "owner")}");
             return Results.Json(new { ok = true, data = new { id, version, status = "withdrawn" } });
-        }).RequireAuthorization("ApiOrCookie");
+        }).RequireAuthorization("BearerOnly");
 
         api.MapGet("/packages/{id}/{version}/download", async (string id, string version,
             AppDbContext db, SubmissionService svc) =>
@@ -261,7 +261,7 @@ public static class ApiEndpoints
         {
             var root = DevkitRoot(config, env);
             var full = Path.GetFullPath(Path.Combine(root, path));
-            if (!full.StartsWith(Path.GetFullPath(root)) || !File.Exists(full))
+            if (!IsUnder(root, full) || !File.Exists(full))
                 return NotFound("FILE_NOT_FOUND", $"No devkit file '{path}'. List files via GET /api/devkit.");
             var ext = Path.GetExtension(full).ToLowerInvariant();
             var type = ext switch
@@ -305,6 +305,14 @@ public static class ApiEndpoints
     {
         var root = config["Storage:Devkit"];
         return string.IsNullOrWhiteSpace(root) ? Path.Combine(env.ContentRootPath, "data", "devkit") : root;
+    }
+
+    /// <summary>True when <paramref name="full"/> lies INSIDE root (separator-aware prefix check).</summary>
+    private static bool IsUnder(string root, string full)
+    {
+        var rootFull = Path.GetFullPath(root).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+                       + Path.DirectorySeparatorChar;
+        return full.StartsWith(rootFull, StringComparison.OrdinalIgnoreCase);
     }
 
     private static IResult Unauthorized() => Results.Json(new

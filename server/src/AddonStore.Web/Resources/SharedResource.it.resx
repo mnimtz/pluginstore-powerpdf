@@ -112,4 +112,43 @@
   <data name="Productivity" xml:space="preserve"><value>Produttività</value></data>
   <data name="System" xml:space="preserve"><value>Sistema</value></data>
   <data name="Other" xml:space="preserve"><value>Altro</value></data>
+  <data name="A user with this email already exists." xml:space="preserve"><value>Esiste già un utente con questo indirizzo e-mail.</value></data>
+  <data name="API tokens" xml:space="preserve"><value>Token API</value></data>
+  <data name="Account created." xml:space="preserve"><value>Account creato.</value></data>
+  <data name="Activate account" xml:space="preserve"><value>Attiva account</value></data>
+  <data name="Admin" xml:space="preserve"><value>Amministratore</value></data>
+  <data name="Choose your display name and a password to activate your Plugin-Store account." xml:space="preserve"><value>Scegliere un nome visualizzato e una password per attivare l'account Plugin-Store.</value></data>
+  <data name="Create a user directly" xml:space="preserve"><value>Crea un utente direttamente</value></data>
+  <data name="Create account" xml:space="preserve"><value>Crea account</value></data>
+  <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>L'e-mail non è configurata; condividere questo link di invito direttamente:</value></data>
+  <data name="Email notifications (Resend)" xml:space="preserve"><value>Notifiche e-mail (Resend)</value></data>
+  <data name="Initial password" xml:space="preserve"><value>Password iniziale</value></data>
+  <data name="Instance settings; values are stored on the server and take effect immediately." xml:space="preserve"><value>Impostazioni dell'istanza; i valori vengono salvati sul server e hanno effetto immediato.</value></data>
+  <data name="Invitation email sent. The link can also be shared directly:" xml:space="preserve"><value>E-mail di invito inviata. Il link può anche essere condiviso direttamente:</value></data>
+  <data name="Invitation revoked." xml:space="preserve"><value>Invito revocato.</value></data>
+  <data name="Invite a user" xml:space="preserve"><value>Invita un utente</value></data>
+  <data name="Invited by" xml:space="preserve"><value>Invitato da</value></data>
+  <data name="My profile" xml:space="preserve"><value>Il mio profilo</value></data>
+  <data name="Notifications: access requests and new submissions to admins; approvals, rejections and invitations to users." xml:space="preserve"><value>Notifiche: richieste di accesso e nuovi invii agli amministratori; approvazioni, rifiuti e inviti agli utenti.</value></data>
+  <data name="Only PNG or JPEG images are accepted." xml:space="preserve"><value>Sono accettate solo immagini PNG o JPEG.</value></data>
+  <data name="Open invitations" xml:space="preserve"><value>Inviti in sospeso</value></data>
+  <data name="Profile picture (PNG or JPEG, max. 512 KB)" xml:space="preserve"><value>Immagine del profilo (PNG o JPEG, max. 512 KB)</value></data>
+  <data name="Profile updated." xml:space="preserve"><value>Profilo aggiornato.</value></data>
+  <data name="Public base URL (used in emails and invite links)" xml:space="preserve"><value>URL di base pubblico (utilizzato nelle e-mail e nei link di invito)</value></data>
+  <data name="Resend API key" xml:space="preserve"><value>Chiave API Resend</value></data>
+  <data name="Reviewer" xml:space="preserve"><value>Revisore</value></data>
+  <data name="Role updated." xml:space="preserve"><value>Ruolo aggiornato.</value></data>
+  <data name="Save" xml:space="preserve"><value>Salva</value></data>
+  <data name="Send invitation" xml:space="preserve"><value>Invia invito</value></data>
+  <data name="Sender address" xml:space="preserve"><value>Indirizzo mittente</value></data>
+  <data name="Server" xml:space="preserve"><value>Server</value></data>
+  <data name="Settings" xml:space="preserve"><value>Impostazioni</value></data>
+  <data name="Settings saved." xml:space="preserve"><value>Impostazioni salvate.</value></data>
+  <data name="The image is too large (maximum 512 KB)." xml:space="preserve"><value>L'immagine è troppo grande (massimo 512 KB).</value></data>
+  <data name="The last active admin cannot be demoted." xml:space="preserve"><value>L'ultimo amministratore attivo non può essere retrocesso.</value></data>
+  <data name="This invitation link is invalid or was already used." xml:space="preserve"><value>Questo link di invito non è valido o è già stato utilizzato.</value></data>
+  <data name="User" xml:space="preserve"><value>Utente</value></data>
+  <data name="You cannot change your own role." xml:space="preserve"><value>Non è possibile modificare il proprio ruolo.</value></data>
+  <data name="You have been invited" xml:space="preserve"><value>Hai ricevuto un invito</value></data>
+  <data name="configured" xml:space="preserve"><value>configurato</value></data>
 </root>

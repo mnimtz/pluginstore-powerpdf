@@ -112,4 +112,43 @@
   <data name="Productivity" xml:space="preserve"><value>Produktivita</value></data>
   <data name="System" xml:space="preserve"><value>Systém</value></data>
   <data name="Other" xml:space="preserve"><value>Ostatní</value></data>
+  <data name="A user with this email already exists." xml:space="preserve"><value>Uživatel s tímto e-mailem již existuje.</value></data>
+  <data name="API tokens" xml:space="preserve"><value>API tokeny</value></data>
+  <data name="Account created." xml:space="preserve"><value>Účet vytvořen.</value></data>
+  <data name="Activate account" xml:space="preserve"><value>Aktivovat účet</value></data>
+  <data name="Admin" xml:space="preserve"><value>Administrátor</value></data>
+  <data name="Choose your display name and a password to activate your Plugin-Store account." xml:space="preserve"><value>Zvolte si zobrazované jméno a heslo pro aktivaci účtu Plugin-Store.</value></data>
+  <data name="Create a user directly" xml:space="preserve"><value>Vytvořit uživatele přímo</value></data>
+  <data name="Create account" xml:space="preserve"><value>Vytvořit účet</value></data>
+  <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>E-mail není nakonfigurován; sdílejte tento odkaz s pozvánkou přímo:</value></data>
+  <data name="Email notifications (Resend)" xml:space="preserve"><value>E-mailová oznámení (Resend)</value></data>
+  <data name="Initial password" xml:space="preserve"><value>Počáteční heslo</value></data>
+  <data name="Instance settings; values are stored on the server and take effect immediately." xml:space="preserve"><value>Nastavení instance; hodnoty se ukládají na serveru a platí okamžitě.</value></data>
+  <data name="Invitation email sent. The link can also be shared directly:" xml:space="preserve"><value>E-mail s pozvánkou byl odeslán. Odkaz lze také sdílet přímo:</value></data>
+  <data name="Invitation revoked." xml:space="preserve"><value>Pozvánka zrušena.</value></data>
+  <data name="Invite a user" xml:space="preserve"><value>Pozvat uživatele</value></data>
+  <data name="Invited by" xml:space="preserve"><value>Pozvánka od</value></data>
+  <data name="My profile" xml:space="preserve"><value>Můj profil</value></data>
+  <data name="Notifications: access requests and new submissions to admins; approvals, rejections and invitations to users." xml:space="preserve"><value>Oznámení: žádosti o přístup a nové příspěvky administrátorům; schválení, zamítnutí a pozvánky uživatelům.</value></data>
+  <data name="Only PNG or JPEG images are accepted." xml:space="preserve"><value>Přijímány jsou pouze obrázky PNG nebo JPEG.</value></data>
+  <data name="Open invitations" xml:space="preserve"><value>Čekající pozvánky</value></data>
+  <data name="Profile picture (PNG or JPEG, max. 512 KB)" xml:space="preserve"><value>Profilový obrázek (PNG nebo JPEG, max. 512 KB)</value></data>
+  <data name="Profile updated." xml:space="preserve"><value>Profil aktualizován.</value></data>
+  <data name="Public base URL (used in emails and invite links)" xml:space="preserve"><value>Veřejná základní URL (používá se v e-mailech a odkazech s pozvánkami)</value></data>
+  <data name="Resend API key" xml:space="preserve"><value>API klíč Resend</value></data>
+  <data name="Reviewer" xml:space="preserve"><value>Recenzent</value></data>
+  <data name="Role updated." xml:space="preserve"><value>Role aktualizována.</value></data>
+  <data name="Save" xml:space="preserve"><value>Uložit</value></data>
+  <data name="Send invitation" xml:space="preserve"><value>Odeslat pozvánku</value></data>
+  <data name="Sender address" xml:space="preserve"><value>Adresa odesílatele</value></data>
+  <data name="Server" xml:space="preserve"><value>Server</value></data>
+  <data name="Settings" xml:space="preserve"><value>Nastavení</value></data>
+  <data name="Settings saved." xml:space="preserve"><value>Nastavení uloženo.</value></data>
+  <data name="The image is too large (maximum 512 KB)." xml:space="preserve"><value>Obrázek je příliš velký (maximálně 512 KB).</value></data>
+  <data name="The last active admin cannot be demoted." xml:space="preserve"><value>Posledního aktivního administrátora nelze degradovat.</value></data>
+  <data name="This invitation link is invalid or was already used." xml:space="preserve"><value>Tento odkaz s pozvánkou je neplatný nebo již byl použit.</value></data>
+  <data name="User" xml:space="preserve"><value>Uživatel</value></data>
+  <data name="You cannot change your own role." xml:space="preserve"><value>Vlastní roli nelze změnit.</value></data>
+  <data name="You have been invited" xml:space="preserve"><value>Byli jste pozváni</value></data>
+  <data name="configured" xml:space="preserve"><value>nakonfigurováno</value></data>
 </root>

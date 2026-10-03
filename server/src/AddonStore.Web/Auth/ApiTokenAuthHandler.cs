@@ -36,11 +36,20 @@ public class ApiTokenAuthHandler : AuthenticationHandler<AuthenticationSchemeOpt
             .FirstOrDefaultAsync(t => t.TokenHash == hash);
 
         if (token is null)
+        {
+            Context.Items["auth_fail"] = "TOKEN_INVALID";
             return AuthenticateResult.Fail("TOKEN_INVALID");
+        }
         if (token.RevokedAt is not null)
+        {
+            Context.Items["auth_fail"] = "TOKEN_REVOKED";
             return AuthenticateResult.Fail("TOKEN_REVOKED");
+        }
         if (token.User is null || token.User.Status != UserStatus.Active)
+        {
+            Context.Items["auth_fail"] = "USER_NOT_ACTIVE";
             return AuthenticateResult.Fail("USER_NOT_ACTIVE");
+        }
 
         token.LastUsedAt = DateTime.UtcNow;
         await _db.SaveChangesAsync();

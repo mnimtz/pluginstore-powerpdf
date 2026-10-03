@@ -112,4 +112,43 @@
   <data name="Productivity" xml:space="preserve"><value>Üretkenlik</value></data>
   <data name="System" xml:space="preserve"><value>Sistem</value></data>
   <data name="Other" xml:space="preserve"><value>Diğer</value></data>
+  <data name="A user with this email already exists." xml:space="preserve"><value>Bu e-posta adresine sahip bir kullanıcı zaten mevcut.</value></data>
+  <data name="API tokens" xml:space="preserve"><value>API belirteçleri</value></data>
+  <data name="Account created." xml:space="preserve"><value>Hesap oluşturuldu.</value></data>
+  <data name="Activate account" xml:space="preserve"><value>Hesabı etkinleştir</value></data>
+  <data name="Admin" xml:space="preserve"><value>Yönetici</value></data>
+  <data name="Choose your display name and a password to activate your Plugin-Store account." xml:space="preserve"><value>Plugin-Store hesabınızı etkinleştirmek için görünen adınızı ve bir parola seçin.</value></data>
+  <data name="Create a user directly" xml:space="preserve"><value>Doğrudan kullanıcı oluştur</value></data>
+  <data name="Create account" xml:space="preserve"><value>Hesap oluştur</value></data>
+  <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>E-posta yapılandırılmamış; bu davet bağlantısını doğrudan paylaşın:</value></data>
+  <data name="Email notifications (Resend)" xml:space="preserve"><value>E-posta bildirimleri (Resend)</value></data>
+  <data name="Initial password" xml:space="preserve"><value>Başlangıç parolası</value></data>
+  <data name="Instance settings; values are stored on the server and take effect immediately." xml:space="preserve"><value>Örnek ayarları; değerler sunucuda saklanır ve hemen geçerli olur.</value></data>
+  <data name="Invitation email sent. The link can also be shared directly:" xml:space="preserve"><value>Davet e-postası gönderildi. Bağlantı doğrudan da paylaşılabilir:</value></data>
+  <data name="Invitation revoked." xml:space="preserve"><value>Davet iptal edildi.</value></data>
+  <data name="Invite a user" xml:space="preserve"><value>Kullanıcı davet et</value></data>
+  <data name="Invited by" xml:space="preserve"><value>Davet eden</value></data>
+  <data name="My profile" xml:space="preserve"><value>Profilim</value></data>
+  <data name="Notifications: access requests and new submissions to admins; approvals, rejections and invitations to users." xml:space="preserve"><value>Bildirimler: erişim istekleri ve yeni gönderimler yöneticilere; onaylar, retler ve davetler kullanıcılara iletilir.</value></data>
+  <data name="Only PNG or JPEG images are accepted." xml:space="preserve"><value>Yalnızca PNG veya JPEG görüntüleri kabul edilir.</value></data>
+  <data name="Open invitations" xml:space="preserve"><value>Bekleyen davetler</value></data>
+  <data name="Profile picture (PNG or JPEG, max. 512 KB)" xml:space="preserve"><value>Profil resmi (PNG veya JPEG, en fazla 512 KB)</value></data>
+  <data name="Profile updated." xml:space="preserve"><value>Profil güncellendi.</value></data>
+  <data name="Public base URL (used in emails and invite links)" xml:space="preserve"><value>Genel temel URL (e-postalarda ve davet bağlantılarında kullanılır)</value></data>
+  <data name="Resend API key" xml:space="preserve"><value>Resend API anahtarı</value></data>
+  <data name="Reviewer" xml:space="preserve"><value>İnceleyici</value></data>
+  <data name="Role updated." xml:space="preserve"><value>Rol güncellendi.</value></data>
+  <data name="Save" xml:space="preserve"><value>Kaydet</value></data>
+  <data name="Send invitation" xml:space="preserve"><value>Davet gönder</value></data>
+  <data name="Sender address" xml:space="preserve"><value>Gönderen adresi</value></data>
+  <data name="Server" xml:space="preserve"><value>Sunucu</value></data>
+  <data name="Settings" xml:space="preserve"><value>Ayarlar</value></data>
+  <data name="Settings saved." xml:space="preserve"><value>Ayarlar kaydedildi.</value></data>
+  <data name="The image is too large (maximum 512 KB)." xml:space="preserve"><value>Görüntü çok büyük (en fazla 512 KB).</value></data>
+  <data name="The last active admin cannot be demoted." xml:space="preserve"><value>Son etkin yöneticinin rolü düşürülemez.</value></data>
+  <data name="This invitation link is invalid or was already used." xml:space="preserve"><value>Bu davet bağlantısı geçersiz veya daha önce kullanılmış.</value></data>
+  <data name="User" xml:space="preserve"><value>Kullanıcı</value></data>
+  <data name="You cannot change your own role." xml:space="preserve"><value>Kendi rolünüzü değiştiremezsiniz.</value></data>
+  <data name="You have been invited" xml:space="preserve"><value>Davet edildiniz</value></data>
+  <data name="configured" xml:space="preserve"><value>yapılandırıldı</value></data>
 </root>

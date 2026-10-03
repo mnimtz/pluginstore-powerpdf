@@ -29,9 +29,12 @@ public class LoginModel : PageModel
 
     public async Task<IActionResult> OnPostAsync(string email, string password)
     {
+        // The password is verified FIRST; account status is only revealed to
+        // someone who already proved they own the account (no user enumeration).
         var user = await _users.FindByEmailAsync(email);
-        if (user is null)
+        if (user is null || !await _users.CheckPasswordAsync(user, password))
         {
+            if (user is not null) await _users.AccessFailedAsync(user);
             Message = "Sign-in failed. Check email and password.";
             MessageKind = "error";
             return Page();

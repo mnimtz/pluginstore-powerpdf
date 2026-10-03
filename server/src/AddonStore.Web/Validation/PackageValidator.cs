@@ -17,6 +17,30 @@ public class PackageValidator
 {
     public const long MaxPackageBytes = 200 * 1024L * 1024L;
 
+    // Decompression caps (zip-bomb defense): per entry type and total inflated.
+    private const long MaxManifestBytes = 256 * 1024;
+    private const long MaxTextEntryBytes = 1 * 1024 * 1024;
+    private const long MaxIconBytes = 4 * 1024 * 1024;
+    private const long MaxZxtBytes = 120 * 1024L * 1024L;
+    private const long MaxTotalInflatedBytes = 400 * 1024L * 1024L;
+    private long _inflated;
+
+    /// <summary>Reads an entry with a hard decompressed-size cap; null when exceeded.</summary>
+    private byte[]? ReadCapped(ZipArchiveEntry entry, long cap)
+    {
+        using var ms = new MemoryStream();
+        using var es = entry.Open();
+        var buf = new byte[81920];
+        int got;
+        while ((got = es.Read(buf, 0, buf.Length)) > 0)
+        {
+            _inflated += got;
+            if (ms.Length + got > cap || _inflated > MaxTotalInflatedBytes) return null;
+            ms.Write(buf, 0, got);
+        }
+        return ms.ToArray();
+    }
+
     private static readonly Regex IdPattern = new(@"^[a-z0-9][a-z0-9-]*(\.[a-z0-9][a-z0-9-]*)+$", RegexOptions.Compiled);
     private static readonly Regex SemVerPattern = new(@"^\d+\.\d+\.\d+$", RegexOptions.Compiled);
 
@@ -87,12 +111,17 @@ public class PackageValidator
                 return (report, null);
             }
 
+            var manifestBytes = ReadCapped(manifestEntry, MaxManifestBytes);
+            if (manifestBytes is null)
+            {
+                report.Error("MANIFEST_TOO_LARGE", "manifest.json exceeds 256 KB.",
+                    "Keep the manifest small; long documentation belongs under docs/.");
+                return (report, null);
+            }
             JsonDocument doc;
             try
             {
-                using var ms = new MemoryStream();
-                await using (var es = manifestEntry.Open()) await es.CopyToAsync(ms);
-                doc = JsonDocument.Parse(ms.ToArray());
+                doc = JsonDocument.Parse(manifestBytes);
             }
             catch (JsonException ex)
             {
@@ -212,9 +241,13 @@ public class PackageValidator
                         continue;
                     }
 
-                    using var fileMs = new MemoryStream();
-                    await using (var es = zxtEntry.Open()) await es.CopyToAsync(fileMs);
-                    var bytes = fileMs.ToArray();
+                    var bytes = ReadCapped(zxtEntry, MaxZxtBytes);
+                    if (bytes is null)
+                    {
+                        report.Error("ENTRY_TOO_LARGE", $"'{file}' inflates beyond the allowed size.",
+                            "A single .zxt may be at most 120 MB uncompressed; large payloads must be fetched at install time.");
+                        continue;
+                    }
 
                     var expected = root.TryGetProperty("sha256", out var shaEl) && shaEl.ValueKind == JsonValueKind.Object
                         ? GetString(shaEl, arch) : null;
@@ -397,7 +430,7 @@ public class PackageValidator
         }
     }
 
-    private static void CheckIcon(ValidationReport report, ZipArchive zip)
+    private void CheckIcon(ValidationReport report, ZipArchive zip)
     {
         var icon = zip.GetEntry("assets/icon.png");
         if (icon is null)
@@ -408,9 +441,12 @@ public class PackageValidator
         }
         try
         {
-            using var ms = new MemoryStream();
-            using (var es = icon.Open()) es.CopyTo(ms);
-            var b = ms.ToArray();
+            var b = ReadCapped(icon, MaxIconBytes);
+            if (b is null)
+            {
+                report.Warn("ICON_TOO_LARGE", "assets/icon.png inflates beyond 4 MB.", "Use a small square PNG (e.g. 128x128).");
+                return;
+            }
             bool png = b.Length > 24 && b[0] == 0x89 && b[1] == 'P' && b[2] == 'N' && b[3] == 'G';
             if (!png) { report.Warn("ICON_INVALID", "assets/icon.png is not a PNG file.", "Export the icon as PNG."); return; }
             int w = (b[16] << 24) | (b[17] << 16) | (b[18] << 8) | b[19];
@@ -426,7 +462,7 @@ public class PackageValidator
         }
     }
 
-    private static void CheckLicenses(ValidationReport report, ZipArchive zip)
+    private void CheckLicenses(ValidationReport report, ZipArchive zip)
     {
         var lic = zip.GetEntry("LICENSES.md");
         if (lic is null)
@@ -437,8 +473,9 @@ public class PackageValidator
         }
         try
         {
-            using var reader = new StreamReader(lic.Open());
-            var text = reader.ReadToEnd();
+            var raw = ReadCapped(lic, MaxTextEntryBytes);
+            if (raw is null) return;
+            var text = System.Text.Encoding.UTF8.GetString(raw);
             if (Regex.IsMatch(text, @"\b(A?GPL|GNU (Affero )?General Public License|LGPL)\b", RegexOptions.IgnoreCase))
                 report.Warn("LICENSE_GPL_MARKER", "LICENSES.md mentions a GPL-family license.",
                     "Only MIT/BSD/Apache-2.0 dependencies are allowed in shipped plugins (standing team policy). Replace the dependency or clarify the mention.");
@@ -451,7 +488,7 @@ public class PackageValidator
     /// rule, the host-owned panel:: namespace, the IconMode=1 trap, and
     /// NameAndTitle language folders that drift apart after a fork/rename.
     /// </summary>
-    private static void CheckUiLayout(ValidationReport report, ZipArchive zip)
+    private void CheckUiLayout(ValidationReport report, ZipArchive zip)
     {
         var layoutEntries = zip.Entries
             .Where(e => e.FullName.Replace('\\', '/').Contains("UILayout/"))
@@ -460,8 +497,8 @@ public class PackageValidator
 
         string ReadEntry(ZipArchiveEntry e)
         {
-            using var r = new StreamReader(e.Open());
-            return r.ReadToEnd();
+            var raw = ReadCapped(e, MaxTextEntryBytes);
+            return raw is null ? "" : System.Text.Encoding.UTF8.GetString(raw);
         }
 
         var publish = layoutEntries.FirstOrDefault(e => e.FullName.EndsWith("Publish Mode.xml", StringComparison.OrdinalIgnoreCase));
