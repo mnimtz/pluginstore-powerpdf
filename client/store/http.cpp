@@ -67,6 +67,61 @@ bool Allowed(const Url& u)
     return true;
 }
 
+// "AddonStore-PowerPDF/0.4.2 (PowerPDF 15.1.0.555; Windows 10.0.26200; arm64)":
+// client, host and OS version plus the machine's native architecture, for the
+// store's usage reports. Technical data only, nothing personal.
+static const wchar_t* UserAgent()
+{
+    static std::wstring ua;
+    if (!ua.empty()) return ua.c_str();
+
+    std::wstring host = L"0";
+    wchar_t exe[MAX_PATH] = { 0 };
+    GetModuleFileNameW(NULL, exe, MAX_PATH);
+    DWORD dummy = 0, size = GetFileVersionInfoSizeW(exe, &dummy);
+    if (size > 0)
+    {
+        std::vector<BYTE> data(size);
+        VS_FIXEDFILEINFO* fi = nullptr;
+        UINT len = 0;
+        if (GetFileVersionInfoW(exe, 0, size, data.data()) &&
+            VerQueryValueW(data.data(), L"\\", reinterpret_cast<void**>(&fi), &len) && fi)
+        {
+            wchar_t v[64];
+            swprintf_s(v, 64, L"%u.%u.%u.%u", HIWORD(fi->dwFileVersionMS), LOWORD(fi->dwFileVersionMS),
+                       HIWORD(fi->dwFileVersionLS), LOWORD(fi->dwFileVersionLS));
+            host = v;
+        }
+    }
+
+    // RtlGetVersion reports the real OS version (GetVersionEx is shimmed).
+    std::wstring os = L"0";
+    typedef LONG(WINAPI* RtlGetVersionFn)(OSVERSIONINFOW*);
+    if (auto rtl = reinterpret_cast<RtlGetVersionFn>(GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "RtlGetVersion")))
+    {
+        OSVERSIONINFOW vi = { sizeof(vi) };
+        if (rtl(&vi) == 0)
+        {
+            wchar_t v[48];
+            swprintf_s(v, 48, L"%lu.%lu.%lu", vi.dwMajorVersion, vi.dwMinorVersion, vi.dwBuildNumber);
+            os = v;
+        }
+    }
+
+    // Native machine, so Power PDF in ARM64EC emulation still reports arm64.
+    std::wstring arch = L"x64";
+    typedef BOOL(WINAPI* IsWow64Process2Fn)(HANDLE, USHORT*, USHORT*);
+    if (auto wow = reinterpret_cast<IsWow64Process2Fn>(GetProcAddress(GetModuleHandleW(L"kernel32.dll"), "IsWow64Process2")))
+    {
+        USHORT proc = 0, native = 0;
+        if (wow(GetCurrentProcess(), &proc, &native) && native == 0xAA64 /* IMAGE_FILE_MACHINE_ARM64 */)
+            arch = L"arm64";
+    }
+
+    ua = std::wstring(L"AddonStore-PowerPDF/") + FP_VERSION_W + L" (PowerPDF " + host + L"; Windows " + os + L"; " + arch + L")";
+    return ua.c_str();
+}
+
 // Opens the request and receives the response; returns the request handle
 // chain via out-params (caller keeps the session/connect handles alive).
 bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& request, DWORD* status)
@@ -75,7 +130,7 @@ bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& reque
 #define WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY_CONFIG 4
 #endif
     if (!Allowed(u)) return false;
-    session = WinHttpOpen(L"AddonStore-PowerPDF/" FP_VERSION_W,
+    session = WinHttpOpen(UserAgent(),
                           WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY_CONFIG,
                           WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0);
     if (!session) return false;

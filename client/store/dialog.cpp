@@ -274,7 +274,15 @@ protected:
         CWaitCursor wait;
         int rc = PSSelfUpdate(m_self, GetSafeHwnd());
         if (rc == 0)
-            SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_MSG_SELFUPD).c_str());
+        {
+            // The helper installs once Power PDF is gone: close it now.
+            HWND mainWnd = ::GetAncestor(GetSafeHwnd(), GA_ROOTOWNER);
+            EndDialog(IDCANCEL);
+            if (mainWnd && mainWnd != GetSafeHwnd())
+                ::PostMessageW(mainWnd, WM_CLOSE, 0, 0);
+        }
+        else if (rc == 5)
+            return;
         else if (rc == 2)
             SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_MSG_HASH).c_str());
         else

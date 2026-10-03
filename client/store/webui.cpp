@@ -408,8 +408,17 @@ protected:
         if (job == JobSelfUpdate)
         {
             int rc = PSSelfUpdate(m_self, m_hWnd);
-            SendMessageToPage(FPLoc(IDS_PSD_TITLE), rc == 0 ? FPLoc(IDS_PSD_MSG_SELFUPD)
-                : rc == 2 ? FPLoc(IDS_PSD_MSG_HASH) : FmtInt(IDS_PSD_MSG_INSTFAIL, rc));
+            if (rc == 0)
+            {
+                // The helper installs once Power PDF is gone: close it now.
+                HWND mainWnd = ::GetAncestor(m_hWnd, GA_ROOTOWNER);
+                EndDialog(IDOK);
+                if (mainWnd && mainWnd != m_hWnd) ::PostMessageW(mainWnd, WM_CLOSE, 0, 0);
+            }
+            else if (rc == 5)
+                SendMessageToPage(L"", L"");
+            else
+                SendMessageToPage(FPLoc(IDS_PSD_TITLE), rc == 2 ? FPLoc(IDS_PSD_MSG_HASH) : FmtInt(IDS_PSD_MSG_INSTFAIL, rc));
             return 0;
         }
         if (m_jobIndex >= m_entries.size()) return 0;

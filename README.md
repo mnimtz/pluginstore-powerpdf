@@ -108,6 +108,16 @@ built with the Power PDF Plugin SDK):
   is inserted as text only; the page cannot navigate or load anything external.
   Without the WebView2 runtime, or with `ClassicUI = 1` (HKCU or the HKLM
   policy key), the classic list dialog opens instead.
+- **Restart and self-update** (client 0.4.1+/0.4.2+): after an install or
+  removal Power PDF closes and a helper starts it again. Updating the store
+  client asks once, closes Power PDF, installs the new MSI with a progress
+  bar (one UAC prompt) and starts Power PDF again, also when the installation
+  was cancelled. Helper steps are logged to `%TEMP%\PluginStore.log`, the MSI
+  log to `%TEMP%\AddonStoreUpdate.log`.
+- **Usage statistics** (client 0.4.2+): the client's user agent carries its
+  version, the Power PDF and Windows version and the native architecture
+  (x64/arm64), e.g. `AddonStore-PowerPDF/0.4.2 (PowerPDF 15.1.0.555; Windows
+  10.0.26200; arm64)`. Technical data only, used for the admin reports.
 - Lists the catalog with localized names, changelogs, installed versions and
   update status; installs with SHA-256 verification and a single UAC prompt.
 - Drops each package's `manifest.json` next to the plugin, so updates are

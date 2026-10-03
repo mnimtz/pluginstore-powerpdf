@@ -25,11 +25,16 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner);
 // plus the plugin's HKCU key (user context). Same return codes as install.
 int PSUninstallPackage(const std::wstring& zxtName, HWND owner);
 
-// Self-update of the store client: download the client package (hash
-// verified), extract its MSI in user context and launch it. The MSI closes
-// Power PDF itself and elevates on its own. 0 = MSI started, 1 = download,
-// 2 = hash, 4 = extract/launch failed.
+// Self-update of the store client: downloads the client package (hash
+// verified), asks the user, then starts a helper that waits for Power PDF to
+// exit, installs the MSI (/passive, elevates itself) and starts Power PDF
+// again. The CALLER closes Power PDF when this returns 0.
+// 0 = helper started, 1 = download, 2 = hash, 4 = helper failed, 5 = cancelled.
 int PSSelfUpdate(const PSCatalogEntry& e, HWND owner);
+
+// The self-update helper script (PowerShell) for a downloaded package; used by
+// PSSelfUpdate, separate so it can be tested without a download.
+std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& outDir);
 
 // Starts a detached helper that waits until Power PDF (this process and any
 // other PowerPDF.exe) has exited and then starts it again. Logs its steps to

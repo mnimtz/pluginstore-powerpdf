@@ -46,7 +46,7 @@
 #define IDS_PSD_MSG_UNINSTOK    142
 #define IDS_PSD_SELF_UPDATE     143
 #define IDS_PSD_BTN_SELFUPD     144
-#define IDS_PSD_MSG_SELFUPD     145
+#define IDS_PSD_ASK_SELFUPD     145
 #define IDS_PSD_AUTHOR          146
 #define IDS_PSD_ASK_RESTART     147
 #define IDS_PSD_ASK_RESTART_UN  148

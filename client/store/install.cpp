@@ -1,4 +1,4 @@
-// install.cpp — see install.h.
+// install.cpp â€” see install.h.
 
 #include "stdafx.h"
 #include "install.h"
@@ -6,6 +6,8 @@
 #include "http.h"
 #include "powerpdfpath.h"
 #include "logging.h"
+#include "loc.h"
+#include "Resource.h"
 #include <bcrypt.h>
 #include <shellapi.h>
 #include <vector>
@@ -135,7 +137,7 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
     DWORD status = 0;
     if (!PSHttpGetFile(e.downloadUrl, ppak, &status)) return 1;
 
-    // 2) verify (user context) — the catalog hash is authoritative
+    // 2) verify (user context) â€” the catalog hash is authoritative
     std::wstring actual = Sha256File(ppak);
     if (_wcsicmp(actual.c_str(), e.sha256.c_str()) != 0)
     {
@@ -202,36 +204,21 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
     return result;
 }
 
-bool PSScheduleRestart()
+// PowerShell single-quoted literal: ' doubles (a user folder like O'Brien).
+static std::wstring PsQuote(const std::wstring& v)
 {
-    wchar_t exe[MAX_PATH] = { 0 };
-    GetModuleFileNameW(NULL, exe, MAX_PATH);
-    wchar_t tempDir[MAX_PATH];
-    GetTempPathW(MAX_PATH, tempDir);
-    wchar_t pid[16];
-    swprintf_s(pid, 16, L"%lu", GetCurrentProcessId());
+    std::wstring r = L"'";
+    for (wchar_t c : v)
+    {
+        r += c;
+        if (c == L'\'' || c == 0x2018 || c == 0x2019) r += c;
+    }
+    return r + L"'";
+}
 
-    // Waits for THIS process, then until no PowerPDF.exe is left at all
-    // (a second instance still shutting down would swallow the new start via
-    // the single-instance hand-over), then starts Power PDF again. Generous
-    // timeout: the user may take a while with "save changes?" prompts.
-    std::wstring script = std::wstring() +
-        L"$log = Join-Path $env:TEMP 'PluginStore.log'\r\n" +
-        L"function L($m) { Add-Content -Path $log -Encoding UTF8 -Value ((Get-Date -Format 'yyyy-MM-dd HH:mm:ss.fff') + '  [Restart] ' + $m) }\r\n" +
-        L"$p0 = " + pid + L"\r\n" +
-        L"$exe = '" + exe + L"'\r\n" +
-        L"L ('helper waiting for pid ' + $p0)\r\n" +
-        L"Wait-Process -Id $p0 -Timeout 900 -ErrorAction SilentlyContinue\r\n" +
-        L"if (Get-Process -Id $p0 -ErrorAction SilentlyContinue) { L 'Power PDF still running after 15 min, giving up'; exit 1 }\r\n" +
-        L"$deadline = (Get-Date).AddSeconds(60)\r\n" +
-        L"while ((Get-Process -Name PowerPDF -ErrorAction SilentlyContinue) -and (Get-Date) -lt $deadline) { Start-Sleep -Milliseconds 500 }\r\n" +
-        L"if (Get-Process -Name PowerPDF -ErrorAction SilentlyContinue) { L 'another PowerPDF.exe is still running, not starting a second one'; exit 2 }\r\n" +
-        L"Start-Sleep -Seconds 2\r\n" +
-        L"try { Start-Process -FilePath $exe; L 'Power PDF restarted' } catch { L ('start failed: ' + $_.Exception.Message) }\r\n";
-
-    std::wstring scriptPath = std::wstring(tempDir) + L"psrestart.ps1";
-    if (!WriteTextFile(scriptPath, script)) return false;
-
+// Starts a PowerShell helper script that must outlive this process.
+static bool LaunchHelper(const std::wstring& scriptPath, const wchar_t* what)
+{
     std::wstring cmd = L"powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"" + scriptPath + L"\"";
     std::vector<wchar_t> buf(cmd.begin(), cmd.end());
     buf.push_back(0);
@@ -252,7 +239,7 @@ bool PSScheduleRestart()
                             NULL, NULL, &si, &pi);
     if (!ok)
     {
-        FPLogW(L"[Store] restart helper could not start (%lu)", GetLastError());
+        FPLogW(L"[Store] %s helper could not start (%lu)", what, GetLastError());
         return false;
     }
     CloseHandle(pi.hThread);
@@ -263,12 +250,49 @@ bool PSScheduleRestart()
         DWORD code = 0;
         GetExitCodeProcess(pi.hProcess, &code);
         CloseHandle(pi.hProcess);
-        FPLogW(L"[Store] restart helper exited at once (code %lu)", code);
+        FPLogW(L"[Store] %s helper exited at once (code %lu)", what, code);
         return false;
     }
     CloseHandle(pi.hProcess);
-    FPLogW(L"[Store] restart requested, helper started");
+    FPLogW(L"[Store] %s requested, helper started", what);
     return true;
+}
+
+// Script lines shared by the restart and the self-update helper: log
+// function, wait for this process, then for every PowerPDF.exe (a second
+// instance still shutting down would swallow the new start via the
+// single-instance hand-over). Generous timeout: the user may take a while
+// with "save changes?" prompts.
+static std::wstring HelperPrologue(const wchar_t* tag, const wchar_t* giveUp)
+{
+    wchar_t exe[MAX_PATH] = { 0 };
+    GetModuleFileNameW(NULL, exe, MAX_PATH);
+    wchar_t pid[16];
+    swprintf_s(pid, 16, L"%lu", GetCurrentProcessId());
+    return std::wstring() +
+        L"$log = Join-Path $env:TEMP 'PluginStore.log'\r\n" +
+        L"function L($m) { Add-Content -Path $log -Encoding UTF8 -Value ((Get-Date -Format 'yyyy-MM-dd HH:mm:ss.fff') + '  [" + tag + L"] ' + $m) }\r\n" +
+        L"$p0 = " + pid + L"\r\n" +
+        L"$exe = " + PsQuote(exe) + L"\r\n" +
+        L"L ('helper waiting for pid ' + $p0)\r\n" +
+        L"Wait-Process -Id $p0 -Timeout 900 -ErrorAction SilentlyContinue\r\n" +
+        L"if (Get-Process -Id $p0 -ErrorAction SilentlyContinue) { L '" + giveUp + L"'; exit 1 }\r\n" +
+        L"$deadline = (Get-Date).AddSeconds(60)\r\n" +
+        L"while ((Get-Process -Name PowerPDF -ErrorAction SilentlyContinue) -and (Get-Date) -lt $deadline) { Start-Sleep -Milliseconds 500 }\r\n";
+}
+
+bool PSScheduleRestart()
+{
+    wchar_t tempDir[MAX_PATH];
+    GetTempPathW(MAX_PATH, tempDir);
+    std::wstring script = HelperPrologue(L"Restart", L"Power PDF still running after 15 min, giving up") +
+        L"if (Get-Process -Name PowerPDF -ErrorAction SilentlyContinue) { L 'another PowerPDF.exe is still running, not starting a second one'; exit 2 }\r\n" +
+        L"Start-Sleep -Seconds 2\r\n" +
+        L"try { Start-Process -FilePath $exe; L 'Power PDF restarted' } catch { L ('start failed: ' + $_.Exception.Message) }\r\n";
+
+    std::wstring scriptPath = std::wstring(tempDir) + L"psrestart.ps1";
+    if (!WriteTextFile(scriptPath, script)) return false;
+    return LaunchHelper(scriptPath, L"restart");
 }
 
 int PSCompareVersions(const std::wstring& a, const std::wstring& b)
@@ -286,6 +310,34 @@ int PSCompareVersions(const std::wstring& a, const std::wstring& b)
     return 0;
 }
 
+// Helper script of the self-update: wait until Power PDF has exited, extract
+// the MSI in user context, install with a progress bar (Windows asks for
+// elevation), clean up and start Power PDF again, also when the installation
+// was cancelled.
+std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& outDir)
+{
+    return HelperPrologue(L"SelfUpdate", L"Power PDF still running after 15 min, update not installed") +
+        L"$ppak = " + PsQuote(ppak) + L"\r\n" +
+        L"$out = " + PsQuote(outDir) + L"\r\n" +
+        L"try {\r\n" +
+        L"  if (Test-Path $out) { Remove-Item $out -Recurse -Force }\r\n" +
+        L"  Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
+        L"  [System.IO.Compression.ZipFile]::ExtractToDirectory($ppak, $out)\r\n" +
+        L"  $msi = Get-ChildItem (Join-Path $out 'installer') -Filter '*.msi' | Select-Object -First 1\r\n" +
+        L"  if (-not $msi) { throw 'no MSI in the package' }\r\n" +
+        L"  $mlog = Join-Path $env:TEMP 'AddonStoreUpdate.log'\r\n" +
+        L"  L ('installing ' + $msi.Name)\r\n" +
+        L"  $p = Start-Process msiexec.exe -ArgumentList @('/i', ('\"' + $msi.FullName + '\"'), '/passive', '/norestart', '/l*v', ('\"' + $mlog + '\"')) -Wait -PassThru\r\n" +
+        L"  L ('msiexec exit code ' + $p.ExitCode + ' (0 = ok, 3010 = ok, 1602 = cancelled)')\r\n" +
+        L"} catch { L ('update failed: ' + $_.Exception.Message) }\r\n" +
+        L"Remove-Item $ppak -Force -ErrorAction SilentlyContinue\r\n" +
+        L"Remove-Item $out -Recurse -Force -ErrorAction SilentlyContinue\r\n" +
+        L"if (-not (Get-Process -Name PowerPDF -ErrorAction SilentlyContinue)) {\r\n" +
+        L"  Start-Sleep -Seconds 2\r\n" +
+        L"  try { Start-Process -FilePath $exe; L 'Power PDF restarted' } catch { L ('start failed: ' + $_.Exception.Message) }\r\n" +
+        L"}\r\n";
+}
+
 int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
 {
     wchar_t tempDir[MAX_PATH];
@@ -300,43 +352,24 @@ int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
         return 2;
     }
 
-    // Extract the MSI in USER context (no elevation needed for %TEMP%), then
-    // hand over to msiexec: the MSI elevates itself and asks to close Power PDF.
-    std::wstring outDir = std::wstring(tempDir) + L"PluginStoreUpdate-" + e.version;
-    std::wstring script = std::wstring() +
-        L"$ErrorActionPreference='Stop'\r\n" +
-        L"$out='" + outDir + L"'\r\n" +
-        L"if(Test-Path $out){ Remove-Item $out -Recurse -Force }\r\n" +
-        L"Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
-        L"[System.IO.Compression.ZipFile]::ExtractToDirectory('" + ppak + L"',$out)\r\n" +
-        L"$msi=Get-ChildItem (Join-Path $out 'installer') -Filter '*.msi' | Select-Object -First 1\r\n" +
-        L"if(-not $msi){ exit 3 }\r\n" +
-        L"Start-Process msiexec.exe -ArgumentList @('/i', ('\"' + $msi.FullName + '\"'))\r\n" +
-        L"exit 0\r\n";
-    std::wstring scriptPath = std::wstring(tempDir) + L"psselfupdate.ps1";
-    if (!WriteTextFile(scriptPath, script)) return 4;
-
-    std::wstring cmd = L"powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"" + scriptPath + L"\"";
-    STARTUPINFOW si = { sizeof(si) };
-    si.dwFlags = STARTF_USESHOWWINDOW;
-    si.wShowWindow = SW_HIDE;
-    PROCESS_INFORMATION pi = { 0 };
-    std::vector<wchar_t> buf(cmd.begin(), cmd.end());
-    buf.push_back(0);
-    int result = 4;
-    if (CreateProcessW(NULL, buf.data(), NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi))
+    // The MSI cannot replace PluginStore.zxt while Power PDF has it loaded, so
+    // Power PDF closes first; ask before that happens.
+    if (MessageBoxW(owner, FPLoc(IDS_PSD_ASK_SELFUPD).c_str(), FPLoc(IDS_PSD_TITLE).c_str(),
+                    MB_YESNO | MB_ICONQUESTION) != IDYES)
     {
-        WaitForSingleObject(pi.hProcess, 60000);
-        DWORD code = 1;
-        GetExitCodeProcess(pi.hProcess, &code);
-        CloseHandle(pi.hProcess);
-        CloseHandle(pi.hThread);
-        result = code == 0 ? 0 : 4;
+        DeleteFileW(ppak.c_str());
+        return 5;
     }
-    DeleteFileW(scriptPath.c_str());
-    DeleteFileW(ppak.c_str());
+
+    std::wstring outDir = std::wstring(tempDir) + L"PluginStoreUpdate-" + e.version;
+    std::wstring script = PSSelfUpdateScript(ppak, outDir);
+    std::wstring scriptPath = std::wstring(tempDir) + L"psselfupdate.ps1";
+    int result = 4;
+    if (WriteTextFile(scriptPath, script) && LaunchHelper(scriptPath, L"self-update"))
+        result = 0;
+    else
+        DeleteFileW(ppak.c_str());
     FPLogW(L"[Store] self-update to %s -> %d", e.version.c_str(), result);
-    (void)owner;
     return result;
 }
 
