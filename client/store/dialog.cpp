@@ -129,6 +129,11 @@ protected:
         const PSCatalogEntry* e = Selected();
         if (!e) { SetDlgItemTextW(IDC_PS_DESC, L""); return; }
         std::wstring text = e->description;
+        if (!e->author.empty())
+        {
+            text += L"\r\n\r\n" + FPLoc(IDS_PSD_AUTHOR) + L" " + e->author;
+            if (!e->contactEmail.empty()) text += L" <" + e->contactEmail + L">";
+        }
         if (!e->changelog.empty())
             text += L"\r\n\r\n" + e->version + L": " + e->changelog;
         SetDlgItemTextW(IDC_PS_DESC, text.c_str());

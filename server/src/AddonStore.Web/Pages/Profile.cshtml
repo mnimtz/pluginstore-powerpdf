@@ -28,6 +28,13 @@
             <label>@L["Profile picture (PNG or JPEG, max. 512 KB)"]</label>
             <input type="file" name="avatar" accept=".png,.jpg,.jpeg" />
         </div>
+        <div>
+            <label style="display:flex;gap:8px;align-items:flex-start;font-weight:400">
+                <input type="checkbox" name="showContact" value="true" checked="@(Model.Me?.ShowContactPublicly ?? true)" style="width:auto;margin-top:3px" />
+                <span>@L["Show my name and email as author of my plugins in the public catalog"]<br />
+                    <small style="color:var(--tun-slate)">@L["When off, the catalog shows “Tungsten Automation” instead."]</small></span>
+            </label>
+        </div>
         <button type="submit" class="btn">@L["Save"]</button>
     </form>
 </div>

@@ -17,6 +17,8 @@ public class AppUser : IdentityUser
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     /// <summary>File name of the avatar under data/avatars, e.g. "<id>.png"; null = none.</summary>
     public string? AvatarFile { get; set; }
+    /// <summary>Show name + email as author on the public catalog; off = "Tungsten Automation".</summary>
+    public bool ShowContactPublicly { get; set; } = true;
 }
 
 /// <summary>Runtime-editable instance settings (admin area), e.g. the Resend key.</summary>

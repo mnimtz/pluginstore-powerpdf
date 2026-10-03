@@ -429,8 +429,8 @@ public static class ApiEndpoints
         var cmp = new SemVerComparer();
         var result = new List<object>();
         var ownerRows = await db.Packages.Include(p => p.Owner).ToListAsync();
-        var owners = ownerRows.ToDictionary(p => p.Id, p => p.Owner?.DisplayName ?? "");
-        var ownerMails = ownerRows.ToDictionary(p => p.Id, p => p.Owner?.Email ?? "");
+        var owners = ownerRows.ToDictionary(p => p.Id, p => Services.CatalogUi.PublicName(p.Owner));
+        var ownerMails = ownerRows.ToDictionary(p => p.Id, p => Services.CatalogUi.PublicEmail(p.Owner));
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live)

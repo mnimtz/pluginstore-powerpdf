@@ -113,6 +113,7 @@ using (var scope = app.Services.CreateScope())
     foreach (var sql in new[]
     {
         "ALTER TABLE AspNetUsers ADD COLUMN AvatarFile TEXT NULL",
+        "ALTER TABLE AspNetUsers ADD COLUMN ShowContactPublicly INTEGER NOT NULL DEFAULT 1",
         "CREATE TABLE IF NOT EXISTS AppSettings (Key TEXT NOT NULL PRIMARY KEY, Value TEXT NOT NULL)",
         "CREATE TABLE IF NOT EXISTS Invites (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
             "Email TEXT NOT NULL, TokenHash TEXT NOT NULL, Role TEXT NOT NULL, InvitedBy TEXT NOT NULL, " +

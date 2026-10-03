@@ -164,4 +164,6 @@
   <data name="Time zone for displayed times" xml:space="preserve"><value>Fuso orario per gli orari visualizzati</value></data>
   <data name="Withdrawn" xml:space="preserve"><value>Ritirato</value></data>
   <data name="Author" xml:space="preserve"><value>Autore</value></data>
+  <data name="Show my name and email as author of my plugins in the public catalog" xml:space="preserve"><value>Mostra il mio nome e la mia e-mail come autore dei miei plugin nel catalogo pubblico</value></data>
+  <data name="When off, the catalog shows “Tungsten Automation” instead." xml:space="preserve"><value>Se disattivato, il catalogo mostra invece "Tungsten Automation".</value></data>
 </root>

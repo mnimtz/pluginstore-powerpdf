@@ -164,4 +164,6 @@
   <data name="Time zone for displayed times" xml:space="preserve"><value>A megjelenített időpontok időzónája</value></data>
   <data name="Withdrawn" xml:space="preserve"><value>Visszavonva</value></data>
   <data name="Author" xml:space="preserve"><value>Szerző</value></data>
+  <data name="Show my name and email as author of my plugins in the public catalog" xml:space="preserve"><value>Nevem és e-mail-címem megjelenítése a beépülő moduljaim szerzőjeként a nyilvános katalógusban</value></data>
+  <data name="When off, the catalog shows “Tungsten Automation” instead." xml:space="preserve"><value>Kikapcsolt állapotban a katalógus helyette a "Tungsten Automation" nevet mutatja.</value></data>
 </root>

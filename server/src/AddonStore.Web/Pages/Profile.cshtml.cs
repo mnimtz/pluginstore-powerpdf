@@ -30,10 +30,16 @@ public class ProfileModel : PageModel
 
     public async Task OnGetAsync() => await LoadAsync();
 
-    public async Task OnPostProfileAsync(string name, IFormFile? avatar)
+    public async Task OnPostProfileAsync(string name, IFormFile? avatar, bool showContact)
     {
         var user = await _users.GetUserAsync(User);
         if (user is null) { await LoadAsync(); return; }
+
+        if (user.ShowContactPublicly != showContact)
+        {
+            user.ShowContactPublicly = showContact;
+            Notice = "Profile updated.";
+        }
 
         if (!string.IsNullOrWhiteSpace(name) && name.Trim() != user.DisplayName)
         {

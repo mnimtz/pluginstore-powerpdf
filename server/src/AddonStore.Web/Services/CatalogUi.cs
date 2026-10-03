@@ -36,8 +36,8 @@ public static class CatalogUi
         var cmp = new SemVerComparer();
         var items = new List<CatalogItem>();
         var ownerRows = await db.Packages.Include(p => p.Owner).ToListAsync();
-        var owners = ownerRows.ToDictionary(p => p.Id, p => p.Owner?.DisplayName ?? "");
-        var ownerMails = ownerRows.ToDictionary(p => p.Id, p => p.Owner?.Email ?? "");
+        var owners = ownerRows.ToDictionary(p => p.Id, p => CatalogUi.PublicName(p.Owner));
+        var ownerMails = ownerRows.ToDictionary(p => p.Id, p => CatalogUi.PublicEmail(p.Owner));
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
@@ -72,6 +72,16 @@ public static class CatalogUi
         }
         return items;
     }
+
+    public const string PlaceholderAuthor = "Tungsten Automation";
+
+    /// <summary>The owner's public name, or the placeholder when they opted out.</summary>
+    public static string PublicName(AppUser? owner) =>
+        owner is null || !owner.ShowContactPublicly ? PlaceholderAuthor : owner.DisplayName;
+
+    /// <summary>The owner's public email, or nothing when they opted out.</summary>
+    public static string PublicEmail(AppUser? owner) =>
+        owner is null || !owner.ShowContactPublicly ? "" : owner.Email ?? "";
 
     /// <summary>Optional manifest "author" (e.g. a team) wins; otherwise the publishing account.</summary>
     public static string AuthorOf(JsonElement root, string ownerName) =>
