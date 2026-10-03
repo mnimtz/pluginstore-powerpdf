@@ -240,12 +240,15 @@ bool PSScheduleRestart()
     si.wShowWindow = SW_HIDE;
     PROCESS_INFORMATION pi = { 0 };
     // Break away from a job the host may run in, so the helper survives the
-    // host's exit; fall back to a plain detached start where that is denied.
+    // host's exit; fall back to a plain start where that is denied.
+    // Never DETACHED_PROCESS: powershell.exe 5.1 started without any console
+    // exits at once without running the script (C0.3.3 to C0.4.0 restart bug).
+    // CREATE_NO_WINDOW gives it a hidden console of its own instead.
     BOOL ok = CreateProcessW(NULL, buf.data(), NULL, NULL, FALSE,
-                             CREATE_NO_WINDOW | DETACHED_PROCESS | CREATE_BREAKAWAY_FROM_JOB,
+                             CREATE_NO_WINDOW | CREATE_BREAKAWAY_FROM_JOB,
                              NULL, NULL, &si, &pi);
     if (!ok)
-        ok = CreateProcessW(NULL, buf.data(), NULL, NULL, FALSE, CREATE_NO_WINDOW | DETACHED_PROCESS,
+        ok = CreateProcessW(NULL, buf.data(), NULL, NULL, FALSE, CREATE_NO_WINDOW,
                             NULL, NULL, &si, &pi);
     if (!ok)
     {
@@ -253,6 +256,16 @@ bool PSScheduleRestart()
         return false;
     }
     CloseHandle(pi.hThread);
+    // The helper waits for this process, so an exit within the first second
+    // means it did not run; report that instead of closing Power PDF for good.
+    if (WaitForSingleObject(pi.hProcess, 1000) == WAIT_OBJECT_0)
+    {
+        DWORD code = 0;
+        GetExitCodeProcess(pi.hProcess, &code);
+        CloseHandle(pi.hProcess);
+        FPLogW(L"[Store] restart helper exited at once (code %lu)", code);
+        return false;
+    }
     CloseHandle(pi.hProcess);
     FPLogW(L"[Store] restart requested, helper started");
     return true;

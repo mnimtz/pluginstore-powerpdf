@@ -385,7 +385,11 @@ protected:
         else if (cmd == L"restart")
         {
             HWND mainWnd = ::GetAncestor(m_hWnd, GA_ROOTOWNER);
-            if (!PSScheduleRestart()) return;
+            if (!PSScheduleRestart())
+            {
+                ::MessageBoxW(m_hWnd, FPLoc(IDS_PSD_RESTART_FAIL).c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
+                return;
+            }
             EndDialog(IDOK);
             if (mainWnd && mainWnd != m_hWnd) ::PostMessageW(mainWnd, WM_CLOSE, 0, 0);
         }

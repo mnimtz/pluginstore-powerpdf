@@ -218,7 +218,11 @@ protected:
             return;
 
         HWND mainWnd = ::GetAncestor(GetSafeHwnd(), GA_ROOTOWNER);
-        if (!PSScheduleRestart()) return;
+        if (!PSScheduleRestart())
+        {
+            MessageBoxW(FPLoc(IDS_PSD_RESTART_FAIL).c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
+            return;
+        }
 
         EndDialog(IDCANCEL);
         if (mainWnd && mainWnd != GetSafeHwnd())
