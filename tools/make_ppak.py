@@ -36,6 +36,20 @@ def sha256(path):
     return h.hexdigest()
 
 
+def msi_product_version(path):
+    """ProductVersion from the MSI Property table (Windows Installer COM via PowerShell)."""
+    import subprocess
+    ps = (
+        "$wi=New-Object -ComObject WindowsInstaller.Installer;"
+        f"$db=$wi.GetType().InvokeMember('OpenDatabase','InvokeMethod',$null,$wi,@('{os.path.abspath(path)}',0));"
+        "$v=$db.GetType().InvokeMember('OpenView','InvokeMethod',$null,$db,@(\"SELECT Value FROM Property WHERE Property='ProductVersion'\"));"
+        "$v.GetType().InvokeMember('Execute','InvokeMethod',$null,$v,$null);"
+        "$r=$v.GetType().InvokeMember('Fetch','InvokeMethod',$null,$v,$null);"
+        "$r.GetType().InvokeMember('StringData','GetProperty',$null,$r,1)")
+    out = subprocess.run(['powershell', '-NoProfile', '-Command', ps], capture_output=True, text=True)
+    return out.stdout.strip()
+
+
 def main():
     spec_path, out_dir = sys.argv[1], sys.argv[2]
     base = os.path.dirname(os.path.abspath(spec_path))
@@ -63,6 +77,16 @@ def main():
         'ribbonAtomNamespace': spec.get('ribbonAtomNamespace', ''),
         'uninstall': spec.get('uninstall', {}),
     }
+
+    # Guard: an included MSI must carry exactly the package version, otherwise
+    # users get "Repair/Remove" instead of an upgrade (happened with 0.3.1).
+    for item in spec.get('include', []):
+        src = os.path.join(base, item['src'])
+        if src.lower().endswith('.msi'):
+            msi_ver = msi_product_version(src)
+            if msi_ver != version:
+                raise SystemExit(f'ABORT: {src} has ProductVersion {msi_ver}, package version is {version}. '
+                                 'Rebuild the MSI (client\\installer\\build_msi.cmd).')
 
     os.makedirs(out_dir, exist_ok=True)
     out = os.path.join(out_dir, f"{spec['id']}-{version}.ppak")

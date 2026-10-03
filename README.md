@@ -93,8 +93,14 @@ built with the Power PDF Plugin SDK):
 - Options page under *File → Options → Plugin-Store*: server URL (defaults to
   your instance, enforceable via HKLM policy) and the beta-channel switch.
 
-Build with `client\build.cmd` (Visual Studio 2022, x64), deploy for testing
-with an elevated `client\deploy.cmd`.
+End users install it with the MSI from the store's landing page
+(`/download/pluginstore.msi`); afterwards the client offers its own updates.
+
+Build with `client\build.cmd` and `client\installer\build_msi.cmd`
+(Visual Studio 2022, WiX v3), deploy for testing with an elevated
+`client\deploy.cmd`. Publishing a new client version (own lane: admin-only,
+live immediately) is described step by step in
+[docs/RELEASING.md](docs/RELEASING.md).
 
 ## API in 30 seconds
 

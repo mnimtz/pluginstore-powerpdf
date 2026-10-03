@@ -29,5 +29,8 @@ if not exist "%~dp0Release" mkdir "%~dp0Release"
 "%WIX%\light.exe" -nologo -ext WixUtilExtension -ext WixUIExtension -sw1076 ^
     -out "%~dp0Release\PluginStore-%FPVER%.msi" "%~dp0Product.wixobj" || exit /b 1
 
+rem Stable name for the store package (packaging/pluginstore.ppakspec.json).
+copy /Y "%~dp0Release\PluginStore-%FPVER%.msi" "%~dp0Release\PluginStore.msi" >nul || exit /b 1
+
 echo OK. MSI: %~dp0Release\PluginStore-%FPVER%.msi
 exit /b 0
