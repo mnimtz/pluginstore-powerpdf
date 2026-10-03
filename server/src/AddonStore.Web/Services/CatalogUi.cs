@@ -7,27 +7,18 @@ namespace AddonStore.Web.Services;
 
 public record CatalogItem(string Id, string Name, string Description, string Version,
     string Channel, string Changelog, long SizeBytes, int Downloads,
-    string Sha256, string MinHost, string ZxtName, string Category, string Author, string ContactEmail);
+    string Sha256, string MinHost, string ZxtName, string Category, string Author, string ContactEmail,
+    string CategoryName = "");
 
 public static class CatalogUi
 {
-    /// <summary>Fixed category slugs; anything else maps to "other". The UI
-    /// shows them as localized labels (resx keys = English labels).</summary>
-    public static readonly string[] Categories =
-        { "conversion", "forms", "signing", "navigation", "printing", "productivity", "system", "other" };
-
-    /// <summary>English display label for a category slug; doubles as resx key.</summary>
-    public static string CategoryLabel(string slug) => slug switch
+    /// <summary>Effective category of a catalog entry: server override, then manifest; unknown slugs become "other".</summary>
+    public static string EffectiveCategory(Package? pkg, JsonElement root, Dictionary<string, Category> known)
     {
-        "conversion" => "Conversion",
-        "forms" => "Forms",
-        "signing" => "Signing",
-        "navigation" => "Navigation",
-        "printing" => "Printing",
-        "productivity" => "Productivity",
-        "system" => "System",
-        _ => "Other"
-    };
+        var slug = !string.IsNullOrWhiteSpace(pkg?.CategoryOverride) ? pkg!.CategoryOverride!
+            : root.TryGetProperty("category", out var cat) && cat.ValueKind == JsonValueKind.String ? cat.GetString() ?? "other" : "other";
+        return known.ContainsKey(slug) ? slug : "other";
+    }
     public static async Task<List<CatalogItem>> GetAsync(AppDbContext db, string culture, bool includeBeta = false)
     {
         var all = await db.PackageVersions
@@ -39,6 +30,7 @@ public static class CatalogUi
         var owners = ownerRows.ToDictionary(p => p.Id, p => CatalogUi.PublicName(p.Owner));
         var ownerMails = ownerRows.ToDictionary(p => p.Id, p => CatalogUi.PublicEmail(p.Owner));
         var pkgs = ownerRows.ToDictionary(p => p.Id);
+        var known = await db.Categories.ToDictionaryAsync(c => c.Slug);
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
@@ -56,11 +48,8 @@ public static class CatalogUi
                 files.ValueKind == JsonValueKind.Object &&
                 files.TryGetProperty("x64", out var fx) && fx.ValueKind == JsonValueKind.String)
                 zxt = Path.GetFileNameWithoutExtension(fx.GetString() ?? "");
-            var category = doc.RootElement.TryGetProperty("category", out var cat) &&
-                           cat.ValueKind == JsonValueKind.String
-                ? (cat.GetString() ?? "other") : "other";
-            if (!Categories.Contains(category)) category = "other";
             var pkg = pkgs.GetValueOrDefault(pick.PackageId);
+            var category = EffectiveCategory(pkg, doc.RootElement, known);
             items.Add(new CatalogItem(
                 pick.PackageId,
                 OverrideText(pkg?.NameJson, culture) ?? LangText(doc.RootElement, "name", culture) ?? pick.PackageId,
@@ -70,7 +59,8 @@ public static class CatalogUi
                 pick.SizeBytes, pick.Downloads,
                 pick.Sha256, pick.MinPowerPdfVersion, zxt, category,
                 EffectiveAuthor(pkg, doc.RootElement, owners.GetValueOrDefault(pick.PackageId, pick.SubmittedBy)),
-                EffectiveContact(pkg, doc.RootElement, ownerMails.GetValueOrDefault(pick.PackageId, ""))));
+                EffectiveContact(pkg, doc.RootElement, ownerMails.GetValueOrDefault(pick.PackageId, "")),
+                CategoryService.Name(known.GetValueOrDefault(category), category, culture)));
         }
         return items;
     }

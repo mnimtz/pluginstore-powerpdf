@@ -37,7 +37,7 @@
                     </td></tr>
                 <tr><th style="text-align:left;padding-right:16px">@L["Author"]</th><td>@(Model.InCatalog?.Author ?? "-")</td></tr>
                 <tr><th style="text-align:left;padding-right:16px">@L["Contact"]</th><td>@(Model.InCatalog?.ContactEmail is { Length: > 0 } c ? c : "-")</td></tr>
-                <tr><th style="text-align:left;padding-right:16px">@L["Category"]</th><td>@(Model.InCatalog is null ? "-" : L[CatalogUi.CategoryLabel(Model.InCatalog.Category)])</td></tr>
+                <tr><th style="text-align:left;padding-right:16px">@L["Category"]</th><td>@(Model.InCatalog?.CategoryName ?? "-")</td></tr>
                 <tr><th style="text-align:left;padding-right:16px">@L["Downloads"]</th><td>@Model.Versions.Sum(v => v.Downloads)</td></tr>
             </table>
         </div>

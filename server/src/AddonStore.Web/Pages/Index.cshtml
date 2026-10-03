@@ -36,9 +36,9 @@ else
         <input type="search" id="pkg-search" placeholder="@L["Search"]…" aria-label="@L["Search"]" />
         <div class="chips" id="pkg-chips">
             <button class="chip active" data-cat="">@L["All"]</button>
-            @foreach (var cat in Model.Items.Select(i => i.Category).Distinct().OrderBy(c => c))
+            @foreach (var cat in Model.Items.GroupBy(i => i.Category).Select(g => g.First()).OrderBy(i => i.CategoryName))
             {
-                <button class="chip" data-cat="@cat">@L[AddonStore.Web.Services.CatalogUi.CategoryLabel(cat)]</button>
+                <button class="chip" data-cat="@cat.Category">@cat.CategoryName</button>
             }
         </div>
     </div>
@@ -49,7 +49,7 @@ else
                  data-text="@(item.Name.ToLowerInvariant()) @(item.Id) @(item.Description.ToLowerInvariant()) @(item.Author.ToLowerInvariant())">
                 <span class="name">@item.Name</span>
                 <span class="meta">
-                    <span class="badge live" style="font-weight:500">@L[AddonStore.Web.Services.CatalogUi.CategoryLabel(item.Category)]</span>
+                    <span class="badge live" style="font-weight:500">@item.CategoryName</span>
                     @item.Id · v@(item.Version) · @(item.SizeBytes / 1024) KB · @item.Downloads @L["download(s)"]
                 </span>
                 <span class="desc">@item.Description</span>

@@ -320,4 +320,16 @@
   <data name="Windows warning?" xml:space="preserve"><value>Aviso do Windows?</value></data>
   <data name="Download the Add-on Store" xml:space="preserve"><value>Transferir o Add-on Store</value></data>
   <data name="Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again." xml:space="preserve"><value>Não acontece nada? Este botão precisa do Add-on Store para Power PDF, versão 0.3.7 ou posterior, neste computador. Instale-o uma vez (ou atualize-o na caixa de diálogo da loja) e clique novamente no botão.</value></data>
+  <data name="Built-in" xml:space="preserve"><value>Integrada</value></data>
+  <data name="Categories" xml:space="preserve"><value>Categorias</value></data>
+  <data name="Delete" xml:space="preserve"><value>Eliminar</value></data>
+  <data name="From the package" xml:space="preserve"><value>Do pacote</value></data>
+  <data name="Maximum number of categories" xml:space="preserve"><value>Número máximo de categorias</value></data>
+  <data name="Merge into" xml:space="preserve"><value>Juntar com</value></data>
+  <data name="New catalog category created by an upload" xml:space="preserve"><value>Nova categoria de catálogo criada por um envio</value></data>
+  <data name="Uploads may propose a new high-level category when none fits; the server checks length, similarity and the limit and creates it automatically. Merge or delete categories that are not needed." xml:space="preserve"><value>Os envios podem propor uma nova categoria geral se nenhuma servir; o servidor verifica o comprimento, a semelhança e o limite e cria-a automaticamente. Junte ou elimine as categorias desnecessárias.</value></data>
+  <data name="Category merged." xml:space="preserve"><value>Categoria juntada.</value></data>
+  <data name="Category deleted." xml:space="preserve"><value>Categoria eliminada.</value></data>
+  <data name="This action is not possible for this category." xml:space="preserve"><value>Esta ação não é possível para esta categoria.</value></data>
+  <data name="The limit must be between 8 and 50." xml:space="preserve"><value>O limite tem de estar entre 8 e 50.</value></data>
 </root>

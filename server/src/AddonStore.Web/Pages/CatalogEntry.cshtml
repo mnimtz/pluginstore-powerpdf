@@ -30,6 +30,17 @@
                 <label for="author">@L["Author"]</label>
                 <input type="text" id="author" name="author" value="@Model.Author" maxlength="100" placeholder="@L["Empty: name of the publishing account"]" />
             </div>
+            <div style="flex:1;min-width:200px">
+                <label for="category">@L["Category"]</label>
+                @{ var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+                <select id="category" name="category">
+                    <option value="">@L["From the package"]: @AddonStore.Web.Services.CategoryService.Name(Model.Categories.FirstOrDefault(c => c.Slug == Model.ManifestCategory), Model.ManifestCategory, lang)</option>
+                    @foreach (var c in Model.Categories)
+                    {
+                        <option value="@c.Slug" selected="@(c.Slug == Model.CategoryOverride)">@AddonStore.Web.Services.CategoryService.Name(c, c.Slug, lang)</option>
+                    }
+                </select>
+            </div>
             <div style="flex:1;min-width:240px">
                 <label for="contact">@L["Contact email"]</label>
                 <input type="email" id="contact" name="contact" value="@Model.Contact" maxlength="200" placeholder="@L["Empty: email of the publishing account"]" />

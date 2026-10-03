@@ -28,6 +28,9 @@ public class CatalogEntryModel : PageModel
     public string Author { get; private set; } = "";
     public string Contact { get; private set; } = "";
     public string OwnerName { get; private set; } = "";
+    public List<Category> Categories { get; private set; } = new();
+    public string? CategoryOverride { get; private set; }
+    public string ManifestCategory { get; private set; } = "";
     public List<MetaIssue> Issues { get; private set; } = new();
     public string? Notice { get; private set; }
 
@@ -54,6 +57,10 @@ public class CatalogEntryModel : PageModel
             .OrderByDescending(v => v.Version, new SemVerComparer()).FirstOrDefault()
             ?? Pkg.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault();
         (Name, Description, Author, Contact) = PackageMetaService.Current(Pkg, newest);
+        Categories = _db.Categories.OrderBy(c => c.Slug).ToList();
+        CategoryOverride = Pkg.CategoryOverride;
+        var tmp = new Package { Versions = Pkg.Versions };
+        ManifestCategory = CategoryService.EffectiveSlug(tmp);
     }
 
     public async Task<IActionResult> OnGetAsync(string id)
@@ -64,7 +71,7 @@ public class CatalogEntryModel : PageModel
         return Page();
     }
 
-    public async Task<IActionResult> OnPostSaveAsync(string id, string? author, string? contact)
+    public async Task<IActionResult> OnPostSaveAsync(string id, string? author, string? contact, string? category)
     {
         var (pkg, user) = await LoadAsync(id ?? "");
         if (pkg is null || user is null) return Forbid();
@@ -80,12 +87,16 @@ public class CatalogEntryModel : PageModel
             SetDescription = true, Description = Read("desc_"),
             SetAuthor = true, Author = author,
             SetContact = true, ContactEmail = contact,
+            SetCategory = true, Category = category,
         };
         Issues = await _meta.ApplyAsync(pkg, user, change);
         if (Issues.Any(i => i.Severity == "error"))
         {
             Name = change.Name ?? new(); Description = change.Description ?? new();
             Author = author ?? ""; Contact = contact ?? "";
+            Categories = _db.Categories.OrderBy(c => c.Slug).ToList();
+            CategoryOverride = category;
+            ManifestCategory = CategoryService.EffectiveSlug(new Package { Versions = pkg.Versions });
             return Page();
         }
         Notice = "Catalog entry saved. The catalog and the Power PDF client show it immediately.";
@@ -97,7 +108,7 @@ public class CatalogEntryModel : PageModel
     {
         var (pkg, user) = await LoadAsync(id ?? "");
         if (pkg is null || user is null) return Forbid();
-        await _meta.ApplyAsync(pkg, user, new MetaChange { SetName = true, SetDescription = true, SetAuthor = true, SetContact = true });
+        await _meta.ApplyAsync(pkg, user, new MetaChange { SetName = true, SetDescription = true, SetAuthor = true, SetContact = true, SetCategory = true });
         Notice = "Catalog entry reset to the values from the package.";
         Fill();
         return Page();

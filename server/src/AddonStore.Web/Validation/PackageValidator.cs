@@ -62,7 +62,12 @@ public class PackageValidator
 
     private readonly AppDbContext _db;
 
-    public PackageValidator(AppDbContext db) => _db = db;
+    private readonly Services.CategoryService? _categories;
+
+    public PackageValidator(AppDbContext db, Services.CategoryService? categories = null)
+    {
+        _db = db; _categories = categories;
+    }
 
     public async Task<(ValidationReport Report, ParsedManifest? Manifest)> ValidateAsync(
         string zipPath, string callerUserId)
@@ -184,13 +189,9 @@ public class PackageValidator
                     report.Warn("MIN_HOST_VERSION_MISSING", "Manifest field 'minPowerPdfVersion' is not set.",
                         "State the lowest Power PDF version the plugin was tested with, e.g. \"5.0\".");
 
-                var category = GetString(root, "category");
-                if (category is null)
-                    report.Warn("CATEGORY_MISSING", "Manifest field 'category' is not set.",
-                        "Pick one of: conversion, forms, signing, navigation, printing, productivity, system, other. The store uses it as a catalog filter.");
-                else if (!Services.CatalogUi.Categories.Contains(category))
-                    report.Warn("CATEGORY_UNKNOWN", $"Category '{category}' is not a known slug.",
-                        "Use one of: conversion, forms, signing, navigation, printing, productivity, system, other.");
+                manifest.Category = GetString(root, "category")?.Trim() ?? "";
+                if (_categories is not null)
+                    manifest.NewCategoryNames = await _categories.CheckAsync(report, root, manifest.Id);
 
                 // architectures + files + hashes + PE checks. x64 is mandatory and
                 // alone covers every machine (ARM64EC hosts load x64 plugins); a

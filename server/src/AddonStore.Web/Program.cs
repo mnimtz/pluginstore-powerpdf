@@ -94,6 +94,7 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Admin/Audit", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Settings", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Backup", "PageAdmin");
+        o.Conventions.AuthorizePage("/Admin/Categories", "PageAdmin");
         o.Conventions.AuthorizePage("/Dashboard", "PageUser");
         o.Conventions.AuthorizePage("/CatalogEntry", "PageUser");
         o.Conventions.AuthorizePage("/Plugin", "PageUser");
@@ -114,6 +115,7 @@ builder.Services.AddScoped<TimeDisplay>();
 builder.Services.AddScoped<BackupService>();
 builder.Services.AddScoped<PackageMetaService>();
 builder.Services.AddScoped<VersionActionService>();
+builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<IAppEmailSender, ResendEmailSender>();
 
 var versionFile = Path.Combine(AppContext.BaseDirectory, "VERSION");
@@ -146,6 +148,9 @@ using (var scope = app.Services.CreateScope())
         "CREATE UNIQUE INDEX IF NOT EXISTS IX_Invites_TokenHash ON Invites (TokenHash)",
         "ALTER TABLE AspNetUsers ADD COLUMN NotifyAboutPlugins INTEGER NOT NULL DEFAULT 1",
         "ALTER TABLE Packages ADD COLUMN NameJson TEXT NULL",
+        "ALTER TABLE Packages ADD COLUMN CategoryOverride TEXT NULL",
+        "CREATE TABLE IF NOT EXISTS Categories (Slug TEXT NOT NULL PRIMARY KEY, NameJson TEXT NULL, " +
+            "Builtin INTEGER NOT NULL DEFAULT 0, CreatedAt TEXT NOT NULL, CreatedBy TEXT NOT NULL)",
         "ALTER TABLE Packages ADD COLUMN DescriptionJson TEXT NULL",
         "ALTER TABLE Packages ADD COLUMN Author TEXT NULL",
         "ALTER TABLE Packages ADD COLUMN ContactEmail TEXT NULL",
@@ -156,6 +161,9 @@ using (var scope = app.Services.CreateScope())
         try { db.Database.ExecuteSqlRaw(sql); }
         catch (Microsoft.Data.Sqlite.SqliteException) { /* column/table already there */ }
     }
+
+    await CategoryService.SeedAsync(db, scope.ServiceProvider.GetRequiredService<
+        Microsoft.Extensions.Localization.IStringLocalizer<AddonStore.Web.SharedResource>>());
 
     var roles = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     foreach (var role in new[] { "Admin", "Reviewer", "User" })

@@ -320,4 +320,16 @@
   <data name="Windows warning?" xml:space="preserve"><value>Windows-figyelmeztetés?</value></data>
   <data name="Download the Add-on Store" xml:space="preserve"><value>Az Add-on Store letöltése</value></data>
   <data name="Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again." xml:space="preserve"><value>Nem történt semmi? Ehhez a gombhoz a Power PDF-hez készült Add-on Store 0.3.7-es vagy újabb verziójára van szükség ezen a számítógépen. Telepítse egyszer (vagy frissítse az áruház párbeszédpanelén), majd kattintson újra a gombra.</value></data>
+  <data name="Built-in" xml:space="preserve"><value>Beépített</value></data>
+  <data name="Categories" xml:space="preserve"><value>Kategóriák</value></data>
+  <data name="Delete" xml:space="preserve"><value>Törlés</value></data>
+  <data name="From the package" xml:space="preserve"><value>A csomagból</value></data>
+  <data name="Maximum number of categories" xml:space="preserve"><value>Kategóriák maximális száma</value></data>
+  <data name="Merge into" xml:space="preserve"><value>Egyesítés ezzel:</value></data>
+  <data name="New catalog category created by an upload" xml:space="preserve"><value>Egy feltöltés új katalóguskategóriát hozott létre</value></data>
+  <data name="Uploads may propose a new high-level category when none fits; the server checks length, similarity and the limit and creates it automatically. Merge or delete categories that are not needed." xml:space="preserve"><value>A feltöltések új, általános kategóriát javasolhatnak, ha egyik sem illik; a kiszolgáló ellenőrzi a hosszt, a hasonlóságot és a korlátot, majd automatikusan létrehozza. A felesleges kategóriákat egyesítse vagy törölje.</value></data>
+  <data name="Category merged." xml:space="preserve"><value>Kategória egyesítve.</value></data>
+  <data name="Category deleted." xml:space="preserve"><value>Kategória törölve.</value></data>
+  <data name="This action is not possible for this category." xml:space="preserve"><value>Ez a művelet ennél a kategóriánál nem lehetséges.</value></data>
+  <data name="The limit must be between 8 and 50." xml:space="preserve"><value>A korlátnak 8 és 50 között kell lennie.</value></data>
 </root>

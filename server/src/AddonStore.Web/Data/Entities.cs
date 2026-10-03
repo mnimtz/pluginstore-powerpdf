@@ -23,6 +23,21 @@ public class AppUser : IdentityUser
     public bool NotifyAboutPlugins { get; set; } = true;
 }
 
+/// <summary>
+/// Catalog category. The store starts with eight built-in ones; uploads may
+/// propose a new high-level category (see CategoryService), admins merge or
+/// delete them.
+/// </summary>
+public class Category
+{
+    public string Slug { get; set; } = "";
+    /// <summary>{"en": "...", "de": "...", ...} in all 16 languages.</summary>
+    public string? NameJson { get; set; }
+    public bool Builtin { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public string CreatedBy { get; set; } = "";
+}
+
 /// <summary>Runtime-editable instance settings (admin area), e.g. the Resend key.</summary>
 public class AppSetting
 {
@@ -70,6 +85,8 @@ public class Package
     public string? DescriptionJson { get; set; }   // all 16 languages
     public string? Author { get; set; }
     public string? ContactEmail { get; set; }
+    /// <summary>Category set on the server (catalog entry or category merge); wins over the manifest.</summary>
+    public string? CategoryOverride { get; set; }
     public DateTime? MetaUpdatedAt { get; set; }
     public string? MetaUpdatedBy { get; set; }
 }

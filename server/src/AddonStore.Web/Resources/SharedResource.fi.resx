@@ -320,4 +320,16 @@
   <data name="Windows warning?" xml:space="preserve"><value>Windowsin varoitus?</value></data>
   <data name="Download the Add-on Store" xml:space="preserve"><value>Lataa Add-on Store</value></data>
   <data name="Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again." xml:space="preserve"><value>Eikö mitään tapahtunut? Tämä painike edellyttää, että tietokoneessa on Add-on Store Power PDF:lle, versio 0.3.7 tai uudempi. Asenna se kerran (tai päivitä se kaupan valintaikkunassa) ja napsauta painiketta sitten uudelleen.</value></data>
+  <data name="Built-in" xml:space="preserve"><value>Sisäänrakennettu</value></data>
+  <data name="Categories" xml:space="preserve"><value>Luokat</value></data>
+  <data name="Delete" xml:space="preserve"><value>Poista</value></data>
+  <data name="From the package" xml:space="preserve"><value>Paketista</value></data>
+  <data name="Maximum number of categories" xml:space="preserve"><value>Luokkien enimmäismäärä</value></data>
+  <data name="Merge into" xml:space="preserve"><value>Yhdistä luokkaan</value></data>
+  <data name="New catalog category created by an upload" xml:space="preserve"><value>Lataus loi uuden luetteloluokan</value></data>
+  <data name="Uploads may propose a new high-level category when none fits; the server checks length, similarity and the limit and creates it automatically. Merge or delete categories that are not needed." xml:space="preserve"><value>Lataukset voivat ehdottaa uutta yleistason luokkaa, jos mikään ei sovi; palvelin tarkistaa pituuden, samankaltaisuuden ja rajan ja luo sen automaattisesti. Yhdistä tai poista tarpeettomat luokat.</value></data>
+  <data name="Category merged." xml:space="preserve"><value>Luokka yhdistetty.</value></data>
+  <data name="Category deleted." xml:space="preserve"><value>Luokka poistettu.</value></data>
+  <data name="This action is not possible for this category." xml:space="preserve"><value>Tämä toiminto ei ole mahdollinen tälle luokalle.</value></data>
+  <data name="The limit must be between 8 and 50." xml:space="preserve"><value>Rajan on oltava välillä 8–50.</value></data>
 </root>

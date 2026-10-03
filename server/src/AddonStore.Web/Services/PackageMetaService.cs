@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using AddonStore.Web.Data;
 using AddonStore.Web.Validation;
+using Microsoft.EntityFrameworkCore;
 
 namespace AddonStore.Web.Services;
 
@@ -14,7 +15,8 @@ public record MetaIssue(string Code, string Severity, string Message, string Hin
 /// </summary>
 public class MetaChange
 {
-    public bool SetName, SetDescription, SetAuthor, SetContact;
+    public bool SetName, SetDescription, SetAuthor, SetContact, SetCategory;
+    public string? Category;
     public Dictionary<string, string>? Name;
     public Dictionary<string, string>? Description;
     public string? Author;
@@ -99,6 +101,9 @@ public class PackageMetaService
     {
         Normalize(c);
         var issues = Validate(c);
+        if (c.SetCategory && !string.IsNullOrWhiteSpace(c.Category) && !await _db.Categories.AnyAsync(x => x.Slug == c.Category))
+            issues.Add(new("CATEGORY_UNKNOWN", "error", $"Category '{c.Category}' does not exist.",
+                "Use a slug from GET /api/categories. New categories are only created through a package upload with categoryProposal."));
         if (issues.Any(i => i.Severity == "error")) return issues;
 
         var changed = new List<string>();
@@ -106,6 +111,7 @@ public class PackageMetaService
         if (c.SetDescription) { pkg.DescriptionJson = c.Description is null ? null : JsonSerializer.Serialize(c.Description); changed.Add(c.Description is null ? "description reset" : "description"); }
         if (c.SetAuthor) { pkg.Author = string.IsNullOrWhiteSpace(c.Author) ? null : c.Author; changed.Add(pkg.Author is null ? "author reset" : $"author '{pkg.Author}'"); }
         if (c.SetContact) { pkg.ContactEmail = string.IsNullOrWhiteSpace(c.ContactEmail) ? null : c.ContactEmail; changed.Add(pkg.ContactEmail is null ? "contact reset" : $"contact '{pkg.ContactEmail}'"); }
+        if (c.SetCategory) { pkg.CategoryOverride = string.IsNullOrWhiteSpace(c.Category) ? null : c.Category!.Trim(); changed.Add(pkg.CategoryOverride is null ? "category reset" : $"category '{pkg.CategoryOverride}'"); }
         if (changed.Count == 0) return issues;
 
         pkg.MetaUpdatedAt = DateTime.UtcNow;

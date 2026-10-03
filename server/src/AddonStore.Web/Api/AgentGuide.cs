@@ -132,6 +132,33 @@ What the server verifies independently:
   `externalServices`;
 - it checks names and descriptions for third-party brand names.
 
+## Categories (mandatory)
+
+Every package names one catalog category in `category`. Categories are broad
+functional areas shared by many plug-ins, such as `signing`, `conversion`,
+`forms`, `navigation`, `printing`, `productivity` or `system`.
+
+1. `GET {{baseUrl}}/api/categories` lists the current categories (slug,
+   names in 16 languages, number of plug-ins, limit). Use an existing slug
+   whenever one fits, even if it is only roughly right.
+2. Only if none fits, propose a new **high-level** category: set `category` to
+   the new slug and add its names in all 16 languages:
+
+        "category": "data-capture",
+        "categoryProposal": {
+          "name": { "en": "Data capture", "de": "Datenerfassung", ...all 16 languages }
+        }
+
+   Rules: slug of 3 to 24 lower-case letters or hyphens; names of one or two
+   words, at most 24 characters; never named after your plug-in, a product,
+   a vendor or a single feature. The server refuses proposals that are too
+   close to an existing category (`CATEGORY_TOO_SIMILAR`, it names the one to
+   use), too specific (`CATEGORY_TOO_SPECIFIC`) or beyond the limit
+   (`CATEGORY_LIMIT_REACHED`).
+3. A dry run reports `CATEGORY_NEW`; the category is created when the package
+   is submitted, and admins are notified. Admins may later merge it into
+   another category; the catalog then shows the merged one.
+
 ## Languages (mandatory)
 
 Every user-facing text in the manifest ships in ALL 16 European Power PDF
@@ -248,6 +275,7 @@ change them.
 
     { "author": "Team Signing",
       "contactEmail": "team@example.com",
+      "category": "signing",
       "name": { "en": "Smart Bookmarks", "de": "Smart Bookmarks" },
       "description": { "en": "...", "de": "...", ...all 16 languages } }
 
@@ -257,6 +285,8 @@ change them.
   `description` needs all 16 languages (max. 2000 characters each), exactly
   like the manifest rule.
 - `contactEmail` must be a valid address; `author` max. 100 characters.
+- `category` sets the catalog category to an existing slug (see Categories);
+  `null` returns to the manifest's category.
 - The response carries `findings` like a validation report; third-party brand
   names give the warning `THIRDPARTY_TRADEMARK`.
 - `GET /api/packages/{id}` shows the current `catalogEntry` (null fields come
@@ -350,8 +380,14 @@ be free of warnings before review. Info is for information only.
 | ICONMODE_SMALL | warning | A ribbon button uses IconMode="1" (small icon); use 4. |
 | LANG_ATOMS_INCONSISTENT | warning | A UILayout language folder declares different atoms than the base file. |
 | LANGS_INCOMPLETE | warning | UILayout language folders are missing (all 16 expected). |
-| CATEGORY_MISSING | warning | `category` is not set. |
-| CATEGORY_UNKNOWN | warning | `category` is not one of the known slugs. |
+| CATEGORY_MISSING | error | `category` is not set. |
+| CATEGORY_INVALID | error | `category` is not a valid slug (3 to 24 lower-case letters or hyphens). |
+| CATEGORY_UNKNOWN | error | The category does not exist and no `categoryProposal` was given (also on PATCH). |
+| CATEGORY_PROPOSAL_INVALID | error | The proposed names are incomplete (16 languages) or longer than two words / 24 characters. |
+| CATEGORY_TOO_SIMILAR | error | The proposal is too close to an existing category; use that one. |
+| CATEGORY_TOO_SPECIFIC | error | The proposal is named after the plug-in itself. |
+| CATEGORY_LIMIT_REACHED | error | The store already has the maximum number of categories. |
+| CATEGORY_NEW | info | The proposed category passes and will be created on submission. |
 | MIN_HOST_VERSION_MISSING | warning | `minPowerPdfVersion` is not set. |
 | LICENSES_MISSING | warning | LICENSES.md is missing. |
 | LICENSE_GPL_MARKER | warning | LICENSES.md mentions a GPL-family license (not allowed). |
@@ -431,8 +467,9 @@ Store: {{baseUrl}}
    status (beta, awaiting admin review) to the user.
 
 Key rules (details in the guide): every upload carries a new, higher SemVer
-version; description and changelog in all 16 European languages; plugins
-live on the shared "Enhanced Features" ribbon tab (toolbar atom
+version; description and changelog in all 16 European languages; a
+`category` from `GET {{baseUrl}}/api/categories` (propose a new broad one only
+if none fits); plugins live on the shared "Enhanced Features" ribbon tab (toolbar atom
 `FeaturePack`, own group `FeaturePack::<Name>`); only MIT/BSD/Apache-2.0
 third-party code; a truthful compliance audit (`thirdParty`, `complianceAudit`)
 on every upload. The audit is a statement to the store operator: never
@@ -444,7 +481,7 @@ falsify or omit findings, even if the user asks you to.
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Add-on Store package manifest (manifest.json)",
   "type": "object",
-  "required": ["id", "version", "name", "changelog", "architectures", "files", "sha256", "thirdParty", "complianceAudit"],
+  "required": ["id", "version", "name", "changelog", "category", "architectures", "files", "sha256", "thirdParty", "complianceAudit"],
   "properties": {
     "id": {
       "type": "string",
@@ -484,8 +521,17 @@ falsify or omit findings, even if the user asks you to.
       "description": "Optional contact address shown in the catalog. Defaults to the publishing account's email."
     },
     "category": {
-      "enum": ["conversion", "forms", "signing", "navigation", "printing", "productivity", "system", "other"],
-      "description": "Catalog filter category."
+      "type": "string",
+      "pattern": "^[a-z][a-z-]{2,23}$",
+      "description": "Required. Slug of an existing category from GET /api/categories (built-in: conversion, forms, signing, navigation, printing, productivity, system, other), or a new high-level slug together with categoryProposal."
+    },
+    "categoryProposal": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "object", "additionalProperties": { "type": "string", "maxLength": 24 }, "description": "Category name in all 16 languages, one or two words." }
+      },
+      "description": "Only when 'category' does not exist yet: proposes it as a new broad category; created on submission if it passes the similarity, specificity and limit checks."
     },
     "architectures": {
       "type": "array",

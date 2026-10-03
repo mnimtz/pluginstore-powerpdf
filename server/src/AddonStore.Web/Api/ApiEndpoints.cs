@@ -63,7 +63,8 @@ public static class ApiEndpoints
                     "GET  /api/packages/{id}          status and history of one package",
                     "POST /api/packages/validate      dry-run: full validation, nothing stored (auth)",
                     "POST /api/packages               submit a package (auth)",
-                    "PATCH  /api/packages/{id}  change the catalog entry: name, description, author, contactEmail (owner/admin, auth)",
+                    "GET  /api/categories             catalog categories (slug, names, usage, limit)",
+                    "PATCH  /api/packages/{id}  change the catalog entry: name, description, author, contactEmail, category (owner/admin, auth)",
                     "DELETE /api/packages/{id}/{version}  withdraw your own beta version (auth)",
                     "GET  /api/packages/{id}/{version}/download",
                     "GET  /api/devkit                 SDK documentation and developer kit files"
@@ -166,6 +167,7 @@ public static class ApiEndpoints
                         description = ParseOrNull(package.DescriptionJson),
                         author = package.Author,
                         contactEmail = package.ContactEmail,
+                        category = package.CategoryOverride,
                         updatedAt = package.MetaUpdatedAt,
                         updatedBy = package.MetaUpdatedBy,
                         note = "null fields come from the newest manifest; change them with PATCH /api/packages/" + package.Id
@@ -260,6 +262,29 @@ public static class ApiEndpoints
             finally { TryDelete(tmp); }
         }).RequireAuthorization("BearerOnly");
 
+        api.MapGet("/categories", async (AppDbContext db, CategoryService categories) =>
+        {
+            var all = await categories.AllAsync();
+            var pkgs = await db.Packages.Include(p => p.Versions).ToListAsync();
+            var used = pkgs.GroupBy(CategoryService.EffectiveSlug).ToDictionary(g => g.Key, g => g.Count());
+            return Results.Json(new
+            {
+                ok = true,
+                data = new
+                {
+                    limit = await categories.MaxAsync(),
+                    categories = all.Select(c => new
+                    {
+                        slug = c.Slug,
+                        name = ParseOrNull(c.NameJson),
+                        builtin = c.Builtin,
+                        packages = used.GetValueOrDefault(c.Slug)
+                    }),
+                    hint = "Use an existing slug as manifest 'category'. Propose a new one only if none fits (see the agent guide, section Categories)."
+                }
+            });
+        });
+
         api.MapPatch("/packages/{id}", async (string id, HttpContext ctx, UserManager<AppUser> users,
             AppDbContext db, PackageMetaService meta) =>
         {
@@ -308,8 +333,11 @@ public static class ApiEndpoints
                     case "contactEmail":
                         change.SetContact = true; change.ContactEmail = v.ValueKind == JsonValueKind.String ? v.GetString() : null;
                         break;
+                    case "category":
+                        change.SetCategory = true; change.Category = v.ValueKind == JsonValueKind.String ? v.GetString() : null;
+                        break;
                     default:
-                        typeErrors.Add(new("METADATA_INVALID", "error", $"Unknown field '{prop.Name}'.", "Allowed fields: name, description, author, contactEmail."));
+                        typeErrors.Add(new("METADATA_INVALID", "error", $"Unknown field '{prop.Name}'.", "Allowed fields: name, description, author, contactEmail, category."));
                         break;
                 }
             }
@@ -326,7 +354,7 @@ public static class ApiEndpoints
                 {
                     id = pkg.Id,
                     name = ParseOrNull(pkg.NameJson), description = ParseOrNull(pkg.DescriptionJson),
-                    author = pkg.Author, contactEmail = pkg.ContactEmail,
+                    author = pkg.Author, contactEmail = pkg.ContactEmail, category = pkg.CategoryOverride,
                     updatedAt = pkg.MetaUpdatedAt, updatedBy = pkg.MetaUpdatedBy,
                     next = "The catalog, the web UI and the Power PDF client show the new values immediately; no new version is needed."
                 }
@@ -521,6 +549,7 @@ public static class ApiEndpoints
         var owners = ownerRows.ToDictionary(p => p.Id, p => Services.CatalogUi.PublicName(p.Owner));
         var ownerMails = ownerRows.ToDictionary(p => p.Id, p => Services.CatalogUi.PublicEmail(p.Owner));
         var pkgs = ownerRows.ToDictionary(p => p.Id);
+        var known = await db.Categories.ToDictionaryAsync(c => c.Slug);
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live)
@@ -545,7 +574,7 @@ public static class ApiEndpoints
                 id = pick.PackageId,
                 name = ParseOrNull(pkg?.NameJson) ?? CloneOrNull(root, "name"),
                 description = ParseOrNull(pkg?.DescriptionJson) ?? CloneOrNull(root, "description"),
-                category = root.TryGetProperty("category", out var cat) && cat.ValueKind == JsonValueKind.String ? cat.GetString() : "other",
+                category = Services.CatalogUi.EffectiveCategory(pkg, root, known),
                 author = Services.CatalogUi.EffectiveAuthor(pkg, root, owners.GetValueOrDefault(pick.PackageId, pick.SubmittedBy)),
                 contactEmail = Services.CatalogUi.EffectiveContact(pkg, root, ownerMails.GetValueOrDefault(pick.PackageId, "")),
                 version = pick.Version,

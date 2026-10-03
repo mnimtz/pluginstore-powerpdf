@@ -1,0 +1,61 @@
+@page
+@model AddonStore.Web.Pages.Admin.CategoriesModel
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<p style="margin:0 0 6px"><a href="/Admin/Settings">← @L["Settings"]</a></p>
+<h1>@L["Categories"]</h1>
+<p class="lead">@L["Uploads may propose a new high-level category when none fits; the server checks length, similarity and the limit and creates it automatically. Merge or delete categories that are not needed."]</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+}
+
+<div class="table-wrap">
+<table>
+    <tr><th>@L["Category"]</th><th>Slug</th><th>@L["Plug-ins"]</th><th>@L["Created"]</th><th>@L["Actions"]</th></tr>
+    @foreach (var r in Model.Rows)
+    {
+        <tr>
+            <td><b>@r.Name</b></td>
+            <td><code>@r.Cat.Slug</code></td>
+            <td>@r.Packages</td>
+            <td>@(r.Cat.Builtin ? L["Built-in"] : $"{Time.Fmt(r.Cat.CreatedAt, false)} · {r.Cat.CreatedBy}")</td>
+            <td>
+                @if (!r.Cat.Builtin)
+                {
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+                        <form method="post" asp-page-handler="Merge" style="display:flex;gap:6px;align-items:center">
+                            <input type="hidden" name="slug" value="@r.Cat.Slug" />
+                            <select name="into" style="width:auto">
+                                @foreach (var t in Model.Rows.Where(x => x.Cat.Slug != r.Cat.Slug))
+                                {
+                                    <option value="@t.Cat.Slug">@t.Name</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn small secondary">@L["Merge into"]</button>
+                        </form>
+                        @if (r.Packages == 0)
+                        {
+                            <form method="post" asp-page-handler="Delete">
+                                <input type="hidden" name="slug" value="@r.Cat.Slug" />
+                                <button type="submit" class="btn small danger">@L["Delete"]</button>
+                            </form>
+                        }
+                    </div>
+                }
+            </td>
+        </tr>
+    }
+</table>
+</div>
+
+<div class="card" style="max-width:560px;margin-top:16px">
+    <form method="post" asp-page-handler="Limit" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <label for="max" style="margin:0">@L["Maximum number of categories"]</label>
+        <input type="number" id="max" name="max" min="8" max="50" value="@Model.Max" style="width:90px" />
+        <button type="submit" class="btn small">@L["Save"]</button>
+    </form>
+</div>

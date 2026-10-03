@@ -22,13 +22,14 @@ public class SubmissionService
     private readonly UserManager<AppUser> _users;
     private readonly AuditService _audit;
     private readonly NotificationService _notify;
+    private readonly CategoryService _categories;
     private readonly IConfiguration _config;
     private readonly IWebHostEnvironment _env;
 
     public SubmissionService(AppDbContext db, UserManager<AppUser> users, AuditService audit,
-        NotificationService notify, IConfiguration config, IWebHostEnvironment env)
+        NotificationService notify, IConfiguration config, IWebHostEnvironment env, CategoryService categories)
     {
-        _db = db; _users = users; _audit = audit; _notify = notify; _config = config; _env = env;
+        _db = db; _users = users; _audit = audit; _notify = notify; _categories = categories; _config = config; _env = env;
     }
 
     public string StorageRoot
@@ -45,14 +46,14 @@ public class SubmissionService
 
     public async Task<ValidationReport> ValidateOnlyAsync(string zipPath, AppUser user)
     {
-        var validator = new PackageValidator(_db);
+        var validator = new PackageValidator(_db, _categories);
         var (report, _) = await validator.ValidateAsync(zipPath, user.Id);
         return report;
     }
 
     public async Task<SubmissionResult> SubmitAsync(string zipPath, AppUser user, string via)
     {
-        var validator = new PackageValidator(_db);
+        var validator = new PackageValidator(_db, _categories);
         var (report, manifest) = await validator.ValidateAsync(zipPath, user.Id);
         if (!report.Passed || manifest is null)
             return new SubmissionResult(report, null);
@@ -110,6 +111,8 @@ public class SubmissionService
             ValidationReportJson = report.ToJson()
         };
         _db.PackageVersions.Add(version);
+        if (manifest.NewCategoryNames is not null)
+            await _categories.CreateAsync(manifest.Category, manifest.NewCategoryNames, user, manifest.Id);
 
         // The uploader's compliance statement is kept under their name; the
         // server-side scans do not rely on it.

@@ -320,4 +320,16 @@
   <data name="Windows warning?" xml:space="preserve"><value>Advarsel fra Windows?</value></data>
   <data name="Download the Add-on Store" xml:space="preserve"><value>Last ned Add-on Store</value></data>
   <data name="Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again." xml:space="preserve"><value>Skjer det ingenting? Denne knappen krever Add-on Store for Power PDF, versjon 0.3.7 eller nyere, på denne datamaskinen. Installer den én gang (eller oppdater den i butikkdialogen), og klikk deretter på knappen igjen.</value></data>
+  <data name="Built-in" xml:space="preserve"><value>Innebygd</value></data>
+  <data name="Categories" xml:space="preserve"><value>Kategorier</value></data>
+  <data name="Delete" xml:space="preserve"><value>Slett</value></data>
+  <data name="From the package" xml:space="preserve"><value>Fra pakken</value></data>
+  <data name="Maximum number of categories" xml:space="preserve"><value>Maksimalt antall kategorier</value></data>
+  <data name="Merge into" xml:space="preserve"><value>Slå sammen med</value></data>
+  <data name="New catalog category created by an upload" xml:space="preserve"><value>Ny katalogkategori opprettet av en opplasting</value></data>
+  <data name="Uploads may propose a new high-level category when none fits; the server checks length, similarity and the limit and creates it automatically. Merge or delete categories that are not needed." xml:space="preserve"><value>Opplastinger kan foreslå en ny overordnet kategori når ingen passer; serveren kontrollerer lengde, likhet og grensen og oppretter den automatisk. Slå sammen eller slett kategorier som ikke trengs.</value></data>
+  <data name="Category merged." xml:space="preserve"><value>Kategori slått sammen.</value></data>
+  <data name="Category deleted." xml:space="preserve"><value>Kategori slettet.</value></data>
+  <data name="This action is not possible for this category." xml:space="preserve"><value>Denne handlingen er ikke mulig for denne kategorien.</value></data>
+  <data name="The limit must be between 8 and 50." xml:space="preserve"><value>Grensen må være mellom 8 og 50.</value></data>
 </root>

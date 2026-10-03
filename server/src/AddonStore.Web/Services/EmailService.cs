@@ -86,6 +86,7 @@ public class NotificationService
         ("CatalogChange",   "Catalog entry changed by an admin", "Owner"),
         ("AccountDecision", "Access request approved or declined", "Applicant"),
         ("ClientRelease",   "New Add-on Store client released", "Admins"),
+        ("CategoryCreated", "New catalog category created by an upload", "Admins"),
     };
 
     private readonly IAppEmailSender _mail;
