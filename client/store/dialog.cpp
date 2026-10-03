@@ -9,6 +9,7 @@
 #include "logging.h"
 #include "Resource.h"
 #include "version.h"
+#include "webui.h"
 #include <afxcmn.h>
 #include <vector>
 
@@ -302,7 +303,10 @@ void PSShowStoreDialog(const std::wstring& preselectId)
     static bool s_open = false;
     if (s_open) return;
     s_open = true;
-    storedlg::CStoreDialog dlg(preselectId);
-    dlg.DoModal();
+    if (!PSWebUiAvailable() || PSShowWebStore(preselectId) == IDABORT)
+    {
+        storedlg::CStoreDialog dlg(preselectId);
+        dlg.DoModal();
+    }
     s_open = false;
 }

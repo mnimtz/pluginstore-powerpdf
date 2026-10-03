@@ -67,7 +67,7 @@
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;WIN_PLATFORM;WIN32;_WINDOWS;WIN_ENV;_CRT_SECURE_NO_WARNINGS;DOCUFLAG;_USRDLL;PI_CORE_VERSION=0x00020000;PI_RVIEW_VERSION=0x00060000;PI_DOCUVIEW_VERSION=0x00060000;PI_DDMODEL_VERSION=0x00060000;PI_DAB_VERSION=0x00060000;PI_WIN_VERSION=0x00050000;PI_PAGE_DDE_CONTENT_VERSION=0x00060000;PI_PDFEDIT_READ_VERSION=0x00060000;PI_PDFEDIT_WRITE_VERSION=0x00060000;PI_DDMETADATA_VERSION=0x00060000;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Claude\Documentation\TungstenPowerPDFPluginSDK-2025.3.6\Headers;$(ProjectDir)common;$(ProjectDir)res;$(ProjectDir)store;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Claude\Documentation\TungstenPowerPDFPluginSDK-2025.3.6\Headers;$(ProjectDir)common;$(ProjectDir)res;$(ProjectDir)store;$(ProjectDir)third_party\webview2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -76,7 +76,8 @@
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
       <OutputFile>$(TargetPath)</OutputFile>
-      <AdditionalDependencies>crypt32.lib;shell32.lib;winhttp.lib;bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>crypt32.lib;shell32.lib;winhttp.lib;bcrypt.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)third_party\webview2\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/EXPORT:PlugInMain %(AdditionalOptions)</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
@@ -97,7 +98,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;WIN_PLATFORM;WIN32;NDEBUG;WIN_ENV;DOCUFLAG;_USRDLL;_CRT_SECURE_NO_WARNINGS;PI_CORE_VERSION=0x00020000;PI_RVIEW_VERSION=0x00060000;PI_DOCUVIEW_VERSION=0x00060000;PI_DDMODEL_VERSION=0x00060000;PI_DAB_VERSION=0x00060000;PI_WIN_VERSION=0x00050000;PI_PAGE_DDE_CONTENT_VERSION=0x00060000;PI_PDFEDIT_READ_VERSION=0x00060000;PI_PDFEDIT_WRITE_VERSION=0x00060000;PI_DDMETADATA_VERSION=0x00060000;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Claude\Documentation\TungstenPowerPDFPluginSDK-2025.3.6\Headers;$(ProjectDir)common;$(ProjectDir)res;$(ProjectDir)store;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Claude\Documentation\TungstenPowerPDFPluginSDK-2025.3.6\Headers;$(ProjectDir)common;$(ProjectDir)res;$(ProjectDir)store;$(ProjectDir)third_party\webview2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -107,7 +108,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <AdditionalDependencies>crypt32.lib;shell32.lib;winhttp.lib;bcrypt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>crypt32.lib;shell32.lib;winhttp.lib;bcrypt.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)third_party\webview2\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/EXPORT:PlugInMain %(AdditionalOptions)</AdditionalOptions>
       <OutputFile>$(TargetPath)</OutputFile>
     </Link>
@@ -133,6 +135,7 @@
     <ClInclude Include="store\install.h" />
     <ClInclude Include="store\settings.h" />
     <ClInclude Include="store\link.h" />
+    <ClInclude Include="store\webui.h" />
     <ClInclude Include="res\Resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +159,7 @@
     <ClCompile Include="store\ribbon.cpp" />
     <ClCompile Include="store\settings.cpp" />
     <ClCompile Include="store\link.cpp" />
+    <ClCompile Include="store\webui.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

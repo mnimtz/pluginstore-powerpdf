@@ -99,6 +99,12 @@ The `client/` folder holds the **Add-on Store ribbon add-on** (C++/MFC `.zxt`,
 built with the Power PDF Plugin SDK):
 
 - Adds an *Add-on Store* group to the shared **Enhanced Features** ribbon tab.
+- **Modern store window** (client 0.4+): cards with icon, status and one-click
+  action, search, category chips and a detail panel, rendered by Microsoft
+  WebView2 from a page compiled into the plug-in (`client/ui/store.html`). Data
+  is inserted as text only; the page cannot navigate or load anything external.
+  Without the WebView2 runtime, or with `ClassicUI = 1` (HKCU or the HKLM
+  policy key), the classic list dialog opens instead.
 - Lists the catalog with localized names, changelogs, installed versions and
   update status; installs with SHA-256 verification and a single UAC prompt.
 - Drops each package's `manifest.json` next to the plugin, so updates are
@@ -124,7 +130,30 @@ built with the Power PDF Plugin SDK):
 End users install it with the MSI from the store's landing page
 (`/download/pluginstore.msi`); afterwards the client offers its own updates.
 
-Build with `client\build.cmd` and `client\installer\build_msi.cmd`
+### Deploying the client in companies
+
+The MSI installs per machine and runs silently, best as its own step right
+after Power PDF (Intune, SCCM, GPO, scripts):
+
+```bat
+msiexec /i PluginStore-<version>.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"
+```
+
+- Requires Power PDF to be installed first (the MSI finds it via App Paths or
+  `HKLM\SOFTWARE\Kofax\PDF`). Installing before Power PDF was ever started is
+  fine: the layout is merged on the first start.
+- Preconfigure for all users under
+  `HKLM\SOFTWARE\Kofax\PDF\Tungsten Power PDF\PluginStore\Policies\Store`:
+  `ServerUrl` (REG_SZ, locks the URL), `BetaChannel` (DWORD), `LockPage`
+  (DWORD 1 locks the options page), `ClassicUI` (DWORD 1). From 32-bit
+  deployment agents use `reg add ... /reg:64`.
+- Intune detection rule: the file `<bin>\Plug-Ins\PluginStore.zxt` with a
+  minimum version (the ProductCode changes with every version).
+- The Power PDF Customization Kit can add the files of a plug-in ("Additional
+  Files"), but no registry values (URL scheme, policies); the separate silent
+  MSI step is the recommended way.
+
+Build with `python tools\fetch_webview2.py` (once), `client\build.cmd` and `client\installer\build_msi.cmd`
 (Visual Studio 2022, WiX v3), deploy for testing with an elevated
 `client\deploy.cmd`. Publishing a new client version (own lane: admin-only,
 live immediately) is described step by step in

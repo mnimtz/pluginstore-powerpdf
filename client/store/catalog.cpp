@@ -77,6 +77,8 @@ bool PSFetchCatalog(std::vector<PSCatalogEntry>& out, std::wstring& error)
         if (f.size() > 11) e.category = f[11];
         if (f.size() > 12) e.author = f[12];
         if (f.size() > 13) e.contactEmail = f[13];
+        if (f.size() > 14) e.categoryName = f[14];
+        if (f.size() > 15) e.iconUrl = f[15];
         e.installedVersion = PSInstalledVersion(e.zxtName);
         out.push_back(std::move(e));
     }

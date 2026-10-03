@@ -282,8 +282,11 @@ Every version's source code goes to the store, right after the package:
     GET {{baseUrl}}/api/catalog              released (live) packages
     GET {{baseUrl}}/api/catalog?channel=beta ...including newer beta versions
     GET {{baseUrl}}/api/packages/{id}/{version}/download
+    GET {{baseUrl}}/api/packages/{id}/icon   catalog icon (assets/icon.png of the newest released version)
 
-Verify the download against the catalog's `sha256` before installing.
+Verify the download against the catalog's `sha256` before installing. The
+store client shows each package's `assets/icon.png` (square PNG, 128 px
+recommended) and the localized category name, so ship a clear icon.
 
 ## Versioning and ownership
 

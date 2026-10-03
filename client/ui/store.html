@@ -1,0 +1,279 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
+<title>Add-on Store</title>
+<style>
+:root{--navy:#002854;--navy2:#0a3a6b;--blue:#00A0FB;--green:#00EB86;--ink:#1f2a37;--slate:#6b7a8c;--line:#e1e7ee;--soft:#f2f6fa;--sel:#e8f4fe}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:"Segoe UI Variable Text","Segoe UI",Arial,sans-serif;color:var(--ink);background:#fff;font-size:13px;overflow:hidden;user-select:none}
+button{font:inherit;cursor:pointer}
+.app{display:flex;flex-direction:column;height:100%}
+header{background:var(--navy);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:10px;flex:none}
+header .t{font-size:17px;font-weight:600}
+header .s{font-size:12px;color:#9fd8ff}
+.search{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--navy2);border-radius:8px;padding:7px 11px;width:280px}
+.search input{all:unset;font-size:13px;color:#fff;width:100%;user-select:text}
+.search input::placeholder{color:#9fb8d4}
+.accent{height:3px;background:var(--blue);flex:none}
+.banner{font-size:12.5px;padding:8px 18px;display:flex;align-items:center;gap:10px;flex:none}
+.banner.upd{background:#fff8e1;color:#634E12}
+.banner.err{background:#FFBDBD;color:#421F1F}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px 6px;flex:none}
+.chip{font-size:12px;padding:4px 12px;border-radius:999px;border:1px solid #c9d3df;background:#fff;color:var(--navy)}
+.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.main{flex:1;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);min-height:0}
+.list{overflow-y:auto;padding:4px 10px 14px;border-right:1px solid var(--line)}
+.card{display:flex;gap:12px;padding:10px 12px;border-radius:10px;border:1px solid transparent;align-items:center;margin-bottom:2px}
+.card:hover{background:var(--soft)}
+.card.sel{background:var(--sel);border-color:var(--blue)}
+.tile{width:42px;height:42px;border-radius:10px;flex:none;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:15px;overflow:hidden;background:var(--navy)}
+.tile img{width:100%;height:100%;object-fit:contain;background:#fff}
+.tile.big{width:64px;height:64px;border-radius:14px;font-size:22px}
+.cbody{min-width:0;flex:1}
+.cname{display:flex;gap:8px;align-items:center;min-width:0}
+.cname span:first-child{font-size:14px;font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cdesc{font-size:12px;color:var(--slate);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.pill{font-size:11px;padding:2px 8px;border-radius:999px;white-space:nowrap;flex:none}
+.p-inst{background:#B6FFDE;color:#016839}.p-upd{background:#FFDF85;color:#634E12}.p-beta{background:#e3e8ff;color:#26215C}
+.btn{border:0;border-radius:8px;padding:8px 16px;font-size:13px;background:var(--navy);color:#fff;white-space:nowrap}
+.btn:hover{background:#00366f}
+.btn.sec{background:#fff;color:var(--navy);border:1px solid #c9d3df}
+.btn.sec:hover{background:var(--soft)}
+.btn.sm{padding:5px 12px;font-size:12px}
+.btn:disabled{opacity:.55;cursor:default}
+.detail{overflow-y:auto;padding:18px 20px}
+.dhead{display:flex;gap:14px;align-items:center}
+.dname{font-size:19px;font-weight:600;color:var(--navy)}
+.dmeta{font-size:12px;color:var(--slate);margin-top:2px}
+.ddesc{font-size:13px;line-height:1.6;margin:14px 0;user-select:text;white-space:pre-wrap}
+.news{background:var(--soft);border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.5;user-select:text}
+.news b{display:block;color:var(--navy);margin-bottom:3px}
+.who{display:flex;gap:8px;align-items:center;margin:14px 0 4px;font-size:12px;color:var(--slate);flex-wrap:wrap}
+.link{color:var(--blue);text-decoration:none;cursor:pointer}
+.link:hover{text-decoration:underline}
+.acts{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.hint{font-size:11.5px;color:var(--slate);margin-top:12px;display:flex;gap:6px;align-items:flex-start}
+.empty{padding:28px 12px;color:var(--slate);font-size:13px;text-align:center}
+footer{border-top:1px solid var(--line);padding:8px 18px;font-size:11.5px;color:var(--slate);display:flex;gap:10px;align-items:center;flex:none}
+footer .grow{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.veil{position:fixed;inset:0;background:rgba(0,20,45,.45);display:none;align-items:center;justify-content:center;z-index:10}
+.veil.on{display:flex}
+.modal{background:#fff;border-radius:12px;padding:20px 22px;width:min(460px,90vw);max-height:80vh;overflow:auto;box-shadow:0 18px 50px rgba(0,20,50,.35)}
+.modal h3{margin:0 0 8px;font-size:16px;color:var(--navy)}
+.modal p{margin:0 0 6px;line-height:1.55;white-space:pre-wrap;user-select:text}
+.modal .acts{justify-content:flex-end}
+.spin{width:30px;height:30px;border-radius:50%;border:3px solid #d6e4f2;border-top-color:var(--blue);animation:r 0.9s linear infinite;margin:0 auto 12px}
+@keyframes r{to{transform:rotate(360deg)}}
+svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <svg class="i" style="width:24px;height:24px;color:var(--green)" viewBox="0 0 24 24"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+    <span class="t" id="title"></span>
+    <span class="s">Tungsten Power PDF</span>
+    <label class="search">
+      <svg class="i" style="color:#9fd8ff" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="text" autocomplete="off" spellcheck="false">
+    </label>
+  </header>
+  <div class="accent"></div>
+  <div class="banner upd" id="upd" style="display:none">
+    <svg class="i" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>
+    <span id="updText"></span>
+    <button class="btn sec sm" style="margin-left:auto" id="updBtn"></button>
+  </div>
+  <div class="banner err" id="err" style="display:none"></div>
+  <div class="chips" id="chips"></div>
+  <div class="main">
+    <div class="list" id="list"></div>
+    <div class="detail" id="detail"></div>
+  </div>
+  <footer>
+    <svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+    <span class="grow" id="disc"></span>
+    <a class="link" id="discLink"></a>
+  </footer>
+</div>
+<div class="veil" id="veil"><div class="modal" id="modal"></div></div>
+<script>
+"use strict";
+var S = {}, items = [], self = null, sel = null, cat = "", busy = false, icons = {};
+var host = window.chrome && window.chrome.webview;
+function post(m) { if (host) host.postMessage(m); }
+function $(id) { return document.getElementById(id); }
+function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function fmt(s) { var a = Array.prototype.slice.call(arguments, 1), i = 0; return String(s || "").replace(/%[sd]/g, function () { return a[i++] != null ? String(a[i - 1]) : ""; }).replace(/\\n/g, "\n"); }
+function status(x) { return !x.installed ? "none" : x.installed !== x.version ? "upd" : "inst"; }
+var palette = ["#002854", "#0F6E56", "#534AB7", "#993C1D", "#185FA5", "#3B6D11"];
+function tile(x, big) {
+  var t = el("div", "tile" + (big ? " big" : ""));
+  if (icons[x.id]) { var img = el("img"); img.src = icons[x.id]; img.alt = ""; t.appendChild(img); }
+  else {
+    var h = 0; for (var i = 0; i < x.category.length; i++) h = (h * 31 + x.category.charCodeAt(i)) >>> 0;
+    t.style.background = palette[h % palette.length];
+    t.textContent = x.name.split(/\s+/).map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase();
+  }
+  return t;
+}
+function pill(x) {
+  var s = status(x);
+  if (s === "inst") return el("span", "pill p-inst", S.stInstalled);
+  if (s === "upd") return el("span", "pill p-upd", S.stUpdate);
+  if (x.channel === "beta") return el("span", "pill p-beta", S.beta);
+  return null;
+}
+function actionButtons(x, small) {
+  var s = status(x), out = [];
+  function b(label, cls, fn) { var e = el("button", "btn" + (cls ? " " + cls : "") + (small ? " sm" : ""), label); e.disabled = busy; e.onclick = function (ev) { ev.stopPropagation(); fn(); }; out.push(e); }
+  if (s === "none") b(S.install, "", function () { confirmAct("install", x); });
+  if (s === "upd") b(S.update, "", function () { confirmAct("install", x); });
+  if (s === "inst" || (s === "upd" && !small)) b(S.remove, "sec", function () { confirmAct("uninstall", x); });
+  return out;
+}
+function visible() {
+  var q = $("q").value.trim().toLowerCase();
+  return items.filter(function (x) {
+    if (cat && x.category !== cat) return false;
+    if (!q) return true;
+    return (x.name + " " + x.description + " " + x.author).toLowerCase().indexOf(q) >= 0;
+  });
+}
+function renderChips() {
+  var c = $("chips"); c.textContent = "";
+  var seen = {}, list = [];
+  items.forEach(function (x) { if (!seen[x.category]) { seen[x.category] = 1; list.push({ slug: x.category, name: x.categoryName || x.category }); } });
+  list.sort(function (a, b) { return a.name.localeCompare(b.name); });
+  if (list.length < 2) return;
+  [{ slug: "", name: S.all }].concat(list).forEach(function (k) {
+    var e = el("button", "chip" + (k.slug === cat ? " on" : ""), k.name);
+    e.onclick = function () { cat = k.slug; render(); };
+    c.appendChild(e);
+  });
+}
+function render() {
+  renderChips();
+  var l = $("list"); l.textContent = "";
+  var v = visible();
+  if (!v.length) { l.appendChild(el("div", "empty", items.length ? S.none : S.empty)); }
+  if (v.length && !v.some(function (x) { return x.id === sel; })) sel = v[0].id;
+  v.forEach(function (x) {
+    var c = el("div", "card" + (x.id === sel ? " sel" : ""));
+    c.appendChild(tile(x));
+    var b = el("div", "cbody"), n = el("div", "cname");
+    n.appendChild(el("span", "", x.name)); var p = pill(x); if (p) n.appendChild(p);
+    b.appendChild(n); b.appendChild(el("div", "cdesc", x.description));
+    c.appendChild(b);
+    actionButtons(x, true).forEach(function (a) { c.appendChild(a); });
+    c.onclick = function () { sel = x.id; render(); };
+    if (x.id === sel) c.id = "selcard";
+    l.appendChild(c);
+  });
+  renderDetail();
+}
+function renderDetail() {
+  var d = $("detail"); d.textContent = "";
+  var x = items.filter(function (i) { return i.id === sel; })[0];
+  if (!x) return;
+  var h = el("div", "dhead"); h.appendChild(tile(x, true));
+  var t = el("div"); t.appendChild(el("div", "dname", x.name));
+  t.appendChild(el("div", "dmeta", [x.categoryName || x.category, fmt(S.version, x.version), Math.max(1, Math.round(x.size / 1024)) + " KB"].concat(x.installed && x.installed !== x.version ? [S.colInstalled + ": " + x.installed] : []).join("  ·  ")));
+  h.appendChild(t); d.appendChild(h);
+  d.appendChild(el("div", "ddesc", x.description));
+  if (x.changelog) { var n = el("div", "news"); n.appendChild(el("b", "", fmt(S.whatsNew, x.version))); n.appendChild(document.createTextNode(x.changelog)); d.appendChild(n); }
+  if (x.author || x.contact) {
+    var w = el("div", "who");
+    if (x.author) w.appendChild(el("span", "", S.author + ": " + x.author));
+    if (x.contact) { var a = el("a", "link", x.contact); a.onclick = function () { post({ cmd: "mail", to: x.contact }); }; w.appendChild(a); }
+    d.appendChild(w);
+  }
+  var acts = el("div", "acts"); actionButtons(x, false).forEach(function (a) { acts.appendChild(a); }); d.appendChild(acts);
+  var hint = el("div", "hint");
+  hint.innerHTML = '<svg class="i" viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3z"/></svg>';
+  hint.appendChild(el("span", "", S.adminNote)); d.appendChild(hint);
+}
+function modal(title, text, buttons) {
+  var m = $("modal"); m.textContent = "";
+  if (title) m.appendChild(el("h3", "", title));
+  if (text) m.appendChild(el("p", "", text));
+  var a = el("div", "acts");
+  buttons.forEach(function (b) { var e = el("button", "btn" + (b.sec ? " sec" : ""), b.label); e.onclick = function () { closeModal(); if (b.fn) b.fn(); }; a.appendChild(e); });
+  if (buttons.length) m.appendChild(a);
+  $("veil").classList.add("on");
+  var first = a.querySelector("button"); if (first) first.focus();
+}
+function closeModal() { $("veil").classList.remove("on"); }
+function busyModal(text) { var m = $("modal"); m.textContent = ""; m.appendChild(el("div", "spin")); var p = el("p", "", text); p.style.textAlign = "center"; m.appendChild(p); $("veil").classList.add("on"); }
+function confirmAct(action, x) {
+  if (busy) return;
+  var text = action === "install" ? fmt(S.confirmInstall, x.name, x.version) : fmt(S.confirmUninstall, x.name);
+  modal(x.name, text, [
+    { label: S.cancel, sec: true },
+    { label: action === "install" ? (status(x) === "upd" ? S.update : S.install) : S.remove, fn: function () {
+      busy = true; render(); busyModal(action === "install" ? S.installing : S.removing);
+      post({ cmd: action, id: x.id });
+    } }
+  ]);
+}
+function onResult(m) {
+  busy = false; closeModal();
+  if (m.ok && m.restart) {
+    modal(m.title || "", m.message, [{ label: S.later, sec: true }, { label: S.restartNow, fn: function () { post({ cmd: "restart" }); } }]);
+  } else if (m.message) {
+    modal(m.title || "", m.message, [{ label: "OK" }]);
+  }
+}
+function apply(m) {
+  if (m.type === "init") {
+    S = m.strings || {};
+    $("title").textContent = S.title; document.title = S.title;
+    $("q").placeholder = S.search;
+    $("disc").textContent = S.disclaimer; $("disc").title = S.disclaimer;
+    $("discLink").textContent = S.disclaimerBtn;
+    $("discLink").onclick = function () { modal(S.disclaimerBtn, S.disclaimerFull, [{ label: "OK" }]); };
+    $("updBtn").textContent = S.selfUpdateBtn;
+    $("updBtn").onclick = function () { busyModal(S.selfUpdateBtn); post({ cmd: "selfUpdate" }); };
+  } else if (m.type === "catalog") {
+    items = m.items || []; self = m.self || null;
+    $("err").style.display = m.error ? "flex" : "none"; $("err").textContent = m.error || "";
+    $("upd").style.display = self ? "flex" : "none";
+    if (self) $("updText").textContent = fmt(S.selfUpdate, self.version, self.installed);
+    if (m.select) { sel = m.select; cat = ""; }
+    render();
+    var sc = $("selcard"); if (sc && m.select) sc.scrollIntoView({ block: "center" });
+    if (m.select) {
+      var x = items.filter(function (i) { return i.id === m.select; })[0];
+      if (x && status(x) !== "inst") confirmAct("install", x);
+      else if (!x && m.selectMissing) modal("", m.selectMissing, [{ label: "OK" }]);
+    }
+  } else if (m.type === "icon") {
+    icons[m.id] = m.data; render();
+  } else if (m.type === "result") {
+    onResult(m);
+  } else if (m.type === "message") {
+    closeModal(); busy = false; render();
+    if (m.message) modal(m.title || "", m.message, [{ label: "OK" }]);
+  }
+}
+if (host) host.addEventListener("message", function (e) { apply(e.data); });
+$("q").addEventListener("input", render);
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape" && $("veil").classList.contains("on") && !busy) { closeModal(); return; }
+  if ($("veil").classList.contains("on")) return;
+  if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+    var v = visible(), i = v.findIndex(function (x) { return x.id === sel; });
+    i = Math.max(0, Math.min(v.length - 1, i + (e.key === "ArrowDown" ? 1 : -1)));
+    if (v[i]) { sel = v[i].id; render(); var sc = $("selcard"); if (sc) sc.scrollIntoView({ block: "nearest" }); }
+    e.preventDefault();
+  }
+  if ((e.ctrlKey && e.key === "f") || e.key === "F3") { $("q").focus(); e.preventDefault(); }
+  if (e.key === "F5") { post({ cmd: "refresh" }); e.preventDefault(); }
+});
+document.addEventListener("contextmenu", function (e) { if (e.target.tagName !== "INPUT") e.preventDefault(); });
+post({ cmd: "ready" });
+</script>
+</body>
+</html>

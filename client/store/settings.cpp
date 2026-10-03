@@ -36,6 +36,13 @@ static std::wstring TrimUrl(std::wstring u)
     return u;
 }
 
+bool PSUseClassicUI()
+{
+    DWORD v = 0;
+    if (FPPolicyDword(L"Store", L"ClassicUI", v)) return v != 0;
+    return ReadUserDword(L"ClassicUI", v) && v != 0;
+}
+
 bool PSIsAllowedServerUrl(const std::wstring& url)
 {
     std::wstring u = TrimUrl(url);

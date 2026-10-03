@@ -69,6 +69,7 @@ public static class ApiEndpoints
                     "GET  /api/packages/{id}/{version}/source  download the source code (admins only)",
                     "DELETE /api/packages/{id}/{version}  withdraw your own beta version (auth)",
                     "GET  /api/packages/{id}/{version}/download",
+                    "GET  /api/packages/{id}/icon     catalog icon (PNG) of the newest released version",
                     "GET  /api/devkit                 SDK documentation and developer kit files"
                 }
             }
@@ -132,7 +133,9 @@ public static class ApiEndpoints
                       .Append(i.SizeBytes).Append('\t').Append(i.Sha256).Append('\t')
                       .Append($"{Base(ctx)}/api/packages/{i.Id}/{i.Version}/download").Append('\t')
                       .Append(i.ZxtName).Append('\t').Append(i.Category).Append('\t')
-                      .Append(Flat(i.Author)).Append('\t').Append(Flat(i.ContactEmail)).Append('\n');
+                      .Append(Flat(i.Author)).Append('\t').Append(Flat(i.ContactEmail)).Append('\t')
+                      .Append(Flat(i.CategoryName)).Append('\t')
+                      .Append($"{Base(ctx)}/api/packages/{i.Id}/icon").Append('\n');
                 }
                 return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
             }
@@ -314,6 +317,32 @@ public static class ApiEndpoints
             if (!File.Exists(path)) return NotFound("FILE_MISSING", "The source file is missing on the server; restore it from a backup.");
             return Results.File(path, "application/zip", $"{id}-{version}-source.zip");
         }).RequireAuthorization("ApiOrCookie");
+
+        // Catalog icon (assets/icon.png of the newest live, else beta, version); public like the catalog.
+        api.MapGet("/packages/{id}/icon", async (string id, AppDbContext db, SubmissionService svc) =>
+        {
+            var cmp = new SemVerComparer();
+            var versions = await db.PackageVersions
+                .Where(v => v.PackageId == id && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)).ToListAsync();
+            var pick = versions.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault()
+                       ?? versions.OrderByDescending(v => v.Version, cmp).FirstOrDefault();
+            if (pick is null) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
+            var path = Path.Combine(svc.StorageRoot, pick.FilePath);
+            if (!File.Exists(path)) return NotFound("FILE_MISSING", "The package file is missing on the server.");
+            try
+            {
+                using var zip = System.IO.Compression.ZipFile.OpenRead(path);
+                var entry = zip.GetEntry("assets/icon.png");
+                if (entry is null || entry.Length > 4 * 1024 * 1024) return NotFound("ICON_MISSING", "This package has no icon.");
+                using var s = entry.Open();
+                using var ms = new MemoryStream();
+                await s.CopyToAsync(ms);
+                var bytes = ms.ToArray();
+                if (bytes.Length < 8 || bytes[0] != 0x89 || bytes[1] != (byte)'P') return NotFound("ICON_MISSING", "This package has no valid PNG icon.");
+                return Results.File(bytes, "image/png", lastModified: pick.SubmittedAt, entityTag: new Microsoft.Net.Http.Headers.EntityTagHeaderValue($"\"{pick.Sha256[..16]}\""));
+            }
+            catch (InvalidDataException) { return NotFound("ICON_MISSING", "The package could not be read."); }
+        });
 
         api.MapGet("/categories", async (AppDbContext db, CategoryService categories) =>
         {

@@ -67,6 +67,22 @@
 #define IDS_PSO_GRP_DIAG        157
 #define IDS_PSO_URL_HTTPS       162
 #define IDS_PSD_LINK_NOTFOUND   163
+#define IDS_PSW_SEARCH          164
+#define IDS_PSW_ALL             165
+#define IDS_PSW_NONE            166
+#define IDS_PSW_VERSION         167
+#define IDS_PSW_WHATSNEW        168
+#define IDS_PSW_UPDATE          169
+#define IDS_PSW_REMOVE          170
+#define IDS_PSW_CANCEL          171
+#define IDS_PSW_LATER           172
+#define IDS_PSW_RESTARTNOW      173
+#define IDS_PSW_INSTALLING      174
+#define IDS_PSW_REMOVING        175
+#define IDS_PSW_BETA            176
+#define IDD_PS_WEB              1480
+#define IDR_STORE_HTML          260
+#define IDI_PS_STORE            261
 
 // ---- bitmaps ----
 #define IDB_STORE               250

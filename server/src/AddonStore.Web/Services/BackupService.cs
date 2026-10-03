@@ -82,7 +82,13 @@ public class BackupService
                 createdBy,
                 users = await _db.Users.CountAsync(),
                 packages = await _db.Packages.CountAsync(),
-                versions = await _db.PackageVersions.CountAsync()
+                versions = await _db.PackageVersions.CountAsync(),
+                sourceArchives = await _db.PackageVersions.CountAsync(v => v.SourcePath != null),
+                categories = await _db.Categories.CountAsync(),
+                // Everything the server keeps lives in pluginstore.db (users, roles, tokens, settings,
+                // categories, catalog entries, audit) and these folders: packages (incl. *.source.zip),
+                // avatars, devkit. New data must land in one of them, or be added here.
+                contents = new[] { "pluginstore.db", "packages/ (packages and source code)", "avatars/", "devkit/" }
             };
 
             await using var fs = File.Create(target);

@@ -45,7 +45,8 @@ Steps (Windows, Visual Studio 2022, WiX v3 in `C:\Claude\Tools\wix314`):
 2. Write the changelog for **all 16 languages** into
    `packaging/pluginstore.ppakspec.json` (`changelog`); the server rejects
    uploads with missing languages.
-3. Build:
+3. Build (once per machine first: `python tools\fetch_webview2.py` fetches the
+   pinned WebView2 SDK static loader, which is not committed):
    ```bat
    client\build.cmd
    client\installer\build_msi.cmd
