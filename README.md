@@ -27,11 +27,10 @@ and install them with one click from a *Plugin-Store* ribbon inside Power PDF.
 
 ## Why
 
-Colleagues around the world build Power PDF plugins with the Plugin SDK, each
-on their own, shared by mail and memory. PluginStore-PowerPDF turns that into
-one channel: a single reviewed catalog, a beta channel for instant testing,
-automatic quality gates built from hard-won SDK knowledge, and one-click
-installs and updates right inside Power PDF.
+PluginStore-PowerPDF consolidates Power PDF extensions in one place. Anyone who
+builds a plugin with the Plugin SDK can offer it here centrally: it passes
+automatic quality checks and a review, and users find, install and update it
+directly inside Power PDF.
 
 ## How it works
 
