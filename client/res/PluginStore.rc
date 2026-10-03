@@ -114,6 +114,12 @@ Windows will ask once for administrator approval."
     IDS_PSD_SELF_UPDATE "A new version of the Plugin-Store is available: %s (installed: %s)."
     IDS_PSD_BTN_SELFUPD "Update Plugin-Store"
     IDS_PSD_AUTHOR      "Author / contact:"
+    IDS_PSD_ASK_RESTART "'%s' is installed. Power PDF loads plugins at start.
+
+Restart Power PDF now? Unsaved documents are offered for saving first."
+    IDS_PSD_ASK_RESTART_UN "'%s' is removed. Power PDF unloads it at the next start.
+
+Restart Power PDF now? Unsaved documents are offered for saving first."
     IDS_PSD_MSG_SELFUPD "The installer has started. Please follow it; it will ask you to close Power PDF."
     IDS_PSO_PAGE        "General"
     IDS_PSO_GRP         "Plugin store server"
@@ -162,6 +168,12 @@ Windows fragt einmal nach Administrator-Bestätigung."
     IDS_PSD_SELF_UPDATE "Eine neue Version des Plugin-Store ist verfügbar: %s (installiert: %s)."
     IDS_PSD_BTN_SELFUPD "Plugin-Store aktualisieren"
     IDS_PSD_AUTHOR      "Autor / Kontakt:"
+    IDS_PSD_ASK_RESTART "'%s' ist installiert. Power PDF lädt Plug-ins beim Start.
+
+Power PDF jetzt neu starten? Ungespeicherte Dokumente werden vorher zum Speichern angeboten."
+    IDS_PSD_ASK_RESTART_UN "'%s' ist entfernt. Power PDF entlädt es beim nächsten Start.
+
+Power PDF jetzt neu starten? Ungespeicherte Dokumente werden vorher zum Speichern angeboten."
     IDS_PSD_MSG_SELFUPD "Das Installationsprogramm wurde gestartet. Bitte folgen Sie ihm; es fordert Sie auf, Power PDF zu schließen."
     IDS_PSO_PAGE        "Allgemein"
     IDS_PSO_GRP         "Plugin-Store-Server"

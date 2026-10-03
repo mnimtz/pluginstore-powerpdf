@@ -82,7 +82,6 @@
   <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>Co plánujete publikovat? (zobrazí se administrátorovi)</value></data>
   <data name="Withdraw" xml:space="preserve"><value>Vzít zpět</value></data>
   <data name="You have not submitted any packages yet." xml:space="preserve"><value>Zatím jste neodeslali žádné balíčky.</value></data>
-  <data name="active" xml:space="preserve"><value>aktivní</value></data>
   <data name="download(s)" xml:space="preserve"><value>stažení</value></data>
   <data name="revoked" xml:space="preserve"><value>odvolán</value></data>
   <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>Vaše žádost o přístup byla odeslána. Jakmile ji administrátor schválí, obdržíte e-mail.</value></data>
@@ -166,4 +165,47 @@
   <data name="Author" xml:space="preserve"><value>Autor</value></data>
   <data name="Show my name and email as author of my plugins in the public catalog" xml:space="preserve"><value>Zobrazovat mé jméno a e-mail jako autora mých pluginů ve veřejném katalogu</value></data>
   <data name="When off, the catalog shows “Tungsten Automation” instead." xml:space="preserve"><value>Pokud je vypnuto, katalog místo toho zobrazí "Tungsten Automation".</value></data>
+  <data name="A new, higher version number (SemVer) for every upload, and a change description." xml:space="preserve"><value>Pro každé nahrání nové, vyšší číslo verze (SemVer) a popis změn.</value></data>
+  <data name="API and Claude" xml:space="preserve"><value>API a Claude</value></data>
+  <data name="Address" xml:space="preserve"><value>Adresa</value></data>
+  <data name="An x64 build of the plugin (it also runs on Windows on ARM)." xml:space="preserve"><value>Sestavení doplňku pro x64 (funguje i ve Windows on ARM).</value></data>
+  <data name="Automatic checks" xml:space="preserve"><value>Automatické kontroly</value></data>
+  <data name="Binaries and integrity" xml:space="preserve"><value>Binární soubory a integrita</value></data>
+  <data name="Check your token" xml:space="preserve"><value>Ověřit token</value></data>
+  <data name="Complete guide for developers and AI assistants" xml:space="preserve"><value>Úplný průvodce pro vývojáře a AI asistenty</value></data>
+  <data name="Create a personal token" xml:space="preserve"><value>Vytvořit osobní token</value></data>
+  <data name="Create a token on your profile page and store it as an environment variable, never in a chat or a file:" xml:space="preserve"><value>Vytvořte token na stránce svého profilu a uložte jej jako proměnnou prostředí, nikdy ne do chatu nebo souboru:</value></data>
+  <data name="Description and change description in all 16 European languages." xml:space="preserve"><value>Popis a popis změn ve všech 16 evropských jazycích.</value></data>
+  <data name="Download SKILL.md" xml:space="preserve"><value>Stáhnout SKILL.md</value></data>
+  <data name="Endpoints" xml:space="preserve"><value>Koncové body</value></data>
+  <data name="Example instruction for a Claude session in your plugin's project folder:" xml:space="preserve"><value>Ukázkový pokyn pro relaci Claude ve složce projektu vašeho doplňku:</value></data>
+  <data name="Example with curl" xml:space="preserve"><value>Příklad s curl</value></data>
+  <data name="Icon" xml:space="preserve"><value>Ikona</value></data>
+  <data name="Install the Claude skill (once)" xml:space="preserve"><value>Nainstalovat skill pro Claude (jednorázově)</value></data>
+  <data name="Languages" xml:space="preserve"><value>Jazyky</value></data>
+  <data name="Licenses" xml:space="preserve"><value>Licence</value></data>
+  <data name="List of all endpoints" xml:space="preserve"><value>Seznam všech koncových bodů</value></data>
+  <data name="Manifest and versioning" xml:space="preserve"><value>Manifest a správa verzí</value></data>
+  <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>Pouze komponenty třetích stran s licencí MIT, BSD nebo Apache-2.0.</value></data>
+  <data name="Open a new terminal afterwards so the variable is available." xml:space="preserve"><value>Poté otevřete nový terminál, aby byla proměnná k dispozici.</value></data>
+  <data name="Other checks" xml:space="preserve"><value>Další kontroly</value></data>
+  <data name="Package structure" xml:space="preserve"><value>Struktura balíčku</value></data>
+  <data name="Publish and update plugins directly from your Claude session. Claude reads the store's rules from the API, validates the package until all checks pass, and submits it for review." xml:space="preserve"><value>Publikujte a aktualizujte doplňky přímo z relace Claude. Claude načte pravidla obchodu přes API, ověřuje balíček, dokud neprojdou všechny kontroly, a poté jej odešle k posouzení.</value></data>
+  <data name="Purpose" xml:space="preserve"><value>Účel</value></data>
+  <data name="Ribbon and layout" xml:space="preserve"><value>Pás karet a rozložení</value></data>
+  <data name="Rules every upload must meet" xml:space="preserve"><value>Pravidla, která musí splnit každé nahrání</value></data>
+  <data name="Runtime and dependencies" xml:space="preserve"><value>Běhové prostředí a závislosti</value></data>
+  <data name="Schema of manifest.json" xml:space="preserve"><value>Schéma souboru manifest.json</value></data>
+  <data name="Security scan" xml:space="preserve"><value>Bezpečnostní skenování</value></data>
+  <data name="Status, history and check reports of a package" xml:space="preserve"><value>Stav, historie a protokoly kontrol balíčku</value></data>
+  <data name="Technical details are in English so that developers and AI assistants can act on them directly." xml:space="preserve"><value>Technické podrobnosti jsou v angličtině, aby s nimi vývojáři a AI asistenti mohli přímo pracovat.</value></data>
+  <data name="Tell Claude what to do" xml:space="preserve"><value>Řekněte Claudovi, co má udělat</value></data>
+  <data name="Test run of all checks, nothing is stored" xml:space="preserve"><value>Zkušební spuštění všech kontrol, nic se neukládá</value></data>
+  <data name="The automatic checks verify these rules; every finding comes with a concrete fix." xml:space="preserve"><value>Automatické kontroly ověřují tato pravidla; ke každému zjištění je uvedena konkrétní oprava.</value></data>
+  <data name="The plugin's buttons sit as a group on the shared “Enhanced Features” ribbon tab." xml:space="preserve"><value>Tlačítka doplňku jsou seskupena na sdílené kartě pásu karet „Rozšířené funkce“.</value></data>
+  <data name="The skill tells Claude where this store is and how to work with it. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>Skill sděluje Claudovi, kde se tento obchod nachází a jak s ním pracovat. Vždy načítá aktuální pravidla ze serveru, takže jej nikdy není nutné aktualizovat.</value></data>
+  <data name="Without the skill, the URL of the agent guide in the instruction is enough." xml:space="preserve"><value>Bez skillu stačí URL adresa průvodce pro agenty uvedená v pokynu.</value></data>
+  <data name="all passed" xml:space="preserve"><value>všechny prošly</value></data>
+  <data name="failed" xml:space="preserve"><value>neprošly</value></data>
+  <data name="passed with warnings" xml:space="preserve"><value>prošly s upozorněními</value></data>
 </root>

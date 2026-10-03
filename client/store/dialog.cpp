@@ -154,12 +154,14 @@ protected:
         if (MessageBoxW(ask, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
             return;
 
+        std::wstring name = e->name;
         CWaitCursor wait;
         int rc = PSUninstallPackage(e->zxtName, GetSafeHwnd());
         if (rc == 0)
         {
             SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_MSG_UNINSTOK).c_str());
             Reload();
+            OfferRestart(IDS_PSD_ASK_RESTART_UN, name);
         }
         else
         {
@@ -167,6 +169,55 @@ protected:
             swprintf_s(msg, 256, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
             SetDlgItemTextW(IDC_PS_STATUS, msg);
         }
+    }
+
+    // Power PDF loads plug-ins only at start. On "yes" a detached helper waits
+    // for THIS process to exit and starts PowerPDF.exe again; then the main
+    // window gets a normal close request, so unsaved documents are offered
+    // for saving and the user can still cancel (the helper gives up after
+    // 3 minutes).
+    void OfferRestart(UINT idsQuestion, const std::wstring& name)
+    {
+        wchar_t ask[600];
+        swprintf_s(ask, 600, FPLoc(idsQuestion).c_str(), name.c_str());
+        if (MessageBoxW(ask, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
+            return;
+
+        HWND mainWnd = ::GetAncestor(GetSafeHwnd(), GA_ROOTOWNER);
+        wchar_t exe[MAX_PATH] = { 0 };
+        GetModuleFileNameW(NULL, exe, MAX_PATH);
+        DWORD pid = GetCurrentProcessId();
+
+        wchar_t cmd[1024];
+        swprintf_s(cmd, 1024,
+            L"powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command "
+            L"\"Wait-Process -Id %lu -Timeout 180 -ErrorAction SilentlyContinue; "
+            L"if (-not (Get-Process -Id %lu -ErrorAction SilentlyContinue)) { Start-Process -FilePath '%s' }\"",
+            pid, pid, exe);
+
+        STARTUPINFOW si = { sizeof(si) };
+        si.dwFlags = STARTF_USESHOWWINDOW;
+        si.wShowWindow = SW_HIDE;
+        PROCESS_INFORMATION pi = { 0 };
+        if (!CreateProcessW(NULL, cmd, NULL, NULL, FALSE,
+                            CREATE_NO_WINDOW | DETACHED_PROCESS | CREATE_BREAKAWAY_FROM_JOB,
+                            NULL, NULL, &si, &pi))
+        {
+            // Some environments forbid breaking away from the job; retry plain.
+            if (!CreateProcessW(NULL, cmd, NULL, NULL, FALSE, CREATE_NO_WINDOW | DETACHED_PROCESS,
+                                NULL, NULL, &si, &pi))
+            {
+                FPLogW(L"[Store] restart helper could not start (%lu)", GetLastError());
+                return;
+            }
+        }
+        CloseHandle(pi.hThread);
+        CloseHandle(pi.hProcess);
+        FPLogW(L"[Store] restart requested, helper started");
+
+        EndDialog(IDCANCEL);
+        if (mainWnd && mainWnd != GetSafeHwnd())
+            ::PostMessageW(mainWnd, WM_CLOSE, 0, 0);
     }
 
     void OnInstall()
@@ -179,12 +230,14 @@ protected:
         if (MessageBoxW(ask, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
             return;
 
+        std::wstring name = e->name;
         CWaitCursor wait;
         int rc = PSInstallPackage(*e, GetSafeHwnd());
         if (rc == 0)
         {
             SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_MSG_INSTOK).c_str());
             Reload();
+            OfferRestart(IDS_PSD_ASK_RESTART, name);
         }
         else if (rc == 2)
         {

@@ -76,6 +76,10 @@ public static class ApiEndpoints
 
         api.MapGet("/schema/manifest", () => Results.Text(AgentGuide.ManifestSchema, "application/json"));
 
+        api.MapGet("/skill", (HttpContext ctx) =>
+            Results.File(System.Text.Encoding.UTF8.GetBytes(AgentGuide.SkillMarkdown(Base(ctx))),
+                         "text/markdown; charset=utf-8", "SKILL.md"));
+
         api.MapGet("/me", async (HttpContext ctx, AppDbContext db, UserManager<AppUser> users) =>
         {
             var user = await RequireUserAsync(ctx, users);

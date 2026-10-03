@@ -181,6 +181,36 @@ inline bool EnsureButtons(std::wstring& text, const GroupDef& g)
     return changed;
 }
 
+// Ribbon governance: the Plugin-Store group is always the LAST group on the
+// shared tab. Other plug-ins insert their groups before </toolbar>, so after
+// every install we move ours back to the end. Returns true when moved.
+inline bool MoveGroupToEnd(std::wstring& text, const GroupDef& g)
+{
+    size_t tb = text.find(L"<toolbar name=\"FeaturePack\"");
+    if (tb == std::wstring::npos) return false;
+    size_t tbEnd = text.find(L"</toolbar>", tb);
+    if (tbEnd == std::wstring::npos) return false;
+
+    std::wstring grpTag = std::wstring(L"<PFFGroup name=\"") + g.name + L"\"";
+    size_t grp = text.find(grpTag, tb);
+    if (grp == std::wstring::npos || grp > tbEnd) return false;
+    size_t grpEnd = text.find(L"</PFFGroup>", grp);
+    if (grpEnd == std::wstring::npos || grpEnd > tbEnd) return false;
+    grpEnd += wcslen(L"</PFFGroup>");
+
+    // Already last? Only whitespace between our group and </toolbar>.
+    bool last = true;
+    for (size_t i = grpEnd; i < tbEnd; ++i)
+        if (!iswspace(text[i])) { last = false; break; }
+    if (last) return false;
+
+    std::wstring block = text.substr(grp, grpEnd - grp);
+    text.erase(grp, grpEnd - grp);
+    tbEnd = text.find(L"</toolbar>", tb);
+    text.insert(tbEnd, block + L"\n");
+    return true;
+}
+
 // Navigation panel is PARKED (SDK 2025.3 can't surface a third-party panel yet,
 // see reference-powerpdf-navigation-panel). This REMOVES the experimental panel
 // entry we injected in 0.9.7-0.9.11 from the merged layout, so a profile that
@@ -321,6 +351,7 @@ inline int ApplyButtons()
             if (EnsureGroup(text, kGroups[gi]))        changed = true;
             if (EnsureButtons(text, kGroups[gi]))      changed = true;
             if (EnforceButtonOrder(text, kGroups[gi])) changed = true;
+            if (MoveGroupToEnd(text, kGroups[gi]))     changed = true;
         }
         if (PatchButtons(text)) changed = true;
         if (CleanLeftPanel(text)) changed = true;   // never touch the native <Left> bar; strip old entries

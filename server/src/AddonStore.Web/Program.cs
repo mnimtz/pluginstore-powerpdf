@@ -54,6 +54,17 @@ builder.Services.AddAuthorization(o =>
     o.AddPolicy("ReviewerOrAdmin", p => p
         .AddAuthenticationSchemes(IdentityConstants.ApplicationScheme, ApiTokenAuthHandler.Scheme)
         .RequireRole("Admin", "Reviewer"));
+    // Web pages authenticate with the cookie ONLY, so an anonymous visitor is
+    // redirected to the login page instead of receiving the API's JSON 401.
+    o.AddPolicy("PageAdmin", p => p
+        .AddAuthenticationSchemes(IdentityConstants.ApplicationScheme)
+        .RequireRole("Admin"));
+    o.AddPolicy("PageReviewer", p => p
+        .AddAuthenticationSchemes(IdentityConstants.ApplicationScheme)
+        .RequireRole("Admin", "Reviewer"));
+    o.AddPolicy("PageUser", p => p
+        .AddAuthenticationSchemes(IdentityConstants.ApplicationScheme)
+        .RequireAuthenticatedUser());
 });
 
 // --- localization: all European Power PDF languages ----------------------
@@ -71,12 +82,13 @@ builder.Services.AddRazorPages(o =>
     {
         // Reviewers may use the review queue; everything else under /Admin is
         // admin-only (users, audit, settings).
-        o.Conventions.AuthorizePage("/Admin/Review", "ReviewerOrAdmin");
-        o.Conventions.AuthorizePage("/Admin/Users", "AdminOnly");
-        o.Conventions.AuthorizePage("/Admin/Audit", "AdminOnly");
-        o.Conventions.AuthorizePage("/Admin/Settings", "AdminOnly");
-        o.Conventions.AuthorizePage("/Dashboard");
-        o.Conventions.AuthorizePage("/Profile");
+        o.Conventions.AuthorizePage("/Admin/Review", "PageReviewer");
+        o.Conventions.AuthorizePage("/Admin/Users", "PageAdmin");
+        o.Conventions.AuthorizePage("/Admin/Audit", "PageAdmin");
+        o.Conventions.AuthorizePage("/Admin/Settings", "PageAdmin");
+        o.Conventions.AuthorizePage("/Dashboard", "PageUser");
+        o.Conventions.AuthorizePage("/Profile", "PageUser");
+        o.Conventions.AuthorizePage("/Developer", "PageUser");
     })
     .AddViewLocalization();
 

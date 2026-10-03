@@ -48,6 +48,8 @@
 #define IDS_PSD_BTN_SELFUPD     144
 #define IDS_PSD_MSG_SELFUPD     145
 #define IDS_PSD_AUTHOR          146
+#define IDS_PSD_ASK_RESTART     147
+#define IDS_PSD_ASK_RESTART_UN  148
 
 // ---- options page ----
 #define IDS_PSO_PAGE            150

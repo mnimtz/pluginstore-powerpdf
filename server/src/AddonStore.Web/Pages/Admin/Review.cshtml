@@ -31,19 +31,8 @@
             @L["Submitted by"] @v.SubmittedBy · @v.SubmittedVia · @Time.Fmt(v.SubmittedAt) · @(v.SizeBytes / 1024) KB · SHA-256 <code>@v.Sha256[..16]…</code>
         </div>
         <p style="margin:6px 0"><b>@L["Changelog"]:</b> @AddonStore.Web.Services.CatalogUi.ManifestText(v, "changelog", lang, v.Changelog)</p>
-        @{
-            var report = JsonSerializer.Deserialize<ValidationReport>(v.ValidationReportJson);
-            var warnings = report?.Findings.Where(f => f.Severity != "info").ToList() ?? new List<Finding>();
-        }
-        @if (warnings.Count > 0)
-        {
-            <ul class="findings">
-                @foreach (var f in warnings)
-                {
-                    <li class="@f.Severity"><span class="code">@f.Code</span> @f.Message</li>
-                }
-            </ul>
-        }
+        <partial name="_ValidationReport" model="AddonStore.Web.Validation.ReportView.Parse(v.ValidationReportJson)"
+                 view-data="@(new Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary(ViewData) { ["open"] = true })" />
         <div style="display:flex;gap:10px;align-items:flex-start;margin-top:10px;flex-wrap:wrap">
             <a class="btn small secondary" href="/api/packages/@v.PackageId/@v.Version/download">@L["Download"]</a>
             <form method="post" asp-page-handler="Approve" style="display:inline">

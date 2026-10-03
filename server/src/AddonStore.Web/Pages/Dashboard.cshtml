@@ -64,6 +64,11 @@ else
                         <td>@v.Downloads</td>
                         <td>@(v.ReviewComment ?? "")</td>
                     </tr>
+                    <tr>
+                        <td colspan="6" style="padding-top:0">
+                            <partial name="_ValidationReport" model="AddonStore.Web.Validation.ReportView.Parse(v.ValidationReportJson)" />
+                        </td>
+                    </tr>
                 }
             </table>
         </div>

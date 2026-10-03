@@ -82,7 +82,6 @@
   <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>Hvad planlægger du at udgive? (vises til administratoren)</value></data>
   <data name="Withdraw" xml:space="preserve"><value>Træk tilbage</value></data>
   <data name="You have not submitted any packages yet." xml:space="preserve"><value>Du har endnu ikke indsendt nogen pakker.</value></data>
-  <data name="active" xml:space="preserve"><value>aktiv</value></data>
   <data name="download(s)" xml:space="preserve"><value>downloads</value></data>
   <data name="revoked" xml:space="preserve"><value>tilbagekaldt</value></data>
   <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>Din adgangsanmodning er sendt. Du modtager en e-mail, når en administrator har godkendt den.</value></data>
@@ -166,4 +165,47 @@
   <data name="Author" xml:space="preserve"><value>Forfatter</value></data>
   <data name="Show my name and email as author of my plugins in the public catalog" xml:space="preserve"><value>Vis mit navn og min e-mail som forfatter af mine plugins i det offentlige katalog</value></data>
   <data name="When off, the catalog shows “Tungsten Automation” instead." xml:space="preserve"><value>Når det er slået fra, viser kataloget "Tungsten Automation" i stedet.</value></data>
+  <data name="A new, higher version number (SemVer) for every upload, and a change description." xml:space="preserve"><value>Et nyt, højere versionsnummer (SemVer) ved hver upload samt en beskrivelse af ændringerne.</value></data>
+  <data name="API and Claude" xml:space="preserve"><value>API og Claude</value></data>
+  <data name="Address" xml:space="preserve"><value>Adresse</value></data>
+  <data name="An x64 build of the plugin (it also runs on Windows on ARM)." xml:space="preserve"><value>Et x64-build af pluginnet (kører også på Windows on ARM).</value></data>
+  <data name="Automatic checks" xml:space="preserve"><value>Automatiske kontroller</value></data>
+  <data name="Binaries and integrity" xml:space="preserve"><value>Binære filer og integritet</value></data>
+  <data name="Check your token" xml:space="preserve"><value>Kontrollér dit token</value></data>
+  <data name="Complete guide for developers and AI assistants" xml:space="preserve"><value>Komplet vejledning til udviklere og AI-assistenter</value></data>
+  <data name="Create a personal token" xml:space="preserve"><value>Opret et personligt token</value></data>
+  <data name="Create a token on your profile page and store it as an environment variable, never in a chat or a file:" xml:space="preserve"><value>Opret et token på din profilside, og gem det som en miljøvariabel, aldrig i en chat eller en fil:</value></data>
+  <data name="Description and change description in all 16 European languages." xml:space="preserve"><value>Beskrivelse og ændringsbeskrivelse på alle 16 europæiske sprog.</value></data>
+  <data name="Download SKILL.md" xml:space="preserve"><value>Download SKILL.md</value></data>
+  <data name="Endpoints" xml:space="preserve"><value>Endpoints</value></data>
+  <data name="Example instruction for a Claude session in your plugin's project folder:" xml:space="preserve"><value>Eksempel på en instruktion til en Claude-session i dit plugins projektmappe:</value></data>
+  <data name="Example with curl" xml:space="preserve"><value>Eksempel med curl</value></data>
+  <data name="Icon" xml:space="preserve"><value>Ikon</value></data>
+  <data name="Install the Claude skill (once)" xml:space="preserve"><value>Installer Claude-skillen (én gang)</value></data>
+  <data name="Languages" xml:space="preserve"><value>Sprog</value></data>
+  <data name="Licenses" xml:space="preserve"><value>Licenser</value></data>
+  <data name="List of all endpoints" xml:space="preserve"><value>Liste over alle endpoints</value></data>
+  <data name="Manifest and versioning" xml:space="preserve"><value>Manifest og versionsstyring</value></data>
+  <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>Kun tredjepartskomponenter under MIT, BSD eller Apache-2.0.</value></data>
+  <data name="Open a new terminal afterwards so the variable is available." xml:space="preserve"><value>Åbn derefter en ny terminal, så variablen er tilgængelig.</value></data>
+  <data name="Other checks" xml:space="preserve"><value>Andre kontroller</value></data>
+  <data name="Package structure" xml:space="preserve"><value>Pakkestruktur</value></data>
+  <data name="Publish and update plugins directly from your Claude session. Claude reads the store's rules from the API, validates the package until all checks pass, and submits it for review." xml:space="preserve"><value>Udgiv og opdater plugins direkte fra din Claude-session. Claude læser butikkens regler via API'et, validerer pakken, indtil alle kontroller er bestået, og indsender den til gennemgang.</value></data>
+  <data name="Purpose" xml:space="preserve"><value>Formål</value></data>
+  <data name="Ribbon and layout" xml:space="preserve"><value>Båndet og layout</value></data>
+  <data name="Rules every upload must meet" xml:space="preserve"><value>Regler, som enhver upload skal overholde</value></data>
+  <data name="Runtime and dependencies" xml:space="preserve"><value>Runtime og afhængigheder</value></data>
+  <data name="Schema of manifest.json" xml:space="preserve"><value>Skema for manifest.json</value></data>
+  <data name="Security scan" xml:space="preserve"><value>Sikkerhedsscanning</value></data>
+  <data name="Status, history and check reports of a package" xml:space="preserve"><value>Status, historik og kontrolrapporter for en pakke</value></data>
+  <data name="Technical details are in English so that developers and AI assistants can act on them directly." xml:space="preserve"><value>Tekniske detaljer er på engelsk, så udviklere og AI-assistenter kan handle direkte ud fra dem.</value></data>
+  <data name="Tell Claude what to do" xml:space="preserve"><value>Fortæl Claude, hvad der skal gøres</value></data>
+  <data name="Test run of all checks, nothing is stored" xml:space="preserve"><value>Testkørsel af alle kontroller, intet gemmes</value></data>
+  <data name="The automatic checks verify these rules; every finding comes with a concrete fix." xml:space="preserve"><value>De automatiske kontroller efterprøver disse regler; hvert fund ledsages af en konkret løsning.</value></data>
+  <data name="The plugin's buttons sit as a group on the shared “Enhanced Features” ribbon tab." xml:space="preserve"><value>Pluginnets knapper er samlet i en gruppe på den delte fane »Avancerede funktioner« på båndet.</value></data>
+  <data name="The skill tells Claude where this store is and how to work with it. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>Skillen fortæller Claude, hvor denne butik findes, og hvordan man arbejder med den. Den indlæser altid de aktuelle regler fra serveren og skal derfor aldrig opdateres.</value></data>
+  <data name="Without the skill, the URL of the agent guide in the instruction is enough." xml:space="preserve"><value>Uden skillen er URL'en til agentvejledningen i instruktionen tilstrækkelig.</value></data>
+  <data name="all passed" xml:space="preserve"><value>alle bestået</value></data>
+  <data name="failed" xml:space="preserve"><value>ikke bestået</value></data>
+  <data name="passed with warnings" xml:space="preserve"><value>bestået med advarsler</value></data>
 </root>

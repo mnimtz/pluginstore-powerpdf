@@ -82,7 +82,6 @@
   <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>Mit tervez közzétenni? (a rendszergazda látja)</value></data>
   <data name="Withdraw" xml:space="preserve"><value>Visszavonás</value></data>
   <data name="You have not submitted any packages yet." xml:space="preserve"><value>Még nem küldött be egyetlen csomagot sem.</value></data>
-  <data name="active" xml:space="preserve"><value>aktív</value></data>
   <data name="download(s)" xml:space="preserve"><value>letöltés</value></data>
   <data name="revoked" xml:space="preserve"><value>érvénytelenítve</value></data>
   <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>Hozzáférési kérelmét elküldtük. E-mailt kap, amint egy rendszergazda jóváhagyja.</value></data>
@@ -166,4 +165,47 @@
   <data name="Author" xml:space="preserve"><value>Szerző</value></data>
   <data name="Show my name and email as author of my plugins in the public catalog" xml:space="preserve"><value>Nevem és e-mail-címem megjelenítése a beépülő moduljaim szerzőjeként a nyilvános katalógusban</value></data>
   <data name="When off, the catalog shows “Tungsten Automation” instead." xml:space="preserve"><value>Kikapcsolt állapotban a katalógus helyette a "Tungsten Automation" nevet mutatja.</value></data>
+  <data name="A new, higher version number (SemVer) for every upload, and a change description." xml:space="preserve"><value>Minden feltöltéshez új, magasabb verziószám (SemVer) és a változások leírása.</value></data>
+  <data name="API and Claude" xml:space="preserve"><value>API és Claude</value></data>
+  <data name="Address" xml:space="preserve"><value>Cím</value></data>
+  <data name="An x64 build of the plugin (it also runs on Windows on ARM)." xml:space="preserve"><value>A bővítmény x64-es buildje (Windows on ARM rendszeren is fut).</value></data>
+  <data name="Automatic checks" xml:space="preserve"><value>Automatikus ellenőrzések</value></data>
+  <data name="Binaries and integrity" xml:space="preserve"><value>Bináris fájlok és integritás</value></data>
+  <data name="Check your token" xml:space="preserve"><value>Token ellenőrzése</value></data>
+  <data name="Complete guide for developers and AI assistants" xml:space="preserve"><value>Teljes útmutató fejlesztőknek és AI-asszisztenseknek</value></data>
+  <data name="Create a personal token" xml:space="preserve"><value>Személyes token létrehozása</value></data>
+  <data name="Create a token on your profile page and store it as an environment variable, never in a chat or a file:" xml:space="preserve"><value>Hozzon létre egy tokent a profiloldalán, és tárolja környezeti változóként, soha ne csevegésben vagy fájlban:</value></data>
+  <data name="Description and change description in all 16 European languages." xml:space="preserve"><value>Leírás és a változások leírása mind a 16 európai nyelven.</value></data>
+  <data name="Download SKILL.md" xml:space="preserve"><value>SKILL.md letöltése</value></data>
+  <data name="Endpoints" xml:space="preserve"><value>Végpontok</value></data>
+  <data name="Example instruction for a Claude session in your plugin's project folder:" xml:space="preserve"><value>Példautasítás egy Claude-munkamenethez a bővítménye projektmappájában:</value></data>
+  <data name="Example with curl" xml:space="preserve"><value>Példa curl használatával</value></data>
+  <data name="Icon" xml:space="preserve"><value>Ikon</value></data>
+  <data name="Install the Claude skill (once)" xml:space="preserve"><value>A Claude-skill telepítése (egyszer)</value></data>
+  <data name="Languages" xml:space="preserve"><value>Nyelvek</value></data>
+  <data name="Licenses" xml:space="preserve"><value>Licencek</value></data>
+  <data name="List of all endpoints" xml:space="preserve"><value>Az összes végpont listája</value></data>
+  <data name="Manifest and versioning" xml:space="preserve"><value>Manifest és verziókezelés</value></data>
+  <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>Kizárólag MIT, BSD vagy Apache-2.0 licencű külső összetevők.</value></data>
+  <data name="Open a new terminal afterwards so the variable is available." xml:space="preserve"><value>Ezután nyisson meg egy új terminált, hogy a változó elérhető legyen.</value></data>
+  <data name="Other checks" xml:space="preserve"><value>Egyéb ellenőrzések</value></data>
+  <data name="Package structure" xml:space="preserve"><value>Csomagszerkezet</value></data>
+  <data name="Publish and update plugins directly from your Claude session. Claude reads the store's rules from the API, validates the package until all checks pass, and submits it for review." xml:space="preserve"><value>Bővítményeit közvetlenül a Claude-munkamenetéből teheti közzé és frissítheti. A Claude az API-n keresztül beolvassa az áruház szabályait, addig ellenőrzi a csomagot, amíg minden ellenőrzésen át nem megy, majd bírálatra küldi.</value></data>
+  <data name="Purpose" xml:space="preserve"><value>Cél</value></data>
+  <data name="Ribbon and layout" xml:space="preserve"><value>Menüszalag és elrendezés</value></data>
+  <data name="Rules every upload must meet" xml:space="preserve"><value>Szabályok, amelyeknek minden feltöltésnek meg kell felelnie</value></data>
+  <data name="Runtime and dependencies" xml:space="preserve"><value>Futtatókörnyezet és függőségek</value></data>
+  <data name="Schema of manifest.json" xml:space="preserve"><value>A manifest.json sémája</value></data>
+  <data name="Security scan" xml:space="preserve"><value>Biztonsági vizsgálat</value></data>
+  <data name="Status, history and check reports of a package" xml:space="preserve"><value>Egy csomag állapota, előzményei és ellenőrzési jelentései</value></data>
+  <data name="Technical details are in English so that developers and AI assistants can act on them directly." xml:space="preserve"><value>A technikai részletek angol nyelvűek, hogy a fejlesztők és az AI-asszisztensek közvetlenül felhasználhassák őket.</value></data>
+  <data name="Tell Claude what to do" xml:space="preserve"><value>Mondja el a Claude-nak, mi a teendő</value></data>
+  <data name="Test run of all checks, nothing is stored" xml:space="preserve"><value>Az összes ellenőrzés próbafuttatása, semmi sem kerül mentésre</value></data>
+  <data name="The automatic checks verify these rules; every finding comes with a concrete fix." xml:space="preserve"><value>Az automatikus ellenőrzések ezeket a szabályokat vizsgálják; minden megállapításhoz konkrét javítás tartozik.</value></data>
+  <data name="The plugin's buttons sit as a group on the shared “Enhanced Features” ribbon tab." xml:space="preserve"><value>A bővítmény gombjai csoportként a közös „Speciális funkciók” menüszalaglapon találhatók.</value></data>
+  <data name="The skill tells Claude where this store is and how to work with it. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>A skill megmondja a Claude-nak, hol található ez az áruház, és hogyan kell vele dolgozni. Mindig a kiszolgálóról tölti be az aktuális szabályokat, így soha nem kell frissíteni.</value></data>
+  <data name="Without the skill, the URL of the agent guide in the instruction is enough." xml:space="preserve"><value>A skill nélkül elegendő az utasításban szereplő ügynökútmutató URL-címe.</value></data>
+  <data name="all passed" xml:space="preserve"><value>mind sikeres</value></data>
+  <data name="failed" xml:space="preserve"><value>sikertelen</value></data>
+  <data name="passed with warnings" xml:space="preserve"><value>figyelmeztetésekkel sikeres</value></data>
 </root>

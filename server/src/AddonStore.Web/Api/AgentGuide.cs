@@ -143,6 +143,43 @@ the plugin itself, not bundled.
   both binaries exist, not that they work.
 """;
 
+    /// <summary>
+    /// A Claude Code skill (SKILL.md) that points the agent at this instance.
+    /// Install: save as ~/.claude/skills/powerpdf-plugin-store/SKILL.md.
+    /// Deliberately thin: the authoritative rules live in /api/agent-guide, so
+    /// the skill never goes stale when the rules change.
+    /// </summary>
+    public static string SkillMarkdown(string baseUrl) => $$"""
+---
+name: powerpdf-plugin-store
+description: Build, package, validate and publish Tungsten Power PDF plugins (.zxt, Plugin SDK) to the team Plugin-Store at {{baseUrl}}. Use whenever the user develops a Power PDF plugin, asks to package it as .ppak, upload or update it in the Plugin-Store, or fix store validation findings.
+---
+
+# Power PDF Plugin-Store
+
+Store: {{baseUrl}}
+
+1. Before packaging or uploading, fetch and follow the current rules:
+   `GET {{baseUrl}}/api/agent-guide` (markdown) and
+   `GET {{baseUrl}}/api/schema/manifest` (manifest.json schema).
+   They are authoritative and may change; never rely on memory.
+2. The personal API token is in the environment variable `PPAK_TOKEN`.
+   Never print it, never write it into files or commits. If it is missing,
+   ask the user to create one on {{baseUrl}}/Profile and set the variable.
+3. Verify the connection with `GET {{baseUrl}}/api/me`.
+4. Build the plugin (Release, x64), create the .ppak, then loop:
+   `POST {{baseUrl}}/api/packages/validate` until `data.passed` is true,
+   fixing every finding with severity "error" using its `hint`.
+5. Submit with `POST {{baseUrl}}/api/packages` and report the resulting
+   status (beta, awaiting admin review) to the user.
+
+Key rules (details in the guide): every upload carries a new, higher SemVer
+version; description and changelog in all 16 European languages; plugins
+live on the shared "Enhanced Features" ribbon tab (toolbar atom
+`FeaturePack`, own group `FeaturePack::<Name>`); only MIT/BSD/Apache-2.0
+third-party code.
+""";
+
     public const string ManifestSchema = """
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",

@@ -63,6 +63,25 @@ p.lead { color: var(--tun-slate); margin-top: 0; }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
 
+/* validation report */
+.report { border: 1px solid var(--tun-gray-200); border-radius: 8px; margin: 10px 0; background: var(--tun-gray-100); }
+.report > summary { cursor: pointer; padding: 10px 14px; list-style: none; display: flex; gap: 8px; align-items: center; }
+.report > summary::-webkit-details-marker { display: none; }
+.report-ok { border-left: 4px solid var(--tun-green); }
+.report-warning { border-left: 4px solid var(--tun-yellow); }
+.report-error { border-left: 4px solid var(--tun-coral); }
+.report-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; padding: 0 14px 10px; }
+.report-area { background: #fff; border: 1px solid var(--tun-gray-200); border-radius: 6px; padding: 8px 10px; }
+.report-label { font-weight: 500; color: var(--tun-navy); font-size: .9rem; }
+.report-icon {
+  display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px;
+  border-radius: 50%; font-size: .75rem; font-weight: 700; color: #fff; margin-right: 6px; flex: none;
+}
+.report-icon.ok { background: #016839; }
+.report-icon.warning { background: #634E12; }
+.report-icon.error { background: #B3261E; }
+.report-note { color: var(--tun-slate); font-size: .78rem; padding: 0 14px 10px; margin: 0; }
+
 .catalog-tools { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
 .catalog-tools input[type=search] { max-width: 260px; border-radius: 999px; padding: 8px 16px; }
 .chips { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -153,3 +172,9 @@ footer.site .spacer { margin-left: auto; }
 .hero p { color: var(--tun-blue-light); max-width: 640px; }
 .hero img.product { position: absolute; right: 28px; top: 24px; height: 84px; }
 @media (max-width: 700px) { .hero img.product { display: none; } }
+
+pre.code {
+  background: var(--tun-navy); color: #fff; padding: 12px 14px; border-radius: 6px;
+  font-family: Consolas, "Cascadia Mono", monospace; font-size: .85rem;
+  white-space: pre-wrap; word-break: break-all;
+}

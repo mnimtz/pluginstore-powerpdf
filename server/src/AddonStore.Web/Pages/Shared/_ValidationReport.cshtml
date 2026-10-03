@@ -1,0 +1,51 @@
+@model AddonStore.Web.Validation.ValidationReport
+@using AddonStore.Web.Validation
+@{
+    var areas = ReportView.Build(Model);
+    var (errors, warnings) = ReportView.Counts(Model);
+    var overall = errors > 0 ? "error" : warnings > 0 ? "warning" : "ok";
+    var open = ViewData["open"] is bool b && b;
+}
+<details class="report report-@overall" @(open ? "open" : "")>
+    <summary>
+        <span class="report-icon @overall">@(overall == "ok" ? "✓" : overall == "warning" ? "!" : "✕")</span>
+        <b>@L["Automatic checks"]:</b>
+        @if (overall == "ok")
+        {
+            @L["all passed"]
+        }
+        else if (overall == "warning")
+        {
+            @L["passed with warnings"] <span class="badge beta">@warnings</span>
+        }
+        else
+        {
+            @L["failed"] <span class="badge rejected">@errors</span>
+        }
+    </summary>
+    <div class="report-grid">
+        @foreach (var a in areas)
+        {
+            <div class="report-area">
+                <span class="report-icon @a.Status">@(a.Status == "ok" ? "✓" : a.Status == "warning" ? "!" : "✕")</span>
+                <span class="report-label">@L[a.Label]</span>
+                @if (a.Findings.Count > 0)
+                {
+                    <ul class="findings">
+                        @foreach (var f in a.Findings)
+                        {
+                            <li class="@f.Severity">
+                                <span class="code">@f.Code</span> @f.Message
+                                @if (!string.IsNullOrEmpty(f.Hint))
+                                {
+                                    <span class="hint">@f.Hint</span>
+                                }
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        }
+    </div>
+    <p class="report-note">@L["Technical details are in English so that developers and AI assistants can act on them directly."]</p>
+</details>

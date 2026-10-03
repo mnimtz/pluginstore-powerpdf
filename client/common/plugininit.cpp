@@ -73,7 +73,13 @@ DCCB1 DUBool DCCB2 PluginInit()
     return true;
 }
 
-DCCB1 DUBool DCCB2 PluginUnload()      { return true; }
+// Plug-ins initialised after us may have appended their groups behind ours;
+// re-applying at shutdown keeps the Plugin-Store group last for the next start.
+DCCB1 DUBool DCCB2 PluginUnload()
+{
+    DURING fplayout::ApplyButtons(); HANDLER END_HANDLER
+    return true;
+}
 DCCB1 DUBool DCCB2 PluginExportHFTs()  { return true; }
 
 DCCB1 DUBool DCCB2 PluginImportReplaceAndRegister()

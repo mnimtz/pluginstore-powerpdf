@@ -230,7 +230,7 @@ public class PackageValidator
 
                 if (manifest.AtomNamespace.Length > 0 && !manifest.AtomNamespace.StartsWith("FeaturePack::", StringComparison.Ordinal)
                     && manifest.AtomNamespace != "FeaturePack")
-                    report.Warn("ATOM_NOT_SHARED_TAB",
+                    report.Error("ATOM_NOT_SHARED_TAB",
                         $"ribbonAtomNamespace '{manifest.AtomNamespace}' does not live on the shared tab.",
                         "Store plugins share ONE ribbon tab (toolbar atom 'FeaturePack', title 'Enhanced Features'). Use a group atom like 'FeaturePack::MyPlugin' instead of creating an own tab.");
 
@@ -525,7 +525,7 @@ public class PackageValidator
                     "Use IconMode=\"4\" for product-sized buttons; 1 renders a large button with a small icon once merged.");
             var tb = Regex.Match(xml, "<toolbar name=\"([^\"]+)\"");
             if (tb.Success && tb.Groups[1].Value != "FeaturePack")
-                report.Warn("ATOM_NOT_SHARED_TAB", $"Publish Mode.xml creates its own ribbon tab '{tb.Groups[1].Value}'.",
+                report.Error("ATOM_NOT_SHARED_TAB", $"Publish Mode.xml creates its own ribbon tab '{tb.Groups[1].Value}'.",
                     "Store plugins share ONE tab: toolbar atom 'FeaturePack' with the localized title 'Enhanced Features'/'Erweiterte Funktionen'.");
         }
 

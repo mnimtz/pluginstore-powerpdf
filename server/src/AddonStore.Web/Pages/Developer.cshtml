@@ -1,0 +1,66 @@
+@page
+@model AddonStore.Web.Pages.DeveloperModel
+@{
+    ViewData["Title"] = "API";
+    var b = Model.BaseUrl;
+}
+
+<h1>@L["API and Claude"]</h1>
+<p class="lead">@L["Publish and update plugins directly from your Claude session. Claude reads the store's rules from the API, validates the package until all checks pass, and submits it for review."]</p>
+
+<div class="card">
+    <h2 style="margin-top:0">1. @L["Create a personal token"]</h2>
+    <p>@L["Create a token on your profile page and store it as an environment variable, never in a chat or a file:"]</p>
+    <pre class="code">setx PPAK_TOKEN "ppak_..."</pre>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["Open a new terminal afterwards so the variable is available."] <a href="/Profile">@L["Profile"]</a></p>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">2. @L["Install the Claude skill (once)"]</h2>
+    <p>@L["The skill tells Claude where this store is and how to work with it. It always loads the current rules from the server, so it never needs updating."]</p>
+    <pre class="code">New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills\powerpdf-plugin-store" | Out-Null
+Invoke-WebRequest @(b)/api/skill -OutFile "$env:USERPROFILE\.claude\skills\powerpdf-plugin-store\SKILL.md"</pre>
+    <p><a class="btn small secondary" href="/api/skill">@L["Download SKILL.md"]</a></p>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">3. @L["Tell Claude what to do"]</h2>
+    <p>@L["Example instruction for a Claude session in your plugin's project folder:"]</p>
+    <pre class="code">Publish this Power PDF plugin to our Plugin-Store (@b).
+Follow @(b)/api/agent-guide. My token is in the environment variable PPAK_TOKEN.
+Build the release, create the .ppak with all 16 languages, validate until
+everything passes, then submit it and tell me the result.</pre>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["Without the skill, the URL of the agent guide in the instruction is enough."]</p>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">@L["Rules every upload must meet"]</h2>
+    <ul>
+        <li>@L["A new, higher version number (SemVer) for every upload, and a change description."]</li>
+        <li>@L["Description and change description in all 16 European languages."]</li>
+        <li>@L["An x64 build of the plugin (it also runs on Windows on ARM)."]</li>
+        <li>@L["The plugin's buttons sit as a group on the shared “Enhanced Features” ribbon tab."]</li>
+        <li>@L["Only third-party components under MIT, BSD or Apache-2.0."]</li>
+    </ul>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["The automatic checks verify these rules; every finding comes with a concrete fix."]</p>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">@L["Endpoints"]</h2>
+    <table>
+        <tr><th>@L["Address"]</th><th>@L["Purpose"]</th></tr>
+        <tr><td><code>@b/api/agent-guide</code></td><td>@L["Complete guide for developers and AI assistants"]</td></tr>
+        <tr><td><code>@b/api/schema/manifest</code></td><td>@L["Schema of manifest.json"]</td></tr>
+        <tr><td><code>@b/api</code></td><td>@L["List of all endpoints"]</td></tr>
+        <tr><td><code>GET @b/api/me</code></td><td>@L["Check your token"]</td></tr>
+        <tr><td><code>POST @b/api/packages/validate</code></td><td>@L["Test run of all checks, nothing is stored"]</td></tr>
+        <tr><td><code>POST @b/api/packages</code></td><td>@L["Submit a package"]</td></tr>
+        <tr><td><code>GET @b/api/packages/{id}</code></td><td>@L["Status, history and check reports of a package"]</td></tr>
+    </table>
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">@L["Example with curl"]</h2>
+    <pre class="code">curl -X POST -H "Authorization: Bearer %PPAK_TOKEN%" -H "Content-Type: application/zip" ^
+     --data-binary @@my-plugin.ppak @(b)/api/packages/validate</pre>
+</div>

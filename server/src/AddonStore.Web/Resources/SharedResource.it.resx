@@ -82,7 +82,6 @@
   <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>Cosa intende pubblicare? (visibile all'amministratore)</value></data>
   <data name="Withdraw" xml:space="preserve"><value>Ritira</value></data>
   <data name="You have not submitted any packages yet." xml:space="preserve"><value>Non ha ancora inviato alcun pacchetto.</value></data>
-  <data name="active" xml:space="preserve"><value>attivo</value></data>
   <data name="download(s)" xml:space="preserve"><value>download</value></data>
   <data name="revoked" xml:space="preserve"><value>revocato</value></data>
   <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>La richiesta di accesso è stata inviata. Riceverà un'e-mail non appena un amministratore l'avrà approvata.</value></data>
@@ -166,4 +165,47 @@
   <data name="Author" xml:space="preserve"><value>Autore</value></data>
   <data name="Show my name and email as author of my plugins in the public catalog" xml:space="preserve"><value>Mostra il mio nome e la mia e-mail come autore dei miei plugin nel catalogo pubblico</value></data>
   <data name="When off, the catalog shows “Tungsten Automation” instead." xml:space="preserve"><value>Se disattivato, il catalogo mostra invece "Tungsten Automation".</value></data>
+  <data name="A new, higher version number (SemVer) for every upload, and a change description." xml:space="preserve"><value>Un numero di versione nuovo e più alto (SemVer) per ogni caricamento, insieme a una descrizione delle modifiche.</value></data>
+  <data name="API and Claude" xml:space="preserve"><value>API e Claude</value></data>
+  <data name="Address" xml:space="preserve"><value>Indirizzo</value></data>
+  <data name="An x64 build of the plugin (it also runs on Windows on ARM)." xml:space="preserve"><value>Una build x64 del plugin (funziona anche su Windows on ARM).</value></data>
+  <data name="Automatic checks" xml:space="preserve"><value>Controlli automatici</value></data>
+  <data name="Binaries and integrity" xml:space="preserve"><value>File binari e integrità</value></data>
+  <data name="Check your token" xml:space="preserve"><value>Verificare il token</value></data>
+  <data name="Complete guide for developers and AI assistants" xml:space="preserve"><value>Guida completa per sviluppatori e assistenti IA</value></data>
+  <data name="Create a personal token" xml:space="preserve"><value>Creare un token personale</value></data>
+  <data name="Create a token on your profile page and store it as an environment variable, never in a chat or a file:" xml:space="preserve"><value>Creare un token nella pagina del profilo e salvarlo come variabile d'ambiente, mai in una chat o in un file:</value></data>
+  <data name="Description and change description in all 16 European languages." xml:space="preserve"><value>Descrizione e descrizione delle modifiche in tutte le 16 lingue europee.</value></data>
+  <data name="Download SKILL.md" xml:space="preserve"><value>Scarica SKILL.md</value></data>
+  <data name="Endpoints" xml:space="preserve"><value>Endpoint</value></data>
+  <data name="Example instruction for a Claude session in your plugin's project folder:" xml:space="preserve"><value>Istruzione di esempio per una sessione Claude nella cartella del progetto del Suo plugin:</value></data>
+  <data name="Example with curl" xml:space="preserve"><value>Esempio con curl</value></data>
+  <data name="Icon" xml:space="preserve"><value>Icona</value></data>
+  <data name="Install the Claude skill (once)" xml:space="preserve"><value>Installare la skill di Claude (una sola volta)</value></data>
+  <data name="Languages" xml:space="preserve"><value>Lingue</value></data>
+  <data name="Licenses" xml:space="preserve"><value>Licenze</value></data>
+  <data name="List of all endpoints" xml:space="preserve"><value>Elenco di tutti gli endpoint</value></data>
+  <data name="Manifest and versioning" xml:space="preserve"><value>Manifest e controllo delle versioni</value></data>
+  <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>Solo componenti di terze parti con licenza MIT, BSD o Apache-2.0.</value></data>
+  <data name="Open a new terminal afterwards so the variable is available." xml:space="preserve"><value>Aprire quindi un nuovo terminale affinché la variabile sia disponibile.</value></data>
+  <data name="Other checks" xml:space="preserve"><value>Altri controlli</value></data>
+  <data name="Package structure" xml:space="preserve"><value>Struttura del pacchetto</value></data>
+  <data name="Publish and update plugins directly from your Claude session. Claude reads the store's rules from the API, validates the package until all checks pass, and submits it for review." xml:space="preserve"><value>Pubblicare e aggiornare i plugin direttamente dalla Sua sessione Claude. Claude legge le regole dello store tramite l'API, convalida il pacchetto finché tutti i controlli non vengono superati e lo invia per la revisione.</value></data>
+  <data name="Purpose" xml:space="preserve"><value>Scopo</value></data>
+  <data name="Ribbon and layout" xml:space="preserve"><value>Barra multifunzione e layout</value></data>
+  <data name="Rules every upload must meet" xml:space="preserve"><value>Regole che ogni caricamento deve rispettare</value></data>
+  <data name="Runtime and dependencies" xml:space="preserve"><value>Runtime e dipendenze</value></data>
+  <data name="Schema of manifest.json" xml:space="preserve"><value>Schema di manifest.json</value></data>
+  <data name="Security scan" xml:space="preserve"><value>Scansione di sicurezza</value></data>
+  <data name="Status, history and check reports of a package" xml:space="preserve"><value>Stato, cronologia e report dei controlli di un pacchetto</value></data>
+  <data name="Technical details are in English so that developers and AI assistants can act on them directly." xml:space="preserve"><value>I dettagli tecnici sono in inglese, così sviluppatori e assistenti IA possono utilizzarli direttamente.</value></data>
+  <data name="Tell Claude what to do" xml:space="preserve"><value>Indicare a Claude cosa fare</value></data>
+  <data name="Test run of all checks, nothing is stored" xml:space="preserve"><value>Esecuzione di prova di tutti i controlli, non viene salvato nulla</value></data>
+  <data name="The automatic checks verify these rules; every finding comes with a concrete fix." xml:space="preserve"><value>I controlli automatici verificano queste regole; ogni rilievo è accompagnato da una correzione concreta.</value></data>
+  <data name="The plugin's buttons sit as a group on the shared “Enhanced Features” ribbon tab." xml:space="preserve"><value>I pulsanti del plugin si trovano raggruppati nella scheda condivisa «Funzioni avanzate» della barra multifunzione.</value></data>
+  <data name="The skill tells Claude where this store is and how to work with it. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>La skill indica a Claude dove si trova questo store e come utilizzarlo. Carica sempre le regole aggiornate dal server, quindi non deve mai essere aggiornata.</value></data>
+  <data name="Without the skill, the URL of the agent guide in the instruction is enough." xml:space="preserve"><value>Senza la skill è sufficiente l'URL della guida per agenti contenuto nell'istruzione.</value></data>
+  <data name="all passed" xml:space="preserve"><value>tutti superati</value></data>
+  <data name="failed" xml:space="preserve"><value>non superati</value></data>
+  <data name="passed with warnings" xml:space="preserve"><value>superati con avvisi</value></data>
 </root>
