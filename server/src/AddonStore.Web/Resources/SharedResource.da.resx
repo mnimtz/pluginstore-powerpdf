@@ -83,7 +83,7 @@
   <data name="Withdraw" xml:space="preserve"><value>Træk tilbage</value></data>
   <data name="You have not submitted any packages yet." xml:space="preserve"><value>Du har endnu ikke indsendt nogen pakker.</value></data>
   <data name="active" xml:space="preserve"><value>aktiv</value></data>
-  <data name="downloads" xml:space="preserve"><value>downloads</value></data>
+  <data name="download(s)" xml:space="preserve"><value>downloads</value></data>
   <data name="revoked" xml:space="preserve"><value>tilbagekaldt</value></data>
   <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>Din adgangsanmodning er sendt. Du modtager en e-mail, når en administrator har godkendt den.</value></data>
   <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>Login mislykkedes. Kontrollér e-mail og adgangskode.</value></data>

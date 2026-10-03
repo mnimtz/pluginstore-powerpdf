@@ -83,7 +83,7 @@
   <data name="Withdraw" xml:space="preserve"><value>Geri çek</value></data>
   <data name="You have not submitted any packages yet." xml:space="preserve"><value>Henüz hiç paket göndermediniz.</value></data>
   <data name="active" xml:space="preserve"><value>etkin</value></data>
-  <data name="downloads" xml:space="preserve"><value>indirme</value></data>
+  <data name="download(s)" xml:space="preserve"><value>indirme</value></data>
   <data name="revoked" xml:space="preserve"><value>iptal edildi</value></data>
   <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>Erişim isteğiniz gönderildi. Bir yönetici onayladığında e-posta alacaksınız.</value></data>
   <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>Oturum açılamadı. E-postayı ve parolayı kontrol edin.</value></data>

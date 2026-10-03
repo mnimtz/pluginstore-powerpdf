@@ -83,7 +83,7 @@
   <data name="Withdraw" xml:space="preserve"><value>Visszavonás</value></data>
   <data name="You have not submitted any packages yet." xml:space="preserve"><value>Még nem küldött be egyetlen csomagot sem.</value></data>
   <data name="active" xml:space="preserve"><value>aktív</value></data>
-  <data name="downloads" xml:space="preserve"><value>letöltés</value></data>
+  <data name="download(s)" xml:space="preserve"><value>letöltés</value></data>
   <data name="revoked" xml:space="preserve"><value>érvénytelenítve</value></data>
   <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>Hozzáférési kérelmét elküldtük. E-mailt kap, amint egy rendszergazda jóváhagyja.</value></data>
   <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>A bejelentkezés nem sikerült. Ellenőrizze az e-mail-címet és a jelszót.</value></data>

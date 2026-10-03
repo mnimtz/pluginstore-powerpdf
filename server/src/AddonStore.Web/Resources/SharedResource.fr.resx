@@ -83,7 +83,7 @@
   <data name="Withdraw" xml:space="preserve"><value>Retirer</value></data>
   <data name="You have not submitted any packages yet." xml:space="preserve"><value>Vous n'avez encore soumis aucun package.</value></data>
   <data name="active" xml:space="preserve"><value>actif</value></data>
-  <data name="downloads" xml:space="preserve"><value>téléchargements</value></data>
+  <data name="download(s)" xml:space="preserve"><value>téléchargements</value></data>
   <data name="revoked" xml:space="preserve"><value>révoqué</value></data>
   <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>Votre demande d'accès a été envoyée. Vous recevrez un e-mail dès qu'un administrateur l'aura approuvée.</value></data>
   <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>Échec de la connexion. Vérifiez l'e-mail et le mot de passe.</value></data>
