@@ -141,7 +141,7 @@ dotnet run --project server/src/AddonStore.Web --urls http://localhost:5190
 ```
 
 SQLite and package storage land in `server/src/AddonStore.Web/data/`.
-The client's default server URL is `http://localhost:5190` during development.
+The client's default server URL is `https://pluginstore.azurewebsites.net`; point it at `http://localhost:5190` for local development via *File → Options → Plugin-Store*.
 
 ## Repository layout
 

@@ -7,9 +7,9 @@
 
 const wchar_t* kPSRegKey = L"Software\\Kofax\\PDF\\Tungsten Power PDF\\PluginStore";
 
-// Until the production instance exists this default points at the local dev
-// server; the Options page and the HKLM policy can override it any time.
-static const wchar_t* kDefaultUrl = L"http://localhost:5190";
+// Our team instance; the Options page and the HKLM policy can override it
+// any time (e.g. http://localhost:5190 during development).
+static const wchar_t* kDefaultUrl = L"https://pluginstore.azurewebsites.net";
 
 static std::wstring g_url = kDefaultUrl;
 static bool g_beta = false;

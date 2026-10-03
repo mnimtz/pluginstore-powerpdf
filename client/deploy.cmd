@@ -29,7 +29,7 @@ xcopy /E /I /Y "%SRC%Plug-ins\PluginStore" "%DST%\PluginStore" || goto :fail
 echo.
 echo Fertig. Power PDF starten - Gruppe "Plugin-Store" erscheint im Tab
 echo "Erweiterte Funktionen". Server-URL unter Datei ^> Optionen ^> Plugin-Store
-echo (Standard: http://localhost:5190).
+echo (Standard: https://pluginstore.azurewebsites.net).
 echo    %DST%\PluginStore.zxt
 echo    %DST%\PluginStore\...
 exit /b 0
