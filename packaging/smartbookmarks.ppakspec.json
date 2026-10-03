@@ -1,6 +1,6 @@
 {
   "id": "com.tungsten.smartbookmarks",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": {
     "en": "Smart Bookmarks",
     "de": "Smart Bookmarks"
@@ -24,22 +24,22 @@
     "tr": "Her PDF için otomatik olarak çok seviyeli yer işareti yapısı oluşturur: başlık algılama, canlı önizleme paneli, içindekiler, isteğe bağlı OCR."
   },
   "changelog": {
-    "en": "Now built from the same code base as the Enhanced Features modules; ribbon buttons, settings and the navigation panel of existing installations are kept.",
-    "de": "Basiert jetzt auf derselben Codebasis wie die Module der Erweiterten Funktionen; Ribbon-Schaltflächen, Einstellungen und das Navigationspanel bestehender Installationen bleiben erhalten.",
-    "fr": "Repose désormais sur la même base de code que les modules des Fonctions avancées ; les boutons du ruban, les paramètres et le panneau de navigation des installations existantes sont conservés.",
-    "it": "Ora si basa sullo stesso codice dei moduli delle Funzioni avanzate; i pulsanti della barra multifunzione, le impostazioni e il pannello di navigazione delle installazioni esistenti vengono mantenuti.",
-    "es": "Ahora se basa en el mismo código que los módulos de Funciones avanzadas; se conservan los botones de la cinta, la configuración y el panel de navegación de las instalaciones existentes.",
-    "nl": "Is nu gebaseerd op dezelfde codebasis als de modules van Geavanceerde functies; lintknoppen, instellingen en het navigatiepaneel van bestaande installaties blijven behouden.",
-    "pt": "Agora baseado na mesma base de código dos módulos de Funções avançadas; os botões da faixa de opções, as configurações e o painel de navegação das instalações existentes são mantidos.",
-    "da": "Bygger nu på samme kodebase som modulerne i Avancerede funktioner; båndknapper, indstillinger og navigationspanelet i eksisterende installationer bevares.",
-    "fi": "Perustuu nyt samaan koodipohjaan kuin Lisätoiminnot-moduulit; olemassa olevien asennusten valintanauhan painikkeet, asetukset ja navigointipaneeli säilyvät.",
-    "nb": "Bygger nå på samme kodebase som modulene i Avanserte funksjoner; båndknapper, innstillinger og navigasjonspanelet i eksisterende installasjoner beholdes.",
-    "sv": "Bygger nu på samma kodbas som modulerna i Avancerade funktioner; menyfliksknappar, inställningar och navigeringspanelen i befintliga installationer behålls.",
-    "pl": "Teraz oparty na tej samej bazie kodu co moduły Funkcji zaawansowanych; przyciski wstążki, ustawienia i panel nawigacji istniejących instalacji zostają zachowane.",
-    "cs": "Nyní vychází ze stejného základu kódu jako moduly Rozšířených funkcí; tlačítka pásu karet, nastavení a navigační panel stávajících instalací zůstávají zachovány.",
-    "hu": "Mostantól ugyanarra a kódbázisra épül, mint a Speciális funkciók moduljai; a meglévő telepítések menüszalag-gombjai, beállításai és navigációs panelje megmarad.",
-    "ru": "Теперь основан на той же кодовой базе, что и модули «Расширенные функции»; кнопки ленты, настройки и панель навигации существующих установок сохраняются.",
-    "tr": "Artık Gelişmiş İşlevler modülleriyle aynı kod tabanını kullanıyor; mevcut kurulumların şerit düğmeleri, ayarları ve gezinti paneli korunur."
+    "en": "Scanned documents: bookmarks are now detected with the text recognition built into Windows (no extra download, works offline, nothing leaves the computer). The OCR language follows the Power PDF language; administrators can set it with the OcrLanguage value.",
+    "de": "Gescannte Dokumente: Lesezeichen werden jetzt mit der in Windows eingebauten Texterkennung erkannt (kein zusätzlicher Download, funktioniert offline, nichts verlässt den Rechner). Die OCR-Sprache folgt der Power-PDF-Sprache; Administratoren können sie über den Wert OcrLanguage festlegen.",
+    "fr": "Documents numérisés : les signets sont désormais détectés avec la reconnaissance de texte intégrée à Windows (aucun téléchargement supplémentaire, fonctionne hors ligne, rien ne quitte l'ordinateur). La langue de l'OCR suit celle de Power PDF ; les administrateurs peuvent la définir avec la valeur OcrLanguage.",
+    "it": "Documenti scansionati: i segnalibri vengono ora rilevati con il riconoscimento del testo integrato in Windows (nessun download aggiuntivo, funziona offline, nulla lascia il computer). La lingua dell'OCR segue quella di Power PDF; gli amministratori possono impostarla con il valore OcrLanguage.",
+    "es": "Documentos escaneados: los marcadores se detectan ahora con el reconocimiento de texto integrado en Windows (sin descargas adicionales, funciona sin conexión, nada sale del equipo). El idioma del OCR sigue el de Power PDF; los administradores pueden fijarlo con el valor OcrLanguage.",
+    "nl": "Gescande documenten: bladwijzers worden nu herkend met de tekstherkenning die in Windows is ingebouwd (geen extra download, werkt offline, er verlaat niets de computer). De OCR-taal volgt de taal van Power PDF; beheerders kunnen deze instellen met de waarde OcrLanguage.",
+    "pt": "Documentos digitalizados: os marcadores são agora detetados com o reconhecimento de texto integrado no Windows (sem transferências adicionais, funciona offline, nada sai do computador). O idioma do OCR segue o do Power PDF; os administradores podem defini-lo com o valor OcrLanguage.",
+    "da": "Scannede dokumenter: bogmærker registreres nu med den tekstgenkendelse, der er indbygget i Windows (ingen ekstra download, virker offline, intet forlader computeren). OCR-sproget følger Power PDF's sprog; administratorer kan angive det med værdien OcrLanguage.",
+    "fi": "Skannatut asiakirjat: kirjanmerkit tunnistetaan nyt Windowsiin sisäänrakennetulla tekstintunnistuksella (ei lisälatauksia, toimii ilman verkkoyhteyttä, mitään ei lähde tietokoneelta). OCR-kieli seuraa Power PDF:n kieltä; järjestelmänvalvojat voivat asettaa sen OcrLanguage-arvolla.",
+    "nb": "Skannede dokumenter: bokmerker gjenkjennes nå med tekstgjenkjenningen som er innebygd i Windows (ingen ekstra nedlasting, fungerer frakoblet, ingenting forlater datamaskinen). OCR-språket følger språket i Power PDF; administratorer kan angi det med verdien OcrLanguage.",
+    "sv": "Skannade dokument: bokmärken identifieras nu med den textigenkänning som är inbyggd i Windows (ingen extra nedladdning, fungerar offline, inget lämnar datorn). OCR-språket följer Power PDF:s språk; administratörer kan ange det med värdet OcrLanguage.",
+    "pl": "Zeskanowane dokumenty: zakładki są teraz wykrywane za pomocą wbudowanego w system Windows rozpoznawania tekstu (bez dodatkowego pobierania, działa offline, nic nie opuszcza komputera). Język OCR jest zgodny z językiem Power PDF; administratorzy mogą go ustawić wartością OcrLanguage.",
+    "cs": "Naskenované dokumenty: záložky se nyní rozpoznávají pomocí rozpoznávání textu zabudovaného ve Windows (bez dalšího stahování, funguje offline, nic neopouští počítač). Jazyk OCR odpovídá jazyku Power PDF; správci jej mohou nastavit hodnotou OcrLanguage.",
+    "hu": "Beszkennelt dokumentumok: a könyvjelzőket most a Windowsba épített szövegfelismerés ismeri fel (nincs további letöltés, offline is működik, semmi nem hagyja el a számítógépet). Az OCR nyelve a Power PDF nyelvét követi; a rendszergazdák az OcrLanguage értékkel állíthatják be.",
+    "ru": "Отсканированные документы: закладки теперь распознаются встроенным в Windows распознаванием текста (без дополнительной загрузки, работает офлайн, ничего не покидает компьютер). Язык OCR соответствует языку Power PDF; администраторы могут задать его значением OcrLanguage.",
+    "tr": "Taranmış belgeler: yer işaretleri artık Windows'a yerleşik metin tanıma ile algılanıyor (ek indirme yok, çevrimdışı çalışır, hiçbir şey bilgisayardan çıkmaz). OCR dili Power PDF dilini izler; yöneticiler OcrLanguage değeriyle ayarlayabilir."
   },
   "minPowerPdfVersion": "5.0",
   "ribbonAtomNamespace": "FeaturePack::SmartBookmarks",
@@ -77,11 +77,17 @@
       "version": "3.12.0",
       "license": "MIT",
       "source": "https://github.com/nlohmann/json"
+    },
+    {
+      "name": "C++/WinRT projection headers (Windows SDK)",
+      "version": "10.0.26100.0",
+      "license": "MIT",
+      "source": "https://github.com/microsoft/cppwinrt"
     }
   ],
   "complianceAudit": {
     "confirmed": true,
-    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; store builds name no contact persons), and all network code. One MIT library (nlohmann/json). Tesseract is not bundled. The AI outline feature is off by default and only contacts the provider the user selects, with the user's own API key.",
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; store builds name no contact persons), and all network code. Two MIT components: nlohmann/json and the C++/WinRT headers of the Windows SDK (header-only). Scan OCR uses Windows' built-in Windows.Media.Ocr (operating system component, runs locally, no network); Tesseract is no longer used. The AI outline feature is off by default and only contacts the provider the user selects, with the user's own API key.",
     "externalServices": [
       {
         "name": "OpenAI API (optional AI outline, off by default)",
