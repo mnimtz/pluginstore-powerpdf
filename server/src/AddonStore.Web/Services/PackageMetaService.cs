@@ -1,0 +1,166 @@
+using System.Text.Json;
+using System.Text.RegularExpressions;
+using AddonStore.Web.Data;
+using AddonStore.Web.Validation;
+
+namespace AddonStore.Web.Services;
+
+public record MetaIssue(string Code, string Severity, string Message, string Hint);
+
+/// <summary>
+/// One requested change of a package's catalog entry. A field is only touched
+/// when its Set flag is true; a null value with Set = true resets the field to
+/// the value from the newest manifest.
+/// </summary>
+public class MetaChange
+{
+    public bool SetName, SetDescription, SetAuthor, SetContact;
+    public Dictionary<string, string>? Name;
+    public Dictionary<string, string>? Description;
+    public string? Author;
+    public string? ContactEmail;
+}
+
+/// <summary>
+/// The catalog entry (name, description, author, contact) can be corrected on
+/// the server without uploading a new version. The package files and their
+/// manifests stay untouched; catalog, web UI and Power PDF client show the
+/// edited values.
+/// </summary>
+public class PackageMetaService
+{
+    public const int MaxName = 80, MaxDescription = 2000, MaxAuthor = 100;
+
+    private static readonly HashSet<string> KnownLangs =
+        new(PackageValidator.RequiredLanguages.Append("no"), StringComparer.Ordinal);
+
+    private readonly AppDbContext _db;
+    private readonly AuditService _audit;
+
+    public PackageMetaService(AppDbContext db, AuditService audit) { _db = db; _audit = audit; }
+
+    public static List<MetaIssue> Validate(MetaChange c)
+    {
+        var issues = new List<MetaIssue>();
+        if (c.SetName && c.Name is not null)
+        {
+            if (!c.Name.TryGetValue("en", out var en) || string.IsNullOrWhiteSpace(en))
+                issues.Add(new("NAME_INVALID", "error", "The name needs at least an English entry (\"en\").",
+                    "Send name as an object, e.g. {\"en\": \"Smart Bookmarks\", \"de\": \"Smart Bookmarks\"}."));
+            foreach (var (lang, text) in c.Name)
+            {
+                if (!KnownLangs.Contains(lang))
+                    issues.Add(new("NAME_INVALID", "error", $"Unknown language code '{lang}' in name.",
+                        $"Use the codes {string.Join(", ", PackageValidator.RequiredLanguages)}."));
+                else if (text.Length > MaxName)
+                    issues.Add(new("NAME_INVALID", "error", $"The {lang} name is longer than {MaxName} characters.",
+                        "Keep the name short; the description carries the details."));
+            }
+        }
+        if (c.SetDescription && c.Description is not null)
+        {
+            bool Has(string l) => c.Description.TryGetValue(l, out var t) && !string.IsNullOrWhiteSpace(t);
+            var missing = PackageValidator.RequiredLanguages.Where(l => !Has(l) && !(l == "nb" && Has("no"))).ToList();
+            if (missing.Count > 0)
+                issues.Add(new("LANG_TEXT_INCOMPLETE", "error", $"The description is missing these languages: {string.Join(", ", missing)}.",
+                    "Provide the description in all 16 European languages; translate it yourself."));
+            foreach (var (lang, text) in c.Description)
+            {
+                if (!KnownLangs.Contains(lang))
+                    issues.Add(new("LANG_TEXT_INCOMPLETE", "error", $"Unknown language code '{lang}' in description.",
+                        $"Use the codes {string.Join(", ", PackageValidator.RequiredLanguages)}."));
+                else if (text.Length > MaxDescription)
+                    issues.Add(new("DESCRIPTION_TOO_LONG", "error", $"The {lang} description is longer than {MaxDescription} characters.",
+                        "Shorten it; put long documentation into docs/ inside the package."));
+            }
+        }
+        if (c.SetAuthor && c.Author is not null && c.Author.Length > MaxAuthor)
+            issues.Add(new("AUTHOR_INVALID", "error", $"The author is longer than {MaxAuthor} characters.", "Use a person's or team's name."));
+        if (c.SetContact && !string.IsNullOrEmpty(c.ContactEmail) && !System.Net.Mail.MailAddress.TryCreate(c.ContactEmail, out _))
+            issues.Add(new("CONTACT_INVALID", "error", $"'{c.ContactEmail}' is not a valid email address.",
+                "Use a reachable address such as team@example.com, or reset the field to fall back to the publishing account."));
+
+        var texts = new List<string>();
+        if (c.SetName && c.Name is not null) texts.AddRange(c.Name.Values);
+        if (c.SetDescription && c.Description is not null) texts.AddRange(c.Description.Values);
+        var brands = PackageValidator.ForeignBrands
+            .Where(b => texts.Any(t => Regex.IsMatch(t, $@"\b{Regex.Escape(b)}\b", RegexOptions.IgnoreCase))).ToList();
+        if (brands.Count > 0)
+            issues.Add(new("THIRDPARTY_TRADEMARK", "warning", $"Name or description mentions third-party brands: {string.Join(", ", brands)}.",
+                "Do not use other companies' product names or trademarks in plugin names and catalog texts; describe the function instead."));
+        return issues;
+    }
+
+    public async Task<List<MetaIssue>> ApplyAsync(Package pkg, AppUser actor, MetaChange c)
+    {
+        Normalize(c);
+        var issues = Validate(c);
+        if (issues.Any(i => i.Severity == "error")) return issues;
+
+        var changed = new List<string>();
+        if (c.SetName) { pkg.NameJson = c.Name is null ? null : JsonSerializer.Serialize(c.Name); changed.Add(c.Name is null ? "name reset" : "name"); }
+        if (c.SetDescription) { pkg.DescriptionJson = c.Description is null ? null : JsonSerializer.Serialize(c.Description); changed.Add(c.Description is null ? "description reset" : "description"); }
+        if (c.SetAuthor) { pkg.Author = string.IsNullOrWhiteSpace(c.Author) ? null : c.Author; changed.Add(pkg.Author is null ? "author reset" : $"author '{pkg.Author}'"); }
+        if (c.SetContact) { pkg.ContactEmail = string.IsNullOrWhiteSpace(c.ContactEmail) ? null : c.ContactEmail; changed.Add(pkg.ContactEmail is null ? "contact reset" : $"contact '{pkg.ContactEmail}'"); }
+        if (changed.Count == 0) return issues;
+
+        pkg.MetaUpdatedAt = DateTime.UtcNow;
+        pkg.MetaUpdatedBy = actor.DisplayName;
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(actor.DisplayName, "package.catalog.updated", pkg.Id, string.Join("; ", changed));
+        return issues;
+    }
+
+    private static void Normalize(MetaChange c)
+    {
+        static string Clean(string s) => new string(s.Where(ch => !char.IsControl(ch) || ch == '\n').ToArray()).Trim();
+        static Dictionary<string, string>? CleanMap(Dictionary<string, string>? m) =>
+            m?.Where(kv => !string.IsNullOrWhiteSpace(kv.Value))
+              .ToDictionary(kv => kv.Key.Trim().ToLowerInvariant(), kv => Clean(kv.Value));
+        c.Name = CleanMap(c.Name);
+        c.Description = CleanMap(c.Description);
+        if (c.Author is not null) c.Author = Clean(c.Author).Replace('\n', ' ');
+        if (c.ContactEmail is not null) c.ContactEmail = c.ContactEmail.Trim();
+    }
+
+    /// <summary>Current values for an edit form: catalog entry first, then the newest manifest.</summary>
+    public static (Dictionary<string, string> Name, Dictionary<string, string> Description, string Author, string Contact)
+        Current(Package pkg, PackageVersion? newest)
+    {
+        Dictionary<string, string> Map(string? overrideJson, string field)
+        {
+            var json = overrideJson;
+            if (string.IsNullOrWhiteSpace(json) && newest is not null)
+            {
+                try
+                {
+                    using var doc = JsonDocument.Parse(newest.ManifestJson);
+                    if (doc.RootElement.TryGetProperty(field, out var el))
+                        json = el.ValueKind == JsonValueKind.String ? JsonSerializer.Serialize(new { en = el.GetString() }) : el.GetRawText();
+                }
+                catch (JsonException) { }
+            }
+            try
+            {
+                return string.IsNullOrWhiteSpace(json) ? new()
+                    : JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json)!
+                        .Where(kv => kv.Value.ValueKind == JsonValueKind.String)
+                        .ToDictionary(kv => kv.Key, kv => kv.Value.GetString() ?? "");
+            }
+            catch (JsonException) { return new(); }
+        }
+
+        string author = pkg.Author ?? "", contact = pkg.ContactEmail ?? "";
+        if (newest is not null && (author.Length == 0 || contact.Length == 0))
+        {
+            try
+            {
+                using var doc = JsonDocument.Parse(newest.ManifestJson);
+                if (author.Length == 0 && doc.RootElement.TryGetProperty("author", out var a) && a.ValueKind == JsonValueKind.String) author = a.GetString() ?? "";
+                if (contact.Length == 0 && doc.RootElement.TryGetProperty("contactEmail", out var e) && e.ValueKind == JsonValueKind.String) contact = e.GetString() ?? "";
+            }
+            catch (JsonException) { }
+        }
+        return (Map(pkg.NameJson, "name"), Map(pkg.DescriptionJson, "description"), author, contact);
+    }
+}

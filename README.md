@@ -51,6 +51,7 @@ directly inside Power PDF.
 |---|---|
 | 🏪 **End users never see this server** | The catalog is read anonymously by the Add-on Store ribbon add-on. Accounts exist only for plugin publishers and admins; registration is an access *request* that an admin approves. |
 | 🔍 **Every upload is validated** | Manifest schema, SemVer monotonicity, x64 + ARM64 PE checks, debug-runtime detection, import-table scan, SHA-256 verification, ribbon governance, reserved names, layout and localization pitfalls. Every finding carries a stable `code` and a concrete `hint`. |
+| ✏️ **Editable catalog entry** | Owners and admins correct name, description (16 languages), author and contact on the server or via `PATCH /api/packages/{id}`, without a new version; the Power PDF client shows the change immediately. |
 | 🧪 **Beta channel** | Versions that pass all automatic checks become instantly installable for users who enabled the beta option in Power PDF, while an admin reviews them for the live store. |
 | 🤖 **Agent-friendly API** | `GET /api/agent-guide` teaches any AI assistant the full workflow with zero prior knowledge. Personal tokens let Claude validate, fix and submit packages in a loop until the report is green. |
 | 📜 **Audit trail** | Registrations, approvals, tokens, submissions (version + changelog are mandatory), reviews and downloads are recorded and searchable. |
@@ -141,6 +142,11 @@ curl -X POST -H "Authorization: Bearer ppak_..." -H "Content-Type: application/z
      --data-binary @my-plugin.ppak https://<host>/api/packages/validate
 curl -X POST -H "Authorization: Bearer ppak_..." -H "Content-Type: application/zip" \
      --data-binary @my-plugin.ppak https://<host>/api/packages
+
+# correct the catalog entry without a new version (null resets a field):
+curl -X PATCH -H "Authorization: Bearer ppak_..." -H "Content-Type: application/json" \
+     -d '{"author": "Team Signing", "contactEmail": "team@example.com"}' \
+     https://<host>/api/packages/com.example.myplugin
 ```
 
 Every response uses one envelope:

@@ -38,6 +38,7 @@ public static class CatalogUi
         var ownerRows = await db.Packages.Include(p => p.Owner).ToListAsync();
         var owners = ownerRows.ToDictionary(p => p.Id, p => CatalogUi.PublicName(p.Owner));
         var ownerMails = ownerRows.ToDictionary(p => p.Id, p => CatalogUi.PublicEmail(p.Owner));
+        var pkgs = ownerRows.ToDictionary(p => p.Id);
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
@@ -59,16 +60,17 @@ public static class CatalogUi
                            cat.ValueKind == JsonValueKind.String
                 ? (cat.GetString() ?? "other") : "other";
             if (!Categories.Contains(category)) category = "other";
+            var pkg = pkgs.GetValueOrDefault(pick.PackageId);
             items.Add(new CatalogItem(
                 pick.PackageId,
-                LangText(doc.RootElement, "name", culture) ?? pick.PackageId,
-                LangText(doc.RootElement, "description", culture) ?? "",
+                OverrideText(pkg?.NameJson, culture) ?? LangText(doc.RootElement, "name", culture) ?? pick.PackageId,
+                OverrideText(pkg?.DescriptionJson, culture) ?? LangText(doc.RootElement, "description", culture) ?? "",
                 pick.Version, channel,
                 LangText(doc.RootElement, "changelog", culture) ?? pick.Changelog,
                 pick.SizeBytes, pick.Downloads,
                 pick.Sha256, pick.MinPowerPdfVersion, zxt, category,
-                AuthorOf(doc.RootElement, owners.GetValueOrDefault(pick.PackageId, pick.SubmittedBy)),
-                ContactOf(doc.RootElement, ownerMails.GetValueOrDefault(pick.PackageId, ""))));
+                EffectiveAuthor(pkg, doc.RootElement, owners.GetValueOrDefault(pick.PackageId, pick.SubmittedBy)),
+                EffectiveContact(pkg, doc.RootElement, ownerMails.GetValueOrDefault(pick.PackageId, ""))));
         }
         return items;
     }
@@ -100,6 +102,29 @@ public static class CatalogUi
         }
         return ownerEmail;
     }
+
+    /// <summary>Server-side catalog entry wins over the manifest; see PackageMetaService.</summary>
+    public static string EffectiveAuthor(Package? pkg, JsonElement root, string ownerName) =>
+        !string.IsNullOrWhiteSpace(pkg?.Author) ? pkg!.Author!.Trim() : AuthorOf(root, ownerName);
+
+    public static string EffectiveContact(Package? pkg, JsonElement root, string ownerEmail) =>
+        !string.IsNullOrWhiteSpace(pkg?.ContactEmail) ? pkg!.ContactEmail!.Trim() : ContactOf(root, ownerEmail);
+
+    /// <summary>Best language from a stored {lang: text} override, or null when there is none.</summary>
+    public static string? OverrideText(string? json, string culture)
+    {
+        if (string.IsNullOrWhiteSpace(json)) return null;
+        try
+        {
+            using var doc = JsonDocument.Parse("{\"v\":" + json + "}");
+            return LangText(doc.RootElement, "v", culture);
+        }
+        catch (JsonException) { return null; }
+    }
+
+    /// <summary>Display name of a package: catalog entry first, then the given version's manifest.</summary>
+    public static string DisplayName(Package pkg, PackageVersion? v, string culture) =>
+        OverrideText(pkg.NameJson, culture) ?? (v is null ? pkg.Id : ManifestText(v, "name", culture, pkg.Id));
 
     /// <summary>Localized text of a manifest field for a stored version (e.g. changelog, name).</summary>
     public static string ManifestText(PackageVersion v, string field, string culture, string fallback = "")

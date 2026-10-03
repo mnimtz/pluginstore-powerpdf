@@ -765,7 +765,7 @@ public class PackageValidator
         "api.dropboxapi.com", "www.googleapis.com", "api.box.com",
     };
 
-    private static readonly string[] ForeignBrands =
+    internal static readonly string[] ForeignBrands =
     {
         "Adobe", "Acrobat", "Foxit", "Nitro", "ABBYY", "Bluebeam", "PDF-XChange", "Smallpdf", "iLovePDF", "Wondershare", "PDFelement",
     };

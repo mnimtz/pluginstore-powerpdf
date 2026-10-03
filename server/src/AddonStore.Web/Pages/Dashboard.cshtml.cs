@@ -17,6 +17,7 @@ public class DashboardModel : PageModel
     public List<Package> Packages { get; private set; } = new();
     public List<Finding> Findings { get; private set; } = new();
     public string? Notice { get; private set; }
+    public string UserId => _users.GetUserId(User) ?? "";
     public string NoticeKind { get; private set; } = "ok";
 
     public DashboardModel(AppDbContext db, UserManager<AppUser> users, SubmissionService svc)
@@ -79,9 +80,12 @@ public class DashboardModel : PageModel
     private async Task LoadAsync()
     {
         var userId = _users.GetUserId(User);
+        // Admins see every package so they can maintain catalog entries.
+        var isAdmin = User.IsInRole("Admin");
         Packages = await _db.Packages
-            .Where(p => p.OwnerId == userId)
+            .Where(p => isAdmin || p.OwnerId == userId)
             .Include(p => p.Versions)
+            .Include(p => p.Owner)
             .OrderBy(p => p.Id)
             .ToListAsync();
         foreach (var p in Packages)

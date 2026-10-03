@@ -11,9 +11,11 @@ import sys
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'server', 'src', 'AddonStore.Web')
 SOURCES = ['Validation/PackageValidator.cs', 'Services/SubmissionService.cs',
-           'Api/ApiEndpoints.cs', 'Auth/ApiTokenAuthHandler.cs']
+           'Api/ApiEndpoints.cs', 'Auth/ApiTokenAuthHandler.cs',
+           'Services/PackageMetaService.cs']
 EXTRA_CODES = {'CLIENT_ADMIN_ONLY', 'VERSION_EXISTS', 'VALIDATION_FAILED', 'NOT_OWNER', 'LIVE_VERSION',
-               'TOKEN_INVALID', 'TOKEN_REVOKED', 'USER_NOT_ACTIVE', 'NO_PACKAGE'}
+               'TOKEN_INVALID', 'TOKEN_REVOKED', 'USER_NOT_ACTIVE', 'NO_PACKAGE',
+               'METADATA_INVALID', 'PACKAGE_NOT_FOUND'}
 
 code = ''
 for rel in SOURCES:
@@ -21,6 +23,7 @@ for rel in SOURCES:
         code += f.read()
 
 codes = set(re.findall(r'\.(?:Error|Warn|Info)\("([A-Z0-9_]+)"', code))
+codes |= set(re.findall(r'new\("([A-Z0-9_]+)", "(?:error|warning)"', code))
 codes |= {c for c in EXTRA_CODES if f'"{c}"' in code}
 
 with open(os.path.join(ROOT, 'Api', 'AgentGuide.cs'), encoding='utf-8') as f:

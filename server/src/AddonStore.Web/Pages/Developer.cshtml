@@ -52,6 +52,7 @@ Invoke-WebRequest @(b)/api/skill -OutFile "$env:USERPROFILE\.claude\skills\power
         <tr><td><code>POST @b/api/packages/validate</code></td><td>@L["Test run of all checks, nothing is stored"]</td></tr>
         <tr><td><code>POST @b/api/packages</code></td><td>@L["Submit a package"]</td></tr>
         <tr><td><code>GET @b/api/packages/{id}</code></td><td>@L["Status, history and check reports of a package"]</td></tr>
+        <tr><td><code>PATCH @b/api/packages/{id}</code></td><td>@L["Change name, description, author and contact without a new version"]</td></tr>
     </table>
 </div>
 

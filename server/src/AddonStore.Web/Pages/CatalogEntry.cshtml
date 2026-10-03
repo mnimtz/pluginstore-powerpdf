@@ -1,0 +1,63 @@
+@page
+@model AddonStore.Web.Pages.CatalogEntryModel
+@{
+    ViewData["Title"] = "Catalog entry";
+    var pkg = Model.Pkg!;
+}
+
+<h1>@L["Catalog entry"]</h1>
+<p class="lead">@pkg.Id · @L["Owner"]: @Model.OwnerName</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert ok">@L[Model.Notice]</div>
+}
+@foreach (var i in Model.Issues)
+{
+    <div class="alert @(i.Severity == "error" ? "error" : "warn")"><b>@i.Code</b>: @i.Message <br /><small>@i.Hint</small></div>
+}
+
+<div class="card">
+    <p style="margin-top:0">@L["Name, description, author and contact shown in the catalog and in the Power PDF client. Changes apply immediately; no new version is needed. The package files are not changed."]</p>
+    @if (pkg.MetaUpdatedAt is not null)
+    {
+        <p style="color:var(--tun-slate);font-size:.85rem">@L["Last changed"]: @Time.Fmt(pkg.MetaUpdatedAt.Value) · @pkg.MetaUpdatedBy</p>
+    }
+
+    <form method="post" asp-page-handler="Save" asp-route-id="@pkg.Id" class="stack" style="max-width:none">
+        <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <div style="flex:1;min-width:240px">
+                <label for="author">@L["Author"]</label>
+                <input type="text" id="author" name="author" value="@Model.Author" maxlength="100" placeholder="@L["Empty: name of the publishing account"]" />
+            </div>
+            <div style="flex:1;min-width:240px">
+                <label for="contact">@L["Contact email"]</label>
+                <input type="email" id="contact" name="contact" value="@Model.Contact" maxlength="200" placeholder="@L["Empty: email of the publishing account"]" />
+            </div>
+        </div>
+
+        <p style="margin:12px 0 0;color:var(--tun-slate);font-size:.9rem">@L["The name needs at least English; the description is required in all 16 languages."]</p>
+        <div class="table-wrap">
+            <table>
+                <tr><th style="width:130px">@L["Language"]</th><th style="width:28%">@L["Name"]</th><th>@L["Description"]</th></tr>
+                @foreach (var (code, label) in AddonStore.Web.Pages.CatalogEntryModel.Languages)
+                {
+                    <tr>
+                        <td><b>@code</b> <span style="color:var(--tun-slate)">@label</span></td>
+                        <td><input type="text" name="name_@code" value="@(Model.Name.GetValueOrDefault(code) ?? (code == "nb" ? Model.Name.GetValueOrDefault("no") : null))" maxlength="80" required="@(code == "en")" /></td>
+                        <td><textarea name="desc_@code" rows="3" maxlength="2000" required style="width:100%">@(Model.Description.GetValueOrDefault(code) ?? (code == "nb" ? Model.Description.GetValueOrDefault("no") : null))</textarea></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button type="submit" class="btn">@L["Save"]</button>
+            <a class="btn secondary" href="/Dashboard">@L["Cancel"]</a>
+        </div>
+    </form>
+
+    <form method="post" asp-page-handler="Reset" asp-route-id="@pkg.Id" style="margin-top:16px"
+          onsubmit="return confirm('@L["Reset name, description, author and contact to the values from the package?"]');">
+        <button type="submit" class="btn secondary">@L["Reset to package values"]</button>
+    </form>
+</div>

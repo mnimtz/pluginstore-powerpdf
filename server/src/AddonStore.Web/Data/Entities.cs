@@ -62,6 +62,14 @@ public class Package
     public AppUser? Owner { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public List<PackageVersion> Versions { get; set; } = new();
+
+    // Catalog entry edited on the server; null = take the value from the newest manifest.
+    public string? NameJson { get; set; }          // {"en": "...", "de": "..."}
+    public string? DescriptionJson { get; set; }   // all 16 languages
+    public string? Author { get; set; }
+    public string? ContactEmail { get; set; }
+    public DateTime? MetaUpdatedAt { get; set; }
+    public string? MetaUpdatedBy { get; set; }
 }
 
 public enum VersionStatus

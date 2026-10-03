@@ -88,6 +88,7 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Admin/Settings", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Backup", "PageAdmin");
         o.Conventions.AuthorizePage("/Dashboard", "PageUser");
+        o.Conventions.AuthorizePage("/CatalogEntry", "PageUser");
         o.Conventions.AuthorizePage("/Profile", "PageUser");
         o.Conventions.AuthorizePage("/Developer", "PageUser");
     })
@@ -103,6 +104,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<SettingsService>();
 builder.Services.AddScoped<TimeDisplay>();
 builder.Services.AddScoped<BackupService>();
+builder.Services.AddScoped<PackageMetaService>();
 builder.Services.AddScoped<IAppEmailSender, ResendEmailSender>();
 
 var versionFile = Path.Combine(AppContext.BaseDirectory, "VERSION");
@@ -132,7 +134,13 @@ using (var scope = app.Services.CreateScope())
         "CREATE TABLE IF NOT EXISTS Invites (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
             "Email TEXT NOT NULL, TokenHash TEXT NOT NULL, Role TEXT NOT NULL, InvitedBy TEXT NOT NULL, " +
             "CreatedAt TEXT NOT NULL, AcceptedAt TEXT NULL)",
-        "CREATE UNIQUE INDEX IF NOT EXISTS IX_Invites_TokenHash ON Invites (TokenHash)"
+        "CREATE UNIQUE INDEX IF NOT EXISTS IX_Invites_TokenHash ON Invites (TokenHash)",
+        "ALTER TABLE Packages ADD COLUMN NameJson TEXT NULL",
+        "ALTER TABLE Packages ADD COLUMN DescriptionJson TEXT NULL",
+        "ALTER TABLE Packages ADD COLUMN Author TEXT NULL",
+        "ALTER TABLE Packages ADD COLUMN ContactEmail TEXT NULL",
+        "ALTER TABLE Packages ADD COLUMN MetaUpdatedAt TEXT NULL",
+        "ALTER TABLE Packages ADD COLUMN MetaUpdatedBy TEXT NULL"
     })
     {
         try { db.Database.ExecuteSqlRaw(sql); }

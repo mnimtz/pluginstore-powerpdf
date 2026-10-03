@@ -261,4 +261,21 @@
   <data name="Without a verified sender domain, Resend only delivers to the email address of the Resend account owner." xml:space="preserve"><value>Sans domaine d'expéditeur vérifié, Resend ne distribue qu'à l'adresse e-mail du titulaire du compte Resend.</value></data>
   <data name="Your account is not an active admin in this backup; restoring it would lock you out." xml:space="preserve"><value>Votre compte n'est pas un administrateur actif dans cette sauvegarde ; la restaurer vous bloquerait l'accès.</value></data>
   <data name="to" xml:space="preserve"><value>à</value></data>
+  <data name="Catalog entry" xml:space="preserve"><value>Entrée de catalogue</value></data>
+  <data name="Owner" xml:space="preserve"><value>Propriétaire</value></data>
+  <data name="Name, description, author and contact shown in the catalog and in the Power PDF client. Changes apply immediately; no new version is needed. The package files are not changed." xml:space="preserve"><value>Nom, description, auteur et contact affichés dans le catalogue et dans le client Power PDF. Les modifications s'appliquent immédiatement ; aucune nouvelle version n'est nécessaire. Les fichiers du package ne sont pas modifiés.</value></data>
+  <data name="Last changed" xml:space="preserve"><value>Dernière modification</value></data>
+  <data name="Contact email" xml:space="preserve"><value>E-mail de contact</value></data>
+  <data name="Empty: name of the publishing account" xml:space="preserve"><value>Vide : nom du compte de publication</value></data>
+  <data name="Empty: email of the publishing account" xml:space="preserve"><value>Vide : e-mail du compte de publication</value></data>
+  <data name="The name needs at least English; the description is required in all 16 languages." xml:space="preserve"><value>Le nom doit être fourni au moins en anglais ; la description est obligatoire dans les 16 langues.</value></data>
+  <data name="Language" xml:space="preserve"><value>Langue</value></data>
+  <data name="Description" xml:space="preserve"><value>Description</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Annuler</value></data>
+  <data name="Reset name, description, author and contact to the values from the package?" xml:space="preserve"><value>Réinitialiser le nom, la description, l’auteur et le contact avec les valeurs du package ?</value></data>
+  <data name="Reset to package values" xml:space="preserve"><value>Réinitialiser avec les valeurs du package</value></data>
+  <data name="Edit catalog entry" xml:space="preserve"><value>Modifier l'entrée de catalogue</value></data>
+  <data name="Catalog entry saved. The catalog and the Power PDF client show it immediately." xml:space="preserve"><value>Entrée de catalogue enregistrée. Le catalogue et le client Power PDF l'affichent immédiatement.</value></data>
+  <data name="Catalog entry reset to the values from the package." xml:space="preserve"><value>Entrée de catalogue réinitialisée avec les valeurs du package.</value></data>
+  <data name="Change name, description, author and contact without a new version" xml:space="preserve"><value>Modifier le nom, la description, l'auteur et le contact sans nouvelle version</value></data>
 </root>

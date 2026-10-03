@@ -50,8 +50,15 @@ else
                 var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
                 var newest = pkg.Versions.FirstOrDefault();
             }
-            <strong style="color:var(--tun-navy)">@(newest is null ? pkg.Id : AddonStore.Web.Services.CatalogUi.ManifestText(newest, "name", lang, pkg.Id))</strong>
-            <span style="color:var(--tun-slate);font-size:.85rem">@pkg.Id</span>
+            <div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">
+                <strong style="color:var(--tun-navy)">@AddonStore.Web.Services.CatalogUi.DisplayName(pkg, newest, lang)</strong>
+                <span style="color:var(--tun-slate);font-size:.85rem">@pkg.Id</span>
+                @if (pkg.OwnerId != Model.UserId)
+                {
+                    <span style="color:var(--tun-slate);font-size:.85rem">· @L["Owner"]: @pkg.Owner?.DisplayName</span>
+                }
+                <a href="/CatalogEntry?id=@pkg.Id" style="margin-left:auto">@L["Edit catalog entry"]</a>
+            </div>
             <table style="margin-top:10px">
                 <tr><th>@L["Version"]</th><th>@L["Status"]</th><th>@L["Changelog"]</th><th>@L["Submitted"]</th><th>@L["Downloads"]</th><th>@L["Review comment"]</th></tr>
                 @foreach (var v in pkg.Versions)

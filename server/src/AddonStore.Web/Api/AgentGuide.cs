@@ -230,6 +230,37 @@ Verify the download against the catalog's `sha256` before installing.
   (`com.tungsten.pluginstore`) may only be uploaded by admins and goes live
   immediately.
 
+## Changing the catalog entry (no new version)
+
+Name, description, author and contact email can be corrected on the server
+at any time, without uploading a new version. The package files and their
+manifests stay unchanged; the catalog, the web UI and the Power PDF client
+show the edited values immediately. Only the package owner or an admin may
+change them.
+
+    PATCH {{baseUrl}}/api/packages/{id}
+    Authorization: Bearer ppak_...
+    Content-Type: application/json
+
+    { "author": "Team Signing",
+      "contactEmail": "team@example.com",
+      "name": { "en": "Smart Bookmarks", "de": "Smart Bookmarks" },
+      "description": { "en": "...", "de": "...", ...all 16 languages } }
+
+- Omit a field to keep it; send `null` to reset it to the value from the
+  newest manifest.
+- `name` needs at least `en` (max. 80 characters per language).
+  `description` needs all 16 languages (max. 2000 characters each), exactly
+  like the manifest rule.
+- `contactEmail` must be a valid address; `author` max. 100 characters.
+- The response carries `findings` like a validation report; third-party brand
+  names give the warning `THIRDPARTY_TRADEMARK`.
+- `GET /api/packages/{id}` shows the current `catalogEntry` (null fields come
+  from the manifest). Every change is in the audit log.
+- In the web UI: My plugins, then "Edit catalog entry".
+- Versions you upload later keep the edited catalog entry. To let a new
+  manifest's texts show again, reset the fields with `null`.
+
 ## What the store installs (Power PDF client)
 
 The client downloads the package, verifies its SHA-256 against the catalog
@@ -335,6 +366,12 @@ be free of warnings before review. Info is for information only.
 | ICON_NOT_SQUARE | warning | The icon is not square. |
 | ICON_TOO_LARGE | warning | The icon is too large. |
 | VERSION_EXISTS | error (409) | This exact version was already uploaded. |
+| PACKAGE_NOT_FOUND | error (404) | No package with this id. |
+| METADATA_INVALID | error (400/422) | PATCH body is not a JSON object, has unknown fields, or a finding with severity error. |
+| NAME_INVALID | error | Catalog name has no `en` entry, an unknown language code or is too long. |
+| DESCRIPTION_TOO_LONG | error | A catalog description is longer than 2000 characters. |
+| AUTHOR_INVALID | error | The author is longer than 100 characters. |
+| CONTACT_INVALID | error | The contact email is not a valid address. |
 | CLIENT_ADMIN_ONLY | error (403) | Only admins may publish the store client. |
 | VALIDATION_FAILED | error (422) | Summary code of a rejected upload; see `findings`. |
 | NO_PACKAGE | error (400) | The request carried no package data. |

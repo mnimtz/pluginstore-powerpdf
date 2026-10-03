@@ -63,6 +63,7 @@ public static class ApiEndpoints
                     "GET  /api/packages/{id}          status and history of one package",
                     "POST /api/packages/validate      dry-run: full validation, nothing stored (auth)",
                     "POST /api/packages               submit a package (auth)",
+                    "PATCH  /api/packages/{id}  change the catalog entry: name, description, author, contactEmail (owner/admin, auth)",
                     "DELETE /api/packages/{id}/{version}  withdraw your own beta version (auth)",
                     "GET  /api/packages/{id}/{version}/download",
                     "GET  /api/devkit                 SDK documentation and developer kit files"
@@ -159,6 +160,16 @@ public static class ApiEndpoints
                 {
                     id = package.Id,
                     owner = package.Owner?.DisplayName,
+                    catalogEntry = new
+                    {
+                        name = ParseOrNull(package.NameJson),
+                        description = ParseOrNull(package.DescriptionJson),
+                        author = package.Author,
+                        contactEmail = package.ContactEmail,
+                        updatedAt = package.MetaUpdatedAt,
+                        updatedBy = package.MetaUpdatedBy,
+                        note = "null fields come from the newest manifest; change them with PATCH /api/packages/" + package.Id
+                    },
                     versions = versions.Select(v => new
                     {
                         v.Version,
@@ -247,6 +258,79 @@ public static class ApiEndpoints
                 }, statusCode: 201);
             }
             finally { TryDelete(tmp); }
+        }).RequireAuthorization("BearerOnly");
+
+        api.MapPatch("/packages/{id}", async (string id, HttpContext ctx, UserManager<AppUser> users,
+            AppDbContext db, PackageMetaService meta) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var pkg = await db.Packages.FirstOrDefaultAsync(p => p.Id == id);
+            if (pkg is null) return NotFound("PACKAGE_NOT_FOUND", $"No package with id '{id}'.");
+            if (pkg.OwnerId != user.Id && !ctx.User.IsInRole("Admin"))
+                return Results.Json(new { ok = false, error = new { code = "NOT_OWNER", message = "This package belongs to another user.", hint = "Only the owner or an admin can change the catalog entry." } }, statusCode: 403);
+
+            JsonElement body;
+            try
+            {
+                if (ctx.Request.ContentLength is > 256 * 1024) throw new JsonException();
+                using var doc = await JsonDocument.ParseAsync(ctx.Request.Body);
+                body = doc.RootElement.Clone();
+                if (body.ValueKind != JsonValueKind.Object) throw new JsonException();
+            }
+            catch (JsonException)
+            {
+                return Results.Json(new { ok = false, error = new { code = "METADATA_INVALID", message = "The body must be a JSON object (max. 256 KB).",
+                    hint = "Example: {\"author\": \"Team Signing\", \"contactEmail\": \"team@example.com\", \"name\": {\"en\": \"...\"}, \"description\": {\"en\": \"...\", ...all 16 languages}}. Omit a field to keep it, send null to reset it to the manifest value." } }, statusCode: 400);
+            }
+
+            var change = new MetaChange();
+            Dictionary<string, string>? Map(JsonElement el) => el.ValueKind == JsonValueKind.Object
+                ? el.EnumerateObject().Where(p => p.Value.ValueKind == JsonValueKind.String).ToDictionary(p => p.Name, p => p.Value.GetString() ?? "")
+                : null;
+            var typeErrors = new List<MetaIssue>();
+            foreach (var prop in body.EnumerateObject())
+            {
+                var v = prop.Value;
+                switch (prop.Name)
+                {
+                    case "name":
+                        change.SetName = true; change.Name = v.ValueKind == JsonValueKind.Null ? null : Map(v);
+                        if (v.ValueKind is not (JsonValueKind.Null or JsonValueKind.Object)) typeErrors.Add(new("NAME_INVALID", "error", "'name' must be an object or null.", "Example: {\"en\": \"My Plugin\"}."));
+                        break;
+                    case "description":
+                        change.SetDescription = true; change.Description = v.ValueKind == JsonValueKind.Null ? null : Map(v);
+                        if (v.ValueKind is not (JsonValueKind.Null or JsonValueKind.Object)) typeErrors.Add(new("LANG_TEXT_INCOMPLETE", "error", "'description' must be an object with all 16 languages, or null.", "Example: {\"en\": \"...\", \"de\": \"...\", ...}."));
+                        break;
+                    case "author":
+                        change.SetAuthor = true; change.Author = v.ValueKind == JsonValueKind.String ? v.GetString() : null;
+                        break;
+                    case "contactEmail":
+                        change.SetContact = true; change.ContactEmail = v.ValueKind == JsonValueKind.String ? v.GetString() : null;
+                        break;
+                    default:
+                        typeErrors.Add(new("METADATA_INVALID", "error", $"Unknown field '{prop.Name}'.", "Allowed fields: name, description, author, contactEmail."));
+                        break;
+                }
+            }
+
+            var issues = typeErrors.Count > 0 ? typeErrors : await meta.ApplyAsync(pkg, user, change);
+            var findings = issues.Select(i => new { code = i.Code, severity = i.Severity, message = i.Message, hint = i.Hint });
+            if (issues.Any(i => i.Severity == "error"))
+                return Results.Json(new { ok = false, error = new { code = "METADATA_INVALID", message = "The catalog entry was not changed.", hint = "Fix every finding with severity 'error' and send the request again." }, findings }, statusCode: 422);
+            return Results.Json(new
+            {
+                ok = true,
+                findings,
+                data = new
+                {
+                    id = pkg.Id,
+                    name = ParseOrNull(pkg.NameJson), description = ParseOrNull(pkg.DescriptionJson),
+                    author = pkg.Author, contactEmail = pkg.ContactEmail,
+                    updatedAt = pkg.MetaUpdatedAt, updatedBy = pkg.MetaUpdatedBy,
+                    next = "The catalog, the web UI and the Power PDF client show the new values immediately; no new version is needed."
+                }
+            });
         }).RequireAuthorization("BearerOnly");
 
         api.MapDelete("/packages/{id}/{version}", async (string id, string version, HttpContext ctx,
@@ -436,6 +520,7 @@ public static class ApiEndpoints
         var ownerRows = await db.Packages.Include(p => p.Owner).ToListAsync();
         var owners = ownerRows.ToDictionary(p => p.Id, p => Services.CatalogUi.PublicName(p.Owner));
         var ownerMails = ownerRows.ToDictionary(p => p.Id, p => Services.CatalogUi.PublicEmail(p.Owner));
+        var pkgs = ownerRows.ToDictionary(p => p.Id);
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live)
@@ -454,14 +539,15 @@ public static class ApiEndpoints
 
             using var doc = JsonDocument.Parse(pick.ManifestJson);
             var root = doc.RootElement;
+            var pkg = pkgs.GetValueOrDefault(pick.PackageId);
             result.Add(new
             {
                 id = pick.PackageId,
-                name = CloneOrNull(root, "name"),
-                description = CloneOrNull(root, "description"),
+                name = ParseOrNull(pkg?.NameJson) ?? CloneOrNull(root, "name"),
+                description = ParseOrNull(pkg?.DescriptionJson) ?? CloneOrNull(root, "description"),
                 category = root.TryGetProperty("category", out var cat) && cat.ValueKind == JsonValueKind.String ? cat.GetString() : "other",
-                author = Services.CatalogUi.AuthorOf(root, owners.GetValueOrDefault(pick.PackageId, pick.SubmittedBy)),
-                contactEmail = Services.CatalogUi.ContactOf(root, ownerMails.GetValueOrDefault(pick.PackageId, "")),
+                author = Services.CatalogUi.EffectiveAuthor(pkg, root, owners.GetValueOrDefault(pick.PackageId, pick.SubmittedBy)),
+                contactEmail = Services.CatalogUi.EffectiveContact(pkg, root, ownerMails.GetValueOrDefault(pick.PackageId, "")),
                 version = pick.Version,
                 channel,
                 changelog = pick.Changelog,
@@ -477,6 +563,13 @@ public static class ApiEndpoints
 
     private static JsonElement? CloneOrNull(JsonElement root, string name) =>
         root.TryGetProperty(name, out var el) ? el.Clone() : null;
+
+    private static JsonElement? ParseOrNull(string? json)
+    {
+        if (string.IsNullOrWhiteSpace(json)) return null;
+        try { using var d = JsonDocument.Parse(json); return d.RootElement.Clone(); }
+        catch (JsonException) { return null; }
+    }
 }
 
 public record AppVersion(string Value);
