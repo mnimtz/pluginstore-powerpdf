@@ -349,4 +349,107 @@
   <data name="Replace source" xml:space="preserve"><value>Заменить исходный код</value></data>
   <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>Опубликованные надстройки для Tungsten Power PDF. Они устанавливаются на компьютере с Windows прямо в Power PDF.</value></data>
   <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>Надстройки независимых авторов, без гарантии и официальной поддержки.</value></data>
+  <data name="Developer" xml:space="preserve"><value>Разработчик</value></data>
+  <data name="Reports" xml:space="preserve"><value>Отчёты</value></data>
+  <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>Использование магазина: загрузки, используемые клиенты, местоположения, отправки и разработчики.</value></data>
+  <data name="Last {0} days" xml:space="preserve"><value>Последние {0} дн.</value></data>
+  <data name="From" xml:space="preserve"><value>С</value></data>
+  <data name="To" xml:space="preserve"><value>По</value></data>
+  <data name="Add-on" xml:space="preserve"><value>Надстройка</value></data>
+  <data name="All add-ons" xml:space="preserve"><value>Все надстройки</value></data>
+  <data name="Country" xml:space="preserve"><value>Страна</value></data>
+  <data name="All countries" xml:space="preserve"><value>Все страны</value></data>
+  <data name="Source" xml:space="preserve"><value>Источник</value></data>
+  <data name="All sources" xml:space="preserve"><value>Все источники</value></data>
+  <data name="Client" xml:space="preserve"><value>Клиент</value></data>
+  <data name="Web" xml:space="preserve"><value>Веб</value></data>
+  <data name="Apply" xml:space="preserve"><value>Применить</value></data>
+  <data name="Reset filters" xml:space="preserve"><value>Сбросить фильтры</value></data>
+  <data name="Report language" xml:space="preserve"><value>Язык отчёта</value></data>
+  <data name="PDF report" xml:space="preserve"><value>Отчёт PDF</value></data>
+  <data name="Download CSV" xml:space="preserve"><value>Скачать CSV</value></data>
+  <data name="compared with {0} – {1}" xml:space="preserve"><value>по сравнению с {0} – {1}</value></data>
+  <data name="Time series since {0}; the all-time totals include earlier downloads." xml:space="preserve"><value>Временные ряды с {0}; итоговые значения включают более ранние загрузки.</value></data>
+  <data name="No usage data yet in this period." xml:space="preserve"><value>За этот период пока нет данных об использовании.</value></data>
+  <data name="Downloads (all time)" xml:space="preserve"><value>Загрузки (всего)</value></data>
+  <data name="Downloads in period" xml:space="preserve"><value>Загрузки за период</value></data>
+  <data name="Store windows opened" xml:space="preserve"><value>Открытий окна магазина</value></data>
+  <data name="Client installer downloads" xml:space="preserve"><value>Загрузки установщика клиента</value></data>
+  <data name="Live add-ons" xml:space="preserve"><value>Опубликованные надстройки</value></data>
+  <data name="Developers" xml:space="preserve"><value>Разработчики</value></data>
+  <data name="Awaiting review" xml:space="preserve"><value>Ожидают проверки</value></data>
+  <data name="Downloads per day" xml:space="preserve"><value>Загрузки по дням</value></data>
+  <data name="Downloads per week" xml:space="preserve"><value>Загрузки по неделям</value></data>
+  <data name="Downloads per month" xml:space="preserve"><value>Загрузки по месяцам</value></data>
+  <data name="Highest value: {0}" xml:space="preserve"><value>Максимум: {0}</value></data>
+  <data name="Ranking of add-ons" xml:space="preserve"><value>Рейтинг надстроек</value></data>
+  <data name="Sorted by downloads in the period; the trend compares with the previous period of the same length." xml:space="preserve"><value>Отсортировано по загрузкам за период; тренд сравнивается с предыдущим периодом той же длины.</value></data>
+  <data name="In period" xml:space="preserve"><value>За период</value></data>
+  <data name="Trend" xml:space="preserve"><value>Тренд</value></data>
+  <data name="Share" xml:space="preserve"><value>Доля</value></data>
+  <data name="Course" xml:space="preserve"><value>Динамика</value></data>
+  <data name="Top country" xml:space="preserve"><value>Ведущая страна</value></data>
+  <data name="All time" xml:space="preserve"><value>Всего</value></data>
+  <data name="previous period" xml:space="preserve"><value>предыдущий период</value></data>
+  <data name="new" xml:space="preserve"><value>новое</value></data>
+  <data name="unknown" xml:space="preserve"><value>неизвестно</value></data>
+  <data name="Clients in use" xml:space="preserve"><value>Используемые клиенты</value></data>
+  <data name="Store windows opened per client version in the period; shows how far a client update has spread." xml:space="preserve"><value>Открытия окна магазина по версиям клиента за период; показывает, насколько распространилось обновление.</value></data>
+  <data name="Client languages" xml:space="preserve"><value>Языки клиента</value></data>
+  <data name="Language of Power PDF when the store window was opened." xml:space="preserve"><value>Язык Power PDF при открытии окна магазина.</value></data>
+  <data name="Download sources" xml:space="preserve"><value>Источники загрузок</value></data>
+  <data name="Client = Add-on Store in Power PDF, Web = browser, API = scripts and AI agents." xml:space="preserve"><value>Клиент = Add-on Store в Power PDF, Веб = браузер, API = скрипты и ИИ-агенты.</value></data>
+  <data name="Countries" xml:space="preserve"><value>Страны</value></data>
+  <data name="Cities" xml:space="preserve"><value>Города</value></data>
+  <data name="Networks and organisations" xml:space="preserve"><value>Сети и организации</value></data>
+  <data name="Operator of the network the request came from; company networks often show the company name." xml:space="preserve"><value>Оператор сети, из которой пришёл запрос; корпоративные сети часто показывают название компании.</value></data>
+  <data name="Power PDF versions" xml:space="preserve"><value>Версии Power PDF</value></data>
+  <data name="Windows versions" xml:space="preserve"><value>Версии Windows</value></data>
+  <data name="Architecture" xml:space="preserve"><value>Архитектура</value></data>
+  <data name="Power PDF, Windows and architecture are reported by Add-on Store clients from version 0.4.2." xml:space="preserve"><value>Power PDF, Windows и архитектуру сообщают клиенты Add-on Store начиная с версии 0.4.2.</value></data>
+  <data name="Submissions and reviews (12 months)" xml:space="preserve"><value>Отправки и проверки (12 месяцев)</value></data>
+  <data name="Month" xml:space="preserve"><value>Месяц</value></data>
+  <data name="Median review time" xml:space="preserve"><value>Медианное время проверки</value></data>
+  <data name="Last submission" xml:space="preserve"><value>Последняя отправка</value></data>
+  <data name="Store versions without source code" xml:space="preserve"><value>Версии в магазине без исходного кода</value></data>
+  <data name="All live and beta versions have source code deposited." xml:space="preserve"><value>Для всех опубликованных и бета-версий сохранён исходный код.</value></data>
+  <data name="IP address logging" xml:space="preserve"><value>Запись IP-адресов</value></data>
+  <data name="IP address logging (reports)" xml:space="preserve"><value>Запись IP-адресов (отчёты)</value></data>
+  <data name="Off. Only the daily counters above are kept; they contain no IP address." xml:space="preserve"><value>Выключено. Хранятся только дневные счётчики выше; они не содержат IP-адресов.</value></data>
+  <data name="Switch on in the settings" xml:space="preserve"><value>Включить в настройках</value></data>
+  <data name="On" xml:space="preserve"><value>Включено</value></data>
+  <data name="Stored requests: {0}. Older than {1} days are deleted automatically." xml:space="preserve"><value>Сохранённые запросы: {0}. Записи старше {1} дн. удаляются автоматически.</value></data>
+  <data name="Stored requests: {0}. Kept permanently (no automatic deletion)." xml:space="preserve"><value>Сохранённые запросы: {0}. Хранятся постоянно (без автоматического удаления).</value></data>
+  <data name="Download CSV with IP addresses" xml:space="preserve"><value>Скачать CSV с IP-адресами</value></data>
+  <data name="Most frequent IP addresses" xml:space="preserve"><value>Самые частые IP-адреса</value></data>
+  <data name="Latest requests" xml:space="preserve"><value>Последние запросы</value></data>
+  <data name="Type" xml:space="preserve"><value>Тип</value></data>
+  <data name="Location" xml:space="preserve"><value>Местоположение</value></data>
+  <data name="Network" xml:space="preserve"><value>Сеть</value></data>
+  <data name="Map" xml:space="preserve"><value>Карта</value></data>
+  <data name="Location and network data:" xml:space="preserve"><value>Данные о местоположении и сети:</value></data>
+  <data name="Generated on {0}" xml:space="preserve"><value>Создано {0}</value></data>
+  <data name="Use &quot;Save as PDF&quot; as the printer to get the report as a PDF file." xml:space="preserve"><value>Выберите принтер «Сохранить как PDF», чтобы получить отчёт в виде PDF-файла.</value></data>
+  <data name="Print / save as PDF" xml:space="preserve"><value>Печать / сохранить как PDF</value></data>
+  <data name="Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports." xml:space="preserve"><value>Всегда включено: дневные счётчики со страной, регионом, городом и оператором сети, определёнными по IP-адресу; сам адрес не сохраняется. Дополнительно: каждая загрузка и запрос каталога с IP-адресом, именем хоста и user agent для отчётов.</value></data>
+  <data name="GDPR confirmation given by {0} on {1}." xml:space="preserve"><value>Подтверждение GDPR дано: {0}, {1}.</value></data>
+  <data name="Data protection (GDPR)" xml:space="preserve"><value>Защита данных (GDPR)</value></data>
+  <data name="IP addresses are personal data under the GDPR, also without a sign-in. Storing them needs a legal basis (for example legitimate interest), a note in the privacy policy and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>IP-адреса являются персональными данными по GDPR, даже без входа в систему. Для их хранения нужны правовое основание (например, законный интерес), указание в политике конфиденциальности и срок хранения. Согласуйте это с ответственным за защиту данных до включения.</value></data>
+  <data name="I confirm that a legal basis exists, the privacy policy covers this logging and the retention period below is agreed." xml:space="preserve"><value>Подтверждаю, что правовое основание существует, политика конфиденциальности охватывает эту запись, а указанный ниже срок хранения согласован.</value></data>
+  <data name="Retention period (days)" xml:space="preserve"><value>Срок хранения (дней)</value></data>
+  <data name="Store permanently (no automatic deletion)" xml:space="preserve"><value>Хранить постоянно (без автоматического удаления)</value></data>
+  <data name="The GDPR requires that personal data is kept no longer than necessary. Choose this only if your data protection officer agreed." xml:space="preserve"><value>GDPR требует хранить персональные данные не дольше необходимого. Выбирайте это только с согласия ответственного за защиту данных.</value></data>
+  <data name="Confirm and switch on" xml:space="preserve"><value>Подтвердить и включить</value></data>
+  <data name="Switch on" xml:space="preserve"><value>Включить</value></data>
+  <data name="Switch off" xml:space="preserve"><value>Выключить</value></data>
+  <data name="Save retention period" xml:space="preserve"><value>Сохранить срок хранения</value></data>
+  <data name="Delete all stored IP addresses" xml:space="preserve"><value>Удалить все сохранённые IP-адреса</value></data>
+  <data name="Please confirm the data protection statement first." xml:space="preserve"><value>Сначала подтвердите заявление о защите данных.</value></data>
+  <data name="IP logging is on." xml:space="preserve"><value>Запись IP включена.</value></data>
+  <data name="IP logging is off." xml:space="preserve"><value>Запись IP выключена.</value></data>
+  <data name="Retention period saved." xml:space="preserve"><value>Срок хранения сохранён.</value></data>
+  <data name="All stored IP addresses were deleted." xml:space="preserve"><value>Все сохранённые IP-адреса удалены.</value></data>
+  <data name="Type DELETE to confirm." xml:space="preserve"><value>Введите DELETE для подтверждения.</value></data>
+  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Загрузить исходный код версии (после каждой загрузки)</value></data>
+  <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Администраторы: исходный код новейшей версии, отправная точка для изменения</value></data>
 </root>

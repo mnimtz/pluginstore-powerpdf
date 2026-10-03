@@ -11,6 +11,7 @@ public class SettingsModel : PageModel
     private readonly UserManager<AppUser> _users;
     private readonly AuditService _audit;
     private readonly NotificationService _notify;
+    private readonly UsageService _usage;
 
     public bool HasResendKey { get; private set; }
     public string From { get; private set; } = "";
@@ -23,10 +24,17 @@ public class SettingsModel : PageModel
     public Dictionary<string, bool> EventEnabled { get; } = new();
     public string? MyEmail { get; private set; }
 
+    // IP logging for the reports (GDPR confirmation once, then switchable)
+    public bool IpOn { get; private set; }
+    public int RetentionDays { get; private set; } = UsageService.DefaultRetentionDays;
+    public string IpConfirmedBy { get; private set; } = "";
+    public DateTime? IpConfirmedAt { get; private set; }
+    public int IpEventCount { get; private set; }
+
     public SettingsModel(SettingsService settings, UserManager<AppUser> users, AuditService audit,
-        NotificationService notify)
+        NotificationService notify, UsageService usage)
     {
-        _settings = settings; _users = users; _audit = audit; _notify = notify;
+        _settings = settings; _users = users; _audit = audit; _notify = notify; _usage = usage;
     }
 
     public string? TestTo { get; private set; }
@@ -96,8 +104,82 @@ public class SettingsModel : PageModel
         await LoadAsync();
     }
 
+    /// <summary>
+    /// Switches IP logging on. The GDPR confirmation is needed only the first
+    /// time; it is kept (who, when) and shown, also after switching off.
+    /// </summary>
+    public async Task OnPostIpEnableAsync(bool confirmGdpr, int retentionDays, bool permanent)
+    {
+        var admin = await _users.GetUserAsync(User);
+        var confirmed = (await _settings.GetAsync(UsageService.IpConfirmedAtKey)).Length > 0;
+        if (!confirmed && !confirmGdpr)
+        {
+            Notice = "Please confirm the data protection statement first.";
+            NoticeKind = "error";
+            await LoadAsync();
+            return;
+        }
+        var days = UsageService.NormalizeRetention(retentionDays, permanent);
+        await _settings.SetAsync(UsageService.IpRetentionKey, days.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        if (!confirmed)
+        {
+            await _settings.SetAsync(UsageService.IpConfirmedByKey, admin!.DisplayName + " <" + admin.Email + ">");
+            await _settings.SetAsync(UsageService.IpConfirmedAtKey, DateTime.UtcNow.ToString("o"));
+        }
+        await _settings.SetAsync(UsageService.IpLoggingKey, "on");
+        await _audit.LogAsync(admin!.DisplayName, "usage.iplogging.enabled", "IP logging",
+            (confirmed ? "switched on (GDPR confirmation on file)" : "GDPR confirmation given") +
+            (days == 0 ? "; permanent storage" : $"; retention {days} days"));
+        Notice = "IP logging is on.";
+        await LoadAsync();
+    }
+
+    public async Task OnPostIpDisableAsync()
+    {
+        var admin = await _users.GetUserAsync(User);
+        await _settings.SetAsync(UsageService.IpLoggingKey, "off");
+        await _audit.LogAsync(admin!.DisplayName, "usage.iplogging.disabled", "IP logging",
+            "stored events are kept until the retention period ends");
+        Notice = "IP logging is off.";
+        await LoadAsync();
+    }
+
+    public async Task OnPostIpRetentionAsync(int retentionDays, bool permanent)
+    {
+        var admin = await _users.GetUserAsync(User);
+        var days = UsageService.NormalizeRetention(retentionDays, permanent);
+        await _settings.SetAsync(UsageService.IpRetentionKey, days.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        var n = await _usage.PurgeAsync();
+        await _audit.LogAsync(admin!.DisplayName, "usage.iplogging.retention", "IP logging",
+            days == 0 ? "permanent storage, no automatic deletion" : $"retention {days} days; {n} older events deleted");
+        Notice = "Retention period saved.";
+        await LoadAsync();
+    }
+
+    public async Task OnPostIpDeleteAllAsync(string? confirm)
+    {
+        var admin = await _users.GetUserAsync(User);
+        if (confirm != "DELETE")
+        {
+            Notice = "Type DELETE to confirm.";
+            NoticeKind = "error";
+            await LoadAsync();
+            return;
+        }
+        var n = await _usage.DeleteAllEventsAsync();
+        await _audit.LogAsync(admin!.DisplayName, "usage.iplogging.deleted", "IP logging", $"{n} events with IP address deleted");
+        Notice = "All stored IP addresses were deleted.";
+        await LoadAsync();
+    }
+
     private async Task LoadAsync()
     {
+        IpOn = await _usage.IpLoggingOnAsync();
+        RetentionDays = await _usage.RetentionDaysAsync();
+        IpConfirmedBy = await _settings.GetAsync(UsageService.IpConfirmedByKey);
+        IpConfirmedAt = DateTime.TryParse(await _settings.GetAsync(UsageService.IpConfirmedAtKey), null,
+            System.Globalization.DateTimeStyles.RoundtripKind, out var at) ? at : null;
+        IpEventCount = await _usage.EventCountAsync();
         HasResendKey = (await _settings.GetAsync("Email.ResendApiKey", "Email:ResendApiKey")).Length > 0;
         From = await _settings.GetAsync("Email.From", "Email:From");
         BaseUrl = await _settings.GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl");

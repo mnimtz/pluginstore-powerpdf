@@ -85,9 +85,12 @@ public class BackupService
                 versions = await _db.PackageVersions.CountAsync(),
                 sourceArchives = await _db.PackageVersions.CountAsync(v => v.SourcePath != null),
                 categories = await _db.Categories.CountAsync(),
+                usageCounterRows = await _db.UsageStats.CountAsync(),
+                ipEvents = await _db.UsageEvents.CountAsync(),
                 // Everything the server keeps lives in pluginstore.db (users, roles, tokens, settings,
                 // categories, catalog entries, audit) and these folders: packages (incl. *.source.zip),
                 // avatars, devkit. New data must land in one of them, or be added here.
+                // Not backed up on purpose: data/geo (DB-IP databases, downloaded again by GeoService).
                 contents = new[] { "pluginstore.db", "packages/ (packages and source code)", "avatars/", "devkit/" }
             };
 

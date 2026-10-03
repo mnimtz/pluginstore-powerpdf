@@ -36,7 +36,7 @@ public class RegisterModel : PageModel
             Error = string.Join(" ", result.Errors.Select(e => e.Description));
             return Page();
         }
-        await _users.AddToRoleAsync(user, "User");
+        await _users.AddToRoleAsync(user, SchemaUpgrade.DefaultRole);
         await _audit.LogAsync(name, "user.access-requested", email, reason ?? "");
         await _notify.NotifyStaffAsync("AccessRequest",
             "[Add-on Store] New access request",

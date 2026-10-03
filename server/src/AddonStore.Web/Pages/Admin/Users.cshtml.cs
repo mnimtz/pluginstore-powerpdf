@@ -12,7 +12,7 @@ public class UsersModel : PageModel
 {
     public record Row(AppUser User, string Role);
 
-    public static readonly string[] Roles = { "User", "Reviewer", "Admin" };
+    public static readonly string[] Roles = SchemaUpgrade.Roles;
 
     private readonly AppDbContext _db;
     private readonly UserManager<AppUser> _users;
@@ -58,7 +58,7 @@ public class UsersModel : PageModel
     public async Task OnPostCreateAsync(string name, string email, string role, string password)
     {
         var admin = await _users.GetUserAsync(User);
-        if (!Roles.Contains(role)) role = "User";
+        if (!Roles.Contains(role)) role = SchemaUpgrade.DefaultRole;
 
         var user = new AppUser { UserName = email, Email = email, DisplayName = name, Status = UserStatus.Active };
         var result = await _users.CreateAsync(user, password);
@@ -79,7 +79,7 @@ public class UsersModel : PageModel
     public async Task OnPostInviteAsync(string email, string role)
     {
         var admin = await _users.GetUserAsync(User);
-        if (!Roles.Contains(role)) role = "User";
+        if (!Roles.Contains(role)) role = SchemaUpgrade.DefaultRole;
 
         if (await _users.FindByEmailAsync(email) is not null)
         {
@@ -178,7 +178,7 @@ public class UsersModel : PageModel
         foreach (var u in all)
         {
             var roles = await _users.GetRolesAsync(u);
-            All.Add(new Row(u, roles.Contains("Admin") ? "Admin" : roles.Contains("Reviewer") ? "Reviewer" : "User"));
+            All.Add(new Row(u, roles.Contains("Admin") ? "Admin" : roles.Contains("Reviewer") ? "Reviewer" : SchemaUpgrade.DefaultRole));
         }
         OpenInvites = await _db.Invites.Where(i => i.AcceptedAt == null)
             .OrderByDescending(i => i.CreatedAt).ToListAsync();

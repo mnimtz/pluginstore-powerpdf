@@ -53,6 +53,8 @@ Invoke-WebRequest @(b)/api/skill -OutFile "$env:USERPROFILE\.claude\skills\power
         <tr><td><code>POST @b/api/packages</code></td><td>@L["Submit a package"]</td></tr>
         <tr><td><code>GET @b/api/packages/{id}</code></td><td>@L["Status, history and check reports of a package"]</td></tr>
         <tr><td><code>PATCH @b/api/packages/{id}</code></td><td>@L["Change name, description, author and contact without a new version"]</td></tr>
+        <tr><td><code>PUT @b/api/packages/{id}/{version}/source</code></td><td>@L["Upload the source code of a version (after every upload)"]</td></tr>
+        <tr><td><code>GET @b/api/packages/{id}/source/latest</code></td><td>@L["Admins: source code of the newest version, the starting point for a change"]</td></tr>
     </table>
 </div>
 

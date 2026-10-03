@@ -15,7 +15,7 @@ public static class ApiEndpoints
     {
         // The installer for end users: the MSI inside the newest client package.
         // Stable URL, linked from the landing page; no account needed.
-        app.MapGet("/download/pluginstore.msi", async (AppDbContext db, SubmissionService svc) =>
+        app.MapGet("/download/pluginstore.msi", async (AppDbContext db, SubmissionService svc, UsageService usage, HttpContext ctx) =>
         {
             var versions = await db.PackageVersions
                 .Where(v => v.PackageId == SubmissionService.ClientPackageId &&
@@ -40,6 +40,7 @@ public static class ApiEndpoints
             ms.Position = 0;
             pick.Downloads++;
             await db.SaveChangesAsync();
+            await usage.CountAsync(ctx, "msi", pick.PackageId, pick.Version);
             return Results.File(ms, "application/x-msi", $"AddonStore-{pick.Version}.msi");
         });
 
@@ -67,6 +68,7 @@ public static class ApiEndpoints
                     "PATCH  /api/packages/{id}  change the catalog entry: name, description, author, contactEmail, category (owner/admin, auth)",
                     "PUT  /api/packages/{id}/{version}/source  upload the source code ZIP of a version (owner/admin, auth)",
                     "GET  /api/packages/{id}/{version}/source  download the source code (admins only)",
+                    "GET  /api/packages/{id}/source/latest  source code of the newest version that has one (admins only; header X-Source-Version)",
                     "DELETE /api/packages/{id}/{version}  withdraw your own beta version (auth)",
                     "GET  /api/packages/{id}/{version}/download",
                     "GET  /api/packages/{id}/icon     catalog icon (PNG) of the newest released version",
@@ -112,7 +114,7 @@ public static class ApiEndpoints
             });
         }).RequireAuthorization("ApiOrCookie");
 
-        api.MapGet("/catalog", async (AppDbContext db, HttpContext ctx, string? channel, string? format, string? lang) =>
+        api.MapGet("/catalog", async (AppDbContext db, HttpContext ctx, UsageService usage, string? channel, string? format, string? lang) =>
         {
             var beta = string.Equals(channel, "beta", StringComparison.OrdinalIgnoreCase);
 
@@ -122,6 +124,9 @@ public static class ApiEndpoints
             {
                 var culture = (lang ?? "en").Trim();
                 if (culture.Length > 2) culture = MapHostLang(culture);
+                // Store window opened (or refreshed) in a client: basis of the
+                // "clients in use" report; anonymous, see UsageService.
+                await usage.CountAsync(ctx, "catalog", lang: culture);
                 var items = await Services.CatalogUi.GetAsync(db, culture, beta);
                 static string Flat(string s) => s.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
                 var sb = new System.Text.StringBuilder();
@@ -187,6 +192,9 @@ public static class ApiEndpoints
                         reviewComment = isOwner ? v.ReviewComment : null,
                         hasSource = v.SourcePath is not null,
                         sourceUploadedAt = isOwner ? v.SourceUploadedAt : null,
+                        // Admins only: where to fetch it (source round trip, see the agent guide).
+                        sourceUrl = v.SourcePath is not null && ctx.User.IsInRole("Admin")
+                            ? $"{Base(ctx)}/api/packages/{v.PackageId}/{v.Version}/source" : null,
                         findings = isOwner ? JsonSerializer.Deserialize<JsonElement>(v.ValidationReportJson) : (object?)null
                     })
                 }
@@ -316,6 +324,21 @@ public static class ApiEndpoints
             var path = sources.FullPath(v);
             if (!File.Exists(path)) return NotFound("FILE_MISSING", "The source file is missing on the server; restore it from a backup.");
             return Results.File(path, "application/zip", $"{id}-{version}-source.zip");
+        }).RequireAuthorization("ApiOrCookie");
+
+        // Source of the newest version that has one: the starting point when an
+        // admin (or their Claude session) changes an existing add-on.
+        api.MapGet("/packages/{id}/source/latest", async (string id, HttpContext ctx, AppDbContext db, SourceService sources) =>
+        {
+            if (!ctx.User.IsInRole("Admin"))
+                return Results.Json(new { ok = false, error = new { code = "ADMIN_ONLY", message = "Source code is visible to store admins only.", hint = "Use an admin account or an admin's API token." } }, statusCode: 403);
+            var withSource = await db.PackageVersions.Where(x => x.PackageId == id && x.SourcePath != null).ToListAsync();
+            var v = withSource.OrderByDescending(x => x.Version, new SemVerComparer()).FirstOrDefault();
+            if (v is null) return NotFound("SOURCE_MISSING", $"No source code stored for any version of '{id}'.");
+            var path = sources.FullPath(v);
+            if (!File.Exists(path)) return NotFound("FILE_MISSING", "The source file is missing on the server; restore it from a backup.");
+            ctx.Response.Headers["X-Source-Version"] = v.Version;
+            return Results.File(path, "application/zip", $"{id}-{v.Version}-source.zip");
         }).RequireAuthorization("ApiOrCookie");
 
         // Catalog icon (assets/icon.png of the newest live, else beta, version); public like the catalog.
@@ -465,7 +488,7 @@ public static class ApiEndpoints
         }).RequireAuthorization("BearerOnly");
 
         api.MapGet("/packages/{id}/{version}/download", async (string id, string version,
-            AppDbContext db, SubmissionService svc) =>
+            AppDbContext db, SubmissionService svc, UsageService usage, HttpContext ctx) =>
         {
             var v = await db.PackageVersions.FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version &&
                 (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta));
@@ -474,6 +497,7 @@ public static class ApiEndpoints
             if (!File.Exists(path)) return NotFound("FILE_MISSING", "The package file is missing on the server; contact an admin.");
             v.Downloads++;
             await db.SaveChangesAsync();
+            await usage.CountAsync(ctx, "download", v.PackageId, v.Version);
             return Results.File(path, "application/zip", $"{id}-{version}.ppak");
         });
 

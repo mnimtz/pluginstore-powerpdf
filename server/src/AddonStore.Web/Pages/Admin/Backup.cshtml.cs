@@ -14,14 +14,16 @@ public class BackupModel : PageModel
     private readonly BackupService _backup;
     private readonly UserManager<AppUser> _users;
     private readonly AuditService _audit;
+    private readonly IServiceScopeFactory _scopes;
 
     public string? Notice { get; private set; }
     public string NoticeKind { get; private set; } = "ok";
     public List<(string Name, long Size, DateTime Utc)> SafetyBackups { get; } = new();
 
-    public BackupModel(BackupService backup, UserManager<AppUser> users, AuditService audit)
+    public BackupModel(BackupService backup, UserManager<AppUser> users, AuditService audit,
+                       IServiceScopeFactory scopes)
     {
-        _backup = backup; _users = users; _audit = audit;
+        _backup = backup; _users = users; _audit = audit; _scopes = scopes;
     }
 
     public void OnGet() => Load();
@@ -74,6 +76,10 @@ public class BackupModel : PageModel
                 return;
             }
             var safety = await _backup.RestoreAsync(tmp, admin.DisplayName);
+            // An older backup may lack newer columns, tables or role names:
+            // upgrade it now instead of at the next app start.
+            using (var scope = _scopes.CreateScope())
+                await SchemaUpgrade.RunAsync(scope.ServiceProvider);
             // The audit table itself was just replaced; record the restore in the restored log.
             await _audit.LogAsync(admin.DisplayName, "backup.restored", archive.FileName,
                 "safety backup: " + Path.GetFileName(safety));

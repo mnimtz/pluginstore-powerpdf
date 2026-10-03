@@ -349,4 +349,107 @@
   <data name="Replace source" xml:space="preserve"><value>Nahradit zdrojový kód</value></data>
   <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>Vydané doplňky pro Tungsten Power PDF. Instalují se na počítači s Windows přímo v Power PDF.</value></data>
   <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>Doplňky nezávislých autorů, bez záruky a bez oficiální podpory.</value></data>
+  <data name="Developer" xml:space="preserve"><value>Vývojář</value></data>
+  <data name="Reports" xml:space="preserve"><value>Přehledy</value></data>
+  <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>Využití obchodu: stažení, používaní klienti, místa, odeslání a vývojáři.</value></data>
+  <data name="Last {0} days" xml:space="preserve"><value>Posledních {0} dní</value></data>
+  <data name="From" xml:space="preserve"><value>Od</value></data>
+  <data name="To" xml:space="preserve"><value>Do</value></data>
+  <data name="Add-on" xml:space="preserve"><value>Doplněk</value></data>
+  <data name="All add-ons" xml:space="preserve"><value>Všechny doplňky</value></data>
+  <data name="Country" xml:space="preserve"><value>Země</value></data>
+  <data name="All countries" xml:space="preserve"><value>Všechny země</value></data>
+  <data name="Source" xml:space="preserve"><value>Zdroj</value></data>
+  <data name="All sources" xml:space="preserve"><value>Všechny zdroje</value></data>
+  <data name="Client" xml:space="preserve"><value>Klient</value></data>
+  <data name="Web" xml:space="preserve"><value>Web</value></data>
+  <data name="Apply" xml:space="preserve"><value>Použít</value></data>
+  <data name="Reset filters" xml:space="preserve"><value>Obnovit filtry</value></data>
+  <data name="Report language" xml:space="preserve"><value>Jazyk přehledu</value></data>
+  <data name="PDF report" xml:space="preserve"><value>Přehled PDF</value></data>
+  <data name="Download CSV" xml:space="preserve"><value>Stáhnout CSV</value></data>
+  <data name="compared with {0} – {1}" xml:space="preserve"><value>ve srovnání s {0} – {1}</value></data>
+  <data name="Time series since {0}; the all-time totals include earlier downloads." xml:space="preserve"><value>Časové řady od {0}; celkové součty zahrnují i dřívější stažení.</value></data>
+  <data name="No usage data yet in this period." xml:space="preserve"><value>Pro toto období zatím nejsou žádná data o využití.</value></data>
+  <data name="Downloads (all time)" xml:space="preserve"><value>Stažení (celkem)</value></data>
+  <data name="Downloads in period" xml:space="preserve"><value>Stažení v období</value></data>
+  <data name="Store windows opened" xml:space="preserve"><value>Otevřená okna obchodu</value></data>
+  <data name="Client installer downloads" xml:space="preserve"><value>Stažení instalačního programu klienta</value></data>
+  <data name="Live add-ons" xml:space="preserve"><value>Zveřejněné doplňky</value></data>
+  <data name="Developers" xml:space="preserve"><value>Vývojáři</value></data>
+  <data name="Awaiting review" xml:space="preserve"><value>Čeká na kontrolu</value></data>
+  <data name="Downloads per day" xml:space="preserve"><value>Stažení za den</value></data>
+  <data name="Downloads per week" xml:space="preserve"><value>Stažení za týden</value></data>
+  <data name="Downloads per month" xml:space="preserve"><value>Stažení za měsíc</value></data>
+  <data name="Highest value: {0}" xml:space="preserve"><value>Nejvyšší hodnota: {0}</value></data>
+  <data name="Ranking of add-ons" xml:space="preserve"><value>Pořadí doplňků</value></data>
+  <data name="Sorted by downloads in the period; the trend compares with the previous period of the same length." xml:space="preserve"><value>Seřazeno podle stažení v období; trend porovnává s předchozím stejně dlouhým obdobím.</value></data>
+  <data name="In period" xml:space="preserve"><value>V období</value></data>
+  <data name="Trend" xml:space="preserve"><value>Trend</value></data>
+  <data name="Share" xml:space="preserve"><value>Podíl</value></data>
+  <data name="Course" xml:space="preserve"><value>Průběh</value></data>
+  <data name="Top country" xml:space="preserve"><value>Hlavní země</value></data>
+  <data name="All time" xml:space="preserve"><value>Celkem</value></data>
+  <data name="previous period" xml:space="preserve"><value>předchozí období</value></data>
+  <data name="new" xml:space="preserve"><value>nový</value></data>
+  <data name="unknown" xml:space="preserve"><value>neznámé</value></data>
+  <data name="Clients in use" xml:space="preserve"><value>Používaní klienti</value></data>
+  <data name="Store windows opened per client version in the period; shows how far a client update has spread." xml:space="preserve"><value>Otevřená okna obchodu podle verze klienta v období; ukazuje, jak daleko se aktualizace klienta rozšířila.</value></data>
+  <data name="Client languages" xml:space="preserve"><value>Jazyky klienta</value></data>
+  <data name="Language of Power PDF when the store window was opened." xml:space="preserve"><value>Jazyk Power PDF při otevření okna obchodu.</value></data>
+  <data name="Download sources" xml:space="preserve"><value>Zdroje stažení</value></data>
+  <data name="Client = Add-on Store in Power PDF, Web = browser, API = scripts and AI agents." xml:space="preserve"><value>Klient = Add-on Store v Power PDF, Web = prohlížeč, API = skripty a agenti AI.</value></data>
+  <data name="Countries" xml:space="preserve"><value>Země</value></data>
+  <data name="Cities" xml:space="preserve"><value>Města</value></data>
+  <data name="Networks and organisations" xml:space="preserve"><value>Sítě a organizace</value></data>
+  <data name="Operator of the network the request came from; company networks often show the company name." xml:space="preserve"><value>Provozovatel sítě, ze které požadavek přišel; firemní sítě často ukazují název firmy.</value></data>
+  <data name="Power PDF versions" xml:space="preserve"><value>Verze Power PDF</value></data>
+  <data name="Windows versions" xml:space="preserve"><value>Verze Windows</value></data>
+  <data name="Architecture" xml:space="preserve"><value>Architektura</value></data>
+  <data name="Power PDF, Windows and architecture are reported by Add-on Store clients from version 0.4.2." xml:space="preserve"><value>Power PDF, Windows a architekturu hlásí klienti Add-on Store od verze 0.4.2.</value></data>
+  <data name="Submissions and reviews (12 months)" xml:space="preserve"><value>Odeslání a kontroly (12 měsíců)</value></data>
+  <data name="Month" xml:space="preserve"><value>Měsíc</value></data>
+  <data name="Median review time" xml:space="preserve"><value>Medián doby kontroly</value></data>
+  <data name="Last submission" xml:space="preserve"><value>Poslední odeslání</value></data>
+  <data name="Store versions without source code" xml:space="preserve"><value>Verze v obchodě bez zdrojového kódu</value></data>
+  <data name="All live and beta versions have source code deposited." xml:space="preserve"><value>Všechny zveřejněné verze a verze beta mají uložený zdrojový kód.</value></data>
+  <data name="IP address logging" xml:space="preserve"><value>Zaznamenávání IP adres</value></data>
+  <data name="IP address logging (reports)" xml:space="preserve"><value>Zaznamenávání IP adres (přehledy)</value></data>
+  <data name="Off. Only the daily counters above are kept; they contain no IP address." xml:space="preserve"><value>Vypnuto. Ukládají se jen denní počítadla výše; neobsahují žádné IP adresy.</value></data>
+  <data name="Switch on in the settings" xml:space="preserve"><value>Zapnout v nastavení</value></data>
+  <data name="On" xml:space="preserve"><value>Zapnuto</value></data>
+  <data name="Stored requests: {0}. Older than {1} days are deleted automatically." xml:space="preserve"><value>Uložené požadavky: {0}. Starší než {1} dní se mažou automaticky.</value></data>
+  <data name="Stored requests: {0}. Kept permanently (no automatic deletion)." xml:space="preserve"><value>Uložené požadavky: {0}. Uchovávají se trvale (bez automatického mazání).</value></data>
+  <data name="Download CSV with IP addresses" xml:space="preserve"><value>Stáhnout CSV s IP adresami</value></data>
+  <data name="Most frequent IP addresses" xml:space="preserve"><value>Nejčastější IP adresy</value></data>
+  <data name="Latest requests" xml:space="preserve"><value>Poslední požadavky</value></data>
+  <data name="Type" xml:space="preserve"><value>Typ</value></data>
+  <data name="Location" xml:space="preserve"><value>Místo</value></data>
+  <data name="Network" xml:space="preserve"><value>Síť</value></data>
+  <data name="Map" xml:space="preserve"><value>Mapa</value></data>
+  <data name="Location and network data:" xml:space="preserve"><value>Údaje o místě a síti:</value></data>
+  <data name="Generated on {0}" xml:space="preserve"><value>Vytvořeno {0}</value></data>
+  <data name="Use &quot;Save as PDF&quot; as the printer to get the report as a PDF file." xml:space="preserve"><value>Jako tiskárnu zvolte „Uložit jako PDF“ a získáte přehled jako soubor PDF.</value></data>
+  <data name="Print / save as PDF" xml:space="preserve"><value>Tisk / uložit jako PDF</value></data>
+  <data name="Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports." xml:space="preserve"><value>Vždy zapnuto: denní počítadla se zemí, regionem, městem a provozovatelem sítě odvozenými z IP adresy; samotná adresa se neukládá. Volitelně: každé stažení a dotaz na katalog s IP adresou, názvem hostitele a user agentem pro přehledy.</value></data>
+  <data name="GDPR confirmation given by {0} on {1}." xml:space="preserve"><value>Potvrzení GDPR udělil(a) {0} dne {1}.</value></data>
+  <data name="Data protection (GDPR)" xml:space="preserve"><value>Ochrana údajů (GDPR)</value></data>
+  <data name="IP addresses are personal data under the GDPR, also without a sign-in. Storing them needs a legal basis (for example legitimate interest), a note in the privacy policy and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>IP adresy jsou podle GDPR osobní údaje, i bez přihlášení. Jejich ukládání vyžaduje právní základ (například oprávněný zájem), zmínku v zásadách ochrany osobních údajů a dobu uchovávání. Před zapnutím to prosím vyjasněte se svým pověřencem pro ochranu osobních údajů.</value></data>
+  <data name="I confirm that a legal basis exists, the privacy policy covers this logging and the retention period below is agreed." xml:space="preserve"><value>Potvrzuji, že existuje právní základ, zásady ochrany osobních údajů toto zaznamenávání pokrývají a níže uvedená doba uchovávání je odsouhlasena.</value></data>
+  <data name="Retention period (days)" xml:space="preserve"><value>Doba uchovávání (dny)</value></data>
+  <data name="Store permanently (no automatic deletion)" xml:space="preserve"><value>Uchovávat trvale (bez automatického mazání)</value></data>
+  <data name="The GDPR requires that personal data is kept no longer than necessary. Choose this only if your data protection officer agreed." xml:space="preserve"><value>GDPR vyžaduje, aby se osobní údaje neuchovávaly déle, než je nutné. Zvolte to jen se souhlasem svého pověřence pro ochranu osobních údajů.</value></data>
+  <data name="Confirm and switch on" xml:space="preserve"><value>Potvrdit a zapnout</value></data>
+  <data name="Switch on" xml:space="preserve"><value>Zapnout</value></data>
+  <data name="Switch off" xml:space="preserve"><value>Vypnout</value></data>
+  <data name="Save retention period" xml:space="preserve"><value>Uložit dobu uchovávání</value></data>
+  <data name="Delete all stored IP addresses" xml:space="preserve"><value>Smazat všechny uložené IP adresy</value></data>
+  <data name="Please confirm the data protection statement first." xml:space="preserve"><value>Nejprve potvrďte prohlášení o ochraně údajů.</value></data>
+  <data name="IP logging is on." xml:space="preserve"><value>Zaznamenávání IP je zapnuto.</value></data>
+  <data name="IP logging is off." xml:space="preserve"><value>Zaznamenávání IP je vypnuto.</value></data>
+  <data name="Retention period saved." xml:space="preserve"><value>Doba uchovávání uložena.</value></data>
+  <data name="All stored IP addresses were deleted." xml:space="preserve"><value>Všechny uložené IP adresy byly smazány.</value></data>
+  <data name="Type DELETE to confirm." xml:space="preserve"><value>Pro potvrzení zadejte DELETE.</value></data>
+  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Nahrát zdrojový kód verze (po každém nahrání)</value></data>
+  <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Správci: zdrojový kód nejnovější verze, výchozí bod pro změnu</value></data>
 </root>

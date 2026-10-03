@@ -1,0 +1,369 @@
+@page
+@model AddonStore.Web.Pages.Admin.ReportsModel
+@{
+    ViewData["Title"] = "Reports";
+    string Pct(double p) => p.ToString(p < 10 ? "0.0" : "0", System.Globalization.CultureInfo.CurrentCulture) + " %";
+    string W(double p) => p.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture) + "%";
+    string Pc(double p) => W(p);
+    var Ci = System.Globalization.CultureInfo.CurrentCulture;
+    if (Model.Print) { Layout = "_ReportPrintLayout"; }
+    string Spark(int[] v)
+    {
+        if (v.Length < 2) return "";
+        var max = Math.Max(1, v.Max());
+        var inv = System.Globalization.CultureInfo.InvariantCulture;
+        return string.Join(" ", v.Select((x, i) => (100.0 * i / (v.Length - 1)).ToString("0.#", inv) + "," + (22 - 20.0 * x / max).ToString("0.#", inv)));
+    }
+
+    void Trend(int now, int prev)
+    {
+        var d = AddonStore.Web.Pages.Admin.ReportsModel.Delta(now, prev);
+        if (d is null) { <span class="trend new" title="@L["previous period"]: 0">@L["new"]</span> }
+        else if (Math.Abs(d.Value) < 0.5) { <span class="trend flat" title="@L["previous period"]: @prev">± 0 %</span> }
+        else { <span class="trend @(d > 0 ? "up" : "down")" title="@L["previous period"]: @prev">@(d > 0 ? "▲" : "▼") @Math.Abs(d.Value).ToString("0", Ci) %</span> }
+    }
+
+    string FilterUrl(string key, string value)
+    {
+        var rv = Model.RouteValues();
+        rv[key] = value;
+        return Url.Page("/Admin/Reports", rv) ?? "";
+    }
+
+    void ShareList(List<AddonStore.Web.Pages.Admin.ReportsModel.Share> list, Func<string, object>? label = null, string? filterKey = null)
+    {
+        foreach (var s in list)
+        {
+            var text = s.Key == "?" ? L["unknown"] : (label is null ? s.Key : label(s.Key));
+            <div class="share"><span title="@s.Key">@if (filterKey is not null && s.Key != "?") { <a href="@FilterUrl(filterKey, s.Key)">@text</a> } else { @text }</span><span class="track"><i style="width:@W(s.Percent)"></i></span><span>@s.Count · @Pct(s.Percent)</span></div>
+        }
+        if (list.Count == 0)
+        {
+            <p class="muted">@L["No usage data yet in this period."]</p>
+        }
+    }
+}
+
+<div class="print-only report-head">
+    <img src="/img/tungsten-logo-navy.svg" alt="Tungsten Automation" />
+    <div>
+        <b>Add-on Store · @L["Reports"]</b><br />
+        @Model.RangeFrom.ToString("d", Ci) – @Model.RangeTo.ToString("d", Ci)@(Model.PkgName is null ? "" : " · " + Model.PkgName)@(Model.Country is null ? "" : " · " + Model.Country)@(Model.Src is null ? "" : " · " + Model.Src)<br />
+        <span class="muted">@L["Generated on {0}", Time.Fmt(Model.GeneratedAt)]</span>
+    </div>
+</div>
+
+<h1 class="no-print">@L["Reports"]</h1>
+<p class="lead no-print">@L["Usage of the store: downloads, clients in use, locations, submissions and developers."]</p>
+
+
+<div class="card report-filter no-print">
+    <div class="chips">
+        @foreach (var d in AddonStore.Web.Pages.Admin.ReportsModel.Periods)
+        {
+            <a class="chip @(d == Model.Days && !Model.CustomRange ? "active" : "")"
+               asp-page="/Admin/Reports" asp-route-days="@d" asp-route-pkg="@Model.Pkg">@L["Last {0} days", d]</a>
+        }
+    </div>
+    <form method="get" class="filter-form">
+        <label>@L["From"] <input type="date" name="from" value="@Model.RangeFrom.ToString("yyyy-MM-dd")" /></label>
+        <label>@L["To"] <input type="date" name="to" value="@Model.RangeTo.ToString("yyyy-MM-dd")" /></label>
+        <label>@L["Add-on"]
+            <select name="pkg">
+                <option value="">@L["All add-ons"]</option>
+                @foreach (var o in Model.PackageOptions)
+                {
+                    <option value="@o.Id" selected="@(o.Id == Model.Pkg)">@o.Name</option>
+                }
+            </select>
+        </label>
+        <label>@L["Country"]
+            <select name="country">
+                <option value="">@L["All countries"]</option>
+                @foreach (var c in Model.CountryOptions)
+                {
+                    <option value="@c" selected="@(c == Model.Country)">@c</option>
+                }
+            </select>
+        </label>
+        <label>@L["Source"]
+            <select name="src">
+                <option value="">@L["All sources"]</option>
+                <option value="client" selected="@(Model.Src == "client")">@L["Client"]</option>
+                <option value="web" selected="@(Model.Src == "web")">@L["Web"]</option>
+                <option value="api" selected="@(Model.Src == "api")">API</option>
+            </select>
+        </label>
+        <label>@L["Report language"]
+            <select name="rlang">
+                @{ var uiLang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+                @foreach (var lg in AddonStore.Web.Pages.Admin.ReportsModel.ReportLanguages)
+                {
+                    var native = System.Globalization.CultureInfo.GetCultureInfo(lg).NativeName;
+                    <option value="@lg" selected="@(lg == uiLang || (lg == "nb" && uiLang == "no"))">@(char.ToUpper(native[0]) + native[1..])</option>
+                }
+            </select>
+        </label>
+        @if (Model.CustomRange) { } else { <input type="hidden" name="days" value="@Model.Days" /> }
+        <button type="submit" class="btn small">@L["Apply"]</button>
+        @if (Model.AnyFilter)
+        {
+            <a class="btn small secondary" asp-page="/Admin/Reports" asp-route-days="@(Model.CustomRange ? 30 : Model.Days)">@L["Reset filters"]</a>
+        }
+        <span class="spacer"></span>
+        <a class="btn small" asp-page="/Admin/Reports" asp-all-route-data="Model.RouteValues(true)" target="_blank" rel="noopener">@L["PDF report"]</a>
+        <a class="btn small secondary" asp-page="/Admin/Reports" asp-page-handler="Csv" asp-all-route-data="Model.RouteValues()">@L["Download CSV"]</a>
+    </form>
+    <p class="muted small" style="margin:8px 0 0">
+        @Model.RangeFrom.ToString("d", Ci) – @Model.RangeTo.ToString("d", Ci)
+        @if (Model.PkgName is not null) { <text>· @Model.PkgName</text> }
+        @if (Model.Country is not null) { <text>· @Model.Country</text> }
+        @if (Model.Src is not null) { <text>· @Model.Src</text> }
+        · @L["compared with {0} – {1}", Model.PrevFrom.ToString("d", Ci), Model.PrevTo.ToString("d", Ci)]
+        · @(Model.TrackingSince is { } since
+            ? L["Time series since {0}; the all-time totals include earlier downloads.", since.ToString("d", Ci)]
+            : L["No usage data yet in this period."])
+    </p>
+</div>
+
+<div class="kpis">
+    <div class="kpi"><b>@Model.K.DownloadsAllTime.ToString("N0", Ci)</b><span>@L["Downloads (all time)"]</span></div>
+    <div class="kpi accent"><b>@Model.K.DownloadsPeriod.ToString("N0", Ci)</b><span>@L["Downloads in period"]</span>@{ Trend(Model.K.DownloadsPeriod, Model.K.DownloadsPrev); }</div>
+    <div class="kpi"><b>@Model.K.CatalogPeriod.ToString("N0", Ci)</b><span>@L["Store windows opened"]</span>@{ Trend(Model.K.CatalogPeriod, Model.K.CatalogPrev); }</div>
+    <div class="kpi"><b>@Model.K.ClientMsiPeriod.ToString("N0", Ci)</b><span>@L["Client installer downloads"]</span>@{ Trend(Model.K.ClientMsiPeriod, Model.K.ClientMsiPrev); }</div>
+    <div class="kpi"><b>@Model.K.LiveAddons</b><span>@L["Live add-ons"]</span></div>
+    <div class="kpi"><b>@Model.K.Developers</b><span>@L["Developers"]</span></div>
+    <div class="kpi"><b>@Model.K.PendingReviews</b><span>@L["Awaiting review"]</span></div>
+</div>
+
+<div class="card">
+    @{
+        var barTitle = Model.Granularity switch { "week" => "Downloads per week", "month" => "Downloads per month", _ => "Downloads per day" };
+        string BarLabel(DateOnly d) => Model.Granularity == "month" ? d.ToString("MMM yyyy", Ci) : d.ToString("d", Ci);
+    }
+    <h2>@L[barTitle]</h2>
+    <div class="bars" role="img" aria-label="@L[barTitle]">
+        @foreach (var b in Model.Daily)
+        {
+            <div class="bar" title="@BarLabel(b.Day): @b.Downloads @L["Downloads"], @b.Catalog @L["Store windows opened"]">
+                <i class="c" style="height:@Pc(100.0 * b.Catalog / Model.DailyMax)"></i>
+                <i class="d" style="height:@Pc(100.0 * b.Downloads / Model.DailyMax)"></i>
+                @if (Model.Daily.Count <= 31 && b.Downloads > 0) { <em style="bottom:@Pc(100.0 * b.Downloads / Model.DailyMax)">@b.Downloads</em> }
+            </div>
+        }
+    </div>
+    @if (Model.Daily.Count > 0)
+    {
+        <div class="bar-axis small muted">
+            <span>@BarLabel(Model.Daily[0].Day)</span>
+            <span>@BarLabel(Model.Daily[Model.Daily.Count / 2].Day)</span>
+            <span>@BarLabel(Model.Daily[^1].Day)</span>
+        </div>
+    }
+    <p class="legend small"><span class="sw d"></span>@L["Downloads"] <span class="sw c"></span>@L["Store windows opened"]
+        <span class="muted">· @L["Highest value: {0}", Model.DailyMax]</span></p>
+</div>
+
+<div class="card">
+    <h2>@L["Ranking of add-ons"]</h2>
+    <p class="muted small">@L["Sorted by downloads in the period; the trend compares with the previous period of the same length."]</p>
+    <div class="table-wrap">
+    <table class="ranking">
+        <tr><th>#</th><th>@L["Add-on"]</th><th>@L["In period"]</th><th>@L["Trend"]</th><th>@L["Share"]</th><th>@L["Course"]</th>
+            <th>@L["Client"] / @L["Web"] / API</th><th>@L["Top country"]</th><th>@L["All time"]</th></tr>
+        @foreach (var a in Model.Addons)
+        {
+            <tr>
+                <td class="rank">
+                    <b>@a.Rank</b>
+                    @if (a.PrevRank is { } pr && pr != a.Rank)
+                    {
+                        <small class="@(pr > a.Rank ? "up" : "down")" title="@L["previous period"]: #@pr">@(pr > a.Rank ? "▲" : "▼")@Math.Abs(pr - a.Rank)</small>
+                    }
+                </td>
+                <td>
+                    <a href="/Plugin?id=@a.Id"><b>@a.Name</b></a>
+                    <div class="muted small">@a.Owner@(a.LiveVersion is null ? "" : " · Live " + a.LiveVersion)</div>
+                    <details class="small" open="@Model.Print"><summary>@L["Versions"]</summary>
+                        @foreach (var v in a.Versions)
+                        {
+                            <div>@v.Version <span class="badge @v.Status.ToString().ToLowerInvariant()">@L[v.Status.ToString()]</span> · @v.Downloads</div>
+                        }
+                    </details>
+                    <a class="small no-print" asp-page="/Admin/Reports" asp-all-route-data="Model.RouteValues()" asp-route-pkg="@a.Id">@L["Filter"] →</a>
+                </td>
+                <td><b>@a.Period.ToString("N0", Ci)</b></td>
+                <td>@{ Trend(a.Period, a.Prev); }</td>
+                <td style="min-width:90px"><span class="track mini"><i style="width:@W(a.Share)"></i></span> <span class="small">@Pct(a.Share)</span></td>
+                <td>
+                    @if (a.Spark.Length > 1)
+                    {
+                        <svg class="spark" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true"><polyline points="@Spark(a.Spark)" /></svg>
+                    }
+                </td>
+                <td class="small">@a.ViaClient / @a.ViaWeb / @a.ViaApi</td>
+                <td>@(a.TopCountry == "" ? "–" : a.TopCountry)</td>
+                <td>@a.AllTime.ToString("N0", Ci)</td>
+            </tr>
+        }
+    </table>
+    </div>
+</div>
+
+<div class="grid">
+    <div class="card">
+        <h2>@L["Clients in use"]</h2>
+        <p class="muted small">@L["Store windows opened per client version in the period; shows how far a client update has spread."]</p>
+        @{ ShareList(Model.ClientVersions, k => "C" + k); }
+    </div>
+    <div class="card">
+        <h2>@L["Client languages"]</h2>
+        <p class="muted small">@L["Language of Power PDF when the store window was opened."]</p>
+        @{ ShareList(Model.Languages); }
+    </div>
+    <div class="card">
+        <h2>@L["Download sources"]</h2>
+        <p class="muted small">@L["Client = Add-on Store in Power PDF, Web = browser, API = scripts and AI agents."]</p>
+        @{ ShareList(Model.Sources, k => k switch { "client" => L["Client"], "web" => L["Web"], _ => (object)"API" }, "src"); }
+    </div>
+</div>
+
+<div class="grid">
+    <div class="card">
+        <h2>@L["Countries"]</h2>
+        @{ ShareList(Model.Countries, filterKey: "country"); }
+    </div>
+    <div class="card">
+        <h2>@L["Cities"]</h2>
+        @{ ShareList(Model.Cities); }
+    </div>
+    <div class="card">
+        <h2>@L["Networks and organisations"]</h2>
+        <p class="muted small">@L["Operator of the network the request came from; company networks often show the company name."]</p>
+        @{ ShareList(Model.Orgs); }
+    </div>
+</div>
+
+<div class="grid">
+    <div class="card">
+        <h2>@L["Power PDF versions"]</h2>
+        @{ ShareList(Model.HostVersions); }
+    </div>
+    <div class="card">
+        <h2>@L["Windows versions"]</h2>
+        @{ ShareList(Model.OsVersions); }
+    </div>
+    <div class="card">
+        <h2>@L["Architecture"]</h2>
+        @{ ShareList(Model.Archs); }
+    </div>
+</div>
+<p class="muted small">@L["Power PDF, Windows and architecture are reported by Add-on Store clients from version 0.4.2."]</p>
+
+<div class="card">
+    <h2>@L["Submissions and reviews (12 months)"]</h2>
+    <div class="table-wrap">
+    <table>
+        <tr><th>@L["Month"]</th><th>@L["Submitted"]</th><th>@L["Approved"]</th><th>@L["Rejected"]</th><th>@L["Median review time"]</th></tr>
+        @foreach (var m in Model.Months)
+        {
+            <tr><td>@m.Month</td><td>@m.Submitted</td><td>@m.Approved</td><td>@m.Rejected</td>
+                <td>@(m.MedianReviewHours is { } h ? (h < 48 ? $"{h:0.#} h" : $"{h / 24:0.#} d") : "–")</td></tr>
+        }
+    </table>
+    </div>
+</div>
+
+<div class="card">
+    <h2>@L["Developers"]</h2>
+    <div class="table-wrap">
+    <table>
+        <tr><th>@L["Name"]</th><th>@L["Email"]</th><th>@L["Role"]</th><th>@L["Plug-ins"]</th><th>@L["Versions"]</th><th>@L["Downloads"]</th><th>@L["Last submission"]</th></tr>
+        @foreach (var d in Model.Devs)
+        {
+            <tr><td>@d.Name</td><td>@d.Email</td><td>@L[d.Role]</td><td>@d.Packages</td><td>@d.Versions</td><td>@d.Downloads</td>
+                <td>@(d.LastSubmission is { } t ? Time.Fmt(t, false) : "–")</td></tr>
+        }
+    </table>
+    </div>
+</div>
+
+<div class="card">
+    <h2>@L["Store versions without source code"]</h2>
+    @if (Model.SourceGaps.Count == 0)
+    {
+        <p class="muted">@L["All live and beta versions have source code deposited."]</p>
+    }
+    else
+    {
+        <div class="table-wrap">
+        <table>
+            <tr><th>@L["Add-on"]</th><th>@L["Version"]</th><th>@L["Status"]</th></tr>
+            @foreach (var g in Model.SourceGaps)
+            {
+                <tr><td><a href="/Plugin?id=@g.Id">@g.Name</a></td><td>@g.Version</td>
+                    <td><span class="badge @g.Status.ToString().ToLowerInvariant()">@L[g.Status.ToString()]</span></td></tr>
+            }
+        </table>
+        </div>
+    }
+</div>
+
+<div class="card@(Model.IpOn || Model.IpEventCount > 0 ? "" : " no-print")" id="ip">
+    <h2>@L["IP address logging"]</h2>
+    @if (!Model.IpOn)
+    {
+        <p>@L["Off. Only the daily counters above are kept; they contain no IP address."]
+            <a class="no-print" href="/Admin/Settings#privacy">@L["Switch on in the settings"] →</a></p>
+    }
+    else
+    {
+        <p><span class="badge live">@L["On"]</span>
+           @(Model.RetentionDays == 0
+               ? L["Stored requests: {0}. Kept permanently (no automatic deletion).", Model.IpEventCount]
+               : L["Stored requests: {0}. Older than {1} days are deleted automatically.", Model.IpEventCount, Model.RetentionDays])
+           <a class="no-print" href="/Admin/Settings#privacy">@L["Settings"]</a></p>
+    }
+    @if (Model.IpEventCount > 0)
+    {
+        <p class="no-print"><a class="btn small secondary" asp-page="/Admin/Reports" asp-page-handler="IpCsv" asp-all-route-data="Model.RouteValues()">@L["Download CSV with IP addresses"]</a></p>
+        <div class="grid">
+            <div>
+                <h3>@L["Most frequent IP addresses"]</h3>
+                @{ ShareList(Model.TopIps); }
+            </div>
+        </div>
+
+        <h3>@L["Latest requests"]</h3>
+        <div class="table-wrap">
+        <table>
+            <tr><th>@L["Time"]</th><th>@L["Type"]</th><th>@L["Add-on"]</th><th>IP</th><th>@L["Location"]</th><th>@L["Network"]</th><th>@L["Client"]</th></tr>
+            @foreach (var e in Model.RecentEvents)
+            {
+                <tr>
+                    <td>@Time.Fmt(e.At)</td>
+                    <td>@e.Kind</td>
+                    <td>@(e.PackageId == "" ? "–" : e.PackageId + " " + e.Version)</td>
+                    <td><code>@e.Ip</code>@if (!string.IsNullOrEmpty(e.Hostname)) { <div class="small muted">@e.Hostname</div> }</td>
+                    <td>
+                        @string.Join(", ", new[] { e.City, e.Region, e.Country }.Where(x => x != "").Distinct())
+                        @if (e.Latitude is { } lat && e.Longitude is { } lon)
+                        {
+                            var inv = System.Globalization.CultureInfo.InvariantCulture;
+                            <a class="small no-print" rel="noopener noreferrer" target="_blank"
+                               href="https://www.openstreetmap.org/?mlat=@lat.ToString("0.####", inv)&mlon=@lon.ToString("0.####", inv)#map=10/@lat.ToString("0.####", inv)/@lon.ToString("0.####", inv)">@L["Map"]</a>
+                        }
+                    </td>
+                    <td>@e.Org@if (e.Asn is { } asn) { <div class="small muted">AS@asn</div> }</td>
+                    <td class="small">@(e.Source == "client" ? $"C{e.ClientVersion} · Power PDF {e.HostVersion} · {e.Arch}" : e.Source)</td>
+                </tr>
+            }
+        </table>
+        </div>
+    }
+</div>
+
+<p class="muted small">
+    @L["Location and network data:"] <a href="https://db-ip.com" rel="noopener">IP Geolocation by DB-IP</a>
+    (<a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>)@(Model.GeoDate is { } geoDate ? ", " + Time.Fmt(geoDate, false) : "").
+</p>

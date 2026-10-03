@@ -3,7 +3,10 @@ obj/
 *.user
 # runtime storage of the local dev instance (NOT the Data/ source folder;
 # ignore patterns match case-insensitively on Windows, so be precise here)
-server/src/AddonStore.Web/data/
+# runtime data; on Windows (core.ignorecase) this would also hide the code folder Data/,
+# so C# sources are re-included explicitly
+server/src/AddonStore.Web/data/*
+!server/src/AddonStore.Web/data/*.cs
 server/dev-credentials.local.txt
 testdata/
 assets/

@@ -6,7 +6,7 @@
 
 <h1>@L["Settings"]</h1>
 <p class="lead">@L["Instance settings; values are stored on the server and take effect immediately."]</p>
-<p style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn small secondary" href="/Admin/Backup">@L["Backup and restore"]</a> <a class="btn small secondary" href="/Admin/Categories">@L["Categories"]</a></p>
+<p style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn small secondary" href="/Admin/Backup">@L["Backup and restore"]</a> <a class="btn small secondary" href="/Admin/Categories">@L["Categories"]</a> <a class="btn small secondary" href="#privacy">@L["IP address logging (reports)"]</a></p>
 
 @if (Model.Notice is not null)
 {
@@ -90,4 +90,71 @@
         </div>
         <button type="submit" class="btn cta">@L["Save"]</button>
     </form>
+</div>
+
+<div class="card" style="max-width:760px" id="privacy">
+    <h2 style="margin-top:0">@L["IP address logging (reports)"]</h2>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports."]</p>
+    @if (Model.IpConfirmedAt is { } confirmedAt)
+    {
+        <p style="font-size:.88rem">@L["GDPR confirmation given by {0} on {1}.", Model.IpConfirmedBy, Time.Fmt(confirmedAt)]</p>
+    }
+    @if (!Model.IpOn)
+    {
+        <form method="post" asp-page-handler="IpEnable">
+            @if (Model.IpConfirmedAt is null)
+            {
+                <div class="alert warn">
+                    <p style="margin-top:0"><b>@L["Data protection (GDPR)"]</b></p>
+                    <p>@L["IP addresses are personal data under the GDPR, also without a sign-in. Storing them needs a legal basis (for example legitimate interest), a note in the privacy policy and a retention period. Please clarify this with your data protection officer before switching it on."]</p>
+                    <label style="display:flex;gap:8px;align-items:flex-start">
+                        <input type="checkbox" name="confirmGdpr" value="true" required style="width:auto;margin-top:3px" />
+                        <span>@L["I confirm that a legal basis exists, the privacy policy covers this logging and the retention period below is agreed."]</span>
+                    </label>
+                </div>
+            }
+            <div>
+                <label>@L["Retention period (days)"]</label>
+                <input type="number" name="retentionDays" min="1" max="730" value="@(Model.RetentionDays == 0 ? 90 : Model.RetentionDays)" style="width:120px" />
+                <label style="display:flex;gap:8px;align-items:flex-start;margin-top:8px;font-size:.88rem">
+                        <input type="checkbox" name="permanent" value="true" checked="@(Model.RetentionDays == 0)" style="width:auto;margin-top:3px" />
+                        <span><b>@L["Store permanently (no automatic deletion)"]</b><br />
+                            <span style="color:var(--tun-slate)">@L["The GDPR requires that personal data is kept no longer than necessary. Choose this only if your data protection officer agreed."]</span></span>
+                    </label>
+            </div>
+            <button type="submit" class="btn cta" style="margin-top:12px">@(Model.IpConfirmedAt is null ? L["Confirm and switch on"] : L["Switch on"])</button>
+        </form>
+    }
+    else
+    {
+        <p><span class="badge live">@L["On"]</span>
+           @(Model.RetentionDays == 0
+               ? L["Stored requests: {0}. Kept permanently (no automatic deletion).", Model.IpEventCount]
+               : L["Stored requests: {0}. Older than {1} days are deleted automatically.", Model.IpEventCount, Model.RetentionDays])</p>
+        <form method="post" asp-page-handler="IpRetention" style="margin-bottom:10px">
+            <label>@L["Retention period (days)"]</label>
+            <div style="display:flex;gap:6px;align-items:center">
+                <input type="number" name="retentionDays" min="1" max="730" value="@(Model.RetentionDays == 0 ? 90 : Model.RetentionDays)" style="width:100px" />
+                <button type="submit" class="btn small secondary">@L["Save retention period"]</button>
+            </div>
+            <label style="display:flex;gap:8px;align-items:flex-start;margin-top:8px;font-size:.88rem">
+                        <input type="checkbox" name="permanent" value="true" checked="@(Model.RetentionDays == 0)" style="width:auto;margin-top:3px" />
+                        <span><b>@L["Store permanently (no automatic deletion)"]</b><br />
+                            <span style="color:var(--tun-slate)">@L["The GDPR requires that personal data is kept no longer than necessary. Choose this only if your data protection officer agreed."]</span></span>
+                    </label>
+        </form>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <form method="post" asp-page-handler="IpDisable">
+                <button type="submit" class="btn small secondary">@L["Switch off"]</button>
+            </form>
+            <a class="btn small secondary" href="/Admin/Reports#ip">@L["Reports"]</a>
+        </div>
+    }
+    @if (Model.IpEventCount > 0)
+    {
+        <form method="post" asp-page-handler="IpDeleteAll" style="display:flex;gap:6px;align-items:center;margin-top:12px">
+            <input name="confirm" placeholder="DELETE" style="width:120px" />
+            <button type="submit" class="btn small danger">@L["Delete all stored IP addresses"]</button>
+        </form>
+    }
 </div>

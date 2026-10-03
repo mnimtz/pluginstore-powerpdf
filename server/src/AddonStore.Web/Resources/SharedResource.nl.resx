@@ -349,4 +349,107 @@
   <data name="Replace source" xml:space="preserve"><value>Broncode vervangen</value></data>
   <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>Gepubliceerde invoegtoepassingen voor Tungsten Power PDF. Ze worden geïnstalleerd op een Windows-pc, direct in Power PDF.</value></data>
   <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>Invoegtoepassingen van onafhankelijke auteurs, zonder garantie of officiële ondersteuning.</value></data>
+  <data name="Developer" xml:space="preserve"><value>Ontwikkelaar</value></data>
+  <data name="Reports" xml:space="preserve"><value>Rapporten</value></data>
+  <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>Gebruik van de store: downloads, gebruikte clients, locaties, inzendingen en ontwikkelaars.</value></data>
+  <data name="Last {0} days" xml:space="preserve"><value>Laatste {0} dagen</value></data>
+  <data name="From" xml:space="preserve"><value>Van</value></data>
+  <data name="To" xml:space="preserve"><value>Tot</value></data>
+  <data name="Add-on" xml:space="preserve"><value>Invoegtoepassing</value></data>
+  <data name="All add-ons" xml:space="preserve"><value>Alle invoegtoepassingen</value></data>
+  <data name="Country" xml:space="preserve"><value>Land</value></data>
+  <data name="All countries" xml:space="preserve"><value>Alle landen</value></data>
+  <data name="Source" xml:space="preserve"><value>Bron</value></data>
+  <data name="All sources" xml:space="preserve"><value>Alle bronnen</value></data>
+  <data name="Client" xml:space="preserve"><value>Client</value></data>
+  <data name="Web" xml:space="preserve"><value>Web</value></data>
+  <data name="Apply" xml:space="preserve"><value>Toepassen</value></data>
+  <data name="Reset filters" xml:space="preserve"><value>Filters herstellen</value></data>
+  <data name="Report language" xml:space="preserve"><value>Taal van het rapport</value></data>
+  <data name="PDF report" xml:space="preserve"><value>PDF-rapport</value></data>
+  <data name="Download CSV" xml:space="preserve"><value>CSV downloaden</value></data>
+  <data name="compared with {0} – {1}" xml:space="preserve"><value>vergeleken met {0} – {1}</value></data>
+  <data name="Time series since {0}; the all-time totals include earlier downloads." xml:space="preserve"><value>Tijdreeksen sinds {0}; de totalen bevatten ook eerdere downloads.</value></data>
+  <data name="No usage data yet in this period." xml:space="preserve"><value>Nog geen gebruiksgegevens in deze periode.</value></data>
+  <data name="Downloads (all time)" xml:space="preserve"><value>Downloads (totaal)</value></data>
+  <data name="Downloads in period" xml:space="preserve"><value>Downloads in periode</value></data>
+  <data name="Store windows opened" xml:space="preserve"><value>Storevensters geopend</value></data>
+  <data name="Client installer downloads" xml:space="preserve"><value>Downloads van het clientinstallatieprogramma</value></data>
+  <data name="Live add-ons" xml:space="preserve"><value>Gepubliceerde invoegtoepassingen</value></data>
+  <data name="Developers" xml:space="preserve"><value>Ontwikkelaars</value></data>
+  <data name="Awaiting review" xml:space="preserve"><value>Wacht op beoordeling</value></data>
+  <data name="Downloads per day" xml:space="preserve"><value>Downloads per dag</value></data>
+  <data name="Downloads per week" xml:space="preserve"><value>Downloads per week</value></data>
+  <data name="Downloads per month" xml:space="preserve"><value>Downloads per maand</value></data>
+  <data name="Highest value: {0}" xml:space="preserve"><value>Hoogste waarde: {0}</value></data>
+  <data name="Ranking of add-ons" xml:space="preserve"><value>Ranglijst van invoegtoepassingen</value></data>
+  <data name="Sorted by downloads in the period; the trend compares with the previous period of the same length." xml:space="preserve"><value>Gesorteerd op downloads in de periode; de trend vergelijkt met de vorige periode van dezelfde lengte.</value></data>
+  <data name="In period" xml:space="preserve"><value>In periode</value></data>
+  <data name="Trend" xml:space="preserve"><value>Trend</value></data>
+  <data name="Share" xml:space="preserve"><value>Aandeel</value></data>
+  <data name="Course" xml:space="preserve"><value>Verloop</value></data>
+  <data name="Top country" xml:space="preserve"><value>Belangrijkste land</value></data>
+  <data name="All time" xml:space="preserve"><value>Totaal</value></data>
+  <data name="previous period" xml:space="preserve"><value>vorige periode</value></data>
+  <data name="new" xml:space="preserve"><value>nieuw</value></data>
+  <data name="unknown" xml:space="preserve"><value>onbekend</value></data>
+  <data name="Clients in use" xml:space="preserve"><value>Gebruikte clients</value></data>
+  <data name="Store windows opened per client version in the period; shows how far a client update has spread." xml:space="preserve"><value>Geopende storevensters per clientversie in de periode; toont hoe ver een clientupdate is verspreid.</value></data>
+  <data name="Client languages" xml:space="preserve"><value>Clienttalen</value></data>
+  <data name="Language of Power PDF when the store window was opened." xml:space="preserve"><value>Taal van Power PDF bij het openen van het storevenster.</value></data>
+  <data name="Download sources" xml:space="preserve"><value>Downloadbronnen</value></data>
+  <data name="Client = Add-on Store in Power PDF, Web = browser, API = scripts and AI agents." xml:space="preserve"><value>Client = Add-on Store in Power PDF, Web = browser, API = scripts en AI-agents.</value></data>
+  <data name="Countries" xml:space="preserve"><value>Landen</value></data>
+  <data name="Cities" xml:space="preserve"><value>Steden</value></data>
+  <data name="Networks and organisations" xml:space="preserve"><value>Netwerken en organisaties</value></data>
+  <data name="Operator of the network the request came from; company networks often show the company name." xml:space="preserve"><value>Beheerder van het netwerk waaruit het verzoek kwam; bedrijfsnetwerken tonen vaak de bedrijfsnaam.</value></data>
+  <data name="Power PDF versions" xml:space="preserve"><value>Power PDF-versies</value></data>
+  <data name="Windows versions" xml:space="preserve"><value>Windows-versies</value></data>
+  <data name="Architecture" xml:space="preserve"><value>Architectuur</value></data>
+  <data name="Power PDF, Windows and architecture are reported by Add-on Store clients from version 0.4.2." xml:space="preserve"><value>Power PDF, Windows en architectuur worden gemeld door Add-on Store-clients vanaf versie 0.4.2.</value></data>
+  <data name="Submissions and reviews (12 months)" xml:space="preserve"><value>Inzendingen en beoordelingen (12 maanden)</value></data>
+  <data name="Month" xml:space="preserve"><value>Maand</value></data>
+  <data name="Median review time" xml:space="preserve"><value>Mediane beoordelingstijd</value></data>
+  <data name="Last submission" xml:space="preserve"><value>Laatste inzending</value></data>
+  <data name="Store versions without source code" xml:space="preserve"><value>Storeversies zonder broncode</value></data>
+  <data name="All live and beta versions have source code deposited." xml:space="preserve"><value>Voor alle gepubliceerde en bètaversies is broncode opgeslagen.</value></data>
+  <data name="IP address logging" xml:space="preserve"><value>Registratie van IP-adressen</value></data>
+  <data name="IP address logging (reports)" xml:space="preserve"><value>Registratie van IP-adressen (rapporten)</value></data>
+  <data name="Off. Only the daily counters above are kept; they contain no IP address." xml:space="preserve"><value>Uit. Alleen de dagtellers hierboven worden bewaard; ze bevatten geen IP-adres.</value></data>
+  <data name="Switch on in the settings" xml:space="preserve"><value>Inschakelen in de instellingen</value></data>
+  <data name="On" xml:space="preserve"><value>Aan</value></data>
+  <data name="Stored requests: {0}. Older than {1} days are deleted automatically." xml:space="preserve"><value>Opgeslagen verzoeken: {0}. Ouder dan {1} dagen worden automatisch verwijderd.</value></data>
+  <data name="Stored requests: {0}. Kept permanently (no automatic deletion)." xml:space="preserve"><value>Opgeslagen verzoeken: {0}. Permanent bewaard (geen automatische verwijdering).</value></data>
+  <data name="Download CSV with IP addresses" xml:space="preserve"><value>CSV met IP-adressen downloaden</value></data>
+  <data name="Most frequent IP addresses" xml:space="preserve"><value>Meest voorkomende IP-adressen</value></data>
+  <data name="Latest requests" xml:space="preserve"><value>Laatste verzoeken</value></data>
+  <data name="Type" xml:space="preserve"><value>Soort</value></data>
+  <data name="Location" xml:space="preserve"><value>Locatie</value></data>
+  <data name="Network" xml:space="preserve"><value>Netwerk</value></data>
+  <data name="Map" xml:space="preserve"><value>Kaart</value></data>
+  <data name="Location and network data:" xml:space="preserve"><value>Locatie- en netwerkgegevens:</value></data>
+  <data name="Generated on {0}" xml:space="preserve"><value>Gemaakt op {0}</value></data>
+  <data name="Use &quot;Save as PDF&quot; as the printer to get the report as a PDF file." xml:space="preserve"><value>Kies “Opslaan als PDF” als printer om het rapport als PDF-bestand te krijgen.</value></data>
+  <data name="Print / save as PDF" xml:space="preserve"><value>Afdrukken / opslaan als PDF</value></data>
+  <data name="Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports." xml:space="preserve"><value>Altijd actief: dagtellers met land, regio, stad en netwerkbeheerder afgeleid van het IP-adres; het adres zelf wordt niet opgeslagen. Optioneel: elke download en catalogusaanvraag met IP-adres, hostnaam en user-agent voor de rapporten.</value></data>
+  <data name="GDPR confirmation given by {0} on {1}." xml:space="preserve"><value>AVG-bevestiging gegeven door {0} op {1}.</value></data>
+  <data name="Data protection (GDPR)" xml:space="preserve"><value>Gegevensbescherming (AVG)</value></data>
+  <data name="IP addresses are personal data under the GDPR, also without a sign-in. Storing them needs a legal basis (for example legitimate interest), a note in the privacy policy and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>IP-adressen zijn persoonsgegevens volgens de AVG, ook zonder aanmelding. Voor opslag zijn een rechtsgrond (bijvoorbeeld gerechtvaardigd belang), een vermelding in de privacyverklaring en een bewaartermijn nodig. Overleg dit vóór het inschakelen met uw functionaris voor gegevensbescherming.</value></data>
+  <data name="I confirm that a legal basis exists, the privacy policy covers this logging and the retention period below is agreed." xml:space="preserve"><value>Ik bevestig dat er een rechtsgrond is, dat de privacyverklaring deze registratie dekt en dat de bewaartermijn hieronder is afgestemd.</value></data>
+  <data name="Retention period (days)" xml:space="preserve"><value>Bewaartermijn (dagen)</value></data>
+  <data name="Store permanently (no automatic deletion)" xml:space="preserve"><value>Permanent bewaren (geen automatische verwijdering)</value></data>
+  <data name="The GDPR requires that personal data is kept no longer than necessary. Choose this only if your data protection officer agreed." xml:space="preserve"><value>De AVG vereist dat persoonsgegevens niet langer dan nodig worden bewaard. Kies dit alleen als uw functionaris voor gegevensbescherming akkoord is.</value></data>
+  <data name="Confirm and switch on" xml:space="preserve"><value>Bevestigen en inschakelen</value></data>
+  <data name="Switch on" xml:space="preserve"><value>Inschakelen</value></data>
+  <data name="Switch off" xml:space="preserve"><value>Uitschakelen</value></data>
+  <data name="Save retention period" xml:space="preserve"><value>Bewaartermijn opslaan</value></data>
+  <data name="Delete all stored IP addresses" xml:space="preserve"><value>Alle opgeslagen IP-adressen verwijderen</value></data>
+  <data name="Please confirm the data protection statement first." xml:space="preserve"><value>Bevestig eerst de verklaring over gegevensbescherming.</value></data>
+  <data name="IP logging is on." xml:space="preserve"><value>IP-registratie is ingeschakeld.</value></data>
+  <data name="IP logging is off." xml:space="preserve"><value>IP-registratie is uitgeschakeld.</value></data>
+  <data name="Retention period saved." xml:space="preserve"><value>Bewaartermijn opgeslagen.</value></data>
+  <data name="All stored IP addresses were deleted." xml:space="preserve"><value>Alle opgeslagen IP-adressen zijn verwijderd.</value></data>
+  <data name="Type DELETE to confirm." xml:space="preserve"><value>Typ DELETE om te bevestigen.</value></data>
+  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Broncode van een versie uploaden (na elke upload)</value></data>
+  <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Beheerders: broncode van de nieuwste versie, startpunt voor een wijziging</value></data>
 </root>

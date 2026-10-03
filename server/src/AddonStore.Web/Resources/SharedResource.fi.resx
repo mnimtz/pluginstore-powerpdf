@@ -349,4 +349,107 @@
   <data name="Replace source" xml:space="preserve"><value>Korvaa lähdekoodi</value></data>
   <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>Julkaistut lisäosat Tungsten Power PDF:lle. Ne asennetaan Windows-tietokoneella suoraan Power PDF:ssä.</value></data>
   <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>Riippumattomien tekijöiden lisäosia, ilman takuuta tai virallista tukea.</value></data>
+  <data name="Developer" xml:space="preserve"><value>Kehittäjä</value></data>
+  <data name="Reports" xml:space="preserve"><value>Raportit</value></data>
+  <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>Kaupan käyttö: lataukset, käytössä olevat asiakasohjelmat, sijainnit, lähetykset ja kehittäjät.</value></data>
+  <data name="Last {0} days" xml:space="preserve"><value>Viimeiset {0} päivää</value></data>
+  <data name="From" xml:space="preserve"><value>Alkaen</value></data>
+  <data name="To" xml:space="preserve"><value>Asti</value></data>
+  <data name="Add-on" xml:space="preserve"><value>Lisäosa</value></data>
+  <data name="All add-ons" xml:space="preserve"><value>Kaikki lisäosat</value></data>
+  <data name="Country" xml:space="preserve"><value>Maa</value></data>
+  <data name="All countries" xml:space="preserve"><value>Kaikki maat</value></data>
+  <data name="Source" xml:space="preserve"><value>Lähde</value></data>
+  <data name="All sources" xml:space="preserve"><value>Kaikki lähteet</value></data>
+  <data name="Client" xml:space="preserve"><value>Asiakasohjelma</value></data>
+  <data name="Web" xml:space="preserve"><value>Verkko</value></data>
+  <data name="Apply" xml:space="preserve"><value>Käytä</value></data>
+  <data name="Reset filters" xml:space="preserve"><value>Tyhjennä suodattimet</value></data>
+  <data name="Report language" xml:space="preserve"><value>Raportin kieli</value></data>
+  <data name="PDF report" xml:space="preserve"><value>PDF-raportti</value></data>
+  <data name="Download CSV" xml:space="preserve"><value>Lataa CSV</value></data>
+  <data name="compared with {0} – {1}" xml:space="preserve"><value>verrattuna jaksoon {0} – {1}</value></data>
+  <data name="Time series since {0}; the all-time totals include earlier downloads." xml:space="preserve"><value>Aikasarjat {0} alkaen; kokonaismäärät sisältävät myös aiemmat lataukset.</value></data>
+  <data name="No usage data yet in this period." xml:space="preserve"><value>Tältä ajanjaksolta ei ole vielä käyttötietoja.</value></data>
+  <data name="Downloads (all time)" xml:space="preserve"><value>Lataukset (yhteensä)</value></data>
+  <data name="Downloads in period" xml:space="preserve"><value>Lataukset jaksolla</value></data>
+  <data name="Store windows opened" xml:space="preserve"><value>Kauppaikkunoita avattu</value></data>
+  <data name="Client installer downloads" xml:space="preserve"><value>Asiakasohjelman asennusohjelman lataukset</value></data>
+  <data name="Live add-ons" xml:space="preserve"><value>Julkaistut lisäosat</value></data>
+  <data name="Developers" xml:space="preserve"><value>Kehittäjät</value></data>
+  <data name="Awaiting review" xml:space="preserve"><value>Odottaa tarkistusta</value></data>
+  <data name="Downloads per day" xml:space="preserve"><value>Lataukset päivässä</value></data>
+  <data name="Downloads per week" xml:space="preserve"><value>Lataukset viikossa</value></data>
+  <data name="Downloads per month" xml:space="preserve"><value>Lataukset kuukaudessa</value></data>
+  <data name="Highest value: {0}" xml:space="preserve"><value>Suurin arvo: {0}</value></data>
+  <data name="Ranking of add-ons" xml:space="preserve"><value>Lisäosien sijoitus</value></data>
+  <data name="Sorted by downloads in the period; the trend compares with the previous period of the same length." xml:space="preserve"><value>Lajiteltu jakson latausten mukaan; trendi vertaa yhtä pitkään edelliseen jaksoon.</value></data>
+  <data name="In period" xml:space="preserve"><value>Jaksolla</value></data>
+  <data name="Trend" xml:space="preserve"><value>Trendi</value></data>
+  <data name="Share" xml:space="preserve"><value>Osuus</value></data>
+  <data name="Course" xml:space="preserve"><value>Kehitys</value></data>
+  <data name="Top country" xml:space="preserve"><value>Kärkimaa</value></data>
+  <data name="All time" xml:space="preserve"><value>Yhteensä</value></data>
+  <data name="previous period" xml:space="preserve"><value>edellinen jakso</value></data>
+  <data name="new" xml:space="preserve"><value>uusi</value></data>
+  <data name="unknown" xml:space="preserve"><value>tuntematon</value></data>
+  <data name="Clients in use" xml:space="preserve"><value>Käytössä olevat asiakasohjelmat</value></data>
+  <data name="Store windows opened per client version in the period; shows how far a client update has spread." xml:space="preserve"><value>Avatut kauppaikkunat asiakasohjelman version mukaan; näyttää, kuinka laajalle päivitys on levinnyt.</value></data>
+  <data name="Client languages" xml:space="preserve"><value>Asiakasohjelman kielet</value></data>
+  <data name="Language of Power PDF when the store window was opened." xml:space="preserve"><value>Power PDF:n kieli kauppaikkunaa avattaessa.</value></data>
+  <data name="Download sources" xml:space="preserve"><value>Latauslähteet</value></data>
+  <data name="Client = Add-on Store in Power PDF, Web = browser, API = scripts and AI agents." xml:space="preserve"><value>Asiakasohjelma = Add-on Store Power PDF:ssä, Verkko = selain, API = komentosarjat ja tekoälyagentit.</value></data>
+  <data name="Countries" xml:space="preserve"><value>Maat</value></data>
+  <data name="Cities" xml:space="preserve"><value>Kaupungit</value></data>
+  <data name="Networks and organisations" xml:space="preserve"><value>Verkot ja organisaatiot</value></data>
+  <data name="Operator of the network the request came from; company networks often show the company name." xml:space="preserve"><value>Verkon ylläpitäjä, josta pyyntö tuli; yritysverkoissa näkyy usein yrityksen nimi.</value></data>
+  <data name="Power PDF versions" xml:space="preserve"><value>Power PDF -versiot</value></data>
+  <data name="Windows versions" xml:space="preserve"><value>Windows-versiot</value></data>
+  <data name="Architecture" xml:space="preserve"><value>Arkkitehtuuri</value></data>
+  <data name="Power PDF, Windows and architecture are reported by Add-on Store clients from version 0.4.2." xml:space="preserve"><value>Add-on Store -asiakasohjelmat ilmoittavat Power PDF:n, Windowsin ja arkkitehtuurin versiosta 0.4.2 alkaen.</value></data>
+  <data name="Submissions and reviews (12 months)" xml:space="preserve"><value>Lähetykset ja tarkistukset (12 kk)</value></data>
+  <data name="Month" xml:space="preserve"><value>Kuukausi</value></data>
+  <data name="Median review time" xml:space="preserve"><value>Tarkistusajan mediaani</value></data>
+  <data name="Last submission" xml:space="preserve"><value>Viimeisin lähetys</value></data>
+  <data name="Store versions without source code" xml:space="preserve"><value>Kaupan versiot ilman lähdekoodia</value></data>
+  <data name="All live and beta versions have source code deposited." xml:space="preserve"><value>Kaikille julkaistuille ja beetaversioille on tallennettu lähdekoodi.</value></data>
+  <data name="IP address logging" xml:space="preserve"><value>IP-osoitteiden kirjaus</value></data>
+  <data name="IP address logging (reports)" xml:space="preserve"><value>IP-osoitteiden kirjaus (raportit)</value></data>
+  <data name="Off. Only the daily counters above are kept; they contain no IP address." xml:space="preserve"><value>Pois päältä. Vain yllä olevat päivälaskurit säilytetään; ne eivät sisällä IP-osoitteita.</value></data>
+  <data name="Switch on in the settings" xml:space="preserve"><value>Ota käyttöön asetuksissa</value></data>
+  <data name="On" xml:space="preserve"><value>Päällä</value></data>
+  <data name="Stored requests: {0}. Older than {1} days are deleted automatically." xml:space="preserve"><value>Tallennetut pyynnöt: {0}. Yli {1} päivää vanhat poistetaan automaattisesti.</value></data>
+  <data name="Stored requests: {0}. Kept permanently (no automatic deletion)." xml:space="preserve"><value>Tallennetut pyynnöt: {0}. Säilytetään pysyvästi (ei automaattista poistoa).</value></data>
+  <data name="Download CSV with IP addresses" xml:space="preserve"><value>Lataa CSV IP-osoitteineen</value></data>
+  <data name="Most frequent IP addresses" xml:space="preserve"><value>Yleisimmät IP-osoitteet</value></data>
+  <data name="Latest requests" xml:space="preserve"><value>Viimeisimmät pyynnöt</value></data>
+  <data name="Type" xml:space="preserve"><value>Tyyppi</value></data>
+  <data name="Location" xml:space="preserve"><value>Sijainti</value></data>
+  <data name="Network" xml:space="preserve"><value>Verkko</value></data>
+  <data name="Map" xml:space="preserve"><value>Kartta</value></data>
+  <data name="Location and network data:" xml:space="preserve"><value>Sijainti- ja verkkotiedot:</value></data>
+  <data name="Generated on {0}" xml:space="preserve"><value>Luotu {0}</value></data>
+  <data name="Use &quot;Save as PDF&quot; as the printer to get the report as a PDF file." xml:space="preserve"><value>Valitse tulostimeksi ”Tallenna PDF-muodossa”, niin saat raportin PDF-tiedostona.</value></data>
+  <data name="Print / save as PDF" xml:space="preserve"><value>Tulosta / tallenna PDF:nä</value></data>
+  <data name="Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports." xml:space="preserve"><value>Aina käytössä: päivälaskurit, joissa maa, alue, kaupunki ja verkon ylläpitäjä päätellään IP-osoitteesta; itse osoitetta ei tallenneta. Valinnainen: jokainen lataus ja luettelopyyntö IP-osoitteen, isäntänimen ja käyttäjäagentin kanssa raportteja varten.</value></data>
+  <data name="GDPR confirmation given by {0} on {1}." xml:space="preserve"><value>GDPR-vahvistuksen antoi {0} {1}.</value></data>
+  <data name="Data protection (GDPR)" xml:space="preserve"><value>Tietosuoja (GDPR)</value></data>
+  <data name="IP addresses are personal data under the GDPR, also without a sign-in. Storing them needs a legal basis (for example legitimate interest), a note in the privacy policy and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>IP-osoitteet ovat GDPR:n mukaan henkilötietoja, myös ilman kirjautumista. Niiden tallentaminen edellyttää oikeusperustetta (esimerkiksi oikeutettu etu), mainintaa tietosuojaselosteessa ja säilytysaikaa. Selvitä asia tietosuojavastaavasi kanssa ennen käyttöönottoa.</value></data>
+  <data name="I confirm that a legal basis exists, the privacy policy covers this logging and the retention period below is agreed." xml:space="preserve"><value>Vahvistan, että oikeusperuste on olemassa, tietosuojaseloste kattaa tämän kirjauksen ja alla oleva säilytysaika on sovittu.</value></data>
+  <data name="Retention period (days)" xml:space="preserve"><value>Säilytysaika (päivää)</value></data>
+  <data name="Store permanently (no automatic deletion)" xml:space="preserve"><value>Säilytä pysyvästi (ei automaattista poistoa)</value></data>
+  <data name="The GDPR requires that personal data is kept no longer than necessary. Choose this only if your data protection officer agreed." xml:space="preserve"><value>GDPR edellyttää, ettei henkilötietoja säilytetä pidempään kuin on tarpeen. Valitse tämä vain tietosuojavastaavan suostumuksella.</value></data>
+  <data name="Confirm and switch on" xml:space="preserve"><value>Vahvista ja ota käyttöön</value></data>
+  <data name="Switch on" xml:space="preserve"><value>Ota käyttöön</value></data>
+  <data name="Switch off" xml:space="preserve"><value>Poista käytöstä</value></data>
+  <data name="Save retention period" xml:space="preserve"><value>Tallenna säilytysaika</value></data>
+  <data name="Delete all stored IP addresses" xml:space="preserve"><value>Poista kaikki tallennetut IP-osoitteet</value></data>
+  <data name="Please confirm the data protection statement first." xml:space="preserve"><value>Vahvista ensin tietosuojalausuma.</value></data>
+  <data name="IP logging is on." xml:space="preserve"><value>IP-kirjaus on käytössä.</value></data>
+  <data name="IP logging is off." xml:space="preserve"><value>IP-kirjaus on poistettu käytöstä.</value></data>
+  <data name="Retention period saved." xml:space="preserve"><value>Säilytysaika tallennettu.</value></data>
+  <data name="All stored IP addresses were deleted." xml:space="preserve"><value>Kaikki tallennetut IP-osoitteet poistettiin.</value></data>
+  <data name="Type DELETE to confirm." xml:space="preserve"><value>Vahvista kirjoittamalla DELETE.</value></data>
+  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Lähetä version lähdekoodi (jokaisen latauksen jälkeen)</value></data>
+  <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Ylläpitäjät: uusimman version lähdekoodi, muutoksen lähtökohta</value></data>
 </root>

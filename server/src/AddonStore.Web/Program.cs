@@ -75,9 +75,15 @@ builder.Services.Configure<RequestLocalizationOptions>(o =>
     o.DefaultRequestCulture = new RequestCulture("en");
     o.SupportedCultures = cultures.Select(c => new CultureInfo(c)).ToList();
     o.SupportedUICultures = o.SupportedCultures;
+    // ?rlang= (report language, admin reports and their PDF view) wins over everything else.
+    o.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider
+    {
+        QueryStringKey = "rlang",
+        UIQueryStringKey = "rlang"
+    });
     // cookie (manual switch) wins over Accept-Language (automatic detection).
     // Norwegian browsers often send "no" or "nn"; both map to our Bokmål texts.
-    o.RequestCultureProviders.Insert(2, new CustomRequestCultureProvider(ctx =>
+    o.RequestCultureProviders.Insert(3, new CustomRequestCultureProvider(ctx =>
     {
         var first = ctx.Request.Headers.AcceptLanguage.ToString().Split(',')[0].Split(';')[0].Trim().ToLowerInvariant();
         return Task.FromResult(first is "no" or "nn" or "no-no" or "nn-no"
@@ -95,6 +101,7 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Admin/Settings", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Backup", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Categories", "PageAdmin");
+        o.Conventions.AuthorizePage("/Admin/Reports", "PageAdmin");
         o.Conventions.AuthorizePage("/Dashboard", "PageUser");
         o.Conventions.AuthorizePage("/CatalogEntry", "PageUser");
         o.Conventions.AuthorizePage("/Plugin", "PageUser");
@@ -105,6 +112,10 @@ builder.Services.AddRazorPages(o =>
 
 // --- app services ---------------------------------------------------------
 builder.Services.AddScoped<AuditService>();
+builder.Services.AddScoped<UsageService>();
+builder.Services.AddSingleton<GeoService>();
+builder.Services.AddHostedService(sp => sp.GetRequiredService<GeoService>());
+builder.Services.AddHostedService<UsageMaintenance>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<SubmissionService>();
 builder.Services.AddScoped<NotificationService>();
@@ -132,51 +143,7 @@ var app = builder.Build();
 
 // --- schema + roles --------------------------------------------------------
 using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();
-
-    // Poor-man migrations: EnsureCreated never alters an existing database, so
-    // additions arrive as idempotent statements here.
-    foreach (var sql in new[]
-    {
-        "ALTER TABLE AspNetUsers ADD COLUMN AvatarFile TEXT NULL",
-        "ALTER TABLE AspNetUsers ADD COLUMN ShowContactPublicly INTEGER NOT NULL DEFAULT 1",
-        "CREATE TABLE IF NOT EXISTS AppSettings (Key TEXT NOT NULL PRIMARY KEY, Value TEXT NOT NULL)",
-        "CREATE TABLE IF NOT EXISTS Invites (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-            "Email TEXT NOT NULL, TokenHash TEXT NOT NULL, Role TEXT NOT NULL, InvitedBy TEXT NOT NULL, " +
-            "CreatedAt TEXT NOT NULL, AcceptedAt TEXT NULL)",
-        "CREATE UNIQUE INDEX IF NOT EXISTS IX_Invites_TokenHash ON Invites (TokenHash)",
-        "ALTER TABLE AspNetUsers ADD COLUMN NotifyAboutPlugins INTEGER NOT NULL DEFAULT 1",
-        "ALTER TABLE Packages ADD COLUMN NameJson TEXT NULL",
-        "ALTER TABLE Packages ADD COLUMN CategoryOverride TEXT NULL",
-        "ALTER TABLE PackageVersions ADD COLUMN SourcePath TEXT NULL",
-        "ALTER TABLE PackageVersions ADD COLUMN SourceSizeBytes INTEGER NOT NULL DEFAULT 0",
-        "ALTER TABLE PackageVersions ADD COLUMN SourceSha256 TEXT NULL",
-        "ALTER TABLE PackageVersions ADD COLUMN SourceUploadedAt TEXT NULL",
-        "ALTER TABLE PackageVersions ADD COLUMN SourceUploadedBy TEXT NULL",
-        "ALTER TABLE PackageVersions ADD COLUMN SourceReportJson TEXT NULL",
-        "CREATE TABLE IF NOT EXISTS Categories (Slug TEXT NOT NULL PRIMARY KEY, NameJson TEXT NULL, " +
-            "Builtin INTEGER NOT NULL DEFAULT 0, CreatedAt TEXT NOT NULL, CreatedBy TEXT NOT NULL)",
-        "ALTER TABLE Packages ADD COLUMN DescriptionJson TEXT NULL",
-        "ALTER TABLE Packages ADD COLUMN Author TEXT NULL",
-        "ALTER TABLE Packages ADD COLUMN ContactEmail TEXT NULL",
-        "ALTER TABLE Packages ADD COLUMN MetaUpdatedAt TEXT NULL",
-        "ALTER TABLE Packages ADD COLUMN MetaUpdatedBy TEXT NULL"
-    })
-    {
-        try { db.Database.ExecuteSqlRaw(sql); }
-        catch (Microsoft.Data.Sqlite.SqliteException) { /* column/table already there */ }
-    }
-
-    await CategoryService.SeedAsync(db, scope.ServiceProvider.GetRequiredService<
-        Microsoft.Extensions.Localization.IStringLocalizer<AddonStore.Web.SharedResource>>());
-
-    var roles = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    foreach (var role in new[] { "Admin", "Reviewer", "User" })
-        if (!await roles.RoleExistsAsync(role))
-            await roles.CreateAsync(new IdentityRole(role));
-}
+    await AddonStore.Web.Data.SchemaUpgrade.RunAsync(scope.ServiceProvider);
 
 // Security response headers (TLS/HSTS terminate at App Service).
 app.Use(async (ctx, next) =>

@@ -1,0 +1,24 @@
+@using System.Globalization
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName" class="report-print">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Add-on Store · @L["Reports"] · @DateTime.UtcNow.ToString("yyyy-MM-dd")</title>
+    <link rel="icon" href="/img/store-icon.png" />
+    <link rel="stylesheet" href="/css/site.css" />
+</head>
+<body>
+<main>
+    <div class="print-toolbar no-print">
+        <span>@L["Use \"Save as PDF\" as the printer to get the report as a PDF file."]</span>
+        <button type="button" class="btn small" onclick="window.print()">@L["Print / save as PDF"]</button>
+    </div>
+    @RenderBody()
+</main>
+<script>
+    // Open the print dialog once the page (including the logo) has rendered.
+    window.addEventListener('load', function () { setTimeout(function () { window.print(); }, 300); });
+</script>
+</body>
+</html>

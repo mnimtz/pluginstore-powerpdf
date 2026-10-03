@@ -45,13 +45,71 @@ public class AppSetting
     public string Value { get; set; } = "";
 }
 
+/// <summary>
+/// Daily usage counter for the admin reports (S0.9.0). One row per day and
+/// combination; the IP address itself is not stored here, only what was
+/// derived from it (country, region, city, network operator).
+/// Kind: "download" (package file), "msi" (client installer from the
+/// website), "catalog" (catalog fetch = store window opened).
+/// Source: "client" (Add-on Store client), "web" (browser), "api" (other).
+/// </summary>
+public class UsageStat
+{
+    public string Day { get; set; } = "";            // yyyy-MM-dd (UTC)
+    public string Kind { get; set; } = "";
+    public string PackageId { get; set; } = "";
+    public string Version { get; set; } = "";
+    public string Source { get; set; } = "";
+    public string Lang { get; set; } = "";
+    public string ClientVersion { get; set; } = "";
+    public string Country { get; set; } = "";        // ISO 3166 alpha-2 from the IP, IP not stored
+    public string Region { get; set; } = "";         // state / region from the IP
+    public string City { get; set; } = "";           // city from the IP
+    public string Org { get; set; } = "";            // network operator (ASN organisation) from the IP
+    public string Arch { get; set; } = "";           // client: x64 / arm64
+    public string HostVersion { get; set; } = "";    // client: Power PDF version
+    public string OsVersion { get; set; } = "";      // client: Windows version (major.minor.build)
+    public int Count { get; set; }
+}
+
+/// <summary>
+/// Single request with IP address (S0.9.0). Written ONLY while an admin has
+/// switched on IP logging with the GDPR confirmation (setting Usage.IpLogging);
+/// deleted after Usage.IpRetentionDays by UsageMaintenance.
+/// </summary>
+public class UsageEvent
+{
+    public long Id { get; set; }
+    public DateTime At { get; set; } = DateTime.UtcNow;
+    public string Kind { get; set; } = "";
+    public string PackageId { get; set; } = "";
+    public string Version { get; set; } = "";
+    public string Source { get; set; } = "";
+    public string Lang { get; set; } = "";
+    public string ClientVersion { get; set; } = "";
+    public string HostVersion { get; set; } = "";
+    public string OsVersion { get; set; } = "";
+    public string Arch { get; set; } = "";
+    public string Country { get; set; } = "";
+    public string Region { get; set; } = "";
+    public string City { get; set; } = "";
+    public double? Latitude { get; set; }
+    public double? Longitude { get; set; }
+    public long? Asn { get; set; }
+    public string Org { get; set; } = "";
+    public string Ip { get; set; } = "";
+    /// <summary>Reverse DNS name, resolved in the background; null = not tried yet, "" = none.</summary>
+    public string? Hostname { get; set; }
+    public string UserAgent { get; set; } = "";
+}
+
 /// <summary>An email invitation; only the token hash is stored.</summary>
 public class Invite
 {
     public int Id { get; set; }
     public string Email { get; set; } = "";
     public string TokenHash { get; set; } = "";
-    public string Role { get; set; } = "User";
+    public string Role { get; set; } = "Developer";
     public string InvitedBy { get; set; } = "";
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? AcceptedAt { get; set; }

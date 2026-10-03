@@ -349,4 +349,107 @@
   <data name="Replace source" xml:space="preserve"><value>Forráskód cseréje</value></data>
   <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>Közzétett bővítmények a Tungsten Power PDF-hez. Windowsos számítógépen, közvetlenül a Power PDF-ben telepíthetők.</value></data>
   <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>Független szerzők bővítményei, garancia és hivatalos támogatás nélkül.</value></data>
+  <data name="Developer" xml:space="preserve"><value>Fejlesztő</value></data>
+  <data name="Reports" xml:space="preserve"><value>Jelentések</value></data>
+  <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>Az áruház használata: letöltések, használt kliensek, helyszínek, beküldések és fejlesztők.</value></data>
+  <data name="Last {0} days" xml:space="preserve"><value>Utolsó {0} nap</value></data>
+  <data name="From" xml:space="preserve"><value>Ettől</value></data>
+  <data name="To" xml:space="preserve"><value>Eddig</value></data>
+  <data name="Add-on" xml:space="preserve"><value>Bővítmény</value></data>
+  <data name="All add-ons" xml:space="preserve"><value>Minden bővítmény</value></data>
+  <data name="Country" xml:space="preserve"><value>Ország</value></data>
+  <data name="All countries" xml:space="preserve"><value>Minden ország</value></data>
+  <data name="Source" xml:space="preserve"><value>Forrás</value></data>
+  <data name="All sources" xml:space="preserve"><value>Minden forrás</value></data>
+  <data name="Client" xml:space="preserve"><value>Kliens</value></data>
+  <data name="Web" xml:space="preserve"><value>Web</value></data>
+  <data name="Apply" xml:space="preserve"><value>Alkalmaz</value></data>
+  <data name="Reset filters" xml:space="preserve"><value>Szűrők törlése</value></data>
+  <data name="Report language" xml:space="preserve"><value>A jelentés nyelve</value></data>
+  <data name="PDF report" xml:space="preserve"><value>PDF-jelentés</value></data>
+  <data name="Download CSV" xml:space="preserve"><value>CSV letöltése</value></data>
+  <data name="compared with {0} – {1}" xml:space="preserve"><value>összehasonlítva: {0} – {1}</value></data>
+  <data name="Time series since {0}; the all-time totals include earlier downloads." xml:space="preserve"><value>Idősorok {0} óta; az összesítések a korábbi letöltéseket is tartalmazzák.</value></data>
+  <data name="No usage data yet in this period." xml:space="preserve"><value>Ebben az időszakban még nincsenek használati adatok.</value></data>
+  <data name="Downloads (all time)" xml:space="preserve"><value>Letöltések (összesen)</value></data>
+  <data name="Downloads in period" xml:space="preserve"><value>Letöltések az időszakban</value></data>
+  <data name="Store windows opened" xml:space="preserve"><value>Megnyitott áruházablakok</value></data>
+  <data name="Client installer downloads" xml:space="preserve"><value>Kliens-telepítő letöltései</value></data>
+  <data name="Live add-ons" xml:space="preserve"><value>Közzétett bővítmények</value></data>
+  <data name="Developers" xml:space="preserve"><value>Fejlesztők</value></data>
+  <data name="Awaiting review" xml:space="preserve"><value>Ellenőrzésre vár</value></data>
+  <data name="Downloads per day" xml:space="preserve"><value>Letöltések naponta</value></data>
+  <data name="Downloads per week" xml:space="preserve"><value>Letöltések hetente</value></data>
+  <data name="Downloads per month" xml:space="preserve"><value>Letöltések havonta</value></data>
+  <data name="Highest value: {0}" xml:space="preserve"><value>Legmagasabb érték: {0}</value></data>
+  <data name="Ranking of add-ons" xml:space="preserve"><value>Bővítmények rangsora</value></data>
+  <data name="Sorted by downloads in the period; the trend compares with the previous period of the same length." xml:space="preserve"><value>Az időszak letöltései szerint rendezve; a trend az azonos hosszúságú előző időszakkal hasonlít össze.</value></data>
+  <data name="In period" xml:space="preserve"><value>Az időszakban</value></data>
+  <data name="Trend" xml:space="preserve"><value>Trend</value></data>
+  <data name="Share" xml:space="preserve"><value>Részesedés</value></data>
+  <data name="Course" xml:space="preserve"><value>Alakulás</value></data>
+  <data name="Top country" xml:space="preserve"><value>Vezető ország</value></data>
+  <data name="All time" xml:space="preserve"><value>Összesen</value></data>
+  <data name="previous period" xml:space="preserve"><value>előző időszak</value></data>
+  <data name="new" xml:space="preserve"><value>új</value></data>
+  <data name="unknown" xml:space="preserve"><value>ismeretlen</value></data>
+  <data name="Clients in use" xml:space="preserve"><value>Használt kliensek</value></data>
+  <data name="Store windows opened per client version in the period; shows how far a client update has spread." xml:space="preserve"><value>Megnyitott áruházablakok kliensverziónként; megmutatja, mennyire terjedt el egy kliensfrissítés.</value></data>
+  <data name="Client languages" xml:space="preserve"><value>Kliensnyelvek</value></data>
+  <data name="Language of Power PDF when the store window was opened." xml:space="preserve"><value>A Power PDF nyelve az áruházablak megnyitásakor.</value></data>
+  <data name="Download sources" xml:space="preserve"><value>Letöltési források</value></data>
+  <data name="Client = Add-on Store in Power PDF, Web = browser, API = scripts and AI agents." xml:space="preserve"><value>Kliens = Add-on Store a Power PDF-ben, Web = böngésző, API = szkriptek és MI-ügynökök.</value></data>
+  <data name="Countries" xml:space="preserve"><value>Országok</value></data>
+  <data name="Cities" xml:space="preserve"><value>Városok</value></data>
+  <data name="Networks and organisations" xml:space="preserve"><value>Hálózatok és szervezetek</value></data>
+  <data name="Operator of the network the request came from; company networks often show the company name." xml:space="preserve"><value>Annak a hálózatnak az üzemeltetője, ahonnan a kérés jött; a vállalati hálózatoknál gyakran a cégnév látszik.</value></data>
+  <data name="Power PDF versions" xml:space="preserve"><value>Power PDF-verziók</value></data>
+  <data name="Windows versions" xml:space="preserve"><value>Windows-verziók</value></data>
+  <data name="Architecture" xml:space="preserve"><value>Architektúra</value></data>
+  <data name="Power PDF, Windows and architecture are reported by Add-on Store clients from version 0.4.2." xml:space="preserve"><value>A Power PDF-et, a Windowst és az architektúrát az Add-on Store kliensek a 0.4.2-es verziótól jelentik.</value></data>
+  <data name="Submissions and reviews (12 months)" xml:space="preserve"><value>Beküldések és ellenőrzések (12 hónap)</value></data>
+  <data name="Month" xml:space="preserve"><value>Hónap</value></data>
+  <data name="Median review time" xml:space="preserve"><value>Ellenőrzési idő mediánja</value></data>
+  <data name="Last submission" xml:space="preserve"><value>Utolsó beküldés</value></data>
+  <data name="Store versions without source code" xml:space="preserve"><value>Forráskód nélküli áruházi verziók</value></data>
+  <data name="All live and beta versions have source code deposited." xml:space="preserve"><value>Minden közzétett és béta verzióhoz van letétbe helyezett forráskód.</value></data>
+  <data name="IP address logging" xml:space="preserve"><value>IP-címek naplózása</value></data>
+  <data name="IP address logging (reports)" xml:space="preserve"><value>IP-címek naplózása (jelentések)</value></data>
+  <data name="Off. Only the daily counters above are kept; they contain no IP address." xml:space="preserve"><value>Kikapcsolva. Csak a fenti napi számlálók tárolódnak; ezek nem tartalmaznak IP-címet.</value></data>
+  <data name="Switch on in the settings" xml:space="preserve"><value>Bekapcsolás a beállításokban</value></data>
+  <data name="On" xml:space="preserve"><value>Bekapcsolva</value></data>
+  <data name="Stored requests: {0}. Older than {1} days are deleted automatically." xml:space="preserve"><value>Tárolt kérések: {0}. A(z) {1} napnál régebbiek automatikusan törlődnek.</value></data>
+  <data name="Stored requests: {0}. Kept permanently (no automatic deletion)." xml:space="preserve"><value>Tárolt kérések: {0}. Tartósan tárolva (nincs automatikus törlés).</value></data>
+  <data name="Download CSV with IP addresses" xml:space="preserve"><value>CSV letöltése IP-címekkel</value></data>
+  <data name="Most frequent IP addresses" xml:space="preserve"><value>Leggyakoribb IP-címek</value></data>
+  <data name="Latest requests" xml:space="preserve"><value>Legutóbbi kérések</value></data>
+  <data name="Type" xml:space="preserve"><value>Típus</value></data>
+  <data name="Location" xml:space="preserve"><value>Helyszín</value></data>
+  <data name="Network" xml:space="preserve"><value>Hálózat</value></data>
+  <data name="Map" xml:space="preserve"><value>Térkép</value></data>
+  <data name="Location and network data:" xml:space="preserve"><value>Hely- és hálózati adatok:</value></data>
+  <data name="Generated on {0}" xml:space="preserve"><value>Készült: {0}</value></data>
+  <data name="Use &quot;Save as PDF&quot; as the printer to get the report as a PDF file." xml:space="preserve"><value>Nyomtatóként válassza a „Mentés PDF-ként” lehetőséget, hogy PDF-fájlt kapjon.</value></data>
+  <data name="Print / save as PDF" xml:space="preserve"><value>Nyomtatás / mentés PDF-ként</value></data>
+  <data name="Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports." xml:space="preserve"><value>Mindig aktív: napi számlálók az IP-címből meghatározott országgal, régióval, várossal és hálózatüzemeltetővel; maga a cím nem kerül tárolásra. Opcionális: minden letöltés és katalóguslekérés IP-címmel, gépnévvel és felhasználói ügynökkel a jelentésekhez.</value></data>
+  <data name="GDPR confirmation given by {0} on {1}." xml:space="preserve"><value>GDPR-megerősítést adta: {0}, {1}.</value></data>
+  <data name="Data protection (GDPR)" xml:space="preserve"><value>Adatvédelem (GDPR)</value></data>
+  <data name="IP addresses are personal data under the GDPR, also without a sign-in. Storing them needs a legal basis (for example legitimate interest), a note in the privacy policy and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>Az IP-címek a GDPR szerint személyes adatok, bejelentkezés nélkül is. Tárolásukhoz jogalap (például jogos érdek), az adatvédelmi tájékoztatóban szereplő tájékoztatás és megőrzési idő szükséges. Bekapcsolás előtt egyeztessen az adatvédelmi tisztviselővel.</value></data>
+  <data name="I confirm that a legal basis exists, the privacy policy covers this logging and the retention period below is agreed." xml:space="preserve"><value>Megerősítem, hogy van jogalap, az adatvédelmi tájékoztató kiterjed erre a naplózásra, és az alábbi megőrzési idő egyeztetett.</value></data>
+  <data name="Retention period (days)" xml:space="preserve"><value>Megőrzési idő (nap)</value></data>
+  <data name="Store permanently (no automatic deletion)" xml:space="preserve"><value>Tartós tárolás (nincs automatikus törlés)</value></data>
+  <data name="The GDPR requires that personal data is kept no longer than necessary. Choose this only if your data protection officer agreed." xml:space="preserve"><value>A GDPR előírja, hogy a személyes adatokat ne tárolják a szükségesnél tovább. Csak az adatvédelmi tisztviselő jóváhagyásával válassza ezt.</value></data>
+  <data name="Confirm and switch on" xml:space="preserve"><value>Megerősítés és bekapcsolás</value></data>
+  <data name="Switch on" xml:space="preserve"><value>Bekapcsolás</value></data>
+  <data name="Switch off" xml:space="preserve"><value>Kikapcsolás</value></data>
+  <data name="Save retention period" xml:space="preserve"><value>Megőrzési idő mentése</value></data>
+  <data name="Delete all stored IP addresses" xml:space="preserve"><value>Minden tárolt IP-cím törlése</value></data>
+  <data name="Please confirm the data protection statement first." xml:space="preserve"><value>Először erősítse meg az adatvédelmi nyilatkozatot.</value></data>
+  <data name="IP logging is on." xml:space="preserve"><value>Az IP-naplózás be van kapcsolva.</value></data>
+  <data name="IP logging is off." xml:space="preserve"><value>Az IP-naplózás ki van kapcsolva.</value></data>
+  <data name="Retention period saved." xml:space="preserve"><value>Megőrzési idő mentve.</value></data>
+  <data name="All stored IP addresses were deleted." xml:space="preserve"><value>Minden tárolt IP-cím törölve.</value></data>
+  <data name="Type DELETE to confirm." xml:space="preserve"><value>A megerősítéshez írja be: DELETE.</value></data>
+  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Egy verzió forráskódjának feltöltése (minden feltöltés után)</value></data>
+  <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Rendszergazdák: a legújabb verzió forráskódja, a módosítás kiindulópontja</value></data>
 </root>

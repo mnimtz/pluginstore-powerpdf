@@ -16,7 +16,7 @@ public class InviteModel : PageModel
 
     public string? Error { get; private set; }
     public string Email { get; private set; } = "";
-    public string Role { get; private set; } = "User";
+    public string Role { get; private set; } = SchemaUpgrade.DefaultRole;
     public string Token { get; private set; } = "";
 
     public InviteModel(AppDbContext db, UserManager<AppUser> users, SignInManager<AppUser> signIn, AuditService audit)

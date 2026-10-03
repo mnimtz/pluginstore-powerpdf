@@ -349,4 +349,107 @@
   <data name="Replace source" xml:space="preserve"><value>Erstat kildekode</value></data>
   <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>Udgivne tilføjelser til Tungsten Power PDF. De installeres på en Windows-pc direkte i Power PDF.</value></data>
   <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>Tilføjelser fra uafhængige udviklere, uden garanti og uden officiel support.</value></data>
+  <data name="Developer" xml:space="preserve"><value>Udvikler</value></data>
+  <data name="Reports" xml:space="preserve"><value>Rapporter</value></data>
+  <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>Brug af butikken: downloads, klienter i brug, placeringer, indsendelser og udviklere.</value></data>
+  <data name="Last {0} days" xml:space="preserve"><value>Seneste {0} dage</value></data>
+  <data name="From" xml:space="preserve"><value>Fra</value></data>
+  <data name="To" xml:space="preserve"><value>Til</value></data>
+  <data name="Add-on" xml:space="preserve"><value>Tilføjelse</value></data>
+  <data name="All add-ons" xml:space="preserve"><value>Alle tilføjelser</value></data>
+  <data name="Country" xml:space="preserve"><value>Land</value></data>
+  <data name="All countries" xml:space="preserve"><value>Alle lande</value></data>
+  <data name="Source" xml:space="preserve"><value>Kilde</value></data>
+  <data name="All sources" xml:space="preserve"><value>Alle kilder</value></data>
+  <data name="Client" xml:space="preserve"><value>Klient</value></data>
+  <data name="Web" xml:space="preserve"><value>Web</value></data>
+  <data name="Apply" xml:space="preserve"><value>Anvend</value></data>
+  <data name="Reset filters" xml:space="preserve"><value>Nulstil filtre</value></data>
+  <data name="Report language" xml:space="preserve"><value>Rapportens sprog</value></data>
+  <data name="PDF report" xml:space="preserve"><value>PDF-rapport</value></data>
+  <data name="Download CSV" xml:space="preserve"><value>Download CSV</value></data>
+  <data name="compared with {0} – {1}" xml:space="preserve"><value>sammenlignet med {0} – {1}</value></data>
+  <data name="Time series since {0}; the all-time totals include earlier downloads." xml:space="preserve"><value>Tidsserier siden {0}; de samlede tal omfatter også tidligere downloads.</value></data>
+  <data name="No usage data yet in this period." xml:space="preserve"><value>Ingen brugsdata i denne periode endnu.</value></data>
+  <data name="Downloads (all time)" xml:space="preserve"><value>Downloads (i alt)</value></data>
+  <data name="Downloads in period" xml:space="preserve"><value>Downloads i perioden</value></data>
+  <data name="Store windows opened" xml:space="preserve"><value>Butiksvinduer åbnet</value></data>
+  <data name="Client installer downloads" xml:space="preserve"><value>Downloads af klientinstallationsprogrammet</value></data>
+  <data name="Live add-ons" xml:space="preserve"><value>Udgivne tilføjelser</value></data>
+  <data name="Developers" xml:space="preserve"><value>Udviklere</value></data>
+  <data name="Awaiting review" xml:space="preserve"><value>Afventer gennemgang</value></data>
+  <data name="Downloads per day" xml:space="preserve"><value>Downloads pr. dag</value></data>
+  <data name="Downloads per week" xml:space="preserve"><value>Downloads pr. uge</value></data>
+  <data name="Downloads per month" xml:space="preserve"><value>Downloads pr. måned</value></data>
+  <data name="Highest value: {0}" xml:space="preserve"><value>Højeste værdi: {0}</value></data>
+  <data name="Ranking of add-ons" xml:space="preserve"><value>Rangliste over tilføjelser</value></data>
+  <data name="Sorted by downloads in the period; the trend compares with the previous period of the same length." xml:space="preserve"><value>Sorteret efter downloads i perioden; tendensen sammenligner med den foregående periode af samme længde.</value></data>
+  <data name="In period" xml:space="preserve"><value>I perioden</value></data>
+  <data name="Trend" xml:space="preserve"><value>Tendens</value></data>
+  <data name="Share" xml:space="preserve"><value>Andel</value></data>
+  <data name="Course" xml:space="preserve"><value>Forløb</value></data>
+  <data name="Top country" xml:space="preserve"><value>Førende land</value></data>
+  <data name="All time" xml:space="preserve"><value>I alt</value></data>
+  <data name="previous period" xml:space="preserve"><value>foregående periode</value></data>
+  <data name="new" xml:space="preserve"><value>ny</value></data>
+  <data name="unknown" xml:space="preserve"><value>ukendt</value></data>
+  <data name="Clients in use" xml:space="preserve"><value>Klienter i brug</value></data>
+  <data name="Store windows opened per client version in the period; shows how far a client update has spread." xml:space="preserve"><value>Åbnede butiksvinduer pr. klientversion i perioden; viser, hvor langt en klientopdatering er nået ud.</value></data>
+  <data name="Client languages" xml:space="preserve"><value>Klientsprog</value></data>
+  <data name="Language of Power PDF when the store window was opened." xml:space="preserve"><value>Power PDF's sprog, da butiksvinduet blev åbnet.</value></data>
+  <data name="Download sources" xml:space="preserve"><value>Downloadkilder</value></data>
+  <data name="Client = Add-on Store in Power PDF, Web = browser, API = scripts and AI agents." xml:space="preserve"><value>Klient = Add-on Store i Power PDF, Web = browser, API = scripts og AI-agenter.</value></data>
+  <data name="Countries" xml:space="preserve"><value>Lande</value></data>
+  <data name="Cities" xml:space="preserve"><value>Byer</value></data>
+  <data name="Networks and organisations" xml:space="preserve"><value>Netværk og organisationer</value></data>
+  <data name="Operator of the network the request came from; company networks often show the company name." xml:space="preserve"><value>Operatør af det netværk, forespørgslen kom fra; virksomhedsnetværk viser ofte firmanavnet.</value></data>
+  <data name="Power PDF versions" xml:space="preserve"><value>Power PDF-versioner</value></data>
+  <data name="Windows versions" xml:space="preserve"><value>Windows-versioner</value></data>
+  <data name="Architecture" xml:space="preserve"><value>Arkitektur</value></data>
+  <data name="Power PDF, Windows and architecture are reported by Add-on Store clients from version 0.4.2." xml:space="preserve"><value>Power PDF, Windows og arkitektur rapporteres af Add-on Store-klienter fra version 0.4.2.</value></data>
+  <data name="Submissions and reviews (12 months)" xml:space="preserve"><value>Indsendelser og gennemgange (12 måneder)</value></data>
+  <data name="Month" xml:space="preserve"><value>Måned</value></data>
+  <data name="Median review time" xml:space="preserve"><value>Median gennemgangstid</value></data>
+  <data name="Last submission" xml:space="preserve"><value>Seneste indsendelse</value></data>
+  <data name="Store versions without source code" xml:space="preserve"><value>Butiksversioner uden kildekode</value></data>
+  <data name="All live and beta versions have source code deposited." xml:space="preserve"><value>Alle udgivne versioner og betaversioner har deponeret kildekode.</value></data>
+  <data name="IP address logging" xml:space="preserve"><value>Logning af IP-adresser</value></data>
+  <data name="IP address logging (reports)" xml:space="preserve"><value>Logning af IP-adresser (rapporter)</value></data>
+  <data name="Off. Only the daily counters above are kept; they contain no IP address." xml:space="preserve"><value>Fra. Kun de daglige tællere ovenfor gemmes; de indeholder ingen IP-adresse.</value></data>
+  <data name="Switch on in the settings" xml:space="preserve"><value>Slå til i indstillingerne</value></data>
+  <data name="On" xml:space="preserve"><value>Til</value></data>
+  <data name="Stored requests: {0}. Older than {1} days are deleted automatically." xml:space="preserve"><value>Gemte forespørgsler: {0}. Ældre end {1} dage slettes automatisk.</value></data>
+  <data name="Stored requests: {0}. Kept permanently (no automatic deletion)." xml:space="preserve"><value>Gemte forespørgsler: {0}. Gemmes permanent (ingen automatisk sletning).</value></data>
+  <data name="Download CSV with IP addresses" xml:space="preserve"><value>Download CSV med IP-adresser</value></data>
+  <data name="Most frequent IP addresses" xml:space="preserve"><value>Hyppigste IP-adresser</value></data>
+  <data name="Latest requests" xml:space="preserve"><value>Seneste forespørgsler</value></data>
+  <data name="Type" xml:space="preserve"><value>Type</value></data>
+  <data name="Location" xml:space="preserve"><value>Sted</value></data>
+  <data name="Network" xml:space="preserve"><value>Netværk</value></data>
+  <data name="Map" xml:space="preserve"><value>Kort</value></data>
+  <data name="Location and network data:" xml:space="preserve"><value>Placerings- og netværksdata:</value></data>
+  <data name="Generated on {0}" xml:space="preserve"><value>Oprettet {0}</value></data>
+  <data name="Use &quot;Save as PDF&quot; as the printer to get the report as a PDF file." xml:space="preserve"><value>Vælg “Gem som PDF” som printer for at få rapporten som PDF-fil.</value></data>
+  <data name="Print / save as PDF" xml:space="preserve"><value>Udskriv / gem som PDF</value></data>
+  <data name="Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports." xml:space="preserve"><value>Altid aktiv: daglige tællere med land, region, by og netværksoperatør udledt af IP-adressen; selve adressen gemmes ikke. Valgfrit: hver download og katalogforespørgsel med IP-adresse, værtsnavn og brugeragent til rapporterne.</value></data>
+  <data name="GDPR confirmation given by {0} on {1}." xml:space="preserve"><value>GDPR-bekræftelse givet af {0} den {1}.</value></data>
+  <data name="Data protection (GDPR)" xml:space="preserve"><value>Databeskyttelse (GDPR)</value></data>
+  <data name="IP addresses are personal data under the GDPR, also without a sign-in. Storing them needs a legal basis (for example legitimate interest), a note in the privacy policy and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>IP-adresser er personoplysninger i henhold til GDPR, også uden login. Lagring kræver et retsgrundlag (f.eks. legitim interesse), en oplysning i privatlivspolitikken og en opbevaringsperiode. Afklar dette med din databeskyttelsesrådgiver, før du slår det til.</value></data>
+  <data name="I confirm that a legal basis exists, the privacy policy covers this logging and the retention period below is agreed." xml:space="preserve"><value>Jeg bekræfter, at der foreligger et retsgrundlag, at privatlivspolitikken dækker denne logning, og at opbevaringsperioden nedenfor er aftalt.</value></data>
+  <data name="Retention period (days)" xml:space="preserve"><value>Opbevaringsperiode (dage)</value></data>
+  <data name="Store permanently (no automatic deletion)" xml:space="preserve"><value>Gem permanent (ingen automatisk sletning)</value></data>
+  <data name="The GDPR requires that personal data is kept no longer than necessary. Choose this only if your data protection officer agreed." xml:space="preserve"><value>GDPR kræver, at personoplysninger ikke opbevares længere end nødvendigt. Vælg kun dette, hvis din databeskyttelsesrådgiver har godkendt det.</value></data>
+  <data name="Confirm and switch on" xml:space="preserve"><value>Bekræft og slå til</value></data>
+  <data name="Switch on" xml:space="preserve"><value>Slå til</value></data>
+  <data name="Switch off" xml:space="preserve"><value>Slå fra</value></data>
+  <data name="Save retention period" xml:space="preserve"><value>Gem opbevaringsperiode</value></data>
+  <data name="Delete all stored IP addresses" xml:space="preserve"><value>Slet alle gemte IP-adresser</value></data>
+  <data name="Please confirm the data protection statement first." xml:space="preserve"><value>Bekræft først erklæringen om databeskyttelse.</value></data>
+  <data name="IP logging is on." xml:space="preserve"><value>IP-logning er slået til.</value></data>
+  <data name="IP logging is off." xml:space="preserve"><value>IP-logning er slået fra.</value></data>
+  <data name="Retention period saved." xml:space="preserve"><value>Opbevaringsperiode gemt.</value></data>
+  <data name="All stored IP addresses were deleted." xml:space="preserve"><value>Alle gemte IP-adresser er slettet.</value></data>
+  <data name="Type DELETE to confirm." xml:space="preserve"><value>Skriv DELETE for at bekræfte.</value></data>
+  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Upload kildekoden til en version (efter hver upload)</value></data>
+  <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Administratorer: kildekoden til den nyeste version, udgangspunkt for en ændring</value></data>
 </root>

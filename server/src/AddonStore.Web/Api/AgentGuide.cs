@@ -277,6 +277,46 @@ Every version's source code goes to the store, right after the package:
 - Admins may upload new versions of any package (finding
   `ADMIN_UPLOAD_FOR_OWNER`); the owner stays the same.
 
+## Changing an existing add-on (admins: source round trip)
+
+Store admins (and their Claude session with an admin API token) can take any
+add-on's stored source, change it and publish a new version, for example to
+add languages, update the SDK or fix a bug while the author is away. The
+store must end up with the source of **every** version, matching exactly what
+was built. Follow these steps in order, without skipping one:
+
+1. Look up the package: `GET {{baseUrl}}/api/packages/{id}`. Each version
+   shows `hasSource` and, for admins, `sourceUrl`.
+2. Download the source to start from:
+   `GET {{baseUrl}}/api/packages/{id}/source/latest` (newest version that has
+   source; the response header `X-Source-Version` names it) or a specific
+   version via `GET {{baseUrl}}/api/packages/{id}/{version}/source`.
+   `SOURCE_MISSING` means no source was ever stored; then ask the author
+   instead of rebuilding from scratch.
+3. Unpack it into a fresh working folder and make the change there. Keep the
+   package `id`, the ribbon atom namespace and the ribbon group; the owner
+   stays the original author.
+4. Raise the version (higher than every earlier version of the id, also
+   withdrawn ones), in the manifest and in the plug-in's own version
+   resources, and write a changelog for exactly this change in all 16
+   languages.
+5. Redo the compliance audit for the changed code (`thirdParty`,
+   `complianceAudit`); it is a new statement under your name.
+6. Build, pack, validate (`POST /api/packages/validate`) and submit
+   (`POST /api/packages`). The response carries the info finding
+   `ADMIN_UPLOAD_FOR_OWNER` when you publish for another owner.
+7. **Right after the submit, upload the changed source as the source of the
+   new version**: ZIP the working folder in the state you built from and
+   `PUT {{baseUrl}}/api/packages/{id}/{newVersion}/source`. Never upload the
+   unchanged old ZIP, never skip this step.
+8. Check `GET {{baseUrl}}/api/packages/{id}`: the new version must show
+   `hasSource: true`. Report the new version, its status and what changed to
+   the user.
+
+The author gets the usual emails (upload receipt, review result). The
+version then goes through the normal review; with the default source policy
+it cannot be approved without its source.
+
 ## Reading the catalog (what the Power PDF client does)
 
     GET {{baseUrl}}/api/catalog              released (live) packages
@@ -520,12 +560,20 @@ Store: {{baseUrl}}
    fixing every finding with severity "error" using its `hint`.
 5. Submit with `POST {{baseUrl}}/api/packages` and report the resulting
    status (beta, awaiting admin review) to the user.
+6. Immediately afterwards upload the source code of exactly that version:
+   `PUT {{baseUrl}}/api/packages/{id}/{version}/source` (ZIP of the source
+   tree you built from). Do this automatically, every time.
+7. Changing an existing add-on as an admin (any owner): download its source
+   with `GET {{baseUrl}}/api/packages/{id}/source/latest`, change it, raise
+   the version, submit, then upload the CHANGED source for the NEW version.
+   Follow "Changing an existing add-on" in the guide step by step.
 
 Key rules (details in the guide): every upload carries a new, higher SemVer
 version; description and changelog in all 16 European languages; a
 `category` from `GET {{baseUrl}}/api/categories` (propose a new broad one only
 if none fits); after every upload also the source code of that version
-(`PUT .../api/packages/{id}/{version}/source`, automatically); plugins live on the shared "Enhanced Features" ribbon tab (toolbar atom
+(`PUT .../api/packages/{id}/{version}/source`, automatically; the stored
+source must always match its version); plugins live on the shared "Enhanced Features" ribbon tab (toolbar atom
 `FeaturePack`, own group `FeaturePack::<Name>`); only MIT/BSD/Apache-2.0
 third-party code; a truthful compliance audit (`thirdParty`, `complianceAudit`)
 on every upload. The audit is a statement to the store operator: never
