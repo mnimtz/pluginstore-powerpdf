@@ -10,13 +10,30 @@
     @if (Model.ClientDownloadUrl is not null)
     {
         <div style="margin-top:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
-            <a class="btn cta" href="@Model.ClientDownloadUrl">@L["Download"]: Add-on Store @L["for Power PDF"] v@(Model.ClientVersion)</a>
+            <span class="tip" id="dl-tip">
+                <a class="btn cta" id="dl-btn" href="@Model.ClientDownloadUrl" aria-describedby="dl-tip-text">@L["Download"]: Add-on Store @L["for Power PDF"] v@(Model.ClientVersion)</a>
+                <button type="button" class="tip-icon" aria-label="@L["Windows warning?"]" aria-describedby="dl-tip-text">i</button>
+                <span class="tip-bubble" id="dl-tip-text" role="tooltip">
+                    <b>@L["Windows warning?"]</b>
+                    @L["The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF."]
+                </span>
+            </span>
             <span style="color:var(--tun-blue-light);font-size:.85rem;max-width:460px">@L["Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date."]</span>
         </div>
-        <p class="smartscreen-hint">
-            <b>@L["Windows warning?"]</b>
-            @L["The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF."]
-        </p>
+        <script>
+            // The Windows warning appears right after the download: show the hint for a while.
+            (function () {
+                var tip = document.getElementById('dl-tip'), btn = document.getElementById('dl-btn');
+                if (!tip || !btn) return;
+                btn.addEventListener('click', function () {
+                    tip.classList.add('open');
+                    setTimeout(function () { tip.classList.remove('open'); }, 20000);
+                });
+                document.addEventListener('click', function (e) {
+                    if (!tip.contains(e.target)) tip.classList.remove('open');
+                });
+            })();
+        </script>
     }
 </div>
 

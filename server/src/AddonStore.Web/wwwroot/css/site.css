@@ -166,9 +166,9 @@ footer.site .spacer { margin-left: auto; }
 
 .hero {
   background: var(--tun-domain-blue); color: #fff; border-radius: 12px;
-  padding: 30px 28px; margin-bottom: 24px; position: relative; overflow: hidden;
+  padding: 30px 28px; margin-bottom: 24px; position: relative; overflow: visible;
 }
-.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: var(--tun-accent-pdf); }
+.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; background: var(--tun-accent-pdf); border-radius: 0 0 12px 12px; }
 .hero h1 { color: #fff; }
 .hero p { color: var(--tun-blue-light); max-width: 640px; }
 .hero img.product { position: absolute; right: 28px; top: 24px; height: 84px; }
@@ -254,3 +254,23 @@ pre.code {
 .source-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 6px 0 12px; font-size: .88rem; }
 .source-upload { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-left: auto; }
 .source-upload input[type=file] { width: auto; max-width: 260px; padding: 5px; font-size: .82rem; }
+
+/* info bubble next to the client download */
+.tip { position: relative; display: inline-flex; align-items: center; gap: 8px; }
+.tip-icon {
+  width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--tun-blue-light);
+  background: transparent; color: var(--tun-blue-light); font: 700 .8rem/1 "Red Hat Display", Arial, sans-serif;
+  cursor: help; padding: 0; display: inline-flex; align-items: center; justify-content: center;
+}
+.tip-icon:hover, .tip-icon:focus { background: var(--tun-blue-light); color: var(--tun-navy); outline: none; }
+.tip-bubble {
+  position: absolute; left: 0; top: calc(100% + 12px); z-index: 30; width: min(440px, 86vw);
+  background: #fff; color: var(--tun-ink); border-radius: 10px; padding: 12px 14px; font-size: .84rem; line-height: 1.45;
+  box-shadow: 0 10px 28px rgba(0, 20, 50, .3); opacity: 0; visibility: hidden; transform: translateY(4px);
+  transition: opacity .15s, transform .15s, visibility .15s;
+}
+.tip-bubble b { display: block; color: var(--tun-navy); margin-bottom: 4px; }
+.tip-bubble::after {
+  content: ""; position: absolute; left: 28px; bottom: 100%; border: 8px solid transparent; border-bottom-color: #fff;
+}
+.tip:hover .tip-bubble, .tip:focus-within .tip-bubble, .tip.open .tip-bubble { opacity: 1; visibility: visible; transform: none; }
