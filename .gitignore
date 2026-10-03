@@ -1,7 +1,9 @@
 bin/
 obj/
 *.user
-data/
+# runtime storage of the local dev instance (NOT the Data/ source folder;
+# ignore patterns match case-insensitively on Windows, so be precise here)
+server/src/AddonStore.Web/data/
 server/dev-credentials.local.txt
 testdata/
 assets/
