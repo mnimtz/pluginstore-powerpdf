@@ -88,6 +88,7 @@ builder.Services.AddScoped<NotificationService>();
 
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<SettingsService>();
+builder.Services.AddScoped<TimeDisplay>();
 builder.Services.AddScoped<IAppEmailSender, ResendEmailSender>();
 
 var versionFile = Path.Combine(AppContext.BaseDirectory, "VERSION");

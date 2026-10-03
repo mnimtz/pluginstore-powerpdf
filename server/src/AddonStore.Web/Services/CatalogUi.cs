@@ -7,7 +7,7 @@ namespace AddonStore.Web.Services;
 
 public record CatalogItem(string Id, string Name, string Description, string Version,
     string Channel, string Changelog, long SizeBytes, int Downloads,
-    string Sha256, string MinHost, string ZxtName, string Category);
+    string Sha256, string MinHost, string ZxtName, string Category, string Author, string ContactEmail);
 
 public static class CatalogUi
 {
@@ -35,6 +35,9 @@ public static class CatalogUi
             .ToListAsync();
         var cmp = new SemVerComparer();
         var items = new List<CatalogItem>();
+        var ownerRows = await db.Packages.Include(p => p.Owner).ToListAsync();
+        var owners = ownerRows.ToDictionary(p => p.Id, p => p.Owner?.DisplayName ?? "");
+        var ownerMails = ownerRows.ToDictionary(p => p.Id, p => p.Owner?.Email ?? "");
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
@@ -60,10 +63,46 @@ public static class CatalogUi
                 pick.PackageId,
                 LangText(doc.RootElement, "name", culture) ?? pick.PackageId,
                 LangText(doc.RootElement, "description", culture) ?? "",
-                pick.Version, channel, pick.Changelog, pick.SizeBytes, pick.Downloads,
-                pick.Sha256, pick.MinPowerPdfVersion, zxt, category));
+                pick.Version, channel,
+                LangText(doc.RootElement, "changelog", culture) ?? pick.Changelog,
+                pick.SizeBytes, pick.Downloads,
+                pick.Sha256, pick.MinPowerPdfVersion, zxt, category,
+                AuthorOf(doc.RootElement, owners.GetValueOrDefault(pick.PackageId, pick.SubmittedBy)),
+                ContactOf(doc.RootElement, ownerMails.GetValueOrDefault(pick.PackageId, ""))));
         }
         return items;
+    }
+
+    /// <summary>Optional manifest "author" (e.g. a team) wins; otherwise the publishing account.</summary>
+    public static string AuthorOf(JsonElement root, string ownerName) =>
+        root.TryGetProperty("author", out var a) && a.ValueKind == JsonValueKind.String &&
+        !string.IsNullOrWhiteSpace(a.GetString())
+            ? a.GetString()!.Trim()
+            : ownerName;
+
+    /// <summary>Optional manifest "contactEmail" wins; otherwise the publishing account's email.</summary>
+    public static string ContactOf(JsonElement root, string ownerEmail)
+    {
+        if (root.TryGetProperty("contactEmail", out var c) && c.ValueKind == JsonValueKind.String)
+        {
+            var v = (c.GetString() ?? "").Trim();
+            if (System.Net.Mail.MailAddress.TryCreate(v, out _)) return v;
+        }
+        return ownerEmail;
+    }
+
+    /// <summary>Localized text of a manifest field for a stored version (e.g. changelog, name).</summary>
+    public static string ManifestText(PackageVersion v, string field, string culture, string fallback = "")
+    {
+        try
+        {
+            using var doc = JsonDocument.Parse(v.ManifestJson);
+            return LangText(doc.RootElement, field, culture) ?? fallback;
+        }
+        catch (JsonException)
+        {
+            return fallback;
+        }
     }
 
     /// <summary>Picks the best language from a {lang: text} manifest object.</summary>

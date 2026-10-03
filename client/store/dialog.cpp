@@ -8,6 +8,7 @@
 #include "loc.h"
 #include "logging.h"
 #include "Resource.h"
+#include "version.h"
 #include <afxcmn.h>
 #include <vector>
 
@@ -21,6 +22,8 @@ public:
 protected:
     CListCtrl m_list;
     std::vector<PSCatalogEntry> m_entries;
+    PSCatalogEntry m_self;          // the store client's own catalog entry
+    bool m_selfUpdate = false;
 
     BOOL OnInitDialog() override
     {
@@ -29,6 +32,7 @@ protected:
         SetWindowTextW(FPLoc(IDS_PSD_TITLE).c_str());
         SetDlgItemTextW(IDC_PS_REFRESH, FPLoc(IDS_PSD_BTN_REFRESH).c_str());
         SetDlgItemTextW(IDC_PS_UNINSTALL, FPLoc(IDS_PSD_BTN_UNINSTALL).c_str());
+        SetDlgItemTextW(IDC_PS_SELFUPDATE, FPLoc(IDS_PSD_BTN_SELFUPD).c_str());
         SetDlgItemTextW(IDC_PS_INSTALL, FPLoc(IDS_PSD_BTN_INSTALL).c_str());
         SetDlgItemTextW(IDCANCEL,       FPLoc(IDS_PSD_BTN_CLOSE).c_str());
         SetDlgItemTextW(IDC_PS_ADMIN_NOTE, FPLoc(IDS_PSD_ADMIN_NOTE).c_str());
@@ -56,7 +60,29 @@ protected:
         if (!PSFetchCatalog(m_entries, error))
         {
             SetDlgItemTextW(IDC_PS_STATUS, error.c_str());
+            GetDlgItem(IDC_PS_SELFUPDATE)->ShowWindow(SW_HIDE);
             return;
+        }
+
+        // The client has its own lane: it is not listed as a plugin; a newer
+        // catalog version shows up as an update hint instead.
+        m_selfUpdate = false;
+        for (auto it = m_entries.begin(); it != m_entries.end(); ++it)
+        {
+            if (it->id == L"com.tungsten.pluginstore")
+            {
+                m_self = *it;
+                m_selfUpdate = PSCompareVersions(it->version, FP_VERSION_W) > 0;
+                m_entries.erase(it);
+                break;
+            }
+        }
+        GetDlgItem(IDC_PS_SELFUPDATE)->ShowWindow(m_selfUpdate ? SW_SHOW : SW_HIDE);
+        if (m_selfUpdate)
+        {
+            wchar_t hint[256];
+            swprintf_s(hint, 256, FPLoc(IDS_PSD_SELF_UPDATE).c_str(), m_self.version.c_str(), FP_VERSION_W);
+            SetDlgItemTextW(IDC_PS_STATUS, hint);
         }
         if (m_entries.empty())
         {
@@ -170,6 +196,22 @@ protected:
     afx_msg void OnRefresh() { Reload(); }
     afx_msg void OnInstallClicked() { OnInstall(); }
     afx_msg void OnUninstallClicked() { OnUninstall(); }
+    afx_msg void OnSelfUpdateClicked()
+    {
+        if (!m_selfUpdate) return;
+        CWaitCursor wait;
+        int rc = PSSelfUpdate(m_self, GetSafeHwnd());
+        if (rc == 0)
+            SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_MSG_SELFUPD).c_str());
+        else if (rc == 2)
+            SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_MSG_HASH).c_str());
+        else
+        {
+            wchar_t msg[256];
+            swprintf_s(msg, 256, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
+            SetDlgItemTextW(IDC_PS_STATUS, msg);
+        }
+    }
     afx_msg void OnListChanged(NMHDR*, LRESULT* result) { UpdateDescription(); *result = 0; }
 
     DECLARE_MESSAGE_MAP()
@@ -179,6 +221,7 @@ BEGIN_MESSAGE_MAP(CStoreDialog, CDialog)
     ON_BN_CLICKED(IDC_PS_REFRESH, &CStoreDialog::OnRefresh)
     ON_BN_CLICKED(IDC_PS_INSTALL, &CStoreDialog::OnInstallClicked)
     ON_BN_CLICKED(IDC_PS_UNINSTALL, &CStoreDialog::OnUninstallClicked)
+    ON_BN_CLICKED(IDC_PS_SELFUPDATE, &CStoreDialog::OnSelfUpdateClicked)
     ON_NOTIFY(LVN_ITEMCHANGED, IDC_PS_LIST, &CStoreDialog::OnListChanged)
 END_MESSAGE_MAP()
 

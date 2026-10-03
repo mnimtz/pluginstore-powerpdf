@@ -151,4 +151,17 @@
   <data name="You cannot change your own role." xml:space="preserve"><value>Kendi rolünüzü değiştiremezsiniz.</value></data>
   <data name="You have been invited" xml:space="preserve"><value>Davet edildiniz</value></data>
   <data name="configured" xml:space="preserve"><value>yapılandırıldı</value></data>
+  <data name="Active" xml:space="preserve"><value>Etkin</value></data>
+  <data name="Beta" xml:space="preserve"><value>Beta</value></data>
+  <data name="Disabled" xml:space="preserve"><value>Devre dışı</value></data>
+  <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Yükleyiciyi indirip çalıştırın (yönetici hakları gerekir); ardından eklenti kendini ve eklentilerinizi güncel tutar.</value></data>
+  <data name="Live" xml:space="preserve"><value>Yayında</value></data>
+  <data name="Only administrators can publish new versions of the Plugin-Store client." xml:space="preserve"><value>Plugin-Store istemcisinin yeni sürümlerini yalnızca yöneticiler yayımlayabilir.</value></data>
+  <data name="Pending" xml:space="preserve"><value>Beklemede</value></data>
+  <data name="Plugin-Store client released. Installed clients offer the update now." xml:space="preserve"><value>Plugin-Store istemcisi yayımlandı. Yüklü istemciler artık güncellemeyi sunuyor.</value></data>
+  <data name="Rejected" xml:space="preserve"><value>Reddedildi</value></data>
+  <data name="Time" xml:space="preserve"><value>Saat</value></data>
+  <data name="Time zone for displayed times" xml:space="preserve"><value>Gösterilen saatler için saat dilimi</value></data>
+  <data name="Withdrawn" xml:space="preserve"><value>Geri çekildi</value></data>
+  <data name="Author" xml:space="preserve"><value>Yazar</value></data>
 </root>

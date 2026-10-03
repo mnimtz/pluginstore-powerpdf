@@ -11,7 +11,7 @@
     {
         <div style="margin-top:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
             <a class="btn cta" href="@Model.ClientDownloadUrl">@L["Download"]: Plugin-Store @L["for Power PDF"] v@(Model.ClientVersion)</a>
-            <span style="color:var(--tun-blue-light);font-size:.85rem;max-width:460px">@L["Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date."]</span>
+            <span style="color:var(--tun-blue-light);font-size:.85rem;max-width:460px">@L["Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date."]</span>
         </div>
     }
 </div>
@@ -37,13 +37,19 @@ else
         @foreach (var item in Model.Items)
         {
             <div class="card pkg" data-cat="@item.Category"
-                 data-text="@(item.Name.ToLowerInvariant()) @(item.Id) @(item.Description.ToLowerInvariant())">
+                 data-text="@(item.Name.ToLowerInvariant()) @(item.Id) @(item.Description.ToLowerInvariant()) @(item.Author.ToLowerInvariant())">
                 <span class="name">@item.Name</span>
                 <span class="meta">
                     <span class="badge live" style="font-weight:500">@L[AddonStore.Web.Services.CatalogUi.CategoryLabel(item.Category)]</span>
                     @item.Id · v@(item.Version) · @(item.SizeBytes / 1024) KB · @item.Downloads @L["download(s)"]
                 </span>
                 <span class="desc">@item.Description</span>
+                <span class="meta">@L["Author"]: @item.Author
+                    @if (!string.IsNullOrEmpty(item.ContactEmail))
+                    {
+                        <text> · </text><a href="mailto:@item.ContactEmail" style="color:var(--tun-blue)">@item.ContactEmail</a>
+                    }
+                </span>
             </div>
         }
     </div>

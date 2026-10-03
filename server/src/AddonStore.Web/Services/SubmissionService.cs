@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using AddonStore.Web.Data;
 using AddonStore.Web.Validation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AddonStore.Web.Services;
@@ -14,16 +15,20 @@ public record SubmissionResult(ValidationReport Report, PackageVersion? Version,
 /// </summary>
 public class SubmissionService
 {
+    /// <summary>The store client's own package: admin-only, no review queue.</summary>
+    public const string ClientPackageId = "com.tungsten.pluginstore";
+
     private readonly AppDbContext _db;
+    private readonly UserManager<AppUser> _users;
     private readonly AuditService _audit;
     private readonly NotificationService _notify;
     private readonly IConfiguration _config;
     private readonly IWebHostEnvironment _env;
 
-    public SubmissionService(AppDbContext db, AuditService audit, NotificationService notify,
-        IConfiguration config, IWebHostEnvironment env)
+    public SubmissionService(AppDbContext db, UserManager<AppUser> users, AuditService audit,
+        NotificationService notify, IConfiguration config, IWebHostEnvironment env)
     {
-        _db = db; _audit = audit; _notify = notify; _config = config; _env = env;
+        _db = db; _users = users; _audit = audit; _notify = notify; _config = config; _env = env;
     }
 
     public string StorageRoot
@@ -51,6 +56,14 @@ public class SubmissionService
         var (report, manifest) = await validator.ValidateAsync(zipPath, user.Id);
         if (!report.Passed || manifest is null)
             return new SubmissionResult(report, null);
+
+        // The store client has its own lane: only admins publish it, and a new
+        // version goes live immediately (it is our own tooling, not a third-
+        // party plugin waiting for review).
+        var isClient = manifest.Id == ClientPackageId;
+        if (isClient && !await _users.IsInRoleAsync(user, "Admin"))
+            return new SubmissionResult(report, null, "CLIENT_ADMIN_ONLY",
+                "Only administrators can publish new versions of the Plugin-Store client.");
 
         // Idempotency: the same version again is a clear, named condition.
         var existing = await _db.PackageVersions
@@ -82,7 +95,9 @@ public class SubmissionService
         {
             PackageId = manifest.Id,
             Version = manifest.Version,
-            Status = VersionStatus.Beta,
+            Status = isClient ? VersionStatus.Live : VersionStatus.Beta,
+            ReviewedById = isClient ? user.Id : null,
+            ReviewedAt = isClient ? DateTime.UtcNow : null,
             Changelog = manifest.Changelog,
             ManifestJson = manifest.RawJson,
             AtomNamespace = manifest.AtomNamespace,
@@ -95,6 +110,20 @@ public class SubmissionService
             ValidationReportJson = report.ToJson()
         };
         _db.PackageVersions.Add(version);
+
+        if (isClient)
+        {
+            // Older client versions still waiting in beta are superseded.
+            var stale = await _db.PackageVersions
+                .Where(v => v.PackageId == ClientPackageId && v.Status == VersionStatus.Beta)
+                .ToListAsync();
+            foreach (var v in stale) v.Status = VersionStatus.Withdrawn;
+            await _db.SaveChangesAsync();
+            await _audit.LogAsync(user.DisplayName, "client.released", manifest.Version,
+                $"via {via}; superseded beta versions: {stale.Count}");
+            return new SubmissionResult(report, version);
+        }
+
         await _db.SaveChangesAsync();
 
         await _audit.LogAsync(user.DisplayName, "package.submitted",

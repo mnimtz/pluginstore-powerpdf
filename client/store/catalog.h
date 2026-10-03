@@ -23,6 +23,9 @@ struct PSCatalogEntry
     std::wstring sha256;
     std::wstring downloadUrl;
     std::wstring zxtName;        // plugin binary base name, e.g. "OfficeKonverter"
+    std::wstring category;
+    std::wstring author;
+    std::wstring contactEmail;
     std::wstring installedVersion; // filled by the install module, empty = not installed
 };
 

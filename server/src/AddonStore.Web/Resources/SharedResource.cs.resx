@@ -151,4 +151,17 @@
   <data name="You cannot change your own role." xml:space="preserve"><value>Vlastní roli nelze změnit.</value></data>
   <data name="You have been invited" xml:space="preserve"><value>Byli jste pozváni</value></data>
   <data name="configured" xml:space="preserve"><value>nakonfigurováno</value></data>
+  <data name="Active" xml:space="preserve"><value>Aktivní</value></data>
+  <data name="Beta" xml:space="preserve"><value>Beta</value></data>
+  <data name="Disabled" xml:space="preserve"><value>Zakázáno</value></data>
+  <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Stáhněte a spusťte instalační program (vyžadována práva správce); poté doplněk udržuje sebe i vaše pluginy aktuální.</value></data>
+  <data name="Live" xml:space="preserve"><value>Zveřejněno</value></data>
+  <data name="Only administrators can publish new versions of the Plugin-Store client." xml:space="preserve"><value>Nové verze klienta Plugin-Store mohou publikovat pouze správci.</value></data>
+  <data name="Pending" xml:space="preserve"><value>Čeká</value></data>
+  <data name="Plugin-Store client released. Installed clients offer the update now." xml:space="preserve"><value>Klient Plugin-Store byl zveřejněn. Nainstalovaní klienti nyní nabízejí aktualizaci.</value></data>
+  <data name="Rejected" xml:space="preserve"><value>Zamítnuto</value></data>
+  <data name="Time" xml:space="preserve"><value>Čas</value></data>
+  <data name="Time zone for displayed times" xml:space="preserve"><value>Časové pásmo zobrazovaných časů</value></data>
+  <data name="Withdrawn" xml:space="preserve"><value>Staženo</value></data>
+  <data name="Author" xml:space="preserve"><value>Autor</value></data>
 </root>

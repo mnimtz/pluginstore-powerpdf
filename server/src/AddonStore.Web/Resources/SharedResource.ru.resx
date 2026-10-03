@@ -151,4 +151,17 @@
   <data name="You cannot change your own role." xml:space="preserve"><value>Вы не можете изменить свою собственную роль.</value></data>
   <data name="You have been invited" xml:space="preserve"><value>Вас пригласили</value></data>
   <data name="configured" xml:space="preserve"><value>настроено</value></data>
+  <data name="Active" xml:space="preserve"><value>Активна</value></data>
+  <data name="Beta" xml:space="preserve"><value>Beta</value></data>
+  <data name="Disabled" xml:space="preserve"><value>Отключена</value></data>
+  <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Скачайте и запустите установщик (требуются права администратора); после этого надстройка будет обновлять себя и ваши плагины.</value></data>
+  <data name="Live" xml:space="preserve"><value>Опубликовано</value></data>
+  <data name="Only administrators can publish new versions of the Plugin-Store client." xml:space="preserve"><value>Публиковать новые версии клиента Plugin-Store могут только администраторы.</value></data>
+  <data name="Pending" xml:space="preserve"><value>Ожидает</value></data>
+  <data name="Plugin-Store client released. Installed clients offer the update now." xml:space="preserve"><value>Клиент Plugin-Store опубликован. Установленные клиенты теперь предлагают обновление.</value></data>
+  <data name="Rejected" xml:space="preserve"><value>Отклонено</value></data>
+  <data name="Time" xml:space="preserve"><value>Время</value></data>
+  <data name="Time zone for displayed times" xml:space="preserve"><value>Часовой пояс для отображаемого времени</value></data>
+  <data name="Withdrawn" xml:space="preserve"><value>Отозвано</value></data>
+  <data name="Author" xml:space="preserve"><value>Автор</value></data>
 </root>

@@ -14,6 +14,7 @@ public class SettingsModel : PageModel
     public bool HasResendKey { get; private set; }
     public string From { get; private set; } = "";
     public string BaseUrl { get; private set; } = "";
+    public string TimeZone { get; private set; } = TimeDisplay.DefaultZone;
     public string? Notice { get; private set; }
 
     public SettingsModel(SettingsService settings, UserManager<AppUser> users, AuditService audit)
@@ -37,11 +38,13 @@ public class SettingsModel : PageModel
         await LoadAsync();
     }
 
-    public async Task OnPostServerAsync(string? baseUrl)
+    public async Task OnPostServerAsync(string? baseUrl, string? timeZone)
     {
         var admin = await _users.GetUserAsync(User);
         await _settings.SetAsync("App.PublicBaseUrl", (baseUrl ?? "").Trim().TrimEnd('/'));
-        await _audit.LogAsync(admin!.DisplayName, "settings.changed", "Server", "public base url");
+        if (timeZone is not null && TimeDisplay.Zones.Contains(timeZone))
+            await _settings.SetAsync("App.TimeZone", timeZone);
+        await _audit.LogAsync(admin!.DisplayName, "settings.changed", "Server", $"public base url, time zone {timeZone}");
         Notice = "Settings saved.";
         await LoadAsync();
     }
@@ -51,5 +54,7 @@ public class SettingsModel : PageModel
         HasResendKey = (await _settings.GetAsync("Email.ResendApiKey", "Email:ResendApiKey")).Length > 0;
         From = await _settings.GetAsync("Email.From", "Email:From");
         BaseUrl = await _settings.GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl");
+        var tz = await _settings.GetAsync("App.TimeZone", "App:TimeZone");
+        TimeZone = string.IsNullOrWhiteSpace(tz) ? TimeDisplay.DefaultZone : tz;
     }
 }

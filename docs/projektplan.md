@@ -417,10 +417,26 @@ v0.1.0 ist gebaut und lokal verifiziert:
   Hash-Prüfung + einem UAC-Prompt, erkennt installierte Versionen über
   manifest.json im Plug-in-Datenordner, Optionen-Seite (URL, Beta, Logging,
   Policy-Lock). Test in Power PDF selbst steht aus (deploy.cmd liegt bei).
-- **Offen für die erste Team-Auslieferung**: Client-Strings in den übrigen 14
-  Sprachen (.rc) + 14 weitere NameAndTitle-Ordner; Azure-Deployment auf echte
-  Subscription; MSI für den Client; Live-Test im Host; ppak-CLI; Devkit-Inhalte
-  (sdk.zip, knowledge.md, Skill).
+- **v0.2.0 (gleicher Tag)**: Produktiv-Instanz https://ppdf-store.azurewebsites.net
+  (1-Click-Deployment, SQLite+Pakete auf /data). Benutzerverwaltung komplett:
+  Rolle "Prüfer" (nur Review-Queue), Benutzer direkt anlegen, Einladen per
+  E-Mail (7-Tage-Token, Link-Fallback ohne Mail-Konfiguration), Rollenwechsel
+  mit Letzter-Admin-Schutz, Profil mit Namen + Avatar, Admin-Bereich
+  "Einstellungen" (Resend-Key, Absender, Public-Base-URL, zur Laufzeit in der
+  DB). Katalog-Startseite: Client-Download-Box, Suchfeld, Kategorien-Filter
+  (Manifest-Feld `category`, lokalisierte Chips). Deinstallation im Client.
+  ARM64-Regel korrigiert: x64 Pflicht (deckt ARM64EC-Hosts ab), natives arm64
+  optional. Sicherheits-Review durchgeführt und gefixt
+  (docs/security-review-2026-10.md), Lizenz-Inventur
+  (docs/LICENSES-THIRD-PARTY.md), SQLite-CVE-Pin. Pakete gebaut und lokal
+  eingereicht: Plugin-Store-Client 0.2.0, Smart Bookmarks 1.0.5,
+  XFA Converter 0.2.0 (Office Konverter zurückgestellt: 478-MB-Engine braucht
+  den Nachlade-Mechanismus).
+- **Offen für die erste Team-Auslieferung**: Client-Dialog-Strings in den
+  übrigen 14 Sprachen (.rc) + 14 weitere NameAndTitle-Ordner; Live-Test des
+  Clients in Power PDF; Resend-Key in den Einstellungen; MSI für den Client;
+  ppak-CLI; Devkit-Inhalte (sdk.zip, knowledge.md, Skill); Office Konverter
+  mit Engine-Download bei Installation.
 
 ## 4. Phasenplan
 

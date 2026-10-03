@@ -13,6 +13,36 @@ public static class ApiEndpoints
 {
     public static void MapApi(this IEndpointRouteBuilder app)
     {
+        // The installer for end users: the MSI inside the newest client package.
+        // Stable URL, linked from the landing page; no account needed.
+        app.MapGet("/download/pluginstore.msi", async (AppDbContext db, SubmissionService svc) =>
+        {
+            var versions = await db.PackageVersions
+                .Where(v => v.PackageId == SubmissionService.ClientPackageId &&
+                            (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta))
+                .ToListAsync();
+            var cmp = new SemVerComparer();
+            var pick = versions.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault()
+                       ?? versions.OrderByDescending(v => v.Version, cmp).FirstOrDefault();
+            if (pick is null) return Results.NotFound();
+
+            var path = Path.Combine(svc.StorageRoot, pick.FilePath);
+            if (!File.Exists(path)) return Results.NotFound();
+
+            using var zip = System.IO.Compression.ZipFile.OpenRead(path);
+            var msi = zip.Entries.FirstOrDefault(e =>
+                e.FullName.StartsWith("installer/", StringComparison.OrdinalIgnoreCase) &&
+                e.FullName.EndsWith(".msi", StringComparison.OrdinalIgnoreCase));
+            if (msi is null || msi.Length > 100 * 1024 * 1024) return Results.NotFound();
+
+            var ms = new MemoryStream();
+            await using (var es = msi.Open()) await es.CopyToAsync(ms);
+            ms.Position = 0;
+            pick.Downloads++;
+            await db.SaveChangesAsync();
+            return Results.File(ms, "application/x-msi", $"PluginStore-{pick.Version}.msi");
+        });
+
         var api = app.MapGroup("/api");
 
         api.MapGet("/", (AppVersion ver, HttpContext ctx) => Results.Json(new
@@ -92,7 +122,8 @@ public static class ApiEndpoints
                       .Append(Flat(i.Changelog)).Append('\t').Append(i.MinHost).Append('\t')
                       .Append(i.SizeBytes).Append('\t').Append(i.Sha256).Append('\t')
                       .Append($"{Base(ctx)}/api/packages/{i.Id}/{i.Version}/download").Append('\t')
-                      .Append(i.ZxtName).Append('\t').Append(i.Category).Append('\n');
+                      .Append(i.ZxtName).Append('\t').Append(i.Category).Append('\t')
+                      .Append(Flat(i.Author)).Append('\t').Append(Flat(i.ContactEmail)).Append('\n');
                 }
                 return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
             }
@@ -162,6 +193,14 @@ public static class ApiEndpoints
                 var via = ctx.User.FindFirstValue("token_name") is { } t ? $"api:{t}" : "web";
                 var result = await svc.SubmitAsync(tmp, user, via);
 
+                if (result.ErrorCode == "CLIENT_ADMIN_ONLY")
+                    return Results.Json(new
+                    {
+                        ok = false,
+                        error = new { code = result.ErrorCode, message = "Not allowed.", hint = result.ErrorHint },
+                        findings = result.Report.Findings
+                    }, statusCode: 403);
+
                 if (result.ErrorCode == "VERSION_EXISTS")
                     return Results.Json(new
                     {
@@ -192,11 +231,13 @@ public static class ApiEndpoints
                     {
                         id = v.PackageId,
                         version = v.Version,
-                        status = "beta",
+                        status = v.Status.ToString().ToLowerInvariant(),
                         sha256 = v.Sha256,
                         sizeBytes = v.SizeBytes,
                         downloadUrl = $"{Base(ctx)}/api/packages/{v.PackageId}/{v.Version}/download",
-                        next = "The version is in the beta channel now (visible to clients with the beta option). An admin reviews it for the live store; you will be notified by email. Check GET /api/packages/" + v.PackageId + " for status."
+                        next = v.Status == VersionStatus.Live
+                            ? "The Plugin-Store client version is live immediately; installed clients offer it as an update."
+                            : "The version is in the beta channel now (visible to clients with the beta option). An admin reviews it for the live store; you will be notified by email. Check GET /api/packages/" + v.PackageId + " for status."
                     }
                 }, statusCode: 201);
             }
@@ -387,6 +428,9 @@ public static class ApiEndpoints
             .ToListAsync();
         var cmp = new SemVerComparer();
         var result = new List<object>();
+        var ownerRows = await db.Packages.Include(p => p.Owner).ToListAsync();
+        var owners = ownerRows.ToDictionary(p => p.Id, p => p.Owner?.DisplayName ?? "");
+        var ownerMails = ownerRows.ToDictionary(p => p.Id, p => p.Owner?.Email ?? "");
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live)
@@ -411,6 +455,8 @@ public static class ApiEndpoints
                 name = CloneOrNull(root, "name"),
                 description = CloneOrNull(root, "description"),
                 category = root.TryGetProperty("category", out var cat) && cat.ValueKind == JsonValueKind.String ? cat.GetString() : "other",
+                author = Services.CatalogUi.AuthorOf(root, owners.GetValueOrDefault(pick.PackageId, pick.SubmittedBy)),
+                contactEmail = Services.CatalogUi.ContactOf(root, ownerMails.GetValueOrDefault(pick.PackageId, "")),
                 version = pick.Version,
                 channel,
                 changelog = pick.Changelog,

@@ -37,6 +37,15 @@
             <label>@L["Public base URL (used in emails and invite links)"]</label>
             <input type="text" name="baseUrl" value="@Model.BaseUrl" placeholder="https://ppdf-store.azurewebsites.net" />
         </div>
+        <div>
+            <label>@L["Time zone for displayed times"]</label>
+            <select name="timeZone">
+                @foreach (var z in AddonStore.Web.Services.TimeDisplay.Zones)
+                {
+                    <option value="@z" selected="@(z == Model.TimeZone)">@z</option>
+                }
+            </select>
+        </div>
         <button type="submit" class="btn cta">@L["Save"]</button>
     </form>
 </div>

@@ -45,7 +45,12 @@ public class DashboardModel : PageModel
 
             var result = await _svc.SubmitAsync(tmp, user, "web");
             Findings = result.Report.Findings;
-            if (result.ErrorCode == "VERSION_EXISTS")
+            if (result.ErrorCode == "CLIENT_ADMIN_ONLY")
+            {
+                Notice = "Only administrators can publish new versions of the Plugin-Store client.";
+                NoticeKind = "error";
+            }
+            else if (result.ErrorCode == "VERSION_EXISTS")
             {
                 Notice = result.ErrorHint;
                 NoticeKind = "warn";
@@ -54,6 +59,10 @@ public class DashboardModel : PageModel
             {
                 Notice = "The package did not pass the automatic checks; nothing was stored. Fix the errors below and upload again.";
                 NoticeKind = "error";
+            }
+            else if (result.Version.Status == VersionStatus.Live)
+            {
+                Notice = "Plugin-Store client released. Installed clients offer the update now.";
             }
             else
             {

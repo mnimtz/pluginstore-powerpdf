@@ -13,11 +13,11 @@
 </form>
 
 <table>
-    <tr><th>@L["Time (UTC)"]</th><th>@L["Actor"]</th><th>@L["Action"]</th><th>@L["Subject"]</th><th>@L["Details"]</th></tr>
+    <tr><th>@L["Time"] (@Time.ZoneId)</th><th>@L["Actor"]</th><th>@L["Action"]</th><th>@L["Subject"]</th><th>@L["Details"]</th></tr>
     @foreach (var e in Model.Entries)
     {
         <tr>
-            <td style="white-space:nowrap">@e.At.ToString("MMM d, yyyy HH:mm:ss")</td>
+            <td style="white-space:nowrap">@Time.Fmt(e.At)</td>
             <td>@e.Actor</td>
             <td><code>@e.Action</code></td>
             <td>@e.Subject</td>

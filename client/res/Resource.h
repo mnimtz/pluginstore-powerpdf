@@ -44,6 +44,10 @@
 #define IDS_PSD_BTN_UNINSTALL   140
 #define IDS_PSD_CONFIRM_UNINST  141
 #define IDS_PSD_MSG_UNINSTOK    142
+#define IDS_PSD_SELF_UPDATE     143
+#define IDS_PSD_BTN_SELFUPD     144
+#define IDS_PSD_MSG_SELFUPD     145
+#define IDS_PSD_AUTHOR          146
 
 // ---- options page ----
 #define IDS_PSO_PAGE            150
@@ -79,3 +83,4 @@
 #define IDC_PS_STATUS           1505
 #define IDC_PS_ADMIN_NOTE       1506
 #define IDC_PS_UNINSTALL        1507
+#define IDC_PS_SELFUPDATE       1508

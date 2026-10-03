@@ -155,7 +155,13 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
         L"$tmp=Join-Path $env:TEMP ('psinst-'+[guid]::NewGuid().ToString('N'))\r\n" +
         L"Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
         L"[System.IO.Compression.ZipFile]::ExtractToDirectory($pkg,$tmp)\r\n" +
-        L"Copy-Item (Join-Path $tmp ('x64\\' + $name + '.zxt')) (Join-Path $plugins ($name + '.zxt')) -Force\r\n" +
+        // A plug-in that is loaded in the running Power PDF cannot be
+        // overwritten, but a loaded DLL CAN be renamed; the stale copy is
+        // swept on the next store operation.
+        L"Get-ChildItem $plugins -Filter '*.zxt.old-*' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue\r\n" +
+        L"$target=Join-Path $plugins ($name + '.zxt')\r\n" +
+        L"if(Test-Path $target){ try { Remove-Item $target -Force } catch { Rename-Item $target ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
+        L"Copy-Item (Join-Path $tmp ('x64\\' + $name + '.zxt')) $target -Force\r\n" +
         L"$data=Join-Path $plugins $name\r\n" +
         L"New-Item -ItemType Directory -Force $data | Out-Null\r\n" +
         L"Copy-Item (Join-Path $tmp 'manifest.json') (Join-Path $data 'manifest.json') -Force\r\n" +
@@ -196,6 +202,75 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
     return result;
 }
 
+int PSCompareVersions(const std::wstring& a, const std::wstring& b)
+{
+    size_t ia = 0, ib = 0;
+    for (int seg = 0; seg < 4; ++seg)
+    {
+        unsigned long va = 0, vb = 0;
+        if (ia < a.size()) va = wcstoul(a.c_str() + ia, nullptr, 10);
+        if (ib < b.size()) vb = wcstoul(b.c_str() + ib, nullptr, 10);
+        if (va != vb) return va < vb ? -1 : 1;
+        ia = a.find(L'.', ia); ia = ia == std::wstring::npos ? a.size() : ia + 1;
+        ib = b.find(L'.', ib); ib = ib == std::wstring::npos ? b.size() : ib + 1;
+    }
+    return 0;
+}
+
+int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
+{
+    wchar_t tempDir[MAX_PATH];
+    GetTempPathW(MAX_PATH, tempDir);
+    std::wstring ppak = std::wstring(tempDir) + e.id + L"-" + e.version + L".ppak";
+
+    DWORD status = 0;
+    if (!PSHttpGetFile(e.downloadUrl, ppak, &status)) return 1;
+    if (_wcsicmp(Sha256File(ppak).c_str(), e.sha256.c_str()) != 0)
+    {
+        DeleteFileW(ppak.c_str());
+        return 2;
+    }
+
+    // Extract the MSI in USER context (no elevation needed for %TEMP%), then
+    // hand over to msiexec: the MSI elevates itself and asks to close Power PDF.
+    std::wstring outDir = std::wstring(tempDir) + L"PluginStoreUpdate-" + e.version;
+    std::wstring script = std::wstring() +
+        L"$ErrorActionPreference='Stop'\r\n" +
+        L"$out='" + outDir + L"'\r\n" +
+        L"if(Test-Path $out){ Remove-Item $out -Recurse -Force }\r\n" +
+        L"Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
+        L"[System.IO.Compression.ZipFile]::ExtractToDirectory('" + ppak + L"',$out)\r\n" +
+        L"$msi=Get-ChildItem (Join-Path $out 'installer') -Filter '*.msi' | Select-Object -First 1\r\n" +
+        L"if(-not $msi){ exit 3 }\r\n" +
+        L"Start-Process msiexec.exe -ArgumentList @('/i', ('\"' + $msi.FullName + '\"'))\r\n" +
+        L"exit 0\r\n";
+    std::wstring scriptPath = std::wstring(tempDir) + L"psselfupdate.ps1";
+    if (!WriteTextFile(scriptPath, script)) return 4;
+
+    std::wstring cmd = L"powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"" + scriptPath + L"\"";
+    STARTUPINFOW si = { sizeof(si) };
+    si.dwFlags = STARTF_USESHOWWINDOW;
+    si.wShowWindow = SW_HIDE;
+    PROCESS_INFORMATION pi = { 0 };
+    std::vector<wchar_t> buf(cmd.begin(), cmd.end());
+    buf.push_back(0);
+    int result = 4;
+    if (CreateProcessW(NULL, buf.data(), NULL, NULL, FALSE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi))
+    {
+        WaitForSingleObject(pi.hProcess, 60000);
+        DWORD code = 1;
+        GetExitCodeProcess(pi.hProcess, &code);
+        CloseHandle(pi.hProcess);
+        CloseHandle(pi.hThread);
+        result = code == 0 ? 0 : 4;
+    }
+    DeleteFileW(scriptPath.c_str());
+    DeleteFileW(ppak.c_str());
+    FPLogW(L"[Store] self-update to %s -> %d", e.version.c_str(), result);
+    (void)owner;
+    return result;
+}
+
 int PSUninstallPackage(const std::wstring& zxtName, HWND owner)
 {
     std::wstring pluginsDir = PluginsDir();
@@ -208,8 +283,9 @@ int PSUninstallPackage(const std::wstring& zxtName, HWND owner)
         L"$ErrorActionPreference='Stop'\r\n" +
         L"$plugins='" + pluginsDir + L"'\r\n" +
         L"$name='" + zxtName + L"'\r\n" +
+        L"Get-ChildItem $plugins -Filter '*.zxt.old-*' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue\r\n" +
         L"$zxt=Join-Path $plugins ($name + '.zxt')\r\n" +
-        L"if(Test-Path $zxt){ Remove-Item $zxt -Force }\r\n" +
+        L"if(Test-Path $zxt){ try { Remove-Item $zxt -Force } catch { Rename-Item $zxt ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
         L"$data=Join-Path $plugins $name\r\n" +
         L"if(Test-Path $data){ Remove-Item $data -Recurse -Force }\r\n" +
         L"exit 0\r\n";

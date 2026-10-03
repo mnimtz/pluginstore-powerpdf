@@ -36,7 +36,7 @@ public class IndexModel : PageModel
         if (client is not null)
         {
             ClientVersion = client.Version;
-            ClientDownloadUrl = $"/api/packages/{ClientPackageId}/{client.Version}/download";
+            ClientDownloadUrl = "/download/pluginstore.msi";
         }
 
         Items = items.Where(i => i.Id != ClientPackageId).ToList();

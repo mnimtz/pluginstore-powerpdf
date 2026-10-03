@@ -47,6 +47,21 @@ A .ppak is a ZIP container:
     LICENSES.md            recommended, third-party licenses (MIT/BSD/Apache-2.0 only)
     docs/...               optional documentation
 
+## Languages (mandatory)
+
+Every user-facing text in the manifest ships in ALL 16 European Power PDF
+languages: en, de, fr, it, es, nl, pt, da, fi, nb, sv, pl, cs, hu, ru, tr.
+
+- `description` and `changelog` MUST be objects containing all 16 codes; the
+  server rejects the upload otherwise (`LANG_TEXT_INCOMPLETE`). Translate the
+  texts yourself before uploading; the store, the web UI and the Power PDF
+  client show them in each user's language.
+- `name` may stay a single product name (e.g. {"en": "Smart Bookmarks"}) or be
+  localized.
+- The plugin's own UI follows the same rule: every UILayout language folder
+  (ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK) and all
+  string resources.
+
 ## Ribbon governance (mandatory)
 
 All store plugins share ONE ribbon tab so Power PDF does not grow a tab per
@@ -163,6 +178,14 @@ the plugin itself, not bundled.
     "minPowerPdfVersion": {
       "type": "string",
       "description": "Lowest Power PDF version the plugin supports, e.g. \"5.0\"."
+    },
+    "author": {
+      "type": "string",
+      "description": "Optional author shown in the catalog (person or team). Defaults to the publishing account's display name."
+    },
+    "contactEmail": {
+      "type": "string",
+      "description": "Optional contact address shown in the catalog. Defaults to the publishing account's email."
     },
     "category": {
       "enum": ["conversion", "forms", "signing", "navigation", "printing", "productivity", "system", "other"],

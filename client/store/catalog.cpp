@@ -74,6 +74,9 @@ bool PSFetchCatalog(std::vector<PSCatalogEntry>& out, std::wstring& error)
         e.description = f[4]; e.changelog = f[5]; e.minHost = f[6];
         e.sizeBytes = _wcstoui64(f[7].c_str(), NULL, 10);
         e.sha256 = f[8]; e.downloadUrl = f[9]; e.zxtName = f[10];
+        if (f.size() > 11) e.category = f[11];
+        if (f.size() > 12) e.author = f[12];
+        if (f.size() > 13) e.contactEmail = f[13];
         e.installedVersion = PSInstalledVersion(e.zxtName);
         out.push_back(std::move(e));
     }

@@ -21,12 +21,16 @@
 @foreach (var v in Model.Queue)
 {
     <div class="card">
-        <strong style="color:var(--tun-navy)">@v.PackageId</strong> v@(v.Version)
-        <span class="badge beta">Beta</span>
+        @{
+            var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        }
+        <strong style="color:var(--tun-navy)">@AddonStore.Web.Services.CatalogUi.ManifestText(v, "name", lang, v.PackageId)</strong>
+        <span style="color:var(--tun-slate)">@v.PackageId</span> v@(v.Version)
+        <span class="badge beta">@L["Beta"]</span>
         <div style="color:var(--tun-slate);font-size:.85rem;margin:4px 0 8px">
-            @L["Submitted by"] @v.SubmittedBy · @v.SubmittedVia · @v.SubmittedAt.ToString("MMM d, yyyy HH:mm") · @(v.SizeBytes / 1024) KB · SHA-256 <code>@v.Sha256[..16]…</code>
+            @L["Submitted by"] @v.SubmittedBy · @v.SubmittedVia · @Time.Fmt(v.SubmittedAt) · @(v.SizeBytes / 1024) KB · SHA-256 <code>@v.Sha256[..16]…</code>
         </div>
-        <p style="margin:6px 0"><b>@L["Changelog"]:</b> @v.Changelog</p>
+        <p style="margin:6px 0"><b>@L["Changelog"]:</b> @AddonStore.Web.Services.CatalogUi.ManifestText(v, "changelog", lang, v.Changelog)</p>
         @{
             var report = JsonSerializer.Deserialize<ValidationReport>(v.ValidationReportJson);
             var warnings = report?.Findings.Where(f => f.Severity != "info").ToList() ?? new List<Finding>();
@@ -69,7 +73,7 @@ else
             <tr>
                 <td>@v.PackageId</td>
                 <td>@v.Version</td>
-                <td>@v.ReviewedAt?.ToString("MMM d, yyyy")</td>
+                <td>@Time.Fmt(v.ReviewedAt, false)</td>
                 <td>@v.Downloads</td>
                 <td>
                     <form method="post" asp-page-handler="Withdraw">

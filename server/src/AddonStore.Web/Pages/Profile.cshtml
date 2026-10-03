@@ -66,8 +66,8 @@
         <tr>
             <td>@t.Name</td>
             <td><code>@t.Prefix…</code></td>
-            <td>@t.CreatedAt.ToString("MMM d, yyyy")</td>
-            <td>@(t.LastUsedAt?.ToString("MMM d, yyyy HH:mm") ?? "-")</td>
+            <td>@Time.Fmt(t.CreatedAt, false)</td>
+            <td>@Time.Fmt(t.LastUsedAt)</td>
             <td>
                 @if (t.RevokedAt is null)
                 {

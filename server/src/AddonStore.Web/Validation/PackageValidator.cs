@@ -162,6 +162,18 @@ public class PackageValidator
                         "Describe briefly what changed in this version, e.g. {\"en\": \"Fixes crash when ...\", \"de\": \"...\"}. Admins review this text.");
                 else manifest.Changelog = changelog.Trim();
 
+                // Every user-facing text ships in ALL European Power PDF languages
+                // (standing team rule); the name may stay a single product name.
+                foreach (var field in new[] { "description", "changelog" })
+                {
+                    var missing = MissingLanguages(root, field);
+                    if (missing.Count > 0)
+                        report.Error("LANG_TEXT_INCOMPLETE",
+                            $"'{field}' is missing languages: {string.Join(", ", missing)}.",
+                            $"Provide '{field}' as an object with all 16 languages: {string.Join(", ", RequiredLanguages)}. " +
+                            "Translate the text yourself; the store shows it in the user's language.");
+                }
+
                 manifest.AtomNamespace = GetString(root, "ribbonAtomNamespace") ?? "";
                 if (manifest.AtomNamespace.Length == 0)
                     report.Warn("ATOM_NAMESPACE_MISSING", "Manifest field 'ribbonAtomNamespace' is not set.",
@@ -543,6 +555,20 @@ public class PackageValidator
                     $"UILayout language folders missing: {string.Join(", ", missing)}.",
                     "Ship all 16 European Power PDF languages (ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK); the ribbon follows the host language.");
         }
+    }
+
+    /// <summary>The 16 European Power PDF UI languages (manifest language codes).</summary>
+    public static readonly string[] RequiredLanguages =
+        { "en", "de", "fr", "it", "es", "nl", "pt", "da", "fi", "nb", "sv", "pl", "cs", "hu", "ru", "tr" };
+
+    private static List<string> MissingLanguages(JsonElement root, string field)
+    {
+        if (!root.TryGetProperty(field, out var el) || el.ValueKind != JsonValueKind.Object)
+            return RequiredLanguages.ToList();
+        bool Has(string lang) =>
+            el.TryGetProperty(lang, out var v) && v.ValueKind == JsonValueKind.String &&
+            !string.IsNullOrWhiteSpace(v.GetString());
+        return RequiredLanguages.Where(l => !Has(l) && !(l == "nb" && Has("no"))).ToList();
     }
 
     private static string? GetString(JsonElement el, string name) =>

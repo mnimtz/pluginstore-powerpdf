@@ -8,8 +8,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // Version
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,2,0,0
- PRODUCTVERSION 0,2,0,0
+ FILEVERSION 0,3,0,0
+ PRODUCTVERSION 0,3,0,0
  FILEFLAGSMASK 0x3fL
  FILEFLAGS 0x0L
  FILEOS 0x40004L
@@ -22,11 +22,11 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Tungsten Automation"
             VALUE "FileDescription", "Plugin-Store client for Tungsten Power PDF"
-            VALUE "FileVersion", "0.2.0"
+            VALUE "FileVersion", "0.3.0"
             VALUE "InternalName", "PluginStore"
             VALUE "OriginalFilename", "PluginStore.zxt"
             VALUE "ProductName", "PluginStore-PowerPDF"
-            VALUE "ProductVersion", "0.2.0"
+            VALUE "ProductVersion", "0.3.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -54,6 +54,7 @@ BEGIN
                     ES_MULTILINE | ES_READONLY | WS_VSCROLL | NOT WS_TABSTOP
     LTEXT           "", IDC_PS_ADMIN_NOTE, 7, 201, 426, 10
     LTEXT           "", IDC_PS_STATUS, 7, 214, 426, 18
+    PUSHBUTTON      "Update Plugin-Store", IDC_PS_SELFUPDATE, 7, 239, 110, 14
     PUSHBUTTON      "Refresh", IDC_PS_REFRESH, 153, 239, 60, 14
     PUSHBUTTON      "Uninstall", IDC_PS_UNINSTALL, 217, 239, 72, 14
     DEFPUSHBUTTON   "Install", IDC_PS_INSTALL, 293, 239, 70, 14
@@ -110,6 +111,10 @@ BEGIN
     IDS_PSD_CONFIRM_UNINST "Remove '%s' from Power PDF now?
 Windows will ask once for administrator approval."
     IDS_PSD_MSG_UNINSTOK "Uninstalled. Restart Power PDF to unload the plugin."
+    IDS_PSD_SELF_UPDATE "A new version of the Plugin-Store is available: %s (installed: %s)."
+    IDS_PSD_BTN_SELFUPD "Update Plugin-Store"
+    IDS_PSD_AUTHOR      "Author / contact:"
+    IDS_PSD_MSG_SELFUPD "The installer has started. Please follow it; it will ask you to close Power PDF."
     IDS_PSO_PAGE        "General"
     IDS_PSO_GRP         "Plugin store server"
     IDS_PSO_URL_LBL     "Server URL:"
@@ -154,6 +159,10 @@ BEGIN
     IDS_PSD_CONFIRM_UNINST "'%s' jetzt aus Power PDF entfernen?
 Windows fragt einmal nach Administrator-Bestätigung."
     IDS_PSD_MSG_UNINSTOK "Deinstalliert. Starten Sie Power PDF neu, um das Plug-in zu entladen."
+    IDS_PSD_SELF_UPDATE "Eine neue Version des Plugin-Store ist verfügbar: %s (installiert: %s)."
+    IDS_PSD_BTN_SELFUPD "Plugin-Store aktualisieren"
+    IDS_PSD_AUTHOR      "Autor / Kontakt:"
+    IDS_PSD_MSG_SELFUPD "Das Installationsprogramm wurde gestartet. Bitte folgen Sie ihm; es fordert Sie auf, Power PDF zu schließen."
     IDS_PSO_PAGE        "Allgemein"
     IDS_PSO_GRP         "Plugin-Store-Server"
     IDS_PSO_URL_LBL     "Server-URL:"

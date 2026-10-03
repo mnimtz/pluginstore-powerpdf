@@ -151,4 +151,17 @@
   <data name="You cannot change your own role." xml:space="preserve"><value>Sie können Ihre eigene Rolle nicht ändern.</value></data>
   <data name="You have been invited" xml:space="preserve"><value>Sie wurden eingeladen</value></data>
   <data name="configured" xml:space="preserve"><value>konfiguriert</value></data>
+  <data name="Active" xml:space="preserve"><value>Aktiv</value></data>
+  <data name="Beta" xml:space="preserve"><value>Beta</value></data>
+  <data name="Disabled" xml:space="preserve"><value>Deaktiviert</value></data>
+  <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Installationsprogramm herunterladen und ausführen (Administratorrechte erforderlich); danach hält das Add-on sich und Ihre Plug-ins aktuell.</value></data>
+  <data name="Live" xml:space="preserve"><value>Live</value></data>
+  <data name="Only administrators can publish new versions of the Plugin-Store client." xml:space="preserve"><value>Nur Administratoren dürfen neue Versionen des Plugin-Store-Clients veröffentlichen.</value></data>
+  <data name="Pending" xml:space="preserve"><value>Beantragt</value></data>
+  <data name="Plugin-Store client released. Installed clients offer the update now." xml:space="preserve"><value>Plugin-Store-Client veröffentlicht. Installierte Clients bieten das Update jetzt an.</value></data>
+  <data name="Rejected" xml:space="preserve"><value>Abgelehnt</value></data>
+  <data name="Time" xml:space="preserve"><value>Zeit</value></data>
+  <data name="Time zone for displayed times" xml:space="preserve"><value>Zeitzone für angezeigte Uhrzeiten</value></data>
+  <data name="Withdrawn" xml:space="preserve"><value>Zurückgezogen</value></data>
+  <data name="Author" xml:space="preserve"><value>Autor</value></data>
 </root>

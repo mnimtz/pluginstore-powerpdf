@@ -24,3 +24,12 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner);
 // Removes <bin>\Plug-Ins\<name>.zxt and the data folder (one elevated step)
 // plus the plugin's HKCU key (user context). Same return codes as install.
 int PSUninstallPackage(const std::wstring& zxtName, HWND owner);
+
+// Self-update of the store client: download the client package (hash
+// verified), extract its MSI in user context and launch it. The MSI closes
+// Power PDF itself and elevates on its own. 0 = MSI started, 1 = download,
+// 2 = hash, 4 = extract/launch failed.
+int PSSelfUpdate(const PSCatalogEntry& e, HWND owner);
+
+// "1.2.10" > "1.2.9": numeric per-segment compare.
+int PSCompareVersions(const std::wstring& a, const std::wstring& b);

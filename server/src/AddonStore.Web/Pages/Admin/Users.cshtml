@@ -78,7 +78,7 @@
                 <td>@i.Email</td>
                 <td>@L[i.Role]</td>
                 <td>@i.InvitedBy</td>
-                <td>@i.CreatedAt.ToString("MMM d, yyyy")</td>
+                <td>@Time.Fmt(i.CreatedAt, false)</td>
                 <td>
                     <form method="post" asp-page-handler="RevokeInvite">
                         <input type="hidden" name="id" value="@i.Id" />
@@ -100,7 +100,7 @@
             <tr>
                 <td>@u.DisplayName</td>
                 <td>@u.Email</td>
-                <td>@u.CreatedAt.ToString("MMM d, yyyy HH:mm")</td>
+                <td>@Time.Fmt(u.CreatedAt)</td>
                 <td style="display:flex;gap:8px">
                     <form method="post" asp-page-handler="Approve">
                         <input type="hidden" name="id" value="@u.Id" />
@@ -149,7 +149,7 @@
                     </form>
                 }
             </td>
-            <td><span class="badge @row.User.Status.ToString().ToLowerInvariant()">@row.User.Status</span></td>
+            <td><span class="badge @row.User.Status.ToString().ToLowerInvariant()">@L[row.User.Status.ToString()]</span></td>
             <td>
                 @if (row.User.Status == UserStatus.Active && row.User.Id != Model.MyId)
                 {

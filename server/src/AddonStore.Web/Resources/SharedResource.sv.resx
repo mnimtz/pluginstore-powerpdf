@@ -151,4 +151,17 @@
   <data name="You cannot change your own role." xml:space="preserve"><value>Du kan inte ändra din egen roll.</value></data>
   <data name="You have been invited" xml:space="preserve"><value>Du har blivit inbjuden</value></data>
   <data name="configured" xml:space="preserve"><value>konfigurerad</value></data>
+  <data name="Active" xml:space="preserve"><value>Aktiv</value></data>
+  <data name="Beta" xml:space="preserve"><value>Beta</value></data>
+  <data name="Disabled" xml:space="preserve"><value>Inaktiverad</value></data>
+  <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Ladda ner och kör installationsprogrammet (administratörsbehörighet krävs); därefter håller tillägget sig självt och dina plugin-program uppdaterade.</value></data>
+  <data name="Live" xml:space="preserve"><value>Publicerad</value></data>
+  <data name="Only administrators can publish new versions of the Plugin-Store client." xml:space="preserve"><value>Endast administratörer kan publicera nya versioner av Plugin-Store-klienten.</value></data>
+  <data name="Pending" xml:space="preserve"><value>Väntar</value></data>
+  <data name="Plugin-Store client released. Installed clients offer the update now." xml:space="preserve"><value>Plugin-Store-klienten har publicerats. Installerade klienter erbjuder nu uppdateringen.</value></data>
+  <data name="Rejected" xml:space="preserve"><value>Avvisad</value></data>
+  <data name="Time" xml:space="preserve"><value>Tid</value></data>
+  <data name="Time zone for displayed times" xml:space="preserve"><value>Tidszon för visade tider</value></data>
+  <data name="Withdrawn" xml:space="preserve"><value>Återkallad</value></data>
+  <data name="Author" xml:space="preserve"><value>Författare</value></data>
 </root>

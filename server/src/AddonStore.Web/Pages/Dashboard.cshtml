@@ -46,16 +46,21 @@ else
     @foreach (var pkg in Model.Packages)
     {
         <div class="card">
-            <strong style="color:var(--tun-navy)">@pkg.Id</strong>
+            @{
+                var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+                var newest = pkg.Versions.FirstOrDefault();
+            }
+            <strong style="color:var(--tun-navy)">@(newest is null ? pkg.Id : AddonStore.Web.Services.CatalogUi.ManifestText(newest, "name", lang, pkg.Id))</strong>
+            <span style="color:var(--tun-slate);font-size:.85rem">@pkg.Id</span>
             <table style="margin-top:10px">
                 <tr><th>@L["Version"]</th><th>@L["Status"]</th><th>@L["Changelog"]</th><th>@L["Submitted"]</th><th>@L["Downloads"]</th><th>@L["Review comment"]</th></tr>
                 @foreach (var v in pkg.Versions)
                 {
                     <tr>
                         <td>@v.Version</td>
-                        <td><span class="badge @v.Status.ToString().ToLowerInvariant()">@v.Status</span></td>
-                        <td>@v.Changelog</td>
-                        <td>@v.SubmittedAt.ToString("MMM d, yyyy HH:mm")</td>
+                        <td><span class="badge @v.Status.ToString().ToLowerInvariant()">@L[v.Status.ToString()]</span></td>
+                        <td>@AddonStore.Web.Services.CatalogUi.ManifestText(v, "changelog", lang, v.Changelog)</td>
+                        <td>@Time.Fmt(v.SubmittedAt)</td>
                         <td>@v.Downloads</td>
                         <td>@(v.ReviewComment ?? "")</td>
                     </tr>

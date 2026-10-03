@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Plugin-Store client for Tungsten Power PDF - MSI package.
+
+  Installs PluginStore.zxt plus its data folder (UILayout) into the Power PDF
+  plug-in folder. The target is not hard-coded: the App Paths entry of
+  PowerPDF.exe (or the Kofax install keys) tells us where the product lives.
+  The client later updates itself by downloading the newest MSI from the store
+  and running it; MajorUpgrade replaces the previous version in place.
+
+  ProductVersion: build_msi.cmd derives it from common\version.h and passes it
+  as -dFPVersion. Bump version.h on every release.
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Product Id="*"
+           Name="Plugin-Store for Tungsten Power PDF"
+           Language="1033"
+           Codepage="1252"
+           Version="$(var.FPVersion)"
+           Manufacturer="Tungsten Automation"
+           UpgradeCode="{AFC4D7E3-52F6-4F64-BBD5-3A8F61AB67D1}">
+
+    <Package InstallerVersion="500"
+             Compressed="yes"
+             InstallScope="perMachine"
+             Description="Plugin-Store for Tungsten Power PDF"
+             Manufacturer="Tungsten Automation" />
+
+    <MediaTemplate EmbedCab="yes" />
+
+    <MajorUpgrade AllowSameVersionUpgrades="yes"
+                  DowngradeErrorMessage="A newer version of the Plugin-Store is already installed." />
+
+    <Property Id="POWERPDFBIN">
+      <RegistrySearch Id="PowerPdfAppPath"
+                      Root="HKLM"
+                      Key="SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\PowerPDF.exe"
+                      Name="Path"
+                      Type="raw"
+                      Win64="yes" />
+    </Property>
+    <Property Id="PPDFINSTALLDIR">
+      <RegistrySearch Id="KofaxInstallDir"
+                      Root="HKLM" Key="SOFTWARE\Kofax\PDF" Name="InstallDir"
+                      Type="raw" Win64="yes" />
+    </Property>
+    <Property Id="PPDFINSTALLPATH">
+      <RegistrySearch Id="KofaxInstallPath"
+                      Root="HKLM" Key="SOFTWARE\Kofax\PDF" Name="InstallPath"
+                      Type="raw" Win64="yes" />
+    </Property>
+    <SetProperty Id="POWERPDFBIN" Action="SetBinFromInstallDir"
+                 After="AppSearch" Sequence="both"
+                 Value="[PPDFINSTALLDIR]bin">
+      <![CDATA[NOT POWERPDFBIN AND PPDFINSTALLDIR]]>
+    </SetProperty>
+    <SetProperty Id="POWERPDFBIN" Action="SetBinFromInstallPath"
+                 After="SetBinFromInstallDir" Sequence="both"
+                 Value="[PPDFINSTALLPATH]bin">
+      <![CDATA[NOT POWERPDFBIN AND PPDFINSTALLPATH]]>
+    </SetProperty>
+
+    <Condition Message="Tungsten Power PDF was not found on this computer. Please install Power PDF first.">
+      <![CDATA[Installed OR POWERPDFBIN]]>
+    </Condition>
+
+    <!-- Power PDF must be closed: the .zxt is locked while it runs. -->
+    <util:CloseApplication Id="ClosePowerPDF"
+                           Target="PowerPDF.exe"
+                           CloseMessage="no"
+                           RebootPrompt="no"
+                           PromptToContinue="yes"
+                           Description="Please close Tungsten Power PDF and continue." />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="POWERPDFBIN">
+        <Directory Id="PLUGINSDIR" Name="Plug-Ins">
+
+          <Component Id="cmpPlugin" Guid="{8C6DE33D-D93A-44BB-A8B6-4A229CA8F685}" Win64="yes">
+            <File Id="filZxt"
+                  Source="$(var.ProjectDir)\Release\PluginStore.zxt"
+                  Name="PluginStore.zxt"
+                  KeyPath="yes" />
+          </Component>
+
+          <Directory Id="PSDIR" Name="PluginStore">
+            <Directory Id="UILAYOUTDIR" Name="UILayout">
+              <Component Id="cmpLayout" Guid="{9DF9BE9A-7052-4545-BF1A-AF1ADDD56166}" Win64="yes">
+                <File Id="filNameAndTitle"
+                      Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\NameAndTitle.xml"
+                      Name="NameAndTitle.xml" KeyPath="yes" />
+              </Component>
+              <Component Id="cmpPublish" Guid="{6CD82DEA-DC16-44F0-8CDE-A3261D17BD18}" Win64="yes">
+                <File Id="filPublishMode"
+                      Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\Publish Mode.xml"
+                      Name="Publish Mode.xml" KeyPath="yes" />
+              </Component>
+              <Directory Id="LANGDEU" Name="DEU">
+                <Component Id="cmpDeu" Guid="{0CDC1E08-BD11-411D-97C3-37D9E0339E9A}" Win64="yes">
+                  <File Id="filDeu" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\DEU\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="Core" Title="Plugin-Store" Level="1" Absent="disallow">
+      <ComponentRef Id="cmpPlugin" />
+      <ComponentRef Id="cmpLayout" />
+      <ComponentRef Id="cmpPublish" />
+      <ComponentRef Id="cmpDeu" />
+    </Feature>
+
+    <UIRef Id="WixUI_Minimal" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\installer\license.rtf" />
+
+  </Product>
+</Wix>
