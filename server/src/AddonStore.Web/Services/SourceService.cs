@@ -129,7 +129,8 @@ public class SourceService
                 if (SdkHeaders.Contains(name)) sdk.Add(e.FullName);
                 if (ext is ".pfx" or ".p12" or ".key" or ".snk") { secrets.Add($"{e.FullName} (key or certificate container)"); continue; }
 
-                var isLicense = name.StartsWith("license") || name.StartsWith("copying") || name.StartsWith("notice");
+                // LICENSES.md is the package's own component list, not a license text.
+                var isLicense = (name.StartsWith("license") && !name.StartsWith("licenses.")) || name.StartsWith("copying") || name.StartsWith("notice");
                 if (!isLicense && !TextExtensions.Contains(ext)) continue;
                 if (e.Length > MaxScannedFileBytes) continue;
 
