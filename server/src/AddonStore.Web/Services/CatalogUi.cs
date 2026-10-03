@@ -7,10 +7,27 @@ namespace AddonStore.Web.Services;
 
 public record CatalogItem(string Id, string Name, string Description, string Version,
     string Channel, string Changelog, long SizeBytes, int Downloads,
-    string Sha256, string MinHost, string ZxtName);
+    string Sha256, string MinHost, string ZxtName, string Category);
 
 public static class CatalogUi
 {
+    /// <summary>Fixed category slugs; anything else maps to "other". The UI
+    /// shows them as localized labels (resx keys = English labels).</summary>
+    public static readonly string[] Categories =
+        { "conversion", "forms", "signing", "navigation", "printing", "productivity", "system", "other" };
+
+    /// <summary>English display label for a category slug; doubles as resx key.</summary>
+    public static string CategoryLabel(string slug) => slug switch
+    {
+        "conversion" => "Conversion",
+        "forms" => "Forms",
+        "signing" => "Signing",
+        "navigation" => "Navigation",
+        "printing" => "Printing",
+        "productivity" => "Productivity",
+        "system" => "System",
+        _ => "Other"
+    };
     public static async Task<List<CatalogItem>> GetAsync(AppDbContext db, string culture, bool includeBeta = false)
     {
         var all = await db.PackageVersions
@@ -35,12 +52,16 @@ public static class CatalogUi
                 files.ValueKind == JsonValueKind.Object &&
                 files.TryGetProperty("x64", out var fx) && fx.ValueKind == JsonValueKind.String)
                 zxt = Path.GetFileNameWithoutExtension(fx.GetString() ?? "");
+            var category = doc.RootElement.TryGetProperty("category", out var cat) &&
+                           cat.ValueKind == JsonValueKind.String
+                ? (cat.GetString() ?? "other") : "other";
+            if (!Categories.Contains(category)) category = "other";
             items.Add(new CatalogItem(
                 pick.PackageId,
                 LangText(doc.RootElement, "name", culture) ?? pick.PackageId,
                 LangText(doc.RootElement, "description", culture) ?? "",
                 pick.Version, channel, pick.Changelog, pick.SizeBytes, pick.Downloads,
-                pick.Sha256, pick.MinPowerPdfVersion, zxt));
+                pick.Sha256, pick.MinPowerPdfVersion, zxt, category));
         }
         return items;
     }

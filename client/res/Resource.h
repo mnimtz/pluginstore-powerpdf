@@ -41,6 +41,9 @@
 #define IDS_PSD_MSG_HASH        137
 #define IDS_PSD_EMPTY           138
 #define IDS_PSD_BETA_TAG        139
+#define IDS_PSD_BTN_UNINSTALL   140
+#define IDS_PSD_CONFIRM_UNINST  141
+#define IDS_PSD_MSG_UNINSTOK    142
 
 // ---- options page ----
 #define IDS_PSO_PAGE            150
@@ -75,3 +78,4 @@
 #define IDC_PS_INSTALL          1504
 #define IDC_PS_STATUS           1505
 #define IDC_PS_ADMIN_NOTE       1506
+#define IDC_PS_UNINSTALL        1507

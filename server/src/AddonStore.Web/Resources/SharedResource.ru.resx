@@ -100,4 +100,16 @@
   <data name="Request rejected." xml:space="preserve"><value>Запрос отклонен.</value></data>
   <data name="Account disabled." xml:space="preserve"><value>Учетная запись отключена.</value></data>
   <data name="Account enabled." xml:space="preserve"><value>Учетная запись включена.</value></data>
+  <data name="for Power PDF" xml:space="preserve"><value>для Power PDF</value></data>
+  <data name="Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Скачайте ZIP-архив, распакуйте его и запустите install.cmd от имени администратора; после этого надстройка будет обновлять себя и ваши плагины.</value></data>
+  <data name="Search" xml:space="preserve"><value>Поиск</value></data>
+  <data name="All" xml:space="preserve"><value>Все</value></data>
+  <data name="Conversion" xml:space="preserve"><value>Преобразование</value></data>
+  <data name="Forms" xml:space="preserve"><value>Формы</value></data>
+  <data name="Signing" xml:space="preserve"><value>Подписание</value></data>
+  <data name="Navigation" xml:space="preserve"><value>Навигация</value></data>
+  <data name="Printing" xml:space="preserve"><value>Печать</value></data>
+  <data name="Productivity" xml:space="preserve"><value>Продуктивность</value></data>
+  <data name="System" xml:space="preserve"><value>Система</value></data>
+  <data name="Other" xml:space="preserve"><value>Прочее</value></data>
 </root>

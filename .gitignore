@@ -16,3 +16,5 @@ client/x64/
 client/Debug/
 *.aps
 *.zxt
+dist/
+packaging/*.ppak

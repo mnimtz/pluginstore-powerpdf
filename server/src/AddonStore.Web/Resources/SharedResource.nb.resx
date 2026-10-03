@@ -100,4 +100,16 @@
   <data name="Request rejected." xml:space="preserve"><value>Forespørsel avvist.</value></data>
   <data name="Account disabled." xml:space="preserve"><value>Konto deaktivert.</value></data>
   <data name="Account enabled." xml:space="preserve"><value>Konto aktivert.</value></data>
+  <data name="for Power PDF" xml:space="preserve"><value>for Power PDF</value></data>
+  <data name="Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Last ned ZIP-filen, pakk den ut og kjør install.cmd som administrator; deretter holder tillegget seg selv og programtilleggene oppdatert.</value></data>
+  <data name="Search" xml:space="preserve"><value>Søk</value></data>
+  <data name="All" xml:space="preserve"><value>Alle</value></data>
+  <data name="Conversion" xml:space="preserve"><value>Konvertering</value></data>
+  <data name="Forms" xml:space="preserve"><value>Skjemaer</value></data>
+  <data name="Signing" xml:space="preserve"><value>Signering</value></data>
+  <data name="Navigation" xml:space="preserve"><value>Navigasjon</value></data>
+  <data name="Printing" xml:space="preserve"><value>Utskrift</value></data>
+  <data name="Productivity" xml:space="preserve"><value>Produktivitet</value></data>
+  <data name="System" xml:space="preserve"><value>System</value></data>
+  <data name="Other" xml:space="preserve"><value>Annet</value></data>
 </root>

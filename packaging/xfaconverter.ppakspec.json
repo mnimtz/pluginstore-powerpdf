@@ -1,0 +1,59 @@
+{
+  "id": "com.tungsten.xfaconverter",
+  "version": "0.2.0",
+  "name": {
+    "en": "XFA Converter"
+  },
+  "description": {
+    "en": "Converts XFA forms into standard AcroForms and exports form data as CSV; dynamic XFA is rebuilt as a local reflow AcroForm, optional online providers are opt-in.",
+    "de": "Wandelt XFA-Formulare in Standard-AcroForms um und exportiert Formulardaten als CSV; dynamisches XFA wird lokal als Reflow-AcroForm neu aufgebaut, Online-Anbieter sind opt-in.",
+    "fr": "Convertit les formulaires XFA en AcroForms standard et exporte les données de formulaire en CSV ; le XFA dynamique est reconstruit localement, les fournisseurs en ligne sont optionnels.",
+    "it": "Converte i moduli XFA in AcroForm standard ed esporta i dati dei moduli in CSV; l'XFA dinamico viene ricostruito localmente, i provider online sono facoltativi.",
+    "es": "Convierte formularios XFA en AcroForms estándar y exporta los datos del formulario como CSV; el XFA dinámico se reconstruye localmente, los proveedores en línea son opcionales.",
+    "nl": "Zet XFA-formulieren om in standaard AcroForms en exporteert formuliergegevens als CSV; dynamische XFA wordt lokaal opnieuw opgebouwd, onlineproviders zijn opt-in.",
+    "pt": "Converte formulários XFA em AcroForms padrão e exporta os dados do formulário como CSV; o XFA dinâmico é reconstruído localmente, provedores on-line são opcionais.",
+    "da": "Konverterer XFA-formularer til standard-AcroForms og eksporterer formulardata som CSV; dynamisk XFA genopbygges lokalt, onlineudbydere er valgfrie.",
+    "fi": "Muuntaa XFA-lomakkeet vakiomuotoisiksi AcroForm-lomakkeiksi ja vie lomaketiedot CSV-muodossa; dynaaminen XFA rakennetaan paikallisesti uudelleen, verkkopalvelut ovat valinnaisia.",
+    "nb": "Konverterer XFA-skjemaer til standard AcroForms og eksporterer skjemadata som CSV; dynamisk XFA gjenoppbygges lokalt, nettleverandører er valgfrie.",
+    "sv": "Konverterar XFA-formulär till standard-AcroForms och exporterar formulärdata som CSV; dynamisk XFA byggs om lokalt, onlineleverantörer är valfria.",
+    "pl": "Konwertuje formularze XFA na standardowe AcroForms i eksportuje dane formularzy jako CSV; dynamiczne XFA jest odbudowywane lokalnie, dostawcy online są opcjonalni.",
+    "cs": "Převádí formuláře XFA na standardní AcroForms a exportuje data formulářů jako CSV; dynamické XFA se lokálně znovu sestaví, online poskytovatelé jsou volitelní.",
+    "hu": "Az XFA-űrlapokat szabványos AcroForm-űrlapokká alakítja, és az űrlapadatokat CSV-ként exportálja; a dinamikus XFA helyben újraépül, az online szolgáltatók opcionálisak.",
+    "ru": "Преобразует формы XFA в стандартные AcroForm и экспортирует данные форм в CSV; динамический XFA перестраивается локально, онлайн-провайдеры подключаются по желанию.",
+    "tr": "XFA formlarını standart AcroForm'lara dönüştürür ve form verilerini CSV olarak dışa aktarır; dinamik XFA yerel olarak yeniden oluşturulur, çevrimiçi sağlayıcılar isteğe bağlıdır."
+  },
+  "category": "conversion",
+  "changelog": {
+    "en": "First release in the Plugin-Store (identical to the MSI release 0.2.0).",
+    "de": "Erste Veröffentlichung im Plugin-Store (identisch mit MSI-Release 0.2.0)."
+  },
+  "minPowerPdfVersion": "5.0",
+  "ribbonAtomNamespace": "FeaturePack::Xfa",
+  "zxt": {
+    "x64": "C:/Claude/XfaConverter/Release/XfaConverter.zxt"
+  },
+  "include": [
+    {
+      "src": "C:/Claude/XfaConverter/Plug-ins/XfaConverter/UILayout",
+      "dst": "UILayout"
+    },
+    {
+      "src": "C:/Claude/XfaConverter/Plug-ins/XfaConverter/XfaConverter.ini.sample",
+      "dst": "docs/XfaConverter.ini.sample"
+    },
+    {
+      "src": "C:/Claude/XfaConverter/Plug-ins/XfaConverter/logo.png",
+      "dst": "assets/icon.png"
+    },
+    {
+      "src": "C:/Claude/XfaConverter/LICENSES.md",
+      "dst": "LICENSES.md"
+    }
+  ],
+  "uninstall": {
+    "registryKeys": [
+      "HKCU\\Software\\Kofax\\PDF\\Tungsten Power PDF\\XfaConverter"
+    ],
+    "extraPaths": []
+  }
+}

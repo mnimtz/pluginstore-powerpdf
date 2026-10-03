@@ -100,4 +100,16 @@
   <data name="Request rejected." xml:space="preserve"><value>Aanvraag afgewezen.</value></data>
   <data name="Account disabled." xml:space="preserve"><value>Account uitgeschakeld.</value></data>
   <data name="Account enabled." xml:space="preserve"><value>Account ingeschakeld.</value></data>
+  <data name="for Power PDF" xml:space="preserve"><value>voor Power PDF</value></data>
+  <data name="Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Download het ZIP-bestand, pak het uit en voer install.cmd uit als administrator; daarna houdt de add-on zichzelf en uw plug-ins actueel.</value></data>
+  <data name="Search" xml:space="preserve"><value>Zoeken</value></data>
+  <data name="All" xml:space="preserve"><value>Alle</value></data>
+  <data name="Conversion" xml:space="preserve"><value>Conversie</value></data>
+  <data name="Forms" xml:space="preserve"><value>Formulieren</value></data>
+  <data name="Signing" xml:space="preserve"><value>Ondertekenen</value></data>
+  <data name="Navigation" xml:space="preserve"><value>Navigatie</value></data>
+  <data name="Printing" xml:space="preserve"><value>Afdrukken</value></data>
+  <data name="Productivity" xml:space="preserve"><value>Productiviteit</value></data>
+  <data name="System" xml:space="preserve"><value>Systeem</value></data>
+  <data name="Other" xml:space="preserve"><value>Overig</value></data>
 </root>

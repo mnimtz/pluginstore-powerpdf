@@ -92,7 +92,7 @@ public static class ApiEndpoints
                       .Append(Flat(i.Changelog)).Append('\t').Append(i.MinHost).Append('\t')
                       .Append(i.SizeBytes).Append('\t').Append(i.Sha256).Append('\t')
                       .Append($"{Base(ctx)}/api/packages/{i.Id}/{i.Version}/download").Append('\t')
-                      .Append(i.ZxtName).Append('\n');
+                      .Append(i.ZxtName).Append('\t').Append(i.Category).Append('\n');
                 }
                 return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
             }
@@ -402,6 +402,7 @@ public static class ApiEndpoints
                 id = pick.PackageId,
                 name = CloneOrNull(root, "name"),
                 description = CloneOrNull(root, "description"),
+                category = root.TryGetProperty("category", out var cat) && cat.ValueKind == JsonValueKind.String ? cat.GetString() : "other",
                 version = pick.Version,
                 channel,
                 changelog = pick.Changelog,

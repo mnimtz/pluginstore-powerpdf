@@ -195,3 +195,61 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
     FPLogW(L"[Store] install %s %s -> %d", e.id.c_str(), e.version.c_str(), result);
     return result;
 }
+
+int PSUninstallPackage(const std::wstring& zxtName, HWND owner)
+{
+    std::wstring pluginsDir = PluginsDir();
+    if (pluginsDir.empty()) return 5;
+
+    // One elevated step removes the Program-Files part; the HKCU settings key
+    // is removed afterwards in USER context (elevated processes can resolve the
+    // wrong profile, a lesson learned the hard way).
+    std::wstring script = std::wstring() +
+        L"$ErrorActionPreference='Stop'\r\n" +
+        L"$plugins='" + pluginsDir + L"'\r\n" +
+        L"$name='" + zxtName + L"'\r\n" +
+        L"$zxt=Join-Path $plugins ($name + '.zxt')\r\n" +
+        L"if(Test-Path $zxt){ Remove-Item $zxt -Force }\r\n" +
+        L"$data=Join-Path $plugins $name\r\n" +
+        L"if(Test-Path $data){ Remove-Item $data -Recurse -Force }\r\n" +
+        L"exit 0\r\n";
+
+    wchar_t tempDir[MAX_PATH];
+    GetTempPathW(MAX_PATH, tempDir);
+    std::wstring scriptPath = std::wstring(tempDir) + L"psuninstall-" + zxtName + L".ps1";
+    if (!WriteTextFile(scriptPath, script)) return 4;
+
+    std::wstring args = L"-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"" + scriptPath + L"\"";
+
+    SHELLEXECUTEINFOW sei = { sizeof(sei) };
+    sei.fMask = SEE_MASK_NOCLOSEPROCESS;
+    sei.hwnd = owner;
+    sei.lpVerb = L"runas";
+    sei.lpFile = L"powershell.exe";
+    sei.lpParameters = args.c_str();
+    sei.nShow = SW_HIDE;
+
+    int result;
+    if (!ShellExecuteExW(&sei) || !sei.hProcess)
+    {
+        result = 3;
+    }
+    else
+    {
+        WaitForSingleObject(sei.hProcess, 60000);
+        DWORD exitCode = 1;
+        GetExitCodeProcess(sei.hProcess, &exitCode);
+        CloseHandle(sei.hProcess);
+        result = exitCode == 0 ? 0 : 4;
+    }
+    DeleteFileW(scriptPath.c_str());
+
+    if (result == 0)
+    {
+        std::wstring key = L"Software\\Kofax\\PDF\\Tungsten Power PDF\\" + zxtName;
+        RegDeleteTreeW(HKEY_CURRENT_USER, key.c_str());
+    }
+
+    FPLogW(L"[Store] uninstall %s -> %d", zxtName.c_str(), result);
+    return result;
+}

@@ -100,4 +100,16 @@
   <data name="Request rejected." xml:space="preserve"><value>Wniosek odrzucony.</value></data>
   <data name="Account disabled." xml:space="preserve"><value>Konto wyłączone.</value></data>
   <data name="Account enabled." xml:space="preserve"><value>Konto włączone.</value></data>
+  <data name="for Power PDF" xml:space="preserve"><value>dla Power PDF</value></data>
+  <data name="Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Pobierz plik ZIP, rozpakuj go i uruchom install.cmd jako administrator; następnie dodatek będzie aktualizował siebie i wtyczki.</value></data>
+  <data name="Search" xml:space="preserve"><value>Szukaj</value></data>
+  <data name="All" xml:space="preserve"><value>Wszystkie</value></data>
+  <data name="Conversion" xml:space="preserve"><value>Konwersja</value></data>
+  <data name="Forms" xml:space="preserve"><value>Formularze</value></data>
+  <data name="Signing" xml:space="preserve"><value>Podpisywanie</value></data>
+  <data name="Navigation" xml:space="preserve"><value>Nawigacja</value></data>
+  <data name="Printing" xml:space="preserve"><value>Drukowanie</value></data>
+  <data name="Productivity" xml:space="preserve"><value>Produktywność</value></data>
+  <data name="System" xml:space="preserve"><value>System</value></data>
+  <data name="Other" xml:space="preserve"><value>Inne</value></data>
 </root>

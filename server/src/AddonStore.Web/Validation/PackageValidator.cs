@@ -143,15 +143,33 @@ public class PackageValidator
                     report.Warn("MIN_HOST_VERSION_MISSING", "Manifest field 'minPowerPdfVersion' is not set.",
                         "State the lowest Power PDF version the plugin was tested with, e.g. \"5.0\".");
 
-                // architectures + files + hashes + PE checks
-                var architectures = new[] { "x64", "arm64" };
+                var category = GetString(root, "category");
+                if (category is null)
+                    report.Warn("CATEGORY_MISSING", "Manifest field 'category' is not set.",
+                        "Pick one of: conversion, forms, signing, navigation, printing, productivity, system, other. The store uses it as a catalog filter.");
+                else if (!Services.CatalogUi.Categories.Contains(category))
+                    report.Warn("CATEGORY_UNKNOWN", $"Category '{category}' is not a known slug.",
+                        "Use one of: conversion, forms, signing, navigation, printing, productivity, system, other.");
+
+                // architectures + files + hashes + PE checks. x64 is mandatory and
+                // alone covers every machine (ARM64EC hosts load x64 plugins); a
+                // native arm64 build is optional and validated when present.
                 var declared = new HashSet<string>();
                 if (root.TryGetProperty("architectures", out var archEl) && archEl.ValueKind == JsonValueKind.Array)
                     foreach (var a in archEl.EnumerateArray())
                         if (a.ValueKind == JsonValueKind.String) declared.Add(a.GetString()!);
 
-                // Both architectures must carry the SAME base name: the host loads
-                // <name>.zxt and the store client derives folders from it.
+                if (!declared.Contains("x64"))
+                    report.Error("ARCH_MISSING", "Architecture 'x64' is not declared in 'architectures'.",
+                        "\"x64\" is mandatory; it also serves Windows-on-ARM, where Power PDF runs as ARM64EC and loads x64 plugins.");
+                if (!declared.Contains("arm64"))
+                    report.Info("ARCH_ARM64_ABSENT", "No native arm64 build is included (fine: ARM64EC hosts run the x64 binary).",
+                        "Optionally add a native arm64 build under arm64/ once the toolchain supports it.");
+
+                var architectures = declared.Contains("arm64") ? new[] { "x64", "arm64" } : new[] { "x64" };
+
+                // Both architectures, when present, must share the same base name:
+                // the host loads <name>.zxt and the client derives folders from it.
                 {
                     string? fx = root.TryGetProperty("files", out var fEl) && fEl.ValueKind == JsonValueKind.Object ? GetString(fEl, "x64") : null;
                     string? fa = root.TryGetProperty("files", out var fEl2) && fEl2.ValueKind == JsonValueKind.Object ? GetString(fEl2, "arm64") : null;
@@ -162,11 +180,11 @@ public class PackageValidator
                         if (!string.Equals(bx, ba, StringComparison.OrdinalIgnoreCase))
                             report.Error("FILENAME_MISMATCH", $"x64 file '{bx}' and arm64 file '{ba}' have different names.",
                                 "Both architectures must ship the same .zxt base name, e.g. x64/MyPlugin.zxt and arm64/MyPlugin.zxt.");
-                        var baseName = Path.GetFileNameWithoutExtension(bx ?? "");
-                        if (baseName.Length > 0 && ReservedZxtNames.Contains(baseName))
-                            report.Error("RESERVED_NAME", $"'{baseName}.zxt' collides with a plugin Power PDF ships itself.",
-                                "Rename the plugin binary; it must not shadow a built-in Power PDF plugin.");
                     }
+                    var baseName = Path.GetFileNameWithoutExtension(fx ?? "");
+                    if (baseName.Length > 0 && ReservedZxtNames.Contains(baseName) && manifest.Id != "com.tungsten.pluginstore")
+                        report.Error("RESERVED_NAME", $"'{baseName}.zxt' collides with a plugin Power PDF ships itself.",
+                            "Rename the plugin binary; it must not shadow a built-in Power PDF plugin.");
                 }
 
                 if (manifest.AtomNamespace.Length > 0 && !manifest.AtomNamespace.StartsWith("FeaturePack::", StringComparison.Ordinal)
@@ -177,10 +195,6 @@ public class PackageValidator
 
                 foreach (var arch in architectures)
                 {
-                    if (!declared.Contains(arch))
-                        report.Error("ARCH_MISSING", $"Architecture '{arch}' is not declared in 'architectures'.",
-                            "Both \"x64\" and \"arm64\" are mandatory for every package (Windows-on-ARM support is a standing requirement).");
-
                     string? file = root.TryGetProperty("files", out var filesEl) && filesEl.ValueKind == JsonValueKind.Object
                         ? GetString(filesEl, arch) : null;
                     if (file is null)

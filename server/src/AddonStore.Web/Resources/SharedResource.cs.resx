@@ -100,4 +100,16 @@
   <data name="Request rejected." xml:space="preserve"><value>Žádost byla zamítnuta.</value></data>
   <data name="Account disabled." xml:space="preserve"><value>Účet byl zakázán.</value></data>
   <data name="Account enabled." xml:space="preserve"><value>Účet byl povolen.</value></data>
+  <data name="for Power PDF" xml:space="preserve"><value>pro Power PDF</value></data>
+  <data name="Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Stáhněte ZIP, rozbalte jej a spusťte install.cmd jako správce; poté doplněk udržuje sebe i vaše pluginy aktuální.</value></data>
+  <data name="Search" xml:space="preserve"><value>Hledat</value></data>
+  <data name="All" xml:space="preserve"><value>Vše</value></data>
+  <data name="Conversion" xml:space="preserve"><value>Převod</value></data>
+  <data name="Forms" xml:space="preserve"><value>Formuláře</value></data>
+  <data name="Signing" xml:space="preserve"><value>Podepisování</value></data>
+  <data name="Navigation" xml:space="preserve"><value>Navigace</value></data>
+  <data name="Printing" xml:space="preserve"><value>Tisk</value></data>
+  <data name="Productivity" xml:space="preserve"><value>Produktivita</value></data>
+  <data name="System" xml:space="preserve"><value>Systém</value></data>
+  <data name="Other" xml:space="preserve"><value>Ostatní</value></data>
 </root>

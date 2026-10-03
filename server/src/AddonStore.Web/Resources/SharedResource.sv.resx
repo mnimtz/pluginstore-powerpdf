@@ -100,4 +100,16 @@
   <data name="Request rejected." xml:space="preserve"><value>Förfrågan har avvisats.</value></data>
   <data name="Account disabled." xml:space="preserve"><value>Kontot har inaktiverats.</value></data>
   <data name="Account enabled." xml:space="preserve"><value>Kontot har aktiverats.</value></data>
+  <data name="for Power PDF" xml:space="preserve"><value>för Power PDF</value></data>
+  <data name="Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Ladda ner ZIP-filen, packa upp den och kör install.cmd som administratör; därefter håller tillägget sig självt och dina plugin-program uppdaterade.</value></data>
+  <data name="Search" xml:space="preserve"><value>Sök</value></data>
+  <data name="All" xml:space="preserve"><value>Alla</value></data>
+  <data name="Conversion" xml:space="preserve"><value>Konvertering</value></data>
+  <data name="Forms" xml:space="preserve"><value>Formulär</value></data>
+  <data name="Signing" xml:space="preserve"><value>Signering</value></data>
+  <data name="Navigation" xml:space="preserve"><value>Navigering</value></data>
+  <data name="Printing" xml:space="preserve"><value>Utskrift</value></data>
+  <data name="Productivity" xml:space="preserve"><value>Produktivitet</value></data>
+  <data name="System" xml:space="preserve"><value>System</value></data>
+  <data name="Other" xml:space="preserve"><value>Övrigt</value></data>
 </root>

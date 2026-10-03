@@ -7,6 +7,13 @@
 <div class="hero">
     <h1>@L["Plugin-Store for Tungsten Power PDF"]</h1>
     <p>@L["Browse released plugins below. Installation happens directly inside Power PDF via the Plugin-Store ribbon; this site is for plugin developers and admins."]</p>
+    @if (Model.ClientDownloadUrl is not null)
+    {
+        <div style="margin-top:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+            <a class="btn cta" href="@Model.ClientDownloadUrl">@L["Download"]: Plugin-Store @L["for Power PDF"] v@(Model.ClientVersion)</a>
+            <span style="color:var(--tun-blue-light);font-size:.85rem;max-width:460px">@L["Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date."]</span>
+        </div>
+    }
 </div>
 
 <h2>@L["Released plugins"]</h2>
@@ -16,14 +23,53 @@
 }
 else
 {
-    <div class="grid">
+    <div class="catalog-tools">
+        <input type="search" id="pkg-search" placeholder="@L["Search"]…" aria-label="@L["Search"]" />
+        <div class="chips" id="pkg-chips">
+            <button class="chip active" data-cat="">@L["All"]</button>
+            @foreach (var cat in Model.Items.Select(i => i.Category).Distinct().OrderBy(c => c))
+            {
+                <button class="chip" data-cat="@cat">@L[AddonStore.Web.Services.CatalogUi.CategoryLabel(cat)]</button>
+            }
+        </div>
+    </div>
+    <div class="grid" id="pkg-grid">
         @foreach (var item in Model.Items)
         {
-            <div class="card pkg">
+            <div class="card pkg" data-cat="@item.Category"
+                 data-text="@(item.Name.ToLowerInvariant()) @(item.Id) @(item.Description.ToLowerInvariant())">
                 <span class="name">@item.Name</span>
-                <span class="meta">@item.Id · v@(item.Version) · @(item.SizeBytes / 1024) KB · @item.Downloads @L["download(s)"]</span>
+                <span class="meta">
+                    <span class="badge live" style="font-weight:500">@L[AddonStore.Web.Services.CatalogUi.CategoryLabel(item.Category)]</span>
+                    @item.Id · v@(item.Version) · @(item.SizeBytes / 1024) KB · @item.Downloads @L["download(s)"]
+                </span>
                 <span class="desc">@item.Description</span>
             </div>
         }
     </div>
+    <script>
+        (function () {
+            var search = document.getElementById('pkg-search');
+            var chips = document.querySelectorAll('#pkg-chips .chip');
+            var cards = document.querySelectorAll('#pkg-grid .pkg');
+            var cat = '';
+            function apply() {
+                var q = search.value.toLowerCase();
+                cards.forEach(function (c) {
+                    var hit = (!cat || c.dataset.cat === cat) &&
+                              (!q || c.dataset.text.indexOf(q) >= 0);
+                    c.style.display = hit ? '' : 'none';
+                });
+            }
+            search.addEventListener('input', apply);
+            chips.forEach(function (chip) {
+                chip.addEventListener('click', function () {
+                    chips.forEach(function (x) { x.classList.remove('active'); });
+                    chip.classList.add('active');
+                    cat = chip.dataset.cat;
+                    apply();
+                });
+            });
+        })();
+    </script>
 }

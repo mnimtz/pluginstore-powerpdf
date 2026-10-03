@@ -20,3 +20,7 @@ std::wstring PSInstalledVersion(const std::wstring& zxtName);
 // 1 = download failed, 2 = hash mismatch, 3 = elevation declined/failed,
 // 4 = install script failed, 5 = Power PDF folder not found.
 int PSInstallPackage(const PSCatalogEntry& e, HWND owner);
+
+// Removes <bin>\Plug-Ins\<name>.zxt and the data folder (one elevated step)
+// plus the plugin's HKCU key (user context). Same return codes as install.
+int PSUninstallPackage(const std::wstring& zxtName, HWND owner);

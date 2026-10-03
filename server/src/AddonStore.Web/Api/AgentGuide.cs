@@ -39,8 +39,10 @@ approved yet).
 A .ppak is a ZIP container:
 
     manifest.json          required, see /api/schema/manifest
-    x64/<Name>.zxt         required, x64 build
-    arm64/<Name>.zxt       required, ARM64 build (both architectures are mandatory)
+    x64/<Name>.zxt         required; x64 covers every machine, including
+                           Windows-on-ARM (Power PDF runs there as ARM64EC
+                           and loads x64 plugins)
+    arm64/<Name>.zxt       optional native ARM64 build, validated when present
     assets/icon.png        recommended, square icon for the catalog
     LICENSES.md            recommended, third-party licenses (MIT/BSD/Apache-2.0 only)
     docs/...               optional documentation
@@ -70,9 +72,9 @@ Rules enforced by the server:
 - `version` is SemVer and must be strictly higher than the latest submitted
   version of the same package id.
 - `changelog` must not be empty; write what changed, admins review it.
-- Both .zxt files must be native Windows DLLs for the right machine type
-  (x64 = 0x8664, arm64 = 0xAA64).
-- `sha256.x64` / `sha256.arm64` must match the packaged files (lowercase hex).
+- Every packaged .zxt must be a native Windows DLL for the right machine type
+  (x64 = 0x8664, arm64 = 0xAA64); x64 is mandatory, arm64 optional.
+- `sha256.<arch>` must match each packaged file (lowercase hex).
 - `ribbonAtomNamespace` must be unique across the store.
 
 ## Submitting
@@ -162,23 +164,27 @@ the plugin itself, not bundled.
       "type": "string",
       "description": "Lowest Power PDF version the plugin supports, e.g. \"5.0\"."
     },
+    "category": {
+      "enum": ["conversion", "forms", "signing", "navigation", "printing", "productivity", "system", "other"],
+      "description": "Catalog filter category."
+    },
     "architectures": {
       "type": "array",
       "items": { "enum": ["x64", "arm64"] },
-      "minItems": 2,
-      "description": "Both x64 and arm64 are mandatory."
+      "minItems": 1,
+      "description": "x64 is mandatory and covers every machine (Power PDF on Windows-on-ARM runs as ARM64EC and loads x64 plugins); a native arm64 build is optional."
     },
     "files": {
       "type": "object",
-      "required": ["x64", "arm64"],
+      "required": ["x64"],
       "properties": {
         "x64": { "type": "string", "description": "ZIP path of the x64 .zxt, e.g. x64/MyPlugin.zxt" },
-        "arm64": { "type": "string", "description": "ZIP path of the arm64 .zxt" }
+        "arm64": { "type": "string", "description": "ZIP path of the optional native arm64 .zxt (same base name as x64)" }
       }
     },
     "sha256": {
       "type": "object",
-      "required": ["x64", "arm64"],
+      "required": ["x64"],
       "properties": {
         "x64": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
         "arm64": { "type": "string", "pattern": "^[a-f0-9]{64}$" }

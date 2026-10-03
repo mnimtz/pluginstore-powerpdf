@@ -54,7 +54,8 @@ BEGIN
                     ES_MULTILINE | ES_READONLY | WS_VSCROLL | NOT WS_TABSTOP
     LTEXT           "", IDC_PS_ADMIN_NOTE, 7, 201, 426, 10
     LTEXT           "", IDC_PS_STATUS, 7, 214, 426, 18
-    PUSHBUTTON      "Refresh", IDC_PS_REFRESH, 229, 239, 60, 14
+    PUSHBUTTON      "Refresh", IDC_PS_REFRESH, 153, 239, 60, 14
+    PUSHBUTTON      "Uninstall", IDC_PS_UNINSTALL, 217, 239, 72, 14
     DEFPUSHBUTTON   "Install", IDC_PS_INSTALL, 293, 239, 70, 14
     PUSHBUTTON      "Close", IDCANCEL, 367, 239, 66, 14
 END
@@ -105,6 +106,10 @@ BEGIN
     IDS_PSD_MSG_HASH    "The downloaded file failed the integrity check (SHA-256). Installation aborted."
     IDS_PSD_EMPTY       "No plugins are available on the server yet."
     IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Uninstall"
+    IDS_PSD_CONFIRM_UNINST "Remove '%s' from Power PDF now?
+Windows will ask once for administrator approval."
+    IDS_PSD_MSG_UNINSTOK "Uninstalled. Restart Power PDF to unload the plugin."
     IDS_PSO_PAGE        "General"
     IDS_PSO_GRP         "Plugin store server"
     IDS_PSO_URL_LBL     "Server URL:"
@@ -145,6 +150,10 @@ BEGIN
     IDS_PSD_MSG_HASH    "Die heruntergeladene Datei hat die Integritätsprüfung (SHA-256) nicht bestanden. Installation abgebrochen."
     IDS_PSD_EMPTY       "Auf dem Server sind noch keine Plug-ins verfügbar."
     IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Deinstallieren"
+    IDS_PSD_CONFIRM_UNINST "'%s' jetzt aus Power PDF entfernen?
+Windows fragt einmal nach Administrator-Bestätigung."
+    IDS_PSD_MSG_UNINSTOK "Deinstalliert. Starten Sie Power PDF neu, um das Plug-in zu entladen."
     IDS_PSO_PAGE        "Allgemein"
     IDS_PSO_GRP         "Plugin-Store-Server"
     IDS_PSO_URL_LBL     "Server-URL:"

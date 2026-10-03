@@ -100,4 +100,16 @@
   <data name="Request rejected." xml:space="preserve"><value>Kérelem elutasítva.</value></data>
   <data name="Account disabled." xml:space="preserve"><value>Fiók letiltva.</value></data>
   <data name="Account enabled." xml:space="preserve"><value>Fiók engedélyezve.</value></data>
+  <data name="for Power PDF" xml:space="preserve"><value>a Power PDF-hez</value></data>
+  <data name="Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>Töltse le a ZIP-fájlt, csomagolja ki, és futtassa az install.cmd fájlt rendszergazdaként; ezután a bővítmény naprakészen tartja magát és a beépülő modulokat.</value></data>
+  <data name="Search" xml:space="preserve"><value>Keresés</value></data>
+  <data name="All" xml:space="preserve"><value>Összes</value></data>
+  <data name="Conversion" xml:space="preserve"><value>Konvertálás</value></data>
+  <data name="Forms" xml:space="preserve"><value>Űrlapok</value></data>
+  <data name="Signing" xml:space="preserve"><value>Aláírás</value></data>
+  <data name="Navigation" xml:space="preserve"><value>Navigáció</value></data>
+  <data name="Printing" xml:space="preserve"><value>Nyomtatás</value></data>
+  <data name="Productivity" xml:space="preserve"><value>Produktivitás</value></data>
+  <data name="System" xml:space="preserve"><value>Rendszer</value></data>
+  <data name="Other" xml:space="preserve"><value>Egyéb</value></data>
 </root>

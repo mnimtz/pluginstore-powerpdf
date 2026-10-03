@@ -28,6 +28,7 @@ protected:
 
         SetWindowTextW(FPLoc(IDS_PSD_TITLE).c_str());
         SetDlgItemTextW(IDC_PS_REFRESH, FPLoc(IDS_PSD_BTN_REFRESH).c_str());
+        SetDlgItemTextW(IDC_PS_UNINSTALL, FPLoc(IDS_PSD_BTN_UNINSTALL).c_str());
         SetDlgItemTextW(IDC_PS_INSTALL, FPLoc(IDS_PSD_BTN_INSTALL).c_str());
         SetDlgItemTextW(IDCANCEL,       FPLoc(IDS_PSD_BTN_CLOSE).c_str());
         SetDlgItemTextW(IDC_PS_ADMIN_NOTE, FPLoc(IDS_PSD_ADMIN_NOTE).c_str());
@@ -105,6 +106,36 @@ protected:
         if (!e->changelog.empty())
             text += L"\r\n\r\n" + e->version + L": " + e->changelog;
         SetDlgItemTextW(IDC_PS_DESC, text.c_str());
+
+        // Uninstall applies to installed plugins; the store client itself is
+        // not removable from its own dialog.
+        BOOL canUninstall = !e->installedVersion.empty() && e->zxtName != L"PluginStore";
+        GetDlgItem(IDC_PS_UNINSTALL)->EnableWindow(canUninstall);
+    }
+
+    void OnUninstall()
+    {
+        const PSCatalogEntry* e = Selected();
+        if (!e || e->installedVersion.empty() || e->zxtName == L"PluginStore") return;
+
+        wchar_t ask[512];
+        swprintf_s(ask, 512, FPLoc(IDS_PSD_CONFIRM_UNINST).c_str(), e->name.c_str());
+        if (MessageBoxW(ask, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
+            return;
+
+        CWaitCursor wait;
+        int rc = PSUninstallPackage(e->zxtName, GetSafeHwnd());
+        if (rc == 0)
+        {
+            SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_MSG_UNINSTOK).c_str());
+            Reload();
+        }
+        else
+        {
+            wchar_t msg[256];
+            swprintf_s(msg, 256, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
+            SetDlgItemTextW(IDC_PS_STATUS, msg);
+        }
     }
 
     void OnInstall()
@@ -138,6 +169,7 @@ protected:
 
     afx_msg void OnRefresh() { Reload(); }
     afx_msg void OnInstallClicked() { OnInstall(); }
+    afx_msg void OnUninstallClicked() { OnUninstall(); }
     afx_msg void OnListChanged(NMHDR*, LRESULT* result) { UpdateDescription(); *result = 0; }
 
     DECLARE_MESSAGE_MAP()
@@ -146,6 +178,7 @@ protected:
 BEGIN_MESSAGE_MAP(CStoreDialog, CDialog)
     ON_BN_CLICKED(IDC_PS_REFRESH, &CStoreDialog::OnRefresh)
     ON_BN_CLICKED(IDC_PS_INSTALL, &CStoreDialog::OnInstallClicked)
+    ON_BN_CLICKED(IDC_PS_UNINSTALL, &CStoreDialog::OnUninstallClicked)
     ON_NOTIFY(LVN_ITEMCHANGED, IDC_PS_LIST, &CStoreDialog::OnListChanged)
 END_MESSAGE_MAP()
 

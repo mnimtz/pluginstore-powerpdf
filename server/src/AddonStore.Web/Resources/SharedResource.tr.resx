@@ -100,4 +100,16 @@
   <data name="Request rejected." xml:space="preserve"><value>İstek reddedildi.</value></data>
   <data name="Account disabled." xml:space="preserve"><value>Hesap devre dışı bırakıldı.</value></data>
   <data name="Account enabled." xml:space="preserve"><value>Hesap etkinleştirildi.</value></data>
+  <data name="for Power PDF" xml:space="preserve"><value>Power PDF için</value></data>
+  <data name="Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>ZIP dosyasını indirin, ayıklayın ve install.cmd dosyasını yönetici olarak çalıştırın; ardından eklenti kendini ve eklentilerinizi güncel tutar.</value></data>
+  <data name="Search" xml:space="preserve"><value>Ara</value></data>
+  <data name="All" xml:space="preserve"><value>Tümü</value></data>
+  <data name="Conversion" xml:space="preserve"><value>Dönüştürme</value></data>
+  <data name="Forms" xml:space="preserve"><value>Formlar</value></data>
+  <data name="Signing" xml:space="preserve"><value>İmzalama</value></data>
+  <data name="Navigation" xml:space="preserve"><value>Gezinme</value></data>
+  <data name="Printing" xml:space="preserve"><value>Yazdırma</value></data>
+  <data name="Productivity" xml:space="preserve"><value>Üretkenlik</value></data>
+  <data name="System" xml:space="preserve"><value>Sistem</value></data>
+  <data name="Other" xml:space="preserve"><value>Diğer</value></data>
 </root>

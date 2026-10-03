@@ -1,0 +1,59 @@
+{
+  "id": "com.tungsten.smartbookmarks",
+  "version": "1.0.5",
+  "name": {
+    "en": "Smart Bookmarks"
+  },
+  "description": {
+    "en": "Automatically creates a multi-level bookmark outline for any PDF: heading detection, live preview panel, table of contents, optional OCR.",
+    "de": "Erzeugt automatisch eine mehrstufige Lesezeichen-Gliederung für jedes PDF: Überschriften-Erkennung, Live-Vorschau-Panel, Inhaltsverzeichnis, optionale OCR.",
+    "fr": "Crée automatiquement une structure de signets à plusieurs niveaux pour tout PDF : détection des titres, panneau d'aperçu en direct, table des matières, OCR en option.",
+    "it": "Crea automaticamente una struttura di segnalibri a più livelli per qualsiasi PDF: rilevamento dei titoli, pannello di anteprima dal vivo, sommario, OCR opzionale.",
+    "es": "Crea automáticamente un esquema de marcadores de varios niveles para cualquier PDF: detección de títulos, panel de vista previa en vivo, índice, OCR opcional.",
+    "nl": "Maakt automatisch een gelaagde bladwijzerstructuur voor elke PDF: koppendetectie, live voorbeeldpaneel, inhoudsopgave, optionele OCR.",
+    "pt": "Cria automaticamente uma estrutura de marcadores em vários níveis para qualquer PDF: detecção de títulos, painel de visualização ao vivo, sumário, OCR opcional.",
+    "da": "Opretter automatisk en bogmærkestruktur i flere niveauer for enhver PDF: registrering af overskrifter, live forhåndsvisningspanel, indholdsfortegnelse, valgfri OCR.",
+    "fi": "Luo automaattisesti monitasoisen kirjanmerkkirakenteen mihin tahansa PDF-tiedostoon: otsikoiden tunnistus, live-esikatselupaneeli, sisällysluettelo, valinnainen OCR.",
+    "nb": "Lager automatisk en bokmerkestruktur i flere nivåer for enhver PDF: overskriftsgjenkjenning, live forhåndsvisningspanel, innholdsfortegnelse, valgfri OCR.",
+    "sv": "Skapar automatiskt en bokmärkesstruktur i flera nivåer för alla PDF-filer: rubrikidentifiering, live förhandsgranskningspanel, innehållsförteckning, valfri OCR.",
+    "pl": "Automatycznie tworzy wielopoziomową strukturę zakładek dla każdego PDF: wykrywanie nagłówków, panel podglądu na żywo, spis treści, opcjonalne OCR.",
+    "cs": "Automaticky vytváří víceúrovňovou strukturu záložek pro jakékoli PDF: rozpoznávání nadpisů, panel živého náhledu, obsah, volitelné OCR.",
+    "hu": "Automatikusan többszintű könyvjelző-szerkezetet készít bármely PDF-hez: címsorfelismerés, élő előnézeti panel, tartalomjegyzék, opcionális OCR.",
+    "ru": "Автоматически создаёт многоуровневую структуру закладок для любого PDF: распознавание заголовков, панель предварительного просмотра, оглавление, опциональное OCR.",
+    "tr": "Her PDF için otomatik olarak çok seviyeli yer işareti yapısı oluşturur: başlık algılama, canlı önizleme paneli, içindekiler, isteğe bağlı OCR."
+  },
+  "changelog": {
+    "en": "First release in the Plugin-Store (identical to the MSI release 1.0.5). The optional Tesseract OCR payload ships separately for now.",
+    "de": "Erste Veröffentlichung im Plugin-Store (identisch mit MSI-Release 1.0.5). Die optionale Tesseract-OCR-Beilage kommt vorerst separat."
+  },
+  "minPowerPdfVersion": "5.0",
+  "ribbonAtomNamespace": "TungstenBookmarks2",
+  "zxt": {
+    "x64": "C:/Claude/SmartBookmarks/Release/SmartBookmarks.zxt"
+  },
+  "include": [
+    {
+      "src": "C:/Claude/SmartBookmarks/Plug-ins/SmartBookmarks/UILayout",
+      "dst": "UILayout"
+    },
+    {
+      "src": "C:/Claude/SmartBookmarks/Plug-ins/SmartBookmarks/SmartBookmarks.ini.sample",
+      "dst": "docs/SmartBookmarks.ini.sample"
+    },
+    {
+      "src": "sb-icon.png",
+      "dst": "assets/icon.png"
+    },
+    {
+      "src": "sb-LICENSES.md",
+      "dst": "LICENSES.md"
+    }
+  ],
+  "uninstall": {
+    "registryKeys": [
+      "HKCU\\Software\\Kofax\\PDF\\Tungsten Power PDF\\SmartBookmarks"
+    ],
+    "extraPaths": []
+  },
+  "category": "navigation"
+}

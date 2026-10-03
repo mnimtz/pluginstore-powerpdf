@@ -63,6 +63,17 @@ p.lead { color: var(--tun-slate); margin-top: 0; }
 
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
 
+.catalog-tools { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+.catalog-tools input[type=search] { max-width: 260px; border-radius: 999px; padding: 8px 16px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  border: 1px solid var(--tun-gray-200); background: #fff; color: var(--tun-navy);
+  font-family: inherit; font-weight: 500; font-size: .82rem;
+  padding: 5px 14px; border-radius: 999px; cursor: pointer;
+}
+.chip:hover { border-color: var(--tun-blue); }
+.chip.active { background: var(--tun-navy); color: #fff; border-color: var(--tun-navy); }
+
 .pkg { display: flex; flex-direction: column; gap: 6px; }
 .pkg .name { font-weight: 700; color: var(--tun-navy); font-size: 1.05rem; }
 .pkg .meta { color: var(--tun-slate); font-size: .82rem; }

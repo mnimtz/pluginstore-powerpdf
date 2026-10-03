@@ -1,0 +1,62 @@
+{
+  "id": "com.tungsten.pluginstore",
+  "versionFrom": {
+    "file": "../client/common/version.h",
+    "regex": "FP_VERSION_W  L\"([0-9.]+)\""
+  },
+  "name": {
+    "en": "Plugin-Store"
+  },
+  "description": {
+    "en": "The Plugin-Store ribbon for Power PDF: browse, install, update and remove plugins from the team catalog.",
+    "de": "Das Plugin-Store-Menüband für Power PDF: Plug-ins aus dem Team-Katalog durchsuchen, installieren, aktualisieren und entfernen.",
+    "fr": "Le ruban Plugin-Store pour Power PDF : parcourez, installez, mettez à jour et supprimez les plugins du catalogue d'équipe.",
+    "it": "La barra multifunzione Plugin-Store per Power PDF: sfoglia, installa, aggiorna e rimuovi i plugin dal catalogo del team.",
+    "es": "La cinta Plugin-Store para Power PDF: explore, instale, actualice y elimine plugins del catálogo del equipo.",
+    "nl": "Het Plugin-Store-lint voor Power PDF: blader door de teamcatalogus en installeer, update of verwijder plug-ins.",
+    "pt": "A faixa Plugin-Store para o Power PDF: navegue, instale, atualize e remova plugins do catálogo da equipe.",
+    "da": "Plugin-Store-båndet til Power PDF: gennemse, installer, opdater og fjern plugins fra teamkataloget.",
+    "fi": "Plugin-Store-valintanauha Power PDF:lle: selaa, asenna, päivitä ja poista laajennuksia tiimin luettelosta.",
+    "nb": "Plugin-Store-båndet for Power PDF: bla gjennom, installer, oppdater og fjern programtillegg fra teamkatalogen.",
+    "sv": "Plugin-Store-menyfliken för Power PDF: bläddra, installera, uppdatera och ta bort plugin-program från teamkatalogen.",
+    "pl": "Wstążka Plugin-Store dla Power PDF: przeglądaj, instaluj, aktualizuj i usuwaj wtyczki z katalogu zespołu.",
+    "cs": "Pás karet Plugin-Store pro Power PDF: procházejte, instalujte, aktualizujte a odebírejte pluginy z týmového katalogu.",
+    "hu": "A Plugin-Store menüszalag a Power PDF-hez: böngéssze, telepítse, frissítse és távolítsa el a bővítményeket a csapatkatalógusból.",
+    "ru": "Лента Plugin-Store для Power PDF: просматривайте, устанавливайте, обновляйте и удаляйте плагины из каталога команды.",
+    "tr": "Power PDF için Plugin-Store şeridi: ekip kataloğundan eklentilere göz atın, yükleyin, güncelleyin ve kaldırın."
+  },
+  "changelog": {
+    "en": "First release of the Plugin-Store client.",
+    "de": "Erste Veröffentlichung des Plugin-Store-Clients."
+  },
+  "minPowerPdfVersion": "5.0",
+  "ribbonAtomNamespace": "FeaturePack::PluginStore",
+  "zxt": {
+    "x64": "../client/Release/PluginStore.zxt"
+  },
+  "include": [
+    {
+      "src": "../client/Plug-ins/PluginStore/UILayout",
+      "dst": "UILayout"
+    },
+    {
+      "src": "install.cmd",
+      "dst": "install.cmd"
+    },
+    {
+      "src": "icon.png",
+      "dst": "assets/icon.png"
+    },
+    {
+      "src": "../LICENSE",
+      "dst": "LICENSES.md"
+    }
+  ],
+  "uninstall": {
+    "registryKeys": [
+      "HKCU\\Software\\Kofax\\PDF\\Tungsten Power PDF\\PluginStore"
+    ],
+    "extraPaths": []
+  },
+  "category": "system"
+}
