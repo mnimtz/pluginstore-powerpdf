@@ -96,6 +96,96 @@
                       Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\Publish Mode.xml"
                       Name="Publish Mode.xml" KeyPath="yes" />
               </Component>
+              <Directory Id="LANGENU" Name="ENU">
+                <Component Id="cmpENU" Guid="{2CC75583-EE6D-45A5-AF82-71A2D749B488}" Win64="yes">
+                  <File Id="filENU" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\ENU\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGFRA" Name="FRA">
+                <Component Id="cmpFRA" Guid="{020B06C9-9118-4B30-9F15-C94F227FE590}" Win64="yes">
+                  <File Id="filFRA" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\FRA\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGITA" Name="ITA">
+                <Component Id="cmpITA" Guid="{AAF62DA1-6D1B-406F-97F9-F8CED2AE33C0}" Win64="yes">
+                  <File Id="filITA" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\ITA\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGESP" Name="ESP">
+                <Component Id="cmpESP" Guid="{5B754679-AC42-4110-83A4-367D02CECE13}" Win64="yes">
+                  <File Id="filESP" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\ESP\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGNLD" Name="NLD">
+                <Component Id="cmpNLD" Guid="{B611F6B6-81BB-4B6E-B2F3-FECA8096B0B4}" Win64="yes">
+                  <File Id="filNLD" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\NLD\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGPTB" Name="PTB">
+                <Component Id="cmpPTB" Guid="{2ED0FC10-941F-49DF-B1A5-5E6E50FC47EC}" Win64="yes">
+                  <File Id="filPTB" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\PTB\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGDAN" Name="DAN">
+                <Component Id="cmpDAN" Guid="{DA4045A3-7699-4DAD-8451-633825654E55}" Win64="yes">
+                  <File Id="filDAN" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\DAN\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGFIN" Name="FIN">
+                <Component Id="cmpFIN" Guid="{802D81D9-2E50-4090-99FF-2961C174737A}" Win64="yes">
+                  <File Id="filFIN" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\FIN\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGNOR" Name="NOR">
+                <Component Id="cmpNOR" Guid="{67DA0855-AFAE-4D8B-ABAD-28185E4927FF}" Win64="yes">
+                  <File Id="filNOR" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\NOR\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGSVE" Name="SVE">
+                <Component Id="cmpSVE" Guid="{B74EF5FF-51A2-4E76-860C-47BF7173F990}" Win64="yes">
+                  <File Id="filSVE" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\SVE\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGPLK" Name="PLK">
+                <Component Id="cmpPLK" Guid="{72D0EFBB-0A6A-47A7-9C34-389400C2B4C0}" Win64="yes">
+                  <File Id="filPLK" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\PLK\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGCSY" Name="CSY">
+                <Component Id="cmpCSY" Guid="{26F367AB-8CE1-4D91-8E74-EBE2A458E5C6}" Win64="yes">
+                  <File Id="filCSY" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\CSY\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGHUN" Name="HUN">
+                <Component Id="cmpHUN" Guid="{AD974606-348E-4E63-9471-60B958F31E02}" Win64="yes">
+                  <File Id="filHUN" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\HUN\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGRUS" Name="RUS">
+                <Component Id="cmpRUS" Guid="{20621EFE-16DE-42EE-A558-8F6A15C11796}" Win64="yes">
+                  <File Id="filRUS" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\RUS\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGTRK" Name="TRK">
+                <Component Id="cmpTRK" Guid="{5DCAE91D-27FB-4BE4-84DC-D9CEC181C231}" Win64="yes">
+                  <File Id="filTRK" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\TRK\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
               <Directory Id="LANGDEU" Name="DEU">
                 <Component Id="cmpDeu" Guid="{0CDC1E08-BD11-411D-97C3-37D9E0339E9A}" Win64="yes">
                   <File Id="filDeu" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\DEU\NameAndTitle.xml"
@@ -113,6 +203,21 @@
       <ComponentRef Id="cmpLayout" />
       <ComponentRef Id="cmpPublish" />
       <ComponentRef Id="cmpDeu" />
+      <ComponentRef Id="cmpENU" />
+      <ComponentRef Id="cmpFRA" />
+      <ComponentRef Id="cmpITA" />
+      <ComponentRef Id="cmpESP" />
+      <ComponentRef Id="cmpNLD" />
+      <ComponentRef Id="cmpPTB" />
+      <ComponentRef Id="cmpDAN" />
+      <ComponentRef Id="cmpFIN" />
+      <ComponentRef Id="cmpNOR" />
+      <ComponentRef Id="cmpSVE" />
+      <ComponentRef Id="cmpPLK" />
+      <ComponentRef Id="cmpCSY" />
+      <ComponentRef Id="cmpHUN" />
+      <ComponentRef Id="cmpRUS" />
+      <ComponentRef Id="cmpTRK" />
     </Feature>
 
     <UIRef Id="WixUI_Minimal" />

@@ -202,6 +202,62 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
     return result;
 }
 
+bool PSScheduleRestart()
+{
+    wchar_t exe[MAX_PATH] = { 0 };
+    GetModuleFileNameW(NULL, exe, MAX_PATH);
+    wchar_t tempDir[MAX_PATH];
+    GetTempPathW(MAX_PATH, tempDir);
+    wchar_t pid[16];
+    swprintf_s(pid, 16, L"%lu", GetCurrentProcessId());
+
+    // Waits for THIS process, then until no PowerPDF.exe is left at all
+    // (a second instance still shutting down would swallow the new start via
+    // the single-instance hand-over), then starts Power PDF again. Generous
+    // timeout: the user may take a while with "save changes?" prompts.
+    std::wstring script = std::wstring() +
+        L"$log = Join-Path $env:TEMP 'PluginStore.log'\r\n" +
+        L"function L($m) { Add-Content -Path $log -Encoding UTF8 -Value ((Get-Date -Format 'yyyy-MM-dd HH:mm:ss.fff') + '  [Restart] ' + $m) }\r\n" +
+        L"$p0 = " + pid + L"\r\n" +
+        L"$exe = '" + exe + L"'\r\n" +
+        L"L ('helper waiting for pid ' + $p0)\r\n" +
+        L"Wait-Process -Id $p0 -Timeout 900 -ErrorAction SilentlyContinue\r\n" +
+        L"if (Get-Process -Id $p0 -ErrorAction SilentlyContinue) { L 'Power PDF still running after 15 min, giving up'; exit 1 }\r\n" +
+        L"$deadline = (Get-Date).AddSeconds(60)\r\n" +
+        L"while ((Get-Process -Name PowerPDF -ErrorAction SilentlyContinue) -and (Get-Date) -lt $deadline) { Start-Sleep -Milliseconds 500 }\r\n" +
+        L"if (Get-Process -Name PowerPDF -ErrorAction SilentlyContinue) { L 'another PowerPDF.exe is still running, not starting a second one'; exit 2 }\r\n" +
+        L"Start-Sleep -Seconds 2\r\n" +
+        L"try { Start-Process -FilePath $exe; L 'Power PDF restarted' } catch { L ('start failed: ' + $_.Exception.Message) }\r\n";
+
+    std::wstring scriptPath = std::wstring(tempDir) + L"psrestart.ps1";
+    if (!WriteTextFile(scriptPath, script)) return false;
+
+    std::wstring cmd = L"powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"" + scriptPath + L"\"";
+    std::vector<wchar_t> buf(cmd.begin(), cmd.end());
+    buf.push_back(0);
+    STARTUPINFOW si = { sizeof(si) };
+    si.dwFlags = STARTF_USESHOWWINDOW;
+    si.wShowWindow = SW_HIDE;
+    PROCESS_INFORMATION pi = { 0 };
+    // Break away from a job the host may run in, so the helper survives the
+    // host's exit; fall back to a plain detached start where that is denied.
+    BOOL ok = CreateProcessW(NULL, buf.data(), NULL, NULL, FALSE,
+                             CREATE_NO_WINDOW | DETACHED_PROCESS | CREATE_BREAKAWAY_FROM_JOB,
+                             NULL, NULL, &si, &pi);
+    if (!ok)
+        ok = CreateProcessW(NULL, buf.data(), NULL, NULL, FALSE, CREATE_NO_WINDOW | DETACHED_PROCESS,
+                            NULL, NULL, &si, &pi);
+    if (!ok)
+    {
+        FPLogW(L"[Store] restart helper could not start (%lu)", GetLastError());
+        return false;
+    }
+    CloseHandle(pi.hThread);
+    CloseHandle(pi.hProcess);
+    FPLogW(L"[Store] restart requested, helper started");
+    return true;
+}
+
 int PSCompareVersions(const std::wstring& a, const std::wstring& b)
 {
     size_t ia = 0, ib = 0;

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GaaihoLayoutTitle>
+    <toolbar name="FeaturePack" title="Geavanceerde functies"/>
+    <PFFGroup name="FeaturePack::PluginStore" title="Plugin-Store"/>
+    <PFFButton name="FeaturePack::PluginStore::Open" title="Plugin-Store" tooltip="Plug-ins voor Power PDF bekijken en installeren"/>
+</GaaihoLayoutTitle>

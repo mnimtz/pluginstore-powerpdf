@@ -31,5 +31,10 @@ int PSUninstallPackage(const std::wstring& zxtName, HWND owner);
 // 2 = hash, 4 = extract/launch failed.
 int PSSelfUpdate(const PSCatalogEntry& e, HWND owner);
 
+// Starts a detached helper that waits until Power PDF (this process and any
+// other PowerPDF.exe) has exited and then starts it again. Logs its steps to
+// %TEMP%\PluginStore.log. Returns false when the helper could not start.
+bool PSScheduleRestart();
+
 // "1.2.10" > "1.2.9": numeric per-segment compare.
 int PSCompareVersions(const std::wstring& a, const std::wstring& b);

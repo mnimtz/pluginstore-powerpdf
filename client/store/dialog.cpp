@@ -39,11 +39,13 @@ protected:
 
         m_list.SubclassDlgItem(IDC_PS_LIST, this);
         m_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
-        m_list.InsertColumn(0, FPLoc(IDS_PSD_C_NAME).c_str(),      LVCFMT_LEFT, 150);
-        m_list.InsertColumn(1, FPLoc(IDS_PSD_C_AVAIL).c_str(),     LVCFMT_LEFT, 70);
-        m_list.InsertColumn(2, FPLoc(IDS_PSD_C_INSTALLED).c_str(), LVCFMT_LEFT, 70);
+        m_list.InsertColumn(0, FPLoc(IDS_PSD_C_NAME).c_str(),      LVCFMT_LEFT, 160);
+        m_list.InsertColumn(1, FPLoc(IDS_PSD_C_AVAIL).c_str(),     LVCFMT_LEFT, 65);
+        m_list.InsertColumn(2, FPLoc(IDS_PSD_C_INSTALLED).c_str(), LVCFMT_LEFT, 65);
         m_list.InsertColumn(3, FPLoc(IDS_PSD_C_STATUS).c_str(),    LVCFMT_LEFT, 110);
-        m_list.InsertColumn(4, FPLoc(IDS_PSD_C_SIZE).c_str(),      LVCFMT_RIGHT, 70);
+        m_list.InsertColumn(4, FPLoc(IDS_PSD_C_SIZE).c_str(),      LVCFMT_RIGHT, 60);
+        m_list.InsertColumn(5, FPLoc(IDS_PSD_C_AUTHOR).c_str(),    LVCFMT_LEFT, 130);
+        m_list.InsertColumn(6, FPLoc(IDS_PSD_C_CONTACT).c_str(),   LVCFMT_LEFT, 210);
 
         Reload();
         return TRUE;
@@ -102,6 +104,8 @@ protected:
             wchar_t size[32];
             swprintf_s(size, 32, L"%llu KB", e.sizeBytes / 1024);
             m_list.SetItemText(row, 4, size);
+            m_list.SetItemText(row, 5, e.author.c_str());
+            m_list.SetItemText(row, 6, e.contactEmail.c_str());
             m_list.SetItemData(row, (DWORD_PTR)i);
         }
         m_list.SetItemState(0, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
@@ -171,11 +175,10 @@ protected:
         }
     }
 
-    // Power PDF loads plug-ins only at start. On "yes" a detached helper waits
-    // for THIS process to exit and starts PowerPDF.exe again; then the main
-    // window gets a normal close request, so unsaved documents are offered
-    // for saving and the user can still cancel (the helper gives up after
-    // 3 minutes).
+    // Power PDF loads plug-ins only at start. On "yes" a detached helper
+    // (PSScheduleRestart) waits until Power PDF has fully exited and starts it
+    // again; then the main window gets a normal close request, so unsaved
+    // documents are offered for saving and the user can still cancel.
     void OfferRestart(UINT idsQuestion, const std::wstring& name)
     {
         wchar_t ask[600];
@@ -184,36 +187,7 @@ protected:
             return;
 
         HWND mainWnd = ::GetAncestor(GetSafeHwnd(), GA_ROOTOWNER);
-        wchar_t exe[MAX_PATH] = { 0 };
-        GetModuleFileNameW(NULL, exe, MAX_PATH);
-        DWORD pid = GetCurrentProcessId();
-
-        wchar_t cmd[1024];
-        swprintf_s(cmd, 1024,
-            L"powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command "
-            L"\"Wait-Process -Id %lu -Timeout 180 -ErrorAction SilentlyContinue; "
-            L"if (-not (Get-Process -Id %lu -ErrorAction SilentlyContinue)) { Start-Process -FilePath '%s' }\"",
-            pid, pid, exe);
-
-        STARTUPINFOW si = { sizeof(si) };
-        si.dwFlags = STARTF_USESHOWWINDOW;
-        si.wShowWindow = SW_HIDE;
-        PROCESS_INFORMATION pi = { 0 };
-        if (!CreateProcessW(NULL, cmd, NULL, NULL, FALSE,
-                            CREATE_NO_WINDOW | DETACHED_PROCESS | CREATE_BREAKAWAY_FROM_JOB,
-                            NULL, NULL, &si, &pi))
-        {
-            // Some environments forbid breaking away from the job; retry plain.
-            if (!CreateProcessW(NULL, cmd, NULL, NULL, FALSE, CREATE_NO_WINDOW | DETACHED_PROCESS,
-                                NULL, NULL, &si, &pi))
-            {
-                FPLogW(L"[Store] restart helper could not start (%lu)", GetLastError());
-                return;
-            }
-        }
-        CloseHandle(pi.hThread);
-        CloseHandle(pi.hProcess);
-        FPLogW(L"[Store] restart requested, helper started");
+        if (!PSScheduleRestart()) return;
 
         EndDialog(IDCANCEL);
         if (mainWnd && mainWnd != GetSafeHwnd())

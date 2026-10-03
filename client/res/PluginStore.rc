@@ -8,8 +8,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // Version
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,3,2,0
- PRODUCTVERSION 0,3,2,0
+ FILEVERSION 0,3,3,0
+ PRODUCTVERSION 0,3,3,0
  FILEFLAGSMASK 0x3fL
  FILEFLAGS 0x0L
  FILEOS 0x40004L
@@ -22,11 +22,11 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Tungsten Automation"
             VALUE "FileDescription", "Plugin-Store client for Tungsten Power PDF"
-            VALUE "FileVersion", "0.3.2"
+            VALUE "FileVersion", "0.3.3"
             VALUE "InternalName", "PluginStore"
             VALUE "OriginalFilename", "PluginStore.zxt"
             VALUE "ProductName", "PluginStore-PowerPDF"
-            VALUE "ProductVersion", "0.3.2"
+            VALUE "ProductVersion", "0.3.3"
         END
     END
     BLOCK "VarFileInfo"
@@ -42,23 +42,23 @@ IDB_STORE16   BITMAP  "icon_store16.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 // Store dialog
-IDD_PS_DIALOG DIALOGEX 0, 0, 440, 260
+IDD_PS_DIALOG DIALOGEX 0, 0, 560, 260
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Plugin-Store"
 FONT 9, "Segoe UI", 400, 0, 0x0
 BEGIN
     CONTROL         "", IDC_PS_LIST, "SysListView32",
                     LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,
-                    7, 7, 426, 140
-    EDITTEXT        IDC_PS_DESC, 7, 152, 426, 44,
+                    7, 7, 546, 140
+    EDITTEXT        IDC_PS_DESC, 7, 152, 546, 44,
                     ES_MULTILINE | ES_READONLY | WS_VSCROLL | NOT WS_TABSTOP
-    LTEXT           "", IDC_PS_ADMIN_NOTE, 7, 201, 426, 10
-    LTEXT           "", IDC_PS_STATUS, 7, 214, 426, 18
+    LTEXT           "", IDC_PS_ADMIN_NOTE, 7, 201, 546, 10
+    LTEXT           "", IDC_PS_STATUS, 7, 214, 546, 18
     PUSHBUTTON      "Update Plugin-Store", IDC_PS_SELFUPDATE, 7, 239, 110, 14
-    PUSHBUTTON      "Refresh", IDC_PS_REFRESH, 153, 239, 60, 14
-    PUSHBUTTON      "Uninstall", IDC_PS_UNINSTALL, 217, 239, 72, 14
-    DEFPUSHBUTTON   "Install", IDC_PS_INSTALL, 293, 239, 70, 14
-    PUSHBUTTON      "Close", IDCANCEL, 367, 239, 66, 14
+    PUSHBUTTON      "Refresh", IDC_PS_REFRESH, 273, 239, 60, 14
+    PUSHBUTTON      "Uninstall", IDC_PS_UNINSTALL, 337, 239, 72, 14
+    DEFPUSHBUTTON   "Install", IDC_PS_INSTALL, 413, 239, 70, 14
+    PUSHBUTTON      "Close", IDCANCEL, 487, 239, 66, 14
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -114,6 +114,8 @@ Windows will ask once for administrator approval."
     IDS_PSD_SELF_UPDATE "A new version of the Plugin-Store is available: %s (installed: %s)."
     IDS_PSD_BTN_SELFUPD "Update Plugin-Store"
     IDS_PSD_AUTHOR      "Author / contact:"
+    IDS_PSD_C_AUTHOR    "Author"
+    IDS_PSD_C_CONTACT   "Contact"
     IDS_PSD_ASK_RESTART "'%s' is installed. Power PDF loads plugins at start.
 
 Restart Power PDF now? Unsaved documents are offered for saving first."
@@ -168,6 +170,8 @@ Windows fragt einmal nach Administrator-Bestätigung."
     IDS_PSD_SELF_UPDATE "Eine neue Version des Plugin-Store ist verfügbar: %s (installiert: %s)."
     IDS_PSD_BTN_SELFUPD "Plugin-Store aktualisieren"
     IDS_PSD_AUTHOR      "Autor / Kontakt:"
+    IDS_PSD_C_AUTHOR    "Autor"
+    IDS_PSD_C_CONTACT   "Kontakt"
     IDS_PSD_ASK_RESTART "'%s' ist installiert. Power PDF lädt Plug-ins beim Start.
 
 Power PDF jetzt neu starten? Ungespeicherte Dokumente werden vorher zum Speichern angeboten."
@@ -183,4 +187,788 @@ Power PDF jetzt neu starten? Ungespeicherte Dokumente werden vorher zum Speicher
     IDS_PSO_HINT        "Beta-Plug-ins haben die automatische Prüfung bestanden, sind aber noch nicht von einem Admin geprüft. Installation auf eigene Verantwortung."
     IDS_PSO_VERBOSE     "Ausführliches Protokoll (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnose"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — French
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Fonctions avancées"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Parcourir et installer des plug-ins pour Power PDF"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Plug-in"
+    IDS_PSD_C_AVAIL     "Disponible"
+    IDS_PSD_C_INSTALLED "Installée"
+    IDS_PSD_C_STATUS    "État"
+    IDS_PSD_C_SIZE      "Taille"
+    IDS_PSD_BTN_INSTALL "Installer"
+    IDS_PSD_BTN_REFRESH "Actualiser"
+    IDS_PSD_BTN_CLOSE   "Fermer"
+    IDS_PSD_ST_NOTINST  "Non installé"
+    IDS_PSD_ST_INSTALLED "Installé"
+    IDS_PSD_ST_UPDATE   "Mise à jour disponible"
+    IDS_PSD_MSG_FAIL    "Impossible de joindre le serveur du Plugin-Store. Vérifiez l’URL du serveur dans Fichier > Options > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Installé. Redémarrez Power PDF pour charger le plug-in."
+    IDS_PSD_MSG_INSTFAIL "Échec de l’installation (code %d)."
+    IDS_PSD_CONFIRM     "Installer « %s » version %s maintenant ?\nWindows vous demandera une seule fois l’autorisation d’un administrateur."
+    IDS_PSD_ADMIN_NOTE  "L’installation ou la mise à jour d’un plug-in nécessite des droits d’administrateur local (une demande par installation)."
+    IDS_PSD_MSG_HASH    "Le fichier téléchargé n’a pas réussi le contrôle d’intégrité (SHA-256). Installation annulée."
+    IDS_PSD_EMPTY       "Aucun plug-in n’est encore disponible sur le serveur."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Désinstaller"
+    IDS_PSD_CONFIRM_UNINST "Supprimer « %s » de Power PDF maintenant ?
+Windows vous demandera une seule fois l’autorisation d’un administrateur."
+    IDS_PSD_MSG_UNINSTOK "Désinstallé. Redémarrez Power PDF pour décharger le plug-in."
+    IDS_PSD_SELF_UPDATE "Une nouvelle version du Plugin-Store est disponible : %s (installée : %s)."
+    IDS_PSD_BTN_SELFUPD "Mettre à jour le Plugin-Store"
+    IDS_PSD_AUTHOR      "Auteur / contact :"
+    IDS_PSD_C_AUTHOR    "Auteur"
+    IDS_PSD_C_CONTACT   "Contact"
+    IDS_PSD_ASK_RESTART "« %s » est installé. Power PDF charge les plug-ins au démarrage.
+
+Redémarrer Power PDF maintenant ? Il vous sera d’abord proposé d’enregistrer les documents non enregistrés."
+    IDS_PSD_ASK_RESTART_UN "« %s » a été supprimé. Power PDF le déchargera au prochain démarrage.
+
+Redémarrer Power PDF maintenant ? Il vous sera d’abord proposé d’enregistrer les documents non enregistrés."
+    IDS_PSD_MSG_SELFUPD "Le programme d’installation a démarré. Veuillez suivre ses instructions ; il vous demandera de fermer Power PDF."
+    IDS_PSO_PAGE        "Général"
+    IDS_PSO_GRP         "Serveur du Plugin-Store"
+    IDS_PSO_URL_LBL     "URL du serveur :"
+    IDS_PSO_BETA        "Beta : afficher les plug-ins qui ne sont pas encore approuvés"
+    IDS_PSO_VERSIONLBL  "Client Plugin-Store version %s"
+    IDS_PSO_HINT        "Les plug-ins Beta ont passé les contrôles automatiques mais n’ont pas encore été vérifiés par un administrateur. Installez-les à vos propres risques."
+    IDS_PSO_VERBOSE     "Journalisation détaillée (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnostic"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Italian
+LANGUAGE LANG_ITALIAN, SUBLANG_ITALIAN
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Funzioni avanzate"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Sfoglia e installa plug-in per Power PDF"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Plug-in"
+    IDS_PSD_C_AVAIL     "Disponibile"
+    IDS_PSD_C_INSTALLED "Installata"
+    IDS_PSD_C_STATUS    "Stato"
+    IDS_PSD_C_SIZE      "Dimensione"
+    IDS_PSD_BTN_INSTALL "Installa"
+    IDS_PSD_BTN_REFRESH "Aggiorna"
+    IDS_PSD_BTN_CLOSE   "Chiudi"
+    IDS_PSD_ST_NOTINST  "Non installato"
+    IDS_PSD_ST_INSTALLED "Installato"
+    IDS_PSD_ST_UPDATE   "Aggiornamento disponibile"
+    IDS_PSD_MSG_FAIL    "Impossibile raggiungere il server del Plugin-Store. Verificare l’URL del server in File > Opzioni > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Installato. Riavviare Power PDF per caricare il plug-in."
+    IDS_PSD_MSG_INSTFAIL "Installazione non riuscita (codice %d)."
+    IDS_PSD_CONFIRM     "Installare ora '%s' versione %s?\nWindows chiederà una sola volta l’autorizzazione dell’amministratore."
+    IDS_PSD_ADMIN_NOTE  "L’installazione o l’aggiornamento di un plug-in richiede diritti di amministratore locale (una richiesta per installazione)."
+    IDS_PSD_MSG_HASH    "Il file scaricato non ha superato il controllo di integrità (SHA-256). Installazione annullata."
+    IDS_PSD_EMPTY       "Sul server non sono ancora disponibili plug-in."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Disinstalla"
+    IDS_PSD_CONFIRM_UNINST "Rimuovere ora '%s' da Power PDF?
+Windows chiederà una sola volta l’autorizzazione dell’amministratore."
+    IDS_PSD_MSG_UNINSTOK "Disinstallato. Riavviare Power PDF per disattivare il plug-in."
+    IDS_PSD_SELF_UPDATE "È disponibile una nuova versione del Plugin-Store: %s (installata: %s)."
+    IDS_PSD_BTN_SELFUPD "Aggiorna Plugin-Store"
+    IDS_PSD_AUTHOR      "Autore / contatto:"
+    IDS_PSD_C_AUTHOR    "Autore"
+    IDS_PSD_C_CONTACT   "Contatto"
+    IDS_PSD_ASK_RESTART "'%s' è installato. Power PDF carica i plug-in all’avvio.
+
+Riavviare ora Power PDF? Prima verrà proposto di salvare i documenti non salvati."
+    IDS_PSD_ASK_RESTART_UN "'%s' è stato rimosso. Power PDF lo disattiverà al prossimo avvio.
+
+Riavviare ora Power PDF? Prima verrà proposto di salvare i documenti non salvati."
+    IDS_PSD_MSG_SELFUPD "Il programma di installazione è stato avviato. Seguire le istruzioni; verrà richiesto di chiudere Power PDF."
+    IDS_PSO_PAGE        "Generale"
+    IDS_PSO_GRP         "Server del Plugin-Store"
+    IDS_PSO_URL_LBL     "URL del server:"
+    IDS_PSO_BETA        "Beta: mostra i plug-in non ancora approvati"
+    IDS_PSO_VERSIONLBL  "Client Plugin-Store versione %s"
+    IDS_PSO_HINT        "I plug-in Beta hanno superato i controlli automatici, ma non sono ancora stati verificati da un amministratore. L’installazione avviene a proprio rischio."
+    IDS_PSO_VERBOSE     "Registrazione dettagliata (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnostica"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Spanish
+LANGUAGE LANG_SPANISH, SUBLANG_SPANISH_MODERN
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Funciones avanzadas"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Explorar e instalar complementos para Power PDF"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Complemento"
+    IDS_PSD_C_AVAIL     "Disponible"
+    IDS_PSD_C_INSTALLED "Instalada"
+    IDS_PSD_C_STATUS    "Estado"
+    IDS_PSD_C_SIZE      "Tamaño"
+    IDS_PSD_BTN_INSTALL "Instalar"
+    IDS_PSD_BTN_REFRESH "Actualizar"
+    IDS_PSD_BTN_CLOSE   "Cerrar"
+    IDS_PSD_ST_NOTINST  "No instalado"
+    IDS_PSD_ST_INSTALLED "Instalado"
+    IDS_PSD_ST_UPDATE   "Actualización disponible"
+    IDS_PSD_MSG_FAIL    "No se pudo conectar con el servidor del Plugin-Store. Compruebe la URL del servidor en Archivo > Opciones > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Instalado. Reinicie Power PDF para cargar el complemento."
+    IDS_PSD_MSG_INSTFAIL "Error en la instalación (código %d)."
+    IDS_PSD_CONFIRM     "¿Instalar ahora '%s' versión %s?\nWindows solicitará una sola vez la aprobación del administrador."
+    IDS_PSD_ADMIN_NOTE  "Para instalar o actualizar un complemento se requieren derechos de administrador local (una solicitud por instalación)."
+    IDS_PSD_MSG_HASH    "El archivo descargado no superó la comprobación de integridad (SHA-256). Instalación cancelada."
+    IDS_PSD_EMPTY       "Todavía no hay complementos disponibles en el servidor."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Desinstalar"
+    IDS_PSD_CONFIRM_UNINST "¿Quitar ahora '%s' de Power PDF?
+Windows solicitará una sola vez la aprobación del administrador."
+    IDS_PSD_MSG_UNINSTOK "Desinstalado. Reinicie Power PDF para desactivar el complemento."
+    IDS_PSD_SELF_UPDATE "Hay una nueva versión del Plugin-Store disponible: %s (instalada: %s)."
+    IDS_PSD_BTN_SELFUPD "Actualizar Plugin-Store"
+    IDS_PSD_AUTHOR      "Autor / contacto:"
+    IDS_PSD_C_AUTHOR    "Autor"
+    IDS_PSD_C_CONTACT   "Contacto"
+    IDS_PSD_ASK_RESTART "'%s' está instalado. Power PDF carga los complementos al iniciarse.
+
+¿Reiniciar Power PDF ahora? Antes se le ofrecerá guardar los documentos no guardados."
+    IDS_PSD_ASK_RESTART_UN "'%s' se ha quitado. Power PDF lo desactivará en el próximo inicio.
+
+¿Reiniciar Power PDF ahora? Antes se le ofrecerá guardar los documentos no guardados."
+    IDS_PSD_MSG_SELFUPD "Se ha iniciado el instalador. Siga sus instrucciones; le pedirá que cierre Power PDF."
+    IDS_PSO_PAGE        "General"
+    IDS_PSO_GRP         "Servidor del Plugin-Store"
+    IDS_PSO_URL_LBL     "URL del servidor:"
+    IDS_PSO_BETA        "Beta: mostrar complementos que aún no están aprobados"
+    IDS_PSO_VERSIONLBL  "Cliente Plugin-Store versión %s"
+    IDS_PSO_HINT        "Los complementos Beta han superado las comprobaciones automáticas, pero aún no los ha revisado un administrador. Instálelos bajo su propia responsabilidad."
+    IDS_PSO_VERBOSE     "Registro detallado (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnóstico"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Dutch
+LANGUAGE LANG_DUTCH, SUBLANG_DUTCH
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Geavanceerde functies"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Plug-ins voor Power PDF bekijken en installeren"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Plug-in"
+    IDS_PSD_C_AVAIL     "Beschikbaar"
+    IDS_PSD_C_INSTALLED "Geïnstalleerd"
+    IDS_PSD_C_STATUS    "Status"
+    IDS_PSD_C_SIZE      "Grootte"
+    IDS_PSD_BTN_INSTALL "Installeren"
+    IDS_PSD_BTN_REFRESH "Vernieuwen"
+    IDS_PSD_BTN_CLOSE   "Sluiten"
+    IDS_PSD_ST_NOTINST  "Niet geïnstalleerd"
+    IDS_PSD_ST_INSTALLED "Geïnstalleerd"
+    IDS_PSD_ST_UPDATE   "Update beschikbaar"
+    IDS_PSD_MSG_FAIL    "De Plugin-Store-server is niet bereikbaar. Controleer de server-URL onder Bestand > Opties > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Geïnstalleerd. Start Power PDF opnieuw om de plug-in te laden."
+    IDS_PSD_MSG_INSTFAIL "Installatie mislukt (code %d)."
+    IDS_PSD_CONFIRM     "'%s' versie %s nu installeren?\nWindows vraagt eenmalig om goedkeuring door een beheerder."
+    IDS_PSD_ADMIN_NOTE  "Voor het installeren of bijwerken van een plug-in zijn lokale beheerdersrechten vereist (één melding per installatie)."
+    IDS_PSD_MSG_HASH    "Het gedownloade bestand heeft de integriteitscontrole (SHA-256) niet doorstaan. Installatie afgebroken."
+    IDS_PSD_EMPTY       "Er zijn nog geen plug-ins beschikbaar op de server."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Verwijderen"
+    IDS_PSD_CONFIRM_UNINST "'%s' nu uit Power PDF verwijderen?
+Windows vraagt eenmalig om goedkeuring door een beheerder."
+    IDS_PSD_MSG_UNINSTOK "Verwijderd. Start Power PDF opnieuw om de plug-in te ontladen."
+    IDS_PSD_SELF_UPDATE "Er is een nieuwe versie van de Plugin-Store beschikbaar: %s (geïnstalleerd: %s)."
+    IDS_PSD_BTN_SELFUPD "Plugin-Store bijwerken"
+    IDS_PSD_AUTHOR      "Auteur / contact:"
+    IDS_PSD_C_AUTHOR    "Auteur"
+    IDS_PSD_C_CONTACT   "Contact"
+    IDS_PSD_ASK_RESTART "'%s' is geïnstalleerd. Power PDF laadt plug-ins bij het starten.
+
+Power PDF nu opnieuw starten? U krijgt eerst de gelegenheid niet-opgeslagen documenten op te slaan."
+    IDS_PSD_ASK_RESTART_UN "'%s' is verwijderd. Power PDF ontlaadt de plug-in bij de volgende start.
+
+Power PDF nu opnieuw starten? U krijgt eerst de gelegenheid niet-opgeslagen documenten op te slaan."
+    IDS_PSD_MSG_SELFUPD "Het installatieprogramma is gestart. Volg de instructies; u wordt gevraagd Power PDF te sluiten."
+    IDS_PSO_PAGE        "Algemeen"
+    IDS_PSO_GRP         "Plugin-Store-server"
+    IDS_PSO_URL_LBL     "Server-URL:"
+    IDS_PSO_BETA        "Beta: plug-ins weergeven die nog niet zijn goedgekeurd"
+    IDS_PSO_VERSIONLBL  "Plugin-Store-client versie %s"
+    IDS_PSO_HINT        "Beta-plug-ins hebben de automatische controles doorstaan, maar zijn nog niet door een beheerder beoordeeld. Installatie is op eigen risico."
+    IDS_PSO_VERBOSE     "Uitgebreide logboekregistratie (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnose"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Portuguese (Brazil)
+LANGUAGE LANG_PORTUGUESE, SUBLANG_PORTUGUESE_BRAZILIAN
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Funções avançadas"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Procurar e instalar plug-ins para o Power PDF"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Plug-in"
+    IDS_PSD_C_AVAIL     "Disponível"
+    IDS_PSD_C_INSTALLED "Instalada"
+    IDS_PSD_C_STATUS    "Status"
+    IDS_PSD_C_SIZE      "Tamanho"
+    IDS_PSD_BTN_INSTALL "Instalar"
+    IDS_PSD_BTN_REFRESH "Atualizar"
+    IDS_PSD_BTN_CLOSE   "Fechar"
+    IDS_PSD_ST_NOTINST  "Não instalado"
+    IDS_PSD_ST_INSTALLED "Instalado"
+    IDS_PSD_ST_UPDATE   "Atualização disponível"
+    IDS_PSD_MSG_FAIL    "Não foi possível acessar o servidor do Plugin-Store. Verifique a URL do servidor em Arquivo > Opções > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Instalado. Reinicie o Power PDF para carregar o plug-in."
+    IDS_PSD_MSG_INSTFAIL "Falha na instalação (código %d)."
+    IDS_PSD_CONFIRM     "Instalar '%s' versão %s agora?\nO Windows solicitará uma única vez a aprovação do administrador."
+    IDS_PSD_ADMIN_NOTE  "A instalação ou atualização de um plug-in requer direitos de administrador local (uma solicitação por instalação)."
+    IDS_PSD_MSG_HASH    "O arquivo baixado não passou na verificação de integridade (SHA-256). Instalação cancelada."
+    IDS_PSD_EMPTY       "Ainda não há plug-ins disponíveis no servidor."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Desinstalar"
+    IDS_PSD_CONFIRM_UNINST "Remover '%s' do Power PDF agora?
+O Windows solicitará uma única vez a aprovação do administrador."
+    IDS_PSD_MSG_UNINSTOK "Desinstalado. Reinicie o Power PDF para descarregar o plug-in."
+    IDS_PSD_SELF_UPDATE "Uma nova versão do Plugin-Store está disponível: %s (instalada: %s)."
+    IDS_PSD_BTN_SELFUPD "Atualizar Plugin-Store"
+    IDS_PSD_AUTHOR      "Autor / contato:"
+    IDS_PSD_C_AUTHOR    "Autor"
+    IDS_PSD_C_CONTACT   "Contato"
+    IDS_PSD_ASK_RESTART "'%s' está instalado. O Power PDF carrega os plug-ins na inicialização.
+
+Reiniciar o Power PDF agora? Antes, será oferecida a opção de salvar os documentos não salvos."
+    IDS_PSD_ASK_RESTART_UN "'%s' foi removido. O Power PDF o descarregará na próxima inicialização.
+
+Reiniciar o Power PDF agora? Antes, será oferecida a opção de salvar os documentos não salvos."
+    IDS_PSD_MSG_SELFUPD "O instalador foi iniciado. Siga as instruções; ele solicitará que você feche o Power PDF."
+    IDS_PSO_PAGE        "Geral"
+    IDS_PSO_GRP         "Servidor do Plugin-Store"
+    IDS_PSO_URL_LBL     "URL do servidor:"
+    IDS_PSO_BETA        "Beta: mostrar plug-ins ainda não aprovados"
+    IDS_PSO_VERSIONLBL  "Cliente Plugin-Store versão %s"
+    IDS_PSO_HINT        "Os plug-ins Beta passaram nas verificações automáticas, mas ainda não foram revisados por um administrador. Instale-os por sua conta e risco."
+    IDS_PSO_VERBOSE     "Log detalhado (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnóstico"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Danish
+LANGUAGE LANG_DANISH, SUBLANG_DANISH_DENMARK
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Avancerede funktioner"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Gennemse og installer plug-ins til Power PDF"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Plug-in"
+    IDS_PSD_C_AVAIL     "Tilgængelig"
+    IDS_PSD_C_INSTALLED "Installeret"
+    IDS_PSD_C_STATUS    "Status"
+    IDS_PSD_C_SIZE      "Størrelse"
+    IDS_PSD_BTN_INSTALL "Installer"
+    IDS_PSD_BTN_REFRESH "Opdater"
+    IDS_PSD_BTN_CLOSE   "Luk"
+    IDS_PSD_ST_NOTINST  "Ikke installeret"
+    IDS_PSD_ST_INSTALLED "Installeret"
+    IDS_PSD_ST_UPDATE   "Opdatering tilgængelig"
+    IDS_PSD_MSG_FAIL    "Der kunne ikke oprettes forbindelse til Plugin-Store-serveren. Kontrollér serverens URL under Filer > Indstillinger > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Installeret. Genstart Power PDF for at indlæse plug-in'et."
+    IDS_PSD_MSG_INSTFAIL "Installationen mislykkedes (kode %d)."
+    IDS_PSD_CONFIRM     "Vil du installere '%s' version %s nu?\nWindows beder én gang om godkendelse fra en administrator."
+    IDS_PSD_ADMIN_NOTE  "Installation eller opdatering af et plug-in kræver lokale administratorrettigheder (én anmodning pr. installation)."
+    IDS_PSD_MSG_HASH    "Den downloadede fil bestod ikke integritetskontrollen (SHA-256). Installationen blev afbrudt."
+    IDS_PSD_EMPTY       "Der er endnu ingen plug-ins tilgængelige på serveren."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Afinstaller"
+    IDS_PSD_CONFIRM_UNINST "Vil du fjerne '%s' fra Power PDF nu?
+Windows beder én gang om godkendelse fra en administrator."
+    IDS_PSD_MSG_UNINSTOK "Afinstalleret. Genstart Power PDF for at fjerne plug-in'et fra hukommelsen."
+    IDS_PSD_SELF_UPDATE "Der er en ny version af Plugin-Store tilgængelig: %s (installeret: %s)."
+    IDS_PSD_BTN_SELFUPD "Opdater Plugin-Store"
+    IDS_PSD_AUTHOR      "Forfatter / kontakt:"
+    IDS_PSD_C_AUTHOR    "Forfatter"
+    IDS_PSD_C_CONTACT   "Kontakt"
+    IDS_PSD_ASK_RESTART "'%s' er installeret. Power PDF indlæser plug-ins ved start.
+
+Vil du genstarte Power PDF nu? Du får først mulighed for at gemme ikke-gemte dokumenter."
+    IDS_PSD_ASK_RESTART_UN "'%s' er fjernet. Power PDF fjerner det fra hukommelsen ved næste start.
+
+Vil du genstarte Power PDF nu? Du får først mulighed for at gemme ikke-gemte dokumenter."
+    IDS_PSD_MSG_SELFUPD "Installationsprogrammet er startet. Følg vejledningen; du bliver bedt om at lukke Power PDF."
+    IDS_PSO_PAGE        "Generelt"
+    IDS_PSO_GRP         "Plugin-Store-server"
+    IDS_PSO_URL_LBL     "Serverens URL:"
+    IDS_PSO_BETA        "Beta: vis plug-ins, der endnu ikke er godkendt"
+    IDS_PSO_VERSIONLBL  "Plugin-Store-klient version %s"
+    IDS_PSO_HINT        "Beta-plug-ins har bestået de automatiske kontroller, men er endnu ikke gennemgået af en administrator. Installation sker på eget ansvar."
+    IDS_PSO_VERBOSE     "Detaljeret logføring (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnosticering"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Finnish
+LANGUAGE LANG_FINNISH, SUBLANG_FINNISH_FINLAND
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Lisätoiminnot"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Selaa ja asenna Power PDF:n laajennuksia"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Laajennus"
+    IDS_PSD_C_AVAIL     "Saatavilla"
+    IDS_PSD_C_INSTALLED "Asennettu"
+    IDS_PSD_C_STATUS    "Tila"
+    IDS_PSD_C_SIZE      "Koko"
+    IDS_PSD_BTN_INSTALL "Asenna"
+    IDS_PSD_BTN_REFRESH "Päivitä"
+    IDS_PSD_BTN_CLOSE   "Sulje"
+    IDS_PSD_ST_NOTINST  "Ei asennettu"
+    IDS_PSD_ST_INSTALLED "Asennettu"
+    IDS_PSD_ST_UPDATE   "Päivitys saatavilla"
+    IDS_PSD_MSG_FAIL    "Plugin-Store-palvelimeen ei saatu yhteyttä. Tarkista palvelimen URL-osoite kohdassa Tiedosto > Asetukset > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Asennettu. Käynnistä Power PDF uudelleen, jotta laajennus latautuu."
+    IDS_PSD_MSG_INSTFAIL "Asennus epäonnistui (koodi %d)."
+    IDS_PSD_CONFIRM     "Asennetaanko '%s', versio %s, nyt?\nWindows pyytää järjestelmänvalvojan hyväksyntää kerran."
+    IDS_PSD_ADMIN_NOTE  "Laajennuksen asentaminen tai päivittäminen edellyttää paikallisia järjestelmänvalvojan oikeuksia (yksi kehote asennusta kohden)."
+    IDS_PSD_MSG_HASH    "Ladattu tiedosto ei läpäissyt eheystarkistusta (SHA-256). Asennus keskeytettiin."
+    IDS_PSD_EMPTY       "Palvelimella ei ole vielä saatavilla laajennuksia."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Poista asennus"
+    IDS_PSD_CONFIRM_UNINST "Poistetaanko '%s' Power PDF:stä nyt?
+Windows pyytää järjestelmänvalvojan hyväksyntää kerran."
+    IDS_PSD_MSG_UNINSTOK "Asennus poistettu. Käynnistä Power PDF uudelleen, jotta laajennus poistuu käytöstä."
+    IDS_PSD_SELF_UPDATE "Plugin-Storesta on saatavilla uusi versio: %s (asennettu: %s)."
+    IDS_PSD_BTN_SELFUPD "Päivitä Plugin-Store"
+    IDS_PSD_AUTHOR      "Tekijä / yhteystiedot:"
+    IDS_PSD_C_AUTHOR    "Tekijä"
+    IDS_PSD_C_CONTACT   "Yhteystiedot"
+    IDS_PSD_ASK_RESTART "'%s' on asennettu. Power PDF lataa laajennukset käynnistyksen yhteydessä.
+
+Käynnistetäänkö Power PDF uudelleen nyt? Tallentamattomat asiakirjat tarjotaan ensin tallennettaviksi."
+    IDS_PSD_ASK_RESTART_UN "'%s' on poistettu. Power PDF poistaa sen käytöstä seuraavan käynnistyksen yhteydessä.
+
+Käynnistetäänkö Power PDF uudelleen nyt? Tallentamattomat asiakirjat tarjotaan ensin tallennettaviksi."
+    IDS_PSD_MSG_SELFUPD "Asennusohjelma on käynnistetty. Noudata sen ohjeita; se pyytää sulkemaan Power PDF:n."
+    IDS_PSO_PAGE        "Yleiset"
+    IDS_PSO_GRP         "Plugin-Store-palvelin"
+    IDS_PSO_URL_LBL     "Palvelimen URL-osoite:"
+    IDS_PSO_BETA        "Beta: näytä laajennukset, joita ei ole vielä hyväksytty"
+    IDS_PSO_VERSIONLBL  "Plugin-Store-asiakasohjelman versio %s"
+    IDS_PSO_HINT        "Beta-laajennukset ovat läpäisseet automaattiset tarkistukset, mutta järjestelmänvalvoja ei ole vielä tarkastanut niitä. Asennus tapahtuu omalla vastuulla."
+    IDS_PSO_VERBOSE     "Laaja lokikirjaus (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Vianmääritys"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Norwegian Bokmål
+LANGUAGE LANG_NORWEGIAN, SUBLANG_NORWEGIAN_BOKMAL
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Avanserte funksjoner"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Bla gjennom og installer programtillegg for Power PDF"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Programtillegg"
+    IDS_PSD_C_AVAIL     "Tilgjengelig"
+    IDS_PSD_C_INSTALLED "Installert"
+    IDS_PSD_C_STATUS    "Status"
+    IDS_PSD_C_SIZE      "Størrelse"
+    IDS_PSD_BTN_INSTALL "Installer"
+    IDS_PSD_BTN_REFRESH "Oppdater"
+    IDS_PSD_BTN_CLOSE   "Lukk"
+    IDS_PSD_ST_NOTINST  "Ikke installert"
+    IDS_PSD_ST_INSTALLED "Installert"
+    IDS_PSD_ST_UPDATE   "Oppdatering tilgjengelig"
+    IDS_PSD_MSG_FAIL    "Kan ikke koble til Plugin-Store-serveren. Kontroller serverens URL under Fil > Alternativer > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Installert. Start Power PDF på nytt for å laste inn programtillegget."
+    IDS_PSD_MSG_INSTFAIL "Installasjonen mislyktes (kode %d)."
+    IDS_PSD_CONFIRM     "Vil du installere '%s' versjon %s nå?\nWindows ber én gang om godkjenning fra en administrator."
+    IDS_PSD_ADMIN_NOTE  "Installasjon eller oppdatering av et programtillegg krever lokale administratorrettigheter (én forespørsel per installasjon)."
+    IDS_PSD_MSG_HASH    "Den nedlastede filen besto ikke integritetskontrollen (SHA-256). Installasjonen ble avbrutt."
+    IDS_PSD_EMPTY       "Det er ennå ingen programtillegg tilgjengelig på serveren."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Avinstaller"
+    IDS_PSD_CONFIRM_UNINST "Vil du fjerne '%s' fra Power PDF nå?
+Windows ber én gang om godkjenning fra en administrator."
+    IDS_PSD_MSG_UNINSTOK "Avinstallert. Start Power PDF på nytt for å laste ut programtillegget."
+    IDS_PSD_SELF_UPDATE "En ny versjon av Plugin-Store er tilgjengelig: %s (installert: %s)."
+    IDS_PSD_BTN_SELFUPD "Oppdater Plugin-Store"
+    IDS_PSD_AUTHOR      "Forfatter / kontakt:"
+    IDS_PSD_C_AUTHOR    "Forfatter"
+    IDS_PSD_C_CONTACT   "Kontakt"
+    IDS_PSD_ASK_RESTART "'%s' er installert. Power PDF laster inn programtillegg ved oppstart.
+
+Vil du starte Power PDF på nytt nå? Du får først tilbud om å lagre ulagrede dokumenter."
+    IDS_PSD_ASK_RESTART_UN "'%s' er fjernet. Power PDF laster det ut ved neste oppstart.
+
+Vil du starte Power PDF på nytt nå? Du får først tilbud om å lagre ulagrede dokumenter."
+    IDS_PSD_MSG_SELFUPD "Installasjonsprogrammet er startet. Følg instruksjonene; du blir bedt om å lukke Power PDF."
+    IDS_PSO_PAGE        "Generelt"
+    IDS_PSO_GRP         "Plugin-Store-server"
+    IDS_PSO_URL_LBL     "Server-URL:"
+    IDS_PSO_BETA        "Beta: vis programtillegg som ennå ikke er godkjent"
+    IDS_PSO_VERSIONLBL  "Plugin-Store-klient versjon %s"
+    IDS_PSO_HINT        "Beta-programtillegg har bestått de automatiske kontrollene, men er ennå ikke gjennomgått av en administrator. Installasjon skjer på eget ansvar."
+    IDS_PSO_VERBOSE     "Detaljert logging (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnostikk"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Swedish
+LANGUAGE LANG_SWEDISH, SUBLANG_SWEDISH
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Avancerade funktioner"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Bläddra bland och installera plugin-program för Power PDF"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Plugin-program"
+    IDS_PSD_C_AVAIL     "Tillgänglig"
+    IDS_PSD_C_INSTALLED "Installerad"
+    IDS_PSD_C_STATUS    "Status"
+    IDS_PSD_C_SIZE      "Storlek"
+    IDS_PSD_BTN_INSTALL "Installera"
+    IDS_PSD_BTN_REFRESH "Uppdatera"
+    IDS_PSD_BTN_CLOSE   "Stäng"
+    IDS_PSD_ST_NOTINST  "Inte installerat"
+    IDS_PSD_ST_INSTALLED "Installerat"
+    IDS_PSD_ST_UPDATE   "Uppdatering tillgänglig"
+    IDS_PSD_MSG_FAIL    "Det gick inte att ansluta till Plugin-Store-servern. Kontrollera serverns URL under Arkiv > Alternativ > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Installerat. Starta om Power PDF för att läsa in plugin-programmet."
+    IDS_PSD_MSG_INSTFAIL "Installationen misslyckades (kod %d)."
+    IDS_PSD_CONFIRM     "Vill du installera '%s' version %s nu?\nWindows ber en gång om godkännande från en administratör."
+    IDS_PSD_ADMIN_NOTE  "Installation eller uppdatering av ett plugin-program kräver lokal administratörsbehörighet (en fråga per installation)."
+    IDS_PSD_MSG_HASH    "Den hämtade filen klarade inte integritetskontrollen (SHA-256). Installationen avbröts."
+    IDS_PSD_EMPTY       "Det finns ännu inga plugin-program tillgängliga på servern."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Avinstallera"
+    IDS_PSD_CONFIRM_UNINST "Vill du ta bort '%s' från Power PDF nu?
+Windows ber en gång om godkännande från en administratör."
+    IDS_PSD_MSG_UNINSTOK "Avinstallerat. Starta om Power PDF för att ta bort plugin-programmet ur minnet."
+    IDS_PSD_SELF_UPDATE "En ny version av Plugin-Store är tillgänglig: %s (installerad: %s)."
+    IDS_PSD_BTN_SELFUPD "Uppdatera Plugin-Store"
+    IDS_PSD_AUTHOR      "Författare / kontakt:"
+    IDS_PSD_C_AUTHOR    "Författare"
+    IDS_PSD_C_CONTACT   "Kontakt"
+    IDS_PSD_ASK_RESTART "'%s' är installerat. Power PDF läser in plugin-program vid start.
+
+Vill du starta om Power PDF nu? Du får först möjlighet att spara osparade dokument."
+    IDS_PSD_ASK_RESTART_UN "'%s' är borttaget. Power PDF tar bort det ur minnet vid nästa start.
+
+Vill du starta om Power PDF nu? Du får först möjlighet att spara osparade dokument."
+    IDS_PSD_MSG_SELFUPD "Installationsprogrammet har startats. Följ anvisningarna; du uppmanas att stänga Power PDF."
+    IDS_PSO_PAGE        "Allmänt"
+    IDS_PSO_GRP         "Plugin-Store-server"
+    IDS_PSO_URL_LBL     "Serverns URL:"
+    IDS_PSO_BETA        "Beta: visa plugin-program som ännu inte är godkända"
+    IDS_PSO_VERSIONLBL  "Plugin-Store-klient version %s"
+    IDS_PSO_HINT        "Beta-plugin-program har klarat de automatiska kontrollerna men har ännu inte granskats av en administratör. Installation sker på egen risk."
+    IDS_PSO_VERBOSE     "Utförlig loggning (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnostik"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Polish
+LANGUAGE LANG_POLISH, SUBLANG_POLISH_POLAND
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Funkcje zaawansowane"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Przeglądaj i instaluj wtyczki do programu Power PDF"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Wtyczka"
+    IDS_PSD_C_AVAIL     "Dostępna"
+    IDS_PSD_C_INSTALLED "Zainstalowana"
+    IDS_PSD_C_STATUS    "Stan"
+    IDS_PSD_C_SIZE      "Rozmiar"
+    IDS_PSD_BTN_INSTALL "Zainstaluj"
+    IDS_PSD_BTN_REFRESH "Odśwież"
+    IDS_PSD_BTN_CLOSE   "Zamknij"
+    IDS_PSD_ST_NOTINST  "Niezainstalowana"
+    IDS_PSD_ST_INSTALLED "Zainstalowana"
+    IDS_PSD_ST_UPDATE   "Dostępna aktualizacja"
+    IDS_PSD_MSG_FAIL    "Nie można połączyć się z serwerem Plugin-Store. Sprawdź adres URL serwera w menu Plik > Opcje > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Zainstalowano. Uruchom ponownie program Power PDF, aby załadować wtyczkę."
+    IDS_PSD_MSG_INSTFAIL "Instalacja nie powiodła się (kod %d)."
+    IDS_PSD_CONFIRM     "Zainstalować teraz '%s' w wersji %s?\nSystem Windows jednorazowo poprosi o zgodę administratora."
+    IDS_PSD_ADMIN_NOTE  "Instalacja lub aktualizacja wtyczki wymaga lokalnych uprawnień administratora (jeden monit na instalację)."
+    IDS_PSD_MSG_HASH    "Pobrany plik nie przeszedł kontroli integralności (SHA-256). Instalacja została przerwana."
+    IDS_PSD_EMPTY       "Na serwerze nie ma jeszcze dostępnych wtyczek."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Odinstaluj"
+    IDS_PSD_CONFIRM_UNINST "Usunąć teraz '%s' z programu Power PDF?
+System Windows jednorazowo poprosi o zgodę administratora."
+    IDS_PSD_MSG_UNINSTOK "Odinstalowano. Uruchom ponownie program Power PDF, aby wyładować wtyczkę."
+    IDS_PSD_SELF_UPDATE "Dostępna jest nowa wersja Plugin-Store: %s (zainstalowana: %s)."
+    IDS_PSD_BTN_SELFUPD "Aktualizuj Plugin-Store"
+    IDS_PSD_AUTHOR      "Autor / kontakt:"
+    IDS_PSD_C_AUTHOR    "Autor"
+    IDS_PSD_C_CONTACT   "Kontakt"
+    IDS_PSD_ASK_RESTART "Wtyczka '%s' została zainstalowana. Power PDF ładuje wtyczki podczas uruchamiania.
+
+Uruchomić teraz ponownie program Power PDF? Najpierw zostanie zaproponowane zapisanie niezapisanych dokumentów."
+    IDS_PSD_ASK_RESTART_UN "Wtyczka '%s' została usunięta. Power PDF wyładuje ją przy następnym uruchomieniu.
+
+Uruchomić teraz ponownie program Power PDF? Najpierw zostanie zaproponowane zapisanie niezapisanych dokumentów."
+    IDS_PSD_MSG_SELFUPD "Instalator został uruchomiony. Postępuj zgodnie z jego instrukcjami; instalator poprosi o zamknięcie programu Power PDF."
+    IDS_PSO_PAGE        "Ogólne"
+    IDS_PSO_GRP         "Serwer Plugin-Store"
+    IDS_PSO_URL_LBL     "Adres URL serwera:"
+    IDS_PSO_BETA        "Beta: pokaż wtyczki, które nie zostały jeszcze zatwierdzone"
+    IDS_PSO_VERSIONLBL  "Klient Plugin-Store, wersja %s"
+    IDS_PSO_HINT        "Wtyczki Beta przeszły automatyczne kontrole, ale nie zostały jeszcze sprawdzone przez administratora. Instalacja odbywa się na własne ryzyko."
+    IDS_PSO_VERBOSE     "Szczegółowe rejestrowanie (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnostyka"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Czech
+LANGUAGE LANG_CZECH, SUBLANG_CZECH_CZECH_REPUBLIC
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Rozšířené funkce"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Procházet a instalovat moduly plug-in pro Power PDF"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Modul plug-in"
+    IDS_PSD_C_AVAIL     "Dostupná"
+    IDS_PSD_C_INSTALLED "Nainstalovaná"
+    IDS_PSD_C_STATUS    "Stav"
+    IDS_PSD_C_SIZE      "Velikost"
+    IDS_PSD_BTN_INSTALL "Instalovat"
+    IDS_PSD_BTN_REFRESH "Aktualizovat"
+    IDS_PSD_BTN_CLOSE   "Zavřít"
+    IDS_PSD_ST_NOTINST  "Nenainstalováno"
+    IDS_PSD_ST_INSTALLED "Nainstalováno"
+    IDS_PSD_ST_UPDATE   "K dispozici je aktualizace"
+    IDS_PSD_MSG_FAIL    "Nelze se připojit k serveru Plugin-Store. Zkontrolujte adresu URL serveru v nabídce Soubor > Možnosti > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Nainstalováno. Restartujte Power PDF, aby se modul plug-in načetl."
+    IDS_PSD_MSG_INSTFAIL "Instalace se nezdařila (kód %d)."
+    IDS_PSD_CONFIRM     "Nainstalovat nyní '%s' verze %s?\nSystém Windows jednou požádá o schválení správcem."
+    IDS_PSD_ADMIN_NOTE  "Instalace nebo aktualizace modulu plug-in vyžaduje oprávnění místního správce (jedna výzva na instalaci)."
+    IDS_PSD_MSG_HASH    "Stažený soubor neprošel kontrolou integrity (SHA-256). Instalace byla přerušena."
+    IDS_PSD_EMPTY       "Na serveru zatím nejsou k dispozici žádné moduly plug-in."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Odinstalovat"
+    IDS_PSD_CONFIRM_UNINST "Odebrat nyní '%s' z Power PDF?
+Systém Windows jednou požádá o schválení správcem."
+    IDS_PSD_MSG_UNINSTOK "Odinstalováno. Restartujte Power PDF, aby se modul plug-in uvolnil."
+    IDS_PSD_SELF_UPDATE "Je k dispozici nová verze Plugin-Store: %s (nainstalováno: %s)."
+    IDS_PSD_BTN_SELFUPD "Aktualizovat Plugin-Store"
+    IDS_PSD_AUTHOR      "Autor / kontakt:"
+    IDS_PSD_C_AUTHOR    "Autor"
+    IDS_PSD_C_CONTACT   "Kontakt"
+    IDS_PSD_ASK_RESTART "Modul '%s' je nainstalován. Power PDF načítá moduly plug-in při spuštění.
+
+Restartovat nyní Power PDF? Neuložené dokumenty budete moci nejprve uložit."
+    IDS_PSD_ASK_RESTART_UN "Modul '%s' byl odebrán. Power PDF jej uvolní při příštím spuštění.
+
+Restartovat nyní Power PDF? Neuložené dokumenty budete moci nejprve uložit."
+    IDS_PSD_MSG_SELFUPD "Instalační program byl spuštěn. Postupujte podle jeho pokynů; vyzve vás k zavření Power PDF."
+    IDS_PSO_PAGE        "Obecné"
+    IDS_PSO_GRP         "Server Plugin-Store"
+    IDS_PSO_URL_LBL     "Adresa URL serveru:"
+    IDS_PSO_BETA        "Beta: zobrazit moduly plug-in, které ještě nebyly schváleny"
+    IDS_PSO_VERSIONLBL  "Klient Plugin-Store verze %s"
+    IDS_PSO_HINT        "Moduly plug-in Beta prošly automatickými kontrolami, ale dosud je nezkontroloval správce. Instalace je na vlastní nebezpečí."
+    IDS_PSO_VERBOSE     "Podrobné protokolování (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnostika"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Hungarian
+LANGUAGE LANG_HUNGARIAN, SUBLANG_HUNGARIAN_HUNGARY
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Speciális funkciók"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Power PDF-bővítmények böngészése és telepítése"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Bővítmény"
+    IDS_PSD_C_AVAIL     "Elérhető"
+    IDS_PSD_C_INSTALLED "Telepített"
+    IDS_PSD_C_STATUS    "Állapot"
+    IDS_PSD_C_SIZE      "Méret"
+    IDS_PSD_BTN_INSTALL "Telepítés"
+    IDS_PSD_BTN_REFRESH "Frissítés"
+    IDS_PSD_BTN_CLOSE   "Bezárás"
+    IDS_PSD_ST_NOTINST  "Nincs telepítve"
+    IDS_PSD_ST_INSTALLED "Telepítve"
+    IDS_PSD_ST_UPDATE   "Frissítés érhető el"
+    IDS_PSD_MSG_FAIL    "A Plugin-Store-kiszolgáló nem érhető el. Ellenőrizze a kiszolgáló URL-címét a Fájl > Beállítások > Plugin-Store menüpontban."
+    IDS_PSD_MSG_INSTOK  "Telepítve. A bővítmény betöltéséhez indítsa újra a Power PDF-et."
+    IDS_PSD_MSG_INSTFAIL "A telepítés sikertelen (kód: %d)."
+    IDS_PSD_CONFIRM     "Telepíti most a(z) '%s' bővítmény %s verzióját?\nA Windows egyszer rendszergazdai jóváhagyást kér."
+    IDS_PSD_ADMIN_NOTE  "Bővítmény telepítéséhez vagy frissítéséhez helyi rendszergazdai jogosultság szükséges (telepítésenként egy kérdés)."
+    IDS_PSD_MSG_HASH    "A letöltött fájl nem felelt meg az integritás-ellenőrzésnek (SHA-256). A telepítés megszakadt."
+    IDS_PSD_EMPTY       "A kiszolgálón még nem érhetők el bővítmények."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Eltávolítás"
+    IDS_PSD_CONFIRM_UNINST "Eltávolítja most a(z) '%s' bővítményt a Power PDF-ből?
+A Windows egyszer rendszergazdai jóváhagyást kér."
+    IDS_PSD_MSG_UNINSTOK "Eltávolítva. A bővítmény leválasztásához indítsa újra a Power PDF-et."
+    IDS_PSD_SELF_UPDATE "A Plugin-Store új verziója érhető el: %s (telepítve: %s)."
+    IDS_PSD_BTN_SELFUPD "Plugin-Store frissítése"
+    IDS_PSD_AUTHOR      "Szerző / kapcsolat:"
+    IDS_PSD_C_AUTHOR    "Szerző"
+    IDS_PSD_C_CONTACT   "Kapcsolat"
+    IDS_PSD_ASK_RESTART "A(z) '%s' bővítmény telepítve van. A Power PDF indításkor tölti be a bővítményeket.
+
+Újraindítja most a Power PDF-et? A program előbb felajánlja a nem mentett dokumentumok mentését."
+    IDS_PSD_ASK_RESTART_UN "A(z) '%s' bővítmény el lett távolítva. A Power PDF a következő indításkor leválasztja.
+
+Újraindítja most a Power PDF-et? A program előbb felajánlja a nem mentett dokumentumok mentését."
+    IDS_PSD_MSG_SELFUPD "A telepítő elindult. Kövesse az utasításait; a telepítő kérni fogja a Power PDF bezárását."
+    IDS_PSO_PAGE        "Általános"
+    IDS_PSO_GRP         "Plugin-Store-kiszolgáló"
+    IDS_PSO_URL_LBL     "Kiszolgáló URL-címe:"
+    IDS_PSO_BETA        "Beta: a még jóvá nem hagyott bővítmények megjelenítése"
+    IDS_PSO_VERSIONLBL  "Plugin-Store-ügyfél, verzió: %s"
+    IDS_PSO_HINT        "A Beta-bővítmények átmentek az automatikus ellenőrzéseken, de rendszergazda még nem vizsgálta meg őket. Telepítésük saját felelősségre történik."
+    IDS_PSO_VERBOSE     "Részletes naplózás (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Diagnosztika"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Russian
+LANGUAGE LANG_RUSSIAN, SUBLANG_RUSSIAN_RUSSIA
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Расширенные функции"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Просмотр и установка подключаемых модулей для Power PDF"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Модуль"
+    IDS_PSD_C_AVAIL     "Доступна"
+    IDS_PSD_C_INSTALLED "Установлена"
+    IDS_PSD_C_STATUS    "Состояние"
+    IDS_PSD_C_SIZE      "Размер"
+    IDS_PSD_BTN_INSTALL "Установить"
+    IDS_PSD_BTN_REFRESH "Обновить"
+    IDS_PSD_BTN_CLOSE   "Закрыть"
+    IDS_PSD_ST_NOTINST  "Не установлен"
+    IDS_PSD_ST_INSTALLED "Установлен"
+    IDS_PSD_ST_UPDATE   "Доступно обновление"
+    IDS_PSD_MSG_FAIL    "Не удалось подключиться к серверу Plugin-Store. Проверьте URL-адрес сервера в разделе Файл > Параметры > Plugin-Store."
+    IDS_PSD_MSG_INSTOK  "Установлено. Перезапустите Power PDF, чтобы загрузить модуль."
+    IDS_PSD_MSG_INSTFAIL "Ошибка установки (код %d)."
+    IDS_PSD_CONFIRM     "Установить '%s' версии %s сейчас?\nWindows однократно запросит подтверждение администратора."
+    IDS_PSD_ADMIN_NOTE  "Для установки или обновления модуля требуются права локального администратора (один запрос на установку)."
+    IDS_PSD_MSG_HASH    "Загруженный файл не прошел проверку целостности (SHA-256). Установка прервана."
+    IDS_PSD_EMPTY       "На сервере пока нет доступных модулей."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Удалить"
+    IDS_PSD_CONFIRM_UNINST "Удалить '%s' из Power PDF сейчас?
+Windows однократно запросит подтверждение администратора."
+    IDS_PSD_MSG_UNINSTOK "Удалено. Перезапустите Power PDF, чтобы выгрузить модуль."
+    IDS_PSD_SELF_UPDATE "Доступна новая версия Plugin-Store: %s (установлена: %s)."
+    IDS_PSD_BTN_SELFUPD "Обновить Plugin-Store"
+    IDS_PSD_AUTHOR      "Автор / контакт:"
+    IDS_PSD_C_AUTHOR    "Автор"
+    IDS_PSD_C_CONTACT   "Контакт"
+    IDS_PSD_ASK_RESTART "Модуль '%s' установлен. Power PDF загружает модули при запуске.
+
+Перезапустить Power PDF сейчас? Перед этим будет предложено сохранить несохраненные документы."
+    IDS_PSD_ASK_RESTART_UN "Модуль '%s' удален. Power PDF выгрузит его при следующем запуске.
+
+Перезапустить Power PDF сейчас? Перед этим будет предложено сохранить несохраненные документы."
+    IDS_PSD_MSG_SELFUPD "Программа установки запущена. Следуйте ее указаниям; она попросит закрыть Power PDF."
+    IDS_PSO_PAGE        "Общие"
+    IDS_PSO_GRP         "Сервер Plugin-Store"
+    IDS_PSO_URL_LBL     "URL-адрес сервера:"
+    IDS_PSO_BETA        "Beta: показывать еще не одобренные модули"
+    IDS_PSO_VERSIONLBL  "Клиент Plugin-Store, версия %s"
+    IDS_PSO_HINT        "Модули Beta прошли автоматические проверки, но еще не проверены администратором. Устанавливайте их на свой риск."
+    IDS_PSO_VERBOSE     "Подробное ведение журнала (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Диагностика"
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Strings — Turkish
+LANGUAGE LANG_TURKISH, SUBLANG_TURKISH_TURKEY
+STRINGTABLE
+BEGIN
+    IDS_PS_TITLE        "Plugin-Store"
+    IDS_PS_TAB_TITLE    "Gelişmiş İşlevler"
+    IDS_PS_GROUP        "Plugin-Store"
+    IDS_PS_BTN_OPEN     "Plugin-Store"
+    IDS_PS_TIP_OPEN     "Power PDF için eklentilere göz atın ve eklenti yükleyin"
+    IDS_PSD_TITLE       "Plugin-Store"
+    IDS_PSD_C_NAME      "Eklenti"
+    IDS_PSD_C_AVAIL     "Mevcut"
+    IDS_PSD_C_INSTALLED "Yüklü"
+    IDS_PSD_C_STATUS    "Durum"
+    IDS_PSD_C_SIZE      "Boyut"
+    IDS_PSD_BTN_INSTALL "Yükle"
+    IDS_PSD_BTN_REFRESH "Yenile"
+    IDS_PSD_BTN_CLOSE   "Kapat"
+    IDS_PSD_ST_NOTINST  "Yüklü değil"
+    IDS_PSD_ST_INSTALLED "Yüklü"
+    IDS_PSD_ST_UPDATE   "Güncelleştirme mevcut"
+    IDS_PSD_MSG_FAIL    "Plugin-Store sunucusuna ulaşılamadı. Dosya > Seçenekler > Plugin-Store bölümünde sunucu URL'sini kontrol edin."
+    IDS_PSD_MSG_INSTOK  "Yüklendi. Eklentiyi etkinleştirmek için Power PDF'i yeniden başlatın."
+    IDS_PSD_MSG_INSTFAIL "Yükleme başarısız oldu (kod %d)."
+    IDS_PSD_CONFIRM     "'%s' sürüm %s şimdi yüklensin mi?\nWindows bir kez yönetici onayı isteyecektir."
+    IDS_PSD_ADMIN_NOTE  "Bir eklentiyi yüklemek veya güncelleştirmek için yerel yönetici hakları gerekir (yükleme başına bir onay isteği)."
+    IDS_PSD_MSG_HASH    "İndirilen dosya bütünlük denetimini (SHA-256) geçemedi. Yükleme iptal edildi."
+    IDS_PSD_EMPTY       "Sunucuda henüz kullanılabilir eklenti yok."
+    IDS_PSD_BETA_TAG    " [Beta]"
+    IDS_PSD_BTN_UNINSTALL "Kaldır"
+    IDS_PSD_CONFIRM_UNINST "'%s' şimdi Power PDF'ten kaldırılsın mı?
+Windows bir kez yönetici onayı isteyecektir."
+    IDS_PSD_MSG_UNINSTOK "Kaldırıldı. Eklentiyi devre dışı bırakmak için Power PDF'i yeniden başlatın."
+    IDS_PSD_SELF_UPDATE "Plugin-Store'un yeni bir sürümü mevcut: %s (yüklü: %s)."
+    IDS_PSD_BTN_SELFUPD "Plugin-Store'u güncelleştir"
+    IDS_PSD_AUTHOR      "Yazar / iletişim:"
+    IDS_PSD_C_AUTHOR    "Yazar"
+    IDS_PSD_C_CONTACT   "İletişim"
+    IDS_PSD_ASK_RESTART "'%s' yüklendi. Power PDF eklentileri başlangıçta yükler.
+
+Power PDF şimdi yeniden başlatılsın mı? Kaydedilmemiş belgeler için önce kaydetme seçeneği sunulur."
+    IDS_PSD_ASK_RESTART_UN "'%s' kaldırıldı. Power PDF bir sonraki başlatmada bu eklentiyi devre dışı bırakır.
+
+Power PDF şimdi yeniden başlatılsın mı? Kaydedilmemiş belgeler için önce kaydetme seçeneği sunulur."
+    IDS_PSD_MSG_SELFUPD "Yükleyici başlatıldı. Lütfen yönergeleri izleyin; sizden Power PDF'i kapatmanız istenecektir."
+    IDS_PSO_PAGE        "Genel"
+    IDS_PSO_GRP         "Plugin-Store sunucusu"
+    IDS_PSO_URL_LBL     "Sunucu URL'si:"
+    IDS_PSO_BETA        "Beta: henüz onaylanmamış eklentileri göster"
+    IDS_PSO_VERSIONLBL  "Plugin-Store istemcisi sürüm %s"
+    IDS_PSO_HINT        "Beta eklentiler otomatik denetimleri geçti ancak henüz bir yönetici tarafından incelenmedi. Yükleme sorumluluğu size aittir."
+    IDS_PSO_VERBOSE     "Ayrıntılı günlük kaydı (%TEMP%\\PluginStore.log)"
+    IDS_PSO_GRP_DIAG    "Tanılama"
 END

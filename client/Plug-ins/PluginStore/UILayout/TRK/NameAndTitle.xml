@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GaaihoLayoutTitle>
+    <toolbar name="FeaturePack" title="Gelişmiş İşlevler"/>
+    <PFFGroup name="FeaturePack::PluginStore" title="Plugin-Store"/>
+    <PFFButton name="FeaturePack::PluginStore::Open" title="Plugin-Store" tooltip="Power PDF için eklentilere göz atın ve eklenti yükleyin"/>
+</GaaihoLayoutTitle>

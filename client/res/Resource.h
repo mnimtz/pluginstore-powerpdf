@@ -50,6 +50,8 @@
 #define IDS_PSD_AUTHOR          146
 #define IDS_PSD_ASK_RESTART     147
 #define IDS_PSD_ASK_RESTART_UN  148
+#define IDS_PSD_C_AUTHOR        149
+#define IDS_PSD_C_CONTACT       158
 
 // ---- options page ----
 #define IDS_PSO_PAGE            150
