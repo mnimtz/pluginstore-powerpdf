@@ -14,6 +14,7 @@ public class PluginModel : PageModel
     private readonly AppDbContext _db;
     private readonly UserManager<AppUser> _users;
     private readonly VersionActionService _actions;
+    private readonly SourceService _sources;
 
     public Package? Pkg { get; private set; }
     public AppUser? Me { get; private set; }
@@ -25,10 +26,13 @@ public class PluginModel : PageModel
     public bool IsOwner { get; private set; }
     public bool CanReview { get; private set; }
     public string? Notice { get; private set; }
+    public string NoticeKind { get; private set; } = "ok";
+    public string SourcePolicy { get; private set; } = "required";
+    public List<Finding> SourceFindings { get; private set; } = new();
 
-    public PluginModel(AppDbContext db, UserManager<AppUser> users, VersionActionService actions)
+    public PluginModel(AppDbContext db, UserManager<AppUser> users, VersionActionService actions, SourceService sources)
     {
-        _db = db; _users = users; _actions = actions;
+        _db = db; _users = users; _actions = actions; _sources = sources;
     }
 
     private async Task<bool> LoadAsync(string id)
@@ -51,6 +55,7 @@ public class PluginModel : PageModel
         Description = CatalogUi.OverrideText(Pkg.DescriptionJson, lang)
                       ?? (shown is null ? "" : CatalogUi.ManifestText(shown, "description", lang));
         InCatalog = (await CatalogUi.GetAsync(_db, lang, includeBeta: true)).FirstOrDefault(c => c.Id == Pkg.Id);
+        SourcePolicy = await _sources.PolicyAsync();
         return true;
     }
 
@@ -60,6 +65,7 @@ public class PluginModel : PageModel
     {
         if (!await LoadAsync(id ?? "")) return Forbid();
         Notice = await action() ?? "This action is not allowed for this version.";
+        if (Notice.StartsWith("The source code") || Notice.StartsWith("This action")) NoticeKind = "warn";
         await LoadAsync(id!);
         return Page();
     }
@@ -75,6 +81,29 @@ public class PluginModel : PageModel
 
     public Task<IActionResult> OnPostRestoreAsync(string id, int versionId) =>
         ActAsync(id, () => _actions.RestoreAsync(versionId, Me!, IsAdmin));
+
+    public async Task<IActionResult> OnPostSourceAsync(string id, int versionId, IFormFile? source)
+    {
+        if (!await LoadAsync(id ?? "")) return Forbid();
+        var v = Versions.FirstOrDefault(x => x.Id == versionId);
+        if (v is null || (!IsOwner && !IsAdmin) || source is null || source.Length == 0)
+        {
+            Notice = "This action is not allowed for this version."; NoticeKind = "warn";
+            return Page();
+        }
+        var tmp = Path.Combine(Path.GetTempPath(), "src-" + Guid.NewGuid().ToString("N") + ".zip");
+        try
+        {
+            await using (var fs = System.IO.File.Create(tmp)) await source.CopyToAsync(fs);
+            var report = await _sources.UploadAsync(v, tmp, Me!);
+            SourceFindings = report.Findings.ToList();
+            Notice = report.Passed ? "Source code stored." : "The source code was not stored.";
+            NoticeKind = report.Passed ? "ok" : "error";
+        }
+        finally { try { System.IO.File.Delete(tmp); } catch { } }
+        await LoadAsync(id!);
+        return Page();
+    }
 
     public Task<IActionResult> OnPostWithdrawAllAsync(string id) =>
         ActAsync(id, () => _actions.WithdrawPackageAsync(id, Me!, IsAdmin));

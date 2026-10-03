@@ -332,4 +332,19 @@
   <data name="Category deleted." xml:space="preserve"><value>Categoria eliminata.</value></data>
   <data name="This action is not possible for this category." xml:space="preserve"><value>Questa azione non è possibile per questa categoria.</value></data>
   <data name="The limit must be between 8 and 50." xml:space="preserve"><value>Il limite deve essere compreso tra 8 e 50.</value></data>
+  <data name="Download source" xml:space="preserve"><value>Scarica codice sorgente</value></data>
+  <data name="Off" xml:space="preserve"><value>Disattivato</value></data>
+  <data name="Recommended: approval possible without source code" xml:space="preserve"><value>Consigliato: approvazione possibile senza codice sorgente</value></data>
+  <data name="Required before approval." xml:space="preserve"><value>Richiesto prima dell’approvazione.</value></data>
+  <data name="Required: no approval without source code" xml:space="preserve"><value>Obbligatorio: nessuna approvazione senza codice sorgente</value></data>
+  <data name="Source code" xml:space="preserve"><value>Codice sorgente</value></data>
+  <data name="Source code is stored next to each version and visible to admins only; Power PDF clients never receive it." xml:space="preserve"><value>Il codice sorgente viene salvato con ogni versione ed è visibile solo agli amministratori; i client Power PDF non lo ricevono mai.</value></data>
+  <data name="Source code per version" xml:space="preserve"><value>Codice sorgente per versione</value></data>
+  <data name="Source code stored." xml:space="preserve"><value>Codice sorgente salvato.</value></data>
+  <data name="The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it." xml:space="preserve"><value>Manca il codice sorgente di questa versione. Potrà essere approvata quando l’autore (o un amministratore) lo avrà caricato.</value></data>
+  <data name="The source code was not stored." xml:space="preserve"><value>Il codice sorgente non è stato salvato.</value></data>
+  <data name="missing" xml:space="preserve"><value>mancante</value></data>
+  <data name="stored" xml:space="preserve"><value>presente</value></data>
+  <data name="Upload source (ZIP)" xml:space="preserve"><value>Carica codice sorgente (ZIP)</value></data>
+  <data name="Replace source" xml:space="preserve"><value>Sostituisci codice sorgente</value></data>
 </root>

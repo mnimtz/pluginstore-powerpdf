@@ -332,4 +332,19 @@
   <data name="Category deleted." xml:space="preserve"><value>Luokka poistettu.</value></data>
   <data name="This action is not possible for this category." xml:space="preserve"><value>Tämä toiminto ei ole mahdollinen tälle luokalle.</value></data>
   <data name="The limit must be between 8 and 50." xml:space="preserve"><value>Rajan on oltava välillä 8–50.</value></data>
+  <data name="Download source" xml:space="preserve"><value>Lataa lähdekoodi</value></data>
+  <data name="Off" xml:space="preserve"><value>Pois</value></data>
+  <data name="Recommended: approval possible without source code" xml:space="preserve"><value>Suositeltu: hyväksyntä mahdollinen ilman lähdekoodia</value></data>
+  <data name="Required before approval." xml:space="preserve"><value>Pakollinen ennen hyväksyntää.</value></data>
+  <data name="Required: no approval without source code" xml:space="preserve"><value>Pakollinen: ei hyväksyntää ilman lähdekoodia</value></data>
+  <data name="Source code" xml:space="preserve"><value>Lähdekoodi</value></data>
+  <data name="Source code is stored next to each version and visible to admins only; Power PDF clients never receive it." xml:space="preserve"><value>Lähdekoodi tallennetaan jokaisen version yhteyteen, ja vain ylläpitäjät näkevät sen; Power PDF -asiakasohjelmat eivät koskaan saa sitä.</value></data>
+  <data name="Source code per version" xml:space="preserve"><value>Lähdekoodi versioittain</value></data>
+  <data name="Source code stored." xml:space="preserve"><value>Lähdekoodi tallennettu.</value></data>
+  <data name="The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it." xml:space="preserve"><value>Tämän version lähdekoodi puuttuu. Versio voidaan hyväksyä, kun tekijä (tai ylläpitäjä) on ladannut sen.</value></data>
+  <data name="The source code was not stored." xml:space="preserve"><value>Lähdekoodia ei tallennettu.</value></data>
+  <data name="missing" xml:space="preserve"><value>puuttuu</value></data>
+  <data name="stored" xml:space="preserve"><value>tallennettu</value></data>
+  <data name="Upload source (ZIP)" xml:space="preserve"><value>Lataa lähdekoodi palvelimeen (ZIP)</value></data>
+  <data name="Replace source" xml:space="preserve"><value>Korvaa lähdekoodi</value></data>
 </root>

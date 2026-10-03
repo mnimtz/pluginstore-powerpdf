@@ -12,10 +12,10 @@ import sys
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'server', 'src', 'AddonStore.Web')
 SOURCES = ['Validation/PackageValidator.cs', 'Services/SubmissionService.cs',
            'Api/ApiEndpoints.cs', 'Auth/ApiTokenAuthHandler.cs',
-           'Services/PackageMetaService.cs', 'Services/CategoryService.cs']
+           'Services/PackageMetaService.cs', 'Services/CategoryService.cs', 'Services/SourceService.cs']
 EXTRA_CODES = {'CLIENT_ADMIN_ONLY', 'VERSION_EXISTS', 'VALIDATION_FAILED', 'NOT_OWNER', 'LIVE_VERSION',
                'TOKEN_INVALID', 'TOKEN_REVOKED', 'USER_NOT_ACTIVE', 'NO_PACKAGE',
-               'METADATA_INVALID', 'PACKAGE_NOT_FOUND'}
+               'METADATA_INVALID', 'PACKAGE_NOT_FOUND', 'SOURCE_REJECTED', 'SOURCE_MISSING', 'ADMIN_ONLY'}
 
 code = ''
 for rel in SOURCES:

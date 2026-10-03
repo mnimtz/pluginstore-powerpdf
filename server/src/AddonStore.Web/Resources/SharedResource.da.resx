@@ -332,4 +332,19 @@
   <data name="Category deleted." xml:space="preserve"><value>Kategori slettet.</value></data>
   <data name="This action is not possible for this category." xml:space="preserve"><value>Denne handling er ikke mulig for denne kategori.</value></data>
   <data name="The limit must be between 8 and 50." xml:space="preserve"><value>Grænsen skal være mellem 8 og 50.</value></data>
+  <data name="Download source" xml:space="preserve"><value>Download kildekode</value></data>
+  <data name="Off" xml:space="preserve"><value>Fra</value></data>
+  <data name="Recommended: approval possible without source code" xml:space="preserve"><value>Anbefalet: godkendelse mulig uden kildekode</value></data>
+  <data name="Required before approval." xml:space="preserve"><value>Påkrævet før godkendelse.</value></data>
+  <data name="Required: no approval without source code" xml:space="preserve"><value>Påkrævet: ingen godkendelse uden kildekode</value></data>
+  <data name="Source code" xml:space="preserve"><value>Kildekode</value></data>
+  <data name="Source code is stored next to each version and visible to admins only; Power PDF clients never receive it." xml:space="preserve"><value>Kildekoden gemmes med hver version og er kun synlig for administratorer; Power PDF-klienter modtager den aldrig.</value></data>
+  <data name="Source code per version" xml:space="preserve"><value>Kildekode pr. version</value></data>
+  <data name="Source code stored." xml:space="preserve"><value>Kildekode gemt.</value></data>
+  <data name="The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it." xml:space="preserve"><value>Kildekoden til denne version mangler. Den kan godkendes, når forfatteren (eller en administrator) har uploadet den.</value></data>
+  <data name="The source code was not stored." xml:space="preserve"><value>Kildekoden blev ikke gemt.</value></data>
+  <data name="missing" xml:space="preserve"><value>mangler</value></data>
+  <data name="stored" xml:space="preserve"><value>findes</value></data>
+  <data name="Upload source (ZIP)" xml:space="preserve"><value>Upload kildekode (ZIP)</value></data>
+  <data name="Replace source" xml:space="preserve"><value>Erstat kildekode</value></data>
 </root>

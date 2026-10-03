@@ -116,6 +116,7 @@ builder.Services.AddScoped<BackupService>();
 builder.Services.AddScoped<PackageMetaService>();
 builder.Services.AddScoped<VersionActionService>();
 builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<SourceService>();
 builder.Services.AddScoped<IAppEmailSender, ResendEmailSender>();
 
 var versionFile = Path.Combine(AppContext.BaseDirectory, "VERSION");
@@ -149,6 +150,12 @@ using (var scope = app.Services.CreateScope())
         "ALTER TABLE AspNetUsers ADD COLUMN NotifyAboutPlugins INTEGER NOT NULL DEFAULT 1",
         "ALTER TABLE Packages ADD COLUMN NameJson TEXT NULL",
         "ALTER TABLE Packages ADD COLUMN CategoryOverride TEXT NULL",
+        "ALTER TABLE PackageVersions ADD COLUMN SourcePath TEXT NULL",
+        "ALTER TABLE PackageVersions ADD COLUMN SourceSizeBytes INTEGER NOT NULL DEFAULT 0",
+        "ALTER TABLE PackageVersions ADD COLUMN SourceSha256 TEXT NULL",
+        "ALTER TABLE PackageVersions ADD COLUMN SourceUploadedAt TEXT NULL",
+        "ALTER TABLE PackageVersions ADD COLUMN SourceUploadedBy TEXT NULL",
+        "ALTER TABLE PackageVersions ADD COLUMN SourceReportJson TEXT NULL",
         "CREATE TABLE IF NOT EXISTS Categories (Slug TEXT NOT NULL PRIMARY KEY, NameJson TEXT NULL, " +
             "Builtin INTEGER NOT NULL DEFAULT 0, CreatedAt TEXT NOT NULL, CreatedBy TEXT NOT NULL)",
         "ALTER TABLE Packages ADD COLUMN DescriptionJson TEXT NULL",

@@ -70,7 +70,7 @@ public class PackageValidator
     }
 
     public async Task<(ValidationReport Report, ParsedManifest? Manifest)> ValidateAsync(
-        string zipPath, string callerUserId)
+        string zipPath, string callerUserId, bool callerIsAdmin = false)
     {
         var report = new ValidationReport();
         ParsedManifest? manifest = null;
@@ -283,17 +283,20 @@ public class PackageValidator
         }
 
         if (manifest is not null && manifest.Id.Length > 0)
-            await CheckAgainstCatalogAsync(report, manifest, callerUserId);
+            await CheckAgainstCatalogAsync(report, manifest, callerUserId, callerIsAdmin);
 
         return (report, manifest);
     }
 
-    private async Task CheckAgainstCatalogAsync(ValidationReport report, ParsedManifest manifest, string callerUserId)
+    private async Task CheckAgainstCatalogAsync(ValidationReport report, ParsedManifest manifest, string callerUserId, bool callerIsAdmin)
     {
         var package = await _db.Packages.Include(p => p.Owner)
             .FirstOrDefaultAsync(p => p.Id == manifest.Id);
 
-        if (package is not null && package.OwnerId != callerUserId)
+        if (package is not null && package.OwnerId != callerUserId && callerIsAdmin)
+            report.Info("ADMIN_UPLOAD_FOR_OWNER",
+                $"Admin upload for '{manifest.Id}', owned by {package.Owner?.DisplayName ?? "unknown"}; the owner stays unchanged and is notified.");
+        else if (package is not null && package.OwnerId != callerUserId)
         {
             report.Error("PACKAGE_OWNED_BY_OTHER",
                 $"Package id '{manifest.Id}' belongs to another user ({package.Owner?.DisplayName ?? "unknown"}).",
@@ -730,7 +733,7 @@ public class PackageValidator
                 "Do not use other companies' product names or trademarks in plugin names and catalog texts; describe the function instead.");
     }
 
-    private static readonly (string Label, Regex Rx)[] SecretPatterns =
+    internal static readonly (string Label, Regex Rx)[] SecretPatterns =
     {
         ("private key", new Regex(@"-----BEGIN (RSA |EC |DSA |OPENSSH |ENCRYPTED )?PRIVATE KEY-----", RegexOptions.Compiled)),
         ("store API token", new Regex(@"ppak_[A-Za-z0-9_\-]{20,}", RegexOptions.Compiled)),
@@ -772,7 +775,7 @@ public class PackageValidator
     };
 
     /// <summary>Printable ASCII and UTF-16LE runs of at least 8 characters, like `strings`.</summary>
-    private static IEnumerable<string> ExtractStrings(byte[] b)
+    internal static IEnumerable<string> ExtractStrings(byte[] b)
     {
         var sb = new System.Text.StringBuilder();
         for (int i = 0; i < b.Length; i++)

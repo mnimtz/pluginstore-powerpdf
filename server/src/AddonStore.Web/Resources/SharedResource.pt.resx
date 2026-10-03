@@ -332,4 +332,19 @@
   <data name="Category deleted." xml:space="preserve"><value>Categoria eliminada.</value></data>
   <data name="This action is not possible for this category." xml:space="preserve"><value>Esta ação não é possível para esta categoria.</value></data>
   <data name="The limit must be between 8 and 50." xml:space="preserve"><value>O limite tem de estar entre 8 e 50.</value></data>
+  <data name="Download source" xml:space="preserve"><value>Transferir código-fonte</value></data>
+  <data name="Off" xml:space="preserve"><value>Desativado</value></data>
+  <data name="Recommended: approval possible without source code" xml:space="preserve"><value>Recomendado: aprovação possível sem código-fonte</value></data>
+  <data name="Required before approval." xml:space="preserve"><value>Necessário antes da aprovação.</value></data>
+  <data name="Required: no approval without source code" xml:space="preserve"><value>Obrigatório: sem código-fonte não há aprovação</value></data>
+  <data name="Source code" xml:space="preserve"><value>Código-fonte</value></data>
+  <data name="Source code is stored next to each version and visible to admins only; Power PDF clients never receive it." xml:space="preserve"><value>O código-fonte é guardado com cada versão e só é visível para administradores; os clientes do Power PDF nunca o recebem.</value></data>
+  <data name="Source code per version" xml:space="preserve"><value>Código-fonte por versão</value></data>
+  <data name="Source code stored." xml:space="preserve"><value>Código-fonte guardado.</value></data>
+  <data name="The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it." xml:space="preserve"><value>Falta o código-fonte desta versão. Poderá ser aprovada quando o autor (ou um administrador) o tiver enviado.</value></data>
+  <data name="The source code was not stored." xml:space="preserve"><value>O código-fonte não foi guardado.</value></data>
+  <data name="missing" xml:space="preserve"><value>em falta</value></data>
+  <data name="stored" xml:space="preserve"><value>disponível</value></data>
+  <data name="Upload source (ZIP)" xml:space="preserve"><value>Enviar código-fonte (ZIP)</value></data>
+  <data name="Replace source" xml:space="preserve"><value>Substituir código-fonte</value></data>
 </root>

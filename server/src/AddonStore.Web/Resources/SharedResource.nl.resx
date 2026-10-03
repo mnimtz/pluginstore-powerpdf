@@ -332,4 +332,19 @@
   <data name="Category deleted." xml:space="preserve"><value>Categorie verwijderd.</value></data>
   <data name="This action is not possible for this category." xml:space="preserve"><value>Deze actie is niet mogelijk voor deze categorie.</value></data>
   <data name="The limit must be between 8 and 50." xml:space="preserve"><value>Het maximum moet tussen 8 en 50 liggen.</value></data>
+  <data name="Download source" xml:space="preserve"><value>Broncode downloaden</value></data>
+  <data name="Off" xml:space="preserve"><value>Uit</value></data>
+  <data name="Recommended: approval possible without source code" xml:space="preserve"><value>Aanbevolen: goedkeuring ook zonder broncode mogelijk</value></data>
+  <data name="Required before approval." xml:space="preserve"><value>Vereist vóór goedkeuring.</value></data>
+  <data name="Required: no approval without source code" xml:space="preserve"><value>Verplicht: geen goedkeuring zonder broncode</value></data>
+  <data name="Source code" xml:space="preserve"><value>Broncode</value></data>
+  <data name="Source code is stored next to each version and visible to admins only; Power PDF clients never receive it." xml:space="preserve"><value>De broncode wordt bij elke versie opgeslagen en is alleen zichtbaar voor beheerders; Power PDF-clients ontvangen deze nooit.</value></data>
+  <data name="Source code per version" xml:space="preserve"><value>Broncode per versie</value></data>
+  <data name="Source code stored." xml:space="preserve"><value>Broncode opgeslagen.</value></data>
+  <data name="The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it." xml:space="preserve"><value>De broncode van deze versie ontbreekt. Ze kan worden goedgekeurd zodra de auteur (of een beheerder) deze heeft geüpload.</value></data>
+  <data name="The source code was not stored." xml:space="preserve"><value>De broncode is niet opgeslagen.</value></data>
+  <data name="missing" xml:space="preserve"><value>ontbreekt</value></data>
+  <data name="stored" xml:space="preserve"><value>aanwezig</value></data>
+  <data name="Upload source (ZIP)" xml:space="preserve"><value>Broncode uploaden (ZIP)</value></data>
+  <data name="Replace source" xml:space="preserve"><value>Broncode vervangen</value></data>
 </root>

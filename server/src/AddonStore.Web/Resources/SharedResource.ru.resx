@@ -332,4 +332,19 @@
   <data name="Category deleted." xml:space="preserve"><value>Категория удалена.</value></data>
   <data name="This action is not possible for this category." xml:space="preserve"><value>Это действие недоступно для данной категории.</value></data>
   <data name="The limit must be between 8 and 50." xml:space="preserve"><value>Лимит должен быть от 8 до 50.</value></data>
+  <data name="Download source" xml:space="preserve"><value>Скачать исходный код</value></data>
+  <data name="Off" xml:space="preserve"><value>Выкл.</value></data>
+  <data name="Recommended: approval possible without source code" xml:space="preserve"><value>Рекомендуется: одобрение возможно без исходного кода</value></data>
+  <data name="Required before approval." xml:space="preserve"><value>Требуется перед одобрением.</value></data>
+  <data name="Required: no approval without source code" xml:space="preserve"><value>Обязательно: без исходного кода одобрение невозможно</value></data>
+  <data name="Source code" xml:space="preserve"><value>Исходный код</value></data>
+  <data name="Source code is stored next to each version and visible to admins only; Power PDF clients never receive it." xml:space="preserve"><value>Исходный код хранится с каждой версией и доступен только администраторам; клиенты Power PDF никогда его не получают.</value></data>
+  <data name="Source code per version" xml:space="preserve"><value>Исходный код для каждой версии</value></data>
+  <data name="Source code stored." xml:space="preserve"><value>Исходный код сохранен.</value></data>
+  <data name="The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it." xml:space="preserve"><value>Исходный код этой версии отсутствует. Ее можно одобрить после того, как автор (или администратор) загрузит его.</value></data>
+  <data name="The source code was not stored." xml:space="preserve"><value>Исходный код не сохранен.</value></data>
+  <data name="missing" xml:space="preserve"><value>отсутствует</value></data>
+  <data name="stored" xml:space="preserve"><value>сохранен</value></data>
+  <data name="Upload source (ZIP)" xml:space="preserve"><value>Загрузить исходный код (ZIP)</value></data>
+  <data name="Replace source" xml:space="preserve"><value>Заменить исходный код</value></data>
 </root>

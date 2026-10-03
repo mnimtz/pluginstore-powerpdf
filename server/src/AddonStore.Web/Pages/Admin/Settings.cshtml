@@ -79,6 +79,15 @@
                 }
             </select>
         </div>
+        <div>
+            <label>@L["Source code per version"]</label>
+            <select name="sourcePolicy">
+                <option value="required" selected="@(Model.SourcePolicy == "required")">@L["Required: no approval without source code"]</option>
+                <option value="recommended" selected="@(Model.SourcePolicy == "recommended")">@L["Recommended: approval possible without source code"]</option>
+                <option value="off" selected="@(Model.SourcePolicy == "off")">@L["Off"]</option>
+            </select>
+            <small style="color:var(--tun-slate)">@L["Source code is stored next to each version and visible to admins only; Power PDF clients never receive it."]</small>
+        </div>
         <button type="submit" class="btn cta">@L["Save"]</button>
     </form>
 </div>

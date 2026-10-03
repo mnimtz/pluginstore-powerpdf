@@ -65,6 +65,8 @@ public static class ApiEndpoints
                     "POST /api/packages               submit a package (auth)",
                     "GET  /api/categories             catalog categories (slug, names, usage, limit)",
                     "PATCH  /api/packages/{id}  change the catalog entry: name, description, author, contactEmail, category (owner/admin, auth)",
+                    "PUT  /api/packages/{id}/{version}/source  upload the source code ZIP of a version (owner/admin, auth)",
+                    "GET  /api/packages/{id}/{version}/source  download the source code (admins only)",
                     "DELETE /api/packages/{id}/{version}  withdraw your own beta version (auth)",
                     "GET  /api/packages/{id}/{version}/download",
                     "GET  /api/devkit                 SDK documentation and developer kit files"
@@ -180,6 +182,8 @@ public static class ApiEndpoints
                         v.SubmittedAt,
                         v.Downloads,
                         reviewComment = isOwner ? v.ReviewComment : null,
+                        hasSource = v.SourcePath is not null,
+                        sourceUploadedAt = isOwner ? v.SourceUploadedAt : null,
                         findings = isOwner ? JsonSerializer.Deserialize<JsonElement>(v.ValidationReportJson) : (object?)null
                     })
                 }
@@ -200,7 +204,7 @@ public static class ApiEndpoints
             finally { TryDelete(tmp); }
         }).RequireAuthorization("ApiOrCookie");
 
-        api.MapPost("/packages", async (HttpContext ctx, UserManager<AppUser> users, SubmissionService svc) =>
+        api.MapPost("/packages", async (HttpContext ctx, UserManager<AppUser> users, SubmissionService svc, SourceService sources) =>
         {
             var user = await RequireUserAsync(ctx, users);
             if (user is null) return Unauthorized();
@@ -241,6 +245,7 @@ public static class ApiEndpoints
                     }, statusCode: 422);
 
                 var v = result.Version;
+                var policy = await sources.PolicyAsync();
                 return Results.Json(new
                 {
                     ok = true,
@@ -250,6 +255,11 @@ public static class ApiEndpoints
                         id = v.PackageId,
                         version = v.Version,
                         status = v.Status.ToString().ToLowerInvariant(),
+                        sourcePolicy = policy,
+                        sourceUploadUrl = $"{Base(ctx)}/api/packages/{v.PackageId}/{v.Version}/source",
+                        sourceNext = policy == "off" ? null
+                            : $"Now upload the source code of this version: PUT {Base(ctx)}/api/packages/{v.PackageId}/{v.Version}/source with a ZIP of the source tree (Content-Type: application/zip)."
+                              + (policy == "required" && v.Status != VersionStatus.Live ? " Required: an admin cannot approve the version without it." : ""),
                         sha256 = v.Sha256,
                         sizeBytes = v.SizeBytes,
                         downloadUrl = $"{Base(ctx)}/api/packages/{v.PackageId}/{v.Version}/download",
@@ -261,6 +271,49 @@ public static class ApiEndpoints
             }
             finally { TryDelete(tmp); }
         }).RequireAuthorization("BearerOnly");
+
+        api.MapPut("/packages/{id}/{version}/source", async (string id, string version, HttpContext ctx,
+            UserManager<AppUser> users, AppDbContext db, SourceService sources) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var v = await db.PackageVersions.Include(x => x.Package).FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version);
+            if (v is null) return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}'. Upload the package first (POST /api/packages).");
+            if (v.Package!.OwnerId != user.Id && !ctx.User.IsInRole("Admin"))
+                return Results.Json(new { ok = false, error = new { code = "NOT_OWNER", message = "This package belongs to another user.", hint = "Only the owner or an admin can upload its source code." } }, statusCode: 403);
+            var tmp = await SaveUploadAsync(ctx.Request);
+            if (tmp is null) return BadUpload();
+            try
+            {
+                var report = await sources.UploadAsync(v, tmp, user);
+                if (!report.Passed)
+                    return Results.Json(new
+                    {
+                        ok = false,
+                        error = new { code = "SOURCE_REJECTED", message = "The source code was not stored.", hint = "Fix every finding with severity 'error' and upload again." },
+                        findings = report.Findings
+                    }, statusCode: 422);
+                return Results.Json(new
+                {
+                    ok = true,
+                    findings = report.Findings,
+                    data = new { id, version, sizeBytes = v.SourceSizeBytes, sha256 = v.SourceSha256, next = "Source stored. It is visible to store admins only and is not delivered to Power PDF clients." }
+                });
+            }
+            finally { TryDelete(tmp); }
+        }).RequireAuthorization("BearerOnly");
+
+        api.MapGet("/packages/{id}/{version}/source", async (string id, string version, HttpContext ctx,
+            AppDbContext db, SourceService sources) =>
+        {
+            if (!ctx.User.IsInRole("Admin"))
+                return Results.Json(new { ok = false, error = new { code = "ADMIN_ONLY", message = "Source code is visible to store admins only.", hint = "Use an admin account or an admin's API token." } }, statusCode: 403);
+            var v = await db.PackageVersions.FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version);
+            if (v?.SourcePath is null) return NotFound("SOURCE_MISSING", $"No source code stored for {id} {version}.");
+            var path = sources.FullPath(v);
+            if (!File.Exists(path)) return NotFound("FILE_MISSING", "The source file is missing on the server; restore it from a backup.");
+            return Results.File(path, "application/zip", $"{id}-{version}-source.zip");
+        }).RequireAuthorization("ApiOrCookie");
 
         api.MapGet("/categories", async (AppDbContext db, CategoryService categories) =>
         {

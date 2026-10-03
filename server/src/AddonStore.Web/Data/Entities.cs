@@ -114,6 +114,13 @@ public class PackageVersion
     public string FilePath { get; set; } = "";
     public string Sha256 { get; set; } = "";
     public long SizeBytes { get; set; }
+    /// <summary>Source code ZIP next to the package (admins only), relative to the package storage.</summary>
+    public string? SourcePath { get; set; }
+    public long SourceSizeBytes { get; set; }
+    public string? SourceSha256 { get; set; }
+    public DateTime? SourceUploadedAt { get; set; }
+    public string? SourceUploadedBy { get; set; }
+    public string? SourceReportJson { get; set; }
     public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
     public string SubmittedBy { get; set; } = "";
     public string SubmittedVia { get; set; } = "";   // "web" or "api:<token name>"

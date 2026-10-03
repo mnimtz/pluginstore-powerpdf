@@ -16,7 +16,16 @@
 
 @if (Model.Notice is not null)
 {
-    <div class="alert ok">@L[Model.Notice]</div>
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+}
+@if (Model.SourceFindings.Count > 0)
+{
+    <ul class="findings">
+        @foreach (var f in Model.SourceFindings)
+        {
+            <li class="@f.Severity"><span class="code">@f.Code</span> @f.Message <span class="hint">@f.Hint</span></li>
+        }
+    </ul>
 }
 
 <div class="card">
@@ -121,6 +130,37 @@
                     </form>
                 }
                 <partial name="_ValidationReport" model="AddonStore.Web.Validation.ReportView.Parse(v.ValidationReportJson)" />
+                @if (Model.SourcePolicy != "off" || v.SourcePath is not null)
+                {
+                    <div class="source-row">
+                        <b>@L["Source code"]:</b>
+                        @if (v.SourcePath is not null)
+                        {
+                            <span class="badge live">@L["stored"]</span>
+                            <span style="color:var(--tun-slate);font-size:.85rem">@(v.SourceSizeBytes / 1024) KB · @Time.Fmt(v.SourceUploadedAt) · @v.SourceUploadedBy</span>
+                            @if (Model.IsAdmin)
+                            {
+                                <a class="btn small secondary" href="/api/packages/@v.PackageId/@v.Version/source">@L["Download source"]</a>
+                            }
+                        }
+                        else
+                        {
+                            <span class="badge @(Model.SourcePolicy == "required" && v.PackageId != "com.tungsten.pluginstore" ? "rejected" : "withdrawn")">@L["missing"]</span>
+                            @if (Model.SourcePolicy == "required" && v.Status == VersionStatus.Beta && v.PackageId != "com.tungsten.pluginstore")
+                            {
+                                <span style="color:var(--tun-slate);font-size:.85rem">@L["Required before approval."]</span>
+                            }
+                        }
+                        @if ((Model.IsOwner || Model.IsAdmin) && v.Status is not (VersionStatus.Rejected or VersionStatus.Withdrawn))
+                        {
+                            <form method="post" asp-page-handler="Source" asp-route-id="@pkg.Id" enctype="multipart/form-data" class="source-upload">
+                                <input type="hidden" name="versionId" value="@v.Id" />
+                                <input type="file" name="source" accept=".zip" required />
+                                <button type="submit" class="btn small secondary">@L[v.SourcePath is null ? "Upload source (ZIP)" : "Replace source"]</button>
+                            </form>
+                        }
+                    </div>
+                }
             </td>
         </tr>
     }

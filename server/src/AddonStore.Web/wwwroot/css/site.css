@@ -251,3 +251,6 @@ pre.code {
 .client-hint { display: block; margin-top: 8px; padding: 8px 10px; border-radius: 6px; background: #FFDF85; color: #634E12; font-size: .82rem; }
 .client-hint[hidden] { display: none; }
 .client-hint a { color: var(--tun-navy); font-weight: 700; }
+.source-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 6px 0 12px; font-size: .88rem; }
+.source-upload { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-left: auto; }
+.source-upload input[type=file] { width: auto; max-width: 260px; padding: 5px; font-size: .82rem; }

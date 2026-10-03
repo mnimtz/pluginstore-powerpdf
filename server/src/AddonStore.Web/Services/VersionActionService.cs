@@ -13,10 +13,11 @@ public class VersionActionService
     private readonly AppDbContext _db;
     private readonly AuditService _audit;
     private readonly NotificationService _notify;
+    private readonly SourceService _sources;
 
-    public VersionActionService(AppDbContext db, AuditService audit, NotificationService notify)
+    public VersionActionService(AppDbContext db, AuditService audit, NotificationService notify, SourceService sources)
     {
-        _db = db; _audit = audit; _notify = notify;
+        _db = db; _audit = audit; _notify = notify; _sources = sources;
     }
 
     private static string Enc(string s) => System.Net.WebUtility.HtmlEncode(s);
@@ -47,6 +48,8 @@ public class VersionActionService
         var v = await _db.PackageVersions.Include(x => x.Package).ThenInclude(p => p!.Owner)
             .FirstOrDefaultAsync(x => x.Id == versionId);
         if (v is null || v.Status != VersionStatus.Beta) return null;
+        if (approve && await _sources.BlocksApprovalAsync(v))
+            return "The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it.";
         v.Status = approve ? VersionStatus.Live : VersionStatus.Rejected;
         v.ReviewedById = actor.Id;
         v.ReviewedAt = DateTime.UtcNow;

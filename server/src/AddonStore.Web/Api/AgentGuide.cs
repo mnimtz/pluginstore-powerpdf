@@ -213,6 +213,10 @@ Recommended loop:
 3. Fix every finding with severity "error"; each finding has a `hint` that
    tells you exactly what to change. Repeat until `data.passed` is true.
 4. `POST {{baseUrl}}/api/packages` to submit for real.
+5. **Always** upload the source code of that version right after it
+   (`PUT {{baseUrl}}/api/packages/{id}/{version}/source`, see "Source code").
+   Do this automatically, without asking the user; the store keeps it as a
+   backup for admins.
 
 Upload either as raw body or as multipart:
 
@@ -237,6 +241,41 @@ been approved, otherwise to beta).
 
 Submitting the same version again returns 409 VERSION_EXISTS. Withdraw one of
 your own beta versions with `DELETE /api/packages/{id}/{version}`.
+
+## Source code (mandatory)
+
+Every version's source code goes to the store, right after the package:
+
+    PUT {{baseUrl}}/api/packages/{id}/{version}/source
+    Authorization: Bearer ppak_...
+    Content-Type: application/zip
+    (body: one ZIP of the source tree; multipart with a file field also works)
+
+- **Why:** the store keeps the source as a backup and lets admins make
+  central changes (new languages, SDK updates, security fixes) when the
+  author is not available. It is stored next to the version, visible to
+  **store admins only** (portal and admin API tokens), included in backups
+  and never delivered to Power PDF clients. Authors can upload and replace it,
+  but not download it.
+- **Include** everything needed to rebuild exactly this version: project and
+  solution files, .cpp/.h sources, resources (.rc, bitmaps, icons), the
+  UILayout folders, build and packaging scripts, LICENSES.md and any
+  third-party source you vendored (with its license file).
+- **Leave out** build output (bin, obj, Release, Debug, x64, .vs, .pdb, .obj,
+  .zxt, .msi), the Power PDF Plugin SDK (reference its path instead),
+  credentials and customer documents. Limits: 100 MB ZIP, 20,000 files,
+  600 MB unpacked.
+- Make the ZIP from the same state you built the package from. Uploading
+  again replaces the stored source of that version.
+- The server checks the source like the package: credentials
+  (`SOURCE_SECRET`) and GPL/AGPL code or license files
+  (`LICENSE_COPYLEFT_SOURCE`) reject the upload; build output, SDK headers,
+  LGPL/MPL/EPL code and a ZIP without source files give warnings. The
+  submit response names the URL (`sourceUploadUrl`) and the store's policy
+  (`sourcePolicy`). With the default policy `required`, an admin cannot
+  approve a version until its source is stored.
+- Admins may upload new versions of any package (finding
+  `ADMIN_UPLOAD_FOR_OWNER`); the owner stays the same.
 
 ## Reading the catalog (what the Power PDF client does)
 
@@ -411,6 +450,19 @@ be free of warnings before review. Info is for information only.
 | ICON_TOO_LARGE | warning | The icon is too large. |
 | VERSION_EXISTS | error (409) | This exact version was already uploaded. |
 | PACKAGE_NOT_FOUND | error (404) | No package with this id. |
+| SOURCE_REJECTED | error (422) | The source upload was not stored; see `findings`. |
+| SOURCE_INVALID | error | The source upload is not a readable ZIP, is empty or too big unpacked. |
+| SOURCE_TOO_LARGE | error | The source ZIP is larger than 100 MB. |
+| SOURCE_SECRET | error | Credentials or key containers in the source. |
+| LICENSE_COPYLEFT_SOURCE | error | GPL/AGPL code or license files in the source. |
+| LICENSE_WEAK_COPYLEFT_SOURCE | warning | LGPL/MPL/EPL code in the source. |
+| SOURCE_BUILD_OUTPUT | warning | Build output or binaries in the source ZIP. |
+| SOURCE_SDK_INCLUDED | warning | Power PDF Plugin SDK headers in the source ZIP. |
+| SOURCE_NO_CODE | warning | No C, C++ or C# files in the source ZIP. |
+| THIRDPARTY_SOURCE_DETECTED | info | Folders with third-party license files (MIT/BSD/Apache). |
+| SOURCE_MISSING | error (404) | No source stored for this version (download). |
+| ADMIN_ONLY | error (403) | Source downloads are for store admins only. |
+| ADMIN_UPLOAD_FOR_OWNER | info | An admin uploaded a version of someone else's package. |
 | METADATA_INVALID | error (400/422) | PATCH body is not a JSON object, has unknown fields, or a finding with severity error. |
 | NAME_INVALID | error | Catalog name has no `en` entry, an unknown language code or is too long. |
 | DESCRIPTION_TOO_LONG | error | A catalog description is longer than 2000 characters. |
@@ -469,7 +521,8 @@ Store: {{baseUrl}}
 Key rules (details in the guide): every upload carries a new, higher SemVer
 version; description and changelog in all 16 European languages; a
 `category` from `GET {{baseUrl}}/api/categories` (propose a new broad one only
-if none fits); plugins live on the shared "Enhanced Features" ribbon tab (toolbar atom
+if none fits); after every upload also the source code of that version
+(`PUT .../api/packages/{id}/{version}/source`, automatically); plugins live on the shared "Enhanced Features" ribbon tab (toolbar atom
 `FeaturePack`, own group `FeaturePack::<Name>`); only MIT/BSD/Apache-2.0
 third-party code; a truthful compliance audit (`thirdParty`, `complianceAudit`)
 on every upload. The audit is a statement to the store operator: never

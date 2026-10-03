@@ -16,6 +16,7 @@ public class SettingsModel : PageModel
     public string From { get; private set; } = "";
     public string BaseUrl { get; private set; } = "";
     public string TimeZone { get; private set; } = TimeDisplay.DefaultZone;
+    public string SourcePolicy { get; private set; } = "required";
     public string? Notice { get; private set; }
     public string NoticeKind { get; private set; } = "ok";
     public string? TestDetail { get; private set; }
@@ -82,8 +83,10 @@ public class SettingsModel : PageModel
         await LoadAsync();
     }
 
-    public async Task OnPostServerAsync(string? baseUrl, string? timeZone)
+    public async Task OnPostServerAsync(string? baseUrl, string? timeZone, string? sourcePolicy)
     {
+        if (sourcePolicy is "off" or "recommended" or "required")
+            await _settings.SetAsync("Source.Policy", sourcePolicy);
         var admin = await _users.GetUserAsync(User);
         await _settings.SetAsync("App.PublicBaseUrl", (baseUrl ?? "").Trim().TrimEnd('/'));
         if (timeZone is not null && TimeDisplay.Zones.Contains(timeZone))
@@ -98,6 +101,8 @@ public class SettingsModel : PageModel
         HasResendKey = (await _settings.GetAsync("Email.ResendApiKey", "Email:ResendApiKey")).Length > 0;
         From = await _settings.GetAsync("Email.From", "Email:From");
         BaseUrl = await _settings.GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl");
+        var sp = await _settings.GetAsync("Source.Policy");
+        SourcePolicy = sp is "off" or "recommended" or "required" ? sp : "required";
         foreach (var (key, _, _) in NotificationService.Events)
             EventEnabled[key] = await _notify.IsEnabledAsync(key);
         MyEmail = (await _users.GetUserAsync(User))?.Email;

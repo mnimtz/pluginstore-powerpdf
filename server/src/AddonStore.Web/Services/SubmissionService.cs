@@ -47,14 +47,14 @@ public class SubmissionService
     public async Task<ValidationReport> ValidateOnlyAsync(string zipPath, AppUser user)
     {
         var validator = new PackageValidator(_db, _categories);
-        var (report, _) = await validator.ValidateAsync(zipPath, user.Id);
+        var (report, _) = await validator.ValidateAsync(zipPath, user.Id, await _users.IsInRoleAsync(user, "Admin"));
         return report;
     }
 
     public async Task<SubmissionResult> SubmitAsync(string zipPath, AppUser user, string via)
     {
         var validator = new PackageValidator(_db, _categories);
-        var (report, manifest) = await validator.ValidateAsync(zipPath, user.Id);
+        var (report, manifest) = await validator.ValidateAsync(zipPath, user.Id, await _users.IsInRoleAsync(user, "Admin"));
         if (!report.Passed || manifest is null)
             return new SubmissionResult(report, null);
 

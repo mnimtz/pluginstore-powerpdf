@@ -332,4 +332,19 @@
   <data name="Category deleted." xml:space="preserve"><value>Kategorie odstraněna.</value></data>
   <data name="This action is not possible for this category." xml:space="preserve"><value>Tuto akci nelze pro tuto kategorii provést.</value></data>
   <data name="The limit must be between 8 and 50." xml:space="preserve"><value>Limit musí být mezi 8 a 50.</value></data>
+  <data name="Download source" xml:space="preserve"><value>Stáhnout zdrojový kód</value></data>
+  <data name="Off" xml:space="preserve"><value>Vypnuto</value></data>
+  <data name="Recommended: approval possible without source code" xml:space="preserve"><value>Doporučeno: schválení možné i bez zdrojového kódu</value></data>
+  <data name="Required before approval." xml:space="preserve"><value>Vyžadováno před schválením.</value></data>
+  <data name="Required: no approval without source code" xml:space="preserve"><value>Povinné: bez zdrojového kódu žádné schválení</value></data>
+  <data name="Source code" xml:space="preserve"><value>Zdrojový kód</value></data>
+  <data name="Source code is stored next to each version and visible to admins only; Power PDF clients never receive it." xml:space="preserve"><value>Zdrojový kód se ukládá u každé verze a vidí ho jen správci; klienti Power PDF ho nikdy nedostanou.</value></data>
+  <data name="Source code per version" xml:space="preserve"><value>Zdrojový kód pro každou verzi</value></data>
+  <data name="Source code stored." xml:space="preserve"><value>Zdrojový kód uložen.</value></data>
+  <data name="The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it." xml:space="preserve"><value>Zdrojový kód této verze chybí. Verzi lze schválit, jakmile ho autor (nebo správce) nahraje.</value></data>
+  <data name="The source code was not stored." xml:space="preserve"><value>Zdrojový kód nebyl uložen.</value></data>
+  <data name="missing" xml:space="preserve"><value>chybí</value></data>
+  <data name="stored" xml:space="preserve"><value>uložen</value></data>
+  <data name="Upload source (ZIP)" xml:space="preserve"><value>Nahrát zdrojový kód (ZIP)</value></data>
+  <data name="Replace source" xml:space="preserve"><value>Nahradit zdrojový kód</value></data>
 </root>

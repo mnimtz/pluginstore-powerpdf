@@ -332,4 +332,19 @@
   <data name="Category deleted." xml:space="preserve"><value>Kategori silindi.</value></data>
   <data name="This action is not possible for this category." xml:space="preserve"><value>Bu işlem bu kategori için mümkün değil.</value></data>
   <data name="The limit must be between 8 and 50." xml:space="preserve"><value>Sınır 8 ile 50 arasında olmalıdır.</value></data>
+  <data name="Download source" xml:space="preserve"><value>Kaynak kodunu indir</value></data>
+  <data name="Off" xml:space="preserve"><value>Kapalı</value></data>
+  <data name="Recommended: approval possible without source code" xml:space="preserve"><value>Önerilen: kaynak kodu olmadan da onay mümkün</value></data>
+  <data name="Required before approval." xml:space="preserve"><value>Onaydan önce gerekli.</value></data>
+  <data name="Required: no approval without source code" xml:space="preserve"><value>Zorunlu: kaynak kodu olmadan onay yok</value></data>
+  <data name="Source code" xml:space="preserve"><value>Kaynak kodu</value></data>
+  <data name="Source code is stored next to each version and visible to admins only; Power PDF clients never receive it." xml:space="preserve"><value>Kaynak kodu her sürümle birlikte saklanır ve yalnızca yöneticiler tarafından görülebilir; Power PDF istemcileri onu asla almaz.</value></data>
+  <data name="Source code per version" xml:space="preserve"><value>Sürüm başına kaynak kodu</value></data>
+  <data name="Source code stored." xml:space="preserve"><value>Kaynak kodu kaydedildi.</value></data>
+  <data name="The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it." xml:space="preserve"><value>Bu sürümün kaynak kodu eksik. Yazar (veya bir yönetici) yükledikten sonra onaylanabilir.</value></data>
+  <data name="The source code was not stored." xml:space="preserve"><value>Kaynak kodu kaydedilmedi.</value></data>
+  <data name="missing" xml:space="preserve"><value>eksik</value></data>
+  <data name="stored" xml:space="preserve"><value>mevcut</value></data>
+  <data name="Upload source (ZIP)" xml:space="preserve"><value>Kaynak kodunu yükle (ZIP)</value></data>
+  <data name="Replace source" xml:space="preserve"><value>Kaynak kodunu değiştir</value></data>
 </root>
