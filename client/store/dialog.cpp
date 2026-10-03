@@ -105,7 +105,7 @@ protected:
             if (it->id == L"com.tungsten.pluginstore")
             {
                 m_self = *it;
-                m_selfUpdate = PSCompareVersions(it->version, FP_VERSION_W) > 0;
+                m_selfUpdate = !PSPolicyNoSelfUpdate() && PSCompareVersions(it->version, FP_VERSION_W) > 0;
                 m_entries.erase(it);
                 break;
             }
@@ -176,7 +176,11 @@ protected:
         // Uninstall applies to installed plugins; the store client itself is
         // not removable from its own dialog.
         BOOL canUninstall = !e->installedVersion.empty() && e->zxtName != L"PluginStore";
-        GetDlgItem(IDC_PS_UNINSTALL)->EnableWindow(canUninstall);
+        // Company policy DisableInstall: browse only.
+        const BOOL allowed = !PSPolicyNoInstall();
+        GetDlgItem(IDC_PS_UNINSTALL)->EnableWindow(canUninstall && allowed);
+        GetDlgItem(IDC_PS_INSTALL)->EnableWindow(allowed);
+        if (!allowed) SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_POLICY_INSTALL).c_str());
     }
 
     void OnUninstall()

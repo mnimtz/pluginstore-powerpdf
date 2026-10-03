@@ -15,5 +15,8 @@ bool         PSUrlLocked();               // true when a policy enforces the URL
 void         PSSaveUserSettings(const std::wstring& url, bool beta);
 bool         PSIsAllowedServerUrl(const std::wstring& url); // https://, or http:// for loopback; empty = default
 bool         PSUseClassicUI();            // ClassicUI = 1 (HKLM policy Store or HKCU): no WebView2 window
+// Company policies (HKLM ...\PluginStore\Policies\Store only, never HKCU):
+bool         PSPolicyNoInstall();         // DisableInstall = 1: browse only, no install/remove
+bool         PSPolicyNoSelfUpdate();      // DisableSelfUpdate = 1: no client update from the store (IT deploys the MSI)
 
 extern const wchar_t* kPSRegKey;          // HKCU key path

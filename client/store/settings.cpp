@@ -43,6 +43,18 @@ bool PSUseClassicUI()
     return ReadUserDword(L"ClassicUI", v) && v != 0;
 }
 
+bool PSPolicyNoInstall()
+{
+    DWORD v = 0;
+    return FPPolicyDword(L"Store", L"DisableInstall", v) && v != 0;
+}
+
+bool PSPolicyNoSelfUpdate()
+{
+    DWORD v = 0;
+    return FPPolicyDword(L"Store", L"DisableSelfUpdate", v) && v != 0;
+}
+
 bool PSIsAllowedServerUrl(const std::wstring& url)
 {
     std::wstring u = TrimUrl(url);

@@ -6,6 +6,7 @@
 #include "http.h"
 #include "powerpdfpath.h"
 #include "logging.h"
+#include "settings.h"
 #include "loc.h"
 #include "Resource.h"
 #include <bcrypt.h>
@@ -126,6 +127,11 @@ static bool WriteTextFile(const std::wstring& path, const std::wstring& text)
 
 int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
 {
+    if (PSPolicyNoInstall())
+    {
+        FPLogW(L"[Store] install/remove blocked by policy DisableInstall");
+        return 7;
+    }
     std::wstring pluginsDir = PluginsDir();
     if (pluginsDir.empty()) return 5;
 
@@ -340,6 +346,11 @@ std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& ou
 
 int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
 {
+    if (PSPolicyNoSelfUpdate())
+    {
+        FPLogW(L"[Store] self-update blocked by policy DisableSelfUpdate");
+        return 7;
+    }
     wchar_t tempDir[MAX_PATH];
     GetTempPathW(MAX_PATH, tempDir);
     std::wstring ppak = std::wstring(tempDir) + e.id + L"-" + e.version + L".ppak";
@@ -375,6 +386,11 @@ int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
 
 int PSUninstallPackage(const std::wstring& zxtName, HWND owner)
 {
+    if (PSPolicyNoInstall())
+    {
+        FPLogW(L"[Store] install/remove blocked by policy DisableInstall");
+        return 7;
+    }
     std::wstring pluginsDir = PluginsDir();
     if (pluginsDir.empty()) return 5;
 

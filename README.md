@@ -159,7 +159,10 @@ msiexec /i PluginStore-<version>.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"
 - Preconfigure for all users under
   `HKLM\SOFTWARE\Kofax\PDF\Tungsten Power PDF\PluginStore\Policies\Store`:
   `ServerUrl` (REG_SZ, locks the URL), `BetaChannel` (DWORD), `LockPage`
-  (DWORD 1 locks the options page), `ClassicUI` (DWORD 1). From 32-bit
+  (DWORD 1 locks the options page), `ClassicUI` (DWORD 1),
+  `DisableInstall` (DWORD 1: browse only, no install or removal; client
+  0.4.3+), `DisableSelfUpdate` (DWORD 1: no store-client update from the
+  store, for IT-managed MSI rollouts; client 0.4.3+). From 32-bit
   deployment agents use `reg add ... /reg:64`.
 - Intune detection rule: the file `<bin>\Plug-Ins\PluginStore.zxt` with a
   minimum version (the ProductCode changes with every version).

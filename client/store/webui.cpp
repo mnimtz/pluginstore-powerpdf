@@ -275,8 +275,10 @@ protected:
             { L"installing", IDS_PSW_INSTALLING }, { L"removing", IDS_PSW_REMOVING }, { L"later", IDS_PSW_LATER },
             { L"restartNow", IDS_PSW_RESTARTNOW }, { L"disclaimer", IDS_PSD_DISCLAIMER }, { L"disclaimerBtn", IDS_PSD_BTN_DISCLAIMER },
             { L"disclaimerFull", IDS_PSD_DISCLAIMER_FULL }, { L"selfUpdate", IDS_PSD_SELF_UPDATE }, { L"selfUpdateBtn", IDS_PSD_BTN_SELFUPD },
+            { L"installLocked", IDS_PSD_POLICY_INSTALL },
         };
-        std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) + L",\"strings\":{";
+        std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) +
+                         L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") + L",\"strings\":{";
         for (size_t i = 0; i < _countof(strings); ++i)
             j += (i ? L"," : L"") + Json(strings[i].key) + L":" + Json(FPLoc(strings[i].id));
         Send(j + L"}}");
@@ -294,7 +296,7 @@ protected:
             if (e.id == kClientId)
             {
                 m_self = e;
-                m_hasSelfUpdate = PSCompareVersions(e.version, FP_VERSION_W) > 0;
+                m_hasSelfUpdate = !PSPolicyNoSelfUpdate() && PSCompareVersions(e.version, FP_VERSION_W) > 0;
                 continue;
             }
             m_entries.push_back(e);
@@ -375,7 +377,7 @@ protected:
         std::wstring cmd = Field(json, L"cmd");
         if (cmd == L"ready") { SendInit(); LoadCatalog(true); }
         else if (cmd == L"refresh") LoadCatalog(false);
-        else if (cmd == L"install" || cmd == L"uninstall")
+        else if ((cmd == L"install" || cmd == L"uninstall") && !PSPolicyNoInstall())
         {
             size_t idx = 0;
             if (Find(Field(json, L"id"), &idx)) { m_jobIndex = idx; PostMessage(WM_RUN, cmd == L"install" ? JobInstall : JobUninstall); }

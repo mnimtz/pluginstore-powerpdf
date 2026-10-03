@@ -8,8 +8,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // Version
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,4,2,0
- PRODUCTVERSION 0,4,2,0
+ FILEVERSION 0,4,3,0
+ PRODUCTVERSION 0,4,3,0
  FILEFLAGSMASK 0x3fL
  FILEFLAGS 0x0L
  FILEOS 0x40004L
@@ -22,11 +22,11 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Tungsten Automation"
             VALUE "FileDescription", "Add-on Store client for Tungsten Power PDF"
-            VALUE "FileVersion", "0.4.2"
+            VALUE "FileVersion", "0.4.3"
             VALUE "InternalName", "PluginStore"
             VALUE "OriginalFilename", "PluginStore.zxt"
             VALUE "ProductName", "Add-on Store for Tungsten Power PDF"
-            VALUE "ProductVersion", "0.4.2"
+            VALUE "ProductVersion", "0.4.3"
         END
     END
     BLOCK "VarFileInfo"
@@ -141,6 +141,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "The server URL must start with https:// (http:// is only allowed for localhost). The store uses a single HTTPS connection; no other ports are needed."
     IDS_PSD_LINK_NOTFOUND "The add-on “%s” from the website is not in the catalog. It may only be in the beta channel (Options)."
     IDS_PSD_RESTART_FAIL "Power PDF could not be restarted automatically. Please close Power PDF and start it again yourself to finish."
+    IDS_PSD_POLICY_INSTALL "Installing and removing add-ons is turned off by your administrator. You can browse the catalog."
     IDS_PSW_SEARCH         "Search add-ons"
     IDS_PSW_ALL            "All"
     IDS_PSW_NONE           "No add-ons found."
@@ -211,6 +212,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "Die Server-URL muss mit https:// beginnen (http:// ist nur für localhost erlaubt). Der Store nutzt eine einzige HTTPS-Verbindung; weitere Ports sind nicht nötig."
     IDS_PSD_LINK_NOTFOUND "Das Add-on „%s“ von der Website ist nicht im Katalog. Eventuell gibt es es nur im Beta-Kanal (Optionen)."
     IDS_PSD_RESTART_FAIL "Power PDF konnte nicht automatisch neu gestartet werden. Bitte schließen Sie Power PDF und starten Sie es selbst neu, um den Vorgang abzuschließen."
+    IDS_PSD_POLICY_INSTALL "Das Installieren und Entfernen von Add-ons ist von Ihrer IT abgeschaltet. Den Katalog können Sie ansehen."
     IDS_PSW_SEARCH         "Add-ons durchsuchen"
     IDS_PSW_ALL            "Alle"
     IDS_PSW_NONE           "Keine Add-ons gefunden."
@@ -281,6 +283,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "L’URL du serveur doit commencer par https:// (http:// n’est autorisé que pour localhost). Le store utilise une seule connexion HTTPS ; aucun autre port n’est nécessaire."
     IDS_PSD_LINK_NOTFOUND "Le module « %s » du site web ne figure pas dans le catalogue. Il est peut-être disponible uniquement dans le canal bêta (Options)."
     IDS_PSD_RESTART_FAIL "Impossible de redémarrer Power PDF automatiquement. Veuillez fermer Power PDF puis le relancer vous-même pour terminer."
+    IDS_PSD_POLICY_INSTALL "L'installation et la suppression de modules sont désactivées par votre administrateur. Vous pouvez consulter le catalogue."
     IDS_PSW_SEARCH         "Rechercher des modules"
     IDS_PSW_ALL            "Tous"
     IDS_PSW_NONE           "Aucun module trouvé."
@@ -351,6 +354,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "L’URL del server deve iniziare con https:// (http:// è consentito solo per localhost). Lo store usa un’unica connessione HTTPS; non servono altre porte."
     IDS_PSD_LINK_NOTFOUND "Il componente aggiuntivo “%s” del sito web non è nel catalogo. Potrebbe essere disponibile solo nel canale beta (Opzioni)."
     IDS_PSD_RESTART_FAIL "Impossibile riavviare automaticamente Power PDF. Chiudere Power PDF e riavviarlo manualmente per completare."
+    IDS_PSD_POLICY_INSTALL "L'installazione e la rimozione dei componenti aggiuntivi sono disattivate dall'amministratore. È possibile consultare il catalogo."
     IDS_PSW_SEARCH         "Cerca componenti aggiuntivi"
     IDS_PSW_ALL            "Tutti"
     IDS_PSW_NONE           "Nessun componente aggiuntivo trovato."
@@ -421,6 +425,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "La URL del servidor debe empezar por https:// (http:// solo se permite para localhost). La tienda usa una única conexión HTTPS; no se necesitan otros puertos."
     IDS_PSD_LINK_NOTFOUND "El complemento «%s» del sitio web no está en el catálogo. Puede que solo esté en el canal beta (Opciones)."
     IDS_PSD_RESTART_FAIL "No se pudo reiniciar Power PDF automáticamente. Cierre Power PDF y vuelva a iniciarlo usted mismo para terminar."
+    IDS_PSD_POLICY_INSTALL "Su administrador ha desactivado la instalación y eliminación de complementos. Puede consultar el catálogo."
     IDS_PSW_SEARCH         "Buscar complementos"
     IDS_PSW_ALL            "Todos"
     IDS_PSW_NONE           "No se encontraron complementos."
@@ -491,6 +496,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "De server-URL moet beginnen met https:// (http:// is alleen toegestaan voor localhost). De store gebruikt één HTTPS-verbinding; andere poorten zijn niet nodig."
     IDS_PSD_LINK_NOTFOUND "De invoegtoepassing “%s” van de website staat niet in de catalogus. Mogelijk is deze alleen in het bètakanaal beschikbaar (Opties)."
     IDS_PSD_RESTART_FAIL "Power PDF kon niet automatisch opnieuw worden gestart. Sluit Power PDF en start het zelf opnieuw om te voltooien."
+    IDS_PSD_POLICY_INSTALL "Het installeren en verwijderen van invoegtoepassingen is door uw beheerder uitgeschakeld. U kunt de catalogus bekijken."
     IDS_PSW_SEARCH         "Invoegtoepassingen zoeken"
     IDS_PSW_ALL            "Alle"
     IDS_PSW_NONE           "Geen invoegtoepassingen gevonden."
@@ -561,6 +567,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "A URL do servidor deve começar com https:// (http:// só é permitido para localhost). A loja usa uma única conexão HTTPS; nenhuma outra porta é necessária."
     IDS_PSD_LINK_NOTFOUND "O complemento “%s” do site não está no catálogo. Talvez esteja disponível apenas no canal beta (Opções)."
     IDS_PSD_RESTART_FAIL "Não foi possível reiniciar o Power PDF automaticamente. Feche o Power PDF e inicie-o novamente para concluir."
+    IDS_PSD_POLICY_INSTALL "A instalação e a remoção de complementos foram desativadas pelo seu administrador. Pode consultar o catálogo."
     IDS_PSW_SEARCH         "Pesquisar complementos"
     IDS_PSW_ALL            "Todos"
     IDS_PSW_NONE           "Nenhum complemento encontrado."
@@ -631,6 +638,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "Serverens URL skal starte med https:// (http:// er kun tilladt for localhost). Butikken bruger én HTTPS-forbindelse; andre porte er ikke nødvendige."
     IDS_PSD_LINK_NOTFOUND "Tilføjelsen “%s” fra webstedet findes ikke i kataloget. Den findes muligvis kun i betakanalen (Indstillinger)."
     IDS_PSD_RESTART_FAIL "Power PDF kunne ikke genstartes automatisk. Luk Power PDF, og start det selv igen for at afslutte."
+    IDS_PSD_POLICY_INSTALL "Installation og fjernelse af tilføjelser er slået fra af din administrator. Du kan se kataloget."
     IDS_PSW_SEARCH         "Søg i tilføjelser"
     IDS_PSW_ALL            "Alle"
     IDS_PSW_NONE           "Ingen tilføjelser fundet."
@@ -701,6 +709,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "Palvelimen URL-osoitteen on alettava https:// (http:// on sallittu vain localhostille). Kauppa käyttää yhtä HTTPS-yhteyttä; muita portteja ei tarvita."
     IDS_PSD_LINK_NOTFOUND "Verkkosivuston lisäosaa ”%s” ei ole luettelossa. Se voi olla saatavilla vain beetakanavassa (Asetukset)."
     IDS_PSD_RESTART_FAIL "Power PDF:ää ei voitu käynnistää automaattisesti uudelleen. Sulje Power PDF ja käynnistä se itse uudelleen viimeistelläksesi."
+    IDS_PSD_POLICY_INSTALL "Järjestelmänvalvoja on poistanut lisäosien asentamisen ja poistamisen käytöstä. Voit selata luetteloa."
     IDS_PSW_SEARCH         "Hae lisäosia"
     IDS_PSW_ALL            "Kaikki"
     IDS_PSW_NONE           "Lisäosia ei löytynyt."
@@ -771,6 +780,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "Server-URL-en må starte med https:// (http:// er bare tillatt for localhost). Butikken bruker én HTTPS-tilkobling; andre porter trengs ikke."
     IDS_PSD_LINK_NOTFOUND "Tillegget «%s» fra nettstedet finnes ikke i katalogen. Det er kanskje bare tilgjengelig i betakanalen (Alternativer)."
     IDS_PSD_RESTART_FAIL "Power PDF kunne ikke startes på nytt automatisk. Lukk Power PDF og start det selv igjen for å fullføre."
+    IDS_PSD_POLICY_INSTALL "Installering og fjerning av tillegg er slått av av administratoren. Du kan se katalogen."
     IDS_PSW_SEARCH         "Søk i tillegg"
     IDS_PSW_ALL            "Alle"
     IDS_PSW_NONE           "Fant ingen tillegg."
@@ -841,6 +851,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "Serverns URL måste börja med https:// (http:// tillåts bara för localhost). Butiken använder en enda HTTPS-anslutning; inga andra portar behövs."
     IDS_PSD_LINK_NOTFOUND "Tillägget ”%s” från webbplatsen finns inte i katalogen. Det kanske bara finns i betakanalen (Alternativ)."
     IDS_PSD_RESTART_FAIL "Power PDF kunde inte startas om automatiskt. Stäng Power PDF och starta det själv igen för att slutföra."
+    IDS_PSD_POLICY_INSTALL "Installation och borttagning av tillägg har stängts av av din administratör. Du kan bläddra i katalogen."
     IDS_PSW_SEARCH         "Sök tillägg"
     IDS_PSW_ALL            "Alla"
     IDS_PSW_NONE           "Inga tillägg hittades."
@@ -911,6 +922,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "Adres URL serwera musi zaczynać się od https:// (http:// jest dozwolone tylko dla localhost). Sklep używa jednego połączenia HTTPS; inne porty nie są potrzebne."
     IDS_PSD_LINK_NOTFOUND "Dodatku „%s” ze strony internetowej nie ma w katalogu. Może być dostępny tylko w kanale beta (Opcje)."
     IDS_PSD_RESTART_FAIL "Nie można automatycznie uruchomić ponownie programu Power PDF. Zamknij Power PDF i uruchom go ponownie samodzielnie, aby zakończyć."
+    IDS_PSD_POLICY_INSTALL "Instalowanie i usuwanie dodatków zostało wyłączone przez administratora. Możesz przeglądać katalog."
     IDS_PSW_SEARCH         "Szukaj dodatków"
     IDS_PSW_ALL            "Wszystkie"
     IDS_PSW_NONE           "Nie znaleziono dodatków."
@@ -981,6 +993,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "Adresa URL serveru musí začínat https:// (http:// je povoleno jen pro localhost). Obchod používá jediné připojení HTTPS; další porty nejsou potřeba."
     IDS_PSD_LINK_NOTFOUND "Doplněk „%s“ z webu není v katalogu. Možná je dostupný jen v kanálu beta (Možnosti)."
     IDS_PSD_RESTART_FAIL "Power PDF se nepodařilo automaticky restartovat. Zavřete Power PDF a spusťte jej znovu sami, abyste akci dokončili."
+    IDS_PSD_POLICY_INSTALL "Instalace a odebírání doplňků vypnul váš správce. Katalog si můžete prohlížet."
     IDS_PSW_SEARCH         "Hledat doplňky"
     IDS_PSW_ALL            "Vše"
     IDS_PSW_NONE           "Nebyly nalezeny žádné doplňky."
@@ -1051,6 +1064,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "A kiszolgáló URL-címének https:// előtaggal kell kezdődnie (http:// csak localhost esetén engedélyezett). Az áruház egyetlen HTTPS-kapcsolatot használ; más portokra nincs szükség."
     IDS_PSD_LINK_NOTFOUND "A webhelyről választott „%s” bővítmény nincs a katalógusban. Lehet, hogy csak a béta csatornában érhető el (Beállítások)."
     IDS_PSD_RESTART_FAIL "A Power PDF nem indítható újra automatikusan. A befejezéshez zárja be a Power PDF-et, és indítsa el újra saját maga."
+    IDS_PSD_POLICY_INSTALL "A bővítmények telepítését és eltávolítását a rendszergazda kikapcsolta. A katalógust böngészheti."
     IDS_PSW_SEARCH         "Bővítmények keresése"
     IDS_PSW_ALL            "Összes"
     IDS_PSW_NONE           "Nem található bővítmény."
@@ -1121,6 +1135,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "URL-адрес сервера должен начинаться с https:// (http:// допускается только для localhost). Магазин использует одно HTTPS-подключение; другие порты не нужны."
     IDS_PSD_LINK_NOTFOUND "Надстройка «%s» с веб-сайта отсутствует в каталоге. Возможно, она доступна только в бета-канале (Параметры)."
     IDS_PSD_RESTART_FAIL "Не удалось автоматически перезапустить Power PDF. Закройте Power PDF и запустите его снова вручную, чтобы завершить."
+    IDS_PSD_POLICY_INSTALL "Установка и удаление надстроек отключены администратором. Каталог можно просматривать."
     IDS_PSW_SEARCH         "Поиск надстроек"
     IDS_PSW_ALL            "Все"
     IDS_PSW_NONE           "Надстройки не найдены."
@@ -1191,6 +1206,7 @@ BEGIN
     IDS_PSO_URL_HTTPS   "Sunucu URL'si https:// ile başlamalıdır (http:// yalnızca localhost için izinlidir). Mağaza tek bir HTTPS bağlantısı kullanır; başka bağlantı noktası gerekmez."
     IDS_PSD_LINK_NOTFOUND "Web sitesindeki “%s” eklentisi katalogda yok. Yalnızca beta kanalında olabilir (Seçenekler)."
     IDS_PSD_RESTART_FAIL "Power PDF otomatik olarak yeniden başlatılamadı. Tamamlamak için Power PDF'i kapatıp kendiniz yeniden başlatın."
+    IDS_PSD_POLICY_INSTALL "Eklenti yükleme ve kaldırma yöneticiniz tarafından kapatıldı. Kataloğa göz atabilirsiniz."
     IDS_PSW_SEARCH         "Eklentilerde ara"
     IDS_PSW_ALL            "Tümü"
     IDS_PSW_NONE           "Eklenti bulunamadı."

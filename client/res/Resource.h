@@ -81,6 +81,7 @@
 #define IDS_PSW_REMOVING        175
 #define IDS_PSW_BETA            176
 #define IDS_PSD_RESTART_FAIL    177
+#define IDS_PSD_POLICY_INSTALL  178
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261
