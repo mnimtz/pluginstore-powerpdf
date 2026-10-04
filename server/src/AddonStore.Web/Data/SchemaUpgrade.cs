@@ -19,7 +19,23 @@ public static class SchemaUpgrade
     public static async Task RunAsync(IServiceProvider services)
     {
         var db = services.GetRequiredService<AppDbContext>();
+        var log = services.GetRequiredService<ILoggerFactory>().CreateLogger("AddonStore.Startup");
         db.Database.EnsureCreated();
+
+        // Rollback journal instead of WAL (S0.17.1). The database lives on the
+        // Azure Files share (/data, SMB): WAL keeps its index in a memory-mapped
+        // -shm file, which SQLite does not support on network file systems; a
+        // second container during a restart then crashed the new one (exit 139).
+        // The journal mode is stored in the file, so this runs once per database.
+        try
+        {
+            var conn = db.Database.GetDbConnection();
+            if (conn.State != System.Data.ConnectionState.Open) conn.Open();
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = "PRAGMA journal_mode=DELETE";
+            log.LogInformation("Startup: SQLite journal mode {Mode}", cmd.ExecuteScalar());
+        }
+        catch (Exception ex) { log.LogWarning(ex, "Startup: SQLite journal mode could not be changed"); }
 
         // Poor-man migrations: EnsureCreated never alters an existing database, so
         // additions arrive as idempotent statements here.
@@ -104,6 +120,9 @@ public static class SchemaUpgrade
             "CREATE UNIQUE INDEX IF NOT EXISTS IX_Deliveries_CustomerId_PackageId ON Deliveries (CustomerId, PackageId)"
         })
         {
+            // Skip columns that exist (a failing ALTER would show as an error in the log).
+            var add = System.Text.RegularExpressions.Regex.Match(sql, @"^ALTER TABLE (\w+) ADD COLUMN (\w+) ");
+            if (add.Success && ColumnExists(db, add.Groups[1].Value, add.Groups[2].Value)) continue;
             try { db.Database.ExecuteSqlRaw(sql); }
             catch (Microsoft.Data.Sqlite.SqliteException) { /* column/table already there */ }
         }
@@ -114,5 +133,16 @@ public static class SchemaUpgrade
         foreach (var role in Roles)
             if (!await roles.RoleExistsAsync(role))
                 await roles.CreateAsync(new IdentityRole(role));
+    }
+
+    private static bool ColumnExists(AppDbContext db, string table, string column)
+    {
+        var conn = db.Database.GetDbConnection();
+        if (conn.State != System.Data.ConnectionState.Open) conn.Open();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = "SELECT COUNT(*) FROM pragma_table_info($t) WHERE name = $c";
+        var pt = cmd.CreateParameter(); pt.ParameterName = "$t"; pt.Value = table; cmd.Parameters.Add(pt);
+        var pc = cmd.CreateParameter(); pc.ParameterName = "$c"; pc.Value = column; cmd.Parameters.Add(pc);
+        return Convert.ToInt64(cmd.ExecuteScalar()) > 0;
     }
 }

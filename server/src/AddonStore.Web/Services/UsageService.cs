@@ -139,6 +139,9 @@ public sealed class UsageMaintenance : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stop)
     {
+        // Start after the web server: SQLite's async calls run synchronously, and
+        // the first purge must not hold up the start (S0.17.1).
+        try { await Task.Delay(TimeSpan.FromSeconds(30), stop); } catch (TaskCanceledException) { return; }
         var nextPurge = DateTime.MinValue;
         while (!stop.IsCancellationRequested)
         {

@@ -8,7 +8,8 @@ namespace AddonStore.Web.Services;
 /// IP address to location and network operator for the usage reports.
 /// Data: "IP to City Lite" and "IP to ASN Lite" by DB-IP (https://db-ip.com),
 /// CC BY 4.0, attribution on the reports page. Refreshed monthly into
-/// data/geo (not part of backups, downloaded again); opened memory-mapped.
+/// data/geo (not part of backups, downloaded again); read into memory (S0.17.1:
+/// no memory mapping, the files live on a network share).
 /// Without the files every lookup returns empty values.
 /// </summary>
 public sealed class GeoService : BackgroundService
@@ -136,6 +137,9 @@ public sealed class GeoService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stop)
     {
+        // Return to the host at once: reading the databases (some 100 MB from the
+        // share) must not delay the start of the web server.
+        await Task.Yield();
         Directory.CreateDirectory(_dir);
         foreach (var (key, file) in Databases) Load(key, file);
         while (!stop.IsCancellationRequested)
@@ -157,10 +161,11 @@ public sealed class GeoService : BackgroundService
         if (!File.Exists(path)) return;
         try
         {
-            var reader = new Reader(path, FileAccessMode.MemoryMapped);
+            var reader = new Reader(path, FileAccessMode.Memory);
             Reader? old;
             lock (_lock) { old = _readers[key]; _readers[key] = reader; }
             old?.Dispose();
+            _log.LogInformation("Startup: geo database {File} loaded", file);
         }
         catch (Exception ex) { _log.LogWarning(ex, "geo database {File} could not be loaded", file); }
     }

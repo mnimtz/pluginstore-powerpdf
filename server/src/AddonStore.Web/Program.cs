@@ -179,8 +179,13 @@ var app = builder.Build();
 // --- schema + roles --------------------------------------------------------
 using (var scope = app.Services.CreateScope())
 {
+    // Each start-up step with its duration in the container log (S0.17.1).
+    var startLog = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("AddonStore.Startup");
+    var clock = System.Diagnostics.Stopwatch.StartNew();
+    startLog.LogInformation("Startup: schema upgrade");
     await AddonStore.Web.Data.SchemaUpgrade.RunAsync(scope.ServiceProvider);
     await app.Services.GetRequiredService<SetupGate>().InitAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>());
+    startLog.LogInformation("Startup: database ready after {Ms} ms", clock.ElapsedMilliseconds);
 }
 
 // Security response headers. TLS terminates at App Service, which does not
