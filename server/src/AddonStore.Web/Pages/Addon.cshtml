@@ -45,6 +45,7 @@ else
                  onerror="this.src='/img/powerpdf-icon.svg'" />
             <div class="addon-head">
                 <h1>@item.Name</h1>
+                <partial name="_Stars" model="(item.Rating, item.RatingCount)" />
                 <div class="meta">
                     <span class="badge live">@item.CategoryName</span>
                     @if (item.Channel == "beta") { <span class="badge beta">Beta</span> }
@@ -63,6 +64,25 @@ else
             </div>
         </div>
 
+        @if (Model.Shots.Count > 0)
+        {
+            <div class="card shots">
+                <h2 style="margin-top:0">@L["Screenshots"]</h2>
+                <div class="shot-strip">
+                    @foreach (var s in Model.Shots)
+                    {
+                        <button type="button" class="shot" data-src="/api/packages/@item.Id/screenshots/@s.Index?v=@Model.ShotVersion" data-caption="@s.Caption">
+                            <img src="/api/packages/@item.Id/screenshots/@s.Index?v=@Model.ShotVersion" alt="@s.Caption" loading="lazy" />
+                            @if (s.Caption.Length > 0) { <span>@s.Caption</span> }
+                        </button>
+                    }
+                </div>
+            </div>
+            <dialog id="shot-view" class="shot-view">
+                <form method="dialog"><button class="btn small secondary" aria-label="@L["Close"]">×</button></form>
+                <img alt="" /><p></p>
+            </dialog>
+        }
         <div class="grid addon-grid">
             @if (!string.IsNullOrWhiteSpace(item.Changelog))
             {
@@ -143,6 +163,16 @@ else
                     if (!left && hint) hint.hidden = false;
                 }, 1800);
             });
+            var dlg = document.getElementById('shot-view');
+            document.querySelectorAll('.shot').forEach(function (b) {
+                b.addEventListener('click', function () {
+                    if (!dlg || !dlg.showModal) { window.open(b.dataset.src, '_blank'); return; }
+                    dlg.querySelector('img').src = b.dataset.src;
+                    dlg.querySelector('p').textContent = b.dataset.caption || '';
+                    dlg.showModal();
+                });
+            });
+            if (dlg) dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
             var tip = document.getElementById('dl-tip'), dl = document.getElementById('dl-btn');
             if (tip && dl) {
                 dl.addEventListener('click', function () { tip.classList.add('open'); setTimeout(function () { tip.classList.remove('open'); }, 20000); });

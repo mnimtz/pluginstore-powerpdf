@@ -166,3 +166,77 @@
     }
 </table>
 </div>
+
+@{
+    var ratingTotal = Model.RatingDist.Sum();
+    var ratingAvg = ratingTotal == 0 ? 0 : Enumerable.Range(1, 5).Sum(i => i * Model.RatingDist[i - 1]) / (double)ratingTotal;
+}
+<h2>@L["Ratings and feedback"]</h2>
+<div class="grid">
+    <div class="card">
+        <h3 style="margin-top:0">@L["Ratings"]</h3>
+        @if (ratingTotal == 0)
+        {
+            <p class="muted">@L["No ratings yet. Users rate add-ons in the store window inside Power PDF."]</p>
+        }
+        else
+        {
+            <partial name="_Stars" model="(Math.Round(ratingAvg, 1), ratingTotal)" />
+            @for (var st = 5; st >= 1; st--)
+            {
+                var n = Model.RatingDist[st - 1];
+                <div class="share"><span>@st ★</span><span class="track"><i style="width:@((100.0 * n / ratingTotal).ToString("0.#", System.Globalization.CultureInfo.InvariantCulture))%"></i></span><span>@n</span></div>
+            }
+        }
+    </div>
+</div>
+@if (Model.IsOwner || Model.IsAdmin)
+{
+    <div class="card">
+        <h3 style="margin-top:0">@L["Problem reports and comments"]</h3>
+        <p class="muted small">@L["Sent from the store window inside Power PDF. Only you and the admins see them; Claude reads them via GET /api/packages/<id>/feedback."]</p>
+        @if (Model.Feedbacks.Count == 0)
+        {
+            <p class="muted">@L["Nothing received yet."]</p>
+        }
+        else
+        {
+            <div class="table-wrap">
+            <table>
+                <tr><th>@L["Received"]</th><th>@L["Type"]</th><th>@L["Version"]</th><th>@L["Message"]</th><th>@L["Status"]</th></tr>
+                @foreach (var f in Model.Feedbacks)
+                {
+                    <tr>
+                        <td class="small">@Time.Fmt(f.CreatedAt)@if (f.Country != "") { <br /><span class="muted">@f.Country</span> }</td>
+                        <td><span class="badge @(f.Kind == "problem" ? "rejected" : "submitted")">@L[f.Kind == "problem" ? "Problem" : "Comment"]</span></td>
+                        <td>@f.Version</td>
+                        <td style="white-space:pre-wrap;max-width:520px">@f.Message
+                            @if (!string.IsNullOrEmpty(f.Email)) { <div class="small"><a href="mailto:@f.Email">@f.Email</a></div> }
+                            <div class="small muted">@f.ClientInfo</div>
+                            @if (!string.IsNullOrEmpty(f.LogExcerpt))
+                            {
+                                <details class="small"><summary>@L["Log excerpt"]</summary><pre class="code" style="max-height:260px;overflow:auto">@f.LogExcerpt</pre></details>
+                            }
+                        </td>
+                        <td>
+                            <form method="post" asp-page-handler="FeedbackStatus" asp-route-id="@Model.Pkg!.Id">
+                                <input type="hidden" name="fid" value="@f.Id" />
+                                @if (f.Status == "open")
+                                {
+                                    <span class="badge pending">@L["open"]</span>
+                                    <button type="submit" name="status" value="done" class="btn small secondary">@L["Mark as done"]</button>
+                                }
+                                else
+                                {
+                                    <span class="badge live">@L["done"]</span>
+                                    <button type="submit" name="status" value="open" class="btn small secondary">@L["Reopen"]</button>
+                                }
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+            </div>
+        }
+    </div>
+}

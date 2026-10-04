@@ -1,0 +1,11 @@
+@model (double Average, int Count)
+@* Average star rating, e.g. "★★★★☆ 4.3 (12)"; nothing when there is no rating yet. *@
+@if (Model.Count > 0)
+{
+    var avg = Model.Average.ToString("0.0", System.Globalization.CultureInfo.CurrentCulture);
+    var pct = (Model.Average / 5 * 100).ToString("0.#", System.Globalization.CultureInfo.InvariantCulture);
+    <span class="stars" title="@avg / 5 · @L["{0} rating(s)", Model.Count]">
+        <i style="--p:@(pct)%" aria-hidden="true">★★★★★</i>
+        <b>@avg</b> <span>(@Model.Count)</span>
+    </span>
+}

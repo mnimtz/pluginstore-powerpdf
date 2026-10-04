@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection;
 using System.Globalization;
 using AddonStore.Web.Api;
 using AddonStore.Web.Auth;
@@ -18,6 +19,12 @@ Directory.CreateDirectory(dataDir);
 var connection = builder.Configuration.GetConnectionString("Default")
                  ?? $"Data Source={Path.Combine(dataDir, "pluginstore.db")}";
 builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(connection));
+// Keys for auth cookies and antiforgery tokens live in the persistent data
+// folder; in the container's default location they were lost on every restart,
+// which signed everybody out after each deployment.
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(dataDir, "keys")))
+    .SetApplicationName("AddonStore");
 
 // --- identity + token auth ----------------------------------------------
 builder.Services.AddIdentity<AppUser, IdentityRole>(o =>
@@ -114,6 +121,8 @@ builder.Services.AddRazorPages(o =>
 builder.Services.AddScoped<AuditService>();
 builder.Services.AddScoped<UsageService>();
 builder.Services.AddScoped<ShareService>();
+builder.Services.AddScoped<FeedbackService>();
+builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<GeoService>();
 builder.Services.AddHostedService(sp => sp.GetRequiredService<GeoService>());
 builder.Services.AddHostedService<UsageMaintenance>();

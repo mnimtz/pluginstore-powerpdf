@@ -487,4 +487,23 @@
   <data name="Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF." xml:space="preserve"><value>Componenti aggiuntivi per Tungsten Power PDF: scoprili qui e installali direttamente in Power PDF.</value></data>
   <data name="Backup" xml:space="preserve"><value>Backup</value></data>
   <data name="Setup" xml:space="preserve"><value>Configurazione</value></data>
+  <data name="Close" xml:space="preserve"><value>Chiudi</value></data>
+  <data name="Log excerpt" xml:space="preserve"><value>Estratto del log</value></data>
+  <data name="Mark as done" xml:space="preserve"><value>Segna come risolto</value></data>
+  <data name="Message" xml:space="preserve"><value>Messaggio</value></data>
+  <data name="No ratings yet. Users rate add-ons in the store window inside Power PDF." xml:space="preserve"><value>Ancora nessuna valutazione. Gli utenti valutano i componenti nella finestra dello store in Power PDF.</value></data>
+  <data name="Nothing received yet." xml:space="preserve"><value>Ancora nulla ricevuto.</value></data>
+  <data name="Problem report or comment from the store client" xml:space="preserve"><value>Segnalazione o commento dal client dello store</value></data>
+  <data name="Problem reports and comments" xml:space="preserve"><value>Segnalazioni e commenti</value></data>
+  <data name="Ratings" xml:space="preserve"><value>Valutazioni</value></data>
+  <data name="Ratings and feedback" xml:space="preserve"><value>Valutazioni e riscontri</value></data>
+  <data name="Received" xml:space="preserve"><value>Ricevuto</value></data>
+  <data name="Reopen" xml:space="preserve"><value>Riapri</value></data>
+  <data name="Screenshots" xml:space="preserve"><value>Schermate</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; Claude reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Inviati dalla finestra dello store in Power PDF. Li vedete solo voi e gli amministratori; Claude li legge tramite GET /api/packages/&lt;id&gt;/feedback.</value></data>
+  <data name="open" xml:space="preserve"><value>aperto</value></data>
+  <data name="done" xml:space="preserve"><value>risolto</value></data>
+  <data name="{0} rating(s)" xml:space="preserve"><value>{0} valutazione/i</value></data>
+  <data name="Problem" xml:space="preserve"><value>Problema</value></data>
+  <data name="Comment" xml:space="preserve"><value>Commento</value></data>
 </root>

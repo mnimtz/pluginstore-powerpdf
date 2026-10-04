@@ -106,6 +106,11 @@ public static class ApiEndpoints
                     "PUT  /api/packages/{id}/{version}/source  upload the source code ZIP of a version (owner/admin, auth)",
                     "GET  /api/packages/{id}/{version}/source  download the source code (admins only)",
                     "GET  /api/packages/{id}/source/latest  source code of the newest version that has one (admins only; header X-Source-Version)",
+                    "GET  /api/packages/{id}/screenshots  screenshot list with captions (?lang=, ?format=tsv); /screenshots/{n} the image",
+                    "POST /api/packages/{id}/rating  {installId, stars 1-5, version} from the store client (anonymous)",
+                    "POST /api/packages/{id}/feedback  {installId, kind problem|comment, message, email?, version, log?} from the store client",
+                    "GET  /api/packages/{id}/feedback  ratings and feedback of your package (owner/admin, ?status=open|done)",
+                    "PATCH /api/packages/{id}/feedback/{fid}  {status: open|done} (owner/admin)",
                     "DELETE /api/packages/{id}/{version}  withdraw your own beta version (auth)",
                     "GET  /api/packages/{id}/{version}/download",
                     "GET  /api/packages/{id}/icon     catalog icon (PNG) of the newest released version",
@@ -177,7 +182,9 @@ public static class ApiEndpoints
                       .Append(i.ZxtName).Append('\t').Append(i.Category).Append('\t')
                       .Append(Flat(i.Author)).Append('\t').Append(Flat(i.ContactEmail)).Append('\t')
                       .Append(Flat(i.CategoryName)).Append('\t')
-                      .Append($"{Base(ctx)}/api/packages/{i.Id}/icon").Append('\n');
+                      .Append($"{Base(ctx)}/api/packages/{i.Id}/icon").Append('\t')
+                      .Append(i.Rating.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)).Append('\t')
+                      .Append(i.RatingCount).Append('\t').Append(i.Screenshots).Append('\n');
                 }
                 return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
             }
@@ -403,6 +410,97 @@ public static class ApiEndpoints
             }
             catch (InvalidDataException) { return NotFound("ICON_MISSING", "The package could not be read."); }
         });
+
+        // Screenshots (S0.11.0): list with localized captions (JSON, or TSV "url<TAB>caption" for the client) and images.
+        api.MapGet("/packages/{id}/screenshots", async (string id, string? lang, string? format, HttpContext ctx, AppDbContext db) =>
+        {
+            var v = await ScreenshotService.DisplayVersionAsync(db, id);
+            if (v is null) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
+            var culture = (lang ?? System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName).Trim();
+            if (culture.Length > 2) culture = MapHostLang(culture);
+            var shots = ScreenshotService.FromManifest(v.ManifestJson, culture);
+            string Url(int n) => $"{Base(ctx)}/api/packages/{id}/screenshots/{n}?v={v.Version}";
+            if (string.Equals(format, "tsv", StringComparison.OrdinalIgnoreCase))
+                return Results.Text(string.Concat(shots.Select(s => Url(s.Index) + "\t" + s.Caption.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ') + "\n")),
+                                    "text/tab-separated-values; charset=utf-8");
+            return Results.Json(new { ok = true, data = new { id, version = v.Version, screenshots = shots.Select(s => new { index = s.Index, url = Url(s.Index), caption = s.Caption }) } });
+        });
+
+        api.MapGet("/packages/{id}/screenshots/{n:int}", async (string id, int n, AppDbContext db, SubmissionService svc) =>
+        {
+            var v = await ScreenshotService.DisplayVersionAsync(db, id);
+            if (v is null) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
+            var shot = ScreenshotService.FromManifest(v.ManifestJson, "en").FirstOrDefault(s => s.Index == n);
+            if (shot is null) return NotFound("SCREENSHOT_NOT_FOUND", $"No screenshot {n}.");
+            var img = await ScreenshotService.ReadAsync(Path.Combine(svc.StorageRoot, v.FilePath), shot.File);
+            if (img is null) return NotFound("SCREENSHOT_NOT_FOUND", "The screenshot could not be read.");
+            return Results.File(img.Value.Bytes, img.Value.Type, lastModified: v.SubmittedAt,
+                entityTag: new Microsoft.Net.Http.Headers.EntityTagHeaderValue($"\"{v.Sha256[..16]}-{n}\""));
+        });
+
+        // Ratings and problem reports from Add-on Store clients (anonymous install id, see FeedbackService).
+        api.MapPost("/packages/{id}/rating", async (string id, HttpContext ctx, FeedbackService fb, RatingBody body) =>
+        {
+            var (r, sum) = await fb.RateAsync(ctx, id, body.InstallId, body.Stars, body.Version);
+            if (!r.Ok) return Results.Json(new { ok = false, error = new { code = r.Code, message = r.Message, hint = "" } },
+                                           statusCode: r.Code == "PACKAGE_NOT_FOUND" ? 404 : r.Code == "RATE_LIMITED" ? 429 : 400);
+            return Results.Json(new { ok = true, data = new { id, average = sum?.Average ?? 0, count = sum?.Count ?? 0 } });
+        });
+
+        api.MapPost("/packages/{id}/feedback", async (string id, HttpContext ctx, FeedbackService fb, FeedbackBody body) =>
+        {
+            var r = await fb.AddAsync(ctx, id, body.InstallId, body.Kind, body.Message, body.Email, body.Version, body.Log);
+            if (!r.Ok) return Results.Json(new { ok = false, error = new { code = r.Code, message = r.Message, hint = "" } },
+                                           statusCode: r.Code == "PACKAGE_NOT_FOUND" ? 404 : r.Code == "RATE_LIMITED" ? 429 : 400);
+            return Results.Json(new { ok = true, data = new { id, message = r.Message } });
+        });
+
+        // Owner/admin: read and close reports (portal and Claude sessions).
+        api.MapGet("/packages/{id}/feedback", async (string id, string? status, HttpContext ctx, AppDbContext db, UserManager<AppUser> users) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var pkg = await db.Packages.FirstOrDefaultAsync(p => p.Id == id);
+            if (pkg is null) return NotFound("PACKAGE_NOT_FOUND", $"No package with id '{id}'.");
+            if (pkg.OwnerId != user.Id && !ctx.User.IsInRole("Admin"))
+                return Results.Json(new { ok = false, error = new { code = "NOT_OWNER", message = "This package belongs to another user.", hint = "Only the owner or an admin can read its feedback." } }, statusCode: 403);
+            var q = db.Feedbacks.AsNoTracking().Where(f => f.PackageId == id);
+            if (status is "open" or "done") q = q.Where(f => f.Status == status);
+            var rows = await q.OrderByDescending(f => f.Id).Take(500).ToListAsync();
+            var ratings = await db.Ratings.AsNoTracking().Where(r => r.PackageId == id).GroupBy(r => r.Stars)
+                .Select(g => new { stars = g.Key, count = g.Count() }).ToListAsync();
+            return Results.Json(new
+            {
+                ok = true,
+                data = new
+                {
+                    id,
+                    ratings = Enumerable.Range(1, 5).ToDictionary(s => s.ToString(), s => ratings.FirstOrDefault(r => r.stars == s)?.count ?? 0),
+                    feedback = rows.Select(f => new { f.Id, f.Kind, f.Version, f.Message, f.Email, f.ClientInfo, log = f.LogExcerpt, f.Country, f.CreatedAt, f.Status, f.DoneAt, f.DoneBy })
+                }
+            });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapMethods("/packages/{id}/feedback/{fid:int}", new[] { "PATCH" }, async (string id, int fid, HttpContext ctx, AppDbContext db,
+            UserManager<AppUser> users, AuditService audit, FeedbackStatusBody body) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var pkg = await db.Packages.FirstOrDefaultAsync(p => p.Id == id);
+            if (pkg is null) return NotFound("PACKAGE_NOT_FOUND", $"No package with id '{id}'.");
+            if (pkg.OwnerId != user.Id && !ctx.User.IsInRole("Admin"))
+                return Results.Json(new { ok = false, error = new { code = "NOT_OWNER", message = "This package belongs to another user.", hint = "" } }, statusCode: 403);
+            var f = await db.Feedbacks.FirstOrDefaultAsync(x => x.Id == fid && x.PackageId == id);
+            if (f is null) return NotFound("FEEDBACK_NOT_FOUND", $"No feedback {fid} for '{id}'.");
+            if (body.Status is not ("open" or "done"))
+                return Results.Json(new { ok = false, error = new { code = "FEEDBACK_STATUS_INVALID", message = "status must be 'open' or 'done'.", hint = "" } }, statusCode: 400);
+            f.Status = body.Status;
+            f.DoneAt = body.Status == "done" ? DateTime.UtcNow : null;
+            f.DoneBy = body.Status == "done" ? user.DisplayName : null;
+            await db.SaveChangesAsync();
+            await audit.LogAsync(user.DisplayName, "feedback." + body.Status, $"{id} #{fid}");
+            return Results.Json(new { ok = true, data = new { id, feedback = fid, status = f.Status } });
+        }).RequireAuthorization("ApiOrCookie");
 
         api.MapGet("/categories", async (AppDbContext db, CategoryService categories) =>
         {
@@ -693,6 +791,7 @@ public static class ApiEndpoints
         var ownerMails = ownerRows.ToDictionary(p => p.Id, p => Services.CatalogUi.PublicEmail(p.Owner));
         var pkgs = ownerRows.ToDictionary(p => p.Id);
         var known = await db.Categories.ToDictionaryAsync(c => c.Slug);
+        var ratingSums = await FeedbackService.SummariesAsync(db);
         // Share page slugs over live and beta ids, the same set /a/{slug} resolves against.
         var slugIds = (await db.PackageVersions.Where(v => v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)
             .Select(v => v.PackageId).Distinct().ToListAsync()).Where(i => i != SubmissionService.ClientPackageId).ToList();
@@ -730,6 +829,8 @@ public static class ApiEndpoints
                 sha256 = pick.Sha256,
                 sizeBytes = pick.SizeBytes,
                 downloads = pick.Downloads,
+                rating = ratingSums.GetValueOrDefault(pick.PackageId) is { } rs ? new { average = rs.Average, count = rs.Count } : null,
+                screenshots = ScreenshotService.Count(pick.ManifestJson),
                 pageUrl = pick.PackageId == SubmissionService.ClientPackageId ? null
                     : $"{baseUrl}/a/{ShareService.Slug(pick.PackageId, slugIds)}",
                 downloadUrl = $"{baseUrl}/api/packages/{pick.PackageId}/{pick.Version}/download"
@@ -750,3 +851,10 @@ public static class ApiEndpoints
 }
 
 public record AppVersion(string Value);
+
+/// <summary>POST /api/packages/{id}/rating</summary>
+public record RatingBody(string? InstallId, int Stars, string? Version);
+/// <summary>POST /api/packages/{id}/feedback</summary>
+public record FeedbackBody(string? InstallId, string? Kind, string? Message, string? Email, string? Version, string? Log);
+/// <summary>PATCH /api/packages/{id}/feedback/{fid}</summary>
+public record FeedbackStatusBody(string? Status);

@@ -487,4 +487,23 @@
   <data name="Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF." xml:space="preserve"><value>Invoegtoepassingen voor Tungsten Power PDF: ontdek ze hier en installeer ze direct in Power PDF.</value></data>
   <data name="Backup" xml:space="preserve"><value>Back-up</value></data>
   <data name="Setup" xml:space="preserve"><value>Instellen</value></data>
+  <data name="Close" xml:space="preserve"><value>Sluiten</value></data>
+  <data name="Log excerpt" xml:space="preserve"><value>Logfragment</value></data>
+  <data name="Mark as done" xml:space="preserve"><value>Markeren als afgehandeld</value></data>
+  <data name="Message" xml:space="preserve"><value>Bericht</value></data>
+  <data name="No ratings yet. Users rate add-ons in the store window inside Power PDF." xml:space="preserve"><value>Nog geen beoordelingen. Gebruikers beoordelen invoegtoepassingen in het storevenster in Power PDF.</value></data>
+  <data name="Nothing received yet." xml:space="preserve"><value>Nog niets ontvangen.</value></data>
+  <data name="Problem report or comment from the store client" xml:space="preserve"><value>Probleemmelding of opmerking vanuit de storeclient</value></data>
+  <data name="Problem reports and comments" xml:space="preserve"><value>Probleemmeldingen en opmerkingen</value></data>
+  <data name="Ratings" xml:space="preserve"><value>Beoordelingen</value></data>
+  <data name="Ratings and feedback" xml:space="preserve"><value>Beoordelingen en feedback</value></data>
+  <data name="Received" xml:space="preserve"><value>Ontvangen</value></data>
+  <data name="Reopen" xml:space="preserve"><value>Heropenen</value></data>
+  <data name="Screenshots" xml:space="preserve"><value>Schermafbeeldingen</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; Claude reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Verzonden vanuit het storevenster in Power PDF. Alleen u en de beheerders zien ze; Claude leest ze via GET /api/packages/&lt;id&gt;/feedback.</value></data>
+  <data name="open" xml:space="preserve"><value>open</value></data>
+  <data name="done" xml:space="preserve"><value>afgehandeld</value></data>
+  <data name="{0} rating(s)" xml:space="preserve"><value>{0} beoordeling(en)</value></data>
+  <data name="Problem" xml:space="preserve"><value>Probleem</value></data>
+  <data name="Comment" xml:space="preserve"><value>Opmerking</value></data>
 </root>

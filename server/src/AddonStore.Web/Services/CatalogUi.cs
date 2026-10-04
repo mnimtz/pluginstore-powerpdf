@@ -8,7 +8,14 @@ namespace AddonStore.Web.Services;
 public record CatalogItem(string Id, string Name, string Description, string Version,
     string Channel, string Changelog, long SizeBytes, int Downloads,
     string Sha256, string MinHost, string ZxtName, string Category, string Author, string ContactEmail,
-    string CategoryName = "");
+    string CategoryName = "")
+{
+    /// <summary>Average stars (0 = no rating yet) and number of ratings (S0.11.0).</summary>
+    public double Rating { get; init; }
+    public int RatingCount { get; init; }
+    /// <summary>Number of screenshots in the shown version's manifest.</summary>
+    public int Screenshots { get; init; }
+}
 
 public static class CatalogUi
 {
@@ -31,6 +38,7 @@ public static class CatalogUi
         var ownerMails = ownerRows.ToDictionary(p => p.Id, p => CatalogUi.PublicEmail(p.Owner));
         var pkgs = ownerRows.ToDictionary(p => p.Id);
         var known = await db.Categories.ToDictionaryAsync(c => c.Slug);
+        var ratings = await FeedbackService.SummariesAsync(db);
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
@@ -60,7 +68,12 @@ public static class CatalogUi
                 pick.Sha256, pick.MinPowerPdfVersion, zxt, category,
                 EffectiveAuthor(pkg, doc.RootElement, owners.GetValueOrDefault(pick.PackageId, pick.SubmittedBy)),
                 EffectiveContact(pkg, doc.RootElement, ownerMails.GetValueOrDefault(pick.PackageId, "")),
-                CategoryService.Name(known.GetValueOrDefault(category), category, culture)));
+                CategoryService.Name(known.GetValueOrDefault(category), category, culture))
+            {
+                Rating = ratings.GetValueOrDefault(pick.PackageId)?.Average ?? 0,
+                RatingCount = ratings.GetValueOrDefault(pick.PackageId)?.Count ?? 0,
+                Screenshots = ScreenshotService.Count(pick.ManifestJson),
+            });
         }
         return items;
     }

@@ -276,6 +276,7 @@ public class PackageValidator
                 }
 
                 CheckIcon(report, zip);
+                CheckScreenshots(report, zip, root);
                 CheckLicenses(report, zip);
                 CheckThirdParty(report, zip, root);
                 CheckUiLayout(report, zip);
@@ -475,6 +476,75 @@ public class PackageValidator
             report.Warn("ICON_INVALID", "assets/icon.png could not be read.", "Re-export the PNG.");
         }
     }
+
+    /// <summary>Optional "screenshots": [{"file": "assets/x.png", "caption": {"en": ..}}], max 6 (S0.11.0).</summary>
+    private void CheckScreenshots(ValidationReport report, ZipArchive zip, JsonElement root)
+    {
+        if (!root.TryGetProperty("screenshots", out var arr) || arr.ValueKind == JsonValueKind.Null)
+        {
+            report.Info("SCREENSHOTS_NONE", "The package has no screenshots.",
+                "Add up to 6 screenshots (PNG or JPEG, 1280x800 recommended) under assets/ and list them in \"screenshots\"; the catalog shows them.");
+            return;
+        }
+        if (arr.ValueKind != JsonValueKind.Array)
+        {
+            report.Error("SCREENSHOTS_INVALID", "\"screenshots\" must be an array.",
+                "Use \"screenshots\": [{\"file\": \"assets/screenshot-1.png\", \"caption\": {\"en\": \"...\"}}].");
+            return;
+        }
+        if (arr.GetArrayLength() > ScreenshotMax)
+            report.Error("SCREENSHOTS_TOO_MANY", $"\"screenshots\" lists {arr.GetArrayLength()} entries.", $"List at most {ScreenshotMax} screenshots.");
+        int n = 0;
+        foreach (var s in arr.EnumerateArray())
+        {
+            n++;
+            if (s.ValueKind != JsonValueKind.Object || GetString(s, "file") is not { Length: > 0 } file)
+            {
+                report.Error("SCREENSHOTS_INVALID", $"Screenshot {n} has no \"file\".",
+                    "Each entry needs \"file\": the path of the image inside the package, e.g. assets/screenshot-1.png.");
+                continue;
+            }
+            if (!file.StartsWith("assets/", StringComparison.Ordinal) || file.Contains(".."))
+            {
+                report.Error("SCREENSHOT_FORMAT", $"Screenshot '{file}' is not under assets/.", "Put screenshots into the package's assets/ folder.");
+                continue;
+            }
+            var entry = zip.GetEntry(file);
+            if (entry is null)
+            {
+                report.Error("SCREENSHOT_MISSING", $"Screenshot '{file}' is not in the package.", "Add the file to the ZIP or remove it from \"screenshots\".");
+                continue;
+            }
+            var b = ReadCapped(entry, ScreenshotMaxBytes);
+            if (b is null)
+            {
+                report.Error("SCREENSHOT_TOO_LARGE", $"Screenshot '{file}' is larger than 3 MB.", "Export it smaller (1280x800 PNG or JPEG quality 85).");
+                continue;
+            }
+            var type = Services.ScreenshotService.ImageType(b);
+            if (type is null)
+            {
+                report.Error("SCREENSHOT_FORMAT", $"Screenshot '{file}' is neither PNG nor JPEG.", "Export the screenshot as PNG or JPEG.");
+                continue;
+            }
+            if (type == "image/png")
+            {
+                int w = (b[16] << 24) | (b[17] << 16) | (b[18] << 8) | b[19];
+                if (w < 640 || w > 3840)
+                    report.Warn("SCREENSHOT_SIZE", $"Screenshot '{file}' is {w}px wide.", "Use 640 to 3840 px width; 1280x800 is recommended.");
+            }
+            if (s.TryGetProperty("caption", out var cap) && cap.ValueKind == JsonValueKind.Object)
+            {
+                var missing = MissingLanguages(s, "caption");
+                if (missing.Count > 0)
+                    report.Warn("SCREENSHOT_CAPTION_LANGS", $"The caption of '{file}' lacks: {string.Join(", ", missing)}.",
+                        "Give each caption in all 16 languages (en de fr it es nl pt da fi nb sv pl cs hu ru tr).");
+            }
+        }
+    }
+
+    private const int ScreenshotMax = 6;
+    private const long ScreenshotMaxBytes = 3 * 1024 * 1024;
 
     private void CheckLicenses(ValidationReport report, ZipArchive zip)
     {

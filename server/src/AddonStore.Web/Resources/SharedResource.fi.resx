@@ -487,4 +487,23 @@
   <data name="Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF." xml:space="preserve"><value>Lisäosia Tungsten Power PDF:ään: löydä ne täältä ja asenna ne suoraan Power PDF:ään.</value></data>
   <data name="Backup" xml:space="preserve"><value>Varmuuskopio</value></data>
   <data name="Setup" xml:space="preserve"><value>Käyttöönotto</value></data>
+  <data name="Close" xml:space="preserve"><value>Sulje</value></data>
+  <data name="Log excerpt" xml:space="preserve"><value>Lokiote</value></data>
+  <data name="Mark as done" xml:space="preserve"><value>Merkitse käsitellyksi</value></data>
+  <data name="Message" xml:space="preserve"><value>Viesti</value></data>
+  <data name="No ratings yet. Users rate add-ons in the store window inside Power PDF." xml:space="preserve"><value>Ei vielä arvioita. Käyttäjät arvioivat lisäosia Power PDF:n kauppaikkunassa.</value></data>
+  <data name="Nothing received yet." xml:space="preserve"><value>Mitään ei ole vielä saapunut.</value></data>
+  <data name="Problem report or comment from the store client" xml:space="preserve"><value>Ongelmailmoitus tai kommentti kauppaohjelmasta</value></data>
+  <data name="Problem reports and comments" xml:space="preserve"><value>Ongelmailmoitukset ja kommentit</value></data>
+  <data name="Ratings" xml:space="preserve"><value>Arviot</value></data>
+  <data name="Ratings and feedback" xml:space="preserve"><value>Arviot ja palaute</value></data>
+  <data name="Received" xml:space="preserve"><value>Saapunut</value></data>
+  <data name="Reopen" xml:space="preserve"><value>Avaa uudelleen</value></data>
+  <data name="Screenshots" xml:space="preserve"><value>Kuvakaappaukset</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; Claude reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Lähetetty Power PDF:n kauppaikkunasta. Vain sinä ja ylläpitäjät näette ne; Claude lukee ne osoitteesta GET /api/packages/&lt;id&gt;/feedback.</value></data>
+  <data name="open" xml:space="preserve"><value>avoin</value></data>
+  <data name="done" xml:space="preserve"><value>käsitelty</value></data>
+  <data name="{0} rating(s)" xml:space="preserve"><value>{0} arvio(ta)</value></data>
+  <data name="Problem" xml:space="preserve"><value>Ongelma</value></data>
+  <data name="Comment" xml:space="preserve"><value>Kommentti</value></data>
 </root>

@@ -66,7 +66,15 @@ public static class SchemaUpgrade
                 "Asn INTEGER NULL, Org TEXT NOT NULL, Ip TEXT NOT NULL, Hostname TEXT NULL, UserAgent TEXT NOT NULL)",
             "CREATE INDEX IF NOT EXISTS IX_UsageEvents_At ON UsageEvents (At)",
             "CREATE TABLE IF NOT EXISTS ShareStats (Day TEXT NOT NULL, PackageId TEXT NOT NULL, Ref TEXT NOT NULL, " +
-                "Kind TEXT NOT NULL, Count INTEGER NOT NULL, PRIMARY KEY (Day, PackageId, Ref, Kind))"
+                "Kind TEXT NOT NULL, Count INTEGER NOT NULL, PRIMARY KEY (Day, PackageId, Ref, Kind))",
+            "CREATE TABLE IF NOT EXISTS Ratings (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, PackageId TEXT NOT NULL, " +
+                "InstallHash TEXT NOT NULL, Stars INTEGER NOT NULL, Version TEXT NOT NULL, CreatedAt TEXT NOT NULL, UpdatedAt TEXT NOT NULL)",
+            "CREATE UNIQUE INDEX IF NOT EXISTS IX_Ratings_PackageId_InstallHash ON Ratings (PackageId, InstallHash)",
+            "CREATE TABLE IF NOT EXISTS Feedback (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, PackageId TEXT NOT NULL, " +
+                "Version TEXT NOT NULL, Kind TEXT NOT NULL, Message TEXT NOT NULL, Email TEXT NULL, ClientInfo TEXT NOT NULL, " +
+                "LogExcerpt TEXT NULL, Country TEXT NOT NULL, InstallHash TEXT NOT NULL, CreatedAt TEXT NOT NULL, " +
+                "Status TEXT NOT NULL, DoneAt TEXT NULL, DoneBy TEXT NULL)",
+            "CREATE INDEX IF NOT EXISTS IX_Feedback_PackageId_CreatedAt ON Feedback (PackageId, CreatedAt)"
         })
         {
             try { db.Database.ExecuteSqlRaw(sql); }

@@ -487,4 +487,23 @@
   <data name="Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF." xml:space="preserve"><value>Tillegg for Tungsten Power PDF: finn dem her og installer dem direkte i Power PDF.</value></data>
   <data name="Backup" xml:space="preserve"><value>Sikkerhetskopi</value></data>
   <data name="Setup" xml:space="preserve"><value>Oppsett</value></data>
+  <data name="Close" xml:space="preserve"><value>Lukk</value></data>
+  <data name="Log excerpt" xml:space="preserve"><value>Loggutdrag</value></data>
+  <data name="Mark as done" xml:space="preserve"><value>Merk som løst</value></data>
+  <data name="Message" xml:space="preserve"><value>Melding</value></data>
+  <data name="No ratings yet. Users rate add-ons in the store window inside Power PDF." xml:space="preserve"><value>Ingen vurderinger ennå. Brukere vurderer tillegg i butikkvinduet i Power PDF.</value></data>
+  <data name="Nothing received yet." xml:space="preserve"><value>Ingenting mottatt ennå.</value></data>
+  <data name="Problem report or comment from the store client" xml:space="preserve"><value>Problemrapport eller kommentar fra butikkklienten</value></data>
+  <data name="Problem reports and comments" xml:space="preserve"><value>Problemrapporter og kommentarer</value></data>
+  <data name="Ratings" xml:space="preserve"><value>Vurderinger</value></data>
+  <data name="Ratings and feedback" xml:space="preserve"><value>Vurderinger og tilbakemeldinger</value></data>
+  <data name="Received" xml:space="preserve"><value>Mottatt</value></data>
+  <data name="Reopen" xml:space="preserve"><value>Åpne på nytt</value></data>
+  <data name="Screenshots" xml:space="preserve"><value>Skjermbilder</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; Claude reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Sendt fra butikkvinduet i Power PDF. Bare du og administratorene ser dem; Claude leser dem via GET /api/packages/&lt;id&gt;/feedback.</value></data>
+  <data name="open" xml:space="preserve"><value>åpen</value></data>
+  <data name="done" xml:space="preserve"><value>løst</value></data>
+  <data name="{0} rating(s)" xml:space="preserve"><value>{0} vurdering(er)</value></data>
+  <data name="Problem" xml:space="preserve"><value>Problem</value></data>
+  <data name="Comment" xml:space="preserve"><value>Kommentar</value></data>
 </root>

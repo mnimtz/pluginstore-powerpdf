@@ -30,6 +30,8 @@ public class AddonModel : PageModel
     public string PageUrl { get; private set; } = "";
     public string? ClientVersion { get; private set; }
     public string? ClientDownloadUrl { get; private set; }
+    public List<ScreenshotService.Shot> Shots { get; private set; } = new();
+    public string ShotVersion { get; private set; } = "";
 
     public async Task<IActionResult> OnGetAsync(string slug, [FromQuery(Name = "ref")] string? reference)
     {
@@ -57,6 +59,12 @@ public class AddonModel : PageModel
         {
             ClientVersion = client.Version;
             ClientDownloadUrl = "/download/pluginstore.msi" + (Ref.Length > 0 ? $"?pkg={Uri.EscapeDataString(Item.Id)}&ref={Ref}" : $"?pkg={Uri.EscapeDataString(Item.Id)}");
+        }
+        var shown = await ScreenshotService.DisplayVersionAsync(_db, Item.Id);
+        if (shown is not null)
+        {
+            Shots = ScreenshotService.FromManifest(shown.ManifestJson, culture);
+            ShotVersion = shown.Version;
         }
         if (!ShareService.IsPreviewBot(Request.Headers.UserAgent)) await _share.CountAsync(Item.Id, Ref, "view");
         return Page();

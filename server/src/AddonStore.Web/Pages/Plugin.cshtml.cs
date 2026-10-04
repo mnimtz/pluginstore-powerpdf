@@ -29,6 +29,8 @@ public class PluginModel : PageModel
     public string NoticeKind { get; private set; } = "ok";
     public string SourcePolicy { get; private set; } = "required";
     public List<Finding> SourceFindings { get; private set; } = new();
+    public int[] RatingDist { get; private set; } = new int[5];   // index 0 = 1 star
+    public List<Feedback> Feedbacks { get; private set; } = new();
 
     public PluginModel(AppDbContext db, UserManager<AppUser> users, VersionActionService actions, SourceService sources)
     {
@@ -56,6 +58,13 @@ public class PluginModel : PageModel
                       ?? (shown is null ? "" : CatalogUi.ManifestText(shown, "description", lang));
         InCatalog = (await CatalogUi.GetAsync(_db, lang, includeBeta: true)).FirstOrDefault(c => c.Id == Pkg.Id);
         SourcePolicy = await _sources.PolicyAsync();
+        RatingDist = new int[5];
+        foreach (var g in await _db.Ratings.AsNoTracking().Where(r => r.PackageId == Pkg.Id).GroupBy(r => r.Stars)
+                                       .Select(g => new { g.Key, N = g.Count() }).ToListAsync())
+            if (g.Key is >= 1 and <= 5) RatingDist[g.Key - 1] = g.N;
+        Feedbacks = (IsOwner || IsAdmin)
+            ? await _db.Feedbacks.AsNoTracking().Where(f => f.PackageId == Pkg.Id).OrderByDescending(f => f.Id).Take(200).ToListAsync()
+            : new();
         return true;
     }
 
@@ -103,6 +112,21 @@ public class PluginModel : PageModel
         finally { try { System.IO.File.Delete(tmp); } catch { } }
         await LoadAsync(id!);
         return Page();
+    }
+
+    public async Task<IActionResult> OnPostFeedbackStatusAsync(string id, int fid, string status)
+    {
+        if (!await LoadAsync(id ?? "")) return Forbid();
+        if (!IsOwner && !IsAdmin) return Forbid();
+        var f = await _db.Feedbacks.FirstOrDefaultAsync(x => x.Id == fid && x.PackageId == id);
+        if (f is not null && status is "open" or "done")
+        {
+            f.Status = status;
+            f.DoneAt = status == "done" ? DateTime.UtcNow : null;
+            f.DoneBy = status == "done" ? Me!.DisplayName : null;
+            await _db.SaveChangesAsync();
+        }
+        return RedirectToPage(new { id });
     }
 
     public Task<IActionResult> OnPostWithdrawAllAsync(string id) =>

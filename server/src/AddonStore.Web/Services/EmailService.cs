@@ -87,6 +87,7 @@ public class NotificationService
         ("AccountDecision", "Access request approved or declined", "Applicant"),
         ("ClientRelease",   "New Add-on Store client released", "Admins"),
         ("CategoryCreated", "New catalog category created by an upload", "Admins"),
+        ("Feedback",        "Problem report or comment from the store client", "Owner"),
     };
 
     private readonly IAppEmailSender _mail;
@@ -117,7 +118,7 @@ public class NotificationService
     }
 
     /// <summary>Events about a user's own plug-ins; the user can opt out of them in the profile.</summary>
-    public static readonly HashSet<string> PluginEvents = new() { "SubmissionReceipt", "ReviewResult", "StatusChange", "CatalogChange" };
+    public static readonly HashSet<string> PluginEvents = new() { "SubmissionReceipt", "ReviewResult", "StatusChange", "CatalogChange", "Feedback" };
 
     public async Task NotifyUserAsync(string eventKey, AppUser user, string subject, string text)
     {

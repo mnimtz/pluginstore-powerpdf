@@ -103,6 +103,44 @@ public class UsageEvent
     public string UserAgent { get; set; } = "";
 }
 
+/// <summary>
+/// Star rating from an Add-on Store client (S0.11.0): one per installation and
+/// package (InstallHash = SHA-256 of the client's random install id + package
+/// id, so ratings of different packages cannot be linked). No personal data.
+/// </summary>
+public class Rating
+{
+    public int Id { get; set; }
+    public string PackageId { get; set; } = "";
+    public string InstallHash { get; set; } = "";
+    public int Stars { get; set; }
+    public string Version { get; set; } = "";
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+}
+
+/// <summary>
+/// Problem report or comment sent from the Add-on Store client (S0.11.0); visible
+/// to the package owner and admins (portal and API), never public.
+/// </summary>
+public class Feedback
+{
+    public int Id { get; set; }
+    public string PackageId { get; set; } = "";
+    public string Version { get; set; } = "";
+    public string Kind { get; set; } = "problem";       // problem, comment
+    public string Message { get; set; } = "";
+    public string? Email { get; set; }                   // optional, given by the user for a reply
+    public string ClientInfo { get; set; } = "";         // client user agent (versions, architecture)
+    public string? LogExcerpt { get; set; }              // only when the user ticked "attach log"
+    public string Country { get; set; } = "";
+    public string InstallHash { get; set; } = "";
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public string Status { get; set; } = "open";         // open, done
+    public DateTime? DoneAt { get; set; }
+    public string? DoneBy { get; set; }
+}
+
 /// <summary>Daily counter for shared add-on links /a/{slug}?ref= (S0.10.0); Kind: view, install, client.</summary>
 public class ShareStat
 {

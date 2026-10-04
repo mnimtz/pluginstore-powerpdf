@@ -17,6 +17,8 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<UsageStat> UsageStats => Set<UsageStat>();
     public DbSet<UsageEvent> UsageEvents => Set<UsageEvent>();
     public DbSet<ShareStat> ShareStats => Set<ShareStat>();
+    public DbSet<Rating> Ratings => Set<Rating>();
+    public DbSet<Feedback> Feedbacks => Set<Feedback>();
 
     protected override void OnModelCreating(ModelBuilder b)
     {
@@ -28,6 +30,8 @@ public class AppDbContext : IdentityDbContext<AppUser>
                                                 s.Country, s.Region, s.City, s.Org, s.Arch, s.HostVersion, s.OsVersion });
         b.Entity<UsageEvent>().HasIndex(e => e.At);
         b.Entity<ShareStat>().HasKey(s => new { s.Day, s.PackageId, s.Ref, s.Kind });
+        b.Entity<Rating>().HasIndex(r => new { r.PackageId, r.InstallHash }).IsUnique();
+        b.Entity<Feedback>().ToTable("Feedback").HasIndex(f => new { f.PackageId, f.CreatedAt });
         b.Entity<Invite>().HasIndex(i => i.TokenHash).IsUnique();
         b.Entity<PackageVersion>().HasIndex(v => new { v.PackageId, v.Version }).IsUnique();
         b.Entity<AuditEntry>().HasIndex(a => a.At);

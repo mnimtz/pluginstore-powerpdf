@@ -19,7 +19,7 @@ Richtlinien funktionieren wie gewohnt.
 | Kunde | Eine Organisation oder ein Projekt beim Kunden (Name, Ansprechpartner, Notiz, Sprache). |
 | Kundencode | Geheimer Zugangscode des Kunden, z. B. `K7QM-4XRT-9WPL-2HDN-6CVB`. Wird im Client hinterlegt. |
 | Privates Add-on | Paket mit Sichtbarkeit „privat": erscheint nie im öffentlichen Katalog, auf der Website oder im öffentlichen Client. |
-| Auslieferung | Zuordnung „Add-on an Kunde", wahlweise „immer neueste freigegebene Version" oder „fest Version x.y.z", mit optionalem Start- und Enddatum. |
+| Auslieferung | Zuordnung „Add-on an Kunde" mit zwei Stufen, Beta und Live, jeweils „immer neueste" oder „fest Version x.y.z", mit optionalem Start- und Enddatum. |
 
 ## Ablauf aus Sicht der Beteiligten
 
@@ -30,8 +30,8 @@ Richtlinien funktionieren wie gewohnt.
    `visibility: "private"` oder Schalter im Portal). Öffentliche Add-ons
    können zusätzlich an Kunden ausgeliefert werden, z. B. um eine feste
    Version zu garantieren.
-3. Auslieferung anlegen: Kunde wählen, Add-on wählen, „neueste" oder feste
-   Version, optional Zeitraum.
+3. Auslieferung anlegen: Kunde wählen, Add-on wählen, für jede Stufe
+   „neueste" oder feste Version, optional Zeitraum (siehe „Zwei Stufen").
 4. Optional „Kunde informieren": E-Mail an den Ansprechpartner in seiner
    Sprache mit Kundencode, Link zum Client-Download und Kurzanleitung.
 
@@ -49,6 +49,26 @@ Richtlinien funktionieren wie gewohnt.
 „liefere Version 1.3.0 von com.kunde.xyz an Kunde Muster AG aus". Der
 Agent-Guide und SKILL.md bekommen dafür einen eigenen Abschnitt.
 
+## Zwei Stufen: Beta und Live (Wunsch Marcus, Okt 4, 2026)
+
+Jede Auslieferung hat zwei Stufen, damit ein Kunde eine neue Version erst mit
+einer Testgruppe prüfen kann, bevor alle sie bekommen:
+
+| Stufe | Wer bekommt sie | Inhalt |
+|---|---|---|
+| Beta | Arbeitsplätze des Kunden, deren Client im Beta-Kanal läuft (Option „Beta" oder Richtlinie `BetaChannel = 1`, z. B. nur für die Testgruppe verteilt) | „neueste Version" (auch noch nicht freigegebene, sobald die automatischen Prüfungen bestanden sind) oder fest x.y.z |
+| Live | alle anderen Arbeitsplätze des Kunden | „neueste freigegebene Version" oder fest x.y.z |
+
+- Typischer Ablauf: neue Version hochladen, sie erscheint beim Kunden sofort
+  in der Beta-Stufe, die Testgruppe prüft, dann „Nach Live übernehmen"
+  (setzt Live auf diese Version, ein Klick oder ein API-Aufruf).
+- Beide Stufen lassen sich unabhängig pausieren; ist Beta leer, bekommen auch
+  Beta-Arbeitsplätze die Live-Version.
+- Bei „Admin-Freigabe erforderlich" gilt die Freigabe für die Live-Stufe; die
+  Beta-Stufe braucht nur bestandene automatische Prüfungen.
+- Der Kunde sieht im Store-Fenster an der Version, ob er Beta oder Live hat
+  (Kennzeichnung wie heute beim öffentlichen Beta-Kanal).
+
 ## Register „Kunden" im Portal
 
 - **Liste:** Name, Anzahl Auslieferungen, letzte Aktivität (letzter
@@ -57,8 +77,9 @@ Agent-Guide und SKILL.md bekommen dafür einen eigenen Abschnitt.
   - Stammdaten (Name, Ansprechpartner, E-Mail, Sprache, Notiz)
   - Kundencode: anzeigen, kopieren, neu erzeugen (der alte Code gilt noch
     eine einstellbare Übergangszeit, Standard 14 Tage), sperren
-  - Auslieferungen: Tabelle mit Add-on, Version (neueste oder fest),
-    Zeitraum, Status; Aktionen pausieren, beenden, Version ändern
+  - Auslieferungen: Tabelle mit Add-on, Beta-Stufe, Live-Stufe (je neueste
+    oder fest), Zeitraum, Status; Aktionen „Nach Live übernehmen", pausieren,
+    beenden, Version ändern
   - Nutzung: Katalogabrufe, Downloads und installierte Versionen je
     Auslieferung (aus den vorhandenen Zählern, ergänzt um die Kunden-ID)
   - Verlauf: alle Änderungen aus dem Audit-Log
@@ -71,8 +92,9 @@ Agent-Guide und SKILL.md bekommen dafür einen eigenen Abschnitt.
 ## Freigabe
 
 Private Add-ons durchlaufen dieselben automatischen Prüfungen wie öffentliche
-(Manifest, Lizenzen, Compliance-Erklärung, Quellcode-Pflicht). Für die
-menschliche Freigabe schlage ich eine Instanz-Einstellung vor:
+(Manifest, Lizenzen, Compliance-Erklärung, Quellcode-Pflicht). Die Beta-Stufe
+braucht nur diese Prüfungen. Für die menschliche Freigabe der Live-Stufe
+schlage ich eine Instanz-Einstellung vor:
 
 - **Admin-Freigabe erforderlich** (Standard): Eine Auslieferung wird erst
   aktiv, wenn ein Admin die Version freigegeben hat.

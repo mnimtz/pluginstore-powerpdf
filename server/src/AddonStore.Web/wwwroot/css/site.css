@@ -378,3 +378,22 @@ ol.steps { padding-left: 20px; margin: 0 0 14px; line-height: 1.6; }
   .addon-hero { flex-direction: column; gap: 12px; }
   .addon-icon { width: 72px; height: 72px; }
 }
+
+/* ---- ratings and screenshots (S0.11.0) ---- */
+.stars { display: inline-flex; gap: 5px; align-items: center; font-size: .85rem; color: var(--tun-slate); }
+.stars i { font-style: normal; letter-spacing: 1px; font-size: 1rem;
+           background: linear-gradient(90deg, var(--tun-yellow) var(--p), var(--tun-gray-blue) var(--p));
+           -webkit-background-clip: text; background-clip: text; color: transparent; }
+.stars b { color: var(--tun-navy); }
+.card.pkg .stars { margin-top: -2px; }
+.shot-strip { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x mandatory; }
+.shot { flex: none; width: 280px; border: 1px solid var(--tun-gray-200); border-radius: 8px; background: #fff; padding: 0;
+        cursor: zoom-in; text-align: left; scroll-snap-align: start; overflow: hidden; }
+.shot img { display: block; width: 100%; height: 175px; object-fit: cover; background: var(--tun-gray-150); }
+.shot span { display: block; padding: 8px 10px; font-size: .82rem; color: var(--tun-slate); }
+.shot:hover { border-color: var(--tun-blue); }
+dialog.shot-view { border: 0; border-radius: 10px; padding: 12px; max-width: min(1280px, 94vw); }
+dialog.shot-view::backdrop { background: rgba(0, 18, 59, .75); }
+dialog.shot-view img { display: block; max-width: 100%; max-height: 80vh; margin: 0 auto; }
+dialog.shot-view p { margin: 8px 4px 0; color: var(--tun-slate); }
+dialog.shot-view form { text-align: right; margin-bottom: 6px; }
