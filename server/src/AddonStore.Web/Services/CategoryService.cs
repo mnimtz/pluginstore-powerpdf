@@ -195,10 +195,15 @@ public class CategoryService
         var saved = CultureInfo.CurrentUICulture;
         try
         {
+            // One query for all built-in categories (start-up runs on a network share, S0.18.1).
+            var slugs = Builtin.Select(b => b.Item1).ToList();
+            var rows = await db.Categories.Where(c => slugs.Contains(c.Slug)).ToDictionaryAsync(c => c.Slug);
+            var changed = false;
             foreach (var (slug, label) in Builtin)
             {
-                var row = await db.Categories.FirstOrDefaultAsync(c => c.Slug == slug);
+                var row = rows.GetValueOrDefault(slug);
                 if (row is not null && row.NameJson is not null) continue;
+                changed = true;
                 var names = new Dictionary<string, string>();
                 foreach (var lang in PackageValidator.RequiredLanguages)
                 {
@@ -210,7 +215,7 @@ public class CategoryService
                 else
                     row.NameJson = JsonSerializer.Serialize(names);
             }
-            await db.SaveChangesAsync();
+            if (changed) await db.SaveChangesAsync();
         }
         finally { CultureInfo.CurrentUICulture = saved; }
     }

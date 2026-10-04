@@ -195,4 +195,10 @@ Decided earlier and still open: no server-side malware scan (decision Oct 3,
   SAS limited to one container works (the container is only created when it is missing).
   Recommended on the storage account: soft delete for blobs. A failed run is audited and
   mailed to the admins (event "BackupFailed").
+- **Faster start on the share (S0.18.1):** the schema upgrade reads tables, indexes and
+  columns in one query and runs only what is missing (before: some 60 statements and two
+  writes on every start, 7 to 18 seconds on Azure Files); category seeding in one query and
+  without a write when nothing changed. The production log showed the cause of the earlier
+  crashes as "SQLite Error 14: unable to open database file" while the old container still
+  held the WAL database; every start since S0.17.1 succeeded with both containers running.
 

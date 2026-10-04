@@ -8,8 +8,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
 COPY --from=build /app .
 
-ENV ASPNETCORE_URLS=http://+:8080 \
-    Storage__Data=/data \
+# Port 8080 comes from the image (ASPNETCORE_HTTP_PORTS); also setting URLS only logs a warning.
+ENV Storage__Data=/data \
     Storage__Root=/data/packages \
     Storage__Devkit=/data/devkit \
     ConnectionStrings__Default="Data Source=/data/pluginstore.db;Cache=Shared"

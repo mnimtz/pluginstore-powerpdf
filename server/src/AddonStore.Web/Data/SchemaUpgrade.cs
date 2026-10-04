@@ -39,6 +39,7 @@ public static class SchemaUpgrade
 
         // Poor-man migrations: EnsureCreated never alters an existing database, so
         // additions arrive as idempotent statements here.
+        var schema = ReadSchema(db);
         foreach (var sql in new[]
         {
             "ALTER TABLE AspNetUsers ADD COLUMN AvatarFile TEXT NULL",
@@ -120,9 +121,15 @@ public static class SchemaUpgrade
             "CREATE UNIQUE INDEX IF NOT EXISTS IX_Deliveries_CustomerId_PackageId ON Deliveries (CustomerId, PackageId)"
         })
         {
-            // Skip columns that exist (a failing ALTER would show as an error in the log).
+            // Only what is missing runs (S0.18.1): on the network share every statement
+            // costs a round trip and every write a lock and a journal file, and a failing
+            // ALTER would show as an error in the log. Usually nothing runs at all.
             var add = System.Text.RegularExpressions.Regex.Match(sql, @"^ALTER TABLE (\w+) ADD COLUMN (\w+) ");
-            if (add.Success && ColumnExists(db, add.Groups[1].Value, add.Groups[2].Value)) continue;
+            if (add.Success && schema.Columns.Contains(add.Groups[1].Value + "." + add.Groups[2].Value)) continue;
+            var create = System.Text.RegularExpressions.Regex.Match(sql, @"^CREATE (?:UNIQUE )?(?:TABLE|INDEX) IF NOT EXISTS (\w+)");
+            if (create.Success && schema.Objects.Contains(create.Groups[1].Value)) continue;
+            var update = System.Text.RegularExpressions.Regex.Match(sql, @"^UPDATE (\w+) SET .*? WHERE (.*)$", System.Text.RegularExpressions.RegexOptions.Singleline);
+            if (update.Success && !Any(db, $"SELECT EXISTS(SELECT 1 FROM {update.Groups[1].Value} WHERE {update.Groups[2].Value})")) continue;
             try { db.Database.ExecuteSqlRaw(sql); }
             catch (Microsoft.Data.Sqlite.SqliteException) { /* column/table already there */ }
         }
@@ -135,14 +142,37 @@ public static class SchemaUpgrade
                 await roles.CreateAsync(new IdentityRole(role));
     }
 
-    private static bool ColumnExists(AppDbContext db, string table, string column)
+    private sealed record Schema(HashSet<string> Objects, HashSet<string> Columns);
+
+    /// <summary>All tables, indexes and "Table.Column" names in one query.</summary>
+    private static Schema ReadSchema(AppDbContext db)
     {
+        var objects = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var columns = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var conn = db.Database.GetDbConnection();
         if (conn.State != System.Data.ConnectionState.Open) conn.Open();
         using var cmd = conn.CreateCommand();
-        cmd.CommandText = "SELECT COUNT(*) FROM pragma_table_info($t) WHERE name = $c";
-        var pt = cmd.CreateParameter(); pt.ParameterName = "$t"; pt.Value = table; cmd.Parameters.Add(pt);
-        var pc = cmd.CreateParameter(); pc.ParameterName = "$c"; pc.Value = column; cmd.Parameters.Add(pc);
-        return Convert.ToInt64(cmd.ExecuteScalar()) > 0;
+        cmd.CommandText = "SELECT m.name, m.type, p.name FROM sqlite_master m " +
+                          "LEFT JOIN pragma_table_info(m.name) p ON m.type = 'table' WHERE m.type IN ('table', 'index')";
+        using var r = cmd.ExecuteReader();
+        while (r.Read())
+        {
+            objects.Add(r.GetString(0));
+            if (!r.IsDBNull(2)) columns.Add(r.GetString(0) + "." + r.GetString(2));
+        }
+        return new Schema(objects, columns);
+    }
+
+    private static bool Any(AppDbContext db, string sql)
+    {
+        try
+        {
+            var conn = db.Database.GetDbConnection();
+            if (conn.State != System.Data.ConnectionState.Open) conn.Open();
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = sql;
+            return Convert.ToInt64(cmd.ExecuteScalar()) != 0;
+        }
+        catch (Microsoft.Data.Sqlite.SqliteException) { return true; }   // unsure: let the statement decide
     }
 }
