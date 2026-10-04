@@ -67,7 +67,7 @@ directly inside Power PDF.
 | 🧪 **Beta channel** | Versions that pass all automatic checks become instantly installable for users who enabled the beta option in Power PDF, while an admin reviews them for the live store. |
 | 🤖 **Agent-friendly API, any assistant** | `GET /api/agent-guide` teaches any AI assistant (Claude, ChatGPT, Gemini, Copilot or your own agent) the full workflow with zero prior knowledge. Vendor-neutral entry points: `/llms.txt`, an OpenAPI 3.1 description at `/api/openapi.json` (ChatGPT custom GPT actions, Gemini function calling, Postman, code generators) and an `AGENTS.md` at `/api/agents-md` for coding assistants (Codex, Copilot, Cursor, Gemini CLI); the Claude Code skill is one more option. Plain HTTPS, bearer token, JSON. Personal tokens let the assistant validate, fix and submit packages in a loop until the report is green. CI fails when a route is missing from the OpenAPI document. |
 | 📜 **Audit trail** | Registrations, approvals, tokens, submissions (version + changelog are mandatory), reviews and downloads are recorded and searchable. |
-| 💾 **Backup and restore** | One click downloads a full backup (database including usage counters and stored IP events, packages and source code, avatars, developer kit); restore checks the archive, refuses to lock out the acting admin, keeps an automatic safety backup of the previous state and upgrades an older backup to the current schema right away. The geolocation databases (data/geo) are not backed up; the server downloads them again. |
+| 💾 **Backup and restore** | One click downloads a full backup (database including usage counters and stored IP events, packages and source code, avatars, developer kit); restore checks the archive, refuses to lock out the acting admin, keeps an automatic safety backup of the previous state and upgrades an older backup to the current schema right away. The geolocation databases (data/geo) are not backed up; the server downloads them again. **Automatic backup** (S0.18.0) to Azure Blob Storage: one access key (connection string or SAS URL), a passphrase that encrypts the whole backup before it leaves the server (AES-256-GCM in chunks, PBKDF2-SHA256), time and weekdays in the server time zone, how many backups to keep; "Back up now", connection test, restore straight from the container or from a downloaded .psbak file, email to the admins when a run fails. |
 | ✉️ **Notifications** | Email via Resend with a test button (free recipient); admins choose which events send mail: access requests, submissions, client releases, and for authors upload receipts, approval or rejection, withdrawn or restored versions and catalog changes by an admin. Authors can opt out in their profile. Every sent or failed mail is in the audit log. |
 | 🗂️ **Plug-in management** | One compact overview (admins: all plug-ins, authors: their own) with search and filters (awaiting approval, live, not in the store); a details page per plug-in to approve, reject, withdraw or restore versions, take a plug-in out of the store and edit its catalog entry. |
 | 📱 **Phone-ready** | Menu button and card layout on small screens; the whole portal works on a smartphone. |
@@ -101,7 +101,12 @@ setup, and choose which events send mail. Without a key the app runs
 normally; skipped mails are recorded in the audit log.
 
 **Backup and restore:** admin **Settings → Backup and restore**. Store backup
-files like passwords: they contain password hashes and settings.
+files like passwords: they contain password hashes and settings. For automatic
+backups, paste the connection string of an Azure storage account (Azure portal:
+storage account → Access keys → Connection string) or a SAS URL under
+**Automatic backup**, set a passphrase (keep it outside the server), time and
+weekdays; the page has a short guide. Restore works straight from the container
+or from a downloaded `.psbak` file with the passphrase.
 
 ## The Power PDF client
 

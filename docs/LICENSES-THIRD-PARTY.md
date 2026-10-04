@@ -13,6 +13,7 @@ deliverables; no GPL/AGPL/LGPL. Status: **compliant**. Last audit: Oct 4, 2026.
 | SQLitePCLRaw.bundle_e_sqlite3 | 3.0.5 | Apache-2.0 | pinned directly; 2.x carried GHSA-2m69-gcr7-jv3q (High), 3.x is clean |
 | SQLite (native, via bundle) | 3.x | Public domain | |
 | MaxMind.Db (reader for .mmdb files) | 5.2.0 | Apache-2.0 | since S0.9.0, reports geolocation |
+| Azure.Storage.Blobs (+ Azure.Storage.Common 12.29.0, Azure.Core 1.60.0, System.ClientModel 1.14.0, System.IO.Hashing, System.Memory.Data) | 12.30.0 | MIT | since S0.18.0, automatic backup to Azure Blob Storage (off until configured) |
 | Anthropic (official C# SDK for the Claude API) | 12.53.0 | MIT | since S0.12.0, optional AI assistant (off by default); Gemini is called via plain HTTPS, no extra package |
 | DB-IP "IP to City Lite" + "IP to ASN Lite" (data) | monthly | CC BY 4.0 | since S0.9.0; data, not code; downloaded at runtime into data/geo, not in the image; attribution "IP Geolocation by DB-IP" with link on the reports page |
 | Red Hat Display (font) | n/a | SIL OFL 1.1 | referenced by name only (`font-family`), no font file bundled |

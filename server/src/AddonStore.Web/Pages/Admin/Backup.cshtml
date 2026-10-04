@@ -2,73 +2,247 @@
 @model AddonStore.Web.Pages.Admin.BackupModel
 @{
     ViewData["Title"] = "Backup";
+    var c = Model.Cloud;
+    var ci = System.Globalization.CultureInfo.CurrentCulture;
+    string SectionUrl(string view) => Url.Page("/Admin/Backup", new { view = view == "auto" ? null : view }) ?? "";
+    string Size(long bytes) => bytes >= 1024 * 1024 ? (bytes / 1024.0 / 1024.0).ToString("0.0", ci) + " MB" : (bytes / 1024).ToString("N0", ci) + " KB";
 }
 
 <h1>@L["Backup and restore"]</h1>
 <p class="lead">@L["A backup contains everything: database (accounts, packages, versions, reviews, audit log, settings), all plugin packages, profile pictures and developer kit files."]</p>
 
+<div class="report-layout">
+<nav class="report-nav" aria-label="@L["Sections"]">
+    @foreach (var (key, label) in AddonStore.Web.Pages.Admin.BackupModel.Views)
+    {
+        <a href="@SectionUrl(key)" class="@(Model.View == key ? "active" : "")" aria-current="@(Model.View == key ? "page" : null)">@L[label]</a>
+    }
+</nav>
+<div class="report-main">
+
 @if (Model.Notice is not null)
 {
-    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+    <div class="alert @Model.NoticeKind">@(Model.NoticeArg is null ? L[Model.Notice] : L[Model.Notice, Model.NoticeArg])</div>
 }
 
-<div class="card" style="max-width:640px">
-    <h2 style="margin-top:0">@L["Create backup"]</h2>
-    <p>@L["Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file."]</p>
-    <form method="post" asp-page-handler="Download" class="stack">
-        <div>
-            <label for="keyPassword">@L["Password for the key ring (optional)"]</label>
-            <input type="password" id="keyPassword" name="keyPassword" minlength="12" autocomplete="new-password" />
-        </div>
-        <button type="submit" class="btn cta">@L["Download full backup"]</button>
-    </form>
-    <p style="font-size:.82rem;color:var(--tun-slate)">@L["With a password, the key ring that decrypts the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: after a restore, enter those keys again; customer codes keep working but can no longer be shown."]</p>
-    <p style="font-size:.82rem;color:var(--tun-slate)">@L["The backup contains password hashes and settings such as the Resend key. Store it like a password."]</p>
-</div>
-
-<div class="card" style="max-width:640px">
-    <h2 style="margin-top:0">@L["Restore"]</h2>
-    <p>@L["Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup."]</p>
-    <form method="post" asp-page-handler="Restore" enctype="multipart/form-data" class="stack">
-        <div>
-            <label>@L["Backup file (.zip)"]</label>
-            <input type="file" name="archive" accept=".zip" required />
-        </div>
-        <div>
-            <label for="restoreKeyPassword">@L["Password for the key ring (only for backups that contain one)"]</label>
-            <input type="password" id="restoreKeyPassword" name="keyPassword" autocomplete="off" />
-            <label style="display:flex;gap:8px;align-items:center;margin-top:6px">
-                <input type="checkbox" name="withoutKeys" value="true" style="width:auto" />
-                @L["Restore without the key ring (signing key and stored secrets are lost)"]
-            </label>
-        </div>
-        <div>
-            <label>@L["Type RESTORE to confirm"]</label>
-            <input type="text" name="confirm" autocomplete="off" required pattern="RESTORE" />
-        </div>
-        <button type="submit" class="btn danger">@L["Restore backup"]</button>
-    </form>
-    <p style="font-size:.82rem;color:var(--tun-slate)">@L["The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out."]</p>
-</div>
-
-@if (Model.SafetyBackups.Count > 0)
+@if (Model.View == "auto")
 {
-    <h2>@L["Automatic safety backups"]</h2>
-    <table style="max-width:640px">
-        <tr><th>@L["File"]</th><th>@L["Created"]</th><th>@L["Size"]</th><th></th></tr>
-        @foreach (var b in Model.SafetyBackups)
-        {
-            <tr>
-                <td><code>@b.Name</code></td>
-                <td>@Time.Fmt(b.Utc)</td>
-                <td>@(b.Size / 1024) KB</td>
-                <td>
-                    <form method="post" asp-page-handler="Safety" asp-route-name="@b.Name" style="display:flex;gap:6px">
-                        <input type="password" name="keyPassword" minlength="12" placeholder="@L["Password for the key ring (optional)"]" aria-label="@L["Password for the key ring (optional)"]" autocomplete="new-password" />
-                        <button type="submit" class="btn small secondary">@L["Download"]</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </table>
+    <div class="card">
+        <h2 style="margin-top:0">@L["Automatic backup to Azure Blob Storage"]</h2>
+        <p>
+            @if (!c.Ready) { <span class="badge pending">@L["Not set up"]</span> }
+            else if (c.Enabled) { <span class="badge live">@L["On"]</span> }
+            else { <span class="badge withdrawn">@L["Off"]</span> }
+            @if (Model.CloudRunning) { <span class="badge submitted">@L["Running"]</span> }
+        </p>
+        <table class="no-rtable" style="width:auto">
+            <tr><th>@L["Storage account"]</th><td>@(c.HasConnection ? c.Account + " / " + c.Container : "–")</td></tr>
+            <tr><th>@L["Last backup"]</th><td>
+                @if (c.LastRunUtc is null) { <text>–</text> }
+                else if (c.LastResult == "ok") { <span class="badge live">@L["OK"]</span> <text>@Time.Fmt(c.LastRunUtc) · @Size(c.LastSize) · </text><code>@c.LastBlob</code> }
+                else { <span class="badge rejected">@L["Failed"]</span> <text>@Time.Fmt(c.LastRunUtc) · </text><code>@c.LastResult</code> }
+            </td></tr>
+            <tr><th>@L["Next backup"]</th><td>@(Model.NextRunUtc is { } n ? Time.Fmt(n) : "–")</td></tr>
+        </table>
+
+        <form method="post" asp-page-handler="CloudSave" class="stack" style="margin-top:16px">
+            <div>
+                <label for="connection">@L["Access key (connection string or SAS URL)"]</label>
+                <input type="password" id="connection" name="connection" autocomplete="off"
+                       placeholder="@(c.HasConnection ? L["Stored; leave empty to keep it"] : "DefaultEndpointsProtocol=https;AccountName=…;AccountKey=…")" />
+            </div>
+            <div>
+                <label for="container">@L["Container"]</label>
+                <input type="text" id="container" name="container" value="@c.Container" pattern="[a-z0-9-]{3,63}" style="max-width:320px" />
+                <small class="muted" style="display:block">@L["Created automatically if it does not exist."]</small>
+            </div>
+            <div>
+                <label for="passphrase">@L["Passphrase (at least 12 characters)"]</label>
+                <input type="password" id="passphrase" name="passphrase" minlength="12" autocomplete="new-password"
+                       placeholder="@(c.HasPassphrase ? L["Stored; leave empty to keep it"] : "")" />
+                <small class="muted" style="display:block">@L["Encrypts every backup before it leaves the server. Without it a backup cannot be restored: keep it outside the server, for example in a password manager."]</small>
+            </div>
+            <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end">
+                <div>
+                    <label for="time">@L["Time"] (@Time.ZoneId)</label>
+                    <input type="time" id="time" name="time" value="@c.Time.ToString("HH:mm")" style="width:auto" />
+                </div>
+                <div>
+                    <label for="keep">@L["Backups to keep"]</label>
+                    <input type="number" id="keep" name="keep" value="@c.Keep" min="1" max="365" style="max-width:110px" />
+                </div>
+            </div>
+            <div>
+                <label>@L["Weekdays"]</label>
+                <div style="display:flex;gap:14px;flex-wrap:wrap">
+                    @foreach (var d in new[] { 1, 2, 3, 4, 5, 6, 0 })
+                    {
+                        <label style="font-weight:400;display:flex;gap:6px;align-items:center">
+                            <input type="checkbox" name="days" value="@d" checked="@c.Days.Contains((char)('0' + d))" style="width:auto" />
+                            @ci.DateTimeFormat.GetAbbreviatedDayName((DayOfWeek)d)
+                        </label>
+                    }
+                </div>
+            </div>
+            <label style="font-weight:400;display:flex;gap:8px;align-items:center">
+                <input type="checkbox" name="enabled" value="true" checked="@c.Enabled" style="width:auto" />
+                @L["Back up automatically on the selected days"]
+            </label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <button type="submit" class="btn cta">@L["Save"]</button>
+            </div>
+        </form>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+            <form method="post" asp-page-handler="CloudTest"><button type="submit" class="btn small secondary" disabled="@(!c.HasConnection)">@L["Test connection"]</button></form>
+            <form method="post" asp-page-handler="CloudRun"><button type="submit" class="btn small secondary" disabled="@(!c.Ready || Model.CloudRunning)">@L["Back up now"]</button></form>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2 style="margin-top:0">@L["Guide"]</h2>
+        <ol class="steps">
+            <li>@L["In the Azure portal, open a storage account (or create one: \"Storage accounts\", \"Create\", standard settings are enough; Redundancy \"LRS\" is the cheapest)."]</li>
+            <li>@L["In the storage account, open \"Security + networking\", \"Access keys\", and copy the \"Connection string\" of key1."]</li>
+            <li>@L["Paste it above as the access key, choose a passphrase of at least 12 characters and note it in your password manager."]</li>
+            <li>@L["Click \"Save\" and then \"Test connection\". The store creates the container by itself."]</li>
+            <li>@L["Choose time and weekdays, switch on the automatic backup and save. \"Back up now\" makes a first backup right away."]</li>
+        </ol>
+        <p class="muted small">@L["Instead of the connection string, a SAS URL of the storage account or of one container works too (permissions: read, write, create, list, delete). It can be limited in time and revoked without changing the account keys."]</p>
+        <p class="muted small">@L["Recommended in the storage account: \"Data protection\", soft delete for blobs (for example 14 days), so a deleted backup can be recovered."]</p>
+        <p class="muted small">@L["Restore: \"Backups in Azure\" restores a backup directly with the stored passphrase. On a new server, first create the admin account, enter the same access key and passphrase here, then restore."]</p>
+        <p class="muted small">@L["If a backup fails, all admins get an email (Settings, notifications: \"Automatic backup failed\")."]</p>
+    </div>
 }
+
+@if (Model.View == "cloud")
+{
+    <div class="card" id="cloudlist">
+        <h2 style="margin-top:0">@L["Backups in Azure"]</h2>
+        @if (!c.HasConnection)
+        {
+            <p>@L["No access key is stored."] <a href="@SectionUrl("auto")">@L["Automatic backup"] →</a></p>
+        }
+        else if (Model.CloudListError is not null)
+        {
+            <p class="alert error">@L["The list could not be loaded: {0}", Model.CloudListError]</p>
+        }
+        else if (Model.CloudBackups.Count == 0)
+        {
+            <p class="muted">@L["No backups in the container yet."]</p>
+        }
+        else
+        {
+            <div class="table-wrap">
+            <table>
+                <tr><th>@L["File"]</th><th>@L["Created"]</th><th>@L["Size"]</th><th></th></tr>
+                @foreach (var b in AddonStore.Web.Services.Paging.Items(Model.CloudBackups, ViewContext.HttpContext.Request, "cloud"))
+                {
+                    <tr>
+                        <td><code>@b.Name</code></td>
+                        <td>@Time.Fmt(b.CreatedUtc)</td>
+                        <td>@Size(b.Size)</td>
+                        <td>
+                            <form method="post" asp-page-handler="CloudDownload" asp-route-name="@b.Name" style="display:inline">
+                                <button type="submit" class="btn small secondary">@L["Download"]</button>
+                            </form>
+                            <details style="display:inline-block">
+                                <summary class="btn small danger" style="list-style:none">@L["Restore"]</summary>
+                                <form method="post" asp-page-handler="CloudRestore" asp-route-name="@b.Name" class="stack" style="margin-top:8px;max-width:360px">
+                                    <p class="small">@L["Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup."]</p>
+                                    <label>@L["Type RESTORE to confirm"]</label>
+                                    <input type="text" name="confirm" autocomplete="off" required pattern="RESTORE" />
+                                    <button type="submit" class="btn small danger">@L["Restore backup"]</button>
+                                </form>
+                            </details>
+                        </td>
+                    </tr>
+                }
+            </table>
+            </div>
+            <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("cloud", Model.CloudBackups.Count)' />
+            <p class="muted small">@L["The files are encrypted with the passphrase. A downloaded file can be restored under \"Restore\" with that passphrase."]</p>
+        }
+    </div>
+}
+
+@if (Model.View == "manual")
+{
+    <div class="card" style="max-width:640px">
+        <h2 style="margin-top:0">@L["Create backup"]</h2>
+        <p>@L["Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file."]</p>
+        <form method="post" asp-page-handler="Download" class="stack">
+            <div>
+                <label for="keyPassword">@L["Password for the key ring (optional)"]</label>
+                <input type="password" id="keyPassword" name="keyPassword" minlength="12" autocomplete="new-password" />
+            </div>
+            <button type="submit" class="btn cta">@L["Download full backup"]</button>
+        </form>
+        <p style="font-size:.82rem;color:var(--tun-slate)">@L["With a password, the key ring that decrypts the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: after a restore, enter those keys again; customer codes keep working but can no longer be shown."]</p>
+        <p style="font-size:.82rem;color:var(--tun-slate)">@L["The backup contains password hashes and settings such as the Resend key. Store it like a password."]</p>
+    </div>
+}
+
+@if (Model.View == "restore")
+{
+    <div class="card" style="max-width:640px">
+        <h2 style="margin-top:0">@L["Restore"]</h2>
+        <p>@L["Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup."]</p>
+        <form method="post" asp-page-handler="Restore" enctype="multipart/form-data" class="stack">
+            <div>
+                <label>@L["Backup file (.zip, or .psbak from the automatic backup)"]</label>
+                <input type="file" name="archive" accept=".zip,.psbak" required />
+            </div>
+            <div>
+                <label for="restoreKeyPassword">@L["Password for the key ring, or the passphrase of an automatic backup"]</label>
+                <input type="password" id="restoreKeyPassword" name="keyPassword" autocomplete="off" />
+                <label style="display:flex;gap:8px;align-items:center;margin-top:6px">
+                    <input type="checkbox" name="withoutKeys" value="true" style="width:auto" />
+                    @L["Restore without the key ring (signing key and stored secrets are lost)"]
+                </label>
+            </div>
+            <div>
+                <label>@L["Type RESTORE to confirm"]</label>
+                <input type="text" name="confirm" autocomplete="off" required pattern="RESTORE" />
+            </div>
+            <button type="submit" class="btn danger">@L["Restore backup"]</button>
+        </form>
+        <p style="font-size:.82rem;color:var(--tun-slate)">@L["The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out."]</p>
+    </div>
+}
+
+@if (Model.View == "safety")
+{
+    <div class="card" id="safety">
+        <h2 style="margin-top:0">@L["Automatic safety backups"]</h2>
+        @if (Model.SafetyBackups.Count == 0)
+        {
+            <p class="muted">@L["None yet. The server creates one before every restore."]</p>
+        }
+        else
+        {
+            <div class="table-wrap">
+            <table>
+                <tr><th>@L["File"]</th><th>@L["Created"]</th><th>@L["Size"]</th><th></th></tr>
+                @foreach (var b in AddonStore.Web.Services.Paging.Items(Model.SafetyBackups, ViewContext.HttpContext.Request, "safety"))
+                {
+                    <tr>
+                        <td><code>@b.Name</code></td>
+                        <td>@Time.Fmt(b.Utc)</td>
+                        <td>@Size(b.Size)</td>
+                        <td>
+                            <form method="post" asp-page-handler="Safety" asp-route-name="@b.Name" style="display:flex;gap:6px">
+                                <input type="password" name="keyPassword" minlength="12" placeholder="@L["Password for the key ring (optional)"]" aria-label="@L["Password for the key ring (optional)"]" autocomplete="new-password" />
+                                <button type="submit" class="btn small secondary">@L["Download"]</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+            </div>
+            <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("safety", Model.SafetyBackups.Count)' />
+        }
+    </div>
+}
+
+</div>
+</div>

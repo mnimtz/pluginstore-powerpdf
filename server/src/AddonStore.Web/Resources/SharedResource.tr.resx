@@ -676,4 +676,57 @@
   <data name="Previous" xml:space="preserve"><value>Önceki</value></data>
   <data name="Next" xml:space="preserve"><value>Sonraki</value></data>
   <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>{1} isteğin en yeni {0} tanesi; CSV dışa aktarımı hepsini içerir.</value></data>
+  <data name="A backup is already running." xml:space="preserve"><value>Bir yedekleme zaten çalışıyor.</value></data>
+  <data name="AI assistant" xml:space="preserve"><value>Yapay zeka asistanı</value></data>
+  <data name="Access key (connection string or SAS URL)" xml:space="preserve"><value>Erişim anahtarı (bağlantı dizesi veya SAS URL)</value></data>
+  <data name="Automatic backup" xml:space="preserve"><value>Otomatik yedekleme</value></data>
+  <data name="Automatic backup failed" xml:space="preserve"><value>Otomatik yedekleme başarısız oldu</value></data>
+  <data name="Automatic backup to Azure Blob Storage" xml:space="preserve"><value>Azure Blob Storage'a otomatik yedekleme</value></data>
+  <data name="Back up automatically on the selected days" xml:space="preserve"><value>Seçili günlerde otomatik olarak yedekle</value></data>
+  <data name="Back up now" xml:space="preserve"><value>Şimdi yedekle</value></data>
+  <data name="Backup file (.zip, or .psbak from the automatic backup)" xml:space="preserve"><value>Yedek dosyası (.zip veya otomatik yedeklemeden .psbak)</value></data>
+  <data name="Backups in Azure" xml:space="preserve"><value>Azure'daki yedekler</value></data>
+  <data name="Backups to keep" xml:space="preserve"><value>Saklanacak yedekler</value></data>
+  <data name="Choose time and weekdays, switch on the automatic backup and save. &quot;Back up now&quot; makes a first backup right away." xml:space="preserve"><value>Saati ve hafta günlerini seçin, otomatik yedeklemeyi açın ve kaydedin. "Şimdi yedekle" hemen ilk yedeği oluşturur.</value></data>
+  <data name="Click &quot;Save&quot; and then &quot;Test connection&quot;. The store creates the container by itself." xml:space="preserve"><value>"Kaydet" düğmesine ve ardından "Bağlantıyı test et" düğmesine tıklayın. Store kapsayıcıyı kendisi oluşturur.</value></data>
+  <data name="Connection works: {0}" xml:space="preserve"><value>Bağlantı çalışıyor: {0}</value></data>
+  <data name="Container" xml:space="preserve"><value>Kapsayıcı</value></data>
+  <data name="Container names use 3 to 63 lower-case letters, digits and hyphens." xml:space="preserve"><value>Kapsayıcı adları 3 ile 63 arasında küçük harf, rakam ve kısa çizgiden oluşur.</value></data>
+  <data name="Created automatically if it does not exist." xml:space="preserve"><value>Yoksa otomatik olarak oluşturulur.</value></data>
+  <data name="Encrypts every backup before it leaves the server. Without it a backup cannot be restored: keep it outside the server, for example in a password manager." xml:space="preserve"><value>Her yedeği sunucudan çıkmadan önce şifreler. Parola ifadesi olmadan yedek geri yüklenemez: bunu sunucunun dışında, örneğin bir parola yöneticisinde saklayın.</value></data>
+  <data name="Enter the access key and the passphrase first." xml:space="preserve"><value>Önce erişim anahtarını ve parola ifadesini girin.</value></data>
+  <data name="Guide" xml:space="preserve"><value>Kılavuz</value></data>
+  <data name="If a backup fails, all admins get an email (Settings, notifications: &quot;Automatic backup failed&quot;)." xml:space="preserve"><value>Bir yedekleme başarısız olursa tüm yöneticiler e-posta alır (Ayarlar, bildirimler: "Otomatik yedekleme başarısız oldu").</value></data>
+  <data name="In the Azure portal, open a storage account (or create one: &quot;Storage accounts&quot;, &quot;Create&quot;, standard settings are enough; Redundancy &quot;LRS&quot; is the cheapest)." xml:space="preserve"><value>Azure portalında bir depolama hesabı açın (veya oluşturun: "Depolama hesapları", "Oluştur", standart ayarlar yeterlidir; "LRS" yedekliliği en ucuzudur).</value></data>
+  <data name="In the storage account, open &quot;Security + networking&quot;, &quot;Access keys&quot;, and copy the &quot;Connection string&quot; of key1." xml:space="preserve"><value>Depolama hesabında "Security + networking", "Erişim anahtarları" bölümünü açın ve key1'in "Bağlantı dizesi" değerini kopyalayın.</value></data>
+  <data name="Instead of the connection string, a SAS URL of the storage account or of one container works too (permissions: read, write, create, list, delete). It can be limited in time and revoked without changing the account keys." xml:space="preserve"><value>Bağlantı dizesi yerine depolama hesabının veya tek bir kapsayıcının SAS URL'si de çalışır (izinler: okuma, yazma, oluşturma, listeleme, silme). Süreyle sınırlandırılabilir ve hesap anahtarları değiştirilmeden iptal edilebilir.</value></data>
+  <data name="Last backup" xml:space="preserve"><value>Son yedek</value></data>
+  <data name="Manual backup" xml:space="preserve"><value>Manuel yedekleme</value></data>
+  <data name="Next backup" xml:space="preserve"><value>Sonraki yedekleme</value></data>
+  <data name="No access key is stored." xml:space="preserve"><value>Kayıtlı erişim anahtarı yok.</value></data>
+  <data name="No backups in the container yet." xml:space="preserve"><value>Kapsayıcıda henüz yedek yok.</value></data>
+  <data name="None yet. The server creates one before every restore." xml:space="preserve"><value>Henüz yok. Sunucu her geri yüklemeden önce bir tane oluşturur.</value></data>
+  <data name="Not set up" xml:space="preserve"><value>Ayarlanmadı</value></data>
+  <data name="OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Passphrase (at least 12 characters)" xml:space="preserve"><value>Parola ifadesi (en az 12 karakter)</value></data>
+  <data name="Password for the key ring, or the passphrase of an automatic backup" xml:space="preserve"><value>Anahtarlık parolası veya otomatik bir yedeğin parola ifadesi</value></data>
+  <data name="Paste it above as the access key, choose a passphrase of at least 12 characters and note it in your password manager." xml:space="preserve"><value>Bunu yukarıya erişim anahtarı olarak yapıştırın, en az 12 karakterlik bir parola ifadesi seçin ve parola yöneticinize kaydedin.</value></data>
+  <data name="Recommended in the storage account: &quot;Data protection&quot;, soft delete for blobs (for example 14 days), so a deleted backup can be recovered." xml:space="preserve"><value>Depolama hesabında önerilir: "Veri koruma", bloblar için geçici silme (örneğin 14 gün); böylece silinen bir yedek kurtarılabilir.</value></data>
+  <data name="Restore: &quot;Backups in Azure&quot; restores a backup directly with the stored passphrase. On a new server, first create the admin account, enter the same access key and passphrase here, then restore." xml:space="preserve"><value>Geri yükleme: "Azure'daki yedekler" bir yedeği kayıtlı parola ifadesiyle doğrudan geri yükler. Yeni bir sunucuda önce yönetici hesabını oluşturun, burada aynı erişim anahtarını ve parola ifadesini girin, ardından geri yükleyin.</value></data>
+  <data name="Running" xml:space="preserve"><value>Çalışıyor</value></data>
+  <data name="Safety backups" xml:space="preserve"><value>Güvenlik kopyaları</value></data>
+  <data name="Saved. The schedule stays off until an access key and a passphrase are set." xml:space="preserve"><value>Kaydedildi. Bir erişim anahtarı ve parola ifadesi ayarlanana kadar zamanlama kapalı kalır.</value></data>
+  <data name="Sections" xml:space="preserve"><value>Bölümler</value></data>
+  <data name="Storage account" xml:space="preserve"><value>Depolama hesabı</value></data>
+  <data name="Stored; leave empty to keep it" xml:space="preserve"><value>Kayıtlı; korumak için boş bırakın</value></data>
+  <data name="The access key is neither a connection string nor a SAS URL of the storage account." xml:space="preserve"><value>Erişim anahtarı, depolama hesabının ne bağlantı dizesi ne de SAS URL'sidir.</value></data>
+  <data name="The backup could not be downloaded." xml:space="preserve"><value>Yedek indirilemedi.</value></data>
+  <data name="The backup started. Reload the page in a minute to see the result." xml:space="preserve"><value>Yedekleme başladı. Sonucu görmek için sayfayı bir dakika sonra yeniden yükleyin.</value></data>
+  <data name="The connection failed: {0}" xml:space="preserve"><value>Bağlantı başarısız oldu: {0}</value></data>
+  <data name="The files are encrypted with the passphrase. A downloaded file can be restored under &quot;Restore&quot; with that passphrase." xml:space="preserve"><value>Dosyalar parola ifadesiyle şifrelenir. İndirilen bir dosya bu parola ifadesiyle "Geri yükle" altında geri yüklenebilir.</value></data>
+  <data name="The list could not be loaded: {0}" xml:space="preserve"><value>Liste yüklenemedi: {0}</value></data>
+  <data name="The passphrase is wrong or the file is damaged." xml:space="preserve"><value>Parola ifadesi yanlış veya dosya bozuk.</value></data>
+  <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>Parola ifadesi en az 12 karakter olmalıdır.</value></data>
+  <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Bu yedek şifrelenmiş. Parola ifadesini girin.</value></data>
+  <data name="Weekdays" xml:space="preserve"><value>Hafta günleri</value></data>
 </root>

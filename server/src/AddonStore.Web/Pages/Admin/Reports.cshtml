@@ -437,7 +437,7 @@
     @if (!Model.IpOn)
     {
         <p>@L["Off. Only the daily counters above are kept; they contain no IP address."]
-            <a class="no-print" href="/Admin/Settings#privacy">@L["Switch on in the settings"] →</a></p>
+            <a class="no-print" href="/Admin/Settings?view=privacy">@L["Switch on in the settings"] →</a></p>
     }
     else
     {
@@ -445,7 +445,7 @@
            @(Model.RetentionDays == 0
                ? L["Stored requests: {0}. Kept permanently (no automatic deletion).", Model.IpEventCount]
                : L["Stored requests: {0}. Older than {1} days are deleted automatically.", Model.IpEventCount, Model.RetentionDays])
-           <a class="no-print" href="/Admin/Settings#privacy">@L["Settings"]</a></p>
+           <a class="no-print" href="/Admin/Settings?view=privacy">@L["Settings"]</a></p>
     }
     @if (Model.IpEventCount > 0)
     {

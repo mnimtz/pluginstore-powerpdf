@@ -676,4 +676,57 @@
   <data name="Previous" xml:space="preserve"><value>Poprzednia</value></data>
   <data name="Next" xml:space="preserve"><value>Następna</value></data>
   <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>Najnowsze {0} z {1} żądań; eksport CSV zawiera wszystkie.</value></data>
+  <data name="A backup is already running." xml:space="preserve"><value>Tworzenie kopii zapasowej już trwa.</value></data>
+  <data name="AI assistant" xml:space="preserve"><value>Asystent AI</value></data>
+  <data name="Access key (connection string or SAS URL)" xml:space="preserve"><value>Klucz dostępu (parametry połączenia lub SAS URL)</value></data>
+  <data name="Automatic backup" xml:space="preserve"><value>Automatyczna kopia zapasowa</value></data>
+  <data name="Automatic backup failed" xml:space="preserve"><value>Automatyczna kopia zapasowa nie powiodła się</value></data>
+  <data name="Automatic backup to Azure Blob Storage" xml:space="preserve"><value>Automatyczna kopia zapasowa w Azure Blob Storage</value></data>
+  <data name="Back up automatically on the selected days" xml:space="preserve"><value>Twórz kopię zapasową automatycznie w wybrane dni</value></data>
+  <data name="Back up now" xml:space="preserve"><value>Utwórz kopię teraz</value></data>
+  <data name="Backup file (.zip, or .psbak from the automatic backup)" xml:space="preserve"><value>Plik kopii zapasowej (.zip lub .psbak z automatycznej kopii zapasowej)</value></data>
+  <data name="Backups in Azure" xml:space="preserve"><value>Kopie zapasowe w Azure</value></data>
+  <data name="Backups to keep" xml:space="preserve"><value>Liczba przechowywanych kopii</value></data>
+  <data name="Choose time and weekdays, switch on the automatic backup and save. &quot;Back up now&quot; makes a first backup right away." xml:space="preserve"><value>Wybierz godzinę i dni tygodnia, włącz automatyczną kopię zapasową i zapisz. "Utwórz kopię teraz" od razu tworzy pierwszą kopię zapasową.</value></data>
+  <data name="Click &quot;Save&quot; and then &quot;Test connection&quot;. The store creates the container by itself." xml:space="preserve"><value>Kliknij "Zapisz", a następnie "Testuj połączenie". Store sam utworzy kontener.</value></data>
+  <data name="Connection works: {0}" xml:space="preserve"><value>Połączenie działa: {0}</value></data>
+  <data name="Container" xml:space="preserve"><value>Kontener</value></data>
+  <data name="Container names use 3 to 63 lower-case letters, digits and hyphens." xml:space="preserve"><value>Nazwy kontenerów składają się z 3 do 63 małych liter, cyfr i łączników.</value></data>
+  <data name="Created automatically if it does not exist." xml:space="preserve"><value>Zostanie utworzony automatycznie, jeśli nie istnieje.</value></data>
+  <data name="Encrypts every backup before it leaves the server. Without it a backup cannot be restored: keep it outside the server, for example in a password manager." xml:space="preserve"><value>Szyfruje każdą kopię zapasową, zanim opuści serwer. Bez frazy hasła nie da się przywrócić kopii zapasowej: przechowuj ją poza serwerem, na przykład w menedżerze haseł.</value></data>
+  <data name="Enter the access key and the passphrase first." xml:space="preserve"><value>Najpierw wprowadź klucz dostępu i frazę hasła.</value></data>
+  <data name="Guide" xml:space="preserve"><value>Instrukcja</value></data>
+  <data name="If a backup fails, all admins get an email (Settings, notifications: &quot;Automatic backup failed&quot;)." xml:space="preserve"><value>Jeśli tworzenie kopii zapasowej się nie powiedzie, wszyscy administratorzy otrzymają wiadomość e-mail (Ustawienia, powiadomienia: "Automatyczna kopia zapasowa nie powiodła się").</value></data>
+  <data name="In the Azure portal, open a storage account (or create one: &quot;Storage accounts&quot;, &quot;Create&quot;, standard settings are enough; Redundancy &quot;LRS&quot; is the cheapest)." xml:space="preserve"><value>W witrynie Azure Portal otwórz konto magazynu (lub utwórz je: "Konta magazynu", "Utwórz", ustawienia standardowe wystarczą; nadmiarowość "LRS" jest najtańsza).</value></data>
+  <data name="In the storage account, open &quot;Security + networking&quot;, &quot;Access keys&quot;, and copy the &quot;Connection string&quot; of key1." xml:space="preserve"><value>W koncie magazynu otwórz "Security + networking", "Klucze dostępu" i skopiuj "Parametry połączenia" klucza key1.</value></data>
+  <data name="Instead of the connection string, a SAS URL of the storage account or of one container works too (permissions: read, write, create, list, delete). It can be limited in time and revoked without changing the account keys." xml:space="preserve"><value>Zamiast parametrów połączenia można też użyć SAS URL konta magazynu lub jednego kontenera (uprawnienia: odczyt, zapis, tworzenie, wyświetlanie listy, usuwanie). Można go ograniczyć czasowo i odwołać bez zmiany kluczy konta.</value></data>
+  <data name="Last backup" xml:space="preserve"><value>Ostatnia kopia zapasowa</value></data>
+  <data name="Manual backup" xml:space="preserve"><value>Ręczna kopia zapasowa</value></data>
+  <data name="Next backup" xml:space="preserve"><value>Następna kopia zapasowa</value></data>
+  <data name="No access key is stored." xml:space="preserve"><value>Nie zapisano klucza dostępu.</value></data>
+  <data name="No backups in the container yet." xml:space="preserve"><value>W kontenerze nie ma jeszcze kopii zapasowych.</value></data>
+  <data name="None yet. The server creates one before every restore." xml:space="preserve"><value>Jeszcze brak. Serwer tworzy ją przed każdym przywróceniem.</value></data>
+  <data name="Not set up" xml:space="preserve"><value>Nie skonfigurowano</value></data>
+  <data name="OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Passphrase (at least 12 characters)" xml:space="preserve"><value>Fraza hasła (co najmniej 12 znaków)</value></data>
+  <data name="Password for the key ring, or the passphrase of an automatic backup" xml:space="preserve"><value>Hasło do pęku kluczy lub fraza hasła automatycznej kopii zapasowej</value></data>
+  <data name="Paste it above as the access key, choose a passphrase of at least 12 characters and note it in your password manager." xml:space="preserve"><value>Wklej je powyżej jako klucz dostępu, wybierz frazę hasła o długości co najmniej 12 znaków i zapisz ją w menedżerze haseł.</value></data>
+  <data name="Recommended in the storage account: &quot;Data protection&quot;, soft delete for blobs (for example 14 days), so a deleted backup can be recovered." xml:space="preserve"><value>Zalecane w koncie magazynu: "Ochrona danych", usuwanie nietrwałe dla obiektów blob (na przykład 14 dni), aby można było odzyskać usuniętą kopię zapasową.</value></data>
+  <data name="Restore: &quot;Backups in Azure&quot; restores a backup directly with the stored passphrase. On a new server, first create the admin account, enter the same access key and passphrase here, then restore." xml:space="preserve"><value>Przywracanie: "Kopie zapasowe w Azure" przywraca kopię zapasową bezpośrednio przy użyciu zapisanej frazy hasła. Na nowym serwerze najpierw utwórz konto administratora, wprowadź tutaj ten sam klucz dostępu i frazę hasła, a następnie przywróć.</value></data>
+  <data name="Running" xml:space="preserve"><value>Działa</value></data>
+  <data name="Safety backups" xml:space="preserve"><value>Kopie bezpieczeństwa</value></data>
+  <data name="Saved. The schedule stays off until an access key and a passphrase are set." xml:space="preserve"><value>Zapisano. Harmonogram pozostanie wyłączony, dopóki nie zostaną ustawione klucz dostępu i fraza hasła.</value></data>
+  <data name="Sections" xml:space="preserve"><value>Sekcje</value></data>
+  <data name="Storage account" xml:space="preserve"><value>Konto magazynu</value></data>
+  <data name="Stored; leave empty to keep it" xml:space="preserve"><value>Zapisano; pozostaw puste, aby zachować wartość</value></data>
+  <data name="The access key is neither a connection string nor a SAS URL of the storage account." xml:space="preserve"><value>Klucz dostępu nie jest ani parametrami połączenia, ani SAS URL konta magazynu.</value></data>
+  <data name="The backup could not be downloaded." xml:space="preserve"><value>Nie można pobrać kopii zapasowej.</value></data>
+  <data name="The backup started. Reload the page in a minute to see the result." xml:space="preserve"><value>Rozpoczęto tworzenie kopii zapasowej. Odśwież stronę za minutę, aby zobaczyć wynik.</value></data>
+  <data name="The connection failed: {0}" xml:space="preserve"><value>Połączenie nie powiodło się: {0}</value></data>
+  <data name="The files are encrypted with the passphrase. A downloaded file can be restored under &quot;Restore&quot; with that passphrase." xml:space="preserve"><value>Pliki są zaszyfrowane frazą hasła. Pobrany plik można przywrócić w sekcji "Przywróć" przy użyciu tej frazy hasła.</value></data>
+  <data name="The list could not be loaded: {0}" xml:space="preserve"><value>Nie można załadować listy: {0}</value></data>
+  <data name="The passphrase is wrong or the file is damaged." xml:space="preserve"><value>Fraza hasła jest nieprawidłowa lub plik jest uszkodzony.</value></data>
+  <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>Fraza hasła musi mieć co najmniej 12 znaków.</value></data>
+  <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Ta kopia zapasowa jest zaszyfrowana. Wprowadź jej frazę hasła.</value></data>
+  <data name="Weekdays" xml:space="preserve"><value>Dni tygodnia</value></data>
 </root>

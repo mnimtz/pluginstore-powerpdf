@@ -96,6 +96,7 @@ public class NotificationService
         ("CategoryCreated", "New catalog category created by an upload", "Admins"),
         ("Feedback",        "Problem report or comment from the store client", "Owner"),
         ("CustomerDelivery", "Customer delivery created or changed by a developer", "Admins"),
+        ("BackupFailed",    "Automatic backup failed",          "Admins"),
     };
 
     private readonly IAppEmailSender _mail;

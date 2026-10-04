@@ -169,3 +169,30 @@ led to these changes:
 
 Decided earlier and still open: no server-side malware scan (decision Oct 3,
 2026), no Authenticode signing (no certificate).
+
+## S0.17.1 to S0.18.0 (Oct 4, 2026)
+
+- **Start-up crash on App Service (exit code 139), fixed in S0.17.1.** The SQLite database
+  lives on the Azure Files share (`/data`, SMB). Entity Framework creates it in WAL mode,
+  whose index is a memory-mapped `-shm` file; SQLite does not support that on network file
+  systems. While App Service started a new container and the old one was still running,
+  the new one crashed, several times in a row, until App Service blocked the site. The
+  server now switches the database to the rollback journal at start-up (stored in the file)
+  and reads the geolocation databases into memory instead of mapping them from the share.
+  Nothing slow runs before the web server listens; start-up steps are logged with durations.
+- **Paged lists (S0.17.2/S0.17.3):** audit log paged in the database (before: fixed to the
+  newest 300), reports, users, plug-ins, customers, versions, problem reports and the public
+  catalog paged (25/50/100).
+- **Stylesheet cache busting (S0.17.3):** `asp-append-version`, so a security or layout fix
+  in CSS reaches browsers at once.
+- **Automatic backup to Azure Blob Storage (S0.18.0).** The access key (connection string or
+  SAS URL) and the passphrase are stored with the data protection key ring (never in plain
+  text, never in logs or the audit; error texts mask `sig=` and `AccountKey=`). The whole
+  backup is encrypted before upload: format PSBAK1, PBKDF2-SHA256 (600,000 iterations),
+  AES-256-GCM in 1 MiB chunks with a random nonce each; every chunk authenticates the header,
+  its index and a last-chunk flag, so reordered, swapped, damaged or cut-off files are refused
+  before anything is restored. The key ring inside is additionally encrypted (keys.enc). A
+  SAS limited to one container works (the container is only created when it is missing).
+  Recommended on the storage account: soft delete for blobs. A failed run is audited and
+  mailed to the admins (event "BackupFailed").
+

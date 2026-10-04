@@ -156,6 +156,8 @@ builder.Services.AddSingleton<PackageSigning>();
 builder.Services.AddSingleton<SetupGate>();
 builder.Services.AddScoped<TimeDisplay>();
 builder.Services.AddScoped<BackupService>();
+builder.Services.AddScoped<CloudBackupService>();
+builder.Services.AddHostedService<CloudBackupScheduler>();
 builder.Services.AddScoped<PackageMetaService>();
 builder.Services.AddScoped<VersionActionService>();
 builder.Services.AddScoped<CategoryService>();

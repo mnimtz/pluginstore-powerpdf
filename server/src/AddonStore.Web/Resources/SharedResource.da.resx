@@ -676,4 +676,57 @@
   <data name="Previous" xml:space="preserve"><value>Forrige</value></data>
   <data name="Next" xml:space="preserve"><value>Næste</value></data>
   <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>De seneste {0} af {1} forespørgsler; CSV-eksporten indeholder dem alle.</value></data>
+  <data name="A backup is already running." xml:space="preserve"><value>En sikkerhedskopiering kører allerede.</value></data>
+  <data name="AI assistant" xml:space="preserve"><value>AI-assistent</value></data>
+  <data name="Access key (connection string or SAS URL)" xml:space="preserve"><value>Adgangsnøgle (forbindelsesstreng eller SAS URL)</value></data>
+  <data name="Automatic backup" xml:space="preserve"><value>Automatisk sikkerhedskopiering</value></data>
+  <data name="Automatic backup failed" xml:space="preserve"><value>Automatisk sikkerhedskopiering mislykkedes</value></data>
+  <data name="Automatic backup to Azure Blob Storage" xml:space="preserve"><value>Automatisk sikkerhedskopiering til Azure Blob Storage</value></data>
+  <data name="Back up automatically on the selected days" xml:space="preserve"><value>Sikkerhedskopiér automatisk på de valgte dage</value></data>
+  <data name="Back up now" xml:space="preserve"><value>Sikkerhedskopiér nu</value></data>
+  <data name="Backup file (.zip, or .psbak from the automatic backup)" xml:space="preserve"><value>Sikkerhedskopifil (.zip eller .psbak fra den automatiske sikkerhedskopiering)</value></data>
+  <data name="Backups in Azure" xml:space="preserve"><value>Sikkerhedskopier i Azure</value></data>
+  <data name="Backups to keep" xml:space="preserve"><value>Sikkerhedskopier, der gemmes</value></data>
+  <data name="Choose time and weekdays, switch on the automatic backup and save. &quot;Back up now&quot; makes a first backup right away." xml:space="preserve"><value>Vælg tidspunkt og ugedage, slå automatisk sikkerhedskopiering til, og gem. "Sikkerhedskopiér nu" laver straks en første sikkerhedskopi.</value></data>
+  <data name="Click &quot;Save&quot; and then &quot;Test connection&quot;. The store creates the container by itself." xml:space="preserve"><value>Klik på "Gem" og derefter på "Test forbindelse". Store opretter selv containeren.</value></data>
+  <data name="Connection works: {0}" xml:space="preserve"><value>Forbindelsen virker: {0}</value></data>
+  <data name="Container" xml:space="preserve"><value>Container</value></data>
+  <data name="Container names use 3 to 63 lower-case letters, digits and hyphens." xml:space="preserve"><value>Containernavne består af 3 til 63 små bogstaver, cifre og bindestreger.</value></data>
+  <data name="Created automatically if it does not exist." xml:space="preserve"><value>Oprettes automatisk, hvis den ikke findes.</value></data>
+  <data name="Encrypts every backup before it leaves the server. Without it a backup cannot be restored: keep it outside the server, for example in a password manager." xml:space="preserve"><value>Krypterer hver sikkerhedskopi, før den forlader serveren. Uden adgangssætningen kan en sikkerhedskopi ikke gendannes: Opbevar den uden for serveren, for eksempel i en adgangskodeadministrator.</value></data>
+  <data name="Enter the access key and the passphrase first." xml:space="preserve"><value>Angiv først adgangsnøglen og adgangssætningen.</value></data>
+  <data name="Guide" xml:space="preserve"><value>Vejledning</value></data>
+  <data name="If a backup fails, all admins get an email (Settings, notifications: &quot;Automatic backup failed&quot;)." xml:space="preserve"><value>Hvis en sikkerhedskopiering mislykkes, får alle administratorer en e-mail (Indstillinger, notifikationer: "Automatisk sikkerhedskopiering mislykkedes").</value></data>
+  <data name="In the Azure portal, open a storage account (or create one: &quot;Storage accounts&quot;, &quot;Create&quot;, standard settings are enough; Redundancy &quot;LRS&quot; is the cheapest)." xml:space="preserve"><value>Åbn en lagerkonto i Azure-portalen (eller opret en: "Lagerkonti", "Opret", standardindstillingerne er nok; redundans "LRS" er den billigste).</value></data>
+  <data name="In the storage account, open &quot;Security + networking&quot;, &quot;Access keys&quot;, and copy the &quot;Connection string&quot; of key1." xml:space="preserve"><value>Åbn "Security + networking", "Adgangsnøgler" i lagerkontoen, og kopiér "Forbindelsesstreng" for key1.</value></data>
+  <data name="Instead of the connection string, a SAS URL of the storage account or of one container works too (permissions: read, write, create, list, delete). It can be limited in time and revoked without changing the account keys." xml:space="preserve"><value>I stedet for forbindelsesstrengen virker også en SAS URL til lagerkontoen eller til en enkelt container (tilladelser: læse, skrive, oprette, vise, slette). Den kan tidsbegrænses og tilbagekaldes uden at ændre kontonøglerne.</value></data>
+  <data name="Last backup" xml:space="preserve"><value>Seneste sikkerhedskopi</value></data>
+  <data name="Manual backup" xml:space="preserve"><value>Manuel sikkerhedskopiering</value></data>
+  <data name="Next backup" xml:space="preserve"><value>Næste sikkerhedskopiering</value></data>
+  <data name="No access key is stored." xml:space="preserve"><value>Der er ikke gemt nogen adgangsnøgle.</value></data>
+  <data name="No backups in the container yet." xml:space="preserve"><value>Endnu ingen sikkerhedskopier i containeren.</value></data>
+  <data name="None yet. The server creates one before every restore." xml:space="preserve"><value>Ingen endnu. Serveren opretter en før hver gendannelse.</value></data>
+  <data name="Not set up" xml:space="preserve"><value>Ikke konfigureret</value></data>
+  <data name="OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Passphrase (at least 12 characters)" xml:space="preserve"><value>Adgangssætning (mindst 12 tegn)</value></data>
+  <data name="Password for the key ring, or the passphrase of an automatic backup" xml:space="preserve"><value>Adgangskode til nøgleringen eller adgangssætningen for en automatisk sikkerhedskopi</value></data>
+  <data name="Paste it above as the access key, choose a passphrase of at least 12 characters and note it in your password manager." xml:space="preserve"><value>Indsæt den ovenfor som adgangsnøgle, vælg en adgangssætning på mindst 12 tegn, og notér den i din adgangskodeadministrator.</value></data>
+  <data name="Recommended in the storage account: &quot;Data protection&quot;, soft delete for blobs (for example 14 days), so a deleted backup can be recovered." xml:space="preserve"><value>Anbefales i lagerkontoen: "Databeskyttelse", blød sletning for blobs (for eksempel 14 dage), så en slettet sikkerhedskopi kan gendannes.</value></data>
+  <data name="Restore: &quot;Backups in Azure&quot; restores a backup directly with the stored passphrase. On a new server, first create the admin account, enter the same access key and passphrase here, then restore." xml:space="preserve"><value>Gendannelse: "Sikkerhedskopier i Azure" gendanner en sikkerhedskopi direkte med den gemte adgangssætning. På en ny server skal du først oprette administratorkontoen, angive den samme adgangsnøgle og adgangssætning her og derefter gendanne.</value></data>
+  <data name="Running" xml:space="preserve"><value>Kører</value></data>
+  <data name="Safety backups" xml:space="preserve"><value>Beskyttelseskopier</value></data>
+  <data name="Saved. The schedule stays off until an access key and a passphrase are set." xml:space="preserve"><value>Gemt. Tidsplanen forbliver slået fra, indtil der er angivet en adgangsnøgle og en adgangssætning.</value></data>
+  <data name="Sections" xml:space="preserve"><value>Sektioner</value></data>
+  <data name="Storage account" xml:space="preserve"><value>Lagerkonto</value></data>
+  <data name="Stored; leave empty to keep it" xml:space="preserve"><value>Gemt; lad feltet stå tomt for at beholde værdien</value></data>
+  <data name="The access key is neither a connection string nor a SAS URL of the storage account." xml:space="preserve"><value>Adgangsnøglen er hverken en forbindelsesstreng eller en SAS URL til lagerkontoen.</value></data>
+  <data name="The backup could not be downloaded." xml:space="preserve"><value>Sikkerhedskopien kunne ikke downloades.</value></data>
+  <data name="The backup started. Reload the page in a minute to see the result." xml:space="preserve"><value>Sikkerhedskopieringen er startet. Genindlæs siden om et minut for at se resultatet.</value></data>
+  <data name="The connection failed: {0}" xml:space="preserve"><value>Forbindelsen mislykkedes: {0}</value></data>
+  <data name="The files are encrypted with the passphrase. A downloaded file can be restored under &quot;Restore&quot; with that passphrase." xml:space="preserve"><value>Filerne er krypteret med adgangssætningen. En downloadet fil kan gendannes under "Gendan" med denne adgangssætning.</value></data>
+  <data name="The list could not be loaded: {0}" xml:space="preserve"><value>Listen kunne ikke indlæses: {0}</value></data>
+  <data name="The passphrase is wrong or the file is damaged." xml:space="preserve"><value>Adgangssætningen er forkert, eller filen er beskadiget.</value></data>
+  <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>Adgangssætningen skal være på mindst 12 tegn.</value></data>
+  <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Denne sikkerhedskopi er krypteret. Angiv dens adgangssætning.</value></data>
+  <data name="Weekdays" xml:space="preserve"><value>Ugedage</value></data>
 </root>

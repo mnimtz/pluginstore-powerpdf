@@ -676,4 +676,57 @@
   <data name="Previous" xml:space="preserve"><value>Vorige</value></data>
   <data name="Next" xml:space="preserve"><value>Volgende</value></data>
   <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>De nieuwste {0} van {1} aanvragen; de CSV-export bevat ze allemaal.</value></data>
+  <data name="A backup is already running." xml:space="preserve"><value>Er wordt al een back-up uitgevoerd.</value></data>
+  <data name="AI assistant" xml:space="preserve"><value>AI-assistent</value></data>
+  <data name="Access key (connection string or SAS URL)" xml:space="preserve"><value>Toegangssleutel (verbindingsreeks of SAS URL)</value></data>
+  <data name="Automatic backup" xml:space="preserve"><value>Automatische back-up</value></data>
+  <data name="Automatic backup failed" xml:space="preserve"><value>Automatische back-up mislukt</value></data>
+  <data name="Automatic backup to Azure Blob Storage" xml:space="preserve"><value>Automatische back-up naar Azure Blob Storage</value></data>
+  <data name="Back up automatically on the selected days" xml:space="preserve"><value>Automatisch een back-up maken op de geselecteerde dagen</value></data>
+  <data name="Back up now" xml:space="preserve"><value>Nu back-up maken</value></data>
+  <data name="Backup file (.zip, or .psbak from the automatic backup)" xml:space="preserve"><value>Back-upbestand (.zip, of .psbak uit de automatische back-up)</value></data>
+  <data name="Backups in Azure" xml:space="preserve"><value>Back-ups in Azure</value></data>
+  <data name="Backups to keep" xml:space="preserve"><value>Te bewaren back-ups</value></data>
+  <data name="Choose time and weekdays, switch on the automatic backup and save. &quot;Back up now&quot; makes a first backup right away." xml:space="preserve"><value>Kies tijd en weekdagen, schakel de automatische back-up in en sla op. "Nu back-up maken" maakt direct een eerste back-up.</value></data>
+  <data name="Click &quot;Save&quot; and then &quot;Test connection&quot;. The store creates the container by itself." xml:space="preserve"><value>Klik op "Opslaan" en daarna op "Verbinding testen". De Store maakt de container zelf aan.</value></data>
+  <data name="Connection works: {0}" xml:space="preserve"><value>Verbinding werkt: {0}</value></data>
+  <data name="Container" xml:space="preserve"><value>Container</value></data>
+  <data name="Container names use 3 to 63 lower-case letters, digits and hyphens." xml:space="preserve"><value>Containernamen bestaan uit 3 tot 63 kleine letters, cijfers en koppeltekens.</value></data>
+  <data name="Created automatically if it does not exist." xml:space="preserve"><value>Wordt automatisch aangemaakt als deze niet bestaat.</value></data>
+  <data name="Encrypts every backup before it leaves the server. Without it a backup cannot be restored: keep it outside the server, for example in a password manager." xml:space="preserve"><value>Versleutelt elke back-up voordat deze de server verlaat. Zonder de wachtwoordzin kan geen back-up worden hersteld: bewaar deze buiten de server, bijvoorbeeld in een wachtwoordmanager.</value></data>
+  <data name="Enter the access key and the passphrase first." xml:space="preserve"><value>Voer eerst de toegangssleutel en de wachtwoordzin in.</value></data>
+  <data name="Guide" xml:space="preserve"><value>Handleiding</value></data>
+  <data name="If a backup fails, all admins get an email (Settings, notifications: &quot;Automatic backup failed&quot;)." xml:space="preserve"><value>Als een back-up mislukt, ontvangen alle beheerders een e-mail (Instellingen, meldingen: "Automatische back-up mislukt").</value></data>
+  <data name="In the Azure portal, open a storage account (or create one: &quot;Storage accounts&quot;, &quot;Create&quot;, standard settings are enough; Redundancy &quot;LRS&quot; is the cheapest)." xml:space="preserve"><value>Open in de Azure Portal een opslagaccount (of maak er een: "Opslagaccounts", "Maken", standaardinstellingen volstaan; redundantie "LRS" is het goedkoopst).</value></data>
+  <data name="In the storage account, open &quot;Security + networking&quot;, &quot;Access keys&quot;, and copy the &quot;Connection string&quot; of key1." xml:space="preserve"><value>Open in het opslagaccount "Security + networking", "Toegangssleutels" en kopieer de "Verbindingsreeks" van key1.</value></data>
+  <data name="Instead of the connection string, a SAS URL of the storage account or of one container works too (permissions: read, write, create, list, delete). It can be limited in time and revoked without changing the account keys." xml:space="preserve"><value>In plaats van de verbindingsreeks werkt ook een SAS URL van het opslagaccount of van één container (machtigingen: lezen, schrijven, maken, weergeven, verwijderen). Deze kan in tijd worden beperkt en worden ingetrokken zonder de accountsleutels te wijzigen.</value></data>
+  <data name="Last backup" xml:space="preserve"><value>Laatste back-up</value></data>
+  <data name="Manual backup" xml:space="preserve"><value>Handmatige back-up</value></data>
+  <data name="Next backup" xml:space="preserve"><value>Volgende back-up</value></data>
+  <data name="No access key is stored." xml:space="preserve"><value>Er is geen toegangssleutel opgeslagen.</value></data>
+  <data name="No backups in the container yet." xml:space="preserve"><value>Nog geen back-ups in de container.</value></data>
+  <data name="None yet. The server creates one before every restore." xml:space="preserve"><value>Nog geen. De server maakt er een vóór elk herstel.</value></data>
+  <data name="Not set up" xml:space="preserve"><value>Niet ingesteld</value></data>
+  <data name="OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Passphrase (at least 12 characters)" xml:space="preserve"><value>Wachtwoordzin (minimaal 12 tekens)</value></data>
+  <data name="Password for the key ring, or the passphrase of an automatic backup" xml:space="preserve"><value>Wachtwoord voor de sleutelbos, of de wachtwoordzin van een automatische back-up</value></data>
+  <data name="Paste it above as the access key, choose a passphrase of at least 12 characters and note it in your password manager." xml:space="preserve"><value>Plak deze hierboven als toegangssleutel, kies een wachtwoordzin van minimaal 12 tekens en noteer die in uw wachtwoordmanager.</value></data>
+  <data name="Recommended in the storage account: &quot;Data protection&quot;, soft delete for blobs (for example 14 days), so a deleted backup can be recovered." xml:space="preserve"><value>Aanbevolen in het opslagaccount: "Gegevensbescherming", voorlopig verwijderen voor blobs (bijvoorbeeld 14 dagen), zodat een verwijderde back-up kan worden teruggehaald.</value></data>
+  <data name="Restore: &quot;Backups in Azure&quot; restores a backup directly with the stored passphrase. On a new server, first create the admin account, enter the same access key and passphrase here, then restore." xml:space="preserve"><value>Herstel: "Back-ups in Azure" herstelt een back-up direct met de opgeslagen wachtwoordzin. Maak op een nieuwe server eerst het beheerdersaccount aan, voer hier dezelfde toegangssleutel en wachtwoordzin in en herstel daarna.</value></data>
+  <data name="Running" xml:space="preserve"><value>Actief</value></data>
+  <data name="Safety backups" xml:space="preserve"><value>Veiligheidskopieën</value></data>
+  <data name="Saved. The schedule stays off until an access key and a passphrase are set." xml:space="preserve"><value>Opgeslagen. De planning blijft uitgeschakeld totdat een toegangssleutel en een wachtwoordzin zijn ingesteld.</value></data>
+  <data name="Sections" xml:space="preserve"><value>Secties</value></data>
+  <data name="Storage account" xml:space="preserve"><value>Opslagaccount</value></data>
+  <data name="Stored; leave empty to keep it" xml:space="preserve"><value>Opgeslagen; laat leeg om de waarde te behouden</value></data>
+  <data name="The access key is neither a connection string nor a SAS URL of the storage account." xml:space="preserve"><value>De toegangssleutel is geen verbindingsreeks en ook geen SAS URL van het opslagaccount.</value></data>
+  <data name="The backup could not be downloaded." xml:space="preserve"><value>De back-up kon niet worden gedownload.</value></data>
+  <data name="The backup started. Reload the page in a minute to see the result." xml:space="preserve"><value>De back-up is gestart. Laad de pagina over een minuut opnieuw om het resultaat te zien.</value></data>
+  <data name="The connection failed: {0}" xml:space="preserve"><value>De verbinding is mislukt: {0}</value></data>
+  <data name="The files are encrypted with the passphrase. A downloaded file can be restored under &quot;Restore&quot; with that passphrase." xml:space="preserve"><value>De bestanden zijn versleuteld met de wachtwoordzin. Een gedownload bestand kan onder "Herstellen" met die wachtwoordzin worden hersteld.</value></data>
+  <data name="The list could not be loaded: {0}" xml:space="preserve"><value>De lijst kon niet worden geladen: {0}</value></data>
+  <data name="The passphrase is wrong or the file is damaged." xml:space="preserve"><value>De wachtwoordzin is onjuist of het bestand is beschadigd.</value></data>
+  <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>De wachtwoordzin moet minimaal 12 tekens bevatten.</value></data>
+  <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Deze back-up is versleuteld. Voer de wachtwoordzin ervan in.</value></data>
+  <data name="Weekdays" xml:space="preserve"><value>Weekdagen</value></data>
 </root>

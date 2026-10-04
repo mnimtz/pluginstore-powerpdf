@@ -14,7 +14,17 @@ else if (Model.SigningKeyId.Length > 0)
     <p style="font-size:.82rem;color:var(--tun-slate)">@L["Package signing key"]: <code>@Model.SigningKeyId</code></p>
 }
 <p class="lead">@L["Instance settings; values are stored on the server and take effect immediately."]</p>
-<p style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn small secondary" href="/Admin/Backup">@L["Backup and restore"]</a> <a class="btn small secondary" href="/Admin/Categories">@L["Categories"]</a> <a class="btn small secondary" href="#privacy">@L["IP address logging (reports)"]</a> <a class="btn small secondary" href="#ai">@L["AI assistant (optional)"]</a></p>
+
+<div class="report-layout">
+<nav class="report-nav" aria-label="@L["Sections"]">
+    @foreach (var (key, label) in AddonStore.Web.Pages.Admin.SettingsModel.Views)
+    {
+        <a href="@Url.Page("/Admin/Settings", new { view = key == "server" ? null : key })" class="@(Model.View == key ? "active" : "")" aria-current="@(Model.View == key ? "page" : null)">@L[label]</a>
+    }
+    <a href="/Admin/Backup">@L["Backup and restore"] →</a>
+    <a href="/Admin/Categories">@L["Categories"] →</a>
+</nav>
+<div class="report-main">
 
 @if (Model.Notice is not null)
 {
@@ -26,6 +36,8 @@ else if (Model.SigningKeyId.Length > 0)
     </div>
 }
 
+@if (Model.View == "email")
+{
 <div class="card" style="max-width:560px">
     <h2 style="margin-top:0">@L["Email notifications (Resend)"]</h2>
     <form method="post" asp-page-handler="Email" class="stack" style="max-width:none">
@@ -46,7 +58,10 @@ else if (Model.SigningKeyId.Length > 0)
     </form>
     <p style="font-size:.82rem;color:var(--tun-slate)">@L["Without a verified sender domain, Resend only delivers to the email address of the Resend account owner."]</p>
 </div>
+}
 
+@if (Model.View == "notifications")
+{
 <div class="card" style="max-width:760px">
     <h2 style="margin-top:0">@L["Notifications"]</h2>
     <p style="font-size:.88rem;color:var(--tun-slate)">@L["Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log."]</p>
@@ -70,7 +85,10 @@ else if (Model.SigningKeyId.Length > 0)
         <button type="submit" class="btn cta" style="margin-top:12px">@L["Save"]</button>
     </form>
 </div>
+}
 
+@if (Model.View == "server")
+{
 <div class="card" style="max-width:560px">
     <h2 style="margin-top:0">@L["Server"]</h2>
     <form method="post" asp-page-handler="Server" class="stack" style="max-width:none">
@@ -109,7 +127,10 @@ else if (Model.SigningKeyId.Length > 0)
         <button type="submit" class="btn cta">@L["Save"]</button>
     </form>
 </div>
+}
 
+@if (Model.View == "ai")
+{
 <div class="card" style="max-width:760px" id="ai">
     <h2 style="margin-top:0">@L["AI assistant (optional)"]</h2>
     <p style="font-size:.88rem;color:var(--tun-slate)">@L["Sorts problem reports, prepares a review aid for new versions and lets users search for add-ons by describing what they need. Off by default; everything works without it."]</p>
@@ -192,7 +213,10 @@ else if (Model.SigningKeyId.Length > 0)
     }
     <p style="font-size:.82rem;color:var(--tun-slate)">@L["Data sent to the provider: add-on texts from the catalog, the text of problem reports, search queries, manifests and file lists of new versions, and only with the option above changed source code lines. Never sent: email addresses, IP addresses, log excerpts, user accounts. Check with your data protection team before switching it on."]</p>
 </div>
+}
 
+@if (Model.View == "privacy")
+{
 <div class="card" style="max-width:760px" id="privacy">
     <h2 style="margin-top:0">@L["IP address logging (reports)"]</h2>
     <p style="font-size:.88rem;color:var(--tun-slate)">@L["Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports."]</p>
@@ -258,4 +282,8 @@ else if (Model.SigningKeyId.Length > 0)
             <button type="submit" class="btn small danger">@L["Delete all stored IP addresses"]</button>
         </form>
     }
+</div>
+}
+
+</div>
 </div>

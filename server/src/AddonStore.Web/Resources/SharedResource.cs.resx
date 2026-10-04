@@ -676,4 +676,57 @@
   <data name="Previous" xml:space="preserve"><value>Předchozí</value></data>
   <data name="Next" xml:space="preserve"><value>Další</value></data>
   <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>Nejnovějších {0} z {1} požadavků; export CSV obsahuje všechny.</value></data>
+  <data name="A backup is already running." xml:space="preserve"><value>Zálohování již probíhá.</value></data>
+  <data name="AI assistant" xml:space="preserve"><value>Asistent AI</value></data>
+  <data name="Access key (connection string or SAS URL)" xml:space="preserve"><value>Přístupový klíč (připojovací řetězec nebo SAS URL)</value></data>
+  <data name="Automatic backup" xml:space="preserve"><value>Automatické zálohování</value></data>
+  <data name="Automatic backup failed" xml:space="preserve"><value>Automatické zálohování selhalo</value></data>
+  <data name="Automatic backup to Azure Blob Storage" xml:space="preserve"><value>Automatické zálohování do Azure Blob Storage</value></data>
+  <data name="Back up automatically on the selected days" xml:space="preserve"><value>Automaticky zálohovat ve vybrané dny</value></data>
+  <data name="Back up now" xml:space="preserve"><value>Zálohovat nyní</value></data>
+  <data name="Backup file (.zip, or .psbak from the automatic backup)" xml:space="preserve"><value>Soubor zálohy (.zip nebo .psbak z automatického zálohování)</value></data>
+  <data name="Backups in Azure" xml:space="preserve"><value>Zálohy v Azure</value></data>
+  <data name="Backups to keep" xml:space="preserve"><value>Počet uchovávaných záloh</value></data>
+  <data name="Choose time and weekdays, switch on the automatic backup and save. &quot;Back up now&quot; makes a first backup right away." xml:space="preserve"><value>Zvolte čas a dny v týdnu, zapněte automatické zálohování a uložte. "Zálohovat nyní" ihned vytvoří první zálohu.</value></data>
+  <data name="Click &quot;Save&quot; and then &quot;Test connection&quot;. The store creates the container by itself." xml:space="preserve"><value>Klikněte na "Uložit" a potom na "Otestovat připojení". Store vytvoří kontejner sám.</value></data>
+  <data name="Connection works: {0}" xml:space="preserve"><value>Připojení funguje: {0}</value></data>
+  <data name="Container" xml:space="preserve"><value>Kontejner</value></data>
+  <data name="Container names use 3 to 63 lower-case letters, digits and hyphens." xml:space="preserve"><value>Názvy kontejnerů obsahují 3 až 63 malých písmen, číslic a spojovníků.</value></data>
+  <data name="Created automatically if it does not exist." xml:space="preserve"><value>Pokud neexistuje, vytvoří se automaticky.</value></data>
+  <data name="Encrypts every backup before it leaves the server. Without it a backup cannot be restored: keep it outside the server, for example in a password manager." xml:space="preserve"><value>Zašifruje každou zálohu dříve, než opustí server. Bez heslové fráze nelze zálohu obnovit: uchovávejte ji mimo server, například ve správci hesel.</value></data>
+  <data name="Enter the access key and the passphrase first." xml:space="preserve"><value>Nejprve zadejte přístupový klíč a heslovou frázi.</value></data>
+  <data name="Guide" xml:space="preserve"><value>Návod</value></data>
+  <data name="If a backup fails, all admins get an email (Settings, notifications: &quot;Automatic backup failed&quot;)." xml:space="preserve"><value>Pokud zálohování selže, všichni správci obdrží e-mail (Nastavení, oznámení: "Automatické zálohování selhalo").</value></data>
+  <data name="In the Azure portal, open a storage account (or create one: &quot;Storage accounts&quot;, &quot;Create&quot;, standard settings are enough; Redundancy &quot;LRS&quot; is the cheapest)." xml:space="preserve"><value>Na webu Azure Portal otevřete účet úložiště (nebo ho vytvořte: "Účty úložiště", "Vytvořit", standardní nastavení stačí; redundance "LRS" je nejlevnější).</value></data>
+  <data name="In the storage account, open &quot;Security + networking&quot;, &quot;Access keys&quot;, and copy the &quot;Connection string&quot; of key1." xml:space="preserve"><value>V účtu úložiště otevřete "Security + networking", "Přístupové klíče" a zkopírujte "Připojovací řetězec" klíče key1.</value></data>
+  <data name="Instead of the connection string, a SAS URL of the storage account or of one container works too (permissions: read, write, create, list, delete). It can be limited in time and revoked without changing the account keys." xml:space="preserve"><value>Místo připojovacího řetězce funguje i SAS URL účtu úložiště nebo jednoho kontejneru (oprávnění: čtení, zápis, vytváření, výpis, odstranění). Lze ji časově omezit a odvolat bez změny klíčů účtu.</value></data>
+  <data name="Last backup" xml:space="preserve"><value>Poslední záloha</value></data>
+  <data name="Manual backup" xml:space="preserve"><value>Ruční zálohování</value></data>
+  <data name="Next backup" xml:space="preserve"><value>Další záloha</value></data>
+  <data name="No access key is stored." xml:space="preserve"><value>Není uložen žádný přístupový klíč.</value></data>
+  <data name="No backups in the container yet." xml:space="preserve"><value>V kontejneru zatím nejsou žádné zálohy.</value></data>
+  <data name="None yet. The server creates one before every restore." xml:space="preserve"><value>Zatím žádné. Server ji vytvoří před každým obnovením.</value></data>
+  <data name="Not set up" xml:space="preserve"><value>Nenastaveno</value></data>
+  <data name="OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Passphrase (at least 12 characters)" xml:space="preserve"><value>Heslová fráze (alespoň 12 znaků)</value></data>
+  <data name="Password for the key ring, or the passphrase of an automatic backup" xml:space="preserve"><value>Heslo ke svazku klíčů nebo heslová fráze automatické zálohy</value></data>
+  <data name="Paste it above as the access key, choose a passphrase of at least 12 characters and note it in your password manager." xml:space="preserve"><value>Vložte jej výše jako přístupový klíč, zvolte heslovou frázi o délce alespoň 12 znaků a poznamenejte si ji ve správci hesel.</value></data>
+  <data name="Recommended in the storage account: &quot;Data protection&quot;, soft delete for blobs (for example 14 days), so a deleted backup can be recovered." xml:space="preserve"><value>Doporučeno v účtu úložiště: "Ochrana dat", obnovitelné odstranění pro objekty blob (například 14 dní), aby bylo možné smazanou zálohu obnovit.</value></data>
+  <data name="Restore: &quot;Backups in Azure&quot; restores a backup directly with the stored passphrase. On a new server, first create the admin account, enter the same access key and passphrase here, then restore." xml:space="preserve"><value>Obnovení: "Zálohy v Azure" obnoví zálohu přímo pomocí uložené heslové fráze. Na novém serveru nejprve vytvořte účet správce, zadejte zde stejný přístupový klíč a heslovou frázi a poté obnovte.</value></data>
+  <data name="Running" xml:space="preserve"><value>Probíhá</value></data>
+  <data name="Safety backups" xml:space="preserve"><value>Bezpečnostní kopie</value></data>
+  <data name="Saved. The schedule stays off until an access key and a passphrase are set." xml:space="preserve"><value>Uloženo. Plán zůstane vypnutý, dokud nebude nastaven přístupový klíč a heslová fráze.</value></data>
+  <data name="Sections" xml:space="preserve"><value>Oddíly</value></data>
+  <data name="Storage account" xml:space="preserve"><value>Účet úložiště</value></data>
+  <data name="Stored; leave empty to keep it" xml:space="preserve"><value>Uloženo; ponechte prázdné, chcete-li hodnotu zachovat</value></data>
+  <data name="The access key is neither a connection string nor a SAS URL of the storage account." xml:space="preserve"><value>Přístupový klíč není připojovací řetězec ani SAS URL účtu úložiště.</value></data>
+  <data name="The backup could not be downloaded." xml:space="preserve"><value>Zálohu se nepodařilo stáhnout.</value></data>
+  <data name="The backup started. Reload the page in a minute to see the result." xml:space="preserve"><value>Zálohování bylo spuštěno. Za minutu stránku znovu načtěte, abyste viděli výsledek.</value></data>
+  <data name="The connection failed: {0}" xml:space="preserve"><value>Připojení se nezdařilo: {0}</value></data>
+  <data name="The files are encrypted with the passphrase. A downloaded file can be restored under &quot;Restore&quot; with that passphrase." xml:space="preserve"><value>Soubory jsou zašifrovány heslovou frází. Stažený soubor lze obnovit v části "Obnovit" pomocí této heslové fráze.</value></data>
+  <data name="The list could not be loaded: {0}" xml:space="preserve"><value>Seznam se nepodařilo načíst: {0}</value></data>
+  <data name="The passphrase is wrong or the file is damaged." xml:space="preserve"><value>Heslová fráze je nesprávná nebo je soubor poškozený.</value></data>
+  <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>Heslová fráze musí mít alespoň 12 znaků.</value></data>
+  <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Tato záloha je zašifrovaná. Zadejte její heslovou frázi.</value></data>
+  <data name="Weekdays" xml:space="preserve"><value>Dny v týdnu</value></data>
 </root>

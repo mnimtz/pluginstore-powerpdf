@@ -676,4 +676,57 @@
   <data name="Previous" xml:space="preserve"><value>Előző</value></data>
   <data name="Next" xml:space="preserve"><value>Következő</value></data>
   <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>A legutóbbi {0} kérés ({1}-ből); a CSV-export mindet tartalmazza.</value></data>
+  <data name="A backup is already running." xml:space="preserve"><value>Már fut egy biztonsági mentés.</value></data>
+  <data name="AI assistant" xml:space="preserve"><value>MI-asszisztens</value></data>
+  <data name="Access key (connection string or SAS URL)" xml:space="preserve"><value>Hozzáférési kulcs (kapcsolati sztring vagy SAS URL)</value></data>
+  <data name="Automatic backup" xml:space="preserve"><value>Automatikus biztonsági mentés</value></data>
+  <data name="Automatic backup failed" xml:space="preserve"><value>Az automatikus biztonsági mentés sikertelen</value></data>
+  <data name="Automatic backup to Azure Blob Storage" xml:space="preserve"><value>Automatikus biztonsági mentés az Azure Blob Storage-ba</value></data>
+  <data name="Back up automatically on the selected days" xml:space="preserve"><value>Automatikus biztonsági mentés a kiválasztott napokon</value></data>
+  <data name="Back up now" xml:space="preserve"><value>Biztonsági mentés most</value></data>
+  <data name="Backup file (.zip, or .psbak from the automatic backup)" xml:space="preserve"><value>Biztonsági mentés fájlja (.zip, vagy .psbak az automatikus biztonsági mentésből)</value></data>
+  <data name="Backups in Azure" xml:space="preserve"><value>Biztonsági mentések az Azure-ban</value></data>
+  <data name="Backups to keep" xml:space="preserve"><value>Megőrzendő biztonsági mentések</value></data>
+  <data name="Choose time and weekdays, switch on the automatic backup and save. &quot;Back up now&quot; makes a first backup right away." xml:space="preserve"><value>Válassza ki az időpontot és a hét napjait, kapcsolja be az automatikus biztonsági mentést, majd mentse a beállításokat. A "Biztonsági mentés most" azonnal elkészít egy első biztonsági mentést.</value></data>
+  <data name="Click &quot;Save&quot; and then &quot;Test connection&quot;. The store creates the container by itself." xml:space="preserve"><value>Kattintson a "Mentés", majd a "Kapcsolat tesztelése" gombra. A Store maga hozza létre a tárolót.</value></data>
+  <data name="Connection works: {0}" xml:space="preserve"><value>A kapcsolat működik: {0}</value></data>
+  <data name="Container" xml:space="preserve"><value>Tároló</value></data>
+  <data name="Container names use 3 to 63 lower-case letters, digits and hyphens." xml:space="preserve"><value>A tárolók neve 3–63 kisbetűből, számjegyből és kötőjelből állhat.</value></data>
+  <data name="Created automatically if it does not exist." xml:space="preserve"><value>Ha nem létezik, automatikusan létrejön.</value></data>
+  <data name="Encrypts every backup before it leaves the server. Without it a backup cannot be restored: keep it outside the server, for example in a password manager." xml:space="preserve"><value>Minden biztonsági mentést titkosít, mielőtt az elhagyná a kiszolgálót. A jelmondat nélkül a biztonsági mentés nem állítható vissza: tárolja a kiszolgálón kívül, például egy jelszókezelőben.</value></data>
+  <data name="Enter the access key and the passphrase first." xml:space="preserve"><value>Először adja meg a hozzáférési kulcsot és a jelmondatot.</value></data>
+  <data name="Guide" xml:space="preserve"><value>Útmutató</value></data>
+  <data name="If a backup fails, all admins get an email (Settings, notifications: &quot;Automatic backup failed&quot;)." xml:space="preserve"><value>Ha egy biztonsági mentés sikertelen, minden rendszergazda e-mailt kap (Beállítások, értesítések: "Az automatikus biztonsági mentés sikertelen").</value></data>
+  <data name="In the Azure portal, open a storage account (or create one: &quot;Storage accounts&quot;, &quot;Create&quot;, standard settings are enough; Redundancy &quot;LRS&quot; is the cheapest)." xml:space="preserve"><value>Az Azure Portalon nyisson meg egy tárfiókot (vagy hozzon létre egyet: "Tárfiókok", "Létrehozás", a szokásos beállítások elegendők; az "LRS" redundancia a legolcsóbb).</value></data>
+  <data name="In the storage account, open &quot;Security + networking&quot;, &quot;Access keys&quot;, and copy the &quot;Connection string&quot; of key1." xml:space="preserve"><value>A tárfiókban nyissa meg a "Security + networking", "Hozzáférési kulcsok" részt, és másolja ki a key1 "Kapcsolati sztring" értékét.</value></data>
+  <data name="Instead of the connection string, a SAS URL of the storage account or of one container works too (permissions: read, write, create, list, delete). It can be limited in time and revoked without changing the account keys." xml:space="preserve"><value>A kapcsolati sztring helyett a tárfiók vagy egy tároló SAS URL-je is működik (engedélyek: olvasás, írás, létrehozás, listázás, törlés). Időben korlátozható, és a fiókkulcsok módosítása nélkül visszavonható.</value></data>
+  <data name="Last backup" xml:space="preserve"><value>Utolsó biztonsági mentés</value></data>
+  <data name="Manual backup" xml:space="preserve"><value>Manuális biztonsági mentés</value></data>
+  <data name="Next backup" xml:space="preserve"><value>Következő biztonsági mentés</value></data>
+  <data name="No access key is stored." xml:space="preserve"><value>Nincs tárolt hozzáférési kulcs.</value></data>
+  <data name="No backups in the container yet." xml:space="preserve"><value>A tárolóban még nincs biztonsági mentés.</value></data>
+  <data name="None yet. The server creates one before every restore." xml:space="preserve"><value>Még nincs. A kiszolgáló minden visszaállítás előtt készít egyet.</value></data>
+  <data name="Not set up" xml:space="preserve"><value>Nincs beállítva</value></data>
+  <data name="OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Passphrase (at least 12 characters)" xml:space="preserve"><value>Jelmondat (legalább 12 karakter)</value></data>
+  <data name="Password for the key ring, or the passphrase of an automatic backup" xml:space="preserve"><value>A kulcskarika jelszava, vagy egy automatikus biztonsági mentés jelmondata</value></data>
+  <data name="Paste it above as the access key, choose a passphrase of at least 12 characters and note it in your password manager." xml:space="preserve"><value>Illessze be fent hozzáférési kulcsként, válasszon legalább 12 karakteres jelmondatot, és jegyezze fel a jelszókezelőjében.</value></data>
+  <data name="Recommended in the storage account: &quot;Data protection&quot;, soft delete for blobs (for example 14 days), so a deleted backup can be recovered." xml:space="preserve"><value>Ajánlott a tárfiókban: "Adatvédelem", helyreállítható törlés a blobokhoz (például 14 nap), így egy törölt biztonsági mentés visszaállítható.</value></data>
+  <data name="Restore: &quot;Backups in Azure&quot; restores a backup directly with the stored passphrase. On a new server, first create the admin account, enter the same access key and passphrase here, then restore." xml:space="preserve"><value>Visszaállítás: a "Biztonsági mentések az Azure-ban" közvetlenül a tárolt jelmondattal állít vissza egy biztonsági mentést. Új kiszolgálón először hozza létre a rendszergazdai fiókot, adja meg itt ugyanazt a hozzáférési kulcsot és jelmondatot, majd végezze el a visszaállítást.</value></data>
+  <data name="Running" xml:space="preserve"><value>Fut</value></data>
+  <data name="Safety backups" xml:space="preserve"><value>Biztonsági másolatok</value></data>
+  <data name="Saved. The schedule stays off until an access key and a passphrase are set." xml:space="preserve"><value>Mentve. Az ütemezés kikapcsolva marad, amíg nincs megadva hozzáférési kulcs és jelmondat.</value></data>
+  <data name="Sections" xml:space="preserve"><value>Szakaszok</value></data>
+  <data name="Storage account" xml:space="preserve"><value>Tárfiók</value></data>
+  <data name="Stored; leave empty to keep it" xml:space="preserve"><value>Tárolva; hagyja üresen a megtartásához</value></data>
+  <data name="The access key is neither a connection string nor a SAS URL of the storage account." xml:space="preserve"><value>A hozzáférési kulcs nem a tárfiók kapcsolati sztringje, és nem is SAS URL-je.</value></data>
+  <data name="The backup could not be downloaded." xml:space="preserve"><value>A biztonsági mentést nem sikerült letölteni.</value></data>
+  <data name="The backup started. Reload the page in a minute to see the result." xml:space="preserve"><value>A biztonsági mentés elindult. Egy perc múlva töltse újra az oldalt az eredmény megtekintéséhez.</value></data>
+  <data name="The connection failed: {0}" xml:space="preserve"><value>A kapcsolódás sikertelen: {0}</value></data>
+  <data name="The files are encrypted with the passphrase. A downloaded file can be restored under &quot;Restore&quot; with that passphrase." xml:space="preserve"><value>A fájlok a jelmondattal titkosítottak. A letöltött fájl a "Visszaállítás" alatt ezzel a jelmondattal állítható vissza.</value></data>
+  <data name="The list could not be loaded: {0}" xml:space="preserve"><value>A lista nem tölthető be: {0}</value></data>
+  <data name="The passphrase is wrong or the file is damaged." xml:space="preserve"><value>A jelmondat hibás, vagy a fájl sérült.</value></data>
+  <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>A jelmondatnak legalább 12 karakterből kell állnia.</value></data>
+  <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Ez a biztonsági mentés titkosított. Adja meg a jelmondatát.</value></data>
+  <data name="Weekdays" xml:space="preserve"><value>A hét napjai</value></data>
 </root>

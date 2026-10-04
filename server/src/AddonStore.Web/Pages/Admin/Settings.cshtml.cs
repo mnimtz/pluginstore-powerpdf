@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.DataProtection;
 using AddonStore.Web.Data;
 using AddonStore.Web.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AddonStore.Web.Pages.Admin;
@@ -23,6 +24,13 @@ public class SettingsModel : PageModel
     public string SourcePolicy { get; private set; } = "required";
     public bool FourEyes { get; private set; }
     public int ApproverCount { get; private set; }
+    /// <summary>Sections of the left navigation (S0.18.0); one is shown at a time.</summary>
+    public static readonly (string Key, string Label)[] Views =
+    {
+        ("server", "Server"), ("email", "Email"), ("notifications", "Notifications"),
+        ("ai", "AI assistant"), ("privacy", "IP address logging"),
+    };
+    [BindProperty(SupportsGet = true)] public string? View { get; set; }
     public string? Notice { get; private set; }
     public string NoticeKind { get; private set; } = "ok";
     public string? TestDetail { get; private set; }
@@ -256,6 +264,13 @@ public class SettingsModel : PageModel
 
     private async Task LoadAsync()
     {
+        // After a POST the section follows from the handler (?handler=AiTest -> ai).
+        if (!Views.Any(v => v.Key == View))
+        {
+            var h = (string?)Request.Query["handler"] ?? "";
+            View = h.StartsWith("Ip") ? "privacy" : h.StartsWith("Ai") ? "ai" : h is "Email" or "TestMail" ? "email"
+                 : h == "Notifications" ? "notifications" : "server";
+        }
         Ai = await _ai.ConfigAsync();
         OfferFake = _env.IsDevelopment();
         AiModels = await _ai.StoredModelsAsync(Ai.Provider);
