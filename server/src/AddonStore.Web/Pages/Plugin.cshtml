@@ -77,11 +77,11 @@
     </div>
 </div>
 
-<h2>@L["Versions"]</h2>
+<h2 id="versions">@L["Versions"]</h2>
 <div class="table-wrap">
 <table>
     <tr><th>@L["Version"]</th><th>@L["Status"]</th><th>@L["Changelog"]</th><th>@L["Submitted"]</th><th>@L["Downloads"]</th><th style="text-align:right">@L["Actions"]</th></tr>
-    @foreach (var v in Model.Versions)
+    @foreach (var v in AddonStore.Web.Services.Paging.Items(Model.Versions, ViewContext.HttpContext.Request, "versions"))
     {
         <tr>
             <td><b>@v.Version</b></td>
@@ -181,6 +181,7 @@
     }
 </table>
 </div>
+<partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("versions", Model.Versions.Count)' />
 
 @{
     var ratingTotal = Model.RatingDist.Sum();
@@ -208,7 +209,7 @@
 @if (Model.IsOwner || Model.IsAdmin)
 {
     <div class="card">
-        <h3 style="margin-top:0">@L["Problem reports and comments"]</h3>
+        <h3 style="margin-top:0" id="feedback">@L["Problem reports and comments"]</h3>
         <p class="muted small">@L["Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/<id>/feedback."]</p>
         @if (Model.Feedbacks.Count == 0)
         {
@@ -219,7 +220,7 @@
             <div class="table-wrap">
             <table>
                 <tr><th>@L["Received"]</th><th>@L["Type"]</th><th>@L["Version"]</th><th>@L["Message"]</th><th>@L["Status"]</th></tr>
-                @foreach (var f in Model.Feedbacks)
+                @foreach (var f in AddonStore.Web.Services.Paging.Items(Model.Feedbacks, ViewContext.HttpContext.Request, "feedback"))
                 {
                     <tr>
                         <td class="small">@Time.Fmt(f.CreatedAt)@if (f.Country != "") { <br /><span class="muted">@f.Country</span> }</td>
@@ -269,6 +270,7 @@
                 }
             </table>
             </div>
+            <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("feedback", Model.Feedbacks.Count)' />
         }
     </div>
 }

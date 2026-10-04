@@ -22,10 +22,10 @@
 }
 else
 {
-    <div class="table-wrap">
+    <div class="table-wrap" id="customers">
     <table>
         <tr><th>@L["Customer"]</th><th>@L["Contact"]</th><th>@L["Deliveries"]</th><th>@L["Status"]</th><th>@L["Last activity"]</th><th>@L["Created by"]</th></tr>
-        @foreach (var r in Model.Rows)
+        @foreach (var r in AddonStore.Web.Services.Paging.Items(Model.Rows, ViewContext.HttpContext.Request, "customers"))
         {
             <tr>
                 <td><a href="/Customer?id=@r.Customer.Id"><b>@r.Customer.Name</b></a></td>
@@ -38,6 +38,7 @@ else
         }
     </table>
     </div>
+    <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("customers", Model.Rows.Count)' />
 }
 
 @if (Model.CanCreate)

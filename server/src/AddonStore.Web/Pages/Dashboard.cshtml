@@ -61,14 +61,14 @@
 }
 else
 {
-    <div class="table-wrap">
+    <div class="table-wrap" id="plugins">
     <table>
         <tr>
             <th>@L["Plug-in"]</th>
             @if (isAdmin) { <th>@L["Owner"]</th> }
             <th>@L["Live"]</th><th>@L["Status"]</th><th>@L["Downloads"]</th><th>@L["Last activity"]</th><th></th>
         </tr>
-        @foreach (var r in Model.Visible)
+        @foreach (var r in AddonStore.Web.Services.Paging.Items(Model.Visible, ViewContext.HttpContext.Request, "plugins"))
         {
             <tr>
                 <td><b style="color:var(--tun-navy)">@r.Name</b><br /><span style="color:var(--tun-slate);font-size:.8rem">@r.Pkg.Id</span></td>
@@ -95,4 +95,5 @@ else
         }
     </table>
     </div>
+    <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("plugins", Model.Visible.Count)' />
 }

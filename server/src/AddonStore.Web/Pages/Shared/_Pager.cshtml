@@ -1,0 +1,44 @@
+@model AddonStore.Web.Services.PagerModel
+@* Rows-per-page choice and page navigation under a long list (S0.17.2); keeps every other query value. *@
+@using AddonStore.Web.Services
+@{
+    var req = ViewContext.HttpContext.Request;
+    var size = Paging.Size(req);
+    var total = Model.Total;
+    var ci = System.Globalization.CultureInfo.CurrentCulture;
+    string Url(int page, int? newSize = null)
+    {
+        var q = req.Query.ToDictionary(x => x.Key, x => x.Value.ToString());
+        if (newSize is { } ns)
+        {
+            if (ns == Paging.Sizes[0]) q.Remove("size"); else q["size"] = ns.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            q.Remove("p_" + Model.Key);
+        }
+        else if (page <= 1) q.Remove("p_" + Model.Key);
+        else q["p_" + Model.Key] = page.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        var qs = Microsoft.AspNetCore.Http.QueryString.Create(q.Select(x => new KeyValuePair<string, string?>(x.Key, x.Value)));
+        return req.PathBase + req.Path + qs + "#" + Model.Key;
+    }
+}
+@if (total > Paging.Sizes[0])
+{
+    var page = Paging.Page(req, Model.Key, total, size);
+    var pages = Paging.PageCount(total, size);
+    var first = (page - 1) * size + 1;
+    var last = Math.Min(total, page * size);
+    <nav class="pager no-print" aria-label="@L["Pages"]">
+        <span class="muted small">@L["{0} to {1} of {2}", first.ToString("N0", ci), last.ToString("N0", ci), total.ToString("N0", ci)]</span>
+        <span class="pager-sizes small">@L["Rows per page"]:
+            @foreach (var sz in Paging.Sizes)
+            {
+                if (sz == size) { <b aria-current="true">@sz</b> }
+                else { <a href="@Url(1, sz)">@sz</a> }
+            }
+        </span>
+        <span class="pager-pages">
+            @if (page > 1) { <a class="btn small secondary" href="@Url(page - 1)" rel="prev">‹ @L["Previous"]</a> }
+            <span class="small">@L["Page {0} of {1}", page, pages]</span>
+            @if (page < pages) { <a class="btn small secondary" href="@Url(page + 1)" rel="next">@L["Next"] ›</a> }
+        </span>
+    </nav>
+}

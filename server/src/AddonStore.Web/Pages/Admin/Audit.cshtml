@@ -12,7 +12,7 @@
     <button type="submit" class="btn small secondary">@L["Filter"]</button>
 </form>
 
-<table>
+<table id="audit">
     <tr><th>@L["Time"] (@Time.ZoneId)</th><th>@L["Actor"]</th><th>@L["Action"]</th><th>@L["Subject"]</th><th>@L["Details"]</th></tr>
     @foreach (var e in Model.Entries)
     {
@@ -25,3 +25,4 @@
         </tr>
     }
 </table>
+<partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("audit", Model.Total)' />
