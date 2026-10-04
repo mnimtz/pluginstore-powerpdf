@@ -117,6 +117,11 @@ built with the Power PDF Plugin SDK):
   bar (one UAC prompt) and starts Power PDF again, also when the installation
   was cancelled. Helper steps are logged to `%TEMP%\PluginStore.log`, the MSI
   log to `%TEMP%\AddonStoreUpdate.log`.
+- **Ratings, problem reports, screenshots** (client 0.5.0+): stars on every
+  card, the user's own rating (installed add-ons, one per installation; a
+  random install id in HKCU, only a per-package hash reaches the server),
+  "Report a problem" with an optional reply address and log excerpt, and a
+  screenshot strip with enlarged view in the detail panel.
 - **Usage statistics** (client 0.4.2+): the client's user agent carries its
   version, the Power PDF and Windows version and the native architecture
   (x64/arm64), e.g. `AddonStore-PowerPDF/0.4.2 (PowerPDF 15.1.0.555; Windows

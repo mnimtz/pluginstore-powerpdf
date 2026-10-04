@@ -28,6 +28,9 @@ struct PSCatalogEntry
     std::wstring contactEmail;
     std::wstring categoryName;   // localized by the server (TSV column 15)
     std::wstring iconUrl;        // GET /api/packages/{id}/icon (TSV column 16)
+    double rating = 0;           // average stars, 0 = none (TSV column 17, server 0.11+)
+    int ratingCount = 0;         // number of ratings (TSV column 18)
+    int screenshots = 0;         // number of screenshots (TSV column 19)
     std::wstring installedVersion; // filled by the install module, empty = not installed
 };
 

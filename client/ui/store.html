@@ -67,6 +67,29 @@ footer .grow{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .spin{width:30px;height:30px;border-radius:50%;border:3px solid #d6e4f2;border-top-color:var(--blue);animation:r 0.9s linear infinite;margin:0 auto 12px}
 @keyframes r{to{transform:rotate(360deg)}}
 svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.stars{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--slate)}
+.stars i{font-style:normal;letter-spacing:1px;background:linear-gradient(90deg,#FFC600 var(--p),#D9DFE6 var(--p));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stars b{color:var(--navy)}
+.cstars{margin-top:3px}
+.rate{display:flex;align-items:center;gap:10px;margin:14px 0 0;font-size:12px;color:var(--slate);flex-wrap:wrap}
+.rate .st{display:inline-flex}
+.rate button{all:unset;cursor:pointer;font-size:20px;line-height:1;color:#D9DFE6;padding:0 1px}
+.rate button.on{color:#FFC600}
+.rate button:focus-visible{outline:2px solid var(--blue);border-radius:3px}
+.shots{display:flex;gap:10px;overflow-x:auto;margin:14px 0 2px;padding-bottom:6px}
+.shots button{all:unset;cursor:zoom-in;flex:none;width:200px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+.shots button:hover{border-color:var(--blue)}
+.shots img{display:block;width:200px;height:125px;object-fit:cover;background:var(--soft)}
+.shots span{display:block;font-size:11px;color:var(--slate);padding:5px 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.modal.wide{width:min(1100px,94vw)}
+.modal.wide img{display:block;max-width:100%;max-height:70vh;margin:0 auto}
+.form label{display:block;font-size:12px;color:var(--slate);margin:10px 0 4px}
+.form textarea,.form input[type=email]{width:100%;font:inherit;border:1px solid #c9d3df;border-radius:8px;padding:8px 10px;user-select:text}
+.form textarea{min-height:120px;resize:vertical}
+.form .kinds{display:flex;gap:14px;margin-top:4px}
+.form .kinds label,.form .chk{display:flex;gap:6px;align-items:center;margin:0;color:var(--ink);font-size:13px}
+.form .chk{margin-top:10px}
+.form .note{font-size:11.5px;color:var(--slate);margin-top:10px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -102,7 +125,7 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
 <div class="veil" id="veil"><div class="modal" id="modal"></div></div>
 <script>
 "use strict";
-var S = {}, items = [], self = null, sel = null, cat = "", busy = false, locked = false, icons = {};
+var S = {}, items = [], self = null, sel = null, cat = "", busy = false, locked = false, icons = {}, shots = {}, shotsAsked = {};
 var host = window.chrome && window.chrome.webview;
 function post(m) { if (host) host.postMessage(m); }
 function $(id) { return document.getElementById(id); }
@@ -119,6 +142,14 @@ function tile(x, big) {
     t.textContent = x.name.split(/\s+/).map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase();
   }
   return t;
+}
+function stars(avg, count) {
+  if (!count) return null;
+  var w = el("span", "stars"), i = el("i", "", "\u2605\u2605\u2605\u2605\u2605");
+  i.style.setProperty("--p", Math.round(avg / 5 * 100) + "%");
+  w.appendChild(i); w.appendChild(el("b", "", Number(avg).toFixed(1))); w.appendChild(el("span", "", "(" + count + ")"));
+  w.title = fmt(S.ratings, count);
+  return w;
 }
 function pill(x) {
   var s = status(x);
@@ -168,6 +199,7 @@ function render() {
     var b = el("div", "cbody"), n = el("div", "cname");
     n.appendChild(el("span", "", x.name)); var p = pill(x); if (p) n.appendChild(p);
     b.appendChild(n); b.appendChild(el("div", "cdesc", x.description));
+    var cs = stars(x.rating, x.ratingCount); if (cs) { var cw = el("div", "cstars"); cw.appendChild(cs); b.appendChild(cw); }
     c.appendChild(b);
     actionButtons(x, true).forEach(function (a) { c.appendChild(a); });
     c.onclick = function () { sel = x.id; render(); };
@@ -183,8 +215,20 @@ function renderDetail() {
   var h = el("div", "dhead"); h.appendChild(tile(x, true));
   var t = el("div"); t.appendChild(el("div", "dname", x.name));
   t.appendChild(el("div", "dmeta", [x.categoryName || x.category, fmt(S.version, x.version), Math.max(1, Math.round(x.size / 1024)) + " KB"].concat(x.installed && x.installed !== x.version ? [S.colInstalled + ": " + x.installed] : []).join("  ·  ")));
+  var ds = stars(x.rating, x.ratingCount); if (ds) { var dw = el("div", "cstars"); dw.appendChild(ds); t.appendChild(dw); }
   h.appendChild(t); d.appendChild(h);
   d.appendChild(el("div", "ddesc", x.description));
+  if (x.shots > 0 && !shotsAsked[x.id]) { shotsAsked[x.id] = true; post({ cmd: "shots", id: x.id }); }
+  if (shots[x.id] && shots[x.id].length) {
+    var strip = el("div", "shots");
+    shots[x.id].forEach(function (sh) {
+      var b = el("button"); var im = el("img"); im.src = sh.src; im.alt = sh.caption || ""; b.appendChild(im);
+      if (sh.caption) b.appendChild(el("span", "", sh.caption));
+      b.title = S.screenshots || ""; b.onclick = function () { showShot(sh); };
+      strip.appendChild(b);
+    });
+    d.appendChild(strip);
+  }
   if (x.changelog) { var n = el("div", "news"); n.appendChild(el("b", "", fmt(S.whatsNew, x.version))); n.appendChild(document.createTextNode(x.changelog)); d.appendChild(n); }
   if (x.author || x.contact) {
     var w = el("div", "who");
@@ -192,7 +236,25 @@ function renderDetail() {
     if (x.contact) { var a = el("a", "link", x.contact); a.onclick = function () { post({ cmd: "mail", to: x.contact }); }; w.appendChild(a); }
     d.appendChild(w);
   }
-  var acts = el("div", "acts"); actionButtons(x, false).forEach(function (a) { acts.appendChild(a); }); d.appendChild(acts);
+  var acts = el("div", "acts"); actionButtons(x, false).forEach(function (a) { acts.appendChild(a); });
+  var rep = el("button", "btn sec", S.report); rep.onclick = function () { reportForm(x); }; acts.appendChild(rep);
+  d.appendChild(acts);
+  var rate = el("div", "rate");
+  if (x.installed) {
+    rate.appendChild(el("span", "", S.yourRating));
+    var st = el("span", "st");
+    for (var k = 1; k <= 5; k++) (function (n) {
+      var sb = el("button", n <= (x.mine || 0) ? "on" : "", "\u2605");
+      sb.title = n + " / 5"; sb.setAttribute("aria-label", n + " / 5");
+      sb.onclick = function () { post({ cmd: "rate", id: x.id, stars: String(n) }); };
+      st.appendChild(sb);
+    })(k);
+    rate.appendChild(st);
+    if (x.justRated) rate.appendChild(el("span", "", S.rated));
+  } else {
+    rate.appendChild(el("span", "", S.rateHint));
+  }
+  d.appendChild(rate);
   var hint = el("div", "hint");
   hint.innerHTML = '<svg class="i" viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3z"/></svg>';
   hint.appendChild(el("span", "", S.adminNote)); d.appendChild(hint);
@@ -207,7 +269,43 @@ function modal(title, text, buttons) {
   $("veil").classList.add("on");
   var first = a.querySelector("button"); if (first) first.focus();
 }
-function closeModal() { $("veil").classList.remove("on"); }
+function closeModal() { $("veil").classList.remove("on"); $("modal").classList.remove("wide"); }
+function showShot(sh) {
+  var m = $("modal"); m.textContent = ""; m.classList.add("wide");
+  var im = el("img"); im.src = sh.src; im.alt = sh.caption || ""; m.appendChild(im);
+  if (sh.caption) { var p = el("p", "", sh.caption); p.style.marginTop = "8px"; m.appendChild(p); }
+  var a = el("div", "acts"), c = el("button", "btn sec", S.close || "OK"); c.onclick = closeModal; a.appendChild(c); m.appendChild(a);
+  $("veil").classList.add("on"); c.focus();
+}
+function reportForm(x) {
+  if (busy) return;
+  var m = $("modal"); m.textContent = ""; m.classList.remove("wide");
+  m.appendChild(el("h3", "", S.report + ": " + x.name));
+  var f = el("div", "form");
+  var kinds = el("div", "kinds");
+  [["problem", S.reportProblem], ["comment", S.reportComment]].forEach(function (k, i) {
+    var l = el("label"), r = el("input"); r.type = "radio"; r.name = "kind"; r.value = k[0]; r.checked = i === 0;
+    l.appendChild(r); l.appendChild(document.createTextNode(k[1])); kinds.appendChild(l);
+  });
+  f.appendChild(kinds);
+  var lt = el("label", "", S.reportText); var ta = el("textarea"); ta.maxLength = 4000; f.appendChild(lt); f.appendChild(ta);
+  var le = el("label", "", S.reportEmail); var em = el("input"); em.type = "email"; em.maxLength = 200; f.appendChild(le); f.appendChild(em);
+  var lc = el("label", "chk"), cb = el("input"); cb.type = "checkbox"; lc.appendChild(cb); lc.appendChild(document.createTextNode(S.reportLog)); f.appendChild(lc);
+  f.appendChild(el("div", "note", S.reportPrivacy));
+  m.appendChild(f);
+  var a = el("div", "acts");
+  var cancel = el("button", "btn sec", S.cancel); cancel.onclick = closeModal;
+  var send = el("button", "btn", S.send);
+  send.onclick = function () {
+    var text = ta.value.trim();
+    if (text.length < 5) { ta.focus(); return; }
+    var kind = f.querySelector("input[name=kind]:checked").value;
+    busyModal(S.send);
+    post({ cmd: "feedback", id: x.id, kind: kind, message: text, email: em.value.trim(), log: cb.checked ? "1" : "0" });
+  };
+  a.appendChild(cancel); a.appendChild(send); m.appendChild(a);
+  $("veil").classList.add("on"); ta.focus();
+}
 function busyModal(text) { var m = $("modal"); m.textContent = ""; m.appendChild(el("div", "spin")); var p = el("p", "", text); p.style.textAlign = "center"; m.appendChild(p); $("veil").classList.add("on"); }
 function confirmAct(action, x) {
   if (busy) return;
@@ -253,6 +351,11 @@ function apply(m) {
       if (x && status(x) !== "inst" && !locked) confirmAct("install", x);
       else if (!x && m.selectMissing) modal("", m.selectMissing, [{ label: "OK" }]);
     }
+  } else if (m.type === "rated") {
+    items.forEach(function (x) { if (x.id === m.id) { x.rating = m.rating; x.ratingCount = m.ratingCount; x.mine = m.mine; x.justRated = true; } });
+    render();
+  } else if (m.type === "shots") {
+    shots[m.id] = m.items || []; render();
   } else if (m.type === "icon") {
     icons[m.id] = m.data; render();
   } else if (m.type === "result") {

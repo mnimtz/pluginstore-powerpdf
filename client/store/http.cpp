@@ -124,7 +124,8 @@ static const wchar_t* UserAgent()
 
 // Opens the request and receives the response; returns the request handle
 // chain via out-params (caller keeps the session/connect handles alive).
-bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& request, DWORD* status)
+bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& request, DWORD* status,
+          const wchar_t* method = L"GET", const std::string* body = nullptr)
 {
 #ifndef WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY_CONFIG
 #define WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY_CONFIG 4
@@ -140,13 +141,19 @@ bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& reque
     connect = WinHttpConnect(session, u.host.c_str(), u.port, 0);
     if (!connect) return false;
 
-    request = WinHttpOpenRequest(connect, L"GET", u.path.c_str(), NULL,
+    request = WinHttpOpenRequest(connect, method, u.path.c_str(), NULL,
                                  WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES,
                                  u.https ? WINHTTP_FLAG_SECURE : 0);
     if (!request) return false;
 
-    if (!WinHttpSendRequest(request, WINHTTP_NO_ADDITIONAL_HEADERS, 0,
-                            WINHTTP_NO_REQUEST_DATA, 0, 0, 0)) return false;
+    if (body)
+    {
+        static const wchar_t* kJson = L"Content-Type: application/json; charset=utf-8\r\n";
+        if (!WinHttpSendRequest(request, kJson, (DWORD)-1L, (LPVOID)body->data(), (DWORD)body->size(),
+                                (DWORD)body->size(), 0)) return false;
+    }
+    else if (!WinHttpSendRequest(request, WINHTTP_NO_ADDITIONAL_HEADERS, 0,
+                                 WINHTTP_NO_REQUEST_DATA, 0, 0, 0)) return false;
     if (!WinHttpReceiveResponse(request, NULL)) return false;
 
     DWORD code = 0, sz = sizeof(code);
@@ -180,6 +187,31 @@ bool PSHttpGetText(const std::wstring& url, std::string& outUtf8, DWORD* status)
         if (outUtf8.size() > 16 * 1024 * 1024) return false;
     }
     return true;
+}
+
+bool PSHttpPostJson(const std::wstring& url, const std::string& bodyUtf8, std::string& responseUtf8, DWORD* status)
+{
+    Url u;
+    if (!Crack(url, u)) return false;
+    HINTERNET hs = NULL, hc = NULL, hr = NULL;
+    DWORD code = 0;
+    bool ok = Send(u, hs, hc, hr, &code, L"POST", &bodyUtf8);
+    Handle s(hs), c(hc), r(hr);
+    if (status) *status = code;
+    responseUtf8.clear();
+    if (!hr || code == 0) { FPLogW(L"[Store] POST %s failed", url.c_str()); return false; }
+    for (;;)
+    {
+        DWORD avail = 0;
+        if (!WinHttpQueryDataAvailable(r, &avail) || avail == 0) break;
+        std::string chunk(avail, 0);
+        DWORD got = 0;
+        if (!WinHttpReadData(r, chunk.data(), avail, &got) || got == 0) break;
+        responseUtf8.append(chunk.data(), got);
+        if (responseUtf8.size() > 1024 * 1024) break;
+    }
+    if (!ok) FPLogW(L"[Store] POST %s -> %u", url.c_str(), code);
+    return ok;
 }
 
 bool PSHttpGetFile(const std::wstring& url, const std::wstring& targetPath, DWORD* status)

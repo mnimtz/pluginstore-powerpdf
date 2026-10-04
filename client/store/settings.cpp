@@ -43,6 +43,34 @@ bool PSUseClassicUI()
     return ReadUserDword(L"ClassicUI", v) && v != 0;
 }
 
+std::wstring PSInstallId()
+{
+    std::wstring id;
+    if (ReadUserString(L"InstallId", id) && id.size() == 36) return id;
+    GUID g;
+    if (FAILED(CoCreateGuid(&g))) return L"";
+    wchar_t buf[64] = { 0 };
+    StringFromGUID2(g, buf, 64);                        // {xxxxxxxx-...}
+    id = std::wstring(buf + 1, 36);
+    RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"InstallId", REG_SZ, id.c_str(), (DWORD)((id.size() + 1) * sizeof(wchar_t)));
+    return id;
+}
+
+int PSMyRating(const std::wstring& packageId)
+{
+    DWORD v = 0, sz = sizeof(v);
+    std::wstring key = std::wstring(kPSRegKey) + L"\\Ratings";
+    if (RegGetValueW(HKEY_CURRENT_USER, key.c_str(), packageId.c_str(), RRF_RT_REG_DWORD, NULL, &v, &sz) != ERROR_SUCCESS) return 0;
+    return v >= 1 && v <= 5 ? (int)v : 0;
+}
+
+void PSSetMyRating(const std::wstring& packageId, int stars)
+{
+    DWORD v = (DWORD)stars;
+    std::wstring key = std::wstring(kPSRegKey) + L"\\Ratings";
+    RegSetKeyValueW(HKEY_CURRENT_USER, key.c_str(), packageId.c_str(), REG_DWORD, &v, sizeof(v));
+}
+
 bool PSPolicyNoInstall()
 {
     DWORD v = 0;

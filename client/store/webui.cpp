@@ -54,7 +54,7 @@ std::wstring Json(const std::wstring& s)
 }
 
 // Reads a string field from a flat JSON object sent by the page ({"cmd":"install","id":"..."}).
-std::wstring Field(const std::wstring& json, const wchar_t* key)
+std::wstring Field(const std::wstring& json, const wchar_t* key, size_t maxLen = 512)
 {
     std::wstring k = std::wstring(L"\"") + key + L"\"";
     size_t p = json.find(k);
@@ -64,7 +64,7 @@ std::wstring Field(const std::wstring& json, const wchar_t* key)
     p = json.find(L'"', p);
     if (p == std::wstring::npos) return std::wstring();
     std::wstring v;
-    for (size_t i = p + 1; i < json.size() && v.size() < 512; ++i)
+    for (size_t i = p + 1; i < json.size() && v.size() < maxLen; ++i)
     {
         wchar_t c = json[i];
         if (c == L'"') return v;
@@ -102,6 +102,75 @@ std::wstring Base64(const std::vector<BYTE>& data)
     if (!CryptBinaryToStringW(data.data(), (DWORD)data.size(), CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, &out[0], &len)) return std::wstring();
     out.resize(len);
     return out;
+}
+
+std::string U8(const std::wstring& w)
+{
+    if (w.empty()) return std::string();
+    int n = WideCharToMultiByte(CP_UTF8, 0, w.c_str(), (int)w.size(), NULL, 0, NULL, NULL);
+    std::string s(n, '\0');
+    WideCharToMultiByte(CP_UTF8, 0, w.c_str(), (int)w.size(), &s[0], n, NULL, NULL);
+    return s;
+}
+
+std::wstring W16(const std::string& s)
+{
+    if (s.empty()) return std::wstring();
+    int n = MultiByteToWideChar(CP_UTF8, 0, s.c_str(), (int)s.size(), NULL, 0);
+    std::wstring w(n, L'\0');
+    MultiByteToWideChar(CP_UTF8, 0, s.c_str(), (int)s.size(), &w[0], n);
+    return w;
+}
+
+// Number after "key": in a server JSON response (flat search is enough here).
+double JsonNumber(const std::string& json, const char* key)
+{
+    std::string k = std::string("\"") + key + "\":";
+    size_t p = json.find(k);
+    return p == std::string::npos ? 0 : strtod(json.c_str() + p + k.size(), NULL);
+}
+
+// "4.3" without locale influence (JSON numbers for the page).
+std::wstring Tenths(double v)
+{
+    int t = (int)(v * 10 + 0.5);
+    wchar_t b[32];
+    swprintf_s(b, 32, L"%d.%d", t / 10, t % 10);
+    return b;
+}
+
+// Last lines of the store log for a problem report (only when the user ticks it).
+std::wstring LogTail(size_t maxLines)
+{
+    wchar_t tmp[MAX_PATH];
+    GetTempPathW(MAX_PATH, tmp);
+    HANDLE f = CreateFileW((std::wstring(tmp) + L"PluginStore.log").c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE,
+                           NULL, OPEN_EXISTING, 0, NULL);
+    if (f == INVALID_HANDLE_VALUE) return std::wstring();
+    LARGE_INTEGER sz = { 0 };
+    GetFileSizeEx(f, &sz);
+    LONGLONG start = sz.QuadPart > 64 * 1024 ? sz.QuadPart - 64 * 1024 : 0;
+    LARGE_INTEGER off; off.QuadPart = start;
+    SetFilePointerEx(f, off, NULL, FILE_BEGIN);
+    std::string data((size_t)(sz.QuadPart - start), '\0');
+    DWORD got = 0;
+    ReadFile(f, data.data(), (DWORD)data.size(), &got, NULL);
+    CloseHandle(f);
+    data.resize(got);
+    std::wstring text = W16(data);
+    size_t pos = text.size(), lines = 0;
+    while (pos > 0 && lines <= maxLines) { pos = text.rfind(L'\n', pos - 1); if (pos == std::wstring::npos) { pos = 0; break; } ++lines; }
+    text = text.substr(pos);
+    return text.size() > 18000 ? text.substr(text.size() - 18000) : text;
+}
+
+std::wstring HostLang()
+{
+    char code[64] = { 0 };
+    DURING DVAppGetLanguage(code); HANDLER END_HANDLER
+    wchar_t w[64] = { 0 };
+    MultiByteToWideChar(CP_ACP, 0, code, -1, w, 64);
+    return w;
 }
 
 std::wstring LocalDir(const wchar_t* sub)
@@ -276,6 +345,11 @@ protected:
             { L"restartNow", IDS_PSW_RESTARTNOW }, { L"disclaimer", IDS_PSD_DISCLAIMER }, { L"disclaimerBtn", IDS_PSD_BTN_DISCLAIMER },
             { L"disclaimerFull", IDS_PSD_DISCLAIMER_FULL }, { L"selfUpdate", IDS_PSD_SELF_UPDATE }, { L"selfUpdateBtn", IDS_PSD_BTN_SELFUPD },
             { L"installLocked", IDS_PSD_POLICY_INSTALL },
+            { L"ratings", IDS_PSW_RATINGS }, { L"yourRating", IDS_PSW_YOUR_RATING }, { L"rateHint", IDS_PSW_RATE_HINT },
+            { L"rated", IDS_PSW_RATED }, { L"report", IDS_PSW_REPORT }, { L"reportProblem", IDS_PSW_REPORT_PROBLEM },
+            { L"reportComment", IDS_PSW_REPORT_COMMENT }, { L"reportText", IDS_PSW_REPORT_TEXT }, { L"reportEmail", IDS_PSW_REPORT_EMAIL },
+            { L"reportLog", IDS_PSW_REPORT_LOG }, { L"reportPrivacy", IDS_PSW_REPORT_PRIVACY }, { L"send", IDS_PSW_SEND },
+            { L"screenshots", IDS_PSW_SCREENSHOTS }, { L"close", IDS_PSW_CLOSE },
         };
         std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) +
                          L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") + L",\"strings\":{";
@@ -312,7 +386,9 @@ protected:
                  L",\"version\":" + Json(e.version) + L",\"installed\":" + Json(e.installedVersion) +
                  L",\"channel\":" + Json(e.channel) + L",\"category\":" + Json(e.category) +
                  L",\"categoryName\":" + Json(e.categoryName.empty() ? e.category : e.categoryName) +
-                 L",\"size\":" + size + L",\"author\":" + Json(e.author) + L",\"contact\":" + Json(e.contactEmail) + L"}";
+                 L",\"size\":" + size + L",\"author\":" + Json(e.author) + L",\"contact\":" + Json(e.contactEmail) +
+                 L",\"rating\":" + Tenths(e.rating) + L",\"ratingCount\":" + std::to_wstring(e.ratingCount) +
+                 L",\"shots\":" + std::to_wstring(e.screenshots) + L",\"mine\":" + std::to_wstring(PSMyRating(e.id)) + L"}";
         }
         j += L"]";
         if (m_hasSelfUpdate)
@@ -327,6 +403,106 @@ protected:
         m_iconQueue.clear();
         for (size_t i = 0; i < m_entries.size(); ++i) m_iconQueue.push_back(i);
         PostMessage(WM_ICONS);
+    }
+
+    std::wstring PackageUrl(const PSCatalogEntry& e, const wchar_t* tail)
+    {
+        return PSServerUrl() + L"/api/packages/" + e.id + tail;
+    }
+
+    // Star rating (1-5) of an installed add-on; one per installation.
+    void Rate(size_t i, int stars)
+    {
+        if (stars < 1 || stars > 5 || i >= m_entries.size()) return;
+        PSCatalogEntry& e = m_entries[i];
+        std::string body = "{\"installId\":" + U8(Json(PSInstallId())) + ",\"stars\":" + std::to_string(stars) +
+                           ",\"version\":" + U8(Json(e.installedVersion.empty() ? e.version : e.installedVersion)) + "}";
+        std::string resp;
+        DWORD status = 0;
+        if (!PSHttpPostJson(PackageUrl(e, L"/rating"), body, resp, &status))
+        {
+            SendMessageToPage(FPLoc(IDS_PSD_TITLE), FPLoc(IDS_PSW_RATE_FAIL));
+            return;
+        }
+        PSSetMyRating(e.id, stars);
+        e.rating = JsonNumber(resp, "average");
+        e.ratingCount = (int)JsonNumber(resp, "count");
+        Send(L"{\"type\":\"rated\",\"id\":" + Json(e.id) + L",\"rating\":" + Tenths(e.rating) +
+             L",\"ratingCount\":" + std::to_wstring(e.ratingCount) + L",\"mine\":" + std::to_wstring(stars) + L"}");
+    }
+
+    // Problem report or comment to the add-on's developer.
+    void SendFeedback(size_t i, std::wstring kind, const std::wstring& message, const std::wstring& email, bool withLog)
+    {
+        if (i >= m_entries.size()) return;
+        const PSCatalogEntry& e = m_entries[i];
+        if (kind != L"comment") kind = L"problem";
+        std::string body = "{\"installId\":" + U8(Json(PSInstallId())) + ",\"kind\":" + U8(Json(kind)) +
+                           ",\"message\":" + U8(Json(message)) + ",\"email\":" + U8(Json(email)) +
+                           ",\"version\":" + U8(Json(e.installedVersion.empty() ? e.version : e.installedVersion)) +
+                           ",\"log\":" + U8(Json(withLog ? LogTail(80) : std::wstring())) + "}";
+        std::string resp;
+        DWORD status = 0;
+        if (PSHttpPostJson(PackageUrl(e, L"/feedback"), body, resp, &status))
+        {
+            SendMessageToPage(FPLoc(IDS_PSW_REPORT), FPLoc(IDS_PSW_REPORT_SENT));
+            return;
+        }
+        // The server explains a refusal (too short, invalid address, limit) in "message".
+        std::wstring why;
+        size_t p = resp.find("\"message\":\"");
+        if (p != std::string::npos) why = W16(resp.substr(p + 11, resp.find('"', p + 11) - (p + 11)));
+        SendMessageToPage(FPLoc(IDS_PSW_REPORT), FPLoc(IDS_PSW_REPORT_FAIL) + (why.empty() ? L"" : L"\n\n" + why));
+    }
+
+    // Screenshots of the selected add-on: list (TSV url<TAB>caption), images cached per version.
+    void LoadShots(size_t i)
+    {
+        if (i >= m_entries.size()) return;
+        const PSCatalogEntry& e = m_entries[i];
+        std::string tsv;
+        if (!PSHttpGetText(PackageUrl(e, L"/screenshots?format=tsv&lang=") + HostLang(), tsv)) return;
+        std::wstring dir = LocalDir(L"shots");
+        std::wstring items;
+        std::wstring text = W16(tsv);
+        size_t pos = 0;
+        int n = 0;
+        while (pos < text.size() && n < 6)
+        {
+            size_t eol = text.find(L'\n', pos);
+            if (eol == std::wstring::npos) eol = text.size();
+            std::wstring line = text.substr(pos, eol - pos);
+            pos = eol + 1;
+            size_t tab = line.find(L'\t');
+            if (tab == std::wstring::npos) continue;
+            std::wstring url = line.substr(0, tab), caption = line.substr(tab + 1);
+            std::wstring name = e.id + L"-" + e.version + L"-" + std::to_wstring(n) + L".img";
+            ++n;
+            if (dir.empty() || !SafeFileName(name)) continue;
+            std::wstring path = dir + L"\\" + name;
+            if (GetFileAttributesW(path.c_str()) == INVALID_FILE_ATTRIBUTES)
+            {
+                DWORD status = 0;
+                if (!PSHttpGetFile(url, path, &status)) continue;
+            }
+            HANDLE f = CreateFileW(path.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+            if (f == INVALID_HANDLE_VALUE) continue;
+            LARGE_INTEGER sz = { 0 };
+            std::vector<BYTE> data;
+            if (GetFileSizeEx(f, &sz) && sz.QuadPart > 8 && sz.QuadPart <= 3 * 1024 * 1024)
+            {
+                data.resize((size_t)sz.QuadPart);
+                DWORD got = 0;
+                if (!ReadFile(f, data.data(), (DWORD)data.size(), &got, NULL) || got != data.size()) data.clear();
+            }
+            CloseHandle(f);
+            const wchar_t* type = data.size() > 4 && data[0] == 0x89 && data[1] == 'P' ? L"image/png"
+                                : data.size() > 4 && data[0] == 0xFF && data[1] == 0xD8 ? L"image/jpeg" : nullptr;
+            if (!type) continue;
+            items += (items.empty() ? L"" : L",") + std::wstring(L"{\"src\":") + Json(std::wstring(L"data:") + type + L";base64," + Base64(data)) +
+                     L",\"caption\":" + Json(caption) + L"}";
+        }
+        Send(L"{\"type\":\"shots\",\"id\":" + Json(e.id) + L",\"items\":[" + items + L"]}");
     }
 
     // One icon per message so the window stays responsive; cached per version.
@@ -384,6 +560,22 @@ protected:
             else SendMessageToPage(L"", FPLoc(IDS_PSD_EMPTY));
         }
         else if (cmd == L"selfUpdate" && m_hasSelfUpdate) PostMessage(WM_RUN, JobSelfUpdate);
+        else if (cmd == L"rate")
+        {
+            size_t idx = 0;
+            if (Find(Field(json, L"id"), &idx)) Rate(idx, _wtoi(Field(json, L"stars").c_str()));
+        }
+        else if (cmd == L"feedback")
+        {
+            size_t idx = 0;
+            if (Find(Field(json, L"id"), &idx))
+                SendFeedback(idx, Field(json, L"kind"), Field(json, L"message", 4000), Field(json, L"email", 200), Field(json, L"log") == L"1");
+        }
+        else if (cmd == L"shots")
+        {
+            size_t idx = 0;
+            if (Find(Field(json, L"id"), &idx)) LoadShots(idx);
+        }
         else if (cmd == L"restart")
         {
             HWND mainWnd = ::GetAncestor(m_hWnd, GA_ROOTOWNER);
