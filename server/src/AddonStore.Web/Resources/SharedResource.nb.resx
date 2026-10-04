@@ -660,4 +660,20 @@
   <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>Sikkerhetskopien er gjenopprettet uten nøkkelring. Skriv inn AI- og Resend-nøklene på nytt og angi reservesigneringsnøkkelen (Signing__PrivateKeyPem); inntil da kan klienter ikke installere.</value></data>
   <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>Signeringsnøkkelen for pakker kan ikke leses. Klienter avviser installasjoner til sikkerhetskopien er gjenopprettet med nøkkelringens passord eller appinnstillingen Signing__PrivateKeyPem inneholder reservenøkkelen.</value></data>
   <data name="Package signing key" xml:space="preserve"><value>Signeringsnøkkel for pakker</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>Språk for automatiske gjennomgangshjelpere</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>Opprett på nytt på {0}</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>Denne gjennomgangshjelperen er skrevet på {0}.</value></data>
+  <data name="Overview" xml:space="preserve"><value>Oversikt</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>Tillegg</value></data>
+  <data name="Clients" xml:space="preserve"><value>Klienter</value></data>
+  <data name="Locations" xml:space="preserve"><value>Steder</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>Innsendinger og gjennomganger</value></data>
+  <data name="Report sections" xml:space="preserve"><value>Rapportdeler</value></data>
+  <data name="Pages" xml:space="preserve"><value>Sider</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>Rader per side</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>Side {0} av {1}</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>{0} til {1} av {2}</value></data>
+  <data name="Previous" xml:space="preserve"><value>Forrige</value></data>
+  <data name="Next" xml:space="preserve"><value>Neste</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>De nyeste {0} av {1} forespørsler; CSV-eksporten inneholder alle.</value></data>
 </root>

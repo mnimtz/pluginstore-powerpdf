@@ -660,4 +660,20 @@
   <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>Backup ripristinato senza portachiavi. Reinserisci le chiavi IA e Resend e imposta la chiave di firma di riserva (Signing__PrivateKeyPem); fino ad allora i client non possono installare.</value></data>
   <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>La chiave di firma dei pacchetti non è leggibile. I client rifiutano le installazioni finché il backup non viene ripristinato con la password del portachiavi o l'impostazione Signing__PrivateKeyPem contiene la chiave di riserva.</value></data>
   <data name="Package signing key" xml:space="preserve"><value>Chiave di firma dei pacchetti</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>Lingua degli aiuti alla revisione automatici</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>Ricrea in {0}</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>Questo aiuto alla revisione è scritto in {0}.</value></data>
+  <data name="Overview" xml:space="preserve"><value>Panoramica</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>Componenti aggiuntivi</value></data>
+  <data name="Clients" xml:space="preserve"><value>Client</value></data>
+  <data name="Locations" xml:space="preserve"><value>Località</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>Invii e revisioni</value></data>
+  <data name="Report sections" xml:space="preserve"><value>Sezioni del report</value></data>
+  <data name="Pages" xml:space="preserve"><value>Pagine</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>Righe per pagina</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>Pagina {0} di {1}</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>da {0} a {1} di {2}</value></data>
+  <data name="Previous" xml:space="preserve"><value>Precedente</value></data>
+  <data name="Next" xml:space="preserve"><value>Successiva</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>Le {0} richieste più recenti su {1}; l'esportazione CSV le contiene tutte.</value></data>
 </root>

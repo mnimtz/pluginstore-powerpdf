@@ -660,4 +660,20 @@
   <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>Back-up hersteld zonder sleutelring. Voer de AI- en Resend-sleutels opnieuw in en stel de reserve-ondertekeningssleutel in (Signing__PrivateKeyPem); tot die tijd kunnen clients niets installeren.</value></data>
   <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>De ondertekeningssleutel voor pakketten is niet leesbaar. Clients weigeren installaties totdat de back-up met het wachtwoord van de sleutelring is hersteld of de app-instelling Signing__PrivateKeyPem de reservesleutel bevat.</value></data>
   <data name="Package signing key" xml:space="preserve"><value>Ondertekeningssleutel voor pakketten</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>Taal van automatische beoordelingshulpen</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>Opnieuw maken in het {0}</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>Deze beoordelingshulp is geschreven in het {0}.</value></data>
+  <data name="Overview" xml:space="preserve"><value>Overzicht</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>Add-ons</value></data>
+  <data name="Clients" xml:space="preserve"><value>Clients</value></data>
+  <data name="Locations" xml:space="preserve"><value>Locaties</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>Inzendingen en beoordelingen</value></data>
+  <data name="Report sections" xml:space="preserve"><value>Rapportonderdelen</value></data>
+  <data name="Pages" xml:space="preserve"><value>Pagina's</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>Rijen per pagina</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>Pagina {0} van {1}</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>{0} tot {1} van {2}</value></data>
+  <data name="Previous" xml:space="preserve"><value>Vorige</value></data>
+  <data name="Next" xml:space="preserve"><value>Volgende</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>De nieuwste {0} van {1} aanvragen; de CSV-export bevat ze allemaal.</value></data>
 </root>

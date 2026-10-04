@@ -660,4 +660,20 @@
   <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>A mentés kulcskarika nélkül állt vissza. Adja meg újra az MI- és Resend-kulcsokat, és állítsa be a tartalék aláírókulcsot (Signing__PrivateKeyPem); addig az ügyfelek nem tudnak telepíteni.</value></data>
   <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>A csomagaláíró kulcs nem olvasható. Az ügyfelek megtagadják a telepítést, amíg a mentést vissza nem állítják a kulcskarika jelszavával, vagy a Signing__PrivateKeyPem alkalmazásbeállítás nem tartalmazza a tartalékkulcsot.</value></data>
   <data name="Package signing key" xml:space="preserve"><value>Csomagaláíró kulcs</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>Az automatikus ellenőrzési segédletek nyelve</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>Újbóli létrehozás ezen a nyelven: {0}</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>Ez az ellenőrzési segédlet ezen a nyelven készült: {0}.</value></data>
+  <data name="Overview" xml:space="preserve"><value>Áttekintés</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>Bővítmények</value></data>
+  <data name="Clients" xml:space="preserve"><value>Kliensek</value></data>
+  <data name="Locations" xml:space="preserve"><value>Helyek</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>Beküldések és ellenőrzések</value></data>
+  <data name="Report sections" xml:space="preserve"><value>Jelentés részei</value></data>
+  <data name="Pages" xml:space="preserve"><value>Oldalak</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>Sorok oldalanként</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>{0}. oldal / {1}</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>{0}–{1} / {2}</value></data>
+  <data name="Previous" xml:space="preserve"><value>Előző</value></data>
+  <data name="Next" xml:space="preserve"><value>Következő</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>A legutóbbi {0} kérés ({1}-ből); a CSV-export mindet tartalmazza.</value></data>
 </root>

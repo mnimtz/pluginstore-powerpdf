@@ -46,8 +46,29 @@ public class ReportsModel : PageModel
     [BindProperty(SupportsGet = true)] public string? Rlang { get; set; }
     public static readonly string[] ReportLanguages =
         { "en", "de", "fr", "it", "es", "nl", "pt", "da", "fi", "nb", "sv", "pl", "cs", "hu", "ru", "tr" };
-    /// <summary>Print view for "Save as PDF".</summary>
+    /// <summary>Print view for "Save as PDF" (all sections, all rows).</summary>
     [BindProperty(SupportsGet = true)] public bool Print { get; set; }
+
+    /// <summary>Report sections of the left navigation (S0.17.0); one is shown at a time.</summary>
+    public static readonly (string Key, string Label)[] Views =
+    {
+        ("overview", "Overview"), ("addons", "Add-ons"), ("links", "Shared links"), ("clients", "Clients"),
+        ("locations", "Locations"), ("submissions", "Submissions and reviews"), ("developers", "Developers"),
+        ("sources", "Source code"), ("ip", "IP address logging"),
+    };
+    [BindProperty(SupportsGet = true)] public string? View { get; set; }
+    /// <summary>Rows per page of the long lists; the page of each list is p_&lt;list&gt; in the query.</summary>
+    public static readonly int[] PageSizes = { 25, 50, 100 };
+    [BindProperty(SupportsGet = true)] public int Size { get; set; } = 25;
+    public bool Show(string view) => Print || View == view;
+
+    public int PageCount(int total) => Math.Max(1, (total + Size - 1) / Size);
+    /// <summary>Current page of a list (1-based, clamped to the list).</summary>
+    public int PageOf(string key, int total) =>
+        Math.Min(int.TryParse(Request.Query["p_" + key], out var pg) && pg > 0 ? pg : 1, PageCount(total));
+    /// <summary>The rows of the current page; the print view gets all rows.</summary>
+    public IEnumerable<T> PageItems<T>(IReadOnlyList<T> list, string key) =>
+        Print ? list : list.Skip((PageOf(key, list.Count) - 1) * Size).Take(Size);
 
     public DateOnly RangeFrom { get; private set; }
     public DateOnly RangeTo { get; private set; }
@@ -73,6 +94,8 @@ public class ReportsModel : PageModel
         ["src"] = string.IsNullOrEmpty(Src) ? null : Src,
         ["rlang"] = Rlang is not null && ReportLanguages.Contains(Rlang) ? Rlang : null,
         ["print"] = print ? "true" : null,
+        ["view"] = print || View == "overview" ? null : View,
+        ["size"] = print || Size == PageSizes[0] ? null : Size.ToString(CultureInfo.InvariantCulture),
     };
 
     private (DateOnly From, DateOnly To) ResolveRange()
@@ -142,6 +165,8 @@ public class ReportsModel : PageModel
     public int RetentionDays { get; private set; } = UsageService.DefaultRetentionDays;
     public int IpEventCount { get; private set; }
     public List<UsageEvent> RecentEvents { get; } = new();
+    /// <summary>IP events in the period and filter (RecentEvents holds the current page).</summary>
+    public int EventsTotal { get; private set; }
     public List<Share> TopIps { get; } = new();
     public List<MonthRow> Months { get; } = new();
     public List<DevRow> Devs { get; } = new();
@@ -152,6 +177,8 @@ public class ReportsModel : PageModel
     public async Task OnGetAsync()
     {
         var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        if (!Views.Any(v => v.Key == View)) View = "overview";
+        if (!PageSizes.Contains(Size)) Size = PageSizes[0];
         var (from, to) = ResolveRange();
         RangeFrom = from; RangeTo = to;
         var span = to.DayNumber - from.DayNumber + 1;
@@ -281,8 +308,8 @@ public class ReportsModel : PageModel
         // Country over all counted requests (downloads, catalog, MSI); client details from catalog fetches.
         Countries.AddRange(Shares(geoBase.Select(s => (s.Country == "" ? "?" : s.Country, s.Count))));
         Cities.AddRange(Shares(geoBase.Select(s => (s.City == "" ? "?" : s.City + (s.Region != "" && s.Region != s.City ? ", " + s.Region : "") +
-                                                                 (s.Country != "" ? " (" + s.Country + ")" : ""), s.Count))).Take(25));
-        Orgs.AddRange(Shares(geoBase.Select(s => (s.Org == "" ? "?" : s.Org, s.Count))).Take(25));
+                                                                 (s.Country != "" ? " (" + s.Country + ")" : ""), s.Count))));
+        Orgs.AddRange(Shares(geoBase.Select(s => (s.Org == "" ? "?" : s.Org, s.Count))));
         var fromClient = catalog.Where(s => s.Source == "client").ToList();
         HostVersions.AddRange(Shares(fromClient.Select(s => (s.HostVersion == "" ? "?" : s.HostVersion, s.Count))));
         OsVersions.AddRange(Shares(fromClient.Select(s => (s.OsVersion == "" ? "?" : WindowsName(s.OsVersion), s.Count))));
@@ -307,10 +334,16 @@ public class ReportsModel : PageModel
         var toUtc = to.AddDays(1).ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
         var events = _db.UsageEvents.AsNoTracking().Where(e => e.At >= fromUtc && e.At < toUtc && (filtered || e.PackageId == Pkg) &&
                                                          (Country == null || e.Country == Country) && (Src == null || e.Source == Src));
-        RecentEvents.AddRange(await events.OrderByDescending(e => e.Id).Take(100).ToListAsync());
-        TopIps.AddRange(Shares((await events
-            .GroupBy(e => e.Ip).Select(g => new { g.Key, N = g.Count() }).ToListAsync())
-            .Select(x => (x.Key, x.N))).Take(20));
+        // Paged in the database: the table can hold many thousand requests.
+        if (Show("ip"))
+        {
+            EventsTotal = await events.CountAsync();
+            var skip = Print ? 0 : (PageOf("events", EventsTotal) - 1) * Size;
+            RecentEvents.AddRange(await events.OrderByDescending(e => e.Id).Skip(skip).Take(Print ? 100 : Size).ToListAsync());
+            TopIps.AddRange(Shares((await events
+                .GroupBy(e => e.Ip).Select(g => new { g.Key, N = g.Count() }).ToListAsync())
+                .Select(x => (x.Key, x.N))));
+        }
 
         // Submissions and reviews per month (last 12 months, independent of the period)
         var monthStart = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1, 0, 0, 0, DateTimeKind.Utc).AddMonths(-11);

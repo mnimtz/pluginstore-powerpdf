@@ -660,4 +660,20 @@
   <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>Varmuuskopio palautettu ilman avainrengasta. Anna tekoäly- ja Resend-avaimet uudelleen ja aseta varallekirjoitusavain (Signing__PrivateKeyPem); siihen asti asiakkaat eivät voi asentaa.</value></data>
   <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>Pakettien allekirjoitusavainta ei voi lukea. Asiakkaat kieltäytyvät asennuksista, kunnes varmuuskopio palautetaan avainrenkaan salasanalla tai sovellusasetus Signing__PrivateKeyPem sisältää varavaimen.</value></data>
   <data name="Package signing key" xml:space="preserve"><value>Pakettien allekirjoitusavain</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>Automaattisten tarkistusapujen kieli</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>Luo uudelleen kielellä {0}</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>Tämä tarkistusapu on kirjoitettu kielellä {0}.</value></data>
+  <data name="Overview" xml:space="preserve"><value>Yleiskatsaus</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>Lisäosat</value></data>
+  <data name="Clients" xml:space="preserve"><value>Asiakasohjelmat</value></data>
+  <data name="Locations" xml:space="preserve"><value>Sijainnit</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>Lähetykset ja tarkistukset</value></data>
+  <data name="Report sections" xml:space="preserve"><value>Raportin osiot</value></data>
+  <data name="Pages" xml:space="preserve"><value>Sivut</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>Rivejä sivulla</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>Sivu {0}/{1}</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>{0}–{1}/{2}</value></data>
+  <data name="Previous" xml:space="preserve"><value>Edellinen</value></data>
+  <data name="Next" xml:space="preserve"><value>Seuraava</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>Uusimmat {0}/{1} pyyntöä; CSV-vienti sisältää ne kaikki.</value></data>
 </root>

@@ -660,4 +660,20 @@
   <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>Копия восстановлена без набора ключей. Снова введите ключи ИИ и Resend и задайте резервный ключ подписи (Signing__PrivateKeyPem); до этого клиенты не смогут устанавливать.</value></data>
   <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>Ключ подписи пакетов не читается. Клиенты отказываются устанавливать, пока копия не будет восстановлена с паролем набора ключей или параметр Signing__PrivateKeyPem не будет содержать резервный ключ.</value></data>
   <data name="Package signing key" xml:space="preserve"><value>Ключ подписи пакетов</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>Язык автоматических подсказок для проверки</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>Создать заново на языке: {0}</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>Эта подсказка для проверки написана на языке: {0}.</value></data>
+  <data name="Overview" xml:space="preserve"><value>Обзор</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>Надстройки</value></data>
+  <data name="Clients" xml:space="preserve"><value>Клиенты</value></data>
+  <data name="Locations" xml:space="preserve"><value>Местоположения</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>Отправки и проверки</value></data>
+  <data name="Report sections" xml:space="preserve"><value>Разделы отчёта</value></data>
+  <data name="Pages" xml:space="preserve"><value>Страницы</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>Строк на странице</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>Страница {0} из {1}</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>с {0} по {1} из {2}</value></data>
+  <data name="Previous" xml:space="preserve"><value>Назад</value></data>
+  <data name="Next" xml:space="preserve"><value>Далее</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>Последние {0} из {1} запросов; экспорт CSV содержит все.</value></data>
 </root>

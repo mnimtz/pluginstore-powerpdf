@@ -222,7 +222,8 @@ public class SettingsModel : PageModel
     }
 
     /// <summary>Step 2: model and features (provider and key come from step 1).</summary>
-    public async Task OnPostAiAsync(string? model, bool triage, bool review, bool reviewAuto, bool reviewSource, bool search, int dailyLimit)
+    public async Task OnPostAiAsync(string? model, bool triage, bool review, bool reviewAuto, bool reviewSource, bool search, int dailyLimit,
+                                   string? reviewLanguage)
     {
         var admin = await _users.GetUserAsync(User);
         var cfg = await _ai.ConfigAsync();
@@ -236,9 +237,10 @@ public class SettingsModel : PageModel
         await _settings.SetAsync(AiService.ReviewAutoKey, review && reviewAuto ? "1" : "0");
         await _settings.SetAsync(AiService.ReviewSourceKey, review && reviewSource ? "1" : "0");
         await _settings.SetAsync(AiService.SearchKey, search ? "1" : "0");
+        await _settings.SetAsync(AiService.ReviewLanguageKey, AiAssist.ReviewLanguage(reviewLanguage, "de"));
         await _settings.SetAsync(AiService.DailyLimitKey, Math.Clamp(dailyLimit, 1, 100000).ToString(System.Globalization.CultureInfo.InvariantCulture));
         await _audit.LogAsync(admin!.DisplayName, "settings.changed", "AI assistant",
-            $"model {(m.Length == 0 ? "default" : m)}, triage {triage}, review {review} (auto {reviewAuto}, source {reviewSource}), search {search}, limit {dailyLimit}");
+            $"model {(m.Length == 0 ? "default" : m)}, triage {triage}, review {review} (auto {reviewAuto}, source {reviewSource}, language {AiAssist.ReviewLanguage(reviewLanguage, "de")}), search {search}, limit {dailyLimit}");
         Notice = "Settings saved.";
         await LoadAsync();
     }

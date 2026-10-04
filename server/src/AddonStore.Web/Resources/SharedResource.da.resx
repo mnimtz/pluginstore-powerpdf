@@ -660,4 +660,20 @@
   <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>Sikkerhedskopien er gendannet uden nøglering. Indtast AI- og Resend-nøglerne igen, og angiv reserve-signeringsnøglen (Signing__PrivateKeyPem); indtil da kan klienter ikke installere.</value></data>
   <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>Pakkens signeringsnøgle kan ikke læses. Klienter afviser installationer, indtil sikkerhedskopien gendannes med nøgleringens adgangskode, eller appindstillingen Signing__PrivateKeyPem indeholder reservenøglen.</value></data>
   <data name="Package signing key" xml:space="preserve"><value>Signeringsnøgle for pakker</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>Sprog for automatiske gennemgangshjælpere</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>Opret igen på {0}</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>Denne gennemgangshjælper er skrevet på {0}.</value></data>
+  <data name="Overview" xml:space="preserve"><value>Oversigt</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>Tilføjelser</value></data>
+  <data name="Clients" xml:space="preserve"><value>Klienter</value></data>
+  <data name="Locations" xml:space="preserve"><value>Placeringer</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>Indsendelser og gennemgange</value></data>
+  <data name="Report sections" xml:space="preserve"><value>Rapportafsnit</value></data>
+  <data name="Pages" xml:space="preserve"><value>Sider</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>Rækker pr. side</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>Side {0} af {1}</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>{0} til {1} af {2}</value></data>
+  <data name="Previous" xml:space="preserve"><value>Forrige</value></data>
+  <data name="Next" xml:space="preserve"><value>Næste</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>De seneste {0} af {1} forespørgsler; CSV-eksporten indeholder dem alle.</value></data>
 </root>

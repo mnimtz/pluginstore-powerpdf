@@ -407,7 +407,10 @@ An admin can switch on an AI assistant (Claude or Gemini, off by default).
 The review aid summarizes what changed against the previous version, says
 whether the changelog matches (`changelog_fits`: yes, partly, no, unknown),
 lists `concerns` (severity info, warning, high) and gives a `recommendation`
-(approve, check_more, reject). Reviewers decide; the aid only advises. Write
+(approve, check_more, reject). `lang` is one of the 16 store languages (en, de,
+fr, it, es, nl, pt, da, fi, nb, sv, pl, cs, hu, ru, tr; default en); the
+response names it in `language`. Automatic review aids use the language an
+admin set in Admin > Settings. Reviewers decide; the aid only advises. Write
 a precise changelog and keep network hosts and third-party code declared in
 the manifest: the aid compares them with the code.
 
@@ -467,7 +470,7 @@ developer creates or changes a delivery.
 Every catalog entry carries a signature of the server (ECDSA P-256 over
 "addonstore-pkg-v2\n{id}\n{version}\n{sha256}\n{zxtName}"), in TSV column
 21 and the JSON field `signature` ("keyId:base64"). The public key is at
-`GET {{baseUrl}}/api/signing-key`. The Power PDF client (0.7.0+) installs only
+`GET {{baseUrl}}/api/signing-key`. The Power PDF client (0.7.1+) installs only
 packages signed with a key it trusts, so nothing changes for you as a
 submitter: the server signs what it accepted.
 

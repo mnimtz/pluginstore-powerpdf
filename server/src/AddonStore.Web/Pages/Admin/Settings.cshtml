@@ -167,6 +167,15 @@ else if (Model.SigningKeyId.Length > 0)
                 <label style="font-weight:400"><input type="checkbox" name="review" value="true" checked="@Model.Ai.Review" style="width:auto" /> @L["Review aid for new versions (on request)"]</label>
                 <label style="font-weight:400;margin-left:24px"><input type="checkbox" name="reviewAuto" value="true" checked="@Model.Ai.ReviewAuto" style="width:auto" /> @L["Create automatically for every new version"]</label>
                 <label style="font-weight:400;margin-left:24px"><input type="checkbox" name="reviewSource" value="true" checked="@Model.Ai.ReviewSource" style="width:auto" /> @L["Send changed source code lines to the provider"]</label>
+                <label style="font-weight:400;margin-left:24px">@L["Language of automatic review aids"]
+                    <select name="reviewLanguage" style="width:auto;margin-left:8px">
+                        @foreach (var code in AddonStore.Web.Services.AiAssist.ReviewLanguages.Keys)
+                        {
+                            var ci = new System.Globalization.CultureInfo(code);
+                            <option value="@code" selected="@(Model.Ai.ReviewLanguage == code)">@(char.ToUpper(ci.NativeName[0]) + ci.NativeName[1..])</option>
+                        }
+                    </select>
+                </label>
                 <label style="font-weight:400"><input type="checkbox" name="search" value="true" checked="@Model.Ai.Search" style="width:auto" /> @L["Search by need on the website and in the store window"]</label>
             </div>
             <div>

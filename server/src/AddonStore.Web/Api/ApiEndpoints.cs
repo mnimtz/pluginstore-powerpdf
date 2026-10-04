@@ -635,7 +635,7 @@ public static class ApiEndpoints
             if (v is null) return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}'.");
             if (v.AiReviewJson is null) return NotFound("AI_REVIEW_MISSING", "No review aid has been created for this version.");
             using var doc = System.Text.Json.JsonDocument.Parse(v.AiReviewJson);
-            return Results.Json(new { ok = true, data = new { id, version, model = v.AiReviewModel, at = v.AiReviewAt, review = doc.RootElement.Clone() } });
+            return Results.Json(new { ok = true, data = new { id, version, model = v.AiReviewModel, at = v.AiReviewAt, language = v.AiReviewLang, review = doc.RootElement.Clone() } });
         }).RequireAuthorization("ReviewerOrAdmin");
 
         api.MapPost("/packages/{id}/{version}/ai-review", async (string id, string version, string? lang, HttpContext ctx, AppDbContext db,
@@ -646,13 +646,13 @@ public static class ApiEndpoints
                 return Results.Json(new { ok = false, error = new { code = "AI_OFF", message = "The AI review aid is switched off.", hint = "An admin can switch it on in Admin > Settings." } }, statusCode: 409);
             var v = await db.PackageVersions.AsNoTracking().FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version);
             if (v is null) return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}'.");
-            if (!await assist.ReviewAsync(v, lang == "de" ? "de" : "en", ctx.RequestAborted))
+            if (!await assist.ReviewAsync(v, AiAssist.ReviewLanguage(lang), ctx.RequestAborted))
                 return Results.Json(new { ok = false, error = new { code = "AI_FAILED", message = "The AI provider gave no usable answer.", hint = "Check the connection test in Admin > Settings and the server log." } }, statusCode: 502);
             var user = await users.GetUserAsync(ctx.User);
             await audit.LogAsync(user?.DisplayName ?? "?", "ai.review", $"{id} {version}");
             var stored = await db.PackageVersions.AsNoTracking().FirstAsync(x => x.Id == v.Id);
             using var doc = System.Text.Json.JsonDocument.Parse(stored.AiReviewJson!);
-            return Results.Json(new { ok = true, data = new { id, version, model = stored.AiReviewModel, at = stored.AiReviewAt, review = doc.RootElement.Clone() } });
+            return Results.Json(new { ok = true, data = new { id, version, model = stored.AiReviewModel, at = stored.AiReviewAt, language = stored.AiReviewLang, review = doc.RootElement.Clone() } });
         }).RequireAuthorization("ReviewerOrAdmin");
 
         // ---- Customer deliveries (S0.14.0): customers, codes, deliveries ----

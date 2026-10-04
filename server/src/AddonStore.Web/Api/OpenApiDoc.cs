@@ -59,7 +59,7 @@ public static class OpenApiDoc
             new[] { "q:query:the need, 2 to 300 characters", "lang:query:language of the reasons", "channel:query:'beta' includes pre-release versions", "format:query:'tsv'" }),
         new("get", "/api/packages/{id}/{version}/ai-review", "getAiReview", "Stored AI review aid of a version.", "reviewer", new[] { "id:path:package id", "version:path:version" }),
         new("post", "/api/packages/{id}/{version}/ai-review", "createAiReview", "Create the AI review aid of a version again.", "reviewer",
-            new[] { "id:path:package id", "version:path:version", "lang:query:'de' or 'en'" }),
+            new[] { "id:path:package id", "version:path:version", "lang:query:one of the 16 store languages (en, de, fr, it, es, nl, pt, da, fi, nb, sv, pl, cs, hu, ru, tr), default en" }),
         new("get", "/api/customers", "listCustomers", "Your customers (admins and reviewers: all) for customer deliveries.", "token", Array.Empty<string>()),
         new("post", "/api/customers", "createCustomer", "Create a customer, by default with a customer code for all its deliveries.", "token", Array.Empty<string>(), Body: "customer"),
         new("get", "/api/customers/{cid}", "getCustomer", "One customer with its codes and deliveries.", "token", new[] { "cid:path:customer id" }),

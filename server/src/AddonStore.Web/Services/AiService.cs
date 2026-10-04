@@ -28,6 +28,7 @@ public class AiService
     public const string ReviewKey = "Ai.Review";               // "1" = review aid on demand
     public const string ReviewAutoKey = "Ai.ReviewAuto";       // "1" = review aid automatically for new versions
     public const string ReviewSourceKey = "Ai.ReviewSource";   // "1" = send source excerpts with the review aid
+    public const string ReviewLanguageKey = "Ai.ReviewLanguage"; // language of automatic review aids (default "de")
     public const string SearchKey = "Ai.Search";               // "1" = natural-language search
     public const string DailyLimitKey = "Ai.DailyLimit";       // calls per day, default 300
     public const string ModelListKey = "Ai.ModelList";         // models offered by the provider, loaded with the key
@@ -51,7 +52,7 @@ public class AiService
     }
 
     public record Config(string Provider, string Model, bool HasKey, bool Triage, bool Review, bool ReviewAuto,
-                         bool ReviewSource, bool Search, int DailyLimit)
+                         bool ReviewSource, bool Search, int DailyLimit, string ReviewLanguage = "de")
     {
         public bool On => Provider is "claude" or "gemini" or "fake";
     }
@@ -67,7 +68,8 @@ public class AiService
         return new Config(provider, model, (await _settings.GetAsync(ApiKeyKey)).Length > 0,
             await _settings.GetAsync(TriageKey) == "1", await _settings.GetAsync(ReviewKey) == "1",
             await _settings.GetAsync(ReviewAutoKey) == "1", await _settings.GetAsync(ReviewSourceKey) == "1",
-            await _settings.GetAsync(SearchKey) == "1", limit is >= 1 and <= 100000 ? limit : 300);
+            await _settings.GetAsync(SearchKey) == "1", limit is >= 1 and <= 100000 ? limit : 300,
+            AiAssist.ReviewLanguage(await _settings.GetAsync(ReviewLanguageKey), "de"));
     }
 
     /// <summary>One model the provider offers for this key (id for the API, name for the drop-down).</summary>

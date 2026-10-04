@@ -30,17 +30,68 @@
         return Url.Page("/Admin/Reports", rv) ?? "";
     }
 
-    void ShareList(List<AddonStore.Web.Pages.Admin.ReportsModel.Share> list, Func<string, object>? label = null, string? filterKey = null)
+    // Link to another page or page size of a list; keeps range, filters, section
+    // and the pages of the other lists in this section.
+    string PageUrl(string key, int page, int? size = null)
     {
-        foreach (var s in list)
+        var rv = Model.RouteValues();
+        foreach (var q in Request.Query.Where(q => q.Key.StartsWith("p_", StringComparison.Ordinal)))
+            rv[q.Key] = q.Value.ToString();
+        if (size is { } sz)
+        {
+            rv["size"] = sz == AddonStore.Web.Pages.Admin.ReportsModel.PageSizes[0] ? null : sz.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            rv["p_" + key] = null;
+        }
+        else rv["p_" + key] = page <= 1 ? null : page.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        return Url.Page("/Admin/Reports", rv) + "#" + key;
+    }
+
+    string SectionUrl(string view)
+    {
+        var rv = Model.RouteValues();
+        rv["view"] = view == "overview" ? null : view;
+        return Url.Page("/Admin/Reports", rv) ?? "";
+    }
+
+    // Rows-per-page choice and page navigation under a long list.
+    void Pager(string key, int total)
+    {
+        if (Model.Print || total <= AddonStore.Web.Pages.Admin.ReportsModel.PageSizes[0]) return;
+        var page = Model.PageOf(key, total);
+        var pages = Model.PageCount(total);
+        var first = (page - 1) * Model.Size + 1;
+        var last = Math.Min(total, page * Model.Size);
+        <nav class="pager no-print" aria-label="@L["Pages"]">
+            <span class="muted small">@L["{0} to {1} of {2}", first.ToString("N0", Ci), last.ToString("N0", Ci), total.ToString("N0", Ci)]</span>
+            <span class="pager-sizes small">@L["Rows per page"]:
+                @foreach (var sz in AddonStore.Web.Pages.Admin.ReportsModel.PageSizes)
+                {
+                    if (sz == Model.Size) { <b aria-current="true">@sz</b> }
+                    else { <a href="@PageUrl(key, 1, sz)">@sz</a> }
+                }
+            </span>
+            <span class="pager-pages">
+                @if (page > 1) { <a class="btn small secondary" href="@PageUrl(key, page - 1)" rel="prev">‹ @L["Previous"]</a> }
+                <span class="small">@L["Page {0} of {1}", page, pages]</span>
+                @if (page < pages) { <a class="btn small secondary" href="@PageUrl(key, page + 1)" rel="next">@L["Next"] ›</a> }
+            </span>
+        </nav>
+    }
+
+    void ShareList(List<AddonStore.Web.Pages.Admin.ReportsModel.Share> list, string key, Func<string, object>? label = null, string? filterKey = null)
+    {
+        <div id="@key">
+        @foreach (var s in Model.PageItems(list, key))
         {
             var text = s.Key == "?" ? L["unknown"] : (label is null ? s.Key : label(s.Key));
             <div class="share"><span title="@s.Key">@if (filterKey is not null && s.Key != "?") { <a href="@FilterUrl(filterKey, s.Key)">@text</a> } else { @text }</span><span class="track"><i style="width:@W(s.Percent)"></i></span><span>@s.Count · @Pct(s.Percent)</span></div>
         }
-        if (list.Count == 0)
+        @if (list.Count == 0)
         {
             <p class="muted">@L["No usage data yet in this period."]</p>
         }
+        @{ Pager(key, list.Count); }
+        </div>
     }
 }
 
@@ -56,13 +107,22 @@
 <h1 class="no-print">@L["Reports"]</h1>
 <p class="lead no-print">@L["Usage of the store: downloads, clients in use, locations, submissions and developers."]</p>
 
+<div class="report-layout">
+<nav class="report-nav no-print" aria-label="@L["Report sections"]">
+    @foreach (var (key, label) in AddonStore.Web.Pages.Admin.ReportsModel.Views)
+    {
+        <a href="@SectionUrl(key)" class="@(Model.View == key ? "active" : "")" aria-current="@(Model.View == key ? "page" : null)">@L[label]</a>
+    }
+</nav>
+<div class="report-main">
 
 <div class="card report-filter no-print">
     <div class="chips">
         @foreach (var d in AddonStore.Web.Pages.Admin.ReportsModel.Periods)
         {
             <a class="chip @(d == Model.Days && !Model.CustomRange ? "active" : "")"
-               asp-page="/Admin/Reports" asp-route-days="@d" asp-route-pkg="@Model.Pkg">@L["Last {0} days", d]</a>
+               asp-page="/Admin/Reports" asp-route-days="@d" asp-route-pkg="@Model.Pkg"
+               asp-route-view="@(Model.View == "overview" ? null : Model.View)">@L["Last {0} days", d]</a>
         }
     </div>
     <form method="get" class="filter-form">
@@ -105,10 +165,13 @@
             </select>
         </label>
         @if (Model.CustomRange) { } else { <input type="hidden" name="days" value="@Model.Days" /> }
+        @if (Model.View != "overview") { <input type="hidden" name="view" value="@Model.View" /> }
+        @if (Model.Size != AddonStore.Web.Pages.Admin.ReportsModel.PageSizes[0]) { <input type="hidden" name="size" value="@Model.Size" /> }
         <button type="submit" class="btn small">@L["Apply"]</button>
         @if (Model.AnyFilter)
         {
-            <a class="btn small secondary" asp-page="/Admin/Reports" asp-route-days="@(Model.CustomRange ? 30 : Model.Days)">@L["Reset filters"]</a>
+            <a class="btn small secondary" asp-page="/Admin/Reports" asp-route-days="@(Model.CustomRange ? 30 : Model.Days)"
+               asp-route-view="@(Model.View == "overview" ? null : Model.View)">@L["Reset filters"]</a>
         }
         <span class="spacer"></span>
         <a class="btn small" asp-page="/Admin/Reports" asp-all-route-data="Model.RouteValues(true)" target="_blank" rel="noopener">@L["PDF report"]</a>
@@ -126,6 +189,8 @@
     </p>
 </div>
 
+@if (Model.Show("overview"))
+{
 <div class="kpis">
     <div class="kpi"><b>@Model.K.DownloadsAllTime.ToString("N0", Ci)</b><span>@L["Downloads (all time)"]</span></div>
     <div class="kpi accent"><b>@Model.K.DownloadsPeriod.ToString("N0", Ci)</b><span>@L["Downloads in period"]</span>@{ Trend(Model.K.DownloadsPeriod, Model.K.DownloadsPrev); }</div>
@@ -163,15 +228,18 @@
     <p class="legend small"><span class="sw d"></span>@L["Downloads"] <span class="sw c"></span>@L["Store windows opened"]
         <span class="muted">· @L["Highest value: {0}", Model.DailyMax]</span></p>
 </div>
+}
 
-<div class="card">
+@if (Model.Show("addons"))
+{
+<div class="card" id="addons">
     <h2>@L["Ranking of add-ons"]</h2>
     <p class="muted small">@L["Sorted by downloads in the period; the trend compares with the previous period of the same length."]</p>
     <div class="table-wrap">
     <table class="ranking">
         <tr><th>#</th><th>@L["Add-on"]</th><th>@L["In period"]</th><th>@L["Trend"]</th><th>@L["Share"]</th><th>@L["Course"]</th>
             <th>@L["Client"] / @L["Web"] / API</th><th>@L["Top country"]</th><th>@L["All time"]</th></tr>
-        @foreach (var a in Model.Addons)
+        @foreach (var a in Model.PageItems(Model.Addons, "addons"))
         {
             <tr>
                 <td class="rank">
@@ -208,9 +276,13 @@
         }
     </table>
     </div>
+    @{ Pager("addons", Model.Addons.Count); }
 </div>
+}
 
-<div class="card">
+@if (Model.Show("links"))
+{
+<div class="card" id="links">
     <h2>@L["Shared links"]</h2>
     <p class="muted small">@L["Calls of the add-on pages (/a/...) per short name: page views without link previews, clicks on \"Install in Power PDF\" and client installer downloads from that page. Without a short name the link was shared without one."]</p>
     @if (Model.ShareLinks.Count == 0)
@@ -222,7 +294,7 @@
         <div class="table-wrap">
         <table>
             <tr><th>@L["Short name"]</th><th>@L["Add-on"]</th><th>@L["Page views"]</th><th>@L["Install clicks"]</th><th>@L["Client downloads"]</th></tr>
-            @foreach (var r in Model.ShareLinks)
+            @foreach (var r in Model.PageItems(Model.ShareLinks, "links"))
             {
                 <tr>
                     <td>@(r.Ref == "" ? L["without short name"] : (object)r.Ref)</td>
@@ -233,59 +305,73 @@
             <tr><th>@L["Total"]</th><th></th><th>@Model.ShareLinks.Sum(r => r.Views)</th><th>@Model.ShareLinks.Sum(r => r.Installs)</th><th>@Model.ShareLinks.Sum(r => r.Clients)</th></tr>
         </table>
         </div>
+        Pager("links", Model.ShareLinks.Count);
     }
 </div>
+}
 
+@if (Model.Show("clients"))
+{
 <div class="grid">
     <div class="card">
         <h2>@L["Clients in use"]</h2>
         <p class="muted small">@L["Store windows opened per client version in the period; shows how far a client update has spread."]</p>
-        @{ ShareList(Model.ClientVersions, k => "C" + k); }
+        @{ ShareList(Model.ClientVersions, "cv", k => "C" + k); }
     </div>
     <div class="card">
         <h2>@L["Client languages"]</h2>
         <p class="muted small">@L["Language of Power PDF when the store window was opened."]</p>
-        @{ ShareList(Model.Languages); }
+        @{ ShareList(Model.Languages, "lang"); }
     </div>
     <div class="card">
         <h2>@L["Download sources"]</h2>
         <p class="muted small">@L["Client = Add-on Store in Power PDF, Web = browser, API = scripts and AI agents."]</p>
-        @{ ShareList(Model.Sources, k => k switch { "client" => L["Client"], "web" => L["Web"], _ => (object)"API" }, "src"); }
-    </div>
-</div>
-
-<div class="grid">
-    <div class="card">
-        <h2>@L["Countries"]</h2>
-        @{ ShareList(Model.Countries, filterKey: "country"); }
-    </div>
-    <div class="card">
-        <h2>@L["Cities"]</h2>
-        @{ ShareList(Model.Cities); }
-    </div>
-    <div class="card">
-        <h2>@L["Networks and organisations"]</h2>
-        <p class="muted small">@L["Operator of the network the request came from; company networks often show the company name."]</p>
-        @{ ShareList(Model.Orgs); }
+        @{ ShareList(Model.Sources, "src", k => k switch { "client" => L["Client"], "web" => L["Web"], _ => (object)"API" }, "src"); }
     </div>
 </div>
 
 <div class="grid">
     <div class="card">
         <h2>@L["Power PDF versions"]</h2>
-        @{ ShareList(Model.HostVersions); }
+        @{ ShareList(Model.HostVersions, "host"); }
     </div>
     <div class="card">
         <h2>@L["Windows versions"]</h2>
-        @{ ShareList(Model.OsVersions); }
+        @{ ShareList(Model.OsVersions, "os"); }
     </div>
     <div class="card">
         <h2>@L["Architecture"]</h2>
-        @{ ShareList(Model.Archs); }
+        @{ ShareList(Model.Archs, "arch"); }
     </div>
 </div>
 <p class="muted small">@L["Power PDF, Windows and architecture are reported by Add-on Store clients from version 0.4.2."]</p>
+}
 
+@if (Model.Show("locations"))
+{
+<div class="grid">
+    <div class="card">
+        <h2>@L["Countries"]</h2>
+        @{ ShareList(Model.Countries, "countries", filterKey: "country"); }
+    </div>
+    <div class="card">
+        <h2>@L["Cities"]</h2>
+        @{ ShareList(Model.Cities, "cities"); }
+    </div>
+    <div class="card">
+        <h2>@L["Networks and organisations"]</h2>
+        <p class="muted small">@L["Operator of the network the request came from; company networks often show the company name."]</p>
+        @{ ShareList(Model.Orgs, "orgs"); }
+    </div>
+</div>
+<p class="muted small">
+    @L["Location and network data:"] <a href="https://db-ip.com" rel="noopener">IP Geolocation by DB-IP</a>
+    (<a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>)@(Model.GeoDate is { } geoDate ? ", " + Time.Fmt(geoDate, false) : "").
+</p>
+}
+
+@if (Model.Show("submissions"))
+{
 <div class="card">
     <h2>@L["Submissions and reviews (12 months)"]</h2>
     <div class="table-wrap">
@@ -299,22 +385,29 @@
     </table>
     </div>
 </div>
+}
 
-<div class="card">
+@if (Model.Show("developers"))
+{
+<div class="card" id="devs">
     <h2>@L["Developers"]</h2>
     <div class="table-wrap">
     <table>
         <tr><th>@L["Name"]</th><th>@L["Email"]</th><th>@L["Role"]</th><th>@L["Plug-ins"]</th><th>@L["Versions"]</th><th>@L["Downloads"]</th><th>@L["Last submission"]</th></tr>
-        @foreach (var d in Model.Devs)
+        @foreach (var d in Model.PageItems(Model.Devs, "devs"))
         {
             <tr><td>@d.Name</td><td>@d.Email</td><td>@L[d.Role]</td><td>@d.Packages</td><td>@d.Versions</td><td>@d.Downloads</td>
                 <td>@(d.LastSubmission is { } t ? Time.Fmt(t, false) : "–")</td></tr>
         }
     </table>
     </div>
+    @{ Pager("devs", Model.Devs.Count); }
 </div>
+}
 
-<div class="card">
+@if (Model.Show("sources"))
+{
+<div class="card" id="gaps">
     <h2>@L["Store versions without source code"]</h2>
     @if (Model.SourceGaps.Count == 0)
     {
@@ -325,16 +418,20 @@
         <div class="table-wrap">
         <table>
             <tr><th>@L["Add-on"]</th><th>@L["Version"]</th><th>@L["Status"]</th></tr>
-            @foreach (var g in Model.SourceGaps)
+            @foreach (var g in Model.PageItems(Model.SourceGaps, "gaps"))
             {
                 <tr><td><a href="/Plugin?id=@g.Id">@g.Name</a></td><td>@g.Version</td>
                     <td><span class="badge @g.Status.ToString().ToLowerInvariant()">@L[g.Status.ToString()]</span></td></tr>
             }
         </table>
         </div>
+        Pager("gaps", Model.SourceGaps.Count);
     }
 </div>
+}
 
+@if (Model.Show("ip"))
+{
 <div class="card@(Model.IpOn || Model.IpEventCount > 0 ? "" : " no-print")" id="ip">
     <h2>@L["IP address logging"]</h2>
     @if (!Model.IpOn)
@@ -353,14 +450,10 @@
     @if (Model.IpEventCount > 0)
     {
         <p class="no-print"><a class="btn small secondary" asp-page="/Admin/Reports" asp-page-handler="IpCsv" asp-all-route-data="Model.RouteValues()">@L["Download CSV with IP addresses"]</a></p>
-        <div class="grid">
-            <div>
-                <h3>@L["Most frequent IP addresses"]</h3>
-                @{ ShareList(Model.TopIps); }
-            </div>
-        </div>
+        <h3>@L["Most frequent IP addresses"]</h3>
+        <div class="ip-top">@{ ShareList(Model.TopIps, "ips"); }</div>
 
-        <h3>@L["Latest requests"]</h3>
+        <h3 id="events">@L["Latest requests"]</h3>
         <div class="table-wrap">
         <table>
             <tr><th>@L["Time"]</th><th>@L["Type"]</th><th>@L["Add-on"]</th><th>IP</th><th>@L["Location"]</th><th>@L["Network"]</th><th>@L["Client"]</th></tr>
@@ -386,10 +479,18 @@
             }
         </table>
         </div>
+        @if (Model.Print && Model.EventsTotal > Model.RecentEvents.Count)
+        {
+            <p class="muted small">@L["The latest {0} of {1} requests; the CSV export contains all of them.", Model.RecentEvents.Count, Model.EventsTotal]</p>
+        }
+        Pager("events", Model.EventsTotal);
+        <p class="muted small">
+            @L["Location and network data:"] <a href="https://db-ip.com" rel="noopener">IP Geolocation by DB-IP</a>
+            (<a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>)
+        </p>
     }
 </div>
+}
 
-<p class="muted small">
-    @L["Location and network data:"] <a href="https://db-ip.com" rel="noopener">IP Geolocation by DB-IP</a>
-    (<a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a>)@(Model.GeoDate is { } geoDate ? ", " + Time.Fmt(geoDate, false) : "").
-</p>
+</div>
+</div>

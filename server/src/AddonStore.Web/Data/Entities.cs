@@ -252,6 +252,8 @@ public class PackageVersion
     public string? AiReviewJson { get; set; }
     public DateTime? AiReviewAt { get; set; }
     public string? AiReviewModel { get; set; }
+    // Language of the review aid text (S0.17.0; null = created before that).
+    public string? AiReviewLang { get; set; }
 }
 
 public class AuditEntry

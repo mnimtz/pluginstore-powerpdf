@@ -134,9 +134,28 @@ public class AiAssist
                                                  ".wxs", ".md", ".txt", ".ini", ".vcxproj", ".props", ".targets", ".html", ".js", ".css" };
     private static readonly Regex HostRx = new(@"https?://([A-Za-z0-9.\-]+)", RegexOptions.Compiled);
 
-    /// <summary>Builds the review aid for a version and stores it; returns false when AI gave no answer.</summary>
+    /// <summary>The 16 store languages the review aid can be written in (code, English name for the prompt).</summary>
+    public static readonly IReadOnlyDictionary<string, string> ReviewLanguages = new Dictionary<string, string>
+    {
+        ["en"] = "English", ["de"] = "German", ["fr"] = "French", ["it"] = "Italian", ["es"] = "Spanish",
+        ["nl"] = "Dutch", ["pt"] = "Portuguese", ["da"] = "Danish", ["fi"] = "Finnish", ["nb"] = "Norwegian (Bokmål)",
+        ["sv"] = "Swedish", ["pl"] = "Polish", ["cs"] = "Czech", ["hu"] = "Hungarian", ["ru"] = "Russian", ["tr"] = "Turkish"
+    };
+
+    /// <summary>A supported language code for <paramref name="code"/> ("no"/"nn" become "nb"), else <paramref name="fallback"/>.</summary>
+    public static string ReviewLanguage(string? code, string fallback = "en")
+    {
+        var c = (code ?? "").Trim().ToLowerInvariant();
+        if (c.Length > 2) c = c[..2];
+        if (c is "no" or "nn") c = "nb";
+        return ReviewLanguages.ContainsKey(c) ? c : fallback;
+    }
+
+    /// <summary>Builds the review aid for a version in <paramref name="language"/> (one of
+    /// <see cref="ReviewLanguages"/>, else English) and stores it; returns false when AI gave no answer.</summary>
     public async Task<bool> ReviewAsync(PackageVersion v, string language, CancellationToken ct = default)
     {
+        language = ReviewLanguage(language);
         var cfg = await _ai.ConfigAsync();
         var cmp = new SemVerComparer();
         var prev = (await _db.PackageVersions.AsNoTracking()
@@ -188,7 +207,7 @@ public class AiAssist
         manifest.Append("New manifest:\n<data>\n").Append(ManifestDigest(v.ManifestJson)).Append("\n</data>\n");
         if (prev is not null) manifest.Append("Previous manifest:\n<data>\n").Append(ManifestDigest(prev.ManifestJson)).Append("\n</data>\n");
 
-        var lang = language is "de" ? "German" : "English";
+        var lang = ReviewLanguages[language];
         var r = await _ai.JsonAsync(
             "You help an administrator of the Add-on Store for Tungsten Power PDF decide whether to approve a new plug-in " +
             "version. Summarize what changed compared with the previous version, judge whether the developer's changelog " +
@@ -202,6 +221,7 @@ public class AiAssist
         target.AiReviewJson = e.GetRawText();
         target.AiReviewAt = DateTime.UtcNow;
         target.AiReviewModel = cfg.Provider + "/" + cfg.Model;
+        target.AiReviewLang = language;
         await _db.SaveChangesAsync(ct);
         return true;
     }
@@ -427,7 +447,7 @@ public sealed class AiWorker : BackgroundService
                                      .OrderBy(v => v.Id).Take(6).ToListAsync(stop))
                         {
                             if (GiveUp("rv" + v.Id)) continue;
-                            if (!await assist.ReviewAsync(v, "de", stop)) { Failed("rv" + v.Id); break; }
+                            if (!await assist.ReviewAsync(v, cfg.ReviewLanguage, stop)) { Failed("rv" + v.Id); break; }
                         }
                     }
                 }

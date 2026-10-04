@@ -660,4 +660,20 @@
   <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>Sauvegarde restaurée sans son trousseau de clés. Saisissez à nouveau les clés IA et Resend et définissez la clé de signature de secours (Signing__PrivateKeyPem) ; d'ici là, les clients ne peuvent rien installer.</value></data>
   <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>La clé de signature des paquets est illisible. Les clients refusent les installations jusqu'à ce que la sauvegarde soit restaurée avec le mot de passe du trousseau ou que le paramètre d'application Signing__PrivateKeyPem contienne la clé de secours.</value></data>
   <data name="Package signing key" xml:space="preserve"><value>Clé de signature des paquets</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>Langue des aides à la vérification automatiques</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>Recréer en {0}</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>Cette aide à la vérification est rédigée en {0}.</value></data>
+  <data name="Overview" xml:space="preserve"><value>Vue d'ensemble</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>Modules complémentaires</value></data>
+  <data name="Clients" xml:space="preserve"><value>Clients</value></data>
+  <data name="Locations" xml:space="preserve"><value>Emplacements</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>Soumissions et vérifications</value></data>
+  <data name="Report sections" xml:space="preserve"><value>Sections du rapport</value></data>
+  <data name="Pages" xml:space="preserve"><value>Pages</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>Lignes par page</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>Page {0} sur {1}</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>{0} à {1} sur {2}</value></data>
+  <data name="Previous" xml:space="preserve"><value>Précédent</value></data>
+  <data name="Next" xml:space="preserve"><value>Suivant</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>Les {0} requêtes les plus récentes sur {1} ; l'export CSV les contient toutes.</value></data>
 </root>

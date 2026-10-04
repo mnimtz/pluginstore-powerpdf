@@ -3,6 +3,10 @@
 @{
     var v = Model.V;
     var rv = AddonStore.Web.Services.AiAssist.ParseReview(v.AiReviewJson);
+    // The text is written in one language; offer to recreate it in the viewer's.
+    var ui = AddonStore.Web.Services.AiAssist.ReviewLanguage(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
+    string LangName(string code) { var n = new System.Globalization.CultureInfo(code).NativeName; return char.ToUpper(n[0]) + n[1..]; }
+    var otherLang = rv is not null && v.AiReviewLang is not null && v.AiReviewLang != ui;
 }
 <div class="ai-box">
     <div class="ai-head">
@@ -16,12 +20,16 @@
         {
             <form method="post" asp-page-handler="AiReview" asp-route-id="@v.PackageId" style="display:inline">
                 <input type="hidden" name="versionId" value="@v.Id" />
-                <button type="submit" class="btn small secondary">@L[rv is null ? "Create AI review aid" : "Create again"]</button>
+                <button type="submit" class="btn small secondary">@(otherLang ? L["Create in {0}", LangName(ui)] : L[rv is null ? "Create AI review aid" : "Create again"])</button>
             </form>
         }
     </div>
     @if (rv is not null)
     {
+        @if (otherLang)
+        {
+            <p class="muted small">@L["This review aid is written in {0}.", LangName(v.AiReviewLang!)]</p>
+        }
         <p>@rv.Summary</p>
         @if (rv.Changes.Count > 0)
         {

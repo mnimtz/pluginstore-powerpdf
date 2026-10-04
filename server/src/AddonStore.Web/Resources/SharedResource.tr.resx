@@ -660,4 +660,20 @@
   <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>Yedek, anahtar halkası olmadan geri yüklendi. Yapay zekâ ve Resend anahtarlarını yeniden girin ve yedek imza anahtarını ayarlayın (Signing__PrivateKeyPem); o zamana kadar istemciler yükleme yapamaz.</value></data>
   <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>Paket imza anahtarı okunamıyor. Yedek anahtar halkası parolasıyla geri yüklenene veya Signing__PrivateKeyPem uygulama ayarı yedek anahtarı içerene kadar istemciler yüklemeleri reddeder.</value></data>
   <data name="Package signing key" xml:space="preserve"><value>Paket imza anahtarı</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>Otomatik inceleme yardımlarının dili</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>{0} dilinde yeniden oluştur</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>Bu inceleme yardımı {0} dilinde yazılmıştır.</value></data>
+  <data name="Overview" xml:space="preserve"><value>Genel bakış</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>Eklentiler</value></data>
+  <data name="Clients" xml:space="preserve"><value>İstemciler</value></data>
+  <data name="Locations" xml:space="preserve"><value>Konumlar</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>Gönderimler ve incelemeler</value></data>
+  <data name="Report sections" xml:space="preserve"><value>Rapor bölümleri</value></data>
+  <data name="Pages" xml:space="preserve"><value>Sayfalar</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>Sayfa başına satır</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>Sayfa {0} / {1}</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>{0} - {1} / {2}</value></data>
+  <data name="Previous" xml:space="preserve"><value>Önceki</value></data>
+  <data name="Next" xml:space="preserve"><value>Sonraki</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>{1} isteğin en yeni {0} tanesi; CSV dışa aktarımı hepsini içerir.</value></data>
 </root>
