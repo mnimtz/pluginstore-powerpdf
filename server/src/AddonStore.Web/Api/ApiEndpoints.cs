@@ -128,6 +128,7 @@ public static class ApiEndpoints
                     "PATCH /api/packages/{id}/feedback/{fid}  {status: open|done} (owner/admin)",
                     "GET  /api/features               which optional AI features are switched on",
                     "GET  /api/search?q=&lang=&channel=  find add-ons by need (AI ranking with reasons when enabled, else word search; ?format=tsv)",
+                    "GET  /api/signing-key              public key of the catalog signatures (ECDSA P-256)",
                     "GET|POST /api/packages/{id}/{version}/ai-review  read or create the AI review aid (reviewers/admins)",
                     "GET|POST /api/customers          customer deliveries: list or create customers (auth)",
                     "GET|PATCH /api/customers/{cid}   one customer with codes and deliveries (creator/admin; reviewers read)",
@@ -187,10 +188,22 @@ public static class ApiEndpoints
             });
         }).RequireAuthorization("ApiOrCookie");
 
+        // Public key the catalog signatures can be checked with (clients pin it).
+        api.MapGet("/signing-key", async (PackageSigning signing) =>
+        {
+            await signing.EnsureLoadedAsync();
+            return Results.Json(new { ok = true, data = new {
+                keyId = signing.KeyId, algorithm = PackageSigning.Algorithm, publicKeyPem = signing.PublicKeyPem,
+                publicKeyRaw = signing.PublicKeyRaw,
+                message = PackageSigning.MessagePrefix + "\\n{id}\\n{version}\\n{sha256 lowercase hex}",
+                signatureFormat = "keyId:base64(r||s), IEEE P1363, in the catalog (TSV column 21, JSON field signature)" } });
+        });
+
         api.MapGet("/catalog", async (AppDbContext db, HttpContext ctx, UsageService usage, CustomerService customers,
-                                      string? channel, string? format, string? lang) =>
+                                      PackageSigning signing, string? channel, string? format, string? lang) =>
         {
             var beta = string.Equals(channel, "beta", StringComparison.OrdinalIgnoreCase);
+            await signing.EnsureLoadedAsync();
             // Customer codes in the X-Customer-Code header unlock delivered add-ons (S0.14.0).
             var grants = await customers.GrantsAsync(ctx);
 
@@ -230,12 +243,13 @@ public static class ApiEndpoints
                       .Append($"{Base(ctx)}/api/packages/{i.Id}/icon").Append('\t')
                       .Append(i.Rating.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)).Append('\t')
                       .Append(i.RatingCount).Append('\t').Append(i.Screenshots).Append('\t')
-                      .Append(Flat(i.Customer)).Append('\n');
+                      .Append(Flat(i.Customer)).Append('\t')
+                      .Append(signing.Sign(i.Id, i.Version, i.Sha256)).Append('\n');
                 }
                 return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
             }
 
-            var entries = await CatalogAsync(db, beta, Base(ctx), grants);
+            var entries = await CatalogAsync(db, beta, Base(ctx), grants, signing);
             return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live", packages = entries } });
         });
 
@@ -1074,8 +1088,9 @@ public static class ApiEndpoints
     }
 
     public static async Task<List<object>> CatalogAsync(AppDbContext db, bool includeBeta, string baseUrl,
-                                                         List<CustomerService.Granted>? grants = null)
+                                                         List<CustomerService.Granted>? grants = null, PackageSigning? signing = null)
     {
+        if (signing is not null) await signing.EnsureLoadedAsync();
         var all = await db.PackageVersions
             .Where(v => v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta))
             .ToListAsync();
@@ -1145,6 +1160,7 @@ public static class ApiEndpoints
                     : $"{baseUrl}/a/{ShareService.Slug(pick.PackageId, slugIds)}",
                 downloadUrl = $"{baseUrl}/api/packages/{pick.PackageId}/{pick.Version}/download",
                 customer,
+                signature = signing?.Sign(pick.PackageId, pick.Version, pick.Sha256),
             };
         }
     }

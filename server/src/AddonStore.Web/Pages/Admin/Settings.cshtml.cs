@@ -21,6 +21,8 @@ public class SettingsModel : PageModel
     public string BaseUrl { get; private set; } = "";
     public string TimeZone { get; private set; } = TimeDisplay.DefaultZone;
     public string SourcePolicy { get; private set; } = "required";
+    public bool FourEyes { get; private set; }
+    public int ApproverCount { get; private set; }
     public string? Notice { get; private set; }
     public string NoticeKind { get; private set; } = "ok";
     public string? TestDetail { get; private set; }
@@ -101,15 +103,16 @@ public class SettingsModel : PageModel
         await LoadAsync();
     }
 
-    public async Task OnPostServerAsync(string? baseUrl, string? timeZone, string? sourcePolicy)
+    public async Task OnPostServerAsync(string? baseUrl, string? timeZone, string? sourcePolicy, bool fourEyes)
     {
         if (sourcePolicy is "off" or "recommended" or "required")
             await _settings.SetAsync("Source.Policy", sourcePolicy);
+        await _settings.SetAsync("Review.FourEyes", fourEyes ? "on" : "off");
         var admin = await _users.GetUserAsync(User);
         await _settings.SetAsync("App.PublicBaseUrl", (baseUrl ?? "").Trim().TrimEnd('/'));
         if (timeZone is not null && TimeDisplay.Zones.Contains(timeZone))
             await _settings.SetAsync("App.TimeZone", timeZone);
-        await _audit.LogAsync(admin!.DisplayName, "settings.changed", "Server", $"public base url, time zone {timeZone}");
+        await _audit.LogAsync(admin!.DisplayName, "settings.changed", "Server", $"public base url, time zone {timeZone}, four-eyes {(fourEyes ? "on" : "off")}");
         Notice = "Settings saved.";
         await LoadAsync();
     }
@@ -261,6 +264,9 @@ public class SettingsModel : PageModel
         BaseUrl = await _settings.GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl");
         var sp = await _settings.GetAsync("Source.Policy");
         SourcePolicy = sp is "off" or "recommended" or "required" ? sp : "required";
+        FourEyes = await _settings.GetAsync("Review.FourEyes") == "on";
+        ApproverCount = (await _users.GetUsersInRoleAsync("Admin")).Concat(await _users.GetUsersInRoleAsync("Reviewer"))
+            .Where(u => u.Status == UserStatus.Active).Select(u => u.Id).Distinct().Count();
         foreach (var (key, _, _) in NotificationService.Events)
             EventEnabled[key] = await _notify.IsEnabledAsync(key);
         MyEmail = (await _users.GetUserAsync(User))?.Email;

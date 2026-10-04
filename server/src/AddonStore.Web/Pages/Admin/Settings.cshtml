@@ -88,6 +88,16 @@
             </select>
             <small style="color:var(--tun-slate)">@L["Source code is stored next to each version and visible to admins only; Power PDF clients never receive it."]</small>
         </div>
+        <div>
+            <label style="display:flex;gap:8px;align-items:center">
+                <input type="checkbox" name="fourEyes" value="true" checked="@Model.FourEyes" style="width:auto" />
+                @L["Four-eyes rule: nobody approves a version they uploaded or own"]
+            </label>
+            @if (Model.ApproverCount < 2)
+            {
+                <small style="color:var(--tun-slate)">@L["Needs at least two active admins or reviewers; with only one, own versions can no longer be approved."]</small>
+            }
+        </div>
         <button type="submit" class="btn cta">@L["Save"]</button>
     </form>
 </div>

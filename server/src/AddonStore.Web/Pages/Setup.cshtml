@@ -11,9 +11,18 @@
 {
     <div class="alert error">@Model.Error</div>
 }
+@if (Model.TokenError)
+{
+    <div class="alert error">@L["The setup token is wrong or has expired. Restart the app for a new one."]</div>
+}
 
 <div class="card">
     <form method="post" class="stack">
+        <div>
+            <label for="setupToken">@L["Setup token"]</label>
+            <input type="text" id="setupToken" name="setupToken" required autocomplete="off" spellcheck="false" />
+            <small style="color:var(--tun-slate)">@L["Shown in the server log at start-up and stored in the file setup-token.txt in the data folder; valid for 24 hours."]</small>
+        </div>
         <div>
             <label for="name">@L["Display name"]</label>
             <input type="text" id="name" name="name" required maxlength="100" />

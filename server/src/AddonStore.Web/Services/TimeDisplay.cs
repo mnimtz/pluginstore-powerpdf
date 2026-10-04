@@ -11,7 +11,7 @@ public class TimeDisplay
 {
     public const string DefaultZone = "Europe/Berlin";
 
-    /// <summary>Zones offered on the settings page (IANA ids work on Linux and Windows with .NET 8).</summary>
+    /// <summary>Zones offered on the settings page (IANA ids work on Linux and Windows since .NET 6).</summary>
     public static readonly string[] Zones =
     {
         "UTC", "Europe/London", "Europe/Lisbon", "Europe/Dublin", "Europe/Berlin", "Europe/Paris",

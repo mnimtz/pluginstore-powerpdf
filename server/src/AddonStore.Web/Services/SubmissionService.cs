@@ -112,6 +112,7 @@ public class SubmissionService
             Sha256 = await HashFileAsync(target),
             SizeBytes = new FileInfo(target).Length,
             SubmittedBy = user.DisplayName,
+            SubmittedById = user.Id,
             SubmittedVia = via,
             ValidationReportJson = report.ToJson()
         };

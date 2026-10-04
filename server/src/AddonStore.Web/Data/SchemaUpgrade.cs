@@ -36,6 +36,7 @@ public static class SchemaUpgrade
             "ALTER TABLE Packages ADD COLUMN NameJson TEXT NULL",
             "ALTER TABLE Packages ADD COLUMN CategoryOverride TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN SourcePath TEXT NULL",
+            "ALTER TABLE PackageVersions ADD COLUMN SubmittedById TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN SourceSizeBytes INTEGER NOT NULL DEFAULT 0",
             "ALTER TABLE PackageVersions ADD COLUMN SourceSha256 TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN SourceUploadedAt TEXT NULL",

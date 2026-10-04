@@ -643,4 +643,16 @@
   <data name="Sign-in failed. Check email and password, or try again later." xml:space="preserve"><value>Přihlášení se nezdařilo. Zkontrolujte e-mail a heslo nebo to zkuste později.</value></data>
   <data name="Backup restored. The server restarts now to load it completely; sign in again in a minute." xml:space="preserve"><value>Záloha obnovena. Server se nyní restartuje, aby ji načetl celou; za minutu se znovu přihlaste.</value></data>
   <data name="no longer available" xml:space="preserve"><value>již není k dispozici</value></data>
+  <data name="Setup token" xml:space="preserve"><value>Instalační token</value></data>
+  <data name="Shown in the server log at start-up and stored in the file setup-token.txt in the data folder; valid for 24 hours." xml:space="preserve"><value>Zobrazí se v protokolu serveru při spuštění a uloží do souboru setup-token.txt v datové složce; platí 24 hodin.</value></data>
+  <data name="The setup token is wrong or has expired. Restart the app for a new one." xml:space="preserve"><value>Instalační token je chybný nebo vypršel. Restartujte aplikaci a získáte nový.</value></data>
+  <data name="Password for the key ring (optional)" xml:space="preserve"><value>Heslo ke svazku klíčů (nepovinné)</value></data>
+  <data name="Password for the key ring (only for backups that contain one)" xml:space="preserve"><value>Heslo ke svazku klíčů (jen pro zálohy, které ho obsahují)</value></data>
+  <data name="With a password, the key ring that decrypts the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: after a restore, enter those keys again; customer codes keep working but can no longer be shown." xml:space="preserve"><value>S heslem se svazek klíčů, který dešifruje uložené klíče AI a Resend a zákaznické kódy, uloží do zálohy šifrovaně (AES-256). Bez hesla se vynechá: po obnovení zadejte klíče znovu; zákaznické kódy dál fungují, ale už je nelze zobrazit.</value></data>
+  <data name="The password must have at least 12 characters." xml:space="preserve"><value>Heslo musí mít alespoň 12 znaků.</value></data>
+  <data name="The password for the key ring is wrong." xml:space="preserve"><value>Heslo ke svazku klíčů je chybné.</value></data>
+  <data name="Backup restored without its key ring (no password given). Enter the AI and Resend keys again in the settings." xml:space="preserve"><value>Záloha obnovena bez svazku klíčů (nebylo zadáno heslo). Zadejte znovu klíče AI a Resend v nastavení.</value></data>
+  <data name="Four-eyes rule: nobody approves a version they uploaded or own" xml:space="preserve"><value>Princip čtyř očí: nikdo neschvaluje verzi, kterou sám nahrál nebo vlastní</value></data>
+  <data name="Needs at least two active admins or reviewers; with only one, own versions can no longer be approved." xml:space="preserve"><value>Vyžaduje alespoň dva aktivní správce nebo kontrolory; s jediným už vlastní verze nelze schválit.</value></data>
+  <data name="Four-eyes rule: another admin or reviewer has to approve a version you uploaded or own." xml:space="preserve"><value>Princip čtyř očí: verzi, kterou jste nahráli nebo vlastníte, musí schválit jiný správce nebo kontrolor.</value></data>
 </root>

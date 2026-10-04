@@ -152,6 +152,8 @@ builder.Services.AddScoped<NotificationService>();
 
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<SettingsService>();
+builder.Services.AddSingleton<PackageSigning>();
+builder.Services.AddSingleton<SetupGate>();
 builder.Services.AddScoped<TimeDisplay>();
 builder.Services.AddScoped<BackupService>();
 builder.Services.AddScoped<PackageMetaService>();
@@ -176,7 +178,10 @@ var app = builder.Build();
 
 // --- schema + roles --------------------------------------------------------
 using (var scope = app.Services.CreateScope())
+{
     await AddonStore.Web.Data.SchemaUpgrade.RunAsync(scope.ServiceProvider);
+    await app.Services.GetRequiredService<SetupGate>().InitAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>());
+}
 
 // Security response headers. TLS terminates at App Service, which does not
 // add HSTS itself; browsers only honour the header on HTTPS responses.

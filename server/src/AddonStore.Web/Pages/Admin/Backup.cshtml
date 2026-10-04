@@ -15,7 +15,14 @@
 <div class="card" style="max-width:640px">
     <h2 style="margin-top:0">@L["Create backup"]</h2>
     <p>@L["Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file."]</p>
-    <a class="btn cta" href="/Admin/Backup?handler=Download">@L["Download full backup"]</a>
+    <form method="post" asp-page-handler="Download" class="stack">
+        <div>
+            <label for="keyPassword">@L["Password for the key ring (optional)"]</label>
+            <input type="password" id="keyPassword" name="keyPassword" minlength="12" autocomplete="new-password" />
+        </div>
+        <button type="submit" class="btn cta">@L["Download full backup"]</button>
+    </form>
+    <p style="font-size:.82rem;color:var(--tun-slate)">@L["With a password, the key ring that decrypts the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: after a restore, enter those keys again; customer codes keep working but can no longer be shown."]</p>
     <p style="font-size:.82rem;color:var(--tun-slate)">@L["The backup contains password hashes and settings such as the Resend key. Store it like a password."]</p>
 </div>
 
@@ -26,6 +33,10 @@
         <div>
             <label>@L["Backup file (.zip)"]</label>
             <input type="file" name="archive" accept=".zip" required />
+        </div>
+        <div>
+            <label for="restoreKeyPassword">@L["Password for the key ring (only for backups that contain one)"]</label>
+            <input type="password" id="restoreKeyPassword" name="keyPassword" autocomplete="off" />
         </div>
         <div>
             <label>@L["Type RESTORE to confirm"]</label>
@@ -47,7 +58,12 @@
                 <td><code>@b.Name</code></td>
                 <td>@Time.Fmt(b.Utc)</td>
                 <td>@(b.Size / 1024) KB</td>
-                <td><a class="btn small secondary" href="/Admin/Backup?handler=Safety&amp;name=@b.Name">@L["Download"]</a></td>
+                <td>
+                    <form method="post" asp-page-handler="Safety" asp-route-name="@b.Name" style="display:flex;gap:6px">
+                        <input type="password" name="keyPassword" minlength="12" placeholder="@L["Password for the key ring (optional)"]" aria-label="@L["Password for the key ring (optional)"]" autocomplete="new-password" />
+                        <button type="submit" class="btn small secondary">@L["Download"]</button>
+                    </form>
+                </td>
             </tr>
         }
     </table>

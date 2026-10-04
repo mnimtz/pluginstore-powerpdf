@@ -427,6 +427,46 @@ public class PackageValidator
                 "A .zxt is a renamed DLL; check the project type (dynamic library).");
 
         CheckImports(report, file, bytes, peOffset);
+        if (arch == "x64") CheckUiLanguages(report, file, bytes);
+    }
+
+    /// <summary>
+    /// The add-on's own UI follows the Power PDF UI language: its string tables
+    /// (or, without any, its dialogs and menus) must exist in all 16 Power PDF
+    /// languages as LANGUAGE blocks in the .zxt resources.
+    /// </summary>
+    private static void CheckUiLanguages(ValidationReport report, string file, byte[] bytes)
+    {
+        var res = PeResources.Languages(bytes);
+        if (res is null) return;
+        static int Primary(ushort langId) => langId & 0x3FF;
+        res.TryGetValue(PeResources.RtString, out var strings);
+        var basis = strings is { Count: > 0 } ? strings
+            : res.Values.SelectMany(d => d).GroupBy(kv => kv.Key).ToDictionary(g => g.Key, g => g.Sum(kv => kv.Value));
+        var present = basis.Keys.Where(l => Primary(l) != 0).Select(Primary).ToHashSet();
+        if (present.Count == 0)
+        {
+            report.Warn("UI_LANGS_UNKNOWN", $"'{file}' has no localized string tables, dialogs or menus.",
+                "Texts hard-coded in the source cannot follow the Power PDF language. Put every visible text into the .rc string table with one LANGUAGE block per Power PDF language (16).");
+            return;
+        }
+        var missing = PeResources.PowerPdfLanguages.Where(l => !present.Contains(l.Primary)).Select(l => l.Code).ToList();
+        if (missing.Count > 0)
+            report.Error("UI_LANGS_MISSING",
+                $"'{file}' has its UI texts in {16 - missing.Count} of the 16 Power PDF languages; missing: {string.Join(", ", missing)}.",
+                "Every add-on follows the Power PDF UI language. Add a STRINGTABLE (and translated dialogs/menus, if any) with a LANGUAGE block for each of: " +
+                "en de fr it es nl pt da fi nb sv pl cs hu ru tr, and pick the block that matches the host language at run time.");
+        if (strings is { Count: > 0 })
+        {
+            int Count(int primary) => strings.Where(kv => Primary(kv.Key) == primary).Sum(kv => kv.Value);
+            var en = Count(0x09);
+            var partial = PeResources.PowerPdfLanguages.Where(l => l.Primary != 0x09 && Count(l.Primary) > 0 && Count(l.Primary) < en)
+                .Select(l => l.Code).ToList();
+            if (en > 0 && partial.Count > 0)
+                report.Warn("UI_STRINGS_PARTIAL",
+                    $"'{file}': the string tables of {string.Join(", ", partial)} have fewer blocks than English; some texts appear in English.",
+                    "Translate every string of the English table into each language.");
+        }
     }
 
     /// <summary>System and runtime DLLs a .zxt may import without a finding.</summary>
@@ -999,8 +1039,8 @@ public class PackageValidator
                         "All language folders must carry exactly the same atom set as the base file; this drifts apart easily after a fork or rename.");
             }
             var missing = EuroLangFolders.Where(l => !langFolders.Contains(l)).ToList();
-            if (langFolders.Count > 0 && missing.Count > 0)
-                report.Warn("LANGS_INCOMPLETE",
+            if (missing.Count > 0)
+                report.Error("LANGS_INCOMPLETE",
                     $"UILayout language folders missing: {string.Join(", ", missing)}.",
                     "Ship all 16 European Power PDF languages (ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK); the ribbon follows the host language.");
         }

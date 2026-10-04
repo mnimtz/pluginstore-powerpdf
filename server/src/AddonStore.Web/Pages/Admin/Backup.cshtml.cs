@@ -28,27 +28,46 @@ public class BackupModel : PageModel
 
     public void OnGet() => Load();
 
-    public async Task<IActionResult> OnGetDownloadAsync()
+    private const int MinKeyPassword = 12;
+
+    // A password is optional; when given it must be long enough to protect the key ring.
+    private bool BadPassword(string? password) => !string.IsNullOrEmpty(password) && password.Length < MinKeyPassword;
+
+    // POST (antiforgery-protected) instead of a GET link: the archive carries the key ring.
+    public async Task<IActionResult> OnPostDownloadAsync(string? keyPassword)
     {
+        if (BadPassword(keyPassword)) { Fail("The password must have at least 12 characters."); return Page(); }
         var admin = await _users.GetUserAsync(User);
-        var tmp = Path.Combine(Path.GetTempPath(), "pluginstore-backup-" + Guid.NewGuid().ToString("N") + ".zip");
-        await _backup.CreateAsync(tmp, admin!.DisplayName);
-        await _audit.LogAsync(admin.DisplayName, "backup.created", Path.GetFileName(tmp), $"{new FileInfo(tmp).Length / 1024} KB");
+        var full = Path.Combine(Path.GetTempPath(), "pluginstore-backup-" + Guid.NewGuid().ToString("N") + ".zip");
+        var tmp = full + ".out";
+        try
+        {
+            await _backup.CreateAsync(full, admin!.DisplayName);
+            await _backup.ExportAsync(full, tmp, string.IsNullOrEmpty(keyPassword) ? null : keyPassword);
+        }
+        finally { try { System.IO.File.Delete(full); } catch { } }
+        await _audit.LogAsync(admin.DisplayName, "backup.created", Path.GetFileName(tmp),
+            $"{new FileInfo(tmp).Length / 1024} KB, key ring " + (string.IsNullOrEmpty(keyPassword) ? "omitted" : "encrypted"));
         var stream = new FileStream(tmp, FileMode.Open, FileAccess.Read, FileShare.None, 81920, FileOptions.DeleteOnClose);
         return File(stream, "application/zip", $"pluginstore-backup-{DateTime.UtcNow:yyyyMMdd-HHmm}.zip");
     }
 
-    public async Task<IActionResult> OnGetSafetyAsync(string name)
+    public async Task<IActionResult> OnPostSafetyAsync(string name, string? keyPassword)
     {
         if (!Regex.IsMatch(name ?? "", @"^pre-restore-\d{8}-\d{6}\.zip$")) return NotFound();
         var path = Path.Combine(_backup.SafetyRoot, name!);
         if (!System.IO.File.Exists(path)) return NotFound();
+        if (BadPassword(keyPassword)) { Fail("The password must have at least 12 characters."); return Page(); }
         var admin = await _users.GetUserAsync(User);
-        await _audit.LogAsync(admin!.DisplayName, "backup.downloaded", name!);
-        return PhysicalFile(path, "application/zip", name);
+        var tmp = Path.Combine(Path.GetTempPath(), "pluginstore-safety-" + Guid.NewGuid().ToString("N") + ".zip");
+        await _backup.ExportAsync(path, tmp, string.IsNullOrEmpty(keyPassword) ? null : keyPassword);
+        await _audit.LogAsync(admin!.DisplayName, "backup.downloaded", name!,
+            "key ring " + (string.IsNullOrEmpty(keyPassword) ? "omitted" : "encrypted"));
+        var stream = new FileStream(tmp, FileMode.Open, FileAccess.Read, FileShare.None, 81920, FileOptions.DeleteOnClose);
+        return File(stream, "application/zip", name);
     }
 
-    public async Task OnPostRestoreAsync(IFormFile? archive, string? confirm)
+    public async Task OnPostRestoreAsync(IFormFile? archive, string? confirm, string? keyPassword)
     {
         var admin = await _users.GetUserAsync(User);
         if (archive is null || archive.Length == 0)
@@ -75,7 +94,20 @@ public class BackupModel : PageModel
                 Fail(check.Message);
                 return;
             }
-            var safety = await _backup.RestoreAsync(tmp, admin.DisplayName);
+            // Encrypted key ring: check the password BEFORE anything is replaced.
+            byte[]? keys = null;
+            var keysSkipped = false;
+            if (BackupService.HasEncryptedKeys(tmp))
+            {
+                if (string.IsNullOrEmpty(keyPassword)) keysSkipped = true;
+                else if ((keys = BackupService.DecryptKeys(tmp, keyPassword)) is null)
+                {
+                    await _audit.LogAsync(admin.DisplayName, "backup.restore-refused", archive.FileName, "wrong key ring password");
+                    Fail("The password for the key ring is wrong.");
+                    return;
+                }
+            }
+            var safety = await _backup.RestoreAsync(tmp, admin.DisplayName, keys);
             // An older backup may lack newer columns, tables or role names:
             // upgrade it now instead of at the next app start.
             using (var scope = _scopes.CreateScope())
@@ -83,12 +115,14 @@ public class BackupModel : PageModel
             // The audit table itself was just replaced; record the restore in the restored log.
             await _audit.LogAsync(admin.DisplayName, "backup.restored", archive.FileName,
                 "safety backup: " + Path.GetFileName(safety));
-            Notice = "Backup restored. A safety backup of the previous state was kept on the server.";
+            Notice = keysSkipped
+                ? "Backup restored without its key ring (no password given). Enter the AI and Resend keys again in the settings."
+                : "Backup restored. A safety backup of the previous state was kept on the server.";
             // Restart so every connection, cache and the restored key ring start clean
             // (App Service starts the container again by itself). Not in development.
             if (!HttpContext.RequestServices.GetRequiredService<IWebHostEnvironment>().IsDevelopment())
             {
-                Notice = "Backup restored. The server restarts now to load it completely; sign in again in a minute.";
+                if (!keysSkipped) Notice = "Backup restored. The server restarts now to load it completely; sign in again in a minute.";
                 var life = HttpContext.RequestServices.GetRequiredService<IHostApplicationLifetime>();
                 _ = Task.Run(async () => { await Task.Delay(TimeSpan.FromSeconds(3)); life.StopApplication(); });
             }

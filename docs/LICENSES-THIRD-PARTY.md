@@ -7,9 +7,9 @@ deliverables; no GPL/AGPL/LGPL. Status: **compliant**. Last audit: Oct 4, 2026.
 
 | Component | Version | License | Notes |
 |---|---|---|---|
-| ASP.NET Core 8 / .NET 8 runtime | 8.0 | MIT | Microsoft |
-| Microsoft.AspNetCore.Identity.EntityFrameworkCore | 8.0.11 | MIT | |
-| Microsoft.EntityFrameworkCore.Sqlite (+ Microsoft.Data.Sqlite) | 8.0.11 | MIT | |
+| ASP.NET Core 10 / .NET 10 runtime | 10.0 | MIT | Microsoft |
+| Microsoft.AspNetCore.Identity.EntityFrameworkCore | 10.0.12 | MIT | |
+| Microsoft.EntityFrameworkCore.Sqlite (+ Microsoft.Data.Sqlite) | 10.0.12 | MIT | |
 | SQLitePCLRaw.bundle_e_sqlite3 | 3.0.5 | Apache-2.0 | pinned directly; 2.x carried GHSA-2m69-gcr7-jv3q (High), 3.x is clean |
 | SQLite (native, via bundle) | 3.x | Public domain | |
 | MaxMind.Db (reader for .mmdb files) | 5.2.0 | Apache-2.0 | since S0.9.0, reports geolocation |

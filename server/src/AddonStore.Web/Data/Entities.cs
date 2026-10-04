@@ -241,6 +241,7 @@ public class PackageVersion
     public string? SourceReportJson { get; set; }
     public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
     public string SubmittedBy { get; set; } = "";
+    public string? SubmittedById { get; set; }   // S0.15.0: account that uploaded (four-eyes rule)
     public string SubmittedVia { get; set; } = "";   // "web" or "api:<token name>"
     public string ValidationReportJson { get; set; } = "{}";
     public string? ReviewedById { get; set; }

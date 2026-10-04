@@ -643,4 +643,16 @@
   <data name="Sign-in failed. Check email and password, or try again later." xml:space="preserve"><value>Inloggningen misslyckades. Kontrollera e-post och lösenord eller försök igen senare.</value></data>
   <data name="Backup restored. The server restarts now to load it completely; sign in again in a minute." xml:space="preserve"><value>Säkerhetskopian har återställts. Servern startas om för att läsa in den helt; logga in igen om en minut.</value></data>
   <data name="no longer available" xml:space="preserve"><value>inte längre tillgänglig</value></data>
+  <data name="Setup token" xml:space="preserve"><value>Installationstoken</value></data>
+  <data name="Shown in the server log at start-up and stored in the file setup-token.txt in the data folder; valid for 24 hours." xml:space="preserve"><value>Visas i serverloggen vid start och sparas i filen setup-token.txt i datamappen; giltig i 24 timmar.</value></data>
+  <data name="The setup token is wrong or has expired. Restart the app for a new one." xml:space="preserve"><value>Installationstoken är fel eller har gått ut. Starta om appen för att få en ny.</value></data>
+  <data name="Password for the key ring (optional)" xml:space="preserve"><value>Lösenord för nyckelringen (valfritt)</value></data>
+  <data name="Password for the key ring (only for backups that contain one)" xml:space="preserve"><value>Lösenord för nyckelringen (bara för säkerhetskopior som innehåller en)</value></data>
+  <data name="With a password, the key ring that decrypts the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: after a restore, enter those keys again; customer codes keep working but can no longer be shown." xml:space="preserve"><value>Med ett lösenord följer nyckelringen som dekrypterar de sparade AI- och Resend-nycklarna och kundkoderna med krypterad (AES-256). Utan lösenord utelämnas den: ange nycklarna igen efter en återställning; kundkoder fungerar fortfarande men kan inte längre visas.</value></data>
+  <data name="The password must have at least 12 characters." xml:space="preserve"><value>Lösenordet måste ha minst 12 tecken.</value></data>
+  <data name="The password for the key ring is wrong." xml:space="preserve"><value>Lösenordet för nyckelringen är fel.</value></data>
+  <data name="Backup restored without its key ring (no password given). Enter the AI and Resend keys again in the settings." xml:space="preserve"><value>Säkerhetskopian återställdes utan nyckelring (inget lösenord). Ange AI- och Resend-nycklarna igen i inställningarna.</value></data>
+  <data name="Four-eyes rule: nobody approves a version they uploaded or own" xml:space="preserve"><value>Fyraögonsprincip: ingen godkänner en version som de själva har laddat upp eller äger</value></data>
+  <data name="Needs at least two active admins or reviewers; with only one, own versions can no longer be approved." xml:space="preserve"><value>Kräver minst två aktiva administratörer eller granskare; med bara en kan egna versioner inte längre godkännas.</value></data>
+  <data name="Four-eyes rule: another admin or reviewer has to approve a version you uploaded or own." xml:space="preserve"><value>Fyraögonsprincip: en version som du har laddat upp eller äger måste godkännas av en annan administratör eller granskare.</value></data>
 </root>

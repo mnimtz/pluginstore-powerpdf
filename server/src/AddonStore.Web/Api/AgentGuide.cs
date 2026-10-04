@@ -181,9 +181,26 @@ languages: en, de, fr, it, es, nl, pt, da, fi, nb, sv, pl, cs, hu, ru, tr.
   client show them in each user's language.
 - `name` may stay a single product name (e.g. {"en": "Smart Bookmarks"}) or be
   localized.
-- The plugin's own UI follows the same rule: every UILayout language folder
-  (ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK) and all
-  string resources.
+- The plugin's own UI follows the Power PDF UI language (mandatory, checked):
+  - every UILayout language folder ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR
+    SVE PLK CSY HUN RUS TRK with a translated NameAndTitle.xml
+    (`LANGS_INCOMPLETE`, error);
+  - every visible text of the plug-in (messages, dialogs, menus, options
+    pages, tooltips) in the .zxt resources: a STRINGTABLE with one LANGUAGE
+    block per language (en de fr it es nl pt da fi nb sv pl cs hu ru tr) and
+    run-time selection of the block that matches the host language
+    (`DVAppGetLanguage`: ENU, DEU, FRA, ...). The validator reads the
+    resources of the x64 .zxt (`UI_LANGS_MISSING`, error;
+    `UI_STRINGS_PARTIAL` and `UI_LANGS_UNKNOWN`, warnings). Texts hard-coded
+    in the source cannot follow the language: move them into the string
+    table.
+- YOUR job as the submitting AI: when the add-on you were asked to upload
+  lacks any of these languages, add the missing translations completely
+  BEFORE you submit (string tables, dialogs, menus, UILayout folders),
+  rebuild, and say in the changelog that languages were added. Do not
+  upload a version with missing UI languages and do not ask the user to
+  translate; only when you cannot change the source (no source access),
+  stop and tell the user which languages are missing.
 
 ## Ribbon governance (mandatory)
 
@@ -445,6 +462,15 @@ Developers manage their own customers and deliver only their own add-ons;
 admins see and manage all, reviewers read. Admins get an email when a
 developer creates or changes a delivery.
 
+## Package signatures
+
+Every catalog entry carries a signature of the server (ECDSA P-256 over
+"addonstore-pkg-v1\n{id}\n{version}\n{sha256}"), in TSV column 21 and the
+JSON field `signature` ("keyId:base64"). The public key is at
+`GET {{baseUrl}}/api/signing-key`. The Power PDF client (0.7.0+) installs only
+packages signed with a key it trusts, so nothing changes for you as a
+submitter: the server signs what it accepted.
+
 ## Versioning and ownership
 
 - `version` is MAJOR.MINOR.PATCH (digits only, no suffixes).
@@ -578,7 +604,10 @@ be free of warnings before review. Info is for information only.
 | RESERVED_PANEL_NS | error | The layout uses the host-owned `panel::` atom namespace. |
 | ICONMODE_SMALL | warning | A ribbon button uses IconMode="1" (small icon); use 4. |
 | LANG_ATOMS_INCONSISTENT | warning | A UILayout language folder declares different atoms than the base file. |
-| LANGS_INCOMPLETE | warning | UILayout language folders are missing (all 16 expected). |
+| LANGS_INCOMPLETE | error | UILayout language folders are missing (all 16 Power PDF languages are required). |
+| UI_LANGS_MISSING | error | The x64 .zxt has its UI texts (string tables; without them dialogs/menus) not in all 16 Power PDF languages. Add the missing LANGUAGE blocks before submitting. |
+| UI_STRINGS_PARTIAL | warning | Some languages have fewer string blocks than English; those texts appear in English. |
+| UI_LANGS_UNKNOWN | warning | No localized string tables, dialogs or menus found; hard-coded texts cannot follow the Power PDF language. |
 | CATEGORY_MISSING | error | `category` is not set. |
 | CATEGORY_INVALID | error | `category` is not a valid slug (3 to 24 lower-case letters or hyphens). |
 | CATEGORY_UNKNOWN | error | The category does not exist and no `categoryProposal` was given (also on PATCH). |
@@ -773,7 +802,9 @@ Store: {{baseUrl}}
    Follow "Changing an existing add-on" in the guide step by step.
 
 Key rules (details in the guide): every upload carries a new, higher SemVer
-version; description and changelog in all 16 European languages; a
+version; description and changelog in all 16 European languages; the
+add-on's own UI (string tables, dialogs, menus, UILayout folders) in all 16
+Power PDF UI languages, add missing translations yourself before you submit; a
 `category` from `GET {{baseUrl}}/api/categories` (propose a new broad one only
 if none fits); after every upload also the source code of that version
 (`PUT .../api/packages/{id}/{version}/source`, automatically; the stored

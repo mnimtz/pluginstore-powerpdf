@@ -14,10 +14,12 @@ public class VersionActionService
     private readonly AuditService _audit;
     private readonly NotificationService _notify;
     private readonly SourceService _sources;
+    private readonly SettingsService _settings;
 
-    public VersionActionService(AppDbContext db, AuditService audit, NotificationService notify, SourceService sources)
+    public VersionActionService(AppDbContext db, AuditService audit, NotificationService notify, SourceService sources,
+                                SettingsService settings)
     {
-        _db = db; _audit = audit; _notify = notify; _sources = sources;
+        _db = db; _audit = audit; _notify = notify; _sources = sources; _settings = settings;
     }
 
     private static string Enc(string s) => System.Net.WebUtility.HtmlEncode(s);
@@ -50,6 +52,10 @@ public class VersionActionService
         if (v is null || v.Status != VersionStatus.Beta) return null;
         if (approve && await _sources.BlocksApprovalAsync(v))
             return "The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it.";
+        // Four-eyes rule (setting Review.FourEyes): nobody approves a version they uploaded or whose package they own.
+        if (approve && v.PackageId != SubmissionService.ClientPackageId && await FourEyesAsync() &&
+            (v.SubmittedById == actor.Id || v.Package?.OwnerId == actor.Id))
+            return "Four-eyes rule: another admin or reviewer has to approve a version you uploaded or own.";
         v.Status = approve ? VersionStatus.Live : VersionStatus.Rejected;
         v.ReviewedById = actor.Id;
         v.ReviewedAt = DateTime.UtcNow;
@@ -66,6 +72,8 @@ public class VersionActionService
                 + await _notify.PluginLinkAsync(v.PackageId));
         return approve ? "Version approved and live." : "Version rejected.";
     }
+
+    private async Task<bool> FourEyesAsync() => await _settings.GetAsync("Review.FourEyes") == "on";
 
     public async Task<string?> WithdrawAsync(int versionId, AppUser actor, bool isAdmin)
     {

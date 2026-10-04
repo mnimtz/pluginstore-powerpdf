@@ -11,3 +11,4 @@ dist/
 client/
 .git/
 .vs/
+**/*.local.pem

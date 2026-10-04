@@ -53,6 +53,7 @@ public static class OpenApiDoc
             new[] { "id:path:package id", "status:query:'open' or 'done'" }),
         new("patch", "/api/packages/{id}/feedback/{fid}", "setFeedbackStatus", "Mark a report done or open again.", "owner",
             new[] { "id:path:package id", "fid:path:report id" }, Body: "feedbackStatus"),
+        new("get", "/api/signing-key", "getSigningKey", "Public key (ECDSA P-256) of the catalog signatures; clients verify id, version and SHA-256 of every package with it.", "none", Array.Empty<string>()),
         new("get", "/api/features", "getFeatures", "Which optional AI features of the store are switched on.", "none", Array.Empty<string>()),
         new("get", "/api/search", "searchAddons", "Add-ons for a need described in plain words, best first, each with a reason (AI ranking when enabled, else word search).", "none",
             new[] { "q:query:the need, 2 to 300 characters", "lang:query:language of the reasons", "channel:query:'beta' includes pre-release versions", "format:query:'tsv'" }),

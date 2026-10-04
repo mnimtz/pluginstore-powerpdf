@@ -29,3 +29,6 @@ client/installer/Release/
 client/link/Release/
 client/link/obj/
 client/third_party/webview2/x64/
+
+# signing keys never go into the repository
+*.local.pem

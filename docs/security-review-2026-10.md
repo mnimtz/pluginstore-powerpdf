@@ -76,10 +76,10 @@ backup/restore) green after the fixes.
 
 | # | Severity | Item | Recommendation |
 |---|---|---|---|
-| O1 | High | .NET 8 support ends Nov 10, 2026 | Move server and container images to .NET 10 LTS before that date |
-| O2 | Medium | Backup archives contain the Data Protection key ring unencrypted | Store backups only in protected storage; optional archive password later |
-| O3 | Medium | Admins can approve their own uploads | Four-eyes rule for the customer phase (setting) |
-| O4 | Medium | First-run setup token has no expiry | Expire after first use or 24 hours |
+| O1 | High | .NET 8 support ends Nov 10, 2026 | **Fixed in S0.15.0**: .NET 10 LTS, EF Core/Identity 10.0.12, container images 10.0 |
+| O2 | Medium | Backup archives contain the Data Protection key ring unencrypted | **Fixed in S0.15.0**: downloads carry it only encrypted with a password (AES-256-GCM, PBKDF2-SHA256 600k) or not at all; the password is checked before a restore changes anything |
+| O3 | Medium | Admins can approve their own uploads | **Fixed in S0.15.0**: setting four-eyes rule (uploader and owner cannot approve), off by default while only one admin exists |
+| O4 | Medium | First-run setup had no token at all (first visitor became admin) | **Fixed in S0.15.0**: one-time token in the server log and data/setup-token.txt, 24 hours, deleted after use; setup serialized |
 | O5 | Low | Some list pages run one query per row; concurrent writes on the same row can still answer 500 | Batch queries and catch concurrency exceptions when traffic grows |
 | O6 | Low | Geo database reload not synchronized with readers | Swap the reader atomically |
 | O7 | Low | Dates are stored in UTC and shown without time zone | Show the user's time zone in reports |
@@ -115,3 +115,16 @@ this (planned H4). The self-update MSI is unpacked in the user's TEMP before
 `msiexec` elevates. Network calls of the store window still run on the UI
 thread (short freezes on slow networks). The options page with the new
 customer-code field was built but not clicked through live.
+
+## S0.15.0 additions
+
+- Catalog signatures (ECDSA P-256 over id, version, SHA-256; TSV column 21,
+  JSON `signature`, key at `/api/signing-key`). Clients from 0.7.0 install
+  only packages signed with a pinned key; closes the open client item about
+  a changed `ServerUrl` in HKCU. Key: App Setting `Signing__PrivateKeyPem`,
+  else created once and stored encrypted in the database (backed up with the
+  encrypted key ring). A second, offline key is pinned in the client for
+  recovery.
+- UI-language rule: every add-on's own UI in the 16 Power PDF languages
+  (`UI_LANGS_MISSING`, `LANGS_INCOMPLETE` now errors); the agent guide makes
+  the submitting AI add missing translations before it uploads.
