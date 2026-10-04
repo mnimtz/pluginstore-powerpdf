@@ -6,7 +6,7 @@
         <select name="@(Model.Prefix)Mode" style="width:auto">
             <option value="latest" selected="@(Model.Mode == "latest")">@L["newest"]</option>
             <option value="fixed" selected="@(Model.Mode == "fixed")">@L["fixed"]</option>
-            <option value="off" selected="@(Model.Mode == "off")">@L["off"]</option>
+            <option value="off" selected="@(Model.Mode == "off")">@L["Off"]</option>
         </select>
         <select name="@(Model.Prefix)Version" class="stage-version" style="width:auto">
             @if (Model.Version is not null && !Model.Versions.Contains(Model.Version))

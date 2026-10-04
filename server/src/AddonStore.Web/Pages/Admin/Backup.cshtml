@@ -177,7 +177,7 @@
             </div>
             <button type="submit" class="btn cta">@L["Download full backup"]</button>
         </form>
-        <p style="font-size:.82rem;color:var(--tun-slate)">@L["With a password, the key ring that decrypts the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: after a restore, enter those keys again; customer codes keep working but can no longer be shown."]</p>
+        <p style="font-size:.82rem;color:var(--tun-slate)">@L["With a password, the key ring that decrypts the package signing key, the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: restored on another server, the signing key is lost (clients refuse installs until the recovery key is set) and the AI and Resend keys must be entered again; customer codes keep working but can no longer be shown."]</p>
         <p style="font-size:.82rem;color:var(--tun-slate)">@L["The backup contains password hashes and settings such as the Resend key. Store it like a password."]</p>
     </div>
 }

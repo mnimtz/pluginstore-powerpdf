@@ -256,6 +256,25 @@ public class BackupService
         }
     }
 
+    /// <summary>A value of the AppSettings table in an archive's database (null when missing).</summary>
+    public static string? ArchiveSetting(string zipPath, string key)
+    {
+        var tmpDb = Path.Combine(Path.GetTempPath(), "pluginstore-setting-" + Guid.NewGuid().ToString("N") + ".db");
+        try
+        {
+            using (var zip = ZipFile.OpenRead(zipPath))
+                zip.GetEntry("pluginstore.db")!.ExtractToFile(tmpDb);
+            using var c = new SqliteConnection($"Data Source={tmpDb};Mode=ReadOnly;Pooling=False");
+            c.Open();
+            using var cmd = c.CreateCommand();
+            cmd.CommandText = "SELECT Value FROM AppSettings WHERE Key = $k";
+            cmd.Parameters.AddWithValue("$k", key);
+            return cmd.ExecuteScalar() as string;
+        }
+        catch (SqliteException) { return null; }
+        finally { try { File.Delete(tmpDb); } catch (IOException) { } }
+    }
+
     /// <summary>True when the store holds at most one account and no packages: a server set up just now.</summary>
     public async Task<bool> IsFreshInstanceAsync() =>
         await _db.Users.CountAsync() <= 1 && !await _db.Packages.AnyAsync();
@@ -273,30 +292,17 @@ public class BackupService
             try { old.Delete(); } catch (IOException) { }
         await CreateAsync(safety, actingName + " (automatic, before restore)");
 
-        var dbPath = DbPath;
-        using var zip = ZipFile.OpenRead(zipPath);
-
-        // Database: replace the file under closed connections.
-        SqliteConnection.ClearAllPools();
-        var staged = dbPath + ".restore";
-        zip.GetEntry("pluginstore.db")!.ExtractToFile(staged, overwrite: true);
-        // Every side file of the old database goes: a leftover rollback journal
-        // (-journal, since S0.17.1) would be applied to the RESTORED file on the next
-        // open and damage it; -wal/-shm come from databases before S0.17.1.
-        foreach (var side in new[] { dbPath + "-journal", dbPath + "-wal", dbPath + "-shm" })
-            if (File.Exists(side)) File.Delete(side);
-        File.Copy(staged, dbPath, overwrite: true);
-        File.Delete(staged);
-        SqliteConnection.ClearAllPools();
-
-        ReplaceFolder(zip, "packages/", PackagesRoot);
-        ReplaceFolder(zip, "avatars/", AvatarsRoot);
-        ReplaceFolder(zip, "devkit/", DevkitRoot);
-        AddMissingKeys(zip, KeysRoot);
-        if (decryptedKeys is not null)
+        try
         {
-            using var inner = new ZipArchive(new MemoryStream(decryptedKeys), ZipArchiveMode.Read);
-            AddMissingKeys(inner, KeysRoot, "");
+            Apply(zipPath, decryptedKeys);
+        }
+        catch (Exception ex)
+        {
+            // Back to the state before the restore, from the safety backup just written.
+            var rolledBack = false;
+            try { Apply(safety, null); rolledBack = true; }
+            catch (Exception) { }
+            throw new RestoreFailedException(ex.Message, rolledBack, Path.GetFileName(safety), ex);
         }
         return safety;
     }
@@ -318,7 +324,67 @@ public class BackupService
         }
     }
 
-    private static void ReplaceFolder(ZipArchive zip, string prefix, string root)
+    /// <summary>
+    /// Puts an archive in place in two steps: first everything is unpacked next to
+    /// its target (a damaged entry or a full disk stops here, the live store is
+    /// untouched), then database and folders are swapped.
+    /// </summary>
+    private void Apply(string zipPath, byte[]? decryptedKeys)
+    {
+        var dbPath = DbPath;
+        var folders = new[] { ("packages/", PackagesRoot), ("avatars/", AvatarsRoot), ("devkit/", DevkitRoot) };
+        var stagedDb = dbPath + ".restore";
+        using var zip = ZipFile.OpenRead(zipPath);
+        try
+        {
+            zip.GetEntry("pluginstore.db")!.ExtractToFile(stagedDb, overwrite: true);
+            foreach (var (prefix, root) in folders) StageFolder(zip, prefix, root + ".restore");
+
+            // Database: replace the file under closed connections. Every side file of the
+            // old database goes: a leftover rollback journal (-journal, since S0.17.1) would
+            // be applied to the RESTORED file on the next open and damage it; -wal/-shm come
+            // from databases before S0.17.1.
+            SqliteConnection.ClearAllPools();
+            foreach (var side in new[] { dbPath + "-journal", dbPath + "-wal", dbPath + "-shm" })
+                if (File.Exists(side)) File.Delete(side);
+            File.Copy(stagedDb, dbPath, overwrite: true);
+            SqliteConnection.ClearAllPools();
+
+            foreach (var (_, root) in folders) SwapContents(root + ".restore", root);
+        }
+        finally
+        {
+            try { File.Delete(stagedDb); } catch (IOException) { }
+            foreach (var (_, root) in folders) DeleteDir(root + ".restore");
+        }
+        AddMissingKeys(zip, KeysRoot);
+        if (decryptedKeys is not null)
+        {
+            using var inner = new ZipArchive(new MemoryStream(decryptedKeys), ZipArchiveMode.Read);
+            AddMissingKeys(inner, KeysRoot, "");
+        }
+    }
+
+    // Moves the CONTENT, not the folder: a root may be a mount point.
+    private static void SwapContents(string staged, string root)
+    {
+        var old = root + ".old";
+        DeleteDir(old);
+        Directory.CreateDirectory(old);
+        Directory.CreateDirectory(root);
+        foreach (var d in Directory.GetDirectories(root)) Directory.Move(d, Path.Combine(old, Path.GetFileName(d)));
+        foreach (var f in Directory.GetFiles(root)) File.Move(f, Path.Combine(old, Path.GetFileName(f)));
+        foreach (var d in Directory.GetDirectories(staged)) Directory.Move(d, Path.Combine(root, Path.GetFileName(d)));
+        foreach (var f in Directory.GetFiles(staged)) File.Move(f, Path.Combine(root, Path.GetFileName(f)));
+        DeleteDir(old);
+    }
+
+    private static void DeleteDir(string dir)
+    {
+        try { if (Directory.Exists(dir)) Directory.Delete(dir, recursive: true); } catch (IOException) { }
+    }
+
+    private static void StageFolder(ZipArchive zip, string prefix, string root)
     {
         if (Directory.Exists(root)) Directory.Delete(root, recursive: true);
         Directory.CreateDirectory(root);
@@ -332,6 +398,13 @@ public class BackupService
             e.ExtractToFile(target, overwrite: true);
         }
     }
+}
+
+/// <summary>A restore that failed; <see cref="RolledBack"/> tells whether the previous state is back.</summary>
+public sealed class RestoreFailedException(string message, bool rolledBack, string safety, Exception inner) : Exception(message, inner)
+{
+    public bool RolledBack { get; } = rolledBack;
+    public string Safety { get; } = safety;
 }
 
 /// <summary>Password encryption of the key ring in downloaded backups.</summary>

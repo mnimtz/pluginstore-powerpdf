@@ -228,7 +228,13 @@ public class CustomerService
             StartsAt = startsAt, EndsAt = endsAt, CreatedBy = actor.DisplayName,
         };
         _db.Deliveries.Add(d);
-        await _db.SaveChangesAsync();
+        try { await _db.SaveChangesAsync(); }
+        catch (DbUpdateException)
+        {
+            // created at the same moment by another request (unique customer + package)
+            _db.Entry(d).State = EntityState.Detached;
+            return Outcome.Fail("DELIVERY_EXISTS", "This add-on is already delivered to this customer; change that delivery instead.");
+        }
         await _audit.LogAsync(actor.DisplayName, "delivery.created", $"customer {customer.Id}",
             $"{packageId}: beta {d.BetaMode} {d.BetaVersion}, live {d.LiveMode} {d.LiveVersion}");
         if (ownCode) await CreateCodeAsync(customer.Id, d.Id, actor.DisplayName, 0);
@@ -242,6 +248,9 @@ public class CustomerService
                                                    bool datesGiven, string? status, AppUser actor, bool actorIsAdmin)
     {
         var versions = await DeliverableVersionsAsync(d.PackageId);
+        // "fixed" without a version keeps the version fixed so far.
+        if (beta is { Mode: "fixed", Version: null }) beta = beta with { Version = d.BetaVersion };
+        if (live is { Mode: "fixed", Version: null }) live = live with { Version = d.LiveVersion };
         if (beta is not null && CheckStage(beta, versions) is { } e1) return Outcome.Fail("DELIVERY_INVALID", e1);
         if (live is not null && CheckStage(live, versions) is { } e2) return Outcome.Fail("DELIVERY_INVALID", e2);
         if (status is not null and not ("active" or "paused" or "ended")) return Outcome.Fail("DELIVERY_INVALID", "status must be active, paused or ended");
@@ -323,6 +332,51 @@ public class CustomerService
     // --------------------------------------------------- client side (codes)
     public record Granted(Delivery Delivery, Customer Customer, Package Package, PackageVersion? Beta, PackageVersion? Live);
 
+    // Per address and hour: the distinct unknown codes seen (the limit counts these, so
+    // a typo sent with every catalog call counts once) and the codes found valid (still
+    // honoured after the limit is reached, so a site behind one NAT address keeps its add-ons).
+    private sealed class CodeAttempts
+    {
+        public readonly HashSet<string> Unknown = new();
+        public readonly HashSet<string> Valid = new();
+    }
+
+    /// <summary>The valid codes of the X-Customer-Code header, under the per-address guessing limit.</summary>
+    private async Task<List<CustomerCode>> ValidCodesAsync(HttpContext ctx)
+    {
+        var raw = ctx.Request.Headers[HeaderName].ToString();
+        if (string.IsNullOrWhiteSpace(raw)) return new();
+        var hashes = raw.Split(new[] { ';', ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(Normalize).Where(c => c.Length == 20).Distinct().Take(10).Select(Hash).ToList();
+        if (hashes.Count == 0) return new();
+        var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
+        var key = "custcode-fail:" + ip + ":" + DateTime.UtcNow.ToString("yyyyMMddHH");
+        var state = _cache.GetOrCreate(key, e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1); return new CodeAttempts(); })!;
+        lock (state)
+        {
+            // Blocked: only codes this address already used successfully this hour.
+            if (state.Unknown.Count >= MaxFailedPerHour) hashes = hashes.Where(state.Valid.Contains).ToList();
+        }
+        if (hashes.Count == 0) return new();
+
+        var now = DateTime.UtcNow;
+        var rows = await _db.CustomerCodes.Where(c => hashes.Contains(c.CodeHash)).ToListAsync();
+        var codes = rows.Where(c => CodeValid(c, now)).ToList();
+        // expired or revoked codes are not guesses (an old code left on a workstation must not lock out the new one)
+        var unknown = hashes.Where(h => !rows.Any(r => r.CodeHash == h)).ToList();
+        bool blockNow = false;
+        lock (state)
+        {
+            foreach (var c in codes) state.Valid.Add(c.CodeHash);
+            var before = state.Unknown.Count;
+            foreach (var h in unknown) state.Unknown.Add(h);
+            blockNow = before < MaxFailedPerHour && state.Unknown.Count >= MaxFailedPerHour;
+        }
+        if (blockNow)
+            await _audit.LogAsync("system", "customer.code.blocked", ip, $"{MaxFailedPerHour} unknown customer codes within an hour; new codes from this address are ignored for the hour");
+        return codes;
+    }
+
     /// <summary>
     /// Deliveries the X-Customer-Code header of this request unlocks (several
     /// codes separated by ";" or ","). Unknown codes count against a per-address
@@ -330,29 +384,9 @@ public class CustomerService
     /// </summary>
     public async Task<List<Granted>> GrantsAsync(HttpContext ctx)
     {
-        var raw = ctx.Request.Headers[HeaderName].ToString();
-        if (string.IsNullOrWhiteSpace(raw)) return new();
-        var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
-        var key = "custcode-fail:" + ip + ":" + DateTime.UtcNow.ToString("yyyyMMddHH");
-        var fails = _cache.GetOrCreate(key, e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1); return new int[1]; })!;
-        if (fails[0] >= MaxFailedPerHour) return new();
-
-        var hashes = raw.Split(new[] { ';', ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(Normalize).Where(c => c.Length == 20).Distinct().Take(10).Select(Hash).ToList();
-        if (hashes.Count == 0) return new();
-        var now = DateTime.UtcNow;
-        var rows = await _db.CustomerCodes.Where(c => hashes.Contains(c.CodeHash)).ToListAsync();
-        var codes = rows.Where(c => CodeValid(c, now)).ToList();
-        // expired or revoked codes are not guesses (an old code left on a workstation must not lock out the new one)
-        var unknown = hashes.Count(h => !rows.Any(r => r.CodeHash == h));
-        if (unknown > 0)
-        {
-            bool blockNow;
-            lock (fails) { fails[0] += unknown; blockNow = fails[0] >= MaxFailedPerHour; }
-            if (blockNow)
-                await _audit.LogAsync("system", "customer.code.blocked", ip, $"{MaxFailedPerHour} unknown customer codes within an hour; codes from this address are ignored for the hour");
-        }
+        var codes = await ValidCodesAsync(ctx);
         if (codes.Count == 0) return new();
+        var now = DateTime.UtcNow;
 
         var customerIds = codes.Select(c => c.CustomerId).Distinct().ToList();
         var customers = await _db.Customers.Where(c => customerIds.Contains(c.Id) && c.Status == "active").ToDictionaryAsync(c => c.Id);
@@ -392,12 +426,9 @@ public class CustomerService
         var grants = await GrantsAsync(ctx);
         if (grants.Count > 0)
             return (true, string.Join(", ", grants.Select(g => g.Customer.Name).Distinct()), grants.Select(g => g.Package.Id).Distinct().Count());
-        // A valid code of an active customer without a current delivery is still valid.
-        var hashes = ctx.Request.Headers[HeaderName].ToString().Split(new[] { ';', ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(Normalize).Where(c => c.Length == 20).Distinct().Take(10).Select(Hash).ToList();
-        if (hashes.Count == 0) return (false, "", 0);
-        var now = DateTime.UtcNow;
-        var codes = (await _db.CustomerCodes.Where(c => hashes.Contains(c.CodeHash)).ToListAsync()).Where(c => CodeValid(c, now)).ToList();
+        // A valid code of an active customer without a current delivery is still valid
+        // (same limit: this second look counts nothing new, the codes are known by now).
+        var codes = await ValidCodesAsync(ctx);
         if (codes.Count == 0) return (false, "", 0);
         var ids = codes.Select(c => c.CustomerId).Distinct().ToList();
         var names = await _db.Customers.Where(c => ids.Contains(c.Id) && c.Status == "active").Select(c => c.Name).ToListAsync();

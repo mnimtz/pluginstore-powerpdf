@@ -4,12 +4,12 @@
     var c = Model.Cust!;
     ViewData["Title"] = c.Name;
     string StageText(string mode, string? version, string? resolved) =>
-        mode == "off" ? L["off"].Value
+        mode == "off" ? L["Off"].Value
         : (mode == "fixed" ? L["fixed"].Value + " " + version : L["newest"].Value) + (resolved is null ? " (–)" : " → " + resolved);
 }
 
 <p style="margin:0 0 6px"><a href="/Customers">← @L["Customers"]</a></p>
-<h1>@c.Name <span class="badge @(c.Status == "active" ? "live" : "withdrawn")" style="font-size:.8rem;vertical-align:middle">@L[c.Status == "active" ? "active" : "paused"]</span></h1>
+<h1>@c.Name <span class="badge @(c.Status == "active" ? "live" : "withdrawn")" style="font-size:.8rem;vertical-align:middle">@L[c.Status == "active" ? "Active" : "paused"]</span></h1>
 <p class="muted small">@L["Created by"] @Model.Owner · @Time.Fmt(c.CreatedAt) · @L["Last activity"]: @(c.LastSeenAt is null ? "–" : Time.Fmt(c.LastSeenAt))</p>
 
 @if (Model.Notice is not null)
@@ -94,7 +94,7 @@
             <div class="ai-head">
                 <b>@d.Name</b> <span class="muted small">@del.PackageId</span>
                 @if (d.Visibility == "private") { <span class="badge submitted">@L["private"]</span> }
-                <span class="badge @(d.Effective ? "live" : "withdrawn")">@L[del.Status == "active" ? (d.Effective ? "active" : "outside period") : del.Status == "paused" ? "paused" : "ended"]</span>
+                <span class="badge @(d.Effective ? "live" : "withdrawn")">@L[del.Status == "active" ? (d.Effective ? "Active" : "outside period") : del.Status == "paused" ? "paused" : "ended"]</span>
                 <span class="muted small">@L["Last activity"]: @(del.LastSeenAt is null ? "–" : Time.Fmt(del.LastSeenAt))</span>
             </div>
             <p class="small" style="margin:6px 0">
@@ -201,7 +201,7 @@
             <div>
                 <label>@L["Status"]</label>
                 <select name="status">
-                    <option value="active" selected="@(c.Status == "active")">@L["active"]</option>
+                    <option value="active" selected="@(c.Status == "active")">@L["Active"]</option>
                     <option value="paused" selected="@(c.Status == "paused")">@L["paused (no add-ons for this customer)"]</option>
                 </select>
             </div>

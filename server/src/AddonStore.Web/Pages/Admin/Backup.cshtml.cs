@@ -224,6 +224,19 @@ public class BackupModel : PageModel
             }
             byte[]? keys = null;
             var keysSkipped = false;
+            // Downloaded without a password: no key ring inside. On another server the
+            // package signing key in it cannot be read; restore only on explicit request.
+            if (check.Meta is { } m && m.TryGetProperty("keyRing", out var kr) && kr.ValueKind == System.Text.Json.JsonValueKind.String &&
+                kr.GetString() == "omitted" &&
+                !HttpContext.RequestServices.GetRequiredService<PackageSigning>().CanUseStoredKey(BackupService.ArchiveSetting(path, "Signing.PrivateKey")))
+            {
+                if (!withoutKeys)
+                {
+                    Fail("This backup was downloaded without the key ring, and this server cannot read its package signing key. Confirm the restore without the key ring, or use a backup downloaded with a key ring password.");
+                    return;
+                }
+                keysSkipped = true;
+            }
             if (BackupService.HasEncryptedKeys(path))
             {
                 if (string.IsNullOrEmpty(keyPassword))
@@ -244,7 +257,18 @@ public class BackupModel : PageModel
                     return;
                 }
             }
-            var safety = await _backup.RestoreAsync(path, admin.DisplayName, keys);
+            string safety;
+            try { safety = await _backup.RestoreAsync(path, admin.DisplayName, keys); }
+            catch (RestoreFailedException rf)
+            {
+                await _audit.LogAsync(admin.DisplayName, "backup.restore-failed", label,
+                    (rf.RolledBack ? "rolled back from " : "ROLLBACK FAILED, safety backup ") + rf.Safety + ": " + rf.Message);
+                Fail(rf.RolledBack
+                    ? "The restore failed (damaged archive or full disk). The previous state was put back; nothing changed."
+                    : "The restore failed and the previous state could not be put back automatically. Download the safety backup {0} under Safety backups and restore it.");
+                NoticeArg = rf.Safety;
+                return;
+            }
             // An older backup may lack newer columns, tables or role names:
             // upgrade it now instead of at the next app start.
             using (var scope = _scopes.CreateScope())

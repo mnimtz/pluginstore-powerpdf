@@ -69,6 +69,19 @@ public sealed class PackageSigning
         finally { _gate.Release(); }
     }
 
+    /// <summary>
+    /// True when this server could use the signing key stored in a backup's database
+    /// (value of Signing.PrivateKey): the recovery key is configured, the backup has no
+    /// key yet, or the current key ring decrypts it.
+    /// </summary>
+    public bool CanUseStoredKey(string? stored)
+    {
+        if (!string.IsNullOrWhiteSpace(_config["Signing:PrivateKeyPem"])) return true;
+        if (string.IsNullOrEmpty(stored) || !stored.StartsWith("dp:")) return true;
+        try { _dp.CreateProtector("AddonStore.PackageSigning").Unprotect(stored[3..]); return true; }
+        catch (CryptographicException) { return false; }
+    }
+
     private async Task<ECDsa> LoadKeyAsync()
     {
         {

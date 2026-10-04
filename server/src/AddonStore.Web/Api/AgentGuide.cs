@@ -459,8 +459,9 @@ upload reaches the customer's test group first and goes live with `promote`.
 Clients send codes in the header `X-Customer-Code` (several separated by
 ";"), never in a URL. The catalog then also lists the delivered add-ons
 (TSV column 20 and JSON field `customer` carry the customer name); a delivery
-replaces the public entry of the same add-on. More than 30 unknown codes from
-one address within an hour make the server ignore codes from it for the hour.
+replaces the public entry of the same add-on. 30 different unknown codes from
+one address within an hour make the server ignore new codes from it for the
+hour (codes that already worked from that address keep working).
 `GET {{baseUrl}}/api/customer-code` (code in the same header) checks a code
 before a client stores it: `data.valid`, `data.customer` (name) and
 `data.addons` (how many add-ons it unlocks now; a valid code may unlock none

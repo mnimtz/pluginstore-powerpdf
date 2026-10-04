@@ -55,7 +55,7 @@ public class ResendEmailSender : IAppEmailSender
             req.Content = new StringContent(
                 System.Text.Json.JsonSerializer.Serialize(new { from, to = new[] { to }, subject, html }),
                 System.Text.Encoding.UTF8, "application/json");
-            var resp = await http.SendAsync(req);
+            using var resp = await http.SendAsync(req);
             if (!resp.IsSuccessStatusCode)
             {
                 var body = await resp.Content.ReadAsStringAsync();
@@ -102,14 +102,33 @@ public class NotificationService
     private readonly IAppEmailSender _mail;
     private readonly UserManager<AppUser> _users;
     private readonly SettingsService _settings;
+    private readonly IHttpContextAccessor _http;
+    // Address of the last request, for mails sent outside a request (automatic backup)
+    // while no public base URL is set.
+    private static volatile string s_lastRequestBase = "";
 
-    public NotificationService(IAppEmailSender mail, UserManager<AppUser> users, SettingsService settings)
+    public NotificationService(IAppEmailSender mail, UserManager<AppUser> users, SettingsService settings, IHttpContextAccessor http)
     {
-        _mail = mail; _users = users; _settings = settings;
+        _mail = mail; _users = users; _settings = settings; _http = http;
     }
 
-    public async Task<string> BaseUrlAsync() =>
-        (await _settings.GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl")).TrimEnd('/');
+    /// <summary>
+    /// Absolute base URL for links in mails: the configured public base URL, else the
+    /// address of the current (or last) request. Never relative: a link in a mail
+    /// needs a host.
+    /// </summary>
+    public async Task<string> BaseUrlAsync()
+    {
+        var configured = (await _settings.GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl")).TrimEnd('/');
+        if (configured.Length > 0) return configured;
+        if (_http.HttpContext?.Request is { Host.HasValue: true } r)
+        {
+            // behind the App Service front end the request itself arrives as http
+            var proto = r.Headers["X-Forwarded-Proto"].ToString().Split(',')[0].Trim();
+            s_lastRequestBase = $"{(proto is "https" or "http" ? proto : r.Scheme)}://{r.Host}{r.PathBase}".TrimEnd('/');
+        }
+        return s_lastRequestBase;
+    }
 
     public async Task<bool> IsEnabledAsync(string eventKey) =>
         await _settings.GetAsync("Notify." + eventKey) != "0";

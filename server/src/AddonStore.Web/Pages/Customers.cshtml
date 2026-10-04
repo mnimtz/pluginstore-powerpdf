@@ -31,7 +31,7 @@ else
                 <td><a href="/Customer?id=@r.Customer.Id"><b>@r.Customer.Name</b></a></td>
                 <td>@r.Customer.ContactName</td>
                 <td>@r.Deliveries</td>
-                <td><span class="badge @(r.Customer.Status == "active" ? "live" : "withdrawn")">@L[r.Customer.Status == "active" ? "active" : "paused"]</span></td>
+                <td><span class="badge @(r.Customer.Status == "active" ? "live" : "withdrawn")">@L[r.Customer.Status == "active" ? "Active" : "paused"]</span></td>
                 <td class="small">@(r.Customer.LastSeenAt is null ? "–" : Time.Fmt(r.Customer.LastSeenAt))</td>
                 <td class="small">@r.Owner</td>
             </tr>

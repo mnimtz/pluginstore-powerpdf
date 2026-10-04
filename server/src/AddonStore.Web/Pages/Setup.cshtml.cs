@@ -43,6 +43,11 @@ public class SetupModel : PageModel
             return Page();
         }
 
+        if (AddonStore.Web.Services.LocalizedIdentityErrors.CheckAccountInput(name, email, password) is { } bad)
+        {
+            Error = bad;
+            return Page();
+        }
         var user = new AppUser
         {
             UserName = email,

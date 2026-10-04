@@ -34,6 +34,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(o =>
         o.Lockout.MaxFailedAccessAttempts = 8;
         o.User.RequireUniqueEmail = true;
     })
+    .AddErrorDescriber<AddonStore.Web.Services.LocalizedIdentityErrors>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
@@ -151,6 +152,8 @@ builder.Services.AddScoped<SubmissionService>();
 builder.Services.AddScoped<NotificationService>();
 
 builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("resend", c => c.Timeout = TimeSpan.FromSeconds(15));
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<SettingsService>();
 builder.Services.AddSingleton<PackageSigning>();
 builder.Services.AddSingleton<SetupGate>();

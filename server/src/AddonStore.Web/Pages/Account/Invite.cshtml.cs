@@ -46,6 +46,12 @@ public class InviteModel : PageModel
     {
         var invite = await FindAsync(token);
         if (invite is null) { Error = "This invitation link is invalid or was already used."; return Page(); }
+        if (AddonStore.Web.Services.LocalizedIdentityErrors.CheckAccountInput(name, null, password) is { } bad)
+        {
+            Email = invite.Email; Role = invite.Role; Token = token;
+            Error = bad;
+            return Page();
+        }
 
         var user = new AppUser
         {

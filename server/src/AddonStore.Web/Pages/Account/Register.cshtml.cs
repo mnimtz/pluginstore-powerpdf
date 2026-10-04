@@ -41,6 +41,13 @@ public class RegisterModel : PageModel
             return RedirectToPage("/Account/Login", new { registered = "1" });
         }
 
+        if (AddonStore.Web.Services.LocalizedIdentityErrors.CheckAccountInput(name, email, password, reason) is { } bad)
+        {
+            Error = bad;
+            OnGet(dp);
+            return Page();
+        }
+
         // at most 5 access requests per address and hour
         var ip = AddonStore.Web.Services.GeoService.ClientIp(HttpContext)?.ToString() ?? "";
         var n = Microsoft.Extensions.Caching.Memory.CacheExtensions.GetOrCreate(cache, $"register:{ip}:{DateTime.UtcNow:yyyyMMddHH}",
