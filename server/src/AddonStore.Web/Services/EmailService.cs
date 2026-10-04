@@ -88,6 +88,7 @@ public class NotificationService
         ("ClientRelease",   "New Add-on Store client released", "Admins"),
         ("CategoryCreated", "New catalog category created by an upload", "Admins"),
         ("Feedback",        "Problem report or comment from the store client", "Owner"),
+        ("CustomerDelivery", "Customer delivery created or changed by a developer", "Admins"),
     };
 
     private readonly IAppEmailSender _mail;

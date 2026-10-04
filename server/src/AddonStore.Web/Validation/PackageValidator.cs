@@ -189,6 +189,13 @@ public class PackageValidator
                     report.Warn("MIN_HOST_VERSION_MISSING", "Manifest field 'minPowerPdfVersion' is not set.",
                         "State the lowest Power PDF version the plugin was tested with, e.g. \"5.0\".");
 
+                // visibility: "private" = only for customers with a delivery and code (S0.14.0)
+                var vis = GetString(root, "visibility")?.Trim().ToLowerInvariant();
+                if (vis is not null and not ("public" or "private"))
+                    report.Error("VISIBILITY_INVALID", $"Manifest field 'visibility' is '{vis}'.",
+                        "Use \"public\" (catalog, default) or \"private\" (only customers with a delivery and code see it).");
+                else manifest.Visibility = vis ?? "public";
+
                 manifest.Category = GetString(root, "category")?.Trim() ?? "";
                 if (_categories is not null)
                     manifest.NewCategoryNames = await _categories.CheckAsync(report, root, manifest.Id);

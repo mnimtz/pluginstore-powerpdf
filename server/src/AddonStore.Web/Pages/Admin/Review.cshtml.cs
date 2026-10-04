@@ -62,7 +62,9 @@ public class ReviewModel : PageModel
         var ai = await _ai.ConfigAsync();
         AiReviewOn = ai.On && ai.Review;
         _db.ChangeTracker.Clear();
-        Queue = await _db.PackageVersions.Where(v => v.Status == VersionStatus.Beta)
+        // private add-ons need no approval: they reach customers through deliveries
+        Queue = await _db.PackageVersions.Where(v => v.Status == VersionStatus.Beta &&
+                                                     !_db.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private"))
             .OrderBy(v => v.SubmittedAt).ToListAsync();
         Packages = await _db.Packages.Where(p => Queue.Select(q => q.PackageId).Contains(p.Id))
             .ToDictionaryAsync(p => p.Id);

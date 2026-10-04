@@ -37,6 +37,8 @@ public class ParsedManifest
     public string Changelog { get; set; } = "";
     public string AtomNamespace { get; set; } = "";
     public string MinPowerPdfVersion { get; set; } = "";
+    /// <summary>Manifest "visibility": "public" (default) or "private" (customer deliveries only).</summary>
+    public string Visibility { get; set; } = "public";
     public string Category { get; set; } = "";
     /// <summary>Names of a proposed new category (all checks passed); created on submission.</summary>
     public Dictionary<string, string>? NewCategoryNames { get; set; }

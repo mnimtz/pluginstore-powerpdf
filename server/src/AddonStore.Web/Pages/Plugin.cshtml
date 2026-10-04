@@ -54,6 +54,17 @@
             @if (Model.IsOwner || Model.IsAdmin)
             {
                 <a class="btn small" href="/CatalogEntry?id=@pkg.Id">@L["Edit catalog entry"]</a>
+                @if (pkg.Id != "com.tungsten.pluginstore")
+                {
+                    <form method="post" asp-page-handler="Visibility" asp-route-id="@pkg.Id" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+                        <label style="margin:0">@L["Visibility"]</label>
+                        <select name="visibility" style="width:auto">
+                            <option value="public" selected="@(pkg.Visibility != "private")">@L["public (catalog)"]</option>
+                            <option value="private" selected="@(pkg.Visibility == "private")">@L["private (customer deliveries only)"]</option>
+                        </select>
+                        <button type="submit" class="btn small secondary">@L["Save"]</button>
+                    </form>
+                }
             }
             @if (Model.IsAdmin && Model.InCatalog is not null)
             {

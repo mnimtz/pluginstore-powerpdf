@@ -82,9 +82,14 @@ public class SubmissionService
         var package = await _db.Packages.FirstOrDefaultAsync(p => p.Id == manifest.Id);
         if (package is null)
         {
-            package = new Package { Id = manifest.Id, OwnerId = user.Id };
+            // visibility comes from the first upload; later it is changed in the
+            // portal or with PATCH /api/packages/{id}, never by a new version
+            package = new Package { Id = manifest.Id, OwnerId = user.Id, Visibility = isClient ? "public" : manifest.Visibility };
             _db.Packages.Add(package);
         }
+        else if (manifest.Visibility != package.Visibility && !isClient)
+            report.Info("VISIBILITY_KEPT", $"The add-on stays {package.Visibility}; the manifest says {manifest.Visibility}.",
+                "Visibility is set by the first upload. Change it on the plug-in page or with PATCH /api/packages/{id} {\"visibility\": \"private\"}.");
 
         var dir = Path.Combine(StorageRoot, manifest.Id);
         Directory.CreateDirectory(dir);

@@ -580,4 +580,67 @@
   <data name="Sends one short request with the chosen model." xml:space="preserve"><value>Sender én kort forespørgsel med den valgte model.</value></data>
   <data name="Connected. Choose a model below." xml:space="preserve"><value>Forbundet. Vælg en model nedenfor.</value></data>
   <data name="The connection failed." xml:space="preserve"><value>Forbindelsen mislykkedes.</value></data>
+  <data name="Customers" xml:space="preserve"><value>Kunder</value></data>
+  <data name="Customer" xml:space="preserve"><value>Kunde</value></data>
+  <data name="New customer" xml:space="preserve"><value>Ny kunde</value></data>
+  <data name="Create customer" xml:space="preserve"><value>Opret kunde</value></data>
+  <data name="No customers yet." xml:space="preserve"><value>Ingen kunder endnu.</value></data>
+  <data name="Deliveries" xml:space="preserve"><value>Leveringer</value></data>
+  <data name="Deliver an add-on" xml:space="preserve"><value>Lever en tilføjelse</value></data>
+  <data name="Deliver" xml:space="preserve"><value>Lever</value></data>
+  <data name="Codes" xml:space="preserve"><value>Koder</value></data>
+  <data name="Code" xml:space="preserve"><value>Kode</value></data>
+  <data name="No codes yet." xml:space="preserve"><value>Ingen koder endnu.</value></data>
+  <data name="New customer code" xml:space="preserve"><value>Ny kundekode</value></data>
+  <data name="Code for this add-on only" xml:space="preserve"><value>Kode kun til denne tilføjelse</value></data>
+  <data name="Also create a code for this add-on only" xml:space="preserve"><value>Opret også en kode kun til denne tilføjelse</value></data>
+  <data name="Create a customer code for all its deliveries right away" xml:space="preserve"><value>Opret straks en kundekode til alle leveringer</value></data>
+  <data name="Valid for" xml:space="preserve"><value>Gælder for</value></data>
+  <data name="all deliveries" xml:space="preserve"><value>alle leveringer</value></data>
+  <data name="Copy" xml:space="preserve"><value>Kopiér</value></data>
+  <data name="valid" xml:space="preserve"><value>gyldig</value></data>
+  <data name="expired" xml:space="preserve"><value>udløbet</value></data>
+  <data name="valid until {0}" xml:space="preserve"><value>gyldig til {0}</value></data>
+  <data name="Previous code stays valid for" xml:space="preserve"><value>Tidligere kode gælder i</value></data>
+  <data name="0 days (at once)" xml:space="preserve"><value>0 dage (straks ugyldig)</value></data>
+  <data name="days" xml:space="preserve"><value>dage</value></data>
+  <data name="Make live" xml:space="preserve"><value>Sæt live</value></data>
+  <data name="Pause" xml:space="preserve"><value>Sæt på pause</value></data>
+  <data name="Resume" xml:space="preserve"><value>Genoptag</value></data>
+  <data name="End delivery" xml:space="preserve"><value>Afslut levering</value></data>
+  <data name="Change stages and period" xml:space="preserve"><value>Skift trin og periode</value></data>
+  <data name="Period" xml:space="preserve"><value>Periode</value></data>
+  <data name="Until" xml:space="preserve"><value>Til</value></data>
+  <data name="Beta stage" xml:space="preserve"><value>Beta-trin</value></data>
+  <data name="Live stage" xml:space="preserve"><value>Live-trin</value></data>
+  <data name="newest" xml:space="preserve"><value>nyeste</value></data>
+  <data name="fixed" xml:space="preserve"><value>fast</value></data>
+  <data name="off" xml:space="preserve"><value>fra</value></data>
+  <data name="active" xml:space="preserve"><value>aktiv</value></data>
+  <data name="paused" xml:space="preserve"><value>sat på pause</value></data>
+  <data name="ended" xml:space="preserve"><value>afsluttet</value></data>
+  <data name="outside period" xml:space="preserve"><value>uden for perioden</value></data>
+  <data name="private" xml:space="preserve"><value>privat</value></data>
+  <data name="Visibility" xml:space="preserve"><value>Synlighed</value></data>
+  <data name="public (catalog)" xml:space="preserve"><value>offentlig (katalog)</value></data>
+  <data name="private (customer deliveries only)" xml:space="preserve"><value>privat (kun kundeleveringer)</value></data>
+  <data name="Customer data" xml:space="preserve"><value>Kundedata</value></data>
+  <data name="Contact person" xml:space="preserve"><value>Kontaktperson</value></data>
+  <data name="Note" xml:space="preserve"><value>Note</value></data>
+  <data name="Created by" xml:space="preserve"><value>Oprettet af</value></data>
+  <data name="paused (no add-ons for this customer)" xml:space="preserve"><value>sat på pause (ingen tilføjelser til denne kunde)</value></data>
+  <data name="Nothing delivered yet." xml:space="preserve"><value>Intet leveret endnu.</value></data>
+  <data name="Please check name and email address." xml:space="preserve"><value>Kontrollér navn og e-mailadresse.</value></data>
+  <data name="New code created." xml:space="preserve"><value>Ny kode oprettet.</value></data>
+  <data name="Code revoked." xml:space="preserve"><value>Kode tilbagekaldt.</value></data>
+  <data name="Delivery created." xml:space="preserve"><value>Levering oprettet.</value></data>
+  <data name="Delivery saved." xml:space="preserve"><value>Levering gemt.</value></data>
+  <data name="The beta version is now live for this customer." xml:space="preserve"><value>Betaversionen er nu live for denne kunde.</value></data>
+  <data name="Customer delivery created or changed by a developer" xml:space="preserve"><value>Kundelevering oprettet eller ændret af en udvikler</value></data>
+  <data name="Deliver add-ons to individual customers: they see them in the store window with their code, nobody else does. Every delivery has a beta and a live stage." xml:space="preserve"><value>Lever tilføjelser til enkelte kunder: de ser dem med deres kode i butiksvinduet, ingen andre gør. Hver levering har et beta- og et live-trin.</value></data>
+  <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. Enter the code in the Add-on Store options in Power PDF or distribute it with the policy CustomerCode (client 0.6.0 or later). Several codes can be combined, separated by semicolons." xml:space="preserve"><value>En kundekode låser alle leveringer til denne kunde op, en leveringskode kun én tilføjelse. Indtast koden i Add-on Store-indstillingerne i Power PDF, eller distribuer den med politikken CustomerCode (klient 0.6.0 eller nyere). Flere koder kan kombineres adskilt af semikolon.</value></data>
+  <data name="Beta stage: workstations of this customer with the beta option (or policy BetaChannel). Live stage: all others. Typical: new version to beta, test, then &quot;Make live&quot;." xml:space="preserve"><value>Beta-trin: denne kundes arbejdspladser med beta-indstillingen (eller politikken BetaChannel). Live-trin: alle andre. Typisk: ny version til beta, test, derefter "Sæt live".</value></data>
+  <data name="Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>Live "fast" holder kunden på en testet version; "nyeste" følger hver frigivet version. Private tilføjelser kræver ingen godkendelse; administratorer får en e-mail.</value></data>
+  <data name="No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet." xml:space="preserve"><value>Ingen tilføjelse at levere: du kan levere dine egne tilføjelser, der har bestået de automatiske kontroller og endnu ikke er leveret til denne kunde.</value></data>
+  <data name="Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed." xml:space="preserve"><value>Kun navnet er påkrævet. Kontaktdata bruges kun til leverings-e-mailen; lad dem være tomme, hvis de ikke behøves.</value></data>
 </root>

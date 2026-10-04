@@ -1,6 +1,6 @@
 # Konzept: Kundenauslieferungen mit Code
 
-Stand: Okt 4, 2026 · Status: Entwurf zur Abstimmung (Marcus)
+Stand: Okt 4, 2026 · Status: Etappe 1 (Server) umgesetzt in S0.14.0; Entscheidungen siehe Ende
 
 ## Ziel
 
@@ -147,7 +147,20 @@ Empfehlung: A, wie bei den API-Tokens.
 3. **Komfort:** E-Mail „Kunde informieren", Kundenfilter in den Berichten,
    Übergangszeit beim Code-Wechsel, Mitbearbeiter.
 
-## Offene Entscheidungen
+## Entscheidungen (Marcus, Okt 4, 2026)
+
+1. Freigabe: Entwickler dürfen direkt ausliefern, auch in die Live-Stufe;
+   Admins bekommen eine E-Mail und können jederzeit pausieren oder beenden.
+   Private Add-ons brauchen keine Admin-Freigabe.
+2. Code: jederzeit anzeigbar (verschlüsselt mit dem Data-Protection-Schlüssel
+   gespeichert, der im Backup liegt), dazu SHA-256 für die Suche.
+3. Beides steuerbar: ein Kundencode für alle Auslieferungen des Kunden und
+   wahlweise eigene Codes je Auslieferung (Kunde x Plug-in).
+4. Eigene Kunden plus Admins; keine Mitbearbeiter. Reviewer lesen.
+5. Kundendaten: Firmenname, Ansprechpartner, E-Mail (alles außer dem Namen
+   optional).
+
+## Ursprünglich offene Entscheidungen
 
 1. Freigabe: Admin-Freigabe als Standard, oder dürfen Entwickler direkt
    ausliefern?

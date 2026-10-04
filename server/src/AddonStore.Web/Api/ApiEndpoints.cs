@@ -122,6 +122,11 @@ public static class ApiEndpoints
                     "GET  /api/features               which optional AI features are switched on",
                     "GET  /api/search?q=&lang=&channel=  find add-ons by need (AI ranking with reasons when enabled, else word search; ?format=tsv)",
                     "GET|POST /api/packages/{id}/{version}/ai-review  read or create the AI review aid (reviewers/admins)",
+                    "GET|POST /api/customers          customer deliveries: list or create customers (auth)",
+                    "GET|PATCH /api/customers/{cid}   one customer with codes and deliveries (creator/admin; reviewers read)",
+                    "POST /api/customers/{cid}/codes  new code for the customer or one delivery {deliveryId?, transitionDays?}; DELETE .../codes/{codeId} revokes",
+                    "POST /api/customers/{cid}/deliveries  deliver an add-on {packageId, beta{mode,version}, live{mode,version}, startsAt?, endsAt?, ownCode?}",
+                    "PATCH /api/deliveries/{did}       change stages, dates or status; POST /api/deliveries/{did}/promote = beta version goes live",
                     "DELETE /api/packages/{id}/{version}  withdraw your own beta version (auth)",
                     "GET  /api/packages/{id}/{version}/download",
                     "GET  /api/packages/{id}/icon     catalog icon (PNG) of the newest released version",
@@ -175,9 +180,12 @@ public static class ApiEndpoints
             });
         }).RequireAuthorization("ApiOrCookie");
 
-        api.MapGet("/catalog", async (AppDbContext db, HttpContext ctx, UsageService usage, string? channel, string? format, string? lang) =>
+        api.MapGet("/catalog", async (AppDbContext db, HttpContext ctx, UsageService usage, CustomerService customers,
+                                      string? channel, string? format, string? lang) =>
         {
             var beta = string.Equals(channel, "beta", StringComparison.OrdinalIgnoreCase);
+            // Customer codes in the X-Customer-Code header unlock delivered add-ons (S0.14.0).
+            var grants = await customers.GrantsAsync(ctx);
 
             // TSV variant for native clients (the Power PDF ribbon add-on): one
             // line per package, text fields with tabs/newlines flattened.
@@ -189,6 +197,17 @@ public static class ApiEndpoints
                 // "clients in use" report; anonymous, see UsageService.
                 await usage.CountAsync(ctx, "catalog", lang: culture);
                 var items = await Services.CatalogUi.GetAsync(db, culture, beta);
+                if (grants.Count > 0)
+                {
+                    var cctx = await Services.CatalogUi.Context.LoadAsync(db);
+                    foreach (var g in grants)
+                    {
+                        var (v, ch) = CustomerService.Pick(g, beta);
+                        if (v is null) continue;
+                        items.RemoveAll(i => i.Id == v.PackageId);   // a delivery overrides the public entry
+                        items.Add(Services.CatalogUi.Item(cctx, v, ch, culture, g.Customer.Name));
+                    }
+                }
                 static string Flat(string s) => s.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
                 var sb = new System.Text.StringBuilder();
                 foreach (var i in items)
@@ -203,20 +222,22 @@ public static class ApiEndpoints
                       .Append(Flat(i.CategoryName)).Append('\t')
                       .Append($"{Base(ctx)}/api/packages/{i.Id}/icon").Append('\t')
                       .Append(i.Rating.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)).Append('\t')
-                      .Append(i.RatingCount).Append('\t').Append(i.Screenshots).Append('\n');
+                      .Append(i.RatingCount).Append('\t').Append(i.Screenshots).Append('\t')
+                      .Append(Flat(i.Customer)).Append('\n');
                 }
                 return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
             }
 
-            var entries = await CatalogAsync(db, beta, Base(ctx));
+            var entries = await CatalogAsync(db, beta, Base(ctx), grants);
             return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live", packages = entries } });
         });
 
-        api.MapGet("/packages/{id}", async (string id, HttpContext ctx, AppDbContext db, UserManager<AppUser> users) =>
+        api.MapGet("/packages/{id}", async (string id, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService customers) =>
         {
             var package = await db.Packages.Include(p => p.Owner)
                 .FirstOrDefaultAsync(p => p.Id == id);
-            if (package is null) return NotFound("PACKAGE_NOT_FOUND", $"No package with id '{id}'.");
+            if (package is null || !await MayAccessAsync(ctx, id, db, users, customers))
+                return NotFound("PACKAGE_NOT_FOUND", $"No package with id '{id}'.");
 
             var user = await TryUserAsync(ctx, users);
             var isOwner = user is not null &&
@@ -405,8 +426,10 @@ public static class ApiEndpoints
         }).RequireAuthorization("ApiOrCookie");
 
         // Catalog icon (assets/icon.png of the newest live, else beta, version); public like the catalog.
-        api.MapGet("/packages/{id}/icon", async (string id, AppDbContext db, SubmissionService svc) =>
+        api.MapGet("/packages/{id}/icon", async (string id, HttpContext ctx, AppDbContext db, SubmissionService svc,
+                                                 UserManager<AppUser> users, CustomerService customers) =>
         {
+            if (!await MayAccessAsync(ctx, id, db, users, customers)) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
             var cmp = new SemVerComparer();
             var versions = await db.PackageVersions
                 .Where(v => v.PackageId == id && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)).ToListAsync();
@@ -431,8 +454,10 @@ public static class ApiEndpoints
         });
 
         // Screenshots (S0.11.0): list with localized captions (JSON, or TSV "url<TAB>caption" for the client) and images.
-        api.MapGet("/packages/{id}/screenshots", async (string id, string? lang, string? format, HttpContext ctx, AppDbContext db) =>
+        api.MapGet("/packages/{id}/screenshots", async (string id, string? lang, string? format, HttpContext ctx, AppDbContext db,
+                                                        UserManager<AppUser> users, CustomerService customers) =>
         {
+            if (!await MayAccessAsync(ctx, id, db, users, customers)) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
             var v = await ScreenshotService.DisplayVersionAsync(db, id);
             if (v is null) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
             var culture = (lang ?? System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName).Trim();
@@ -445,8 +470,10 @@ public static class ApiEndpoints
             return Results.Json(new { ok = true, data = new { id, version = v.Version, screenshots = shots.Select(s => new { index = s.Index, url = Url(s.Index), caption = s.Caption }) } });
         });
 
-        api.MapGet("/packages/{id}/screenshots/{n:int}", async (string id, int n, AppDbContext db, SubmissionService svc) =>
+        api.MapGet("/packages/{id}/screenshots/{n:int}", async (string id, int n, HttpContext ctx, AppDbContext db, SubmissionService svc,
+                                                                UserManager<AppUser> users, CustomerService customers) =>
         {
+            if (!await MayAccessAsync(ctx, id, db, users, customers)) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
             var v = await ScreenshotService.DisplayVersionAsync(db, id);
             if (v is null) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
             var shot = ScreenshotService.FromManifest(v.ManifestJson, "en").FirstOrDefault(s => s.Index == n);
@@ -587,6 +614,139 @@ public static class ApiEndpoints
             return Results.Json(new { ok = true, data = new { id, version, model = stored.AiReviewModel, at = stored.AiReviewAt, review = doc.RootElement.Clone() } });
         }).RequireAuthorization("ReviewerOrAdmin");
 
+        // ---- Customer deliveries (S0.14.0): customers, codes, deliveries ----
+        static IResult Fail(string code, string message, int status, string hint = "") =>
+            Results.Json(new { ok = false, error = new { code, message, hint } }, statusCode: status);
+        static string UiLang(HttpContext c) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+        api.MapGet("/customers", async (HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService cs) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var list = await cs.Visible(ctx.User, user.Id).OrderBy(c => c.Name).ToListAsync();
+            var counts = await db.Deliveries.GroupBy(d => d.CustomerId).Select(g => new { g.Key, N = g.Count() }).ToDictionaryAsync(x => x.Key, x => x.N);
+            return Results.Json(new { ok = true, data = list.Select(c => new
+            {
+                id = c.Id, name = c.Name, status = c.Status, contactName = c.ContactName, language = c.Language,
+                deliveries = counts.GetValueOrDefault(c.Id), lastSeenAt = c.LastSeenAt, createdAt = c.CreatedAt,
+                mine = c.OwnerId == user.Id,
+            }) });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapPost("/customers", async (HttpContext ctx, UserManager<AppUser> users, CustomerService cs, CustomerBody body) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            if (CustomerService.CheckCustomer(body.Name, body.ContactEmail, body.Language) is { } err)
+                return Fail(err, "name (1 to 120 characters) is required; contactEmail must be an address; language a two-letter code.", 400,
+                    "Example: {\"name\": \"Muster AG\", \"contactName\": \"Erika Muster\", \"contactEmail\": \"it@muster.example\", \"language\": \"de\"}");
+            var c = await cs.CreateCustomerAsync(body.Name!, body.ContactName, body.ContactEmail, body.Language, body.Note, user, body.WithCode ?? true);
+            return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, true, UiLang(ctx)) }, statusCode: 201);
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapGet("/customers/{cid:int}", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService cs) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+            if (c is null || !CustomerService.CanSee(ctx.User, c, user.Id)) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+            return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, CustomerService.CanManage(ctx.User, c, user.Id), UiLang(ctx)) });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapMethods("/customers/{cid:int}", new[] { "PATCH" }, async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users,
+                                                                         CustomerService cs, CustomerBody body) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+            if (c is null || !CustomerService.CanSee(ctx.User, c, user.Id)) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+            if (!CustomerService.CanManage(ctx.User, c, user.Id)) return Fail("NOT_OWNER", "Only the creator of the customer or an admin can change it.", 403);
+            if (CustomerService.CheckCustomer(body.Name ?? c.Name, body.ContactEmail, body.Language) is { } err ||
+                body.Status is not (null or "active" or "paused"))
+                return Fail("CUSTOMER_INVALID", "Check name, contactEmail, language and status (active or paused).", 400);
+            await cs.UpdateCustomerAsync(c, body.Name, body.ContactName ?? c.ContactName, body.ContactEmail ?? c.ContactEmail,
+                body.Language, body.Note ?? c.Note, body.Status, user.DisplayName);
+            return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, true, UiLang(ctx)) });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapPost("/customers/{cid:int}/codes", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users,
+                                                          CustomerService cs, CodeBody? body) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+            if (c is null || !CustomerService.CanSee(ctx.User, c, user.Id)) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+            if (!CustomerService.CanManage(ctx.User, c, user.Id)) return Fail("NOT_OWNER", "Only the creator of the customer or an admin can create codes.", 403);
+            if (body?.DeliveryId is int did && !await db.Deliveries.AnyAsync(d => d.Id == did && d.CustomerId == cid))
+                return NotFound("DELIVERY_NOT_FOUND", $"No delivery {did} for customer {cid}.");
+            var (code, plain) = await cs.CreateCodeAsync(cid, body?.DeliveryId, user.DisplayName, body?.TransitionDays ?? 14);
+            return Results.Json(new { ok = true, data = new { id = code.Id, scope = code.DeliveryId is null ? "customer" : "delivery",
+                deliveryId = code.DeliveryId, code = plain } }, statusCode: 201);
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapDelete("/customers/{cid:int}/codes/{codeId:int}", async (int cid, int codeId, HttpContext ctx, AppDbContext db,
+                                                                         UserManager<AppUser> users, CustomerService cs) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+            if (c is null || !CustomerService.CanSee(ctx.User, c, user.Id)) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+            if (!CustomerService.CanManage(ctx.User, c, user.Id)) return Fail("NOT_OWNER", "Only the creator of the customer or an admin can revoke codes.", 403);
+            return await cs.RevokeCodeAsync(cid, codeId, user.DisplayName)
+                ? Results.Json(new { ok = true, data = new { id = codeId, revoked = true } })
+                : NotFound("CODE_NOT_FOUND", $"No code {codeId} for customer {cid}.");
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapPost("/customers/{cid:int}/deliveries", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users,
+                                                               CustomerService cs, DeliveryBody body) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+            if (c is null || !CustomerService.CanSee(ctx.User, c, user.Id)) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+            if (!CustomerService.CanManage(ctx.User, c, user.Id)) return Fail("NOT_OWNER", "Only the creator of the customer or an admin can deliver to it.", 403);
+            var r = await cs.CreateDeliveryAsync(c, body.PackageId ?? "", new(body.Beta?.Mode, body.Beta?.Version),
+                new(body.Live?.Mode, body.Live?.Version), body.StartsAt, body.EndsAt, body.OwnCode ?? false, user, ctx.User.IsInRole("Admin"));
+            if (!r.Ok) return Fail(r.Code, r.Message, r.Code is "PACKAGE_NOT_FOUND" ? 404 : r.Code is "NOT_OWNER" ? 403 : r.Code is "DELIVERY_EXISTS" ? 409 : 400,
+                "beta/live: {\"mode\": \"latest\"|\"fixed\"|\"off\", \"version\": \"1.2.0\"}; live defaults to the newest version, fixed.");
+            return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, true, UiLang(ctx)) }, statusCode: 201);
+        }).RequireAuthorization("ApiOrCookie");
+
+        async Task<(Delivery? D, Customer? C, IResult? Error, AppUser? User)> LoadDelivery(int did, HttpContext ctx, AppDbContext db,
+                                                                                           UserManager<AppUser> users)
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return (null, null, Unauthorized(), null);
+            var d = await db.Deliveries.FirstOrDefaultAsync(x => x.Id == did);
+            var c = d is null ? null : await db.Customers.FirstOrDefaultAsync(x => x.Id == d.CustomerId);
+            if (d is null || c is null || !CustomerService.CanSee(ctx.User, c, user.Id))
+                return (null, null, NotFound("DELIVERY_NOT_FOUND", $"No delivery {did}."), user);
+            if (!CustomerService.CanManage(ctx.User, c, user.Id))
+                return (null, null, Fail("NOT_OWNER", "Only the creator of the customer or an admin can change its deliveries.", 403), user);
+            return (d, c, null, user);
+        }
+
+        api.MapMethods("/deliveries/{did:int}", new[] { "PATCH" }, async (int did, HttpContext ctx, AppDbContext db, UserManager<AppUser> users,
+                                                                           CustomerService cs, DeliveryBody body) =>
+        {
+            var (d, c, error, user) = await LoadDelivery(did, ctx, db, users);
+            if (error is not null) return error;
+            var r = await cs.UpdateDeliveryAsync(d!, body.Beta is null ? null : new(body.Beta.Mode, body.Beta.Version),
+                body.Live is null ? null : new(body.Live.Mode, body.Live.Version), body.StartsAt, body.EndsAt,
+                body.StartsAt is not null || body.EndsAt is not null || body.ClearDates == true, body.Status, user!, ctx.User.IsInRole("Admin"));
+            if (!r.Ok) return Fail(r.Code, r.Message, 400);
+            return Results.Json(new { ok = true, data = await cs.DescribeAsync(c!, true, UiLang(ctx)) });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapPost("/deliveries/{did:int}/promote", async (int did, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService cs) =>
+        {
+            var (d, c, error, user) = await LoadDelivery(did, ctx, db, users);
+            if (error is not null) return error;
+            var r = await cs.PromoteAsync(d!, user!, ctx.User.IsInRole("Admin"));
+            if (!r.Ok) return Fail(r.Code, r.Message, 409);
+            return Results.Json(new { ok = true, data = await cs.DescribeAsync(c!, true, UiLang(ctx)) });
+        }).RequireAuthorization("ApiOrCookie");
+
         api.MapGet("/categories", async (AppDbContext db, CategoryService categories) =>
         {
             var all = await categories.AllAsync();
@@ -661,8 +821,11 @@ public static class ApiEndpoints
                     case "category":
                         change.SetCategory = true; change.Category = v.ValueKind == JsonValueKind.String ? v.GetString() : null;
                         break;
+                    case "visibility":
+                        change.SetVisibility = true; change.Visibility = v.ValueKind == JsonValueKind.String ? v.GetString() : null;
+                        break;
                     default:
-                        typeErrors.Add(new("METADATA_INVALID", "error", $"Unknown field '{prop.Name}'.", "Allowed fields: name, description, author, contactEmail, category."));
+                        typeErrors.Add(new("METADATA_INVALID", "error", $"Unknown field '{prop.Name}'.", "Allowed fields: name, description, author, contactEmail, category, visibility."));
                         break;
                 }
             }
@@ -708,8 +871,10 @@ public static class ApiEndpoints
         }).RequireAuthorization("BearerOnly");
 
         api.MapGet("/packages/{id}/{version}/download", async (string id, string version,
-            AppDbContext db, SubmissionService svc, UsageService usage, HttpContext ctx) =>
+            AppDbContext db, SubmissionService svc, UsageService usage, HttpContext ctx, UserManager<AppUser> users, CustomerService customers) =>
         {
+            if (!await MayAccessAsync(ctx, id, db, users, customers, version))
+                return NotFound("VERSION_NOT_FOUND", $"No downloadable version {version} of '{id}'.");
             var v = await db.PackageVersions.FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version &&
                 (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta));
             if (v is null) return NotFound("VERSION_NOT_FOUND", $"No downloadable version {version} of '{id}'.");
@@ -864,7 +1029,8 @@ public static class ApiEndpoints
         try { File.Delete(path); } catch { /* temp cleanup is best effort */ }
     }
 
-    public static async Task<List<object>> CatalogAsync(AppDbContext db, bool includeBeta, string baseUrl)
+    public static async Task<List<object>> CatalogAsync(AppDbContext db, bool includeBeta, string baseUrl,
+                                                         List<CustomerService.Granted>? grants = null)
     {
         var all = await db.PackageVersions
             .Where(v => v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta))
@@ -895,11 +1061,24 @@ public static class ApiEndpoints
                 channel = "beta";
             }
             if (pick is null) continue;
+            if (pkgs.GetValueOrDefault(pick.PackageId)?.Visibility == "private") continue;
+            if (grants?.Any(g => g.Package.Id == pick.PackageId && CustomerService.Pick(g, includeBeta).Version is not null) == true) continue;
+            result.Add(Entry(pick, channel, null));
+        }
+        foreach (var g in grants ?? new())
+        {
+            var (v, ch) = CustomerService.Pick(g, includeBeta);
+            if (v is not null) result.Add(Entry(v, ch, g.Customer.Name));
+        }
+        return result;
 
+        object Entry(PackageVersion pick, string channel, string? customer)
+        {
             using var doc = JsonDocument.Parse(pick.ManifestJson);
             var root = doc.RootElement;
             var pkg = pkgs.GetValueOrDefault(pick.PackageId);
-            result.Add(new
+            var isPrivate = pkg?.Visibility == "private";
+            return new
             {
                 id = pick.PackageId,
                 name = ParseOrNull(pkg?.NameJson) ?? CloneOrNull(root, "name"),
@@ -916,12 +1095,28 @@ public static class ApiEndpoints
                 downloads = pick.Downloads,
                 rating = ratingSums.GetValueOrDefault(pick.PackageId) is { } rs ? new { average = rs.Average, count = rs.Count } : null,
                 screenshots = ScreenshotService.Count(pick.ManifestJson),
-                pageUrl = pick.PackageId == SubmissionService.ClientPackageId ? null
+                pageUrl = pick.PackageId == SubmissionService.ClientPackageId || isPrivate ? null
                     : $"{baseUrl}/a/{ShareService.Slug(pick.PackageId, slugIds)}",
-                downloadUrl = $"{baseUrl}/api/packages/{pick.PackageId}/{pick.Version}/download"
-            });
+                downloadUrl = $"{baseUrl}/api/packages/{pick.PackageId}/{pick.Version}/download",
+                customer,
+            };
         }
-        return result;
+    }
+
+    /// <summary>
+    /// Private packages (S0.14.0) are visible to their owner, admins and
+    /// reviewers, and to clients whose customer code unlocks a delivery of
+    /// them (a given version only when a delivery stage hands it out).
+    /// Everyone else gets 404, so the package's existence is not revealed.
+    /// </summary>
+    private static async Task<bool> MayAccessAsync(HttpContext ctx, string packageId, AppDbContext db, UserManager<AppUser> users,
+                                                   CustomerService customers, string? version = null)
+    {
+        var pkg = await db.Packages.AsNoTracking().FirstOrDefaultAsync(p => p.Id == packageId);
+        if (pkg is null || pkg.Visibility != "private") return true;
+        var u = await TryUserAsync(ctx, users);
+        if (u is not null && (pkg.OwnerId == u.Id || ctx.User.IsInRole("Admin") || ctx.User.IsInRole("Reviewer"))) return true;
+        return version is null ? await customers.MaySeeAsync(ctx, pkg) : await customers.MayDownloadAsync(ctx, pkg, version);
     }
 
     private static JsonElement? CloneOrNull(JsonElement root, string name) =>
@@ -943,3 +1138,12 @@ public record RatingBody(string? InstallId, int Stars, string? Version);
 public record FeedbackBody(string? InstallId, string? Kind, string? Message, string? Email, string? Version, string? Log);
 /// <summary>PATCH /api/packages/{id}/feedback/{fid}</summary>
 public record FeedbackStatusBody(string? Status);
+
+/// <summary>POST/PATCH /api/customers[/{cid}] (S0.14.0)</summary>
+public record CustomerBody(string? Name, string? ContactName, string? ContactEmail, string? Language, string? Note, string? Status, bool? WithCode);
+/// <summary>POST /api/customers/{cid}/codes: deliveryId null = code for all deliveries of the customer</summary>
+public record CodeBody(int? DeliveryId, int? TransitionDays);
+public record StageBody(string? Mode, string? Version);
+/// <summary>POST /api/customers/{cid}/deliveries and PATCH /api/deliveries/{did}</summary>
+public record DeliveryBody(string? PackageId, StageBody? Beta, StageBody? Live, DateTime? StartsAt, DateTime? EndsAt,
+                           bool? ClearDates, string? Status, bool? OwnCode);

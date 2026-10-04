@@ -402,6 +402,49 @@ Verify the download against the catalog's `sha256` before installing. The
 store client shows each package's `assets/icon.png` (square PNG, 128 px
 recommended) and the localized category name, so ship a clear icon.
 
+## Customer deliveries (private add-ons)
+
+Add-ons can be delivered to single customers instead of (or in addition to)
+the public catalog. A package with `"visibility": "private"` in its first
+manifest (or switched with `PATCH {{baseUrl}}/api/packages/{id}
+{"visibility": "private"}`) never appears in the catalog, the website or the
+search; details, icon, screenshots and downloads answer 404 unless the
+request comes from its owner, an admin, a reviewer or a client with a code
+for it. Private versions need no admin approval: passing the automatic checks
+is enough.
+
+    GET   {{baseUrl}}/api/customers                         your customers (admins/reviewers: all)
+    POST  {{baseUrl}}/api/customers                         {"name", "contactName"?, "contactEmail"?, "language"?, "note"?, "withCode"?: true}
+    GET   {{baseUrl}}/api/customers/{cid}                   customer with codes (shown to creator/admin) and deliveries
+    PATCH {{baseUrl}}/api/customers/{cid}                   same fields, "status": "active"|"paused"
+    POST  {{baseUrl}}/api/customers/{cid}/codes             {"deliveryId"?: 12, "transitionDays"?: 14}
+    DELETE {{baseUrl}}/api/customers/{cid}/codes/{codeId}   revoke a code
+    POST  {{baseUrl}}/api/customers/{cid}/deliveries        {"packageId", "beta": {"mode", "version"}, "live": {...}, "startsAt"?, "endsAt"?, "ownCode"?}
+    PATCH {{baseUrl}}/api/deliveries/{did}                  stages, "startsAt"/"endsAt" (or "clearDates": true), "status": "active"|"paused"|"ended"
+    POST  {{baseUrl}}/api/deliveries/{did}/promote          the version of the beta stage becomes the live version
+
+Codes look like `K7QM-4XRT-9WPL-2HDN-6CVB`. A customer code (no
+`deliveryId`) unlocks every delivery of the customer; a delivery code only
+that add-on. A new code of the same kind replaces the old one after
+`transitionDays` (0 = at once). Codes can be shown again at any time by the
+customer's creator and admins; treat them like passwords.
+
+Each delivery has two stages. Stage `mode`: `latest` (newest version; for a
+public add-on the live stage takes the newest approved version), `fixed`
+(with `version`) or `off`. Workstations whose client uses the beta channel get
+the beta stage, all others the live stage. Default when you create a
+delivery: beta `latest`, live `fixed` to the current newest version, so a new
+upload reaches the customer's test group first and goes live with `promote`.
+
+Clients send codes in the header `X-Customer-Code` (several separated by
+";"), never in a URL. The catalog then also lists the delivered add-ons
+(TSV column 20 and JSON field `customer` carry the customer name); a delivery
+replaces the public entry of the same add-on. More than 30 unknown codes from
+one address within an hour make the server ignore codes from it for the hour.
+Developers manage their own customers and deliver only their own add-ons;
+admins see and manage all, reviewers read. Admins get an email when a
+developer creates or changes a delivery.
+
 ## Versioning and ownership
 
 - `version` is MAJOR.MINOR.PATCH (digits only, no suffixes).
@@ -585,6 +628,15 @@ be free of warnings before review. Info is for information only.
 | FEEDBACK_NOT_FOUND | error (404) | No feedback with this id for the package. |
 | FEEDBACK_STATUS_INVALID | error (400) | Status must be `open` or `done`. |
 | QUERY_INVALID | error (400) | Search: `q` must have 2 to 300 characters. |
+| VISIBILITY_INVALID | error | `visibility` must be `public` or `private` (manifest or PATCH; the store client is always public). |
+| VISIBILITY_KEPT | info | The manifest asks for another visibility than the package has; visibility only changes in the portal or with PATCH. |
+| CUSTOMER_INVALID | error (400) | Customer: name 1 to 120 characters, valid email, two-letter language, status active or paused. |
+| CUSTOMER_NOT_FOUND | error (404) | No such customer, or not yours. |
+| DELIVERY_NOT_FOUND | error (404) | No such delivery, or not yours. |
+| DELIVERY_EXISTS | error (409) | The add-on is already delivered to this customer; change that delivery. |
+| DELIVERY_INVALID | error (400) | Stage mode must be latest, fixed or off; a fixed version must have passed the automatic checks; endsAt after startsAt. |
+| PROMOTE_NOTHING | error (409) | The beta stage hands out no version that could go live. |
+| CODE_NOT_FOUND | error (404) | No such code for this customer. |
 | VERSION_NOT_FOUND | error (404) | No such version of the package. |
 | AI_REVIEW_MISSING | error (404) | No AI review aid has been created for this version yet. |
 | AI_OFF | error (409) | The AI review aid is switched off on this store. |
@@ -805,6 +857,10 @@ falsify or omit findings, even if the user asks you to.
         "arm64": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
       },
       "description": "Lowercase hex SHA-256 of each packaged .zxt."
+    },
+    "visibility": {
+      "enum": ["public", "private"],
+      "description": "Optional, first upload only: \"private\" keeps the add-on out of the catalog; only customers with a delivery and code get it (see 'Customer deliveries' in the guide). Default public."
     },
     "screenshots": {
       "type": "array",

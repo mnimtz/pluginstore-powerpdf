@@ -408,3 +408,10 @@ dialog.shot-view form { text-align: right; margin-bottom: 6px; }
 .ai-search input { flex: 1; min-width: 220px; }
 .ai-results { margin: 6px 0 16px; }
 .ai-results li { margin: 4px 0; }
+
+/* Customer deliveries (S0.14.0) */
+.delivery { border-top: 1px solid var(--tun-gray-200); padding: 10px 0; }
+.delivery:first-of-type { border-top: 0; }
+.stage-form { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-top: 8px; }
+.stage-form > div { min-width: 150px; }
+.cust-code { font-size: 1rem; letter-spacing: .04em; user-select: all; }

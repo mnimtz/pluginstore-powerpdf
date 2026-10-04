@@ -15,6 +15,8 @@ public record CatalogItem(string Id, string Name, string Description, string Ver
     public int RatingCount { get; init; }
     /// <summary>Number of screenshots in the shown version's manifest.</summary>
     public int Screenshots { get; init; }
+    /// <summary>Customer name when the entry comes from a customer delivery (S0.14.0), else empty.</summary>
+    public string Customer { get; init; } = "";
 }
 
 public static class CatalogUi
@@ -26,19 +28,60 @@ public static class CatalogUi
             : root.TryGetProperty("category", out var cat) && cat.ValueKind == JsonValueKind.String ? cat.GetString() ?? "other" : "other";
         return known.ContainsKey(slug) ? slug : "other";
     }
+    /// <summary>Lookups shared by every catalog entry of one request.</summary>
+    public sealed class Context
+    {
+        public Dictionary<string, Package> Packages = new();
+        public Dictionary<string, Category> Known = new();
+        public Dictionary<string, FeedbackService.Summary> Ratings = new();
+        public static async Task<Context> LoadAsync(AppDbContext db) => new()
+        {
+            Packages = await db.Packages.Include(p => p.Owner).ToDictionaryAsync(p => p.Id),
+            Known = await db.Categories.ToDictionaryAsync(c => c.Slug),
+            Ratings = await FeedbackService.SummariesAsync(db),
+        };
+    }
+
+    /// <summary>One catalog entry for a given version (public catalog or customer delivery).</summary>
+    public static CatalogItem Item(Context ctx, PackageVersion pick, string channel, string culture, string customer = "")
+    {
+        using var doc = JsonDocument.Parse(pick.ManifestJson);
+        var zxt = "";
+        if (doc.RootElement.TryGetProperty("files", out var files) &&
+            files.ValueKind == JsonValueKind.Object &&
+            files.TryGetProperty("x64", out var fx) && fx.ValueKind == JsonValueKind.String)
+            zxt = Path.GetFileNameWithoutExtension(fx.GetString() ?? "");
+        var pkg = ctx.Packages.GetValueOrDefault(pick.PackageId);
+        var category = EffectiveCategory(pkg, doc.RootElement, ctx.Known);
+        return new CatalogItem(
+            pick.PackageId,
+            OverrideText(pkg?.NameJson, culture) ?? LangText(doc.RootElement, "name", culture) ?? pick.PackageId,
+            OverrideText(pkg?.DescriptionJson, culture) ?? LangText(doc.RootElement, "description", culture) ?? "",
+            pick.Version, channel,
+            LangText(doc.RootElement, "changelog", culture) ?? pick.Changelog,
+            pick.SizeBytes, pick.Downloads,
+            pick.Sha256, pick.MinPowerPdfVersion, zxt, category,
+            EffectiveAuthor(pkg, doc.RootElement, pkg is null ? pick.SubmittedBy : PublicName(pkg.Owner)),
+            EffectiveContact(pkg, doc.RootElement, pkg is null ? "" : PublicEmail(pkg.Owner)),
+            CategoryService.Name(ctx.Known.GetValueOrDefault(category), category, culture))
+        {
+            Rating = ctx.Ratings.GetValueOrDefault(pick.PackageId)?.Average ?? 0,
+            RatingCount = ctx.Ratings.GetValueOrDefault(pick.PackageId)?.Count ?? 0,
+            Screenshots = ScreenshotService.Count(pick.ManifestJson),
+            Customer = customer,
+        };
+    }
+
+    /// <summary>The public catalog: newest live (or beta) version of every public package.</summary>
     public static async Task<List<CatalogItem>> GetAsync(AppDbContext db, string culture, bool includeBeta = false)
     {
         var all = await db.PackageVersions
             .Where(v => v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta))
+            .Where(v => db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private"))
             .ToListAsync();
         var cmp = new SemVerComparer();
         var items = new List<CatalogItem>();
-        var ownerRows = await db.Packages.Include(p => p.Owner).ToListAsync();
-        var owners = ownerRows.ToDictionary(p => p.Id, p => CatalogUi.PublicName(p.Owner));
-        var ownerMails = ownerRows.ToDictionary(p => p.Id, p => CatalogUi.PublicEmail(p.Owner));
-        var pkgs = ownerRows.ToDictionary(p => p.Id);
-        var known = await db.Categories.ToDictionaryAsync(c => c.Slug);
-        var ratings = await FeedbackService.SummariesAsync(db);
+        var ctx = await Context.LoadAsync(db);
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
@@ -50,30 +93,7 @@ public static class CatalogUi
                 pick = beta; channel = "beta";
             }
             if (pick is null) continue;
-            using var doc = JsonDocument.Parse(pick.ManifestJson);
-            var zxt = "";
-            if (doc.RootElement.TryGetProperty("files", out var files) &&
-                files.ValueKind == JsonValueKind.Object &&
-                files.TryGetProperty("x64", out var fx) && fx.ValueKind == JsonValueKind.String)
-                zxt = Path.GetFileNameWithoutExtension(fx.GetString() ?? "");
-            var pkg = pkgs.GetValueOrDefault(pick.PackageId);
-            var category = EffectiveCategory(pkg, doc.RootElement, known);
-            items.Add(new CatalogItem(
-                pick.PackageId,
-                OverrideText(pkg?.NameJson, culture) ?? LangText(doc.RootElement, "name", culture) ?? pick.PackageId,
-                OverrideText(pkg?.DescriptionJson, culture) ?? LangText(doc.RootElement, "description", culture) ?? "",
-                pick.Version, channel,
-                LangText(doc.RootElement, "changelog", culture) ?? pick.Changelog,
-                pick.SizeBytes, pick.Downloads,
-                pick.Sha256, pick.MinPowerPdfVersion, zxt, category,
-                EffectiveAuthor(pkg, doc.RootElement, owners.GetValueOrDefault(pick.PackageId, pick.SubmittedBy)),
-                EffectiveContact(pkg, doc.RootElement, ownerMails.GetValueOrDefault(pick.PackageId, "")),
-                CategoryService.Name(known.GetValueOrDefault(category), category, culture))
-            {
-                Rating = ratings.GetValueOrDefault(pick.PackageId)?.Average ?? 0,
-                RatingCount = ratings.GetValueOrDefault(pick.PackageId)?.Count ?? 0,
-                Screenshots = ScreenshotService.Count(pick.ManifestJson),
-            });
+            items.Add(Item(ctx, pick, channel, culture));
         }
         return items;
     }

@@ -19,6 +19,9 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<ShareStat> ShareStats => Set<ShareStat>();
     public DbSet<Rating> Ratings => Set<Rating>();
     public DbSet<Feedback> Feedbacks => Set<Feedback>();
+    public DbSet<Customer> Customers => Set<Customer>();
+    public DbSet<CustomerCode> CustomerCodes => Set<CustomerCode>();
+    public DbSet<Delivery> Deliveries => Set<Delivery>();
 
     protected override void OnModelCreating(ModelBuilder b)
     {
@@ -35,5 +38,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
         b.Entity<Invite>().HasIndex(i => i.TokenHash).IsUnique();
         b.Entity<PackageVersion>().HasIndex(v => new { v.PackageId, v.Version }).IsUnique();
         b.Entity<AuditEntry>().HasIndex(a => a.At);
+        b.Entity<CustomerCode>().HasIndex(c => c.CodeHash).IsUnique();
+        b.Entity<Delivery>().HasIndex(d => new { d.CustomerId, d.PackageId }).IsUnique();
     }
 }

@@ -1,0 +1,18 @@
+@model (string Prefix, string Mode, string? Version, List<string> Versions)
+@* One delivery stage (beta or live): mode and, for "fixed", the version. *@
+<div class="stage">
+    <label>@L[Model.Prefix == "beta" ? "Beta stage" : "Live stage"]</label>
+    <div style="display:flex;gap:6px">
+        <select name="@(Model.Prefix)Mode" style="width:auto">
+            <option value="latest" selected="@(Model.Mode == "latest")">@L["newest"]</option>
+            <option value="fixed" selected="@(Model.Mode == "fixed")">@L["fixed"]</option>
+            <option value="off" selected="@(Model.Mode == "off")">@L["off"]</option>
+        </select>
+        <select name="@(Model.Prefix)Version" class="stage-version" style="width:auto">
+            @foreach (var v in Model.Versions)
+            {
+                <option value="@v" selected="@(v == Model.Version)">@v</option>
+            }
+        </select>
+    </div>
+</div>

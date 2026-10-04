@@ -17,6 +17,7 @@ public class PluginModel : PageModel
     private readonly SourceService _sources;
     private readonly AiService _ai;
     private readonly AiAssist _assist;
+    private readonly PackageMetaService _meta;
 
     public Package? Pkg { get; private set; }
     public AppUser? Me { get; private set; }
@@ -36,9 +37,9 @@ public class PluginModel : PageModel
     public bool AiReviewOn { get; private set; }
 
     public PluginModel(AppDbContext db, UserManager<AppUser> users, VersionActionService actions, SourceService sources,
-                       AiService ai, AiAssist assist)
+                       AiService ai, AiAssist assist, PackageMetaService meta)
     {
-        _db = db; _users = users; _actions = actions; _sources = sources; _ai = ai; _assist = assist;
+        _db = db; _users = users; _actions = actions; _sources = sources; _ai = ai; _assist = assist; _meta = meta;
     }
 
     private async Task<bool> LoadAsync(string id)
@@ -133,6 +134,19 @@ public class PluginModel : PageModel
             await _db.SaveChangesAsync();
         }
         return RedirectToPage(new { id });
+    }
+
+    /// <summary>public (catalog) or private (only customers with a delivery and code see it).</summary>
+    public async Task<IActionResult> OnPostVisibilityAsync(string id, string visibility)
+    {
+        if (!await LoadAsync(id ?? "")) return Forbid();
+        if (!IsOwner && !IsAdmin) return Forbid();
+        var pkg = await _db.Packages.FirstAsync(p => p.Id == id);
+        var issues = await _meta.ApplyAsync(pkg, Me!, new MetaChange { SetVisibility = true, Visibility = visibility });
+        Notice = issues.Any(i => i.Severity == "error") ? "This action is not allowed for this version." : "Settings saved.";
+        NoticeKind = issues.Any(i => i.Severity == "error") ? "warn" : "ok";
+        await LoadAsync(id!);
+        return Page();
     }
 
     public async Task<IActionResult> OnPostAiReviewAsync(string id, int versionId)

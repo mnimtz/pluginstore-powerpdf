@@ -1,0 +1,66 @@
+@page
+@model AddonStore.Web.Pages.CustomersModel
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<h1>@L["Customers"]</h1>
+<p class="lead">@L["Deliver add-ons to individual customers: they see them in the store window with their code, nobody else does. Every delivery has a beta and a live stage."]</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+}
+
+<form method="get" class="catalog-tools">
+    <input type="search" name="q" value="@Model.Q" placeholder="@L["Search"]…" aria-label="@L["Search"]" />
+</form>
+
+@if (Model.Rows.Count == 0)
+{
+    <div class="card">@L["No customers yet."]</div>
+}
+else
+{
+    <div class="table-wrap">
+    <table>
+        <tr><th>@L["Customer"]</th><th>@L["Contact"]</th><th>@L["Deliveries"]</th><th>@L["Status"]</th><th>@L["Last activity"]</th><th>@L["Created by"]</th></tr>
+        @foreach (var r in Model.Rows)
+        {
+            <tr>
+                <td><a href="/Customer?id=@r.Customer.Id"><b>@r.Customer.Name</b></a></td>
+                <td>@r.Customer.ContactName</td>
+                <td>@r.Deliveries</td>
+                <td><span class="badge @(r.Customer.Status == "active" ? "live" : "withdrawn")">@L[r.Customer.Status == "active" ? "active" : "paused"]</span></td>
+                <td class="small">@(r.Customer.LastSeenAt is null ? "–" : Time.Fmt(r.Customer.LastSeenAt))</td>
+                <td class="small">@r.Owner</td>
+            </tr>
+        }
+    </table>
+    </div>
+}
+
+@if (Model.CanCreate)
+{
+    <div class="card" style="max-width:560px">
+        <h2 style="margin-top:0">@L["New customer"]</h2>
+        <form method="post" asp-page-handler="Create" class="stack" style="max-width:none">
+            <div><label>@L["Name"]</label><input type="text" name="name" required maxlength="120" placeholder="Muster AG" /></div>
+            <div><label>@L["Contact person"]</label><input type="text" name="contactName" maxlength="120" /></div>
+            <div><label>@L["Email"]</label><input type="email" name="contactEmail" maxlength="200" /></div>
+            <div>
+                <label>@L["Language"]</label>
+                <select name="language">
+                    @foreach (var l in AddonStore.Web.Validation.PackageValidator.RequiredLanguages)
+                    {
+                        <option value="@l" selected="@(l == "de")">@l</option>
+                    }
+                </select>
+            </div>
+            <div><label>@L["Note"]</label><textarea name="note" rows="2" maxlength="2000"></textarea></div>
+            <label style="font-weight:400"><input type="checkbox" name="withCode" value="true" checked style="width:auto" /> @L["Create a customer code for all its deliveries right away"]</label>
+            <button type="submit" class="btn cta">@L["Create customer"]</button>
+        </form>
+        <p class="muted small">@L["Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed."]</p>
+    </div>
+}

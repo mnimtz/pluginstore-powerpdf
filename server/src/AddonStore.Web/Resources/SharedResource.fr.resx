@@ -580,4 +580,67 @@
   <data name="Sends one short request with the chosen model." xml:space="preserve"><value>Envoie une courte requête avec le modèle choisi.</value></data>
   <data name="Connected. Choose a model below." xml:space="preserve"><value>Connecté. Choisissez un modèle ci-dessous.</value></data>
   <data name="The connection failed." xml:space="preserve"><value>La connexion a échoué.</value></data>
+  <data name="Customers" xml:space="preserve"><value>Clients</value></data>
+  <data name="Customer" xml:space="preserve"><value>Client</value></data>
+  <data name="New customer" xml:space="preserve"><value>Nouveau client</value></data>
+  <data name="Create customer" xml:space="preserve"><value>Créer le client</value></data>
+  <data name="No customers yet." xml:space="preserve"><value>Aucun client pour l'instant.</value></data>
+  <data name="Deliveries" xml:space="preserve"><value>Livraisons</value></data>
+  <data name="Deliver an add-on" xml:space="preserve"><value>Livrer un module</value></data>
+  <data name="Deliver" xml:space="preserve"><value>Livrer</value></data>
+  <data name="Codes" xml:space="preserve"><value>Codes</value></data>
+  <data name="Code" xml:space="preserve"><value>Code</value></data>
+  <data name="No codes yet." xml:space="preserve"><value>Aucun code pour l'instant.</value></data>
+  <data name="New customer code" xml:space="preserve"><value>Nouveau code client</value></data>
+  <data name="Code for this add-on only" xml:space="preserve"><value>Code pour ce module uniquement</value></data>
+  <data name="Also create a code for this add-on only" xml:space="preserve"><value>Créer aussi un code pour ce module uniquement</value></data>
+  <data name="Create a customer code for all its deliveries right away" xml:space="preserve"><value>Créer tout de suite un code client pour toutes ses livraisons</value></data>
+  <data name="Valid for" xml:space="preserve"><value>Valable pour</value></data>
+  <data name="all deliveries" xml:space="preserve"><value>toutes les livraisons</value></data>
+  <data name="Copy" xml:space="preserve"><value>Copier</value></data>
+  <data name="valid" xml:space="preserve"><value>valable</value></data>
+  <data name="expired" xml:space="preserve"><value>expiré</value></data>
+  <data name="valid until {0}" xml:space="preserve"><value>valable jusqu'au {0}</value></data>
+  <data name="Previous code stays valid for" xml:space="preserve"><value>L'ancien code reste valable</value></data>
+  <data name="0 days (at once)" xml:space="preserve"><value>0 jour (invalide tout de suite)</value></data>
+  <data name="days" xml:space="preserve"><value>jours</value></data>
+  <data name="Make live" xml:space="preserve"><value>Passer en live</value></data>
+  <data name="Pause" xml:space="preserve"><value>Suspendre</value></data>
+  <data name="Resume" xml:space="preserve"><value>Reprendre</value></data>
+  <data name="End delivery" xml:space="preserve"><value>Terminer la livraison</value></data>
+  <data name="Change stages and period" xml:space="preserve"><value>Modifier les étapes et la période</value></data>
+  <data name="Period" xml:space="preserve"><value>Période</value></data>
+  <data name="Until" xml:space="preserve"><value>Jusqu'au</value></data>
+  <data name="Beta stage" xml:space="preserve"><value>Étape bêta</value></data>
+  <data name="Live stage" xml:space="preserve"><value>Étape live</value></data>
+  <data name="newest" xml:space="preserve"><value>la plus récente</value></data>
+  <data name="fixed" xml:space="preserve"><value>fixe</value></data>
+  <data name="off" xml:space="preserve"><value>désactivée</value></data>
+  <data name="active" xml:space="preserve"><value>actif</value></data>
+  <data name="paused" xml:space="preserve"><value>suspendu</value></data>
+  <data name="ended" xml:space="preserve"><value>terminée</value></data>
+  <data name="outside period" xml:space="preserve"><value>hors période</value></data>
+  <data name="private" xml:space="preserve"><value>privé</value></data>
+  <data name="Visibility" xml:space="preserve"><value>Visibilité</value></data>
+  <data name="public (catalog)" xml:space="preserve"><value>public (catalogue)</value></data>
+  <data name="private (customer deliveries only)" xml:space="preserve"><value>privé (livraisons client uniquement)</value></data>
+  <data name="Customer data" xml:space="preserve"><value>Données client</value></data>
+  <data name="Contact person" xml:space="preserve"><value>Interlocuteur</value></data>
+  <data name="Note" xml:space="preserve"><value>Note</value></data>
+  <data name="Created by" xml:space="preserve"><value>Créé par</value></data>
+  <data name="paused (no add-ons for this customer)" xml:space="preserve"><value>suspendu (aucun module pour ce client)</value></data>
+  <data name="Nothing delivered yet." xml:space="preserve"><value>Rien de livré pour l'instant.</value></data>
+  <data name="Please check name and email address." xml:space="preserve"><value>Vérifiez le nom et l'adresse e-mail.</value></data>
+  <data name="New code created." xml:space="preserve"><value>Nouveau code créé.</value></data>
+  <data name="Code revoked." xml:space="preserve"><value>Code révoqué.</value></data>
+  <data name="Delivery created." xml:space="preserve"><value>Livraison créée.</value></data>
+  <data name="Delivery saved." xml:space="preserve"><value>Livraison enregistrée.</value></data>
+  <data name="The beta version is now live for this customer." xml:space="preserve"><value>La version bêta est maintenant en live pour ce client.</value></data>
+  <data name="Customer delivery created or changed by a developer" xml:space="preserve"><value>Livraison client créée ou modifiée par un développeur</value></data>
+  <data name="Deliver add-ons to individual customers: they see them in the store window with their code, nobody else does. Every delivery has a beta and a live stage." xml:space="preserve"><value>Livrez des modules à des clients précis : ils les voient avec leur code dans la fenêtre du store, personne d'autre. Chaque livraison a une étape bêta et une étape live.</value></data>
+  <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. Enter the code in the Add-on Store options in Power PDF or distribute it with the policy CustomerCode (client 0.6.0 or later). Several codes can be combined, separated by semicolons." xml:space="preserve"><value>Un code client débloque toutes les livraisons de ce client, un code de livraison un seul module. Saisissez le code dans les options de l'Add-on Store dans Power PDF ou distribuez-le avec la stratégie CustomerCode (client 0.6.0 ou ultérieur). Plusieurs codes peuvent être combinés, séparés par des points-virgules.</value></data>
+  <data name="Beta stage: workstations of this customer with the beta option (or policy BetaChannel). Live stage: all others. Typical: new version to beta, test, then &quot;Make live&quot;." xml:space="preserve"><value>Étape bêta : postes de ce client avec l'option bêta (ou la stratégie BetaChannel). Étape live : tous les autres. Habituellement : nouvelle version en bêta, test, puis « Passer en live ».</value></data>
+  <data name="Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>Live « fixe » maintient le client sur une version testée ; « la plus récente » suit chaque version publiée. Les modules privés n'ont pas besoin d'approbation ; les administrateurs sont informés par e-mail.</value></data>
+  <data name="No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet." xml:space="preserve"><value>Aucun module à livrer : vous pouvez livrer vos propres modules qui ont réussi les contrôles automatiques et ne sont pas encore livrés à ce client.</value></data>
+  <data name="Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed." xml:space="preserve"><value>Seul le nom est obligatoire. Les coordonnées servent uniquement à l'e-mail de livraison ; laissez-les vides si inutiles.</value></data>
 </root>

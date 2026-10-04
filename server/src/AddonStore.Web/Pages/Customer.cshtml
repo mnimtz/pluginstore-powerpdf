@@ -1,0 +1,230 @@
+@page
+@model AddonStore.Web.Pages.CustomerModel
+@{
+    var c = Model.Cust!;
+    ViewData["Title"] = c.Name;
+    string StageText(string mode, string? version, string? resolved) =>
+        mode == "off" ? L["off"].Value
+        : (mode == "fixed" ? L["fixed"].Value + " " + version : L["newest"].Value) + (resolved is null ? " (–)" : " → " + resolved);
+}
+
+<p style="margin:0 0 6px"><a href="/Customers">← @L["Customers"]</a></p>
+<h1>@c.Name <span class="badge @(c.Status == "active" ? "live" : "withdrawn")" style="font-size:.8rem;vertical-align:middle">@L[c.Status == "active" ? "active" : "paused"]</span></h1>
+<p class="muted small">@L["Created by"] @Model.Owner · @Time.Fmt(c.CreatedAt) · @L["Last activity"]: @(c.LastSeenAt is null ? "–" : Time.Fmt(c.LastSeenAt))</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+}
+
+<div class="card">
+    <h2 style="margin-top:0">@L["Codes"]</h2>
+    <p class="small muted">@L["A customer code unlocks all deliveries of this customer; a delivery code only one add-on. Enter the code in the Add-on Store options in Power PDF or distribute it with the policy CustomerCode (client 0.6.0 or later). Several codes can be combined, separated by semicolons."]</p>
+    @if (Model.Codes.Count == 0)
+    {
+        <p class="muted">@L["No codes yet."]</p>
+    }
+    else
+    {
+        <div class="table-wrap">
+        <table>
+            <tr><th>@L["Valid for"]</th><th>@L["Code"]</th><th>@L["Created"]</th><th>@L["Last used"]</th><th>@L["Status"]</th><th></th></tr>
+            @foreach (var r in Model.Codes)
+            {
+                <tr>
+                    <td>@(r.Code.DeliveryId is null ? L["all deliveries"].Value : r.Scope)</td>
+                    <td>
+                        @if (r.Plain is not null)
+                        {
+                            <code class="cust-code">@r.Plain</code>
+                            <button type="button" class="btn small secondary copy-code" data-code="@r.Plain">@L["Copy"]</button>
+                        }
+                        else
+                        {
+                            <code>@r.Code.Prefix…</code>
+                        }
+                    </td>
+                    <td class="small">@Time.Fmt(r.Code.CreatedAt)<br /><span class="muted">@r.Code.CreatedBy</span></td>
+                    <td class="small">@(r.Code.LastUsedAt is null ? "–" : Time.Fmt(r.Code.LastUsedAt))</td>
+                    <td class="small">
+                        @if (r.Code.RevokedAt is not null) { <span class="badge rejected">@L["revoked"]</span> }
+                        else if (!r.Valid) { <span class="badge withdrawn">@L["expired"]</span> }
+                        else if (r.Code.ExpiresAt is not null) { <span class="badge pending">@L["valid until {0}", Time.Fmt(r.Code.ExpiresAt)]</span> }
+                        else { <span class="badge live">@L["valid"]</span> }
+                    </td>
+                    <td>
+                        @if (Model.CanManage && r.Valid)
+                        {
+                            <form method="post" asp-page-handler="Revoke" asp-route-id="@c.Id" style="display:inline">
+                                <input type="hidden" name="codeId" value="@r.Code.Id" />
+                                <button type="submit" class="btn small danger">@L["Revoke"]</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+        </div>
+    }
+    @if (Model.CanManage)
+    {
+        <form method="post" asp-page-handler="Code" asp-route-id="@c.Id" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px">
+            <button type="submit" class="btn small">@L["New customer code"]</button>
+            <label style="margin:0;font-weight:400">@L["Previous code stays valid for"]</label>
+            <select name="transitionDays" style="width:auto">
+                <option value="0">@L["0 days (at once)"]</option>
+                <option value="14" selected>14 @L["days"]</option>
+                <option value="30">30 @L["days"]</option>
+            </select>
+        </form>
+    }
+</div>
+
+<div class="card">
+    <h2 style="margin-top:0">@L["Deliveries"]</h2>
+    <p class="small muted">@L["Beta stage: workstations of this customer with the beta option (or policy BetaChannel). Live stage: all others. Typical: new version to beta, test, then \"Make live\"."]</p>
+    @if (Model.Deliveries.Count == 0)
+    {
+        <p class="muted">@L["Nothing delivered yet."]</p>
+    }
+    @foreach (var d in Model.Deliveries)
+    {
+        var del = d.Delivery;
+        <div class="delivery">
+            <div class="ai-head">
+                <b>@d.Name</b> <span class="muted small">@del.PackageId</span>
+                @if (d.Visibility == "private") { <span class="badge submitted">@L["private"]</span> }
+                <span class="badge @(d.Effective ? "live" : "withdrawn")">@L[del.Status == "active" ? (d.Effective ? "active" : "outside period") : del.Status == "paused" ? "paused" : "ended"]</span>
+                <span class="muted small">@L["Last activity"]: @(del.LastSeenAt is null ? "–" : Time.Fmt(del.LastSeenAt))</span>
+            </div>
+            <p class="small" style="margin:6px 0">
+                <b>@L["Beta"]:</b> @StageText(del.BetaMode, del.BetaVersion, d.BetaResolved) &nbsp;·&nbsp;
+                <b>@L["Live"]:</b> @StageText(del.LiveMode, del.LiveVersion, d.LiveResolved)
+                @if (del.StartsAt is not null || del.EndsAt is not null)
+                {
+                    <text> &nbsp;·&nbsp; @L["Period"]: @(del.StartsAt?.ToString("yyyy-MM-dd") ?? "…") – @(del.EndsAt?.ToString("yyyy-MM-dd") ?? "…")</text>
+                }
+            </p>
+            @if (Model.CanManage)
+            {
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    @if (d.BetaResolved is not null && d.BetaResolved != d.LiveResolved && del.Status != "ended")
+                    {
+                        <form method="post" asp-page-handler="Promote" asp-route-id="@c.Id"><input type="hidden" name="did" value="@del.Id" />
+                            <button type="submit" class="btn small">@L["Make live"] (@d.BetaResolved)</button></form>
+                    }
+                    @if (del.Status == "active")
+                    {
+                        <form method="post" asp-page-handler="Status" asp-route-id="@c.Id"><input type="hidden" name="did" value="@del.Id" /><input type="hidden" name="status" value="paused" />
+                            <button type="submit" class="btn small secondary">@L["Pause"]</button></form>
+                    }
+                    else
+                    {
+                        <form method="post" asp-page-handler="Status" asp-route-id="@c.Id"><input type="hidden" name="did" value="@del.Id" /><input type="hidden" name="status" value="active" />
+                            <button type="submit" class="btn small secondary">@L["Resume"]</button></form>
+                    }
+                    @if (del.Status != "ended")
+                    {
+                        <form method="post" asp-page-handler="Status" asp-route-id="@c.Id"><input type="hidden" name="did" value="@del.Id" /><input type="hidden" name="status" value="ended" />
+                            <button type="submit" class="btn small danger">@L["End delivery"]</button></form>
+                    }
+                    <form method="post" asp-page-handler="Code" asp-route-id="@c.Id"><input type="hidden" name="deliveryId" value="@del.Id" /><input type="hidden" name="transitionDays" value="14" />
+                        <button type="submit" class="btn small secondary">@L["Code for this add-on only"]</button></form>
+                </div>
+                <details style="margin-top:8px">
+                    <summary class="small" style="cursor:pointer">@L["Change stages and period"]</summary>
+                    <form method="post" asp-page-handler="Delivery" asp-route-id="@c.Id" class="stage-form">
+                        <input type="hidden" name="did" value="@del.Id" />
+                        <partial name="_StageFields" model='("beta", del.BetaMode, del.BetaVersion, d.Versions)' />
+                        <partial name="_StageFields" model='("live", del.LiveMode, del.LiveVersion, d.Versions)' />
+                        <div><label>@L["From"]</label><input type="date" name="startsAt" value="@del.StartsAt?.ToString("yyyy-MM-dd")" /></div>
+                        <div><label>@L["Until"]</label><input type="date" name="endsAt" value="@del.EndsAt?.ToString("yyyy-MM-dd")" /></div>
+                        <input type="hidden" name="status" value="@del.Status" />
+                        <button type="submit" class="btn small cta">@L["Save"]</button>
+                    </form>
+                </details>
+            }
+        </div>
+    }
+</div>
+
+@if (Model.CanManage)
+{
+    <div class="card">
+        <h2 style="margin-top:0">@L["Deliver an add-on"]</h2>
+        @if (Model.Packages.Count == 0)
+        {
+            <p class="muted">@L["No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet."]</p>
+        }
+        else
+        {
+            <form method="post" asp-page-handler="Deliver" asp-route-id="@c.Id" class="stage-form" id="deliver-form">
+                <div>
+                    <label>@L["Add-on"]</label>
+                    <select name="packageId" id="deliver-pkg">
+                        @foreach (var p in Model.Packages)
+                        {
+                            <option value="@p.Id" data-versions="@string.Join(",", p.Versions)">@p.Name (@p.Id)@(p.Visibility == "private" ? " · " + L["private"].Value : "")</option>
+                        }
+                    </select>
+                </div>
+                <partial name="_StageFields" model='("beta", "latest", (string?)null, Model.Packages[0].Versions)' />
+                <partial name="_StageFields" model='("live", "fixed", Model.Packages[0].Versions[0], Model.Packages[0].Versions)' />
+                <div><label>@L["From"]</label><input type="date" name="startsAt" /></div>
+                <div><label>@L["Until"]</label><input type="date" name="endsAt" /></div>
+                <label style="font-weight:400"><input type="checkbox" name="ownCode" value="true" style="width:auto" /> @L["Also create a code for this add-on only"]</label>
+                <button type="submit" class="btn cta">@L["Deliver"]</button>
+            </form>
+            <p class="small muted">@L["Live \"fixed\" keeps the customer on a tested version; \"newest\" follows every released version. Private add-ons need no admin approval; admins are informed by email."]</p>
+        }
+    </div>
+}
+
+@if (Model.CanManage)
+{
+    <details class="card">
+        <summary style="cursor:pointer;font-weight:700;color:var(--tun-navy)">@L["Customer data"]</summary>
+        <form method="post" asp-page-handler="Save" asp-route-id="@c.Id" class="stack" style="max-width:560px;margin-top:10px">
+            <div><label>@L["Name"]</label><input type="text" name="name" value="@c.Name" required maxlength="120" /></div>
+            <div><label>@L["Contact person"]</label><input type="text" name="contactName" value="@c.ContactName" maxlength="120" /></div>
+            <div><label>@L["Email"]</label><input type="email" name="contactEmail" value="@c.ContactEmail" maxlength="200" /></div>
+            <div>
+                <label>@L["Language"]</label>
+                <select name="language">
+                    @foreach (var l in AddonStore.Web.Validation.PackageValidator.RequiredLanguages)
+                    {
+                        <option value="@l" selected="@(l == c.Language)">@l</option>
+                    }
+                </select>
+            </div>
+            <div><label>@L["Note"]</label><textarea name="note" rows="2" maxlength="2000">@c.Note</textarea></div>
+            <div>
+                <label>@L["Status"]</label>
+                <select name="status">
+                    <option value="active" selected="@(c.Status == "active")">@L["active"]</option>
+                    <option value="paused" selected="@(c.Status == "paused")">@L["paused (no add-ons for this customer)"]</option>
+                </select>
+            </div>
+            <button type="submit" class="btn cta">@L["Save"]</button>
+        </form>
+    </details>
+}
+
+<script>
+    (function () {
+        document.querySelectorAll('.copy-code').forEach(function (b) {
+            b.addEventListener('click', function () {
+                navigator.clipboard && navigator.clipboard.writeText(b.dataset.code);
+                b.textContent = '✓';
+            });
+        });
+        var sel = document.getElementById('deliver-pkg');
+        if (sel) sel.addEventListener('change', function () {
+            var vs = (sel.selectedOptions[0].dataset.versions || '').split(',');
+            document.querySelectorAll('#deliver-form select.stage-version').forEach(function (s) {
+                s.innerHTML = '';
+                vs.forEach(function (v) { var o = document.createElement('option'); o.value = v; o.textContent = v; s.appendChild(o); });
+            });
+        });
+    })();
+</script>

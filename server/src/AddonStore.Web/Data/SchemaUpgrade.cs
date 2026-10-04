@@ -85,7 +85,21 @@ public static class SchemaUpgrade
             "ALTER TABLE Feedback ADD COLUMN AiAt TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN AiReviewJson TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN AiReviewAt TEXT NULL",
-            "ALTER TABLE PackageVersions ADD COLUMN AiReviewModel TEXT NULL"
+            "ALTER TABLE PackageVersions ADD COLUMN AiReviewModel TEXT NULL",
+            // Customer deliveries (S0.14.0)
+            "ALTER TABLE Packages ADD COLUMN Visibility TEXT NOT NULL DEFAULT 'public'",
+            "CREATE TABLE IF NOT EXISTS Customers (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, " +
+                "ContactName TEXT NULL, ContactEmail TEXT NULL, Language TEXT NOT NULL, Note TEXT NULL, Status TEXT NOT NULL, " +
+                "OwnerId TEXT NOT NULL, CreatedAt TEXT NOT NULL, LastSeenAt TEXT NULL)",
+            "CREATE TABLE IF NOT EXISTS CustomerCodes (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, CustomerId INTEGER NOT NULL, " +
+                "DeliveryId INTEGER NULL, CodeHash TEXT NOT NULL, CodeProtected TEXT NOT NULL, Prefix TEXT NOT NULL, " +
+                "CreatedAt TEXT NOT NULL, CreatedBy TEXT NOT NULL, ExpiresAt TEXT NULL, RevokedAt TEXT NULL, LastUsedAt TEXT NULL)",
+            "CREATE UNIQUE INDEX IF NOT EXISTS IX_CustomerCodes_CodeHash ON CustomerCodes (CodeHash)",
+            "CREATE TABLE IF NOT EXISTS Deliveries (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, CustomerId INTEGER NOT NULL, " +
+                "PackageId TEXT NOT NULL, BetaMode TEXT NOT NULL, BetaVersion TEXT NULL, LiveMode TEXT NOT NULL, LiveVersion TEXT NULL, " +
+                "StartsAt TEXT NULL, EndsAt TEXT NULL, Status TEXT NOT NULL, CreatedBy TEXT NOT NULL, CreatedAt TEXT NOT NULL, " +
+                "UpdatedAt TEXT NULL, LastSeenAt TEXT NULL)",
+            "CREATE UNIQUE INDEX IF NOT EXISTS IX_Deliveries_CustomerId_PackageId ON Deliveries (CustomerId, PackageId)"
         })
         {
             try { db.Database.ExecuteSqlRaw(sql); }

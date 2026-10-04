@@ -15,8 +15,9 @@ public record MetaIssue(string Code, string Severity, string Message, string Hin
 /// </summary>
 public class MetaChange
 {
-    public bool SetName, SetDescription, SetAuthor, SetContact, SetCategory;
+    public bool SetName, SetDescription, SetAuthor, SetContact, SetCategory, SetVisibility;
     public string? Category;
+    public string? Visibility;
     public Dictionary<string, string>? Name;
     public Dictionary<string, string>? Description;
     public string? Author;
@@ -104,9 +105,14 @@ public class PackageMetaService
         if (c.SetCategory && !string.IsNullOrWhiteSpace(c.Category) && !await _db.Categories.AnyAsync(x => x.Slug == c.Category))
             issues.Add(new("CATEGORY_UNKNOWN", "error", $"Category '{c.Category}' does not exist.",
                 "Use a slug from GET /api/categories. New categories are only created through a package upload with categoryProposal."));
+        if (c.SetVisibility && (c.Visibility is not ("public" or "private") ||
+                                (c.Visibility == "private" && pkg.Id == SubmissionService.ClientPackageId)))
+            issues.Add(new("VISIBILITY_INVALID", "error", "visibility must be 'public' or 'private' (the store client is always public).",
+                "Private add-ons appear only for customers with a delivery and code; see 'Customer deliveries' in the guide."));
         if (issues.Any(i => i.Severity == "error")) return issues;
 
         var changed = new List<string>();
+        if (c.SetVisibility && pkg.Visibility != c.Visibility) { pkg.Visibility = c.Visibility!; changed.Add($"visibility {pkg.Visibility}"); }
         if (c.SetName) { pkg.NameJson = c.Name is null ? null : JsonSerializer.Serialize(c.Name); changed.Add(c.Name is null ? "name reset" : "name"); }
         if (c.SetDescription) { pkg.DescriptionJson = c.Description is null ? null : JsonSerializer.Serialize(c.Description); changed.Add(c.Description is null ? "description reset" : "description"); }
         if (c.SetAuthor) { pkg.Author = string.IsNullOrWhiteSpace(c.Author) ? null : c.Author; changed.Add(pkg.Author is null ? "author reset" : $"author '{pkg.Author}'"); }

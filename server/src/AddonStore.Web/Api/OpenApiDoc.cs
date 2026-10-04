@@ -59,6 +59,16 @@ public static class OpenApiDoc
         new("get", "/api/packages/{id}/{version}/ai-review", "getAiReview", "Stored AI review aid of a version.", "reviewer", new[] { "id:path:package id", "version:path:version" }),
         new("post", "/api/packages/{id}/{version}/ai-review", "createAiReview", "Create the AI review aid of a version again.", "reviewer",
             new[] { "id:path:package id", "version:path:version", "lang:query:'de' or 'en'" }),
+        new("get", "/api/customers", "listCustomers", "Your customers (admins and reviewers: all) for customer deliveries.", "token", Array.Empty<string>()),
+        new("post", "/api/customers", "createCustomer", "Create a customer, by default with a customer code for all its deliveries.", "token", Array.Empty<string>(), Body: "customer"),
+        new("get", "/api/customers/{cid}", "getCustomer", "One customer with its codes and deliveries.", "token", new[] { "cid:path:customer id" }),
+        new("patch", "/api/customers/{cid}", "updateCustomer", "Change customer data or status (active, paused).", "token", new[] { "cid:path:customer id" }, Body: "customer"),
+        new("post", "/api/customers/{cid}/codes", "createCustomerCode", "New code for the customer (all deliveries) or for one delivery; the previous code of that kind stays valid for transitionDays.", "token",
+            new[] { "cid:path:customer id" }, Body: "code"),
+        new("delete", "/api/customers/{cid}/codes/{codeId}", "revokeCustomerCode", "Revoke a code.", "token", new[] { "cid:path:customer id", "codeId:path:code id" }),
+        new("post", "/api/customers/{cid}/deliveries", "createDelivery", "Deliver an add-on to the customer with a beta and a live stage.", "token", new[] { "cid:path:customer id" }, Body: "delivery"),
+        new("patch", "/api/deliveries/{did}", "updateDelivery", "Change stages, period or status (active, paused, ended) of a delivery.", "token", new[] { "did:path:delivery id" }, Body: "delivery"),
+        new("post", "/api/deliveries/{did}/promote", "promoteDelivery", "The version of the beta stage becomes the live version for this customer.", "token", new[] { "did:path:delivery id" }),
         new("get", "/api/devkit", "listDevkit", "SDK documentation, knowledge files and templates for plugin development.", "none", Array.Empty<string>()),
         new("get", "/api/devkit/{path}", "getDevkitFile", "One developer kit file.", "none", new[] { "path:path:file path from the list" }, Returns: "file"),
     };
@@ -130,7 +140,7 @@ public static class OpenApiDoc
                     ["in"] = parts[1],
                     ["required"] = parts[1] == "path" || (op.Id == "searchAddons" && parts[0] == "q"),
                     ["description"] = parts[2],
-                    ["schema"] = new JsonObject { ["type"] = parts[0] is "n" or "fid" ? "integer" : "string" },
+                    ["schema"] = new JsonObject { ["type"] = parts[0] is "n" or "fid" or "cid" or "did" or "codeId" ? "integer" : "string" },
                 });
             }
             o["parameters"] = ps;
@@ -192,6 +202,9 @@ public static class OpenApiDoc
             {
                 "catalogPatch" => "CatalogPatch",
                 "rating" => "Rating",
+                "customer" => "Customer",
+                "code" => "CustomerCode",
+                "delivery" => "Delivery",
                 "feedback" => "Feedback",
                 _ => "FeedbackStatus",
             }) } },
@@ -275,6 +288,49 @@ public static class OpenApiDoc
                 ["email"] = Str("Optional reply address"),
                 ["version"] = Str("Installed version"),
                 ["log"] = Str("Optional log excerpt"),
+            },
+        },
+        ["Customer"] = new JsonObject
+        {
+            ["type"] = "object",
+            ["properties"] = new JsonObject
+            {
+                ["name"] = Str("1 to 120 characters"), ["contactName"] = Str("Optional"), ["contactEmail"] = Str("Optional"),
+                ["language"] = Str("Two-letter code, default de"), ["note"] = Str("Optional"),
+                ["status"] = new JsonObject { ["type"] = "string", ["enum"] = new JsonArray("active", "paused") },
+                ["withCode"] = new JsonObject { ["type"] = "boolean", ["description"] = "Create a customer code at once (default true)" },
+            },
+        },
+        ["CustomerCode"] = new JsonObject
+        {
+            ["type"] = "object",
+            ["properties"] = new JsonObject
+            {
+                ["deliveryId"] = new JsonObject { ["type"] = "integer", ["description"] = "Omit for a code valid for all deliveries of the customer" },
+                ["transitionDays"] = new JsonObject { ["type"] = "integer", ["description"] = "How long the previous code of this kind stays valid (0 to 365, default 14)" },
+            },
+        },
+        ["Delivery"] = new JsonObject
+        {
+            ["type"] = "object",
+            ["properties"] = new JsonObject
+            {
+                ["packageId"] = Str("Add-on id (create only)"),
+                ["beta"] = Ref("Stage"), ["live"] = Ref("Stage"),
+                ["startsAt"] = new JsonObject { ["type"] = "string", ["format"] = "date-time" },
+                ["endsAt"] = new JsonObject { ["type"] = "string", ["format"] = "date-time" },
+                ["clearDates"] = new JsonObject { ["type"] = "boolean" },
+                ["status"] = new JsonObject { ["type"] = "string", ["enum"] = new JsonArray("active", "paused", "ended") },
+                ["ownCode"] = new JsonObject { ["type"] = "boolean", ["description"] = "Also create a code for this delivery only (create only)" },
+            },
+        },
+        ["Stage"] = new JsonObject
+        {
+            ["type"] = "object",
+            ["properties"] = new JsonObject
+            {
+                ["mode"] = new JsonObject { ["type"] = "string", ["enum"] = new JsonArray("latest", "fixed", "off") },
+                ["version"] = Str("For mode fixed"),
             },
         },
         ["FeedbackStatus"] = new JsonObject

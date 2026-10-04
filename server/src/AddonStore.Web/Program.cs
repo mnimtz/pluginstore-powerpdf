@@ -112,6 +112,8 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Dashboard", "PageUser");
         o.Conventions.AuthorizePage("/CatalogEntry", "PageUser");
         o.Conventions.AuthorizePage("/Plugin", "PageUser");
+        o.Conventions.AuthorizePage("/Customers", "PageUser");
+        o.Conventions.AuthorizePage("/Customer", "PageUser");
         o.Conventions.AuthorizePage("/Profile", "PageUser");
         o.Conventions.AuthorizePage("/Developer", "PageUser");
     })
@@ -124,6 +126,7 @@ builder.Services.AddScoped<ShareService>();
 builder.Services.AddScoped<FeedbackService>();
 builder.Services.AddScoped<AiService>();
 builder.Services.AddScoped<AiAssist>();
+builder.Services.AddScoped<CustomerService>();
 builder.Services.AddHostedService<AiWorker>();
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<GeoService>();

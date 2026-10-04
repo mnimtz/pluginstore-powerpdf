@@ -205,6 +205,8 @@ public class Package
     public string? CategoryOverride { get; set; }
     public DateTime? MetaUpdatedAt { get; set; }
     public string? MetaUpdatedBy { get; set; }
+    /// <summary>"public" (catalog) or "private" (only via customer deliveries).</summary>
+    public string Visibility { get; set; } = "public";
 }
 
 public enum VersionStatus
@@ -259,4 +261,58 @@ public class AuditEntry
     public string Action { get; set; } = "";
     public string Subject { get; set; } = "";
     public string Details { get; set; } = "";
+}
+
+/// <summary>A customer (organisation or project) that receives add-ons by code.</summary>
+public class Customer
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = "";
+    public string? ContactName { get; set; }
+    public string? ContactEmail { get; set; }
+    public string Language { get; set; } = "de";
+    public string? Note { get; set; }
+    public string Status { get; set; } = "active";       // active, paused
+    public string OwnerId { get; set; } = "";             // user who created it (sees and edits it)
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? LastSeenAt { get; set; }             // last catalog request with one of its codes
+}
+
+/// <summary>
+/// Access code of a customer: for all its deliveries (DeliveryId null) or for
+/// one delivery. Stored encrypted (shown any time to the people who manage
+/// the customer) plus a SHA-256 for the lookup.
+/// </summary>
+public class CustomerCode
+{
+    public int Id { get; set; }
+    public int CustomerId { get; set; }
+    public int? DeliveryId { get; set; }
+    public string CodeHash { get; set; } = "";
+    public string CodeProtected { get; set; } = "";
+    public string Prefix { get; set; } = "";
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public string CreatedBy { get; set; } = "";
+    public DateTime? ExpiresAt { get; set; }               // set when replaced: old code keeps working until then
+    public DateTime? RevokedAt { get; set; }
+    public DateTime? LastUsedAt { get; set; }
+}
+
+/// <summary>An add-on delivered to a customer, with a beta and a live stage.</summary>
+public class Delivery
+{
+    public int Id { get; set; }
+    public int CustomerId { get; set; }
+    public string PackageId { get; set; } = "";
+    public string BetaMode { get; set; } = "latest";      // latest, fixed, off
+    public string? BetaVersion { get; set; }
+    public string LiveMode { get; set; } = "fixed";       // latest, fixed, off
+    public string? LiveVersion { get; set; }
+    public DateTime? StartsAt { get; set; }
+    public DateTime? EndsAt { get; set; }
+    public string Status { get; set; } = "active";        // active, paused, ended
+    public string CreatedBy { get; set; } = "";
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? UpdatedAt { get; set; }
+    public DateTime? LastSeenAt { get; set; }
 }
