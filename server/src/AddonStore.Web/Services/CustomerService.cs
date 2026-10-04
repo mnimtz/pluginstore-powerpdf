@@ -382,6 +382,28 @@ public class CustomerService
         return result;
     }
 
+    /// <summary>
+    /// Check of the codes in the X-Customer-Code header for the store window (S0.19.0):
+    /// valid, the customer's name and how many add-ons it unlocks now. Unknown codes
+    /// count against the same per-address limit as the catalog (no guessing).
+    /// </summary>
+    public async Task<(bool Valid, string Customer, int Addons)> CheckAsync(HttpContext ctx)
+    {
+        var grants = await GrantsAsync(ctx);
+        if (grants.Count > 0)
+            return (true, string.Join(", ", grants.Select(g => g.Customer.Name).Distinct()), grants.Select(g => g.Package.Id).Distinct().Count());
+        // A valid code of an active customer without a current delivery is still valid.
+        var hashes = ctx.Request.Headers[HeaderName].ToString().Split(new[] { ';', ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(Normalize).Where(c => c.Length == 20).Distinct().Take(10).Select(Hash).ToList();
+        if (hashes.Count == 0) return (false, "", 0);
+        var now = DateTime.UtcNow;
+        var codes = (await _db.CustomerCodes.Where(c => hashes.Contains(c.CodeHash)).ToListAsync()).Where(c => CodeValid(c, now)).ToList();
+        if (codes.Count == 0) return (false, "", 0);
+        var ids = codes.Select(c => c.CustomerId).Distinct().ToList();
+        var names = await _db.Customers.Where(c => ids.Contains(c.Id) && c.Status == "active").Select(c => c.Name).ToListAsync();
+        return names.Count == 0 ? (false, "", 0) : (true, string.Join(", ", names.Distinct()), 0);
+    }
+
     /// <summary>The version a client in the given channel gets from a grant, and the channel label.</summary>
     public static (PackageVersion? Version, string Channel) Pick(Granted g, bool betaChannel)
     {

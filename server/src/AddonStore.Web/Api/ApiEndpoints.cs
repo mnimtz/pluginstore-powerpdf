@@ -138,6 +138,7 @@ public static class ApiEndpoints
                     "PATCH /api/deliveries/{did}       change stages, dates or status; POST /api/deliveries/{did}/promote = beta version goes live",
                     "DELETE /api/packages/{id}/{version}  withdraw your own beta version (auth)",
                     "GET  /api/packages/{id}/{version}/download",
+                    "GET  /api/customer-code          check the customer code in the X-Customer-Code header (valid, customer, add-ons)",
                     "GET  /api/packages/{id}/icon[?v=version]  catalog icon (PNG), of the given or the newest released version",
                     "GET  /api/devkit                 SDK documentation and developer kit files"
                 }
@@ -459,6 +460,16 @@ public static class ApiEndpoints
             ctx.Response.Headers["X-Source-Version"] = v.Version;
             return Results.File(path, "application/zip", $"{id}-{v.Version}-source.zip");
         }).RequireAuthorization("ApiOrCookie");
+
+        // Customer code check for the store window (S0.19.0): code in the X-Customer-Code header,
+        // never in the URL. Anonymous like the catalog; unknown codes count against the limit.
+        api.MapGet("/customer-code", async (HttpContext ctx, CustomerService customers) =>
+        {
+            if (string.IsNullOrWhiteSpace(ctx.Request.Headers[CustomerService.HeaderName].ToString()))
+                return Results.Json(new { ok = false, error = new { code = "CODE_MISSING", message = "Send the customer code in the X-Customer-Code header.", hint = "The code never goes into the URL." } }, statusCode: 400);
+            var (valid, customer, addons) = await customers.CheckAsync(ctx);
+            return Results.Json(new { ok = true, data = new { valid, customer = valid ? customer : null, addons } });
+        });
 
         // Catalog icon (assets/icon.png of the version the catalog shows: ?v=, else the newest
         // live, else beta, version); public like the catalog.

@@ -215,12 +215,22 @@ msiexec /i PluginStore-<version>.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"
   deployment agents use `reg add ... /reg:64`.
 - Intune detection rule: the file `<bin>\Plug-Ins\PluginStore.zxt` with a
   minimum version (the ProductCode changes with every version).
+- **Customer code in the store window, MSI in 16 languages** (client
+  0.8.0+): a "Customer code" button in the store header opens a dialog that
+  checks the code at `GET /api/customer-code` before saving it (unknown codes
+  count toward the brute-force limit) and shows the customer and the number
+  of unlocked add-ons; customer add-ons come first in the list and get their
+  own filter chip; "Remove code" clears it (both locked when the policy
+  `CustomerCode` is set). The client MSI carries all 16 languages as embedded
+  language transforms (`python client\installer\build_msi.py`, texts in
+  `client\installer\make_l10n.py`); Windows picks the user's language, and
+  the self-update passes the store window's language as `TRANSFORMS=:<LCID>`.
 - The Power PDF Customization Kit can add the files of a plug-in ("Additional
   Files"), but no registry values (URL scheme, policies); the separate silent
   MSI step is the recommended way.
 
 Build with `python tools\fetch_webview2.py` (once), `client\build.cmd` and `client\installer\build_msi.cmd`
-(Visual Studio 2022, WiX v3), deploy for testing with an elevated
+(Visual Studio 2022, WiX v3 in C:\Claude\Tools\wix314, Python 3.12 or older for msilib), deploy for testing with an elevated
 `client\deploy.cmd`. Publishing a new client version (own lane: admin-only,
 live immediately) is described step by step in
 [docs/RELEASING.md](docs/RELEASING.md).

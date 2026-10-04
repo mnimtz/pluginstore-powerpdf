@@ -461,6 +461,10 @@ Clients send codes in the header `X-Customer-Code` (several separated by
 (TSV column 20 and JSON field `customer` carry the customer name); a delivery
 replaces the public entry of the same add-on. More than 30 unknown codes from
 one address within an hour make the server ignore codes from it for the hour.
+`GET {{baseUrl}}/api/customer-code` (code in the same header) checks a code
+before a client stores it: `data.valid`, `data.customer` (name) and
+`data.addons` (how many add-ons it unlocks now; a valid code may unlock none
+yet); `CODE_MISSING` (400) without the header.
 Developers manage their own customers and deliver only their own add-ons;
 admins see and manage all, reviewers read. Admins get an email when a
 developer creates or changes a delivery.
@@ -711,6 +715,7 @@ be free of warnings before review. Info is for information only.
 | SOURCE_NO_CODE | warning | No C, C++ or C# files in the source ZIP. |
 | THIRDPARTY_SOURCE_DETECTED | info | Folders with third-party license files (MIT/BSD/Apache). |
 | SOURCE_MISSING | error (404) | No source stored for this version (download). |
+| CODE_MISSING | error (400) | GET /api/customer-code without the X-Customer-Code header. |
 | ADMIN_ONLY | error (403) | Source downloads are for store admins only. |
 | ADMIN_UPLOAD_FOR_OWNER | info | An admin uploaded a version of someone else's package. |
 | METADATA_INVALID | error (400/422) | PATCH body is not a JSON object, has unknown fields, or a finding with severity error. |
