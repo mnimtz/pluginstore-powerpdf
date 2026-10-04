@@ -483,4 +483,8 @@
   <data name="Client downloads" xml:space="preserve"><value>İstemci indirmeleri</value></data>
   <data name="without short name" xml:space="preserve"><value>kısa ad yok</value></data>
   <data name="Total" xml:space="preserve"><value>Toplam</value></data>
+  <data name="Add-on Store for Power PDF" xml:space="preserve"><value>Power PDF için Add-on Store</value></data>
+  <data name="Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF." xml:space="preserve"><value>Tungsten Power PDF için eklentiler: burada keşfedin ve doğrudan Power PDF'e yükleyin.</value></data>
+  <data name="Backup" xml:space="preserve"><value>Yedekleme</value></data>
+  <data name="Setup" xml:space="preserve"><value>Kurulum</value></data>
 </root>

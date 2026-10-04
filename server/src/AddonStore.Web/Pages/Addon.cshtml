@@ -2,6 +2,8 @@
 @model AddonStore.Web.Pages.AddonModel
 @{
     ViewData["Title"] = Model.Item?.Name ?? "Add-on";
+    ViewData["OgCustom"] = Model.Item is not null;   // the page sets its own preview tags
+    if (Model.Item is not null) ViewData["Description"] = Model.Item.Description;
     var item = Model.Item;
 }
 @section Head {
@@ -13,7 +15,8 @@
         <meta property="og:description" content="@item.Description" />
         <meta property="og:url" content="@Model.PageUrl" />
         <meta property="og:image" content="@Model.BaseUrl/api/packages/@item.Id/icon" />
-        <meta name="description" content="@item.Description" />
+        <meta property="og:locale" content="@System.Globalization.CultureInfo.CurrentUICulture.Name" />
+        <meta name="twitter:card" content="summary" />
     }
 }
 

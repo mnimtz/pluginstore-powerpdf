@@ -483,4 +483,8 @@
   <data name="Client downloads" xml:space="preserve"><value>Téléchargements du client</value></data>
   <data name="without short name" xml:space="preserve"><value>sans identifiant</value></data>
   <data name="Total" xml:space="preserve"><value>Total</value></data>
+  <data name="Add-on Store for Power PDF" xml:space="preserve"><value>Add-on Store pour Power PDF</value></data>
+  <data name="Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF." xml:space="preserve"><value>Modules pour Tungsten Power PDF : découvrez-les ici et installez-les directement dans Power PDF.</value></data>
+  <data name="Backup" xml:space="preserve"><value>Sauvegarde</value></data>
+  <data name="Setup" xml:space="preserve"><value>Configuration</value></data>
 </root>

@@ -2,11 +2,43 @@
 @inject AddonStore.Web.Api.AppVersion AppVer
 <!DOCTYPE html>
 <html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
+@{
+    // Bookmark / shortcut / tab name: the start page carries the full product
+    // name, every other page "<page> · Add-on Store for Power PDF" (localized).
+    var siteName = L["Add-on Store for Tungsten Power PDF"].Value;
+    var pageTitle = ViewData["Title"] is string t && t.Length > 0
+        ? L[t].Value + " · " + L["Add-on Store for Power PDF"].Value
+        : siteName;
+    var description = ViewData["Description"] as string
+        ?? L["Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF."].Value;
+    var host = Context.Request.Host;
+    var origin = (host.Host is "localhost" or "127.0.0.1" ? Context.Request.Scheme : "https") + "://" + host;
+}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@(ViewData["Title"] is string t && t.Length > 0 ? t + " · " : "")Add-on Store</title>
-    <link rel="icon" href="/img/store-icon.png" />
+    <title>@pageTitle</title>
+    <meta name="description" content="@description" />
+    <meta name="application-name" content="Add-on Store" />
+    <meta name="apple-mobile-web-app-title" content="Add-on Store" />
+    <meta name="theme-color" content="#002854" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    @if (ViewData["OgCustom"] is not true)
+    {
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="@siteName" />
+        <meta property="og:title" content="@pageTitle" />
+        <meta property="og:description" content="@description" />
+        <meta property="og:url" content="@(origin + Context.Request.Path)" />
+        <meta property="og:image" content="@(origin)/img/social-card.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="@CultureInfo.CurrentUICulture.Name" />
+        <meta name="twitter:card" content="summary_large_image" />
+    }
     <link rel="stylesheet" href="/css/site.css" />
     <script>
         // no-win: addonstore:// install links only work on Windows. mobile: phones and

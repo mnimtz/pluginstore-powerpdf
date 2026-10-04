@@ -15,6 +15,28 @@ public static class ApiEndpoints
     {
         // The installer for end users: the MSI inside the newest client package.
         // Stable URL, linked from the landing page; no account needed.
+        // Web app manifest for bookmarks, desktop shortcuts and "install as app":
+        // Power PDF's own application icon, brand colours, localized name.
+        app.MapGet("/site.webmanifest", (Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> L) =>
+            Results.Json(new
+            {
+                name = L["Add-on Store for Tungsten Power PDF"].Value,
+                short_name = "Add-on Store",
+                description = L["Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF."].Value,
+                lang = System.Globalization.CultureInfo.CurrentUICulture.Name,
+                start_url = "/",
+                scope = "/",
+                display = "standalone",
+                background_color = "#002854",
+                theme_color = "#002854",
+                icons = new object[]
+                {
+                    new { src = "/img/icon-192.png", sizes = "192x192", type = "image/png", purpose = "any" },
+                    new { src = "/img/icon-256.png", sizes = "256x256", type = "image/png", purpose = "any" },
+                    new { src = "/img/icon-512.png", sizes = "512x512", type = "image/png", purpose = "any" }
+                }
+            }, contentType: "application/manifest+json"));
+
         // Install click on a shared add-on page (/a/{slug}); counted per ref, see ShareService.
         app.MapPost("/a/{slug}/click", async (string slug, string? what, HttpContext ctx, AppDbContext db, ShareService share) =>
         {

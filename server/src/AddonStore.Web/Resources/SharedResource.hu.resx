@@ -483,4 +483,8 @@
   <data name="Client downloads" xml:space="preserve"><value>Kliensletöltések</value></data>
   <data name="without short name" xml:space="preserve"><value>rövid név nélkül</value></data>
   <data name="Total" xml:space="preserve"><value>Összesen</value></data>
+  <data name="Add-on Store for Power PDF" xml:space="preserve"><value>Add-on Store a Power PDF-hez</value></data>
+  <data name="Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF." xml:space="preserve"><value>Bővítmények a Tungsten Power PDF-hez: fedezze fel őket itt, és telepítse közvetlenül a Power PDF-be.</value></data>
+  <data name="Backup" xml:space="preserve"><value>Biztonsági mentés</value></data>
+  <data name="Setup" xml:space="preserve"><value>Beállítás</value></data>
 </root>
