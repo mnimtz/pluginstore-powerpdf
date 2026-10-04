@@ -397,3 +397,14 @@ dialog.shot-view::backdrop { background: rgba(0, 18, 59, .75); }
 dialog.shot-view img { display: block; max-width: 100%; max-height: 80vh; margin: 0 auto; }
 dialog.shot-view p { margin: 8px 4px 0; color: var(--tun-slate); }
 dialog.shot-view form { text-align: right; margin-bottom: 6px; }
+
+/* AI assistance (S0.12.0) */
+.ai-box { border: 1px solid var(--tun-blue-light); border-left: 4px solid var(--tun-blue); border-radius: 6px; padding: 8px 12px; margin: 8px 0; background: rgba(0, 160, 251, .05); }
+.ai-box p { margin: 6px 0; }
+.ai-head { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.ai-concerns { list-style: none; padding-left: 0; }
+.ai-concerns li { margin: 4px 0; }
+.ai-search { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 4px; }
+.ai-search input { flex: 1; min-width: 220px; }
+.ai-results { margin: 6px 0 16px; }
+.ai-results li { margin: 4px 0; }

@@ -6,7 +6,7 @@
 
 <h1>@L["Settings"]</h1>
 <p class="lead">@L["Instance settings; values are stored on the server and take effect immediately."]</p>
-<p style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn small secondary" href="/Admin/Backup">@L["Backup and restore"]</a> <a class="btn small secondary" href="/Admin/Categories">@L["Categories"]</a> <a class="btn small secondary" href="#privacy">@L["IP address logging (reports)"]</a></p>
+<p style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn small secondary" href="/Admin/Backup">@L["Backup and restore"]</a> <a class="btn small secondary" href="/Admin/Categories">@L["Categories"]</a> <a class="btn small secondary" href="#privacy">@L["IP address logging (reports)"]</a> <a class="btn small secondary" href="#ai">@L["AI assistant (optional)"]</a></p>
 
 @if (Model.Notice is not null)
 {
@@ -90,6 +90,54 @@
         </div>
         <button type="submit" class="btn cta">@L["Save"]</button>
     </form>
+</div>
+
+<div class="card" style="max-width:760px" id="ai">
+    <h2 style="margin-top:0">@L["AI assistant (optional)"]</h2>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["Sorts problem reports, prepares a review aid for new versions and lets users search for add-ons by describing what they need. Off by default; everything works without it."]</p>
+    <form method="post" asp-page-handler="Ai" class="stack" style="max-width:none">
+        <div>
+            <label>@L["Provider"]</label>
+            <select name="provider">
+                <option value="off" selected="@(Model.Ai.Provider == "off")">@L["Off"]</option>
+                <option value="claude" selected="@(Model.Ai.Provider == "claude")">Claude (Anthropic)</option>
+                <option value="gemini" selected="@(Model.Ai.Provider == "gemini")">Gemini (Google)</option>
+                @if (Model.OfferFake)
+                {
+                    <option value="fake" selected="@(Model.Ai.Provider == "fake")">Test (Development)</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label>@L["API key"]</label>
+            <input type="password" name="apiKey" placeholder="@(Model.Ai.HasKey ? "••••••••  (" + L["configured"] + ")" : "")" autocomplete="off" />
+            @if (Model.Ai.HasKey)
+            {
+                <label style="font-weight:400"><input type="checkbox" name="clearKey" value="true" style="width:auto" /> @L["Remove stored key"]</label>
+            }
+            <small style="color:var(--tun-slate)">@L["Stored encrypted on the server and never shown again. Use a key of your own organization with a spending limit."]</small>
+        </div>
+        <div>
+            <label>@L["Model (empty = default)"]</label>
+            <input type="text" name="model" value="@Model.Ai.Model" maxlength="80" placeholder="@AddonStore.Web.Services.AiService.DefaultClaudeModel / @AddonStore.Web.Services.AiService.DefaultGeminiModel" />
+        </div>
+        <div>
+            <label style="font-weight:400"><input type="checkbox" name="triage" value="true" checked="@Model.Ai.Triage" style="width:auto" /> @L["Sort problem reports (category, urgency, summary, reply draft, duplicates)"]</label>
+            <label style="font-weight:400"><input type="checkbox" name="review" value="true" checked="@Model.Ai.Review" style="width:auto" /> @L["Review aid for new versions (on request)"]</label>
+            <label style="font-weight:400;margin-left:24px"><input type="checkbox" name="reviewAuto" value="true" checked="@Model.Ai.ReviewAuto" style="width:auto" /> @L["Create automatically for every new version"]</label>
+            <label style="font-weight:400;margin-left:24px"><input type="checkbox" name="reviewSource" value="true" checked="@Model.Ai.ReviewSource" style="width:auto" /> @L["Send changed source code lines to the provider"]</label>
+            <label style="font-weight:400"><input type="checkbox" name="search" value="true" checked="@Model.Ai.Search" style="width:auto" /> @L["Search by need on the website and in the store window"]</label>
+        </div>
+        <div>
+            <label>@L["Requests per day (limit)"]</label>
+            <input type="number" name="dailyLimit" value="@Model.Ai.DailyLimit" min="1" max="100000" style="max-width:140px" />
+        </div>
+        <button type="submit" class="btn cta">@L["Save"]</button>
+    </form>
+    <form method="post" asp-page-handler="AiTest" style="margin-top:12px">
+        <button type="submit" class="btn small secondary">@L["Test connection"]</button>
+    </form>
+    <p style="font-size:.82rem;color:var(--tun-slate)">@L["Data sent to the provider: add-on texts from the catalog, the text of problem reports, search queries, manifests and file lists of new versions, and only with the option above changed source code lines. Never sent: email addresses, IP addresses, log excerpts, user accounts. Check with your data protection team before switching it on."]</p>
 </div>
 
 <div class="card" style="max-width:760px" id="privacy">

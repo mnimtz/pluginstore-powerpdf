@@ -52,6 +52,8 @@ public class BackupService
     }
 
     private string AvatarsRoot => Path.Combine(DataRoot, "avatars");
+    // Data protection key ring (Program.cs): decrypts stored secrets such as the AI API key.
+    private string KeysRoot => Path.Combine(DataRoot, "keys");
     public string SafetyRoot => Path.Combine(DataRoot, "backups");
 
     private string DbPath =>
@@ -90,9 +92,10 @@ public class BackupService
                 shareCounterRows = await _db.ShareStats.CountAsync(),
                 // Everything the server keeps lives in pluginstore.db (users, roles, tokens, settings,
                 // categories, catalog entries, audit) and these folders: packages (incl. *.source.zip),
-                // avatars, devkit. New data must land in one of them, or be added here.
+                // avatars, devkit, keys. New data must land in one of them, or be added here.
                 // Not backed up on purpose: data/geo (DB-IP databases, downloaded again by GeoService).
-                contents = new[] { "pluginstore.db", "packages/ (packages and source code)", "avatars/", "devkit/" }
+                contents = new[] { "pluginstore.db", "packages/ (packages and source code)", "avatars/", "devkit/",
+                                   "keys/ (data protection key ring for encrypted settings such as the AI key)" }
             };
 
             await using var fs = File.Create(target);
@@ -101,6 +104,7 @@ public class BackupService
             AddFolder(zip, PackagesRoot, "packages");
             AddFolder(zip, AvatarsRoot, "avatars");
             AddFolder(zip, DevkitRoot, "devkit");
+            AddFolder(zip, KeysRoot, "keys");
             var e = zip.CreateEntry("backup.json");
             await using var es = e.Open();
             await JsonSerializer.SerializeAsync(es, meta, new JsonSerializerOptions { WriteIndented = true });
@@ -205,7 +209,25 @@ public class BackupService
         ReplaceFolder(zip, "packages/", PackagesRoot);
         ReplaceFolder(zip, "avatars/", AvatarsRoot);
         ReplaceFolder(zip, "devkit/", DevkitRoot);
+        AddMissingKeys(zip, KeysRoot);
         return safety;
+    }
+
+    /// <summary>
+    /// Adds the backup's data protection keys to the key ring without removing
+    /// or overwriting current ones, so sign-in cookies stay valid and secrets
+    /// encrypted on the old server (AI key) can be read after the next restart.
+    /// </summary>
+    private static void AddMissingKeys(ZipArchive zip, string root)
+    {
+        Directory.CreateDirectory(root);
+        foreach (var e in zip.Entries.Where(e => e.FullName.StartsWith("keys/") && e.Length > 0 && e.Length < 64 * 1024))
+        {
+            var name = e.FullName["keys/".Length..];
+            if (name.Contains('/') || !name.StartsWith("key-") || !name.EndsWith(".xml")) continue;
+            var target = Path.Combine(root, name);
+            if (!File.Exists(target)) e.ExtractToFile(target);
+        }
     }
 
     private static void ReplaceFolder(ZipArchive zip, string prefix, string root)

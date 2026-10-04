@@ -19,11 +19,15 @@ public class IndexModel : PageModel
     public string? ClientDownloadUrl { get; private set; }
     /// <summary>Short page name per add-on for the share links (/a/{slug}).</summary>
     public Dictionary<string, string> Slugs { get; } = new();
+    public bool AiSearch { get; private set; }
+    private readonly AiService _ai;
 
-    public IndexModel(AppDbContext db) => _db = db;
+    public IndexModel(AppDbContext db, AiService ai) { _db = db; _ai = ai; }
 
     public async Task OnGetAsync()
     {
+        var ai = await _ai.ConfigAsync();
+        AiSearch = ai.On && ai.Search;
         var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
         var items = await CatalogUi.GetAsync(_db, culture, includeBeta: false);
 

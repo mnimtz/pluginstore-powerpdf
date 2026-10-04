@@ -53,6 +53,10 @@ else
 {
     <div class="catalog-tools">
         <input type="search" id="pkg-search" placeholder="@L["Search"]…" aria-label="@L["Search"]" />
+        @if (Model.AiSearch)
+        {
+            <button type="button" class="btn small secondary" id="ai-ask" title="@L["Describe what you want to do; AI suggests matching add-ons."]">@L["Ask AI"]</button>
+        }
         <div class="chips" id="pkg-chips">
             <button class="chip active" data-cat="">@L["All"]</button>
             @foreach (var cat in Model.Items.GroupBy(i => i.Category).Select(g => g.First()).OrderBy(i => i.CategoryName))
@@ -61,10 +65,18 @@ else
             }
         </div>
     </div>
+    @if (Model.AiSearch)
+    {
+        <div class="card ai-box ai-results" id="ai-results" hidden>
+            <div class="ai-head"><b>@L["AI suggestions"]</b> <span class="muted small" id="ai-status"></span></div>
+            <ul id="ai-list"></ul>
+            <p class="muted small">@L["Suggested by AI from the add-on descriptions; please check the details."]</p>
+        </div>
+    }
     <div class="grid" id="pkg-grid">
         @foreach (var item in Model.Items)
         {
-            <div class="card pkg" data-cat="@item.Category"
+            <div class="card pkg" data-cat="@item.Category" data-id="@item.Id"
                  data-text="@(item.Name.ToLowerInvariant()) @(item.Id) @(item.Description.ToLowerInvariant()) @(item.Author.ToLowerInvariant())">
                 <span class="name">@item.Name</span>
                 <partial name="_Stars" model="(item.Rating, item.RatingCount)" />
@@ -127,6 +139,34 @@ else
                 });
             }
             search.addEventListener('input', apply);
+            var ask = document.getElementById('ai-ask');
+            if (ask) {
+                var box = document.getElementById('ai-results'), list = document.getElementById('ai-list'),
+                    status = document.getElementById('ai-status');
+                var slugs = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Slugs));
+                function run() {
+                    var q = search.value.trim();
+                    if (q.length < 2) { search.focus(); return; }
+                    box.hidden = false; list.innerHTML = ''; status.textContent = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Searching…"].Value));
+                    fetch('/api/search?q=' + encodeURIComponent(q) + '&lang=' + encodeURIComponent(document.documentElement.lang || 'en'))
+                        .then(function (r) { return r.json(); })
+                        .then(function (j) {
+                            var res = (j.ok && j.data && j.data.results) || [];
+                            status.textContent = res.length ? '' : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Nothing suitable found."].Value));
+                            res.forEach(function (h) {
+                                var li = document.createElement('li'), a = document.createElement('a');
+                                a.href = slugs[h.id] ? '/a/' + slugs[h.id] : '#';
+                                a.textContent = h.name;
+                                li.appendChild(a);
+                                if (h.reason) li.appendChild(document.createTextNode(': ' + h.reason));
+                                list.appendChild(li);
+                            });
+                        })
+                        .catch(function () { status.textContent = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["The search is not available right now."].Value)); });
+                }
+                ask.addEventListener('click', run);
+                search.addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); });
+            }
             chips.forEach(function (chip) {
                 chip.addEventListener('click', function () {
                     chips.forEach(function (x) { x.classList.remove('active'); });

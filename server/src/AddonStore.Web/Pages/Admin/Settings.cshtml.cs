@@ -12,6 +12,8 @@ public class SettingsModel : PageModel
     private readonly AuditService _audit;
     private readonly NotificationService _notify;
     private readonly UsageService _usage;
+    private readonly AiService _ai;
+    private readonly IWebHostEnvironment _env;
 
     public bool HasResendKey { get; private set; }
     public string From { get; private set; } = "";
@@ -31,10 +33,14 @@ public class SettingsModel : PageModel
     public DateTime? IpConfirmedAt { get; private set; }
     public int IpEventCount { get; private set; }
 
+    // Optional AI assistant (S0.12.0)
+    public AiService.Config Ai { get; private set; } = new("off", "", false, false, false, false, false, false, 300);
+    public bool OfferFake { get; private set; }
+
     public SettingsModel(SettingsService settings, UserManager<AppUser> users, AuditService audit,
-        NotificationService notify, UsageService usage)
+        NotificationService notify, UsageService usage, AiService ai, IWebHostEnvironment env)
     {
-        _settings = settings; _users = users; _audit = audit; _notify = notify; _usage = usage;
+        _settings = settings; _users = users; _audit = audit; _notify = notify; _usage = usage; _ai = ai; _env = env;
     }
 
     public string? TestTo { get; private set; }
@@ -172,8 +178,52 @@ public class SettingsModel : PageModel
         await LoadAsync();
     }
 
+    /// <summary>
+    /// Saves the AI assistant. An empty key field keeps the stored key; the key
+    /// is stored encrypted and never rendered back into the page.
+    /// </summary>
+    public async Task OnPostAiAsync(string? provider, string? apiKey, bool clearKey, string? model, bool triage, bool review,
+                                    bool reviewAuto, bool reviewSource, bool search, int dailyLimit)
+    {
+        var admin = await _users.GetUserAsync(User);
+        provider = (provider ?? "off").Trim().ToLowerInvariant();
+        if (provider is not ("off" or "claude" or "gemini" or "fake") || (provider == "fake" && !_env.IsDevelopment())) provider = "off";
+        var before = await _ai.ConfigAsync();
+        await _settings.SetAsync(AiService.ProviderKey, provider);
+        if (clearKey) await _ai.SetApiKeyAsync("");
+        else if (!string.IsNullOrWhiteSpace(apiKey)) await _ai.SetApiKeyAsync(apiKey.Trim());
+        // A model name is letters, digits, dots, dashes and underscores; anything else falls back to the default.
+        var m = (model ?? "").Trim();
+        if (m.Length > 80 || m.Any(ch => !(char.IsAsciiLetterOrDigit(ch) || ch is '.' or '-' or '_'))) m = "";
+        // Switching provider resets a model name that belongs to the other one.
+        if (provider != before.Provider && m == before.Model) m = "";
+        await _settings.SetAsync(AiService.ModelKey, m);
+        await _settings.SetAsync(AiService.TriageKey, triage ? "1" : "0");
+        await _settings.SetAsync(AiService.ReviewKey, review ? "1" : "0");
+        await _settings.SetAsync(AiService.ReviewAutoKey, review && reviewAuto ? "1" : "0");
+        await _settings.SetAsync(AiService.ReviewSourceKey, review && reviewSource ? "1" : "0");
+        await _settings.SetAsync(AiService.SearchKey, search ? "1" : "0");
+        await _settings.SetAsync(AiService.DailyLimitKey, Math.Clamp(dailyLimit, 1, 100000).ToString(System.Globalization.CultureInfo.InvariantCulture));
+        await _audit.LogAsync(admin!.DisplayName, "settings.changed", "AI assistant",
+            $"provider {provider}, model {(m.Length == 0 ? "default" : m)}, triage {triage}, review {review} (auto {reviewAuto}, source {reviewSource}), search {search}, limit {dailyLimit}" +
+            (clearKey ? ", key removed" : string.IsNullOrWhiteSpace(apiKey) ? "" : ", key replaced"));
+        Notice = "Settings saved.";
+        await LoadAsync();
+    }
+
+    public async Task OnPostAiTestAsync()
+    {
+        var (ok, message) = await _ai.TestAsync();
+        Notice = ok ? "AI connection works." : "The AI connection test failed.";
+        NoticeKind = ok ? "ok" : "error";
+        TestDetail = message;
+        await LoadAsync();
+    }
+
     private async Task LoadAsync()
     {
+        Ai = await _ai.ConfigAsync();
+        OfferFake = _env.IsDevelopment();
         IpOn = await _usage.IpLoggingOnAsync();
         RetentionDays = await _usage.RetentionDaysAsync();
         IpConfirmedBy = await _settings.GetAsync(UsageService.IpConfirmedByKey);

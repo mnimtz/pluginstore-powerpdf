@@ -15,6 +15,8 @@ public class PluginModel : PageModel
     private readonly UserManager<AppUser> _users;
     private readonly VersionActionService _actions;
     private readonly SourceService _sources;
+    private readonly AiService _ai;
+    private readonly AiAssist _assist;
 
     public Package? Pkg { get; private set; }
     public AppUser? Me { get; private set; }
@@ -31,10 +33,12 @@ public class PluginModel : PageModel
     public List<Finding> SourceFindings { get; private set; } = new();
     public int[] RatingDist { get; private set; } = new int[5];   // index 0 = 1 star
     public List<Feedback> Feedbacks { get; private set; } = new();
+    public bool AiReviewOn { get; private set; }
 
-    public PluginModel(AppDbContext db, UserManager<AppUser> users, VersionActionService actions, SourceService sources)
+    public PluginModel(AppDbContext db, UserManager<AppUser> users, VersionActionService actions, SourceService sources,
+                       AiService ai, AiAssist assist)
     {
-        _db = db; _users = users; _actions = actions; _sources = sources;
+        _db = db; _users = users; _actions = actions; _sources = sources; _ai = ai; _assist = assist;
     }
 
     private async Task<bool> LoadAsync(string id)
@@ -65,6 +69,8 @@ public class PluginModel : PageModel
         Feedbacks = (IsOwner || IsAdmin)
             ? await _db.Feedbacks.AsNoTracking().Where(f => f.PackageId == Pkg.Id).OrderByDescending(f => f.Id).Take(200).ToListAsync()
             : new();
+        var ai = await _ai.ConfigAsync();
+        AiReviewOn = CanReview && ai.On && ai.Review;
         return true;
     }
 
@@ -127,6 +133,23 @@ public class PluginModel : PageModel
             await _db.SaveChangesAsync();
         }
         return RedirectToPage(new { id });
+    }
+
+    public async Task<IActionResult> OnPostAiReviewAsync(string id, int versionId)
+    {
+        if (!await LoadAsync(id ?? "")) return Forbid();
+        var v = Versions.FirstOrDefault(x => x.Id == versionId);
+        if (v is null || !AiReviewOn)
+        {
+            Notice = "This action is not allowed for this version."; NoticeKind = "warn";
+            return Page();
+        }
+        var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var ok = await _assist.ReviewAsync(v, lang, HttpContext.RequestAborted);
+        Notice = ok ? "AI review aid created." : "The AI provider gave no usable answer. Check the connection test in the settings.";
+        NoticeKind = ok ? "ok" : "error";
+        await LoadAsync(id!);
+        return Page();
     }
 
     public Task<IActionResult> OnPostWithdrawAllAsync(string id) =>

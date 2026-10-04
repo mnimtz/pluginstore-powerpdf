@@ -15,7 +15,8 @@ SOURCES = ['Validation/PackageValidator.cs', 'Services/SubmissionService.cs',
            'Services/PackageMetaService.cs', 'Services/CategoryService.cs', 'Services/SourceService.cs']
 EXTRA_CODES = {'CLIENT_ADMIN_ONLY', 'VERSION_EXISTS', 'VALIDATION_FAILED', 'NOT_OWNER', 'LIVE_VERSION',
                'TOKEN_INVALID', 'TOKEN_REVOKED', 'USER_NOT_ACTIVE', 'NO_PACKAGE',
-               'METADATA_INVALID', 'PACKAGE_NOT_FOUND', 'SOURCE_REJECTED', 'SOURCE_MISSING', 'ADMIN_ONLY'}
+               'METADATA_INVALID', 'PACKAGE_NOT_FOUND', 'SOURCE_REJECTED', 'SOURCE_MISSING', 'ADMIN_ONLY',
+               'QUERY_INVALID', 'VERSION_NOT_FOUND', 'AI_REVIEW_MISSING', 'AI_OFF', 'AI_FAILED'}
 
 code = ''
 for rel in SOURCES:

@@ -537,7 +537,7 @@ public class PackageValidator
             {
                 var missing = MissingLanguages(s, "caption");
                 if (missing.Count > 0)
-                    report.Warn("SCREENSHOT_CAPTION_LANGS", $"The caption of '{file}' lacks: {string.Join(", ", missing)}.",
+                    report.Error("SCREENSHOT_CAPTION_LANGS", $"The caption of '{file}' lacks: {string.Join(", ", missing)}.",
                         "Give each caption in all 16 languages (en de fr it es nl pt da fi nb sv pl cs hu ru tr).");
             }
         }

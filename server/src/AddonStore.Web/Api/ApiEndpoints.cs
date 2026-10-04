@@ -6,6 +6,7 @@ using AddonStore.Web.Validation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace AddonStore.Web.Api;
 
@@ -111,6 +112,9 @@ public static class ApiEndpoints
                     "POST /api/packages/{id}/feedback  {installId, kind problem|comment, message, email?, version, log?} from the store client",
                     "GET  /api/packages/{id}/feedback  ratings and feedback of your package (owner/admin, ?status=open|done)",
                     "PATCH /api/packages/{id}/feedback/{fid}  {status: open|done} (owner/admin)",
+                    "GET  /api/features               which optional AI features are switched on",
+                    "GET  /api/search?q=&lang=&channel=  find add-ons by need (AI ranking with reasons when enabled, else word search; ?format=tsv)",
+                    "GET|POST /api/packages/{id}/{version}/ai-review  read or create the AI review aid (reviewers/admins)",
                     "DELETE /api/packages/{id}/{version}  withdraw your own beta version (auth)",
                     "GET  /api/packages/{id}/{version}/download",
                     "GET  /api/packages/{id}/icon     catalog icon (PNG) of the newest released version",
@@ -476,7 +480,15 @@ public static class ApiEndpoints
                 {
                     id,
                     ratings = Enumerable.Range(1, 5).ToDictionary(s => s.ToString(), s => ratings.FirstOrDefault(r => r.stars == s)?.count ?? 0),
-                    feedback = rows.Select(f => new { f.Id, f.Kind, f.Version, f.Message, f.Email, f.ClientInfo, log = f.LogExcerpt, f.Country, f.CreatedAt, f.Status, f.DoneAt, f.DoneBy })
+                    feedback = rows.Select(f => new
+                    {
+                        f.Id, f.Kind, f.Version, f.Message, f.Email, f.ClientInfo, log = f.LogExcerpt, f.Country, f.CreatedAt, f.Status, f.DoneAt, f.DoneBy,
+                        ai = f.AiAt is null ? null : new
+                        {
+                            category = f.AiCategory, severity = f.AiSeverity, language = f.AiLanguage, summaryEn = f.AiSummaryEn,
+                            summaryDe = f.AiSummaryDe, suggestedReply = f.AiReply, duplicateOf = f.AiDuplicateOf, at = f.AiAt
+                        }
+                    })
                 }
             });
         }).RequireAuthorization("ApiOrCookie");
@@ -501,6 +513,64 @@ public static class ApiEndpoints
             await audit.LogAsync(user.DisplayName, "feedback." + body.Status, $"{id} #{fid}");
             return Results.Json(new { ok = true, data = new { id, feedback = fid, status = f.Status } });
         }).RequireAuthorization("ApiOrCookie");
+
+        // Optional AI features (S0.12.0). The probe tells clients which ones are switched on.
+        api.MapGet("/features", async (AiService ai) =>
+        {
+            var cfg = await ai.ConfigAsync();
+            return Results.Json(new { ok = true, data = new { aiSearch = cfg.On && cfg.Search, aiTriage = cfg.On && cfg.Triage, aiReview = cfg.On && cfg.Review } });
+        });
+
+        // Search by need ("I want to split invoices by barcode"): AI ranking with reasons when enabled, else word search.
+        api.MapGet("/search", async (string? q, string? lang, string? channel, string? format, HttpContext ctx, AiAssist assist,
+                                     IMemoryCache cache) =>
+        {
+            q = (q ?? "").Trim();
+            if (q.Length < 2 || q.Length > 300)
+                return Results.Json(new { ok = false, error = new { code = "QUERY_INVALID", message = "q must have 2 to 300 characters.", hint = "" } }, statusCode: 400);
+            var culture = (lang ?? "en").Trim();
+            if (culture.Length > 2) culture = MapHostLang(culture);
+            var beta = string.Equals(channel, "beta", StringComparison.OrdinalIgnoreCase);
+            // At most 40 AI searches per address and day; after that the plain word search answers.
+            var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
+            var counter = cache.GetOrCreate("ai-search-ip:" + ip + ":" + DateTime.UtcNow.ToString("yyyyMMdd"),
+                e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1); return new int[1]; })!;
+            bool allowAi;
+            lock (counter) { allowAi = counter[0] < 40; if (allowAi) counter[0]++; }
+            var (usedAi, hits) = await assist.SearchAsync(q, culture, beta, allowAi, ctx.RequestAborted);
+            if (string.Equals(format, "tsv", StringComparison.OrdinalIgnoreCase))
+                return Results.Text((usedAi ? "#ai\n" : "#text\n") + string.Concat(hits.Select(h =>
+                    h.Id + "\t" + h.Reason.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ') + "\n")),
+                    "text/tab-separated-values; charset=utf-8");
+            return Results.Json(new { ok = true, data = new { query = q, ai = usedAi, results = hits.Select(h => new { id = h.Id, name = h.Name, reason = h.Reason }) } });
+        });
+
+        // Review aid for one version (reviewers/admins): GET the stored one, POST to (re)create it.
+        api.MapGet("/packages/{id}/{version}/ai-review", async (string id, string version, AppDbContext db) =>
+        {
+            var v = await db.PackageVersions.AsNoTracking().FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version);
+            if (v is null) return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}'.");
+            if (v.AiReviewJson is null) return NotFound("AI_REVIEW_MISSING", "No review aid has been created for this version.");
+            using var doc = System.Text.Json.JsonDocument.Parse(v.AiReviewJson);
+            return Results.Json(new { ok = true, data = new { id, version, model = v.AiReviewModel, at = v.AiReviewAt, review = doc.RootElement.Clone() } });
+        }).RequireAuthorization("ReviewerOrAdmin");
+
+        api.MapPost("/packages/{id}/{version}/ai-review", async (string id, string version, string? lang, HttpContext ctx, AppDbContext db,
+                                                               AiService ai, AiAssist assist, AuditService audit, UserManager<AppUser> users) =>
+        {
+            var cfg = await ai.ConfigAsync();
+            if (!cfg.On || !cfg.Review)
+                return Results.Json(new { ok = false, error = new { code = "AI_OFF", message = "The AI review aid is switched off.", hint = "An admin can switch it on in Admin > Settings." } }, statusCode: 409);
+            var v = await db.PackageVersions.AsNoTracking().FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version);
+            if (v is null) return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}'.");
+            if (!await assist.ReviewAsync(v, lang == "de" ? "de" : "en", ctx.RequestAborted))
+                return Results.Json(new { ok = false, error = new { code = "AI_FAILED", message = "The AI provider gave no usable answer.", hint = "Check the connection test in Admin > Settings and the server log." } }, statusCode: 502);
+            var user = await users.GetUserAsync(ctx.User);
+            await audit.LogAsync(user?.DisplayName ?? "?", "ai.review", $"{id} {version}");
+            var stored = await db.PackageVersions.AsNoTracking().FirstAsync(x => x.Id == v.Id);
+            using var doc = System.Text.Json.JsonDocument.Parse(stored.AiReviewJson!);
+            return Results.Json(new { ok = true, data = new { id, version, model = stored.AiReviewModel, at = stored.AiReviewAt, review = doc.RootElement.Clone() } });
+        }).RequireAuthorization("ReviewerOrAdmin");
 
         api.MapGet("/categories", async (AppDbContext db, CategoryService categories) =>
         {

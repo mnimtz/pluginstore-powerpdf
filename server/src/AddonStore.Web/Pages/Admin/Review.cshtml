@@ -33,6 +33,10 @@
         <p style="margin:6px 0"><b>@L["Changelog"]:</b> @AddonStore.Web.Services.CatalogUi.ManifestText(v, "changelog", lang, v.Changelog)</p>
         <partial name="_ValidationReport" model="AddonStore.Web.Validation.ReportView.Parse(v.ValidationReportJson)"
                  view-data="@(new Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary(ViewData) { ["open"] = true })" />
+        @if ((Model.AiReviewOn || v.AiReviewJson is not null) && v.PackageId != "com.tungsten.pluginstore")
+        {
+            <partial name="_AiReview" model="(v, Model.AiReviewOn)" />
+        }
         <div style="display:flex;gap:10px;align-items:flex-start;margin-top:10px;flex-wrap:wrap">
             <a class="btn small secondary" href="/api/packages/@v.PackageId/@v.Version/download">@L["Download"]</a>
             <form method="post" asp-page-handler="Approve" style="display:inline">

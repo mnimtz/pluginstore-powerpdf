@@ -130,6 +130,10 @@
                     </form>
                 }
                 <partial name="_ValidationReport" model="AddonStore.Web.Validation.ReportView.Parse(v.ValidationReportJson)" />
+                @if (Model.CanReview && (Model.AiReviewOn || v.AiReviewJson is not null) && v.PackageId != "com.tungsten.pluginstore")
+                {
+                    <partial name="_AiReview" model="(v, Model.AiReviewOn)" />
+                }
                 @if (Model.SourcePolicy != "off" || v.SourcePath is not null)
                 {
                     <div class="source-row">
@@ -213,6 +217,23 @@
                         <td style="white-space:pre-wrap;max-width:520px">@f.Message
                             @if (!string.IsNullOrEmpty(f.Email)) { <div class="small"><a href="mailto:@f.Email">@f.Email</a></div> }
                             <div class="small muted">@f.ClientInfo</div>
+                            @if (f.AiAt is not null)
+                            {
+                                var de = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "de";
+                                <div class="ai-box small" style="white-space:normal">
+                                    <div class="ai-head">
+                                        <b>@L["AI assessment"]</b>
+                                        <span class="badge submitted">@L[f.AiCategory switch { "bug" => "Bug", "wish" => "Wish", "question" => "Question", "praise" => "Praise", _ => "Other" }]</span>
+                                        <span class="badge @(f.AiSeverity == "high" ? "rejected" : f.AiSeverity == "medium" ? "pending" : "withdrawn")">@L[f.AiSeverity == "high" ? "high" : f.AiSeverity == "medium" ? "medium" : "low"]</span>
+                                        @if (f.AiDuplicateOf is not null) { <span class="muted">@L["Similar to report #{0}", f.AiDuplicateOf]</span> }
+                                    </div>
+                                    <div>@(de ? f.AiSummaryDe : f.AiSummaryEn)</div>
+                                    @if (!string.IsNullOrEmpty(f.AiReply))
+                                    {
+                                        <details><summary>@L["Suggested reply"]</summary><pre class="code" style="white-space:pre-wrap">@f.AiReply</pre></details>
+                                    }
+                                </div>
+                            }
                             @if (!string.IsNullOrEmpty(f.LogExcerpt))
                             {
                                 <details class="small"><summary>@L["Log excerpt"]</summary><pre class="code" style="max-height:260px;overflow:auto">@f.LogExcerpt</pre></details>

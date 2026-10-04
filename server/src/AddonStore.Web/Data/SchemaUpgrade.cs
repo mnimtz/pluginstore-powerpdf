@@ -74,7 +74,18 @@ public static class SchemaUpgrade
                 "Version TEXT NOT NULL, Kind TEXT NOT NULL, Message TEXT NOT NULL, Email TEXT NULL, ClientInfo TEXT NOT NULL, " +
                 "LogExcerpt TEXT NULL, Country TEXT NOT NULL, InstallHash TEXT NOT NULL, CreatedAt TEXT NOT NULL, " +
                 "Status TEXT NOT NULL, DoneAt TEXT NULL, DoneBy TEXT NULL)",
-            "CREATE INDEX IF NOT EXISTS IX_Feedback_PackageId_CreatedAt ON Feedback (PackageId, CreatedAt)"
+            "CREATE INDEX IF NOT EXISTS IX_Feedback_PackageId_CreatedAt ON Feedback (PackageId, CreatedAt)",
+            "ALTER TABLE Feedback ADD COLUMN AiCategory TEXT NULL",
+            "ALTER TABLE Feedback ADD COLUMN AiSeverity TEXT NULL",
+            "ALTER TABLE Feedback ADD COLUMN AiLanguage TEXT NULL",
+            "ALTER TABLE Feedback ADD COLUMN AiSummaryEn TEXT NULL",
+            "ALTER TABLE Feedback ADD COLUMN AiSummaryDe TEXT NULL",
+            "ALTER TABLE Feedback ADD COLUMN AiReply TEXT NULL",
+            "ALTER TABLE Feedback ADD COLUMN AiDuplicateOf INTEGER NULL",
+            "ALTER TABLE Feedback ADD COLUMN AiAt TEXT NULL",
+            "ALTER TABLE PackageVersions ADD COLUMN AiReviewJson TEXT NULL",
+            "ALTER TABLE PackageVersions ADD COLUMN AiReviewAt TEXT NULL",
+            "ALTER TABLE PackageVersions ADD COLUMN AiReviewModel TEXT NULL"
         })
         {
             try { db.Database.ExecuteSqlRaw(sql); }

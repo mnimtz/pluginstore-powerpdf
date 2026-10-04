@@ -139,6 +139,16 @@ public class Feedback
     public string Status { get; set; } = "open";         // open, done
     public DateTime? DoneAt { get; set; }
     public string? DoneBy { get; set; }
+
+    // AI triage (S0.12.0, optional): filled by AiWorker when the admin enabled it.
+    public string? AiCategory { get; set; }              // bug, wish, question, praise, other
+    public string? AiSeverity { get; set; }              // low, medium, high
+    public string? AiLanguage { get; set; }              // language of the report (ISO 639-1)
+    public string? AiSummaryEn { get; set; }
+    public string? AiSummaryDe { get; set; }
+    public string? AiReply { get; set; }                 // suggested reply in the reporter's language
+    public int? AiDuplicateOf { get; set; }
+    public DateTime? AiAt { get; set; }
 }
 
 /// <summary>Daily counter for shared add-on links /a/{slug}?ref= (S0.10.0); Kind: view, install, client.</summary>
@@ -235,6 +245,10 @@ public class PackageVersion
     public DateTime? ReviewedAt { get; set; }
     public string? ReviewComment { get; set; }
     public int Downloads { get; set; }
+    // AI review aid (S0.12.0, optional): JSON result, when and with which model.
+    public string? AiReviewJson { get; set; }
+    public DateTime? AiReviewAt { get; set; }
+    public string? AiReviewModel { get; set; }
 }
 
 public class AuditEntry
