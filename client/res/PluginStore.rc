@@ -8,8 +8,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // Version
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,7,1,0
- PRODUCTVERSION 0,7,1,0
+ FILEVERSION 0,8,0,0
+ PRODUCTVERSION 0,8,0,0
  FILEFLAGSMASK 0x3fL
  FILEFLAGS 0x0L
  FILEOS 0x40004L
@@ -22,11 +22,11 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Tungsten Automation"
             VALUE "FileDescription", "Add-on Store client for Tungsten Power PDF"
-            VALUE "FileVersion", "0.7.1"
+            VALUE "FileVersion", "0.8.0"
             VALUE "InternalName", "PluginStore"
             VALUE "OriginalFilename", "PluginStore.zxt"
             VALUE "ProductName", "Add-on Store for Tungsten Power PDF"
-            VALUE "ProductVersion", "0.7.1"
+            VALUE "ProductVersion", "0.8.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -190,6 +190,16 @@ BEGIN
     IDS_PSO_HINT        "Beta plugins passed the automatic checks but are not yet reviewed by an admin. Install them at your own risk."
     IDS_PSO_VERBOSE     "Verbose logging (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnostics"
+    IDS_PSW_CODE_BTN     "Customer code"
+    IDS_PSW_CODE_INTRO   "Your add-on provider can give you a customer code for add-ons made for your organisation. Enter it here to see them in the store."
+    IDS_PSW_CODE_APPLY   "Check and save"
+    IDS_PSW_CODE_REMOVE  "Remove code"
+    IDS_PSW_CODE_VALID   "Code valid for %s: %s add-on(s) unlocked."
+    IDS_PSW_CODE_VALID_NONE "Code valid for %s. No add-ons are unlocked for it yet."
+    IDS_PSW_CODE_INVALID "This customer code is not valid. Check it or ask your add-on provider."
+    IDS_PSW_CODE_LOCKED  "Your IT manages the customer code on this computer."
+    IDS_PSW_CODE_REMOVED "The customer code was removed."
+    IDS_PSW_CODE_ACTIVE  "Customer code active: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -287,6 +297,16 @@ BEGIN
     IDS_PSO_HINT        "Beta-Plug-ins haben die automatische Prüfung bestanden, sind aber noch nicht von einem Admin geprüft. Installation auf eigene Verantwortung."
     IDS_PSO_VERBOSE     "Ausführliches Protokoll (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnose"
+    IDS_PSW_CODE_BTN     "Kundencode"
+    IDS_PSW_CODE_INTRO   "Ihr Add-on-Anbieter kann Ihnen einen Kundencode für Add-ons geben, die für Ihre Organisation erstellt wurden. Geben Sie ihn hier ein, um sie im Store zu sehen."
+    IDS_PSW_CODE_APPLY   "Prüfen und speichern"
+    IDS_PSW_CODE_REMOVE  "Code entfernen"
+    IDS_PSW_CODE_VALID   "Code gültig für %s: %s Add-on(s) freigeschaltet."
+    IDS_PSW_CODE_VALID_NONE "Code gültig für %s. Dafür sind noch keine Add-ons freigegeben."
+    IDS_PSW_CODE_INVALID "Dieser Kundencode ist nicht gültig. Prüfen Sie ihn oder fragen Sie Ihren Add-on-Anbieter."
+    IDS_PSW_CODE_LOCKED  "Ihre IT verwaltet den Kundencode auf diesem Computer."
+    IDS_PSW_CODE_REMOVED "Der Kundencode wurde entfernt."
+    IDS_PSW_CODE_ACTIVE  "Kundencode aktiv: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -384,6 +404,16 @@ BEGIN
     IDS_PSO_HINT        "Les plug-ins Beta ont passé les contrôles automatiques mais n’ont pas encore été vérifiés par un administrateur. Installez-les à vos propres risques."
     IDS_PSO_VERBOSE     "Journalisation détaillée (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnostic"
+    IDS_PSW_CODE_BTN     "Code client"
+    IDS_PSW_CODE_INTRO   "Votre fournisseur de modules peut vous donner un code client pour les modules créés pour votre organisation. Saisissez-le ici pour les voir dans le store."
+    IDS_PSW_CODE_APPLY   "Vérifier et enregistrer"
+    IDS_PSW_CODE_REMOVE  "Supprimer le code"
+    IDS_PSW_CODE_VALID   "Code valide pour %s : %s module(s) débloqué(s)."
+    IDS_PSW_CODE_VALID_NONE "Code valide pour %s. Aucun module n'est encore débloqué."
+    IDS_PSW_CODE_INVALID "Ce code client n'est pas valide. Vérifiez-le ou contactez votre fournisseur de modules."
+    IDS_PSW_CODE_LOCKED  "Votre service informatique gère le code client sur cet ordinateur."
+    IDS_PSW_CODE_REMOVED "Le code client a été supprimé."
+    IDS_PSW_CODE_ACTIVE  "Code client actif : %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -481,6 +511,16 @@ BEGIN
     IDS_PSO_HINT        "I plug-in Beta hanno superato i controlli automatici, ma non sono ancora stati verificati da un amministratore. L’installazione avviene a proprio rischio."
     IDS_PSO_VERBOSE     "Registrazione dettagliata (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnostica"
+    IDS_PSW_CODE_BTN     "Codice cliente"
+    IDS_PSW_CODE_INTRO   "Il fornitore dei componenti aggiuntivi può darti un codice cliente per i componenti creati per la tua organizzazione. Inseriscilo qui per vederli nello store."
+    IDS_PSW_CODE_APPLY   "Verifica e salva"
+    IDS_PSW_CODE_REMOVE  "Rimuovi codice"
+    IDS_PSW_CODE_VALID   "Codice valido per %s: %s componente/i sbloccato/i."
+    IDS_PSW_CODE_VALID_NONE "Codice valido per %s. Non è ancora sbloccato alcun componente."
+    IDS_PSW_CODE_INVALID "Questo codice cliente non è valido. Controllalo o chiedi al fornitore dei componenti."
+    IDS_PSW_CODE_LOCKED  "Il reparto IT gestisce il codice cliente su questo computer."
+    IDS_PSW_CODE_REMOVED "Il codice cliente è stato rimosso."
+    IDS_PSW_CODE_ACTIVE  "Codice cliente attivo: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -578,6 +618,16 @@ BEGIN
     IDS_PSO_HINT        "Los complementos Beta han superado las comprobaciones automáticas, pero aún no los ha revisado un administrador. Instálelos bajo su propia responsabilidad."
     IDS_PSO_VERBOSE     "Registro detallado (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnóstico"
+    IDS_PSW_CODE_BTN     "Código de cliente"
+    IDS_PSW_CODE_INTRO   "Su proveedor de complementos puede darle un código de cliente para complementos creados para su organización. Introdúzcalo aquí para verlos en la tienda."
+    IDS_PSW_CODE_APPLY   "Comprobar y guardar"
+    IDS_PSW_CODE_REMOVE  "Quitar código"
+    IDS_PSW_CODE_VALID   "Código válido para %s: %s complemento(s) desbloqueado(s)."
+    IDS_PSW_CODE_VALID_NONE "Código válido para %s. Todavía no hay complementos desbloqueados."
+    IDS_PSW_CODE_INVALID "Este código de cliente no es válido. Compruébelo o consulte a su proveedor de complementos."
+    IDS_PSW_CODE_LOCKED  "Su departamento de TI gestiona el código de cliente en este equipo."
+    IDS_PSW_CODE_REMOVED "Se ha quitado el código de cliente."
+    IDS_PSW_CODE_ACTIVE  "Código de cliente activo: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -675,6 +725,16 @@ BEGIN
     IDS_PSO_HINT        "Beta-plug-ins hebben de automatische controles doorstaan, maar zijn nog niet door een beheerder beoordeeld. Installatie is op eigen risico."
     IDS_PSO_VERBOSE     "Uitgebreide logboekregistratie (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnose"
+    IDS_PSW_CODE_BTN     "Klantcode"
+    IDS_PSW_CODE_INTRO   "Uw add-onleverancier kan u een klantcode geven voor add-ons die voor uw organisatie zijn gemaakt. Voer deze hier in om ze in de store te zien."
+    IDS_PSW_CODE_APPLY   "Controleren en opslaan"
+    IDS_PSW_CODE_REMOVE  "Code verwijderen"
+    IDS_PSW_CODE_VALID   "Code geldig voor %s: %s add-on(s) vrijgegeven."
+    IDS_PSW_CODE_VALID_NONE "Code geldig voor %s. Er zijn nog geen add-ons vrijgegeven."
+    IDS_PSW_CODE_INVALID "Deze klantcode is niet geldig. Controleer hem of vraag het uw add-onleverancier."
+    IDS_PSW_CODE_LOCKED  "Uw IT-afdeling beheert de klantcode op deze computer."
+    IDS_PSW_CODE_REMOVED "De klantcode is verwijderd."
+    IDS_PSW_CODE_ACTIVE  "Klantcode actief: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -772,6 +832,16 @@ BEGIN
     IDS_PSO_HINT        "Os plug-ins Beta passaram nas verificações automáticas, mas ainda não foram revisados por um administrador. Instale-os por sua conta e risco."
     IDS_PSO_VERBOSE     "Log detalhado (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnóstico"
+    IDS_PSW_CODE_BTN     "Código de cliente"
+    IDS_PSW_CODE_INTRO   "O seu fornecedor de suplementos pode dar-lhe um código de cliente para suplementos criados para a sua organização. Introduza-o aqui para os ver na loja."
+    IDS_PSW_CODE_APPLY   "Verificar e guardar"
+    IDS_PSW_CODE_REMOVE  "Remover código"
+    IDS_PSW_CODE_VALID   "Código válido para %s: %s suplemento(s) desbloqueado(s)."
+    IDS_PSW_CODE_VALID_NONE "Código válido para %s. Ainda não há suplementos desbloqueados."
+    IDS_PSW_CODE_INVALID "Este código de cliente não é válido. Verifique-o ou contacte o seu fornecedor de suplementos."
+    IDS_PSW_CODE_LOCKED  "O seu departamento de TI gere o código de cliente neste computador."
+    IDS_PSW_CODE_REMOVED "O código de cliente foi removido."
+    IDS_PSW_CODE_ACTIVE  "Código de cliente ativo: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -869,6 +939,16 @@ BEGIN
     IDS_PSO_HINT        "Beta-plug-ins har bestået de automatiske kontroller, men er endnu ikke gennemgået af en administrator. Installation sker på eget ansvar."
     IDS_PSO_VERBOSE     "Detaljeret logføring (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnosticering"
+    IDS_PSW_CODE_BTN     "Kundekode"
+    IDS_PSW_CODE_INTRO   "Din leverandør af tilføjelser kan give dig en kundekode til tilføjelser, der er lavet til din organisation. Indtast den her for at se dem i butikken."
+    IDS_PSW_CODE_APPLY   "Kontrollér og gem"
+    IDS_PSW_CODE_REMOVE  "Fjern kode"
+    IDS_PSW_CODE_VALID   "Koden er gyldig for %s: %s tilføjelse(r) låst op."
+    IDS_PSW_CODE_VALID_NONE "Koden er gyldig for %s. Der er endnu ikke låst tilføjelser op."
+    IDS_PSW_CODE_INVALID "Denne kundekode er ikke gyldig. Kontrollér den, eller spørg din leverandør af tilføjelser."
+    IDS_PSW_CODE_LOCKED  "Din IT-afdeling administrerer kundekoden på denne computer."
+    IDS_PSW_CODE_REMOVED "Kundekoden er fjernet."
+    IDS_PSW_CODE_ACTIVE  "Kundekode aktiv: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -966,6 +1046,16 @@ BEGIN
     IDS_PSO_HINT        "Beta-laajennukset ovat läpäisseet automaattiset tarkistukset, mutta järjestelmänvalvoja ei ole vielä tarkastanut niitä. Asennus tapahtuu omalla vastuulla."
     IDS_PSO_VERBOSE     "Laaja lokikirjaus (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Vianmääritys"
+    IDS_PSW_CODE_BTN     "Asiakaskoodi"
+    IDS_PSW_CODE_INTRO   "Lisäosien toimittaja voi antaa sinulle asiakaskoodin organisaatiollesi tehtyjä lisäosia varten. Kirjoita se tähän, niin näet ne kaupassa."
+    IDS_PSW_CODE_APPLY   "Tarkista ja tallenna"
+    IDS_PSW_CODE_REMOVE  "Poista koodi"
+    IDS_PSW_CODE_VALID   "Koodi kelpaa: %s, %s lisäosaa avattu."
+    IDS_PSW_CODE_VALID_NONE "Koodi kelpaa: %s. Sille ei ole vielä avattu lisäosia."
+    IDS_PSW_CODE_INVALID "Tämä asiakaskoodi ei kelpaa. Tarkista se tai kysy lisäosien toimittajalta."
+    IDS_PSW_CODE_LOCKED  "IT-osasto hallitsee asiakaskoodia tällä tietokoneella."
+    IDS_PSW_CODE_REMOVED "Asiakaskoodi poistettiin."
+    IDS_PSW_CODE_ACTIVE  "Asiakaskoodi käytössä: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1063,6 +1153,16 @@ BEGIN
     IDS_PSO_HINT        "Beta-programtillegg har bestått de automatiske kontrollene, men er ennå ikke gjennomgått av en administrator. Installasjon skjer på eget ansvar."
     IDS_PSO_VERBOSE     "Detaljert logging (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnostikk"
+    IDS_PSW_CODE_BTN     "Kundekode"
+    IDS_PSW_CODE_INTRO   "Leverandøren av tilleggene kan gi deg en kundekode for tillegg laget for organisasjonen din. Skriv den inn her for å se dem i butikken."
+    IDS_PSW_CODE_APPLY   "Kontroller og lagre"
+    IDS_PSW_CODE_REMOVE  "Fjern kode"
+    IDS_PSW_CODE_VALID   "Koden er gyldig for %s: %s tillegg låst opp."
+    IDS_PSW_CODE_VALID_NONE "Koden er gyldig for %s. Ingen tillegg er låst opp ennå."
+    IDS_PSW_CODE_INVALID "Denne kundekoden er ikke gyldig. Kontroller den, eller spør leverandøren av tilleggene."
+    IDS_PSW_CODE_LOCKED  "IT-avdelingen administrerer kundekoden på denne datamaskinen."
+    IDS_PSW_CODE_REMOVED "Kundekoden ble fjernet."
+    IDS_PSW_CODE_ACTIVE  "Kundekode aktiv: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1160,6 +1260,16 @@ BEGIN
     IDS_PSO_HINT        "Beta-plugin-program har klarat de automatiska kontrollerna men har ännu inte granskats av en administratör. Installation sker på egen risk."
     IDS_PSO_VERBOSE     "Utförlig loggning (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnostik"
+    IDS_PSW_CODE_BTN     "Kundkod"
+    IDS_PSW_CODE_INTRO   "Din leverantör av tillägg kan ge dig en kundkod för tillägg som gjorts för din organisation. Ange den här för att se dem i butiken."
+    IDS_PSW_CODE_APPLY   "Kontrollera och spara"
+    IDS_PSW_CODE_REMOVE  "Ta bort kod"
+    IDS_PSW_CODE_VALID   "Koden är giltig för %s: %s tillägg upplåsta."
+    IDS_PSW_CODE_VALID_NONE "Koden är giltig för %s. Inga tillägg är upplåsta ännu."
+    IDS_PSW_CODE_INVALID "Den här kundkoden är inte giltig. Kontrollera den eller fråga din leverantör av tillägg."
+    IDS_PSW_CODE_LOCKED  "Din IT-avdelning hanterar kundkoden på den här datorn."
+    IDS_PSW_CODE_REMOVED "Kundkoden togs bort."
+    IDS_PSW_CODE_ACTIVE  "Kundkod aktiv: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1257,6 +1367,16 @@ BEGIN
     IDS_PSO_HINT        "Wtyczki Beta przeszły automatyczne kontrole, ale nie zostały jeszcze sprawdzone przez administratora. Instalacja odbywa się na własne ryzyko."
     IDS_PSO_VERBOSE     "Szczegółowe rejestrowanie (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnostyka"
+    IDS_PSW_CODE_BTN     "Kod klienta"
+    IDS_PSW_CODE_INTRO   "Dostawca dodatków może przekazać Ci kod klienta dla dodatków przygotowanych dla Twojej organizacji. Wpisz go tutaj, aby zobaczyć je w sklepie."
+    IDS_PSW_CODE_APPLY   "Sprawdź i zapisz"
+    IDS_PSW_CODE_REMOVE  "Usuń kod"
+    IDS_PSW_CODE_VALID   "Kod ważny dla %s: odblokowano dodatki (%s)."
+    IDS_PSW_CODE_VALID_NONE "Kod ważny dla %s. Nie odblokowano jeszcze żadnych dodatków."
+    IDS_PSW_CODE_INVALID "Ten kod klienta jest nieprawidłowy. Sprawdź go lub zapytaj dostawcę dodatków."
+    IDS_PSW_CODE_LOCKED  "Kodem klienta na tym komputerze zarządza dział IT."
+    IDS_PSW_CODE_REMOVED "Kod klienta został usunięty."
+    IDS_PSW_CODE_ACTIVE  "Aktywny kod klienta: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1354,6 +1474,16 @@ BEGIN
     IDS_PSO_HINT        "Moduly plug-in Beta prošly automatickými kontrolami, ale dosud je nezkontroloval správce. Instalace je na vlastní nebezpečí."
     IDS_PSO_VERBOSE     "Podrobné protokolování (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnostika"
+    IDS_PSW_CODE_BTN     "Kód zákazníka"
+    IDS_PSW_CODE_INTRO   "Dodavatel doplňků vám může dát kód zákazníka pro doplňky vytvořené pro vaši organizaci. Zadejte ho sem a uvidíte je v obchodě."
+    IDS_PSW_CODE_APPLY   "Ověřit a uložit"
+    IDS_PSW_CODE_REMOVE  "Odebrat kód"
+    IDS_PSW_CODE_VALID   "Kód platí pro %s: odemčené doplňky (%s)."
+    IDS_PSW_CODE_VALID_NONE "Kód platí pro %s. Zatím nejsou odemčeny žádné doplňky."
+    IDS_PSW_CODE_INVALID "Tento kód zákazníka není platný. Zkontrolujte ho nebo se obraťte na dodavatele doplňků."
+    IDS_PSW_CODE_LOCKED  "Kód zákazníka na tomto počítači spravuje vaše IT oddělení."
+    IDS_PSW_CODE_REMOVED "Kód zákazníka byl odebrán."
+    IDS_PSW_CODE_ACTIVE  "Aktivní kód zákazníka: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1451,6 +1581,16 @@ BEGIN
     IDS_PSO_HINT        "A Beta-bővítmények átmentek az automatikus ellenőrzéseken, de rendszergazda még nem vizsgálta meg őket. Telepítésük saját felelősségre történik."
     IDS_PSO_VERBOSE     "Részletes naplózás (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Diagnosztika"
+    IDS_PSW_CODE_BTN     "Ügyfélkód"
+    IDS_PSW_CODE_INTRO   "A bővítmények szállítója ügyfélkódot adhat a szervezete számára készített bővítményekhez. Írja be ide, hogy megjelenjenek az áruházban."
+    IDS_PSW_CODE_APPLY   "Ellenőrzés és mentés"
+    IDS_PSW_CODE_REMOVE  "Kód eltávolítása"
+    IDS_PSW_CODE_VALID   "A kód érvényes ehhez: %s. Feloldott bővítmények: %s."
+    IDS_PSW_CODE_VALID_NONE "A kód érvényes ehhez: %s. Még nincs feloldott bővítmény."
+    IDS_PSW_CODE_INVALID "Ez az ügyfélkód nem érvényes. Ellenőrizze, vagy kérdezze meg a bővítmények szállítóját."
+    IDS_PSW_CODE_LOCKED  "Ezen a számítógépen az ügyfélkódot az informatikai részleg kezeli."
+    IDS_PSW_CODE_REMOVED "Az ügyfélkód eltávolítva."
+    IDS_PSW_CODE_ACTIVE  "Aktív ügyfélkód: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1548,6 +1688,16 @@ BEGIN
     IDS_PSO_HINT        "Модули Beta прошли автоматические проверки, но еще не проверены администратором. Устанавливайте их на свой риск."
     IDS_PSO_VERBOSE     "Подробное ведение журнала (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Диагностика"
+    IDS_PSW_CODE_BTN     "Код клиента"
+    IDS_PSW_CODE_INTRO   "Поставщик надстроек может выдать вам код клиента для надстроек, созданных для вашей организации. Введите его здесь, чтобы увидеть их в магазине."
+    IDS_PSW_CODE_APPLY   "Проверить и сохранить"
+    IDS_PSW_CODE_REMOVE  "Удалить код"
+    IDS_PSW_CODE_VALID   "Код действителен для %s: разблокировано надстроек: %s."
+    IDS_PSW_CODE_VALID_NONE "Код действителен для %s. Надстройки для него пока не разблокированы."
+    IDS_PSW_CODE_INVALID "Этот код клиента недействителен. Проверьте его или обратитесь к поставщику надстроек."
+    IDS_PSW_CODE_LOCKED  "Кодом клиента на этом компьютере управляет ваш ИТ-отдел."
+    IDS_PSW_CODE_REMOVED "Код клиента удалён."
+    IDS_PSW_CODE_ACTIVE  "Активный код клиента: %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1645,4 +1795,14 @@ BEGIN
     IDS_PSO_HINT        "Beta eklentiler otomatik denetimleri geçti ancak henüz bir yönetici tarafından incelenmedi. Yükleme sorumluluğu size aittir."
     IDS_PSO_VERBOSE     "Ayrıntılı günlük kaydı (%TEMP%\\PluginStore.log)"
     IDS_PSO_GRP_DIAG    "Tanılama"
+    IDS_PSW_CODE_BTN     "Müşteri kodu"
+    IDS_PSW_CODE_INTRO   "Eklenti sağlayıcınız, kuruluşunuz için hazırlanan eklentiler için size bir müşteri kodu verebilir. Mağazada görmek için kodu buraya girin."
+    IDS_PSW_CODE_APPLY   "Kontrol et ve kaydet"
+    IDS_PSW_CODE_REMOVE  "Kodu kaldır"
+    IDS_PSW_CODE_VALID   "Kod %s için geçerli: %s eklentinin kilidi açıldı."
+    IDS_PSW_CODE_VALID_NONE "Kod %s için geçerli. Henüz kilidi açılmış eklenti yok."
+    IDS_PSW_CODE_INVALID "Bu müşteri kodu geçerli değil. Kontrol edin veya eklenti sağlayıcınıza sorun."
+    IDS_PSW_CODE_LOCKED  "Bu bilgisayardaki müşteri kodunu BT bölümünüz yönetiyor."
+    IDS_PSW_CODE_REMOVED "Müşteri kodu kaldırıldı."
+    IDS_PSW_CODE_ACTIVE  "Müşteri kodu etkin: %s"
 END

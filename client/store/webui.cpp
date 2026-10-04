@@ -84,6 +84,18 @@ std::wstring Field(const std::wstring& json, const wchar_t* key, size_t maxLen =
     return std::wstring();
 }
 
+// A number or true/false of a flat JSON answer ("" when missing).
+std::wstring RawField(const std::wstring& json, const wchar_t* key)
+{
+    std::wstring k = std::wstring(L"\"") + key + L"\"";
+    size_t p = json.find(k);
+    if (p == std::wstring::npos) return std::wstring();
+    p = json.find(L':', p + k.size());
+    if (p == std::wstring::npos) return std::wstring();
+    size_t s = json.find_first_not_of(L" \t\r\n", p + 1), e = json.find_first_of(L",}", s);
+    return s == std::wstring::npos || e == std::wstring::npos ? std::wstring() : json.substr(s, e - s);
+}
+
 std::wstring Fmt(UINT id, const std::wstring& a, const std::wstring& b = std::wstring())
 {
     wchar_t buf[1200];
@@ -253,7 +265,7 @@ std::vector<BYTE> ReadSmallFile(const std::wstring& path, LONGLONG maxBytes)
 // --- worker threads -----------------------------------------------------------
 
 const UINT WM_ASYNC = WM_APP + 64;
-enum AsyncKind { KCatalog = 1, KRated, KFeedback, KSend, KJob };
+enum AsyncKind { KCatalog = 1, KRated, KFeedback, KSend, KJob, KCustomer };
 
 // Result of a worker, posted to the window (which deletes it).
 struct AsyncMsg
@@ -464,9 +476,14 @@ protected:
             { L"screenshots", IDS_PSW_SCREENSHOTS }, { L"close", IDS_PSW_CLOSE },
             { L"forCustomer", IDS_PSW_FOR }, { L"needHint", IDS_PSW_NEED_HINT }, { L"needHits", IDS_PSW_NEED_HITS },
             { L"needAll", IDS_PSW_NEED_ALL }, { L"needNone", IDS_PSW_NEED_NONE },
+            { L"codeBtn", IDS_PSW_CODE_BTN }, { L"codeIntro", IDS_PSW_CODE_INTRO }, { L"codeApply", IDS_PSW_CODE_APPLY },
+            { L"codeRemove", IDS_PSW_CODE_REMOVE }, { L"codeLocked", IDS_PSW_CODE_LOCKED }, { L"codeActive", IDS_PSW_CODE_ACTIVE },
+            { L"codeBad", IDS_PSO_CODE_BAD },
         };
         std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) +
-                         L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") + L",\"strings\":{";
+                         L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") +
+                         L",\"code\":{\"has\":" + (PSCustomerCode().empty() ? L"false" : L"true") +
+                         L",\"locked\":" + (PSCustomerCodeLocked() ? L"true" : L"false") + L"},\"strings\":{";
         for (size_t i = 0; i < _countof(strings); ++i)
             j += (i ? L"," : L"") + Json(strings[i].key) + L":" + Json(FPLoc(strings[i].id));
         Send(j + L"}}");
@@ -485,7 +502,7 @@ protected:
             auto* m = new AsyncMsg;
             m->kind = KCatalog; m->gen = gen; m->flag = withPreselect;
             try { if (!PSFetchCatalogFor(lang, m->entries, m->error)) m->entries.clear(); }
-            catch (...) { m->entries.clear(); m->error = L"catalog could not be read"; }
+            catch (...) { m->entries.clear(); m->error = FPLoc(IDS_PSD_MSG_FAIL); }
             PostAsync(h, m);
         });
     }
@@ -655,6 +672,60 @@ protected:
 
     // Search by need on the server (AI ranking with reasons when the store has
     // it switched on, else its word search). Only ids of listed add-ons count.
+    // Customer code entered in the store window (C0.8.0): checked with the server
+    // BEFORE it is stored; a valid one is stored and the catalog reloaded, so the
+    // delivered add-ons appear in their own section.
+    void CheckCustomerCode(const std::wstring& raw)
+    {
+        std::wstring code;
+        for (wchar_t c : raw) if (c != L' ' && c != L'\t') code += (wchar_t)towupper(c);
+        if (code.empty() || !PSIsValidCustomerCode(code))
+        {
+            Send(L"{\"type\":\"code\",\"ok\":false,\"message\":" + Json(FPLoc(IDS_PSO_CODE_BAD)) + L"}");
+            return;
+        }
+        std::wstring url = PSServerUrl() + L"/api/customer-code";
+        HWND h = m_hWnd;
+        Spawn([h, url, code]() {
+            auto* m = new AsyncMsg;
+            m->kind = KCustomer; m->id = code;
+            std::string body;
+            DWORD status = 0;
+            try
+            {
+                if (PSHttpCheckCustomerCode(url, code, body, &status))
+                {
+                    std::wstring j = W16(body);
+                    m->flag = RawField(j, L"valid") == L"true";
+                    m->text = Field(j, L"customer", 200);
+                    m->count = _wtoi(RawField(j, L"addons").c_str());
+                    m->number = 1;   // answered
+                }
+            }
+            catch (...) { m->number = 0; }
+            PostAsync(h, m);
+        });
+    }
+
+    void ApplyCustomer(AsyncMsg& r)
+    {
+        if (r.number == 0)
+        {
+            Send(L"{\"type\":\"code\",\"ok\":false,\"message\":" + Json(FPLoc(IDS_PSD_MSG_FAIL)) + L"}");
+            return;
+        }
+        if (!r.flag)
+        {
+            Send(L"{\"type\":\"code\",\"ok\":false,\"message\":" + Json(FPLoc(IDS_PSW_CODE_INVALID)) + L"}");
+            return;
+        }
+        PSSaveCustomerCode(r.id);
+        std::wstring msg = r.count > 0 ? Fmt(IDS_PSW_CODE_VALID, r.text, std::to_wstring(r.count))
+                                       : Fmt(IDS_PSW_CODE_VALID_NONE, r.text);
+        Send(L"{\"type\":\"code\",\"ok\":true,\"has\":true,\"customer\":" + Json(r.text) + L",\"message\":" + Json(msg) + L"}");
+        LoadCatalog(false);
+    }
+
     void NeedSearch(const std::wstring& q)
     {
         if (q.size() < 2 || q.size() > 300) return;
@@ -755,6 +826,13 @@ protected:
             else SendMessageToPage(L"", FPLoc(IDS_PSD_EMPTY));
         }
         else if (cmd == L"selfUpdate" && m_hasSelfUpdate) PostMessage(WM_RUN, JobSelfUpdate);
+        else if (cmd == L"codeCheck" && !PSCustomerCodeLocked()) CheckCustomerCode(Field(json, L"code", 80));
+        else if (cmd == L"codeRemove" && !PSCustomerCodeLocked())
+        {
+            PSSaveCustomerCode(L"");
+            Send(L"{\"type\":\"code\",\"ok\":true,\"has\":false,\"message\":" + Json(FPLoc(IDS_PSW_CODE_REMOVED)) + L"}");
+            LoadCatalog(false);
+        }
         else if (cmd == L"rate")
         {
             size_t idx = 0;
@@ -836,6 +914,7 @@ protected:
         case KRated:    ApplyRated(*r); break;
         case KFeedback: ApplyFeedback(*r); break;
         case KJob:      ApplyJob(*r); break;
+        case KCustomer: ApplyCustomer(*r); break;
         case KSend:     if (r->gen == 0 || r->gen == m_catalogGen) Send(r->text); break;
         }
         return 0;

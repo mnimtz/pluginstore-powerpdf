@@ -13,6 +13,8 @@
 
 void         FPLocInit();
 std::wstring FPLoc(UINT id);
+// The LANGID of the strings in use (Power PDF's UI language, else English).
+LANGID       FPLocLangId();
 
 void FPNote(UINT idMsg);
 void FPNoteText(const std::wstring& msg);

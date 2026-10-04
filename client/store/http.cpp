@@ -129,7 +129,7 @@ static const wchar_t* UserAgent()
 // Opens the request and receives the response; returns the request handle
 // chain via out-params (caller keeps the session/connect handles alive).
 bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& request, DWORD* status,
-          const wchar_t* method = L"GET", const std::string* body = nullptr)
+          const wchar_t* method = L"GET", const std::string* body = nullptr, const std::wstring* codeOverride = nullptr)
 {
 #ifndef WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY_CONFIG
 #define WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY_CONFIG 4
@@ -167,7 +167,8 @@ bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& reque
 
     // Customer deliveries: the code goes to the store host only (Allowed above).
     std::wstring headers;
-    std::wstring customer = PSCustomerCode();
+    // (codeOverride: a code being checked in the store window before it is stored)
+    std::wstring customer = codeOverride ? *codeOverride : PSCustomerCode();
     if (!customer.empty()) headers += L"X-Customer-Code: " + customer + L"\r\n";
     if (body) headers += L"Content-Type: application/json; charset=utf-8\r\n";
     const wchar_t* h = headers.empty() ? WINHTTP_NO_ADDITIONAL_HEADERS : headers.c_str();
@@ -210,6 +211,28 @@ bool PSHttpGetText(const std::wstring& url, std::string& outUtf8, DWORD* status)
         if (!WinHttpReadData(r, chunk.data(), avail, &got) || got == 0) break;
         outUtf8.append(chunk.data(), got);
         if (outUtf8.size() > 16 * 1024 * 1024) return false;
+    }
+    return true;
+}
+
+bool PSHttpCheckCustomerCode(const std::wstring& url, const std::wstring& code, std::string& outUtf8, DWORD* status)
+{
+    Url u;
+    if (!Crack(url, u)) return false;
+    HINTERNET hs = NULL, hc = NULL, hr = NULL;
+    bool ok = Send(u, hs, hc, hr, status, L"GET", nullptr, &code);
+    Handle s(hs), c(hc), r(hr);
+    if (!ok) return false;
+    outUtf8.clear();
+    for (;;)
+    {
+        DWORD avail = 0;
+        if (!WinHttpQueryDataAvailable(r, &avail) || avail == 0) break;
+        std::string chunk(avail, 0);
+        DWORD got = 0;
+        if (!WinHttpReadData(r, chunk.data(), avail, &got) || got == 0) break;
+        outUtf8.append(chunk.data(), got);
+        if (outUtf8.size() > 64 * 1024) return false;
     }
     return true;
 }

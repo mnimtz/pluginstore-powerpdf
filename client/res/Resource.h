@@ -110,6 +110,16 @@
 #define IDS_PSO_CODE_LBL        306
 #define IDS_PSO_CODE_BAD        307
 #define IDS_PSD_MSG_SIG         308
+#define IDS_PSW_CODE_BTN        309
+#define IDS_PSW_CODE_INTRO      310
+#define IDS_PSW_CODE_APPLY      311
+#define IDS_PSW_CODE_REMOVE     312
+#define IDS_PSW_CODE_VALID      313
+#define IDS_PSW_CODE_VALID_NONE 314
+#define IDS_PSW_CODE_INVALID    315
+#define IDS_PSW_CODE_LOCKED     316
+#define IDS_PSW_CODE_REMOVED    317
+#define IDS_PSW_CODE_ACTIVE     318
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261

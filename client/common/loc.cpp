@@ -175,6 +175,8 @@ static std::wstring LoadFromBundle(LANGID lang, UINT id)
     return std::wstring(p + 1, len);
 }
 
+LANGID FPLocLangId() { return g_lang; }
+
 std::wstring FPLoc(UINT id)
 {
     std::wstring s = LoadFromBundle(g_lang, id);

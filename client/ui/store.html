@@ -16,6 +16,13 @@ header .s{font-size:12px;color:#9fd8ff}
 .search{margin-left:auto;display:flex;align-items:center;gap:8px;background:var(--navy2);border-radius:8px;padding:7px 11px;width:280px}
 .search input{all:unset;font-size:13px;color:#fff;width:100%;user-select:text}
 .search input::placeholder{color:#9fb8d4}
+.hbtn{background:transparent;color:#fff;border:1px solid #4d6f96;border-radius:8px;padding:6px 12px;font-size:12px;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.hbtn:hover{background:var(--navy2)}
+.hbtn .ok{color:var(--green);font-weight:700}
+.chip.cust{border-color:var(--blue)}
+.chip.cust.on{background:var(--blue);border-color:var(--blue)}
+.codemsg{font-size:12.5px;margin-top:10px;line-height:1.5}
+.codemsg.ok{color:#016839}.codemsg.bad{color:#B3261E}
 .accent{height:3px;background:var(--blue);flex:none}
 .banner{font-size:12.5px;padding:8px 18px;display:flex;align-items:center;gap:10px;flex:none}
 .banner.upd{background:#fff8e1;color:#634E12}
@@ -87,7 +94,7 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .modal.wide{width:min(1100px,94vw)}
 .modal.wide img{display:block;max-width:100%;max-height:70vh;margin:0 auto}
 .form label{display:block;font-size:12px;color:var(--slate);margin:10px 0 4px}
-.form textarea,.form input[type=email]{width:100%;font:inherit;border:1px solid #c9d3df;border-radius:8px;padding:8px 10px;user-select:text}
+.form textarea,.form input[type=email],.form input[type=text]{width:100%;font:inherit;border:1px solid #c9d3df;border-radius:8px;padding:8px 10px;user-select:text}
 .form textarea{min-height:120px;resize:vertical}
 .form .kinds{display:flex;gap:14px;margin-top:4px}
 .form .kinds label,.form .chk{display:flex;gap:6px;align-items:center;margin:0;color:var(--ink);font-size:13px}
@@ -105,6 +112,7 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
       <svg class="i" style="color:#9fd8ff" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input id="q" type="text" autocomplete="off" spellcheck="false">
     </label>
+    <button class="hbtn" id="codeBtn" type="button"></button>
   </header>
   <div class="accent"></div>
   <div class="banner upd" id="upd" style="display:none">
@@ -131,6 +139,9 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
 "use strict";
 var S = {}, items = [], self = null, sel = null, cat = "", busy = false, locked = false, icons = {}, shots = {}, shotsAsked = {};
 var need = null;   // {q, order: [ids], reasons: {id: text}} while a search by need is shown
+var code = { has: false, locked: false, customer: "", open: false };   // customer code (C0.8.0)
+var CUST = "customer";   // chip key of the delivered add-ons (no category slug can look like this)
+function customerName() { var x = items.filter(function (i) { return i.customer; })[0]; return x ? x.customer : code.customer; }
 var host = window.chrome && window.chrome.webview;
 function post(m) { if (host) host.postMessage(m); }
 function $(id) { return document.getElementById(id); }
@@ -180,11 +191,13 @@ function actionButtons(x, small) {
 function visible() {
   if (need) {
     return need.order.map(function (id) { return items.filter(function (x) { return x.id === id; })[0]; })
-                     .filter(function (x) { return x && (!cat || x.category === cat); });
+                     .filter(function (x) { return x && (!cat || (cat === CUST ? x.customer : x.category === cat)); });
   }
   var q = $("q").value.trim().toLowerCase();
-  return items.filter(function (x) {
-    if (cat && x.category !== cat) return false;
+  var list = items.filter(function (x) { return x.customer; }).concat(items.filter(function (x) { return !x.customer; }));
+  return list.filter(function (x) {
+    if (cat === CUST) { if (!x.customer) return false; }
+    else if (cat && x.category !== cat) return false;
     if (!q) return true;
     return (x.name + " " + x.description + " " + x.author).toLowerCase().indexOf(q) >= 0;
   });
@@ -194,9 +207,12 @@ function renderChips() {
   var seen = {}, list = [];
   items.forEach(function (x) { if (!seen[x.category]) { seen[x.category] = 1; list.push({ slug: x.category, name: x.categoryName || x.category }); } });
   list.sort(function (a, b) { return a.name.localeCompare(b.name); });
+  var cust = items.some(function (x) { return x.customer; });
+  if (cust) list.unshift({ slug: CUST, name: fmt(S.forCustomer, customerName()), cust: true });
+  else if (cat === CUST) cat = "";
   if (list.length < 2) return;
   [{ slug: "", name: S.all }].concat(list).forEach(function (k) {
-    var e = el("button", "chip" + (k.slug === cat ? " on" : ""), k.name);
+    var e = el("button", "chip" + (k.cust ? " cust" : "") + (k.slug === cat ? " on" : ""), k.name);
     e.onclick = function () { cat = k.slug; render(); };
     c.appendChild(e);
   });
@@ -277,6 +293,7 @@ function renderDetail() {
   hint.appendChild(el("span", "", S.adminNote)); d.appendChild(hint);
 }
 function modal(title, text, buttons) {
+  code.open = false;
   var m = $("modal"); m.textContent = "";
   if (title) m.appendChild(el("h3", "", title));
   if (text) m.appendChild(el("p", "", text));
@@ -286,7 +303,46 @@ function modal(title, text, buttons) {
   $("veil").classList.add("on");
   var first = a.querySelector("button"); if (first) first.focus();
 }
-function closeModal() { $("veil").classList.remove("on"); $("modal").classList.remove("wide"); }
+function codeButton() {
+  var b = $("codeBtn"); b.textContent = "";
+  if (code.has) b.appendChild(el("span", "ok", "✓"));
+  b.appendChild(document.createTextNode(S.codeBtn || ""));
+  b.title = code.has && customerName() ? fmt(S.codeActive, customerName()) : (S.codeIntro || "");
+}
+function codeDialog(message, ok) {
+  var m = $("modal"); m.textContent = ""; m.classList.remove("wide");
+  var f = el("div", "form");
+  f.appendChild(el("h3", "", S.codeBtn));
+  if (code.has && customerName()) f.appendChild(el("p", "", fmt(S.codeActive, customerName())));
+  var input = null;
+  if (code.locked) f.appendChild(el("p", "", S.codeLocked));
+  else {
+    f.appendChild(el("p", "", S.codeIntro));
+    input = el("input"); input.type = "text"; input.maxLength = 64; input.autocomplete = "off"; input.spellcheck = false;
+    input.placeholder = "XXXX-XXXX-XXXX-XXXX-XXXX";
+    input.onkeydown = function (e) { if (e.key === "Enter") apply(); };
+    f.appendChild(input);
+  }
+  var msg = el("div", "codemsg" + (message ? (ok ? " ok" : " bad") : ""), message || ""); msg.id = "codemsg";
+  f.appendChild(msg);
+  var a = el("div", "acts");
+  function apply() {
+    var v = input.value.trim();
+    if (!v) { input.focus(); return; }
+    msg.className = "codemsg"; msg.textContent = "…";
+    post({ cmd: "codeCheck", code: v });
+  }
+  if (!code.locked) {
+    if (code.has) { var r = el("button", "btn sec", S.codeRemove); r.onclick = function () { post({ cmd: "codeRemove" }); }; a.appendChild(r); }
+    var ap = el("button", "btn", S.codeApply); ap.onclick = apply; a.appendChild(ap);
+  }
+  var c = el("button", "btn sec", S.close || "OK"); c.onclick = function () { code.open = false; closeModal(); }; a.appendChild(c);
+  f.appendChild(a); m.appendChild(f);
+  code.open = true;
+  $("veil").classList.add("on");
+  (input || c).focus();
+}
+function closeModal() { code.open = false; $("veil").classList.remove("on"); $("modal").classList.remove("wide"); }
 function showShot(sh) {
   var m = $("modal"); m.textContent = ""; m.classList.add("wide");
   var im = el("img"); im.src = sh.src; im.alt = sh.caption || ""; m.appendChild(im);
@@ -358,9 +414,13 @@ function apply(m) {
     $("updBtn").textContent = S.selfUpdateBtn;
     $("updBtn").onclick = function () { busyModal(S.selfUpdateBtn); post({ cmd: "selfUpdate" }); };
     locked = !!m.installLocked;
+    if (m.code) { code.has = !!m.code.has; code.locked = !!m.code.locked; }
+    $("codeBtn").onclick = function () { codeDialog(); };
+    codeButton();
     $("lock").style.display = locked ? "flex" : "none"; $("lock").textContent = S.installLocked || "";
   } else if (m.type === "catalog") {
     items = m.items || []; self = m.self || null;
+    codeButton();
     $("err").style.display = m.error ? "flex" : "none"; $("err").textContent = m.error || "";
     $("upd").style.display = self ? "flex" : "none";
     if (self) $("updText").textContent = fmt(S.selfUpdate, self.version, self.installed);
@@ -388,6 +448,11 @@ function apply(m) {
     shots[m.id] = m.items || []; render();
   } else if (m.type === "icon") {
     icons[m.id] = m.data; render();
+  } else if (m.type === "code") {
+    if (m.ok) { code.has = !!m.has; code.customer = m.customer || ""; if (!m.has) { code.customer = ""; if (cat === CUST) cat = ""; } }
+    codeButton();
+    if (code.open) codeDialog(m.message, m.ok);
+    else if (m.message) modal(S.codeBtn, m.message, [{ label: "OK" }]);
   } else if (m.type === "result") {
     onResult(m);
   } else if (m.type === "message") {

@@ -8,6 +8,11 @@
   The client later updates itself by downloading the newest MSI from the store
   and running it; MajorUpgrade replaces the previous version in place.
 
+  Languages (C0.8.0): one MSI per language from l10n\<culture>.wxl, then the
+  other 15 embedded as language transforms into the English MSI (build_msi.py);
+  Windows picks the one of the user's language, the self-update passes the
+  Power PDF language as TRANSFORMS=:<LCID>.
+
   ProductVersion: build_msi.cmd derives it from common\version.h and passes it
   as -dFPVersion. Bump version.h on every release.
 -->
@@ -15,8 +20,7 @@
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <Product Id="*"
            Name="Add-on Store for Tungsten Power PDF"
-           Language="1033"
-           Codepage="1252"
+           Language="!(loc.ProductLanguage)"
            Version="$(var.FPVersion)"
            Manufacturer="Tungsten Automation"
            UpgradeCode="{AFC4D7E3-52F6-4F64-BBD5-3A8F61AB67D1}">
@@ -30,7 +34,7 @@
     <MediaTemplate EmbedCab="yes" />
 
     <MajorUpgrade AllowSameVersionUpgrades="yes"
-                  DowngradeErrorMessage="A newer version of the Add-on Store is already installed." />
+                  DowngradeErrorMessage="!(loc.Downgrade)" />
 
     <Property Id="POWERPDFBIN">
       <RegistrySearch Id="PowerPdfAppPath"
@@ -61,7 +65,7 @@
       <![CDATA[NOT POWERPDFBIN AND PPDFINSTALLPATH]]>
     </SetProperty>
 
-    <Condition Message="Tungsten Power PDF was not found on this computer. Please install Power PDF first.">
+    <Condition Message="!(loc.NoPowerPdf)">
       <![CDATA[Installed OR POWERPDFBIN]]>
     </Condition>
 
@@ -71,7 +75,7 @@
                            CloseMessage="no"
                            RebootPrompt="no"
                            PromptToContinue="yes"
-                           Description="Please close Tungsten Power PDF and continue." />
+                           Description="!(loc.ClosePowerPdf)" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <!-- Fresh installs only (never on an upgrade): the client clears the
@@ -248,7 +252,8 @@
     </Feature>
 
     <UIRef Id="WixUI_Minimal" />
-    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\installer\license.rtf" />
+    <!-- per language: build_msi.py passes -dWixUILicenseRtf=l10n\license-<culture>.rtf to light -->
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\installer\l10n\license-en-US.rtf" Overridable="yes" />
 
   </Product>
 </Wix>

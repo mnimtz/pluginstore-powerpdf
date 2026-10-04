@@ -373,6 +373,12 @@ int PSCompareVersions(const std::wstring& a, const std::wstring& b)
 // also when the installation was cancelled.
 std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& sha256)
 {
+    // The installer shows its dialogs in Power PDF's language: the MSI carries all 16
+    // languages as embedded transforms named by their LCID (C0.8.0).
+    // Only names that exist: an unknown transform makes msiexec fail (1624).
+    static const unsigned kEmbedded[] = { 1031, 1036, 1040, 3082, 1043, 1046, 1030, 1035, 1044, 1053, 1045, 1029, 1038, 1049, 1055 };
+    unsigned lcid = 1033;
+    for (unsigned l : kEmbedded) if (l == FPLocLangId()) lcid = l;
     std::wstring sha = sha256;
     for (auto& c : sha) c = (wchar_t)towupper(c);
     std::wstring elevated = std::wstring() +
@@ -385,6 +391,7 @@ std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& sh
         // of an administrator).
         L"$mlog=Join-Path $env:windir ('Temp\\AddonStoreUpdate-'+[guid]::NewGuid().ToString('N')+'.log')\r\n" +
         L"$msiexec=Join-Path ([Environment]::GetFolderPath('System')) 'msiexec.exe'\r\n" +
+        L"$lang=@(" + (lcid == 1033 ? std::wstring() : L"'TRANSFORMS=:" + std::to_wstring(lcid) + L"'") + L")\r\n" +
         L"$rc=1\r\n" +
         L"$stage=Join-Path $plugins ('.psupdate-'+[guid]::NewGuid().ToString('N'))\r\n" +
         L"try {\r\n" +
@@ -398,7 +405,7 @@ std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& sh
         L"    [System.IO.Compression.ZipFile]::ExtractToDirectory($pkg,$x)\r\n" +
         L"    $msi=Get-ChildItem -LiteralPath (Join-Path $x 'installer') -Filter '*.msi' | Select-Object -First 1\r\n" +
         L"    if (-not $msi) { $rc=8 }\r\n" +
-        L"    else { $p=Start-Process -FilePath $msiexec -ArgumentList @('/i', ('\"'+$msi.FullName+'\"'), '/passive', '/norestart', '/l*v', ('\"'+$mlog+'\"')) -Wait -PassThru; $rc=$p.ExitCode }\r\n" +
+        L"    else { $p=Start-Process -FilePath $msiexec -ArgumentList (@('/i', ('\"'+$msi.FullName+'\"'), '/passive', '/norestart', '/l*v', ('\"'+$mlog+'\"')) + $lang) -Wait -PassThru; $rc=$p.ExitCode }\r\n" +
         L"  }\r\n" +
         L"} catch { $rc=4 }\r\n" +
         L"finally { Remove-Item -LiteralPath $stage -Recurse -Force -ErrorAction SilentlyContinue }\r\n" +
