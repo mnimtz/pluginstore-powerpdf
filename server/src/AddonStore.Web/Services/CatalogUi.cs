@@ -169,7 +169,7 @@ public static class CatalogUi
         if (!root.TryGetProperty(field, out var el)) return null;
         if (el.ValueKind == JsonValueKind.String) return el.GetString();
         if (el.ValueKind != JsonValueKind.Object) return null;
-        foreach (var lang in new[] { culture, "en" })
+        foreach (var lang in culture == "nb" ? new[] { "nb", "no", "en" } : new[] { culture, "en" })
             if (el.TryGetProperty(lang, out var v) && v.ValueKind == JsonValueKind.String)
                 return v.GetString();
         var first = el.EnumerateObject().FirstOrDefault(p => p.Value.ValueKind == JsonValueKind.String);

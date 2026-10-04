@@ -206,6 +206,21 @@ app.Use(async (ctx, next) =>
 app.UseRequestLocalization();
 app.UseStaticFiles();
 app.UseRouting();
+// Small request bodies everywhere in the API except the package/source uploads:
+// anonymous endpoints (ratings, feedback, share clicks) never need megabytes.
+app.Use(async (ctx, next) =>
+{
+    var p = ctx.Request.Path;
+    var upload = (HttpMethods.IsPost(ctx.Request.Method) && (p.Equals("/api/packages") || p.Equals("/api/packages/validate")))
+                 || (HttpMethods.IsPut(ctx.Request.Method) && p.StartsWithSegments("/api/packages") && p.Value!.EndsWith("/source"));
+    if (!upload && (p.StartsWithSegments("/api") || p.StartsWithSegments("/a")))
+    {
+        var f = ctx.Features.Get<Microsoft.AspNetCore.Http.Features.IHttpMaxRequestBodySizeFeature>();
+        if (f is { IsReadOnly: false }) f.MaxRequestBodySize = 2 * 1024 * 1024;
+    }
+    await next();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 

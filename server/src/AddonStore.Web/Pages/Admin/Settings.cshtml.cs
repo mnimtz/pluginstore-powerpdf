@@ -42,10 +42,14 @@ public class SettingsModel : PageModel
     public List<AiService.ModelOption> AiModels { get; private set; } = new();
 
     public SettingsModel(SettingsService settings, UserManager<AppUser> users, AuditService audit,
-        NotificationService notify, UsageService usage, AiService ai, IWebHostEnvironment env)
+        NotificationService notify, UsageService usage, AiService ai, IWebHostEnvironment env, PackageSigning signing)
     {
-        _settings = settings; _users = users; _audit = audit; _notify = notify; _usage = usage; _ai = ai; _env = env;
+        _settings = settings; _users = users; _audit = audit; _notify = notify; _usage = usage; _ai = ai; _env = env; _signing = signing;
     }
+
+    private readonly PackageSigning _signing;
+    public string? SigningProblem { get; private set; }
+    public string SigningKeyId { get; private set; } = "";
 
     public string? TestTo { get; private set; }
 
@@ -265,6 +269,9 @@ public class SettingsModel : PageModel
         var sp = await _settings.GetAsync("Source.Policy");
         SourcePolicy = sp is "off" or "recommended" or "required" ? sp : "required";
         FourEyes = await _settings.GetAsync("Review.FourEyes") == "on";
+        await _signing.EnsureLoadedAsync();
+        SigningProblem = _signing.Problem;
+        SigningKeyId = _signing.KeyId;
         ApproverCount = (await _users.GetUsersInRoleAsync("Admin")).Concat(await _users.GetUsersInRoleAsync("Reviewer"))
             .Where(u => u.Status == UserStatus.Active).Select(u => u.Id).Distinct().Count();
         foreach (var (key, _, _) in NotificationService.Events)

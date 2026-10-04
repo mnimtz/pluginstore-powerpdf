@@ -246,7 +246,8 @@ public class CategoryService
     public static string EffectiveSlug(Package pkg)
     {
         if (!string.IsNullOrWhiteSpace(pkg.CategoryOverride)) return pkg.CategoryOverride!;
-        var newest = pkg.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault();
+        var shown = pkg.Versions.Where(v => v.Status is VersionStatus.Live or VersionStatus.Beta).ToList();
+        var newest = (shown.Count > 0 ? shown : pkg.Versions.ToList()).OrderByDescending(v => v.SubmittedAt).FirstOrDefault();
         if (newest is null) return "other";
         try
         {

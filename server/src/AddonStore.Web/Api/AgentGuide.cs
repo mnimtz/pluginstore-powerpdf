@@ -425,8 +425,8 @@ Add-ons can be delivered to single customers instead of (or in addition to)
 the public catalog. A package with `"visibility": "private"` in its first
 manifest (or switched with `PATCH {{baseUrl}}/api/packages/{id}
 {"visibility": "private"}`) never appears in the catalog, the website or the
-search; details, icon, screenshots and downloads answer 404 unless the
-request comes from its owner, an admin, a reviewer or a client with a code
+search; its details answer 404 to everyone but its owner, admins and
+reviewers, and icon, screenshots and downloads also to clients with a code
 for it. Private versions need no admin approval: passing the automatic checks
 is enough.
 
@@ -465,8 +465,8 @@ developer creates or changes a delivery.
 ## Package signatures
 
 Every catalog entry carries a signature of the server (ECDSA P-256 over
-"addonstore-pkg-v1\n{id}\n{version}\n{sha256}"), in TSV column 21 and the
-JSON field `signature` ("keyId:base64"). The public key is at
+"addonstore-pkg-v2\n{id}\n{version}\n{sha256}\n{zxtName}"), in TSV column
+21 and the JSON field `signature` ("keyId:base64"). The public key is at
 `GET {{baseUrl}}/api/signing-key`. The Power PDF client (0.7.0+) installs only
 packages signed with a key it trusts, so nothing changes for you as a
 submitter: the server signs what it accepted.
@@ -597,7 +597,7 @@ be free of warnings before review. Info is for information only.
 | PE_WRONG_MACHINE | error | The .zxt is built for the wrong CPU (x64 = 0x8664, arm64 = 0xAA64). |
 | PE_NOT_DLL | error | The .zxt is not a DLL. |
 | PE_DEBUG_RUNTIME | error | The .zxt imports a debug C/C++ runtime; ship the Release build. |
-| FOREIGN_DEPENDENCY | warning | The .zxt imports non-system DLLs; bundle them and check their license. |
+| FOREIGN_DEPENDENCY | error | The .zxt imports DLLs that are not part of Windows or Power PDF. Power PDF loads plug-ins from its program folder and the store installs only the .zxt, so link such libraries statically (MIT/BSD/Apache-2.0 only) or load them yourself with LoadLibraryEx and a full path (delay-load). |
 | ATOM_NAMESPACE_MISSING | warning | `ribbonAtomNamespace` is not set. |
 | ATOM_NOT_SHARED_TAB | error | The plugin creates its own ribbon tab instead of a group on "FeaturePack". |
 | ATOM_COLLISION | error | Another package already uses this ribbon atom namespace. |
@@ -607,6 +607,27 @@ be free of warnings before review. Info is for information only.
 | LANGS_INCOMPLETE | error | UILayout language folders are missing (all 16 Power PDF languages are required). |
 | UI_LANGS_MISSING | error | The x64 .zxt has its UI texts (string tables; without them dialogs/menus) not in all 16 Power PDF languages. Add the missing LANGUAGE blocks before submitting. |
 | UI_STRINGS_PARTIAL | warning | Some languages have fewer string blocks than English; those texts appear in English. |
+| ZIP_TOO_MANY_ENTRIES | error | The package has more than 5000 entries. |
+| ZIP_RESERVED_NAME | error | An entry uses a reserved Windows name (CON, PRN, AUX, NUL, COM1-9, LPT1-9). |
+| ZIP_DUPLICATE_ENTRY | error | Two entries are the same file on Windows (case, '\\' vs '/', trailing dots or spaces). |
+| UNEXPECTED_ENTRY | warning | The package holds entries outside manifest.json, LICENSES.md, x64/, arm64/, assets/, docs/, UILayout/ (installer/ for the store client); the client never installs them. |
+| NESTED_ARCHIVE | error | An archive (ZIP, 7z, RAR, gzip, CAB) inside the package; ship files unpacked (Office documents under docs/ are fine). |
+| ENTRY_NOT_SCANNED | error/warning | A binary over 120 MB (error) or a text file over 1 MB (warning) could not be scanned. |
+| DOCS_ACTIVE_CONTENT | warning | Help pages under docs/ contain scripts, frames or external resources. |
+| ARCH_UNKNOWN | error | 'architectures' names something other than x64 or arm64. |
+| ARCH_UNDECLARED | error | 'files.arm64' is set but "arm64" is not in 'architectures'. |
+| PE_MANAGED | error | The .zxt is a .NET assembly; Power PDF loads native plug-ins only. |
+| PE_NO_ENTRY | error | The .zxt does not export PlugInMain (linker option /EXPORT:PlugInMain). |
+| PE_HARDENING | warning | Built without ASLR (/DYNAMICBASE) or DEP (/NXCOMPAT). |
+| VERSIONINFO_MISSING | warning | The .zxt has no VERSIONINFO resource. |
+| VERSIONINFO_MISMATCH | warning | The FILEVERSION of the .zxt differs from the manifest version (usually an old build was packaged). |
+| UI_LANGS_UNREADABLE | warning | The resources of the .zxt could not be read to check the languages. |
+| UILAYOUT_MISSING | warning | The package has no UILayout folder. |
+| ATOM_OUTSIDE_NAMESPACE | error | The layout declares group/button atoms outside the declared ribbonAtomNamespace. |
+| ID_RESERVED | error | The id uses a prefix reserved for the store operators (com.tungsten., com.kofax., com.nuance.); use your own. |
+| SOURCE_LOCKED | error (422) | The source code of a reviewed version cannot be replaced (admins can). |
+| RATE_LIMITED | error (429) | More than 60 package checks and submissions from one account within an hour. |
+| FILE_NOT_FOUND | error (404) | Developer kit: no such file. |
 | UI_LANGS_UNKNOWN | warning | No localized string tables, dialogs or menus found; hard-coded texts cannot follow the Power PDF language. |
 | CATEGORY_MISSING | error | `category` is not set. |
 | CATEGORY_INVALID | error | `category` is not a valid slug (3 to 24 lower-case letters or hyphens). |

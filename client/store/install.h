@@ -18,7 +18,8 @@ std::wstring PSInstalledVersion(const std::wstring& zxtName);
 
 // Full flow: download -> hash check -> elevated copy. Returns 0 on success,
 // 1 = download failed, 2 = hash mismatch, 3 = elevation declined/failed,
-// 4 = install script failed, 5 = Power PDF folder not found.
+// 4 = install script failed, 5 = Power PDF folder not found,
+// 6 = not signed by a trusted store key (signature.h).
 // The elevated step checks the hash once more in an admin-only staging folder
 // before it extracts anything (2 when it changed in between).
 int PSInstallPackage(const PSCatalogEntry& e, HWND owner);
@@ -37,7 +38,7 @@ int PSSelfUpdate(const PSCatalogEntry& e, HWND owner);
 
 // The self-update helper script (PowerShell) for a downloaded package; used by
 // PSSelfUpdate, separate so it can be tested without a download.
-std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& outDir, const std::wstring& sha256);
+std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& sha256);
 
 // Starts a detached helper that waits until Power PDF (this process and any
 // other PowerPDF.exe) has exited and then starts it again. Logs its steps to

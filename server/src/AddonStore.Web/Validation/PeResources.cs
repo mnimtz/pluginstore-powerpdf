@@ -1,53 +1,148 @@
 namespace AddonStore.Web.Validation;
 
 /// <summary>
-/// Reads the resource directory of a 64-bit PE file (.zxt) and reports, per
-/// resource type, which languages exist and how many named resources each
-/// language has. Used for the rule that every add-on's own UI (string tables,
-/// dialogs, menus) follows the Power PDF UI language.
+/// Reads what the store checks in a 64-bit PE file (.zxt): resource languages,
+/// the version resource, exported names, a CLR header and the hardening flags.
+/// Hardened against crafted files: every directory is visited once and the
+/// number of entries is capped, so a malicious resource tree cannot loop.
 /// </summary>
-public static class PeResources
+public sealed class PeResources
 {
-    public const int RtMenu = 4, RtDialog = 5, RtString = 6;
+    public const int RtMenu = 4, RtDialog = 5, RtString = 6, RtVersion = 16;
+    private const int MaxEntries = 65_536;
 
-    /// <summary>type -> (LANGID -> number of resource names in that language). Null when unreadable.</summary>
-    public static Dictionary<int, Dictionary<ushort, int>>? Languages(byte[] bytes)
+    private readonly byte[] _b;
+    private readonly int _opt;
+    private readonly List<(uint Va, uint VSize, uint Raw, uint RawSize)> _sections = new();
+
+    public bool Valid { get; }
+    public ushort DllCharacteristics { get; }
+
+    private PeResources(byte[] b)
+    {
+        _b = b;
+        if (b.Length < 0x40 || b[0] != 'M' || b[1] != 'Z') return;
+        var pe = BitConverter.ToInt32(b, 0x3C);
+        if (pe <= 0 || (long)pe + 24 > b.Length) return;
+        _opt = pe + 24;
+        if ((long)_opt + 240 > b.Length || BitConverter.ToUInt16(b, _opt) != 0x20B) return;   // PE32+
+        var numSections = Math.Min(BitConverter.ToUInt16(b, pe + 6), (ushort)96);
+        var optSize = BitConverter.ToUInt16(b, pe + 20);
+        for (int i = 0; i < numSections; i++)
+        {
+            var s = _opt + optSize + i * 40;
+            if ((long)s + 40 > b.Length) return;
+            _sections.Add((BitConverter.ToUInt32(b, s + 12), BitConverter.ToUInt32(b, s + 8),
+                           BitConverter.ToUInt32(b, s + 20), BitConverter.ToUInt32(b, s + 16)));
+        }
+        DllCharacteristics = BitConverter.ToUInt16(b, _opt + 70);
+        Valid = true;
+    }
+
+    public static PeResources Open(byte[] bytes) => new(bytes);
+
+    private long Offset(uint rva)
+    {
+        foreach (var s in _sections)
+            if (rva >= s.Va && rva < s.Va + Math.Max(s.VSize, s.RawSize))
+            {
+                var o = (long)s.Raw + (rva - s.Va);
+                return o < _b.Length ? o : -1;
+            }
+        return -1;
+    }
+
+    private (uint Rva, uint Size) Directory(int index)
+    {
+        if (!Valid || BitConverter.ToUInt32(_b, _opt + 108) <= index) return (0, 0);
+        return (BitConverter.ToUInt32(_b, _opt + 112 + index * 8), BitConverter.ToUInt32(_b, _opt + 116 + index * 8));
+    }
+
+    /// <summary>True when the image carries a CLR (.NET) header.</summary>
+    public bool IsManaged => Directory(14).Rva != 0;
+
+    /// <summary>Names exported by the DLL (at most 4096).</summary>
+    public List<string> Exports()
+    {
+        var names = new List<string>();
+        var (rva, _) = Directory(0);
+        var e = rva == 0 ? -1 : Offset(rva);
+        if (e < 0 || e + 40 > _b.Length) return names;
+        var n = Math.Min(BitConverter.ToUInt32(_b, (int)e + 24), 4096u);
+        var table = Offset(BitConverter.ToUInt32(_b, (int)e + 32));
+        if (table < 0) return names;
+        for (int i = 0; i < n; i++)
+        {
+            if (table + 4 * i + 4 > _b.Length) break;
+            var s = Offset(BitConverter.ToUInt32(_b, (int)table + 4 * i));
+            if (s < 0) continue;
+            var end = Array.IndexOf(_b, (byte)0, (int)s, (int)Math.Min(260, _b.Length - s));
+            if (end > s) names.Add(System.Text.Encoding.ASCII.GetString(_b, (int)s, end - (int)s));
+        }
+        return names;
+    }
+
+    // --- resource tree --------------------------------------------------------------------
+
+    private long _root = -1;
+    private int _seen;
+    private readonly HashSet<long> _visited = new();
+
+    private long Root()
+    {
+        if (_root >= 0) return _root;
+        var (rva, _) = Directory(2);
+        _root = rva == 0 ? -1 : Offset(rva);
+        return _root;
+    }
+
+    // (id, absolute offset of the sub-directory or -1, absolute offset of the data entry or -1); named entries get id -1.
+    private IEnumerable<(int Id, long Dir, long Data)> Entries(long dir)
+    {
+        if (dir < 0 || dir + 16 > _b.Length || !_visited.Add(dir)) yield break;
+        int named = BitConverter.ToUInt16(_b, (int)dir + 12), ids = BitConverter.ToUInt16(_b, (int)dir + 14);
+        var root = Root();
+        for (int i = 0; i < named + ids; i++)
+        {
+            if (++_seen > MaxEntries) yield break;
+            var e = dir + 16 + i * 8;
+            if (e + 8 > _b.Length) yield break;
+            var name = BitConverter.ToUInt32(_b, (int)e);
+            var off = BitConverter.ToUInt32(_b, (int)e + 4);
+            var id = (name & 0x80000000) != 0 ? -1 : (int)(name & 0xFFFF);
+            var target = root + (off & 0x7FFFFFFF);
+            if (target >= _b.Length) target = -1;
+            yield return (off & 0x80000000) != 0 ? (id, target, -1) : (id, -1, target);
+        }
+    }
+
+    /// <summary>
+    /// type -> primary language -> set of resource name ids in that language, for menus,
+    /// dialogs and string tables. Null when the resource tree is unreadable.
+    /// </summary>
+    public Dictionary<int, Dictionary<int, HashSet<int>>>? Languages()
     {
         try
         {
-            if (bytes.Length < 0x40 || bytes[0] != 'M' || bytes[1] != 'Z') return null;
-            var pe = BitConverter.ToInt32(bytes, 0x3C);
-            if (pe <= 0 || (long)pe + 24 > bytes.Length) return null;
-            var opt = pe + 24;
-            if (BitConverter.ToUInt16(bytes, opt) != 0x20B) return null;   // PE32+
-            var numSections = BitConverter.ToUInt16(bytes, pe + 6);
-            var optSize = BitConverter.ToUInt16(bytes, pe + 20);
-            if (BitConverter.ToUInt32(bytes, opt + 108) < 3) return new();  // no resource directory slot
-            var resRva = BitConverter.ToUInt32(bytes, opt + 112 + 2 * 8);
-            if (resRva == 0) return new();
-
-            long rootOff = -1;
-            var sec = opt + optSize;
-            for (int i = 0; i < numSections; i++)
+            var root = Root();
+            if (!Valid) return null;
+            if (root < 0) return new();
+            _visited.Clear(); _seen = 0;
+            var result = new Dictionary<int, Dictionary<int, HashSet<int>>>();
+            foreach (var (typeId, typeDir, _) in Entries(root).ToList())
             {
-                var s = sec + i * 40;
-                if (s + 40 > bytes.Length) return null;
-                uint va = BitConverter.ToUInt32(bytes, s + 12), vsize = BitConverter.ToUInt32(bytes, s + 8);
-                uint raw = BitConverter.ToUInt32(bytes, s + 20), rawSize = BitConverter.ToUInt32(bytes, s + 16);
-                if (resRva >= va && resRva < va + Math.Max(vsize, rawSize)) { rootOff = raw + (resRva - va); break; }
-            }
-            if (rootOff < 0 || rootOff + 16 > bytes.Length) return null;
-
-            var result = new Dictionary<int, Dictionary<ushort, int>>();
-            foreach (var (typeId, typeDir) in Entries(bytes, rootOff, rootOff))
-            {
-                if (typeId is not (RtMenu or RtDialog or RtString) || typeDir < 0) continue;
-                var langs = new Dictionary<ushort, int>();
-                foreach (var (_, nameDir) in Entries(bytes, rootOff, typeDir))
+                if (typeId is not (RtMenu or RtDialog or RtString) || typeDir < 0 || result.ContainsKey(typeId)) continue;
+                var langs = new Dictionary<int, HashSet<int>>();
+                foreach (var (nameId, nameDir, _) in Entries(typeDir).ToList())
                 {
                     if (nameDir < 0) continue;
-                    foreach (var (langId, _) in Entries(bytes, rootOff, nameDir))
-                        langs[(ushort)langId] = langs.GetValueOrDefault((ushort)langId) + 1;
+                    foreach (var (langId, _, _) in Entries(nameDir).ToList())
+                    {
+                        if (langId < 0) continue;
+                        var primary = langId & 0x3FF;
+                        if (!langs.TryGetValue(primary, out var set)) langs[primary] = set = new HashSet<int>();
+                        set.Add(nameId);
+                    }
                 }
                 result[typeId] = langs;
             }
@@ -57,23 +152,37 @@ public static class PeResources
         catch (IndexOutOfRangeException) { return null; }
     }
 
-    // (id, absolute offset of the sub-directory or -1 for a data entry); named entries get id -1.
-    private static IEnumerable<(int Id, long Dir)> Entries(byte[] b, long root, long dir)
+    /// <summary>FileVersion of the version resource (major, minor, build, revision); null when there is none.</summary>
+    public (int, int, int, int)? FileVersion()
     {
-        if (dir + 16 > b.Length) yield break;
-        int named = BitConverter.ToUInt16(b, (int)dir + 12), ids = BitConverter.ToUInt16(b, (int)dir + 14);
-        var n = Math.Min(named + ids, 4096);
-        for (int i = 0; i < n; i++)
+        try
         {
-            var e = dir + 16 + i * 8;
-            if (e + 8 > b.Length) yield break;
-            var name = BitConverter.ToUInt32(b, (int)e);
-            var off = BitConverter.ToUInt32(b, (int)e + 4);
-            var id = (name & 0x80000000) != 0 ? -1 : (int)(name & 0xFFFF);
-            var sub = (off & 0x80000000) != 0 ? root + (off & 0x7FFFFFFF) : -1;
-            if (sub >= b.Length) sub = -1;
-            yield return (id, sub);
+            var root = Root();
+            if (!Valid || root < 0) return null;
+            _visited.Clear(); _seen = 0;
+            foreach (var (typeId, typeDir, _) in Entries(root).ToList())
+            {
+                if (typeId != RtVersion || typeDir < 0) continue;
+                foreach (var (_, nameDir, _) in Entries(typeDir).ToList())
+                    foreach (var (_, _, data) in Entries(nameDir).ToList())
+                    {
+                        if (data < 0 || data + 8 > _b.Length) continue;
+                        var at = Offset(BitConverter.ToUInt32(_b, (int)data));
+                        var size = BitConverter.ToUInt32(_b, (int)data + 4);
+                        if (at < 0 || size < 92 || at + size > _b.Length) continue;
+                        // VS_FIXEDFILEINFO starts with the signature 0xFEEF04BD inside VS_VERSIONINFO
+                        for (long i = at; i + 52 <= at + Math.Min(size, 512u); i += 4)
+                            if (BitConverter.ToUInt32(_b, (int)i) == 0xFEEF04BD)
+                            {
+                                uint ms = BitConverter.ToUInt32(_b, (int)i + 8), ls = BitConverter.ToUInt32(_b, (int)i + 12);
+                                return ((int)(ms >> 16), (int)(ms & 0xFFFF), (int)(ls >> 16), (int)(ls & 0xFFFF));
+                            }
+                    }
+            }
+            return null;
         }
+        catch (ArgumentException) { return null; }
+        catch (IndexOutOfRangeException) { return null; }
     }
 
     /// <summary>Primary language id of each of the 16 Power PDF UI languages (manifest codes).</summary>

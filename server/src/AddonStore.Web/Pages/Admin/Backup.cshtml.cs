@@ -67,7 +67,7 @@ public class BackupModel : PageModel
         return File(stream, "application/zip", name);
     }
 
-    public async Task OnPostRestoreAsync(IFormFile? archive, string? confirm, string? keyPassword)
+    public async Task OnPostRestoreAsync(IFormFile? archive, string? confirm, string? keyPassword, bool withoutKeys)
     {
         var admin = await _users.GetUserAsync(User);
         if (archive is null || archive.Length == 0)
@@ -99,7 +99,17 @@ public class BackupModel : PageModel
             var keysSkipped = false;
             if (BackupService.HasEncryptedKeys(tmp))
             {
-                if (string.IsNullOrEmpty(keyPassword)) keysSkipped = true;
+                if (string.IsNullOrEmpty(keyPassword))
+                {
+                    // Without the key ring the package signing key is lost too: clients then refuse
+                    // every install until the recovery key is set. Only on explicit request.
+                    if (!withoutKeys)
+                    {
+                        Fail("This backup contains the key ring. Enter its password, or confirm the restore without it.");
+                        return;
+                    }
+                    keysSkipped = true;
+                }
                 else if ((keys = BackupService.DecryptKeys(tmp, keyPassword)) is null)
                 {
                     await _audit.LogAsync(admin.DisplayName, "backup.restore-refused", archive.FileName, "wrong key ring password");
@@ -116,7 +126,7 @@ public class BackupModel : PageModel
             await _audit.LogAsync(admin.DisplayName, "backup.restored", archive.FileName,
                 "safety backup: " + Path.GetFileName(safety));
             Notice = keysSkipped
-                ? "Backup restored without its key ring (no password given). Enter the AI and Resend keys again in the settings."
+                ? "Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install."
                 : "Backup restored. A safety backup of the previous state was kept on the server.";
             // Restart so every connection, cache and the restored key ring start clean
             // (App Service starts the container again by itself). Not in development.

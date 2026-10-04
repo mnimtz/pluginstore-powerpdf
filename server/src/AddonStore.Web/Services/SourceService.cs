@@ -56,8 +56,16 @@ public class SourceService
     public string FullPath(PackageVersion v) => Path.Combine(_submissions.StorageRoot, v.SourcePath!);
 
     /// <summary>Checks a source ZIP; stores it for the version when no finding has severity "error".</summary>
-    public async Task<ValidationReport> UploadAsync(PackageVersion v, string zipPath, AppUser user)
+    public async Task<ValidationReport> UploadAsync(PackageVersion v, string zipPath, AppUser user, bool actorIsAdmin)
     {
+        // Once a version was reviewed, its stored source documents what was approved.
+        if (v.SourcePath is not null && v.ReviewedAt is not null && !actorIsAdmin)
+        {
+            var locked = new ValidationReport();
+            locked.Error("SOURCE_LOCKED", $"The source code of {v.PackageId} {v.Version} was reviewed and cannot be replaced.",
+                "Upload a new version with its source code, or ask an admin.");
+            return locked;
+        }
         var report = Check(zipPath);
         if (!report.Passed) return report;
 

@@ -56,7 +56,7 @@ directly inside Power PDF.
 | 🔗 **Share links for sales** | Every add-on has its own public page `/a/<short name>` (e.g. `/a/smartbookmarks`; the full id works too) with icon, description, what's new, the "Install in Power PDF" button, the client download and a share box: copy the link or open a prepared email in the page's language. Link previews in Teams/Outlook show name, description and icon (Open Graph). An optional `?ref=<short name>` attributes page views, install clicks and client downloads to the person who shared the link (reports, "Shared links"); link-preview bots are not counted. Catalog cards have a "Share link" button; the JSON catalog carries `pageUrl`. |
 | ⭐ **Ratings, problem reports, screenshots** | Users rate add-ons (1 to 5 stars, one rating per installation, anonymous install id) and send problem reports or comments from the store window inside Power PDF, optionally with a reply address and a log excerpt. The average shows on catalog cards, add-on pages and in the client; reports reach the owner by email and are listed on the plug-in page and via `GET /api/packages/{id}/feedback` (owner/admin, so an AI assistant can work through them). Packages may carry up to 6 screenshots with captions (manifest `screenshots`), shown as a gallery on the website and in the client. |
 | 🤖 **AI assistant (optional)** | Off by default; an admin picks Claude (official Anthropic SDK) or Gemini, enters the key (encrypted with the server's data protection keys), clicks "Connect and load models" and then chooses the model from the list the provider offers for that key (loaded live), switches each part on and runs a test request: problem reports are sorted in the background (category, urgency, summary in English and German, reply draft, duplicate hint); reviewers get a review aid per version (what changed against the previous version, does the changelog match, concerns such as new hosts or third-party code, a recommendation), on request or automatically; visitors and the store window search by need ("split scanned invoices by barcode") with a reason per hit. Never sent: email or IP addresses, log excerpts, accounts; changed source lines only with an extra option. Daily request limit, connection test, every change audited. Without AI the plain word search answers. |
-| 🔏 **Signed catalog** | Every catalog entry is signed by the server (ECDSA P-256 over id, version and SHA-256; TSV column 21, JSON `signature`, key at `/api/signing-key`). Clients 0.7.0+ install only packages signed with a key they trust (built in, or HKLM policy `TrustedSigningKeys`), so a changed server address in the user profile cannot deliver foreign packages. Key: App Setting `Signing__PrivateKeyPem`, else created once and stored encrypted in the database. |
+| 🔏 **Signed catalog** | Every catalog entry is signed by the server (ECDSA P-256 over id, version, SHA-256 and binary name; TSV column 21, JSON `signature`, key at `/api/signing-key`). Clients 0.7.0+ install only packages signed with a key they trust (built in, or HKLM policy `TrustedSigningKeys`), so a changed server address in the user profile cannot deliver foreign packages. Key: App Setting `Signing__PrivateKeyPem`, else created once and stored encrypted in the database. |
 | 🛡️ **Admin safeguards** | Backups download with the data protection key ring encrypted by a password (AES-256-GCM, PBKDF2) or without it; optional four-eyes rule (nobody approves a version they uploaded or own); first-run setup needs a one-time token from the server log or `data/setup-token.txt` (24 h). |
 | 🏢 **Customer deliveries** | Register "Customers": developers and admins create customers, deliver add-ons (also private ones that never appear in the catalog) with a beta and a live stage each ("newest", fixed version or off; "Make live" moves the tested beta version to all workstations), an optional period, pause or end. Codes per customer (all its deliveries) and per delivery, shown any time to the people who manage the customer, replaced with a transition period or revoked. Clients send codes only in the `X-Customer-Code` header; private add-ons answer 404 to everyone else; brute-force protection per address. Developers manage their own customers and deliver only their own add-ons; admins are informed by email. |
 | 🔖 **Bookmarks and shortcuts** | Power PDF's own application icon (taken from PowerPDF.exe) as favicon, Apple touch icon and web-app icon (`/site.webmanifest`, localized name, brand colours); page titles in the visitor's language ("Add-on Store für Tungsten Power PDF", sub pages "<page> · Add-on Store für Power PDF"); meta description and an Open Graph preview card (`/img/social-card.png`) for links in Teams, Outlook and messengers. |
@@ -142,6 +142,15 @@ built with the Power PDF Plugin SDK):
   admin-only staging folder under `Plug-Ins`, checks the hash there again and
   only then unpacks it. The self-update helper checks the hash again before
   it starts `msiexec.exe` by full path.
+- **Signed packages, responsive window** (client 0.7.0+): the client installs
+  only catalog entries signed by a trusted store key (built in: the store
+  instance and an offline recovery key; HKLM policy `TrustedSigningKeys` adds
+  keys of a company's own instance, `AllowUnsigned = 1` switches the check off
+  for test servers; nothing in HKCU can add a key). Network work of the store
+  window (catalog, icons, screenshots, ratings, reports, search, install and
+  removal) runs on worker threads. The self-update copies the package into an
+  admin-only staging folder under `Plug-Ins`, checks the hash there and runs
+  the MSI from there (one UAC prompt).
 - **Usage statistics** (client 0.4.2+): the client's user agent carries its
   version, the Power PDF and Windows version and the native architecture
   (x64/arm64), e.g. `AddonStore-PowerPDF/0.4.2 (PowerPDF 15.1.0.555; Windows
@@ -192,7 +201,10 @@ msiexec /i PluginStore-<version>.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"
   store, for IT-managed MSI rollouts; client 0.4.3+), `CustomerCode` (REG_SZ,
   sets and locks the customer code; client 0.6.0+), `UpdateBadge` (DWORD 0:
   no background update check; client 0.6.0+). DWORD values may also be
-  deployed as a decimal REG_SZ such as "1" (client 0.6.0+). From 32-bit
+  deployed as a decimal REG_SZ such as "1" (client 0.6.0+),
+  `TrustedSigningKeys` (REG_SZ or REG_MULTI_SZ, `keyId:base64` of the public
+  key from `/api/signing-key`, for an own store instance; client 0.7.0+),
+  `AllowUnsigned` (DWORD 1, test servers only; client 0.7.0+). From 32-bit
   deployment agents use `reg add ... /reg:64`.
 - Intune detection rule: the file `<bin>\Plug-Ins\PluginStore.zxt` with a
   minimum version (the ProductCode changes with every version).

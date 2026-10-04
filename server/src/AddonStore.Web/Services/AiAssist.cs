@@ -347,7 +347,7 @@ public class AiAssist
                 return (true, hits);
             }
         }
-        // Plain word search: every word must appear in name, description, category or author.
+        // Plain word search: ranked by how many of the words appear in name, description, category or author.
         var words = query.ToLowerInvariant().Split(' ', StringSplitOptions.RemoveEmptyEntries);
         var plain = items.Select(i => (i, text: (i.Name + " " + i.Description + " " + i.CategoryName + " " + i.Author).ToLowerInvariant()))
             .Select(x => (x.i, score: words.Count(w => x.text.Contains(w))))

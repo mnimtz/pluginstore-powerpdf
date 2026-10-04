@@ -16,6 +16,9 @@
 #include <shlobj.h>
 #include <wincrypt.h>
 #include <vector>
+#include <functional>
+#include <memory>
+#include <algorithm>
 #include "WebView2.h"
 
 #pragma comment(lib, "WebView2LoaderStatic.lib")
@@ -229,6 +232,72 @@ std::wstring PageHtml()
     return w;
 }
 
+// Reads a small file completely (icons, screenshots); empty when missing or too large.
+std::vector<BYTE> ReadSmallFile(const std::wstring& path, LONGLONG maxBytes)
+{
+    std::vector<BYTE> data;
+    HANDLE f = CreateFileW(path.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+    if (f == INVALID_HANDLE_VALUE) return data;
+    LARGE_INTEGER sz = { 0 };
+    if (GetFileSizeEx(f, &sz) && sz.QuadPart > 8 && sz.QuadPart <= maxBytes)
+    {
+        data.resize((size_t)sz.QuadPart);
+        DWORD got = 0;
+        if (!ReadFile(f, data.data(), (DWORD)data.size(), &got, NULL) || got != data.size()) data.clear();
+    }
+    CloseHandle(f);
+    return data;
+}
+
+// --- worker threads -----------------------------------------------------------
+
+const UINT WM_ASYNC = WM_APP + 64;
+enum AsyncKind { KCatalog = 1, KRated, KFeedback, KSend, KJob };
+
+// Result of a worker, posted to the window (which deletes it).
+struct AsyncMsg
+{
+    int kind = 0;
+    int gen = 0;                          // catalog generation (stale results are dropped)
+    bool flag = false;                    // success / "with preselect"
+    int number = 0, count = 0;            // job or stars / rc or rating count
+    double rating = 0;
+    std::wstring id, text, error;
+    std::vector<PSCatalogEntry> entries;
+};
+
+// False when the window is gone (the message is then deleted here).
+bool PostAsync(HWND h, AsyncMsg* m)
+{
+    if (::IsWindow(h) && ::PostMessageW(h, WM_ASYNC, 0, reinterpret_cast<LPARAM>(m))) return true;
+    delete m;
+    return false;
+}
+
+DWORD WINAPI WorkerMain(LPVOID p)
+{
+    std::unique_ptr<std::function<void()>> fn(static_cast<std::function<void()>*>(p));
+    try { (*fn)(); } catch (...) { FPLogW(L"[Store] worker failed"); }
+    fn.reset();
+    // the thread holds its own reference on this DLL (see Spawn)
+    FreeLibraryAndExitThread(gHINSTANCE, 0);
+}
+
+// Runs work on a new thread that keeps this DLL loaded until it ends.
+void Spawn(std::function<void()> work)
+{
+    auto* p = new std::function<void()>(std::move(work));
+    HMODULE self = NULL;
+    if (GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, reinterpret_cast<LPCWSTR>(&WorkerMain), &self))
+    {
+        HANDLE t = CreateThread(NULL, 0, WorkerMain, p, 0, NULL);
+        if (t) { CloseHandle(t); return; }
+        FreeLibrary(self);
+    }
+    std::unique_ptr<std::function<void()>> fn(p);   // no thread: run it here
+    (*fn)();
+}
+
 // --- the window -------------------------------------------------------------
 
 class CWebStore : public CDialog
@@ -237,7 +306,7 @@ public:
     explicit CWebStore(const std::wstring& preselect) : CDialog(IDD_PS_WEB), m_preselect(preselect) {}
 
 protected:
-    enum { WM_RUN = WM_APP + 61, WM_ICONS, WM_FAIL };
+    enum { WM_RUN = WM_APP + 61, WM_FAIL = WM_APP + 63 };
     enum Job { JobInstall = 1, JobUninstall, JobSelfUpdate };
 
     ComPtr<ICoreWebView2Environment> m_env;
@@ -247,8 +316,8 @@ protected:
     PSCatalogEntry m_self;
     bool m_hasSelfUpdate = false;
     std::wstring m_preselect;
-    std::vector<size_t> m_iconQueue;
-    size_t m_jobIndex = 0;
+    int m_catalogGen = 0;
+    bool m_jobRunning = false;
 
     BOOL OnInitDialog() override
     {
@@ -384,14 +453,29 @@ protected:
         Send(j + L"}}");
     }
 
+    // --- network work runs on worker threads; results come back as WM_ASYNC ---
+    // Workers never touch the window object or host APIs: they get copies of
+    // what they need (entries, language) and post an AsyncMsg back.
+
     void LoadCatalog(bool withPreselect)
     {
-        std::vector<PSCatalogEntry> all;
-        std::wstring error;
-        if (!PSFetchCatalog(all, error)) all.clear();
+        int gen = ++m_catalogGen;
+        std::wstring lang = HostLang();   // host call: UI thread only
+        HWND h = m_hWnd;
+        Spawn([h, gen, lang, withPreselect]() {
+            auto* m = new AsyncMsg;
+            m->kind = KCatalog; m->gen = gen; m->flag = withPreselect;
+            if (!PSFetchCatalogFor(lang, m->entries, m->error)) m->entries.clear();
+            PostAsync(h, m);
+        });
+    }
+
+    void ApplyCatalog(AsyncMsg& r)
+    {
+        if (r.gen != m_catalogGen) return;   // a newer load is on its way
         m_entries.clear();
         m_hasSelfUpdate = false;
-        for (auto& e : all)
+        for (auto& e : r.entries)
         {
             if (e.id == kClientId)
             {
@@ -403,7 +487,7 @@ protected:
             m_entries.push_back(e);
         }
 
-        std::wstring j = L"{\"type\":\"catalog\",\"error\":" + Json(error) + L",\"items\":[";
+        std::wstring j = L"{\"type\":\"catalog\",\"error\":" + Json(r.error) + L",\"items\":[";
         for (size_t i = 0; i < m_entries.size(); ++i)
         {
             const PSCatalogEntry& e = m_entries[i];
@@ -422,16 +506,13 @@ protected:
         j += L"]";
         if (m_hasSelfUpdate)
             j += L",\"self\":{\"version\":" + Json(m_self.version) + L",\"installed\":" + Json(FP_VERSION_W) + L"}";
-        if (withPreselect && !m_preselect.empty() && m_preselect != kClientId)
+        if (r.flag && !m_preselect.empty() && m_preselect != kClientId)
         {
             j += L",\"select\":" + Json(m_preselect) + L",\"selectMissing\":" + Json(Fmt(IDS_PSD_LINK_NOTFOUND, m_preselect));
             m_preselect.clear();
         }
         Send(j + L"}");
-
-        m_iconQueue.clear();
-        for (size_t i = 0; i < m_entries.size(); ++i) m_iconQueue.push_back(i);
-        PostMessage(WM_ICONS);
+        LoadIcons();
     }
 
     std::wstring PackageUrl(const PSCatalogEntry& e, const wchar_t* tail)
@@ -443,21 +524,34 @@ protected:
     void Rate(size_t i, int stars)
     {
         if (stars < 1 || stars > 5 || i >= m_entries.size()) return;
-        PSCatalogEntry& e = m_entries[i];
+        const PSCatalogEntry& e = m_entries[i];
         std::string body = "{\"installId\":" + U8(Json(PSInstallId())) + ",\"stars\":" + std::to_string(stars) +
                            ",\"version\":" + U8(Json(e.installedVersion.empty() ? e.version : e.installedVersion)) + "}";
-        std::string resp;
-        DWORD status = 0;
-        if (!PSHttpPostJson(PackageUrl(e, L"/rating"), body, resp, &status))
-        {
-            SendMessageToPage(FPLoc(IDS_PSD_TITLE), FPLoc(IDS_PSW_RATE_FAIL));
-            return;
-        }
-        PSSetMyRating(e.id, stars);
-        e.rating = JsonNumber(resp, "average");
-        e.ratingCount = (int)JsonNumber(resp, "count");
-        Send(L"{\"type\":\"rated\",\"id\":" + Json(e.id) + L",\"rating\":" + Tenths(e.rating) +
-             L",\"ratingCount\":" + std::to_wstring(e.ratingCount) + L",\"mine\":" + std::to_wstring(stars) + L"}");
+        std::wstring url = PackageUrl(e, L"/rating"), id = e.id;
+        HWND h = m_hWnd;
+        Spawn([h, url, body, id, stars]() {
+            auto* m = new AsyncMsg;
+            m->kind = KRated; m->id = id; m->number = stars;
+            std::string resp;
+            DWORD status = 0;
+            m->flag = PSHttpPostJson(url, body, resp, &status);
+            if (m->flag)
+            {
+                PSSetMyRating(id, stars);
+                m->rating = JsonNumber(resp, "average");
+                m->count = (int)JsonNumber(resp, "count");
+            }
+            PostAsync(h, m);
+        });
+    }
+
+    void ApplyRated(AsyncMsg& r)
+    {
+        if (!r.flag) { SendMessageToPage(FPLoc(IDS_PSD_TITLE), FPLoc(IDS_PSW_RATE_FAIL)); return; }
+        size_t i = 0;
+        if (Find(r.id, &i)) { m_entries[i].rating = r.rating; m_entries[i].ratingCount = r.count; }
+        Send(L"{\"type\":\"rated\",\"id\":" + Json(r.id) + L",\"rating\":" + Tenths(r.rating) +
+             L",\"ratingCount\":" + std::to_wstring(r.count) + L",\"mine\":" + std::to_wstring(r.number) + L"}");
     }
 
     // Problem report or comment to the add-on's developer.
@@ -470,68 +564,73 @@ protected:
                            ",\"message\":" + U8(Json(message)) + ",\"email\":" + U8(Json(email)) +
                            ",\"version\":" + U8(Json(e.installedVersion.empty() ? e.version : e.installedVersion)) +
                            ",\"log\":" + U8(Json(withLog ? LogTail(80) : std::wstring())) + "}";
-        std::string resp;
-        DWORD status = 0;
-        if (PSHttpPostJson(PackageUrl(e, L"/feedback"), body, resp, &status))
-        {
-            SendMessageToPage(FPLoc(IDS_PSW_REPORT), FPLoc(IDS_PSW_REPORT_SENT));
-            return;
-        }
-        // The server explains a refusal (too short, invalid address, limit) in "message".
-        std::wstring why;
-        size_t p = resp.find("\"message\":\"");
-        if (p != std::string::npos) why = W16(resp.substr(p + 11, resp.find('"', p + 11) - (p + 11)));
-        SendMessageToPage(FPLoc(IDS_PSW_REPORT), FPLoc(IDS_PSW_REPORT_FAIL) + (why.empty() ? L"" : L"\n\n" + why));
+        std::wstring url = PackageUrl(e, L"/feedback");
+        HWND h = m_hWnd;
+        Spawn([h, url, body]() {
+            auto* m = new AsyncMsg;
+            m->kind = KFeedback;
+            std::string resp;
+            DWORD status = 0;
+            m->flag = PSHttpPostJson(url, body, resp, &status);
+            // The server explains a refusal (too short, invalid address, limit) in "message".
+            size_t p = resp.find("\"message\":\"");
+            if (!m->flag && p != std::string::npos)
+                m->text = W16(resp.substr(p + 11, std::min<size_t>(resp.find('"', p + 11) - (p + 11), 600)));
+            PostAsync(h, m);
+        });
+    }
+
+    void ApplyFeedback(AsyncMsg& r)
+    {
+        if (r.flag) SendMessageToPage(FPLoc(IDS_PSW_REPORT), FPLoc(IDS_PSW_REPORT_SENT));
+        else SendMessageToPage(FPLoc(IDS_PSW_REPORT), FPLoc(IDS_PSW_REPORT_FAIL) + (r.text.empty() ? L"" : L"\n\n" + r.text));
     }
 
     // Screenshots of the selected add-on: list (TSV url<TAB>caption), images cached per version.
     void LoadShots(size_t i)
     {
         if (i >= m_entries.size()) return;
-        const PSCatalogEntry& e = m_entries[i];
-        std::string tsv;
-        if (!PSHttpGetText(PackageUrl(e, L"/screenshots?format=tsv&lang=") + HostLang(), tsv)) return;
-        std::wstring dir = LocalDir(L"shots");
-        std::wstring items;
-        std::wstring text = W16(tsv);
-        size_t pos = 0;
-        int n = 0;
-        while (pos < text.size() && n < 6)
-        {
-            size_t eol = text.find(L'\n', pos);
-            if (eol == std::wstring::npos) eol = text.size();
-            std::wstring line = text.substr(pos, eol - pos);
-            pos = eol + 1;
-            size_t tab = line.find(L'\t');
-            if (tab == std::wstring::npos) continue;
-            std::wstring url = line.substr(0, tab), caption = line.substr(tab + 1);
-            std::wstring name = e.id + L"-" + e.version + L"-" + std::to_wstring(n) + L".img";
-            ++n;
-            if (dir.empty() || !SafeFileName(name)) continue;
-            std::wstring path = dir + L"\\" + name;
-            if (GetFileAttributesW(path.c_str()) == INVALID_FILE_ATTRIBUTES)
+        PSCatalogEntry e = m_entries[i];
+        std::wstring url = PackageUrl(e, L"/screenshots?format=tsv&lang=") + HostLang();
+        HWND h = m_hWnd;
+        Spawn([h, e, url]() {
+            std::string tsv;
+            if (!PSHttpGetText(url, tsv)) return;
+            std::wstring dir = LocalDir(L"shots");
+            std::wstring items;
+            std::wstring text = W16(tsv);
+            size_t pos = 0;
+            int n = 0;
+            while (pos < text.size() && n < 6)
             {
-                DWORD status = 0;
-                if (!PSHttpGetFile(url, path, &status, 3 * 1024 * 1024)) continue;
+                size_t eol = text.find(L'\n', pos);
+                if (eol == std::wstring::npos) eol = text.size();
+                std::wstring line = text.substr(pos, eol - pos);
+                pos = eol + 1;
+                size_t tab = line.find(L'\t');
+                if (tab == std::wstring::npos) continue;
+                std::wstring shotUrl = line.substr(0, tab), caption = line.substr(tab + 1);
+                std::wstring name = e.id + L"-" + e.version + L"-" + std::to_wstring(n) + L".img";
+                ++n;
+                if (dir.empty() || !SafeFileName(name)) continue;
+                std::wstring path = dir + L"\\" + name;
+                if (GetFileAttributesW(path.c_str()) == INVALID_FILE_ATTRIBUTES)
+                {
+                    DWORD status = 0;
+                    if (!PSHttpGetFile(shotUrl, path, &status, 3 * 1024 * 1024)) continue;
+                }
+                std::vector<BYTE> data = ReadSmallFile(path, 3 * 1024 * 1024);
+                const wchar_t* type = data.size() > 4 && data[0] == 0x89 && data[1] == 'P' ? L"image/png"
+                                    : data.size() > 4 && data[0] == 0xFF && data[1] == 0xD8 ? L"image/jpeg" : nullptr;
+                if (!type) continue;
+                items += (items.empty() ? L"" : L",") + std::wstring(L"{\"src\":") + Json(std::wstring(L"data:") + type + L";base64," + Base64(data)) +
+                         L",\"caption\":" + Json(caption) + L"}";
             }
-            HANDLE f = CreateFileW(path.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
-            if (f == INVALID_HANDLE_VALUE) continue;
-            LARGE_INTEGER sz = { 0 };
-            std::vector<BYTE> data;
-            if (GetFileSizeEx(f, &sz) && sz.QuadPart > 8 && sz.QuadPart <= 3 * 1024 * 1024)
-            {
-                data.resize((size_t)sz.QuadPart);
-                DWORD got = 0;
-                if (!ReadFile(f, data.data(), (DWORD)data.size(), &got, NULL) || got != data.size()) data.clear();
-            }
-            CloseHandle(f);
-            const wchar_t* type = data.size() > 4 && data[0] == 0x89 && data[1] == 'P' ? L"image/png"
-                                : data.size() > 4 && data[0] == 0xFF && data[1] == 0xD8 ? L"image/jpeg" : nullptr;
-            if (!type) continue;
-            items += (items.empty() ? L"" : L",") + std::wstring(L"{\"src\":") + Json(std::wstring(L"data:") + type + L";base64," + Base64(data)) +
-                     L",\"caption\":" + Json(caption) + L"}";
-        }
-        Send(L"{\"type\":\"shots\",\"id\":" + Json(e.id) + L",\"items\":[" + items + L"]}");
+            auto* m = new AsyncMsg;
+            m->kind = KSend;
+            m->text = L"{\"type\":\"shots\",\"id\":" + Json(e.id) + L",\"items\":[" + items + L"]}";
+            PostAsync(h, m);
+        });
     }
 
     // Search by need on the server (AI ranking with reasons when the store has
@@ -541,67 +640,68 @@ protected:
         if (q.size() < 2 || q.size() > 300) return;
         std::wstring url = PSServerUrl() + L"/api/search?format=tsv&q=" + UrlEncode(q) + L"&lang=" + UrlEncode(HostLang());
         if (PSBetaChannel()) url += L"&channel=beta";
-        std::string tsv;
-        DWORD status = 0;
-        std::wstring hits;
-        bool ai = false;
-        if (PSHttpGetText(url, tsv, &status))
-        {
-            std::wstring text = W16(tsv);
-            size_t pos = 0;
-            int n = 0;
-            while (pos < text.size() && n < 20)
+        std::vector<std::wstring> known;
+        for (const auto& e : m_entries) known.push_back(e.id);
+        HWND h = m_hWnd;
+        Spawn([h, url, q, known]() {
+            std::string tsv;
+            DWORD status = 0;
+            std::wstring hits;
+            bool ai = false;
+            if (PSHttpGetText(url, tsv, &status))
             {
-                size_t eol = text.find(L'\n', pos);
-                if (eol == std::wstring::npos) eol = text.size();
-                std::wstring line = text.substr(pos, eol - pos);
-                pos = eol + 1;
-                while (!line.empty() && line.back() == L'\r') line.pop_back();
-                if (line == L"#ai") { ai = true; continue; }
-                if (line.empty() || line[0] == L'#') continue;
-                size_t tab = line.find(L'\t');
-                std::wstring id = line.substr(0, tab), reason = tab == std::wstring::npos ? L"" : line.substr(tab + 1, 400);
-                if (!Find(id, nullptr)) continue;
-                hits += (n++ ? L"," : L"") + std::wstring(L"{\"id\":") + Json(id) + L",\"reason\":" + Json(reason) + L"}";
+                std::wstring text = W16(tsv);
+                size_t pos = 0;
+                int n = 0;
+                while (pos < text.size() && n < 20)
+                {
+                    size_t eol = text.find(L'\n', pos);
+                    if (eol == std::wstring::npos) eol = text.size();
+                    std::wstring line = text.substr(pos, eol - pos);
+                    pos = eol + 1;
+                    while (!line.empty() && line.back() == L'\r') line.pop_back();
+                    if (line == L"#ai") { ai = true; continue; }
+                    if (line.empty() || line[0] == L'#') continue;
+                    size_t tab = line.find(L'\t');
+                    std::wstring id = line.substr(0, tab), reason = tab == std::wstring::npos ? L"" : line.substr(tab + 1, 400);
+                    if (std::find(known.begin(), known.end(), id) == known.end()) continue;
+                    hits += (n++ ? L"," : L"") + std::wstring(L"{\"id\":") + Json(id) + L",\"reason\":" + Json(reason) + L"}";
+                }
             }
-        }
-        Send(L"{\"type\":\"need\",\"q\":" + Json(q) + L",\"ai\":" + (ai ? L"true" : L"false") + L",\"hits\":[" + hits + L"]}");
+            auto* m = new AsyncMsg;
+            m->kind = KSend;
+            m->text = L"{\"type\":\"need\",\"q\":" + Json(q) + L",\"ai\":" + (ai ? L"true" : L"false") + L",\"hits\":[" + hits + L"]}";
+            PostAsync(h, m);
+        });
     }
 
-    // One icon per message so the window stays responsive; cached per version.
-    void NextIcon()
+    // Icons, cached per version: one worker fetches them in turn and hands
+    // each one over as soon as it is there.
+    void LoadIcons()
     {
-        if (m_iconQueue.empty() || !m_web) return;
-        size_t i = m_iconQueue.front();
-        m_iconQueue.erase(m_iconQueue.begin());
-        if (i < m_entries.size())
-        {
-            const PSCatalogEntry& e = m_entries[i];
+        struct Want { std::wstring id, version, url; };
+        std::vector<Want> want;
+        for (const auto& e : m_entries) want.push_back({ e.id, e.version, e.iconUrl });
+        int gen = m_catalogGen;
+        HWND h = m_hWnd;
+        Spawn([h, want, gen]() {
             std::wstring dir = LocalDir(L"icons");
-            std::wstring name = e.id + L"-" + e.version + L".png";
-            if (!dir.empty() && SafeFileName(name) && !e.iconUrl.empty())
+            for (const auto& w : want)
             {
+                std::wstring name = w.id + L"-" + w.version + L".png";
+                if (dir.empty() || !SafeFileName(name) || w.url.empty()) continue;
                 std::wstring path = dir + L"\\" + name;
                 DWORD status = 0;
                 if (GetFileAttributesW(path.c_str()) == INVALID_FILE_ATTRIBUTES)
-                    PSHttpGetFile(e.iconUrl, path, &status, 4 * 1024 * 1024);
-                HANDLE f = CreateFileW(path.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
-                if (f != INVALID_HANDLE_VALUE)
-                {
-                    LARGE_INTEGER sz = { 0 };
-                    if (GetFileSizeEx(f, &sz) && sz.QuadPart > 8 && sz.QuadPart < 4 * 1024 * 1024)
-                    {
-                        std::vector<BYTE> data((size_t)sz.QuadPart);
-                        DWORD got = 0;
-                        if (ReadFile(f, data.data(), (DWORD)data.size(), &got, NULL) && got == data.size() &&
-                            data[0] == 0x89 && data[1] == 'P' && data[2] == 'N' && data[3] == 'G')
-                            Send(L"{\"type\":\"icon\",\"id\":" + Json(e.id) + L",\"data\":" + Json(L"data:image/png;base64," + Base64(data)) + L"}");
-                    }
-                    CloseHandle(f);
-                }
+                    PSHttpGetFile(w.url, path, &status, 4 * 1024 * 1024);
+                std::vector<BYTE> data = ReadSmallFile(path, 4 * 1024 * 1024);
+                if (data.size() < 8 || data[0] != 0x89 || data[1] != 'P' || data[2] != 'N' || data[3] != 'G') continue;
+                auto* m = new AsyncMsg;
+                m->kind = KSend; m->gen = gen;
+                m->text = L"{\"type\":\"icon\",\"id\":" + Json(w.id) + L",\"data\":" + Json(L"data:image/png;base64," + Base64(data)) + L"}";
+                if (!PostAsync(h, m)) return;   // window gone
             }
-        }
-        if (!m_iconQueue.empty()) PostMessage(WM_ICONS);
+        });
     }
 
     const PSCatalogEntry* Find(const std::wstring& id, size_t* index)
@@ -619,7 +719,8 @@ protected:
         else if ((cmd == L"install" || cmd == L"uninstall") && !PSPolicyNoInstall())
         {
             size_t idx = 0;
-            if (Find(Field(json, L"id"), &idx)) { m_jobIndex = idx; PostMessage(WM_RUN, cmd == L"install" ? JobInstall : JobUninstall); }
+            if (m_jobRunning) return;
+            if (Find(Field(json, L"id"), &idx)) RunJob(cmd == L"install" ? JobInstall : JobUninstall, m_entries[idx]);
             else SendMessageToPage(L"", FPLoc(IDS_PSD_EMPTY));
         }
         else if (cmd == L"selfUpdate" && m_hasSelfUpdate) PostMessage(WM_RUN, JobSelfUpdate);
@@ -660,43 +761,73 @@ protected:
         }
     }
 
-    // Long-running work runs here, after the page has shown its progress state.
-    LRESULT OnRun(WPARAM job, LPARAM)
+    // Install / remove on a worker: download, checks and the elevated step
+    // can take minutes; the window keeps painting its progress meanwhile.
+    void RunJob(int job, const PSCatalogEntry& e)
     {
-        if (job == JobSelfUpdate)
-        {
-            int rc = PSSelfUpdate(m_self, m_hWnd);
-            if (rc == 0)
-            {
-                // The helper installs once Power PDF is gone: close it now.
-                HWND mainWnd = ::GetAncestor(m_hWnd, GA_ROOTOWNER);
-                EndDialog(IDOK);
-                if (mainWnd && mainWnd != m_hWnd) ::PostMessageW(mainWnd, WM_CLOSE, 0, 0);
-            }
-            else if (rc == 5)
-                SendMessageToPage(L"", L"");
-            else
-                SendMessageToPage(FPLoc(IDS_PSD_TITLE), rc == 2 ? FPLoc(IDS_PSD_MSG_HASH) : FmtInt(IDS_PSD_MSG_INSTFAIL, rc));
-            return 0;
-        }
-        if (m_jobIndex >= m_entries.size()) return 0;
-        PSCatalogEntry e = m_entries[m_jobIndex];
-        int rc = job == JobInstall ? PSInstallPackage(e, m_hWnd) : PSUninstallPackage(e.zxtName, m_hWnd);
+        m_jobRunning = true;
+        HWND h = m_hWnd;
+        Spawn([h, job, e]() {
+            auto* m = new AsyncMsg;
+            m->kind = KJob; m->number = job; m->entries.push_back(e);
+            m->count = job == JobInstall ? PSInstallPackage(e, h) : PSUninstallPackage(e.zxtName, h);
+            PostAsync(h, m);
+        });
+    }
+
+    void ApplyJob(AsyncMsg& r)
+    {
+        m_jobRunning = false;
+        const PSCatalogEntry& e = r.entries.front();
+        int rc = r.count;
         if (rc == 0)
         {
             LoadCatalog(false);
             Send(L"{\"type\":\"result\",\"ok\":true,\"restart\":true,\"title\":" + Json(e.name) + L",\"message\":" +
-                 Json(Fmt(job == JobInstall ? IDS_PSD_ASK_RESTART : IDS_PSD_ASK_RESTART_UN, e.name)) + L"}");
+                 Json(Fmt(r.number == JobInstall ? IDS_PSD_ASK_RESTART : IDS_PSD_ASK_RESTART_UN, e.name)) + L"}");
         }
         else
         {
-            std::wstring msg = rc == 2 ? FPLoc(IDS_PSD_MSG_HASH) : FmtInt(IDS_PSD_MSG_INSTFAIL, rc);
+            std::wstring msg = rc == 2 ? FPLoc(IDS_PSD_MSG_HASH) : rc == 6 ? FPLoc(IDS_PSD_MSG_SIG) : FmtInt(IDS_PSD_MSG_INSTFAIL, rc);
             Send(L"{\"type\":\"result\",\"ok\":false,\"title\":" + Json(e.name) + L",\"message\":" + Json(msg) + L"}");
+        }
+    }
+
+    LRESULT OnAsync(WPARAM, LPARAM lp)
+    {
+        std::unique_ptr<AsyncMsg> r(reinterpret_cast<AsyncMsg*>(lp));
+        if (!r || !m_web) return 0;
+        switch (r->kind)
+        {
+        case KCatalog:  ApplyCatalog(*r); break;
+        case KRated:    ApplyRated(*r); break;
+        case KFeedback: ApplyFeedback(*r); break;
+        case KJob:      ApplyJob(*r); break;
+        case KSend:     if (r->gen == 0 || r->gen == m_catalogGen) Send(r->text); break;
         }
         return 0;
     }
 
-    LRESULT OnIcons(WPARAM, LPARAM) { NextIcon(); return 0; }
+    // The store client's own update stays on the UI thread: it asks the user
+    // (message box) and then closes Power PDF.
+    LRESULT OnRun(WPARAM job, LPARAM)
+    {
+        if (job != JobSelfUpdate) return 0;
+        int rc = PSSelfUpdate(m_self, m_hWnd);
+        if (rc == 0)
+        {
+            // The helper installs once Power PDF is gone: close it now.
+            HWND mainWnd = ::GetAncestor(m_hWnd, GA_ROOTOWNER);
+            EndDialog(IDOK);
+            if (mainWnd && mainWnd != m_hWnd) ::PostMessageW(mainWnd, WM_CLOSE, 0, 0);
+        }
+        else if (rc == 5)
+            SendMessageToPage(L"", L"");
+        else
+            SendMessageToPage(FPLoc(IDS_PSD_TITLE), rc == 2 ? FPLoc(IDS_PSD_MSG_HASH) : rc == 6 ? FPLoc(IDS_PSD_MSG_SIG) : FmtInt(IDS_PSD_MSG_INSTFAIL, rc));
+        return 0;
+    }
+
     LRESULT OnFail(WPARAM, LPARAM) { EndDialog(IDABORT); return 0; }
 
     afx_msg void OnSize(UINT type, int cx, int cy) { CDialog::OnSize(type, cx, cy); Resize(); }
@@ -724,7 +855,7 @@ BEGIN_MESSAGE_MAP(CWebStore, CDialog)
     ON_WM_GETMINMAXINFO()
     ON_WM_DESTROY()
     ON_MESSAGE(CWebStore::WM_RUN, &CWebStore::OnRun)
-    ON_MESSAGE(CWebStore::WM_ICONS, &CWebStore::OnIcons)
+    ON_MESSAGE(WM_ASYNC, &CWebStore::OnAsync)
     ON_MESSAGE(CWebStore::WM_FAIL, &CWebStore::OnFail)
 END_MESSAGE_MAP()
 

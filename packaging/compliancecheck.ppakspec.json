@@ -1,6 +1,6 @@
 {
   "id": "com.tungsten.compliancecheck",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "name": {
     "en": "DORA PDF Check",
     "de": "DORA-PDF-Prüfung"
@@ -24,22 +24,22 @@
     "tr": "DORA bağlamında (AB 2022/2554) önemli olan belge gereksinimlerini denetler: PDF/A tanımlaması, şifreleme, imzalar ve imza sonrası değişiklikler, zayıf kriptografi, JavaScript, riskli eylemler, ekler, XFA, yazı tipleri ve meta veriler; trafik ışığı biçiminde bir rapor gösterir ve tek tıkla düzeltilebilen durumlarda düzeltilmiş bir kopya kaydeder."
   },
   "changelog": {
-    "en": "First release as a standalone plug-in in the Plugin-Store.",
-    "de": "Erste Veröffentlichung als eigenständiges Plug-in im Plugin-Store.",
-    "fr": "Première publication en tant que plug-in autonome dans le Plugin-Store.",
-    "it": "Prima pubblicazione come plug-in autonomo nel Plugin-Store.",
-    "es": "Primera publicación como plug-in independiente en el Plugin-Store.",
-    "nl": "Eerste release als zelfstandige plug-in in de Plugin-Store.",
-    "pt": "Primeira versão como plug-in independente na Plugin-Store.",
-    "da": "Første udgivelse som selvstændigt plug-in i Plugin-Store.",
-    "fi": "Ensimmäinen julkaisu itsenäisenä laajennuksena Plugin-Storessa.",
-    "nb": "Første utgivelse som frittstående plugin i Plugin-Store.",
-    "sv": "Första versionen som fristående plugin i Plugin-Store.",
-    "pl": "Pierwsze wydanie jako samodzielna wtyczka w Plugin-Store.",
-    "cs": "První vydání jako samostatný zásuvný modul v Plugin-Store.",
-    "hu": "Első kiadás önálló beépülő modulként a Plugin-Store-ban.",
-    "ru": "Первый выпуск в виде отдельного подключаемого модуля в Plugin-Store.",
-    "tr": "Plugin-Store'da bağımsız bir eklenti olarak ilk sürüm."
+    "en": "The user interface is now available in all 16 Power PDF languages: Dutch, Portuguese, Danish, Finnish, Norwegian, Swedish, Polish, Czech, Hungarian, Russian and Turkish were added; the German, French, Italian and Spanish texts were reviewed and corrected.",
+    "de": "Die Benutzeroberfläche ist jetzt in allen 16 Power-PDF-Sprachen verfügbar: Niederländisch, Portugiesisch, Dänisch, Finnisch, Norwegisch, Schwedisch, Polnisch, Tschechisch, Ungarisch, Russisch und Türkisch kamen hinzu; die deutschen, französischen, italienischen und spanischen Texte wurden überarbeitet und korrigiert.",
+    "fr": "L'interface est désormais disponible dans les 16 langues de Power PDF : néerlandais, portugais, danois, finnois, norvégien, suédois, polonais, tchèque, hongrois, russe et turc ont été ajoutés ; les textes allemands, français, italiens et espagnols ont été revus et corrigés.",
+    "it": "L'interfaccia è ora disponibile in tutte le 16 lingue di Power PDF: aggiunti olandese, portoghese, danese, finlandese, norvegese, svedese, polacco, ceco, ungherese, russo e turco; i testi in tedesco, francese, italiano e spagnolo sono stati rivisti e corretti.",
+    "es": "La interfaz ya está disponible en los 16 idiomas de Power PDF: se han añadido neerlandés, portugués, danés, finés, noruego, sueco, polaco, checo, húngaro, ruso y turco; los textos en alemán, francés, italiano y español se han revisado y corregido.",
+    "nl": "De gebruikersinterface is nu beschikbaar in alle 16 talen van Power PDF: Nederlands, Portugees, Deens, Fins, Noors, Zweeds, Pools, Tsjechisch, Hongaars, Russisch en Turks zijn toegevoegd; de Duitse, Franse, Italiaanse en Spaanse teksten zijn nagekeken en verbeterd.",
+    "pt": "A interface agora está disponível nos 16 idiomas do Power PDF: foram adicionados holandês, português, dinamarquês, finlandês, norueguês, sueco, polonês, tcheco, húngaro, russo e turco; os textos em alemão, francês, italiano e espanhol foram revisados e corrigidos.",
+    "da": "Brugerfladen findes nu på alle 16 Power PDF-sprog: nederlandsk, portugisisk, dansk, finsk, norsk, svensk, polsk, tjekkisk, ungarsk, russisk og tyrkisk er tilføjet; de tyske, franske, italienske og spanske tekster er gennemgået og rettet.",
+    "fi": "Käyttöliittymä on nyt saatavilla kaikilla 16 Power PDF -kielellä: hollanti, portugali, tanska, suomi, norja, ruotsi, puola, tšekki, unkari, venäjä ja turkki lisättiin; saksan-, ranskan-, italian- ja espanjankieliset tekstit tarkistettiin ja korjattiin.",
+    "nb": "Brukergrensesnittet er nå tilgjengelig på alle 16 Power PDF-språk: nederlandsk, portugisisk, dansk, finsk, norsk, svensk, polsk, tsjekkisk, ungarsk, russisk og tyrkisk er lagt til; de tyske, franske, italienske og spanske tekstene er gjennomgått og rettet.",
+    "sv": "Användargränssnittet finns nu på alla 16 Power PDF-språk: nederländska, portugisiska, danska, finska, norska, svenska, polska, tjeckiska, ungerska, ryska och turkiska har lagts till; de tyska, franska, italienska och spanska texterna har granskats och rättats.",
+    "pl": "Interfejs jest teraz dostępny we wszystkich 16 językach Power PDF: dodano niderlandzki, portugalski, duński, fiński, norweski, szwedzki, polski, czeski, węgierski, rosyjski i turecki; teksty niemieckie, francuskie, włoskie i hiszpańskie zostały sprawdzone i poprawione.",
+    "cs": "Uživatelské rozhraní je nyní k dispozici ve všech 16 jazycích Power PDF: přibyla nizozemština, portugalština, dánština, finština, norština, švédština, polština, čeština, maďarština, ruština a turečtina; německé, francouzské, italské a španělské texty byly zkontrolovány a opraveny.",
+    "hu": "A felhasználói felület mostantól a Power PDF mind a 16 nyelvén elérhető: bekerült a holland, portugál, dán, finn, norvég, svéd, lengyel, cseh, magyar, orosz és török; a német, francia, olasz és spanyol szövegeket átnéztük és javítottuk.",
+    "ru": "Интерфейс теперь доступен на всех 16 языках Power PDF: добавлены нидерландский, португальский, датский, финский, норвежский, шведский, польский, чешский, венгерский, русский и турецкий; тексты на немецком, французском, итальянском и испанском проверены и исправлены.",
+    "tr": "Kullanıcı arayüzü artık Power PDF'in 16 dilinin tamamında kullanılabilir: Felemenkçe, Portekizce, Danca, Fince, Norveççe, İsveççe, Lehçe, Çekçe, Macarca, Rusça ve Türkçe eklendi; Almanca, Fransızca, İtalyanca ve İspanyolca metinler gözden geçirilip düzeltildi."
   },
   "minPowerPdfVersion": "5.0",
   "ribbonAtomNamespace": "FeaturePack::ComplianceCheck",

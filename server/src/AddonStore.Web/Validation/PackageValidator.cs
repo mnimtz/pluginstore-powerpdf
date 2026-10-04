@@ -27,7 +27,18 @@ public class PackageValidator
     private bool _inflateCapHit;
 
     /// <summary>Reads an entry with a hard decompressed-size cap; null when exceeded.</summary>
+    private readonly Dictionary<string, byte[]> _readCache = new();
+
     private byte[]? ReadCapped(ZipArchiveEntry entry, long cap)
+    {
+        if (_readCache.TryGetValue(entry.FullName, out var hit)) return hit.Length <= cap ? hit : null;
+        var data = ReadCappedCore(entry, cap);
+        // binaries are read by the PE checks and again by the license/secret scan
+        if (data is not null && data.Length > 1024 * 1024) _readCache[entry.FullName] = data;
+        return data;
+    }
+
+    private byte[]? ReadCappedCore(ZipArchiveEntry entry, long cap)
     {
         using var ms = new MemoryStream();
         using var es = entry.Open();
@@ -60,6 +71,18 @@ public class PackageValidator
         "ZGraphic","ZImposition","ZJavaScript","ZSaveRevision","ZSpellCheck","ZTouchup","ZWebPDF","PluginStore"
     };
 
+    private const int MaxEntries = 5000;
+    private static readonly HashSet<string> ReservedDeviceNames = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "CON","PRN","AUX","NUL","COM1","COM2","COM3","COM4","COM5","COM6","COM7","COM8","COM9",
+        "LPT1","LPT2","LPT3","LPT4","LPT5","LPT6","LPT7","LPT8","LPT9"
+    };
+    private static readonly HashSet<string> AllowedTopFolders = new(StringComparer.OrdinalIgnoreCase)
+        { "x64", "arm64", "assets", "docs", "UILayout", "installer" };
+    /// <summary>Id prefixes of the store operators; only admins create packages there.</summary>
+    private static readonly string[] ReservedIdPrefixes = { "com.tungsten.", "com.kofax.", "com.nuance." };
+    private static string Printable(string s) => new(s.Select(c => c < 0x20 || c == 0x7F ? '?' : c).ToArray());
+
     /// <summary>All 16 European Power PDF UI language folder codes.</summary>
     private static readonly string[] EuroLangFolders =
         { "ENU","DEU","FRA","ITA","ESP","NLD","PTB","DAN","FIN","NOR","SVE","PLK","CSY","HUN","RUS","TRK" };
@@ -77,7 +100,7 @@ public class PackageValidator
         string zipPath, string callerUserId, bool callerIsAdmin = false)
     {
         // A corrupt deflate stream or a malformed binary must give a report, not a 500.
-        _inflated = 0; _inflateCapHit = false;
+        _inflated = 0; _inflateCapHit = false; _readCache.Clear();
         try
         {
             var (report, manifest) = await ValidateCoreAsync(zipPath, callerUserId, callerIsAdmin);
@@ -133,6 +156,55 @@ public class PackageValidator
                     return (report, null);
                 }
             }
+
+            // Names that collide on Windows (case, '\' vs '/', trailing dots/spaces) would make the
+            // client's extraction fail or show reviewers another file than the one checked.
+            if (zip.Entries.Count > MaxEntries)
+            {
+                report.Error("ZIP_TOO_MANY_ENTRIES", $"The package has {zip.Entries.Count} entries (at most {MaxEntries}).",
+                    "Ship only what the plug-in needs at run time.");
+                return (report, null);
+            }
+            var seenNames = new Dictionary<string, string>(StringComparer.Ordinal);
+            var unexpected = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var entry in zip.Entries)
+            {
+                var raw = entry.FullName.Replace('\\', '/');
+                if (raw.Any(c => c < 0x20 || c == 0x7F))
+                {
+                    report.Error("ZIP_SLIP", $"Entry '{Printable(entry.FullName)}' contains control characters.",
+                        "Use plain file names.");
+                    return (report, null);
+                }
+                var segs = raw.TrimEnd('/').Split('/');
+                foreach (var seg in segs)
+                {
+                    var stem = seg.Split('.')[0].TrimEnd(' ');
+                    if (ReservedDeviceNames.Contains(stem))
+                    {
+                        report.Error("ZIP_RESERVED_NAME", $"Entry '{entry.FullName}' uses the reserved Windows name '{seg}'.",
+                            "Windows cannot create files or folders named CON, PRN, AUX, NUL, COM1-9 or LPT1-9; rename it.");
+                        return (report, null);
+                    }
+                }
+                var key = string.Join("/", segs.Select(s => s.TrimEnd('.', ' ').Normalize(System.Text.NormalizationForm.FormC)))
+                          .ToUpperInvariant() + (raw.EndsWith('/') ? "/" : "");
+                if (seenNames.TryGetValue(key, out var first))
+                {
+                    report.Error("ZIP_DUPLICATE_ENTRY", $"Entries '{first}' and '{entry.FullName}' are the same file on Windows.",
+                        "Each path may appear only once (case, '\\' and '/', trailing dots and spaces do not make names different on Windows).");
+                    return (report, null);
+                }
+                seenNames[key] = entry.FullName;
+                var top = segs[0];
+                if (!(segs.Length == 1 && (top.Equals("manifest.json", StringComparison.OrdinalIgnoreCase) ||
+                                           top.Equals("LICENSES.md", StringComparison.OrdinalIgnoreCase))) &&
+                    !(segs.Length > 1 && AllowedTopFolders.Contains(top)))
+                    unexpected.Add(segs.Length > 1 ? top + "/" : top);
+            }
+            if (unexpected.Count > 0)
+                report.Warn("UNEXPECTED_ENTRY", $"The package contains entries the client never installs: {string.Join(", ", unexpected.Take(8))}.",
+                    "A package holds manifest.json, LICENSES.md and the folders x64/, arm64/, assets/, docs/, UILayout/ (installer/ for the store client); remove anything else.");
 
             var manifestEntry = zip.GetEntry("manifest.json");
             if (manifestEntry is null)
@@ -245,6 +317,12 @@ public class PackageValidator
                         "Optionally add a native arm64 build under arm64/ once the toolchain supports it.");
 
                 var architectures = declared.Contains("arm64") ? new[] { "x64", "arm64" } : new[] { "x64" };
+                foreach (var a in declared.Where(a => a is not ("x64" or "arm64")))
+                    report.Error("ARCH_UNKNOWN", $"Architecture '{a}' is not supported.", "Use \"x64\" and optionally \"arm64\".");
+                if (!declared.Contains("arm64") && root.TryGetProperty("files", out var fCheck) && fCheck.ValueKind == JsonValueKind.Object
+                    && fCheck.TryGetProperty("arm64", out _))
+                    report.Error("ARCH_UNDECLARED", "'files.arm64' is set, but \"arm64\" is not listed in 'architectures'.",
+                        "Add \"arm64\" to 'architectures' (the binary is then checked like the x64 one) or remove 'files.arm64'.");
 
                 // Both architectures, when present, must share the same base name:
                 // the host loads <name>.zxt and the client derives folders from it.
@@ -316,14 +394,15 @@ public class PackageValidator
                         report.Error("HASH_MISMATCH", $"'sha256.{arch}' does not match the file in the ZIP.",
                             $"Recompute the hash after the final build; the actual value is \"{actual}\".");
 
-                    CheckPe(report, arch, file, bytes);
+                    CheckPe(report, arch, file, bytes, manifest.Version);
                 }
 
                 CheckIcon(report, zip);
                 CheckScreenshots(report, zip, root);
                 CheckLicenses(report, zip);
                 CheckThirdParty(report, zip, root);
-                CheckUiLayout(report, zip);
+                CheckUiLayout(report, zip, manifest.AtomNamespace);
+                CheckDocs(report, zip);
             }
         }
 
@@ -344,16 +423,30 @@ public class PackageValidator
         else if (package is not null && package.OwnerId != callerUserId)
         {
             report.Error("PACKAGE_OWNED_BY_OTHER",
-                $"Package id '{manifest.Id}' belongs to another user ({package.Owner?.DisplayName ?? "unknown"}).",
+                package.Visibility == "private"
+                    ? $"Package id '{manifest.Id}' is taken."
+                    : $"Package id '{manifest.Id}' belongs to another user ({Services.CatalogUi.PublicName(package.Owner)}).",
                 "Choose a different package id, or ask an admin to transfer ownership.");
             return;
         }
 
+        // Ids of the store operators' namespaces are reserved for admins.
+        if (package is null && !callerIsAdmin && ReservedIdPrefixes.Any(p => manifest.Id.StartsWith(p, StringComparison.Ordinal)))
+            report.Error("ID_RESERVED", $"Ids starting with '{manifest.Id.Split('.')[0]}.{manifest.Id.Split('.')[1]}.' are reserved.",
+                "Use your own reverse-DNS prefix (your company or domain), e.g. 'com.example.myplugin'.");
+
         if (package is not null && manifest.Version.Length > 0)
         {
-            var versions = await _db.PackageVersions
-                .Where(v => v.PackageId == manifest.Id && v.Status != VersionStatus.Rejected)
-                .Select(v => v.Version).ToListAsync();
+            var all = await _db.PackageVersions.Where(v => v.PackageId == manifest.Id)
+                .Select(v => new { v.Version, v.Status }).ToListAsync();
+            var same = all.FirstOrDefault(v => v.Version == manifest.Version);
+            if (same is not null)
+            {
+                report.Error("VERSION_EXISTS", $"Version {manifest.Version} already exists (status: {same.Status}).",
+                    "Every upload carries a new, higher version; bump 'version' in the manifest.");
+                return;
+            }
+            var versions = all.Where(v => v.Status != VersionStatus.Rejected).Select(v => v.Version).ToList();
             var highest = versions.OrderByDescending(v => v, new SemVerComparer()).FirstOrDefault();
             if (highest is not null && new SemVerComparer().Compare(manifest.Version, highest) <= 0)
                 report.Error("VERSION_NOT_INCREMENTED",
@@ -366,7 +459,8 @@ public class PackageValidator
         {
             var others = await _db.PackageVersions.AsNoTracking()
                 .Where(v => v.PackageId != manifest.Id && v.Status != VersionStatus.Rejected)
-                .Select(v => new { v.PackageId, v.ManifestJson }).ToListAsync();
+                .Select(v => new { v.PackageId, v.ManifestJson, Private = _db.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private") })
+                .ToListAsync();
             foreach (var o in others)
             {
                 try
@@ -376,7 +470,9 @@ public class PackageValidator
                         f.TryGetProperty("x64", out var x) && x.ValueKind == JsonValueKind.String &&
                         string.Equals(Path.GetFileNameWithoutExtension(x.GetString()), manifest.ZxtName, StringComparison.OrdinalIgnoreCase))
                     {
-                        report.Error("ZXT_NAME_TAKEN", $"The plug-in file name '{manifest.ZxtName}.zxt' is already used by package '{o.PackageId}'.",
+                        report.Error("ZXT_NAME_TAKEN", o.Private
+                                ? $"The plug-in file name '{manifest.ZxtName}.zxt' is already used by another package."
+                                : $"The plug-in file name '{manifest.ZxtName}.zxt' is already used by package '{o.PackageId}'.",
                             "Choose another binary name; two add-ons with the same file name would overwrite each other.");
                         break;
                     }
@@ -385,19 +481,26 @@ public class PackageValidator
             }
         }
 
-        if (manifest.AtomNamespace.Length > 0)
+        if (manifest.AtomNamespace == "FeaturePack")
+            report.Error("ATOM_NOT_SHARED_TAB", "ribbonAtomNamespace is the shared tab itself.",
+                "Declare your own group atom on the shared tab, e.g. 'FeaturePack::MyPlugin'.");
+        else if (manifest.AtomNamespace.Length > 0)
         {
             var collision = await _db.PackageVersions
-                .Where(v => v.AtomNamespace == manifest.AtomNamespace && v.PackageId != manifest.Id)
-                .Select(v => v.PackageId).FirstOrDefaultAsync();
+                .Where(v => v.AtomNamespace == manifest.AtomNamespace && v.PackageId != manifest.Id
+                            && v.Status != VersionStatus.Rejected && v.Status != VersionStatus.Withdrawn)
+                .Select(v => new { v.PackageId, Private = _db.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private") })
+                .FirstOrDefaultAsync();
             if (collision is not null)
                 report.Error("ATOM_COLLISION",
-                    $"Ribbon atom namespace '{manifest.AtomNamespace}' is already used by package '{collision}'.",
+                    collision.Private
+                        ? $"Ribbon atom namespace '{manifest.AtomNamespace}' is already used by another package."
+                        : $"Ribbon atom namespace '{manifest.AtomNamespace}' is already used by package '{collision.PackageId}'.",
                     "Choose a unique ribbonAtomNamespace; the host caches ribbon layouts by atom name, collisions break both plugins.");
         }
     }
 
-    private static void CheckPe(ValidationReport report, string arch, string file, byte[] bytes)
+    private static void CheckPe(ValidationReport report, string arch, string file, byte[] bytes, string manifestVersion)
     {
         const ushort MachineX64 = 0x8664, MachineArm64 = 0xAA64, DllFlag = 0x2000;
         var expectedMachine = arch == "x64" ? MachineX64 : MachineArm64;
@@ -427,7 +530,30 @@ public class PackageValidator
                 "A .zxt is a renamed DLL; check the project type (dynamic library).");
 
         CheckImports(report, file, bytes, peOffset);
-        if (arch == "x64") CheckUiLanguages(report, file, bytes);
+        var pe = PeResources.Open(bytes);
+        if (!pe.Valid) return;
+        if (pe.IsManaged)
+            report.Error("PE_MANAGED", $"'{file}' is a .NET assembly.",
+                "Power PDF loads native plug-ins only; build the .zxt as a native C++ DLL with the Plugin SDK.");
+        if (!pe.Exports().Contains("PlugInMain"))
+            report.Error("PE_NO_ENTRY", $"'{file}' does not export PlugInMain.",
+                "Power PDF loads a plug-in through its PlugInMain export (Plugin SDK, linker option /EXPORT:PlugInMain).");
+        const ushort DynamicBase = 0x40, NxCompat = 0x100;
+        if ((pe.DllCharacteristics & DynamicBase) == 0 || (pe.DllCharacteristics & NxCompat) == 0)
+            report.Warn("PE_HARDENING", $"'{file}' is built without ASLR (/DYNAMICBASE) or DEP (/NXCOMPAT).",
+                "Keep the default linker options /DYNAMICBASE and /NXCOMPAT (and /HIGHENTROPYVA); they make exploits much harder.");
+        var fv = pe.FileVersion();
+        if (fv is null)
+            report.Warn("VERSIONINFO_MISSING", $"'{file}' has no version resource.",
+                "Add a VERSIONINFO resource whose FILEVERSION matches the manifest version; support and the store use it to tell builds apart.");
+        else if (manifestVersion.Length > 0)
+        {
+            var (a, b, c, _) = fv.Value;
+            if ($"{a}.{b}.{c}" != manifestVersion)
+                report.Warn("VERSIONINFO_MISMATCH", $"'{file}' has FILEVERSION {a}.{b}.{c}, the manifest says {manifestVersion}.",
+                    "Build the binary with the same version as the manifest (FILEVERSION major,minor,patch,0); a mismatch usually means an old build was packaged (fine only for releases without a new binary, e.g. documentation).");
+        }
+        if (arch == "x64") CheckUiLanguages(report, file, pe);
     }
 
     /// <summary>
@@ -435,15 +561,21 @@ public class PackageValidator
     /// (or, without any, its dialogs and menus) must exist in all 16 Power PDF
     /// languages as LANGUAGE blocks in the .zxt resources.
     /// </summary>
-    private static void CheckUiLanguages(ValidationReport report, string file, byte[] bytes)
+    private static void CheckUiLanguages(ValidationReport report, string file, PeResources pe)
     {
-        var res = PeResources.Languages(bytes);
-        if (res is null) return;
-        static int Primary(ushort langId) => langId & 0x3FF;
+        var res = pe.Languages();
+        if (res is null)
+        {
+            report.Warn("UI_LANGS_UNREADABLE", $"The resources of '{file}' could not be read.",
+                "Build the plug-in with standard resource scripts (.rc); the store reads the string tables to check the 16 languages.");
+            return;
+        }
+        // string tables decide; without language-specific ones, dialogs and menus do
         res.TryGetValue(PeResources.RtString, out var strings);
-        var basis = strings is { Count: > 0 } ? strings
-            : res.Values.SelectMany(d => d).GroupBy(kv => kv.Key).ToDictionary(g => g.Key, g => g.Sum(kv => kv.Value));
-        var present = basis.Keys.Where(l => Primary(l) != 0).Select(Primary).ToHashSet();
+        bool HasLanguages(Dictionary<int, HashSet<int>>? d) => d is not null && d.Keys.Any(l => l != 0);
+        var basis = HasLanguages(strings) ? strings!
+            : res.Values.SelectMany(d => d).GroupBy(kv => kv.Key).ToDictionary(g => g.Key, g => g.SelectMany(kv => kv.Value).ToHashSet());
+        var present = basis.Keys.Where(l => l != 0).ToHashSet();
         if (present.Count == 0)
         {
             report.Warn("UI_LANGS_UNKNOWN", $"'{file}' has no localized string tables, dialogs or menus.",
@@ -456,9 +588,9 @@ public class PackageValidator
                 $"'{file}' has its UI texts in {16 - missing.Count} of the 16 Power PDF languages; missing: {string.Join(", ", missing)}.",
                 "Every add-on follows the Power PDF UI language. Add a STRINGTABLE (and translated dialogs/menus, if any) with a LANGUAGE block for each of: " +
                 "en de fr it es nl pt da fi nb sv pl cs hu ru tr, and pick the block that matches the host language at run time.");
-        if (strings is { Count: > 0 })
+        if (HasLanguages(strings))
         {
-            int Count(int primary) => strings.Where(kv => Primary(kv.Key) == primary).Sum(kv => kv.Value);
+            int Count(int primary) => strings!.TryGetValue(primary, out var set) ? set.Count : 0;
             var en = Count(0x09);
             var partial = PeResources.PowerPdfLanguages.Where(l => l.Primary != 0x09 && Count(l.Primary) > 0 && Count(l.Primary) < en)
                 .Select(l => l.Code).ToList();
@@ -519,7 +651,8 @@ public class PackageValidator
 
             var foreign = new List<string>();
             bool debugCrt = false;
-            for (int i = 0; ; i++)
+            var maxDescriptors = (int)Math.Min(importDirSize / 20, 1024);
+            for (int i = 0; i < maxDescriptors; i++)
             {
                 var desc = Rva(importDirRva) + i * 20;
                 if (desc < 0 || desc + 20 > bytes.Length) break;
@@ -527,7 +660,7 @@ public class PackageValidator
                 if (nameRva == 0) break;
                 var nameOff = Rva(nameRva);
                 if (nameOff < 0) break;
-                var end = Array.IndexOf(bytes, (byte)0, (int)nameOff);
+                var end = Array.IndexOf(bytes, (byte)0, (int)nameOff, (int)Math.Min(260, bytes.Length - nameOff));
                 if (end < 0) break;
                 var dll = System.Text.Encoding.ASCII.GetString(bytes, (int)nameOff, end - (int)nameOff);
                 var lower = dll.ToLowerInvariant();
@@ -543,9 +676,9 @@ public class PackageValidator
                 report.Error("PE_DEBUG_RUNTIME", $"'{file}' imports a DEBUG C/C++ runtime.",
                     "Package the Release build; debug runtimes are not present on user machines (the .zxt must run with the same runtime as PowerPDF.exe).");
             if (foreign.Count > 0)
-                report.Warn("FOREIGN_DEPENDENCY",
-                    $"'{file}' imports non-system DLLs: {string.Join(", ", foreign.Distinct())}.",
-                    "Make sure these DLLs ship inside the package (same folder as the .zxt), work without an extra redistributable, and are MIT/BSD/Apache-2.0 licensed.");
+                report.Error("FOREIGN_DEPENDENCY",
+                    $"'{file}' imports DLLs that are not part of Windows or Power PDF: {string.Join(", ", foreign.Distinct())}.",
+                    "Power PDF loads plug-ins from its own program folder, so extra DLLs are never found there (the store installs only the .zxt). Link these libraries statically (MIT/BSD/Apache-2.0 only), or load them yourself from the plug-in's data folder with LoadLibraryEx and a full path and delay-load the import.");
         }
         catch
         {
@@ -816,15 +949,36 @@ public class PackageValidator
                 secrets.Add($"{entry.FullName} (key or certificate container)");
                 continue;
             }
-            var isBinary = ext is ".zxt" or ".dll" or ".exe";
+            // classify by content as well: an executable or an archive with a harmless extension
+            // must not slip past the scans
+            var magic = Head(entry);
+            var isOfficeDoc = ext is ".docx" or ".xlsx" or ".pptx" or ".odt" or ".ods" or ".odp" or ".epub";
+            if (IsArchiveMagic(magic) && !isOfficeDoc && !entry.FullName.StartsWith("installer/", StringComparison.OrdinalIgnoreCase))
+            {
+                report.Error("NESTED_ARCHIVE", $"'{entry.FullName}' is an archive inside the package.",
+                    "Ship files unpacked; archives inside the package cannot be checked and are never installed.");
+                continue;
+            }
+            var isBinary = ext is ".zxt" or ".dll" or ".exe" or ".ocx" or ".sys" || (magic.Length >= 2 && magic[0] == 'M' && magic[1] == 'Z');
             var isText = !isBinary && (ext is ".txt" or ".md" or ".rtf" or ".htm" or ".html" or ".json" or ".xml" or ".ini" or ".cfg"
                                         or ".config" or ".reg" or ".ps1" or ".cmd" or ".bat" or ".js" or ".pem" or ".cer" or ".crt"
+                                        or ".env" or ".yml" or ".yaml" or ".toml" or ".properties" or ".csv" or ".vbs" or ".py"
+                                        || ext.Length == 0
                                         || entry.Name.StartsWith("COPYING", StringComparison.OrdinalIgnoreCase)
                                         || entry.Name.StartsWith("LICENSE", StringComparison.OrdinalIgnoreCase));
             if (!isBinary && !isText) continue;
 
             var bytes = ReadCapped(entry, isBinary ? MaxZxtBytes : MaxTextEntryBytes);
-            if (bytes is null) continue;
+            if (bytes is null)
+            {
+                if (isBinary)
+                    report.Error("ENTRY_NOT_SCANNED", $"'{entry.FullName}' is too large to be checked.",
+                        "Binaries may be at most 120 MB uncompressed; large payloads must be fetched at install time.");
+                else
+                    report.Warn("ENTRY_NOT_SCANNED", $"'{entry.FullName}' is larger than 1 MB and was not scanned for secrets.",
+                        "Keep text and configuration files small, or make sure they hold no keys or passwords.");
+                continue;
+            }
 
             foreach (var s in ExtractStrings(bytes))
             {
@@ -989,12 +1143,59 @@ public class PackageValidator
     /// rule, the host-owned panel:: namespace, the IconMode=1 trap, and
     /// NameAndTitle language folders that drift apart after a fork/rename.
     /// </summary>
-    private void CheckUiLayout(ValidationReport report, ZipArchive zip)
+    /// <summary>First bytes of an entry (content sniffing).</summary>
+    private static byte[] Head(ZipArchiveEntry entry)
+    {
+        if (entry.Length == 0) return Array.Empty<byte>();
+        try
+        {
+            using var s = entry.Open();
+            var buf = new byte[8];
+            int n = 0, got;
+            while (n < buf.Length && (got = s.Read(buf, n, buf.Length - n)) > 0) n += got;
+            return buf[..n];
+        }
+        catch (InvalidDataException) { return Array.Empty<byte>(); }
+    }
+
+    private static bool IsArchiveMagic(byte[] m) =>
+        (m.Length >= 4 && m[0] == 'P' && m[1] == 'K' && (m[2] == 3 || m[2] == 5 || m[2] == 7)) ||        // ZIP
+        (m.Length >= 6 && m[0] == '7' && m[1] == 'z' && m[2] == 0xBC && m[3] == 0xAF) ||                   // 7-Zip
+        (m.Length >= 4 && m[0] == 'R' && m[1] == 'a' && m[2] == 'r' && m[3] == '!') ||                     // RAR
+        (m.Length >= 3 && m[0] == 0x1F && m[1] == 0x8B) ||                                                  // gzip
+        (m.Length >= 4 && m[0] == 'M' && m[1] == 'S' && m[2] == 'C' && m[3] == 'F');                        // CAB
+
+    /// <summary>HTML help is installed on user machines: no scripts, no external resources.</summary>
+    private void CheckDocs(ValidationReport report, ZipArchive zip)
+    {
+        var bad = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var e in zip.Entries.Where(e => e.FullName.StartsWith("docs/", StringComparison.OrdinalIgnoreCase)
+                                                && (e.FullName.EndsWith(".htm", StringComparison.OrdinalIgnoreCase) || e.FullName.EndsWith(".html", StringComparison.OrdinalIgnoreCase))))
+        {
+            var raw = ReadCapped(e, MaxTextEntryBytes);
+            if (raw is null) continue;
+            var html = System.Text.Encoding.UTF8.GetString(raw);
+            if (Regex.IsMatch(html, @"<script\b|\bon[a-z]+\s*=|javascript:", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(html, @"<(?:iframe|object|embed)\b", RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(html, @"\b(?:src|href)\s*=\s*[""']?\s*(?:https?:)?//", RegexOptions.IgnoreCase) && Regex.IsMatch(html, @"<(?:img|script|link|iframe)\b[^>]*\b(?:src|href)\s*=\s*[""']?\s*(?:https?:)?//", RegexOptions.IgnoreCase))
+                bad.Add(e.FullName);
+        }
+        if (bad.Count > 0)
+            report.Warn("DOCS_ACTIVE_CONTENT", $"Help pages contain scripts or load external resources: {string.Join(", ", bad.Take(5))}.",
+                "Help under docs/ is installed on user machines and opened locally: plain HTML with local images only, no scripts, frames or external sources.");
+    }
+
+    private void CheckUiLayout(ValidationReport report, ZipArchive zip, string atomNamespace)
     {
         var layoutEntries = zip.Entries
-            .Where(e => e.FullName.Replace('\\', '/').Contains("UILayout/"))
+            .Where(e => e.FullName.Replace('\\', '/').StartsWith("UILayout/", StringComparison.OrdinalIgnoreCase) && !e.FullName.EndsWith('/'))
             .ToList();
-        if (layoutEntries.Count == 0) return;
+        if (layoutEntries.Count == 0)
+        {
+            report.Warn("UILAYOUT_MISSING", "The package has no UILayout folder.",
+                "Ship UILayout/Publish Mode.xml and NameAndTitle.xml (root and the 16 language folders) so the ribbon group appears in every language.");
+            return;
+        }
 
         string ReadEntry(ZipArchiveEntry e)
         {
@@ -1002,8 +1203,7 @@ public class PackageValidator
             return raw is null ? "" : System.Text.Encoding.UTF8.GetString(raw);
         }
 
-        var publish = layoutEntries.FirstOrDefault(e => e.FullName.EndsWith("Publish Mode.xml", StringComparison.OrdinalIgnoreCase));
-        if (publish is not null)
+        foreach (var publish in layoutEntries.Where(e => e.FullName.EndsWith("Publish Mode.xml", StringComparison.OrdinalIgnoreCase)))
         {
             var xml = ReadEntry(publish);
             if (Regex.IsMatch(xml, "name=\"panel::", RegexOptions.IgnoreCase))
@@ -1012,28 +1212,50 @@ public class PackageValidator
             if (Regex.IsMatch(xml, "IconMode=\"1\""))
                 report.Warn("ICONMODE_SMALL", "Publish Mode.xml uses IconMode=\"1\" (large button with a SMALL icon).",
                     "Use IconMode=\"4\" for product-sized buttons; 1 renders a large button with a small icon once merged.");
-            var tb = Regex.Match(xml, "<toolbar name=\"([^\"]+)\"");
-            if (tb.Success && tb.Groups[1].Value != "FeaturePack")
-                report.Error("ATOM_NOT_SHARED_TAB", $"Publish Mode.xml creates its own ribbon tab '{tb.Groups[1].Value}'.",
-                    "Store plugins share ONE tab: toolbar atom 'FeaturePack' with the localized title 'Enhanced Features'/'Erweiterte Funktionen'.");
+            foreach (Match tb in Regex.Matches(xml, @"<toolbar\b[^>]*?\bname\s*=\s*[""']([^""']+)[""']", RegexOptions.IgnoreCase))
+                if (tb.Groups[1].Value != "FeaturePack")
+                {
+                    report.Error("ATOM_NOT_SHARED_TAB", $"{publish.FullName} creates its own ribbon tab '{tb.Groups[1].Value}'.",
+                        "Store plugins share ONE tab: toolbar atom 'FeaturePack' with the localized title 'Enhanced Features'/'Erweiterte Funktionen'.");
+                    break;
+                }
+        }
+
+        // every atom the layout declares lives in the plug-in's own namespace (or is the shared tab)
+        if (atomNamespace.Length > 0 && atomNamespace != "FeaturePack")
+        {
+            var foreign = new SortedSet<string>(StringComparer.Ordinal);
+            foreach (var e in layoutEntries.Where(e => e.FullName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)))
+                foreach (Match m in Regex.Matches(ReadEntry(e), @"\bname\s*=\s*[""']([^""']+)[""']"))
+                {
+                    var atom = m.Groups[1].Value;
+                    if (atom == "FeaturePack" || atom == atomNamespace || atom.StartsWith(atomNamespace + "::", StringComparison.Ordinal)) continue;
+                    if (!atom.Contains("::")) continue;   // element names such as layout modes, not atoms
+                    foreign.Add(atom);
+                }
+            if (foreign.Count > 0)
+                report.Error("ATOM_OUTSIDE_NAMESPACE", $"The layout declares atoms outside '{atomNamespace}': {string.Join(", ", foreign.Take(6))}.",
+                    "Every group and button atom must start with the declared ribbonAtomNamespace; atoms of other plug-ins would collide.");
         }
 
         // NameAndTitle consistency across language folders (classic fork/rename trap)
         var baseNat = layoutEntries.FirstOrDefault(e =>
-            Regex.IsMatch(e.FullName.Replace('\\', '/'), @"UILayout/NameAndTitle\.xml$", RegexOptions.IgnoreCase));
-        if (baseNat is not null)
+            Regex.IsMatch(e.FullName.Replace('\\', '/'), @"^UILayout/NameAndTitle\.xml$", RegexOptions.IgnoreCase));
+        if (baseNat is null)
+            report.Error("LANGS_INCOMPLETE", "UILayout/NameAndTitle.xml is missing.",
+                "Ship NameAndTitle.xml at UILayout/ and in all 16 language folders (ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK).");
         {
             var atoms = new Regex("name=\"([^\"]+)\"");
-            var baseAtoms = atoms.Matches(ReadEntry(baseNat)).Select(m => m.Groups[1].Value).OrderBy(x => x).ToList();
+            var baseAtoms = baseNat is null ? new List<string>() : atoms.Matches(ReadEntry(baseNat)).Select(m => m.Groups[1].Value).OrderBy(x => x).ToList();
             var langFolders = new List<string>();
             foreach (var e in layoutEntries)
             {
-                var m = Regex.Match(e.FullName.Replace('\\', '/'), @"UILayout/([A-Z]{3})/NameAndTitle\.xml$", RegexOptions.IgnoreCase);
+                var m = Regex.Match(e.FullName.Replace('\\', '/'), @"^UILayout/([A-Z]{3})/NameAndTitle\.xml$", RegexOptions.IgnoreCase);
                 if (!m.Success) continue;
                 var lang = m.Groups[1].Value.ToUpperInvariant();
                 langFolders.Add(lang);
                 var langAtoms = atoms.Matches(ReadEntry(e)).Select(x => x.Groups[1].Value).OrderBy(x => x).ToList();
-                if (!baseAtoms.SequenceEqual(langAtoms))
+                if (baseNat is not null && !baseAtoms.SequenceEqual(langAtoms))
                     report.Warn("LANG_ATOMS_INCONSISTENT",
                         $"UILayout/{lang}/NameAndTitle.xml declares different atoms than the base NameAndTitle.xml.",
                         "All language folders must carry exactly the same atom set as the base file; this drifts apart easily after a fork or rename.");

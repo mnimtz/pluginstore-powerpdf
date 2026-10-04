@@ -7,6 +7,7 @@
 #include "powerpdfpath.h"
 #include "logging.h"
 #include "settings.h"
+#include "signature.h"
 #include "loc.h"
 #include "Resource.h"
 #include <bcrypt.h>
@@ -178,6 +179,7 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
         return 7;
     }
     if (!PSIsValidZxtName(e.zxtName)) return 4;
+    if (!PSSignatureValid(e)) return 6;   // not signed by a trusted store key
     std::wstring pluginsDir = PluginsDir();
     if (pluginsDir.empty()) return 5;
 
@@ -351,33 +353,54 @@ int PSCompareVersions(const std::wstring& a, const std::wstring& b)
     return 0;
 }
 
-// Helper script of the self-update: wait until Power PDF has exited, check
-// the package hash again, extract the MSI in user context, install with a
-// progress bar (Windows asks for elevation), clean up and start Power PDF
-// again, also when the installation was cancelled.
-std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& outDir, const std::wstring& sha256)
+// Helper script of the self-update (user context): wait until Power PDF has
+// exited, then ONE elevated step copies the package into an admin-only
+// staging folder under Plug-Ins, checks the hash there, unpacks it and runs
+// the MSI from there with a progress bar (so no file the user can write is
+// ever executed elevated); afterwards clean up and start Power PDF again,
+// also when the installation was cancelled.
+std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& sha256)
 {
     std::wstring sha = sha256;
     for (auto& c : sha) c = (wchar_t)towupper(c);
+    wchar_t tempDir[MAX_PATH] = { 0 };
+    GetTempPathW(MAX_PATH, tempDir);
+    std::wstring mlog = std::wstring(tempDir) + L"AddonStoreUpdate.log";
+    std::wstring elevated = std::wstring() +
+        L"$ErrorActionPreference='Stop'\r\n" +
+        L"$src=" + PsQuote(ppak) + L"\r\n" +
+        L"$sha=" + PsQuote(sha) + L"\r\n" +
+        L"$plugins=" + PsQuote(PluginsDir()) + L"\r\n" +
+        L"$mlog=" + PsQuote(mlog) + L"\r\n" +
+        L"$msiexec=Join-Path ([Environment]::GetFolderPath('System')) 'msiexec.exe'\r\n" +
+        L"$rc=1\r\n" +
+        L"$stage=Join-Path $plugins ('.psupdate-'+[guid]::NewGuid().ToString('N'))\r\n" +
+        L"try {\r\n" +
+        L"  Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
+        L"  New-Item -ItemType Directory -Path $stage | Out-Null\r\n" +
+        L"  $pkg=Join-Path $stage 'package.ppak'\r\n" +
+        L"  Copy-Item -LiteralPath $src -Destination $pkg -Force\r\n" +
+        L"  if ((Get-FileHash -LiteralPath $pkg -Algorithm SHA256).Hash -ne $sha) { $rc=9 }\r\n" +
+        L"  else {\r\n" +
+        L"    $x=Join-Path $stage 'x'\r\n" +
+        L"    [System.IO.Compression.ZipFile]::ExtractToDirectory($pkg,$x)\r\n" +
+        L"    $msi=Get-ChildItem -LiteralPath (Join-Path $x 'installer') -Filter '*.msi' | Select-Object -First 1\r\n" +
+        L"    if (-not $msi) { $rc=8 }\r\n" +
+        L"    else { $p=Start-Process -FilePath $msiexec -ArgumentList @('/i', ('\"'+$msi.FullName+'\"'), '/passive', '/norestart', '/l*v', ('\"'+$mlog+'\"')) -Wait -PassThru; $rc=$p.ExitCode }\r\n" +
+        L"  }\r\n" +
+        L"} catch { $rc=4 }\r\n" +
+        L"finally { Remove-Item -LiteralPath $stage -Recurse -Force -ErrorAction SilentlyContinue }\r\n" +
+        L"exit $rc\r\n";
     return HelperPrologue(L"SelfUpdate", L"Power PDF still running after 15 min, update not installed") +
         L"$ppak = " + PsQuote(ppak) + L"\r\n" +
-        L"$out = " + PsQuote(outDir) + L"\r\n" +
-        L"$sha = " + PsQuote(sha) + L"\r\n" +
-        L"$msiexec = Join-Path ([Environment]::GetFolderPath('System')) 'msiexec.exe'\r\n" +
+        L"$ps = Join-Path ([Environment]::GetFolderPath('System')) 'WindowsPowerShell\\v1.0\\powershell.exe'\r\n" +
         L"try {\r\n" +
-        L"  if ((Get-FileHash -LiteralPath $ppak -Algorithm SHA256).Hash -ne $sha) { throw 'package hash changed after the download' }\r\n" +
-        L"  if (Test-Path -LiteralPath $out) { Remove-Item -LiteralPath $out -Recurse -Force }\r\n" +
-        L"  Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
-        L"  [System.IO.Compression.ZipFile]::ExtractToDirectory($ppak, $out)\r\n" +
-        L"  $msi = Get-ChildItem -LiteralPath (Join-Path $out 'installer') -Filter '*.msi' | Select-Object -First 1\r\n" +
-        L"  if (-not $msi) { throw 'no MSI in the package' }\r\n" +
-        L"  $mlog = Join-Path $env:TEMP 'AddonStoreUpdate.log'\r\n" +
-        L"  L ('installing ' + $msi.Name)\r\n" +
-        L"  $p = Start-Process -FilePath $msiexec -ArgumentList @('/i', ('\"' + $msi.FullName + '\"'), '/passive', '/norestart', '/l*v', ('\"' + $mlog + '\"')) -Wait -PassThru\r\n" +
-        L"  L ('msiexec exit code ' + $p.ExitCode + ' (0 = ok, 3010 = ok, 1602 = cancelled)')\r\n" +
-        L"} catch { L ('update failed: ' + $_.Exception.Message) }\r\n" +
+        L"  L 'installing the update (one administrator confirmation)'\r\n" +
+        L"  $p = Start-Process -FilePath $ps -Verb RunAs -WindowStyle Hidden -Wait -PassThru -ArgumentList " +
+            PsQuote(EncodedArgs(elevated)) + L"\r\n" +
+        L"  L ('update step exit code ' + $p.ExitCode + ' (0 = ok, 3010 = ok, 1602 = cancelled, 9 = hash changed, 8 = no MSI)')\r\n" +
+        L"} catch { L ('update not installed: ' + $_.Exception.Message) }\r\n" +
         L"Remove-Item -LiteralPath $ppak -Force -ErrorAction SilentlyContinue\r\n" +
-        L"Remove-Item -LiteralPath $out -Recurse -Force -ErrorAction SilentlyContinue\r\n" +
         L"if (-not (Get-Process -Name PowerPDF -ErrorAction SilentlyContinue)) {\r\n" +
         L"  Start-Sleep -Seconds 2\r\n" +
         L"  try { Start-Process -FilePath $exe; L 'Power PDF restarted' } catch { L ('start failed: ' + $_.Exception.Message) }\r\n" +
@@ -391,6 +414,8 @@ int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
         FPLogW(L"[Store] self-update blocked by policy DisableSelfUpdate");
         return 7;
     }
+    if (!PSSignatureValid(e)) return 6;
+    if (PluginsDir().empty()) return 5;
     wchar_t tempDir[MAX_PATH] = { 0 };
     GetTempPathW(MAX_PATH, tempDir);
     std::wstring ppak = std::wstring(tempDir) + e.id + L"-" + e.version + L".ppak";
@@ -413,9 +438,8 @@ int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
         return 5;
     }
 
-    std::wstring outDir = std::wstring(tempDir) + L"PluginStoreUpdate-" + e.version;
     int result = 4;
-    if (LaunchHelper(PSSelfUpdateScript(ppak, outDir, e.sha256), L"self-update"))
+    if (LaunchHelper(PSSelfUpdateScript(ppak, e.sha256), L"self-update"))
         result = 0;
     else
         DeleteFileW(ppak.c_str());

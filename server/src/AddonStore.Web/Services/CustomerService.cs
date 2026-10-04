@@ -189,7 +189,7 @@ public class CustomerService
 
     private static string? CheckStage(StageInput s, List<PackageVersion> versions)
     {
-        var mode = s.Mode ?? "latest";
+        var mode = s.Mode ?? (s.Version is not null ? "fixed" : "latest");
         if (mode is not ("latest" or "fixed" or "off")) return "mode must be latest, fixed or off";
         if (mode == "fixed" && !versions.Any(v => v.Version == s.Version))
             return $"version '{s.Version}' is not a delivered version (it must have passed the automatic checks)";
@@ -211,8 +211,11 @@ public class CustomerService
             return Outcome.Fail("DELIVERY_INVALID", "The add-on has no version that passed the automatic checks yet.");
         // Live default: the newest version now (for a public add-on the newest APPROVED one),
         // so later uploads reach beta workstations first.
-        var liveDefault = pkg.Visibility == "private" ? versions[0] : versions.FirstOrDefault(v => v.Status == VersionStatus.Live) ?? versions[0];
-        live = live with { Mode = live.Mode ?? "fixed", Version = live.Mode is null or "fixed" ? live.Version ?? liveDefault.Version : live.Version };
+        // A public add-on without an approved version has no live default: the live stage then
+        // follows "latest", which hands out approved versions only (never an unreviewed beta).
+        var liveDefault = pkg.Visibility == "private" ? versions[0] : versions.FirstOrDefault(v => v.Status == VersionStatus.Live);
+        if (live.Mode is null && live.Version is null && liveDefault is null) live = live with { Mode = "latest" };
+        else live = live with { Mode = live.Mode ?? "fixed", Version = live.Mode is null or "fixed" ? live.Version ?? liveDefault?.Version : live.Version };
         var err = CheckStage(beta, versions) ?? CheckStage(live, versions);
         if (err is not null) return Outcome.Fail("DELIVERY_INVALID", err);
         if (startsAt is not null && endsAt is not null && endsAt <= startsAt)
@@ -242,8 +245,9 @@ public class CustomerService
         if (beta is not null && CheckStage(beta, versions) is { } e1) return Outcome.Fail("DELIVERY_INVALID", e1);
         if (live is not null && CheckStage(live, versions) is { } e2) return Outcome.Fail("DELIVERY_INVALID", e2);
         if (status is not null and not ("active" or "paused" or "ended")) return Outcome.Fail("DELIVERY_INVALID", "status must be active, paused or ended");
-        if (beta is not null) { d.BetaMode = beta.Mode ?? "latest"; d.BetaVersion = d.BetaMode == "fixed" ? beta.Version : null; }
-        if (live is not null) { d.LiveMode = live.Mode ?? "latest"; d.LiveVersion = d.LiveMode == "fixed" ? live.Version : null; }
+        // A version without a mode means "fixed to that version"; neither keeps the current mode.
+        if (beta is not null) { d.BetaMode = beta.Mode ?? (beta.Version is not null ? "fixed" : d.BetaMode); d.BetaVersion = d.BetaMode == "fixed" ? beta.Version ?? d.BetaVersion : null; }
+        if (live is not null) { d.LiveMode = live.Mode ?? (live.Version is not null ? "fixed" : d.LiveMode); d.LiveVersion = d.LiveMode == "fixed" ? live.Version ?? d.LiveVersion : null; }
         if (datesGiven)
         {
             if (startsAt is not null && endsAt is not null && endsAt <= startsAt)

@@ -73,7 +73,10 @@ public sealed class GeoService : BackgroundService
         // front end APPENDS the address it saw to X-Forwarded-For, so only the
         // rightmost entry is trustworthy (values a client sent stand before it).
         IPAddress? ip = null;
-        var xff = ctx.Request.Headers["X-Forwarded-For"].ToString();
+        // Setting Network:TrustForwardedFor (default true for App Service); set it to false when
+        // the container is reachable directly, because then a client can send the header itself.
+        var trust = ctx.RequestServices.GetService<IConfiguration>()?["Network:TrustForwardedFor"] is not ("false" or "False" or "0");
+        var xff = trust ? ctx.Request.Headers["X-Forwarded-For"].ToString() : "";
         if (!string.IsNullOrEmpty(xff)) ip = Parse(xff.Split(',').Last());
         ip ??= ctx.Connection.RemoteIpAddress;
         return ip is { IsIPv4MappedToIPv6: true } ? ip.MapToIPv4() : ip;

@@ -158,6 +158,7 @@
     <ClCompile Include="store\install.cpp" />
     <ClCompile Include="store\ribbon.cpp" />
     <ClCompile Include="store\settings.cpp" />
+    <ClCompile Include="store\signature.cpp" />
     <ClCompile Include="store\link.cpp" />
     <ClCompile Include="store\webui.cpp" />
   </ItemGroup>

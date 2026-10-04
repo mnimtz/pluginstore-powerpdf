@@ -42,8 +42,9 @@ public static class ApiEndpoints
         app.MapPost("/a/{slug}/click", async (string slug, string? what, HttpContext ctx, AppDbContext db, ShareService share) =>
         {
             if (what != "install") return Results.NoContent();
-            var ids = await db.PackageVersions.Where(v => v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)
-                .Select(v => v.PackageId).Distinct().ToListAsync();
+            var ids = (await db.PackageVersions.Where(v => v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)
+                .Where(v => db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private"))
+                .Select(v => v.PackageId).Distinct().ToListAsync()).Where(i => i != SubmissionService.ClientPackageId).ToList();
             var id = ShareService.Resolve(slug, ids);
             if (id is not null) await share.CountAsync(id, ctx.Request.Query["ref"].ToString(), "install");
             return Results.NoContent();
@@ -117,7 +118,7 @@ public static class ApiEndpoints
                     "POST /api/packages/validate      dry-run: full validation, nothing stored (auth)",
                     "POST /api/packages               submit a package (auth)",
                     "GET  /api/categories             catalog categories (slug, names, usage, limit)",
-                    "PATCH  /api/packages/{id}  change the catalog entry: name, description, author, contactEmail, category (owner/admin, auth)",
+                    "PATCH  /api/packages/{id}  change the catalog entry: name, description, author, contactEmail, category, visibility (owner/admin, auth)",
                     "PUT  /api/packages/{id}/{version}/source  upload the source code ZIP of a version (owner/admin, auth)",
                     "GET  /api/packages/{id}/{version}/source  download the source code (admins only)",
                     "GET  /api/packages/{id}/source/latest  source code of the newest version that has one (admins only; header X-Source-Version)",
@@ -195,7 +196,8 @@ public static class ApiEndpoints
             return Results.Json(new { ok = true, data = new {
                 keyId = signing.KeyId, algorithm = PackageSigning.Algorithm, publicKeyPem = signing.PublicKeyPem,
                 publicKeyRaw = signing.PublicKeyRaw,
-                message = PackageSigning.MessagePrefix + "\\n{id}\\n{version}\\n{sha256 lowercase hex}",
+                message = PackageSigning.MessagePrefix + "\\n{id}\\n{version}\\n{sha256 lowercase hex}\\n{zxtName}",
+                available = signing.Problem is null,
                 signatureFormat = "keyId:base64(r||s), IEEE P1363, in the catalog (TSV column 21, JSON field signature)" } });
         });
 
@@ -220,10 +222,11 @@ public static class ApiEndpoints
                 if (grants.Count > 0)
                 {
                     var cctx = await Services.CatalogUi.Context.LoadAsync(db);
+                    var deliveredIds = new HashSet<string>();
                     foreach (var g in grants)
                     {
                         var (v, ch) = CustomerService.Pick(g, beta);
-                        if (v is null) continue;
+                        if (v is null || !deliveredIds.Add(v.PackageId)) continue;
                         items.RemoveAll(i => i.Id == v.PackageId);   // a delivery overrides the public entry
                         items.Add(Services.CatalogUi.Item(cctx, v, ch, culture, g.Customer.Name));
                     }
@@ -244,7 +247,7 @@ public static class ApiEndpoints
                       .Append(i.Rating.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)).Append('\t')
                       .Append(i.RatingCount).Append('\t').Append(i.Screenshots).Append('\t')
                       .Append(Flat(i.Customer)).Append('\t')
-                      .Append(signing.Sign(i.Id, i.Version, i.Sha256)).Append('\n');
+                      .Append(signing.Sign(i.Id, i.Version, i.Sha256, i.ZxtName)).Append('\n');
                 }
                 return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
             }
@@ -313,8 +316,10 @@ public static class ApiEndpoints
             });
         });
 
-        api.MapPost("/packages/validate", async (HttpContext ctx, UserManager<AppUser> users, SubmissionService svc) =>
+        api.MapPost("/packages/validate", async (HttpContext ctx, UserManager<AppUser> users, SubmissionService svc, IMemoryCache cache) =>
         {
+            if (TooManyUploads(ctx, cache)) return Results.Json(new { ok = false, error = new { code = "RATE_LIMITED",
+                message = "Too many package checks from this account in the last hour.", hint = "Wait a while; at most 60 checks and submissions per account and hour." } }, statusCode: 429);
             var user = await RequireUserAsync(ctx, users);
             if (user is null) return Unauthorized();
             var tmp = await SaveUploadAsync(ctx.Request);
@@ -327,8 +332,10 @@ public static class ApiEndpoints
             finally { TryDelete(tmp); }
         }).RequireAuthorization("ApiOrCookie");
 
-        api.MapPost("/packages", async (HttpContext ctx, UserManager<AppUser> users, SubmissionService svc, SourceService sources) =>
+        api.MapPost("/packages", async (HttpContext ctx, UserManager<AppUser> users, SubmissionService svc, SourceService sources, IMemoryCache cache) =>
         {
+            if (TooManyUploads(ctx, cache)) return Results.Json(new { ok = false, error = new { code = "RATE_LIMITED",
+                message = "Too many package checks from this account in the last hour.", hint = "Wait a while; at most 60 checks and submissions per account and hour." } }, statusCode: 429);
             var user = await RequireUserAsync(ctx, users);
             if (user is null) return Unauthorized();
             var tmp = await SaveUploadAsync(ctx.Request);
@@ -408,7 +415,7 @@ public static class ApiEndpoints
             if (tmp is null) return BadUpload();
             try
             {
-                var report = await sources.UploadAsync(v, tmp, user);
+                var report = await sources.UploadAsync(v, tmp, user, ctx.User.IsInRole("Admin"));
                 if (!report.Passed)
                     return Results.Json(new
                     {
@@ -652,6 +659,9 @@ public static class ApiEndpoints
         static IResult Fail(string code, string message, int status, string hint = "") =>
             Results.Json(new { ok = false, error = new { code, message, hint } }, statusCode: status);
         static string UiLang(HttpContext c) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        // A date without an offset counts as UTC (create and change alike).
+        static DateTime? AsUtc(DateTime? d) => d is null ? null
+            : d.Value.Kind == DateTimeKind.Unspecified ? DateTime.SpecifyKind(d.Value, DateTimeKind.Utc) : d.Value.ToUniversalTime();
 
         api.MapGet("/customers", async (HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService cs) =>
         {
@@ -742,7 +752,7 @@ public static class ApiEndpoints
             if (c is null || !CustomerService.CanSee(ctx.User, c, user.Id)) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
             if (!CustomerService.CanManage(ctx.User, c, user.Id)) return Fail("NOT_OWNER", "Only the creator of the customer or an admin can deliver to it.", 403);
             var r = await cs.CreateDeliveryAsync(c, body.PackageId ?? "", new(body.Beta?.Mode, body.Beta?.Version),
-                new(body.Live?.Mode, body.Live?.Version), body.StartsAt, body.EndsAt, body.OwnCode ?? false, user, ctx.User.IsInRole("Admin"));
+                new(body.Live?.Mode, body.Live?.Version), AsUtc(body.StartsAt), AsUtc(body.EndsAt), body.OwnCode ?? false, user, ctx.User.IsInRole("Admin"));
             if (!r.Ok) return Fail(r.Code, r.Message, r.Code is "PACKAGE_NOT_FOUND" ? 404 : r.Code is "NOT_OWNER" ? 403 : r.Code is "DELIVERY_EXISTS" ? 409 : 400,
                 "beta/live: {\"mode\": \"latest\"|\"fixed\"|\"off\", \"version\": \"1.2.0\"}; live defaults to the newest version, fixed.");
             return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, true, UiLang(ctx)) }, statusCode: 201);
@@ -771,7 +781,7 @@ public static class ApiEndpoints
             var clear = body.ClearDates == true;
             var r = await cs.UpdateDeliveryAsync(d!, body.Beta is null ? null : new(body.Beta.Mode, body.Beta.Version),
                 body.Live is null ? null : new(body.Live.Mode, body.Live.Version),
-                clear ? null : (body.StartsAt?.ToUniversalTime() ?? d!.StartsAt), clear ? null : (body.EndsAt?.ToUniversalTime() ?? d!.EndsAt),
+                clear ? null : (AsUtc(body.StartsAt) ?? d!.StartsAt), clear ? null : (AsUtc(body.EndsAt) ?? d!.EndsAt),
                 body.StartsAt is not null || body.EndsAt is not null || clear, body.Status, user!, ctx.User.IsInRole("Admin"));
             if (!r.Ok) return Fail(r.Code, r.Message, 400);
             return Results.Json(new { ok = true, data = await cs.DescribeAsync(c!, true, UiLang(ctx)) });
@@ -890,7 +900,7 @@ public static class ApiEndpoints
         }).RequireAuthorization("BearerOnly");
 
         api.MapDelete("/packages/{id}/{version}", async (string id, string version, HttpContext ctx,
-            UserManager<AppUser> users, AppDbContext db, AuditService audit) =>
+            UserManager<AppUser> users, AppDbContext db, VersionActionService actions) =>
         {
             var user = await RequireUserAsync(ctx, users);
             if (user is null) return Unauthorized();
@@ -906,10 +916,10 @@ public static class ApiEndpoints
             if (v.Status is not (VersionStatus.Beta or VersionStatus.Live))
                 return Results.Json(new { ok = false, error = new { code = "VERSION_NOT_WITHDRAWABLE", message = $"Version {version} is {v.Status.ToString().ToLowerInvariant()} and cannot be withdrawn.", hint = "Only beta versions (and, for admins, live versions) can be withdrawn." } }, statusCode: 409);
 
-            v.Status = VersionStatus.Withdrawn;
-            await db.SaveChangesAsync();
-            await audit.LogAsync(user.DisplayName, "version.withdrawn", $"{id} {version}", $"previous status reverted by {(isAdmin ? "admin" : "owner")}");
-            return Results.Json(new { ok = true, data = new { id, version, status = "withdrawn" } });
+            var pinned = await db.Deliveries.CountAsync(d => d.PackageId == id && (d.LiveVersion == version || d.BetaVersion == version) && d.Status == "active");
+            await actions.WithdrawAsync(v.Id, user, isAdmin);
+            return Results.Json(new { ok = true, data = new { id, version, status = "withdrawn",
+                warning = pinned > 0 ? $"{pinned} customer deliveries were fixed to this version and hand out nothing now; change them." : null } });
         }).RequireAuthorization("BearerOnly");
 
         api.MapGet("/packages/{id}/{version}/download", async (string id, string version,
@@ -1050,6 +1060,14 @@ public static class ApiEndpoints
         return await RequireUserAsync(ctx, users);
     }
 
+    private static bool TooManyUploads(HttpContext ctx, IMemoryCache cache)
+    {
+        var who = ctx.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? GeoService.ClientIp(ctx)?.ToString() ?? "?";
+        var counter = cache.GetOrCreate("uploads:" + who + ":" + DateTime.UtcNow.ToString("yyyyMMddHH"),
+            e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1); return new int[1]; })!;
+        lock (counter) { return ++counter[0] > 60; }
+    }
+
     private static async Task<string?> SaveUploadAsync(HttpRequest request)
     {
         var tmp = Path.Combine(Path.GetTempPath(), "ppak-" + Guid.NewGuid().ToString("N") + ".zip");
@@ -1159,8 +1177,10 @@ public static class ApiEndpoints
                 pageUrl = pick.PackageId == SubmissionService.ClientPackageId || isPrivate ? null
                     : $"{baseUrl}/a/{ShareService.Slug(pick.PackageId, slugIds)}",
                 downloadUrl = $"{baseUrl}/api/packages/{pick.PackageId}/{pick.Version}/download",
+                iconUrl = $"{baseUrl}/api/packages/{pick.PackageId}/icon",
+                zxtName = ZxtNameOf(root),
                 customer,
-                signature = signing?.Sign(pick.PackageId, pick.Version, pick.Sha256),
+                signature = signing?.Sign(pick.PackageId, pick.Version, pick.Sha256, ZxtNameOf(root)),
             };
         }
     }
@@ -1180,6 +1200,12 @@ public static class ApiEndpoints
         if (u is not null && (pkg.OwnerId == u.Id || ctx.User.IsInRole("Admin") || ctx.User.IsInRole("Reviewer"))) return true;
         return version is null ? await customers.MaySeeAsync(ctx, pkg) : await customers.MayDownloadAsync(ctx, pkg, version);
     }
+
+    /// <summary>Base name of the x64 binary ("SmartBookmarks" for x64/SmartBookmarks.zxt).</summary>
+    public static string ZxtNameOf(JsonElement manifest) =>
+        manifest.TryGetProperty("files", out var f) && f.ValueKind == JsonValueKind.Object &&
+        f.TryGetProperty("x64", out var x) && x.ValueKind == JsonValueKind.String
+            ? Path.GetFileNameWithoutExtension(x.GetString() ?? "") : "";
 
     private static JsonElement? CloneOrNull(JsonElement root, string name) =>
         root.TryGetProperty(name, out var el) ? el.Clone() : null;

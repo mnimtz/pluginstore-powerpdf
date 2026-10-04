@@ -51,12 +51,38 @@ public class SubmissionService
         return report;
     }
 
+    // One submission per package at a time (two uploads of the same new version would race).
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, SemaphoreSlim> Locks = new();
+
     public async Task<SubmissionResult> SubmitAsync(string zipPath, AppUser user, string via)
     {
         var validator = new PackageValidator(_db, _categories);
         var (report, manifest) = await validator.ValidateAsync(zipPath, user.Id, await _users.IsInRoleAsync(user, "Admin"));
+        if (manifest is not null && manifest.Id.Length > 0 && report.Findings.Any(f => f.Code == "VERSION_EXISTS"))
+            return await ExistingVersionAsync(zipPath, manifest, report);
         if (!report.Passed || manifest is null)
             return new SubmissionResult(report, null);
+
+        var gate = Locks.GetOrAdd(manifest.Id, _ => new SemaphoreSlim(1, 1));
+        await gate.WaitAsync();
+        try { return await SubmitCheckedAsync(zipPath, user, via, report, manifest); }
+        finally { gate.Release(); }
+    }
+
+    /// <summary>The same version again is a clear, named condition (409), with or without identical content.</summary>
+    private async Task<SubmissionResult> ExistingVersionAsync(string zipPath, ParsedManifest manifest, ValidationReport report)
+    {
+        var existing = await _db.PackageVersions.AsNoTracking()
+            .FirstOrDefaultAsync(v => v.PackageId == manifest.Id && v.Version == manifest.Version);
+        var identical = existing is not null && string.Equals(existing.Sha256, await HashFileAsync(zipPath), StringComparison.OrdinalIgnoreCase);
+        return new SubmissionResult(report, null, "VERSION_EXISTS",
+            identical
+                ? $"Version {manifest.Version} with this exact content is already on the server (status: {existing!.Status}). Nothing to do."
+                : $"Version {manifest.Version} already exists with different content. Bump 'version' in the manifest and upload again.");
+    }
+
+    private async Task<SubmissionResult> SubmitCheckedAsync(string zipPath, AppUser user, string via, ValidationReport report, ParsedManifest manifest)
+    {
 
         // The store client has its own lane: only admins publish it, and a new
         // version goes live immediately (it is our own tooling, not a third-
@@ -66,18 +92,9 @@ public class SubmissionService
             return new SubmissionResult(report, null, "CLIENT_ADMIN_ONLY",
                 "Only administrators can publish new versions of the Add-on Store client.");
 
-        // Idempotency: the same version again is a clear, named condition.
-        var existing = await _db.PackageVersions
-            .FirstOrDefaultAsync(v => v.PackageId == manifest.Id && v.Version == manifest.Version);
-        if (existing is not null)
-        {
-            var zipHash = await HashFileAsync(zipPath);
-            var identical = string.Equals(existing.Sha256, zipHash, StringComparison.OrdinalIgnoreCase);
-            return new SubmissionResult(report, null, "VERSION_EXISTS",
-                identical
-                    ? $"Version {manifest.Version} with this exact content is already on the server (status: {existing.Status}). Nothing to do."
-                    : $"Version {manifest.Version} already exists with different content. Bump 'version' in the manifest and upload again.");
-        }
+        // checked again under the lock: another upload of the same version may have won
+        if (await _db.PackageVersions.AnyAsync(v => v.PackageId == manifest.Id && v.Version == manifest.Version))
+            return await ExistingVersionAsync(zipPath, manifest, report);
 
         var package = await _db.Packages.FirstOrDefaultAsync(p => p.Id == manifest.Id);
         if (package is null)

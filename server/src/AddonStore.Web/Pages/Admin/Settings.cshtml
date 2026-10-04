@@ -5,6 +5,14 @@
 }
 
 <h1>@L["Settings"]</h1>
+@if (Model.SigningProblem is not null)
+{
+    <div class="alert error">@L["The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key."]</div>
+}
+else if (Model.SigningKeyId.Length > 0)
+{
+    <p style="font-size:.82rem;color:var(--tun-slate)">@L["Package signing key"]: <code>@Model.SigningKeyId</code></p>
+}
 <p class="lead">@L["Instance settings; values are stored on the server and take effect immediately."]</p>
 <p style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn small secondary" href="/Admin/Backup">@L["Backup and restore"]</a> <a class="btn small secondary" href="/Admin/Categories">@L["Categories"]</a> <a class="btn small secondary" href="#privacy">@L["IP address logging (reports)"]</a> <a class="btn small secondary" href="#ai">@L["AI assistant (optional)"]</a></p>
 

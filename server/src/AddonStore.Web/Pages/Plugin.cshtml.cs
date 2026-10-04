@@ -111,7 +111,7 @@ public class PluginModel : PageModel
         try
         {
             await using (var fs = System.IO.File.Create(tmp)) await source.CopyToAsync(fs);
-            var report = await _sources.UploadAsync(v, tmp, Me!);
+            var report = await _sources.UploadAsync(v, tmp, Me!, IsAdmin);
             SourceFindings = report.Findings.ToList();
             Notice = report.Passed ? "Source code stored." : "The source code was not stored.";
             NoticeKind = report.Passed ? "ok" : "error";

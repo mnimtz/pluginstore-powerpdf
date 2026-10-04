@@ -34,6 +34,7 @@ struct PSCatalogEntry
     int ratingCount = 0;         // number of ratings (TSV column 18)
     int screenshots = 0;         // number of screenshots (TSV column 19)
     std::wstring customer;       // customer name when delivered by a customer code (TSV column 20)
+    std::wstring signature;      // "keyId:base64(r||s)" of the server (TSV column 21, see signature.h)
     std::wstring installedVersion; // filled by the install module, empty = not installed
 };
 

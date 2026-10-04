@@ -252,9 +252,9 @@ protected:
             Reload();
             OfferRestart(IDS_PSD_ASK_RESTART, name);
         }
-        else if (rc == 2)
+        else if (rc == 2 || rc == 6)
         {
-            SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_MSG_HASH).c_str());
+            SetDlgItemTextW(IDC_PS_STATUS, FPLoc(rc == 2 ? IDS_PSD_MSG_HASH : IDS_PSD_MSG_SIG).c_str());
         }
         else
         {
@@ -287,8 +287,8 @@ protected:
         }
         else if (rc == 5)
             return;
-        else if (rc == 2)
-            SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_MSG_HASH).c_str());
+        else if (rc == 2 || rc == 6)
+            SetDlgItemTextW(IDC_PS_STATUS, FPLoc(rc == 2 ? IDS_PSD_MSG_HASH : IDS_PSD_MSG_SIG).c_str());
         else
         {
             wchar_t msg[256];

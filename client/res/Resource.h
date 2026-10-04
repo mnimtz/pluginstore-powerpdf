@@ -109,6 +109,7 @@
 #define IDS_PSW_NEED_ALL        305
 #define IDS_PSO_CODE_LBL        306
 #define IDS_PSO_CODE_BAD        307
+#define IDS_PSD_MSG_SIG         308
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261

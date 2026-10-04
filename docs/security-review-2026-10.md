@@ -128,3 +128,44 @@ customer-code field was built but not clicked through live.
 - UI-language rule: every add-on's own UI in the 16 Power PDF languages
   (`UI_LANGS_MISSING`, `LANGS_INCOMPLETE` now errors); the agent guide makes
   the submitting AI add missing translations before it uploads.
+
+## Code check S0.16.0 (API and validation pipeline)
+
+A separate review of the API and the package checks (26 confirmed findings)
+led to these changes:
+
+- Signing key unreadable after a key-less restore no longer takes the catalog
+  down (served unsigned, admins see a warning); a key-less restore of a backup
+  with key ring needs explicit confirmation. Signature format v2 also covers
+  the binary name.
+- Resource parser hardened against crafted .zxt (visited set, entry caps);
+  import walk bounded.
+- ZIP entries: duplicates and collisions on Windows, reserved device names,
+  control characters, entry count, unexpected top-level folders, nested
+  archives (by content), oversized entries reported instead of skipped,
+  executables found by content.
+- VERSION_EXISTS reaches clients as the documented 409 (and in dry runs);
+  concurrent uploads of a package are serialized.
+- FOREIGN_DEPENDENCY is an error (extra DLLs are never installed next to the
+  plug-in), hint corrected.
+- UILayout checks are root-anchored and case-insensitive, read every layout
+  file and toolbar, require the base NameAndTitle.xml; atoms must stay inside
+  the declared namespace; the bare tab atom is refused; rejected/withdrawn
+  packages no longer block a namespace.
+- New checks: PlugInMain export, .NET assemblies refused, VERSIONINFO vs
+  manifest version (warning), ASLR/DEP (warning), reserved id prefixes for
+  admins, scripts in help pages (warning), arm64 declared consistently.
+- Private packages are not revealed by validator messages; share-link click
+  counting uses the public set; TSV and JSON pick the same delivery; JSON
+  carries zxtName and iconUrl; "no" accepted for Norwegian.
+- Deliveries: no unreviewed beta as the default live stage of a public add-on;
+  a version without a mode means "fixed"; dates without offset are UTC.
+- Source code of a reviewed version can only be replaced by admins.
+- API withdraw uses the portal service (owner notified, warning for pinned
+  deliveries).
+- 2 MB request limit on all API endpoints except uploads; 60 checks and
+  submissions per account and hour; X-Forwarded-For trust configurable
+  (Network:TrustForwardedFor).
+
+Decided earlier and still open: no server-side malware scan (decision Oct 3,
+2026), no Authenticode signing (no certificate).

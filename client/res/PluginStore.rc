@@ -8,8 +8,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // Version
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,6,0,0
- PRODUCTVERSION 0,6,0,0
+ FILEVERSION 0,7,0,0
+ PRODUCTVERSION 0,7,0,0
  FILEFLAGSMASK 0x3fL
  FILEFLAGS 0x0L
  FILEOS 0x40004L
@@ -22,11 +22,11 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Tungsten Automation"
             VALUE "FileDescription", "Add-on Store client for Tungsten Power PDF"
-            VALUE "FileVersion", "0.6.0"
+            VALUE "FileVersion", "0.7.0"
             VALUE "InternalName", "PluginStore"
             VALUE "OriginalFilename", "PluginStore.zxt"
             VALUE "ProductName", "Add-on Store for Tungsten Power PDF"
-            VALUE "ProductVersion", "0.6.0"
+            VALUE "ProductVersion", "0.7.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -123,6 +123,7 @@ BEGIN
     IDS_PSD_CONFIRM     "Install '%s' version %s now?\nWindows will ask once for administrator approval."
     IDS_PSD_ADMIN_NOTE  "Installing or updating a plugin requires local administrator rights (one prompt per installation)."
     IDS_PSD_MSG_HASH    "The downloaded file failed the integrity check (SHA-256). Installation aborted."
+    IDS_PSD_MSG_SIG     "This add-on is not signed by a trusted Add-on Store. Installation aborted. Check the server address in the options or ask your IT."
     IDS_PSD_EMPTY       "No plugins are available on the server yet."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Uninstall"
@@ -219,6 +220,7 @@ BEGIN
     IDS_PSD_CONFIRM     "'%s' Version %s jetzt installieren?\nWindows fragt einmal nach Administrator-Bestätigung."
     IDS_PSD_ADMIN_NOTE  "Für das Installieren oder Aktualisieren eines Plug-ins sind lokale Administratorrechte erforderlich (eine Abfrage je Installation)."
     IDS_PSD_MSG_HASH    "Die heruntergeladene Datei hat die Integritätsprüfung (SHA-256) nicht bestanden. Installation abgebrochen."
+    IDS_PSD_MSG_SIG     "Dieses Add-on ist nicht von einem vertrauenswürdigen Add-on Store signiert. Installation abgebrochen. Prüfen Sie die Serveradresse in den Optionen oder wenden Sie sich an Ihre IT."
     IDS_PSD_EMPTY       "Auf dem Server sind noch keine Plug-ins verfügbar."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Deinstallieren"
@@ -315,6 +317,7 @@ BEGIN
     IDS_PSD_CONFIRM     "Installer « %s » version %s maintenant ?\nWindows vous demandera une seule fois l’autorisation d’un administrateur."
     IDS_PSD_ADMIN_NOTE  "L’installation ou la mise à jour d’un plug-in nécessite des droits d’administrateur local (une demande par installation)."
     IDS_PSD_MSG_HASH    "Le fichier téléchargé n’a pas réussi le contrôle d’intégrité (SHA-256). Installation annulée."
+    IDS_PSD_MSG_SIG     "Ce module n'est pas signé par un Add-on Store de confiance. Installation annulée. Vérifiez l'adresse du serveur dans les options ou contactez votre service informatique."
     IDS_PSD_EMPTY       "Aucun plug-in n’est encore disponible sur le serveur."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Désinstaller"
@@ -411,6 +414,7 @@ BEGIN
     IDS_PSD_CONFIRM     "Installare ora '%s' versione %s?\nWindows chiederà una sola volta l’autorizzazione dell’amministratore."
     IDS_PSD_ADMIN_NOTE  "L’installazione o l’aggiornamento di un plug-in richiede diritti di amministratore locale (una richiesta per installazione)."
     IDS_PSD_MSG_HASH    "Il file scaricato non ha superato il controllo di integrità (SHA-256). Installazione annullata."
+    IDS_PSD_MSG_SIG     "Questo componente aggiuntivo non è firmato da un Add-on Store attendibile. Installazione interrotta. Controlla l'indirizzo del server nelle opzioni o rivolgiti al reparto IT."
     IDS_PSD_EMPTY       "Sul server non sono ancora disponibili plug-in."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Disinstalla"
@@ -507,6 +511,7 @@ BEGIN
     IDS_PSD_CONFIRM     "¿Instalar ahora '%s' versión %s?\nWindows solicitará una sola vez la aprobación del administrador."
     IDS_PSD_ADMIN_NOTE  "Para instalar o actualizar un complemento se requieren derechos de administrador local (una solicitud por instalación)."
     IDS_PSD_MSG_HASH    "El archivo descargado no superó la comprobación de integridad (SHA-256). Instalación cancelada."
+    IDS_PSD_MSG_SIG     "Este complemento no está firmado por un Add-on Store de confianza. Instalación cancelada. Compruebe la dirección del servidor en las opciones o consulte a su departamento de TI."
     IDS_PSD_EMPTY       "Todavía no hay complementos disponibles en el servidor."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Desinstalar"
@@ -603,6 +608,7 @@ BEGIN
     IDS_PSD_CONFIRM     "'%s' versie %s nu installeren?\nWindows vraagt eenmalig om goedkeuring door een beheerder."
     IDS_PSD_ADMIN_NOTE  "Voor het installeren of bijwerken van een plug-in zijn lokale beheerdersrechten vereist (één melding per installatie)."
     IDS_PSD_MSG_HASH    "Het gedownloade bestand heeft de integriteitscontrole (SHA-256) niet doorstaan. Installatie afgebroken."
+    IDS_PSD_MSG_SIG     "Deze invoegtoepassing is niet ondertekend door een vertrouwde Add-on Store. Installatie afgebroken. Controleer het serveradres in de opties of neem contact op met uw IT-afdeling."
     IDS_PSD_EMPTY       "Er zijn nog geen plug-ins beschikbaar op de server."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Verwijderen"
@@ -699,6 +705,7 @@ BEGIN
     IDS_PSD_CONFIRM     "Instalar '%s' versão %s agora?\nO Windows solicitará uma única vez a aprovação do administrador."
     IDS_PSD_ADMIN_NOTE  "A instalação ou atualização de um plug-in requer direitos de administrador local (uma solicitação por instalação)."
     IDS_PSD_MSG_HASH    "O arquivo baixado não passou na verificação de integridade (SHA-256). Instalação cancelada."
+    IDS_PSD_MSG_SIG     "Este complemento não está assinado por uma Add-on Store confiável. Instalação cancelada. Verifique o endereço do servidor nas opções ou consulte a sua equipe de TI."
     IDS_PSD_EMPTY       "Ainda não há plug-ins disponíveis no servidor."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Desinstalar"
@@ -795,6 +802,7 @@ BEGIN
     IDS_PSD_CONFIRM     "Vil du installere '%s' version %s nu?\nWindows beder én gang om godkendelse fra en administrator."
     IDS_PSD_ADMIN_NOTE  "Installation eller opdatering af et plug-in kræver lokale administratorrettigheder (én anmodning pr. installation)."
     IDS_PSD_MSG_HASH    "Den downloadede fil bestod ikke integritetskontrollen (SHA-256). Installationen blev afbrudt."
+    IDS_PSD_MSG_SIG     "Denne tilføjelse er ikke signeret af en betroet Add-on Store. Installationen er afbrudt. Kontrollér serveradressen i indstillingerne, eller kontakt din IT-afdeling."
     IDS_PSD_EMPTY       "Der er endnu ingen plug-ins tilgængelige på serveren."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Afinstaller"
@@ -891,6 +899,7 @@ BEGIN
     IDS_PSD_CONFIRM     "Asennetaanko '%s', versio %s, nyt?\nWindows pyytää järjestelmänvalvojan hyväksyntää kerran."
     IDS_PSD_ADMIN_NOTE  "Laajennuksen asentaminen tai päivittäminen edellyttää paikallisia järjestelmänvalvojan oikeuksia (yksi kehote asennusta kohden)."
     IDS_PSD_MSG_HASH    "Ladattu tiedosto ei läpäissyt eheystarkistusta (SHA-256). Asennus keskeytettiin."
+    IDS_PSD_MSG_SIG     "Tätä lisäosaa ei ole allekirjoittanut luotettu Add-on Store. Asennus keskeytettiin. Tarkista palvelimen osoite asetuksista tai ota yhteyttä IT-tukeen."
     IDS_PSD_EMPTY       "Palvelimella ei ole vielä saatavilla laajennuksia."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Poista asennus"
@@ -987,6 +996,7 @@ BEGIN
     IDS_PSD_CONFIRM     "Vil du installere '%s' versjon %s nå?\nWindows ber én gang om godkjenning fra en administrator."
     IDS_PSD_ADMIN_NOTE  "Installasjon eller oppdatering av et programtillegg krever lokale administratorrettigheter (én forespørsel per installasjon)."
     IDS_PSD_MSG_HASH    "Den nedlastede filen besto ikke integritetskontrollen (SHA-256). Installasjonen ble avbrutt."
+    IDS_PSD_MSG_SIG     "Dette tillegget er ikke signert av en klarert Add-on Store. Installasjonen er avbrutt. Kontroller serveradressen i alternativene, eller kontakt IT-avdelingen."
     IDS_PSD_EMPTY       "Det er ennå ingen programtillegg tilgjengelig på serveren."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Avinstaller"
@@ -1083,6 +1093,7 @@ BEGIN
     IDS_PSD_CONFIRM     "Vill du installera '%s' version %s nu?\nWindows ber en gång om godkännande från en administratör."
     IDS_PSD_ADMIN_NOTE  "Installation eller uppdatering av ett plugin-program kräver lokal administratörsbehörighet (en fråga per installation)."
     IDS_PSD_MSG_HASH    "Den hämtade filen klarade inte integritetskontrollen (SHA-256). Installationen avbröts."
+    IDS_PSD_MSG_SIG     "Tillägget är inte signerat av en betrodd Add-on Store. Installationen avbröts. Kontrollera serveradressen i alternativen eller kontakta din IT-avdelning."
     IDS_PSD_EMPTY       "Det finns ännu inga plugin-program tillgängliga på servern."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Avinstallera"
@@ -1179,6 +1190,7 @@ BEGIN
     IDS_PSD_CONFIRM     "Zainstalować teraz '%s' w wersji %s?\nSystem Windows jednorazowo poprosi o zgodę administratora."
     IDS_PSD_ADMIN_NOTE  "Instalacja lub aktualizacja wtyczki wymaga lokalnych uprawnień administratora (jeden monit na instalację)."
     IDS_PSD_MSG_HASH    "Pobrany plik nie przeszedł kontroli integralności (SHA-256). Instalacja została przerwana."
+    IDS_PSD_MSG_SIG     "Ten dodatek nie jest podpisany przez zaufany Add-on Store. Instalację przerwano. Sprawdź adres serwera w opcjach lub skontaktuj się z działem IT."
     IDS_PSD_EMPTY       "Na serwerze nie ma jeszcze dostępnych wtyczek."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Odinstaluj"
@@ -1275,6 +1287,7 @@ BEGIN
     IDS_PSD_CONFIRM     "Nainstalovat nyní '%s' verze %s?\nSystém Windows jednou požádá o schválení správcem."
     IDS_PSD_ADMIN_NOTE  "Instalace nebo aktualizace modulu plug-in vyžaduje oprávnění místního správce (jedna výzva na instalaci)."
     IDS_PSD_MSG_HASH    "Stažený soubor neprošel kontrolou integrity (SHA-256). Instalace byla přerušena."
+    IDS_PSD_MSG_SIG     "Tento doplněk není podepsán důvěryhodným obchodem Add-on Store. Instalace byla přerušena. Zkontrolujte adresu serveru v možnostech nebo kontaktujte oddělení IT."
     IDS_PSD_EMPTY       "Na serveru zatím nejsou k dispozici žádné moduly plug-in."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Odinstalovat"
@@ -1371,6 +1384,7 @@ BEGIN
     IDS_PSD_CONFIRM     "Telepíti most a(z) '%s' bővítmény %s verzióját?\nA Windows egyszer rendszergazdai jóváhagyást kér."
     IDS_PSD_ADMIN_NOTE  "Bővítmény telepítéséhez vagy frissítéséhez helyi rendszergazdai jogosultság szükséges (telepítésenként egy kérdés)."
     IDS_PSD_MSG_HASH    "A letöltött fájl nem felelt meg az integritás-ellenőrzésnek (SHA-256). A telepítés megszakadt."
+    IDS_PSD_MSG_SIG     "Ezt a bővítményt nem írta alá megbízható Add-on Store. A telepítés megszakadt. Ellenőrizze a kiszolgáló címét a beállításokban, vagy forduljon az informatikához."
     IDS_PSD_EMPTY       "A kiszolgálón még nem érhetők el bővítmények."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Eltávolítás"
@@ -1467,6 +1481,7 @@ BEGIN
     IDS_PSD_CONFIRM     "Установить '%s' версии %s сейчас?\nWindows однократно запросит подтверждение администратора."
     IDS_PSD_ADMIN_NOTE  "Для установки или обновления модуля требуются права локального администратора (один запрос на установку)."
     IDS_PSD_MSG_HASH    "Загруженный файл не прошел проверку целостности (SHA-256). Установка прервана."
+    IDS_PSD_MSG_SIG     "Эта надстройка не подписана доверенным Add-on Store. Установка прервана. Проверьте адрес сервера в параметрах или обратитесь в ИТ-отдел."
     IDS_PSD_EMPTY       "На сервере пока нет доступных модулей."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Удалить"
@@ -1563,6 +1578,7 @@ BEGIN
     IDS_PSD_CONFIRM     "'%s' sürüm %s şimdi yüklensin mi?\nWindows bir kez yönetici onayı isteyecektir."
     IDS_PSD_ADMIN_NOTE  "Bir eklentiyi yüklemek veya güncelleştirmek için yerel yönetici hakları gerekir (yükleme başına bir onay isteği)."
     IDS_PSD_MSG_HASH    "İndirilen dosya bütünlük denetimini (SHA-256) geçemedi. Yükleme iptal edildi."
+    IDS_PSD_MSG_SIG     "Bu eklenti güvenilir bir Add-on Store tarafından imzalanmamış. Yükleme iptal edildi. Seçeneklerdeki sunucu adresini kontrol edin veya BT ekibinize başvurun."
     IDS_PSD_EMPTY       "Sunucuda henüz kullanılabilir eklenti yok."
     IDS_PSD_BETA_TAG    " [Beta]"
     IDS_PSD_BTN_UNINSTALL "Kaldır"

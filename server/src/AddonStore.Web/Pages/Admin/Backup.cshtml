@@ -37,6 +37,10 @@
         <div>
             <label for="restoreKeyPassword">@L["Password for the key ring (only for backups that contain one)"]</label>
             <input type="password" id="restoreKeyPassword" name="keyPassword" autocomplete="off" />
+            <label style="display:flex;gap:8px;align-items:center;margin-top:6px">
+                <input type="checkbox" name="withoutKeys" value="true" style="width:auto" />
+                @L["Restore without the key ring (signing key and stored secrets are lost)"]
+            </label>
         </div>
         <div>
             <label>@L["Type RESTORE to confirm"]</label>
