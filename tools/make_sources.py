@@ -32,7 +32,9 @@ FP1_MODULES = {
     'ComplianceCheck': ['sign', 'invoice', 'compliance'],
     'MailMerge': ['sign', 'mailmerge'],
 }
-FP2_COMMON = ['common', 'res', 'store/make_store_icons.py', 'store/make_store_layout.py', 'store/make_store_rc.py']
+# FP2's common folder also holds code other modules use (OCR, conversion); each
+# package gets only the common files its project compiles plus their headers.
+FP2_COMMON = ['res', 'store/make_store_icons.py', 'store/make_store_layout.py', 'store/make_store_rc.py']
 FP2_MODULES = {'StampAssistant': ['stamp'], 'PrintixSecurePrint': ['printix']}
 
 README = """Source code of {name} {version} ({id})
@@ -57,6 +59,42 @@ def add_path(z, root, rel, prefix=''):
                 continue
             p = os.path.join(d, f)
             z.write(p, prefix + os.path.relpath(p, root).replace('\\', '/'))
+
+
+def on_disk(path):
+    """The path with the file name spelled as on disk (includes differ in case: StdAfx.h, stdafx.h)."""
+    d, name = os.path.split(path)
+    try:
+        return os.path.join(d, next(n for n in os.listdir(d) if n.lower() == name.lower()))
+    except (OSError, StopIteration):
+        return path
+
+
+def project_common(root, proj_rel):
+    """common/ files a project compiles (ClCompile/ClInclude) plus the local headers they include."""
+    proj = os.path.join(root, proj_rel)
+    base = os.path.dirname(proj)
+    with open(proj, encoding='utf-8-sig') as f:
+        text = f.read()
+    files = set()
+    for inc in re.findall(r'<(?:ClCompile|ClInclude)\s+Include="([^"]+)"', text):
+        p = on_disk(os.path.normpath(os.path.join(base, inc)))
+        if os.path.isfile(p):
+            files.add(p)
+    todo = list(files)
+    while todo:
+        with open(todo.pop(), encoding='utf-8', errors='replace') as f:
+            src, here = f.read(), os.path.dirname(f.name)
+        for h in re.findall(r'#\s*include\s+"([^"]+)"', src):
+            for d in (here, os.path.join(root, 'common'), os.path.join(root, 'res'), base):
+                p = on_disk(os.path.normpath(os.path.join(d, h)))
+                if os.path.isfile(p) and p.startswith(root):
+                    if p not in files:
+                        files.add(p)
+                        todo.append(p)
+                    break
+    common = os.path.join(root, 'common') + os.sep
+    return sorted(os.path.relpath(p, root) for p in files if p.startswith(common))
 
 
 def spec(name):
@@ -94,7 +132,7 @@ def main():
     for module, dirs in FP2_MODULES.items():
         s = spec(module.lower())
         build(s['id'], version_of(s), module, 'Enhanced Feature Pack 2 (C:\\Claude\\FeaturePack2), store build', FP2,
-              FP2_COMMON + dirs + [f'store/{module}'],
+              project_common(FP2, f'store/{module}/{module}.vcxproj') + FP2_COMMON + dirs + [f'store/{module}'],
               f'Run: msbuild store/{module}/{module}.vcxproj /p:Configuration=Release /p:Platform=x64.')
     s = spec('pluginstore')
     build(s['id'], version_of(s), 'Add-on Store client', 'Add-on Store (github.com/mnimtz/pluginstore-powerpdf)', STORE,
