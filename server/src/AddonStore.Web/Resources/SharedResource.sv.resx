@@ -729,4 +729,7 @@
   <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>Lösenfrasen måste ha minst 12 tecken.</value></data>
   <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Den här säkerhetskopian är krypterad. Ange dess lösenfras.</value></data>
   <data name="Weekdays" xml:space="preserve"><value>Veckodagar</value></data>
+  <data name="Request a developer account" xml:space="preserve"><value>Begär ett utvecklarkonto</value></data>
+  <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>Säkerhetskopian har återställts på den nya servern. Logga in med ett administratörskonto från säkerhetskopian.</value></data>
+  <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>Ditt konto är inte en aktiv administratör i denna säkerhetskopia (varken detta konto eller dess e-postadress); återställningen skulle låsa ute dig.</value></data>
 </root>

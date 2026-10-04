@@ -729,4 +729,7 @@
   <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>De wachtwoordzin moet minimaal 12 tekens bevatten.</value></data>
   <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Deze back-up is versleuteld. Voer de wachtwoordzin ervan in.</value></data>
   <data name="Weekdays" xml:space="preserve"><value>Weekdagen</value></data>
+  <data name="Request a developer account" xml:space="preserve"><value>Ontwikkelaarsaccount aanvragen</value></data>
+  <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>Back-up op de nieuwe server hersteld. Meld u aan met een beheerdersaccount uit de back-up.</value></data>
+  <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>Uw account is in deze back-up geen actieve beheerder (noch dit account noch het e-mailadres ervan); herstellen zou u buitensluiten.</value></data>
 </root>

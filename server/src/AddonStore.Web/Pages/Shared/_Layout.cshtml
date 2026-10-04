@@ -113,6 +113,10 @@
     <img src="/img/tungsten-logo-navy.svg" alt="Tungsten Automation" />
     <span>Add-on Store S@(AppVer.Value)</span>
     <span class="spacer"></span>
+    @if (!(User.Identity?.IsAuthenticated ?? false))
+    {
+        <a class="btn small secondary" href="/Account/Register">@L["Request a developer account"]</a>
+    }
     <a href="/Disclaimer" style="color:var(--tun-slate)">@L["Disclaimer"]</a>
     <a href="/api/agent-guide" style="color:var(--tun-slate)">API</a>
 </footer>

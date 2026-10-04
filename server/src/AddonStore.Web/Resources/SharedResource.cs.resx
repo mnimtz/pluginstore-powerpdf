@@ -729,4 +729,7 @@
   <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>Heslová fráze musí mít alespoň 12 znaků.</value></data>
   <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Tato záloha je zašifrovaná. Zadejte její heslovou frázi.</value></data>
   <data name="Weekdays" xml:space="preserve"><value>Dny v týdnu</value></data>
+  <data name="Request a developer account" xml:space="preserve"><value>Požádat o vývojářský účet</value></data>
+  <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>Záloha byla obnovena na novém serveru. Přihlaste se účtem správce ze zálohy.</value></data>
+  <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>Váš účet není v této záloze aktivním správcem (ani tento účet, ani jeho e-mailová adresa); obnovení by vám zablokovalo přístup.</value></data>
 </root>

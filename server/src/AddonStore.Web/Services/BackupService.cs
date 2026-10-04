@@ -194,7 +194,10 @@ public class BackupService
     public record RestoreCheck(bool Ok, string Message, JsonElement? Meta);
 
     /// <summary>Validates an uploaded archive without changing anything.</summary>
-    public RestoreCheck Inspect(string zipPath, string actingUserId)
+    /// <param name="actingEmail">The acting admin's email: an active admin with the same address in the backup also counts.</param>
+    /// <param name="freshInstance">The server holds only the account just created and no packages (disaster recovery on a
+    /// new server): no lockout check, the admins of the backup sign in afterwards.</param>
+    public RestoreCheck Inspect(string zipPath, string actingUserId, string? actingEmail = null, bool freshInstance = false)
     {
         try
         {
@@ -219,8 +222,10 @@ public class BackupService
             if (!meta.TryGetProperty("product", out var prod) || prod.ValueKind != JsonValueKind.String || prod.GetString() != "PluginStore-PowerPDF")
                 return new(false, "This is not a Add-on Store backup.", meta);
 
-            // Self-lockout protection: the acting admin must exist as an active
-            // admin in the backup, otherwise nobody could sign in afterwards.
+            // Self-lockout protection: the acting admin must exist as an active admin in
+            // the backup (same account or same email), otherwise nobody could sign in
+            // afterwards. A fresh server has nothing to lose: the backup's admins sign in.
+            if (freshInstance) return new(true, "ok", meta);
             var tmpDb = Path.Combine(Path.GetTempPath(), "pluginstore-check-" + Guid.NewGuid().ToString("N") + ".db");
             try
             {
@@ -230,11 +235,13 @@ public class BackupService
                 using var cmd = c.CreateCommand();
                 cmd.CommandText =
                     "SELECT COUNT(*) FROM AspNetUsers u JOIN AspNetUserRoles ur ON ur.UserId = u.Id " +
-                    "JOIN AspNetRoles r ON r.Id = ur.RoleId WHERE u.Id = $id AND r.Name = 'Admin' AND u.Status = 1";
+                    "JOIN AspNetRoles r ON r.Id = ur.RoleId WHERE (u.Id = $id OR (u.NormalizedEmail = $email AND $email <> '')) " +
+                    "AND r.Name = 'Admin' AND u.Status = 1";
                 cmd.Parameters.AddWithValue("$id", actingUserId);
+                cmd.Parameters.AddWithValue("$email", (actingEmail ?? "").Trim().ToUpperInvariant());
                 var n = Convert.ToInt32(cmd.ExecuteScalar());
                 if (n == 0)
-                    return new(false, "Your account is not an active admin in this backup; restoring it would lock you out.", meta);
+                    return new(false, "Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out.", meta);
             }
             finally
             {
@@ -248,6 +255,10 @@ public class BackupService
             return new(false, "The archive could not be read: " + ex.Message, null);
         }
     }
+
+    /// <summary>True when the store holds at most one account and no packages: a server set up just now.</summary>
+    public async Task<bool> IsFreshInstanceAsync() =>
+        await _db.Users.CountAsync() <= 1 && !await _db.Packages.AnyAsync();
 
     /// <summary>
     /// Replaces database and files with the archive's content. A safety backup
@@ -269,7 +280,10 @@ public class BackupService
         SqliteConnection.ClearAllPools();
         var staged = dbPath + ".restore";
         zip.GetEntry("pluginstore.db")!.ExtractToFile(staged, overwrite: true);
-        foreach (var side in new[] { dbPath + "-wal", dbPath + "-shm" })
+        // Every side file of the old database goes: a leftover rollback journal
+        // (-journal, since S0.17.1) would be applied to the RESTORED file on the next
+        // open and damage it; -wal/-shm come from databases before S0.17.1.
+        foreach (var side in new[] { dbPath + "-journal", dbPath + "-wal", dbPath + "-shm" })
             if (File.Exists(side)) File.Delete(side);
         File.Copy(staged, dbPath, overwrite: true);
         File.Delete(staged);

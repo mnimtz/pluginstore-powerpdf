@@ -201,4 +201,20 @@ Decided earlier and still open: no server-side malware scan (decision Oct 3,
   without a write when nothing changed. The production log showed the cause of the earlier
   crashes as "SQLite Error 14: unable to open database file" while the old container still
   held the WAL database; every start since S0.17.1 succeeded with both containers running.
+- **Restore fixes and disaster recovery test (S0.18.2).** (1) A restore on a new server was
+  always refused: the lockout check compared the account id, and an admin created on a new
+  server has a new one. It now accepts the same account or the same email address, and on a
+  fresh server (only the account just created, no packages) it restores without the check and
+  signs the temporary account out. (2) The restore deleted the old -wal/-shm files but not a
+  rollback journal (-journal, since S0.17.1); a leftover journal would have been applied to the
+  restored database and damaged it. Verified end to end: backup to (emulated) Azure Blob,
+  brand-new server, first-run setup, restore from the container, restart, original admin
+  signs in; users, packages, versions, settings, audit, all files, signing key and verifiable
+  catalog signatures identical. Everything the server stores is in the backup (database,
+  packages with source code, avatars, devkit, key ring encrypted); not included on purpose:
+  geolocation data (downloaded again), safety backups, setup token, caches.
+- **Access requests (S0.18.2):** "Request a developer account" in the footer for visitors;
+  bot traps on the form (hidden field, minimum time of 3 s via a signed timestamp), answered
+  like a normal request so bots learn nothing; dropped attempts are audited. Still 5 requests
+  per address and hour, no account enumeration.
 

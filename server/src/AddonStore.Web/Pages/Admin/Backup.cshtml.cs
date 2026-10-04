@@ -1,6 +1,7 @@
 using System.Text.RegularExpressions;
 using AddonStore.Web.Data;
 using AddonStore.Web.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -213,7 +214,8 @@ public class BackupModel : PageModel
                 path = plain;
             }
 
-            var check = _backup.Inspect(path, admin.Id);
+            var fresh = await _backup.IsFreshInstanceAsync();
+            var check = _backup.Inspect(path, admin.Id, admin.Email, fresh);
             if (!check.Ok)
             {
                 await _audit.LogAsync(admin.DisplayName, "backup.restore-refused", label, check.Message);
@@ -249,7 +251,14 @@ public class BackupModel : PageModel
                 await SchemaUpgrade.RunAsync(scope.ServiceProvider);
             // The audit table itself was just replaced; record the restore in the restored log.
             await _audit.LogAsync(admin.DisplayName, "backup.restored", label, "safety backup: " + Path.GetFileName(safety));
-            Notice = keysSkipped
+            if (fresh)
+            {
+                // The account created for the recovery is not in the restored database.
+                await HttpContext.SignOutAsync(Microsoft.AspNetCore.Identity.IdentityConstants.ApplicationScheme);
+            }
+            Notice = fresh
+                ? "Backup restored on the new server. Sign in with an admin account from the backup."
+                : keysSkipped
                 ? "Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install."
                 : "Backup restored. A safety backup of the previous state was kept on the server.";
             NoticeKind = "ok";
@@ -257,7 +266,7 @@ public class BackupModel : PageModel
             // (App Service starts the container again by itself). Not in development.
             if (!HttpContext.RequestServices.GetRequiredService<IWebHostEnvironment>().IsDevelopment())
             {
-                if (!keysSkipped) Notice = "Backup restored. The server restarts now to load it completely; sign in again in a minute.";
+                if (!keysSkipped && !fresh) Notice = "Backup restored. The server restarts now to load it completely; sign in again in a minute.";
                 var life = HttpContext.RequestServices.GetRequiredService<IHostApplicationLifetime>();
                 _ = Task.Run(async () => { await Task.Delay(TimeSpan.FromSeconds(3)); life.StopApplication(); });
             }

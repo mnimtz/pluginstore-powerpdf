@@ -729,4 +729,7 @@
   <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>Parola ifadesi en az 12 karakter olmalıdır.</value></data>
   <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Bu yedek şifrelenmiş. Parola ifadesini girin.</value></data>
   <data name="Weekdays" xml:space="preserve"><value>Hafta günleri</value></data>
+  <data name="Request a developer account" xml:space="preserve"><value>Geliştirici hesabı iste</value></data>
+  <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>Yedek yeni sunucuya geri yüklendi. Yedekteki bir yönetici hesabıyla oturum açın.</value></data>
+  <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>Hesabınız bu yedekte etkin bir yönetici değil (ne bu hesap ne de e-posta adresi); geri yükleme sizi dışarıda bırakırdı.</value></data>
 </root>

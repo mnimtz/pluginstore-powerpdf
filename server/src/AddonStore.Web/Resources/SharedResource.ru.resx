@@ -729,4 +729,7 @@
   <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>Парольная фраза должна содержать не менее 12 символов.</value></data>
   <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Эта резервная копия зашифрована. Введите ее парольную фразу.</value></data>
   <data name="Weekdays" xml:space="preserve"><value>Дни недели</value></data>
+  <data name="Request a developer account" xml:space="preserve"><value>Запросить учётную запись разработчика</value></data>
+  <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>Резервная копия восстановлена на новом сервере. Войдите с учётной записью администратора из резервной копии.</value></data>
+  <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>Ваша учётная запись не является активным администратором в этой резервной копии (ни эта учётная запись, ни её адрес эл. почты); восстановление заблокировало бы вам доступ.</value></data>
 </root>

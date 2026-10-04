@@ -729,4 +729,7 @@
   <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>A frase de acesso deve ter pelo menos 12 caracteres.</value></data>
   <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Esta cópia de segurança está encriptada. Introduza a respetiva frase de acesso.</value></data>
   <data name="Weekdays" xml:space="preserve"><value>Dias da semana</value></data>
+  <data name="Request a developer account" xml:space="preserve"><value>Pedir uma conta de programador</value></data>
+  <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>Cópia de segurança restaurada no novo servidor. Inicie sessão com uma conta de administrador da cópia.</value></data>
+  <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>A sua conta não é um administrador ativo nesta cópia (nem esta conta nem o seu endereço de e-mail); o restauro deixá-lo-ia sem acesso.</value></data>
 </root>

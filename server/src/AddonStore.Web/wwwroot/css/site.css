@@ -158,6 +158,9 @@ footer.site {
 }
 footer.site img { height: 20px; opacity: .8; }
 footer.site .spacer { margin-left: auto; }
+footer.site .btn { margin-right: 4px; }
+/* bot trap on the access request form: off screen, not display:none (some bots skip hidden fields) */
+.hp-field { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 
 .token-reveal {
   font-family: Consolas, monospace; background: var(--tun-navy); color: var(--tun-green);

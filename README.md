@@ -106,7 +106,9 @@ backups, paste the connection string of an Azure storage account (Azure portal:
 storage account → Access keys → Connection string) or a SAS URL under
 **Automatic backup**, set a passphrase (keep it outside the server), time and
 weekdays; the page has a short guide. Restore works straight from the container
-or from a downloaded `.psbak` file with the passphrase.
+or from a downloaded `.psbak` file with the passphrase. Disaster recovery on a new server: run the
+first-run setup, enter the same access key and passphrase, restore from the
+container, then sign in with an admin account from the backup.
 
 ## The Power PDF client
 

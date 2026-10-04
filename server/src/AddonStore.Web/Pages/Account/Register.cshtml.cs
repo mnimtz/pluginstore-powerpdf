@@ -1,5 +1,6 @@
 using AddonStore.Web.Data;
 using AddonStore.Web.Services;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,17 +14,33 @@ public class RegisterModel : PageModel
     private readonly NotificationService _notify;
 
     public string? Error { get; private set; }
+    /// <summary>When the form was shown (UTC ticks, signed): requests faster than 3 s are bots.</summary>
+    public string Shown { get; private set; } = "";
 
     public RegisterModel(UserManager<AppUser> users, AuditService audit, NotificationService notify)
     {
         _users = users; _audit = audit; _notify = notify;
     }
 
-    public void OnGet() { }
+    public void OnGet([FromServices] Microsoft.AspNetCore.DataProtection.IDataProtectionProvider dp) =>
+        Shown = dp.CreateProtector("AddonStore.Register").Protect(DateTime.UtcNow.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture));
 
-    public async Task<IActionResult> OnPostAsync(string name, string email, string password, string? reason,
-                                                 [FromServices] Microsoft.Extensions.Caching.Memory.IMemoryCache cache)
+    public async Task<IActionResult> OnPostAsync(string name, string email, string password, string? reason, string? website, string? shown,
+                                                 [FromServices] Microsoft.Extensions.Caching.Memory.IMemoryCache cache,
+                                                 [FromServices] Microsoft.AspNetCore.DataProtection.IDataProtectionProvider dp)
     {
+        // Bot traps: the invisible field filled in, or the form sent within 3 seconds
+        // (or without a valid timestamp). Answered like a normal request, nothing stored.
+        long ticks = 0;
+        try { ticks = long.Parse(dp.CreateProtector("AddonStore.Register").Unprotect(shown ?? ""), System.Globalization.CultureInfo.InvariantCulture); }
+        catch (Exception ex) when (ex is System.Security.Cryptography.CryptographicException or FormatException or OverflowException) { }
+        var age = DateTime.UtcNow - new DateTime(Math.Min(Math.Max(ticks, 0), DateTime.MaxValue.Ticks), DateTimeKind.Utc);
+        if (!string.IsNullOrEmpty(website) || ticks == 0 || age < TimeSpan.FromSeconds(3) || age > TimeSpan.FromHours(12))
+        {
+            await _audit.LogAsync("anonymous", "user.access-request-dropped", "", !string.IsNullOrEmpty(website) ? "trap field" : "timing");
+            return RedirectToPage("/Account/Login", new { registered = "1" });
+        }
+
         // at most 5 access requests per address and hour
         var ip = AddonStore.Web.Services.GeoService.ClientIp(HttpContext)?.ToString() ?? "";
         var n = Microsoft.Extensions.Caching.Memory.CacheExtensions.GetOrCreate(cache, $"register:{ip}:{DateTime.UtcNow:yyyyMMddHH}",
@@ -45,6 +62,7 @@ public class RegisterModel : PageModel
             if (result.Errors.Any(e => e.Code is "DuplicateUserName" or "DuplicateEmail"))
                 return RedirectToPage("/Account/Login", new { registered = "1" });
             Error = string.Join(" ", result.Errors.Select(e => e.Description));
+            OnGet(dp);
             return Page();
         }
         await _users.AddToRoleAsync(user, SchemaUpgrade.DefaultRole);
@@ -52,7 +70,8 @@ public class RegisterModel : PageModel
         await _notify.NotifyStaffAsync("AccessRequest",
             "[Add-on Store] New access request",
             $"<p><b>{System.Net.WebUtility.HtmlEncode(name)}</b> ({System.Net.WebUtility.HtmlEncode(email)}) requests publisher access.</p>" +
-            $"<p>Reason: {System.Net.WebUtility.HtmlEncode(reason ?? "-")}</p><p>Review it on the Users page.</p>");
+            $"<p>Reason: {System.Net.WebUtility.HtmlEncode(reason ?? "-")}</p>" +
+            $"<p><a href=\"{await _notify.BaseUrlAsync()}/Admin/Users\">Review it on the Users page</a>.</p>");
         return RedirectToPage("/Account/Login", new { registered = "1" });
     }
 }

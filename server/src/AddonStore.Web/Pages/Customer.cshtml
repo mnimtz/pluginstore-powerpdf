@@ -191,9 +191,9 @@
             <div>
                 <label>@L["Language"]</label>
                 <select name="language">
-                    @foreach (var l in AddonStore.Web.Validation.PackageValidator.RequiredLanguages)
+                    @foreach (var (l, name) in AddonStore.Web.Services.LanguageNames.Options())
                     {
-                        <option value="@l" selected="@(l == c.Language)">@l</option>
+                        <option value="@l" selected="@(l == c.Language)">@name</option>
                     }
                 </select>
             </div>

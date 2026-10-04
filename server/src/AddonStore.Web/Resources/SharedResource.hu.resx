@@ -729,4 +729,7 @@
   <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>A jelmondatnak legalább 12 karakterből kell állnia.</value></data>
   <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>Ez a biztonsági mentés titkosított. Adja meg a jelmondatát.</value></data>
   <data name="Weekdays" xml:space="preserve"><value>A hét napjai</value></data>
+  <data name="Request a developer account" xml:space="preserve"><value>Fejlesztői fiók igénylése</value></data>
+  <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>A biztonsági mentés visszaállítva az új kiszolgálón. Jelentkezzen be a mentésben szereplő rendszergazdai fiókkal.</value></data>
+  <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>A fiókja ebben a mentésben nem aktív rendszergazda (sem ez a fiók, sem az e-mail-címe); a visszaállítás kizárná Önt.</value></data>
 </root>

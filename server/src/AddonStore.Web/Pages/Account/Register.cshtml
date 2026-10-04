@@ -14,6 +14,12 @@
 
 <div class="card" style="max-width:480px">
     <form method="post" class="stack">
+        @* Bot traps (S0.18.2): a field people never see, and the time the form was shown. *@
+        <div class="hp-field" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+        <input type="hidden" name="shown" value="@Model.Shown" />
         <div>
             <label for="name">@L["Display name"]</label>
             <input type="text" id="name" name="name" required maxlength="100" />
