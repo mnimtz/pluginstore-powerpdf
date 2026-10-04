@@ -555,4 +555,18 @@
   <data name="Similar to report #{0}" xml:space="preserve"><value>{0} numaralı bildirime benzer</value></data>
   <data name="AI connection works." xml:space="preserve"><value>YZ bağlantısı çalışıyor.</value></data>
   <data name="The AI connection test failed." xml:space="preserve"><value>YZ bağlantı testi başarısız oldu.</value></data>
+  <data name="API and AI assistants" xml:space="preserve"><value>API ve YZ asistanları</value></data>
+  <data name="ChatGPT (custom GPT actions), Gemini function calling and other tools: import the OpenAPI description and enter the personal token as Bearer key." xml:space="preserve"><value>ChatGPT (özel GPT eylemleri), Gemini işlev çağrıları ve diğer araçlar: OpenAPI açıklamasını içe aktarın ve kişisel belirteci Bearer anahtarı olarak girin.</value></data>
+  <data name="Claude Code: install the skill. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>Claude Code: skill'i yükleyin. Güncel kuralları her zaman sunucudan yükler, bu yüzden hiç güncellenmesi gerekmez.</value></data>
+  <data name="Coding assistants that read AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): save it in the plugin project." xml:space="preserve"><value>AGENTS.md okuyan kodlama asistanları (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): eklenti projesine kaydedin.</value></data>
+  <data name="Description of all endpoints (OpenAPI 3.1)" xml:space="preserve"><value>Tüm uç noktaların açıklaması (OpenAPI 3.1)</value></data>
+  <data name="Download AGENTS.md" xml:space="preserve"><value>AGENTS.md dosyasını indir</value></data>
+  <data name="Give the token to your AI assistant together with this line:" xml:space="preserve"><value>Belirteci YZ asistanınıza şu satırla birlikte verin:</value></data>
+  <data name="Give your AI assistant one line" xml:space="preserve"><value>YZ asistanınıza tek bir satır verin</value></data>
+  <data name="Optional: set up your tool once" xml:space="preserve"><value>İsteğe bağlı: aracınızı bir kez ayarlayın</value></data>
+  <data name="Publish and update plugins directly from your AI assistant, for example Claude, ChatGPT, Gemini or Copilot. The assistant reads the store&#x27;s rules from the API, validates the package until all checks pass and submits it for review." xml:space="preserve"><value>Eklentileri doğrudan YZ asistanınızdan, örneğin Claude, ChatGPT, Gemini veya Copilot ile yayımlayın ve güncelleyin. Asistan mağaza kurallarını API üzerinden okur, tüm denetimler geçene kadar paketi doğrular ve incelemeye gönderir.</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Power PDF içindeki mağaza penceresinden gönderildi. Yalnızca siz ve yöneticiler görebilir; YZ asistanınız bunları GET /api/packages/&lt;id&gt;/feedback üzerinden okur.</value></data>
+  <data name="Short index for language models" xml:space="preserve"><value>Dil modelleri için kısa dizin</value></data>
+  <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>İhtiyacı olan bu kadar: kılavuzu okur, sonraki oturumlar için kendini ayarlar ve kurallara uyar.</value></data>
+  <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>Belirteç adı (ör. 'asistan', 'derleme sunucusu')</value></data>
 </root>

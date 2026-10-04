@@ -555,4 +555,18 @@
   <data name="Similar to report #{0}" xml:space="preserve"><value>Hasonló a(z) {0}. jelentéshez</value></data>
   <data name="AI connection works." xml:space="preserve"><value>Az MI-kapcsolat működik.</value></data>
   <data name="The AI connection test failed." xml:space="preserve"><value>Az MI-kapcsolatteszt sikertelen.</value></data>
+  <data name="API and AI assistants" xml:space="preserve"><value>API és MI-asszisztensek</value></data>
+  <data name="ChatGPT (custom GPT actions), Gemini function calling and other tools: import the OpenAPI description and enter the personal token as Bearer key." xml:space="preserve"><value>ChatGPT (egyéni GPT-k műveletei), Gemini függvényhívások és más eszközök: importálja az OpenAPI-leírást, és adja meg a személyes tokent Bearer-kulcsként.</value></data>
+  <data name="Claude Code: install the skill. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>Claude Code: telepítse a skillt. Mindig a szerverről tölti be az aktuális szabályokat, így soha nem kell frissíteni.</value></data>
+  <data name="Coding assistants that read AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): save it in the plugin project." xml:space="preserve"><value>Az AGENTS.md fájlt olvasó kódolási asszisztensek (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): mentse a bővítményprojektbe.</value></data>
+  <data name="Description of all endpoints (OpenAPI 3.1)" xml:space="preserve"><value>Az összes végpont leírása (OpenAPI 3.1)</value></data>
+  <data name="Download AGENTS.md" xml:space="preserve"><value>AGENTS.md letöltése</value></data>
+  <data name="Give the token to your AI assistant together with this line:" xml:space="preserve"><value>Adja át a tokent MI-asszisztensének ezzel a sorral együtt:</value></data>
+  <data name="Give your AI assistant one line" xml:space="preserve"><value>Adjon egy sort MI-asszisztensének</value></data>
+  <data name="Optional: set up your tool once" xml:space="preserve"><value>Opcionális: eszköze egyszeri beállítása</value></data>
+  <data name="Publish and update plugins directly from your AI assistant, for example Claude, ChatGPT, Gemini or Copilot. The assistant reads the store&#x27;s rules from the API, validates the package until all checks pass and submits it for review." xml:space="preserve"><value>Bővítmények közzététele és frissítése közvetlenül MI-asszisztenséből, például Claude, ChatGPT, Gemini vagy Copilot segítségével. Az asszisztens az API-n keresztül olvassa az áruház szabályait, addig ellenőrzi a csomagot, amíg minden ellenőrzés sikeres, majd jóváhagyásra küldi.</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>A Power PDF áruházablakából küldve. Csak Ön és az adminisztrátorok látják; MI-asszisztense a GET /api/packages/&lt;id&gt;/feedback címen olvassa.</value></data>
+  <data name="Short index for language models" xml:space="preserve"><value>Rövid tartalomjegyzék nyelvi modellekhez</value></data>
+  <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Ennyi elég neki: elolvassa az útmutatót, beállítja magát a későbbi munkamenetekre, és betartja a szabályokat.</value></data>
+  <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>Token neve (pl. „asszisztens”, „buildszerver”)</value></data>
 </root>

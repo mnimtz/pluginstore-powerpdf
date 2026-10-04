@@ -555,4 +555,18 @@
   <data name="Similar to report #{0}" xml:space="preserve"><value>Simile alla segnalazione n. {0}</value></data>
   <data name="AI connection works." xml:space="preserve"><value>La connessione IA funziona.</value></data>
   <data name="The AI connection test failed." xml:space="preserve"><value>La verifica della connessione IA non è riuscita.</value></data>
+  <data name="API and AI assistants" xml:space="preserve"><value>API e assistenti IA</value></data>
+  <data name="ChatGPT (custom GPT actions), Gemini function calling and other tools: import the OpenAPI description and enter the personal token as Bearer key." xml:space="preserve"><value>ChatGPT (azioni dei GPT personalizzati), chiamate di funzione Gemini e altri strumenti: importa la descrizione OpenAPI e inserisci il token personale come chiave Bearer.</value></data>
+  <data name="Claude Code: install the skill. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>Claude Code: installa lo skill. Carica sempre le regole attuali dal server, quindi non va mai aggiornato.</value></data>
+  <data name="Coding assistants that read AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): save it in the plugin project." xml:space="preserve"><value>Assistenti di programmazione che leggono AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): salvalo nel progetto del plug-in.</value></data>
+  <data name="Description of all endpoints (OpenAPI 3.1)" xml:space="preserve"><value>Descrizione di tutti gli endpoint (OpenAPI 3.1)</value></data>
+  <data name="Download AGENTS.md" xml:space="preserve"><value>Scarica AGENTS.md</value></data>
+  <data name="Give the token to your AI assistant together with this line:" xml:space="preserve"><value>Fornisci il token al tuo assistente IA insieme a questa riga:</value></data>
+  <data name="Give your AI assistant one line" xml:space="preserve"><value>Dai una riga al tuo assistente IA</value></data>
+  <data name="Optional: set up your tool once" xml:space="preserve"><value>Facoltativo: configura il tuo strumento una volta</value></data>
+  <data name="Publish and update plugins directly from your AI assistant, for example Claude, ChatGPT, Gemini or Copilot. The assistant reads the store&#x27;s rules from the API, validates the package until all checks pass and submits it for review." xml:space="preserve"><value>Pubblica e aggiorna i plug-in direttamente dal tuo assistente IA, per esempio Claude, ChatGPT, Gemini o Copilot. L'assistente legge le regole dello store dall'API, convalida il pacchetto finché tutti i controlli sono superati e lo invia per la revisione.</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Inviati dalla finestra dello store in Power PDF. Solo tu e gli amministratori li vedete; il tuo assistente IA li legge tramite GET /api/packages/&lt;id&gt;/feedback.</value></data>
+  <data name="Short index for language models" xml:space="preserve"><value>Indice breve per i modelli linguistici</value></data>
+  <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Non serve altro: legge la guida, si configura per le sessioni future e rispetta le regole.</value></data>
+  <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>Nome del token (ad es. 'assistente', 'server di build')</value></data>
 </root>

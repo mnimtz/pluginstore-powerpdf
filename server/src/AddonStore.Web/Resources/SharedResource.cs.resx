@@ -555,4 +555,18 @@
   <data name="Similar to report #{0}" xml:space="preserve"><value>Podobné hlášení č. {0}</value></data>
   <data name="AI connection works." xml:space="preserve"><value>Připojení k AI funguje.</value></data>
   <data name="The AI connection test failed." xml:space="preserve"><value>Test připojení k AI selhal.</value></data>
+  <data name="API and AI assistants" xml:space="preserve"><value>API a asistenti AI</value></data>
+  <data name="ChatGPT (custom GPT actions), Gemini function calling and other tools: import the OpenAPI description and enter the personal token as Bearer key." xml:space="preserve"><value>ChatGPT (akce vlastních GPT), volání funkcí Gemini a další nástroje: importujte popis OpenAPI a zadejte osobní token jako klíč Bearer.</value></data>
+  <data name="Claude Code: install the skill. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>Claude Code: nainstalujte skill. Vždy načítá aktuální pravidla ze serveru, takže ho není nutné aktualizovat.</value></data>
+  <data name="Coding assistants that read AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): save it in the plugin project." xml:space="preserve"><value>Asistenti pro programování, kteří čtou AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): uložte jej do projektu pluginu.</value></data>
+  <data name="Description of all endpoints (OpenAPI 3.1)" xml:space="preserve"><value>Popis všech koncových bodů (OpenAPI 3.1)</value></data>
+  <data name="Download AGENTS.md" xml:space="preserve"><value>Stáhnout AGENTS.md</value></data>
+  <data name="Give the token to your AI assistant together with this line:" xml:space="preserve"><value>Předejte token svému asistentovi AI spolu s tímto řádkem:</value></data>
+  <data name="Give your AI assistant one line" xml:space="preserve"><value>Dejte asistentovi AI jeden řádek</value></data>
+  <data name="Optional: set up your tool once" xml:space="preserve"><value>Volitelné: jednorázově nastavte svůj nástroj</value></data>
+  <data name="Publish and update plugins directly from your AI assistant, for example Claude, ChatGPT, Gemini or Copilot. The assistant reads the store&#x27;s rules from the API, validates the package until all checks pass and submits it for review." xml:space="preserve"><value>Publikujte a aktualizujte pluginy přímo ze svého asistenta AI, například Claude, ChatGPT, Gemini nebo Copilot. Asistent načte pravidla obchodu přes API, ověřuje balíček, dokud neprojdou všechny kontroly, a odešle ho ke schválení.</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Odesláno z okna obchodu v Power PDF. Vidíte je jen vy a správci; váš asistent AI je čte přes GET /api/packages/&lt;id&gt;/feedback.</value></data>
+  <data name="Short index for language models" xml:space="preserve"><value>Stručný rejstřík pro jazykové modely</value></data>
+  <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Víc nepotřebuje: přečte si průvodce, nastaví se pro další relace a dodržuje pravidla.</value></data>
+  <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>Název tokenu (např. „asistent“, „build server“)</value></data>
 </root>

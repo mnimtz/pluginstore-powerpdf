@@ -35,3 +35,25 @@ if missing:
     print('Agent guide is missing these codes in its rule reference:', ', '.join(missing))
     sys.exit(1)
 print(f'OK: all {len(codes)} codes are documented in the agent guide.')
+
+# Every /api route must be described in the vendor-neutral OpenAPI document
+# (Api/OpenApiDoc.cs), so assistants other than Claude see it too.
+with open(os.path.join(ROOT, 'Api', 'ApiEndpoints.cs'), encoding='utf-8') as f:
+    endpoints = f.read()
+with open(os.path.join(ROOT, 'Api', 'OpenApiDoc.cs'), encoding='utf-8') as f:
+    openapi = f.read()
+
+
+def norm(path):
+    path = re.sub(r'\{\*\*(\w+)\}', r'{\1}', path)
+    return re.sub(r'\{(\w+):\w+\}', r'{\1}', path).rstrip('/') or '/'
+
+
+routes = {(m.upper(), norm('/api' + p)) for m, p in re.findall(r'api\.Map(Get|Post|Put|Patch|Delete)\("([^"]*)"', endpoints)}
+routes |= {(m.upper(), norm('/api' + p)) for p, m in re.findall(r'api\.MapMethods\("([^"]*)", new\[\] \{ "(\w+)" \}', endpoints)}
+described = {(m.upper(), norm(p)) for m, p in re.findall(r'new\("(get|post|put|patch|delete)", "([^"]+)"', openapi)}
+undocumented = sorted(f'{m} {p}' for m, p in routes - described)
+if undocumented:
+    print('OpenAPI document (Api/OpenApiDoc.cs) is missing these routes:', ', '.join(undocumented))
+    sys.exit(1)
+print(f'OK: all {len(routes)} API routes are described in the OpenAPI document.')

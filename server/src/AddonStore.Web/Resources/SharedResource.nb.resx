@@ -555,4 +555,18 @@
   <data name="Similar to report #{0}" xml:space="preserve"><value>Ligner rapport #{0}</value></data>
   <data name="AI connection works." xml:space="preserve"><value>KI-tilkoblingen fungerer.</value></data>
   <data name="The AI connection test failed." xml:space="preserve"><value>KI-tilkoblingstesten mislyktes.</value></data>
+  <data name="API and AI assistants" xml:space="preserve"><value>API og KI-assistenter</value></data>
+  <data name="ChatGPT (custom GPT actions), Gemini function calling and other tools: import the OpenAPI description and enter the personal token as Bearer key." xml:space="preserve"><value>ChatGPT (handlinger i egne GPT-er), Gemini-funksjonskall og andre verktøy: importer OpenAPI-beskrivelsen, og oppgi det personlige tokenet som Bearer-nøkkel.</value></data>
+  <data name="Claude Code: install the skill. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>Claude Code: installer skillen. Den henter alltid gjeldende regler fra serveren og må aldri oppdateres.</value></data>
+  <data name="Coding assistants that read AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): save it in the plugin project." xml:space="preserve"><value>Kodeassistenter som leser AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): lagre den i plugin-prosjektet.</value></data>
+  <data name="Description of all endpoints (OpenAPI 3.1)" xml:space="preserve"><value>Beskrivelse av alle endepunkter (OpenAPI 3.1)</value></data>
+  <data name="Download AGENTS.md" xml:space="preserve"><value>Last ned AGENTS.md</value></data>
+  <data name="Give the token to your AI assistant together with this line:" xml:space="preserve"><value>Gi tokenet til KI-assistenten din sammen med denne linjen:</value></data>
+  <data name="Give your AI assistant one line" xml:space="preserve"><value>Gi KI-assistenten én linje</value></data>
+  <data name="Optional: set up your tool once" xml:space="preserve"><value>Valgfritt: sett opp verktøyet én gang</value></data>
+  <data name="Publish and update plugins directly from your AI assistant, for example Claude, ChatGPT, Gemini or Copilot. The assistant reads the store&#x27;s rules from the API, validates the package until all checks pass and submits it for review." xml:space="preserve"><value>Publiser og oppdater plugins direkte fra KI-assistenten din, for eksempel Claude, ChatGPT, Gemini eller Copilot. Assistenten leser butikkens regler via API-et, validerer pakken til alle kontroller er bestått, og sender den inn til gjennomgang.</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Sendt fra butikkvinduet i Power PDF. Bare du og administratorene ser dem; KI-assistenten din leser dem via GET /api/packages/&lt;id&gt;/feedback.</value></data>
+  <data name="Short index for language models" xml:space="preserve"><value>Kort indeks for språkmodeller</value></data>
+  <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Mer trenger den ikke: den leser veiledningen, setter seg opp for fremtidige økter og følger reglene.</value></data>
+  <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>Tokennavn (f.eks. 'assistent', 'byggserver')</value></data>
 </root>

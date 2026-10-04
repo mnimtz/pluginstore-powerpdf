@@ -35,7 +35,7 @@ directly inside Power PDF.
 ## How it works
 
 ```
- Developer (+ Claude, via API token)         Admin                 End user
+ Developer (+ AI assistant, API token)       Admin                 End user
         │                                      │                       │
         │ POST /api/packages/validate          │ review queue          │ Add-on Store ribbon
         │ POST /api/packages                   │ approve / reject      │ browse · install · update
@@ -52,9 +52,9 @@ directly inside Power PDF.
 | 🏪 **End users never see this server** | The catalog is read anonymously by the Add-on Store ribbon add-on. Accounts exist only for plugin developers and admins; registration is an access *request* that an admin approves. Roles: **Developer** (uploads and maintains own add-ons; called "User" before S0.9.0), **Reviewer**, **Admin**. |
 | 🔍 **Every upload is validated** | Manifest schema, SemVer monotonicity, x64 + ARM64 PE checks, debug-runtime detection, import-table scan, SHA-256 verification, ribbon governance, reserved names, layout and localization pitfalls. Every finding carries a stable `code` and a concrete `hint`. |
 | 🗄️ **Source code escrow** | After every upload the agent also sends the source code of that version. It is checked (credentials, GPL/AGPL, build output), stored next to the version, visible to admins only and part of every backup; by default a version cannot be approved without it. |
-| 🔁 **Source round trip for admins** | An admin (or their Claude session) fetches an add-on's stored source (`GET /api/packages/{id}/source/latest`), changes it, publishes a higher version for the original owner and uploads the changed source for that new version, so the store holds matching source for every version. Steps in the agent guide and SKILL.md. |
+| 🔁 **Source round trip for admins** | An admin (or their AI assistant) fetches an add-on's stored source (`GET /api/packages/{id}/source/latest`), changes it, publishes a higher version for the original owner and uploads the changed source for that new version, so the store holds matching source for every version. Steps in the agent guide and SKILL.md. |
 | 🔗 **Share links for sales** | Every add-on has its own public page `/a/<short name>` (e.g. `/a/smartbookmarks`; the full id works too) with icon, description, what's new, the "Install in Power PDF" button, the client download and a share box: copy the link or open a prepared email in the page's language. Link previews in Teams/Outlook show name, description and icon (Open Graph). An optional `?ref=<short name>` attributes page views, install clicks and client downloads to the person who shared the link (reports, "Shared links"); link-preview bots are not counted. Catalog cards have a "Share link" button; the JSON catalog carries `pageUrl`. |
-| ⭐ **Ratings, problem reports, screenshots** | Users rate add-ons (1 to 5 stars, one rating per installation, anonymous install id) and send problem reports or comments from the store window inside Power PDF, optionally with a reply address and a log excerpt. The average shows on catalog cards, add-on pages and in the client; reports reach the owner by email and are listed on the plug-in page and via `GET /api/packages/{id}/feedback` (owner/admin, so Claude can work through them). Packages may carry up to 6 screenshots with captions (manifest `screenshots`), shown as a gallery on the website and in the client. |
+| ⭐ **Ratings, problem reports, screenshots** | Users rate add-ons (1 to 5 stars, one rating per installation, anonymous install id) and send problem reports or comments from the store window inside Power PDF, optionally with a reply address and a log excerpt. The average shows on catalog cards, add-on pages and in the client; reports reach the owner by email and are listed on the plug-in page and via `GET /api/packages/{id}/feedback` (owner/admin, so an AI assistant can work through them). Packages may carry up to 6 screenshots with captions (manifest `screenshots`), shown as a gallery on the website and in the client. |
 | 🤖 **AI assistant (optional)** | Off by default; an admin picks Claude (official Anthropic SDK) or Gemini, stores the key (encrypted with the server's data protection keys) and switches each part on: problem reports are sorted in the background (category, urgency, summary in English and German, reply draft, duplicate hint); reviewers get a review aid per version (what changed against the previous version, does the changelog match, concerns such as new hosts or third-party code, a recommendation), on request or automatically; visitors and the store window search by need ("split scanned invoices by barcode") with a reason per hit. Never sent: email or IP addresses, log excerpts, accounts; changed source lines only with an extra option. Daily request limit, connection test, every change audited. Without AI the plain word search answers. |
 | 🔖 **Bookmarks and shortcuts** | Power PDF's own application icon (taken from PowerPDF.exe) as favicon, Apple touch icon and web-app icon (`/site.webmanifest`, localized name, brand colours); page titles in the visitor's language ("Add-on Store für Tungsten Power PDF", sub pages "<page> · Add-on Store für Power PDF"); meta description and an Open Graph preview card (`/img/social-card.png`) for links in Teams, Outlook and messengers. |
 | 📊 **Reports** | Admin tab with downloads per add-on (ranking, trend against the previous period, share, sparkline), downloads and store-window openings per day, week or month, client versions in use, Power PDF and Windows versions, architecture (x64/ARM64), client languages, download sources, countries, cities and network operators (IP geolocation by DB-IP, CC BY 4.0), submissions and review times, developers and versions without source. Filters for period, add-on, country and source; report language selectable (16 languages); CSV export and a print view for "Save as PDF". |
@@ -62,7 +62,7 @@ directly inside Power PDF.
 | 🏷️ **Growing categories** | Every upload names a category. If none fits, the upload may propose a new high-level one (16 languages); the server rejects names that are too close to an existing category, too specific or beyond the limit, and creates it on submission. Admins merge or delete categories. |
 | ✏️ **Editable catalog entry** | Owners and admins correct name, description (16 languages), author and contact on the server or via `PATCH /api/packages/{id}`, without a new version; the Power PDF client shows the change immediately. |
 | 🧪 **Beta channel** | Versions that pass all automatic checks become instantly installable for users who enabled the beta option in Power PDF, while an admin reviews them for the live store. |
-| 🤖 **Agent-friendly API** | `GET /api/agent-guide` teaches any AI assistant the full workflow with zero prior knowledge. Personal tokens let Claude validate, fix and submit packages in a loop until the report is green. |
+| 🤖 **Agent-friendly API, any assistant** | `GET /api/agent-guide` teaches any AI assistant (Claude, ChatGPT, Gemini, Copilot or your own agent) the full workflow with zero prior knowledge. Vendor-neutral entry points: `/llms.txt`, an OpenAPI 3.1 description at `/api/openapi.json` (ChatGPT custom GPT actions, Gemini function calling, Postman, code generators) and an `AGENTS.md` at `/api/agents-md` for coding assistants (Codex, Copilot, Cursor, Gemini CLI); the Claude Code skill is one more option. Plain HTTPS, bearer token, JSON. Personal tokens let the assistant validate, fix and submit packages in a loop until the report is green. CI fails when a route is missing from the OpenAPI document. |
 | 📜 **Audit trail** | Registrations, approvals, tokens, submissions (version + changelog are mandatory), reviews and downloads are recorded and searchable. |
 | 💾 **Backup and restore** | One click downloads a full backup (database including usage counters and stored IP events, packages and source code, avatars, developer kit); restore checks the archive, refuses to lock out the acting admin, keeps an automatic safety backup of the previous state and upgrades an older backup to the current schema right away. The geolocation databases (data/geo) are not backed up; the server downloads them again. |
 | ✉️ **Notifications** | Email via Resend with a test button (free recipient); admins choose which events send mail: access requests, submissions, client releases, and for authors upload receipts, approval or rejection, withdrawn or restored versions and catalog changes by an admin. Authors can opt out in their profile. Every sent or failed mail is in the audit log. |
@@ -186,10 +186,12 @@ live immediately) is described step by step in
 
 ## API in 30 seconds
 
-**One URL is enough for an AI assistant:** tell Claude
+**One URL is enough for an AI assistant** (Claude, ChatGPT, Gemini, Copilot
+or any other): tell it
 *"Read https://<host>/api/agent-guide and publish the plugin in this folder."*
-The guide explains the token (environment variable `PPAK_TOKEN`), installs the
-Claude Code skill from `/api/skill` on first use and walks through packaging,
+The guide explains the token (environment variable `PPAK_TOKEN`), lets the
+assistant remember the store in the way its tool supports (`AGENTS.md`, the
+OpenAPI description or the Claude Code skill) and walks through packaging,
 validation and submission. Signed-in users find the same instructions on the
 **API** page of the web UI.
 
@@ -198,6 +200,9 @@ curl https://<host>/api                  # discover all endpoints
 curl https://<host>/api/agent-guide      # the full guide (markdown)
 curl https://<host>/api/schema/manifest  # manifest.json schema
 
+curl https://<host>/llms.txt             # short index for language models
+curl https://<host>/api/openapi.json     # OpenAPI 3.1 (GPT actions, function calling, tools)
+curl https://<host>/api/agents-md        # AGENTS.md for coding assistants
 curl https://<host>/api/skill            # Claude Code skill (SKILL.md)
 
 # with a personal token from your profile page:

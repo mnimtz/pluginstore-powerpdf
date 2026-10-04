@@ -555,4 +555,18 @@
   <data name="Similar to report #{0}" xml:space="preserve"><value>Vergelijkbaar met melding #{0}</value></data>
   <data name="AI connection works." xml:space="preserve"><value>De AI-verbinding werkt.</value></data>
   <data name="The AI connection test failed." xml:space="preserve"><value>De AI-verbindingstest is mislukt.</value></data>
+  <data name="API and AI assistants" xml:space="preserve"><value>API en AI-assistenten</value></data>
+  <data name="ChatGPT (custom GPT actions), Gemini function calling and other tools: import the OpenAPI description and enter the personal token as Bearer key." xml:space="preserve"><value>ChatGPT (acties van eigen GPT's), Gemini-functieaanroepen en andere tools: importeer de OpenAPI-beschrijving en voer het persoonlijke token in als Bearer-sleutel.</value></data>
+  <data name="Claude Code: install the skill. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>Claude Code: installeer de skill. Die laadt altijd de actuele regels van de server en hoeft nooit bijgewerkt te worden.</value></data>
+  <data name="Coding assistants that read AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): save it in the plugin project." xml:space="preserve"><value>Programmeerassistenten die AGENTS.md lezen (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): sla het op in het plug-inproject.</value></data>
+  <data name="Description of all endpoints (OpenAPI 3.1)" xml:space="preserve"><value>Beschrijving van alle eindpunten (OpenAPI 3.1)</value></data>
+  <data name="Download AGENTS.md" xml:space="preserve"><value>AGENTS.md downloaden</value></data>
+  <data name="Give the token to your AI assistant together with this line:" xml:space="preserve"><value>Geef het token aan uw AI-assistent samen met deze regel:</value></data>
+  <data name="Give your AI assistant one line" xml:space="preserve"><value>Geef uw AI-assistent één regel</value></data>
+  <data name="Optional: set up your tool once" xml:space="preserve"><value>Optioneel: uw tool eenmalig instellen</value></data>
+  <data name="Publish and update plugins directly from your AI assistant, for example Claude, ChatGPT, Gemini or Copilot. The assistant reads the store&#x27;s rules from the API, validates the package until all checks pass and submits it for review." xml:space="preserve"><value>Publiceer en werk plug-ins rechtstreeks bij vanuit uw AI-assistent, bijvoorbeeld Claude, ChatGPT, Gemini of Copilot. De assistent leest de regels van de store via de API, valideert het pakket tot alle controles slagen en dient het in voor beoordeling.</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Verzonden vanuit het storevenster in Power PDF. Alleen u en de beheerders zien ze; uw AI-assistent leest ze via GET /api/packages/&lt;id&gt;/feedback.</value></data>
+  <data name="Short index for language models" xml:space="preserve"><value>Korte index voor taalmodellen</value></data>
+  <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Meer heeft hij niet nodig: hij leest de handleiding, stelt zich in voor volgende sessies en volgt de regels.</value></data>
+  <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>Tokennaam (bijv. 'assistent', 'buildserver')</value></data>
 </root>

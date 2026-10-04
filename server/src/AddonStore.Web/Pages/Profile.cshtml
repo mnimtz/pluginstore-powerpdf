@@ -61,13 +61,13 @@
     <h2 style="margin-top:0">@L["Create a token"]</h2>
     <form method="post" asp-page-handler="Create" class="stack">
         <div>
-            <label for="name">@L["Token name (e.g. 'claude', 'build server')"]</label>
+            <label for="name">@L["Token name (e.g. 'assistant', 'build server')"]</label>
             <input type="text" id="name" name="name" maxlength="60" required />
         </div>
         <button type="submit" class="btn cta">@L["Create token"]</button>
     </form>
     <p style="font-size:.85rem;color:var(--tun-slate)">
-        @L["Give the token to your Claude together with this line:"]<br />
+        @L["Give the token to your AI assistant together with this line:"]<br />
         <code>@L["Plugin store:"] @($"{Request.Scheme}://{Request.Host}/api/agent-guide")</code>
     </p>
 </div>

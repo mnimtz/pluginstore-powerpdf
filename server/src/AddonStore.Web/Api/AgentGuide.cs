@@ -16,23 +16,34 @@ submit a plugin is available from this API.
 
 ## Start here (AI assistants)
 
-This URL is the only thing you need. Set yourself up once:
+This URL is the only thing you need, whichever assistant you are (Claude,
+ChatGPT, Gemini, Copilot or your own agent). The API is plain HTTPS with a
+bearer token and JSON; nothing in it depends on one vendor. Set yourself up once:
 
 1. **Token.** Use the environment variable `PPAK_TOKEN`. Never print it,
    never store it in files or commits. If it is not set, ask the user to
    create a token at {{baseUrl}}/Profile and set it with
    `setx PPAK_TOKEN "ppak_..."` (new terminal afterwards).
-2. **Skill (Claude Code, once per machine).** Download
-   {{baseUrl}}/api/skill and save it as
-   `%USERPROFILE%\.claude\skills\powerpdf-plugin-store\SKILL.md`, then tell
-   the user it is installed. Future sessions recognise Power PDF plugin
-   work automatically. Skip this if the file already exists.
+2. **Remember the store (once, pick what fits your tool):**
+   - Coding assistants that read `AGENTS.md` (OpenAI Codex, GitHub Copilot,
+     Cursor, Gemini CLI and others): save {{baseUrl}}/api/agents-md as
+     `AGENTS.md` in the plugin project (Gemini CLI: also as `GEMINI.md`, or
+     set `contextFileName` to `AGENTS.md`; Copilot: or as
+     `.github/copilot-instructions.md`). Skip if it exists.
+   - Claude Code: download {{baseUrl}}/api/skill and save it as
+     `%USERPROFILE%\.claude\skills\powerpdf-plugin-store\SKILL.md`.
+   - Tools that import OpenAPI (ChatGPT custom GPT actions, Gemini function
+     calling, Postman, code generators): {{baseUrl}}/api/openapi.json,
+     authentication "API key, Bearer" with the personal token.
+   - Chat assistants without HTTP access: give the user the exact `curl`
+     commands from this guide to run, and read their output.
 3. **Check the connection:** `GET {{baseUrl}}/api/me` with the token.
 4. Then follow the rest of this guide: package, validate until green, submit.
 
 ## Quick orientation
 
-1. `GET {{baseUrl}}/api` lists all endpoints.
+1. `GET {{baseUrl}}/api` lists all endpoints; `GET {{baseUrl}}/api/openapi.json`
+   describes them as OpenAPI 3.1; `GET {{baseUrl}}/llms.txt` is the short index.
 2. `GET {{baseUrl}}/api/me` with your token verifies authentication.
 3. `GET {{baseUrl}}/api/devkit` lists SDK documentation, knowledge files and
    templates you can download (Plugin SDK docs, known pitfalls, project template).
@@ -279,7 +290,7 @@ Every version's source code goes to the store, right after the package:
 
 ## Changing an existing add-on (admins: source round trip)
 
-Store admins (and their Claude session with an admin API token) can take any
+Store admins (and their AI assistant with an admin API token) can take any
 add-on's stored source, change it and publish a new version, for example to
 add languages, update the SDK or fix a bug while the author is away. The
 store must end up with the source of **every** version, matching exactly what
@@ -346,7 +357,7 @@ Users rate an add-on (1 to 5 stars) and send problem reports or comments from
 the store window inside Power PDF. The catalog shows the average (`rating` in
 the JSON catalog). Reports reach the package owner by email and are listed on
 the plug-in's portal page. As the owner (or an admin) you can read and close
-them via the API, e.g. to let Claude work through open bug reports:
+them via the API, e.g. to let your AI assistant work through open bug reports:
 
     GET   {{baseUrl}}/api/packages/{id}/feedback?status=open   reports + rating distribution
     PATCH {{baseUrl}}/api/packages/{id}/feedback/{fid}         {"status": "done"}
@@ -630,6 +641,50 @@ description: Build, package, validate and publish Tungsten Power PDF plugins (.z
 
 # Power PDF Add-on Store
 
+""" + Workflow(baseUrl);
+
+    /// <summary>
+    /// The same workflow as a vendor-neutral AGENTS.md (read by OpenAI Codex,
+    /// GitHub Copilot, Cursor, Gemini CLI and other coding assistants), saved
+    /// in the root of a plugin project.
+    /// </summary>
+    public static string AgentsMarkdown(string baseUrl) => $$"""
+# AGENTS.md: Power PDF plugin, published via the Add-on Store
+
+This project is a plugin for Tungsten Power PDF (.zxt, Plugin SDK, C++/MFC).
+It is published through the Add-on Store. These instructions apply to any AI
+coding assistant working here; the store API is plain HTTPS + JSON
+(OpenAPI: {{baseUrl}}/api/openapi.json).
+
+""" + Workflow(baseUrl);
+
+    /// <summary>llms.txt (llmstxt.org): short index of this site for language models.</summary>
+    public static string LlmsTxt(string baseUrl, string version) => $$"""
+# Add-on Store for Tungsten Power PDF
+
+> Catalog and publishing service for Tungsten Power PDF plugins (.ppak packages). Server {{version}}. Any AI assistant can develop, validate and submit plugins through a plain HTTPS/JSON API with a personal bearer token; users install add-ons from the store window inside Power PDF.
+
+## Docs
+
+- [Developer and agent guide]({{baseUrl}}/api/agent-guide): complete workflow and every rule (markdown, authoritative)
+- [OpenAPI 3.1 description]({{baseUrl}}/api/openapi.json): all endpoints, for tools and function calling
+- [manifest.json schema]({{baseUrl}}/api/schema/manifest): JSON Schema of the package manifest
+- [AGENTS.md]({{baseUrl}}/api/agents-md): project instructions for coding assistants (Codex, Copilot, Cursor, Gemini CLI)
+- [Claude Code skill]({{baseUrl}}/api/skill): the same workflow as SKILL.md
+
+## API
+
+- [Endpoint list]({{baseUrl}}/api)
+- [Catalog]({{baseUrl}}/api/catalog): released add-ons as JSON
+- [Search by need]({{baseUrl}}/api/search?q=split%20invoices%20by%20barcode): add-ons for a task described in plain words
+- [Categories]({{baseUrl}}/api/categories)
+
+## Optional
+
+- [Developer kit]({{baseUrl}}/api/devkit): Plugin SDK documentation, known pitfalls, project template
+""";
+
+    private static string Workflow(string baseUrl) => $$"""
 Store: {{baseUrl}}
 
 1. Before packaging or uploading, fetch and follow the current rules:

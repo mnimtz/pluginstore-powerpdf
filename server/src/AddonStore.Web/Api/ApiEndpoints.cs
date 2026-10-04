@@ -82,6 +82,10 @@ public static class ApiEndpoints
             return Results.File(ms, "application/x-msi", $"AddonStore-{pick.Version}.msi");
         });
 
+        // llms.txt (llmstxt.org): entry point for any language model or AI assistant.
+        app.MapGet("/llms.txt", (HttpContext ctx, AppVersion ver) =>
+            Results.Text(AgentGuide.LlmsTxt(Base(ctx), ver.Value), "text/markdown; charset=utf-8"));
+
         var api = app.MapGroup("/api");
 
         api.MapGet("/", (AppVersion ver, HttpContext ctx) => Results.Json(new
@@ -96,7 +100,10 @@ public static class ApiEndpoints
                 {
                     "GET  /api/agent-guide            full instructions for developers and AI agents (markdown)",
                     "GET  /api/schema/manifest        JSON schema of manifest.json",
+                    "GET  /api/openapi.json           OpenAPI 3.1 description of this API (ChatGPT actions, Gemini function calling, tools)",
+                    "GET  /api/agents-md              AGENTS.md for coding assistants (Codex, Copilot, Cursor, Gemini CLI)",
                     "GET  /api/skill                  Claude Code skill (SKILL.md) for this store",
+                    "GET  /llms.txt                   short index of this site for language models",
                     "GET  /api/me                     verify your token, see your packages (auth)",
                     "GET  /api/catalog?channel=beta   released packages; beta channel includes pre-release versions",
                     "GET  /api/packages/{id}          status and history of one package",
@@ -129,6 +136,14 @@ public static class ApiEndpoints
             Results.Text(AgentGuide.Markdown(Base(ctx), ver.Value), "text/markdown; charset=utf-8"));
 
         api.MapGet("/schema/manifest", () => Results.Text(AgentGuide.ManifestSchema, "application/json"));
+
+        // Vendor-neutral entry points (S0.13.0): OpenAPI for tools and function calling, AGENTS.md for coding assistants.
+        api.MapGet("/openapi.json", (HttpContext ctx, AppVersion ver) =>
+            Results.Text(OpenApiDoc.Json(Base(ctx), ver.Value), "application/json; charset=utf-8"));
+
+        api.MapGet("/agents-md", (HttpContext ctx) =>
+            Results.File(System.Text.Encoding.UTF8.GetBytes(AgentGuide.AgentsMarkdown(Base(ctx))),
+                         "text/markdown; charset=utf-8", "AGENTS.md"));
 
         api.MapGet("/skill", (HttpContext ctx) =>
             Results.File(System.Text.Encoding.UTF8.GetBytes(AgentGuide.SkillMarkdown(Base(ctx))),
