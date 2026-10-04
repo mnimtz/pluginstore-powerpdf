@@ -205,10 +205,12 @@ bool PSHttpGetText(const std::wstring& url, std::string& outUtf8, DWORD* status)
     for (;;)
     {
         DWORD avail = 0;
-        if (!WinHttpQueryDataAvailable(r, &avail) || avail == 0) break;
+        if (!WinHttpQueryDataAvailable(r, &avail)) return false;   // dropped connection: not a complete answer
+        if (avail == 0) break;
         std::string chunk(avail, 0);
         DWORD got = 0;
-        if (!WinHttpReadData(r, chunk.data(), avail, &got) || got == 0) break;
+        if (!WinHttpReadData(r, chunk.data(), avail, &got)) return false;
+        if (got == 0) break;
         outUtf8.append(chunk.data(), got);
         if (outUtf8.size() > 16 * 1024 * 1024) return false;
     }
@@ -227,10 +229,12 @@ bool PSHttpCheckCustomerCode(const std::wstring& url, const std::wstring& code, 
     for (;;)
     {
         DWORD avail = 0;
-        if (!WinHttpQueryDataAvailable(r, &avail) || avail == 0) break;
+        if (!WinHttpQueryDataAvailable(r, &avail)) return false;   // dropped connection: not a complete answer
+        if (avail == 0) break;
         std::string chunk(avail, 0);
         DWORD got = 0;
-        if (!WinHttpReadData(r, chunk.data(), avail, &got) || got == 0) break;
+        if (!WinHttpReadData(r, chunk.data(), avail, &got)) return false;
+        if (got == 0) break;
         outUtf8.append(chunk.data(), got);
         if (outUtf8.size() > 64 * 1024) return false;
     }
@@ -251,10 +255,12 @@ bool PSHttpPostJson(const std::wstring& url, const std::string& bodyUtf8, std::s
     for (;;)
     {
         DWORD avail = 0;
-        if (!WinHttpQueryDataAvailable(r, &avail) || avail == 0) break;
+        if (!WinHttpQueryDataAvailable(r, &avail)) return false;   // dropped connection: not a complete answer
+        if (avail == 0) break;
         std::string chunk(avail, 0);
         DWORD got = 0;
-        if (!WinHttpReadData(r, chunk.data(), avail, &got) || got == 0) break;
+        if (!WinHttpReadData(r, chunk.data(), avail, &got)) return false;
+        if (got == 0) break;
         responseUtf8.append(chunk.data(), got);
         if (responseUtf8.size() > 1024 * 1024) break;
     }

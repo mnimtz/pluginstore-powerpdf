@@ -21,5 +21,8 @@ void PSLinkShutdown();   // PluginUnload
 // Policy Store\UpdateBadge = 0 switches it off.
 void PSUpdateCheckSoon();
 
+// After a store window closed: opens a link request that arrived meanwhile.
+void PSLinkReplayPending();
+
 /// Package ids from links must look like reverse-DNS ids, nothing else.
 bool PSLinkIsValidId(const std::wstring& id);

@@ -3,13 +3,14 @@
 // exists in every language block below (English is the runtime fallback).
 #pragma code_page(65001)
 #include "resource.h"
+#include "../common/version.h"
 #include "afxres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // Version
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,8,0,0
- PRODUCTVERSION 0,8,0,0
+ FILEVERSION FP_VERSION_MAJOR,FP_VERSION_MINOR,FP_VERSION_PATCH,0
+ PRODUCTVERSION FP_VERSION_MAJOR,FP_VERSION_MINOR,FP_VERSION_PATCH,0
  FILEFLAGSMASK 0x3fL
  FILEFLAGS 0x0L
  FILEOS 0x40004L
@@ -22,11 +23,11 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Tungsten Automation"
             VALUE "FileDescription", "Add-on Store client for Tungsten Power PDF"
-            VALUE "FileVersion", "0.8.0"
+            VALUE "FileVersion", FP_VERSION_A
             VALUE "InternalName", "PluginStore"
             VALUE "OriginalFilename", "PluginStore.zxt"
             VALUE "ProductName", "Add-on Store for Tungsten Power PDF"
-            VALUE "ProductVersion", "0.8.0"
+            VALUE "ProductVersion", FP_VERSION_A
         END
     END
     BLOCK "VarFileInfo"

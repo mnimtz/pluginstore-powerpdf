@@ -7,3 +7,4 @@
 /// package is selected and, when it is not installed or outdated, the user is
 /// asked right away whether to install it. Ignored while the dialog is open.
 void PSShowStoreDialog(const std::wstring& preselectId = std::wstring());
+bool PSStoreDialogOpen();

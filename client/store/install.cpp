@@ -426,8 +426,9 @@ std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& sh
         L"}\r\n";
 }
 
-int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
+int PSSelfUpdateDownload(const PSCatalogEntry& e, std::wstring& ppak)
 {
+    ppak.clear();
     if (PSPolicyNoSelfUpdate())
     {
         FPLogW(L"[Store] self-update blocked by policy DisableSelfUpdate");
@@ -435,17 +436,29 @@ int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
     }
     if (!PSSignatureValid(e)) return 6;
     if (PluginsDir().empty()) return 8;
-    std::wstring ppak = TempPackagePath(e);
+    std::wstring path = TempPackagePath(e);
 
     DWORD status = 0;
     unsigned long long cap = e.sizeBytes > 0 ? e.sizeBytes + 65536 : 300ull * 1024 * 1024;
-    if (!PSHttpGetFile(e.downloadUrl, ppak, &status, cap)) return 1;
-    if (_wcsicmp(Sha256File(ppak).c_str(), e.sha256.c_str()) != 0)
+    if (!PSHttpGetFile(e.downloadUrl, path, &status, cap)) return 1;
+    if (_wcsicmp(Sha256File(path).c_str(), e.sha256.c_str()) != 0)
     {
-        DeleteFileW(ppak.c_str());
+        DeleteFileW(path.c_str());
         return 2;
     }
+    ppak = path;
+    return 0;
+}
 
+int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
+{
+    std::wstring ppak;
+    int rc = PSSelfUpdateDownload(e, ppak);
+    return rc == 0 ? PSSelfUpdateFinish(e, ppak, owner) : rc;
+}
+
+int PSSelfUpdateFinish(const PSCatalogEntry& e, const std::wstring& ppak, HWND owner)
+{
     // The MSI cannot replace PluginStore.zxt while Power PDF has it loaded, so
     // Power PDF closes first; ask before that happens ("No" is the default).
     if (MessageBoxW(owner, FPLoc(IDS_PSD_ASK_SELFUPD).c_str(), FPLoc(IDS_PSD_TITLE).c_str(),
@@ -475,7 +488,8 @@ int PSUninstallPackage(const std::wstring& zxtName, HWND owner)
     // Only plug-ins with a store manifest (installed by the store or by one of
     // our MSIs) can be removed here: a catalog entry naming one of Power PDF's
     // own plug-ins must never offer to delete it.
-    if (PSInstalledVersion(zxtName).empty())
+    std::wstring manifestDir = PluginsDir();
+    if (manifestDir.empty() || !cspath::FileExists(manifestDir + L"\\" + zxtName + L"\\manifest.json"))
     {
         FPLogW(L"[Store] %s has no store manifest, not removed", zxtName.c_str());
         return 4;

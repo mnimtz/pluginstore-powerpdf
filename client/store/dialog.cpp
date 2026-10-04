@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "dialog.h"
+#include "link.h"
 #include "catalog.h"
 #include "install.h"
 #include "settings.h"
@@ -175,7 +176,7 @@ protected:
 
         // Uninstall applies to installed plugins; the store client itself is
         // not removable from its own dialog.
-        BOOL canUninstall = !e->installedVersion.empty() && e->zxtName != L"PluginStore";
+        BOOL canUninstall = !e->installedVersion.empty() && _wcsicmp(e->zxtName.c_str(), L"PluginStore") != 0;
         // Company policy DisableInstall: browse only.
         const BOOL allowed = !PSPolicyNoInstall();
         GetDlgItem(IDC_PS_UNINSTALL)->EnableWindow(canUninstall && allowed);
@@ -186,7 +187,7 @@ protected:
     void OnUninstall()
     {
         const PSCatalogEntry* e = Selected();
-        if (!e || e->installedVersion.empty() || e->zxtName == L"PluginStore") return;
+        if (!e || e->installedVersion.empty() || _wcsicmp(e->zxtName.c_str(), L"PluginStore") == 0) return;
 
         wchar_t ask[512];
         _snwprintf_s(ask, 512, _TRUNCATE, FPLoc(IDS_PSD_CONFIRM_UNINST).c_str(), e->name.c_str());
@@ -313,16 +314,20 @@ END_MESSAGE_MAP()
 
 } // namespace storedlg
 
+static bool s_storeOpen = false;
+
 void PSShowStoreDialog(const std::wstring& preselectId)
 {
     AFX_MANAGE_MODULE_STATE;
-    static bool s_open = false;
-    if (s_open) return;
-    s_open = true;
+    if (s_storeOpen) return;
+    s_storeOpen = true;
     if (!PSWebUiAvailable() || PSShowWebStore(preselectId) == IDABORT)
     {
         storedlg::CStoreDialog dlg(preselectId);
         dlg.DoModal();
     }
-    s_open = false;
+    s_storeOpen = false;
+    PSLinkReplayPending();
 }
+
+bool PSStoreDialogOpen() { return s_storeOpen; }

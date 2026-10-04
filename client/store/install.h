@@ -37,6 +37,11 @@ int PSUninstallPackage(const std::wstring& zxtName, HWND owner);
 // 6 = not signed by a trusted key, 8 = Power PDF folder not found,
 // 7 = blocked by policy DisableSelfUpdate (install/remove: 7 = DisableInstall).
 int PSSelfUpdate(const PSCatalogEntry& e, HWND owner);
+// The two halves of PSSelfUpdate: the download (no UI, fine on a worker thread;
+// 0 and the verified package path, or 1, 2, 6, 7, 8) and the question plus the
+// helper start (UI thread; 0, 4, 5).
+int PSSelfUpdateDownload(const PSCatalogEntry& e, std::wstring& ppak);
+int PSSelfUpdateFinish(const PSCatalogEntry& e, const std::wstring& ppak, HWND owner);
 
 // The self-update helper script (PowerShell) for a downloaded package; used by
 // PSSelfUpdate, separate so it can be tested without a download.

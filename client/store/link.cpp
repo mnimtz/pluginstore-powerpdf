@@ -94,6 +94,9 @@ BOOL CALLBACK FindMain(HWND h, LPARAM lp)
 
 void OpenPending()
 {
+    // A store window is already open: keep the request, it is replayed when
+    // that window closes (PSLinkReplayPending).
+    if (PSStoreDialogOpen()) return;
     std::wstring id = TakePending();
     if (id.empty()) return;
     FPLogW(L"[Store] link request for %s", id.c_str());
@@ -189,4 +192,9 @@ void PSLinkShutdown()
 {
     if (g_linkWnd) { DestroyWindow(g_linkWnd); g_linkWnd = NULL; }
     UnregisterClassW(PS_LINK_WINDOW_CLASS, gHINSTANCE);
+}
+
+void PSLinkReplayPending()
+{
+    if (g_linkWnd && g_openMsg) PostMessageW(g_linkWnd, g_openMsg, 0, 0);
 }

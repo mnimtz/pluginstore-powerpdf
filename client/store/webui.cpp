@@ -9,6 +9,7 @@
 #include "policy.h"
 #include "loc.h"
 #include "logging.h"
+#include "clocale.h"
 #include "Resource.h"
 #include "version.h"
 #include <wrl.h>
@@ -68,7 +69,7 @@ std::wstring Field(const std::wstring& json, const wchar_t* key, size_t maxLen =
     p = json.find(L'"', p);
     if (p == std::wstring::npos) return std::wstring();
     std::wstring v;
-    for (size_t i = p + 1; i < json.size() && v.size() < maxLen; ++i)
+    for (size_t i = p + 1; i < json.size() && v.size() <= maxLen; ++i)
     {
         wchar_t c = json[i];
         if (c == L'"') return v;
@@ -157,12 +158,14 @@ double JsonNumber(const std::string& json, const char* key)
 {
     std::string k = std::string("\"") + key + "\":";
     size_t p = json.find(k);
-    return p == std::string::npos ? 0 : strtod(json.c_str() + p + k.size(), NULL);
+    return p == std::string::npos ? 0 : _strtod_l(json.c_str() + p + k.size(), NULL, FPCLocale());
 }
 
 // "4.3" without locale influence (JSON numbers for the page).
 std::wstring Tenths(double v)
 {
+    if (!(v > 0)) v = 0;   // also NaN
+    if (v > 5) v = 5;
     int t = (int)(v * 10 + 0.5);
     wchar_t b[32];
     swprintf_s(b, 32, L"%d.%d", t / 10, t % 10);
@@ -334,7 +337,7 @@ public:
     explicit CWebStore(const std::wstring& preselect) : CDialog(IDD_PS_WEB), m_preselect(preselect) {}
 
 protected:
-    enum { WM_RUN = WM_APP + 61, WM_FAIL = WM_APP + 63 };
+    enum { WM_FAIL = WM_APP + 63 };
     enum Job { JobInstall = 1, JobUninstall, JobSelfUpdate };
 
     ComPtr<ICoreWebView2Environment> m_env;
@@ -346,6 +349,9 @@ protected:
     std::wstring m_preselect;
     int m_catalogGen = 0;
     bool m_jobRunning = false;
+    // WebView2 completes its creation callbacks through the message loop, possibly
+    // after the dialog (a stack object) is gone: the callbacks check this flag first.
+    std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
 
     BOOL OnInitDialog() override
     {
@@ -370,7 +376,7 @@ protected:
         std::wstring udf = LocalDir(L"WebView2");
         HRESULT hr = CreateCoreWebView2EnvironmentWithOptions(nullptr, udf.empty() ? nullptr : udf.c_str(), nullptr,
             Callback<ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler>(
-                [this](HRESULT res, ICoreWebView2Environment* env) -> HRESULT { return OnEnvironment(res, env); }).Get());
+                [this, alive = m_alive](HRESULT res, ICoreWebView2Environment* env) -> HRESULT { return *alive ? OnEnvironment(res, env) : S_OK; }).Get());
         if (FAILED(hr)) { FPLogW(L"[Store] WebView2 environment failed (0x%08x)", (unsigned)hr); PostMessage(WM_FAIL); }
         return TRUE;
     }
@@ -380,7 +386,10 @@ protected:
         if (FAILED(res) || !env || !::IsWindow(m_hWnd)) { FPLogW(L"[Store] WebView2 environment callback failed (0x%08x)", (unsigned)res); PostMessage(WM_FAIL); return S_OK; }
         m_env = env;
         return env->CreateCoreWebView2Controller(m_hWnd, Callback<ICoreWebView2CreateCoreWebView2ControllerCompletedHandler>(
-            [this](HRESULT r, ICoreWebView2Controller* c) -> HRESULT { return OnController(r, c); }).Get());
+            [this, alive = m_alive](HRESULT r, ICoreWebView2Controller* c) -> HRESULT {
+                if (*alive) return OnController(r, c);
+                if (c) c->Close();   // window closed while WebView2 was starting
+                return S_OK; }).Get());
     }
 
     HRESULT OnController(HRESULT res, ICoreWebView2Controller* ctrl)
@@ -610,9 +619,12 @@ protected:
             DWORD status = 0;
             m->flag = PSHttpPostJson(url, body, resp, &status);
             // The server explains a refusal (too short, invalid address, limit) in "message".
-            size_t p = resp.find("\"message\":\"");
-            if (!m->flag && p != std::string::npos)
-                m->text = W16(resp.substr(p + 11, std::min<size_t>(resp.find('"', p + 11) - (p + 11), 600)));
+            if (!m->flag)
+            {
+                std::wstring msg = Field(W16(resp), L"message", 600);
+                if (msg.size() > 600) msg.resize(600);
+                m->text = msg;
+            }
             PostAsync(h, m);
         });
     }
@@ -818,14 +830,33 @@ protected:
         std::wstring cmd = Field(json, L"cmd");
         if (cmd == L"ready") { SendInit(); LoadCatalog(true); }
         else if (cmd == L"refresh") LoadCatalog(false);
-        else if ((cmd == L"install" || cmd == L"uninstall") && !PSPolicyNoInstall())
+        else if (cmd == L"install" || cmd == L"uninstall")
         {
+            // The page waits behind a progress dialog until a "result" arrives: every
+            // path answers with one.
             size_t idx = 0;
-            if (m_jobRunning) return;
-            if (Find(Field(json, L"id"), &idx)) RunJob(cmd == L"install" ? JobInstall : JobUninstall, m_entries[idx]);
-            else SendMessageToPage(L"", FPLoc(IDS_PSD_EMPTY));
+            const PSCatalogEntry* e = Find(Field(json, L"id"), &idx);
+            std::wstring refusal = PSPolicyNoInstall() ? FPLoc(IDS_PSD_POLICY_INSTALL)
+                                 : m_jobRunning ? FPLoc(IDS_PSD_MSG_FAIL)
+                                 : !e ? FPLoc(IDS_PSD_EMPTY) : std::wstring();
+            if (refusal.empty()) RunJob(cmd == L"install" ? JobInstall : JobUninstall, m_entries[idx]);
+            else Send(L"{\"type\":\"result\",\"ok\":false,\"title\":" + Json(e ? e->name : std::wstring()) + L",\"message\":" + Json(refusal) + L"}");
         }
-        else if (cmd == L"selfUpdate" && m_hasSelfUpdate) PostMessage(WM_RUN, JobSelfUpdate);
+        else if (cmd == L"selfUpdate" && m_hasSelfUpdate && !m_jobRunning)
+        {
+            // Download on a worker; the question and the helper start come back to this thread.
+            m_jobRunning = true;
+            HWND h = m_hWnd;
+            PSCatalogEntry e = m_self;
+            Spawn([h, e]() {
+                auto* m = new AsyncMsg;
+                m->kind = KJob; m->number = JobSelfUpdate; m->entries.push_back(e);
+                m->count = 1;
+                try { m->count = PSSelfUpdateDownload(e, m->text); }
+                catch (...) { FPLogW(L"[Store] self-update download failed"); }
+                PostAsync(h, m);
+            });
+        }
         else if (cmd == L"codeCheck" && !PSCustomerCodeLocked()) CheckCustomerCode(Field(json, L"code", 80));
         else if (cmd == L"codeRemove" && !PSCustomerCodeLocked())
         {
@@ -889,6 +920,12 @@ protected:
     void ApplyJob(AsyncMsg& r)
     {
         m_jobRunning = false;
+        if (r.number == JobSelfUpdate)
+        {
+            int rc = r.count == 0 ? PSSelfUpdateFinish(r.entries.front(), r.text, m_hWnd) : r.count;
+            FinishSelfUpdate(rc);
+            return;
+        }
         const PSCatalogEntry& e = r.entries.front();
         int rc = r.count;
         if (rc == 0)
@@ -920,12 +957,10 @@ protected:
         return 0;
     }
 
-    // The store client's own update stays on the UI thread: it asks the user
-    // (message box) and then closes Power PDF.
-    LRESULT OnRun(WPARAM job, LPARAM)
+    // End of the store client's own update (UI thread): rc of PSSelfUpdateFinish
+    // or of the download. 0 closes Power PDF so the helper can install.
+    void FinishSelfUpdate(int rc)
     {
-        if (job != JobSelfUpdate) return 0;
-        int rc = PSSelfUpdate(m_self, m_hWnd);
         if (rc == 0)
         {
             // The helper installs once Power PDF is gone: close it now.
@@ -937,7 +972,6 @@ protected:
             SendMessageToPage(L"", L"");
         else
             SendMessageToPage(FPLoc(IDS_PSD_TITLE), rc == 2 ? FPLoc(IDS_PSD_MSG_HASH) : rc == 6 ? FPLoc(IDS_PSD_MSG_SIG) : FmtInt(IDS_PSD_MSG_INSTFAIL, rc));
-        return 0;
     }
 
     LRESULT OnFail(WPARAM, LPARAM) { EndDialog(IDABORT); return 0; }
@@ -960,6 +994,7 @@ protected:
         MSG msg;
         while (::PeekMessageW(&msg, m_hWnd, WM_ASYNC, WM_ASYNC, PM_REMOVE))
             delete reinterpret_cast<AsyncMsg*>(msg.lParam);
+        *m_alive = false;
         if (m_ctrl) { m_ctrl->Close(); m_ctrl.Reset(); }
         m_web.Reset(); m_env.Reset();
         CDialog::OnDestroy();
@@ -978,7 +1013,6 @@ BEGIN_MESSAGE_MAP(CWebStore, CDialog)
     ON_WM_MOVE()
     ON_WM_GETMINMAXINFO()
     ON_WM_DESTROY()
-    ON_MESSAGE(CWebStore::WM_RUN, &CWebStore::OnRun)
     ON_MESSAGE(WM_ASYNC, &CWebStore::OnAsync)
     ON_MESSAGE(CWebStore::WM_FAIL, &CWebStore::OnFail)
 END_MESSAGE_MAP()

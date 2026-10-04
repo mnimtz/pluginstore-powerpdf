@@ -336,7 +336,7 @@ function codeDialog(message, ok) {
     if (code.has) { var r = el("button", "btn sec", S.codeRemove); r.onclick = function () { post({ cmd: "codeRemove" }); }; a.appendChild(r); }
     var ap = el("button", "btn", S.codeApply); ap.onclick = apply; a.appendChild(ap);
   }
-  var c = el("button", "btn sec", S.close || "OK"); c.onclick = function () { code.open = false; closeModal(); }; a.appendChild(c);
+  var c = el("button", "btn sec", S.close); c.onclick = function () { code.open = false; closeModal(); }; a.appendChild(c);
   f.appendChild(a); m.appendChild(f);
   code.open = true;
   $("veil").classList.add("on");
@@ -347,7 +347,7 @@ function showShot(sh) {
   var m = $("modal"); m.textContent = ""; m.classList.add("wide");
   var im = el("img"); im.src = sh.src; im.alt = sh.caption || ""; m.appendChild(im);
   if (sh.caption) { var p = el("p", "", sh.caption); p.style.marginTop = "8px"; m.appendChild(p); }
-  var a = el("div", "acts"), c = el("button", "btn sec", S.close || "OK"); c.onclick = closeModal; a.appendChild(c); m.appendChild(a);
+  var a = el("div", "acts"), c = el("button", "btn sec", S.close); c.onclick = closeModal; a.appendChild(c); m.appendChild(a);
   $("veil").classList.add("on"); c.focus();
 }
 function reportForm(x) {
@@ -397,7 +397,7 @@ function onResult(m) {
   if (m.ok && m.restart) {
     modal(m.title || "", m.message, [{ label: S.later, sec: true }, { label: S.restartNow, fn: function () { post({ cmd: "restart" }); } }]);
   } else if (m.message) {
-    modal(m.title || "", m.message, [{ label: "OK" }]);
+    modal(m.title || "", m.message, [{ label: S.close }]);
   }
 }
 function apply(m) {
@@ -410,7 +410,7 @@ function apply(m) {
     $("needAll").onclick = clearNeed;
     $("disc").textContent = S.disclaimer; $("disc").title = S.disclaimer;
     $("discLink").textContent = S.disclaimerBtn;
-    $("discLink").onclick = function () { modal(S.disclaimerBtn, S.disclaimerFull, [{ label: "OK" }]); };
+    $("discLink").onclick = function () { modal(S.disclaimerBtn, S.disclaimerFull, [{ label: S.close }]); };
     $("updBtn").textContent = S.selfUpdateBtn;
     $("updBtn").onclick = function () { busyModal(S.selfUpdateBtn); post({ cmd: "selfUpdate" }); };
     locked = !!m.installLocked;
@@ -430,7 +430,7 @@ function apply(m) {
     if (m.select) {
       var x = items.filter(function (i) { return i.id === m.select; })[0];
       if (x && status(x) !== "inst" && !locked) confirmAct("install", x);
-      else if (!x && m.selectMissing) modal("", m.selectMissing, [{ label: "OK" }]);
+      else if (!x && m.selectMissing) modal("", m.selectMissing, [{ label: S.close }]);
     }
   } else if (m.type === "rated") {
     items.forEach(function (x) { if (x.id === m.id) { x.rating = m.rating; x.ratingCount = m.ratingCount; x.mine = m.mine; x.justRated = true; } });
@@ -452,7 +452,7 @@ function apply(m) {
     if (m.ok) { code.has = !!m.has; code.customer = m.customer || ""; if (!m.has) { code.customer = ""; if (cat === CUST) cat = ""; } }
     codeButton();
     if (code.open) codeDialog(m.message, m.ok);
-    else if (m.message) modal(S.codeBtn, m.message, [{ label: "OK" }]);
+    else if (m.message) modal(S.codeBtn, m.message, [{ label: S.close }]);
   } else if (m.type === "result") {
     onResult(m);
   } else if (m.type === "message") {
@@ -460,7 +460,7 @@ function apply(m) {
     // own "result" ends it (a late rating/feedback reply must not)
     if (busy) return;
     closeModal(); render();
-    if (m.message) modal(m.title || "", m.message, [{ label: "OK" }]);
+    if (m.message) modal(m.title || "", m.message, [{ label: S.close }]);
   }
 }
 function clearNeed() { need = null; $("need").style.display = "none"; render(); }
