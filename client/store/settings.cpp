@@ -71,6 +71,54 @@ void PSSetMyRating(const std::wstring& packageId, int stars)
     RegSetKeyValueW(HKEY_CURRENT_USER, key.c_str(), packageId.c_str(), REG_DWORD, &v, sizeof(v));
 }
 
+static std::wstring NormalizeCode(const std::wstring& c)
+{
+    std::wstring o;
+    for (wchar_t ch : c)
+    {
+        if (ch == L' ' || ch == L'\t') continue;
+        o += (wchar_t)towupper(ch);
+    }
+    return o;
+}
+
+bool PSIsValidCustomerCode(const std::wstring& code)
+{
+    std::wstring c = NormalizeCode(code);
+    if (c.size() > 64) return false;
+    for (wchar_t ch : c)
+        if (!((ch >= L'A' && ch <= L'Z') || (ch >= L'0' && ch <= L'9') || ch == L'-')) return false;
+    return true;
+}
+
+bool PSCustomerCodeLocked()
+{
+    std::wstring s;
+    return FPPolicyString(L"Store", L"CustomerCode", s) && !s.empty();
+}
+
+std::wstring PSCustomerCode()
+{
+    std::wstring s;
+    if (!FPPolicyString(L"Store", L"CustomerCode", s) || s.empty()) ReadUserString(L"CustomerCode", s);
+    s = NormalizeCode(s);
+    return PSIsValidCustomerCode(s) ? s : std::wstring();
+}
+
+void PSSaveCustomerCode(const std::wstring& code)
+{
+    std::wstring c = NormalizeCode(code);
+    if (!PSIsValidCustomerCode(c)) return;
+    if (c.empty()) RegDeleteKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"CustomerCode");
+    else RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"CustomerCode", REG_SZ, c.c_str(), (DWORD)((c.size() + 1) * sizeof(wchar_t)));
+}
+
+bool PSUpdateBadgeEnabled()
+{
+    DWORD v = 1;
+    return !FPPolicyDword(L"Store", L"UpdateBadge", v) || v != 0;
+}
+
 bool PSPolicyNoInstall()
 {
     DWORD v = 0;

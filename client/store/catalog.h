@@ -5,6 +5,8 @@
 // package:
 //   id \t version \t channel \t name \t description \t changelog \t
 //   minPowerPdfVersion \t sizeBytes \t sha256 \t downloadUrl \t zxtName
+//   (then category, author, contact, category name, icon URL, rating,
+//   rating count, screenshots, customer; see PSCatalogEntry)
 
 #pragma once
 #include <string>
@@ -31,7 +33,13 @@ struct PSCatalogEntry
     double rating = 0;           // average stars, 0 = none (TSV column 17, server 0.11+)
     int ratingCount = 0;         // number of ratings (TSV column 18)
     int screenshots = 0;         // number of screenshots (TSV column 19)
+    std::wstring customer;       // customer name when delivered by a customer code (TSV column 20)
     std::wstring installedVersion; // filled by the install module, empty = not installed
 };
 
 bool PSFetchCatalog(std::vector<PSCatalogEntry>& out, std::wstring& error);
+// Same without host calls (any thread): lang is the host language code.
+bool PSFetchCatalogFor(const std::wstring& lang, std::vector<PSCatalogEntry>& out, std::wstring& error);
+
+// 1 to 64 letters, digits, '-' or '_' (the server enforces the same rule).
+bool PSIsValidZxtName(const std::wstring& name);

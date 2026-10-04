@@ -83,14 +83,14 @@ std::wstring Field(const std::wstring& json, const wchar_t* key, size_t maxLen =
 std::wstring Fmt(UINT id, const std::wstring& a, const std::wstring& b = std::wstring())
 {
     wchar_t buf[1200];
-    swprintf_s(buf, 1200, FPLoc(id).c_str(), a.c_str(), b.c_str());
+    _snwprintf_s(buf, 1200, _TRUNCATE, FPLoc(id).c_str(), a.c_str(), b.c_str());
     return buf;
 }
 
 std::wstring FmtInt(UINT id, int n)
 {
     wchar_t buf[600];
-    swprintf_s(buf, 600, FPLoc(id).c_str(), n);
+    _snwprintf_s(buf, 600, _TRUNCATE, FPLoc(id).c_str(), n);
     return buf;
 }
 
@@ -120,6 +120,20 @@ std::wstring W16(const std::string& s)
     std::wstring w(n, L'\0');
     MultiByteToWideChar(CP_UTF8, 0, s.c_str(), (int)s.size(), &w[0], n);
     return w;
+}
+
+// Percent-encoding (UTF-8) for a query value.
+std::wstring UrlEncode(const std::wstring& v)
+{
+    std::string u = U8(v);
+    std::wstring o;
+    for (unsigned char c : u)
+    {
+        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '-' || c == '_' || c == '.' || c == '~')
+            o += (wchar_t)c;
+        else { wchar_t b[4]; swprintf_s(b, 4, L"%%%02X", c); o += b; }
+    }
+    return o;
 }
 
 // Number after "key": in a server JSON response (flat search is enough here).
@@ -300,6 +314,16 @@ protected:
             [](ICoreWebView2*, ICoreWebView2NewWindowRequestedEventArgs* a) -> HRESULT { a->put_Handled(TRUE); return S_OK; }).Get(), &t);
         m_web->add_WebMessageReceived(Callback<ICoreWebView2WebMessageReceivedEventHandler>(
             [this](ICoreWebView2*, ICoreWebView2WebMessageReceivedEventArgs* a) -> HRESULT {
+                // Messages count only from our own page (loaded with NavigateToString).
+                LPWSTR src = nullptr;
+                a->get_Source(&src);
+                std::wstring from = src ? src : L"";
+                if (src) CoTaskMemFree(src);
+                if (from.rfind(L"about:blank", 0) != 0 && from.rfind(L"data:", 0) != 0)
+                {
+                    FPLogW(L"[Store] page message from %.200s ignored", from.c_str());
+                    return S_OK;
+                }
                 LPWSTR json = nullptr;
                 if (SUCCEEDED(a->get_WebMessageAsJson(&json)) && json) { OnPageMessage(json); CoTaskMemFree(json); }
                 return S_OK;
@@ -350,6 +374,8 @@ protected:
             { L"reportComment", IDS_PSW_REPORT_COMMENT }, { L"reportText", IDS_PSW_REPORT_TEXT }, { L"reportEmail", IDS_PSW_REPORT_EMAIL },
             { L"reportLog", IDS_PSW_REPORT_LOG }, { L"reportPrivacy", IDS_PSW_REPORT_PRIVACY }, { L"send", IDS_PSW_SEND },
             { L"screenshots", IDS_PSW_SCREENSHOTS }, { L"close", IDS_PSW_CLOSE },
+            { L"forCustomer", IDS_PSW_FOR }, { L"needHint", IDS_PSW_NEED_HINT }, { L"needHits", IDS_PSW_NEED_HITS },
+            { L"needAll", IDS_PSW_NEED_ALL }, { L"needNone", IDS_PSW_NEED_NONE },
         };
         std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) +
                          L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") + L",\"strings\":{";
@@ -373,6 +399,7 @@ protected:
                 m_hasSelfUpdate = !PSPolicyNoSelfUpdate() && PSCompareVersions(e.version, FP_VERSION_W) > 0;
                 continue;
             }
+            if (_wcsicmp(e.zxtName.c_str(), L"PluginStore") == 0) continue;   // would replace the store client
             m_entries.push_back(e);
         }
 
@@ -384,11 +411,13 @@ protected:
             j += (i ? L"," : L"") + std::wstring(L"{\"id\":") + Json(e.id) + L",\"name\":" + Json(e.name) +
                  L",\"description\":" + Json(e.description) + L",\"changelog\":" + Json(e.changelog) +
                  L",\"version\":" + Json(e.version) + L",\"installed\":" + Json(e.installedVersion) +
+                 L",\"update\":" + (PSIsUpdate(e.version, e.installedVersion) ? L"true" : L"false") +
                  L",\"channel\":" + Json(e.channel) + L",\"category\":" + Json(e.category) +
                  L",\"categoryName\":" + Json(e.categoryName.empty() ? e.category : e.categoryName) +
                  L",\"size\":" + size + L",\"author\":" + Json(e.author) + L",\"contact\":" + Json(e.contactEmail) +
                  L",\"rating\":" + Tenths(e.rating) + L",\"ratingCount\":" + std::to_wstring(e.ratingCount) +
-                 L",\"shots\":" + std::to_wstring(e.screenshots) + L",\"mine\":" + std::to_wstring(PSMyRating(e.id)) + L"}";
+                 L",\"shots\":" + std::to_wstring(e.screenshots) + L",\"mine\":" + std::to_wstring(PSMyRating(e.id)) +
+                 L",\"customer\":" + Json(e.customer) + L"}";
         }
         j += L"]";
         if (m_hasSelfUpdate)
@@ -483,7 +512,7 @@ protected:
             if (GetFileAttributesW(path.c_str()) == INVALID_FILE_ATTRIBUTES)
             {
                 DWORD status = 0;
-                if (!PSHttpGetFile(url, path, &status)) continue;
+                if (!PSHttpGetFile(url, path, &status, 3 * 1024 * 1024)) continue;
             }
             HANDLE f = CreateFileW(path.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
             if (f == INVALID_HANDLE_VALUE) continue;
@@ -505,6 +534,40 @@ protected:
         Send(L"{\"type\":\"shots\",\"id\":" + Json(e.id) + L",\"items\":[" + items + L"]}");
     }
 
+    // Search by need on the server (AI ranking with reasons when the store has
+    // it switched on, else its word search). Only ids of listed add-ons count.
+    void NeedSearch(const std::wstring& q)
+    {
+        if (q.size() < 2 || q.size() > 300) return;
+        std::wstring url = PSServerUrl() + L"/api/search?format=tsv&q=" + UrlEncode(q) + L"&lang=" + UrlEncode(HostLang());
+        if (PSBetaChannel()) url += L"&channel=beta";
+        std::string tsv;
+        DWORD status = 0;
+        std::wstring hits;
+        bool ai = false;
+        if (PSHttpGetText(url, tsv, &status))
+        {
+            std::wstring text = W16(tsv);
+            size_t pos = 0;
+            int n = 0;
+            while (pos < text.size() && n < 20)
+            {
+                size_t eol = text.find(L'\n', pos);
+                if (eol == std::wstring::npos) eol = text.size();
+                std::wstring line = text.substr(pos, eol - pos);
+                pos = eol + 1;
+                while (!line.empty() && line.back() == L'\r') line.pop_back();
+                if (line == L"#ai") { ai = true; continue; }
+                if (line.empty() || line[0] == L'#') continue;
+                size_t tab = line.find(L'\t');
+                std::wstring id = line.substr(0, tab), reason = tab == std::wstring::npos ? L"" : line.substr(tab + 1, 400);
+                if (!Find(id, nullptr)) continue;
+                hits += (n++ ? L"," : L"") + std::wstring(L"{\"id\":") + Json(id) + L",\"reason\":" + Json(reason) + L"}";
+            }
+        }
+        Send(L"{\"type\":\"need\",\"q\":" + Json(q) + L",\"ai\":" + (ai ? L"true" : L"false") + L",\"hits\":[" + hits + L"]}");
+    }
+
     // One icon per message so the window stays responsive; cached per version.
     void NextIcon()
     {
@@ -521,7 +584,7 @@ protected:
                 std::wstring path = dir + L"\\" + name;
                 DWORD status = 0;
                 if (GetFileAttributesW(path.c_str()) == INVALID_FILE_ATTRIBUTES)
-                    PSHttpGetFile(e.iconUrl, path, &status);
+                    PSHttpGetFile(e.iconUrl, path, &status, 4 * 1024 * 1024);
                 HANDLE f = CreateFileW(path.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
                 if (f != INVALID_HANDLE_VALUE)
                 {
@@ -571,6 +634,7 @@ protected:
             if (Find(Field(json, L"id"), &idx))
                 SendFeedback(idx, Field(json, L"kind"), Field(json, L"message", 4000), Field(json, L"email", 200), Field(json, L"log") == L"1");
         }
+        else if (cmd == L"need") NeedSearch(Field(json, L"q", 300));
         else if (cmd == L"shots")
         {
             size_t idx = 0;

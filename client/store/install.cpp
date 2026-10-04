@@ -1,4 +1,4 @@
-// install.cpp â€” see install.h.
+// install.cpp - see install.h.
 
 #include "stdafx.h"
 #include "install.h"
@@ -11,9 +11,11 @@
 #include "Resource.h"
 #include <bcrypt.h>
 #include <shellapi.h>
+#include <wincrypt.h>
 #include <vector>
 
 #pragma comment(lib, "bcrypt.lib")
+#pragma comment(lib, "crypt32.lib")
 
 extern "C" HINSTANCE gHINSTANCE;
 
@@ -79,14 +81,14 @@ static std::wstring JsonValue(const std::string& json, const char* key)
     if (q2 == std::string::npos) return L"";
     std::string v = json.substr(q1 + 1, q2 - q1 - 1);
     wchar_t w[512] = { 0 };
-    MultiByteToWideChar(CP_UTF8, 0, v.c_str(), -1, w, 512);
+    MultiByteToWideChar(CP_UTF8, 0, v.c_str(), -1, w, 511);
     return w;
 }
 
 std::wstring PSInstalledVersion(const std::wstring& zxtName)
 {
     std::wstring dir = PluginsDir();
-    if (dir.empty()) return L"";
+    if (dir.empty() || !PSIsValidZxtName(zxtName)) return L"";
     std::wstring manifest = dir + L"\\" + zxtName + L"\\manifest.json";
     HANDLE f = CreateFileW(manifest.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL,
                            OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -99,29 +101,72 @@ std::wstring PSInstalledVersion(const std::wstring& zxtName)
     DWORD size = GetFileSize(f, NULL);
     std::string json(size > 0 && size < 1 << 20 ? size : 0, 0);
     DWORD got = 0;
-    if (!json.empty()) ReadFile(f, json.data(), size, &got, NULL);
+    if (!json.empty() && (!ReadFile(f, json.data(), size, &got, NULL) || got != size)) json.clear();
     CloseHandle(f);
     return JsonValue(json, "version");
 }
 
 // ---------------------------------------------------------------------------
-// the elevated step: ONE PowerShell child does the Program-Files work
+// PowerShell children: full path, script passed in memory (-EncodedCommand),
+// so no script file exists that another process could change in between.
 // ---------------------------------------------------------------------------
 
-static bool WriteTextFile(const std::wstring& path, const std::wstring& text)
+// PowerShell single-quoted literal: every single-quote character doubles
+// (PowerShell also treats U+2018, U+2019, U+201A and U+201B as quotes).
+static std::wstring PsQuote(const std::wstring& v)
 {
-    HANDLE f = CreateFileW(path.c_str(), GENERIC_WRITE, 0, NULL,
-                           CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-    if (f == INVALID_HANDLE_VALUE) return false;
-    // UTF-8 with BOM so PowerShell 5.1 reads umlauts correctly
-    const BYTE bom[] = { 0xEF, 0xBB, 0xBF };
-    DWORD w = 0;
-    WriteFile(f, bom, 3, &w, NULL);
-    int n = WideCharToMultiByte(CP_UTF8, 0, text.c_str(), -1, NULL, 0, NULL, NULL);
-    std::string utf8(n > 0 ? n - 1 : 0, 0);
-    if (n > 1) WideCharToMultiByte(CP_UTF8, 0, text.c_str(), -1, utf8.data(), n, NULL, NULL);
-    WriteFile(f, utf8.data(), (DWORD)utf8.size(), &w, NULL);
-    CloseHandle(f);
+    std::wstring r = L"'";
+    for (wchar_t c : v)
+    {
+        r += c;
+        if (c == L'\'' || c == 0x2018 || c == 0x2019 || c == 0x201A || c == 0x201B) r += c;
+    }
+    return r + L"'";
+}
+
+static std::wstring SystemPath(const wchar_t* rel)
+{
+    wchar_t sys[MAX_PATH] = { 0 };
+    UINT n = GetSystemDirectoryW(sys, MAX_PATH);
+    if (n == 0 || n >= MAX_PATH) return std::wstring(L"C:\\Windows\\System32\\") + rel;
+    return std::wstring(sys) + L"\\" + rel;
+}
+
+static std::wstring PowerShellExe() { return SystemPath(L"WindowsPowerShell\\v1.0\\powershell.exe"); }
+
+// "-NoProfile ... -EncodedCommand <base64 of the UTF-16LE script>"
+static std::wstring EncodedArgs(const std::wstring& script)
+{
+    const BYTE* p = reinterpret_cast<const BYTE*>(script.data());
+    DWORD n = (DWORD)(script.size() * sizeof(wchar_t)), len = 0;
+    std::wstring b64;
+    if (CryptBinaryToStringW(p, n, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, NULL, &len) && len > 0)
+    {
+        b64.assign(len, L'\0');
+        if (!CryptBinaryToStringW(p, n, CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF, &b64[0], &len)) b64.clear();
+        else b64.resize(len);
+    }
+    return L"-NoProfile -NonInteractive -ExecutionPolicy Bypass -WindowStyle Hidden -EncodedCommand " + b64;
+}
+
+// The ONE UAC prompt. Returns false when the user declined; exit code in *code.
+static bool RunElevated(const std::wstring& script, HWND owner, DWORD timeoutMs, DWORD* code)
+{
+    std::wstring exe = PowerShellExe(), args = EncodedArgs(script);
+    SHELLEXECUTEINFOW sei = { sizeof(sei) };
+    sei.fMask = SEE_MASK_NOCLOSEPROCESS;
+    sei.hwnd = owner;
+    sei.lpVerb = L"runas";
+    sei.lpFile = exe.c_str();
+    sei.lpParameters = args.c_str();
+    sei.nShow = SW_HIDE;
+    if (!ShellExecuteExW(&sei) || !sei.hProcess) return false;
+    *code = 1;
+    if (WaitForSingleObject(sei.hProcess, timeoutMs) == WAIT_OBJECT_0)
+        GetExitCodeProcess(sei.hProcess, code);
+    else
+        FPLogW(L"[Store] elevated step did not finish within %lu s", timeoutMs / 1000);
+    CloseHandle(sei.hProcess);
     return true;
 }
 
@@ -132,18 +177,20 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
         FPLogW(L"[Store] install/remove blocked by policy DisableInstall");
         return 7;
     }
+    if (!PSIsValidZxtName(e.zxtName)) return 4;
     std::wstring pluginsDir = PluginsDir();
     if (pluginsDir.empty()) return 5;
 
-    wchar_t tempDir[MAX_PATH];
+    wchar_t tempDir[MAX_PATH] = { 0 };
     GetTempPathW(MAX_PATH, tempDir);
     std::wstring ppak = std::wstring(tempDir) + e.id + L"-" + e.version + L".ppak";
 
-    // 1) download (user context)
+    // 1) download (user context); never more than the catalog announced
     DWORD status = 0;
-    if (!PSHttpGetFile(e.downloadUrl, ppak, &status)) return 1;
+    unsigned long long cap = e.sizeBytes > 0 ? e.sizeBytes + 65536 : 300ull * 1024 * 1024;
+    if (!PSHttpGetFile(e.downloadUrl, ppak, &status, cap)) return 1;
 
-    // 2) verify (user context) â€” the catalog hash is authoritative
+    // 2) verify (user context): the catalog hash is authoritative
     std::wstring actual = Sha256File(ppak);
     if (_wcsicmp(actual.c_str(), e.sha256.c_str()) != 0)
     {
@@ -152,82 +199,75 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
         return 2;
     }
 
-    // 3) ONE elevated PowerShell: extract + copy the Program-Files part.
+    // 3) ONE elevated PowerShell. It copies the package into a staging folder
+    //    under Plug-Ins (writable for administrators only), checks the hash
+    //    AGAIN there and only then extracts it, so nothing can swap the file
+    //    in the user's TEMP folder between the check above and the install.
     //    x64 binary on every machine for now; Power PDF on Windows-on-ARM runs
-    //    ARM64EC and loads x64 plug-ins (verified on this ARM64 dev machine).
+    //    ARM64EC and loads x64 plug-ins (verified on an ARM64 machine).
+    //    A plug-in that is loaded in the running Power PDF cannot be
+    //    overwritten, but a loaded DLL CAN be renamed; the stale copy is swept
+    //    on the next store operation.
+    std::wstring sha = e.sha256;
+    for (auto& c : sha) c = (wchar_t)towupper(c);
     std::wstring script = std::wstring() +
         L"$ErrorActionPreference='Stop'\r\n" +
-        L"$pkg='" + ppak + L"'\r\n" +
-        L"$plugins='" + pluginsDir + L"'\r\n" +
-        L"$name='" + e.zxtName + L"'\r\n" +
-        L"$tmp=Join-Path $env:TEMP ('psinst-'+[guid]::NewGuid().ToString('N'))\r\n" +
-        L"Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
-        L"[System.IO.Compression.ZipFile]::ExtractToDirectory($pkg,$tmp)\r\n" +
-        // A plug-in that is loaded in the running Power PDF cannot be
-        // overwritten, but a loaded DLL CAN be renamed; the stale copy is
-        // swept on the next store operation.
-        L"Get-ChildItem $plugins -Filter '*.zxt.old-*' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue\r\n" +
-        L"$target=Join-Path $plugins ($name + '.zxt')\r\n" +
-        L"if(Test-Path $target){ try { Remove-Item $target -Force } catch { Rename-Item $target ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
-        L"Copy-Item (Join-Path $tmp ('x64\\' + $name + '.zxt')) $target -Force\r\n" +
-        L"$data=Join-Path $plugins $name\r\n" +
-        L"New-Item -ItemType Directory -Force $data | Out-Null\r\n" +
-        L"Copy-Item (Join-Path $tmp 'manifest.json') (Join-Path $data 'manifest.json') -Force\r\n" +
-        L"foreach($extra in @('assets','docs','UILayout')){ $src=Join-Path $tmp $extra; if(Test-Path $src){ Copy-Item $src (Join-Path $data $extra) -Recurse -Force } }\r\n" +
-        L"Remove-Item $tmp -Recurse -Force\r\n" +
-        L"exit 0\r\n";
-
-    std::wstring scriptPath = std::wstring(tempDir) + L"psinstall-" + e.zxtName + L".ps1";
-    if (!WriteTextFile(scriptPath, script)) { DeleteFileW(ppak.c_str()); return 4; }
-
-    std::wstring args = L"-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"" + scriptPath + L"\"";
-
-    SHELLEXECUTEINFOW sei = { sizeof(sei) };
-    sei.fMask = SEE_MASK_NOCLOSEPROCESS;
-    sei.hwnd = owner;
-    sei.lpVerb = L"runas";                 // the ONE UAC prompt
-    sei.lpFile = L"powershell.exe";
-    sei.lpParameters = args.c_str();
-    sei.nShow = SW_HIDE;
+        L"$src=" + PsQuote(ppak) + L"\r\n" +
+        L"$plugins=" + PsQuote(pluginsDir) + L"\r\n" +
+        L"$name=" + PsQuote(e.zxtName) + L"\r\n" +
+        L"$sha=" + PsQuote(sha) + L"\r\n" +
+        L"$rc=0\r\n" +
+        L"$stage=Join-Path $plugins ('.psstage-'+[guid]::NewGuid().ToString('N'))\r\n" +
+        L"try {\r\n" +
+        L"  Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
+        L"  New-Item -ItemType Directory -Path $stage | Out-Null\r\n" +
+        L"  $pkg=Join-Path $stage 'package.ppak'\r\n" +
+        L"  Copy-Item -LiteralPath $src -Destination $pkg -Force\r\n" +
+        L"  if ((Get-FileHash -LiteralPath $pkg -Algorithm SHA256).Hash -ne $sha) { $rc=9 }\r\n" +
+        L"  else {\r\n" +
+        L"    $tmp=Join-Path $stage 'x'\r\n" +
+        L"    [System.IO.Compression.ZipFile]::ExtractToDirectory($pkg,$tmp)\r\n" +
+        L"    $bin=Join-Path $tmp ('x64\\'+$name+'.zxt')\r\n" +
+        L"    if (-not (Test-Path -LiteralPath $bin)) { $rc=8 }\r\n" +
+        L"    else {\r\n" +
+        L"      Get-ChildItem -LiteralPath $plugins -Filter '*.zxt.old-*' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue\r\n" +
+        L"      $target=Join-Path $plugins ($name+'.zxt')\r\n" +
+        L"      if (Test-Path -LiteralPath $target) { try { Remove-Item -LiteralPath $target -Force } catch { Rename-Item -LiteralPath $target ($name+'.zxt.old-'+[guid]::NewGuid().ToString('N')) } }\r\n" +
+        L"      Copy-Item -LiteralPath $bin -Destination $target -Force\r\n" +
+        L"      $data=Join-Path $plugins $name\r\n" +
+        L"      New-Item -ItemType Directory -Force -Path $data | Out-Null\r\n" +
+        L"      Copy-Item -LiteralPath (Join-Path $tmp 'manifest.json') -Destination (Join-Path $data 'manifest.json') -Force\r\n" +
+        // replace each extra folder as a whole (copying onto an existing one nests it)
+        L"      foreach ($extra in @('assets','docs','UILayout')) {\r\n" +
+        L"        $s=Join-Path $tmp $extra; $d=Join-Path $data $extra\r\n" +
+        L"        if (Test-Path -LiteralPath $s) { if (Test-Path -LiteralPath $d) { Remove-Item -LiteralPath $d -Recurse -Force }; Copy-Item -LiteralPath $s -Destination $d -Recurse -Force }\r\n" +
+        L"      }\r\n" +
+        L"    }\r\n" +
+        L"  }\r\n" +
+        L"} catch { $rc=4 }\r\n" +
+        L"finally { Remove-Item -LiteralPath $stage -Recurse -Force -ErrorAction SilentlyContinue }\r\n" +
+        L"exit $rc\r\n";
 
     int result;
-    if (!ShellExecuteExW(&sei) || !sei.hProcess)
-    {
+    DWORD code = 1;
+    if (!RunElevated(script, owner, 180000, &code))
         result = 3;                        // user declined elevation
-    }
     else
-    {
-        WaitForSingleObject(sei.hProcess, 120000);
-        DWORD exitCode = 1;
-        GetExitCodeProcess(sei.hProcess, &exitCode);
-        CloseHandle(sei.hProcess);
-        result = exitCode == 0 ? 0 : 4;
-    }
+        result = code == 0 ? 0 : code == 9 ? 2 : 4;
+    if (code == 8) FPLogW(L"[Store] package %s has no x64\\%s.zxt", e.id.c_str(), e.zxtName.c_str());
 
-    DeleteFileW(scriptPath.c_str());
     DeleteFileW(ppak.c_str());
     FPLogW(L"[Store] install %s %s -> %d", e.id.c_str(), e.version.c_str(), result);
     return result;
 }
 
-// PowerShell single-quoted literal: ' doubles (a user folder like O'Brien).
-static std::wstring PsQuote(const std::wstring& v)
+// Starts a PowerShell helper (user context) that must outlive this process.
+static bool LaunchHelper(const std::wstring& script, const wchar_t* what)
 {
-    std::wstring r = L"'";
-    for (wchar_t c : v)
-    {
-        r += c;
-        if (c == L'\'' || c == 0x2018 || c == 0x2019) r += c;
-    }
-    return r + L"'";
-}
-
-// Starts a PowerShell helper script that must outlive this process.
-static bool LaunchHelper(const std::wstring& scriptPath, const wchar_t* what)
-{
-    std::wstring cmd = L"powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"" + scriptPath + L"\"";
+    std::wstring cmd = L"\"" + PowerShellExe() + L"\" " + EncodedArgs(script);
     std::vector<wchar_t> buf(cmd.begin(), cmd.end());
     buf.push_back(0);
+    std::wstring exe = PowerShellExe();
     STARTUPINFOW si = { sizeof(si) };
     si.dwFlags = STARTF_USESHOWWINDOW;
     si.wShowWindow = SW_HIDE;
@@ -237,11 +277,11 @@ static bool LaunchHelper(const std::wstring& scriptPath, const wchar_t* what)
     // Never DETACHED_PROCESS: powershell.exe 5.1 started without any console
     // exits at once without running the script (C0.3.3 to C0.4.0 restart bug).
     // CREATE_NO_WINDOW gives it a hidden console of its own instead.
-    BOOL ok = CreateProcessW(NULL, buf.data(), NULL, NULL, FALSE,
+    BOOL ok = CreateProcessW(exe.c_str(), buf.data(), NULL, NULL, FALSE,
                              CREATE_NO_WINDOW | CREATE_BREAKAWAY_FROM_JOB,
                              NULL, NULL, &si, &pi);
     if (!ok)
-        ok = CreateProcessW(NULL, buf.data(), NULL, NULL, FALSE, CREATE_NO_WINDOW,
+        ok = CreateProcessW(exe.c_str(), buf.data(), NULL, NULL, FALSE, CREATE_NO_WINDOW,
                             NULL, NULL, &si, &pi);
     if (!ok)
     {
@@ -282,23 +322,18 @@ static std::wstring HelperPrologue(const wchar_t* tag, const wchar_t* giveUp)
         L"$exe = " + PsQuote(exe) + L"\r\n" +
         L"L ('helper waiting for pid ' + $p0)\r\n" +
         L"Wait-Process -Id $p0 -Timeout 900 -ErrorAction SilentlyContinue\r\n" +
-        L"if (Get-Process -Id $p0 -ErrorAction SilentlyContinue) { L '" + giveUp + L"'; exit 1 }\r\n" +
+        L"if (Get-Process -Id $p0 -ErrorAction SilentlyContinue) { L " + PsQuote(giveUp) + L"; exit 1 }\r\n" +
         L"$deadline = (Get-Date).AddSeconds(60)\r\n" +
         L"while ((Get-Process -Name PowerPDF -ErrorAction SilentlyContinue) -and (Get-Date) -lt $deadline) { Start-Sleep -Milliseconds 500 }\r\n";
 }
 
 bool PSScheduleRestart()
 {
-    wchar_t tempDir[MAX_PATH];
-    GetTempPathW(MAX_PATH, tempDir);
     std::wstring script = HelperPrologue(L"Restart", L"Power PDF still running after 15 min, giving up") +
         L"if (Get-Process -Name PowerPDF -ErrorAction SilentlyContinue) { L 'another PowerPDF.exe is still running, not starting a second one'; exit 2 }\r\n" +
         L"Start-Sleep -Seconds 2\r\n" +
         L"try { Start-Process -FilePath $exe; L 'Power PDF restarted' } catch { L ('start failed: ' + $_.Exception.Message) }\r\n";
-
-    std::wstring scriptPath = std::wstring(tempDir) + L"psrestart.ps1";
-    if (!WriteTextFile(scriptPath, script)) return false;
-    return LaunchHelper(scriptPath, L"restart");
+    return LaunchHelper(script, L"restart");
 }
 
 int PSCompareVersions(const std::wstring& a, const std::wstring& b)
@@ -316,28 +351,33 @@ int PSCompareVersions(const std::wstring& a, const std::wstring& b)
     return 0;
 }
 
-// Helper script of the self-update: wait until Power PDF has exited, extract
-// the MSI in user context, install with a progress bar (Windows asks for
-// elevation), clean up and start Power PDF again, also when the installation
-// was cancelled.
-std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& outDir)
+// Helper script of the self-update: wait until Power PDF has exited, check
+// the package hash again, extract the MSI in user context, install with a
+// progress bar (Windows asks for elevation), clean up and start Power PDF
+// again, also when the installation was cancelled.
+std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& outDir, const std::wstring& sha256)
 {
+    std::wstring sha = sha256;
+    for (auto& c : sha) c = (wchar_t)towupper(c);
     return HelperPrologue(L"SelfUpdate", L"Power PDF still running after 15 min, update not installed") +
         L"$ppak = " + PsQuote(ppak) + L"\r\n" +
         L"$out = " + PsQuote(outDir) + L"\r\n" +
+        L"$sha = " + PsQuote(sha) + L"\r\n" +
+        L"$msiexec = Join-Path ([Environment]::GetFolderPath('System')) 'msiexec.exe'\r\n" +
         L"try {\r\n" +
-        L"  if (Test-Path $out) { Remove-Item $out -Recurse -Force }\r\n" +
+        L"  if ((Get-FileHash -LiteralPath $ppak -Algorithm SHA256).Hash -ne $sha) { throw 'package hash changed after the download' }\r\n" +
+        L"  if (Test-Path -LiteralPath $out) { Remove-Item -LiteralPath $out -Recurse -Force }\r\n" +
         L"  Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
         L"  [System.IO.Compression.ZipFile]::ExtractToDirectory($ppak, $out)\r\n" +
-        L"  $msi = Get-ChildItem (Join-Path $out 'installer') -Filter '*.msi' | Select-Object -First 1\r\n" +
+        L"  $msi = Get-ChildItem -LiteralPath (Join-Path $out 'installer') -Filter '*.msi' | Select-Object -First 1\r\n" +
         L"  if (-not $msi) { throw 'no MSI in the package' }\r\n" +
         L"  $mlog = Join-Path $env:TEMP 'AddonStoreUpdate.log'\r\n" +
         L"  L ('installing ' + $msi.Name)\r\n" +
-        L"  $p = Start-Process msiexec.exe -ArgumentList @('/i', ('\"' + $msi.FullName + '\"'), '/passive', '/norestart', '/l*v', ('\"' + $mlog + '\"')) -Wait -PassThru\r\n" +
+        L"  $p = Start-Process -FilePath $msiexec -ArgumentList @('/i', ('\"' + $msi.FullName + '\"'), '/passive', '/norestart', '/l*v', ('\"' + $mlog + '\"')) -Wait -PassThru\r\n" +
         L"  L ('msiexec exit code ' + $p.ExitCode + ' (0 = ok, 3010 = ok, 1602 = cancelled)')\r\n" +
         L"} catch { L ('update failed: ' + $_.Exception.Message) }\r\n" +
-        L"Remove-Item $ppak -Force -ErrorAction SilentlyContinue\r\n" +
-        L"Remove-Item $out -Recurse -Force -ErrorAction SilentlyContinue\r\n" +
+        L"Remove-Item -LiteralPath $ppak -Force -ErrorAction SilentlyContinue\r\n" +
+        L"Remove-Item -LiteralPath $out -Recurse -Force -ErrorAction SilentlyContinue\r\n" +
         L"if (-not (Get-Process -Name PowerPDF -ErrorAction SilentlyContinue)) {\r\n" +
         L"  Start-Sleep -Seconds 2\r\n" +
         L"  try { Start-Process -FilePath $exe; L 'Power PDF restarted' } catch { L ('start failed: ' + $_.Exception.Message) }\r\n" +
@@ -351,12 +391,13 @@ int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
         FPLogW(L"[Store] self-update blocked by policy DisableSelfUpdate");
         return 7;
     }
-    wchar_t tempDir[MAX_PATH];
+    wchar_t tempDir[MAX_PATH] = { 0 };
     GetTempPathW(MAX_PATH, tempDir);
     std::wstring ppak = std::wstring(tempDir) + e.id + L"-" + e.version + L".ppak";
 
     DWORD status = 0;
-    if (!PSHttpGetFile(e.downloadUrl, ppak, &status)) return 1;
+    unsigned long long cap = e.sizeBytes > 0 ? e.sizeBytes + 65536 : 300ull * 1024 * 1024;
+    if (!PSHttpGetFile(e.downloadUrl, ppak, &status, cap)) return 1;
     if (_wcsicmp(Sha256File(ppak).c_str(), e.sha256.c_str()) != 0)
     {
         DeleteFileW(ppak.c_str());
@@ -364,19 +405,17 @@ int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
     }
 
     // The MSI cannot replace PluginStore.zxt while Power PDF has it loaded, so
-    // Power PDF closes first; ask before that happens.
+    // Power PDF closes first; ask before that happens ("No" is the default).
     if (MessageBoxW(owner, FPLoc(IDS_PSD_ASK_SELFUPD).c_str(), FPLoc(IDS_PSD_TITLE).c_str(),
-                    MB_YESNO | MB_ICONQUESTION) != IDYES)
+                    MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON2) != IDYES)
     {
         DeleteFileW(ppak.c_str());
         return 5;
     }
 
     std::wstring outDir = std::wstring(tempDir) + L"PluginStoreUpdate-" + e.version;
-    std::wstring script = PSSelfUpdateScript(ppak, outDir);
-    std::wstring scriptPath = std::wstring(tempDir) + L"psselfupdate.ps1";
     int result = 4;
-    if (WriteTextFile(scriptPath, script) && LaunchHelper(scriptPath, L"self-update"))
+    if (LaunchHelper(PSSelfUpdateScript(ppak, outDir, e.sha256), L"self-update"))
         result = 0;
     else
         DeleteFileW(ppak.c_str());
@@ -391,6 +430,7 @@ int PSUninstallPackage(const std::wstring& zxtName, HWND owner)
         FPLogW(L"[Store] install/remove blocked by policy DisableInstall");
         return 7;
     }
+    if (!PSIsValidZxtName(zxtName)) return 4;
     std::wstring pluginsDir = PluginsDir();
     if (pluginsDir.empty()) return 5;
 
@@ -399,44 +439,21 @@ int PSUninstallPackage(const std::wstring& zxtName, HWND owner)
     // wrong profile, a lesson learned the hard way).
     std::wstring script = std::wstring() +
         L"$ErrorActionPreference='Stop'\r\n" +
-        L"$plugins='" + pluginsDir + L"'\r\n" +
-        L"$name='" + zxtName + L"'\r\n" +
-        L"Get-ChildItem $plugins -Filter '*.zxt.old-*' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue\r\n" +
+        L"$plugins=" + PsQuote(pluginsDir) + L"\r\n" +
+        L"$name=" + PsQuote(zxtName) + L"\r\n" +
+        L"Get-ChildItem -LiteralPath $plugins -Filter '*.zxt.old-*' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue\r\n" +
         L"$zxt=Join-Path $plugins ($name + '.zxt')\r\n" +
-        L"if(Test-Path $zxt){ try { Remove-Item $zxt -Force } catch { Rename-Item $zxt ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
+        L"if (Test-Path -LiteralPath $zxt) { try { Remove-Item -LiteralPath $zxt -Force } catch { Rename-Item -LiteralPath $zxt ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
         L"$data=Join-Path $plugins $name\r\n" +
-        L"if(Test-Path $data){ Remove-Item $data -Recurse -Force }\r\n" +
+        L"if (Test-Path -LiteralPath $data) { Remove-Item -LiteralPath $data -Recurse -Force }\r\n" +
         L"exit 0\r\n";
 
-    wchar_t tempDir[MAX_PATH];
-    GetTempPathW(MAX_PATH, tempDir);
-    std::wstring scriptPath = std::wstring(tempDir) + L"psuninstall-" + zxtName + L".ps1";
-    if (!WriteTextFile(scriptPath, script)) return 4;
-
-    std::wstring args = L"-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File \"" + scriptPath + L"\"";
-
-    SHELLEXECUTEINFOW sei = { sizeof(sei) };
-    sei.fMask = SEE_MASK_NOCLOSEPROCESS;
-    sei.hwnd = owner;
-    sei.lpVerb = L"runas";
-    sei.lpFile = L"powershell.exe";
-    sei.lpParameters = args.c_str();
-    sei.nShow = SW_HIDE;
-
     int result;
-    if (!ShellExecuteExW(&sei) || !sei.hProcess)
-    {
+    DWORD code = 1;
+    if (!RunElevated(script, owner, 60000, &code))
         result = 3;
-    }
     else
-    {
-        WaitForSingleObject(sei.hProcess, 60000);
-        DWORD exitCode = 1;
-        GetExitCodeProcess(sei.hProcess, &exitCode);
-        CloseHandle(sei.hProcess);
-        result = exitCode == 0 ? 0 : 4;
-    }
-    DeleteFileW(scriptPath.c_str());
+        result = code == 0 ? 0 : 4;
 
     if (result == 0)
     {

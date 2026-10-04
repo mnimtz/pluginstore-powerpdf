@@ -8,8 +8,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // Version
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,5,0,0
- PRODUCTVERSION 0,5,0,0
+ FILEVERSION 0,6,0,0
+ PRODUCTVERSION 0,6,0,0
  FILEFLAGSMASK 0x3fL
  FILEFLAGS 0x0L
  FILEOS 0x40004L
@@ -22,11 +22,11 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Tungsten Automation"
             VALUE "FileDescription", "Add-on Store client for Tungsten Power PDF"
-            VALUE "FileVersion", "0.5.0"
+            VALUE "FileVersion", "0.6.0"
             VALUE "InternalName", "PluginStore"
             VALUE "OriginalFilename", "PluginStore.zxt"
             VALUE "ProductName", "Add-on Store for Tungsten Power PDF"
-            VALUE "ProductVersion", "0.5.0"
+            VALUE "ProductVersion", "0.6.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -39,6 +39,8 @@ END
 // Bitmaps
 IDB_STORE     BITMAP  "icon_store32.bmp"
 IDB_STORE16   BITMAP  "icon_store16.bmp"
+IDB_STORE_UPD   BITMAP  "icon_store32_upd.bmp"
+IDB_STORE16_UPD BITMAP  "icon_store16_upd.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 // Web store window (client/ui/store.html in WebView2); no controls of its own
@@ -77,18 +79,20 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 // Options page (File > Options > Add-on Store)
-IDD_PS_OPTIONS DIALOGEX 0, 0, 320, 180
+IDD_PS_OPTIONS DIALOGEX 0, 0, 320, 210
 STYLE DS_SETFONT | WS_CHILD
 FONT 9, "Segoe UI", 400, 0, 0x0
 BEGIN
-    GROUPBOX        "", IDC_PSO_GRP, 4, 4, 312, 92
+    GROUPBOX        "", IDC_PSO_GRP, 4, 4, 312, 122
     LTEXT           "", IDC_PSO_URL_LBL, 12, 18, 296, 10
     EDITTEXT        IDC_PSO_URL, 12, 30, 296, 13, ES_AUTOHSCROLL
-    CONTROL         "", IDC_PSO_BETA, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 12, 50, 296, 10
-    LTEXT           "", IDC_PSO_HINT, 12, 64, 296, 26
-    GROUPBOX        "", IDC_PSO_GRP_DIAG, 4, 100, 312, 32
-    CONTROL         "", IDC_PSO_VERBOSE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 12, 113, 296, 10
-    LTEXT           "", IDC_PSO_VERSION, 4, 140, 312, 10
+    LTEXT           "", IDC_PSO_CODE_LBL, 12, 48, 296, 10
+    EDITTEXT        IDC_PSO_CODE, 12, 60, 296, 13, ES_AUTOHSCROLL | ES_UPPERCASE
+    CONTROL         "", IDC_PSO_BETA, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 12, 80, 296, 10
+    LTEXT           "", IDC_PSO_HINT, 12, 94, 296, 26
+    GROUPBOX        "", IDC_PSO_GRP_DIAG, 4, 130, 312, 32
+    CONTROL         "", IDC_PSO_VERBOSE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 12, 143, 296, 10
+    LTEXT           "", IDC_PSO_VERSION, 4, 170, 312, 10
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -159,6 +163,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "The report could not be sent."
     IDS_PSW_SCREENSHOTS    "Screenshots"
     IDS_PSW_CLOSE          "Close"
+    IDS_PS_TIP_UPDATES     "Add-on Store: %d update(s) available"
+    IDS_PSW_FOR            "For %s"
+    IDS_PSW_NEED_HINT      "Enter: search by what you need, for example split invoices by barcode"
+    IDS_PSW_NEED_HITS      "Best matches for: %s"
+    IDS_PSW_NEED_NONE      "No add-on found for: %s"
+    IDS_PSW_NEED_ALL       "Show all"
+    IDS_PSO_CODE_LBL       "Customer code (optional, from your add-on provider):"
+    IDS_PSO_CODE_BAD       "The customer code may contain only letters, digits and hyphens (at most 64 characters)."
     IDS_PSW_SEARCH         "Search add-ons"
     IDS_PSW_ALL            "All"
     IDS_PSW_NONE           "No add-ons found."
@@ -247,6 +259,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "Die Meldung konnte nicht gesendet werden."
     IDS_PSW_SCREENSHOTS    "Screenshots"
     IDS_PSW_CLOSE          "Schließen"
+    IDS_PS_TIP_UPDATES     "Add-on Store: %d Update(s) verfügbar"
+    IDS_PSW_FOR            "Für %s"
+    IDS_PSW_NEED_HINT      "Enter: nach Bedarf suchen, zum Beispiel Rechnungen per Barcode trennen"
+    IDS_PSW_NEED_HITS      "Passende Add-ons für: %s"
+    IDS_PSW_NEED_NONE      "Kein passendes Add-on gefunden für: %s"
+    IDS_PSW_NEED_ALL       "Alle anzeigen"
+    IDS_PSO_CODE_LBL       "Kundencode (optional, von Ihrem Add-on-Anbieter):"
+    IDS_PSO_CODE_BAD       "Der Kundencode darf nur Buchstaben, Ziffern und Bindestriche enthalten (höchstens 64 Zeichen)."
     IDS_PSW_SEARCH         "Add-ons durchsuchen"
     IDS_PSW_ALL            "Alle"
     IDS_PSW_NONE           "Keine Add-ons gefunden."
@@ -335,6 +355,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "Le signalement n'a pas pu être envoyé."
     IDS_PSW_SCREENSHOTS    "Captures d'écran"
     IDS_PSW_CLOSE          "Fermer"
+    IDS_PS_TIP_UPDATES     "Add-on Store : %d mise(s) à jour disponible(s)"
+    IDS_PSW_FOR            "Pour %s"
+    IDS_PSW_NEED_HINT      "Entrée : rechercher selon le besoin, par exemple séparer des factures par code-barres"
+    IDS_PSW_NEED_HITS      "Meilleurs résultats pour : %s"
+    IDS_PSW_NEED_NONE      "Aucun module trouvé pour : %s"
+    IDS_PSW_NEED_ALL       "Tout afficher"
+    IDS_PSO_CODE_LBL       "Code client (facultatif, fourni par votre fournisseur de modules) :"
+    IDS_PSO_CODE_BAD       "Le code client ne peut contenir que des lettres, des chiffres et des tirets (64 caractères au maximum)."
     IDS_PSW_SEARCH         "Rechercher des modules"
     IDS_PSW_ALL            "Tous"
     IDS_PSW_NONE           "Aucun module trouvé."
@@ -423,6 +451,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "Impossibile inviare la segnalazione."
     IDS_PSW_SCREENSHOTS    "Schermate"
     IDS_PSW_CLOSE          "Chiudi"
+    IDS_PS_TIP_UPDATES     "Add-on Store: %d aggiornamento/i disponibile/i"
+    IDS_PSW_FOR            "Per %s"
+    IDS_PSW_NEED_HINT      "Invio: cerca in base all'esigenza, ad esempio dividere fatture tramite codice a barre"
+    IDS_PSW_NEED_HITS      "Risultati migliori per: %s"
+    IDS_PSW_NEED_NONE      "Nessun componente trovato per: %s"
+    IDS_PSW_NEED_ALL       "Mostra tutti"
+    IDS_PSO_CODE_LBL       "Codice cliente (facoltativo, dal fornitore dei componenti):"
+    IDS_PSO_CODE_BAD       "Il codice cliente può contenere solo lettere, cifre e trattini (al massimo 64 caratteri)."
     IDS_PSW_SEARCH         "Cerca componenti aggiuntivi"
     IDS_PSW_ALL            "Tutti"
     IDS_PSW_NONE           "Nessun componente aggiuntivo trovato."
@@ -511,6 +547,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "No se pudo enviar el informe."
     IDS_PSW_SCREENSHOTS    "Capturas de pantalla"
     IDS_PSW_CLOSE          "Cerrar"
+    IDS_PS_TIP_UPDATES     "Add-on Store: %d actualización(es) disponible(s)"
+    IDS_PSW_FOR            "Para %s"
+    IDS_PSW_NEED_HINT      "Intro: buscar según la necesidad, por ejemplo separar facturas por código de barras"
+    IDS_PSW_NEED_HITS      "Mejores resultados para: %s"
+    IDS_PSW_NEED_NONE      "No se encontró ningún complemento para: %s"
+    IDS_PSW_NEED_ALL       "Mostrar todo"
+    IDS_PSO_CODE_LBL       "Código de cliente (opcional, de su proveedor de complementos):"
+    IDS_PSO_CODE_BAD       "El código de cliente solo puede contener letras, dígitos y guiones (64 caracteres como máximo)."
     IDS_PSW_SEARCH         "Buscar complementos"
     IDS_PSW_ALL            "Todos"
     IDS_PSW_NONE           "No se encontraron complementos."
@@ -599,6 +643,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "De melding kon niet worden verzonden."
     IDS_PSW_SCREENSHOTS    "Schermafbeeldingen"
     IDS_PSW_CLOSE          "Sluiten"
+    IDS_PS_TIP_UPDATES     "Add-on Store: %d update(s) beschikbaar"
+    IDS_PSW_FOR            "Voor %s"
+    IDS_PSW_NEED_HINT      "Enter: zoeken op behoefte, bijvoorbeeld facturen splitsen op barcode"
+    IDS_PSW_NEED_HITS      "Beste resultaten voor: %s"
+    IDS_PSW_NEED_NONE      "Geen invoegtoepassing gevonden voor: %s"
+    IDS_PSW_NEED_ALL       "Alles tonen"
+    IDS_PSO_CODE_LBL       "Klantcode (optioneel, van uw leverancier van invoegtoepassingen):"
+    IDS_PSO_CODE_BAD       "De klantcode mag alleen letters, cijfers en koppeltekens bevatten (maximaal 64 tekens)."
     IDS_PSW_SEARCH         "Invoegtoepassingen zoeken"
     IDS_PSW_ALL            "Alle"
     IDS_PSW_NONE           "Geen invoegtoepassingen gevonden."
@@ -687,6 +739,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "Não foi possível enviar o relatório."
     IDS_PSW_SCREENSHOTS    "Capturas de ecrã"
     IDS_PSW_CLOSE          "Fechar"
+    IDS_PS_TIP_UPDATES     "Add-on Store: %d atualização(ões) disponível(eis)"
+    IDS_PSW_FOR            "Para %s"
+    IDS_PSW_NEED_HINT      "Enter: pesquisar por necessidade, por exemplo dividir faturas por código de barras"
+    IDS_PSW_NEED_HITS      "Melhores resultados para: %s"
+    IDS_PSW_NEED_NONE      "Nenhum complemento encontrado para: %s"
+    IDS_PSW_NEED_ALL       "Mostrar tudo"
+    IDS_PSO_CODE_LBL       "Código de cliente (opcional, do seu fornecedor de complementos):"
+    IDS_PSO_CODE_BAD       "O código de cliente só pode conter letras, algarismos e hífenes (no máximo 64 caracteres)."
     IDS_PSW_SEARCH         "Pesquisar complementos"
     IDS_PSW_ALL            "Todos"
     IDS_PSW_NONE           "Nenhum complemento encontrado."
@@ -775,6 +835,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "Rapporten kunne ikke sendes."
     IDS_PSW_SCREENSHOTS    "Skærmbilleder"
     IDS_PSW_CLOSE          "Luk"
+    IDS_PS_TIP_UPDATES     "Add-on Store: %d opdatering(er) tilgængelig(e)"
+    IDS_PSW_FOR            "Til %s"
+    IDS_PSW_NEED_HINT      "Enter: søg efter behov, for eksempel opdel fakturaer efter stregkode"
+    IDS_PSW_NEED_HITS      "Bedste resultater for: %s"
+    IDS_PSW_NEED_NONE      "Ingen tilføjelse fundet for: %s"
+    IDS_PSW_NEED_ALL       "Vis alle"
+    IDS_PSO_CODE_LBL       "Kundekode (valgfri, fra din leverandør af tilføjelser):"
+    IDS_PSO_CODE_BAD       "Kundekoden må kun indeholde bogstaver, cifre og bindestreger (højst 64 tegn)."
     IDS_PSW_SEARCH         "Søg i tilføjelser"
     IDS_PSW_ALL            "Alle"
     IDS_PSW_NONE           "Ingen tilføjelser fundet."
@@ -863,6 +931,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "Ilmoitusta ei voitu lähettää."
     IDS_PSW_SCREENSHOTS    "Kuvakaappaukset"
     IDS_PSW_CLOSE          "Sulje"
+    IDS_PS_TIP_UPDATES     "Add-on Store: %d päivitystä saatavilla"
+    IDS_PSW_FOR            "Asiakkaalle %s"
+    IDS_PSW_NEED_HINT      "Enter: hae tarpeen mukaan, esimerkiksi jaa laskut viivakoodin mukaan"
+    IDS_PSW_NEED_HITS      "Parhaat osumat haulle: %s"
+    IDS_PSW_NEED_NONE      "Lisäosaa ei löytynyt haulle: %s"
+    IDS_PSW_NEED_ALL       "Näytä kaikki"
+    IDS_PSO_CODE_LBL       "Asiakaskoodi (valinnainen, lisäosien toimittajalta):"
+    IDS_PSO_CODE_BAD       "Asiakaskoodi voi sisältää vain kirjaimia, numeroita ja yhdysmerkkejä (enintään 64 merkkiä)."
     IDS_PSW_SEARCH         "Hae lisäosia"
     IDS_PSW_ALL            "Kaikki"
     IDS_PSW_NONE           "Lisäosia ei löytynyt."
@@ -951,6 +1027,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "Rapporten kunne ikke sendes."
     IDS_PSW_SCREENSHOTS    "Skjermbilder"
     IDS_PSW_CLOSE          "Lukk"
+    IDS_PS_TIP_UPDATES     "Add-on Store: %d oppdatering(er) tilgjengelig"
+    IDS_PSW_FOR            "For %s"
+    IDS_PSW_NEED_HINT      "Enter: søk etter behov, for eksempel del fakturaer etter strekkode"
+    IDS_PSW_NEED_HITS      "Beste treff for: %s"
+    IDS_PSW_NEED_NONE      "Fant ingen tillegg for: %s"
+    IDS_PSW_NEED_ALL       "Vis alle"
+    IDS_PSO_CODE_LBL       "Kundekode (valgfritt, fra leverandøren av tillegg):"
+    IDS_PSO_CODE_BAD       "Kundekoden kan bare inneholde bokstaver, sifre og bindestreker (maks. 64 tegn)."
     IDS_PSW_SEARCH         "Søk i tillegg"
     IDS_PSW_ALL            "Alle"
     IDS_PSW_NONE           "Fant ingen tillegg."
@@ -1039,6 +1123,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "Rapporten kunde inte skickas."
     IDS_PSW_SCREENSHOTS    "Skärmbilder"
     IDS_PSW_CLOSE          "Stäng"
+    IDS_PS_TIP_UPDATES     "Add-on Store: %d uppdatering(ar) tillgänglig(a)"
+    IDS_PSW_FOR            "För %s"
+    IDS_PSW_NEED_HINT      "Retur: sök efter behov, till exempel dela fakturor efter streckkod"
+    IDS_PSW_NEED_HITS      "Bästa träffar för: %s"
+    IDS_PSW_NEED_NONE      "Inget tillägg hittades för: %s"
+    IDS_PSW_NEED_ALL       "Visa alla"
+    IDS_PSO_CODE_LBL       "Kundkod (valfri, från din leverantör av tillägg):"
+    IDS_PSO_CODE_BAD       "Kundkoden får bara innehålla bokstäver, siffror och bindestreck (högst 64 tecken)."
     IDS_PSW_SEARCH         "Sök tillägg"
     IDS_PSW_ALL            "Alla"
     IDS_PSW_NONE           "Inga tillägg hittades."
@@ -1127,6 +1219,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "Nie udało się wysłać zgłoszenia."
     IDS_PSW_SCREENSHOTS    "Zrzuty ekranu"
     IDS_PSW_CLOSE          "Zamknij"
+    IDS_PS_TIP_UPDATES     "Add-on Store: dostępne aktualizacje: %d"
+    IDS_PSW_FOR            "Dla %s"
+    IDS_PSW_NEED_HINT      "Enter: szukaj według potrzeby, na przykład dzielenie faktur według kodu kreskowego"
+    IDS_PSW_NEED_HITS      "Najlepsze wyniki dla: %s"
+    IDS_PSW_NEED_NONE      "Nie znaleziono dodatku dla: %s"
+    IDS_PSW_NEED_ALL       "Pokaż wszystkie"
+    IDS_PSO_CODE_LBL       "Kod klienta (opcjonalnie, od dostawcy dodatków):"
+    IDS_PSO_CODE_BAD       "Kod klienta może zawierać tylko litery, cyfry i łączniki (maksymalnie 64 znaki)."
     IDS_PSW_SEARCH         "Szukaj dodatków"
     IDS_PSW_ALL            "Wszystkie"
     IDS_PSW_NONE           "Nie znaleziono dodatków."
@@ -1215,6 +1315,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "Hlášení se nepodařilo odeslat."
     IDS_PSW_SCREENSHOTS    "Snímky obrazovky"
     IDS_PSW_CLOSE          "Zavřít"
+    IDS_PS_TIP_UPDATES     "Add-on Store: dostupné aktualizace: %d"
+    IDS_PSW_FOR            "Pro %s"
+    IDS_PSW_NEED_HINT      "Enter: hledat podle potřeby, například rozdělit faktury podle čárového kódu"
+    IDS_PSW_NEED_HITS      "Nejlepší výsledky pro: %s"
+    IDS_PSW_NEED_NONE      "Nenalezen žádný doplněk pro: %s"
+    IDS_PSW_NEED_ALL       "Zobrazit vše"
+    IDS_PSO_CODE_LBL       "Zákaznický kód (nepovinné, od dodavatele doplňků):"
+    IDS_PSO_CODE_BAD       "Zákaznický kód smí obsahovat jen písmena, číslice a spojovníky (nejvýše 64 znaků)."
     IDS_PSW_SEARCH         "Hledat doplňky"
     IDS_PSW_ALL            "Vše"
     IDS_PSW_NONE           "Nebyly nalezeny žádné doplňky."
@@ -1303,6 +1411,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "A jelentést nem sikerült elküldeni."
     IDS_PSW_SCREENSHOTS    "Képernyőképek"
     IDS_PSW_CLOSE          "Bezárás"
+    IDS_PS_TIP_UPDATES     "Add-on Store: %d frissítés érhető el"
+    IDS_PSW_FOR            "Ügyfél: %s"
+    IDS_PSW_NEED_HINT      "Enter: keresés igény szerint, például számlák szétválasztása vonalkód alapján"
+    IDS_PSW_NEED_HITS      "Legjobb találatok: %s"
+    IDS_PSW_NEED_NONE      "Nincs találat: %s"
+    IDS_PSW_NEED_ALL       "Összes megjelenítése"
+    IDS_PSO_CODE_LBL       "Ügyfélkód (nem kötelező, a bővítmény szállítójától):"
+    IDS_PSO_CODE_BAD       "Az ügyfélkód csak betűket, számjegyeket és kötőjelet tartalmazhat (legfeljebb 64 karakter)."
     IDS_PSW_SEARCH         "Bővítmények keresése"
     IDS_PSW_ALL            "Összes"
     IDS_PSW_NONE           "Nem található bővítmény."
@@ -1391,6 +1507,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "Не удалось отправить сообщение."
     IDS_PSW_SCREENSHOTS    "Снимки экрана"
     IDS_PSW_CLOSE          "Закрыть"
+    IDS_PS_TIP_UPDATES     "Add-on Store: доступно обновлений: %d"
+    IDS_PSW_FOR            "Для %s"
+    IDS_PSW_NEED_HINT      "Enter: поиск по задаче, например разделить счета по штрихкоду"
+    IDS_PSW_NEED_HITS      "Лучшие совпадения для: %s"
+    IDS_PSW_NEED_NONE      "Надстройки не найдены для: %s"
+    IDS_PSW_NEED_ALL       "Показать все"
+    IDS_PSO_CODE_LBL       "Код клиента (необязательно, от поставщика надстроек):"
+    IDS_PSO_CODE_BAD       "Код клиента может содержать только буквы, цифры и дефисы (не более 64 символов)."
     IDS_PSW_SEARCH         "Поиск надстроек"
     IDS_PSW_ALL            "Все"
     IDS_PSW_NONE           "Надстройки не найдены."
@@ -1479,6 +1603,14 @@ BEGIN
     IDS_PSW_REPORT_FAIL    "Bildirim gönderilemedi."
     IDS_PSW_SCREENSHOTS    "Ekran görüntüleri"
     IDS_PSW_CLOSE          "Kapat"
+    IDS_PS_TIP_UPDATES     "Add-on Store: %d güncelleme mevcut"
+    IDS_PSW_FOR            "%s için"
+    IDS_PSW_NEED_HINT      "Enter: ihtiyaca göre ara, örneğin faturaları barkoda göre ayır"
+    IDS_PSW_NEED_HITS      "En iyi eşleşmeler: %s"
+    IDS_PSW_NEED_NONE      "Şunun için eklenti bulunamadı: %s"
+    IDS_PSW_NEED_ALL       "Tümünü göster"
+    IDS_PSO_CODE_LBL       "Müşteri kodu (isteğe bağlı, eklenti sağlayıcınızdan):"
+    IDS_PSO_CODE_BAD       "Müşteri kodu yalnızca harf, rakam ve kısa çizgi içerebilir (en fazla 64 karakter)."
     IDS_PSW_SEARCH         "Eklentilerde ara"
     IDS_PSW_ALL            "Tümü"
     IDS_PSW_NONE           "Eklenti bulunamadı."

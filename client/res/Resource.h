@@ -3,7 +3,8 @@
 // Ranges:
 //   100..199   strings (ribbon, dialog, options)
 //   250..259   bitmaps
-//   1460..1469 options page controls
+//   1460..1470 options page controls
+//   300..399   more strings (C0.6.0 on)
 //   1500..1519 store dialog controls
 //
 // Every IDS_ must exist in ALL language blocks of PluginStore.rc; English is
@@ -99,6 +100,15 @@
 #define IDS_PSW_REPORT_FAIL     193
 #define IDS_PSW_SCREENSHOTS     194
 #define IDS_PSW_CLOSE           195
+// C0.6.0: 100..199 is full, more strings from 300 on
+#define IDS_PS_TIP_UPDATES      300
+#define IDS_PSW_FOR             301
+#define IDS_PSW_NEED_HINT       302
+#define IDS_PSW_NEED_HITS       303
+#define IDS_PSW_NEED_NONE       304
+#define IDS_PSW_NEED_ALL        305
+#define IDS_PSO_CODE_LBL        306
+#define IDS_PSO_CODE_BAD        307
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261
@@ -106,6 +116,8 @@
 // ---- bitmaps ----
 #define IDB_STORE               250
 #define IDB_STORE16             251
+#define IDB_STORE_UPD           252
+#define IDB_STORE16_UPD         253
 
 // ---- options page dialog ----
 #define IDD_PS_OPTIONS          1460
@@ -117,6 +129,8 @@
 #define IDC_PSO_HINT            1466
 #define IDC_PSO_GRP_DIAG        1467
 #define IDC_PSO_VERBOSE         1468
+#define IDC_PSO_CODE_LBL        1469
+#define IDC_PSO_CODE            1470
 
 // ---- store dialog ----
 #define IDD_PS_DIALOG           1500

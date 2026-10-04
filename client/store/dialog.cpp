@@ -68,14 +68,14 @@ protected:
             m_list.EnsureVisible(row, FALSE);
             UpdateDescription();
             const PSCatalogEntry& e = m_entries[idx];
-            if (e.installedVersion.empty() || e.installedVersion != e.version)
+            if (e.installedVersion.empty() || PSIsUpdate(e.version, e.installedVersion))
                 PostMessage(WM_ASK_INSTALL);
             return;
         }
         if (m_preselect != L"com.tungsten.pluginstore")
         {
             wchar_t msg[400];
-            swprintf_s(msg, 400, FPLoc(IDS_PSD_LINK_NOTFOUND).c_str(), m_preselect.c_str());
+            _snwprintf_s(msg, 400, _TRUNCATE, FPLoc(IDS_PSD_LINK_NOTFOUND).c_str(), m_preselect.c_str());
             SetDlgItemTextW(IDC_PS_STATUS, msg);
         }
     }
@@ -114,7 +114,7 @@ protected:
         if (m_selfUpdate)
         {
             wchar_t hint[256];
-            swprintf_s(hint, 256, FPLoc(IDS_PSD_SELF_UPDATE).c_str(), m_self.version.c_str(), FP_VERSION_W);
+            _snwprintf_s(hint, 256, _TRUNCATE, FPLoc(IDS_PSD_SELF_UPDATE).c_str(), m_self.version.c_str(), FP_VERSION_W);
             SetDlgItemTextW(IDC_PS_STATUS, hint);
         }
         if (m_entries.empty())
@@ -146,7 +146,7 @@ protected:
     std::wstring StatusText(const PSCatalogEntry& e) const
     {
         if (e.installedVersion.empty()) return FPLoc(IDS_PSD_ST_NOTINST);
-        if (e.installedVersion != e.version) return FPLoc(IDS_PSD_ST_UPDATE);
+        if (PSIsUpdate(e.version, e.installedVersion)) return FPLoc(IDS_PSD_ST_UPDATE);
         return FPLoc(IDS_PSD_ST_INSTALLED);
     }
 
@@ -189,7 +189,7 @@ protected:
         if (!e || e->installedVersion.empty() || e->zxtName == L"PluginStore") return;
 
         wchar_t ask[512];
-        swprintf_s(ask, 512, FPLoc(IDS_PSD_CONFIRM_UNINST).c_str(), e->name.c_str());
+        _snwprintf_s(ask, 512, _TRUNCATE, FPLoc(IDS_PSD_CONFIRM_UNINST).c_str(), e->name.c_str());
         if (MessageBoxW(ask, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
             return;
 
@@ -205,7 +205,7 @@ protected:
         else
         {
             wchar_t msg[256];
-            swprintf_s(msg, 256, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
+            _snwprintf_s(msg, 256, _TRUNCATE, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
             SetDlgItemTextW(IDC_PS_STATUS, msg);
         }
     }
@@ -217,7 +217,7 @@ protected:
     void OfferRestart(UINT idsQuestion, const std::wstring& name)
     {
         wchar_t ask[600];
-        swprintf_s(ask, 600, FPLoc(idsQuestion).c_str(), name.c_str());
+        _snwprintf_s(ask, 600, _TRUNCATE, FPLoc(idsQuestion).c_str(), name.c_str());
         if (MessageBoxW(ask, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
             return;
 
@@ -239,7 +239,7 @@ protected:
         if (!e) return;
 
         wchar_t ask[512];
-        swprintf_s(ask, 512, FPLoc(IDS_PSD_CONFIRM).c_str(), e->name.c_str(), e->version.c_str());
+        _snwprintf_s(ask, 512, _TRUNCATE, FPLoc(IDS_PSD_CONFIRM).c_str(), e->name.c_str(), e->version.c_str());
         if (MessageBoxW(ask, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
             return;
 
@@ -259,7 +259,7 @@ protected:
         else
         {
             wchar_t msg[256];
-            swprintf_s(msg, 256, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
+            _snwprintf_s(msg, 256, _TRUNCATE, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
             SetDlgItemTextW(IDC_PS_STATUS, msg);
         }
     }
@@ -292,7 +292,7 @@ protected:
         else
         {
             wchar_t msg[256];
-            swprintf_s(msg, 256, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
+            _snwprintf_s(msg, 256, _TRUNCATE, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
             SetDlgItemTextW(IDC_PS_STATUS, msg);
         }
     }

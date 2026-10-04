@@ -137,6 +137,16 @@ bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& reque
     if (!session) return false;
     DWORD timeout = 20000;
     WinHttpSetTimeouts(session, timeout, timeout, timeout, timeout);
+#ifndef WINHTTP_FLAG_SECURE_PROTOCOL_TLS1_3
+#define WINHTTP_FLAG_SECURE_PROTOCOL_TLS1_3 0x00002000
+#endif
+    // TLS 1.2 or newer only; Windows versions without TLS 1.3 refuse that flag.
+    DWORD protocols = WINHTTP_FLAG_SECURE_PROTOCOL_TLS1_2 | WINHTTP_FLAG_SECURE_PROTOCOL_TLS1_3;
+    if (!WinHttpSetOption(session, WINHTTP_OPTION_SECURE_PROTOCOLS, &protocols, sizeof(protocols)))
+    {
+        protocols = WINHTTP_FLAG_SECURE_PROTOCOL_TLS1_2;
+        WinHttpSetOption(session, WINHTTP_OPTION_SECURE_PROTOCOLS, &protocols, sizeof(protocols));
+    }
 
     connect = WinHttpConnect(session, u.host.c_str(), u.port, 0);
     if (!connect) return false;
@@ -146,14 +156,25 @@ bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& reque
                                  u.https ? WINHTTP_FLAG_SECURE : 0);
     if (!request) return false;
 
+    // Never follow a redirect: Allowed() checked THIS host only, and a
+    // redirect could lead the download to any other address.
+    DWORD redirect = WINHTTP_OPTION_REDIRECT_POLICY_NEVER;
+    WinHttpSetOption(request, WINHTTP_OPTION_REDIRECT_POLICY, &redirect, sizeof(redirect));
+
+    // Customer deliveries: the code goes to the store host only (Allowed above).
+    std::wstring headers;
+    std::wstring customer = PSCustomerCode();
+    if (!customer.empty()) headers += L"X-Customer-Code: " + customer + L"\r\n";
+    if (body) headers += L"Content-Type: application/json; charset=utf-8\r\n";
+    const wchar_t* h = headers.empty() ? WINHTTP_NO_ADDITIONAL_HEADERS : headers.c_str();
+    DWORD hlen = headers.empty() ? 0 : (DWORD)-1L;
+
     if (body)
     {
-        static const wchar_t* kJson = L"Content-Type: application/json; charset=utf-8\r\n";
-        if (!WinHttpSendRequest(request, kJson, (DWORD)-1L, (LPVOID)body->data(), (DWORD)body->size(),
+        if (!WinHttpSendRequest(request, h, hlen, (LPVOID)body->data(), (DWORD)body->size(),
                                 (DWORD)body->size(), 0)) return false;
     }
-    else if (!WinHttpSendRequest(request, WINHTTP_NO_ADDITIONAL_HEADERS, 0,
-                                 WINHTTP_NO_REQUEST_DATA, 0, 0, 0)) return false;
+    else if (!WinHttpSendRequest(request, h, hlen, WINHTTP_NO_REQUEST_DATA, 0, 0, 0)) return false;
     if (!WinHttpReceiveResponse(request, NULL)) return false;
 
     DWORD code = 0, sz = sizeof(code);
@@ -214,7 +235,7 @@ bool PSHttpPostJson(const std::wstring& url, const std::string& bodyUtf8, std::s
     return ok;
 }
 
-bool PSHttpGetFile(const std::wstring& url, const std::wstring& targetPath, DWORD* status)
+bool PSHttpGetFile(const std::wstring& url, const std::wstring& targetPath, DWORD* status, unsigned long long maxBytes)
 {
     Url u;
     if (!Crack(url, u)) return false;
@@ -229,6 +250,7 @@ bool PSHttpGetFile(const std::wstring& url, const std::wstring& targetPath, DWOR
     if (f == INVALID_HANDLE_VALUE) return false;
 
     bool result = true;
+    unsigned long long total = 0;
     for (;;)
     {
         DWORD avail = 0;
@@ -238,6 +260,12 @@ bool PSHttpGetFile(const std::wstring& url, const std::wstring& targetPath, DWOR
         DWORD got = 0;
         if (!WinHttpReadData(r, chunk.data(), avail, &got)) { result = false; break; }
         if (got == 0) break;
+        total += got;
+        if (total > maxBytes)
+        {
+            FPLogW(L"[Store] download %s refused: larger than %llu bytes", url.c_str(), maxBytes);
+            result = false; break;
+        }
         DWORD written = 0;
         if (!WriteFile(f, chunk.data(), got, &written, NULL) || written != got)
         { result = false; break; }

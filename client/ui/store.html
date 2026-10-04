@@ -37,6 +37,9 @@ header .s{font-size:12px;color:#9fd8ff}
 .cdesc{font-size:12px;color:var(--slate);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
 .pill{font-size:11px;padding:2px 8px;border-radius:999px;white-space:nowrap;flex:none}
 .p-inst{background:#B6FFDE;color:#016839}.p-upd{background:#FFDF85;color:#634E12}.p-beta{background:#e3e8ff;color:#26215C}
+.p-cust{background:#d9f1ff;color:#002854;max-width:180px;overflow:hidden;text-overflow:ellipsis}
+.banner.need{background:var(--soft);color:var(--navy)}
+.reason{font-size:12px;color:var(--navy);margin-top:2px;white-space:normal}
 .btn{border:0;border-radius:8px;padding:8px 16px;font-size:13px;background:var(--navy);color:#fff;white-space:nowrap}
 .btn:hover{background:#00366f}
 .btn.sec{background:#fff;color:var(--navy);border:1px solid #c9d3df}
@@ -110,6 +113,7 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
     <button class="btn sec sm" style="margin-left:auto" id="updBtn"></button>
   </div>
   <div class="banner err" id="err" style="display:none"></div>
+  <div class="banner need" id="need" style="display:none"><span id="needText"></span><button class="btn sec sm" style="margin-left:auto" id="needAll"></button></div>
   <div class="banner upd" id="lock" style="display:none"></div>
   <div class="chips" id="chips"></div>
   <div class="main">
@@ -126,12 +130,13 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
 <script>
 "use strict";
 var S = {}, items = [], self = null, sel = null, cat = "", busy = false, locked = false, icons = {}, shots = {}, shotsAsked = {};
+var need = null;   // {q, order: [ids], reasons: {id: text}} while a search by need is shown
 var host = window.chrome && window.chrome.webview;
 function post(m) { if (host) host.postMessage(m); }
 function $(id) { return document.getElementById(id); }
 function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 function fmt(s) { var a = Array.prototype.slice.call(arguments, 1), i = 0; return String(s || "").replace(/%[sd]/g, function () { return a[i++] != null ? String(a[i - 1]) : ""; }).replace(/\\n/g, "\n"); }
-function status(x) { return !x.installed ? "none" : x.installed !== x.version ? "upd" : "inst"; }
+function status(x) { return !x.installed ? "none" : x.update ? "upd" : "inst"; }
 var palette = ["#002854", "#0F6E56", "#534AB7", "#993C1D", "#185FA5", "#3B6D11"];
 function tile(x, big) {
   var t = el("div", "tile" + (big ? " big" : ""));
@@ -158,6 +163,11 @@ function pill(x) {
   if (x.channel === "beta") return el("span", "pill p-beta", S.beta);
   return null;
 }
+function custPill(x) {
+  if (!x.customer) return null;
+  var p = el("span", "pill p-cust", fmt(S.forCustomer, x.customer)); p.title = p.textContent;
+  return p;
+}
 function actionButtons(x, small) {
   var s = status(x), out = [];
   if (locked) return out;
@@ -168,6 +178,10 @@ function actionButtons(x, small) {
   return out;
 }
 function visible() {
+  if (need) {
+    return need.order.map(function (id) { return items.filter(function (x) { return x.id === id; })[0]; })
+                     .filter(function (x) { return x && (!cat || x.category === cat); });
+  }
   var q = $("q").value.trim().toLowerCase();
   return items.filter(function (x) {
     if (cat && x.category !== cat) return false;
@@ -198,7 +212,9 @@ function render() {
     c.appendChild(tile(x));
     var b = el("div", "cbody"), n = el("div", "cname");
     n.appendChild(el("span", "", x.name)); var p = pill(x); if (p) n.appendChild(p);
+    var cp = custPill(x); if (cp) n.appendChild(cp);
     b.appendChild(n); b.appendChild(el("div", "cdesc", x.description));
+    if (need && need.reasons[x.id]) b.appendChild(el("div", "reason", need.reasons[x.id]));
     var cs = stars(x.rating, x.ratingCount); if (cs) { var cw = el("div", "cstars"); cw.appendChild(cs); b.appendChild(cw); }
     c.appendChild(b);
     actionButtons(x, true).forEach(function (a) { c.appendChild(a); });
@@ -214,6 +230,7 @@ function renderDetail() {
   if (!x) return;
   var h = el("div", "dhead"); h.appendChild(tile(x, true));
   var t = el("div"); t.appendChild(el("div", "dname", x.name));
+  var dcp = custPill(x); if (dcp) { var dcw = el("div"); dcw.style.marginTop = "3px"; dcw.appendChild(dcp); t.appendChild(dcw); }
   t.appendChild(el("div", "dmeta", [x.categoryName || x.category, fmt(S.version, x.version), Math.max(1, Math.round(x.size / 1024)) + " KB"].concat(x.installed && x.installed !== x.version ? [S.colInstalled + ": " + x.installed] : []).join("  ·  ")));
   var ds = stars(x.rating, x.ratingCount); if (ds) { var dw = el("div", "cstars"); dw.appendChild(ds); t.appendChild(dw); }
   h.appendChild(t); d.appendChild(h);
@@ -287,9 +304,10 @@ function reportForm(x) {
     var l = el("label"), r = el("input"); r.type = "radio"; r.name = "kind"; r.value = k[0]; r.checked = i === 0;
     l.appendChild(r); l.appendChild(document.createTextNode(k[1])); kinds.appendChild(l);
   });
+  kinds.setAttribute("role", "radiogroup"); kinds.setAttribute("aria-label", S.report);
   f.appendChild(kinds);
-  var lt = el("label", "", S.reportText); var ta = el("textarea"); ta.maxLength = 4000; f.appendChild(lt); f.appendChild(ta);
-  var le = el("label", "", S.reportEmail); var em = el("input"); em.type = "email"; em.maxLength = 200; f.appendChild(le); f.appendChild(em);
+  var lt = el("label", "", S.reportText); var ta = el("textarea"); ta.maxLength = 4000; ta.id = "rtext"; lt.htmlFor = "rtext"; f.appendChild(lt); f.appendChild(ta);
+  var le = el("label", "", S.reportEmail); var em = el("input"); em.type = "email"; em.maxLength = 200; em.id = "remail"; le.htmlFor = "remail"; f.appendChild(le); f.appendChild(em);
   var lc = el("label", "chk"), cb = el("input"); cb.type = "checkbox"; lc.appendChild(cb); lc.appendChild(document.createTextNode(S.reportLog)); f.appendChild(lc);
   f.appendChild(el("div", "note", S.reportPrivacy));
   m.appendChild(f);
@@ -330,7 +348,10 @@ function apply(m) {
   if (m.type === "init") {
     S = m.strings || {};
     $("title").textContent = S.title; document.title = S.title;
-    $("q").placeholder = S.search;
+    $("q").placeholder = S.search; $("q").title = S.needHint || "";
+    $("q").setAttribute("aria-label", S.search);
+    $("needAll").textContent = S.needAll || "";
+    $("needAll").onclick = clearNeed;
     $("disc").textContent = S.disclaimer; $("disc").title = S.disclaimer;
     $("discLink").textContent = S.disclaimerBtn;
     $("discLink").onclick = function () { modal(S.disclaimerBtn, S.disclaimerFull, [{ label: "OK" }]); };
@@ -354,6 +375,15 @@ function apply(m) {
   } else if (m.type === "rated") {
     items.forEach(function (x) { if (x.id === m.id) { x.rating = m.rating; x.ratingCount = m.ratingCount; x.mine = m.mine; x.justRated = true; } });
     render();
+  } else if (m.type === "need") {
+    if (m.q !== $("q").value.trim()) return;   // the user typed on meanwhile
+    var reasons = {}, order = [];
+    (m.hits || []).forEach(function (h) { order.push(h.id); reasons[h.id] = h.reason || ""; });
+    need = { q: m.q, order: order, reasons: reasons };
+    $("need").style.display = "flex";
+    $("needText").textContent = order.length ? fmt(S.needHits, m.q) : fmt(S.needNone, m.q);
+    if (order.length) sel = order[0];
+    render();
   } else if (m.type === "shots") {
     shots[m.id] = m.items || []; render();
   } else if (m.type === "icon") {
@@ -365,8 +395,17 @@ function apply(m) {
     if (m.message) modal(m.title || "", m.message, [{ label: "OK" }]);
   }
 }
+function clearNeed() { need = null; $("need").style.display = "none"; render(); }
 if (host) host.addEventListener("message", function (e) { apply(e.data); });
-$("q").addEventListener("input", render);
+$("q").addEventListener("input", function () { if (need) { need = null; $("need").style.display = "none"; } render(); });
+$("q").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    var q = $("q").value.trim();
+    if (q.length >= 2) { post({ cmd: "need", q: q }); $("needText").textContent = "\u2026"; $("need").style.display = "flex"; }
+    e.preventDefault();
+  }
+  if (e.key === "Escape" && need) { clearNeed(); e.stopPropagation(); }
+});
 document.addEventListener("keydown", function (e) {
   if (e.key === "Escape" && $("veil").classList.contains("on") && !busy) { closeModal(); return; }
   if ($("veil").classList.contains("on")) return;

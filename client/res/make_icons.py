@@ -1,10 +1,10 @@
 # make_icons.py - renders the Plugin-Store icon in every size we ship.
 #
-#   icon_store32.bmp / icon_store16.bmp  ribbon (24-bit, OPAQUE: Power PDF needs
+#   icon_store32(_upd).bmp / icon_store16(_upd).bmp  ribbon (_upd: with update badge)
+#                                         (24-bit, OPAQUE: Power PDF needs
 #                                        that; the background is the ribbon's own
 #                                        colour #F1F2F4 so the icon looks transparent)
 #   ../../packaging/icon.png             128 px catalog icon, real alpha
-#   ../../server/.../wwwroot/img/store-icon.png  64 px web icon, real alpha
 #
 # Motif: shopping bag in the PDF & eSignature gradient (#00EB86 -> #00A0FB) with
 # a navy handle and a white download arrow. Drawn here (no third-party asset),
@@ -18,9 +18,10 @@ NAVY = (0, 40, 84)
 GREEN = (0, 235, 134)
 BLUE = (0, 160, 251)
 WHITE = (255, 255, 255)
+AMBER = (255, 198, 0)
 
 
-def render(size):
+def render(size, badge=False):
     ss = 8
     S = size * ss
     img = Image.new('RGBA', (S, S), (0, 0, 0, 0))
@@ -53,6 +54,10 @@ def render(size):
     d.rectangle([u(14.6), u(14), u(17.4), u(21)], fill=WHITE + (255,))
     d.polygon([(u(11.2), u(19.5)), (u(20.8), u(19.5)), (u(16), u(25))], fill=WHITE + (255,))
 
+    if badge:
+        # update badge: amber dot with a white ring, top right (C0.6.0)
+        d.ellipse([u(19.5), u(0.5), u(31.5), u(12.5)], fill=WHITE + (255,))
+        d.ellipse([u(21.5), u(2.5), u(29.5), u(10.5)], fill=AMBER + (255,))
     return img.resize((size, size), Image.LANCZOS)
 
 
@@ -64,8 +69,8 @@ def on_ribbon(img):
 if __name__ == '__main__':
     on_ribbon(render(32)).save(os.path.join(HERE, 'icon_store32.bmp'))
     on_ribbon(render(16)).save(os.path.join(HERE, 'icon_store16.bmp'))
+    on_ribbon(render(32, True)).save(os.path.join(HERE, 'icon_store32_upd.bmp'))
+    on_ribbon(render(16, True)).save(os.path.join(HERE, 'icon_store16_upd.bmp'))
     root = os.path.normpath(os.path.join(HERE, '..', '..'))
     render(128).save(os.path.join(root, 'packaging', 'icon.png'))
-    web = os.path.join(root, 'server', 'src', 'AddonStore.Web', 'wwwroot', 'img', 'store-icon.png')
-    render(64).save(web)
     print('icons written')

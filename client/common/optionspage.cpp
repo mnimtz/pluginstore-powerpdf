@@ -35,17 +35,22 @@ static INT_PTR CALLBACK PsoDlgProc(HWND h, UINT msg, WPARAM /*wp*/, LPARAM /*lp*
         SetDlgItemTextW(h, IDC_PSO_GRP,      FPLoc(IDS_PSO_GRP).c_str());
         SetDlgItemTextW(h, IDC_PSO_URL_LBL,  FPLoc(IDS_PSO_URL_LBL).c_str());
         SetDlgItemTextW(h, IDC_PSO_URL,      PSServerUrl().c_str());
+        SetDlgItemTextW(h, IDC_PSO_CODE_LBL, FPLoc(IDS_PSO_CODE_LBL).c_str());
+        SetDlgItemTextW(h, IDC_PSO_CODE,     PSCustomerCode().c_str());
+        SendDlgItemMessageW(h, IDC_PSO_CODE, EM_LIMITTEXT, 80, 0);
         SetDlgItemTextW(h, IDC_PSO_BETA,     FPLoc(IDS_PSO_BETA).c_str());
         SetDlgItemTextW(h, IDC_PSO_HINT,     FPLoc(IDS_PSO_HINT).c_str());
         SetDlgItemTextW(h, IDC_PSO_GRP_DIAG, FPLoc(IDS_PSO_GRP_DIAG).c_str());
         SetDlgItemTextW(h, IDC_PSO_VERBOSE,  FPLoc(IDS_PSO_VERBOSE).c_str());
-        wchar_t v[160]; swprintf_s(v, 160, FPLoc(IDS_PSO_VERSIONLBL).c_str(), FP_VERSION_W);
+        wchar_t v[160]; _snwprintf_s(v, 160, _TRUNCATE, FPLoc(IDS_PSO_VERSIONLBL).c_str(), FP_VERSION_W);
         SetDlgItemTextW(h, IDC_PSO_VERSION, v);
         CheckDlgButton(h, IDC_PSO_BETA, PSBetaChannel() ? BST_CHECKED : BST_UNCHECKED);
         CheckDlgButton(h, IDC_PSO_VERBOSE, ReadVerbose() ? BST_CHECKED : BST_UNCHECKED);
 
         if (PSUrlLocked())
             EnableWindow(GetDlgItem(h, IDC_PSO_URL), FALSE);
+        if (PSCustomerCodeLocked())
+            EnableWindow(GetDlgItem(h, IDC_PSO_CODE), FALSE);
         if (FPPolicyLockPage(L"Store"))
             FPDisableAllChildren(h);
         return TRUE;
@@ -62,6 +67,17 @@ static DUBool PsoCheck(void* hWnd)
 {
     AFX_MANAGE_MODULE_STATE;
     HWND h = (HWND)hWnd;
+    if (IsWindowEnabled(GetDlgItem(h, IDC_PSO_CODE)))
+    {
+        wchar_t code[128] = { 0 };
+        GetDlgItemTextW(h, IDC_PSO_CODE, code, 128);
+        if (!PSIsValidCustomerCode(code))
+        {
+            MessageBoxW(h, FPLoc(IDS_PSO_CODE_BAD).c_str(), FPLoc(IDS_PSO_PAGE).c_str(), MB_OK | MB_ICONWARNING);
+            SetFocus(GetDlgItem(h, IDC_PSO_CODE));
+            return false;
+        }
+    }
     if (!IsWindowEnabled(GetDlgItem(h, IDC_PSO_URL))) return true;
     wchar_t url[1024] = { 0 };
     GetDlgItemTextW(h, IDC_PSO_URL, url, 1024);
@@ -77,7 +93,15 @@ static DUBool PsoUpdate(void* hWnd)
     wchar_t url[1024] = { 0 };
     GetDlgItemTextW(h, IDC_PSO_URL, url, 1024);
     bool beta = IsDlgButtonChecked(h, IDC_PSO_BETA) == BST_CHECKED;
-    PSSaveUserSettings(url, beta);
+    // a locked page (LockPage policy) saves nothing it shows read-only
+    if (IsWindowEnabled(GetDlgItem(h, IDC_PSO_BETA)))
+        PSSaveUserSettings(url, beta);
+    if (IsWindowEnabled(GetDlgItem(h, IDC_PSO_CODE)))
+    {
+        wchar_t code[128] = { 0 };
+        GetDlgItemTextW(h, IDC_PSO_CODE, code, 128);
+        PSSaveCustomerCode(code);
+    }
     bool verbose = IsDlgButtonChecked(h, IDC_PSO_VERBOSE) == BST_CHECKED;
     WriteVerbose(verbose);
     FPLogSetVerbose(verbose);

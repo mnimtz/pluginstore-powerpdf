@@ -17,6 +17,17 @@ bool FPPolicyDword(const wchar_t* section, const wchar_t* name, DWORD& v)
     if (RegGetValueW(HKEY_LOCAL_MACHINE, PolicyPath(section).c_str(), name,
                      RRF_RT_REG_DWORD, &ty, &val, &sz) == ERROR_SUCCESS)
     { v = val; return true; }
+    // Admins sometimes deploy a policy as REG_SZ "1"; ignoring it would leave
+    // the store open although IT locked it, so a decimal string counts too.
+    wchar_t buf[32] = { 0 };
+    sz = sizeof(buf);
+    if (RegGetValueW(HKEY_LOCAL_MACHINE, PolicyPath(section).c_str(), name,
+                     RRF_RT_REG_SZ, &ty, buf, &sz) == ERROR_SUCCESS)
+    {
+        wchar_t* end = nullptr;
+        unsigned long n = wcstoul(buf, &end, 10);
+        if (end && end != buf) { v = (DWORD)n; return true; }
+    }
     return false;
 }
 

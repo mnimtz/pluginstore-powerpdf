@@ -4,6 +4,9 @@
 #include "link.h"
 #include "dialog.h"
 #include "settings.h"
+#include "catalog.h"
+#include "install.h"
+#include "version.h"
 #include "logging.h"
 
 extern "C" HINSTANCE gHINSTANCE;
@@ -11,9 +14,59 @@ extern "C" HINSTANCE gHINSTANCE;
 namespace {
 
 HWND g_linkWnd = NULL;
+}
+void PSRibbonSetUpdateBadge(int count);   // ribbon.cpp
+namespace {
 UINT g_openMsg = 0;
 int  g_startupTries = 0;
 const UINT_PTR kStartupTimer = 1;
+const UINT_PTR kUpdateTimer = 2;
+const UINT WM_PS_UPDATES = WM_APP + 77;   // wParam = number of updates
+volatile LONG g_checkRunning = 0;
+
+// Worker: fetch the catalog, count newer versions, report to the window.
+// It holds its own reference on this DLL, so an unload while it waits for
+// the network cannot pull the code from under it.
+DWORD WINAPI UpdateCheckThread(LPVOID p)
+{
+    std::wstring* lang = static_cast<std::wstring*>(p);
+    std::vector<PSCatalogEntry> all;
+    std::wstring err;
+    int count = -1;
+    if (PSFetchCatalogFor(*lang, all, err))
+    {
+        count = 0;
+        for (const auto& e : all)
+        {
+            if (e.id == L"com.tungsten.pluginstore")
+            {
+                if (!PSPolicyNoSelfUpdate() && PSCompareVersions(e.version, FP_VERSION_W) > 0) ++count;
+            }
+            else if (!PSPolicyNoInstall() && !e.installedVersion.empty() && e.installedVersion != L"?" &&
+                     PSCompareVersions(e.version, e.installedVersion) > 0) ++count;
+        }
+    }
+    delete lang;
+    if (g_linkWnd && count >= 0) PostMessageW(g_linkWnd, WM_PS_UPDATES, (WPARAM)count, 0);
+    InterlockedExchange(&g_checkRunning, 0);
+    FreeLibraryAndExitThread(gHINSTANCE, 0);
+}
+
+void StartUpdateCheck()
+{
+    if (InterlockedCompareExchange(&g_checkRunning, 1, 0) != 0) return;
+    char code[64] = { 0 };
+    DURING DVAppGetLanguage(code); HANDLER END_HANDLER   // host call: UI thread only
+    wchar_t w[64] = { 0 };
+    MultiByteToWideChar(CP_ACP, 0, code, -1, w, 63);
+    HMODULE self = NULL;
+    if (!GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, reinterpret_cast<LPCWSTR>(&UpdateCheckThread), &self))
+    { InterlockedExchange(&g_checkRunning, 0); return; }
+    std::wstring* lang = new std::wstring(w);
+    HANDLE t = CreateThread(NULL, 0, UpdateCheckThread, lang, 0, NULL);
+    if (t) CloseHandle(t);
+    else { delete lang; FreeLibrary(self); InterlockedExchange(&g_checkRunning, 0); }
+}
 
 std::wstring TakePending()
 {
@@ -53,6 +106,7 @@ void OpenPending()
         SetForegroundWindow(main);
     }
     DURING PSShowStoreDialog(id); HANDLER END_HANDLER
+    PSUpdateCheckSoon();
 }
 
 LRESULT CALLBACK LinkWndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp)
@@ -60,6 +114,17 @@ LRESULT CALLBACK LinkWndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp)
     if (msg == g_openMsg && g_openMsg != 0)
     {
         OpenPending();
+        return 0;
+    }
+    if (msg == WM_TIMER && wp == kUpdateTimer)
+    {
+        KillTimer(h, kUpdateTimer);
+        StartUpdateCheck();
+        return 0;
+    }
+    if (msg == WM_PS_UPDATES)
+    {
+        PSRibbonSetUpdateBadge((int)wp);
         return 0;
     }
     if (msg == WM_TIMER && wp == kStartupTimer)
@@ -110,6 +175,14 @@ void PSLinkInit()
     LSTATUS rc = RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, PS_LINK_PENDING_VALUE, RRF_RT_REG_SZ, NULL, buf, &sz);
     if (rc == ERROR_SUCCESS || rc == ERROR_MORE_DATA)
         SetTimer(g_linkWnd, kStartupTimer, 2000, NULL);
+    if (PSUpdateBadgeEnabled())
+        SetTimer(g_linkWnd, kUpdateTimer, 15000, NULL);
+}
+
+void PSUpdateCheckSoon()
+{
+    if (g_linkWnd && PSUpdateBadgeEnabled())
+        SetTimer(g_linkWnd, kUpdateTimer, 1500, NULL);
 }
 
 void PSLinkShutdown()

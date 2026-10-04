@@ -85,3 +85,33 @@ backup/restore) green after the fixes.
 | O7 | Low | Dates are stored in UTC and shown without time zone | Show the user's time zone in reports |
 | O8 | Low | Category usage counts include versions the catalog no longer shows | Count only deliverable versions |
 | O9 | Privacy | IP addresses in rate limits/usage, AI data flow, log excerpts with user names in problem reports | Review with Legal / data protection before the customer phase |
+
+## Client C0.6.0 (same audit)
+
+Live-tested in Power PDF on an ARM64 machine: update badge on and off, update
+through the hardened elevated step, install and removal of a private add-on
+delivered by customer code, search by need, policy as REG_SZ, downgrade fix.
+The generated PowerShell helper scripts pass the PowerShell parser.
+
+| # | Severity | Finding | Fix |
+|---|---|---|---|
+| C1 | High | The elevated install script was a file in the user's TEMP folder that another user-level process could change before PowerShell read it | Script passed in memory (`-EncodedCommand`); no script files |
+| C2 | High | The package hash was checked in user context only; the file in TEMP could be swapped before the elevated step unpacked it | Elevated step copies it into an admin-only staging folder under `Plug-Ins` and checks the hash again there |
+| C3 | High | WinHTTP followed redirects, which bypassed the store-host pinning | Redirect policy NEVER; TLS 1.2 or newer |
+| C4 | Medium | `powershell.exe` / `msiexec.exe` resolved through the search path | Full paths from the system folder |
+| C5 | Medium | Catalog values (binary name, id, version) went unquoted into the elevated script | Strict field validation; every value quoted (including U+201A/U+201B) |
+| C6 | Medium | Any different catalog version counted as an update, so an older one was offered (downgrade) | Update only when the catalog version is newer; same rule for page, classic dialog and badge |
+| C7 | Medium | Policies deployed as REG_SZ "1" were ignored (store stayed open) | Decimal REG_SZ accepted |
+| C8 | Medium | Localized messages with catalog names in fixed buffers could end Power PDF on overlong names | Truncating formatting |
+| C9 | Low | Unlimited download size | Capped at the announced size (icons 4 MB, screenshots 3 MB) |
+| C10 | Low | Page messages accepted without checking their origin | Only from the page the host loaded |
+| C11 | Low | Updating an add-on nested `assets`, `docs`, `UILayout` inside the old folders | Folders replaced as a whole |
+| C12 | Low | Self-update helper used `msiexec` from the path and trusted the downloaded file | Hash checked again, full path |
+| C13 | Low | A foreign catalog entry named `PluginStore` could replace the store client | Skipped |
+
+Open: `ServerUrl` in HKCU can be changed by any process of the user (an
+install still needs the UAC prompt); package and MSI signing would close
+this (planned H4). The self-update MSI is unpacked in the user's TEMP before
+`msiexec` elevates. Network calls of the store window still run on the UI
+thread (short freezes on slow networks). The options page with the new
+customer-code field was built but not clicked through live.

@@ -6,9 +6,12 @@
 #include "dialog.h"
 #include "loc.h"
 #include "logging.h"
+#include "link.h"
 #include "Resource.h"
 
 extern "C" HINSTANCE gHINSTANCE;
+
+static RVToolButton g_openBtn = NULL;
 
 static DUText MakeDUText(const std::wstring& s)
 {
@@ -19,6 +22,33 @@ static DCCB1 void DCCB2 OnOpenStore(void* /*data*/)
 {
     AFX_MANAGE_MODULE_STATE;
     DURING PSShowStoreDialog(std::wstring()); HANDLER END_HANDLER
+    PSUpdateCheckSoon();   // an install or update may have cleared the badge
+}
+
+// Amber dot on the store icon and a tooltip with the number of updates
+// (store client and installed add-ons); count 0 restores the plain button.
+void PSRibbonSetUpdateBadge(int count)
+{
+    AFX_MANAGE_MODULE_STATE;
+    static int shown = 0;
+    if (!g_openBtn || count < 0 || count == shown) return;
+    shown = count;
+    DURING
+        DVIcon big = RVToolGetIconFromBitmap(gHINSTANCE, MAKEINTRESOURCEW(count ? IDB_STORE_UPD : IDB_STORE));
+        if (big) RVToolButtonSetIcon(g_openBtn, big, true);
+        DVIcon sm = RVToolGetIconFromBitmap(gHINSTANCE, MAKEINTRESOURCEW(count ? IDB_STORE16_UPD : IDB_STORE16));
+        if (sm) RVToolButtonSetIcon(g_openBtn, sm, false);
+        std::wstring tip = FPLoc(IDS_PS_TIP_OPEN);
+        if (count)
+        {
+            wchar_t buf[300];
+            _snwprintf_s(buf, _countof(buf), _TRUNCATE, FPLoc(IDS_PS_TIP_UPDATES).c_str(), count);
+            tip = buf;
+        }
+        DUText h = MakeDUText(tip);
+        RVToolButtonSetHelpText(g_openBtn, h); DUTextDestroy(h);
+    HANDLER END_HANDLER
+    FPLogW(L"[Store] update badge: %d update(s)", count);
 }
 
 void PSRegisterUI(RVToolBar bar)
@@ -50,4 +80,5 @@ void PSRegisterUI(RVToolBar bar)
     DVIcon sm = RVToolGetIconFromBitmap(gHINSTANCE, MAKEINTRESOURCEW(IDB_STORE16));
     if (sm) RVToolButtonSetIcon(b, sm, false);
     RVToolGroupButtonAddButton(group, b, false, NULL);
+    g_openBtn = b;
 }

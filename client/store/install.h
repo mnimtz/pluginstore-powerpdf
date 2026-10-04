@@ -19,6 +19,8 @@ std::wstring PSInstalledVersion(const std::wstring& zxtName);
 // Full flow: download -> hash check -> elevated copy. Returns 0 on success,
 // 1 = download failed, 2 = hash mismatch, 3 = elevation declined/failed,
 // 4 = install script failed, 5 = Power PDF folder not found.
+// The elevated step checks the hash once more in an admin-only staging folder
+// before it extracts anything (2 when it changed in between).
 int PSInstallPackage(const PSCatalogEntry& e, HWND owner);
 
 // Removes <bin>\Plug-Ins\<name>.zxt and the data folder (one elevated step)
@@ -35,7 +37,7 @@ int PSSelfUpdate(const PSCatalogEntry& e, HWND owner);
 
 // The self-update helper script (PowerShell) for a downloaded package; used by
 // PSSelfUpdate, separate so it can be tested without a download.
-std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& outDir);
+std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& outDir, const std::wstring& sha256);
 
 // Starts a detached helper that waits until Power PDF (this process and any
 // other PowerPDF.exe) has exited and then starts it again. Logs its steps to
@@ -44,3 +46,11 @@ bool PSScheduleRestart();
 
 // "1.2.10" > "1.2.9": numeric per-segment compare.
 int PSCompareVersions(const std::wstring& a, const std::wstring& b);
+
+// The catalog offers an update: installed with unknown version ("?", no
+// manifest) or the catalog version is NEWER. An older catalog version (e.g.
+// a newer build installed from an MSI) is no update, never a downgrade.
+inline bool PSIsUpdate(const std::wstring& catalogVersion, const std::wstring& installed)
+{
+    return !installed.empty() && (installed == L"?" || PSCompareVersions(catalogVersion, installed) > 0);
+}

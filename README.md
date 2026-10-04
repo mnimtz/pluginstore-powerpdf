@@ -124,6 +124,22 @@ built with the Power PDF Plugin SDK):
   random install id in HKCU, only a per-package hash reaches the server),
   "Report a problem" with an optional reply address and log excerpt, and a
   screenshot strip with enlarged view in the detail panel.
+- **Update badge, search by need, customer code** (client 0.6.0+): about
+  15 s after Power PDF starts (and after the store window closes) the client
+  reads the catalog in the background and puts an amber dot on the ribbon
+  button when the store client or an installed add-on has a NEWER version
+  (an older catalog version is never offered). Enter in the search box asks
+  the server's search by need. A customer code (Options page, or policy
+  `CustomerCode`) is sent as `X-Customer-Code` and unlocks add-ons delivered
+  to that customer; they show a "For <customer>" label.
+- **Hardened installation** (client 0.6.0+): catalog fields are validated
+  (id, version, SHA-256, binary name, URLs); WinHTTP follows no redirects and
+  uses TLS 1.2 or newer; downloads stop at the announced size. The elevated
+  step runs `%SystemRoot%\System32\...\powershell.exe` with the script in
+  memory (`-EncodedCommand`, no script file), copies the package into an
+  admin-only staging folder under `Plug-Ins`, checks the hash there again and
+  only then unpacks it. The self-update helper checks the hash again before
+  it starts `msiexec.exe` by full path.
 - **Usage statistics** (client 0.4.2+): the client's user agent carries its
   version, the Power PDF and Windows version and the native architecture
   (x64/arm64), e.g. `AddonStore-PowerPDF/0.4.2 (PowerPDF 15.1.0.555; Windows
@@ -171,7 +187,10 @@ msiexec /i PluginStore-<version>.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"
   (DWORD 1 locks the options page), `ClassicUI` (DWORD 1),
   `DisableInstall` (DWORD 1: browse only, no install or removal; client
   0.4.3+), `DisableSelfUpdate` (DWORD 1: no store-client update from the
-  store, for IT-managed MSI rollouts; client 0.4.3+). From 32-bit
+  store, for IT-managed MSI rollouts; client 0.4.3+), `CustomerCode` (REG_SZ,
+  sets and locks the customer code; client 0.6.0+), `UpdateBadge` (DWORD 0:
+  no background update check; client 0.6.0+). DWORD values may also be
+  deployed as a decimal REG_SZ such as "1" (client 0.6.0+). From 32-bit
   deployment agents use `reg add ... /reg:64`.
 - Intune detection rule: the file `<bin>\Plug-Ins\PluginStore.zxt` with a
   minimum version (the ProductCode changes with every version).

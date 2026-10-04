@@ -15,5 +15,11 @@
 void PSLinkInit();       // PluginInit: create the message-only window, pick up a pending request
 void PSLinkShutdown();   // PluginUnload
 
+// Update badge: checks the catalog in the background (15 s after start, and
+// again shortly after the store dialog closed) and marks the ribbon button
+// when the store client or an installed add-on has a newer version.
+// Policy Store\UpdateBadge = 0 switches it off.
+void PSUpdateCheckSoon();
+
 /// Package ids from links must look like reverse-DNS ids, nothing else.
 bool PSLinkIsValidId(const std::wstring& id);
