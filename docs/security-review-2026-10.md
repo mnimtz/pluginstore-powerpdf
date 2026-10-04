@@ -119,7 +119,7 @@ customer-code field was built but not clicked through live.
 ## S0.15.0 additions
 
 - Catalog signatures (ECDSA P-256 over id, version, SHA-256; TSV column 21,
-  JSON `signature`, key at `/api/signing-key`). Clients from 0.7.0 install
+  JSON `signature`, key at `/api/signing-key`). Clients from 0.7.1 install
   only packages signed with a pinned key; closes the open client item about
   a changed `ServerUrl` in HKCU. Key: App Setting `Signing__PrivateKeyPem`,
   else created once and stored encrypted in the database (backed up with the
