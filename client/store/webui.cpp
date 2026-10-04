@@ -19,6 +19,7 @@
 #include <functional>
 #include <memory>
 #include <algorithm>
+#include <atomic>
 #include "WebView2.h"
 
 #pragma comment(lib, "WebView2LoaderStatic.lib")
@@ -266,18 +267,33 @@ struct AsyncMsg
     std::vector<PSCatalogEntry> entries;
 };
 
+// The store window that accepts results. Posting happens under the lock, so
+// once OnDestroy has cleared it and drained the queue nothing new arrives
+// (a reused HWND never receives a stale result either).
+SRWLOCK g_asyncLock = SRWLOCK_INIT;
+HWND g_asyncTarget = NULL;
+// Bumped for every icon load and when the window closes: older icon workers stop.
+std::atomic<int> g_iconGen{ 0 };
+
 // False when the window is gone (the message is then deleted here).
 bool PostAsync(HWND h, AsyncMsg* m)
 {
-    if (::IsWindow(h) && ::PostMessageW(h, WM_ASYNC, 0, reinterpret_cast<LPARAM>(m))) return true;
-    delete m;
-    return false;
+    bool posted = false;
+    AcquireSRWLockShared(&g_asyncLock);
+    if (h && h == g_asyncTarget)
+        posted = ::PostMessageW(h, WM_ASYNC, 0, reinterpret_cast<LPARAM>(m)) != FALSE;
+    ReleaseSRWLockShared(&g_asyncLock);
+    if (!posted) delete m;
+    return posted;
 }
 
 DWORD WINAPI WorkerMain(LPVOID p)
 {
     std::unique_ptr<std::function<void()>> fn(static_cast<std::function<void()>*>(p));
+    // COM for ShellExecuteEx in the elevated install step
+    HRESULT co = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
     try { (*fn)(); } catch (...) { FPLogW(L"[Store] worker failed"); }
+    if (SUCCEEDED(co)) CoUninitialize();
     fn.reset();
     // the thread holds its own reference on this DLL (see Spawn)
     FreeLibraryAndExitThread(gHINSTANCE, 0);
@@ -322,6 +338,9 @@ protected:
     BOOL OnInitDialog() override
     {
         CDialog::OnInitDialog();
+        AcquireSRWLockExclusive(&g_asyncLock);
+        g_asyncTarget = m_hWnd;
+        ReleaseSRWLockExclusive(&g_asyncLock);
         SetWindowTextW(FPLoc(IDS_PSD_TITLE).c_str());
         HICON ico = (HICON)LoadImageW(gHINSTANCE, MAKEINTRESOURCEW(IDI_PS_STORE), IMAGE_ICON, 0, 0, LR_DEFAULTSIZE);
         if (ico) { SetIcon(ico, TRUE); SetIcon(ico, FALSE); }
@@ -465,7 +484,8 @@ protected:
         Spawn([h, gen, lang, withPreselect]() {
             auto* m = new AsyncMsg;
             m->kind = KCatalog; m->gen = gen; m->flag = withPreselect;
-            if (!PSFetchCatalogFor(lang, m->entries, m->error)) m->entries.clear();
+            try { if (!PSFetchCatalogFor(lang, m->entries, m->error)) m->entries.clear(); }
+            catch (...) { m->entries.clear(); m->error = L"catalog could not be read"; }
             PostAsync(h, m);
         });
     }
@@ -683,17 +703,28 @@ protected:
         std::vector<Want> want;
         for (const auto& e : m_entries) want.push_back({ e.id, e.version, e.iconUrl });
         int gen = m_catalogGen;
+        int iconGen = ++g_iconGen;
         HWND h = m_hWnd;
-        Spawn([h, want, gen]() {
+        Spawn([h, want, gen, iconGen]() {
             std::wstring dir = LocalDir(L"icons");
             for (const auto& w : want)
             {
+                if (iconGen != g_iconGen.load()) return;   // a newer load (or the window closed)
                 std::wstring name = w.id + L"-" + w.version + L".png";
                 if (dir.empty() || !SafeFileName(name) || w.url.empty()) continue;
                 std::wstring path = dir + L"\\" + name;
+                std::wstring none = path + L".none";   // the server has no icon for this version
                 DWORD status = 0;
-                if (GetFileAttributesW(path.c_str()) == INVALID_FILE_ATTRIBUTES)
+                if (GetFileAttributesW(path.c_str()) == INVALID_FILE_ATTRIBUTES &&
+                    GetFileAttributesW(none.c_str()) == INVALID_FILE_ATTRIBUTES)
+                {
                     PSHttpGetFile(w.url, path, &status, 4 * 1024 * 1024);
+                    if (status == 404)
+                    {
+                        HANDLE f = CreateFileW(none.c_str(), GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
+                        if (f != INVALID_HANDLE_VALUE) CloseHandle(f);
+                    }
+                }
                 std::vector<BYTE> data = ReadSmallFile(path, 4 * 1024 * 1024);
                 if (data.size() < 8 || data[0] != 0x89 || data[1] != 'P' || data[2] != 'N' || data[3] != 'G') continue;
                 auto* m = new AsyncMsg;
@@ -770,7 +801,9 @@ protected:
         Spawn([h, job, e]() {
             auto* m = new AsyncMsg;
             m->kind = KJob; m->number = job; m->entries.push_back(e);
-            m->count = job == JobInstall ? PSInstallPackage(e, h) : PSUninstallPackage(e.zxtName, h);
+            m->count = 4;   // reported as a failure if the job throws
+            try { m->count = job == JobInstall ? PSInstallPackage(e, h) : PSUninstallPackage(e.zxtName, h); }
+            catch (...) { FPLogW(L"[Store] install job failed"); }
             PostAsync(h, m);
         });
     }
@@ -840,11 +873,23 @@ protected:
     }
     afx_msg void OnDestroy()
     {
+        // No result can arrive any more; free the ones still queued.
+        AcquireSRWLockExclusive(&g_asyncLock);
+        g_asyncTarget = NULL;
+        ReleaseSRWLockExclusive(&g_asyncLock);
+        ++g_iconGen;
+        MSG msg;
+        while (::PeekMessageW(&msg, m_hWnd, WM_ASYNC, WM_ASYNC, PM_REMOVE))
+            delete reinterpret_cast<AsyncMsg*>(msg.lParam);
         if (m_ctrl) { m_ctrl->Close(); m_ctrl.Reset(); }
         m_web.Reset(); m_env.Reset();
         CDialog::OnDestroy();
     }
     void OnOK() override {}   // Enter belongs to the page
+    // While an install or removal runs, the window stays open: its result
+    // (restart prompt, error) must reach the user, and a second run of the
+    // same package must not start on top of it.
+    void OnCancel() override { if (!m_jobRunning) CDialog::OnCancel(); }
 
     DECLARE_MESSAGE_MAP()
 };

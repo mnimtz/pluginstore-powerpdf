@@ -25,7 +25,8 @@ std::wstring PSInstalledVersion(const std::wstring& zxtName);
 int PSInstallPackage(const PSCatalogEntry& e, HWND owner);
 
 // Removes <bin>\Plug-Ins\<name>.zxt and the data folder (one elevated step)
-// plus the plugin's HKCU key (user context). Same return codes as install.
+// plus the plugin's HKCU key (user context). Same return codes as install;
+// 4 also when the plug-in has no store manifest (never installed by the store).
 int PSUninstallPackage(const std::wstring& zxtName, HWND owner);
 
 // Self-update of the store client: downloads the client package (hash
@@ -33,6 +34,7 @@ int PSUninstallPackage(const std::wstring& zxtName, HWND owner);
 // exit, installs the MSI (/passive, elevates itself) and starts Power PDF
 // again. The CALLER closes Power PDF when this returns 0.
 // 0 = helper started, 1 = download, 2 = hash, 4 = helper failed, 5 = cancelled,
+// 6 = not signed by a trusted key, 8 = Power PDF folder not found,
 // 7 = blocked by policy DisableSelfUpdate (install/remove: 7 = DisableInstall).
 int PSSelfUpdate(const PSCatalogEntry& e, HWND owner);
 

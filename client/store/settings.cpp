@@ -12,6 +12,8 @@ const wchar_t* kPSRegKey = L"Software\\Kofax\\PDF\\Tungsten Power PDF\\PluginSto
 static const wchar_t* kDefaultUrl = L"https://addon.power-pdf.de";
 
 static std::wstring g_url = kDefaultUrl;
+// g_url is read by worker threads while Options may rewrite it.
+static SRWLOCK g_urlLock = SRWLOCK_INIT;
 static bool g_beta = false;
 static bool g_urlLocked = false;
 
@@ -151,10 +153,16 @@ void PSSettingsLoad()
     std::wstring s;
     DWORD d = 0;
 
+    std::wstring url = kDefaultUrl;
+    bool locked = false;
     if (FPPolicyString(L"Store", L"ServerUrl", s) && !s.empty())
-    { g_url = TrimUrl(s); g_urlLocked = true; }
+    { url = TrimUrl(s); locked = true; }
     else if (ReadUserString(L"ServerUrl", s) && !s.empty())
-        g_url = TrimUrl(s);
+        url = TrimUrl(s);
+    AcquireSRWLockExclusive(&g_urlLock);
+    g_url = url;
+    g_urlLocked = locked;
+    ReleaseSRWLockExclusive(&g_urlLock);
 
     if (FPPolicyDword(L"Store", L"BetaChannel", d))
         g_beta = d != 0;
@@ -166,7 +174,13 @@ void PSSettingsLoad()
         FPLogSetVerbose(verbose != 0);
 }
 
-std::wstring PSServerUrl() { return g_url; }
+std::wstring PSServerUrl()
+{
+    AcquireSRWLockShared(&g_urlLock);
+    std::wstring u = g_url;
+    ReleaseSRWLockShared(&g_urlLock);
+    return u;
+}
 bool PSBetaChannel()       { return g_beta; }
 bool PSUrlLocked()         { return g_urlLocked; }
 

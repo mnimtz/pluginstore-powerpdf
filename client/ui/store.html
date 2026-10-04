@@ -337,7 +337,7 @@ function confirmAct(action, x) {
   ]);
 }
 function onResult(m) {
-  busy = false; closeModal();
+  busy = false; closeModal(); render();
   if (m.ok && m.restart) {
     modal(m.title || "", m.message, [{ label: S.later, sec: true }, { label: S.restartNow, fn: function () { post({ cmd: "restart" }); } }]);
   } else if (m.message) {
@@ -391,7 +391,10 @@ function apply(m) {
   } else if (m.type === "result") {
     onResult(m);
   } else if (m.type === "message") {
-    closeModal(); busy = false; render();
+    // an install or removal in progress keeps its progress dialog; only its
+    // own "result" ends it (a late rating/feedback reply must not)
+    if (busy) return;
+    closeModal(); render();
     if (m.message) modal(m.title || "", m.message, [{ label: "OK" }]);
   }
 }

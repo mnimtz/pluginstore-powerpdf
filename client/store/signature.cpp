@@ -21,7 +21,8 @@ struct PinnedKey { const wchar_t* id; const wchar_t* raw; };
 const PinnedKey kBuiltIn[] = {
     // offline recovery key (used by the server only if its own key is lost)
     { L"f729dd9553a86cd1", L"H2GP5IfEAXH1x8RafnXP2bb3ZgrvNA8NpsMHVKytweKjTLTgBgUpf72MbzQgOLC//5gG7Wl+937JR+f8iqkP5g==" },
-    // PRODUCTION_KEY_PLACEHOLDER
+    // store instance https://addon.power-pdf.de (GET /api/signing-key, Oct 4, 2026)
+    { L"6d2e832af60f35aa", L"Si6zOG8/Us2ZtBgEOWpTkkvdcbrL33xowWFepHvJAFJiKbuDB+uwhVzA1fP/gGfaoTAp83VvO9RyrXWZSH+8VQ==" },
 };
 
 std::vector<BYTE> Unbase64(const std::wstring& s)
@@ -48,16 +49,22 @@ std::vector<BYTE> KeyFor(const std::wstring& id)
 {
     for (const auto& k : kBuiltIn)
         if (id == k.id) return Unbase64(k.raw);
+    // REG_SZ or REG_MULTI_SZ of any length (a company may trust many keys)
     std::wstring list;
-    if (!FPPolicyString(L"Store", L"TrustedSigningKeys", list) || list.empty())
+    const wchar_t* key = L"Software\\Kofax\\PDF\\Tungsten Power PDF\\PluginStore\\Policies\\Store";
+    const DWORD types = RRF_RT_REG_SZ | RRF_RT_REG_MULTI_SZ;
+    DWORD sz = 0;
+    LSTATUS st = RegGetValueW(HKEY_LOCAL_MACHINE, key, L"TrustedSigningKeys", types, NULL, NULL, &sz);
+    if (st == ERROR_SUCCESS && sz > 0 && sz < 1024 * 1024)
     {
-        // REG_MULTI_SZ variant
-        wchar_t buf[4096] = { 0 };
-        DWORD sz = sizeof(buf) - sizeof(wchar_t);
-        if (RegGetValueW(HKEY_LOCAL_MACHINE, L"Software\\Kofax\\PDF\\Tungsten Power PDF\\PluginStore\\Policies\\Store",
-                         L"TrustedSigningKeys", RRF_RT_REG_MULTI_SZ, NULL, buf, &sz) == ERROR_SUCCESS)
-            for (const wchar_t* p = buf; *p; p += wcslen(p) + 1) { list += p; list += L";"; }
+        std::vector<wchar_t> buf(sz / sizeof(wchar_t) + 2, L'\0');
+        sz = (DWORD)(buf.size() * sizeof(wchar_t));
+        st = RegGetValueW(HKEY_LOCAL_MACHINE, key, L"TrustedSigningKeys", types, NULL, buf.data(), &sz);
+        if (st == ERROR_SUCCESS)
+            for (const wchar_t* p = buf.data(); *p; p += wcslen(p) + 1) { list += p; list += L";"; }
     }
+    if (st != ERROR_SUCCESS && st != ERROR_FILE_NOT_FOUND)
+        FPLogW(L"[Store] policy TrustedSigningKeys could not be read (%ld)", (long)st);
     size_t pos = 0;
     while (pos < list.size())
     {
@@ -124,7 +131,7 @@ bool PSSignatureValid(const PSCatalogEntry& e)
     }
     std::wstring sha = e.sha256;
     for (auto& c : sha) c = (wchar_t)towlower(c);
-    std::string msg = Utf8(L"addonstore-pkg-v1\n" + e.id + L"\n" + e.version + L"\n" + sha);
+    std::string msg = Utf8(L"addonstore-pkg-v2\n" + e.id + L"\n" + e.version + L"\n" + sha + L"\n" + e.zxtName);
     bool ok = Verify(raw, msg, Unbase64(e.signature.substr(colon + 1)));
     if (!ok) FPLogW(L"[Store] %s %s: signature does not match", e.id.c_str(), e.version.c_str());
     return ok;

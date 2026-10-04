@@ -70,11 +70,8 @@ bool Allowed(const Url& u)
 // "AddonStore-PowerPDF/0.4.2 (PowerPDF 15.1.0.555; Windows 10.0.26200; arm64)":
 // client, host and OS version plus the machine's native architecture, for the
 // store's usage reports. Technical data only, nothing personal.
-static const wchar_t* UserAgent()
+static std::wstring BuildUserAgent()
 {
-    static std::wstring ua;
-    if (!ua.empty()) return ua.c_str();
-
     std::wstring host = L"0";
     wchar_t exe[MAX_PATH] = { 0 };
     GetModuleFileNameW(NULL, exe, MAX_PATH);
@@ -118,7 +115,14 @@ static const wchar_t* UserAgent()
             arch = L"arm64";
     }
 
-    ua = std::wstring(L"AddonStore-PowerPDF/") + FP_VERSION_W + L" (PowerPDF " + host + L"; Windows " + os + L"; " + arch + L")";
+    return std::wstring(L"AddonStore-PowerPDF/") + FP_VERSION_W + L" (PowerPDF " + host + L"; Windows " + os + L"; " + arch + L")";
+}
+
+// Built once; a function-local static is initialized thread-safely (workers
+// and the update check may ask at the same time).
+static const wchar_t* UserAgent()
+{
+    static const std::wstring ua = BuildUserAgent();
     return ua.c_str();
 }
 

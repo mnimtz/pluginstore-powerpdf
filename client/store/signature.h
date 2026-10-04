@@ -1,6 +1,6 @@
 // signature.h - catalog signatures of the store server (ECDSA P-256, SHA-256).
 //
-// The server signs "addonstore-pkg-v1\n{id}\n{version}\n{sha256}" of every
+// The server signs "addonstore-pkg-v2\n{id}\n{version}\n{sha256}\n{zxtName}" of every
 // catalog entry (TSV column 21: "keyId:base64(r||s)"). The client installs
 // only packages signed with a key it trusts, so a server address changed in
 // the user profile cannot deliver foreign packages:

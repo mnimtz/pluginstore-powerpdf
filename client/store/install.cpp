@@ -114,6 +114,20 @@ std::wstring PSInstalledVersion(const std::wstring& zxtName)
 
 // PowerShell single-quoted literal: every single-quote character doubles
 // (PowerShell also treats U+2018, U+2019, U+201A and U+201B as quotes).
+// Download target in the user's TEMP, unique per run: two runs for the same
+// package (a store window reopened while the first one still works) never
+// share or delete each other's file.
+static std::wstring TempPackagePath(const PSCatalogEntry& e)
+{
+    wchar_t tempDir[MAX_PATH] = { 0 };
+    GetTempPathW(MAX_PATH, tempDir);
+    GUID g = { 0 };
+    wchar_t tag[40] = L"0";
+    if (SUCCEEDED(CoCreateGuid(&g)))
+        swprintf_s(tag, 40, L"%08lx%04x%04x", g.Data1, g.Data2, g.Data3);
+    return std::wstring(tempDir) + e.id + L"-" + e.version + L"-" + tag + L".ppak";
+}
+
 static std::wstring PsQuote(const std::wstring& v)
 {
     std::wstring r = L"'";
@@ -183,9 +197,7 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
     std::wstring pluginsDir = PluginsDir();
     if (pluginsDir.empty()) return 5;
 
-    wchar_t tempDir[MAX_PATH] = { 0 };
-    GetTempPathW(MAX_PATH, tempDir);
-    std::wstring ppak = std::wstring(tempDir) + e.id + L"-" + e.version + L".ppak";
+    std::wstring ppak = TempPackagePath(e);
 
     // 1) download (user context); never more than the catalog announced
     DWORD status = 0;
@@ -363,15 +375,15 @@ std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& sh
 {
     std::wstring sha = sha256;
     for (auto& c : sha) c = (wchar_t)towupper(c);
-    wchar_t tempDir[MAX_PATH] = { 0 };
-    GetTempPathW(MAX_PATH, tempDir);
-    std::wstring mlog = std::wstring(tempDir) + L"AddonStoreUpdate.log";
     std::wstring elevated = std::wstring() +
         L"$ErrorActionPreference='Stop'\r\n" +
         L"$src=" + PsQuote(ppak) + L"\r\n" +
         L"$sha=" + PsQuote(sha) + L"\r\n" +
         L"$plugins=" + PsQuote(PluginsDir()) + L"\r\n" +
-        L"$mlog=" + PsQuote(mlog) + L"\r\n" +
+        // The MSI log goes to the Windows TEMP under a fresh name, never into a
+        // folder the user can prepare (a link there would redirect the write
+        // of an administrator).
+        L"$mlog=Join-Path $env:windir ('Temp\\AddonStoreUpdate-'+[guid]::NewGuid().ToString('N')+'.log')\r\n" +
         L"$msiexec=Join-Path ([Environment]::GetFolderPath('System')) 'msiexec.exe'\r\n" +
         L"$rc=1\r\n" +
         L"$stage=Join-Path $plugins ('.psupdate-'+[guid]::NewGuid().ToString('N'))\r\n" +
@@ -415,10 +427,8 @@ int PSSelfUpdate(const PSCatalogEntry& e, HWND owner)
         return 7;
     }
     if (!PSSignatureValid(e)) return 6;
-    if (PluginsDir().empty()) return 5;
-    wchar_t tempDir[MAX_PATH] = { 0 };
-    GetTempPathW(MAX_PATH, tempDir);
-    std::wstring ppak = std::wstring(tempDir) + e.id + L"-" + e.version + L".ppak";
+    if (PluginsDir().empty()) return 8;
+    std::wstring ppak = TempPackagePath(e);
 
     DWORD status = 0;
     unsigned long long cap = e.sizeBytes > 0 ? e.sizeBytes + 65536 : 300ull * 1024 * 1024;
@@ -455,6 +465,14 @@ int PSUninstallPackage(const std::wstring& zxtName, HWND owner)
         return 7;
     }
     if (!PSIsValidZxtName(zxtName)) return 4;
+    // Only plug-ins with a store manifest (installed by the store or by one of
+    // our MSIs) can be removed here: a catalog entry naming one of Power PDF's
+    // own plug-ins must never offer to delete it.
+    if (PSInstalledVersion(zxtName).empty())
+    {
+        FPLogW(L"[Store] %s has no store manifest, not removed", zxtName.c_str());
+        return 4;
+    }
     std::wstring pluginsDir = PluginsDir();
     if (pluginsDir.empty()) return 5;
 
