@@ -9,6 +9,10 @@
             <option value="off" selected="@(Model.Mode == "off")">@L["off"]</option>
         </select>
         <select name="@(Model.Prefix)Version" class="stage-version" style="width:auto">
+            @if (Model.Version is not null && !Model.Versions.Contains(Model.Version))
+            {
+                <option value="@Model.Version" selected>@Model.Version (@L["no longer available"])</option>
+            }
             @foreach (var v in Model.Versions)
             {
                 <option value="@v" selected="@(v == Model.Version)">@v</option>

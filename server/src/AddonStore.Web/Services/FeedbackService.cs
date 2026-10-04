@@ -66,7 +66,7 @@ public class FeedbackService
         if (stars is < 1 or > 5) return (new(false, "STARS_INVALID", "stars must be 1 to 5."), null);
         if (!await IsPublishedAsync(packageId)) return (new(false, "PACKAGE_NOT_FOUND", $"No released package with id '{packageId}'."), null);
         var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
-        if (!Allow("rate-ip:" + ip, 200)) return (new(false, "RATE_LIMITED", "Too many ratings from this network today."), null);
+        if (!Allow("rate-ip:" + ip, 30) || !Allow($"rate-ip-pkg:{ip}:{packageId}", 5)) return (new(false, "RATE_LIMITED", "Too many ratings from this network today."), null);
 
         var hash = InstallHash(installId!, packageId);
         var row = await _db.Ratings.FirstOrDefaultAsync(r => r.PackageId == packageId && r.InstallHash == hash);
@@ -97,7 +97,7 @@ public class FeedbackService
             return new(false, "FEEDBACK_EMAIL_INVALID", "email is not a valid address.");
         if (!await IsPublishedAsync(packageId)) return new(false, "PACKAGE_NOT_FOUND", $"No released package with id '{packageId}'.");
         var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
-        if (!Allow("fb-install:" + installId!.ToLowerInvariant(), 10) || !Allow("fb-ip:" + ip, 50))
+        if (!Allow("fb-install:" + installId!.ToLowerInvariant(), 10) || !Allow("fb-ip:" + ip, 20) || !Allow("fb-pkg:" + packageId, 200))
             return new(false, "RATE_LIMITED", "Too many reports today; please try again tomorrow.");
 
         var ua = ctx.Request.Headers.UserAgent.ToString();

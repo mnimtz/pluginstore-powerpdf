@@ -21,8 +21,15 @@ public class RegisterModel : PageModel
 
     public void OnGet() { }
 
-    public async Task<IActionResult> OnPostAsync(string name, string email, string password, string? reason)
+    public async Task<IActionResult> OnPostAsync(string name, string email, string password, string? reason,
+                                                 [FromServices] Microsoft.Extensions.Caching.Memory.IMemoryCache cache)
     {
+        // at most 5 access requests per address and hour
+        var ip = AddonStore.Web.Services.GeoService.ClientIp(HttpContext)?.ToString() ?? "";
+        var n = Microsoft.Extensions.Caching.Memory.CacheExtensions.GetOrCreate(cache, $"register:{ip}:{DateTime.UtcNow:yyyyMMddHH}",
+            e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1); return new int[1]; })!;
+        bool over; lock (n) over = ++n[0] > 5;
+        if (over) return RedirectToPage("/Account/Login", new { registered = "1" });
         var user = new AppUser
         {
             UserName = email,
@@ -33,6 +40,10 @@ public class RegisterModel : PageModel
         var result = await _users.CreateAsync(user, password);
         if (!result.Succeeded)
         {
+            // An existing address gets the same answer as a new request: the page
+            // must not reveal which addresses have an account.
+            if (result.Errors.Any(e => e.Code is "DuplicateUserName" or "DuplicateEmail"))
+                return RedirectToPage("/Account/Login", new { registered = "1" });
             Error = string.Join(" ", result.Errors.Select(e => e.Description));
             return Page();
         }

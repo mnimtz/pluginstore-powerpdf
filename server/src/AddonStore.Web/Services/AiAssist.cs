@@ -74,7 +74,7 @@ public class AiAssist
         f.AiSummaryEn = Clip(Str(e, "summary_en"), 600);
         f.AiSummaryDe = Clip(Str(e, "summary_de"), 600);
         f.AiReply = Clip(Str(e, "suggested_reply"), 2000);
-        var dup = e.TryGetProperty("duplicate_of", out var d) && d.TryGetInt32(out var di) ? di : 0;
+        var dup = e.TryGetProperty("duplicate_of", out var d) && d.ValueKind == JsonValueKind.Number && d.TryGetInt32(out var di) ? di : 0;
         f.AiDuplicateOf = dup > 0 && earlier.Any(x => x.Id == dup) ? dup : null;
         f.AiAt = DateTime.UtcNow;
         return true;
@@ -335,7 +335,7 @@ public class AiAssist
                 "that help with what the user wants to do, best first, and give each a one-sentence reason in the user's " +
                 $"language (UI language code: {culture}). Only use ids from the catalog; return an empty list if nothing fits. " + Untrusted,
                 "Catalog (id | name | category | description):\n<data>\n" + catalog + "</data>\nUser request:\n<data>\n" + query + "\n</data>",
-                SearchSchema, false, ct);
+                SearchSchema, false, ct, anonymous: true);
             if (r is { } e && e.TryGetProperty("results", out var arr) && arr.ValueKind == JsonValueKind.Array)
             {
                 var byId = items.ToDictionary(i => i.Id);
@@ -379,6 +379,11 @@ public class AiAssist
 /// <summary>Background AI work: sorts new problem reports and prepares review aids, once a minute.</summary>
 public sealed class AiWorker : BackgroundService
 {
+    // items that failed: key -> attempts (in memory; three strikes per process run)
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, int> Failures = new();
+    private static bool GiveUp(string key) => Failures.TryGetValue(key, out var n) && n >= 3;
+    private static void Failed(string key) => Failures.AddOrUpdate(key, 1, (_, n) => n + 1);
+
     private readonly IServiceScopeFactory _scopes;
     private readonly ILogger<AiWorker> _log;
     public AiWorker(IServiceScopeFactory scopes, ILogger<AiWorker> log) { _scopes = scopes; _log = log; }
@@ -400,10 +405,16 @@ public sealed class AiWorker : BackgroundService
                     if (cfg.Triage)
                     {
                         var since = DateTime.UtcNow.AddDays(-30);
-                        foreach (var f in await db.Feedbacks.Where(f => f.AiAt == null && f.CreatedAt > since).OrderBy(f => f.Id).Take(10).ToListAsync(stop))
+                        int failedInRow = 0;
+                        foreach (var f in await db.Feedbacks.Where(f => f.AiAt == null && f.CreatedAt > since).OrderBy(f => f.Id).Take(20).ToListAsync(stop))
                         {
-                            if (await assist.TriageAsync(f, stop)) await db.SaveChangesAsync(stop);
-                            else break;   // provider down or quota used up: try again next round
+                            if (GiveUp("fb" + f.Id)) continue;
+                            if (await assist.TriageAsync(f, stop)) { await db.SaveChangesAsync(stop); failedInRow = 0; }
+                            else
+                            {
+                                Failed("fb" + f.Id);
+                                if (++failedInRow >= 2) break;   // provider down or quota used up: next round
+                            }
                         }
                     }
                     if (cfg.Review && cfg.ReviewAuto)
@@ -413,12 +424,15 @@ public sealed class AiWorker : BackgroundService
                                      .Where(v => v.AiReviewAt == null && v.SubmittedAt > since &&
                                                  (v.Status == VersionStatus.Beta || v.Status == VersionStatus.Submitted) &&
                                                  v.PackageId != SubmissionService.ClientPackageId)
-                                     .OrderBy(v => v.Id).Take(3).ToListAsync(stop))
-                            if (!await assist.ReviewAsync(v, "de", stop)) break;
+                                     .OrderBy(v => v.Id).Take(6).ToListAsync(stop))
+                        {
+                            if (GiveUp("rv" + v.Id)) continue;
+                            if (!await assist.ReviewAsync(v, "de", stop)) { Failed("rv" + v.Id); break; }
+                        }
                     }
                 }
             }
-            catch (Exception ex) when (ex is not OperationCanceledException) { _log.LogWarning(ex, "AI worker run failed"); }
+            catch (Exception ex) when (ex is not OperationCanceledException || !stop.IsCancellationRequested) { _log.LogWarning(ex, "AI worker run failed"); }
             try { await Task.Delay(TimeSpan.FromMinutes(1), stop); } catch (TaskCanceledException) { break; }
         }
     }

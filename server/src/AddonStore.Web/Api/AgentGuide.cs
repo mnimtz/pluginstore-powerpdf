@@ -628,6 +628,12 @@ be free of warnings before review. Info is for information only.
 | FEEDBACK_NOT_FOUND | error (404) | No feedback with this id for the package. |
 | FEEDBACK_STATUS_INVALID | error (400) | Status must be `open` or `done`. |
 | QUERY_INVALID | error (400) | Search: `q` must have 2 to 300 characters. |
+| ZXT_NAME_INVALID | error | `files.x64`/`files.arm64` must be `x64/<Name>.zxt` / `arm64/<Name>.zxt`, name 1 to 64 letters, digits, `-` or `_`. |
+| ZXT_NAME_TAKEN | error | Another package already ships a binary with this file name; choose another one. |
+| VERSION_NOT_WITHDRAWABLE | error (409) | Rejected or already withdrawn versions cannot be withdrawn. |
+| MIN_HOST_VERSION_INVALID | error | `minPowerPdfVersion` must be digits and dots, e.g. `5.0` or `2025.3`. |
+| INFLATE_LIMIT | error | The package unpacks to more than 400 MB; the checks need to read every file. |
+| CSRF_CHECK | error (403) | An API write authenticated by the sign-in cookie needs the header `X-Requested-With`; agents use a bearer token instead. |
 | VISIBILITY_INVALID | error | `visibility` must be `public` or `private` (manifest or PATCH; the store client is always public). |
 | VISIBILITY_KEPT | info | The manifest asks for another visibility than the package has; visibility only changes in the portal or with PATCH. |
 | CUSTOMER_INVALID | error (400) | Customer: name 1 to 120 characters, valid email, two-letter language, status active or paused. |

@@ -102,7 +102,7 @@
                 <b>@L["Live"]:</b> @StageText(del.LiveMode, del.LiveVersion, d.LiveResolved)
                 @if (del.StartsAt is not null || del.EndsAt is not null)
                 {
-                    <text> &nbsp;·&nbsp; @L["Period"]: @(del.StartsAt?.ToString("yyyy-MM-dd") ?? "…") – @(del.EndsAt?.ToString("yyyy-MM-dd") ?? "…")</text>
+                    <text> &nbsp;·&nbsp; @L["Period"]: @(del.StartsAt?.ToString("yyyy-MM-dd") ?? "…") – @(del.EndsAt?.AddDays(-1).ToString("yyyy-MM-dd") ?? "…")</text>
                 }
             </p>
             @if (Model.CanManage)
@@ -138,7 +138,7 @@
                         <partial name="_StageFields" model='("beta", del.BetaMode, del.BetaVersion, d.Versions)' />
                         <partial name="_StageFields" model='("live", del.LiveMode, del.LiveVersion, d.Versions)' />
                         <div><label>@L["From"]</label><input type="date" name="startsAt" value="@del.StartsAt?.ToString("yyyy-MM-dd")" /></div>
-                        <div><label>@L["Until"]</label><input type="date" name="endsAt" value="@del.EndsAt?.ToString("yyyy-MM-dd")" /></div>
+                        <div><label>@L["Until"]</label><input type="date" name="endsAt" value="@del.EndsAt?.AddDays(-1).ToString("yyyy-MM-dd")" /></div>
                         <input type="hidden" name="status" value="@del.Status" />
                         <button type="submit" class="btn small cta">@L["Save"]</button>
                     </form>
@@ -210,7 +210,7 @@
     </details>
 }
 
-<script>
+<script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
     (function () {
         document.querySelectorAll('.copy-code').forEach(function (b) {
             b.addEventListener('click', function () {

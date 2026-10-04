@@ -41,6 +41,18 @@ builder.Services.ConfigureApplicationCookie(o =>
 {
     o.LoginPath = "/Account/Login";
     o.AccessDeniedPath = "/Account/Login";
+    o.Cookie.HttpOnly = true;
+    o.Cookie.SameSite = SameSiteMode.Lax;
+    // Production runs behind HTTPS only; the local test server uses plain http.
+    o.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
+});
+// Sessions are re-checked against the security stamp every minute: disabling
+// an account or changing its role takes effect almost at once.
+builder.Services.Configure<SecurityStampValidatorOptions>(o => o.ValidationInterval = TimeSpan.FromMinutes(1));
+builder.Services.AddAntiforgery(o =>
+{
+    o.Cookie.HttpOnly = true;
+    o.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
 });
 
 builder.Services.AddAuthentication()
@@ -127,6 +139,8 @@ builder.Services.AddScoped<FeedbackService>();
 builder.Services.AddScoped<AiService>();
 builder.Services.AddScoped<AiAssist>();
 builder.Services.AddScoped<CustomerService>();
+// A failing background service (AI worker, geo refresh, maintenance) must never stop the web app.
+builder.Services.Configure<HostOptions>(o => o.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.Ignore);
 builder.Services.AddHostedService<AiWorker>();
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<GeoService>();
@@ -151,7 +165,10 @@ builder.Services.AddSingleton(new AppVersion(
     File.Exists(versionFile) ? File.ReadAllText(versionFile).Trim() : "0.0.0-dev"));
 
 builder.Services.Configure<KestrelServerOptions>(o =>
-    o.Limits.MaxRequestBodySize = 220 * 1024 * 1024);
+{
+    o.Limits.MaxRequestBodySize = 220 * 1024 * 1024;
+    o.AddServerHeader = false;          // do not announce the server software
+});
 builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(o =>
     o.MultipartBodyLengthLimit = 220 * 1024 * 1024);
 
@@ -161,15 +178,23 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
     await AddonStore.Web.Data.SchemaUpgrade.RunAsync(scope.ServiceProvider);
 
-// Security response headers (TLS/HSTS terminate at App Service).
+// Security response headers. TLS terminates at App Service, which does not
+// add HSTS itself; browsers only honour the header on HTTPS responses.
+var sendHsts = !app.Environment.IsDevelopment();
 app.Use(async (ctx, next) =>
 {
+    if (sendHsts) ctx.Response.Headers["Strict-Transport-Security"] = "max-age=31536000";
+    ctx.Response.Headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=(), payment=()";
     ctx.Response.Headers["X-Content-Type-Options"] = "nosniff";
     ctx.Response.Headers["X-Frame-Options"] = "DENY";
     ctx.Response.Headers["Referrer-Policy"] = "no-referrer";
+    // Scripts only from this site or inline with this response's nonce (no
+    // inline event handlers): injected markup cannot run script.
+    var nonce = Convert.ToBase64String(System.Security.Cryptography.RandomNumberGenerator.GetBytes(16));
+    ctx.Items["CspNonce"] = nonce;
     ctx.Response.Headers["Content-Security-Policy"] =
         "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; " +
-        "script-src 'self' 'unsafe-inline'; frame-ancestors 'none'";
+        $"script-src 'self' 'nonce-{nonce}'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
     await next();
 });
 
@@ -178,6 +203,25 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+// CSRF guard for the API: a state-changing call that authenticates with the
+// sign-in cookie (instead of a bearer token) must carry X-Requested-With.
+// Browsers cannot add that header cross-site without CORS, which is off.
+app.Use(async (ctx, next) =>
+{
+    var m = ctx.Request.Method;
+    if (ctx.Request.Path.StartsWithSegments("/api") && !HttpMethods.IsGet(m) && !HttpMethods.IsHead(m) && !HttpMethods.IsOptions(m) &&
+        !ctx.Request.Headers.ContainsKey("Authorization") && ctx.Request.Cookies.Keys.Any(k => k.StartsWith(".AspNetCore.Identity")) &&
+        !ctx.Request.Headers.ContainsKey("X-Requested-With"))
+    {
+        ctx.Response.StatusCode = 403;
+        await ctx.Response.WriteAsJsonAsync(new { ok = false, error = new { code = "CSRF_CHECK",
+            message = "Cookie-authenticated API writes need the header X-Requested-With.",
+            hint = "Use a bearer token (Authorization: Bearer ppak_...) for API calls." } });
+        return;
+    }
+    await next();
+});
 
 // First-run: until the first (admin) account exists, the UI leads to /Setup.
 var setupDone = false;
@@ -205,8 +249,11 @@ app.MapGet("/set-lang", (string culture, string? returnUrl, HttpContext ctx) =>
     // Only supported cultures (an arbitrary string would throw), and only
     // same-site relative targets ("//host" and "/\host" are open redirects).
     if (!cultures.Contains(culture)) culture = "en";
-    var target = returnUrl is not null && returnUrl.StartsWith('/') &&
-                 !(returnUrl.Length > 1 && (returnUrl[1] == '/' || returnUrl[1] == '\\'))
+    // Browsers drop tabs and line breaks ("/\t/evil.example" becomes "//evil.example"),
+    // so any control character, backslash or "//" rejects the target.
+    var target = returnUrl is not null && returnUrl.StartsWith('/') && !returnUrl.StartsWith("//") &&
+                 !returnUrl.Any(ch => char.IsControl(ch) || ch == '\\' || char.IsWhiteSpace(ch)) &&
+                 !returnUrl.Replace("\t", "").Contains("//")
         ? returnUrl : "/";
     ctx.Response.Cookies.Append(
         CookieRequestCultureProvider.DefaultCookieName,

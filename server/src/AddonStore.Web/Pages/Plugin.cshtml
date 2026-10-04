@@ -69,7 +69,7 @@
             @if (Model.IsAdmin && Model.InCatalog is not null)
             {
                 <form method="post" asp-page-handler="WithdrawAll" asp-route-id="@pkg.Id"
-                      onsubmit="return confirm('@L["Take this plug-in out of the store? All live and beta versions are withdrawn; installed copies keep working."]');">
+                      data-confirm="@L["Take this plug-in out of the store? All live and beta versions are withdrawn; installed copies keep working."]">
                     <button type="submit" class="btn small danger">@L["Take out of the store"]</button>
                 </form>
             }
@@ -115,7 +115,7 @@
                     @if (VersionActionService.CanWithdraw(v, me, Model.IsAdmin))
                     {
                         <form method="post" asp-page-handler="Withdraw" asp-route-id="@pkg.Id"
-                              onsubmit="return confirm('@L["Withdraw this version?"]');">
+                              data-confirm="@L["Withdraw this version?"]">
                             <input type="hidden" name="versionId" value="@v.Id" />
                             <button type="submit" class="btn small danger">@L["Withdraw"]</button>
                         </form>

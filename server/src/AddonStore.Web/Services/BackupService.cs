@@ -150,7 +150,7 @@ public class BackupService
                 using (var es = metaEntry.Open()) es.CopyTo(ms);
                 meta = JsonDocument.Parse(ms.ToArray()).RootElement.Clone();
             }
-            if (!meta.TryGetProperty("product", out var prod) || prod.GetString() != "PluginStore-PowerPDF")
+            if (!meta.TryGetProperty("product", out var prod) || prod.ValueKind != JsonValueKind.String || prod.GetString() != "PluginStore-PowerPDF")
                 return new(false, "This is not a Add-on Store backup.", meta);
 
             // Self-lockout protection: the acting admin must exist as an active
@@ -191,6 +191,9 @@ public class BackupService
     {
         Directory.CreateDirectory(SafetyRoot);
         var safety = Path.Combine(SafetyRoot, $"pre-restore-{DateTime.UtcNow:yyyyMMdd-HHmmss}.zip");
+        // keep the ten newest safety backups (each one contains the whole store)
+        foreach (var old in new DirectoryInfo(SafetyRoot).GetFiles("pre-restore-*.zip").OrderByDescending(f => f.Name).Skip(9))
+            try { old.Delete(); } catch (IOException) { }
         await CreateAsync(safety, actingName + " (automatic, before restore)");
 
         var dbPath = DbPath;

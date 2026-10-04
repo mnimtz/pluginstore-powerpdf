@@ -68,7 +68,7 @@
     </form>
 
     <form method="post" asp-page-handler="Reset" asp-route-id="@pkg.Id" style="margin-top:16px"
-          onsubmit="return confirm('@L["Reset name, description, author and contact to the values from the package?"]');">
+          data-confirm="@L["Reset name, description, author and contact to the values from the package?"]">
         <button type="submit" class="btn secondary">@L["Reset to package values"]</button>
     </form>
 </div>

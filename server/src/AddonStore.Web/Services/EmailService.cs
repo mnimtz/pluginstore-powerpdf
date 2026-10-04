@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection;
 using AddonStore.Web.Data;
 using Microsoft.AspNetCore.Identity;
 
@@ -22,16 +23,22 @@ public class ResendEmailSender : IAppEmailSender
     private readonly SettingsService _settings;
     private readonly AuditService _audit;
     private readonly ILogger<ResendEmailSender> _log;
+    private readonly Microsoft.AspNetCore.DataProtection.IDataProtectionProvider _dp;
 
     public ResendEmailSender(IHttpClientFactory httpFactory, SettingsService settings, AuditService audit,
-        ILogger<ResendEmailSender> log)
+        ILogger<ResendEmailSender> log, Microsoft.AspNetCore.DataProtection.IDataProtectionProvider dp)
     {
-        _httpFactory = httpFactory; _settings = settings; _audit = audit; _log = log;
+        _httpFactory = httpFactory; _settings = settings; _audit = audit; _log = log; _dp = dp;
     }
 
     public async Task<MailResult> SendAsync(string to, string subject, string html, string eventKey)
     {
         var key = await _settings.GetAsync("Email.ResendApiKey", "Email:ResendApiKey");
+        if (key.StartsWith("dp:"))
+        {
+            try { key = _dp.CreateProtector("AddonStore.ResendKey").Unprotect(key[3..]); }
+            catch (System.Security.Cryptography.CryptographicException) { key = ""; }   // key ring changed: enter the key again
+        }
         if (string.IsNullOrWhiteSpace(key))
         {
             await _audit.LogAsync("system", "mail.skipped", to, $"{eventKey}: no Resend key configured");

@@ -108,7 +108,7 @@ public class AiService
                 models = cfg.Provider == "claude" ? await ClaudeModelsAsync(key, ct) : await GeminiModelsAsync(key, ct);
             }
         }
-        catch (Exception ex) when (ex is not OperationCanceledException)
+        catch (Exception ex) when (ex is not OperationCanceledException || !ct.IsCancellationRequested)
         {
             _log.LogWarning(ex, "Loading the model list failed ({Provider})", cfg.Provider);
             return (false, $"{cfg.Provider}: the key was not accepted or the provider is not reachable ({ex.GetType().Name}).", new());
@@ -173,14 +173,22 @@ public class AiService
         }
     }
 
-    private bool TakeQuota(int limit)
+    private static int _searchCallsToday;
+
+    /// <summary>
+    /// Daily request budget. Anonymous search may use at most a third of it, so
+    /// visitors can never use up the budget for report sorting and review aids.
+    /// </summary>
+    private bool TakeQuota(int limit, bool anonymous)
     {
         lock (_gate)
         {
             var day = DateTime.UtcNow.ToString("yyyyMMdd");
-            if (day != _day) { _day = day; _callsToday = 0; }
+            if (day != _day) { _day = day; _callsToday = 0; _searchCallsToday = 0; }
             if (_callsToday >= limit) return false;
+            if (anonymous && _searchCallsToday >= Math.Max(1, limit / 3)) return false;
             _callsToday++;
+            if (anonymous) _searchCallsToday++;
             return true;
         }
     }
@@ -190,10 +198,11 @@ public class AiService
     /// (JSON Schema, "type": "object"). Null when AI is off, the quota is used up
     /// or the provider fails; callers then simply show nothing.
     /// </summary>
-    public async Task<JsonElement?> JsonAsync(string system, string user, object schema, bool deep = false, CancellationToken ct = default)
+    public async Task<JsonElement?> JsonAsync(string system, string user, object schema, bool deep = false, CancellationToken ct = default,
+                                              bool anonymous = false)
     {
         var cfg = await ConfigAsync();
-        if (!cfg.On || !TakeQuota(cfg.DailyLimit)) return null;
+        if (!cfg.On || !TakeQuota(cfg.DailyLimit, anonymous)) return null;
         try
         {
             string? text = cfg.Provider switch
@@ -207,7 +216,7 @@ public class AiService
             using var doc = JsonDocument.Parse(text);
             return doc.RootElement.ValueKind == JsonValueKind.Object ? doc.RootElement.Clone() : null;
         }
-        catch (Exception ex) when (ex is not OperationCanceledException)
+        catch (Exception ex) when (ex is not OperationCanceledException || !ct.IsCancellationRequested)
         {
             _log.LogWarning(ex, "AI request failed ({Provider})", cfg.Provider);
             return null;

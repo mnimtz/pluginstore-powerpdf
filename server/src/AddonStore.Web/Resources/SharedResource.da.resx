@@ -354,7 +354,6 @@
   <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>Brug af butikken: downloads, klienter i brug, placeringer, indsendelser og udviklere.</value></data>
   <data name="Last {0} days" xml:space="preserve"><value>Seneste {0} dage</value></data>
   <data name="From" xml:space="preserve"><value>Fra</value></data>
-  <data name="To" xml:space="preserve"><value>Til</value></data>
   <data name="Add-on" xml:space="preserve"><value>Tilføjelse</value></data>
   <data name="All add-ons" xml:space="preserve"><value>Alle tilføjelser</value></data>
   <data name="Country" xml:space="preserve"><value>Land</value></data>
@@ -615,8 +614,6 @@
   <data name="Live stage" xml:space="preserve"><value>Live-trin</value></data>
   <data name="newest" xml:space="preserve"><value>nyeste</value></data>
   <data name="fixed" xml:space="preserve"><value>fast</value></data>
-  <data name="off" xml:space="preserve"><value>fra</value></data>
-  <data name="active" xml:space="preserve"><value>aktiv</value></data>
   <data name="paused" xml:space="preserve"><value>sat på pause</value></data>
   <data name="ended" xml:space="preserve"><value>afsluttet</value></data>
   <data name="outside period" xml:space="preserve"><value>uden for perioden</value></data>
@@ -643,4 +640,7 @@
   <data name="Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>Live "fast" holder kunden på en testet version; "nyeste" følger hver frigivet version. Private tilføjelser kræver ingen godkendelse; administratorer får en e-mail.</value></data>
   <data name="No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet." xml:space="preserve"><value>Ingen tilføjelse at levere: du kan levere dine egne tilføjelser, der har bestået de automatiske kontroller og endnu ikke er leveret til denne kunde.</value></data>
   <data name="Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed." xml:space="preserve"><value>Kun navnet er påkrævet. Kontaktdata bruges kun til leverings-e-mailen; lad dem være tomme, hvis de ikke behøves.</value></data>
+  <data name="Sign-in failed. Check email and password, or try again later." xml:space="preserve"><value>Login mislykkedes. Kontrollér e-mail og adgangskode, eller prøv igen senere.</value></data>
+  <data name="Backup restored. The server restarts now to load it completely; sign in again in a minute." xml:space="preserve"><value>Sikkerhedskopien er gendannet. Serveren genstarter nu for at indlæse den helt; log ind igen om et minut.</value></data>
+  <data name="no longer available" xml:space="preserve"><value>ikke længere tilgængelig</value></data>
 </root>

@@ -354,7 +354,6 @@
   <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>Использование магазина: загрузки, используемые клиенты, местоположения, отправки и разработчики.</value></data>
   <data name="Last {0} days" xml:space="preserve"><value>Последние {0} дн.</value></data>
   <data name="From" xml:space="preserve"><value>С</value></data>
-  <data name="To" xml:space="preserve"><value>По</value></data>
   <data name="Add-on" xml:space="preserve"><value>Надстройка</value></data>
   <data name="All add-ons" xml:space="preserve"><value>Все надстройки</value></data>
   <data name="Country" xml:space="preserve"><value>Страна</value></data>
@@ -615,8 +614,6 @@
   <data name="Live stage" xml:space="preserve"><value>Этап live</value></data>
   <data name="newest" xml:space="preserve"><value>новейшая</value></data>
   <data name="fixed" xml:space="preserve"><value>фиксированная</value></data>
-  <data name="off" xml:space="preserve"><value>выкл.</value></data>
-  <data name="active" xml:space="preserve"><value>активен</value></data>
   <data name="paused" xml:space="preserve"><value>приостановлен</value></data>
   <data name="ended" xml:space="preserve"><value>завершена</value></data>
   <data name="outside period" xml:space="preserve"><value>вне периода</value></data>
@@ -643,4 +640,7 @@
   <data name="Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>Live «фиксированная» оставляет клиента на проверенной версии, «новейшая» следует за каждой выпущенной версией. Частные надстройки не требуют одобрения; администраторы получают письмо.</value></data>
   <data name="No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet." xml:space="preserve"><value>Нечего поставлять: можно поставлять свои надстройки, прошедшие автоматические проверки и ещё не поставленные этому клиенту.</value></data>
   <data name="Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed." xml:space="preserve"><value>Обязательно только имя. Контактные данные нужны только для письма о поставке; оставьте их пустыми, если не нужны.</value></data>
+  <data name="Sign-in failed. Check email and password, or try again later." xml:space="preserve"><value>Не удалось войти. Проверьте адрес и пароль или повторите попытку позже.</value></data>
+  <data name="Backup restored. The server restarts now to load it completely; sign in again in a minute." xml:space="preserve"><value>Резервная копия восстановлена. Сервер перезапускается, чтобы полностью её загрузить; войдите снова через минуту.</value></data>
+  <data name="no longer available" xml:space="preserve"><value>больше недоступна</value></data>
 </root>

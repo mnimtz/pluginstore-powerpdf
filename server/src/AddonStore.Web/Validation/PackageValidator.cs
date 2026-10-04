@@ -24,6 +24,7 @@ public class PackageValidator
     private const long MaxZxtBytes = 120 * 1024L * 1024L;
     private const long MaxTotalInflatedBytes = 400 * 1024L * 1024L;
     private long _inflated;
+    private bool _inflateCapHit;
 
     /// <summary>Reads an entry with a hard decompressed-size cap; null when exceeded.</summary>
     private byte[]? ReadCapped(ZipArchiveEntry entry, long cap)
@@ -35,14 +36,17 @@ public class PackageValidator
         while ((got = es.Read(buf, 0, buf.Length)) > 0)
         {
             _inflated += got;
-            if (ms.Length + got > cap || _inflated > MaxTotalInflatedBytes) return null;
+            if (_inflated > MaxTotalInflatedBytes) { _inflateCapHit = true; return null; }
+            if (ms.Length + got > cap) return null;
             ms.Write(buf, 0, got);
         }
         return ms.ToArray();
     }
 
     private static readonly Regex IdPattern = new(@"^[a-z0-9][a-z0-9-]*(\.[a-z0-9][a-z0-9-]*)+$", RegexOptions.Compiled);
-    private static readonly Regex SemVerPattern = new(@"^\d+\.\d+\.\d+$", RegexOptions.Compiled);
+    // [0-9] and \z: no non-ASCII digits, no trailing newline ($ would allow one); 9 digits fit an int
+    private static readonly Regex SemVerPattern = new(@"^[0-9]{1,9}\.[0-9]{1,9}\.[0-9]{1,9}\z", RegexOptions.Compiled);
+    private static readonly Regex HostVersionPattern = new(@"^[0-9]{1,4}(\.[0-9]{1,6}){0,3}\z", RegexOptions.Compiled);
 
     /// <summary>Plugin base names Power PDF ships itself; a store plugin must not shadow them.</summary>
     private static readonly HashSet<string> ReservedZxtNames = new(StringComparer.OrdinalIgnoreCase)
@@ -71,6 +75,28 @@ public class PackageValidator
 
     public async Task<(ValidationReport Report, ParsedManifest? Manifest)> ValidateAsync(
         string zipPath, string callerUserId, bool callerIsAdmin = false)
+    {
+        // A corrupt deflate stream or a malformed binary must give a report, not a 500.
+        _inflated = 0; _inflateCapHit = false;
+        try
+        {
+            var (report, manifest) = await ValidateCoreAsync(zipPath, callerUserId, callerIsAdmin);
+            if (_inflateCapHit)
+                report.Error("INFLATE_LIMIT", $"The package unpacks to more than {MaxTotalInflatedBytes / 1048576} MB.",
+                    "Reduce the package content; the checks need to read every file.");
+            return (report, manifest);
+        }
+        catch (Exception ex) when (ex is InvalidDataException or IndexOutOfRangeException or ArgumentException or IOException or OverflowException)
+        {
+            var report = new ValidationReport();
+            report.Error("ZIP_UNREADABLE", $"The package could not be read completely ({ex.GetType().Name}).",
+                "Create the package as a standard ZIP container (deflate or stored) with intact files.");
+            return (report, null);
+        }
+    }
+
+    private async Task<(ValidationReport Report, ParsedManifest? Manifest)> ValidateCoreAsync(
+        string zipPath, string callerUserId, bool callerIsAdmin)
     {
         var report = new ValidationReport();
         ParsedManifest? manifest = null;
@@ -185,6 +211,9 @@ public class PackageValidator
                         "Declare the ribbon atom namespace your plugin uses; the host caches ribbons by atom name and the store checks for collisions.");
 
                 manifest.MinPowerPdfVersion = GetString(root, "minPowerPdfVersion") ?? "";
+                if (manifest.MinPowerPdfVersion.Length > 0 && !HostVersionPattern.IsMatch(manifest.MinPowerPdfVersion))
+                    report.Error("MIN_HOST_VERSION_INVALID", $"Manifest field 'minPowerPdfVersion' is '{manifest.MinPowerPdfVersion.Replace("\n", " ")}'.",
+                        "Use a plain version such as \"5.0\" or \"2025.3\" (digits and dots only).");
                 if (manifest.MinPowerPdfVersion.Length == 0)
                     report.Warn("MIN_HOST_VERSION_MISSING", "Manifest field 'minPowerPdfVersion' is not set.",
                         "State the lowest Power PDF version the plugin was tested with, e.g. \"5.0\".");
@@ -230,7 +259,15 @@ public class PackageValidator
                             report.Error("FILENAME_MISMATCH", $"x64 file '{bx}' and arm64 file '{ba}' have different names.",
                                 "Both architectures must ship the same .zxt base name, e.g. x64/MyPlugin.zxt and arm64/MyPlugin.zxt.");
                     }
+                    // The base name becomes a file and folder name on every client and is
+                    // used in the installer: letters, digits, '-' and '_' only, directly
+                    // below x64/ (or arm64/).
+                    foreach (var (arch, f) in new[] { ("x64", fx), ("arm64", fa) })
+                        if (f is not null && !System.Text.RegularExpressions.Regex.IsMatch(f, "^" + arch + "/[A-Za-z0-9_-]{1,64}\\.zxt$"))
+                            report.Error("ZXT_NAME_INVALID", $"files.{arch} is '{f}'.",
+                                $"Use \"{arch}/<Name>.zxt\" with a name of 1 to 64 letters, digits, '-' or '_' (no spaces, dots or other characters).");
                     var baseName = Path.GetFileNameWithoutExtension(fx ?? "");
+                    manifest.ZxtName = baseName;
                     if (baseName.Length > 0 && ReservedZxtNames.Contains(baseName) && manifest.Id != "com.tungsten.pluginstore")
                         report.Error("RESERVED_NAME", $"'{baseName}.zxt' collides with a plugin Power PDF ships itself.",
                             "Rename the plugin binary; it must not shadow a built-in Power PDF plugin.");
@@ -324,6 +361,30 @@ public class PackageValidator
                     $"Bump 'version' above {highest}; every release must carry a new, higher version.");
         }
 
+        // Two packages with the same binary name would overwrite and uninstall each other.
+        if (manifest.ZxtName.Length > 0)
+        {
+            var others = await _db.PackageVersions.AsNoTracking()
+                .Where(v => v.PackageId != manifest.Id && v.Status != VersionStatus.Rejected)
+                .Select(v => new { v.PackageId, v.ManifestJson }).ToListAsync();
+            foreach (var o in others)
+            {
+                try
+                {
+                    using var d = JsonDocument.Parse(o.ManifestJson);
+                    if (d.RootElement.TryGetProperty("files", out var f) && f.ValueKind == JsonValueKind.Object &&
+                        f.TryGetProperty("x64", out var x) && x.ValueKind == JsonValueKind.String &&
+                        string.Equals(Path.GetFileNameWithoutExtension(x.GetString()), manifest.ZxtName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        report.Error("ZXT_NAME_TAKEN", $"The plug-in file name '{manifest.ZxtName}.zxt' is already used by package '{o.PackageId}'.",
+                            "Choose another binary name; two add-ons with the same file name would overwrite each other.");
+                        break;
+                    }
+                }
+                catch (JsonException) { }
+            }
+        }
+
         if (manifest.AtomNamespace.Length > 0)
         {
             var collision = await _db.PackageVersions
@@ -348,7 +409,7 @@ public class PackageValidator
             return;
         }
         var peOffset = BitConverter.ToInt32(bytes, 0x3C);
-        if (peOffset <= 0 || peOffset + 24 > bytes.Length ||
+        if (peOffset <= 0 || (long)peOffset + 24 > bytes.Length ||
             bytes[peOffset] != 'P' || bytes[peOffset + 1] != 'E' || bytes[peOffset + 2] != 0 || bytes[peOffset + 3] != 0)
         {
             report.Error("PE_INVALID", $"'{file}' has no valid PE header.",

@@ -21,7 +21,7 @@
             </span>
             <span style="color:var(--tun-blue-light);font-size:.85rem;max-width:460px">@L["Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date."]</span>
         </div>
-        <script>
+        <script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
             // The Windows warning appears right after the download: show the hint for a while.
             (function () {
                 var tip = document.getElementById('dl-tip'), btn = document.getElementById('dl-btn');
@@ -107,7 +107,7 @@ else
             </div>
         }
     </div>
-    <script>
+    <script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
         (function () {
             var search = document.getElementById('pkg-search');
             var chips = document.querySelectorAll('#pkg-chips .chip');

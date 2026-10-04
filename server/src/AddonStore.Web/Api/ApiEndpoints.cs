@@ -63,23 +63,30 @@ public static class ApiEndpoints
             var path = Path.Combine(svc.StorageRoot, pick.FilePath);
             if (!File.Exists(path)) return Results.NotFound();
 
-            using var zip = System.IO.Compression.ZipFile.OpenRead(path);
-            var msi = zip.Entries.FirstOrDefault(e =>
-                e.FullName.StartsWith("installer/", StringComparison.OrdinalIgnoreCase) &&
-                e.FullName.EndsWith(".msi", StringComparison.OrdinalIgnoreCase));
-            if (msi is null || msi.Length > 100 * 1024 * 1024) return Results.NotFound();
-
-            var ms = new MemoryStream();
-            await using (var es = msi.Open()) await es.CopyToAsync(ms);
-            ms.Position = 0;
-            pick.Downloads++;
-            await db.SaveChangesAsync();
+            // extracted once per package version into a disk cache, then streamed (no 100 MB buffers per request)
+            var cacheDir = Path.Combine(Path.GetTempPath(), "addonstore-msi");
+            Directory.CreateDirectory(cacheDir);
+            var cached = Path.Combine(cacheDir, pick.Sha256[..32] + ".msi");
+            if (!File.Exists(cached))
+            {
+                using var zip = System.IO.Compression.ZipFile.OpenRead(path);
+                var msi = zip.Entries.FirstOrDefault(e =>
+                    e.FullName.StartsWith("installer/", StringComparison.OrdinalIgnoreCase) &&
+                    e.FullName.EndsWith(".msi", StringComparison.OrdinalIgnoreCase));
+                if (msi is null || msi.Length > 100 * 1024 * 1024) return Results.NotFound();
+                var part = cached + "." + Guid.NewGuid().ToString("N") + ".part";
+                await using (var es = msi.Open())
+                await using (var fs = File.Create(part))
+                    await es.CopyToAsync(fs);
+                try { File.Move(part, cached, overwrite: true); } catch (IOException) { TryDelete(part); }
+            }
+            await db.PackageVersions.Where(x => x.Id == pick.Id).ExecuteUpdateAsync(s => s.SetProperty(x => x.Downloads, x => x.Downloads + 1));
             await usage.CountAsync(ctx, "msi", pick.PackageId, pick.Version);
             // Client installer fetched from a shared add-on page: attribute it to that add-on and ref.
             var fromPkg = ctx.Request.Query["pkg"].ToString();
             if (fromPkg.Length > 0 && await db.Packages.AnyAsync(p => p.Id == fromPkg))
                 await share.CountAsync(fromPkg, ctx.Request.Query["ref"].ToString(), "client");
-            return Results.File(ms, "application/x-msi", $"AddonStore-{pick.Version}.msi");
+            return Results.File(cached, "application/x-msi", $"AddonStore-{pick.Version}.msi");
         });
 
         // llms.txt (llmstxt.org): entry point for any language model or AI assistant.
@@ -212,12 +219,12 @@ public static class ApiEndpoints
                 var sb = new System.Text.StringBuilder();
                 foreach (var i in items)
                 {
-                    sb.Append(i.Id).Append('\t').Append(i.Version).Append('\t').Append(i.Channel).Append('\t')
+                    sb.Append(Flat(i.Id)).Append('\t').Append(Flat(i.Version)).Append('\t').Append(Flat(i.Channel)).Append('\t')
                       .Append(Flat(i.Name)).Append('\t').Append(Flat(i.Description)).Append('\t')
-                      .Append(Flat(i.Changelog)).Append('\t').Append(i.MinHost).Append('\t')
+                      .Append(Flat(i.Changelog)).Append('\t').Append(Flat(i.MinHost)).Append('\t')
                       .Append(i.SizeBytes).Append('\t').Append(i.Sha256).Append('\t')
                       .Append($"{Base(ctx)}/api/packages/{i.Id}/{i.Version}/download").Append('\t')
-                      .Append(i.ZxtName).Append('\t').Append(i.Category).Append('\t')
+                      .Append(Flat(i.ZxtName)).Append('\t').Append(Flat(i.Category)).Append('\t')
                       .Append(Flat(i.Author)).Append('\t').Append(Flat(i.ContactEmail)).Append('\t')
                       .Append(Flat(i.CategoryName)).Append('\t')
                       .Append($"{Base(ctx)}/api/packages/{i.Id}/icon").Append('\t')
@@ -236,8 +243,15 @@ public static class ApiEndpoints
         {
             var package = await db.Packages.Include(p => p.Owner)
                 .FirstOrDefaultAsync(p => p.Id == id);
-            if (package is null || !await MayAccessAsync(ctx, id, db, users, customers))
-                return NotFound("PACKAGE_NOT_FOUND", $"No package with id '{id}'.");
+            if (package is null) return NotFound("PACKAGE_NOT_FOUND", $"No package with id '{id}'.");
+            if (package.Visibility == "private")
+            {
+                // details (all versions, changelogs, owner) are for the people who manage it,
+                // not for customers: they see what was delivered in the catalog
+                var u = await TryUserAsync(ctx, users);
+                if (u is null || !(package.OwnerId == u.Id || ctx.User.IsInRole("Admin") || ctx.User.IsInRole("Reviewer")))
+                    return NotFound("PACKAGE_NOT_FOUND", $"No package with id '{id}'.");
+            }
 
             var user = await TryUserAsync(ctx, users);
             var isOwner = user is not null &&
@@ -254,7 +268,7 @@ public static class ApiEndpoints
                 data = new
                 {
                     id = package.Id,
-                    owner = package.Owner?.DisplayName,
+                    owner = isOwner ? package.Owner?.DisplayName : Services.CatalogUi.PublicName(package.Owner),
                     catalogEntry = new
                     {
                         name = ParseOrNull(package.NameJson),
@@ -485,16 +499,22 @@ public static class ApiEndpoints
         });
 
         // Ratings and problem reports from Add-on Store clients (anonymous install id, see FeedbackService).
-        api.MapPost("/packages/{id}/rating", async (string id, HttpContext ctx, FeedbackService fb, RatingBody body) =>
+        api.MapPost("/packages/{id}/rating", async (string id, HttpContext ctx, FeedbackService fb, RatingBody body,
+                                                    AppDbContext db, UserManager<AppUser> users, CustomerService customers) =>
         {
+            if (!await MayAccessAsync(ctx, id, db, users, customers))
+                return Results.Json(new { ok = false, error = new { code = "PACKAGE_NOT_FOUND", message = $"No released package with id '{id}'.", hint = "" } }, statusCode: 404);
             var (r, sum) = await fb.RateAsync(ctx, id, body.InstallId, body.Stars, body.Version);
             if (!r.Ok) return Results.Json(new { ok = false, error = new { code = r.Code, message = r.Message, hint = "" } },
                                            statusCode: r.Code == "PACKAGE_NOT_FOUND" ? 404 : r.Code == "RATE_LIMITED" ? 429 : 400);
             return Results.Json(new { ok = true, data = new { id, average = sum?.Average ?? 0, count = sum?.Count ?? 0 } });
         });
 
-        api.MapPost("/packages/{id}/feedback", async (string id, HttpContext ctx, FeedbackService fb, FeedbackBody body) =>
+        api.MapPost("/packages/{id}/feedback", async (string id, HttpContext ctx, FeedbackService fb, FeedbackBody body,
+                                                      AppDbContext db, UserManager<AppUser> users, CustomerService customers) =>
         {
+            if (!await MayAccessAsync(ctx, id, db, users, customers))
+                return Results.Json(new { ok = false, error = new { code = "PACKAGE_NOT_FOUND", message = $"No released package with id '{id}'.", hint = "" } }, statusCode: 404);
             var r = await fb.AddAsync(ctx, id, body.InstallId, body.Kind, body.Message, body.Email, body.Version, body.Log);
             if (!r.Ok) return Results.Json(new { ok = false, error = new { code = r.Code, message = r.Message, hint = "" } },
                                            statusCode: r.Code == "PACKAGE_NOT_FOUND" ? 404 : r.Code == "RATE_LIMITED" ? 429 : 400);
@@ -637,6 +657,8 @@ public static class ApiEndpoints
         {
             var user = await RequireUserAsync(ctx, users);
             if (user is null) return Unauthorized();
+            if (ctx.User.IsInRole("Reviewer") && !ctx.User.IsInRole("Admin"))
+                return Fail("NOT_OWNER", "Reviewers read customers; creating them is for developers and admins.", 403);
             if (CustomerService.CheckCustomer(body.Name, body.ContactEmail, body.Language) is { } err)
                 return Fail(err, "name (1 to 120 characters) is required; contactEmail must be an address; language a two-letter code.", 400,
                     "Example: {\"name\": \"Muster AG\", \"contactName\": \"Erika Muster\", \"contactEmail\": \"it@muster.example\", \"language\": \"de\"}");
@@ -721,8 +743,9 @@ public static class ApiEndpoints
             var c = d is null ? null : await db.Customers.FirstOrDefaultAsync(x => x.Id == d.CustomerId);
             if (d is null || c is null || !CustomerService.CanSee(ctx.User, c, user.Id))
                 return (null, null, NotFound("DELIVERY_NOT_FOUND", $"No delivery {did}."), user);
-            if (!CustomerService.CanManage(ctx.User, c, user.Id))
-                return (null, null, Fail("NOT_OWNER", "Only the creator of the customer or an admin can change its deliveries.", 403), user);
+            if (!CustomerService.CanManage(ctx.User, c, user.Id) ||
+                (!ctx.User.IsInRole("Admin") && !await db.Packages.AnyAsync(p => p.Id == d.PackageId && p.OwnerId == user.Id)))
+                return (null, null, Fail("NOT_OWNER", "Only the add-on's owner (as creator of the customer) or an admin can change this delivery.", 403), user);
             return (d, c, null, user);
         }
 
@@ -731,9 +754,11 @@ public static class ApiEndpoints
         {
             var (d, c, error, user) = await LoadDelivery(did, ctx, db, users);
             if (error is not null) return error;
+            var clear = body.ClearDates == true;
             var r = await cs.UpdateDeliveryAsync(d!, body.Beta is null ? null : new(body.Beta.Mode, body.Beta.Version),
-                body.Live is null ? null : new(body.Live.Mode, body.Live.Version), body.StartsAt, body.EndsAt,
-                body.StartsAt is not null || body.EndsAt is not null || body.ClearDates == true, body.Status, user!, ctx.User.IsInRole("Admin"));
+                body.Live is null ? null : new(body.Live.Mode, body.Live.Version),
+                clear ? null : (body.StartsAt?.ToUniversalTime() ?? d!.StartsAt), clear ? null : (body.EndsAt?.ToUniversalTime() ?? d!.EndsAt),
+                body.StartsAt is not null || body.EndsAt is not null || clear, body.Status, user!, ctx.User.IsInRole("Admin"));
             if (!r.Ok) return Fail(r.Code, r.Message, 400);
             return Results.Json(new { ok = true, data = await cs.DescribeAsync(c!, true, UiLang(ctx)) });
         }).RequireAuthorization("ApiOrCookie");
@@ -750,7 +775,7 @@ public static class ApiEndpoints
         api.MapGet("/categories", async (AppDbContext db, CategoryService categories) =>
         {
             var all = await categories.AllAsync();
-            var pkgs = await db.Packages.Include(p => p.Versions).ToListAsync();
+            var pkgs = await db.Packages.Include(p => p.Versions).Where(p => p.Visibility != "private").ToListAsync();
             var used = pkgs.GroupBy(CategoryService.EffectiveSlug).ToDictionary(g => g.Key, g => g.Count());
             return Results.Json(new
             {
@@ -796,7 +821,8 @@ public static class ApiEndpoints
 
             var change = new MetaChange();
             Dictionary<string, string>? Map(JsonElement el) => el.ValueKind == JsonValueKind.Object
-                ? el.EnumerateObject().Where(p => p.Value.ValueKind == JsonValueKind.String).ToDictionary(p => p.Name, p => p.Value.GetString() ?? "")
+                ? el.EnumerateObject().Where(p => p.Value.ValueKind == JsonValueKind.String)
+                    .GroupBy(p => p.Name).ToDictionary(g => g.Key, g => g.Last().Value.GetString() ?? "")
                 : null;
             var typeErrors = new List<MetaIssue>();
             foreach (var prop in body.EnumerateObject())
@@ -863,6 +889,8 @@ public static class ApiEndpoints
                 return Results.Json(new { ok = false, error = new { code = "NOT_OWNER", message = "This package belongs to another user.", hint = "Only the owner or an admin can withdraw a version." } }, statusCode: 403);
             if (v.Status == VersionStatus.Live && !isAdmin)
                 return Results.Json(new { ok = false, error = new { code = "LIVE_VERSION", message = "Live versions can only be withdrawn by an admin.", hint = "Ask an admin, or submit a higher fixed version instead." } }, statusCode: 403);
+            if (v.Status is not (VersionStatus.Beta or VersionStatus.Live))
+                return Results.Json(new { ok = false, error = new { code = "VERSION_NOT_WITHDRAWABLE", message = $"Version {version} is {v.Status.ToString().ToLowerInvariant()} and cannot be withdrawn.", hint = "Only beta versions (and, for admins, live versions) can be withdrawn." } }, statusCode: 409);
 
             v.Status = VersionStatus.Withdrawn;
             await db.SaveChangesAsync();
@@ -880,8 +908,8 @@ public static class ApiEndpoints
             if (v is null) return NotFound("VERSION_NOT_FOUND", $"No downloadable version {version} of '{id}'.");
             var path = Path.Combine(svc.StorageRoot, v.FilePath);
             if (!File.Exists(path)) return NotFound("FILE_MISSING", "The package file is missing on the server; contact an admin.");
-            v.Downloads++;
-            await db.SaveChangesAsync();
+            // atomic increment: concurrent downloads must not lose counts
+            await db.PackageVersions.Where(x => x.Id == v.Id).ExecuteUpdateAsync(s => s.SetProperty(x => x.Downloads, x => x.Downloads + 1));
             await usage.CountAsync(ctx, "download", v.PackageId, v.Version);
             return Results.File(path, "application/zip", $"{id}-{version}.ppak");
         });
@@ -930,7 +958,9 @@ public static class ApiEndpoints
     private static string Base(HttpContext ctx) => $"{ctx.Request.Scheme}://{ctx.Request.Host}";
 
     /// <summary>Maps Power PDF's 3-letter resource codes (DEU, FRA, ...) to two-letter culture names.</summary>
-    private static string MapHostLang(string code) => code.ToUpperInvariant() switch
+    private static string MapHostLang(string code) => code.Length > 2 && (code[2] == '-' || code[2] == '_')
+        ? code[..2].ToLowerInvariant() is var two && PackageValidator.RequiredLanguages.Contains(two) ? two : "en"
+        : code.ToUpperInvariant() switch
     {
         "DEU" or "GER" => "de",
         "FRA" or "FRE" => "fr",
@@ -1014,14 +1044,28 @@ public static class ApiEndpoints
             var form = await request.ReadFormAsync();
             var file = form.Files["package"] ?? form.Files.FirstOrDefault();
             if (file is null || file.Length == 0) return null;
-            await using var fs = File.Create(tmp);
-            await file.CopyToAsync(fs);
+            try
+            {
+                await using var fs = File.Create(tmp);
+                await file.CopyToAsync(fs);
+            }
+            catch { TryDelete(tmp); throw; }
             return tmp;
         }
         if (request.ContentLength is null or 0) return null;
-        await using (var fs = File.Create(tmp))
-            await request.Body.CopyToAsync(fs);
-        return new FileInfo(tmp).Length > 0 ? tmp : null;
+        try
+        {
+            await using (var fs = File.Create(tmp))
+                await request.Body.CopyToAsync(fs);
+        }
+        catch
+        {
+            TryDelete(tmp);   // aborted or oversized upload: no 220 MB leftovers in TEMP
+            throw;
+        }
+        if (new FileInfo(tmp).Length > 0) return tmp;
+        TryDelete(tmp);
+        return null;
     }
 
     private static void TryDelete(string path)
@@ -1045,6 +1089,7 @@ public static class ApiEndpoints
         var ratingSums = await FeedbackService.SummariesAsync(db);
         // Share page slugs over live and beta ids, the same set /a/{slug} resolves against.
         var slugIds = (await db.PackageVersions.Where(v => v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)
+            .Where(v => db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private"))
             .Select(v => v.PackageId).Distinct().ToListAsync()).Where(i => i != SubmissionService.ClientPackageId).ToList();
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
@@ -1065,10 +1110,11 @@ public static class ApiEndpoints
             if (grants?.Any(g => g.Package.Id == pick.PackageId && CustomerService.Pick(g, includeBeta).Version is not null) == true) continue;
             result.Add(Entry(pick, channel, null));
         }
+        var delivered = new HashSet<string>();
         foreach (var g in grants ?? new())
         {
             var (v, ch) = CustomerService.Pick(g, includeBeta);
-            if (v is not null) result.Add(Entry(v, ch, g.Customer.Name));
+            if (v is not null && delivered.Add(v.PackageId)) result.Add(Entry(v, ch, g.Customer.Name));
         }
         return result;
 

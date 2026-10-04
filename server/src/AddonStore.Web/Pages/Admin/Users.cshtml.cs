@@ -147,6 +147,7 @@ public class UsersModel : PageModel
         }
         await _users.RemoveFromRolesAsync(user, current);
         await _users.AddToRoleAsync(user, role);
+        await _users.UpdateSecurityStampAsync(user);       // the new role applies to open sessions within a minute
         await _audit.LogAsync(admin.DisplayName, "user.role-changed", user.Email ?? id, $"-> {role}");
         Notice = "Role updated.";
         await LoadAsync();
@@ -161,6 +162,7 @@ public class UsersModel : PageModel
         {
             user.Status = status;
             await _users.UpdateAsync(user);
+            await _users.UpdateSecurityStampAsync(user);   // signs the user out everywhere (cookie check every minute)
             await _audit.LogAsync(admin.DisplayName, action, user.Email ?? user.Id);
             if (mailSubject is not null)
                 await _notify.NotifyUserAsync("AccountDecision", user, mailSubject, mailBody!);

@@ -13,13 +13,13 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'server', 
 SOURCES = ['Validation/PackageValidator.cs', 'Services/SubmissionService.cs',
            'Api/ApiEndpoints.cs', 'Auth/ApiTokenAuthHandler.cs',
            'Services/PackageMetaService.cs', 'Services/CategoryService.cs', 'Services/SourceService.cs',
-           'Services/CustomerService.cs']
+           'Services/CustomerService.cs', 'Program.cs']
 EXTRA_CODES = {'CLIENT_ADMIN_ONLY', 'VERSION_EXISTS', 'VALIDATION_FAILED', 'NOT_OWNER', 'LIVE_VERSION',
                'TOKEN_INVALID', 'TOKEN_REVOKED', 'USER_NOT_ACTIVE', 'NO_PACKAGE',
                'METADATA_INVALID', 'PACKAGE_NOT_FOUND', 'SOURCE_REJECTED', 'SOURCE_MISSING', 'ADMIN_ONLY',
                'QUERY_INVALID', 'VERSION_NOT_FOUND', 'AI_REVIEW_MISSING', 'AI_OFF', 'AI_FAILED',
                'CUSTOMER_INVALID', 'CUSTOMER_NOT_FOUND', 'DELIVERY_NOT_FOUND', 'DELIVERY_EXISTS', 'DELIVERY_INVALID',
-               'PROMOTE_NOTHING', 'CODE_NOT_FOUND', 'VISIBILITY_INVALID', 'VISIBILITY_KEPT'}
+               'PROMOTE_NOTHING', 'CODE_NOT_FOUND', 'VISIBILITY_INVALID', 'VISIBILITY_KEPT', 'CSRF_CHECK'}
 
 code = ''
 for rel in SOURCES:

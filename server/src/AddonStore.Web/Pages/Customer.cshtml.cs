@@ -129,12 +129,18 @@ public class CustomerModel : PageModel
         ActAsync(id, async me =>
         {
             var r = await _customers.CreateDeliveryAsync(Cust!, packageId, new(betaMode, betaVersion), new(liveMode, liveVersion),
-                Day(startsAt), Day(endsAt), ownCode, me, User.IsInRole("Admin"));
+                Day(startsAt), Day(endsAt)?.AddDays(1), ownCode, me, User.IsInRole("Admin"));
             return (r.Ok, r.Ok ? "Delivery created." : r.Message);
         });
 
-    private async Task<Delivery?> OwnDeliveryAsync(int id, int did) =>
-        await _db.Deliveries.FirstOrDefaultAsync(d => d.Id == did && d.CustomerId == id);
+    /// <summary>The delivery, if it belongs to this customer and the user may change it (admin or the add-on's owner).</summary>
+    private async Task<Delivery?> OwnDeliveryAsync(int id, int did)
+    {
+        var d = await _db.Deliveries.FirstOrDefaultAsync(x => x.Id == did && x.CustomerId == id);
+        if (d is null || User.IsInRole("Admin")) return d;
+        var me = await _users.GetUserAsync(User);
+        return await _db.Packages.AnyAsync(p => p.Id == d.PackageId && p.OwnerId == me!.Id) ? d : null;
+    }
 
     public Task<IActionResult> OnPostDeliveryAsync(int id, int did, string betaMode, string? betaVersion, string liveMode, string? liveVersion,
                                                    string? startsAt, string? endsAt, string? status) =>
@@ -143,7 +149,7 @@ public class CustomerModel : PageModel
             var d = await OwnDeliveryAsync(id, did);
             if (d is null) return (false, "This action is not allowed for this version.");
             var r = await _customers.UpdateDeliveryAsync(d, new(betaMode, betaVersion), new(liveMode, liveVersion),
-                Day(startsAt), Day(endsAt), true, status, me, User.IsInRole("Admin"));
+                Day(startsAt), Day(endsAt)?.AddDays(1), true, status, me, User.IsInRole("Admin"));
             return (r.Ok, r.Ok ? "Delivery saved." : r.Message);
         });
 

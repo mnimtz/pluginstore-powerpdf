@@ -209,8 +209,10 @@ public class CustomerService
         var versions = await DeliverableVersionsAsync(packageId);
         if (versions.Count == 0)
             return Outcome.Fail("DELIVERY_INVALID", "The add-on has no version that passed the automatic checks yet.");
-        // Live default: the newest version now, so later uploads reach beta workstations first.
-        live = live with { Mode = live.Mode ?? "fixed", Version = live.Mode is null or "fixed" ? live.Version ?? versions[0].Version : live.Version };
+        // Live default: the newest version now (for a public add-on the newest APPROVED one),
+        // so later uploads reach beta workstations first.
+        var liveDefault = pkg.Visibility == "private" ? versions[0] : versions.FirstOrDefault(v => v.Status == VersionStatus.Live) ?? versions[0];
+        live = live with { Mode = live.Mode ?? "fixed", Version = live.Mode is null or "fixed" ? live.Version ?? liveDefault.Version : live.Version };
         var err = CheckStage(beta, versions) ?? CheckStage(live, versions);
         if (err is not null) return Outcome.Fail("DELIVERY_INVALID", err);
         if (startsAt is not null && endsAt is not null && endsAt <= startsAt)
@@ -335,8 +337,10 @@ public class CustomerService
             .Select(Normalize).Where(c => c.Length == 20).Distinct().Take(10).Select(Hash).ToList();
         if (hashes.Count == 0) return new();
         var now = DateTime.UtcNow;
-        var codes = (await _db.CustomerCodes.Where(c => hashes.Contains(c.CodeHash)).ToListAsync()).Where(c => CodeValid(c, now)).ToList();
-        var unknown = hashes.Count - codes.Count;
+        var rows = await _db.CustomerCodes.Where(c => hashes.Contains(c.CodeHash)).ToListAsync();
+        var codes = rows.Where(c => CodeValid(c, now)).ToList();
+        // expired or revoked codes are not guesses (an old code left on a workstation must not lock out the new one)
+        var unknown = hashes.Count(h => !rows.Any(r => r.CodeHash == h));
         if (unknown > 0)
         {
             bool blockNow;
@@ -377,9 +381,10 @@ public class CustomerService
     /// <summary>The version a client in the given channel gets from a grant, and the channel label.</summary>
     public static (PackageVersion? Version, string Channel) Pick(Granted g, bool betaChannel)
     {
-        if (betaChannel && g.Beta is not null)
-            return (g.Beta, g.Live is not null && g.Live.Version == g.Beta.Version ? "live" : "beta");
-        return (g.Live, "live");
+        if (betaChannel && g.Beta is not null &&
+            (g.Live is null || new SemVerComparer().Compare(g.Beta.Version, g.Live.Version) > 0))
+            return (g.Beta, "beta");
+        return (g.Live ?? (betaChannel ? g.Beta : null), "live");
     }
 
     /// <summary>True when the request may see this package (public, or unlocked by a code).</summary>

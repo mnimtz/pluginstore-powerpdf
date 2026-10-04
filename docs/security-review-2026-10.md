@@ -28,3 +28,60 @@ construction, no secrets in the repo.
 Dependency audit: `dotnet list package --vulnerable --include-transitive` is
 clean after pinning SQLitePCLRaw.bundle_e_sqlite3 3.0.5 (2.x carried
 GHSA-2m69-gcr7-jv3q, High). License inventory: docs/LICENSES-THIRD-PARTY.md.
+
+# Hardening audit, Oct 4, 2026 (S0.14.1)
+
+Full audit of server and client after the customer deliveries (S0.14.0):
+security, correctness, concurrency, resource use. Three independent review
+passes, every finding checked against the code, regression suite of 12 test
+scripts (customers, authorization matrix with 44 checks, AI, provider
+neutrality, overview, pages, usage, sharing, source, categories, feedback,
+backup/restore) green after the fixes.
+
+## Fixed in S0.14.1
+
+| # | Severity | Finding | Fix |
+|---|---|---|---|
+| A1 | High | Inline scripts forced `'unsafe-inline'` in the CSP | Per-request nonce on all scripts, no inline handlers; CSP `script-src 'self' 'nonce-…'; object-src 'none'; base-uri 'self'; form-action 'self'` |
+| A2 | High | API writes authenticated by the sign-in cookie had no CSRF guard | Such calls need `X-Requested-With` (error CSRF_CHECK); bearer tokens unaffected |
+| A3 | High | Password guessing: no lockout, no per-address throttle | Identity lockout on failure, 20 attempts per address per 15 minutes, one neutral error message |
+| A4 | High | Disabled users and role changes stayed signed in until the cookie expired | Security stamp renewed on status/role change, validated every minute |
+| A5 | High | Client IP taken from spoofable `X-Client-IP` / leftmost `X-Forwarded-For` (rate limits, geo, usage) | Only the rightmost `X-Forwarded-For` hop (the one App Service appends) |
+| A6 | Medium | Ratings and feedback accepted for private add-ons without access | Same access check as downloads |
+| A7 | Medium | Private add-on details (owner email) visible to customers with a code | Details only for owner, admin, reviewer; owner shown by public name |
+| A8 | Medium | Two packages could ship the same `.zxt` file name and overwrite each other on install | ZXT_NAME_INVALID (strict pattern) and ZXT_NAME_TAKEN |
+| A9 | Medium | Malformed ZIPs and huge version numbers raised 500 instead of a finding | ZIP_UNREADABLE, strict SemVer, MIN_HOST_VERSION_INVALID, INFLATE_LIMIT |
+| A10 | Medium | MSI download buffered up to 100 MB in memory per request | Extracted once to a disk cache keyed by the package hash, streamed |
+| A11 | Medium | Lost download counts under concurrency | Atomic `UPDATE … SET Downloads = Downloads + 1` |
+| A12 | Medium | Anonymous AI search could use up the whole daily AI budget | Search capped at a third of the daily limit |
+| A13 | Medium | Resend API key stored in plain text in the settings table | Encrypted with Data Protection (`dp:` prefix), old values still read |
+| A14 | Medium | Restore left old connections, caches and key ring in memory | App restarts after a restore (production); ten newest safety backups kept |
+| A15 | Medium | Registration revealed existing email addresses; no throttle | Same answer for existing addresses, 5 registrations per address per hour |
+| A16 | Low | Cookies without explicit Secure/SameSite; `Server` header; no HSTS / Permissions-Policy | Secure + HttpOnly + SameSite=Lax, header removed, HSTS and Permissions-Policy set |
+| A17 | Low | Reviewers could create customers; delivery edit without owner check | Owner or admin only |
+| A18 | Low | Withdraw over the API also hit draft/review versions | Only beta and live (VERSION_NOT_WITHDRAWABLE) |
+| A19 | Low | Delivery "until" date ended at midnight before the chosen day | Inclusive end date |
+| A20 | Low | Pinned version silently replaced in the stage form once unavailable | Kept and marked "no longer available" |
+| A21 | Low | Duplicate language keys in PATCH raised 500 | Last value wins |
+| A22 | Low | `set-lang` returnUrl accepted backslash/control characters | Strict relative path check |
+| A23 | Low | One failing background job could stop the host; AI worker retried a broken item forever | Background errors logged, not fatal; worker gives up after three attempts |
+| A24 | Low | Private add-ons leaked through category counts and slug lookups | Excluded |
+| A25 | Low | Temp files of rejected uploads left behind | Cleaned up |
+| A26 | Low | HTML of customer names unencoded in notification mails | HtmlEncode |
+| A27 | Low | Duplicate resource keys (one showed "an" instead of "until" in reports) | Removed, label fixed |
+| A28 | Low | Container build context could include local data and credentials | `.dockerignore` |
+| A29 | Info | EF Core / Identity 8.0.11 | Updated to the latest 8.0 patch (8.0.31); `dotnet list package --vulnerable` clean |
+
+## Open, with recommendation
+
+| # | Severity | Item | Recommendation |
+|---|---|---|---|
+| O1 | High | .NET 8 support ends Nov 10, 2026 | Move server and container images to .NET 10 LTS before that date |
+| O2 | Medium | Backup archives contain the Data Protection key ring unencrypted | Store backups only in protected storage; optional archive password later |
+| O3 | Medium | Admins can approve their own uploads | Four-eyes rule for the customer phase (setting) |
+| O4 | Medium | First-run setup token has no expiry | Expire after first use or 24 hours |
+| O5 | Low | Some list pages run one query per row; concurrent writes on the same row can still answer 500 | Batch queries and catch concurrency exceptions when traffic grows |
+| O6 | Low | Geo database reload not synchronized with readers | Swap the reader atomically |
+| O7 | Low | Dates are stored in UTC and shown without time zone | Show the user's time zone in reports |
+| O8 | Low | Category usage counts include versions the catalog no longer shows | Count only deliverable versions |
+| O9 | Privacy | IP addresses in rate limits/usage, AI data flow, log excerpts with user names in problem reports | Review with Legal / data protection before the customer phase |

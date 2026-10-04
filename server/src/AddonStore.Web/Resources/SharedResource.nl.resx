@@ -354,7 +354,6 @@
   <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>Gebruik van de store: downloads, gebruikte clients, locaties, inzendingen en ontwikkelaars.</value></data>
   <data name="Last {0} days" xml:space="preserve"><value>Laatste {0} dagen</value></data>
   <data name="From" xml:space="preserve"><value>Van</value></data>
-  <data name="To" xml:space="preserve"><value>Tot</value></data>
   <data name="Add-on" xml:space="preserve"><value>Invoegtoepassing</value></data>
   <data name="All add-ons" xml:space="preserve"><value>Alle invoegtoepassingen</value></data>
   <data name="Country" xml:space="preserve"><value>Land</value></data>
@@ -615,8 +614,6 @@
   <data name="Live stage" xml:space="preserve"><value>Livefase</value></data>
   <data name="newest" xml:space="preserve"><value>nieuwste</value></data>
   <data name="fixed" xml:space="preserve"><value>vast</value></data>
-  <data name="off" xml:space="preserve"><value>uit</value></data>
-  <data name="active" xml:space="preserve"><value>actief</value></data>
   <data name="paused" xml:space="preserve"><value>gepauzeerd</value></data>
   <data name="ended" xml:space="preserve"><value>beëindigd</value></data>
   <data name="outside period" xml:space="preserve"><value>buiten de periode</value></data>
@@ -643,4 +640,7 @@
   <data name="Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>Live "vast" houdt de klant op een geteste versie; "nieuwste" volgt elke vrijgegeven versie. Privé-invoegtoepassingen hebben geen goedkeuring nodig; beheerders krijgen een e-mail.</value></data>
   <data name="No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet." xml:space="preserve"><value>Geen invoegtoepassing om te leveren: u kunt eigen invoegtoepassingen leveren die de automatische controles hebben doorstaan en nog niet aan deze klant zijn geleverd.</value></data>
   <data name="Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed." xml:space="preserve"><value>Alleen de naam is verplicht. Contactgegevens dienen alleen voor de leveringsmail; laat ze leeg als ze niet nodig zijn.</value></data>
+  <data name="Sign-in failed. Check email and password, or try again later." xml:space="preserve"><value>Aanmelden mislukt. Controleer e-mail en wachtwoord of probeer het later opnieuw.</value></data>
+  <data name="Backup restored. The server restarts now to load it completely; sign in again in a minute." xml:space="preserve"><value>Back-up hersteld. De server start nu opnieuw om alles te laden; meld u over een minuut opnieuw aan.</value></data>
+  <data name="no longer available" xml:space="preserve"><value>niet meer beschikbaar</value></data>
 </root>

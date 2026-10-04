@@ -84,6 +84,14 @@ public class BackupModel : PageModel
             await _audit.LogAsync(admin.DisplayName, "backup.restored", archive.FileName,
                 "safety backup: " + Path.GetFileName(safety));
             Notice = "Backup restored. A safety backup of the previous state was kept on the server.";
+            // Restart so every connection, cache and the restored key ring start clean
+            // (App Service starts the container again by itself). Not in development.
+            if (!HttpContext.RequestServices.GetRequiredService<IWebHostEnvironment>().IsDevelopment())
+            {
+                Notice = "Backup restored. The server restarts now to load it completely; sign in again in a minute.";
+                var life = HttpContext.RequestServices.GetRequiredService<IHostApplicationLifetime>();
+                _ = Task.Run(async () => { await Task.Delay(TimeSpan.FromSeconds(3)); life.StopApplication(); });
+            }
         }
         finally
         {

@@ -40,7 +40,7 @@
         <meta name="twitter:card" content="summary_large_image" />
     }
     <link rel="stylesheet" href="/css/site.css" />
-    <script>
+    <script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
         // no-win: addonstore:// install links only work on Windows. mobile: phones and
         // tablets get no client download either (a Mac may still fetch it for a VM).
         (function (ua, c) {
@@ -55,8 +55,7 @@
     <div class="bar">
         <img class="logo" src="/img/tungsten-logo-white.svg" alt="Tungsten Automation" />
         <div class="title">Add-on Store<small>Tungsten Power PDF</small></div>
-        <button type="button" class="nav-toggle" aria-label="@L["Menu"]" aria-expanded="false" aria-controls="site-nav"
-                onclick="var h=this.closest('header');var o=h.classList.toggle('open');this.setAttribute('aria-expanded',o)">
+        <button type="button" class="nav-toggle" aria-label="@L["Menu"]" aria-expanded="false" aria-controls="site-nav">
             <span></span><span></span><span></span>
         </button>
         <nav id="site-nav">
@@ -92,7 +91,7 @@
             {
                 <a href="/Account/Login">@L["Sign in"]</a>
             }
-            <select onchange="location='/set-lang?culture='+this.value+'&returnUrl='+encodeURIComponent(location.pathname)" aria-label="Language"
+            <select id="lang-select" aria-label="Language"
                     style="width:auto;padding:4px 6px;font-size:.82rem">
                 @{
                     var current = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
@@ -117,7 +116,28 @@
     <a href="/Disclaimer" style="color:var(--tun-slate)">@L["Disclaimer"]</a>
     <a href="/api/agent-guide" style="color:var(--tun-slate)">API</a>
 </footer>
-<script>
+<script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
+// Behaviour without inline handlers (CSP): menu toggle, language switch,
+// confirmations (data-confirm), image fallbacks (data-fallback), print buttons.
+(function () {
+    var t = document.querySelector('.nav-toggle');
+    if (t) t.addEventListener('click', function () {
+        var o = t.closest('header').classList.toggle('open');
+        t.setAttribute('aria-expanded', o);
+    });
+    var ls = document.getElementById('lang-select');
+    if (ls) ls.addEventListener('change', function () {
+        location = '/set-lang?culture=' + encodeURIComponent(ls.value) + '&returnUrl=' + encodeURIComponent(location.pathname);
+    });
+    document.addEventListener('submit', function (e) {
+        var f = e.target;
+        if (f.dataset && f.dataset.confirm && !confirm(f.dataset.confirm)) e.preventDefault();
+    }, true);
+    document.addEventListener('error', function (e) {
+        var i = e.target;
+        if (i.tagName === 'IMG' && i.dataset.fallback && i.src.indexOf(i.dataset.fallback) < 0) i.src = i.dataset.fallback;
+    }, true);
+})();
 // Phones: tables whose first row holds only headers become one card per row
 // (CSS in site.css, .rtable); each cell is labelled with its column name.
 document.querySelectorAll('main table').forEach(function (t) {

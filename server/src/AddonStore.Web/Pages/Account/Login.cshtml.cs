@@ -2,6 +2,7 @@ using AddonStore.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace AddonStore.Web.Pages.Account;
 
@@ -9,13 +10,25 @@ public class LoginModel : PageModel
 {
     private readonly SignInManager<AppUser> _signIn;
     private readonly UserManager<AppUser> _users;
+    private readonly IMemoryCache _cache;
+    private const int MaxAttemptsPer15Min = 20;
+    private const string Failed = "Sign-in failed. Check email and password, or try again later.";
 
     public string? Message { get; private set; }
     public string MessageKind { get; private set; } = "warn";
 
-    public LoginModel(SignInManager<AppUser> signIn, UserManager<AppUser> users)
+    public LoginModel(SignInManager<AppUser> signIn, UserManager<AppUser> users, IMemoryCache cache)
     {
-        _signIn = signIn; _users = users;
+        _signIn = signIn; _users = users; _cache = cache;
+    }
+
+    /// <summary>At most 20 sign-in attempts per address within 15 minutes.</summary>
+    private bool Throttled()
+    {
+        var ip = AddonStore.Web.Services.GeoService.ClientIp(HttpContext)?.ToString() ?? "";
+        var slot = DateTime.UtcNow.Ticks / TimeSpan.FromMinutes(15).Ticks;
+        var n = _cache.GetOrCreate($"login:{ip}:{slot}", e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(16); return new int[1]; })!;
+        lock (n) return ++n[0] > MaxAttemptsPer15Min;
     }
 
     public void OnGet(string? registered)
@@ -29,13 +42,20 @@ public class LoginModel : PageModel
 
     public async Task<IActionResult> OnPostAsync(string email, string password)
     {
-        // The password is verified FIRST; account status is only revealed to
-        // someone who already proved they own the account (no user enumeration).
-        var user = await _users.FindByEmailAsync(email);
-        if (user is null || !await _users.CheckPasswordAsync(user, password))
+        // The password is verified FIRST (lockout included: a locked account
+        // checks no password at all); account status is only revealed to someone
+        // who proved they own the account. Every failure gets the same message,
+        // so the answer tells nothing about which guess was right.
+        if (Throttled())
         {
-            if (user is not null) await _users.AccessFailedAsync(user);
-            Message = "Sign-in failed. Check email and password.";
+            Message = Failed;
+            MessageKind = "error";
+            return Page();
+        }
+        var user = string.IsNullOrWhiteSpace(email) ? null : await _users.FindByEmailAsync(email);
+        if (user is null || !(await _signIn.CheckPasswordSignInAsync(user, password ?? "", lockoutOnFailure: true)).Succeeded)
+        {
+            Message = Failed;
             MessageKind = "error";
             return Page();
         }
@@ -50,15 +70,7 @@ public class LoginModel : PageModel
                 MessageKind = "error";
                 return Page();
         }
-        var result = await _signIn.PasswordSignInAsync(user, password, isPersistent: true, lockoutOnFailure: true);
-        if (!result.Succeeded)
-        {
-            Message = result.IsLockedOut
-                ? "Too many failed attempts; the account is temporarily locked."
-                : "Sign-in failed. Check email and password.";
-            MessageKind = "error";
-            return Page();
-        }
+        await _signIn.SignInAsync(user, isPersistent: true);
         return RedirectToPage("/Dashboard");
     }
 }

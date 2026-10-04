@@ -354,7 +354,6 @@
   <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>Využití obchodu: stažení, používaní klienti, místa, odeslání a vývojáři.</value></data>
   <data name="Last {0} days" xml:space="preserve"><value>Posledních {0} dní</value></data>
   <data name="From" xml:space="preserve"><value>Od</value></data>
-  <data name="To" xml:space="preserve"><value>Do</value></data>
   <data name="Add-on" xml:space="preserve"><value>Doplněk</value></data>
   <data name="All add-ons" xml:space="preserve"><value>Všechny doplňky</value></data>
   <data name="Country" xml:space="preserve"><value>Země</value></data>
@@ -615,8 +614,6 @@
   <data name="Live stage" xml:space="preserve"><value>Fáze live</value></data>
   <data name="newest" xml:space="preserve"><value>nejnovější</value></data>
   <data name="fixed" xml:space="preserve"><value>pevná</value></data>
-  <data name="off" xml:space="preserve"><value>vypnuto</value></data>
-  <data name="active" xml:space="preserve"><value>aktivní</value></data>
   <data name="paused" xml:space="preserve"><value>pozastaveno</value></data>
   <data name="ended" xml:space="preserve"><value>ukončena</value></data>
   <data name="outside period" xml:space="preserve"><value>mimo období</value></data>
@@ -643,4 +640,7 @@
   <data name="Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>Live „pevná“ drží zákazníka na otestované verzi, „nejnovější“ sleduje každou vydanou verzi. Soukromé doplňky nepotřebují schválení; správci dostanou e-mail.</value></data>
   <data name="No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet." xml:space="preserve"><value>Žádný doplněk k dodání: dodat lze vlastní doplňky, které prošly automatickými kontrolami a tomuto zákazníkovi ještě nebyly dodány.</value></data>
   <data name="Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed." xml:space="preserve"><value>Povinné je jen jméno. Kontaktní údaje slouží jen pro e-mail o dodávce; nechte je prázdné, pokud nejsou potřeba.</value></data>
+  <data name="Sign-in failed. Check email and password, or try again later." xml:space="preserve"><value>Přihlášení se nezdařilo. Zkontrolujte e-mail a heslo nebo to zkuste později.</value></data>
+  <data name="Backup restored. The server restarts now to load it completely; sign in again in a minute." xml:space="preserve"><value>Záloha obnovena. Server se nyní restartuje, aby ji načetl celou; za minutu se znovu přihlaste.</value></data>
+  <data name="no longer available" xml:space="preserve"><value>již není k dispozici</value></data>
 </root>

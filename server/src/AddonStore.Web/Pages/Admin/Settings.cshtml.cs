@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection;
 using AddonStore.Web.Data;
 using AddonStore.Web.Services;
 using Microsoft.AspNetCore.Identity;
@@ -90,7 +91,9 @@ public class SettingsModel : PageModel
         // An empty key field means "keep the stored key"; the value itself is
         // never rendered back into the page.
         if (!string.IsNullOrWhiteSpace(resendKey))
-            await _settings.SetAsync("Email.ResendApiKey", resendKey.Trim());
+            await _settings.SetAsync("Email.ResendApiKey", "dp:" + HttpContext.RequestServices
+                .GetRequiredService<Microsoft.AspNetCore.DataProtection.IDataProtectionProvider>()
+                .CreateProtector("AddonStore.ResendKey").Protect(resendKey.Trim()));
         await _settings.SetAsync("Email.From", (from ?? "").Trim());
         await _audit.LogAsync(admin!.DisplayName, "settings.changed", "Email",
             string.IsNullOrWhiteSpace(resendKey) ? "sender updated" : "key + sender updated");

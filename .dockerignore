@@ -1,0 +1,13 @@
+# Never copy local data, credentials or build output into an image
+**/bin/
+**/obj/
+server/src/AddonStore.Web/data/
+server/dev-credentials.local.txt
+**/*.local.txt
+**/*.db
+**/*.db-shm
+**/*.db-wal
+dist/
+client/
+.git/
+.vs/

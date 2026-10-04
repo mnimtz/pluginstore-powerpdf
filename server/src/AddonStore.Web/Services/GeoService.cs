@@ -69,12 +69,12 @@ public sealed class GeoService : BackgroundService
             if (IPEndPoint.TryParse(s, out var ep)) return ep.Address;
             return null;
         }
-        var ip = Parse(ctx.Request.Headers["X-Client-IP"].ToString());
-        if (ip is null)
-        {
-            var xff = ctx.Request.Headers["X-Forwarded-For"].ToString();
-            if (!string.IsNullOrEmpty(xff)) ip = Parse(xff.Split(',').Last());
-        }
+        // X-Client-IP is not used: a client can send it itself. The App Service
+        // front end APPENDS the address it saw to X-Forwarded-For, so only the
+        // rightmost entry is trustworthy (values a client sent stand before it).
+        IPAddress? ip = null;
+        var xff = ctx.Request.Headers["X-Forwarded-For"].ToString();
+        if (!string.IsNullOrEmpty(xff)) ip = Parse(xff.Split(',').Last());
         ip ??= ctx.Connection.RemoteIpAddress;
         return ip is { IsIPv4MappedToIPv6: true } ? ip.MapToIPv4() : ip;
     }
@@ -190,7 +190,7 @@ public sealed class GeoService : BackgroundService
                 _log.LogInformation("geo database updated from {Url}", url);
                 return;
             }
-            catch (Exception ex) when (ex is not OperationCanceledException)
+            catch (Exception ex) when (ex is not OperationCanceledException || !stop.IsCancellationRequested)
             {
                 _log.LogWarning(ex, "geo database download failed ({Url})", url);
                 try { File.Delete(tmp); } catch { }

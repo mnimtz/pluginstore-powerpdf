@@ -153,7 +153,7 @@ public sealed class UsageMaintenance : BackgroundService
                 }
                 await ResolveHostnamesAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>(), stop);
             }
-            catch (Exception ex) when (ex is not OperationCanceledException) { _log.LogWarning(ex, "usage maintenance run failed"); }
+            catch (Exception ex) when (ex is not OperationCanceledException || !stop.IsCancellationRequested) { _log.LogWarning(ex, "usage maintenance run failed"); }
             try { await Task.Delay(TimeSpan.FromMinutes(1), stop); }
             catch (TaskCanceledException) { break; }
         }

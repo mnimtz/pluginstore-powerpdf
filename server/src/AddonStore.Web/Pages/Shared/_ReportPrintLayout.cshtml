@@ -12,11 +12,12 @@
 <main>
     <div class="print-toolbar no-print">
         <span>@L["Use \"Save as PDF\" as the printer to get the report as a PDF file."]</span>
-        <button type="button" class="btn small" onclick="window.print()">@L["Print / save as PDF"]</button>
+        <button type="button" class="btn small" id="print-btn">@L["Print / save as PDF"]</button>
     </div>
     @RenderBody()
 </main>
-<script>
+<script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
+document.getElementById('print-btn').addEventListener('click', function () { window.print(); });
     // Open the print dialog once the page (including the logo) has rendered.
     window.addEventListener('load', function () { setTimeout(function () { window.print(); }, 300); });
 </script>

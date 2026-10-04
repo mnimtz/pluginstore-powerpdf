@@ -136,7 +136,7 @@ public class PackageMetaService
         static string Clean(string s) => new string(s.Where(ch => !char.IsControl(ch) || ch == '\n').ToArray()).Trim();
         static Dictionary<string, string>? CleanMap(Dictionary<string, string>? m) =>
             m?.Where(kv => !string.IsNullOrWhiteSpace(kv.Value))
-              .ToDictionary(kv => kv.Key.Trim().ToLowerInvariant(), kv => Clean(kv.Value));
+              .GroupBy(kv => kv.Key.Trim().ToLowerInvariant()).ToDictionary(g => g.Key, g => Clean(g.Last().Value));
         c.Name = CleanMap(c.Name);
         c.Description = CleanMap(c.Description);
         if (c.Author is not null) c.Author = Clean(c.Author).Replace('\n', ' ');

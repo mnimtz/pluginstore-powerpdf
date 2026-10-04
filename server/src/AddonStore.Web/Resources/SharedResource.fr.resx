@@ -354,7 +354,6 @@
   <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>Utilisation du store : téléchargements, clients utilisés, emplacements, soumissions et développeurs.</value></data>
   <data name="Last {0} days" xml:space="preserve"><value>{0} derniers jours</value></data>
   <data name="From" xml:space="preserve"><value>Du</value></data>
-  <data name="To" xml:space="preserve"><value>Au</value></data>
   <data name="Add-on" xml:space="preserve"><value>Module</value></data>
   <data name="All add-ons" xml:space="preserve"><value>Tous les modules</value></data>
   <data name="Country" xml:space="preserve"><value>Pays</value></data>
@@ -615,8 +614,6 @@
   <data name="Live stage" xml:space="preserve"><value>Étape live</value></data>
   <data name="newest" xml:space="preserve"><value>la plus récente</value></data>
   <data name="fixed" xml:space="preserve"><value>fixe</value></data>
-  <data name="off" xml:space="preserve"><value>désactivée</value></data>
-  <data name="active" xml:space="preserve"><value>actif</value></data>
   <data name="paused" xml:space="preserve"><value>suspendu</value></data>
   <data name="ended" xml:space="preserve"><value>terminée</value></data>
   <data name="outside period" xml:space="preserve"><value>hors période</value></data>
@@ -643,4 +640,7 @@
   <data name="Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>Live « fixe » maintient le client sur une version testée ; « la plus récente » suit chaque version publiée. Les modules privés n'ont pas besoin d'approbation ; les administrateurs sont informés par e-mail.</value></data>
   <data name="No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet." xml:space="preserve"><value>Aucun module à livrer : vous pouvez livrer vos propres modules qui ont réussi les contrôles automatiques et ne sont pas encore livrés à ce client.</value></data>
   <data name="Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed." xml:space="preserve"><value>Seul le nom est obligatoire. Les coordonnées servent uniquement à l'e-mail de livraison ; laissez-les vides si inutiles.</value></data>
+  <data name="Sign-in failed. Check email and password, or try again later." xml:space="preserve"><value>Échec de la connexion. Vérifiez l'e-mail et le mot de passe, ou réessayez plus tard.</value></data>
+  <data name="Backup restored. The server restarts now to load it completely; sign in again in a minute." xml:space="preserve"><value>Sauvegarde restaurée. Le serveur redémarre pour la charger entièrement ; reconnectez-vous dans une minute.</value></data>
+  <data name="no longer available" xml:space="preserve"><value>plus disponible</value></data>
 </root>
