@@ -66,7 +66,7 @@ else
         <tr>
             <th>@L["Plug-in"]</th>
             @if (isAdmin) { <th>@L["Owner"]</th> }
-            <th>@L["Live"]</th><th>@L["Status"]</th><th>@L["Downloads"]</th><th>@L["Last activity"]</th><th></th>
+            <th>@L["Live"]</th><th>@L["Status"]</th><th>@L["Visibility"]</th><th>@L["Downloads"]</th><th>@L["Last activity"]</th><th></th>
         </tr>
         @foreach (var r in AddonStore.Web.Services.Paging.Items(Model.Visible, ViewContext.HttpContext.Request, "plugins"))
         {
@@ -86,6 +86,24 @@ else
                     else if (r.Newest is not null)
                     {
                         <span class="badge @r.Newest.Status.ToString().ToLowerInvariant()">@L[r.Newest.Status.ToString()]</span>
+                    }
+                </td>
+                <td style="white-space:nowrap">
+                    @if (r.Pkg.Id == "com.tungsten.pluginstore")
+                    {
+                        <span class="badge live">@L["public"]</span>
+                    }
+                    else
+                    {
+                        var priv = r.Pkg.Visibility == "private";
+                        <form method="post" action="/Plugin?id=@Uri.EscapeDataString(r.Pkg.Id)&amp;handler=Visibility" style="display:inline-flex;gap:6px;align-items:center;margin:0"
+                              data-confirm="@(priv ? L["Make this add-on public? It then appears in the catalog for everybody (new versions after approval)."] : L["Make this add-on private? It disappears from the public catalog; only customers with a delivery and a code still get it."])">
+                            <span class="badge @(priv ? "submitted" : "live")">@L[priv ? "private" : "public"]</span>
+                            <input type="hidden" name="visibility" value="@(priv ? "public" : "private")" />
+                            <input type="hidden" name="returnUrl" value="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString)" />
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn small secondary" title="@L[priv ? "Show in the public catalog" : "Customer deliveries only, not in the public catalog"]">@L[priv ? "Make public" : "Make private"]</button>
+                        </form>
                     }
                 </td>
                 <td>@r.Downloads</td>

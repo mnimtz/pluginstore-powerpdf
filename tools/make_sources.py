@@ -31,6 +31,7 @@ FP1_MODULES = {
     'EInvoice': ['sign', 'invoice'],
     'ComplianceCheck': ['sign', 'invoice', 'compliance'],
     'MailMerge': ['sign', 'mailmerge'],
+    'CommerzbankSign': ['sign'],   # private customer edition of OneClickSign
 }
 # FP2's common folder also holds code other modules use (OCR, conversion); each
 # package gets only the common files its project compiles plus their headers.
@@ -124,7 +125,7 @@ def main():
     for module, dirs in FP1_MODULES.items():
         sname = {'OneClickSign': 'oneclicksign', 'QesSign': 'qessign', 'SmartBookmarks': 'smartbookmarks',
                  'BarcodeStamps': 'barcodestamps', 'EInvoice': 'einvoice', 'ComplianceCheck': 'compliancecheck',
-                 'MailMerge': 'mailmerge'}[module]
+                 'MailMerge': 'mailmerge', 'CommerzbankSign': 'commerzbanksign'}[module]
         s = spec(sname)
         build(s['id'], version_of(s), module, 'Enhanced Feature Pack (C:\\Claude\\EnhancedFeaturePack), store build', FP1,
               FP1_COMMON + dirs + [f'store/{module}'],

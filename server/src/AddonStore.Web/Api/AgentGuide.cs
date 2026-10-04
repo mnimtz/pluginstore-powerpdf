@@ -427,7 +427,9 @@ recommended) and the localized category name, so ship a clear icon.
 Add-ons can be delivered to single customers instead of (or in addition to)
 the public catalog. A package with `"visibility": "private"` in its first
 manifest (or switched with `PATCH {{baseUrl}}/api/packages/{id}
-{"visibility": "private"}`) never appears in the catalog, the website or the
+{"visibility": "private"}`; `GET {{baseUrl}}/api/packages/{id}` reports it as
+`data.visibility`; admins and owners also switch it in the plug-in list of the
+portal) never appears in the catalog, the website or the
 search; its details answer 404 to everyone but its owner, admins and
 reviewers, and icon, screenshots and downloads also to clients with a code
 for it. Private versions need no admin approval: passing the automatic checks

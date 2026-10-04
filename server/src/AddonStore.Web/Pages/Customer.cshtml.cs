@@ -72,7 +72,9 @@ public class CustomerModel : PageModel
         {
             var isAdmin = User.IsInRole("Admin");
             var pkgs = await _db.Packages.AsNoTracking()
-                .Where(p => p.Id != SubmissionService.ClientPackageId && (isAdmin || p.OwnerId == me.Id)).ToListAsync();
+                .Where(p => p.Id != SubmissionService.ClientPackageId && p.Visibility == "private" && (isAdmin || p.OwnerId == me.Id)).ToListAsync();
+            // Only private add-ons: public ones are in the catalog for everybody anyway
+            // (a customer-specific version of a public add-on stays possible through the API).
             foreach (var p in pkgs.OrderBy(p => p.Id))
             {
                 if (deliveries.Any(d => d.PackageId == p.Id)) continue;

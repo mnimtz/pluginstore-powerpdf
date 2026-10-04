@@ -154,7 +154,7 @@
         <h2 style="margin-top:0">@L["Deliver an add-on"]</h2>
         @if (Model.Packages.Count == 0)
         {
-            <p class="muted">@L["No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet."]</p>
+            <p class="muted">@L["No private add-on to deliver. Customers get private add-ons (never in the public catalog) that passed the automatic checks and are not delivered to them yet: upload with \"visibility\": \"private\" or switch an add-on to private in the plug-in list."]</p>
         }
         else
         {
@@ -164,7 +164,7 @@
                     <select name="packageId" id="deliver-pkg">
                         @foreach (var p in Model.Packages)
                         {
-                            <option value="@p.Id" data-versions="@string.Join(",", p.Versions)">@p.Name (@p.Id)@(p.Visibility == "private" ? " · " + L["private"].Value : "")</option>
+                            <option value="@p.Id" data-versions="@string.Join(",", p.Versions)">@p.Name (@p.Id)</option>
                         }
                     </select>
                 </div>
@@ -175,7 +175,7 @@
                 <label style="font-weight:400"><input type="checkbox" name="ownCode" value="true" style="width:auto" /> @L["Also create a code for this add-on only"]</label>
                 <button type="submit" class="btn cta">@L["Deliver"]</button>
             </form>
-            <p class="small muted">@L["Live \"fixed\" keeps the customer on a tested version; \"newest\" follows every released version. Private add-ons need no admin approval; admins are informed by email."]</p>
+            <p class="small muted">@L["Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live \"fixed\" keeps the customer on a tested version; \"newest\" follows every released version. Private add-ons need no admin approval; admins are informed by email."]</p>
         }
     </div>
 }

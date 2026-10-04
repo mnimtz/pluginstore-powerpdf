@@ -32,7 +32,7 @@ public static class OpenApiDoc
         new("get", "/api/catalog", "getCatalog", "Released packages (live), or including newer beta versions.", "none",
             new[] { "channel:query:'beta' includes pre-release versions", "format:query:'tsv' for the Power PDF client", "lang:query:UI language for TSV texts" }),
         new("get", "/api/categories", "getCategories", "Catalog categories (slug, names, usage, limit). Every upload names one.", "none", Array.Empty<string>()),
-        new("get", "/api/packages/{id}", "getPackage", "Status, history and check reports of one package.", "none", new[] { "id:path:package id" }),
+        new("get", "/api/packages/{id}", "getPackage", "Status, history and check reports of one package, and its visibility (public or private).", "none", new[] { "id:path:package id" }),
         new("patch", "/api/packages/{id}", "updateCatalogEntry", "Change name, description, author, contactEmail or category without a new version; a field set to null resets it to the manifest value.", "owner",
             new[] { "id:path:package id" }, Body: "catalogPatch"),
         new("post", "/api/packages/validate", "validatePackage", "Dry run: all checks on a .ppak, nothing is stored. Repeat until data.passed is true, fixing each error with its hint.", "token", Array.Empty<string>(), Body: "ppak"),

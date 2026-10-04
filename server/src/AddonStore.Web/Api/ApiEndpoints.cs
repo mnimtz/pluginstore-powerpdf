@@ -287,6 +287,7 @@ public static class ApiEndpoints
                 {
                     id = package.Id,
                     owner = isOwner ? package.Owner?.DisplayName : Services.CatalogUi.PublicName(package.Owner),
+                    visibility = package.Visibility == "private" ? "private" : "public",
                     catalogEntry = new
                     {
                         name = ParseOrNull(package.NameJson),

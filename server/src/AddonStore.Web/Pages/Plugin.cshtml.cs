@@ -137,7 +137,7 @@ public class PluginModel : PageModel
     }
 
     /// <summary>public (catalog) or private (only customers with a delivery and code see it).</summary>
-    public async Task<IActionResult> OnPostVisibilityAsync(string id, string visibility)
+    public async Task<IActionResult> OnPostVisibilityAsync(string id, string visibility, string? returnUrl)
     {
         if (!await LoadAsync(id ?? "")) return Forbid();
         if (!IsOwner && !IsAdmin) return Forbid();
@@ -145,6 +145,9 @@ public class PluginModel : PageModel
         var issues = await _meta.ApplyAsync(pkg, Me!, new MetaChange { SetVisibility = true, Visibility = visibility });
         Notice = issues.Any(i => i.Severity == "error") ? "This action is not allowed for this version." : "Settings saved.";
         NoticeKind = issues.Any(i => i.Severity == "error") ? "warn" : "ok";
+        // Switched from the plug-in list: back there (local addresses only).
+        if (NoticeKind == "ok" && !string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            return LocalRedirect(returnUrl);
         await LoadAsync(id!);
         return Page();
     }

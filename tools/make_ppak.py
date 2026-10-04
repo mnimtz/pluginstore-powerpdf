@@ -15,7 +15,8 @@ The spec is a JSON file:
   "ribbonAtomNamespace": "FeaturePack::Example",
   "zxt": { "x64": "relative/path/Example.zxt" },   // paths relative to the spec file
   "include": [ { "src": "relative/path", "dst": "zip/path" }, ... ],
-  "uninstall": { "registryKeys": [ ... ], "extraPaths": [ ... ] }
+  "uninstall": { "registryKeys": [ ... ], "extraPaths": [ ... ] },
+  "visibility": "private"                   // optional: customer add-on, never in the catalog
 }
 
 sha256 values and the architectures list are computed automatically.
@@ -81,6 +82,10 @@ def main():
     for key in ('thirdParty', 'complianceAudit'):
         if key in spec:
             manifest[key] = spec[key]
+    # "private": a customer add-on that never appears in the catalog (only
+    # with a customer code). Takes effect on the FIRST upload of the id.
+    if spec.get('visibility') in ('public', 'private'):
+        manifest['visibility'] = spec['visibility']
 
     # Guard: an included MSI must carry exactly the package version, otherwise
     # users get "Repair/Remove" instead of an upgrade (happened with 0.3.1).
