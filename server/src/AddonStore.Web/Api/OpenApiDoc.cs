@@ -43,7 +43,7 @@ public static class OpenApiDoc
             new[] { "id:path:package id", "version:path:version" }, Body: "zip"),
         new("get", "/api/packages/{id}/{version}/source", "downloadSource", "Download the stored source code of a version (admins only).", "admin", new[] { "id:path:package id", "version:path:version" }, Returns: "zip"),
         new("get", "/api/packages/{id}/source/latest", "downloadLatestSource", "Source code of the newest version that has one (admins only); header X-Source-Version names the version.", "admin", new[] { "id:path:package id" }, Returns: "zip"),
-        new("get", "/api/packages/{id}/icon", "getIcon", "Catalog icon (PNG) of the newest released version.", "none", new[] { "id:path:package id" }, Returns: "png"),
+        new("get", "/api/packages/{id}/icon", "getIcon", "Catalog icon (PNG) of the given version (v), else of the newest released version; the catalog's iconUrl names the version it shows.", "none", new[] { "id:path:package id", "v:query:version (optional)" }, Returns: "png"),
         new("get", "/api/packages/{id}/screenshots", "listScreenshots", "Screenshot list with localized captions.", "none",
             new[] { "id:path:package id", "lang:query:language code", "format:query:'tsv' for the client" }),
         new("get", "/api/packages/{id}/screenshots/{n}", "getScreenshot", "One screenshot image.", "none", new[] { "id:path:package id", "n:path:index from the list" }, Returns: "image"),

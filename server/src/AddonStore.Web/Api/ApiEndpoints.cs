@@ -138,7 +138,7 @@ public static class ApiEndpoints
                     "PATCH /api/deliveries/{did}       change stages, dates or status; POST /api/deliveries/{did}/promote = beta version goes live",
                     "DELETE /api/packages/{id}/{version}  withdraw your own beta version (auth)",
                     "GET  /api/packages/{id}/{version}/download",
-                    "GET  /api/packages/{id}/icon     catalog icon (PNG) of the newest released version",
+                    "GET  /api/packages/{id}/icon[?v=version]  catalog icon (PNG), of the given or the newest released version",
                     "GET  /api/devkit                 SDK documentation and developer kit files"
                 }
             }
@@ -243,7 +243,7 @@ public static class ApiEndpoints
                       .Append(Flat(i.ZxtName)).Append('\t').Append(Flat(i.Category)).Append('\t')
                       .Append(Flat(i.Author)).Append('\t').Append(Flat(i.ContactEmail)).Append('\t')
                       .Append(Flat(i.CategoryName)).Append('\t')
-                      .Append($"{Base(ctx)}/api/packages/{i.Id}/icon").Append('\t')
+                      .Append($"{Base(ctx)}/api/packages/{i.Id}/icon?v={Uri.EscapeDataString(i.Version)}").Append('\t')
                       .Append(i.Rating.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)).Append('\t')
                       .Append(i.RatingCount).Append('\t').Append(i.Screenshots).Append('\t')
                       .Append(Flat(i.Customer)).Append('\t')
@@ -460,16 +460,18 @@ public static class ApiEndpoints
             return Results.File(path, "application/zip", $"{id}-{v.Version}-source.zip");
         }).RequireAuthorization("ApiOrCookie");
 
-        // Catalog icon (assets/icon.png of the newest live, else beta, version); public like the catalog.
-        api.MapGet("/packages/{id}/icon", async (string id, HttpContext ctx, AppDbContext db, SubmissionService svc,
+        // Catalog icon (assets/icon.png of the version the catalog shows: ?v=, else the newest
+        // live, else beta, version); public like the catalog.
+        api.MapGet("/packages/{id}/icon", async (string id, string? v, HttpContext ctx, AppDbContext db, SubmissionService svc,
                                                  UserManager<AppUser> users, CustomerService customers) =>
         {
             if (!await MayAccessAsync(ctx, id, db, users, customers)) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
             var cmp = new SemVerComparer();
             var versions = await db.PackageVersions
-                .Where(v => v.PackageId == id && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)).ToListAsync();
-            var pick = versions.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault()
-                       ?? versions.OrderByDescending(v => v.Version, cmp).FirstOrDefault();
+                .Where(x => x.PackageId == id && (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta)).ToListAsync();
+            var pick = (v is null ? null : versions.FirstOrDefault(x => x.Version == v))
+                       ?? versions.Where(x => x.Status == VersionStatus.Live).OrderByDescending(x => x.Version, cmp).FirstOrDefault()
+                       ?? versions.OrderByDescending(x => x.Version, cmp).FirstOrDefault();
             if (pick is null) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
             var path = Path.Combine(svc.StorageRoot, pick.FilePath);
             if (!File.Exists(path)) return NotFound("FILE_MISSING", "The package file is missing on the server.");
@@ -1177,7 +1179,7 @@ public static class ApiEndpoints
                 pageUrl = pick.PackageId == SubmissionService.ClientPackageId || isPrivate ? null
                     : $"{baseUrl}/a/{ShareService.Slug(pick.PackageId, slugIds)}",
                 downloadUrl = $"{baseUrl}/api/packages/{pick.PackageId}/{pick.Version}/download",
-                iconUrl = $"{baseUrl}/api/packages/{pick.PackageId}/icon",
+                iconUrl = $"{baseUrl}/api/packages/{pick.PackageId}/icon?v={Uri.EscapeDataString(pick.Version)}",
                 zxtName = ZxtNameOf(root),
                 customer,
                 signature = signing?.Sign(pick.PackageId, pick.Version, pick.Sha256, ZxtNameOf(root)),

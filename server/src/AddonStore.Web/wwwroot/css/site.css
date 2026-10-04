@@ -371,6 +371,7 @@ svg.spark polyline { fill: none; stroke: var(--tun-blue); stroke-width: 1.6; vec
 .pager { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; justify-content: space-between;
          margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--tun-gray-200); }
 .pager-sizes a, .pager-sizes b { margin-left: 6px; }
+.pager[hidden] { display: none; }
 .pager-sizes b { color: var(--tun-navy); }
 .pager-pages { display: flex; gap: 10px; align-items: center; }
 @media (max-width: 900px) {

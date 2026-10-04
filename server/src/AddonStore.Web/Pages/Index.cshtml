@@ -107,6 +107,15 @@ else
             </div>
         }
     </div>
+    <nav class="pager" id="pkg-pager" aria-label="@L["Pages"]" hidden>
+        <span class="muted small" id="pkg-range"></span>
+        <span class="pager-sizes small">@L["Rows per page"]: <span id="pkg-sizes"></span></span>
+        <span class="pager-pages">
+            <button type="button" class="btn small secondary" id="pkg-prev">‹ @L["Previous"]</button>
+            <span class="small" id="pkg-page"></span>
+            <button type="button" class="btn small secondary" id="pkg-next">@L["Next"] ›</button>
+        </span>
+    </nav>
     <script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
         (function () {
             var search = document.getElementById('pkg-search');
@@ -130,15 +139,44 @@ else
                     }, 1800);
                 });
             });
-            function apply() {
+            // Paging over the cards that match search and category (S0.17.3): the
+            // filter runs in the browser, so the paging does too.
+            var sizes = [25, 50, 100], size = 25, page = 1;
+            var pager = document.getElementById('pkg-pager');
+            var T = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(new { range = L["{0} to {1} of {2}"].Value, page = L["Page {0} of {1}"].Value }));
+            function fmt(t) { var a = arguments; return t.replace(/\{(\d)\}/g, function (m, i) { return a[+i + 1]; }); }
+            function apply(keepPage) {
                 var q = search.value.toLowerCase();
+                var hits = [];
                 cards.forEach(function (c) {
                     var hit = (!cat || c.dataset.cat === cat) &&
                               (!q || c.dataset.text.indexOf(q) >= 0);
-                    c.style.display = hit ? '' : 'none';
+                    if (hit) hits.push(c);
+                    c.style.display = 'none';
+                });
+                var pages = Math.max(1, Math.ceil(hits.length / size));
+                if (!keepPage) page = 1;
+                page = Math.min(Math.max(page, 1), pages);
+                hits.slice((page - 1) * size, page * size).forEach(function (c) { c.style.display = ''; });
+                pager.hidden = hits.length <= sizes[0];
+                if (pager.hidden) return;
+                document.getElementById('pkg-range').textContent = fmt(T.range, (page - 1) * size + 1, Math.min(hits.length, page * size), hits.length);
+                document.getElementById('pkg-page').textContent = fmt(T.page, page, pages);
+                // style, not the hidden attribute: .btn sets display and would override it
+                document.getElementById('pkg-prev').style.display = page <= 1 ? 'none' : '';
+                document.getElementById('pkg-next').style.display = page >= pages ? 'none' : '';
+                var box = document.getElementById('pkg-sizes');
+                box.textContent = '';
+                sizes.forEach(function (n) {
+                    var el = document.createElement(n === size ? 'b' : 'a');
+                    el.textContent = String(n);
+                    if (n !== size) { el.href = '#pkg-grid'; el.addEventListener('click', function (e) { e.preventDefault(); size = n; apply(); }); }
+                    box.appendChild(el);
                 });
             }
-            search.addEventListener('input', apply);
+            document.getElementById('pkg-prev').addEventListener('click', function () { page--; apply(true); document.getElementById('pkg-grid').scrollIntoView(); });
+            document.getElementById('pkg-next').addEventListener('click', function () { page++; apply(true); document.getElementById('pkg-grid').scrollIntoView(); });
+            search.addEventListener('input', function () { apply(); });
             var ask = document.getElementById('ai-ask');
             if (ask) {
                 var box = document.getElementById('ai-results'), list = document.getElementById('ai-list'),
@@ -175,6 +213,7 @@ else
                     apply();
                 });
             });
+            apply();
         })();
     </script>
 }

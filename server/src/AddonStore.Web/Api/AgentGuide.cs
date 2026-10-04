@@ -350,7 +350,7 @@ it cannot be approved without its source.
     GET {{baseUrl}}/api/catalog              released (live) packages
     GET {{baseUrl}}/api/catalog?channel=beta ...including newer beta versions
     GET {{baseUrl}}/api/packages/{id}/{version}/download
-    GET {{baseUrl}}/api/packages/{id}/icon   catalog icon (assets/icon.png of the newest released version)
+    GET {{baseUrl}}/api/packages/{id}/icon[?v=version]   catalog icon (assets/icon.png of that version, else of the newest released one)
 
 ## Screenshots (recommended)
 
