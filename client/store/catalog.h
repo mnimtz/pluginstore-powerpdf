@@ -22,7 +22,7 @@ struct PSCatalogEntry
     unsigned long long sizeBytes = 0;
     std::wstring sha256;
     std::wstring downloadUrl;
-    std::wstring zxtName;        // plugin binary base name, e.g. "OfficeKonverter"
+    std::wstring zxtName;        // plugin binary base name, e.g. "SmartBookmarks"
     std::wstring category;
     std::wstring author;
     std::wstring contactEmail;

@@ -125,14 +125,14 @@ manifest.json (Kernfelder):
 
 ```json
 {
-  "id": "com.tungsten.officekonverter",
+  "id": "com.tungsten.myplugin",
   "version": "0.3.0",
-  "name": { "de": "Office Konverter", "en": "Office Converter" },
+  "name": { "de": "Mein Plug-in", "en": "My Plugin" },
   "description": { "de": "...", "en": "..." },
   "publisher": "marcus.nimtz@tungstenautomation.com",
   "minPowerPdfVersion": "5.0",
   "architectures": ["x64", "arm64"],
-  "ribbonAtomNamespace": "OfficePro.v3",
+  "ribbonAtomNamespace": "MyPlugin.v3",
   "files": { "x64": "x64/MyPlugin.zxt", "arm64": "arm64/MyPlugin.zxt" },
   "sha256": { "x64": "...", "arm64": "..." },
   "changelog": { "de": "...", "en": "..." },
@@ -430,13 +430,13 @@ v0.1.0 ist gebaut und lokal verifiziert:
   (docs/security-review-2026-10.md), Lizenz-Inventur
   (docs/LICENSES-THIRD-PARTY.md), SQLite-CVE-Pin. Pakete gebaut und lokal
   eingereicht: Plugin-Store-Client 0.2.0, Smart Bookmarks 1.0.5,
-  XFA Converter 0.2.0 (Office Konverter zurückgestellt: 478-MB-Engine braucht
-  den Nachlade-Mechanismus).
+  XFA Converter 0.2.0. Office Konverter: aus dem Store-Projekt entfernt
+  (Entscheidung Marcus, Okt 4, 2026; 478-MB-CSDK-Engine und offene
+  OEM-/Weitergaberechte).
 - **Offen für die erste Team-Auslieferung**: Client-Dialog-Strings in den
   übrigen 14 Sprachen (.rc) + 14 weitere NameAndTitle-Ordner; Live-Test des
   Clients in Power PDF; Resend-Key in den Einstellungen; MSI für den Client;
-  ppak-CLI; Devkit-Inhalte (sdk.zip, knowledge.md, Skill); Office Konverter
-  mit Engine-Download bei Installation.
+  ppak-CLI; Devkit-Inhalte (sdk.zip, knowledge.md, Skill).
 
 ## 4. Phasenplan
 
@@ -466,7 +466,7 @@ v0.1.0 ist gebaut und lokal verifiziert:
 
 - Server: Katalog, Upload, Review-Queue, Freigabe, Entra-Login im Web-UI
 - Paketformat + `ppak`-CLI, 2-3 Bestandsplug-ins als Pilotpakete (z. B.
-  Office Konverter, XFA-Konverter, Feature Pack)
+  XFA-Konverter, Feature Pack)
 - Store-Client: Katalog anzeigen, installieren, aktualisieren, deinstallieren
 - Server-Prüfpipeline (3.2a) und Developer Kit mit Claude-Skill (3.2b)
 - Betrieb: eine Azure-Subscription, Kostenrahmen klein (App Service B1 + Storage,

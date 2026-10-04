@@ -569,4 +569,15 @@
   <data name="Short index for language models" xml:space="preserve"><value>Краткий указатель для языковых моделей</value></data>
   <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Больше ничего не нужно: помощник читает руководство, настраивается на будущие сеансы и соблюдает правила.</value></data>
   <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>Имя токена (например, «помощник», «сервер сборки»)</value></data>
+  <data name="Provider and key" xml:space="preserve"><value>Поставщик и ключ</value></data>
+  <data name="Connect and load models" xml:space="preserve"><value>Подключить и загрузить модели</value></data>
+  <data name="Model and features" xml:space="preserve"><value>Модель и функции</value></data>
+  <data name="Model" xml:space="preserve"><value>Модель</value></data>
+  <data name="Default" xml:space="preserve"><value>По умолчанию</value></data>
+  <data name="Models this key may use, loaded live from the provider." xml:space="preserve"><value>Модели, доступные для этого ключа, загружены у поставщика в реальном времени.</value></data>
+  <data name="No model list loaded yet: use &quot;Connect and load models&quot; above. Until then the default model is used." xml:space="preserve"><value>Список моделей ещё не загружен: нажмите выше «Подключить и загрузить модели». До этого используется модель по умолчанию.</value></data>
+  <data name="Test" xml:space="preserve"><value>Проверка</value></data>
+  <data name="Sends one short request with the chosen model." xml:space="preserve"><value>Отправляет один короткий запрос с выбранной моделью.</value></data>
+  <data name="Connected. Choose a model below." xml:space="preserve"><value>Подключено. Выберите модель ниже.</value></data>
+  <data name="The connection failed." xml:space="preserve"><value>Не удалось подключиться.</value></data>
 </root>

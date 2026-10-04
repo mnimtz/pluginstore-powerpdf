@@ -569,4 +569,15 @@
   <data name="Short index for language models" xml:space="preserve"><value>Dil modelleri için kısa dizin</value></data>
   <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>İhtiyacı olan bu kadar: kılavuzu okur, sonraki oturumlar için kendini ayarlar ve kurallara uyar.</value></data>
   <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>Belirteç adı (ör. 'asistan', 'derleme sunucusu')</value></data>
+  <data name="Provider and key" xml:space="preserve"><value>Sağlayıcı ve anahtar</value></data>
+  <data name="Connect and load models" xml:space="preserve"><value>Bağlan ve modelleri yükle</value></data>
+  <data name="Model and features" xml:space="preserve"><value>Model ve işlevler</value></data>
+  <data name="Model" xml:space="preserve"><value>Model</value></data>
+  <data name="Default" xml:space="preserve"><value>Varsayılan</value></data>
+  <data name="Models this key may use, loaded live from the provider." xml:space="preserve"><value>Bu anahtarın kullanabileceği modeller, sağlayıcıdan canlı olarak yüklendi.</value></data>
+  <data name="No model list loaded yet: use &quot;Connect and load models&quot; above. Until then the default model is used." xml:space="preserve"><value>Henüz model listesi yüklenmedi: yukarıdaki "Bağlan ve modelleri yükle" düğmesini kullanın. O zamana kadar varsayılan model kullanılır.</value></data>
+  <data name="Test" xml:space="preserve"><value>Test</value></data>
+  <data name="Sends one short request with the chosen model." xml:space="preserve"><value>Seçilen modelle tek bir kısa istek gönderir.</value></data>
+  <data name="Connected. Choose a model below." xml:space="preserve"><value>Bağlandı. Aşağıdan bir model seçin.</value></data>
+  <data name="The connection failed." xml:space="preserve"><value>Bağlantı başarısız oldu.</value></data>
 </root>

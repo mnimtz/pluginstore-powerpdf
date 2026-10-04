@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using Anthropic;
 using Anthropic.Models.Beta.Messages;
+using Anthropic.Models.Models;
 using Microsoft.AspNetCore.DataProtection;
 
 namespace AddonStore.Web.Services;
@@ -29,6 +30,7 @@ public class AiService
     public const string ReviewSourceKey = "Ai.ReviewSource";   // "1" = send source excerpts with the review aid
     public const string SearchKey = "Ai.Search";               // "1" = natural-language search
     public const string DailyLimitKey = "Ai.DailyLimit";       // calls per day, default 300
+    public const string ModelListKey = "Ai.ModelList";         // models offered by the provider, loaded with the key
 
     public const string DefaultClaudeModel = "claude-opus-5-5";
     public const string DefaultGeminiModel = "gemini-2.5-flash";
@@ -66,6 +68,93 @@ public class AiService
             await _settings.GetAsync(TriageKey) == "1", await _settings.GetAsync(ReviewKey) == "1",
             await _settings.GetAsync(ReviewAutoKey) == "1", await _settings.GetAsync(ReviewSourceKey) == "1",
             await _settings.GetAsync(SearchKey) == "1", limit is >= 1 and <= 100000 ? limit : 300);
+    }
+
+    /// <summary>One model the provider offers for this key (id for the API, name for the drop-down).</summary>
+    public record ModelOption(string Id, string Name);
+
+    private record StoredModels(string Provider, DateTime At, List<ModelOption> Models);
+
+    /// <summary>The model list loaded last for <paramref name="provider"/>, empty when none was loaded.</summary>
+    public async Task<List<ModelOption>> StoredModelsAsync(string provider)
+    {
+        var raw = await _settings.GetAsync(ModelListKey);
+        if (raw.Length == 0) return new();
+        try
+        {
+            var s = JsonSerializer.Deserialize<StoredModels>(raw);
+            return s is not null && s.Provider == provider ? s.Models : new();
+        }
+        catch (JsonException) { return new(); }
+    }
+
+    /// <summary>
+    /// Asks the provider which models this key may use (this also proves the key)
+    /// and stores the list for the settings drop-down. (ok, message, models).
+    /// </summary>
+    public async Task<(bool Ok, string Message, List<ModelOption> Models)> LoadModelsAsync(CancellationToken ct = default)
+    {
+        var cfg = await ConfigAsync();
+        if (!cfg.On) { await _settings.SetAsync(ModelListKey, ""); return (false, "AI is switched off.", new()); }
+        List<ModelOption> models;
+        try
+        {
+            if (cfg.Provider == "fake")
+                models = new() { new("fake-large", "Fake Large (test)"), new("fake-small", "Fake Small (test)") };
+            else
+            {
+                var key = await ApiKeyAsync();
+                if (key is null) return (false, "No API key stored.", new());
+                models = cfg.Provider == "claude" ? await ClaudeModelsAsync(key, ct) : await GeminiModelsAsync(key, ct);
+            }
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            _log.LogWarning(ex, "Loading the model list failed ({Provider})", cfg.Provider);
+            return (false, $"{cfg.Provider}: the key was not accepted or the provider is not reachable ({ex.GetType().Name}).", new());
+        }
+        if (models.Count == 0) return (false, $"{cfg.Provider}: no usable models for this key.", new());
+        await _settings.SetAsync(ModelListKey, JsonSerializer.Serialize(new StoredModels(cfg.Provider, DateTime.UtcNow, models)));
+        return (true, $"{cfg.Provider}: {models.Count} models available.", models);
+    }
+
+    private static async Task<List<ModelOption>> ClaudeModelsAsync(string key, CancellationToken ct)
+    {
+        var client = new AnthropicClient { ApiKey = key };
+        var page = await client.Models.List(new ModelListParams { Limit = 100 }, ct);
+        // Newest first, as the API returns them.
+        return page.Items.Select(m => new ModelOption(m.ID, string.IsNullOrWhiteSpace(m.DisplayName) ? m.ID : m.DisplayName)).ToList();
+    }
+
+    private async Task<List<ModelOption>> GeminiModelsAsync(string key, CancellationToken ct)
+    {
+        var http = _http.CreateClient();
+        http.Timeout = TimeSpan.FromSeconds(30);
+        var result = new List<ModelOption>();
+        string? pageToken = null;
+        do
+        {
+            var url = "https://generativelanguage.googleapis.com/v1beta/models?pageSize=1000" +
+                      (pageToken is null ? "" : "&pageToken=" + Uri.EscapeDataString(pageToken));
+            using var req = new HttpRequestMessage(HttpMethod.Get, url);
+            req.Headers.Add("x-goog-api-key", key);
+            using var resp = await http.SendAsync(req, ct);
+            resp.EnsureSuccessStatusCode();
+            using var doc = JsonDocument.Parse(await resp.Content.ReadAsStringAsync(ct));
+            if (doc.RootElement.TryGetProperty("models", out var arr))
+                foreach (var m in arr.EnumerateArray())
+                {
+                    // Only models that answer generateContent (no embedding or image-only models).
+                    if (!m.TryGetProperty("supportedGenerationMethods", out var methods) ||
+                        !methods.EnumerateArray().Any(x => x.GetString() == "generateContent")) continue;
+                    var id = (m.GetProperty("name").GetString() ?? "").Replace("models/", "");
+                    if (id.Length == 0 || id.Contains("embedding") || id.Contains("imagen") || id.Contains("aqa")) continue;
+                    var name = m.TryGetProperty("displayName", out var dn) ? dn.GetString() ?? id : id;
+                    result.Add(new ModelOption(id, name));
+                }
+            pageToken = doc.RootElement.TryGetProperty("nextPageToken", out var t) ? t.GetString() : null;
+        } while (!string.IsNullOrEmpty(pageToken));
+        return result.OrderByDescending(m => m.Id, StringComparer.Ordinal).ToList();
     }
 
     public async Task SetApiKeyAsync(string key) =>

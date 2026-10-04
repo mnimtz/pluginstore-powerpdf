@@ -569,4 +569,15 @@
   <data name="Short index for language models" xml:space="preserve"><value>Kort indeks for språkmodeller</value></data>
   <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Mer trenger den ikke: den leser veiledningen, setter seg opp for fremtidige økter og følger reglene.</value></data>
   <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>Tokennavn (f.eks. 'assistent', 'byggserver')</value></data>
+  <data name="Provider and key" xml:space="preserve"><value>Leverandør og nøkkel</value></data>
+  <data name="Connect and load models" xml:space="preserve"><value>Koble til og last inn modeller</value></data>
+  <data name="Model and features" xml:space="preserve"><value>Modell og funksjoner</value></data>
+  <data name="Model" xml:space="preserve"><value>Modell</value></data>
+  <data name="Default" xml:space="preserve"><value>Standard</value></data>
+  <data name="Models this key may use, loaded live from the provider." xml:space="preserve"><value>Modeller denne nøkkelen kan bruke, hentet direkte fra leverandøren.</value></data>
+  <data name="No model list loaded yet: use &quot;Connect and load models&quot; above. Until then the default model is used." xml:space="preserve"><value>Ingen modelliste lastet inn ennå: bruk "Koble til og last inn modeller" ovenfor. Inntil da brukes standardmodellen.</value></data>
+  <data name="Test" xml:space="preserve"><value>Test</value></data>
+  <data name="Sends one short request with the chosen model." xml:space="preserve"><value>Sender én kort forespørsel med valgt modell.</value></data>
+  <data name="Connected. Choose a model below." xml:space="preserve"><value>Tilkoblet. Velg en modell nedenfor.</value></data>
+  <data name="The connection failed." xml:space="preserve"><value>Tilkoblingen mislyktes.</value></data>
 </root>

@@ -36,6 +36,7 @@ public class SettingsModel : PageModel
     // Optional AI assistant (S0.12.0)
     public AiService.Config Ai { get; private set; } = new("off", "", false, false, false, false, false, false, 300);
     public bool OfferFake { get; private set; }
+    public List<AiService.ModelOption> AiModels { get; private set; } = new();
 
     public SettingsModel(SettingsService settings, UserManager<AppUser> users, AuditService audit,
         NotificationService notify, UsageService usage, AiService ai, IWebHostEnvironment env)
@@ -179,11 +180,11 @@ public class SettingsModel : PageModel
     }
 
     /// <summary>
-    /// Saves the AI assistant. An empty key field keeps the stored key; the key
-    /// is stored encrypted and never rendered back into the page.
+    /// Step 1: provider and key. Stores both (an empty key field keeps the stored
+    /// key; it is stored encrypted and never rendered back), then loads the
+    /// models this key may use, which also proves that the key works.
     /// </summary>
-    public async Task OnPostAiAsync(string? provider, string? apiKey, bool clearKey, string? model, bool triage, bool review,
-                                    bool reviewAuto, bool reviewSource, bool search, int dailyLimit)
+    public async Task OnPostAiConnectAsync(string? provider, string? apiKey, bool clearKey)
     {
         var admin = await _users.GetUserAsync(User);
         provider = (provider ?? "off").Trim().ToLowerInvariant();
@@ -192,11 +193,33 @@ public class SettingsModel : PageModel
         await _settings.SetAsync(AiService.ProviderKey, provider);
         if (clearKey) await _ai.SetApiKeyAsync("");
         else if (!string.IsNullOrWhiteSpace(apiKey)) await _ai.SetApiKeyAsync(apiKey.Trim());
-        // A model name is letters, digits, dots, dashes and underscores; anything else falls back to the default.
+        if (provider != before.Provider) await _settings.SetAsync(AiService.ModelKey, "");
+        await _audit.LogAsync(admin!.DisplayName, "settings.changed", "AI assistant",
+            $"provider {provider}" + (clearKey ? ", key removed" : string.IsNullOrWhiteSpace(apiKey) ? "" : ", key replaced"));
+        if (provider == "off")
+        {
+            await _settings.SetAsync(AiService.ModelListKey, "");
+            Notice = "Settings saved.";
+        }
+        else
+        {
+            var (ok, message, _) = await _ai.LoadModelsAsync(HttpContext.RequestAborted);
+            Notice = ok ? "Connected. Choose a model below." : "The connection failed.";
+            NoticeKind = ok ? "ok" : "error";
+            TestDetail = message;
+        }
+        await LoadAsync();
+    }
+
+    /// <summary>Step 2: model and features (provider and key come from step 1).</summary>
+    public async Task OnPostAiAsync(string? model, bool triage, bool review, bool reviewAuto, bool reviewSource, bool search, int dailyLimit)
+    {
+        var admin = await _users.GetUserAsync(User);
+        var cfg = await _ai.ConfigAsync();
+        // Only a model from the provider's list is accepted; anything else means "default".
+        var offered = await _ai.StoredModelsAsync(cfg.Provider);
         var m = (model ?? "").Trim();
-        if (m.Length > 80 || m.Any(ch => !(char.IsAsciiLetterOrDigit(ch) || ch is '.' or '-' or '_'))) m = "";
-        // Switching provider resets a model name that belongs to the other one.
-        if (provider != before.Provider && m == before.Model) m = "";
+        if (!offered.Any(o => o.Id == m)) m = "";
         await _settings.SetAsync(AiService.ModelKey, m);
         await _settings.SetAsync(AiService.TriageKey, triage ? "1" : "0");
         await _settings.SetAsync(AiService.ReviewKey, review ? "1" : "0");
@@ -205,8 +228,7 @@ public class SettingsModel : PageModel
         await _settings.SetAsync(AiService.SearchKey, search ? "1" : "0");
         await _settings.SetAsync(AiService.DailyLimitKey, Math.Clamp(dailyLimit, 1, 100000).ToString(System.Globalization.CultureInfo.InvariantCulture));
         await _audit.LogAsync(admin!.DisplayName, "settings.changed", "AI assistant",
-            $"provider {provider}, model {(m.Length == 0 ? "default" : m)}, triage {triage}, review {review} (auto {reviewAuto}, source {reviewSource}), search {search}, limit {dailyLimit}" +
-            (clearKey ? ", key removed" : string.IsNullOrWhiteSpace(apiKey) ? "" : ", key replaced"));
+            $"model {(m.Length == 0 ? "default" : m)}, triage {triage}, review {review} (auto {reviewAuto}, source {reviewSource}), search {search}, limit {dailyLimit}");
         Notice = "Settings saved.";
         await LoadAsync();
     }
@@ -224,6 +246,7 @@ public class SettingsModel : PageModel
     {
         Ai = await _ai.ConfigAsync();
         OfferFake = _env.IsDevelopment();
+        AiModels = await _ai.StoredModelsAsync(Ai.Provider);
         IpOn = await _usage.IpLoggingOnAsync();
         RetentionDays = await _usage.RetentionDaysAsync();
         IpConfirmedBy = await _settings.GetAsync(UsageService.IpConfirmedByKey);

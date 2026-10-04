@@ -95,7 +95,8 @@
 <div class="card" style="max-width:760px" id="ai">
     <h2 style="margin-top:0">@L["AI assistant (optional)"]</h2>
     <p style="font-size:.88rem;color:var(--tun-slate)">@L["Sorts problem reports, prepares a review aid for new versions and lets users search for add-ons by describing what they need. Off by default; everything works without it."]</p>
-    <form method="post" asp-page-handler="Ai" class="stack" style="max-width:none">
+    <h3>1. @L["Provider and key"]</h3>
+    <form method="post" asp-page-handler="AiConnect" class="stack" style="max-width:none">
         <div>
             <label>@L["Provider"]</label>
             <select name="provider">
@@ -117,26 +118,51 @@
             }
             <small style="color:var(--tun-slate)">@L["Stored encrypted on the server and never shown again. Use a key of your own organization with a spending limit."]</small>
         </div>
-        <div>
-            <label>@L["Model (empty = default)"]</label>
-            <input type="text" name="model" value="@Model.Ai.Model" maxlength="80" placeholder="@AddonStore.Web.Services.AiService.DefaultClaudeModel / @AddonStore.Web.Services.AiService.DefaultGeminiModel" />
-        </div>
-        <div>
-            <label style="font-weight:400"><input type="checkbox" name="triage" value="true" checked="@Model.Ai.Triage" style="width:auto" /> @L["Sort problem reports (category, urgency, summary, reply draft, duplicates)"]</label>
-            <label style="font-weight:400"><input type="checkbox" name="review" value="true" checked="@Model.Ai.Review" style="width:auto" /> @L["Review aid for new versions (on request)"]</label>
-            <label style="font-weight:400;margin-left:24px"><input type="checkbox" name="reviewAuto" value="true" checked="@Model.Ai.ReviewAuto" style="width:auto" /> @L["Create automatically for every new version"]</label>
-            <label style="font-weight:400;margin-left:24px"><input type="checkbox" name="reviewSource" value="true" checked="@Model.Ai.ReviewSource" style="width:auto" /> @L["Send changed source code lines to the provider"]</label>
-            <label style="font-weight:400"><input type="checkbox" name="search" value="true" checked="@Model.Ai.Search" style="width:auto" /> @L["Search by need on the website and in the store window"]</label>
-        </div>
-        <div>
-            <label>@L["Requests per day (limit)"]</label>
-            <input type="number" name="dailyLimit" value="@Model.Ai.DailyLimit" min="1" max="100000" style="max-width:140px" />
-        </div>
-        <button type="submit" class="btn cta">@L["Save"]</button>
+        <button type="submit" class="btn cta">@L["Connect and load models"]</button>
     </form>
-    <form method="post" asp-page-handler="AiTest" style="margin-top:12px">
-        <button type="submit" class="btn small secondary">@L["Test connection"]</button>
-    </form>
+
+    @if (Model.Ai.On)
+    {
+        <h3>2. @L["Model and features"]</h3>
+        <form method="post" asp-page-handler="Ai" class="stack" style="max-width:none">
+            <div>
+                <label>@L["Model"]</label>
+                @if (Model.AiModels.Count == 0)
+                {
+                    <p class="muted small">@L["No model list loaded yet: use \"Connect and load models\" above. Until then the default model is used."]</p>
+                    <input type="hidden" name="model" value="" />
+                }
+                else
+                {
+                    <select name="model">
+                        <option value="" selected="@(!Model.AiModels.Any(m => m.Id == Model.Ai.Model))">@L["Default"] (@(Model.Ai.Provider == "gemini" ? AddonStore.Web.Services.AiService.DefaultGeminiModel : AddonStore.Web.Services.AiService.DefaultClaudeModel))</option>
+                        @foreach (var m in Model.AiModels)
+                        {
+                            <option value="@m.Id" selected="@(m.Id == Model.Ai.Model)">@m.Name (@m.Id)</option>
+                        }
+                    </select>
+                    <small style="color:var(--tun-slate)">@L["Models this key may use, loaded live from the provider."]</small>
+                }
+            </div>
+            <div>
+                <label style="font-weight:400"><input type="checkbox" name="triage" value="true" checked="@Model.Ai.Triage" style="width:auto" /> @L["Sort problem reports (category, urgency, summary, reply draft, duplicates)"]</label>
+                <label style="font-weight:400"><input type="checkbox" name="review" value="true" checked="@Model.Ai.Review" style="width:auto" /> @L["Review aid for new versions (on request)"]</label>
+                <label style="font-weight:400;margin-left:24px"><input type="checkbox" name="reviewAuto" value="true" checked="@Model.Ai.ReviewAuto" style="width:auto" /> @L["Create automatically for every new version"]</label>
+                <label style="font-weight:400;margin-left:24px"><input type="checkbox" name="reviewSource" value="true" checked="@Model.Ai.ReviewSource" style="width:auto" /> @L["Send changed source code lines to the provider"]</label>
+                <label style="font-weight:400"><input type="checkbox" name="search" value="true" checked="@Model.Ai.Search" style="width:auto" /> @L["Search by need on the website and in the store window"]</label>
+            </div>
+            <div>
+                <label>@L["Requests per day (limit)"]</label>
+                <input type="number" name="dailyLimit" value="@Model.Ai.DailyLimit" min="1" max="100000" style="max-width:140px" />
+            </div>
+            <button type="submit" class="btn cta">@L["Save"]</button>
+        </form>
+        <h3>3. @L["Test"]</h3>
+        <form method="post" asp-page-handler="AiTest">
+            <button type="submit" class="btn small secondary">@L["Test connection"]</button>
+            <small style="color:var(--tun-slate)">@L["Sends one short request with the chosen model."]</small>
+        </form>
+    }
     <p style="font-size:.82rem;color:var(--tun-slate)">@L["Data sent to the provider: add-on texts from the catalog, the text of problem reports, search queries, manifests and file lists of new versions, and only with the option above changed source code lines. Never sent: email addresses, IP addresses, log excerpts, user accounts. Check with your data protection team before switching it on."]</p>
 </div>
 

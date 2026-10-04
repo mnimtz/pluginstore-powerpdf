@@ -569,4 +569,15 @@
   <data name="Short index for language models" xml:space="preserve"><value>Índice curto para modelos de linguagem</value></data>
   <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>É tudo o que precisa: lê o guia, configura-se para sessões futuras e segue as regras.</value></data>
   <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>Nome do token (p. ex. 'assistente', 'servidor de compilação')</value></data>
+  <data name="Provider and key" xml:space="preserve"><value>Fornecedor e chave</value></data>
+  <data name="Connect and load models" xml:space="preserve"><value>Ligar e carregar modelos</value></data>
+  <data name="Model and features" xml:space="preserve"><value>Modelo e funções</value></data>
+  <data name="Model" xml:space="preserve"><value>Modelo</value></data>
+  <data name="Default" xml:space="preserve"><value>Predefinido</value></data>
+  <data name="Models this key may use, loaded live from the provider." xml:space="preserve"><value>Modelos que esta chave pode usar, carregados em direto do fornecedor.</value></data>
+  <data name="No model list loaded yet: use &quot;Connect and load models&quot; above. Until then the default model is used." xml:space="preserve"><value>Ainda não foi carregada nenhuma lista de modelos: use "Ligar e carregar modelos" acima. Até lá é usado o modelo predefinido.</value></data>
+  <data name="Test" xml:space="preserve"><value>Teste</value></data>
+  <data name="Sends one short request with the chosen model." xml:space="preserve"><value>Envia um pedido curto com o modelo escolhido.</value></data>
+  <data name="Connected. Choose a model below." xml:space="preserve"><value>Ligado. Escolha um modelo abaixo.</value></data>
+  <data name="The connection failed." xml:space="preserve"><value>A ligação falhou.</value></data>
 </root>

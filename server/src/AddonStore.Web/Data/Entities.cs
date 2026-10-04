@@ -189,7 +189,7 @@ public class ApiToken
 
 public class Package
 {
-    /// <summary>Reverse-DNS id from the manifest, e.g. com.tungsten.officekonverter.</summary>
+    /// <summary>Reverse-DNS id from the manifest, e.g. com.tungsten.smartbookmarks.</summary>
     public string Id { get; set; } = "";
     public string OwnerId { get; set; } = "";
     public AppUser? Owner { get; set; }

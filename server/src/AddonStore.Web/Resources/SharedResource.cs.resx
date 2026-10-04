@@ -569,4 +569,15 @@
   <data name="Short index for language models" xml:space="preserve"><value>Stručný rejstřík pro jazykové modely</value></data>
   <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Víc nepotřebuje: přečte si průvodce, nastaví se pro další relace a dodržuje pravidla.</value></data>
   <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>Název tokenu (např. „asistent“, „build server“)</value></data>
+  <data name="Provider and key" xml:space="preserve"><value>Poskytovatel a klíč</value></data>
+  <data name="Connect and load models" xml:space="preserve"><value>Připojit a načíst modely</value></data>
+  <data name="Model and features" xml:space="preserve"><value>Model a funkce</value></data>
+  <data name="Model" xml:space="preserve"><value>Model</value></data>
+  <data name="Default" xml:space="preserve"><value>Výchozí</value></data>
+  <data name="Models this key may use, loaded live from the provider." xml:space="preserve"><value>Modely, které smí tento klíč používat, načtené živě od poskytovatele.</value></data>
+  <data name="No model list loaded yet: use &quot;Connect and load models&quot; above. Until then the default model is used." xml:space="preserve"><value>Seznam modelů zatím není načten: použijte výše „Připojit a načíst modely“. Do té doby se používá výchozí model.</value></data>
+  <data name="Test" xml:space="preserve"><value>Test</value></data>
+  <data name="Sends one short request with the chosen model." xml:space="preserve"><value>Odešle jeden krátký požadavek se zvoleným modelem.</value></data>
+  <data name="Connected. Choose a model below." xml:space="preserve"><value>Připojeno. Níže zvolte model.</value></data>
+  <data name="The connection failed." xml:space="preserve"><value>Připojení se nezdařilo.</value></data>
 </root>

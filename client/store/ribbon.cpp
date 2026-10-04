@@ -1,6 +1,6 @@
 // ribbon.cpp — the Add-on Store group on the shared "Enhanced Features" tab.
-// One button that opens the store dialog. Per the ribbon governance this group
-// is meant to be the LAST one on the tab.
+// One button that opens the store dialog. The group stays the FIRST one on the
+// tab (it registers before the other plug-ins; decision Marcus, Oct 4, 2026).
 
 #include "stdafx.h"
 #include "dialog.h"
