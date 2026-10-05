@@ -38,6 +38,10 @@ public class VersionActionService
         (v.Status == VersionStatus.Beta && (isAdmin || v.Package?.OwnerId == user.Id)) ||
         (v.Status == VersionStatus.Live && isAdmin);
 
+    /// <summary>Admins can set a live version back to beta (not the store client, which has no beta stage).</summary>
+    public static bool CanDemote(PackageVersion v, bool isAdmin) =>
+        isAdmin && v.Status == VersionStatus.Live && v.PackageId != SubmissionService.ClientPackageId;
+
     /// <summary>Only admins bring a withdrawn version back.</summary>
     public static bool CanRestore(PackageVersion v, bool isAdmin) => isAdmin && v.Status == VersionStatus.Withdrawn;
 
@@ -88,6 +92,29 @@ public class VersionActionService
             $"<p><b>{Enc(actor.DisplayName)}</b> withdrew version <b>{v.PackageId} {v.Version}</b> (previously {was.ToString().ToLowerInvariant()}). " +
             "It is no longer offered in the store; installed copies keep working.</p>");
         return "Version withdrawn.";
+    }
+
+    /// <summary>
+    /// Live back to beta: from now on only beta workstations are offered this version,
+    /// the live channel falls back to the previous live version, and it needs approval
+    /// again (it is back in the review queue). Installed copies stay.
+    /// </summary>
+    public async Task<string?> DemoteAsync(int versionId, AppUser actor, bool isAdmin)
+    {
+        var v = await _db.PackageVersions.Include(x => x.Package).ThenInclude(p => p!.Owner).FirstOrDefaultAsync(x => x.Id == versionId);
+        if (v is null || !CanDemote(v, isAdmin)) return null;
+        // Approval needs the source code: without it the version would be stuck in beta.
+        if (await _sources.BlocksApprovalAsync(v))
+            return "The source code of this version is missing: back in beta, it could not be approved again. Upload the source code first.";
+        v.Status = VersionStatus.Beta;
+        v.ReviewedAt = null;
+        v.ReviewedById = null;
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(actor.DisplayName, "version.demoted", $"{v.PackageId} {v.Version}", "live -> beta, needs approval again");
+        await TellOwnerAsync(v.Package?.Owner, actor, v.PackageId, $"[Add-on Store] {v.PackageId} {v.Version} back to beta",
+            $"<p><b>{Enc(actor.DisplayName)}</b> set version <b>{v.PackageId} {v.Version}</b> back to beta. " +
+            "Only beta workstations are offered it now; it needs approval again. Installed copies keep working.</p>");
+        return "Version set back to beta; it needs approval again.";
     }
 
     public async Task<string?> RestoreAsync(int versionId, AppUser actor, bool isAdmin)

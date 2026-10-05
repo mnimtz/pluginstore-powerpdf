@@ -109,6 +109,15 @@ public class CustomerModel : PageModel
             return (true, "Settings saved.");
         });
 
+    public async Task<IActionResult> OnPostDeleteAsync(int id)
+    {
+        if (!await LoadAsync(id)) return NotFound();
+        if (!CanManage) return Forbid();
+        var me = (await _users.GetUserAsync(User))!;
+        await _customers.DeleteCustomerAsync(Cust!, me.DisplayName);
+        return RedirectToPage("/Customers", new { deleted = true });
+    }
+
     public Task<IActionResult> OnPostCodeAsync(int id, int? deliveryId, int transitionDays) =>
         ActAsync(id, async me =>
         {

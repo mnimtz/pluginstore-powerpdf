@@ -67,6 +67,11 @@ p.lead { color: var(--tun-slate); margin-top: 0; }
 .report { border: 1px solid var(--tun-gray-200); border-radius: 8px; margin: 10px 0; background: var(--tun-gray-100); }
 .report > summary { cursor: pointer; padding: 10px 14px; list-style: none; display: flex; gap: 8px; align-items: center; }
 .report > summary::-webkit-details-marker { display: none; }
+/* "New customer": a button that reveals the form (no script) */
+details.newcust { margin-bottom: 16px; }
+details.newcust > summary::-webkit-details-marker { display: none; }
+details.newcust > summary::marker { content: ""; }
+details.newcust[open] > summary { opacity: .75; }
 .report-ok { border-left: 4px solid var(--tun-green); }
 .report-warning { border-left: 4px solid var(--tun-yellow); }
 .report-error { border-left: 4px solid var(--tun-coral); }

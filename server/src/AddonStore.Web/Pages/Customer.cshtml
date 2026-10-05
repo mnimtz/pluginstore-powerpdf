@@ -207,6 +207,10 @@
             </div>
             <button type="submit" class="btn cta">@L["Save"]</button>
         </form>
+        <form method="post" asp-page-handler="Delete" asp-route-id="@c.Id" style="margin-top:18px"
+              data-confirm="@L["Delete this customer with all its codes and deliveries? Workstations using its codes lose these add-ons at the next catalog refresh; installed copies keep working."]">
+            <button type="submit" class="btn small danger">@L["Delete customer"]</button>
+        </form>
     </details>
 }
 

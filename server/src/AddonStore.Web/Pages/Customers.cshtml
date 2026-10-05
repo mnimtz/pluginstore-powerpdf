@@ -12,9 +12,39 @@
     <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
 }
 
-<form method="get" class="catalog-tools">
-    <input type="search" name="q" value="@Model.Q" placeholder="@L["Search"]…" aria-label="@L["Search"]" />
-</form>
+<div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px">
+    <form method="get" class="catalog-tools" style="flex:1;min-width:220px;margin:0">
+        <input type="search" name="q" value="@Model.Q" placeholder="@L["Search"]…" aria-label="@L["Search"]" />
+    </form>
+</div>
+
+@if (Model.CanCreate)
+{
+    @* Hidden until "New customer" is clicked (no script: <details>); reopened after an input error. *@
+    <details class="newcust" open="@(Model.NoticeKind == "error")">
+        <summary class="btn cta" style="display:inline-block;list-style:none;cursor:pointer">+ @L["New customer"]</summary>
+        <div class="card" style="max-width:560px;margin-top:10px">
+            <form method="post" asp-page-handler="Create" class="stack" style="max-width:none">
+                <div><label>@L["Name"]</label><input type="text" name="name" required maxlength="120" placeholder="Muster AG" /></div>
+                <div><label>@L["Contact person"]</label><input type="text" name="contactName" maxlength="120" /></div>
+                <div><label>@L["Email"]</label><input type="email" name="contactEmail" maxlength="200" /></div>
+                <div>
+                    <label>@L["Language"]</label>
+                    <select name="language">
+                        @foreach (var (l, name) in AddonStore.Web.Services.LanguageNames.Options())
+                        {
+                            <option value="@l" selected="@(l == "de")">@name</option>
+                        }
+                    </select>
+                </div>
+                <div><label>@L["Note"]</label><textarea name="note" rows="2" maxlength="2000"></textarea></div>
+                <label style="font-weight:400"><input type="checkbox" name="withCode" value="true" checked style="width:auto" /> @L["Create a customer code for all its deliveries right away"]</label>
+                <button type="submit" class="btn cta">@L["Create customer"]</button>
+            </form>
+            <p class="muted small">@L["Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed."]</p>
+        </div>
+    </details>
+}
 
 @if (Model.Rows.Count == 0)
 {
@@ -39,29 +69,4 @@ else
     </table>
     </div>
     <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("customers", Model.Rows.Count)' />
-}
-
-@if (Model.CanCreate)
-{
-    <div class="card" style="max-width:560px">
-        <h2 style="margin-top:0">@L["New customer"]</h2>
-        <form method="post" asp-page-handler="Create" class="stack" style="max-width:none">
-            <div><label>@L["Name"]</label><input type="text" name="name" required maxlength="120" placeholder="Muster AG" /></div>
-            <div><label>@L["Contact person"]</label><input type="text" name="contactName" maxlength="120" /></div>
-            <div><label>@L["Email"]</label><input type="email" name="contactEmail" maxlength="200" /></div>
-            <div>
-                <label>@L["Language"]</label>
-                <select name="language">
-                    @foreach (var (l, name) in AddonStore.Web.Services.LanguageNames.Options())
-                    {
-                        <option value="@l" selected="@(l == "de")">@name</option>
-                    }
-                </select>
-            </div>
-            <div><label>@L["Note"]</label><textarea name="note" rows="2" maxlength="2000"></textarea></div>
-            <label style="font-weight:400"><input type="checkbox" name="withCode" value="true" checked style="width:auto" /> @L["Create a customer code for all its deliveries right away"]</label>
-            <button type="submit" class="btn cta">@L["Create customer"]</button>
-        </form>
-        <p class="muted small">@L["Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed."]</p>
-    </div>
 }

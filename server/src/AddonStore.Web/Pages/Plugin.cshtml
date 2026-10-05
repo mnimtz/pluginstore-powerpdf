@@ -112,6 +112,14 @@
                             <button type="submit" class="btn small">@L["Approve"]</button>
                         </form>
                     }
+                    @if (VersionActionService.CanDemote(v, Model.IsAdmin))
+                    {
+                        <form method="post" asp-page-handler="Demote" asp-route-id="@pkg.Id"
+                              data-confirm="@L["Set this version back to beta? Only beta workstations are offered it from now on, the live channel falls back to the previous live version, and it needs approval again. Installed copies keep working."]">
+                            <input type="hidden" name="versionId" value="@v.Id" />
+                            <button type="submit" class="btn small secondary">@L["Back to beta"]</button>
+                        </form>
+                    }
                     @if (VersionActionService.CanWithdraw(v, me, Model.IsAdmin))
                     {
                         <form method="post" asp-page-handler="Withdraw" asp-route-id="@pkg.Id"

@@ -118,6 +118,8 @@ public class DashboardModel : PageModel
         {
             "pending" => rows.Where(r => r.Pending),
             "live" => rows.Where(r => r.Live is not null),
+            "beta" => rows.Where(r => r.Beta is not null),            // has a version in the beta stage
+            "private" => rows.Where(r => r.Pkg.Visibility == "private"),
             "offline" => rows.Where(r => !r.InStore),
             _ => rows
         };

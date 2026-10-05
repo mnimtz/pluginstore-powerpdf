@@ -439,6 +439,7 @@ is enough.
     POST  {{baseUrl}}/api/customers                         {"name", "contactName"?, "contactEmail"?, "language"?, "note"?, "withCode"?: true}
     GET   {{baseUrl}}/api/customers/{cid}                   customer with codes (shown to creator/admin) and deliveries
     PATCH {{baseUrl}}/api/customers/{cid}                   same fields, "status": "active"|"paused"
+    DELETE {{baseUrl}}/api/customers/{cid}                  delete with all codes and deliveries (creator/admin)
     POST  {{baseUrl}}/api/customers/{cid}/codes             {"deliveryId"?: 12, "transitionDays"?: 14}
     DELETE {{baseUrl}}/api/customers/{cid}/codes/{codeId}   revoke a code
     POST  {{baseUrl}}/api/customers/{cid}/deliveries        {"packageId", "beta": {"mode", "version"}, "live": {...}, "startsAt"?, "endsAt"?, "ownCode"?}

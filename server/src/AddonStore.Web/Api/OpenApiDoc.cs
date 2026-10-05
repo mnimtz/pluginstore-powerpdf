@@ -65,6 +65,7 @@ public static class OpenApiDoc
         new("post", "/api/customers", "createCustomer", "Create a customer, by default with a customer code for all its deliveries.", "token", Array.Empty<string>(), Body: "customer"),
         new("get", "/api/customers/{cid}", "getCustomer", "One customer with its codes and deliveries.", "token", new[] { "cid:path:customer id" }),
         new("patch", "/api/customers/{cid}", "updateCustomer", "Change customer data or status (active, paused).", "token", new[] { "cid:path:customer id" }, Body: "customer"),
+        new("delete", "/api/customers/{cid}", "deleteCustomer", "Delete the customer with all its codes and deliveries (creator or admin). Workstations using its codes lose these add-ons at the next catalog refresh.", "token", new[] { "cid:path:customer id" }),
         new("post", "/api/customers/{cid}/codes", "createCustomerCode", "New code for the customer (all deliveries) or for one delivery; the previous code of that kind stays valid for transitionDays.", "token",
             new[] { "cid:path:customer id" }, Body: "code"),
         new("delete", "/api/customers/{cid}/codes/{codeId}", "revokeCustomerCode", "Revoke a code.", "token", new[] { "cid:path:customer id", "codeId:path:code id" }),

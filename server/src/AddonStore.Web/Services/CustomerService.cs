@@ -159,6 +159,22 @@ public class CustomerService
         await _audit.LogAsync(actor, "customer.updated", $"customer {c.Id}", $"{c.Name}, status {c.Status}");
     }
 
+    /// <summary>
+    /// Deletes the customer with all its codes and deliveries. Workstations using its
+    /// codes lose these add-ons at their next catalog refresh; installed copies stay.
+    /// </summary>
+    public async Task DeleteCustomerAsync(Customer c, string actor)
+    {
+        var codes = await _db.CustomerCodes.Where(x => x.CustomerId == c.Id).ToListAsync();
+        var deliveries = await _db.Deliveries.Where(x => x.CustomerId == c.Id).ToListAsync();
+        _db.CustomerCodes.RemoveRange(codes);
+        _db.Deliveries.RemoveRange(deliveries);
+        _db.Customers.Remove(c);
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(actor, "customer.deleted", $"customer {c.Id}",
+            $"{c.Name}: {deliveries.Count} delivery(ies) ({string.Join(", ", deliveries.Select(d => d.PackageId))}), {codes.Count} code(s)");
+    }
+
     // ------------------------------------------------------------ deliveries
     public record StageInput(string? Mode, string? Version);
 

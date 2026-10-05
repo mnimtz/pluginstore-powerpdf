@@ -132,7 +132,7 @@ public static class ApiEndpoints
                     "GET  /api/signing-key              public key of the catalog signatures (ECDSA P-256)",
                     "GET|POST /api/packages/{id}/{version}/ai-review  read or create the AI review aid (reviewers/admins)",
                     "GET|POST /api/customers          customer deliveries: list or create customers (auth)",
-                    "GET|PATCH /api/customers/{cid}   one customer with codes and deliveries (creator/admin; reviewers read)",
+                    "GET|PATCH /api/customers/{cid}   one customer with codes and deliveries (creator/admin; reviewers read); DELETE removes it with its codes and deliveries",
                     "POST /api/customers/{cid}/codes  new code for the customer or one delivery {deliveryId?, transitionDays?}; DELETE .../codes/{codeId} revokes",
                     "POST /api/customers/{cid}/deliveries  deliver an add-on {packageId, beta{mode,version}, live{mode,version}, startsAt?, endsAt?, ownCode?}",
                     "PATCH /api/deliveries/{did}       change stages, dates or status; POST /api/deliveries/{did}/promote = beta version goes live",
@@ -727,6 +727,17 @@ public static class ApiEndpoints
             await cs.UpdateCustomerAsync(c, body.Name, body.ContactName ?? c.ContactName, body.ContactEmail ?? c.ContactEmail,
                 body.Language, body.Note ?? c.Note, body.Status, user.DisplayName);
             return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, true, UiLang(ctx)) });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapDelete("/customers/{cid:int}", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService cs) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+            if (c is null || !CustomerService.CanSee(ctx.User, c, user.Id)) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+            if (!CustomerService.CanManage(ctx.User, c, user.Id)) return Fail("NOT_OWNER", "Only the creator of the customer or an admin can delete it.", 403);
+            await cs.DeleteCustomerAsync(c, user.DisplayName);
+            return Results.Json(new { ok = true, data = new { deleted = cid } });
         }).RequireAuthorization("ApiOrCookie");
 
         api.MapPost("/customers/{cid:int}/codes", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users,

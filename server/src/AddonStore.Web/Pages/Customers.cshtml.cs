@@ -40,7 +40,13 @@ public class CustomersModel : PageModel
         Rows = list.Select(c => new Row(c, counts.GetValueOrDefault(c.Id), owners.GetValueOrDefault(c.OwnerId, "?"))).ToList();
     }
 
-    public async Task OnGetAsync() => await LoadAsync();
+    [BindProperty(SupportsGet = true)] public bool Deleted { get; set; }
+
+    public async Task OnGetAsync()
+    {
+        await LoadAsync();
+        if (Deleted) { Notice = "Customer deleted."; NoticeKind = "ok"; }
+    }
 
     public async Task<IActionResult> OnPostCreateAsync(string? name, string? contactName, string? contactEmail, string? language,
                                                        string? note, bool withCode)

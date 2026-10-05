@@ -95,6 +95,9 @@ public class PluginModel : PageModel
     public Task<IActionResult> OnPostWithdrawAsync(string id, int versionId) =>
         ActAsync(id, () => _actions.WithdrawAsync(versionId, Me!, IsAdmin));
 
+    public Task<IActionResult> OnPostDemoteAsync(string id, int versionId) =>
+        ActAsync(id, () => _actions.DemoteAsync(versionId, Me!, IsAdmin));
+
     public Task<IActionResult> OnPostRestoreAsync(string id, int versionId) =>
         ActAsync(id, () => _actions.RestoreAsync(versionId, Me!, IsAdmin));
 
