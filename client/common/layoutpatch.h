@@ -32,13 +32,23 @@ namespace fplayout {
 // SHARED "FeaturePack" tab (one tab for v1 and v2). Buttons are organised into
 // their own groups; the group/button atoms are v2-only and never collide with
 // v1's. Canonical order per group.
+//
+// C1.1.0: the Add-on Store has its OWN ribbon tab "Store" (toolbar atom
+// "AddonStore", shortKey A) instead of a group on the shared "FeaturePack" tab,
+// so add-ons named before "PluginStore" no longer push it around. The group it
+// had on the shared tab ("FeaturePack::PluginStore") is removed from profiles
+// merged by an older client.
+static const wchar_t kStoreToolbar[] = L"AddonStore";
+static const wchar_t kStoreShortKey[] = L"A";
+static const wchar_t kLegacyGroup[] = L"FeaturePack::PluginStore";
+
 static const wchar_t* const kStoreButtons[] = {
-    L"FeaturePack::PluginStore::Open",
+    L"AddonStore::Store::Open",
 };
 
 struct GroupDef { const wchar_t* name; const wchar_t* const* buttons; int n; };
 static const GroupDef kGroups[] = {
-    { L"FeaturePack::PluginStore", kStoreButtons, (int)(sizeof(kStoreButtons) / sizeof(kStoreButtons[0])) },
+    { L"AddonStore::Store", kStoreButtons, (int)(sizeof(kStoreButtons) / sizeof(kStoreButtons[0])) },
 };
 static const int kGroupCount = (int)(sizeof(kGroups) / sizeof(kGroups[0]));
 
@@ -119,12 +129,54 @@ inline bool WriteTextFile(const std::wstring& path, const std::wstring& text,
 // Insert a group (with its buttons) into the merged toolbar if it is not there
 // yet. Groups are appended in kGroups order, each before </toolbar>, so calling
 // this for WordPro then Barcode yields WordPro first, Barcode second.
+// Our own tab: appended as the last tab of the ribbon (<Top> block) when the
+// merged file does not know it yet. Returns true when text changed.
+inline bool EnsureStoreToolbar(std::wstring& text)
+{
+    if (text.find(std::wstring(L"<toolbar name=\"") + kStoreToolbar + L"\"") != std::wstring::npos) return false;
+    size_t top = text.find(L"<Top");
+    if (top == std::wstring::npos) return false;
+    size_t topEnd = text.find(L"</Top>", top);
+    if (topEnd == std::wstring::npos) return false;
+    text.insert(topEnd, std::wstring(L"<toolbar name=\"") + kStoreToolbar + L"\" shortKey=\"" + kStoreShortKey +
+                        L"\">\n</toolbar>\n");
+    return true;
+}
+
+// Removes a whole group (and the line break in front of it). Returns true when removed.
+inline bool RemoveGroup(std::wstring& text, const wchar_t* name)
+{
+    bool changed = false;
+    std::wstring tag = std::wstring(L"<PFFGroup name=\"") + name + L"\"";
+    for (;;)
+    {
+        size_t g = text.find(tag);
+        if (g == std::wstring::npos) break;
+        size_t open = text.find(L'>', g);
+        if (open == std::wstring::npos) break;
+        size_t end;
+        if (text[open - 1] == L'/') end = open + 1;                      // <PFFGroup .../>
+        else
+        {
+            end = text.find(L"</PFFGroup>", g);
+            if (end == std::wstring::npos) break;
+            end += wcslen(L"</PFFGroup>");
+        }
+        size_t start = g;
+        while (start > 0 && (text[start - 1] == L' ' || text[start - 1] == L'\t' ||
+                             text[start - 1] == L'\r' || text[start - 1] == L'\n')) --start;
+        text.erase(start, end - start);
+        changed = true;
+    }
+    return changed;
+}
+
 inline bool EnsureGroup(std::wstring& text, const GroupDef& g)
 {
     std::wstring tag = std::wstring(L"\"") + g.name + L"\"";
     if (text.find(tag) != std::wstring::npos) return false;   // group already present
 
-    size_t tb = text.find(L"<toolbar name=\"FeaturePack\"");
+    size_t tb = text.find(std::wstring(L"<toolbar name=\"") + kStoreToolbar + L"\"");
     if (tb == std::wstring::npos) return false;
     size_t end = text.find(L"</toolbar>", tb);
     if (end == std::wstring::npos) return false;
@@ -403,12 +455,13 @@ inline int ApplyButtons()
         std::wstring text; bool utf16 = false;
         if (!ReadTextFile(files[i], text, utf16)) continue;
         bool changed = false;
+        if (RemoveGroup(text, kLegacyGroup)) changed = true;      // C1.0.0 and older: group on the shared tab
+        if (EnsureStoreToolbar(text)) changed = true;
         for (int gi = 0; gi < kGroupCount; ++gi)
         {
             if (EnsureGroup(text, kGroups[gi]))        changed = true;
             if (EnsureButtons(text, kGroups[gi]))      changed = true;
             if (EnforceButtonOrder(text, kGroups[gi])) changed = true;
-            if (MoveGroupToEnd(text, kGroups[gi]))     changed = true;
         }
         if (PatchButtons(text)) changed = true;
         if (CleanLeftPanel(text)) changed = true;   // never touch the native <Left> bar; strip old entries

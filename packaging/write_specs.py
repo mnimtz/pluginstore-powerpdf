@@ -33,7 +33,7 @@ client = {
   "changelog": {"en": "First release of the Plugin-Store client.",
                 "de": "Erste Veröffentlichung des Plugin-Store-Clients."},
   "minPowerPdfVersion": "5.0",
-  "ribbonAtomNamespace": "FeaturePack::PluginStore",
+  "ribbonAtomNamespace": "AddonStore::Store",
   "zxt": {"x64": "../client/Release/PluginStore.zxt"},
   "include": [
     {"src": "../client/Plug-ins/PluginStore/UILayout", "dst": "UILayout"},

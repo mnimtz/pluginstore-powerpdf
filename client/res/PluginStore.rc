@@ -103,6 +103,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Enhanced Features"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Browse and install plugins for Power PDF"
@@ -210,6 +211,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Erweiterte Funktionen"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Plug-ins für Power PDF durchsuchen und installieren"
@@ -317,6 +319,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Fonctions avancées"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Parcourir et installer des plug-ins pour Power PDF"
@@ -424,6 +427,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Funzioni avanzate"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Sfoglia e installa plug-in per Power PDF"
@@ -531,6 +535,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Funciones avanzadas"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Explorar e instalar complementos para Power PDF"
@@ -638,6 +643,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Geavanceerde functies"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Plug-ins voor Power PDF bekijken en installeren"
@@ -745,6 +751,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Funções avançadas"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Procurar e instalar plug-ins para o Power PDF"
@@ -852,6 +859,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Avancerede funktioner"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Gennemse og installer plug-ins til Power PDF"
@@ -959,6 +967,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Lisätoiminnot"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Selaa ja asenna Power PDF:n laajennuksia"
@@ -1066,6 +1075,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Avanserte funksjoner"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Bla gjennom og installer programtillegg for Power PDF"
@@ -1173,6 +1183,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Avancerade funktioner"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Bläddra bland och installera plugin-program för Power PDF"
@@ -1280,6 +1291,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Funkcje zaawansowane"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Przeglądaj i instaluj wtyczki do programu Power PDF"
@@ -1387,6 +1399,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Rozšířené funkce"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Procházet a instalovat moduly plug-in pro Power PDF"
@@ -1494,6 +1507,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Speciális funkciók"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Power PDF-bővítmények böngészése és telepítése"
@@ -1601,6 +1615,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Расширенные функции"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Просмотр и установка подключаемых модулей для Power PDF"
@@ -1708,6 +1723,7 @@ STRINGTABLE
 BEGIN
     IDS_PS_TITLE        "Add-on Store"
     IDS_PS_TAB_TITLE    "Gelişmiş İşlevler"
+    IDS_PS_TAB_STORE    "Store"
     IDS_PS_GROUP        "Add-on Store"
     IDS_PS_BTN_OPEN     "Add-on Store"
     IDS_PS_TIP_OPEN     "Power PDF için eklentilere göz atın ve eklenti yükleyin"

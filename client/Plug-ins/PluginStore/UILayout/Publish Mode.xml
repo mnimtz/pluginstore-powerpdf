@@ -2,9 +2,9 @@
 <GaaihoLayout name="Publish" type="ZeonUILayout" mode="17" version="19">
 <Frisbee>
     <Top panelcount="0" cursel="0">
-        <toolbar name="FeaturePack" shortKey="U">
-            <PFFGroup name="FeaturePack::PluginStore" GroupType="PFFTitleBlock">
-                <PFFButton name="FeaturePack::PluginStore::Open" IconMode="4"/>
+        <toolbar name="AddonStore" shortKey="A">
+            <PFFGroup name="AddonStore::Store" GroupType="PFFTitleBlock">
+                <PFFButton name="AddonStore::Store::Open" IconMode="4"/>
             </PFFGroup>
         </toolbar>
     </Top>

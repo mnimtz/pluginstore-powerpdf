@@ -14,7 +14,8 @@
 
 // ---- pack-wide ----
 #define IDS_PS_TITLE            100     // options category: "Plugin-Store"
-#define IDS_PS_TAB_TITLE        101     // shared ribbon tab, IDENTICAL to the Feature Pack title
+#define IDS_PS_TAB_TITLE        101     // shared ribbon tab, IDENTICAL to the Feature Pack title (fresh-install reset only)
+#define IDS_PS_TAB_STORE        102     // the store's own ribbon tab (C1.1.0)
 
 // ---- ribbon ----
 #define IDS_PS_GROUP            110

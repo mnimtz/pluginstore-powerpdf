@@ -55,7 +55,7 @@ void PSRegisterUI(RVToolBar bar)
 {
     AFX_MANAGE_MODULE_STATE;
 
-    DUAtom groupAtom = DUAtomFromString("FeaturePack::PluginStore");
+    DUAtom groupAtom = DUAtomFromString("AddonStore::Store");
     RVToolButton group = RVToolBarGetButtonByName(bar, groupAtom);
     if (!group)
     {
@@ -68,7 +68,7 @@ void PSRegisterUI(RVToolBar bar)
         RVToolButtonSetLabelText(group, gl, kLabelBottom); DUTextDestroy(gl);
     }
 
-    RVToolButton b = RVToolButtonNew(DUAtomFromString("FeaturePack::PluginStore::Open"), kBtnNormal);
+    RVToolButton b = RVToolButtonNew(DUAtomFromString("AddonStore::Store::Open"), kBtnNormal);
     if (!b) return;
     DUText l = MakeDUText(FPLoc(IDS_PS_BTN_OPEN));
     RVToolButtonSetLabelText(b, l, kLabelBottom); DUTextDestroy(l);

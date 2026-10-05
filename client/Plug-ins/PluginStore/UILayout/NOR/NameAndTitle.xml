@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GaaihoLayoutTitle>
-    <toolbar name="FeaturePack" title="Avanserte funksjoner"/>
-    <PFFGroup name="FeaturePack::PluginStore" title="Add-on Store"/>
-    <PFFButton name="FeaturePack::PluginStore::Open" title="Add-on Store" tooltip="Bla gjennom og installer programtillegg for Power PDF"/>
+    <toolbar name="AddonStore" title="Store"/>
+    <PFFGroup name="AddonStore::Store" title="Add-on Store"/>
+    <PFFButton name="AddonStore::Store::Open" title="Add-on Store" tooltip="Bla gjennom og installer programtillegg for Power PDF"/>
 </GaaihoLayoutTitle>

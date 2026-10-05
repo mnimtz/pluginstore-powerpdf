@@ -38,7 +38,7 @@ static DUText MakeDUText(const wchar_t* s)
 
 // The tab title IS localized and IDENTICAL to the Feature Pack's, so all
 // store plug-ins land on ONE shared "Enhanced Features" tab.
-static std::wstring TabTitle() { return FPLoc(IDS_PS_TAB_TITLE); }
+static std::wstring TabTitle() { return FPLoc(IDS_PS_TAB_STORE); }
 
 DCCB1 DUBool DCCB2 PluginInit()
 {
@@ -47,8 +47,9 @@ DCCB1 DUBool DCCB2 PluginInit()
     FPLocInit();
     PSSettingsLoad();
 
-    // ---- the SHARED ribbon tab (atom "FeaturePack", see ribbon governance) --
-    DUAtom toolbarAtom = DUAtomFromString("FeaturePack");
+    // ---- our OWN ribbon tab "Store" (atom "AddonStore", C1.1.0) ------------
+    // Add-ons keep the shared "FeaturePack" tab; the store no longer sits there.
+    DUAtom toolbarAtom = DUAtomFromString("AddonStore");
     RVToolBar bar = RVFrisbeeGetToolBar(toolbarAtom);
     if (!bar)
     {
@@ -65,7 +66,7 @@ DCCB1 DUBool DCCB2 PluginInit()
     // A prefs TYPE with ZERO pages CRASHES Power PDF when the category opens,
     // so register the type AND the page together.
     DURING
-        DUText optTitle = MakeDUText(TabTitle().c_str());
+        DUText optTitle = MakeDUText(FPLoc(IDS_PS_GROUP).c_str());   // "Add-on Store"
         RVAppRegisterPrefsType("PluginStore", optTitle);
     HANDLER END_HANDLER
     DURING PSRegisterOptionsPage("PluginStore"); HANDLER END_HANDLER

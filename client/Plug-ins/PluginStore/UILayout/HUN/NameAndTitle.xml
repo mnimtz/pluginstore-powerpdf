@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GaaihoLayoutTitle>
-    <toolbar name="FeaturePack" title="Speciális funkciók"/>
-    <PFFGroup name="FeaturePack::PluginStore" title="Add-on Store"/>
-    <PFFButton name="FeaturePack::PluginStore::Open" title="Add-on Store" tooltip="Power PDF-bővítmények böngészése és telepítése"/>
+    <toolbar name="AddonStore" title="Store"/>
+    <PFFGroup name="AddonStore::Store" title="Add-on Store"/>
+    <PFFButton name="AddonStore::Store::Open" title="Add-on Store" tooltip="Power PDF-bővítmények böngészése és telepítése"/>
 </GaaihoLayoutTitle>
