@@ -54,8 +54,39 @@
                       Root="HKLM" Key="SOFTWARE\Kofax\PDF" Name="InstallPath"
                       Type="raw" Win64="yes" />
     </Property>
-    <SetProperty Id="POWERPDFBIN" Action="SetBinFromInstallDir"
+    <!-- C1.1.3 (developer tip): the product's own record of the CURRENT
+         installation wins, HKLM\SOFTWARE\Kofax\PDF\V1 InstallPath. After an
+         update to a new release the folder changes ("Power PDF 2025" -> "2026")
+         while App Paths may still name the old one. Used only when PowerPDF.exe
+         is really in <InstallPath>bin. -->
+    <Property Id="PPDFROOT">
+      <RegistrySearch Id="KofaxV1InstallPath" Root="HKLM" Key="SOFTWARE\Kofax\PDF\V1"
+                      Name="InstallPath" Type="directory" Win64="yes" />
+    </Property>
+    <Property Id="PPDFV1EXE">
+      <RegistrySearch Id="KofaxV1ExeRoot" Root="HKLM" Key="SOFTWARE\Kofax\PDF\V1"
+                      Name="InstallPath" Type="directory" Win64="yes">
+        <DirectorySearch Id="KofaxV1Bin" Path="bin" Depth="0">
+          <FileSearch Id="KofaxV1Exe" Name="PowerPDF.exe" />
+        </DirectorySearch>
+      </RegistrySearch>
+    </Property>
+    <Property Id="PPDFV1NEWENOUGH">
+      <RegistrySearch Id="KofaxV1ExeRootMin" Root="HKLM" Key="SOFTWARE\Kofax\PDF\V1"
+                      Name="InstallPath" Type="directory" Win64="yes">
+        <DirectorySearch Id="KofaxV1BinMin" Path="bin" Depth="0">
+          <FileSearch Id="KofaxV1ExeMin" Name="PowerPDF.exe" MinVersion="2025.2.65535.65535" />
+        </DirectorySearch>
+      </RegistrySearch>
+    </Property>
+    <SetProperty Id="POWERPDFBIN" Action="SetBinFromV1"
                  After="AppSearch" Sequence="both"
+                 Value="[PPDFROOT]bin">
+      <![CDATA[PPDFROOT AND PPDFV1EXE]]>
+    </SetProperty>
+
+    <SetProperty Id="POWERPDFBIN" Action="SetBinFromInstallDir"
+                 After="SetBinFromV1" Sequence="both"
                  Value="[PPDFINSTALLDIR]bin">
       <![CDATA[NOT POWERPDFBIN AND PPDFINSTALLDIR]]>
     </SetProperty>
@@ -85,7 +116,23 @@
       </RegistrySearch>
     </Property>
     <Condition Message="!(loc.PowerPdfTooOld)">
-      <![CDATA[Installed OR NOT PPDFEXE OR PPDFNEWENOUGH]]>
+      <![CDATA[Installed OR (PPDFV1EXE AND PPDFV1NEWENOUGH) OR (NOT PPDFV1EXE AND (NOT PPDFEXE OR PPDFNEWENOUGH))]]>
+    </Condition>
+
+    <!-- Edition (C1.1.3): in Power PDF 2025 only Business loads plug-ins; from
+         2026.4 on every edition. V1 "Version" is the short form ("25.3", "26.4");
+         releases have single-digit minors, so the text comparison is safe, and
+         anything older than 2025.3 is already refused above. Unknown names pass. -->
+    <Property Id="PPDFPRODUCT">
+      <RegistrySearch Id="KofaxV1Product" Root="HKLM" Key="SOFTWARE\Kofax\PDF\V1"
+                      Name="ProductName" Type="raw" Win64="yes" />
+    </Property>
+    <Property Id="PPDFSHORTVER">
+      <RegistrySearch Id="KofaxV1ShortVersion" Root="HKLM" Key="SOFTWARE\Kofax\PDF\V1"
+                      Name="Version" Type="raw" Win64="yes" />
+    </Property>
+    <Condition Message="!(loc.PowerPdfEdition)">
+      <![CDATA[Installed OR NOT PPDFPRODUCT OR NOT PPDFSHORTVER OR PPDFPRODUCT >< "Business" OR NOT (PPDFPRODUCT >< "Standard" OR PPDFPRODUCT >< "Advanced") OR PPDFSHORTVER >= "26.4"]]>
     </Condition>
 
     <!-- Power PDF must be closed: the .zxt is locked while it runs. -->

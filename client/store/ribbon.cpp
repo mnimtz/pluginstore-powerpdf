@@ -34,6 +34,18 @@ static DCCB1 void DCCB2 OnOpenStore(void* /*data*/)
         MessageBoxW(NULL, msg, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
         return;
     }
+    // Standard/Advanced before 2026.4: the SDK is for Business only there (C1.1.3).
+    if (PSHostEditionUnsupported())
+    {
+        const std::wstring edition = PSHostEdition();
+        wchar_t msg[700];
+        _snwprintf_s(msg, _countof(msg), _TRUNCATE, FPLoc(IDS_PS_HOST_EDITION).c_str(),
+                     kPSMinHost, kPSAllEditionsFrom, edition.c_str(), host.c_str());
+        FPLogW(L"[Store] host %s %s does not load add-ons before %s - store not opened",
+               edition.c_str(), host.c_str(), kPSAllEditionsFrom);
+        MessageBoxW(NULL, msg, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
+        return;
+    }
     DURING PSShowStoreDialog(std::wstring()); HANDLER END_HANDLER
     PSUpdateCheckSoon();   // an install or update may have cleared the badge
 }

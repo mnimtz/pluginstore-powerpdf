@@ -4,6 +4,7 @@
   <String Id="ProductLanguage">1049</String>
   <String Id="NoPowerPdf">Tungsten Power PDF не найден на этом компьютере. Сначала установите Power PDF.</String>
   <String Id="PowerPdfTooOld">Для Add-on Store требуется Tungsten Power PDF 2025.3.7 или новее. Сначала обновите Power PDF.</String>
+  <String Id="PowerPdfEdition">Для надстроек требуется Tungsten Power PDF Business 2025.3.7 или новее либо любая редакция (Standard, Advanced, Business) начиная с 2026.4. Сначала обновите Power PDF.</String>
   <String Id="ClosePowerPdf">Закройте Tungsten Power PDF и продолжите.</String>
   <String Id="Downgrade">Уже установлена более новая версия Add-on Store.</String>
 </WixLocalization>

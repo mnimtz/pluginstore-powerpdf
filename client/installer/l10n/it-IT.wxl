@@ -4,6 +4,7 @@
   <String Id="ProductLanguage">1040</String>
   <String Id="NoPowerPdf">Tungsten Power PDF non è stato trovato su questo computer. Installare prima Power PDF.</String>
   <String Id="PowerPdfTooOld">Add-on Store richiede Tungsten Power PDF 2025.3.7 o versione successiva. Aggiornare prima Power PDF.</String>
+  <String Id="PowerPdfEdition">I componenti aggiuntivi richiedono Tungsten Power PDF Business 2025.3.7 o successivo, oppure qualsiasi edizione (Standard, Advanced, Business) dalla 2026.4. Aggiornare prima Power PDF.</String>
   <String Id="ClosePowerPdf">Chiudere Tungsten Power PDF e continuare.</String>
   <String Id="Downgrade">È già installata una versione più recente di Add-on Store.</String>
 </WixLocalization>

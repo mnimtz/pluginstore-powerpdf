@@ -231,6 +231,15 @@ msiexec /i PluginStore-<version>.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"
   profiles (removes its old group from the shared tab) at the first start.
   Tab order (client 1.1.2+): ... *Enhanced Features*, own tabs of private
   add-ons, *Store*, and Power PDF's *Help* always last.
+- **Installation folder, version, edition** (client 1.1.3+): the MSI and the
+  client take the folder from `HKLM\SOFTWARE\Kofax\PDF\V1` `InstallPath`
+  (the product's record of the current installation; App Paths can still
+  name the folder of an older release after an update, "Power PDF 2025" ->
+  "2026"), App Paths only as fallback. Version (`VersionLong`, third number =
+  hotfix) and edition (`ProductName`) are read for the running Power PDF.
+  Power PDF 2025 loads plug-ins in **Business** from 2025.3.7; from **2026.4**
+  every edition (Standard, Advanced, Business) does. The MSI refuses other
+  editions before 2026.4, the store window explains it.
 - The Power PDF Customization Kit can add the files of a plug-in ("Additional
   Files"), but no registry values (URL scheme, policies); the separate silent
   MSI step is the recommended way.

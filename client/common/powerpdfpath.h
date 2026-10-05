@@ -9,9 +9,15 @@
 // Order (first verified hit wins):
 //   1. our own module path        — only inside the plug-in, and unbeatable:
 //                                   the .zxt sits in <root>\bin\Plug-Ins
-//   2. App Paths\PowerPDF.exe     — the standard Windows mechanism
-//   3. HKLM\SOFTWARE\Kofax\PDF    — InstallDir / InstallPath (product's own)
-//   4. Uninstall entries          — DisplayName "…Power PDF…" → InstallLocation
+//   2. the running PowerPDF.exe   — inside the plug-in: the host that loaded us
+//   3. HKLM\SOFTWARE\Kofax\PDF\V1 — InstallPath, the product's own record of
+//                                   the CURRENT installation (C1.1.3; a developer
+//                                   tip: after an update to a new release the
+//                                   folder changes, "Power PDF 2025" -> "2026",
+//                                   while App Paths may still name the old one)
+//   4. App Paths\PowerPDF.exe     — the standard Windows mechanism
+//   5. HKLM\SOFTWARE\Kofax\PDF    — InstallDir / InstallPath (older layout)
+//   6. Uninstall entries          — DisplayName "…Power PDF…" → InstallLocation
 //
 // Shared by the plug-in and the installer, so both land on the same folder.
 
@@ -101,14 +107,36 @@ inline std::wstring FindRoot(HMODULE hModule)
             }
             if (LooksLikeRoot(p)) return p;
         }
+
+        // 2. The host process: <root>\bin\PowerPDF.exe.
+        wchar_t exe[MAX_PATH] = { 0 };
+        if (GetModuleFileNameW(NULL, exe, MAX_PATH))
+        {
+            std::wstring p(exe);
+            for (int i = 0; i < 2 && !p.empty(); ++i)
+            {
+                size_t sl = p.find_last_of(L'\\');
+                p = (sl == std::wstring::npos) ? std::wstring() : p.substr(0, sl);
+            }
+            if (LooksLikeRoot(p)) return p;
+        }
     }
 
     static const DWORD views[] = { 0, KEY_WOW64_64KEY, KEY_WOW64_32KEY };
+
+    // 3. The product's record of the current installation (all views first:
+    //    it beats a stale App Paths entry in any view).
+    for (int v = 0; v < 3; ++v)
+    {
+        std::wstring root = TrimSlash(RegStr(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Kofax\\PDF\\V1", L"InstallPath", views[v]));
+        if (LooksLikeRoot(root)) return root;
+    }
+
     for (int v = 0; v < 3; ++v)
     {
         DWORD view = views[v];
 
-        // 2. App Paths: "Path" is the bin folder, the default value the exe.
+        // 4. App Paths: "Path" is the bin folder, the default value the exe.
         std::wstring bin = TrimSlash(RegStr(HKEY_LOCAL_MACHINE,
             L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\PowerPDF.exe",
             L"Path", view));
@@ -127,7 +155,7 @@ inline std::wstring FindRoot(HMODULE hModule)
             if (LooksLikeRoot(root)) return root;
         }
 
-        // 3. The product's own key — both spellings have been seen.
+        // 5. The older product key — both spellings have been seen.
         const wchar_t* kNames[] = { L"InstallDir", L"InstallPath" };
         for (int i = 0; i < 2; ++i)
         {
@@ -136,7 +164,7 @@ inline std::wstring FindRoot(HMODULE hModule)
             if (LooksLikeRoot(root)) return root;
         }
 
-        // 4. The uninstall list.
+        // 6. The uninstall list.
         std::wstring root = RootFromUninstallList(HKEY_LOCAL_MACHINE, view);
         if (LooksLikeRoot(root)) return root;
     }

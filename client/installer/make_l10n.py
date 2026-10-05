@@ -145,12 +145,35 @@ TOO_OLD = {
     'tr-TR': "Add-on Store, Tungsten Power PDF {v} veya üstünü gerektirir. Lütfen önce Power PDF'i güncelleyin.",
 }
 
+# Editions (C1.1.3): Power PDF 2025 loads plug-ins in Business only; from 2026.4 every
+# edition does. Keep in sync with Product.wxs (PPDFSHORTVER) and common/hostversion.h.
+ALL_EDITIONS_FROM = '2026.4'
+EDITION = {
+    'en-US': "Add-ons need Tungsten Power PDF Business {v} or later, or any edition (Standard, Advanced, Business) from {e} on. Please update Power PDF first.",
+    'de-DE': "Add-ons benötigen Tungsten Power PDF Business ab {v} oder eine beliebige Edition (Standard, Advanced, Business) ab {e}. Bitte aktualisieren Sie zuerst Power PDF.",
+    'fr-FR': "Les modules complémentaires nécessitent Tungsten Power PDF Business {v} ou ultérieur, ou toute édition (Standard, Advanced, Business) à partir de {e}. Mettez d'abord Power PDF à jour.",
+    'it-IT': "I componenti aggiuntivi richiedono Tungsten Power PDF Business {v} o successivo, oppure qualsiasi edizione (Standard, Advanced, Business) dalla {e}. Aggiornare prima Power PDF.",
+    'es-ES': "Los complementos necesitan Tungsten Power PDF Business {v} o posterior, o cualquier edición (Standard, Advanced, Business) a partir de {e}. Actualice primero Power PDF.",
+    'nl-NL': "Invoegtoepassingen vereisen Tungsten Power PDF Business {v} of hoger, of elke editie (Standard, Advanced, Business) vanaf {e}. Werk eerst Power PDF bij.",
+    'pt-BR': "Os suplementos requerem o Tungsten Power PDF Business {v} ou posterior, ou qualquer edição (Standard, Advanced, Business) a partir da {e}. Atualize primeiro o Power PDF.",
+    'da-DK': "Tilføjelsesprogrammer kræver Tungsten Power PDF Business {v} eller nyere eller en vilkårlig udgave (Standard, Advanced, Business) fra {e}. Opdater Power PDF først.",
+    'fi-FI': "Lisäosat vaativat Tungsten Power PDF Business -version {v} tai uudemman, tai minkä tahansa version (Standard, Advanced, Business) {e} alkaen. Päivitä ensin Power PDF.",
+    'nb-NO': "Tillegg krever Tungsten Power PDF Business {v} eller nyere, eller en hvilken som helst utgave (Standard, Advanced, Business) fra {e}. Oppdater Power PDF først.",
+    'sv-SE': "Tillägg kräver Tungsten Power PDF Business {v} eller senare, eller valfri utgåva (Standard, Advanced, Business) från {e}. Uppdatera Power PDF först.",
+    'pl-PL': "Dodatki wymagają programu Tungsten Power PDF Business {v} lub nowszego albo dowolnej edycji (Standard, Advanced, Business) od {e}. Najpierw zaktualizuj Power PDF.",
+    'cs-CZ': "Doplňky vyžadují Tungsten Power PDF Business {v} nebo novější, případně libovolnou edici (Standard, Advanced, Business) od verze {e}. Nejprve aktualizujte Power PDF.",
+    'hu-HU': "A bővítményekhez Tungsten Power PDF Business {v} vagy újabb, illetve {e} verziótól bármely kiadás (Standard, Advanced, Business) szükséges. Először frissítse a Power PDF-et.",
+    'ru-RU': "Для надстроек требуется Tungsten Power PDF Business {v} или новее либо любая редакция (Standard, Advanced, Business) начиная с {e}. Сначала обновите Power PDF.",
+    'tr-TR': "Eklentiler için Tungsten Power PDF Business {v} veya üstü ya da {e} sürümünden itibaren herhangi bir sürüm (Standard, Advanced, Business) gerekir. Lütfen önce Power PDF'i güncelleyin.",
+}
+
 
 def main():
     os.makedirs(OUT, exist_ok=True)
     for culture, lcid, cp in CULTURES:
         no_ppdf, close, downgrade, note = TEXT[culture]
         too_old = TOO_OLD[culture].format(v=MIN_PPDF)
+        edition = EDITION[culture].format(v=MIN_PPDF, e=ALL_EDITIONS_FROM)
         for t in (no_ppdf, close, downgrade, note):
             assert '\u2014' not in t, culture
         wxl = (f'<?xml version="1.0" encoding="utf-8"?>\n'
@@ -159,6 +182,7 @@ def main():
                f'  <String Id="ProductLanguage">{lcid}</String>\n'
                f'  <String Id="NoPowerPdf">{xml(no_ppdf)}</String>\n'
                f'  <String Id="PowerPdfTooOld">{xml(too_old)}</String>\n'
+               f'  <String Id="PowerPdfEdition">{xml(edition)}</String>\n'
                f'  <String Id="ClosePowerPdf">{xml(close)}</String>\n'
                f'  <String Id="Downgrade">{xml(downgrade)}</String>\n'
                f'</WixLocalization>\n')
