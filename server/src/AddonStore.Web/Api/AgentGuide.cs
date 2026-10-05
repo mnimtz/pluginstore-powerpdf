@@ -38,7 +38,13 @@ bearer token and JSON; nothing in it depends on one vendor. Set yourself up once
    - Chat assistants without HTTP access: give the user the exact `curl`
      commands from this guide to run, and read their output.
 3. **Check the connection:** `GET {{baseUrl}}/api/me` with the token.
-4. Then follow the rest of this guide: package, validate until green, submit.
+4. Then follow the rest of this guide: apply the **Pre-flight checklist**
+   while you develop (most rules concern the plugin code, not only the
+   package), package, validate until green, submit.
+5. **Store not reachable or no token?** (for example a cloud sandbox whose
+   network policy blocks {{baseUrl}}): do not stop with instructions. Offer
+   the user right away to build a finished **manual upload package** and
+   build it, see "Manual upload package (fallback)".
 
 ## Quick orientation
 
@@ -70,9 +76,197 @@ A .ppak is a ZIP container:
                            Windows-on-ARM (Power PDF runs there as ARM64EC
                            and loads x64 plugins)
     arm64/<Name>.zxt       optional native ARM64 build, validated when present
+    UILayout/Publish Mode.xml         required: your group on the shared tab
+    UILayout/NameAndTitle.xml         required: English titles and tooltips
+    UILayout/<LANG>/NameAndTitle.xml  required for each of ENU DEU FRA ITA ESP
+                           NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK
     assets/icon.png        recommended, square icon for the catalog
+    assets/screenshot-*.png  optional, listed in `screenshots`
     LICENSES.md            full license texts of all thirdParty components
     docs/...               optional documentation
+
+### Creating the .ppak, step by step
+
+1. **Build** the plugin: Release, x64. If your environment cannot build it
+   (no Windows, no MSVC, no Plugin SDK), ask the user to build it and give you
+   `<Name>.zxt`; never package a Debug build.
+2. **Lay out the tree** above in one folder (`ppak/`).
+3. **manifest.json** (schema: `GET {{baseUrl}}/api/schema/manifest`), complete example:
+
+        {
+          "id": "com.example.quicknote",
+          "version": "1.0.0",
+          "name": { "en": "Quick Note", "de": "Schnellnotiz" },
+          "description": { "en": "Adds a note to the page in one click.", "de": "...", "fr": "...", "...": "all 16: en de fr it es nl pt da fi nb sv pl cs hu ru tr" },
+          "changelog": { "en": "First release.", "de": "Erste Version.", "...": "all 16 languages" },
+          "category": "productivity",
+          "minPowerPdfVersion": "2025.3.7",
+          "author": "Team Example",
+          "contactEmail": "team@example.com",
+          "ribbonAtomNamespace": "FeaturePack::QuickNote",
+          "architectures": ["x64"],
+          "files": { "x64": "x64/QuickNote.zxt" },
+          "sha256": { "x64": "<lowercase hex SHA-256 of the exact .zxt bytes>" },
+          "uninstall": { "registryKeys": ["HKCU\\Software\\Example\\QuickNote"], "extraPaths": [] },
+          "thirdParty": [],
+          "complianceAudit": { "confirmed": true, "method": "<what you checked, see Compliance audit>", "externalServices": [] }
+        }
+
+4. **UILayout/Publish Mode.xml** (one group, buttons `IconMode="4"`):
+
+        <?xml version="1.0" ?>
+        <GaaihoLayout name="Publish" type="ZeonUILayout" mode="17" version="19">
+        <Frisbee>
+            <Top panelcount="0" cursel="0">
+                <toolbar name="FeaturePack" shortKey="U">
+                    <PFFGroup name="FeaturePack::QuickNote" GroupType="PFFTitleBlock">
+                        <PFFButton name="FeaturePack::QuickNote::Add" IconMode="4"/>
+                    </PFFGroup>
+                </toolbar>
+            </Top>
+        </Frisbee>
+        </GaaihoLayout>
+
+   **UILayout/DEU/NameAndTitle.xml** (same atoms in every language folder,
+   the tab title translated: "Enhanced Features" / "Erweiterte Funktionen"):
+
+        <?xml version="1.0" encoding="utf-8"?>
+        <GaaihoLayoutTitle>
+            <toolbar name="FeaturePack" title="Erweiterte Funktionen"/>
+            <PFFGroup name="FeaturePack::QuickNote" title="Schnellnotiz"/>
+            <PFFButton name="FeaturePack::QuickNote::Add" title="Notiz" tooltip="Notiz auf der Seite hinzufügen"/>
+        </GaaihoLayoutTitle>
+
+5. **ZIP it** as `<id>-<version>.ppak`: manifest.json at the root (no
+   enclosing folder), entry names with forward slashes. Do not use Windows
+   PowerShell 5.1 `Compress-Archive` (it writes backslashes). Easiest:
+   `GET {{baseUrl}}/api/tools/make-ppak.ps1?download=1`, then
+   `powershell -ExecutionPolicy Bypass -File make-ppak.ps1 -Package ppak -Source . -Out dist`
+   fills architectures/files/sha256 and writes the .ppak, the source ZIP and
+   the upload package. Without PowerShell: Python `zipfile` or any ZIP tool
+   that writes forward slashes.
+6. **Source ZIP** `<id>-<version>-source.zip`: the source tree you built
+   from, without build output (`.vs`, `x64`, `Release`, `Debug`, `*.pdb`,
+   `*.obj`, `*.zxt`) and without keys or credentials (see "Source code").
+
+## Pre-flight checklist (mandatory: every hard rule)
+
+Every item below is a hard rule of the store: the upload is refused when one
+is broken. Most of them concern the plugin itself, not only the package, so
+apply them **while you write and build the plugin**, not at the end. Before
+every package, go through the whole list and check each item against the
+real files. With API access, `POST {{baseUrl}}/api/packages/validate`
+confirms it. In the manual fallback there is no dry run: this list is the
+only check, so show the user the result item by item (passed or fixed) and
+hand over the upload package only when every item passed. Never assume an
+item passes because a similar plugin passed.
+
+**A. Code and build**
+- [ ] Native C++ plugin (Plugin SDK), a DLL that exports `PlugInMain`
+      (linker option `/EXPORT:PlugInMain`); no .NET assembly.
+      (PE_INVALID, PE_NOT_DLL, PE_NO_ENTRY, PE_MANAGED)
+- [ ] Release build for x64 (machine 0x8664); arm64 optional (0xAA64).
+      Release runtime `/MD` or `/MT`, never the debug runtime (`/MDd`,
+      `/MTd`). (PE_WRONG_MACHINE, PE_DEBUG_RUNTIME)
+- [ ] Imports only DLLs of Windows or Power PDF. Link every other library
+      statically (MIT/BSD/Apache-2.0 only) or load it yourself with
+      LoadLibraryEx and a full path. (FOREIGN_DEPENDENCY)
+- [ ] All UI texts (string tables, dialogs, menus) are in the .zxt in all
+      16 Power PDF languages: one LANGUAGE block each for English, German,
+      French, Italian, Spanish, Dutch, Portuguese (Brazil), Danish, Finnish,
+      Norwegian, Swedish, Polish, Czech, Hungarian, Russian, Turkish. Add
+      missing translations yourself. (UI_LANGS_MISSING)
+- [ ] Binary name `<Name>.zxt`: 1 to 64 letters, digits, `-` or `_`, not the
+      name of a plugin Power PDF ships itself (Annot, Catalog, Search,
+      Watermark, ... see RESERVED_NAME), and not used by another store
+      package (checked online). (ZXT_NAME_INVALID, RESERVED_NAME, ZXT_NAME_TAKEN)
+- [ ] No GPL/AGPL code or license texts anywhere; third-party code only under
+      MIT, BSD or Apache-2.0. (LICENSE_NOT_ALLOWED, LICENSE_COPYLEFT_BINARY,
+      LICENSE_COPYLEFT_SOURCE)
+- [ ] No credentials, API keys, private keys or key containers (.pfx, .p12,
+      .pem, .snk) in the package or the source. (SECRET_DETECTED, SOURCE_SECRET)
+- [ ] Each .zxt at most 120 MB unpacked. (ENTRY_TOO_LARGE, ENTRY_NOT_SCANNED)
+
+**B. manifest.json** (valid JSON, at the ZIP root, at most 256 KB:
+MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
+- [ ] `id`: lowercase reverse-DNS of YOUR domain (com.example.myplugin),
+      not `com.tungsten.`, `com.kofax.`, `com.nuance.` (reserved for the
+      store operators); an id that belongs to another account is refused
+      online. (ID_INVALID, ID_RESERVED, PACKAGE_OWNED_BY_OTHER)
+- [ ] `version`: MAJOR.MINOR.PATCH, higher than every version submitted
+      before (checked online). (VERSION_INVALID, VERSION_NOT_INCREMENTED)
+- [ ] `name`: at least `en`, only known language codes, at most 80
+      characters. (NAME_MISSING, NAME_INVALID)
+- [ ] `description` and `changelog`: all 16 languages (en de fr it es nl
+      pt da fi nb sv pl cs hu ru tr), description at most 2000 characters,
+      changelog not empty. (LANG_TEXT_INCOMPLETE, CHANGELOG_EMPTY,
+      DESCRIPTION_TOO_LONG)
+- [ ] `category`: a slug from `GET {{baseUrl}}/api/categories` (built-in:
+      conversion, forms, signing, navigation, printing, productivity,
+      system, other), 3 to 24 lowercase letters or hyphens. Propose a new
+      one only if none fits: `categoryProposal` with names in all 16
+      languages, at most two words / 24 characters, broad (not named after
+      the plugin, not close to an existing one). (CATEGORY_MISSING,
+      CATEGORY_INVALID, CATEGORY_UNKNOWN, CATEGORY_PROPOSAL_INVALID,
+      CATEGORY_TOO_SIMILAR, CATEGORY_TOO_SPECIFIC, CATEGORY_LIMIT_REACHED)
+- [ ] `architectures` contains `x64` (and `arm64` only with an arm64
+      file), nothing else; `files.x64` = `x64/<Name>.zxt`, `files.arm64` =
+      `arm64/<Name>.zxt` with the same name; every declared file is in the
+      ZIP. (ARCH_MISSING, ARCH_UNKNOWN, ARCH_UNDECLARED,
+      FILE_DECLARATION_MISSING, FILE_MISSING, FILENAME_MISMATCH)
+- [ ] `sha256.<arch>`: lowercase hex SHA-256 of exactly the packaged .zxt;
+      recompute it after every rebuild. (HASH_MISSING, HASH_MISMATCH)
+- [ ] `minPowerPdfVersion`: digits and dots, e.g. `2025.3.7`.
+      (MIN_HOST_VERSION_INVALID)
+- [ ] `thirdParty`: an array of `{ "name", "version", "license", "source" }`,
+      `[]` when there is none. (THIRDPARTY_DECLARATION_MISSING, THIRDPARTY_INVALID)
+- [ ] `complianceAudit`: `confirmed: true`, a truthful `method`, and
+      `externalServices` (`[]` when the plugin works offline), see
+      "Compliance audit". (COMPLIANCE_AUDIT_MISSING, EXTERNAL_SERVICES_MISSING)
+- [ ] `visibility`: `public` or `private` (or left out). (VISIBILITY_INVALID)
+- [ ] `author` at most 100 characters, `contactEmail` a valid address.
+      (AUTHOR_INVALID, CONTACT_INVALID)
+- [ ] `screenshots` (optional): an array of at most 6 `{ "file": "assets/..." }`,
+      PNG or JPEG, each at most 3 MB and in the package; a caption in all 16
+      languages or none. (SCREENSHOTS_INVALID, SCREENSHOTS_TOO_MANY,
+      SCREENSHOT_MISSING, SCREENSHOT_FORMAT, SCREENSHOT_TOO_LARGE,
+      SCREENSHOT_CAPTION_LANGS)
+
+**C. Ribbon and UILayout**
+- [ ] Public plugins: ONE group on the shared tab, toolbar atom `FeaturePack`,
+      `ribbonAtomNamespace` = `FeaturePack::<Name>`, buttons
+      `FeaturePack::<Name>::<Action>` with `IconMode="4"`. In code:
+      `RVFrisbeeGetToolBar("FeaturePack")`, create the tab only when missing.
+      Only private customer add-ons may have an own tab, named like the
+      namespace and not a Power PDF or store tab (help, tool, FeaturePack,
+      AddonStore ...); such an add-on stays private. (ATOM_NOT_SHARED_TAB,
+      OWN_TAB_NAME, OWN_TAB_RESERVED, VISIBILITY_OWN_TAB)
+- [ ] Every group and button atom starts with `ribbonAtomNamespace`; no
+      atom in `panel::`; the namespace is not used by another package
+      (checked online). (ATOM_OUTSIDE_NAMESPACE, RESERVED_PANEL_NS, ATOM_COLLISION)
+- [ ] `UILayout/Publish Mode.xml`, `UILayout/NameAndTitle.xml` and
+      `UILayout/<LANG>/NameAndTitle.xml` for all 16 folders ENU DEU FRA ITA
+      ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK, with the same atoms in
+      every folder. (LANGS_INCOMPLETE)
+
+**D. The ZIP (.ppak)**
+- [ ] A readable ZIP named `<id>-<version>.ppak`, manifest.json at the root,
+      forward slashes, no `..`, drive letters or leading slashes, no
+      reserved Windows names (CON, PRN, AUX, NUL, COM1-9, LPT1-9), no two
+      entries that are the same file on Windows, at most 5000 entries.
+      (ZIP_UNREADABLE, ZIP_SLIP, ZIP_RESERVED_NAME, ZIP_DUPLICATE_ENTRY,
+      ZIP_TOO_MANY_ENTRIES)
+- [ ] No archive inside (ZIP, 7z, RAR, gzip, CAB; Office documents under
+      docs/ are fine). (NESTED_ARCHIVE)
+- [ ] At most 200 MB, at most 400 MB unpacked. (SIZE_LIMIT, INFLATE_LIMIT)
+
+**E. Source ZIP**
+- [ ] A readable ZIP of the source tree you built from, at most 100 MB,
+      without build output, secrets or GPL/AGPL code (see "Source code").
+      (SOURCE_INVALID, SOURCE_TOO_LARGE)
+
+Warnings (yellow) do not block, but fix them too: missing icon, author,
+contact, screenshots, LICENSES.md.
 
 ## Compliance audit (mandatory, truthful)
 
@@ -241,6 +435,39 @@ Rules enforced by the server:
   (x64 = 0x8664, arm64 = 0xAA64); x64 is mandatory, arm64 optional.
 - `sha256.<arch>` must match each packaged file (lowercase hex).
 - `ribbonAtomNamespace` must be unique across the store.
+
+## Manual upload package (fallback)
+
+When you cannot submit through the API (your environment cannot reach
+{{baseUrl}}, there is no token, or the user wants to upload by hand), build a
+finished upload package yourself and hand it over; do not end with a
+description of the steps.
+
+1. Build the .ppak and the source ZIP as in "Creating the .ppak, step by step".
+2. Put exactly these two files at the root of one ZIP named
+   `<id>-<version>-upload.zip`:
+
+        <id>-<version>.ppak
+        <id>-<version>-source.zip
+
+3. Without a dry run the **Pre-flight checklist** is the only check: go
+   through every item (A code and build, B manifest, C ribbon and UILayout,
+   D ZIP, E source), fix what fails, and show the user the result item by
+   item. Hand over the upload package only when every item passed; items
+   marked "checked online" are confirmed by the upload itself.
+4. Give the user the file (download, attachment or saved in the project) and
+   tell them: sign in at {{baseUrl}}, open **Plug-ins**, **Submit a package**,
+   choose the file, **Upload and validate**. The store submits the .ppak and
+   stores the source code at the new version in the same step.
+5. If the store reports errors, ask the user to paste the report, fix the
+   package and build a new upload package. A failed upload stores nothing, so
+   the same version number can be used again.
+
+The manual upload needs no token: never ask the user to paste a token into
+the chat. Through the API, `POST {{baseUrl}}/api/packages` accepts the upload
+package as well (response `data.source`: `stored` and `findings`), and
+`POST {{baseUrl}}/api/packages/validate` checks its .ppak (`data.uploadPackage`,
+`data.sourceIncluded`).
 
 ## Submitting
 
@@ -746,6 +973,7 @@ be free of warnings before review. Info is for information only.
 | CONTACT_INVALID | error | The contact email is not a valid address (manifest or PATCH). |
 | CLIENT_ADMIN_ONLY | error (403) | Only admins may publish the store client. |
 | VALIDATION_FAILED | error (422) | Summary code of a rejected upload; see `findings`. |
+| BUNDLE_INVALID | error (400) | The upload package does not hold exactly one .ppak and at most one source ZIP, or a file in it is too large (.ppak 200 MB, source 100 MB). |
 | NO_PACKAGE | error (400) | The request carried no package data. |
 | NOT_OWNER | error (403) | You may only withdraw your own versions. |
 | LIVE_VERSION | error (403) | Live versions can only be withdrawn by an admin. |
@@ -825,10 +1053,16 @@ coding assistant working here; the store API is plain HTTPS + JSON
     private static string Workflow(string baseUrl) => $$"""
 Store: {{baseUrl}}
 
-1. Before packaging or uploading, fetch and follow the current rules:
+1. Before writing, packaging or uploading, fetch and follow the current rules:
    `GET {{baseUrl}}/api/agent-guide` (markdown) and
    `GET {{baseUrl}}/api/schema/manifest` (manifest.json schema).
-   They are authoritative and may change; never rely on memory.
+   They are authoritative and may change; never rely on memory. If you
+   cannot read them (blocked network), stop and ask the user to download
+   {{baseUrl}}/api/agent-guide?download=1 and give you the file; never
+   build a plugin or package from memory.
+1b. Apply the guide's **Pre-flight checklist** (every hard rule: code and
+   build, manifest, ribbon and UILayout, ZIP, source) while you write the
+   plugin, and check every item again before each package.
 2. The personal API token is in the environment variable `PPAK_TOKEN`.
    Never print it, never write it into files or commits. If it is missing,
    ask the user to create one on {{baseUrl}}/Profile and set the variable.
@@ -851,6 +1085,18 @@ Store: {{baseUrl}}
    with `GET {{baseUrl}}/api/packages/{id}/source/latest`, change it, raise
    the version, submit, then upload the CHANGED source for the NEW version.
    Follow "Changing an existing add-on" in the guide step by step.
+8. Fallback, when {{baseUrl}} is not reachable from your environment (for
+   example a sandbox network policy) or there is no token: offer the user
+   right away to build a finished manual upload package, and build it:
+   `<id>-<version>-upload.zip` with exactly `<id>-<version>.ppak` and
+   `<id>-<version>-source.zip` at its root ("Manual upload package" and
+   "Creating the .ppak, step by step" in the guide; the offline packer
+   `{{baseUrl}}/api/tools/make-ppak.ps1` writes all three files). The user
+   uploads it on the website: Plug-ins, "Submit a package". The .ppak is a
+   ZIP with manifest.json at the root, forward-slash entry names,
+   `x64/<Name>.zxt` (Release), `UILayout/` with all 16 language folders,
+   `assets/icon.png`, `LICENSES.md`; sha256 = lowercase hex of the .zxt.
+   Never ask for the token in the chat.
 
 Key rules (details in the guide): every upload carries a new, higher SemVer
 version; description and changelog in all 16 European languages; the

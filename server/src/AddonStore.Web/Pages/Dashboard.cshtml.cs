@@ -13,6 +13,7 @@ public class DashboardModel : PageModel
     private readonly AppDbContext _db;
     private readonly UserManager<AppUser> _users;
     private readonly SubmissionService _svc;
+    private readonly SourceService _sources;
 
     public record Row(Package Pkg, string Name, string Owner, PackageVersion? Live, PackageVersion? Beta,
                       PackageVersion? Newest, int Downloads, DateTime LastActivity)
@@ -27,13 +28,17 @@ public class DashboardModel : PageModel
     [BindProperty(SupportsGet = true)] public string Filter { get; set; } = "all";
     [BindProperty(SupportsGet = true)] public string? Q { get; set; }
     public List<Finding> Findings { get; private set; } = new();
+    /// <summary>Checks of the source ZIP from an upload package (S1.0.7).</summary>
+    public List<Finding> SourceFindings { get; private set; } = new();
+    public string? SourceNotice { get; private set; }
+    public string SourceNoticeKind { get; private set; } = "ok";
     public string? Notice { get; private set; }
     public string UserId => _users.GetUserId(User) ?? "";
     public string NoticeKind { get; private set; } = "ok";
 
-    public DashboardModel(AppDbContext db, UserManager<AppUser> users, SubmissionService svc)
+    public DashboardModel(AppDbContext db, UserManager<AppUser> users, SubmissionService svc, SourceService sources)
     {
-        _db = db; _users = users; _svc = svc;
+        _db = db; _users = users; _svc = svc; _sources = sources;
     }
 
     public async Task OnGetAsync() => await LoadAsync();
@@ -50,12 +55,23 @@ public class DashboardModel : PageModel
         }
 
         var tmp = Path.GetTempFileName();
+        UploadBundle.Result? bundle = null;
         try
         {
             await using (var fs = System.IO.File.Create(tmp))
                 await package.CopyToAsync(fs);
 
-            var result = await _svc.SubmitAsync(tmp, user, "web");
+            // Upload package (S1.0.7): .ppak + source ZIP in one file
+            try { bundle = UploadBundle.TryUnpack(tmp); }
+            catch (InvalidDataException ex)
+            {
+                Notice = ex.Message;
+                NoticeKind = "error";
+                await LoadAsync();
+                return;
+            }
+
+            var result = await _svc.SubmitAsync(bundle?.PpakPath ?? tmp, user, "web");
             Findings = result.Report.Findings;
             if (result.ErrorCode == "CLIENT_ADMIN_ONLY")
             {
@@ -80,9 +96,28 @@ public class DashboardModel : PageModel
             {
                 Notice = "Submitted. The version is in the beta channel now and awaits admin review.";
             }
+
+            if (result.Version is not null && bundle is not null)
+            {
+                if (bundle.SourcePath is null)
+                {
+                    SourceNotice = "The upload package held no source ZIP. Upload the source code on the plug-in page at this version.";
+                    SourceNoticeKind = "warn";
+                }
+                else
+                {
+                    var report = await _sources.UploadAsync(result.Version, bundle.SourcePath, user, User.IsInRole("Admin"));
+                    SourceFindings = report.Findings.ToList();
+                    SourceNotice = report.Passed
+                        ? "Source code from the upload package stored at this version."
+                        : "The source code from the upload package was not stored. Fix the findings below and upload the source ZIP on the plug-in page.";
+                    SourceNoticeKind = report.Passed ? "ok" : "error";
+                }
+            }
         }
         finally
         {
+            bundle?.Dispose();
             try { System.IO.File.Delete(tmp); } catch { }
         }
         await LoadAsync();

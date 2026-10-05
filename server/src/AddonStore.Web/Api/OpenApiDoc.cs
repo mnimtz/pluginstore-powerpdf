@@ -72,6 +72,7 @@ public static class OpenApiDoc
         new("post", "/api/customers/{cid}/deliveries", "createDelivery", "Deliver an add-on to the customer with a beta and a live stage.", "token", new[] { "cid:path:customer id" }, Body: "delivery"),
         new("patch", "/api/deliveries/{did}", "updateDelivery", "Change stages, period or status (active, paused, ended) of a delivery.", "token", new[] { "did:path:delivery id" }, Body: "delivery"),
         new("post", "/api/deliveries/{did}/promote", "promoteDelivery", "The version of the beta stage becomes the live version for this customer.", "token", new[] { "did:path:delivery id" }),
+        new("get", "/api/tools/make-ppak.ps1", "getMakePpakScript", "Offline packer (Windows PowerShell 5.1): fills architectures/files/sha256, writes the .ppak and, with -Source, the upload package (.ppak + source ZIP) for one manual upload on the website. ?download=1 saves it as a file.", "none", Array.Empty<string>(), Returns: "file"),
         new("get", "/api/devkit", "listDevkit", "SDK documentation, knowledge files and templates for plugin development.", "none", Array.Empty<string>()),
         new("get", "/api/devkit/{path}", "getDevkitFile", "One developer kit file.", "none", new[] { "path:path:file path from the list" }, Returns: "file"),
     };

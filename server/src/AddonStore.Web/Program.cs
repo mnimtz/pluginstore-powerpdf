@@ -225,7 +225,7 @@ app.Use(async (ctx, next) =>
     var path = ctx.Request.Path.Value ?? "";
     if (HttpMethods.IsHead(ctx.Request.Method) &&
         (path is "/llms.txt" or "/robots.txt" or "/agent-guide" or "/api" or "/api/" or "/api/ping" or "/api/agent-guide"
-             or "/api/openapi.json" or "/api/agents-md" or "/api/skill" || path.StartsWith("/api/schema/", StringComparison.Ordinal)))
+             or "/api/openapi.json" or "/api/agents-md" or "/api/skill" or "/api/tools/make-ppak.ps1" || path.StartsWith("/api/schema/", StringComparison.Ordinal)))
     {
         ctx.Request.Method = HttpMethods.Get;
         var body = ctx.Response.Body;

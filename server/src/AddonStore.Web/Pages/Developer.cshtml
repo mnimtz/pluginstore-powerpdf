@@ -19,6 +19,9 @@
     <h2 style="margin-top:0">2. @L["Give your AI assistant one line"]</h2>
     <pre class="code">Read @(b)/agent-guide and publish the plugin in this folder.</pre>
     <p>@L["That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules."]</p>
+    <p style="margin-bottom:6px"><b>@L["Without access to the store (for example a cloud sandbox) or without a token:"]</b></p>
+    <pre class="code">Read @(b)/agent-guide and build a manual upload package for the plugin in this folder.</pre>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["Upload the ZIP it hands you under Plug-ins, \"Submit a package\": the store submits the package and stores the source code in one step."]</p>
 </div>
 
 <details class="card">
@@ -58,6 +61,7 @@ Invoke-WebRequest @(b)/api/skill -OutFile "$env:USERPROFILE\.claude\skills\power
         <tr><td><code>@b/api/openapi.json</code></td><td>@L["Description of all endpoints (OpenAPI 3.1)"]</td></tr>
         <tr><td><code>@b/llms.txt</code></td><td>@L["Short index for language models"]</td></tr>
         <tr><td><code>@b/api/schema/manifest</code></td><td>@L["Schema of manifest.json"]</td></tr>
+        <tr><td><code>@b/api/tools/make-ppak.ps1</code></td><td>@L["Offline packer: .ppak, source ZIP and upload package"]</td></tr>
         <tr><td><code>@b/api</code></td><td>@L["List of all endpoints"]</td></tr>
         <tr><td><code>GET @b/api/me</code></td><td>@L["Check your token"]</td></tr>
         <tr><td><code>POST @b/api/packages/validate</code></td><td>@L["Test run of all checks, nothing is stored"]</td></tr>

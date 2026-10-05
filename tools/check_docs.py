@@ -19,7 +19,7 @@ EXTRA_CODES = {'CLIENT_ADMIN_ONLY', 'VERSION_EXISTS', 'VALIDATION_FAILED', 'NOT_
                'METADATA_INVALID', 'PACKAGE_NOT_FOUND', 'SOURCE_REJECTED', 'SOURCE_MISSING', 'ADMIN_ONLY',
                'QUERY_INVALID', 'VERSION_NOT_FOUND', 'AI_REVIEW_MISSING', 'AI_OFF', 'AI_FAILED',
                'CUSTOMER_INVALID', 'CUSTOMER_NOT_FOUND', 'DELIVERY_NOT_FOUND', 'DELIVERY_EXISTS', 'DELIVERY_INVALID',
-               'PROMOTE_NOTHING', 'CODE_NOT_FOUND', 'VISIBILITY_INVALID', 'VISIBILITY_KEPT', 'CSRF_CHECK', 'RATE_LIMITED'}
+               'PROMOTE_NOTHING', 'CODE_NOT_FOUND', 'VISIBILITY_INVALID', 'VISIBILITY_KEPT', 'CSRF_CHECK', 'RATE_LIMITED', 'BUNDLE_INVALID'}
 
 code = ''
 for rel in SOURCES:
@@ -38,6 +38,18 @@ if missing:
     print('Agent guide is missing these codes in its rule reference:', ', '.join(missing))
     sys.exit(1)
 print(f'OK: all {len(codes)} codes are documented in the agent guide.')
+
+# Every hard package rule (severity exactly "error" in the rule reference) must be
+# in the pre-flight checklist: the manual upload has no dry run, so the checklist
+# is the only check an assistant can run there (S1.0.7).
+ref = guide[guide.index('## Complete rule reference'):guide.index('## Good citizenship')]
+hard = re.findall(r'^\| ([A-Z0-9_]+) \| error \|', ref, re.M)
+pre = guide[guide.index('## Pre-flight checklist'):guide.index('## Compliance audit')]
+gap = sorted(c for c in hard if c not in pre)
+if gap:
+    print('Pre-flight checklist is missing these hard rules:', ', '.join(gap))
+    sys.exit(1)
+print(f'OK: all {len(hard)} hard rules are in the pre-flight checklist.')
 
 # Every /api route must be described in the vendor-neutral OpenAPI document
 # (Api/OpenApiDoc.cs), so assistants other than Claude see it too.

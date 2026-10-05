@@ -172,14 +172,18 @@ public static class ApiEndpoints
                     "GET  /api/packages/{id}/{version}/download",
                     "GET  /api/customer-code          check the customer code in the X-Customer-Code header (valid, customer, add-ons)",
                     "GET  /api/packages/{id}/icon[?v=version]  catalog icon (PNG), of the given or the newest released version",
-                    "GET  /api/devkit                 SDK documentation and developer kit files"
+                    "GET  /api/devkit                 SDK documentation and developer kit files",
+                    "GET  /api/tools/make-ppak.ps1    offline packer: .ppak and the upload package (.ppak + source ZIP) for a manual upload on the website"
                 }
             }
         }));
 
         api.MapGet("/ping", (AppVersion ver) => Results.Json(new { ok = true, data = new { name = "pluginstore-powerpdf", version = ver.Value } }));
 
-        api.MapGet("/agent-guide", (HttpContext ctx, AppVersion ver) => MarkdownText(ctx, AgentGuide.Markdown(Base(ctx), ver.Value)));
+        // "?download=1" saves it as a file, for assistants without network access (S1.0.7)
+        api.MapGet("/agent-guide", (HttpContext ctx, AppVersion ver) => ctx.Request.Query.ContainsKey("download")
+            ? Results.File(System.Text.Encoding.UTF8.GetBytes(AgentGuide.Markdown(Base(ctx), ver.Value).Replace("\r\n", "\n")), "text/markdown; charset=utf-8", "AGENT-GUIDE.md")
+            : MarkdownText(ctx, AgentGuide.Markdown(Base(ctx), ver.Value)));
 
         api.MapGet("/schema/manifest", () => Results.Text(AgentGuide.ManifestSchema, "application/json"));
 
@@ -195,6 +199,13 @@ public static class ApiEndpoints
         api.MapGet("/skill", (HttpContext ctx) => ctx.Request.Query.ContainsKey("download")
             ? Results.File(System.Text.Encoding.UTF8.GetBytes(AgentGuide.SkillMarkdown(Base(ctx)).Replace("\r\n", "\n")), "text/markdown; charset=utf-8", "SKILL.md")
             : MarkdownText(ctx, AgentGuide.SkillMarkdown(Base(ctx))));
+
+        // Offline packer (S1.0.7): builds the .ppak and the upload package (.ppak + source ZIP).
+        // Shown inline as text for web readers; "?download=1" saves it as a file.
+        api.MapGet("/tools/make-ppak.ps1", (HttpContext ctx) => ctx.Request.Query.ContainsKey("download")
+            ? Results.File(System.Text.Encoding.ASCII.GetBytes(PackTool.Script.Replace("\r\n", "\n").Replace("\n", "\r\n")),
+                           "text/plain; charset=us-ascii", PackTool.FileName)
+            : Results.Text(PackTool.Script.Replace("\r\n", "\n"), "text/plain; charset=utf-8"));
 
         api.MapGet("/me", async (HttpContext ctx, AppDbContext db, UserManager<AppUser> users) =>
         {
@@ -358,12 +369,20 @@ public static class ApiEndpoints
             if (user is null) return Unauthorized();
             var tmp = await SaveUploadAsync(ctx.Request);
             if (tmp is null) return BadUpload();
+            UploadBundle.Result? bundle = null;
             try
             {
-                var report = await svc.ValidateOnlyAsync(tmp, user);
-                return Results.Json(new { ok = true, findings = report.Findings, data = new { passed = report.Passed } });
+                try { bundle = UploadBundle.TryUnpack(tmp); }
+                catch (InvalidDataException ex) { return BundleInvalid(ex.Message); }
+                var report = await svc.ValidateOnlyAsync(bundle?.PpakPath ?? tmp, user);
+                return Results.Json(new { ok = true, findings = report.Findings, data = new
+                {
+                    passed = report.Passed,
+                    uploadPackage = bundle is not null,
+                    sourceIncluded = bundle?.SourcePath is not null
+                } });
             }
-            finally { TryDelete(tmp); }
+            finally { bundle?.Dispose(); TryDelete(tmp); }
         }).RequireAuthorization("ApiOrCookie");
 
         api.MapPost("/packages", async (HttpContext ctx, UserManager<AppUser> users, SubmissionService svc, SourceService sources, IMemoryCache cache) =>
@@ -374,10 +393,14 @@ public static class ApiEndpoints
             if (user is null) return Unauthorized();
             var tmp = await SaveUploadAsync(ctx.Request);
             if (tmp is null) return BadUpload();
+            UploadBundle.Result? bundle = null;
             try
             {
+                // upload package (S1.0.7): .ppak + source ZIP of the same version in one file
+                try { bundle = UploadBundle.TryUnpack(tmp); }
+                catch (InvalidDataException ex) { return BundleInvalid(ex.Message); }
                 var via = ctx.User.FindFirstValue("token_name") is { } t ? $"api:{t}" : "web";
-                var result = await svc.SubmitAsync(tmp, user, via);
+                var result = await svc.SubmitAsync(bundle?.PpakPath ?? tmp, user, via);
 
                 if (result.ErrorCode == "CLIENT_ADMIN_ONLY")
                     return Results.Json(new
@@ -410,6 +433,8 @@ public static class ApiEndpoints
 
                 var v = result.Version;
                 var policy = await sources.PolicyAsync();
+                ValidationReport? sourceReport = bundle?.SourcePath is { } sp
+                    ? await sources.UploadAsync(v, sp, user, ctx.User.IsInRole("Admin")) : null;
                 return Results.Json(new
                 {
                     ok = true,
@@ -420,8 +445,10 @@ public static class ApiEndpoints
                         version = v.Version,
                         status = v.Status.ToString().ToLowerInvariant(),
                         sourcePolicy = policy,
+                        // set for an upload package with a source ZIP: stored at this version, or why not
+                        source = sourceReport is null ? null : new { stored = sourceReport.Passed, findings = sourceReport.Findings },
                         sourceUploadUrl = $"{Base(ctx)}/api/packages/{v.PackageId}/{v.Version}/source",
-                        sourceNext = policy == "off" ? null
+                        sourceNext = policy == "off" || sourceReport?.Passed == true ? null
                             : $"Now upload the source code of this version: PUT {Base(ctx)}/api/packages/{v.PackageId}/{v.Version}/source with a ZIP of the source tree (Content-Type: application/zip)."
                               + (policy == "required" && v.Status != VersionStatus.Live ? " Required: an admin cannot approve the version without it." : ""),
                         sha256 = v.Sha256,
@@ -433,7 +460,7 @@ public static class ApiEndpoints
                     }
                 }, statusCode: 201);
             }
-            finally { TryDelete(tmp); }
+            finally { bundle?.Dispose(); TryDelete(tmp); }
         }).RequireAuthorization("BearerOnly");
 
         api.MapPut("/packages/{id}/{version}/source", async (string id, string version, HttpContext ctx,
@@ -1099,6 +1126,17 @@ public static class ApiEndpoints
         ok = false,
         error = new { code, message, hint = "Check GET /api/catalog for available packages and versions." }
     }, statusCode: 404);
+
+    private static IResult BundleInvalid(string message) => Results.Json(new
+    {
+        ok = false,
+        error = new
+        {
+            code = "BUNDLE_INVALID",
+            message,
+            hint = "An upload package is a ZIP with exactly one .ppak and at most one source ZIP of the same version (make-ppak.ps1 -Source builds it); or upload the .ppak alone."
+        }
+    }, statusCode: 400);
 
     private static IResult BadUpload() => Results.Json(new
     {

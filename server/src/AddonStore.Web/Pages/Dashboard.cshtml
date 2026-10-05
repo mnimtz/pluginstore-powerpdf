@@ -26,13 +26,27 @@
         }
     </ul>
 }
+@if (Model.SourceNotice is not null)
+{
+    <div class="alert @Model.SourceNoticeKind">@L[Model.SourceNotice]</div>
+}
+@if (Model.SourceFindings.Count > 0)
+{
+    <ul class="findings">
+        @foreach (var f in Model.SourceFindings)
+        {
+            <li class="@f.Severity"><span class="code">@f.Code</span> @f.Message <span class="hint">@f.Hint</span></li>
+        }
+    </ul>
+}
 
 <details class="card" @(Model.Findings.Count > 0 ? "open" : "")>
     <summary style="cursor:pointer;font-weight:600;color:var(--tun-navy)">@L["Submit a package"]</summary>
-    <p style="color:var(--tun-slate);font-size:.9rem">@L["Upload a .ppak package below, or automate it via the API with a personal token from your profile."]</p>
+    <p style="color:var(--tun-slate);font-size:.9rem">@L["Upload a .ppak package below, or automate it via the API with a personal token from your profile."]
+        @L["An upload package (.zip with the .ppak and the source ZIP, made by make-ppak.ps1 or your AI assistant) submits the version and stores its source code in one step."]</p>
     <form method="post" enctype="multipart/form-data" class="stack">
         <div>
-            <label for="package">@L["Package file (.ppak)"]</label>
+            <label for="package">@L["Package file (.ppak or upload package .zip)"]</label>
             <input type="file" id="package" name="package" accept=".ppak,.zip" required />
         </div>
         <button type="submit" class="btn cta">@L["Upload and validate"]</button>

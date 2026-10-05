@@ -306,6 +306,26 @@ Exception: a **private** customer add-on may bring its own tab
 (switching it to public is refused). Every manifest names `author` and
 `contactEmail` (warning when missing).
 
+**Manual upload package (S1.0.7):** when an AI assistant cannot reach the store
+(for example a cloud sandbox whose network policy blocks it) or has no token,
+it builds `<id>-<version>-upload.zip` with exactly `<id>-<version>.ppak` and
+`<id>-<version>-source.zip` at its root and hands it over. The user uploads it
+under *Plug-ins*, *Submit a package*: the store submits the .ppak and stores the
+source code at the new version in one step (`POST /api/packages` accepts it too).
+One line for the assistant:
+
+```text
+Read https://addon.power-pdf.de/agent-guide and build a manual upload package for the plugin in this folder.
+```
+
+The offline packer `GET /api/tools/make-ppak.ps1` (Windows PowerShell 5.1, no
+network, no token) fills `architectures`/`files`/`sha256` and writes the .ppak,
+the source ZIP and the upload package:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File make-ppak.ps1 -Package .\ppak -Source . -Out .\dist
+```
+
 ## Local development
 
 ```bash
