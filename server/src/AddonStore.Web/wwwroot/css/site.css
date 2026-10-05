@@ -447,3 +447,10 @@ dialog.shot-view form { text-align: right; margin-bottom: 6px; }
 .stage-form { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; margin-top: 8px; }
 .stage-form > div { min-width: 150px; }
 .cust-code { font-size: 1rem; letter-spacing: .04em; user-select: all; }
+
+/* In-page confirmation dialog (data-confirm), never a browser popup */
+dialog.pp-confirm { border: none; border-radius: 12px; padding: 22px 24px 18px; max-width: 460px; width: calc(100% - 32px);
+  box-shadow: 0 18px 48px rgba(0, 40, 84, .28); color: var(--tun-navy); font: inherit; }
+dialog.pp-confirm::backdrop { background: rgba(0, 40, 84, .45); }
+dialog.pp-confirm p { margin: 0 0 18px; line-height: 1.5; }
+.pp-confirm-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }

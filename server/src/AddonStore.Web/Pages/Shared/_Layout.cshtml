@@ -133,9 +133,38 @@
     if (ls) ls.addEventListener('change', function () {
         location = '/set-lang?culture=' + encodeURIComponent(ls.value) + '&returnUrl=' + encodeURIComponent(location.pathname);
     });
+    // Confirmations as an in-page dialog (no browser popup): message from
+    // data-confirm, the confirm button carries the label of the button that was
+    // clicked ("Delete customer"), Cancel is focused (safe default), Escape cancels.
+    var cancelLabel = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Cancel"].Value));
     document.addEventListener('submit', function (e) {
         var f = e.target;
-        if (f.dataset && f.dataset.confirm && !confirm(f.dataset.confirm)) e.preventDefault();
+        if (!f.dataset || !f.dataset.confirm) return;
+        if (f.dataset.confirmed === '1') { f.dataset.confirmed = ''; return; }
+        e.preventDefault();
+        var submitter = e.submitter || f.querySelector('button[type=submit],button:not([type])');
+        var dlg = document.createElement('dialog');
+        dlg.className = 'pp-confirm';
+        var p = document.createElement('p'); p.textContent = f.dataset.confirm; dlg.appendChild(p);
+        var row = document.createElement('div'); row.className = 'pp-confirm-actions';
+        var no = document.createElement('button'); no.type = 'button'; no.className = 'btn secondary'; no.textContent = cancelLabel;
+        var yes = document.createElement('button'); yes.type = 'button';
+        var danger = submitter && submitter.classList.contains('danger');
+        yes.className = 'btn ' + (danger ? 'danger' : 'cta');
+        yes.textContent = (submitter && submitter.textContent.trim()) || 'OK';
+        row.appendChild(no); row.appendChild(yes); dlg.appendChild(row);
+        document.body.appendChild(dlg);
+        function close() { dlg.close(); dlg.remove(); }
+        no.addEventListener('click', close);
+        dlg.addEventListener('cancel', function (ev) { ev.preventDefault(); close(); });
+        dlg.addEventListener('click', function (ev) { if (ev.target === dlg) close(); });   // click on the backdrop
+        yes.addEventListener('click', function () {
+            close();
+            f.dataset.confirmed = '1';
+            if (f.requestSubmit) f.requestSubmit(submitter && submitter.form === f ? submitter : undefined); else f.submit();
+        });
+        dlg.showModal();
+        no.focus();
     }, true);
     document.addEventListener('error', function (e) {
         var i = e.target;
