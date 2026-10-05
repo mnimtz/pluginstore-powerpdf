@@ -215,6 +215,30 @@ else if (Model.SigningKeyId.Length > 0)
 </div>
 }
 
+@if (Model.View == "reset")
+{
+<div class="card" style="max-width:760px" id="reset">
+    <h2 style="margin-top:0">@L["Reset statistics"]</h2>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["After internal tests: delete the collected statistics so the reports count from here on. Add-ons, versions, accounts, customers and the audit log stay. A safety backup of the whole store is written first."]</p>
+    @if (Model.StatsResetAt is { } resetAt)
+    {
+        <p style="font-size:.88rem">@L["Last reset: {0}", Time.Fmt(resetAt)]</p>
+    }
+    <form method="post" asp-page-handler="Reset" class="stack" style="max-width:none"
+          data-confirm="@L["Delete the chosen statistics now? This cannot be undone (except from the safety backup)."]">
+        <label style="font-weight:400"><input type="checkbox" name="usage" value="true" checked style="width:auto" /> @L["Downloads and usage statistics ({0} rows, {1} downloads)", Model.StatUsageRows, Model.StatDownloads]</label>
+        <label style="font-weight:400"><input type="checkbox" name="shares" value="true" checked style="width:auto" /> @L["Shared-link statistics ({0} rows)", Model.StatShareRows]</label>
+        <label style="font-weight:400"><input type="checkbox" name="ipEvents" value="true" checked style="width:auto" /> @L["Stored IP addresses ({0} requests)", Model.IpEventCount]</label>
+        <label style="font-weight:400"><input type="checkbox" name="ratings" value="true" style="width:auto" /> @L["Ratings ({0})", Model.StatRatings]</label>
+        <label style="font-weight:400"><input type="checkbox" name="feedback" value="true" style="width:auto" /> @L["Problem reports and comments ({0})", Model.StatFeedback]</label>
+        <div style="display:flex;gap:6px;align-items:center">
+            <input name="confirm" placeholder="RESET" style="width:120px" autocomplete="off" />
+            <button type="submit" class="btn small danger">@L["Reset statistics"]</button>
+        </div>
+    </form>
+</div>
+}
+
 @if (Model.View == "privacy")
 {
 <div class="card" style="max-width:760px" id="privacy">

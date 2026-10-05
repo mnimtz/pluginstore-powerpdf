@@ -762,4 +762,16 @@
   <data name="Set this version back to beta? Only beta workstations are offered it from now on, the live channel falls back to the previous live version, and it needs approval again. Installed copies keep working." xml:space="preserve"><value>Visszaállítja ezt a verziót bétába? Mostantól csak a béta munkaállomások kapják meg, az élő csatorna visszaáll az előző élő verzióra, és újra jóvá kell hagyni. A telepített példányok tovább működnek.</value></data>
   <data name="Private (customers only)" xml:space="preserve"><value>Privát (csak ügyfelek)</value></data>
   <data name="The source code of this version is missing: back in beta, it could not be approved again. Upload the source code first." xml:space="preserve"><value>Ennek a verziónak hiányzik a forráskódja: bétába visszaállítva nem lehetne újra jóváhagyni. Először töltse fel a forráskódot.</value></data>
+  <data name="Reset statistics" xml:space="preserve"><value>Statisztika nullázása</value></data>
+  <data name="After internal tests: delete the collected statistics so the reports count from here on. Add-ons, versions, accounts, customers and the audit log stay. A safety backup of the whole store is written first." xml:space="preserve"><value>Belső tesztek után: törölje az összegyűjtött statisztikát, hogy a jelentések mostantól számoljanak. A bővítmények, verziók, fiókok, ügyfelek és a naplófájl megmaradnak. Előbb biztonsági másolat készül az egész áruházról.</value></data>
+  <data name="Last reset: {0}" xml:space="preserve"><value>Utolsó nullázás: {0}</value></data>
+  <data name="Delete the chosen statistics now? This cannot be undone (except from the safety backup)." xml:space="preserve"><value>Törli most a kiválasztott statisztikát? Ez nem vonható vissza (csak a biztonsági másolatból).</value></data>
+  <data name="Downloads and usage statistics ({0} rows, {1} downloads)" xml:space="preserve"><value>Letöltések és használati statisztika ({0} sor, {1} letöltés)</value></data>
+  <data name="Shared-link statistics ({0} rows)" xml:space="preserve"><value>Megosztott hivatkozások statisztikája ({0} sor)</value></data>
+  <data name="Stored IP addresses ({0} requests)" xml:space="preserve"><value>Tárolt IP-címek ({0} kérés)</value></data>
+  <data name="Ratings ({0})" xml:space="preserve"><value>Értékelések ({0})</value></data>
+  <data name="Problem reports and comments ({0})" xml:space="preserve"><value>Hibabejelentések és megjegyzések ({0})</value></data>
+  <data name="Type RESET to confirm." xml:space="preserve"><value>A megerősítéshez írja be: RESET.</value></data>
+  <data name="Choose at least one kind of data." xml:space="preserve"><value>Válasszon legalább egy adattípust.</value></data>
+  <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>A statisztika nullázva. Az előző állapot biztonsági másolata itt található: Biztonsági mentés és visszaállítás &gt; Biztonsági másolatok.</value></data>
 </root>

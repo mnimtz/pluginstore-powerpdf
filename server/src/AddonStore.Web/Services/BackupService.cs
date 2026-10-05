@@ -280,17 +280,27 @@ public class BackupService
         await _db.Users.CountAsync() <= 1 && !await _db.Packages.AnyAsync();
 
     /// <summary>
-    /// Replaces database and files with the archive's content. A safety backup
-    /// of the current state is written to data/backups first.
+    /// A full backup of the current state in data/backups (listed under "Safety
+    /// backups"); the ten newest are kept. Written before a restore or a reset.
     /// </summary>
-    public async Task<string> RestoreAsync(string zipPath, string actingName, byte[]? decryptedKeys = null)
+    public async Task<string> CreateSafetyAsync(string label)
     {
         Directory.CreateDirectory(SafetyRoot);
         var safety = Path.Combine(SafetyRoot, $"pre-restore-{DateTime.UtcNow:yyyyMMdd-HHmmss}.zip");
         // keep the ten newest safety backups (each one contains the whole store)
         foreach (var old in new DirectoryInfo(SafetyRoot).GetFiles("pre-restore-*.zip").OrderByDescending(f => f.Name).Skip(9))
             try { old.Delete(); } catch (IOException) { }
-        await CreateAsync(safety, actingName + " (automatic, before restore)");
+        await CreateAsync(safety, label);
+        return safety;
+    }
+
+    /// <summary>
+    /// Replaces database and files with the archive's content. A safety backup
+    /// of the current state is written to data/backups first.
+    /// </summary>
+    public async Task<string> RestoreAsync(string zipPath, string actingName, byte[]? decryptedKeys = null)
+    {
+        var safety = await CreateSafetyAsync(actingName + " (automatic, before restore)");
 
         try
         {

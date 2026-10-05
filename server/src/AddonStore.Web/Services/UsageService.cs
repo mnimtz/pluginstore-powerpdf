@@ -115,6 +115,28 @@ public class UsageService
     public Task<int> EventCountAsync() => _db.UsageEvents.CountAsync();
     public Task<int> DeleteAllEventsAsync() => _db.UsageEvents.ExecuteDeleteAsync();
 
+    public record ResetCounts(int Usage, int Downloads, int Shares, int IpEvents, int Ratings, int Feedback);
+
+    /// <summary>
+    /// "Start counting from here" after internal tests: deletes the chosen statistics.
+    /// Packages, versions, accounts, customers and the audit log stay.
+    /// </summary>
+    public async Task<ResetCounts> ResetAsync(bool usage, bool shares, bool ipEvents, bool ratings, bool feedback)
+    {
+        int u = 0, d = 0, s = 0, ip = 0, r = 0, f = 0;
+        if (usage)
+        {
+            u = await _db.UsageStats.ExecuteDeleteAsync();
+            d = await _db.PackageVersions.Where(v => v.Downloads != 0).ExecuteUpdateAsync(x => x.SetProperty(v => v.Downloads, 0));
+        }
+        if (shares) s = await _db.ShareStats.ExecuteDeleteAsync();
+        if (ipEvents) ip = await _db.UsageEvents.ExecuteDeleteAsync();
+        if (ratings) r = await _db.Ratings.ExecuteDeleteAsync();
+        if (feedback) f = await _db.Feedbacks.ExecuteDeleteAsync();
+        await _settings.SetAsync("Stats.ResetAt", DateTime.UtcNow.ToString("O"));
+        return new ResetCounts(u, d, s, ip, r, f);
+    }
+
     /// <summary>Deletes IP events older than the retention period; returns the number removed.</summary>
     public async Task<int> PurgeAsync()
     {

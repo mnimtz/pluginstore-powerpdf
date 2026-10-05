@@ -762,4 +762,16 @@
   <data name="Set this version back to beta? Only beta workstations are offered it from now on, the live channel falls back to the previous live version, and it needs approval again. Installed copies keep working." xml:space="preserve"><value>Diese Version auf Beta zurücksetzen? Ab jetzt wird sie nur Beta-Arbeitsplätzen angeboten, der Live-Kanal fällt auf die vorherige Live-Version zurück, und sie muss erneut freigegeben werden. Installierte Kopien laufen weiter.</value></data>
   <data name="Private (customers only)" xml:space="preserve"><value>Privat (nur Kunden)</value></data>
   <data name="The source code of this version is missing: back in beta, it could not be approved again. Upload the source code first." xml:space="preserve"><value>Für diese Version fehlt der Quellcode: Auf Beta zurückgesetzt, könnte sie nicht erneut freigegeben werden. Bitte zuerst den Quellcode hochladen.</value></data>
+  <data name="Reset statistics" xml:space="preserve"><value>Statistik zurücksetzen</value></data>
+  <data name="After internal tests: delete the collected statistics so the reports count from here on. Add-ons, versions, accounts, customers and the audit log stay. A safety backup of the whole store is written first." xml:space="preserve"><value>Nach internen Tests: die gesammelte Statistik löschen, damit die Berichte ab jetzt zählen. Add-ons, Versionen, Konten, Kunden und das Audit-Protokoll bleiben erhalten. Vorher wird eine Sicherheitskopie des ganzen Stores angelegt.</value></data>
+  <data name="Last reset: {0}" xml:space="preserve"><value>Zuletzt zurückgesetzt: {0}</value></data>
+  <data name="Delete the chosen statistics now? This cannot be undone (except from the safety backup)." xml:space="preserve"><value>Die ausgewählte Statistik jetzt löschen? Das lässt sich nicht rückgängig machen (außer über die Sicherheitskopie).</value></data>
+  <data name="Downloads and usage statistics ({0} rows, {1} downloads)" xml:space="preserve"><value>Downloads und Nutzungsstatistik ({0} Zeilen, {1} Downloads)</value></data>
+  <data name="Shared-link statistics ({0} rows)" xml:space="preserve"><value>Statistik der geteilten Links ({0} Zeilen)</value></data>
+  <data name="Stored IP addresses ({0} requests)" xml:space="preserve"><value>Gespeicherte IP-Adressen ({0} Anfragen)</value></data>
+  <data name="Ratings ({0})" xml:space="preserve"><value>Bewertungen ({0})</value></data>
+  <data name="Problem reports and comments ({0})" xml:space="preserve"><value>Problemmeldungen und Kommentare ({0})</value></data>
+  <data name="Type RESET to confirm." xml:space="preserve"><value>Zur Bestätigung RESET eingeben.</value></data>
+  <data name="Choose at least one kind of data." xml:space="preserve"><value>Bitte mindestens eine Datenart auswählen.</value></data>
+  <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>Statistik zurückgesetzt. Eine Sicherheitskopie des vorherigen Stands steht unter Sicherung und Wiederherstellung &gt; Sicherheitskopien.</value></data>
 </root>

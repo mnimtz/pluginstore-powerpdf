@@ -762,4 +762,16 @@
   <data name="Set this version back to beta? Only beta workstations are offered it from now on, the live channel falls back to the previous live version, and it needs approval again. Installed copies keep working." xml:space="preserve"><value>Sätta tillbaka den här versionen till beta? Från och med nu erbjuds den bara betaarbetsplatser, livekanalen faller tillbaka på den tidigare liveversionen och den måste godkännas igen. Installerade kopior fortsätter att fungera.</value></data>
   <data name="Private (customers only)" xml:space="preserve"><value>Privat (endast kunder)</value></data>
   <data name="The source code of this version is missing: back in beta, it could not be approved again. Upload the source code first." xml:space="preserve"><value>Källkoden för den här versionen saknas: tillbakasatt till beta skulle den inte kunna godkännas igen. Ladda upp källkoden först.</value></data>
+  <data name="Reset statistics" xml:space="preserve"><value>Återställ statistik</value></data>
+  <data name="After internal tests: delete the collected statistics so the reports count from here on. Add-ons, versions, accounts, customers and the audit log stay. A safety backup of the whole store is written first." xml:space="preserve"><value>Efter interna tester: ta bort den insamlade statistiken så att rapporterna räknar härifrån. Tillägg, versioner, konton, kunder och granskningsloggen behålls. Först skapas en skyddskopia av hela butiken.</value></data>
+  <data name="Last reset: {0}" xml:space="preserve"><value>Senast återställd: {0}</value></data>
+  <data name="Delete the chosen statistics now? This cannot be undone (except from the safety backup)." xml:space="preserve"><value>Ta bort den valda statistiken nu? Det går inte att ångra (utom från skyddskopian).</value></data>
+  <data name="Downloads and usage statistics ({0} rows, {1} downloads)" xml:space="preserve"><value>Nedladdningar och användningsstatistik ({0} rader, {1} nedladdningar)</value></data>
+  <data name="Shared-link statistics ({0} rows)" xml:space="preserve"><value>Statistik för delade länkar ({0} rader)</value></data>
+  <data name="Stored IP addresses ({0} requests)" xml:space="preserve"><value>Sparade IP-adresser ({0} förfrågningar)</value></data>
+  <data name="Ratings ({0})" xml:space="preserve"><value>Betyg ({0})</value></data>
+  <data name="Problem reports and comments ({0})" xml:space="preserve"><value>Problemrapporter och kommentarer ({0})</value></data>
+  <data name="Type RESET to confirm." xml:space="preserve"><value>Skriv RESET för att bekräfta.</value></data>
+  <data name="Choose at least one kind of data." xml:space="preserve"><value>Välj minst en typ av data.</value></data>
+  <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>Statistiken har återställts. En skyddskopia av det tidigare läget finns under Säkerhetskopiering och återställning &gt; Skyddskopior.</value></data>
 </root>

@@ -4,6 +4,7 @@ using AddonStore.Web.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace AddonStore.Web.Pages.Admin;
 
@@ -28,7 +29,7 @@ public class SettingsModel : PageModel
     public static readonly (string Key, string Label)[] Views =
     {
         ("server", "Server"), ("email", "Email"), ("notifications", "Notifications"),
-        ("ai", "AI assistant"), ("privacy", "IP address logging"),
+        ("ai", "AI assistant"), ("privacy", "IP address logging"), ("reset", "Reset statistics"),
     };
     [BindProperty(SupportsGet = true)] public string? View { get; set; }
     public string? Notice { get; private set; }
@@ -43,6 +44,14 @@ public class SettingsModel : PageModel
     public string IpConfirmedBy { get; private set; } = "";
     public DateTime? IpConfirmedAt { get; private set; }
     public int IpEventCount { get; private set; }
+
+    // Reset statistics (S1.0.2): sizes shown before deleting
+    public int StatUsageRows { get; private set; }
+    public int StatDownloads { get; private set; }
+    public int StatShareRows { get; private set; }
+    public int StatRatings { get; private set; }
+    public int StatFeedback { get; private set; }
+    public DateTime? StatsResetAt { get; private set; }
 
     // Optional AI assistant (S0.12.0)
     public AiService.Config Ai { get; private set; } = new("off", "", false, false, false, false, false, false, 300);
@@ -181,6 +190,34 @@ public class SettingsModel : PageModel
         await LoadAsync();
     }
 
+    /// <summary>
+    /// Deletes the chosen statistics after internal tests ("count from here on").
+    /// A safety backup of the whole store is written first; the audit log stays.
+    /// </summary>
+    public async Task OnPostResetAsync(bool usage, bool shares, bool ipEvents, bool ratings, bool feedback, string? confirm)
+    {
+        View = "reset";
+        var admin = await _users.GetUserAsync(User);
+        if (confirm != "RESET")
+        {
+            Notice = "Type RESET to confirm."; NoticeKind = "error";
+            await LoadAsync(); return;
+        }
+        if (!(usage || shares || ipEvents || ratings || feedback))
+        {
+            Notice = "Choose at least one kind of data."; NoticeKind = "error";
+            await LoadAsync(); return;
+        }
+        var backup = HttpContext.RequestServices.GetRequiredService<BackupService>();
+        var safety = await backup.CreateSafetyAsync(admin!.DisplayName + " (automatic, before statistics reset)");
+        var c = await _usage.ResetAsync(usage, shares, ipEvents, ratings, feedback);
+        await _audit.LogAsync(admin.DisplayName, "stats.reset", "statistics",
+            $"usage rows {c.Usage}, download counters of {c.Downloads} version(s), shared-link rows {c.Shares}, IP events {c.IpEvents}, " +
+            $"ratings {c.Ratings}, problem reports {c.Feedback}; safety backup {Path.GetFileName(safety)}");
+        Notice = "Statistics reset. A safety backup of the previous state is listed under Backup and restore > Safety backups.";
+        await LoadAsync();
+    }
+
     public async Task OnPostIpDeleteAllAsync(string? confirm)
     {
         var admin = await _users.GetUserAsync(User);
@@ -269,7 +306,7 @@ public class SettingsModel : PageModel
         {
             var h = (string?)Request.Query["handler"] ?? "";
             View = h.StartsWith("Ip") ? "privacy" : h.StartsWith("Ai") ? "ai" : h is "Email" or "TestMail" ? "email"
-                 : h == "Notifications" ? "notifications" : "server";
+                 : h == "Notifications" ? "notifications" : h == "Reset" ? "reset" : "server";
         }
         Ai = await _ai.ConfigAsync();
         OfferFake = _env.IsDevelopment();
@@ -280,6 +317,17 @@ public class SettingsModel : PageModel
         IpConfirmedAt = DateTime.TryParse(await _settings.GetAsync(UsageService.IpConfirmedAtKey), null,
             System.Globalization.DateTimeStyles.RoundtripKind, out var at) ? at : null;
         IpEventCount = await _usage.EventCountAsync();
+        if (View == "reset")
+        {
+            var db = HttpContext.RequestServices.GetRequiredService<AddonStore.Web.Data.AppDbContext>();
+            StatUsageRows = await db.UsageStats.CountAsync();
+            StatDownloads = await db.PackageVersions.SumAsync(v => v.Downloads);
+            StatShareRows = await db.ShareStats.CountAsync();
+            StatRatings = await db.Ratings.CountAsync();
+            StatFeedback = await db.Feedbacks.CountAsync();
+            StatsResetAt = DateTime.TryParse(await _settings.GetAsync("Stats.ResetAt"), null,
+                System.Globalization.DateTimeStyles.RoundtripKind, out var ra) ? ra : null;
+        }
         HasResendKey = (await _settings.GetAsync("Email.ResendApiKey", "Email:ResendApiKey")).Length > 0;
         From = await _settings.GetAsync("Email.From", "Email:From");
         BaseUrl = await _settings.GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl");

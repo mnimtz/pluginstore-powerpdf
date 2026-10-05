@@ -762,4 +762,16 @@
   <data name="Set this version back to beta? Only beta workstations are offered it from now on, the live channel falls back to the previous live version, and it needs approval again. Installed copies keep working." xml:space="preserve"><value>Sæt denne version tilbage til beta? Fra nu af tilbydes den kun beta-arbejdsstationer, live-kanalen falder tilbage til den forrige live-version, og den skal godkendes igen. Installerede kopier fortsætter med at virke.</value></data>
   <data name="Private (customers only)" xml:space="preserve"><value>Privat (kun kunder)</value></data>
   <data name="The source code of this version is missing: back in beta, it could not be approved again. Upload the source code first." xml:space="preserve"><value>Kildekoden til denne version mangler: sat tilbage til beta kunne den ikke godkendes igen. Upload kildekoden først.</value></data>
+  <data name="Reset statistics" xml:space="preserve"><value>Nulstil statistik</value></data>
+  <data name="After internal tests: delete the collected statistics so the reports count from here on. Add-ons, versions, accounts, customers and the audit log stay. A safety backup of the whole store is written first." xml:space="preserve"><value>Efter interne test: slet den indsamlede statistik, så rapporterne tæller fra nu af. Tilføjelsesprogrammer, versioner, konti, kunder og auditloggen bevares. Først oprettes en beskyttelseskopi af hele butikken.</value></data>
+  <data name="Last reset: {0}" xml:space="preserve"><value>Sidst nulstillet: {0}</value></data>
+  <data name="Delete the chosen statistics now? This cannot be undone (except from the safety backup)." xml:space="preserve"><value>Slet den valgte statistik nu? Det kan ikke fortrydes (undtagen fra beskyttelseskopien).</value></data>
+  <data name="Downloads and usage statistics ({0} rows, {1} downloads)" xml:space="preserve"><value>Downloads og brugsstatistik ({0} rækker, {1} downloads)</value></data>
+  <data name="Shared-link statistics ({0} rows)" xml:space="preserve"><value>Statistik for delte links ({0} rækker)</value></data>
+  <data name="Stored IP addresses ({0} requests)" xml:space="preserve"><value>Gemte IP-adresser ({0} forespørgsler)</value></data>
+  <data name="Ratings ({0})" xml:space="preserve"><value>Bedømmelser ({0})</value></data>
+  <data name="Problem reports and comments ({0})" xml:space="preserve"><value>Problemrapporter og kommentarer ({0})</value></data>
+  <data name="Type RESET to confirm." xml:space="preserve"><value>Skriv RESET for at bekræfte.</value></data>
+  <data name="Choose at least one kind of data." xml:space="preserve"><value>Vælg mindst én type data.</value></data>
+  <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>Statistikken er nulstillet. En beskyttelseskopi af den tidligere tilstand findes under Sikkerhedskopiering og gendannelse &gt; Beskyttelseskopier.</value></data>
 </root>

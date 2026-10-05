@@ -762,4 +762,16 @@
   <data name="Set this version back to beta? Only beta workstations are offered it from now on, the live channel falls back to the previous live version, and it needs approval again. Installed copies keep working." xml:space="preserve"><value>Вернуть эту версию в бету? С этого момента она будет предлагаться только бета-рабочим местам, live-канал вернётся к предыдущей live-версии, и её нужно будет снова одобрить. Установленные копии продолжат работать.</value></data>
   <data name="Private (customers only)" xml:space="preserve"><value>Частные (только клиенты)</value></data>
   <data name="The source code of this version is missing: back in beta, it could not be approved again. Upload the source code first." xml:space="preserve"><value>Для этой версии отсутствует исходный код: после возврата в бету её нельзя будет снова одобрить. Сначала загрузите исходный код.</value></data>
+  <data name="Reset statistics" xml:space="preserve"><value>Сбросить статистику</value></data>
+  <data name="After internal tests: delete the collected statistics so the reports count from here on. Add-ons, versions, accounts, customers and the audit log stay. A safety backup of the whole store is written first." xml:space="preserve"><value>После внутренних тестов: удалить собранную статистику, чтобы отчёты считали с этого момента. Надстройки, версии, учётные записи, клиенты и журнал аудита сохраняются. Сначала создаётся страховочная копия всего магазина.</value></data>
+  <data name="Last reset: {0}" xml:space="preserve"><value>Последний сброс: {0}</value></data>
+  <data name="Delete the chosen statistics now? This cannot be undone (except from the safety backup)." xml:space="preserve"><value>Удалить выбранную статистику сейчас? Это нельзя отменить (кроме как из страховочной копии).</value></data>
+  <data name="Downloads and usage statistics ({0} rows, {1} downloads)" xml:space="preserve"><value>Загрузки и статистика использования ({0} строк, {1} загрузок)</value></data>
+  <data name="Shared-link statistics ({0} rows)" xml:space="preserve"><value>Статистика общих ссылок ({0} строк)</value></data>
+  <data name="Stored IP addresses ({0} requests)" xml:space="preserve"><value>Сохранённые IP-адреса ({0} запросов)</value></data>
+  <data name="Ratings ({0})" xml:space="preserve"><value>Оценки ({0})</value></data>
+  <data name="Problem reports and comments ({0})" xml:space="preserve"><value>Сообщения о проблемах и комментарии ({0})</value></data>
+  <data name="Type RESET to confirm." xml:space="preserve"><value>Для подтверждения введите RESET.</value></data>
+  <data name="Choose at least one kind of data." xml:space="preserve"><value>Выберите хотя бы один тип данных.</value></data>
+  <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>Статистика сброшена. Страховочная копия предыдущего состояния находится в разделе «Резервное копирование и восстановление &gt; Страховочные копии».</value></data>
 </root>
