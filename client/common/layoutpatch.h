@@ -143,28 +143,89 @@ inline bool EnsureStoreToolbar(std::wstring& text)
     return true;
 }
 
-// The "Store" tab is the LAST tab of the ribbon: an add-on that creates the shared
-// "FeaturePack" tab later would otherwise put "Enhanced Features" behind it.
-// Moves our toolbar block to the end of <Top>. Returns true when moved.
-inline bool MoveStoreToolbarToEnd(std::wstring& text)
+// Power PDF's own "Help" tab (toolbar atom "help").
+static const wchar_t kHelpToolbar[] = L"help";
+
+// Cuts a whole <toolbar name="<name>">...</toolbar> block (with its indentation)
+// out of the <Top> block and returns it; empty when not found.
+inline std::wstring CutToolbar(std::wstring& text, const wchar_t* name)
 {
-    size_t tb = text.find(std::wstring(L"<toolbar name=\"") + kStoreToolbar + L"\"");
-    if (tb == std::wstring::npos) return false;
+    size_t tb = text.find(std::wstring(L"<toolbar name=\"") + name + L"\"");
+    if (tb == std::wstring::npos) return std::wstring();
     size_t topEnd = text.find(L"</Top>", tb);
-    size_t end = text.find(L"</toolbar>", tb);
-    if (topEnd == std::wstring::npos || end == std::wstring::npos || end > topEnd) return false;
-    end += wcslen(L"</toolbar>");
-    // nothing but whitespace between our block and </Top>: already last
-    bool last = true;
-    for (size_t i = end; i < topEnd; ++i)
-        if (!iswspace(text[i])) { last = false; break; }
-    if (last) return false;
+    size_t gt = text.find(L'>', tb);
+    if (topEnd == std::wstring::npos || gt == std::wstring::npos || gt > topEnd) return std::wstring();
+    size_t end;
+    if (text[gt - 1] == L'/') end = gt + 1;                        // <toolbar .../>
+    else
+    {
+        end = text.find(L"</toolbar>", tb);
+        if (end == std::wstring::npos || end > topEnd) return std::wstring();
+        end += wcslen(L"</toolbar>");
+    }
     size_t start = tb;
     while (start > 0 && (text[start - 1] == L' ' || text[start - 1] == L'\t')) --start;
+    if (end < text.size() && text[end] == L'\r') ++end;
+    if (end < text.size() && text[end] == L'\n') ++end;
     std::wstring block = text.substr(start, end - start);
     text.erase(start, end - start);
-    topEnd = text.find(L"</Top>", start);
-    text.insert(topEnd, block + L"\n");
+    if (block.empty() || block[block.size() - 1] != L'\n') block += L"\n";
+    return block;
+}
+
+// The ribbon ends with "... Enhanced Features, <own tabs of private add-ons>,
+// Store, Help": the "Store" tab comes last of all add-on tabs (an add-on that
+// creates the shared tab later would otherwise put "Enhanced Features" behind
+// it), and Power PDF's "Help" stays the very last tab (C1.1.2, Marcus).
+// Tabs that add-ons create at run time are appended by the host after every tab
+// of the file; the next start moves "Store" and "Help" behind them again.
+// Returns true when the order changed.
+inline bool EnsureTailOrder(std::wstring& text)
+{
+    const std::wstring storeTag = std::wstring(L"<toolbar name=\"") + kStoreToolbar + L"\"";
+    const std::wstring helpTag = std::wstring(L"<toolbar name=\"") + kHelpToolbar + L"\"";
+    size_t store = text.find(storeTag);
+    if (store == std::wstring::npos) return false;
+    size_t topEnd = text.find(L"</Top>", store);
+    if (topEnd == std::wstring::npos) return false;
+    size_t help = text.find(helpTag);
+    if (help != std::wstring::npos && help > topEnd) help = std::wstring::npos;
+
+    // Already in order: nothing but whitespace after "Store" up to "Help" (if
+    // any), and nothing but whitespace after "Help" (or "Store") up to </Top>.
+    auto onlySpaceBetween = [&](size_t from, size_t to) {
+        for (size_t i = from; i < to; ++i) if (!iswspace(text[i])) return false;
+        return true;
+    };
+    auto blockEnd = [&](size_t at) {
+        size_t gt = text.find(L'>', at);
+        if (gt != std::wstring::npos && text[gt - 1] == L'/') return gt + 1;
+        size_t e = text.find(L"</toolbar>", at);
+        return e == std::wstring::npos ? std::wstring::npos : e + wcslen(L"</toolbar>");
+    };
+    size_t storeEnd = blockEnd(store);
+    if (storeEnd == std::wstring::npos || storeEnd > topEnd) return false;
+    if (help == std::wstring::npos)
+    {
+        if (onlySpaceBetween(storeEnd, topEnd)) return false;
+    }
+    else if (help > store)
+    {
+        size_t helpEnd = blockEnd(help);
+        if (helpEnd == std::wstring::npos || helpEnd > topEnd) return false;
+        if (onlySpaceBetween(storeEnd, help) && onlySpaceBetween(helpEnd, topEnd)) return false;
+    }
+
+    std::wstring storeBlock = CutToolbar(text, kStoreToolbar);
+    std::wstring helpBlock = help != std::wstring::npos ? CutToolbar(text, kHelpToolbar) : std::wstring();
+    if (storeBlock.empty()) return false;
+    size_t top = text.find(L"<Top");
+    topEnd = top == std::wstring::npos ? std::wstring::npos : text.find(L"</Top>", top);
+    if (topEnd == std::wstring::npos) return false;
+    // </Top> starts at its own (indented) line: insert in front of that indentation
+    size_t at = topEnd;
+    while (at > 0 && (text[at - 1] == L' ' || text[at - 1] == L'\t')) --at;
+    text.insert(at, storeBlock + helpBlock);
     return true;
 }
 
@@ -497,7 +558,7 @@ inline int ApplyButtons()
         bool changed = false;
         if (RemoveGroup(text, kLegacyGroup)) changed = true;      // C1.0.0 and older: group on the shared tab
         if (EnsureStoreToolbar(text)) changed = true;
-        if (MoveStoreToolbarToEnd(text)) changed = true;
+        if (EnsureTailOrder(text)) changed = true;      // ... Store, Help (C1.1.2)
         if (EnsureSharedToolbarBeforeStore(text)) changed = true;
         for (int gi = 0; gi < kGroupCount; ++gi)
         {
