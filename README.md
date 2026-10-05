@@ -318,6 +318,11 @@ One line for the assistant:
 Read https://addon.power-pdf.de/agent-guide and build a manual upload package for the plugin in this folder.
 ```
 
+Web readers that summarize long pages lose detail, so the hard rules and the
+manual upload also have short pages of their own (S1.0.8):
+`/api/agent-guide/checklist` (HTML `/agent-guide/checklist`) and
+`/api/agent-guide/manual-upload`.
+
 The offline packer `GET /api/tools/make-ppak.ps1` (Windows PowerShell 5.1, no
 network, no token) fills `architectures`/`files`/`sha256` and writes the .ppak,
 the source ZIP and the upload package:

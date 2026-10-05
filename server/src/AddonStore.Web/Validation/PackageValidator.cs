@@ -231,8 +231,20 @@ public class PackageValidator
             var manifestEntry = zip.GetEntry("manifest.json");
             if (manifestEntry is null)
             {
-                report.Error("MANIFEST_MISSING", "manifest.json was not found at the package root.",
-                    "Add manifest.json at the ZIP root. Fetch /api/schema/manifest for the expected structure.");
+                // the most common cause (S1.0.7): the package tree was zipped together with its folder
+                var nested = zip.Entries.FirstOrDefault(e => e.FullName.Replace('\\', '/').Count(c => c == '/') == 1
+                                                             && e.FullName.Replace('\\', '/').EndsWith("/manifest.json", StringComparison.OrdinalIgnoreCase));
+                if (nested is not null)
+                {
+                    var folder = nested.FullName.Replace('\\', '/').Split('/')[0];
+                    report.Error("MANIFEST_MISSING", $"manifest.json is inside the folder '{folder}/' instead of at the package root.",
+                        $"Zip the CONTENTS of '{folder}' (manifest.json, x64/, UILayout/, assets/, LICENSES.md), not the folder itself. " +
+                        "For one upload with the source code, put the finished .ppak and the source ZIP into an upload package (see 'Manual upload package' in /api/agent-guide).");
+                }
+                else
+                    report.Error("MANIFEST_MISSING", "manifest.json was not found at the package root.",
+                        "Add manifest.json at the ZIP root. Fetch /api/schema/manifest for the expected structure. " +
+                        "An upload package instead holds exactly one .ppak and the source ZIP (see 'Manual upload package' in /api/agent-guide).");
                 return (report, null);
             }
 

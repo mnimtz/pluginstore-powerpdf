@@ -100,10 +100,10 @@ $m | Add-Member -NotePropertyName sha256 -NotePropertyValue ([pscustomobject]$ha
 # ---- layout and assets (the store checks the details) ------------------------
 $layout = Join-Path $Package 'UILayout'
 if (-not (Test-Path -LiteralPath (Join-Path $layout 'Publish Mode.xml'))) { Warn 'UILayout\Publish Mode.xml is missing' }
-if (-not (Test-Path -LiteralPath (Join-Path $layout 'NameAndTitle.xml'))) { Warn 'UILayout\NameAndTitle.xml is missing' }
+if (-not (Test-Path -LiteralPath (Join-Path $layout 'NameAndTitle.xml'))) { Fail 'UILayout\NameAndTitle.xml is missing (required next to the 16 language folders; LANGS_INCOMPLETE)' }
 $noLang = @('ENU', 'DEU', 'FRA', 'ITA', 'ESP', 'NLD', 'PTB', 'DAN', 'FIN', 'NOR', 'SVE', 'PLK', 'CSY', 'HUN', 'RUS', 'TRK' |
     Where-Object { -not (Test-Path -LiteralPath (Join-Path $layout "$_\NameAndTitle.xml")) })
-if ($noLang.Count -gt 0) { Warn "UILayout language folders without NameAndTitle.xml: $($noLang -join ' ')" }
+if ($noLang.Count -gt 0) { Fail "UILayout language folders without NameAndTitle.xml: $($noLang -join ' ') (all 16 are required; LANGS_INCOMPLETE)" }
 if (-not (Test-Path -LiteralPath (Join-Path $Package 'assets\icon.png'))) { Warn 'assets\icon.png is missing (recommended)' }
 if (-not (Test-Path -LiteralPath (Join-Path $Package 'LICENSES.md'))) { Warn 'LICENSES.md is missing' }
 

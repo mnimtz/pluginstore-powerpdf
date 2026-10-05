@@ -95,6 +95,12 @@ public static class ApiEndpoints
 
         // The agent guide as a plain HTML page (S1.0.4): the web readers of some
         // assistants (ChatGPT, Gemini) refuse text/markdown but read any web page.
+        // short excerpts as web pages too (S1.0.8)
+        app.MapGet("/agent-guide/checklist", (HttpContext ctx, AppVersion ver) =>
+            Results.Content(GuideHtml("Pre-flight checklist - Add-on Store for Tungsten Power PDF", AgentGuide.Checklist(Base(ctx), ver.Value)), "text/html; charset=utf-8"));
+        app.MapGet("/agent-guide/manual-upload", (HttpContext ctx, AppVersion ver) =>
+            Results.Content(GuideHtml("Manual upload package - Add-on Store for Tungsten Power PDF", AgentGuide.ManualUpload(Base(ctx), ver.Value)), "text/html; charset=utf-8"));
+
         app.MapGet("/agent-guide", (HttpContext ctx, AppVersion ver) =>
         {
             var md = AgentGuide.Markdown(Base(ctx), ver.Value);
@@ -173,6 +179,8 @@ public static class ApiEndpoints
                     "GET  /api/customer-code          check the customer code in the X-Customer-Code header (valid, customer, add-ons)",
                     "GET  /api/packages/{id}/icon[?v=version]  catalog icon (PNG), of the given or the newest released version",
                     "GET  /api/devkit                 SDK documentation and developer kit files",
+                    "GET  /api/agent-guide/checklist  every hard rule on one short page (HTML: /agent-guide/checklist)",
+                    "GET  /api/agent-guide/manual-upload  package format, step-by-step creation and the one-file manual upload",
                     "GET  /api/tools/make-ppak.ps1    offline packer: .ppak and the upload package (.ppak + source ZIP) for a manual upload on the website"
                 }
             }
@@ -184,6 +192,9 @@ public static class ApiEndpoints
         api.MapGet("/agent-guide", (HttpContext ctx, AppVersion ver) => ctx.Request.Query.ContainsKey("download")
             ? Results.File(System.Text.Encoding.UTF8.GetBytes(AgentGuide.Markdown(Base(ctx), ver.Value).Replace("\r\n", "\n")), "text/markdown; charset=utf-8", "AGENT-GUIDE.md")
             : MarkdownText(ctx, AgentGuide.Markdown(Base(ctx), ver.Value)));
+
+        api.MapGet("/agent-guide/checklist", (HttpContext ctx, AppVersion ver) => MarkdownText(ctx, AgentGuide.Checklist(Base(ctx), ver.Value)));
+        api.MapGet("/agent-guide/manual-upload", (HttpContext ctx, AppVersion ver) => MarkdownText(ctx, AgentGuide.ManualUpload(Base(ctx), ver.Value)));
 
         api.MapGet("/schema/manifest", () => Results.Text(AgentGuide.ManifestSchema, "application/json"));
 
@@ -1126,6 +1137,14 @@ public static class ApiEndpoints
         ok = false,
         error = new { code, message, hint = "Check GET /api/catalog for available packages and versions." }
     }, statusCode: 404);
+
+    private static string GuideHtml(string title, string md) =>
+        "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" +
+        $"<title>{System.Net.WebUtility.HtmlEncode(title)}</title></head>" +
+        "<body style=\"font-family:Arial,sans-serif;max-width:980px;margin:24px auto;padding:0 16px;color:#002854\">" +
+        "<p>Full guide: <a href=\"/agent-guide\">/agent-guide</a> (Markdown: <a href=\"/api/agent-guide\">/api/agent-guide</a>).</p>" +
+        "<pre style=\"white-space:pre-wrap;word-wrap:break-word;font:14px/1.5 Consolas,monospace\">" +
+        System.Net.WebUtility.HtmlEncode(md) + "</pre></body></html>";
 
     private static IResult BundleInvalid(string message) => Results.Json(new
     {

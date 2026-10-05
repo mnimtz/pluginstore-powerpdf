@@ -17,7 +17,10 @@ submit a plugin is available from this API.
 ## Start here (AI assistants)
 
 This URL is the only thing you need, whichever assistant you are (Claude,
-ChatGPT, Gemini, Copilot or your own agent). The API is plain HTTPS with a
+ChatGPT, Gemini, Copilot or your own agent). This guide is long: if your web
+reader summarizes pages, read the hard rules separately at
+{{baseUrl}}/api/agent-guide/checklist (HTML: {{baseUrl}}/agent-guide/checklist)
+and the manual upload at {{baseUrl}}/api/agent-guide/manual-upload. The API is plain HTTPS with a
 bearer token and JSON; nothing in it depends on one vendor. Set yourself up once:
 
 1. **Token.** Use the environment variable `PPAK_TOKEN`. Never print it,
@@ -440,15 +443,29 @@ Rules enforced by the server:
 
 When you cannot submit through the API (your environment cannot reach
 {{baseUrl}}, there is no token, or the user wants to upload by hand), build a
-finished upload package yourself and hand it over; do not end with a
-description of the steps.
+finished upload package yourself and hand it over. The result is ONE file the
+user uploads; do not end with instructions, and do not write your own
+packing or publishing scripts.
 
-1. Build the .ppak and the source ZIP as in "Creating the .ppak, step by step".
-2. Put exactly these two files at the root of one ZIP named
+1. **Binary.** If you changed code, or there is no current Release x64
+   `.zxt` matching the manifest version, and you cannot build yourself: give
+   the user ONE build command, ask them to tell you when it finished, and
+   wait. Do not continue with an old binary.
+2. **You build the package, not the user.** As soon as the Release `.zxt`
+   exists, create the files yourself in your environment (read the .zxt,
+   compute its SHA-256, write manifest.json, ZIP everything with forward
+   slashes): the .ppak as in "Creating the .ppak, step by step", the source
+   ZIP, and then exactly these two files at the root of one ZIP named
    `<id>-<version>-upload.zip`:
 
         <id>-<version>.ppak
         <id>-<version>-source.zip
+
+   Save it where the user can open it and give its full path. Never zip the
+   package folder itself: manifest.json must be at the root of the .ppak,
+   and the upload package holds the two files, not folders. Only if your
+   environment can neither read the .zxt nor write files, give ONE command
+   for the offline packer `{{baseUrl}}/api/tools/make-ppak.ps1` instead.
 
 3. Without a dry run the **Pre-flight checklist** is the only check: go
    through every item (A code and build, B manifest, C ribbon and UILayout,
@@ -1023,6 +1040,29 @@ coding assistant working here; the store API is plain HTTPS + JSON
 
 """ + Workflow(baseUrl);
 
+    /// <summary>
+    /// One section of the guide on its own (S1.0.8): web readers summarize long pages and
+    /// lose detail, so the hard rules and the manual upload have their own short URLs.
+    /// </summary>
+    public static string Section(string baseUrl, string version, string heading, string untilHeading)
+    {
+        var md = Markdown(baseUrl, version).Replace("\r\n", "\n");
+        int a = md.IndexOf(heading, StringComparison.Ordinal);
+        if (a < 0) return md;
+        int b = md.IndexOf(untilHeading, a + heading.Length, StringComparison.Ordinal);
+        var body = b < 0 ? md[a..] : md[a..b];
+        return $"# Add-on Store for Tungsten Power PDF: excerpt of the agent guide\n\n" +
+               $"Full guide: {baseUrl}/api/agent-guide (server {version}). This excerpt is complete and authoritative for its topic.\n\n" +
+               body.TrimEnd() + "\n";
+    }
+
+    public static string Checklist(string baseUrl, string version) =>
+        Section(baseUrl, version, "## Pre-flight checklist", "## Compliance audit");
+
+    public static string ManualUpload(string baseUrl, string version) =>
+        Section(baseUrl, version, "## Package format (.ppak)", "## Pre-flight checklist") + "\n" +
+        Section(baseUrl, version, "## Manual upload package (fallback)", "## Submitting").Split("\n\n", 3)[2];
+
     /// <summary>llms.txt (llmstxt.org): short index of this site for language models.</summary>
     public static string LlmsTxt(string baseUrl, string version) => $$"""
 # Add-on Store for Tungsten Power PDF
@@ -1033,6 +1073,8 @@ coding assistant working here; the store API is plain HTTPS + JSON
 
 - [Developer and agent guide]({{baseUrl}}/api/agent-guide): complete workflow and every rule (authoritative; text/plain, or text/markdown when asked for in Accept)
 - [The same guide as a web page]({{baseUrl}}/agent-guide): for assistants whose web reader only reads HTML
+- [Pre-flight checklist]({{baseUrl}}/api/agent-guide/checklist): every hard rule on its own short page (HTML: {{baseUrl}}/agent-guide/checklist)
+- [Manual upload package]({{baseUrl}}/api/agent-guide/manual-upload): package format, step-by-step creation and the one-file upload
 - [OpenAPI 3.1 description]({{baseUrl}}/api/openapi.json): all endpoints, for tools and function calling
 - [manifest.json schema]({{baseUrl}}/api/schema/manifest): JSON Schema of the package manifest
 - [AGENTS.md]({{baseUrl}}/api/agents-md): project instructions for coding assistants (Codex, Copilot, Cursor, Gemini CLI)
