@@ -884,4 +884,23 @@
   <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Fogalmazza meg a feltételt legfeljebb 600 karakterben.</value></data>
   <data name="checked online" xml:space="preserve"><value>online ellenőrizve</value></data>
   <data name="the standard wording changed since" xml:space="preserve"><value>az alapszöveg azóta megváltozott</value></data>
+  <data name="Blocked" xml:space="preserve"><value>Letiltva</value></data>
+  <data name="Block" xml:space="preserve"><value>Letiltás</value></data>
+  <data name="Block version" xml:space="preserve"><value>Verzió letiltása</value></data>
+  <data name="Block all versions" xml:space="preserve"><value>Összes verzió letiltása</value></data>
+  <data name="Lift the block" xml:space="preserve"><value>Letiltás feloldása</value></data>
+  <data name="Security block" xml:space="preserve"><value>Biztonsági letiltás</value></data>
+  <data name="Reason (users see it)" xml:space="preserve"><value>Indok (a felhasználók látják)</value></data>
+  <data name="e.g. sends document content to an undeclared server" xml:space="preserve"><value>pl. dokumentumtartalmat küld egy be nem jelentett kiszolgálóra</value></data>
+  <data name="This add-on is blocked for a security reason." xml:space="preserve"><value>Ez a bővítmény biztonsági okból le van tiltva.</value></data>
+  <data name="Block this version? It is withdrawn, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Letiltja ezt a verziót? Visszavonásra kerül, és minden Power PDF, amelyben telepítve van, felkéri a felhasználót az eltávolítására.</value></data>
+  <data name="Block the whole add-on? Every version is withdrawn, uploads are refused, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Letiltja a teljes bővítményt? Minden verzió visszavonásra kerül, a feltöltéseket elutasítjuk, és minden Power PDF, amelyben telepítve van, felkéri a felhasználót az eltávolítására.</value></data>
+  <data name="Lift the block? The version stays withdrawn until you restore it." xml:space="preserve"><value>Feloldja a letiltást? A verzió visszavonva marad, amíg vissza nem állítja.</value></data>
+  <data name="Lift the block? The versions stay withdrawn until you restore them." xml:space="preserve"><value>Feloldja a letiltást? A verziók visszavonva maradnak, amíg vissza nem állítja őket.</value></data>
+  <data name="Give a reason for the block (3 to 300 characters); users see it." xml:space="preserve"><value>Adja meg a letiltás okát (3-300 karakter); a felhasználók látják.</value></data>
+  <data name="Version blocked. Clients that have it installed ask the user to remove it." xml:space="preserve"><value>Verzió letiltva. Azok a kliensek, amelyeken telepítve van, felkérik a felhasználót az eltávolítására.</value></data>
+  <data name="Block lifted. The version stays withdrawn; restore it if it should be offered again." xml:space="preserve"><value>Letiltás feloldva. A verzió visszavonva marad; állítsa vissza, ha újra elérhetővé kell tenni.</value></data>
+  <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>Bővítmény letiltva. Minden verzió visszavonva, a feltöltéseket elutasítjuk, és a kliensek felkérik a felhasználót az eltávolítására.</value></data>
+  <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>Letiltás feloldva. A verziók visszavonva maradnak; állítsa vissza azokat, amelyeket újra elérhetővé kell tenni.</value></data>
+  <data name="Security and system access" xml:space="preserve"><value>Biztonság és rendszerhozzáférés</value></data>
 </root>

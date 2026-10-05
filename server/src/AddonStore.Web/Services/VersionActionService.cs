@@ -43,7 +43,85 @@ public class VersionActionService
         isAdmin && v.Status == VersionStatus.Live && v.PackageId != SubmissionService.ClientPackageId;
 
     /// <summary>Only admins bring a withdrawn version back.</summary>
-    public static bool CanRestore(PackageVersion v, bool isAdmin) => isAdmin && v.Status == VersionStatus.Withdrawn;
+    public static bool CanRestore(PackageVersion v, bool isAdmin) =>
+        isAdmin && v.Status == VersionStatus.Withdrawn && v.BlockedAt is null && v.Package?.BlockedAt is null;
+
+    // ---- security block (S1.0.11) -------------------------------------------
+    public const int MaxBlockReason = 300;
+
+    /// <summary>
+    /// Blocks a version after a security finding: it is withdrawn (out of the catalog,
+    /// deliveries and downloads) and listed in GET /api/blocked, so every client that
+    /// has it installed asks the user to remove it. Admins only; the owner and the
+    /// staff are told.
+    /// </summary>
+    public async Task<string?> BlockVersionAsync(int versionId, AppUser actor, bool isAdmin, string? reason)
+    {
+        reason = (reason ?? "").Trim();
+        if (!isAdmin) return null;
+        if (reason.Length is < 3 or > MaxBlockReason) return "Give a reason for the block (3 to 300 characters); users see it.";
+        var v = await _db.PackageVersions.Include(x => x.Package).ThenInclude(p => p!.Owner).FirstOrDefaultAsync(x => x.Id == versionId);
+        if (v is null || v.PackageId == SubmissionService.ClientPackageId || v.BlockedAt is not null) return null;
+        var was = v.Status;
+        if (v.Status is VersionStatus.Live or VersionStatus.Beta or VersionStatus.Submitted) v.Status = VersionStatus.Withdrawn;
+        v.BlockedAt = DateTime.UtcNow; v.BlockReason = reason; v.BlockedBy = actor.DisplayName;
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(actor.DisplayName, "version.blocked", $"{v.PackageId} {v.Version}", $"was {was.ToString().ToLowerInvariant()}; {reason}");
+        await TellBlockAsync(v.Package, actor, $"version {v.Version}", reason);
+        return "Version blocked. Clients that have it installed ask the user to remove it.";
+    }
+
+    public async Task<string?> UnblockVersionAsync(int versionId, AppUser actor, bool isAdmin)
+    {
+        if (!isAdmin) return null;
+        var v = await _db.PackageVersions.FirstOrDefaultAsync(x => x.Id == versionId);
+        if (v is null || v.BlockedAt is null) return null;
+        v.BlockedAt = null; v.BlockReason = null; v.BlockedBy = null;
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(actor.DisplayName, "version.unblocked", $"{v.PackageId} {v.Version}", "stays withdrawn until restored");
+        return "Block lifted. The version stays withdrawn; restore it if it should be offered again.";
+    }
+
+    /// <summary>Blocks the whole add-on: every version withdrawn, uploads refused, all installed versions to be removed.</summary>
+    public async Task<string?> BlockPackageAsync(string packageId, AppUser actor, bool isAdmin, string? reason)
+    {
+        reason = (reason ?? "").Trim();
+        if (!isAdmin) return null;
+        if (reason.Length is < 3 or > MaxBlockReason) return "Give a reason for the block (3 to 300 characters); users see it.";
+        var pkg = await _db.Packages.Include(p => p.Owner).FirstOrDefaultAsync(p => p.Id == packageId);
+        if (pkg is null || pkg.Id == SubmissionService.ClientPackageId || pkg.BlockedAt is not null) return null;
+        pkg.BlockedAt = DateTime.UtcNow; pkg.BlockReason = reason; pkg.BlockedBy = actor.DisplayName;
+        var versions = await _db.PackageVersions
+            .Where(x => x.PackageId == packageId && (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta || x.Status == VersionStatus.Submitted))
+            .ToListAsync();
+        foreach (var v in versions) v.Status = VersionStatus.Withdrawn;
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(actor.DisplayName, "package.blocked", packageId,
+            $"{reason}; withdrawn versions: {string.Join(", ", versions.Select(v => v.Version))}");
+        await TellBlockAsync(pkg, actor, "all versions", reason);
+        return "Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it.";
+    }
+
+    public async Task<string?> UnblockPackageAsync(string packageId, AppUser actor, bool isAdmin)
+    {
+        if (!isAdmin) return null;
+        var pkg = await _db.Packages.FirstOrDefaultAsync(p => p.Id == packageId);
+        if (pkg is null || pkg.BlockedAt is null) return null;
+        pkg.BlockedAt = null; pkg.BlockReason = null; pkg.BlockedBy = null;
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(actor.DisplayName, "package.unblocked", packageId, "versions stay withdrawn until restored");
+        return "Block lifted. The versions stay withdrawn; restore the ones that should be offered again.";
+    }
+
+    private async Task TellBlockAsync(Package? pkg, AppUser actor, string what, string reason)
+    {
+        if (pkg is null) return;
+        var html = $"<p><b>{Enc(actor.DisplayName)}</b> blocked <b>{pkg.Id}</b> ({Enc(what)}) for a security reason: {Enc(reason)}</p>" +
+                   "<p>The store has withdrawn it, and Power PDF clients that have it installed ask their users to remove it.</p>";
+        if (pkg.Owner is { } owner && owner.Id != actor.Id)
+            await _notify.NotifyUserAsync("StatusChange", owner, $"[Add-on Store] {pkg.Id} blocked", html + await _notify.PluginLinkAsync(pkg.Id));
+        await _notify.NotifyStaffAsync("StatusChange", $"[Add-on Store] Security block: {pkg.Id}", html);
+    }
 
     /// <summary>Status a withdrawn version returns to: live when it had been approved (or is the client, which never queues), otherwise beta.</summary>
     public static VersionStatus RestoreTarget(PackageVersion v) =>

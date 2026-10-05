@@ -884,4 +884,23 @@
   <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Koşulu en fazla 600 karakterle yazın.</value></data>
   <data name="checked online" xml:space="preserve"><value>çevrimiçi denetlenir</value></data>
   <data name="the standard wording changed since" xml:space="preserve"><value>standart ifade o zamandan beri değişti</value></data>
+  <data name="Blocked" xml:space="preserve"><value>Engellendi</value></data>
+  <data name="Block" xml:space="preserve"><value>Engelle</value></data>
+  <data name="Block version" xml:space="preserve"><value>Sürümü engelle</value></data>
+  <data name="Block all versions" xml:space="preserve"><value>Tüm sürümleri engelle</value></data>
+  <data name="Lift the block" xml:space="preserve"><value>Engeli kaldır</value></data>
+  <data name="Security block" xml:space="preserve"><value>Güvenlik engeli</value></data>
+  <data name="Reason (users see it)" xml:space="preserve"><value>Neden (kullanıcılar görür)</value></data>
+  <data name="e.g. sends document content to an undeclared server" xml:space="preserve"><value>örn. belge içeriğini bildirilmemiş bir sunucuya gönderiyor</value></data>
+  <data name="This add-on is blocked for a security reason." xml:space="preserve"><value>Bu eklenti güvenlik nedeniyle engellendi.</value></data>
+  <data name="Block this version? It is withdrawn, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Bu sürüm engellensin mi? Geri çekilir ve onu yüklemiş her Power PDF kullanıcısından kaldırmasını ister.</value></data>
+  <data name="Block the whole add-on? Every version is withdrawn, uploads are refused, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Eklentinin tamamı engellensin mi? Tüm sürümler geri çekilir, yüklemeler reddedilir ve onu yüklemiş her Power PDF kullanıcısından kaldırmasını ister.</value></data>
+  <data name="Lift the block? The version stays withdrawn until you restore it." xml:space="preserve"><value>Engel kaldırılsın mı? Sürüm, siz geri yükleyene kadar geri çekilmiş kalır.</value></data>
+  <data name="Lift the block? The versions stay withdrawn until you restore them." xml:space="preserve"><value>Engel kaldırılsın mı? Sürümler, siz geri yükleyene kadar geri çekilmiş kalır.</value></data>
+  <data name="Give a reason for the block (3 to 300 characters); users see it." xml:space="preserve"><value>Engel için bir neden girin (3 ila 300 karakter); kullanıcılar bunu görür.</value></data>
+  <data name="Version blocked. Clients that have it installed ask the user to remove it." xml:space="preserve"><value>Sürüm engellendi. Onu yüklemiş istemciler kullanıcıdan kaldırmasını ister.</value></data>
+  <data name="Block lifted. The version stays withdrawn; restore it if it should be offered again." xml:space="preserve"><value>Engel kaldırıldı. Sürüm geri çekilmiş kalır; yeniden sunulması gerekiyorsa geri yükleyin.</value></data>
+  <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>Eklenti engellendi. Tüm sürümler geri çekildi, yüklemeler reddediliyor ve istemciler kullanıcıdan kaldırmasını ister.</value></data>
+  <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>Engel kaldırıldı. Sürümler geri çekilmiş kalır; yeniden sunulması gerekenleri geri yükleyin.</value></data>
+  <data name="Security and system access" xml:space="preserve"><value>Güvenlik ve sistem erişimi</value></data>
 </root>

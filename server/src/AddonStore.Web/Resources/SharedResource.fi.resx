@@ -884,4 +884,23 @@
   <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Kirjoita ehto enintään 600 merkillä.</value></data>
   <data name="checked online" xml:space="preserve"><value>tarkistetaan verkossa</value></data>
   <data name="the standard wording changed since" xml:space="preserve"><value>vakiomuotoilu on muuttunut sen jälkeen</value></data>
+  <data name="Blocked" xml:space="preserve"><value>Estetty</value></data>
+  <data name="Block" xml:space="preserve"><value>Estä</value></data>
+  <data name="Block version" xml:space="preserve"><value>Estä versio</value></data>
+  <data name="Block all versions" xml:space="preserve"><value>Estä kaikki versiot</value></data>
+  <data name="Lift the block" xml:space="preserve"><value>Poista esto</value></data>
+  <data name="Security block" xml:space="preserve"><value>Tietoturvaesto</value></data>
+  <data name="Reason (users see it)" xml:space="preserve"><value>Syy (näkyy käyttäjille)</value></data>
+  <data name="e.g. sends document content to an undeclared server" xml:space="preserve"><value>esim. lähettää asiakirjojen sisältöä ilmoittamattomalle palvelimelle</value></data>
+  <data name="This add-on is blocked for a security reason." xml:space="preserve"><value>Tämä lisäosa on estetty tietoturvasyistä.</value></data>
+  <data name="Block this version? It is withdrawn, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Estetäänkö tämä versio? Se vedetään pois, ja jokainen Power PDF, johon se on asennettu, pyytää käyttäjää poistamaan sen.</value></data>
+  <data name="Block the whole add-on? Every version is withdrawn, uploads are refused, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Estetäänkö koko lisäosa? Kaikki versiot vedetään pois, lataukset hylätään, ja jokainen Power PDF, johon se on asennettu, pyytää käyttäjää poistamaan sen.</value></data>
+  <data name="Lift the block? The version stays withdrawn until you restore it." xml:space="preserve"><value>Poistetaanko esto? Versio pysyy poisvedettynä, kunnes palautat sen.</value></data>
+  <data name="Lift the block? The versions stay withdrawn until you restore them." xml:space="preserve"><value>Poistetaanko esto? Versiot pysyvät poisvedettyinä, kunnes palautat ne.</value></data>
+  <data name="Give a reason for the block (3 to 300 characters); users see it." xml:space="preserve"><value>Anna eston syy (3-300 merkkiä); käyttäjät näkevät sen.</value></data>
+  <data name="Version blocked. Clients that have it installed ask the user to remove it." xml:space="preserve"><value>Versio estetty. Asiakasohjelmat, joihin se on asennettu, pyytävät käyttäjää poistamaan sen.</value></data>
+  <data name="Block lifted. The version stays withdrawn; restore it if it should be offered again." xml:space="preserve"><value>Esto poistettu. Versio pysyy poisvedettynä; palauta se, jos sitä halutaan taas tarjota.</value></data>
+  <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>Lisäosa estetty. Kaikki versiot on vedetty pois, lataukset hylätään ja asiakasohjelmat pyytävät käyttäjää poistamaan sen.</value></data>
+  <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>Esto poistettu. Versiot pysyvät poisvedettyinä; palauta ne, joita halutaan taas tarjota.</value></data>
+  <data name="Security and system access" xml:space="preserve"><value>Tietoturva ja järjestelmän käyttö</value></data>
 </root>

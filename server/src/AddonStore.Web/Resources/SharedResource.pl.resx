@@ -884,4 +884,23 @@
   <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Opisz warunek w maksymalnie 600 znakach.</value></data>
   <data name="checked online" xml:space="preserve"><value>sprawdzane online</value></data>
   <data name="the standard wording changed since" xml:space="preserve"><value>brzmienie standardowe zmieniło się od tego czasu</value></data>
+  <data name="Blocked" xml:space="preserve"><value>Zablokowany</value></data>
+  <data name="Block" xml:space="preserve"><value>Zablokuj</value></data>
+  <data name="Block version" xml:space="preserve"><value>Zablokuj wersję</value></data>
+  <data name="Block all versions" xml:space="preserve"><value>Zablokuj wszystkie wersje</value></data>
+  <data name="Lift the block" xml:space="preserve"><value>Zdejmij blokadę</value></data>
+  <data name="Security block" xml:space="preserve"><value>Blokada bezpieczeństwa</value></data>
+  <data name="Reason (users see it)" xml:space="preserve"><value>Powód (widoczny dla użytkowników)</value></data>
+  <data name="e.g. sends document content to an undeclared server" xml:space="preserve"><value>np. wysyła treść dokumentów na niezadeklarowany serwer</value></data>
+  <data name="This add-on is blocked for a security reason." xml:space="preserve"><value>Ten dodatek jest zablokowany ze względów bezpieczeństwa.</value></data>
+  <data name="Block this version? It is withdrawn, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Zablokować tę wersję? Zostanie wycofana, a każdy Power PDF, w którym jest zainstalowana, poprosi użytkownika o jej usunięcie.</value></data>
+  <data name="Block the whole add-on? Every version is withdrawn, uploads are refused, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Zablokować cały dodatek? Wszystkie wersje zostaną wycofane, przesyłanie odrzucone, a każdy Power PDF, w którym jest zainstalowany, poprosi użytkownika o jego usunięcie.</value></data>
+  <data name="Lift the block? The version stays withdrawn until you restore it." xml:space="preserve"><value>Zdjąć blokadę? Wersja pozostanie wycofana, dopóki jej nie przywrócisz.</value></data>
+  <data name="Lift the block? The versions stay withdrawn until you restore them." xml:space="preserve"><value>Zdjąć blokadę? Wersje pozostaną wycofane, dopóki ich nie przywrócisz.</value></data>
+  <data name="Give a reason for the block (3 to 300 characters); users see it." xml:space="preserve"><value>Podaj powód blokady (od 3 do 300 znaków); użytkownicy go zobaczą.</value></data>
+  <data name="Version blocked. Clients that have it installed ask the user to remove it." xml:space="preserve"><value>Wersja zablokowana. Klienci, w których jest zainstalowana, poproszą użytkownika o jej usunięcie.</value></data>
+  <data name="Block lifted. The version stays withdrawn; restore it if it should be offered again." xml:space="preserve"><value>Blokada zdjęta. Wersja pozostaje wycofana; przywróć ją, jeśli ma być ponownie oferowana.</value></data>
+  <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>Dodatek zablokowany. Wszystkie wersje są wycofane, przesyłanie jest odrzucane, a klienci poproszą użytkownika o jego usunięcie.</value></data>
+  <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>Blokada zdjęta. Wersje pozostają wycofane; przywróć te, które mają być ponownie oferowane.</value></data>
+  <data name="Security and system access" xml:space="preserve"><value>Bezpieczeństwo i dostęp do systemu</value></data>
 </root>

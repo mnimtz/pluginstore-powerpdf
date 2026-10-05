@@ -340,6 +340,22 @@ from the live guide, `/api/rules`, the OpenAPI description and the manifest
 schema: introduction and principles, the full developer and agent guide, every
 rule by area, the API reference and the manifest reference.
 
+**Security checks and blocks (S1.0.11):** the validator reads the import
+tables of every binary. Network functions without a declared external service
+(`NETWORK_UNDECLARED`), writing into other processes (`PROCESS_INJECTION`) and
+downloading code at run time (`RUNTIME_DOWNLOAD`) are errors; starting
+processes (`PROCESS_START`), services or Run keys (`PERSISTENCE`) and plain
+http:// addresses (`INSECURE_HTTP`) are warnings the reviewer sees. A source
+that switches off HTTPS certificate validation is refused
+(`TLS_CHECK_DISABLED`). Admins block a version or a whole add-on on its plug-in
+page, with a reason users see: a block withdraws it, a blocked add-on takes no
+uploads (`PACKAGE_BLOCKED`), and `GET /api/blocked` publishes the list (SHA-256
+of the lowercase id, version or `*`, reason). Client 1.1.5+ reads that list 20
+seconds after start and every 4 hours (also with update notices off), asks
+once per session to remove a blocked add-on, and shows a red notice with
+"Remove now" in the store window. Lifting a block leaves the versions
+withdrawn until they are restored.
+
 **Mandatory conditions (S1.0.10):** the Rules page opens on the numbered
 conditions a plug-in must meet, first for the **import** (A1 to E4, checked
 automatically on every upload) and then for the **approval** (R1 to R4 and the
@@ -354,7 +370,7 @@ API page (`/docs/AddonStore-Requirements.pdf`, `/docs/AddonStore-Manual.pdf`);
 `tools/make_manual.py` regenerates both and copies them to `wwwroot/docs`.
 
 **Rules page and API (S1.0.9):** every rule the store checks, grouped into
-12 areas, is listed under *Settings, Rules* (`/Admin/Rules`, readable by all
+13 areas, is listed under *Settings, Rules* (`/Admin/Rules`, readable by all
 signed-in users) and at `GET /api/rules`. Admins extend them there: **house
 rules** (guidelines in plain words that reviewers check at approval, or
 recommendations) and **mandatory warnings** (the validator then refuses the

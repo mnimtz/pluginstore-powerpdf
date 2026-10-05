@@ -884,4 +884,23 @@
   <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Formuleer de voorwaarde in maximaal 600 tekens.</value></data>
   <data name="checked online" xml:space="preserve"><value>online gecontroleerd</value></data>
   <data name="the standard wording changed since" xml:space="preserve"><value>de standaardformulering is sindsdien gewijzigd</value></data>
+  <data name="Blocked" xml:space="preserve"><value>Geblokkeerd</value></data>
+  <data name="Block" xml:space="preserve"><value>Blokkeren</value></data>
+  <data name="Block version" xml:space="preserve"><value>Versie blokkeren</value></data>
+  <data name="Block all versions" xml:space="preserve"><value>Alle versies blokkeren</value></data>
+  <data name="Lift the block" xml:space="preserve"><value>Blokkade opheffen</value></data>
+  <data name="Security block" xml:space="preserve"><value>Beveiligingsblokkade</value></data>
+  <data name="Reason (users see it)" xml:space="preserve"><value>Reden (zichtbaar voor gebruikers)</value></data>
+  <data name="e.g. sends document content to an undeclared server" xml:space="preserve"><value>bijv. stuurt documentinhoud naar een niet-opgegeven server</value></data>
+  <data name="This add-on is blocked for a security reason." xml:space="preserve"><value>Deze invoegtoepassing is om veiligheidsredenen geblokkeerd.</value></data>
+  <data name="Block this version? It is withdrawn, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Deze versie blokkeren? Ze wordt ingetrokken en elke Power PDF waarin ze is geïnstalleerd, vraagt de gebruiker haar te verwijderen.</value></data>
+  <data name="Block the whole add-on? Every version is withdrawn, uploads are refused, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>De hele invoegtoepassing blokkeren? Alle versies worden ingetrokken, uploads geweigerd en elke Power PDF waarin ze is geïnstalleerd, vraagt de gebruiker haar te verwijderen.</value></data>
+  <data name="Lift the block? The version stays withdrawn until you restore it." xml:space="preserve"><value>Blokkade opheffen? De versie blijft ingetrokken totdat u haar herstelt.</value></data>
+  <data name="Lift the block? The versions stay withdrawn until you restore them." xml:space="preserve"><value>Blokkade opheffen? De versies blijven ingetrokken totdat u ze herstelt.</value></data>
+  <data name="Give a reason for the block (3 to 300 characters); users see it." xml:space="preserve"><value>Geef een reden voor de blokkade op (3 tot 300 tekens); gebruikers zien die.</value></data>
+  <data name="Version blocked. Clients that have it installed ask the user to remove it." xml:space="preserve"><value>Versie geblokkeerd. Clients waarop ze is geïnstalleerd, vragen de gebruiker haar te verwijderen.</value></data>
+  <data name="Block lifted. The version stays withdrawn; restore it if it should be offered again." xml:space="preserve"><value>Blokkade opgeheven. De versie blijft ingetrokken; herstel haar als ze weer moet worden aangeboden.</value></data>
+  <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>Invoegtoepassing geblokkeerd. Alle versies zijn ingetrokken, uploads worden geweigerd en clients vragen de gebruiker haar te verwijderen.</value></data>
+  <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>Blokkade opgeheven. De versies blijven ingetrokken; herstel de versies die weer moeten worden aangeboden.</value></data>
+  <data name="Security and system access" xml:space="preserve"><value>Beveiliging en systeemtoegang</value></data>
 </root>

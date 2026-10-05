@@ -18,6 +18,11 @@
 {
     <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
 }
+@if (pkg.BlockedAt is not null)
+{
+    <div class="alert error"><b>@L["This add-on is blocked for a security reason."]</b> @pkg.BlockReason
+        <small>(@pkg.BlockedBy · @Time.Fmt(pkg.BlockedAt.Value, false))</small></div>
+}
 @if (Model.SourceFindings.Count > 0)
 {
     <ul class="findings">
@@ -73,6 +78,28 @@
                     <button type="submit" class="btn small danger">@L["Take out of the store"]</button>
                 </form>
             }
+            @if (Model.IsAdmin && pkg.Id != "com.tungsten.pluginstore")
+            {
+                if (pkg.BlockedAt is null)
+                {
+                    <details class="approve-box">
+                        <summary class="btn small danger">@L["Security block"]</summary>
+                        <form method="post" asp-page-handler="BlockPackage" asp-route-id="@pkg.Id" class="stack" style="max-width:none;margin-top:8px"
+                              data-confirm="@L["Block the whole add-on? Every version is withdrawn, uploads are refused, and every Power PDF that has it installed asks its user to remove it."]">
+                            <label for="pkg-block">@L["Reason (users see it)"]</label>
+                            <input id="pkg-block" name="reason" required minlength="3" maxlength="300" placeholder="@L["e.g. sends document content to an undeclared server"]" />
+                            <button type="submit" class="btn small danger">@L["Block all versions"]</button>
+                        </form>
+                    </details>
+                }
+                else
+                {
+                    <form method="post" asp-page-handler="UnblockPackage" asp-route-id="@pkg.Id"
+                          data-confirm="@L["Lift the block? The versions stay withdrawn until you restore them."]">
+                        <button type="submit" class="btn small secondary">@L["Lift the block"]</button>
+                    </form>
+                }
+            }
         </div>
     </div>
 </div>
@@ -87,6 +114,10 @@
             <td><b>@v.Version</b></td>
             <td>
                 <span class="badge @v.Status.ToString().ToLowerInvariant()">@L[v.Status.ToString()]</span>
+                @if (v.BlockedAt is not null)
+                {
+                    <br /><span class="badge rejected">@L["Blocked"]</span> <small style="color:var(--tun-slate)">@v.BlockReason · @v.BlockedBy · @Time.Fmt(v.BlockedAt.Value, false)</small>
+                }
                 @if (v.Status == VersionStatus.Live && v.Id != offeredLive)
                 {
                     <br /><small style="color:var(--tun-slate)">@L["Older version, no longer offered"]</small>
@@ -124,6 +155,29 @@
                             <input type="hidden" name="versionId" value="@v.Id" />
                             <button type="submit" class="btn small danger">@L["Withdraw"]</button>
                         </form>
+                    }
+                    @if (Model.IsAdmin && v.PackageId != "com.tungsten.pluginstore")
+                    {
+                        if (v.BlockedAt is null)
+                        {
+                            <details class="approve-box">
+                                <summary class="btn small danger">@L["Block"]</summary>
+                                <form method="post" asp-page-handler="Block" asp-route-id="@pkg.Id" class="stack" style="max-width:none;margin-top:8px"
+                                      data-confirm="@L["Block this version? It is withdrawn, and every Power PDF that has it installed asks its user to remove it."]">
+                                    <input type="hidden" name="versionId" value="@v.Id" />
+                                    <input name="reason" required minlength="3" maxlength="300" placeholder="@L["Reason (users see it)"]" />
+                                    <button type="submit" class="btn small danger">@L["Block version"]</button>
+                                </form>
+                            </details>
+                        }
+                        else
+                        {
+                            <form method="post" asp-page-handler="Unblock" asp-route-id="@pkg.Id"
+                                  data-confirm="@L["Lift the block? The version stays withdrawn until you restore it."]">
+                                <input type="hidden" name="versionId" value="@v.Id" />
+                                <button type="submit" class="btn small secondary">@L["Lift the block"]</button>
+                            </form>
+                        }
                     }
                     @if (VersionActionService.CanRestore(v, Model.IsAdmin))
                     {

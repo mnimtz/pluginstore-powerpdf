@@ -207,6 +207,10 @@ public class Package
     public string? MetaUpdatedBy { get; set; }
     /// <summary>"public" (catalog) or "private" (only via customer deliveries).</summary>
     public string Visibility { get; set; } = "public";
+    /// <summary>Security block of the whole add-on (S1.0.11): every version withdrawn, uploads refused, clients told to remove it.</summary>
+    public DateTime? BlockedAt { get; set; }
+    public string? BlockReason { get; set; }
+    public string? BlockedBy { get; set; }
 }
 
 public enum VersionStatus
@@ -254,6 +258,10 @@ public class PackageVersion
     public string? AiReviewModel { get; set; }
     // Language of the review aid text (S0.17.0; null = created before that).
     public string? AiReviewLang { get; set; }
+    /// <summary>Security block of this version (S1.0.11): withdrawn, and clients that have it installed are told to remove it.</summary>
+    public DateTime? BlockedAt { get; set; }
+    public string? BlockReason { get; set; }
+    public string? BlockedBy { get; set; }
 }
 
 public class AuditEntry

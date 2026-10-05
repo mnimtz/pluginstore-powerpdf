@@ -399,7 +399,7 @@ def part_intro(meta, rules):
     x.append(Spacer(1, 6))
     x += bullets([
         f"**Automatic checks** on every upload and dry run: {c['errors']} hard rules, {c['warnings']} warnings and {c['info']} notes "
-        f"in 12 areas, plus {c['api']} API responses (Part III).",
+        f"in 13 areas, plus {c['api']} API responses (Part III).",
         '**Review:** a reviewer or admin approves every live version; with the four-eyes rule never the uploader.',
         '**House rules:** guidelines a store adds in plain words. Reviewers check them before approval; recommendations only advise.',
         '**Mandatory warnings:** a store can treat chosen warnings as errors; the validator then refuses such uploads.',

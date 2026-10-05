@@ -450,6 +450,7 @@ public class PackageValidator
                             $"Recompute the hash after the final build; the actual value is \"{actual}\".");
 
                     CheckPe(report, arch, file, bytes, manifest.Version);
+                    CheckCapabilities(report, file, bytes, root);   // network, injection, downloads, processes, persistence (S1.0.11)
                 }
 
                 CheckIcon(report, zip);
@@ -483,6 +484,14 @@ public class PackageValidator
                     ? $"Package id '{manifest.Id}' is taken."
                     : $"Package id '{manifest.Id}' belongs to another user ({Services.CatalogUi.PublicName(package.Owner)}).",
                 "Choose a different package id, or ask an admin to transfer ownership.");
+            return;
+        }
+
+        // A blocked add-on takes no new versions (S1.0.11).
+        if (package?.BlockedAt is not null)
+        {
+            report.Error("PACKAGE_BLOCKED", $"Package '{manifest.Id}' is blocked by the store admins.",
+                "A blocked add-on takes no uploads. Contact the store admins; they lift the block once the security problem is solved.");
             return;
         }
 
@@ -669,6 +678,86 @@ public class PackageValidator
                     $"'{file}': the string tables of {string.Join(", ", partial)} have fewer blocks than English; some texts appear in English.",
                     "Translate every string of the English table into each language.");
         }
+    }
+
+    // ---- capabilities of the binary (S1.0.11) --------------------------------
+    // An add-on runs inside Power PDF with the user's rights and sees confidential
+    // documents. What it can do is read from its imports (normal and delay-load)
+    // and from function or DLL names in its strings (GetProcAddress, LoadLibrary).
+    private static readonly string[] NetworkDlls =
+        { "winhttp.dll", "wininet.dll", "ws2_32.dll", "wsock32.dll", "urlmon.dll", "websocket.dll", "httpapi.dll", "mswsock.dll" };
+    private static readonly string[] NetworkFunctions =
+        { "WinHttpOpen", "InternetOpenA", "InternetOpenW", "WSAStartup", "HttpOpenRequestA", "HttpOpenRequestW", "URLOpenBlockingStreamA", "URLOpenBlockingStreamW" };
+    private static readonly string[] InjectionFunctions =
+        { "WriteProcessMemory", "CreateRemoteThread", "CreateRemoteThreadEx", "VirtualAllocEx", "NtWriteVirtualMemory", "ZwWriteVirtualMemory",
+          "RtlCreateUserThread", "NtCreateThreadEx", "ZwCreateThreadEx", "NtQueueApcThread", "SetThreadContext" };
+    private static readonly string[] DownloadFunctions =
+        { "URLDownloadToFileA", "URLDownloadToFileW", "URLDownloadToCacheFileA", "URLDownloadToCacheFileW" };
+    private static readonly string[] ProcessFunctions =
+        { "CreateProcessA", "CreateProcessW", "CreateProcessAsUserA", "CreateProcessAsUserW", "CreateProcessWithLogonW",
+          "CreateProcessWithTokenW", "WinExec", "ShellExecuteA", "ShellExecuteW", "ShellExecuteExA", "ShellExecuteExW" };
+    private static readonly string[] ServiceFunctions =
+        { "CreateServiceA", "CreateServiceW", "ChangeServiceConfigA", "ChangeServiceConfigW", "ChangeServiceConfig2A", "ChangeServiceConfig2W" };
+    private static readonly string[] PersistenceStrings =
+        { @"\currentversion\run", @"\currentversion\runonce", "schedule.service", "schtasks", @"\start menu\programs\startup",
+          "image file execution options", "appinit_dlls", @"\currentversion\winlogon" };
+    private static readonly Regex PlainHttpUrl = new(@"http://([A-Za-z0-9\-]+(?:\.[A-Za-z0-9\-]+)*\.[A-Za-z]{2,})", RegexOptions.Compiled);
+
+    private static void CheckCapabilities(ValidationReport report, string file, byte[] bytes, JsonElement root)
+    {
+        var imp = PeImports.Read(bytes);
+        var strings = new HashSet<string>(StringComparer.Ordinal);
+        var lowerStrings = new List<string>();
+        foreach (var s in ExtractStrings(bytes))
+        {
+            if (strings.Add(s)) lowerStrings.Add(s.ToLowerInvariant());
+            if (strings.Count > 400_000) break;
+        }
+        // a function counts when it is imported or its exact name is a string (GetProcAddress)
+        List<string> Uses(IEnumerable<string> names) =>
+            names.Where(n => imp.Functions.Contains(n) || strings.Contains(n)).Distinct().ToList();
+
+        var net = NetworkDlls.Where(d => imp.Dlls.Contains(d) || lowerStrings.Any(s => s == d || s.EndsWith("\\" + d))).ToList();
+        net.AddRange(Uses(NetworkFunctions));
+        int declaredServices = root.TryGetProperty("complianceAudit", out var audit) && audit.ValueKind == JsonValueKind.Object
+                               && audit.TryGetProperty("externalServices", out var svc) && svc.ValueKind == JsonValueKind.Array
+            ? svc.GetArrayLength() : 0;
+        if (net.Count > 0 && declaredServices == 0)
+            report.Error("NETWORK_UNDECLARED",
+                $"'{file}' can use the network ({string.Join(", ", net.Distinct().Take(6))}), but complianceAudit.externalServices is empty.",
+                "Declare every service the plug-in contacts (name, url, data sent) so admins can assess what may leave the machine; documents are confidential. If the network code is not needed, remove it (and the library that brings it).");
+
+        var injection = Uses(InjectionFunctions);
+        if (injection.Count > 0)
+            report.Error("PROCESS_INJECTION", $"'{file}' can write into or start threads in other processes ({string.Join(", ", injection)}).",
+                "A Power PDF add-on has no reason to touch other processes. Remove this code; the store does not accept it.");
+
+        var download = Uses(DownloadFunctions);
+        if (download.Count > 0)
+            report.Error("RUNTIME_DOWNLOAD", $"'{file}' downloads files to disk with {string.Join(", ", download)}.",
+                "Add-ons must not fetch and run code at run time: updates come only through the store, where they are checked. Fetch data from a declared service with WinHTTP and never execute or load what you download.");
+
+        var processes = Uses(ProcessFunctions);
+        if (processes.Count > 0)
+            report.Warn("PROCESS_START", $"'{file}' can start programs or open files and links ({string.Join(", ", processes)}).",
+                "Fine for opening a document, a mail or a web page the user asked for. Say in the compliance method text what is started and why; the reviewer checks it. Never start downloaded or temporary programs.");
+
+        var persistence = Uses(ServiceFunctions);
+        persistence.AddRange(PersistenceStrings.Where(p => lowerStrings.Any(s => s.Contains(p))));
+        if (persistence.Count > 0)
+            report.Warn("PERSISTENCE", $"'{file}' may register itself to run outside Power PDF ({string.Join(", ", persistence.Distinct().Take(6))}).",
+                "Add-ons run only while Power PDF runs: no autostart entries, services, scheduled tasks or system hooks. Remove this code or explain the finding to the reviewer.");
+
+        var plainHttp = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var s in strings)
+            foreach (Match m in PlainHttpUrl.Matches(s))
+            {
+                var host = m.Groups[1].Value.ToLowerInvariant();
+                if (!IgnoredHostSuffixes.Any(i => host == i || host.EndsWith("." + i))) plainHttp.Add(host);
+            }
+        if (plainHttp.Count > 0)
+            report.Warn("INSECURE_HTTP", $"'{file}' contains plain http:// addresses: {string.Join(", ", plainHttp.Take(10))}.",
+                "Talk to services over HTTPS only, with certificate checks on. Plain HTTP exposes documents and credentials on the network. Documentation links can stay, say so in the compliance method text.");
     }
 
     /// <summary>System and runtime DLLs a .zxt may import without a finding.</summary>

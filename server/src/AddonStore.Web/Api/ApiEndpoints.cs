@@ -182,6 +182,9 @@ public static class ApiEndpoints
                     "GET  /api/agent-guide/checklist  every hard rule on one short page (HTML: /agent-guide/checklist)",
                     "GET  /api/rules                  every rule grouped by area, with the store's own rules (house rules, stricter warnings)",
                     "GET  /api/agent-guide/manual-upload  package format, step-by-step creation and the one-file manual upload",
+                    "GET  /api/blocked                security blocks: sha256(package id), version or *, reason (format=tsv for the client)",
+                    "POST|DELETE /api/packages/{id}/{version}/block  block a version for a security reason {reason} (admins)",
+                    "POST|DELETE /api/packages/{id}/block  block the whole add-on {reason} (admins)",
                     "GET  /api/tools/make-ppak.ps1    offline packer: .ppak and the upload package (.ppak + source ZIP) for a manual upload on the website"
                 }
             }
@@ -1063,6 +1066,80 @@ public static class ApiEndpoints
                 warning = pinned > 0 ? $"{pinned} customer deliveries were fixed to this version and hand out nothing now; change them." : null } });
         }).RequireAuthorization("BearerOnly");
 
+        // ---- security blocks (S1.0.11) ----------------------------------------
+        // Every client reads this list at start and asks its user to remove blocked add-ons.
+        // Package ids are published as SHA-256 hashes, so private add-ons stay unnamed.
+        api.MapGet("/blocked", async (HttpContext ctx, AppDbContext db) =>
+        {
+            static string H(string id) => Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(
+                System.Text.Encoding.UTF8.GetBytes(id.Trim().ToLowerInvariant()))).ToLowerInvariant();
+            var versions = await db.PackageVersions.AsNoTracking().Where(v => v.BlockedAt != null)
+                .Select(v => new { v.PackageId, v.Version, v.BlockReason, v.BlockedAt }).ToListAsync();
+            var packages = await db.Packages.AsNoTracking().Where(p => p.BlockedAt != null)
+                .Select(p => new { p.Id, p.BlockReason, p.BlockedAt }).ToListAsync();
+            var list = packages.Select(p => new { hash = H(p.Id), version = "*", reason = p.BlockReason ?? "", at = p.BlockedAt })
+                .Concat(versions.Select(v => new { hash = H(v.PackageId), version = v.Version, reason = v.BlockReason ?? "", at = v.BlockedAt }))
+                .ToList();
+            if (ctx.Request.Query["format"] == "tsv")
+            {
+                var sb = new System.Text.StringBuilder("# hash\tversion\treason\n");
+                foreach (var e in list)
+                    sb.Append(e.hash).Append('\t').Append(e.version).Append('\t')
+                      .Append(e.reason.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ')).Append('\n');
+                return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
+            }
+            return Results.Json(new { ok = true, data = new { hash = "sha256(lowercase package id)", entries = list } });
+        });
+
+        api.MapPost("/packages/{id}/{version}/block", async (string id, string version, HttpContext ctx,
+            UserManager<AppUser> users, AppDbContext db, VersionActionService actions) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            if (!ctx.User.IsInRole("Admin")) return Results.Json(new { ok = false, error = new { code = "ADMIN_ONLY", message = "Only admins block versions.", hint = "Ask a store admin." } }, statusCode: 403);
+            var v = await db.PackageVersions.FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version);
+            if (v is null) return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}'.");
+            var reason = await ReasonAsync(ctx);
+            var msg = await actions.BlockVersionAsync(v.Id, user, true, reason);
+            if (msg is null || !msg.StartsWith("Version blocked"))
+                return Results.Json(new { ok = false, error = new { code = "BLOCK_INVALID", message = msg ?? "This version cannot be blocked (already blocked, or the store client).", hint = "Send {\"reason\": \"...\"} with 3 to 300 characters." } }, statusCode: 400);
+            return Results.Json(new { ok = true, data = new { id, version, blocked = true, message = msg } });
+        }).RequireAuthorization("BearerOnly");
+
+        api.MapDelete("/packages/{id}/{version}/block", async (string id, string version, HttpContext ctx,
+            UserManager<AppUser> users, AppDbContext db, VersionActionService actions) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            if (!ctx.User.IsInRole("Admin")) return Results.Json(new { ok = false, error = new { code = "ADMIN_ONLY", message = "Only admins lift blocks.", hint = "Ask a store admin." } }, statusCode: 403);
+            var v = await db.PackageVersions.FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version);
+            if (v is null) return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}'.");
+            var msg = await actions.UnblockVersionAsync(v.Id, user, true);
+            return msg is null ? NotFound("VERSION_NOT_FOUND", $"Version {version} of '{id}' is not blocked.")
+                               : Results.Json(new { ok = true, data = new { id, version, blocked = false, message = msg } });
+        }).RequireAuthorization("BearerOnly");
+
+        api.MapPost("/packages/{id}/block", async (string id, HttpContext ctx, UserManager<AppUser> users, VersionActionService actions) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            if (!ctx.User.IsInRole("Admin")) return Results.Json(new { ok = false, error = new { code = "ADMIN_ONLY", message = "Only admins block add-ons.", hint = "Ask a store admin." } }, statusCode: 403);
+            var msg = await actions.BlockPackageAsync(id, user, true, await ReasonAsync(ctx));
+            if (msg is null || !msg.StartsWith("Add-on blocked"))
+                return Results.Json(new { ok = false, error = new { code = "BLOCK_INVALID", message = msg ?? "This add-on cannot be blocked (unknown, already blocked, or the store client).", hint = "Send {\"reason\": \"...\"} with 3 to 300 characters." } }, statusCode: 400);
+            return Results.Json(new { ok = true, data = new { id, blocked = true, message = msg } });
+        }).RequireAuthorization("BearerOnly");
+
+        api.MapDelete("/packages/{id}/block", async (string id, HttpContext ctx, UserManager<AppUser> users, VersionActionService actions) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            if (!ctx.User.IsInRole("Admin")) return Results.Json(new { ok = false, error = new { code = "ADMIN_ONLY", message = "Only admins lift blocks.", hint = "Ask a store admin." } }, statusCode: 403);
+            var msg = await actions.UnblockPackageAsync(id, user, true);
+            return msg is null ? NotFound("PACKAGE_NOT_FOUND", $"'{id}' is not blocked.")
+                               : Results.Json(new { ok = true, data = new { id, blocked = false, message = msg } });
+        }).RequireAuthorization("BearerOnly");
+
         api.MapGet("/packages/{id}/{version}/download", async (string id, string version,
             AppDbContext db, SubmissionService svc, UsageService usage, HttpContext ctx, UserManager<AppUser> users, CustomerService customers) =>
         {
@@ -1191,6 +1268,18 @@ public static class ApiEndpoints
         "<p>Full guide: <a href=\"/agent-guide\">/agent-guide</a> (Markdown: <a href=\"/api/agent-guide\">/api/agent-guide</a>).</p>" +
         "<pre style=\"white-space:pre-wrap;word-wrap:break-word;font:14px/1.5 Consolas,monospace\">" +
         System.Net.WebUtility.HtmlEncode(md) + "</pre></body></html>";
+
+    /// <summary>{"reason": "..."} from a JSON body, or null.</summary>
+    private static async Task<string?> ReasonAsync(HttpContext ctx)
+    {
+        try
+        {
+            using var doc = await JsonDocument.ParseAsync(ctx.Request.Body);
+            return doc.RootElement.ValueKind == JsonValueKind.Object && doc.RootElement.TryGetProperty("reason", out var r) && r.ValueKind == JsonValueKind.String
+                ? r.GetString() : null;
+        }
+        catch (JsonException) { return null; }
+    }
 
     private static IResult BundleInvalid(string message) => Results.Json(new
     {

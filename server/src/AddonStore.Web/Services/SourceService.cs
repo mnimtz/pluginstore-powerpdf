@@ -13,6 +13,15 @@ namespace AddonStore.Web.Services;
 /// </summary>
 public class SourceService
 {
+    /// <summary>Ways to switch off HTTPS certificate validation in C, C++ and C# (S1.0.11).</summary>
+    internal static readonly (string Label, System.Text.RegularExpressions.Regex Rx)[] TlsBypassPatterns =
+    {
+        ("WinHTTP/WinINet ignore flags", new(@"\b(SECURITY_FLAG_IGNORE_(UNKNOWN_CA|CERT_CN_INVALID|CERT_DATE_INVALID|CERT_WRONG_USAGE|ALL_CERT_ERRORS)|INTERNET_FLAG_IGNORE_CERT_(CN|DATE)_INVALID)\b")),
+        ("curl verification off", new(@"CURLOPT_SSL_VERIFY(PEER|HOST)\s*,\s*0")),
+        ("OpenSSL verification off", new(@"SSL_(CTX_)?set_verify\s*\([^;]*SSL_VERIFY_NONE")),
+        (".NET accept-all certificate callback", new(@"ServerCertificate(Validation|CustomValidation)Callback\s*=\s*[^;]*=>\s*true")),
+    };
+
     public const long MaxZipBytes = 100L * 1024 * 1024;
     public const long MaxInflatedBytes = 600L * 1024 * 1024;
     public const int MaxEntries = 20000;
@@ -123,6 +132,7 @@ public class SourceService
             var copyleft = new SortedSet<string>();
             var weak = new SortedSet<string>();
             var thirdParty = new SortedSet<string>();
+            var tlsOff = new SortedSet<string>();
             var hasCode = false;
 
             foreach (var e in entries)
@@ -153,6 +163,10 @@ public class SourceService
 
                 foreach (var (label, rx) in PackageValidator.SecretPatterns)
                     if (rx.IsMatch(text)) secrets.Add($"{label} in {e.FullName}");
+                // certificate checks switched off (S1.0.11): documents and credentials would be open to interception
+                if (ext is ".c" or ".cc" or ".cpp" or ".cxx" or ".h" or ".hpp" or ".hxx" or ".inl" or ".cs")
+                    foreach (var (label, rx) in TlsBypassPatterns)
+                        if (rx.IsMatch(text)) tlsOff.Add($"{label} in {e.FullName}");
 
                 var dir = Path.GetDirectoryName(e.FullName.Replace('\\', '/'))?.Replace('\\', '/') ?? "";
                 if (isLicense)
@@ -188,6 +202,9 @@ public class SourceService
             if (secrets.Count > 0)
                 report.Error("SOURCE_SECRET", $"Possible credentials in the source: {string.Join("; ", secrets.Take(10))}.",
                     "Remove keys, tokens, passwords and certificates from the source, rotate any exposed secret, and load credentials at runtime.");
+            if (tlsOff.Count > 0)
+                report.Error("TLS_CHECK_DISABLED", $"The source switches off certificate checks: {string.Join("; ", tlsOff.Take(10))}.",
+                    "Keep HTTPS certificate validation on (no ignore flags, no accept-all callbacks). Fix the certificate or the host name instead; a disabled check lets anyone on the network read documents and credentials.");
             if (copyleft.Count > 0)
                 report.Error("LICENSE_COPYLEFT_SOURCE", $"GPL/AGPL code in the source: {string.Join("; ", copyleft.Take(10))}.",
                     "Shipped plugins may contain only MIT, BSD or Apache-2.0 third-party code. Remove or replace the component.");

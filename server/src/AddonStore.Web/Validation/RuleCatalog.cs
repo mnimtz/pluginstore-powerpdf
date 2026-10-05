@@ -124,12 +124,14 @@ public static class RuleCatalog
     {
         "Package structure", "Manifest and versioning", "Categories", "Languages", "Binaries and integrity",
         "Runtime and dependencies", "Ribbon and layout", "Licenses, legal and privacy", "Icon and screenshots",
-        "Source code", "Customer deliveries", "API, accounts and limits",
+        "Security and system access", "Source code", "Customer deliveries", "API, accounts and limits",
     };
 
     public static string AreaOf(string code)
     {
         bool Any(params string[] prefixes) => prefixes.Any(p => code.StartsWith(p, StringComparison.Ordinal));
+        if (code is "NETWORK_UNDECLARED" or "PROCESS_INJECTION" or "RUNTIME_DOWNLOAD" or "PROCESS_START" or "PERSISTENCE"
+            or "INSECURE_HTTP" or "TLS_CHECK_DISABLED" or "PACKAGE_BLOCKED") return "Security and system access";
         if (Any("SOURCE_") || code is "LICENSE_COPYLEFT_SOURCE" or "LICENSE_WEAK_COPYLEFT_SOURCE" or "THIRDPARTY_SOURCE_DETECTED") return "Source code";
         if (Any("CUSTOMER_", "DELIVERY_") || code is "PROMOTE_NOTHING" or "CODE_NOT_FOUND" or "CODE_MISSING") return "Customer deliveries";
         if (Any("CATEGORY_")) return "Categories";

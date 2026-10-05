@@ -197,13 +197,23 @@ item passes because a similar plugin passed.
 - [ ] No credentials, API keys, private keys or key containers (.pfx, .p12,
       .pem, .snk) in the package or the source. (SECRET_DETECTED, SOURCE_SECRET)
 - [ ] Each .zxt at most 120 MB unpacked. (ENTRY_TOO_LARGE, ENTRY_NOT_SCANNED)
+- [ ] Network only for the services declared in `complianceAudit.externalServices`,
+      over HTTPS with certificate validation on (no ignore flags, no accept-all
+      callbacks). A binary that can use the network with an empty list is refused.
+      (NETWORK_UNDECLARED, TLS_CHECK_DISABLED)
+- [ ] Nothing outside Power PDF: no code that writes into other processes or
+      starts threads there, and no downloading of files to run or load them;
+      updates come only through the store. Starting programs and autostart
+      entries, services or scheduled tasks are reported to the reviewer.
+      (PROCESS_INJECTION, RUNTIME_DOWNLOAD)
 
 **B. manifest.json** (valid JSON, at the ZIP root, at most 256 KB:
 MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
 - [ ] `id`: lowercase reverse-DNS of YOUR domain (com.example.myplugin),
       not `com.tungsten.`, `com.kofax.`, `com.nuance.` (reserved for the
-      store operators); an id that belongs to another account is refused
-      online. (ID_INVALID, ID_RESERVED, PACKAGE_OWNED_BY_OTHER)
+      store operators); an id that belongs to another account, or an add-on
+      the store has blocked, is refused online. (ID_INVALID, ID_RESERVED,
+      PACKAGE_OWNED_BY_OTHER, PACKAGE_BLOCKED)
 - [ ] `version`: MAJOR.MINOR.PATCH, higher than every version submitted
       before (checked online). (VERSION_INVALID, VERSION_NOT_INCREMENTED)
 - [ ] `name`: at least `en`, only known language codes, at most 80
@@ -736,6 +746,20 @@ other developers' private ones; the owner gets an email); admins see and
 manage all, reviewers read. Admins get an email when a
 developer creates or changes a delivery.
 
+## Security blocks
+
+When a version or a whole add-on turns out to be unsafe, an admin blocks it on
+the plug-in page (or `POST {{baseUrl}}/api/packages/{id}/{version}/block`,
+`POST {{baseUrl}}/api/packages/{id}/block`, body `{"reason": "..."}`). A block
+withdraws it at once (catalog, customer deliveries, downloads), refuses new
+uploads of a blocked add-on (`PACKAGE_BLOCKED`), and publishes it in
+`GET {{baseUrl}}/api/blocked`: SHA-256 of the lowercase package id, the version
+or `*`, and the reason (private add-ons stay unnamed). Every Power PDF client
+reads that list at start and every few hours, independent of the update
+setting, and asks its user to remove a blocked add-on that is installed. Lifting
+a block (`DELETE` on the same address) leaves the versions withdrawn until an
+admin restores them; the owner and the staff are told by mail.
+
 ## Package signatures
 
 Every catalog entry carries a signature of the server (ECDSA P-256 over
@@ -896,6 +920,15 @@ be free of warnings before review. Info is for information only.
 | ARCH_UNDECLARED | error | 'files.arm64' is set but "arm64" is not in 'architectures'. |
 | PE_MANAGED | error | The .zxt is a .NET assembly; Power PDF loads native plug-ins only. |
 | PE_NO_ENTRY | error | The .zxt does not export PlugInMain (linker option /EXPORT:PlugInMain). |
+| NETWORK_UNDECLARED | error | The binary can use the network (WinHTTP, WinINet, Winsock, URLMon) but `complianceAudit.externalServices` is empty. |
+| PROCESS_INJECTION | error | The binary can write into or start threads in other processes (WriteProcessMemory, CreateRemoteThread, VirtualAllocEx ...). |
+| RUNTIME_DOWNLOAD | error | The binary downloads files to disk with URLDownloadToFile; add-ons must not fetch and run code at run time. |
+| PROCESS_START | warning | The binary can start programs or open files and links (CreateProcess, ShellExecute, WinExec); the reviewer checks why. |
+| PERSISTENCE | warning | The binary may register itself to run outside Power PDF (services, Run keys, scheduled tasks, Winlogon, AppInit_DLLs). |
+| INSECURE_HTTP | warning | The binary contains plain http:// addresses; services are reached over HTTPS only. |
+| TLS_CHECK_DISABLED | error | The source switches off HTTPS certificate validation (ignore flags, curl/OpenSSL verify off, accept-all callbacks). |
+| PACKAGE_BLOCKED | error | The add-on is blocked by the store admins for a security reason; it takes no uploads. |
+| BLOCK_INVALID | error (400) | A block request without a reason (3 to 300 characters), or for something that cannot be blocked. |
 | PE_HARDENING | warning | Built without ASLR (/DYNAMICBASE) or DEP (/NXCOMPAT). |
 | VERSIONINFO_MISSING | warning | The .zxt has no VERSIONINFO resource. |
 | VERSIONINFO_MISMATCH | warning | The FILEVERSION of the .zxt differs from the manifest version (usually an old build was packaged). |

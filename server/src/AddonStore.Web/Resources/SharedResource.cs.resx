@@ -884,4 +884,23 @@
   <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Napište podmínku do 600 znaků.</value></data>
   <data name="checked online" xml:space="preserve"><value>kontrolováno online</value></data>
   <data name="the standard wording changed since" xml:space="preserve"><value>standardní znění se od té doby změnilo</value></data>
+  <data name="Blocked" xml:space="preserve"><value>Zablokováno</value></data>
+  <data name="Block" xml:space="preserve"><value>Zablokovat</value></data>
+  <data name="Block version" xml:space="preserve"><value>Zablokovat verzi</value></data>
+  <data name="Block all versions" xml:space="preserve"><value>Zablokovat všechny verze</value></data>
+  <data name="Lift the block" xml:space="preserve"><value>Zrušit blokaci</value></data>
+  <data name="Security block" xml:space="preserve"><value>Bezpečnostní blokace</value></data>
+  <data name="Reason (users see it)" xml:space="preserve"><value>Důvod (uživatelé ho uvidí)</value></data>
+  <data name="e.g. sends document content to an undeclared server" xml:space="preserve"><value>např. odesílá obsah dokumentů na neohlášený server</value></data>
+  <data name="This add-on is blocked for a security reason." xml:space="preserve"><value>Tento doplněk je z bezpečnostních důvodů zablokován.</value></data>
+  <data name="Block this version? It is withdrawn, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Zablokovat tuto verzi? Bude stažena a každý Power PDF, ve kterém je nainstalována, vyzve uživatele k jejímu odebrání.</value></data>
+  <data name="Block the whole add-on? Every version is withdrawn, uploads are refused, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Zablokovat celý doplněk? Všechny verze budou staženy, nahrávání odmítnuto a každý Power PDF, ve kterém je nainstalován, vyzve uživatele k jeho odebrání.</value></data>
+  <data name="Lift the block? The version stays withdrawn until you restore it." xml:space="preserve"><value>Zrušit blokaci? Verze zůstane stažená, dokud ji neobnovíte.</value></data>
+  <data name="Lift the block? The versions stay withdrawn until you restore them." xml:space="preserve"><value>Zrušit blokaci? Verze zůstanou stažené, dokud je neobnovíte.</value></data>
+  <data name="Give a reason for the block (3 to 300 characters); users see it." xml:space="preserve"><value>Uveďte důvod blokace (3 až 300 znaků); uživatelé ho uvidí.</value></data>
+  <data name="Version blocked. Clients that have it installed ask the user to remove it." xml:space="preserve"><value>Verze zablokována. Klienti, kde je nainstalována, vyzvou uživatele k jejímu odebrání.</value></data>
+  <data name="Block lifted. The version stays withdrawn; restore it if it should be offered again." xml:space="preserve"><value>Blokace zrušena. Verze zůstává stažená; obnovte ji, pokud se má znovu nabízet.</value></data>
+  <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>Doplněk zablokován. Všechny verze jsou stažené, nahrávání je odmítáno a klienti vyzvou uživatele k jeho odebrání.</value></data>
+  <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>Blokace zrušena. Verze zůstávají stažené; obnovte ty, které se mají znovu nabízet.</value></data>
+  <data name="Security and system access" xml:space="preserve"><value>Zabezpečení a přístup k systému</value></data>
 </root>

@@ -884,4 +884,23 @@
   <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Skriv betingelsen med opptil 600 tegn.</value></data>
   <data name="checked online" xml:space="preserve"><value>kontrolleres på nett</value></data>
   <data name="the standard wording changed since" xml:space="preserve"><value>standardformuleringen er endret siden</value></data>
+  <data name="Blocked" xml:space="preserve"><value>Blokkert</value></data>
+  <data name="Block" xml:space="preserve"><value>Blokker</value></data>
+  <data name="Block version" xml:space="preserve"><value>Blokker versjon</value></data>
+  <data name="Block all versions" xml:space="preserve"><value>Blokker alle versjoner</value></data>
+  <data name="Lift the block" xml:space="preserve"><value>Opphev blokkeringen</value></data>
+  <data name="Security block" xml:space="preserve"><value>Sikkerhetsblokkering</value></data>
+  <data name="Reason (users see it)" xml:space="preserve"><value>Grunn (synlig for brukerne)</value></data>
+  <data name="e.g. sends document content to an undeclared server" xml:space="preserve"><value>f.eks. sender dokumentinnhold til en ikke-oppgitt server</value></data>
+  <data name="This add-on is blocked for a security reason." xml:space="preserve"><value>Dette tillegget er blokkert av sikkerhetsgrunner.</value></data>
+  <data name="Block this version? It is withdrawn, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Blokkere denne versjonen? Den trekkes tilbake, og hver Power PDF som har den installert, ber brukeren fjerne den.</value></data>
+  <data name="Block the whole add-on? Every version is withdrawn, uploads are refused, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>Blokkere hele tillegget? Alle versjoner trekkes tilbake, opplastinger avvises, og hver Power PDF som har det installert, ber brukeren fjerne det.</value></data>
+  <data name="Lift the block? The version stays withdrawn until you restore it." xml:space="preserve"><value>Oppheve blokkeringen? Versjonen forblir trukket tilbake til du gjenoppretter den.</value></data>
+  <data name="Lift the block? The versions stay withdrawn until you restore them." xml:space="preserve"><value>Oppheve blokkeringen? Versjonene forblir trukket tilbake til du gjenoppretter dem.</value></data>
+  <data name="Give a reason for the block (3 to 300 characters); users see it." xml:space="preserve"><value>Oppgi en grunn for blokkeringen (3 til 300 tegn); brukerne ser den.</value></data>
+  <data name="Version blocked. Clients that have it installed ask the user to remove it." xml:space="preserve"><value>Versjonen er blokkert. Klienter som har den installert, ber brukeren fjerne den.</value></data>
+  <data name="Block lifted. The version stays withdrawn; restore it if it should be offered again." xml:space="preserve"><value>Blokkeringen er opphevet. Versjonen forblir trukket tilbake; gjenopprett den hvis den skal tilbys igjen.</value></data>
+  <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>Tillegget er blokkert. Alle versjoner er trukket tilbake, opplastinger avvises, og klienter ber brukeren fjerne det.</value></data>
+  <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>Blokkeringen er opphevet. Versjonene forblir trukket tilbake; gjenopprett dem som skal tilbys igjen.</value></data>
+  <data name="Security and system access" xml:space="preserve"><value>Sikkerhet og systemtilgang</value></data>
 </root>

@@ -81,7 +81,8 @@ public class PluginModel : PageModel
     {
         if (!await LoadAsync(id ?? "")) return Forbid();
         Notice = await action() ?? "This action is not allowed for this version.";
-        if (Notice.StartsWith("The source code") || Notice.StartsWith("This action") || Notice.StartsWith("Confirm every")) NoticeKind = "warn";
+        if (Notice.StartsWith("The source code") || Notice.StartsWith("This action") || Notice.StartsWith("Confirm every")
+            || Notice.StartsWith("Give a reason")) NoticeKind = "warn";
         await LoadAsync(id!);
         return Page();
     }
@@ -176,4 +177,17 @@ public class PluginModel : PageModel
 
     public Task<IActionResult> OnPostWithdrawAllAsync(string id) =>
         ActAsync(id, () => _actions.WithdrawPackageAsync(id, Me!, IsAdmin));
+
+    // security blocks (S1.0.11)
+    public Task<IActionResult> OnPostBlockAsync(string id, int versionId, string? reason) =>
+        ActAsync(id, () => _actions.BlockVersionAsync(versionId, Me!, IsAdmin, reason));
+
+    public Task<IActionResult> OnPostUnblockAsync(string id, int versionId) =>
+        ActAsync(id, () => _actions.UnblockVersionAsync(versionId, Me!, IsAdmin));
+
+    public Task<IActionResult> OnPostBlockPackageAsync(string id, string? reason) =>
+        ActAsync(id, () => _actions.BlockPackageAsync(id, Me!, IsAdmin, reason));
+
+    public Task<IActionResult> OnPostUnblockPackageAsync(string id) =>
+        ActAsync(id, () => _actions.UnblockPackageAsync(id, Me!, IsAdmin));
 }
