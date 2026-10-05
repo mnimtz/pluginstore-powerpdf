@@ -8,6 +8,7 @@
 #include "install.h"
 #include "version.h"
 #include "logging.h"
+#include "blocklist.h"
 
 extern "C" HINSTANCE gHINSTANCE;
 
@@ -22,6 +23,9 @@ int  g_startupTries = 0;
 const UINT_PTR kStartupTimer = 1;
 const UINT_PTR kUpdateTimer = 2;
 const UINT WM_PS_UPDATES = WM_APP + 77;   // wParam = number of updates
+const UINT_PTR kBlockTimer = 3;            // security blocklist (C1.1.5): 20 s after start, then every 4 h
+const UINT WM_PS_BLOCKED = WM_APP + 78;    // lParam = std::vector<PSBlocked>*
+const UINT kBlockEveryMs = 4 * 60 * 60 * 1000;
 volatile LONG g_checkRunning = 0;
 
 // Worker: fetch the catalog, count newer versions, report to the window.
@@ -130,6 +134,25 @@ LRESULT CALLBACK LinkWndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp)
         PSRibbonSetUpdateBadge((int)wp);
         return 0;
     }
+    if (msg == WM_TIMER && wp == kBlockTimer)
+    {
+        SetTimer(h, kBlockTimer, kBlockEveryMs, NULL);
+        PSBlockCheckStart(h, WM_PS_BLOCKED);
+        return 0;
+    }
+    if (msg == WM_PS_BLOCKED)
+    {
+        PSBlockTakeResult(lp);
+        if (!PSBlockedInstalled().empty())
+        {
+            // ask over the Power PDF main window, not while a modal dialog of Power PDF is open
+            HWND main = NULL;
+            EnumWindows(FindMain, (LPARAM)&main);
+            if (main && IsWindowEnabled(main) && !PSStoreDialogOpen()) PSOfferBlockedRemoval(main, false);
+            else SetTimer(h, kBlockTimer, 60 * 1000, NULL);
+        }
+        return 0;
+    }
     if (msg == WM_TIMER && wp == kStartupTimer)
     {
         // Power PDF was started by the link helper: wait until its main
@@ -180,6 +203,8 @@ void PSLinkInit()
         SetTimer(g_linkWnd, kStartupTimer, 2000, NULL);
     if (PSUpdateBadgeEnabled())
         SetTimer(g_linkWnd, kUpdateTimer, 15000, NULL);
+    // security blocks are checked regardless of the update badge setting
+    SetTimer(g_linkWnd, kBlockTimer, 20000, NULL);
 }
 
 void PSUpdateCheckSoon()

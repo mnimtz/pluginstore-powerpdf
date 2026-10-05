@@ -11,6 +11,7 @@
 #include "logging.h"
 #include "clocale.h"
 #include "hostversion.h"
+#include "blocklist.h"
 #include "Resource.h"
 #include "version.h"
 #include <wrl.h>
@@ -491,6 +492,7 @@ protected:
             { L"codeRemove", IDS_PSW_CODE_REMOVE }, { L"codeLocked", IDS_PSW_CODE_LOCKED }, { L"codeActive", IDS_PSW_CODE_ACTIVE },
             { L"codeBad", IDS_PSO_CODE_BAD },
             { L"migrateText", IDS_PSW_MIGRATE_TEXT }, { L"migrateBtn", IDS_PSW_MIGRATE_BTN }, { L"migrateDone", IDS_PSW_MIGRATE_DONE },
+            { L"blockedText", IDS_PSW_BLOCKED_BANNER }, { L"blockedBtn", IDS_PSW_BLOCKED_BTN },
         };
         std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) +
                          L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") +
@@ -557,6 +559,14 @@ protected:
         }
         j += L"]";
         j += MigrateJson();
+        // installed add-ons the store has blocked for a security reason (C1.1.5)
+        {
+            std::wstring b;
+            for (const auto& x : PSBlockedInstalled())
+                b += (b.empty() ? L"" : L",") + std::wstring(L"{\"name\":") + Json(x.name) + L",\"version\":" + Json(x.version) +
+                     L",\"reason\":" + Json(x.reason) + L"}";
+            if (!b.empty()) j += L",\"blocked\":[" + b + L"]";
+        }
         if (m_hasSelfUpdate)
             j += L",\"self\":{\"version\":" + Json(m_self.version) + L",\"installed\":" + Json(FP_VERSION_W) + L"}";
         if (r.flag && !m_preselect.empty() && m_preselect != kClientId)
@@ -888,6 +898,7 @@ protected:
         if (cmd == L"ready") { SendInit(); LoadCatalog(true); }
         else if (cmd == L"refresh") LoadCatalog(false);
         else if (cmd == L"migrateDismiss") MigrateDismiss();
+        else if (cmd == L"removeBlocked" && !m_jobRunning) { PSOfferBlockedRemoval(m_hWnd, true); LoadCatalog(false); }
         else if (cmd == L"install" || cmd == L"uninstall")
         {
             // The page waits behind a progress dialog until a "result" arrives: every

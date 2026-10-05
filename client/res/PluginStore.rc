@@ -1,4 +1,4 @@
-// PluginStore.rc — Add-on Store client resource script.
+﻿// PluginStore.rc — Add-on Store client resource script.
 // UTF-8 with code_page pragma. String ids live in Resource.h; every IDS_
 // exists in every language block below (English is the runtime fallback).
 #pragma code_page(65001)
@@ -208,6 +208,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Add-ons from an earlier Power PDF installation (%s) are missing in this one: %s"
     IDS_PSW_MIGRATE_BTN  "Install here"
     IDS_PSW_MIGRATE_DONE  "%s add-on(s) installed. Restart Power PDF now to load them?"
+    IDS_PS_BLOCKED_ASK  "The add-on “%s” (version %s) was blocked by the Add-on Store for a security reason:\n\n%s\n\nRemove it now? Windows asks for administrator rights."
+    IDS_PS_BLOCKED_FAILED  "The add-on “%s” could not be removed (error %d). Please contact your IT department."
+    IDS_PS_BLOCKED_REMOVED  "Blocked add-ons removed. Restart Power PDF now so they are no longer loaded?"
+    IDS_PSW_BLOCKED_BANNER  "Blocked by the Add-on Store for a security reason, please remove: %s"
+    IDS_PSW_BLOCKED_BTN  "Remove now"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -322,6 +327,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Add-ons aus einer früheren Power-PDF-Installation (%s) fehlen in dieser: %s"
     IDS_PSW_MIGRATE_BTN  "Hier installieren"
     IDS_PSW_MIGRATE_DONE  "%s Add-on(s) installiert. Power PDF jetzt neu starten, um sie zu laden?"
+    IDS_PS_BLOCKED_ASK  "Das Add-on „%s“ (Version %s) wurde vom Add-on Store aus Sicherheitsgründen gesperrt:\n\n%s\n\nJetzt entfernen? Windows fragt nach Administratorrechten."
+    IDS_PS_BLOCKED_FAILED  "Das Add-on „%s“ konnte nicht entfernt werden (Fehler %d). Bitte wenden Sie sich an Ihre IT."
+    IDS_PS_BLOCKED_REMOVED  "Gesperrte Add-ons entfernt. Power PDF jetzt neu starten, damit sie nicht mehr geladen sind?"
+    IDS_PSW_BLOCKED_BANNER  "Vom Add-on Store aus Sicherheitsgründen gesperrt, bitte entfernen: %s"
+    IDS_PSW_BLOCKED_BTN  "Jetzt entfernen"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -436,6 +446,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Des modules d'une installation précédente de Power PDF (%s) manquent dans celle-ci : %s"
     IDS_PSW_MIGRATE_BTN  "Installer ici"
     IDS_PSW_MIGRATE_DONE  "%s module(s) installé(s). Redémarrer Power PDF maintenant pour les charger ?"
+    IDS_PS_BLOCKED_ASK  "Le module « %s » (version %s) a été bloqué par l'Add-on Store pour une raison de sécurité :\n\n%s\n\nLe supprimer maintenant ? Windows demande des droits d'administrateur."
+    IDS_PS_BLOCKED_FAILED  "Le module « %s » n'a pas pu être supprimé (erreur %d). Contactez votre service informatique."
+    IDS_PS_BLOCKED_REMOVED  "Modules bloqués supprimés. Redémarrer Power PDF maintenant pour qu'ils ne soient plus chargés ?"
+    IDS_PSW_BLOCKED_BANNER  "Bloqué par l'Add-on Store pour une raison de sécurité, veuillez supprimer : %s"
+    IDS_PSW_BLOCKED_BTN  "Supprimer maintenant"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -550,6 +565,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Componenti aggiuntivi di un'installazione precedente di Power PDF (%s) mancano in questa: %s"
     IDS_PSW_MIGRATE_BTN  "Installa qui"
     IDS_PSW_MIGRATE_DONE  "%s componente/i aggiuntivo/i installato/i. Riavviare ora Power PDF per caricarli?"
+    IDS_PS_BLOCKED_ASK  "Il componente aggiuntivo ""%s"" (versione %s) è stato bloccato da Add-on Store per motivi di sicurezza:\n\n%s\n\nRimuoverlo ora? Windows chiede i diritti di amministratore."
+    IDS_PS_BLOCKED_FAILED  "Impossibile rimuovere il componente aggiuntivo ""%s"" (errore %d). Contatta il reparto IT."
+    IDS_PS_BLOCKED_REMOVED  "Componenti bloccati rimossi. Riavviare ora Power PDF affinché non vengano più caricati?"
+    IDS_PSW_BLOCKED_BANNER  "Bloccato da Add-on Store per motivi di sicurezza, rimuovere: %s"
+    IDS_PSW_BLOCKED_BTN  "Rimuovi ora"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -664,6 +684,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Faltan en esta instalación complementos de una instalación anterior de Power PDF (%s): %s"
     IDS_PSW_MIGRATE_BTN  "Instalar aquí"
     IDS_PSW_MIGRATE_DONE  "%s complemento(s) instalado(s). ¿Reiniciar Power PDF ahora para cargarlos?"
+    IDS_PS_BLOCKED_ASK  "El complemento ""%s"" (versión %s) ha sido bloqueado por la Add-on Store por motivos de seguridad:\n\n%s\n\n¿Eliminarlo ahora? Windows pide derechos de administrador."
+    IDS_PS_BLOCKED_FAILED  "No se pudo eliminar el complemento ""%s"" (error %d). Póngase en contacto con su departamento de TI."
+    IDS_PS_BLOCKED_REMOVED  "Complementos bloqueados eliminados. ¿Reiniciar Power PDF ahora para que dejen de cargarse?"
+    IDS_PSW_BLOCKED_BANNER  "Bloqueado por la Add-on Store por motivos de seguridad, elimínelo: %s"
+    IDS_PSW_BLOCKED_BTN  "Eliminar ahora"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -778,6 +803,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Invoegtoepassingen uit een eerdere Power PDF-installatie (%s) ontbreken in deze: %s"
     IDS_PSW_MIGRATE_BTN  "Hier installeren"
     IDS_PSW_MIGRATE_DONE  "%s invoegtoepassing(en) geïnstalleerd. Power PDF nu opnieuw starten om ze te laden?"
+    IDS_PS_BLOCKED_ASK  "De invoegtoepassing ""%s"" (versie %s) is om veiligheidsredenen door de Add-on Store geblokkeerd:\n\n%s\n\nNu verwijderen? Windows vraagt om beheerdersrechten."
+    IDS_PS_BLOCKED_FAILED  "De invoegtoepassing ""%s"" kon niet worden verwijderd (fout %d). Neem contact op met uw IT-afdeling."
+    IDS_PS_BLOCKED_REMOVED  "Geblokkeerde invoegtoepassingen verwijderd. Power PDF nu opnieuw starten zodat ze niet meer worden geladen?"
+    IDS_PSW_BLOCKED_BANNER  "Om veiligheidsredenen geblokkeerd door de Add-on Store, verwijder: %s"
+    IDS_PSW_BLOCKED_BTN  "Nu verwijderen"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -892,6 +922,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Faltam nesta instalação suplementos de uma instalação anterior do Power PDF (%s): %s"
     IDS_PSW_MIGRATE_BTN  "Instalar aqui"
     IDS_PSW_MIGRATE_DONE  "%s suplemento(s) instalado(s). Reiniciar o Power PDF agora para os carregar?"
+    IDS_PS_BLOCKED_ASK  "O suplemento ""%s"" (versão %s) foi bloqueado pela Add-on Store por motivos de segurança:\n\n%s\n\nRemovê-lo agora? O Windows pede direitos de administrador."
+    IDS_PS_BLOCKED_FAILED  "Não foi possível remover o suplemento ""%s"" (erro %d). Contacte o seu departamento de TI."
+    IDS_PS_BLOCKED_REMOVED  "Suplementos bloqueados removidos. Reiniciar o Power PDF agora para que deixem de ser carregados?"
+    IDS_PSW_BLOCKED_BANNER  "Bloqueado pela Add-on Store por motivos de segurança, remova: %s"
+    IDS_PSW_BLOCKED_BTN  "Remover agora"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1006,6 +1041,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Tilføjelsesprogrammer fra en tidligere Power PDF-installation (%s) mangler i denne: %s"
     IDS_PSW_MIGRATE_BTN  "Installer her"
     IDS_PSW_MIGRATE_DONE  "%s tilføjelsesprogram(mer) installeret. Genstart Power PDF nu for at indlæse dem?"
+    IDS_PS_BLOCKED_ASK  "Tilføjelsesprogrammet ""%s"" (version %s) er blokeret af Add-on Store af sikkerhedsgrunde:\n\n%s\n\nFjern det nu? Windows beder om administratorrettigheder."
+    IDS_PS_BLOCKED_FAILED  "Tilføjelsesprogrammet ""%s"" kunne ikke fjernes (fejl %d). Kontakt din IT-afdeling."
+    IDS_PS_BLOCKED_REMOVED  "Blokerede tilføjelsesprogrammer er fjernet. Genstart Power PDF nu, så de ikke længere indlæses?"
+    IDS_PSW_BLOCKED_BANNER  "Blokeret af Add-on Store af sikkerhedsgrunde, fjern venligst: %s"
+    IDS_PSW_BLOCKED_BTN  "Fjern nu"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1120,6 +1160,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Aiemman Power PDF -asennuksen (%s) lisäosat puuttuvat tästä asennuksesta: %s"
     IDS_PSW_MIGRATE_BTN  "Asenna tähän"
     IDS_PSW_MIGRATE_DONE  "%s lisäosaa asennettu. Käynnistetäänkö Power PDF nyt uudelleen niiden lataamiseksi?"
+    IDS_PS_BLOCKED_ASK  "Add-on Store on estänyt lisäosan ""%s"" (versio %s) tietoturvasyistä:\n\n%s\n\nPoistetaanko se nyt? Windows pyytää järjestelmänvalvojan oikeudet."
+    IDS_PS_BLOCKED_FAILED  "Lisäosaa ""%s"" ei voitu poistaa (virhe %d). Ota yhteyttä IT-tukeen."
+    IDS_PS_BLOCKED_REMOVED  "Estetyt lisäosat poistettu. Käynnistetäänkö Power PDF nyt uudelleen, jotta niitä ei enää ladata?"
+    IDS_PSW_BLOCKED_BANNER  "Add-on Store on estänyt tietoturvasyistä, poista: %s"
+    IDS_PSW_BLOCKED_BTN  "Poista nyt"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1234,6 +1279,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Tillegg fra en tidligere Power PDF-installasjon (%s) mangler i denne: %s"
     IDS_PSW_MIGRATE_BTN  "Installer her"
     IDS_PSW_MIGRATE_DONE  "%s tillegg installert. Starte Power PDF på nytt nå for å laste dem?"
+    IDS_PS_BLOCKED_ASK  "Tillegget ""%s"" (versjon %s) er blokkert av Add-on Store av sikkerhetsgrunner:\n\n%s\n\nFjerne det nå? Windows ber om administratorrettigheter."
+    IDS_PS_BLOCKED_FAILED  "Tillegget ""%s"" kunne ikke fjernes (feil %d). Kontakt IT-avdelingen."
+    IDS_PS_BLOCKED_REMOVED  "Blokkerte tillegg er fjernet. Starte Power PDF på nytt nå slik at de ikke lenger lastes?"
+    IDS_PSW_BLOCKED_BANNER  "Blokkert av Add-on Store av sikkerhetsgrunner, fjern: %s"
+    IDS_PSW_BLOCKED_BTN  "Fjern nå"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1348,6 +1398,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Tillägg från en tidigare Power PDF-installation (%s) saknas i den här: %s"
     IDS_PSW_MIGRATE_BTN  "Installera här"
     IDS_PSW_MIGRATE_DONE  "%s tillägg installerade. Starta om Power PDF nu för att läsa in dem?"
+    IDS_PS_BLOCKED_ASK  "Tillägget ""%s"" (version %s) har spärrats av Add-on Store av säkerhetsskäl:\n\n%s\n\nTa bort det nu? Windows ber om administratörsbehörighet."
+    IDS_PS_BLOCKED_FAILED  "Tillägget ""%s"" kunde inte tas bort (fel %d). Kontakta IT-avdelningen."
+    IDS_PS_BLOCKED_REMOVED  "Spärrade tillägg har tagits bort. Starta om Power PDF nu så att de inte längre läses in?"
+    IDS_PSW_BLOCKED_BANNER  "Spärrat av Add-on Store av säkerhetsskäl, ta bort: %s"
+    IDS_PSW_BLOCKED_BTN  "Ta bort nu"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1462,6 +1517,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "W tej instalacji brakuje dodatków z wcześniejszej instalacji Power PDF (%s): %s"
     IDS_PSW_MIGRATE_BTN  "Zainstaluj tutaj"
     IDS_PSW_MIGRATE_DONE  "Zainstalowano dodatki: %s. Uruchomić ponownie Power PDF teraz, aby je załadować?"
+    IDS_PS_BLOCKED_ASK  "Dodatek „%s” (wersja %s) został zablokowany przez Add-on Store ze względów bezpieczeństwa:\n\n%s\n\nUsunąć go teraz? System Windows poprosi o uprawnienia administratora."
+    IDS_PS_BLOCKED_FAILED  "Nie udało się usunąć dodatku „%s” (błąd %d). Skontaktuj się z działem IT."
+    IDS_PS_BLOCKED_REMOVED  "Zablokowane dodatki usunięto. Uruchomić ponownie Power PDF teraz, aby nie były już ładowane?"
+    IDS_PSW_BLOCKED_BANNER  "Zablokowane przez Add-on Store ze względów bezpieczeństwa, usuń: %s"
+    IDS_PSW_BLOCKED_BTN  "Usuń teraz"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1576,6 +1636,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "V této instalaci chybí doplňky z dřívější instalace Power PDF (%s): %s"
     IDS_PSW_MIGRATE_BTN  "Nainstalovat sem"
     IDS_PSW_MIGRATE_DONE  "Nainstalováno doplňků: %s. Restartovat nyní Power PDF a načíst je?"
+    IDS_PS_BLOCKED_ASK  "Doplněk „%s“ (verze %s) byl z bezpečnostních důvodů zablokován obchodem Add-on Store:\n\n%s\n\nOdebrat ho nyní? Windows požádá o oprávnění správce."
+    IDS_PS_BLOCKED_FAILED  "Doplněk „%s“ se nepodařilo odebrat (chyba %d). Obraťte se na oddělení IT."
+    IDS_PS_BLOCKED_REMOVED  "Zablokované doplňky byly odebrány. Restartovat nyní Power PDF, aby se už nenačítaly?"
+    IDS_PSW_BLOCKED_BANNER  "Zablokováno obchodem Add-on Store z bezpečnostních důvodů, odeberte: %s"
+    IDS_PSW_BLOCKED_BTN  "Odebrat nyní"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1690,6 +1755,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Egy korábbi Power PDF-telepítés (%s) bővítményei hiányoznak ebből: %s"
     IDS_PSW_MIGRATE_BTN  "Telepítés ide"
     IDS_PSW_MIGRATE_DONE  "%s bővítmény telepítve. Újraindítja most a Power PDF-et a betöltésükhöz?"
+    IDS_PS_BLOCKED_ASK  "Az Add-on Store biztonsági okból letiltotta a(z) „%s” bővítményt (verzió: %s):\n\n%s\n\nEltávolítja most? A Windows rendszergazdai jogokat kér."
+    IDS_PS_BLOCKED_FAILED  "A(z) „%s” bővítmény nem távolítható el (hiba: %d). Forduljon az informatikai részleghez."
+    IDS_PS_BLOCKED_REMOVED  "A letiltott bővítmények eltávolítva. Újraindítja most a Power PDF-et, hogy ne töltődjenek be?"
+    IDS_PSW_BLOCKED_BANNER  "Az Add-on Store biztonsági okból letiltotta, távolítsa el: %s"
+    IDS_PSW_BLOCKED_BTN  "Eltávolítás most"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1804,6 +1874,11 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "В этой установке отсутствуют надстройки из предыдущей установки Power PDF (%s): %s"
     IDS_PSW_MIGRATE_BTN  "Установить сюда"
     IDS_PSW_MIGRATE_DONE  "Установлено надстроек: %s. Перезапустить Power PDF сейчас, чтобы загрузить их?"
+    IDS_PS_BLOCKED_ASK  "Надстройка «%s» (версия %s) заблокирована Add-on Store по соображениям безопасности:\n\n%s\n\nУдалить ее сейчас? Windows запросит права администратора."
+    IDS_PS_BLOCKED_FAILED  "Не удалось удалить надстройку «%s» (ошибка %d). Обратитесь в ИТ-отдел."
+    IDS_PS_BLOCKED_REMOVED  "Заблокированные надстройки удалены. Перезапустить Power PDF сейчас, чтобы они больше не загружались?"
+    IDS_PSW_BLOCKED_BANNER  "Заблокировано Add-on Store по соображениям безопасности, удалите: %s"
+    IDS_PSW_BLOCKED_BTN  "Удалить сейчас"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1918,4 +1993,9 @@ BEGIN
     IDS_PSW_MIGRATE_TEXT  "Önceki bir Power PDF kurulumunun (%s) eklentileri bu kurulumda eksik: %s"
     IDS_PSW_MIGRATE_BTN  "Buraya yükle"
     IDS_PSW_MIGRATE_DONE  "%s eklenti yüklendi. Yüklemek için Power PDF şimdi yeniden başlatılsın mı?"
+    IDS_PS_BLOCKED_ASK  """%s"" eklentisi (sürüm %s) güvenlik nedeniyle Add-on Store tarafından engellendi:\n\n%s\n\nŞimdi kaldırılsın mı? Windows yönetici hakları ister."
+    IDS_PS_BLOCKED_FAILED  """%s"" eklentisi kaldırılamadı (hata %d). Lütfen BT departmanınıza başvurun."
+    IDS_PS_BLOCKED_REMOVED  "Engellenen eklentiler kaldırıldı. Artık yüklenmemeleri için Power PDF şimdi yeniden başlatılsın mı?"
+    IDS_PSW_BLOCKED_BANNER  "Güvenlik nedeniyle Add-on Store tarafından engellendi, lütfen kaldırın: %s"
+    IDS_PSW_BLOCKED_BTN  "Şimdi kaldır"
 END

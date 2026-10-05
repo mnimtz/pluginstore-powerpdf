@@ -127,6 +127,11 @@
 #define IDS_PSW_MIGRATE_TEXT    322
 #define IDS_PSW_MIGRATE_BTN     323
 #define IDS_PSW_MIGRATE_DONE    324
+#define IDS_PS_BLOCKED_ASK      325
+#define IDS_PS_BLOCKED_FAILED   326
+#define IDS_PS_BLOCKED_REMOVED  327
+#define IDS_PSW_BLOCKED_BANNER  328
+#define IDS_PSW_BLOCKED_BTN     329
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261

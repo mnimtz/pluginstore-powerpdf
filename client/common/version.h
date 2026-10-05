@@ -5,6 +5,6 @@
 
 #define FP_VERSION_MAJOR 1
 #define FP_VERSION_MINOR 1
-#define FP_VERSION_PATCH 4
-#define FP_VERSION_W  L"1.1.4"
-#define FP_VERSION_A   "1.1.4"
+#define FP_VERSION_PATCH 5
+#define FP_VERSION_W  L"1.1.5"
+#define FP_VERSION_A   "1.1.5"

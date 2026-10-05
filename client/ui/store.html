@@ -123,6 +123,7 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
   <div class="banner err" id="err" style="display:none"></div>
   <div class="banner need" id="need" style="display:none"><span id="needText"></span><button class="btn sec sm" style="margin-left:auto" id="needAll"></button></div>
   <div class="banner upd" id="lock" style="display:none"></div>
+  <div class="banner err" id="blk" style="display:none"><span id="blkText"></span><button class="btn sm" style="margin-left:auto" id="blkBtn"></button></div>
   <div class="banner need" id="mig" style="display:none"><span id="migText"></span><button class="btn sm" style="margin-left:auto" id="migBtn"></button><button class="btn sec sm" id="migLater"></button></div>
   <div class="chips" id="chips"></div>
   <div class="main">
@@ -437,6 +438,8 @@ function apply(m) {
     $("discLink").textContent = S.disclaimerBtn;
     $("discLink").onclick = function () { modal(S.disclaimerBtn, S.disclaimerFull, [{ label: S.close }]); };
     $("migBtn").textContent = S.migrateBtn || ""; $("migLater").textContent = S.later || "";
+    $("blkBtn").textContent = S.blockedBtn || "";
+    $("blkBtn").onclick = function () { if (!busy) post({ cmd: "removeBlocked" }); };
     $("migLater").onclick = function () { $("mig").style.display = "none"; post({ cmd: "migrateDismiss" }); };
     $("updBtn").textContent = S.selfUpdateBtn;
     $("updBtn").onclick = function () { busyModal(S.selfUpdateBtn); post({ cmd: "selfUpdate" }); };
@@ -450,6 +453,9 @@ function apply(m) {
     codeButton();
     $("err").style.display = m.error ? "flex" : "none"; $("err").textContent = m.error || "";
     $("upd").style.display = self ? "flex" : "none";
+    var blk = m.blocked && m.blocked.length ? m.blocked : null;
+    $("blk").style.display = blk ? "flex" : "none";
+    if (blk) $("blkText").textContent = fmt(S.blockedText, blk.map(function (b) { return b.name + " " + b.version + (b.reason ? " (" + b.reason + ")" : ""); }).join("; "));
     var mig = !locked && m.migrate && m.migrate.items && m.migrate.items.length ? m.migrate : null;
     $("mig").style.display = mig && !migQueue ? "flex" : "none";
     if (mig) {
