@@ -57,6 +57,9 @@ bearer token and JSON; nothing in it depends on one vendor. Set yourself up once
 3. `GET {{baseUrl}}/api/devkit` lists SDK documentation, knowledge files and
    templates you can download (Plugin SDK docs, known pitfalls, project template).
 4. `GET {{baseUrl}}/api/schema/manifest` is the schema for manifest.json.
+5. `GET {{baseUrl}}/api/rules` lists every rule grouped by area, with the
+   rules this store adds (house rules, warnings it treats as errors). The
+   pre-flight checklist below includes them.
 
 ## Authentication
 
@@ -268,7 +271,7 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       without build output, secrets or GPL/AGPL code (see "Source code").
       (SOURCE_INVALID, SOURCE_TOO_LARGE)
 
-Warnings (yellow) do not block, but fix them too: missing icon, author,
+{{AddonStore.Web.Validation.RuleCatalog.ChecklistMarkdown()}}Warnings (yellow) do not block, but fix them too: missing icon, author,
 contact, screenshots, LICENSES.md.
 
 ## Compliance audit (mandatory, truthful)

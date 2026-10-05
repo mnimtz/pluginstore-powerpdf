@@ -180,6 +180,7 @@ public static class ApiEndpoints
                     "GET  /api/packages/{id}/icon[?v=version]  catalog icon (PNG), of the given or the newest released version",
                     "GET  /api/devkit                 SDK documentation and developer kit files",
                     "GET  /api/agent-guide/checklist  every hard rule on one short page (HTML: /agent-guide/checklist)",
+                    "GET  /api/rules                  every rule grouped by area, with the store's own rules (house rules, stricter warnings)",
                     "GET  /api/agent-guide/manual-upload  package format, step-by-step creation and the one-file manual upload",
                     "GET  /api/tools/make-ppak.ps1    offline packer: .ppak and the upload package (.ppak + source ZIP) for a manual upload on the website"
                 }
@@ -197,6 +198,43 @@ public static class ApiEndpoints
         api.MapGet("/agent-guide/manual-upload", (HttpContext ctx, AppVersion ver) => MarkdownText(ctx, AgentGuide.ManualUpload(Base(ctx), ver.Value)));
 
         api.MapGet("/schema/manifest", () => Results.Text(AgentGuide.ManifestSchema, "application/json"));
+
+        // Every rule grouped by area, with the store's own rules (S1.0.9).
+        api.MapGet("/rules", () =>
+        {
+            var house = AddonStore.Web.Validation.RuleCatalog.House;
+            var rules = AddonStore.Web.Validation.RuleCatalog.Rules;
+            return Results.Json(new
+            {
+                ok = true,
+                data = new
+                {
+                    areas = AddonStore.Web.Validation.RuleCatalog.Areas.Select(a => new
+                    {
+                        name = a,
+                        rules = rules.Where(r => r.Area == a).Select(r => new
+                        {
+                            code = r.Code,
+                            severity = r.Severity == "warning" && house.Escalated.Contains(r.Code) ? "error" : r.Severity,
+                            kind = r.Api ? "api" : "package",
+                            stricterHere = house.Escalated.Contains(r.Code),
+                            description = r.Description
+                        }),
+                        houseRules = house.Rules.Where(h => h.Area == a).Select(h => new { id = h.Id, title = h.Title, text = h.Text, kind = h.Kind })
+                    }),
+                    escalated = house.Escalated,
+                    counts = new
+                    {
+                        rules = rules.Count,
+                        errors = rules.Count(r => !r.Api && (r.Severity == "error" || house.Escalated.Contains(r.Code))),
+                        warnings = rules.Count(r => !r.Api && r.Severity == "warning" && !house.Escalated.Contains(r.Code)),
+                        info = rules.Count(r => !r.Api && r.Severity == "info"),
+                        api = rules.Count(r => r.Api),
+                        houseRules = house.Rules.Count
+                    }
+                }
+            });
+        });
 
         // Vendor-neutral entry points (S0.13.0): OpenAPI for tools and function calling, AGENTS.md for coding assistants.
         api.MapGet("/openapi.json", (HttpContext ctx, AppVersion ver) =>

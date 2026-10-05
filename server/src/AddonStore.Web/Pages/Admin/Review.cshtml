@@ -14,6 +14,19 @@
     <div class="alert ok">@L[Model.Notice]</div>
 }
 
+@{
+    var toCheck = RuleCatalog.House.Rules.Where(h => h.Kind == "review").ToList();
+}
+@if (toCheck.Count > 0)
+{
+    <div class="card" style="border-left:4px solid var(--tun-blue);margin-bottom:14px">
+        <strong>@L["House rules to check before approval"]</strong>
+        <ul style="margin:6px 0 0">
+            @foreach (var h in toCheck) { <li><b>@h.Title</b>: @h.Text</li> }
+        </ul>
+        <p style="margin:6px 0 0;font-size:.85rem"><a href="/Admin/Rules?area=store">@L["Rules of this store"] →</a></p>
+    </div>
+}
 @if (Model.Queue.Count == 0)
 {
     <div class="card">@L["Nothing to review right now."]</div>

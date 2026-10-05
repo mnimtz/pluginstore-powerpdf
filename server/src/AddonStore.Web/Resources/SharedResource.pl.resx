@@ -732,7 +732,6 @@
   <data name="Request a developer account" xml:space="preserve"><value>Poproś o konto dewelopera</value></data>
   <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>Kopię zapasową przywrócono na nowym serwerze. Zaloguj się kontem administratora z kopii zapasowej.</value></data>
   <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>Twoje konto nie jest aktywnym administratorem w tej kopii zapasowej (ani to konto, ani jego adres e-mail); przywrócenie zablokowałoby Ci dostęp.</value></data>
-  <data name="Failed" xml:space="preserve"><value>Niepowodzenie</value></data>
   <data name="This backup was downloaded without the key ring, and this server cannot read its package signing key. Confirm the restore without the key ring, or use a backup downloaded with a key ring password." xml:space="preserve"><value>Ta kopia zapasowa została pobrana bez pęku kluczy, a ten serwer nie może odczytać jej klucza podpisywania pakietów. Potwierdź przywracanie bez pęku kluczy lub użyj kopii pobranej z hasłem pęku kluczy.</value></data>
   <data name="The restore failed (damaged archive or full disk). The previous state was put back; nothing changed." xml:space="preserve"><value>Przywracanie nie powiodło się (uszkodzone archiwum lub pełny dysk). Poprzedni stan został przywrócony; nic się nie zmieniło.</value></data>
   <data name="The restore failed and the previous state could not be put back automatically. Download the safety backup {0} under Safety backups and restore it." xml:space="preserve"><value>Przywracanie nie powiodło się, a poprzedniego stanu nie udało się przywrócić automatycznie. Pobierz kopię zabezpieczającą {0} w sekcji Kopie bezpieczeństwa i przywróć ją.</value></data>
@@ -816,4 +815,50 @@
   <data name="The .ppak in the upload package is larger than 200 MB." xml:space="preserve"><value>Plik .ppak w pakiecie do przesłania ma ponad 200 MB.</value></data>
   <data name="The source ZIP in the upload package is larger than 100 MB." xml:space="preserve"><value>ZIP z kodem źródłowym w pakiecie do przesłania ma ponad 100 MB.</value></data>
   <data name="A file in the upload package is larger than allowed." xml:space="preserve"><value>Plik w pakiecie do przesłania jest większy niż dozwolono.</value></data>
+  <data name="API" xml:space="preserve"><value>API</value></data>
+  <data name="API responses" xml:space="preserve"><value>Odpowiedzi API</value></data>
+  <data name="API, accounts and limits" xml:space="preserve"><value>API, konta i limity</value></data>
+  <data name="Agent guide" xml:space="preserve"><value>Przewodnik dla agentów</value></data>
+  <data name="Area" xml:space="preserve"><value>Obszar</value></data>
+  <data name="Back to warning" xml:space="preserve"><value>Przywróć ostrzeżenie</value></data>
+  <data name="Checked at approval" xml:space="preserve"><value>Sprawdzane przy zatwierdzeniu</value></data>
+  <data name="Customer deliveries" xml:space="preserve"><value>Dostawy dla klientów</value></data>
+  <data name="Delete the house rule &quot;{0}&quot;?" xml:space="preserve"><value>Usunąć regułę wewnętrzną „{0}”?</value></data>
+  <data name="Edit" xml:space="preserve"><value>Edytuj</value></data>
+  <data name="Edit house rule" xml:space="preserve"><value>Edytuj regułę wewnętrzną</value></data>
+  <data name="Error" xml:space="preserve"><value>Błąd</value></data>
+  <data name="Errors" xml:space="preserve"><value>Błędy</value></data>
+  <data name="Every rule grouped by area, with the rules of this store" xml:space="preserve"><value>Wszystkie reguły według obszarów, z regułami tego Store</value></data>
+  <data name="Every rule the store checks, grouped by area: errors block an upload, warnings and notes do not. The rule texts are in English, exactly as AI assistants read them in the agent guide." xml:space="preserve"><value>Wszystkie reguły sprawdzane przez Store, według obszarów: błędy blokują przesłanie, ostrzeżenia i uwagi nie. Teksty reguł są po angielsku, dokładnie tak, jak asystenci AI czytają je w przewodniku dla agentów.</value></data>
+  <data name="Fill in area, title (up to 120 characters) and text (up to 2000 characters)." xml:space="preserve"><value>Wypełnij obszar, tytuł (do 120 znaków) i tekst (do 2000 znaków).</value></data>
+  <data name="House rules" xml:space="preserve"><value>Reguły wewnętrzne</value></data>
+  <data name="House rules to check before approval" xml:space="preserve"><value>Reguły wewnętrzne do sprawdzenia przed zatwierdzeniem</value></data>
+  <data name="Icon and screenshots" xml:space="preserve"><value>Ikona i zrzuty ekranu</value></data>
+  <data name="Machine-readable" xml:space="preserve"><value>Do odczytu maszynowego</value></data>
+  <data name="Make mandatory" xml:space="preserve"><value>Ustaw jako obowiązkowe</value></data>
+  <data name="Make {0} mandatory? Uploads with this finding are then refused." xml:space="preserve"><value>Ustawić {0} jako obowiązkowe? Przesłania z tym ustaleniem zostaną odrzucone.</value></data>
+  <data name="New house rule" xml:space="preserve"><value>Nowa reguła wewnętrzna</value></data>
+  <data name="None yet. Open an area and choose &quot;Make mandatory&quot; next to a warning." xml:space="preserve"><value>Jeszcze brak. Otwórz obszar i wybierz „Ustaw jako obowiązkowe” obok ostrzeżenia.</value></data>
+  <data name="None yet. Open an area to add a house rule there." xml:space="preserve"><value>Jeszcze brak. Otwórz obszar, aby dodać w nim regułę wewnętrzną.</value></data>
+  <data name="Notes" xml:space="preserve"><value>Uwagi</value></data>
+  <data name="Only warnings can be made mandatory." xml:space="preserve"><value>Tylko ostrzeżenia można ustawić jako obowiązkowe.</value></data>
+  <data name="Pre-flight checklist" xml:space="preserve"><value>Lista kontrolna przed przesłaniem</value></data>
+  <data name="Recommendation" xml:space="preserve"><value>Zalecenie</value></data>
+  <data name="Rule" xml:space="preserve"><value>Reguła</value></data>
+  <data name="Rules" xml:space="preserve"><value>Reguły</value></data>
+  <data name="Rules of this store" xml:space="preserve"><value>Reguły tego Store</value></data>
+  <data name="Saved." xml:space="preserve"><value>Zapisano.</value></data>
+  <data name="Search code or text" xml:space="preserve"><value>Szukaj kodu lub tekstu</value></data>
+  <data name="Search results" xml:space="preserve"><value>Wyniki wyszukiwania</value></data>
+  <data name="Severity" xml:space="preserve"><value>Waga</value></data>
+  <data name="Standard rules" xml:space="preserve"><value>Reguły standardowe</value></data>
+  <data name="Title" xml:space="preserve"><value>Tytuł</value></data>
+  <data name="Treat {0} as a warning again?" xml:space="preserve"><value>Znów traktować {0} jako ostrzeżenie?</value></data>
+  <data name="Warnings" xml:space="preserve"><value>Ostrzeżenia</value></data>
+  <data name="Warnings that are mandatory here" xml:space="preserve"><value>Ostrzeżenia obowiązkowe w tym Store</value></data>
+  <data name="What this store adds to the standard rules. House rules are guidelines in plain words: reviewers check them before approval, recommendations only advise. Mandatory warnings are enforced by the automatic check like errors." xml:space="preserve"><value>Co ten Store dodaje do reguł standardowych. Reguły wewnętrzne to wytyczne prostymi słowami: recenzenci sprawdzają je przed zatwierdzeniem, zalecenia tylko doradzają. Automatyczna kontrola egzekwuje obowiązkowe ostrzeżenia jak błędy.</value></data>
+  <data name="Write it so a developer and an AI assistant can follow it; it appears in the agent guide, the pre-flight checklist and the manual." xml:space="preserve"><value>Napisz ją tak, aby programista i asystent AI mogli jej przestrzegać; pojawia się w przewodniku dla agentów, liście kontrolnej i podręczniku.</value></data>
+  <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>np. dodatki do podpisu stosują reguły certyfikatów klienta</value></data>
+  <data name="mandatory here" xml:space="preserve"><value>obowiązkowe tutaj</value></data>
+  <data name="Last run failed" xml:space="preserve"><value>Ostatnie uruchomienie nie powiodło się</value></data>
 </root>

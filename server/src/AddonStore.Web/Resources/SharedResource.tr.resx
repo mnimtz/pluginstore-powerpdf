@@ -732,7 +732,6 @@
   <data name="Request a developer account" xml:space="preserve"><value>Geliştirici hesabı iste</value></data>
   <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>Yedek yeni sunucuya geri yüklendi. Yedekteki bir yönetici hesabıyla oturum açın.</value></data>
   <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>Hesabınız bu yedekte etkin bir yönetici değil (ne bu hesap ne de e-posta adresi); geri yükleme sizi dışarıda bırakırdı.</value></data>
-  <data name="Failed" xml:space="preserve"><value>Başarısız</value></data>
   <data name="This backup was downloaded without the key ring, and this server cannot read its package signing key. Confirm the restore without the key ring, or use a backup downloaded with a key ring password." xml:space="preserve"><value>Bu yedek anahtar halkası olmadan indirildi ve bu sunucu paket imzalama anahtarını okuyamıyor. Geri yüklemeyi anahtar halkası olmadan onaylayın veya anahtar halkası parolasıyla indirilmiş bir yedek kullanın.</value></data>
   <data name="The restore failed (damaged archive or full disk). The previous state was put back; nothing changed." xml:space="preserve"><value>Geri yükleme başarısız oldu (hasarlı arşiv veya dolu disk). Önceki durum geri getirildi; hiçbir şey değişmedi.</value></data>
   <data name="The restore failed and the previous state could not be put back automatically. Download the safety backup {0} under Safety backups and restore it." xml:space="preserve"><value>Geri yükleme başarısız oldu ve önceki durum otomatik olarak geri getirilemedi. Güvenlik yedeği {0} öğesini Güvenlik kopyaları altında indirip geri yükleyin.</value></data>
@@ -816,4 +815,50 @@
   <data name="The .ppak in the upload package is larger than 200 MB." xml:space="preserve"><value>Yükleme paketindeki .ppak 200 MB'tan büyük.</value></data>
   <data name="The source ZIP in the upload package is larger than 100 MB." xml:space="preserve"><value>Yükleme paketindeki kaynak kod ZIP'i 100 MB'tan büyük.</value></data>
   <data name="A file in the upload package is larger than allowed." xml:space="preserve"><value>Yükleme paketindeki bir dosya izin verilenden büyük.</value></data>
+  <data name="API" xml:space="preserve"><value>API</value></data>
+  <data name="API responses" xml:space="preserve"><value>API yanıtları</value></data>
+  <data name="API, accounts and limits" xml:space="preserve"><value>API, hesaplar ve sınırlar</value></data>
+  <data name="Agent guide" xml:space="preserve"><value>Ajan kılavuzu</value></data>
+  <data name="Area" xml:space="preserve"><value>Alan</value></data>
+  <data name="Back to warning" xml:space="preserve"><value>Yeniden uyarı yap</value></data>
+  <data name="Checked at approval" xml:space="preserve"><value>Onayda kontrol edilir</value></data>
+  <data name="Customer deliveries" xml:space="preserve"><value>Müşteri teslimatları</value></data>
+  <data name="Delete the house rule &quot;{0}&quot;?" xml:space="preserve"><value>"{0}" iç kuralı silinsin mi?</value></data>
+  <data name="Edit" xml:space="preserve"><value>Düzenle</value></data>
+  <data name="Edit house rule" xml:space="preserve"><value>İç kuralı düzenle</value></data>
+  <data name="Error" xml:space="preserve"><value>Hata</value></data>
+  <data name="Errors" xml:space="preserve"><value>Hatalar</value></data>
+  <data name="Every rule grouped by area, with the rules of this store" xml:space="preserve"><value>Alanlara göre tüm kurallar, bu Store'un kurallarıyla</value></data>
+  <data name="Every rule the store checks, grouped by area: errors block an upload, warnings and notes do not. The rule texts are in English, exactly as AI assistants read them in the agent guide." xml:space="preserve"><value>Store'un denetlediği tüm kurallar, alanlara göre: hatalar yüklemeyi engeller, uyarılar ve notlar engellemez. Kural metinleri İngilizcedir, yapay zekâ asistanlarının ajan kılavuzunda okuduğu şekilde.</value></data>
+  <data name="Fill in area, title (up to 120 characters) and text (up to 2000 characters)." xml:space="preserve"><value>Alanı, başlığı (en fazla 120 karakter) ve metni (en fazla 2000 karakter) doldurun.</value></data>
+  <data name="House rules" xml:space="preserve"><value>İç kurallar</value></data>
+  <data name="House rules to check before approval" xml:space="preserve"><value>Onaydan önce kontrol edilecek iç kurallar</value></data>
+  <data name="Icon and screenshots" xml:space="preserve"><value>Simge ve ekran görüntüleri</value></data>
+  <data name="Machine-readable" xml:space="preserve"><value>Makine tarafından okunabilir</value></data>
+  <data name="Make mandatory" xml:space="preserve"><value>Zorunlu yap</value></data>
+  <data name="Make {0} mandatory? Uploads with this finding are then refused." xml:space="preserve"><value>{0} zorunlu yapılsın mı? Bu bulguya sahip yüklemeler reddedilir.</value></data>
+  <data name="New house rule" xml:space="preserve"><value>Yeni iç kural</value></data>
+  <data name="None yet. Open an area and choose &quot;Make mandatory&quot; next to a warning." xml:space="preserve"><value>Henüz yok. Bir alan açın ve bir uyarının yanında "Zorunlu yap"ı seçin.</value></data>
+  <data name="None yet. Open an area to add a house rule there." xml:space="preserve"><value>Henüz yok. İç kural eklemek için bir alan açın.</value></data>
+  <data name="Notes" xml:space="preserve"><value>Notlar</value></data>
+  <data name="Only warnings can be made mandatory." xml:space="preserve"><value>Yalnızca uyarılar zorunlu yapılabilir.</value></data>
+  <data name="Pre-flight checklist" xml:space="preserve"><value>Yükleme öncesi kontrol listesi</value></data>
+  <data name="Recommendation" xml:space="preserve"><value>Öneri</value></data>
+  <data name="Rule" xml:space="preserve"><value>Kural</value></data>
+  <data name="Rules" xml:space="preserve"><value>Kurallar</value></data>
+  <data name="Rules of this store" xml:space="preserve"><value>Bu Store'un kuralları</value></data>
+  <data name="Saved." xml:space="preserve"><value>Kaydedildi.</value></data>
+  <data name="Search code or text" xml:space="preserve"><value>Kod veya metin ara</value></data>
+  <data name="Search results" xml:space="preserve"><value>Arama sonuçları</value></data>
+  <data name="Severity" xml:space="preserve"><value>Önem</value></data>
+  <data name="Standard rules" xml:space="preserve"><value>Standart kurallar</value></data>
+  <data name="Title" xml:space="preserve"><value>Başlık</value></data>
+  <data name="Treat {0} as a warning again?" xml:space="preserve"><value>{0} yeniden uyarı olarak değerlendirilsin mi?</value></data>
+  <data name="Warnings" xml:space="preserve"><value>Uyarılar</value></data>
+  <data name="Warnings that are mandatory here" xml:space="preserve"><value>Burada zorunlu olan uyarılar</value></data>
+  <data name="What this store adds to the standard rules. House rules are guidelines in plain words: reviewers check them before approval, recommendations only advise. Mandatory warnings are enforced by the automatic check like errors." xml:space="preserve"><value>Bu Store'un standart kurallara eklediği şeyler. İç kurallar sade sözcüklerle yazılmış yönergelerdir: gözden geçirenler onaydan önce bunları kontrol eder, öneriler yalnızca tavsiye verir. Zorunlu uyarılar otomatik kontrolde hata gibi uygulanır.</value></data>
+  <data name="Write it so a developer and an AI assistant can follow it; it appears in the agent guide, the pre-flight checklist and the manual." xml:space="preserve"><value>Bir geliştiricinin ve yapay zekâ asistanının izleyebileceği şekilde yazın; ajan kılavuzunda, kontrol listesinde ve el kitabında görünür.</value></data>
+  <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>örn. imza eklentileri müşterinin sertifika kurallarını kullanır</value></data>
+  <data name="mandatory here" xml:space="preserve"><value>burada zorunlu</value></data>
+  <data name="Last run failed" xml:space="preserve"><value>Son çalıştırma başarısız</value></data>
 </root>

@@ -40,7 +40,7 @@
             <tr><th>@L["Last backup"]</th><td>
                 @if (c.LastRunUtc is null) { <text>–</text> }
                 else if (c.LastResult == "ok") { <span class="badge live">@L["OK"]</span> <text>@Time.Fmt(c.LastRunUtc) · @Size(c.LastSize) · </text><code>@c.LastBlob</code> }
-                else { <span class="badge rejected">@L["Failed"]</span> <text>@Time.Fmt(c.LastRunUtc) · </text><code>@c.LastResult</code> }
+                else { <span class="badge rejected">@L["Last run failed"]</span> <text>@Time.Fmt(c.LastRunUtc) · </text><code>@c.LastResult</code> }
             </td></tr>
             <tr><th>@L["Next backup"]</th><td>@(Model.NextRunUtc is { } n ? Time.Fmt(n) : "–")</td></tr>
         </table>

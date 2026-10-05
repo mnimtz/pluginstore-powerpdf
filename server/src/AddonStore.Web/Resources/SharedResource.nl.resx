@@ -732,7 +732,6 @@
   <data name="Request a developer account" xml:space="preserve"><value>Ontwikkelaarsaccount aanvragen</value></data>
   <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>Back-up op de nieuwe server hersteld. Meld u aan met een beheerdersaccount uit de back-up.</value></data>
   <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>Uw account is in deze back-up geen actieve beheerder (noch dit account noch het e-mailadres ervan); herstellen zou u buitensluiten.</value></data>
-  <data name="Failed" xml:space="preserve"><value>Mislukt</value></data>
   <data name="This backup was downloaded without the key ring, and this server cannot read its package signing key. Confirm the restore without the key ring, or use a backup downloaded with a key ring password." xml:space="preserve"><value>Deze back-up is zonder sleutelring gedownload en deze server kan de pakketondertekeningssleutel ervan niet lezen. Bevestig het herstel zonder sleutelring of gebruik een back-up die met een sleutelringwachtwoord is gedownload.</value></data>
   <data name="The restore failed (damaged archive or full disk). The previous state was put back; nothing changed." xml:space="preserve"><value>Het herstel is mislukt (beschadigd archief of volle schijf). De vorige toestand is teruggezet; er is niets veranderd.</value></data>
   <data name="The restore failed and the previous state could not be put back automatically. Download the safety backup {0} under Safety backups and restore it." xml:space="preserve"><value>Het herstel is mislukt en de vorige toestand kon niet automatisch worden teruggezet. Download de veiligheidsback-up {0} onder Veiligheidskopieën en herstel die.</value></data>
@@ -816,4 +815,50 @@
   <data name="The .ppak in the upload package is larger than 200 MB." xml:space="preserve"><value>De .ppak in het uploadpakket is groter dan 200 MB.</value></data>
   <data name="The source ZIP in the upload package is larger than 100 MB." xml:space="preserve"><value>De broncode-ZIP in het uploadpakket is groter dan 100 MB.</value></data>
   <data name="A file in the upload package is larger than allowed." xml:space="preserve"><value>Een bestand in het uploadpakket is groter dan toegestaan.</value></data>
+  <data name="API" xml:space="preserve"><value>API</value></data>
+  <data name="API responses" xml:space="preserve"><value>API-antwoorden</value></data>
+  <data name="API, accounts and limits" xml:space="preserve"><value>API, accounts en limieten</value></data>
+  <data name="Agent guide" xml:space="preserve"><value>Agentgids</value></data>
+  <data name="Area" xml:space="preserve"><value>Gebied</value></data>
+  <data name="Back to warning" xml:space="preserve"><value>Weer waarschuwing</value></data>
+  <data name="Checked at approval" xml:space="preserve"><value>Gecontroleerd bij goedkeuring</value></data>
+  <data name="Customer deliveries" xml:space="preserve"><value>Klantleveringen</value></data>
+  <data name="Delete the house rule &quot;{0}&quot;?" xml:space="preserve"><value>Huisregel "{0}" verwijderen?</value></data>
+  <data name="Edit" xml:space="preserve"><value>Bewerken</value></data>
+  <data name="Edit house rule" xml:space="preserve"><value>Huisregel bewerken</value></data>
+  <data name="Error" xml:space="preserve"><value>Fout</value></data>
+  <data name="Errors" xml:space="preserve"><value>Fouten</value></data>
+  <data name="Every rule grouped by area, with the rules of this store" xml:space="preserve"><value>Alle regels per gebied, met de regels van deze Store</value></data>
+  <data name="Every rule the store checks, grouped by area: errors block an upload, warnings and notes do not. The rule texts are in English, exactly as AI assistants read them in the agent guide." xml:space="preserve"><value>Alle regels die de Store controleert, per gebied: fouten blokkeren een upload, waarschuwingen en opmerkingen niet. De regelteksten zijn Engels, precies zoals AI-assistenten ze in de agentgids lezen.</value></data>
+  <data name="Fill in area, title (up to 120 characters) and text (up to 2000 characters)." xml:space="preserve"><value>Vul gebied, titel (maximaal 120 tekens) en tekst (maximaal 2000 tekens) in.</value></data>
+  <data name="House rules" xml:space="preserve"><value>Huisregels</value></data>
+  <data name="House rules to check before approval" xml:space="preserve"><value>Huisregels om te controleren vóór goedkeuring</value></data>
+  <data name="Icon and screenshots" xml:space="preserve"><value>Pictogram en schermafbeeldingen</value></data>
+  <data name="Machine-readable" xml:space="preserve"><value>Machineleesbaar</value></data>
+  <data name="Make mandatory" xml:space="preserve"><value>Verplicht maken</value></data>
+  <data name="Make {0} mandatory? Uploads with this finding are then refused." xml:space="preserve"><value>{0} verplicht maken? Uploads met deze bevinding worden dan geweigerd.</value></data>
+  <data name="New house rule" xml:space="preserve"><value>Nieuwe huisregel</value></data>
+  <data name="None yet. Open an area and choose &quot;Make mandatory&quot; next to a warning." xml:space="preserve"><value>Nog geen. Open een gebied en kies "Verplicht maken" naast een waarschuwing.</value></data>
+  <data name="None yet. Open an area to add a house rule there." xml:space="preserve"><value>Nog geen. Open een gebied om daar een huisregel toe te voegen.</value></data>
+  <data name="Notes" xml:space="preserve"><value>Opmerkingen</value></data>
+  <data name="Only warnings can be made mandatory." xml:space="preserve"><value>Alleen waarschuwingen kunnen verplicht worden gemaakt.</value></data>
+  <data name="Pre-flight checklist" xml:space="preserve"><value>Controlelijst vooraf</value></data>
+  <data name="Recommendation" xml:space="preserve"><value>Aanbeveling</value></data>
+  <data name="Rule" xml:space="preserve"><value>Regel</value></data>
+  <data name="Rules" xml:space="preserve"><value>Regels</value></data>
+  <data name="Rules of this store" xml:space="preserve"><value>Regels van deze Store</value></data>
+  <data name="Saved." xml:space="preserve"><value>Opgeslagen.</value></data>
+  <data name="Search code or text" xml:space="preserve"><value>Code of tekst zoeken</value></data>
+  <data name="Search results" xml:space="preserve"><value>Zoekresultaten</value></data>
+  <data name="Severity" xml:space="preserve"><value>Ernst</value></data>
+  <data name="Standard rules" xml:space="preserve"><value>Standaardregels</value></data>
+  <data name="Title" xml:space="preserve"><value>Titel</value></data>
+  <data name="Treat {0} as a warning again?" xml:space="preserve"><value>{0} weer als waarschuwing behandelen?</value></data>
+  <data name="Warnings" xml:space="preserve"><value>Waarschuwingen</value></data>
+  <data name="Warnings that are mandatory here" xml:space="preserve"><value>Waarschuwingen die hier verplicht zijn</value></data>
+  <data name="What this store adds to the standard rules. House rules are guidelines in plain words: reviewers check them before approval, recommendations only advise. Mandatory warnings are enforced by the automatic check like errors." xml:space="preserve"><value>Wat deze Store aan de standaardregels toevoegt. Huisregels zijn richtlijnen in gewone woorden: beoordelaars controleren ze vóór goedkeuring, aanbevelingen adviseren alleen. Verplichte waarschuwingen worden door de automatische controle als fouten afgedwongen.</value></data>
+  <data name="Write it so a developer and an AI assistant can follow it; it appears in the agent guide, the pre-flight checklist and the manual." xml:space="preserve"><value>Schrijf het zo dat een ontwikkelaar en een AI-assistent het kunnen volgen; het verschijnt in de agentgids, de controlelijst vooraf en de handleiding.</value></data>
+  <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>bijv. ondertekeningsinvoegtoepassingen gebruiken de certificaatregels van de klant</value></data>
+  <data name="mandatory here" xml:space="preserve"><value>hier verplicht</value></data>
+  <data name="Last run failed" xml:space="preserve"><value>Laatste run mislukt</value></data>
 </root>

@@ -464,6 +464,7 @@ public class PackageValidator
         if (manifest is not null && manifest.Id.Length > 0)
             await CheckAgainstCatalogAsync(report, manifest, callerUserId, callerIsAdmin);
 
+        RuleCatalog.Escalate(report);   // the store's stricter rules (S1.0.9)
         return (report, manifest);
     }
 

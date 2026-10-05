@@ -334,6 +334,14 @@ One line for the assistant:
 Read https://addon.power-pdf.de/agent-guide and build a manual upload package for the plugin in this folder.
 ```
 
+**Rules page and API (S1.0.9):** every rule the store checks, grouped into
+12 areas, is listed under *Settings, Rules* (`/Admin/Rules`, readable by all
+signed-in users) and at `GET /api/rules`. Admins extend them there: **house
+rules** (guidelines in plain words that reviewers check at approval, or
+recommendations) and **mandatory warnings** (the validator then refuses the
+upload). Both appear in the agent guide's pre-flight checklist (section F) and
+in the manual; they are stored in AppSettings and therefore in every backup.
+
 Web readers that summarize long pages lose detail, so the hard rules and the
 manual upload also have short pages of their own (S1.0.8):
 `/api/agent-guide/checklist` (HTML `/agent-guide/checklist`) and

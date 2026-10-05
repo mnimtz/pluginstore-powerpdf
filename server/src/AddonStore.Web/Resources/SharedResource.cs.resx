@@ -732,7 +732,6 @@
   <data name="Request a developer account" xml:space="preserve"><value>Požádat o vývojářský účet</value></data>
   <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>Záloha byla obnovena na novém serveru. Přihlaste se účtem správce ze zálohy.</value></data>
   <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>Váš účet není v této záloze aktivním správcem (ani tento účet, ani jeho e-mailová adresa); obnovení by vám zablokovalo přístup.</value></data>
-  <data name="Failed" xml:space="preserve"><value>Nezdařilo se</value></data>
   <data name="This backup was downloaded without the key ring, and this server cannot read its package signing key. Confirm the restore without the key ring, or use a backup downloaded with a key ring password." xml:space="preserve"><value>Tato záloha byla stažena bez svazku klíčů a tento server nemůže přečíst její klíč pro podepisování balíčků. Potvrďte obnovení bez svazku klíčů, nebo použijte zálohu staženou s heslem ke svazku klíčů.</value></data>
   <data name="The restore failed (damaged archive or full disk). The previous state was put back; nothing changed." xml:space="preserve"><value>Obnovení se nezdařilo (poškozený archiv nebo plný disk). Předchozí stav byl vrácen; nic se nezměnilo.</value></data>
   <data name="The restore failed and the previous state could not be put back automatically. Download the safety backup {0} under Safety backups and restore it." xml:space="preserve"><value>Obnovení se nezdařilo a předchozí stav nebylo možné vrátit automaticky. Stáhněte bezpečnostní zálohu {0} v části Bezpečnostní kopie a obnovte ji.</value></data>
@@ -816,4 +815,50 @@
   <data name="The .ppak in the upload package is larger than 200 MB." xml:space="preserve"><value>Soubor .ppak v balíčku k nahrání je větší než 200 MB.</value></data>
   <data name="The source ZIP in the upload package is larger than 100 MB." xml:space="preserve"><value>ZIP se zdrojovým kódem v balíčku k nahrání je větší než 100 MB.</value></data>
   <data name="A file in the upload package is larger than allowed." xml:space="preserve"><value>Soubor v balíčku k nahrání je větší, než je povoleno.</value></data>
+  <data name="API" xml:space="preserve"><value>API</value></data>
+  <data name="API responses" xml:space="preserve"><value>Odpovědi API</value></data>
+  <data name="API, accounts and limits" xml:space="preserve"><value>API, účty a limity</value></data>
+  <data name="Agent guide" xml:space="preserve"><value>Průvodce pro agenty</value></data>
+  <data name="Area" xml:space="preserve"><value>Oblast</value></data>
+  <data name="Back to warning" xml:space="preserve"><value>Zpět na varování</value></data>
+  <data name="Checked at approval" xml:space="preserve"><value>Kontroluje se při schválení</value></data>
+  <data name="Customer deliveries" xml:space="preserve"><value>Dodávky zákazníkům</value></data>
+  <data name="Delete the house rule &quot;{0}&quot;?" xml:space="preserve"><value>Smazat interní pravidlo „{0}“?</value></data>
+  <data name="Edit" xml:space="preserve"><value>Upravit</value></data>
+  <data name="Edit house rule" xml:space="preserve"><value>Upravit interní pravidlo</value></data>
+  <data name="Error" xml:space="preserve"><value>Chyba</value></data>
+  <data name="Errors" xml:space="preserve"><value>Chyby</value></data>
+  <data name="Every rule grouped by area, with the rules of this store" xml:space="preserve"><value>Všechna pravidla podle oblastí, včetně pravidel tohoto Store</value></data>
+  <data name="Every rule the store checks, grouped by area: errors block an upload, warnings and notes do not. The rule texts are in English, exactly as AI assistants read them in the agent guide." xml:space="preserve"><value>Všechna pravidla, která Store kontroluje, podle oblastí: chyby nahrání zablokují, varování a poznámky ne. Texty pravidel jsou anglicky, přesně tak, jak je asistenti AI čtou v průvodci pro agenty.</value></data>
+  <data name="Fill in area, title (up to 120 characters) and text (up to 2000 characters)." xml:space="preserve"><value>Vyplňte oblast, název (až 120 znaků) a text (až 2000 znaků).</value></data>
+  <data name="House rules" xml:space="preserve"><value>Interní pravidla</value></data>
+  <data name="House rules to check before approval" xml:space="preserve"><value>Interní pravidla ke kontrole před schválením</value></data>
+  <data name="Icon and screenshots" xml:space="preserve"><value>Ikona a snímky obrazovky</value></data>
+  <data name="Machine-readable" xml:space="preserve"><value>Strojově čitelné</value></data>
+  <data name="Make mandatory" xml:space="preserve"><value>Nastavit jako povinné</value></data>
+  <data name="Make {0} mandatory? Uploads with this finding are then refused." xml:space="preserve"><value>Nastavit {0} jako povinné? Nahrání s tímto zjištěním pak budou odmítnuta.</value></data>
+  <data name="New house rule" xml:space="preserve"><value>Nové interní pravidlo</value></data>
+  <data name="None yet. Open an area and choose &quot;Make mandatory&quot; next to a warning." xml:space="preserve"><value>Zatím žádné. Otevřete oblast a u varování zvolte „Nastavit jako povinné“.</value></data>
+  <data name="None yet. Open an area to add a house rule there." xml:space="preserve"><value>Zatím žádná. Otevřete oblast a přidejte do ní interní pravidlo.</value></data>
+  <data name="Notes" xml:space="preserve"><value>Poznámky</value></data>
+  <data name="Only warnings can be made mandatory." xml:space="preserve"><value>Povinná mohou být jen varování.</value></data>
+  <data name="Pre-flight checklist" xml:space="preserve"><value>Kontrolní seznam před nahráním</value></data>
+  <data name="Recommendation" xml:space="preserve"><value>Doporučení</value></data>
+  <data name="Rule" xml:space="preserve"><value>Pravidlo</value></data>
+  <data name="Rules" xml:space="preserve"><value>Pravidla</value></data>
+  <data name="Rules of this store" xml:space="preserve"><value>Pravidla tohoto Store</value></data>
+  <data name="Saved." xml:space="preserve"><value>Uloženo.</value></data>
+  <data name="Search code or text" xml:space="preserve"><value>Hledat kód nebo text</value></data>
+  <data name="Search results" xml:space="preserve"><value>Výsledky hledání</value></data>
+  <data name="Severity" xml:space="preserve"><value>Závažnost</value></data>
+  <data name="Standard rules" xml:space="preserve"><value>Standardní pravidla</value></data>
+  <data name="Title" xml:space="preserve"><value>Název</value></data>
+  <data name="Treat {0} as a warning again?" xml:space="preserve"><value>Znovu považovat {0} za varování?</value></data>
+  <data name="Warnings" xml:space="preserve"><value>Varování</value></data>
+  <data name="Warnings that are mandatory here" xml:space="preserve"><value>Varování, která jsou zde povinná</value></data>
+  <data name="What this store adds to the standard rules. House rules are guidelines in plain words: reviewers check them before approval, recommendations only advise. Mandatory warnings are enforced by the automatic check like errors." xml:space="preserve"><value>Co tento Store přidává ke standardním pravidlům. Interní pravidla jsou zásady srozumitelnými slovy: kontroloři je ověřují před schválením, doporučení jen radí. Povinná varování automatická kontrola vymáhá jako chyby.</value></data>
+  <data name="Write it so a developer and an AI assistant can follow it; it appears in the agent guide, the pre-flight checklist and the manual." xml:space="preserve"><value>Napište ho tak, aby se jím mohl řídit vývojář i asistent AI; zobrazí se v průvodci pro agenty, kontrolním seznamu a příručce.</value></data>
+  <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>např. podpisové doplňky používají pravidla certifikátů zákazníka</value></data>
+  <data name="mandatory here" xml:space="preserve"><value>zde povinné</value></data>
+  <data name="Last run failed" xml:space="preserve"><value>Poslední běh selhal</value></data>
 </root>

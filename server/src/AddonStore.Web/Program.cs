@@ -123,6 +123,7 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Admin/Settings", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Backup", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Categories", "PageAdmin");
+        o.Conventions.AuthorizePage("/Admin/Rules", "PageUser");        // read: everyone signed in; edit: admins (S1.0.9)
         o.Conventions.AuthorizePage("/Admin/Reports", "PageAdmin");
         o.Conventions.AuthorizePage("/Dashboard", "PageUser");
         o.Conventions.AuthorizePage("/CatalogEntry", "PageUser");
@@ -193,6 +194,7 @@ using (var scope = app.Services.CreateScope())
     startLog.LogInformation("Startup: schema upgrade");
     await AddonStore.Web.Data.SchemaUpgrade.RunAsync(scope.ServiceProvider);
     await app.Services.GetRequiredService<SetupGate>().InitAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>());
+    await AddonStore.Web.Validation.RuleCatalog.LoadAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>());
     startLog.LogInformation("Startup: database ready after {Ms} ms", clock.ElapsedMilliseconds);
 }
 
@@ -226,7 +228,7 @@ app.Use(async (ctx, next) =>
     if (HttpMethods.IsHead(ctx.Request.Method) &&
         (path is "/llms.txt" or "/robots.txt" or "/agent-guide" or "/api" or "/api/" or "/api/ping" or "/api/agent-guide"
              or "/api/openapi.json" or "/api/agents-md" or "/api/skill" or "/api/tools/make-ppak.ps1"
-             or "/api/agent-guide/checklist" or "/api/agent-guide/manual-upload" or "/agent-guide/checklist" or "/agent-guide/manual-upload" || path.StartsWith("/api/schema/", StringComparison.Ordinal)))
+             or "/api/agent-guide/checklist" or "/api/agent-guide/manual-upload" or "/api/rules" or "/agent-guide/checklist" or "/agent-guide/manual-upload" || path.StartsWith("/api/schema/", StringComparison.Ordinal)))
     {
         ctx.Request.Method = HttpMethods.Get;
         var body = ctx.Response.Body;

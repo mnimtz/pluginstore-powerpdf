@@ -51,6 +51,22 @@ if gap:
     sys.exit(1)
 print(f'OK: all {len(hard)} hard rules are in the pre-flight checklist.')
 
+# Resource keys are case-insensitive: "Warning" next to "warning" makes the
+# lookup return either one (S1.0.9). Every key must be unique ignoring case.
+import glob
+from collections import Counter
+dups = {}
+for res in glob.glob(os.path.join(ROOT, 'Resources', 'SharedResource.*.resx')):
+    with open(res, encoding='utf-8-sig') as f:
+        names = re.findall(r'<data name="([^"]+)"', f.read())
+    d = [k for k, n in Counter(x.lower() for x in names).items() if n > 1]
+    if d:
+        dups[os.path.basename(res)] = d
+if dups:
+    print('Resource keys that differ only in case:', dups)
+    sys.exit(1)
+print('OK: resource keys are unique ignoring case.')
+
 # Every /api route must be described in the vendor-neutral OpenAPI document
 # (Api/OpenApiDoc.cs), so assistants other than Claude see it too.
 with open(os.path.join(ROOT, 'Api', 'ApiEndpoints.cs'), encoding='utf-8') as f:

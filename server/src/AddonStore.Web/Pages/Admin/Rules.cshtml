@@ -1,0 +1,175 @@
+@page
+@model AddonStore.Web.Pages.Admin.RulesModel
+@using AddonStore.Web.Validation
+@{
+    ViewData["Title"] = "Rules";
+    var house = Model.House;
+    string Badge(string sev) => sev switch { "error" => "rejected", "warning" => "beta", "info" => "submitted", _ => "withdrawn" };
+    string SevLabel(string sev) => sev switch { "error" => "Error", "warning" => "warning", "info" => "info", _ => "API" };
+    var rules = RuleCatalog.Rules;
+    int nErr = rules.Count(r => RulesModel.SeverityOf(r, house) == "error"), nWarn = rules.Count(r => RulesModel.SeverityOf(r, house) == "warning"),
+        nInfo = rules.Count(r => RulesModel.SeverityOf(r, house) == "info"), nApi = rules.Count(r => r.Api);
+    // rule texts come from the guide (markdown): `code` spans as <code>, everything else encoded
+    Microsoft.AspNetCore.Html.IHtmlContent Text(string? s) => new Microsoft.AspNetCore.Html.HtmlString(
+        System.Text.RegularExpressions.Regex.Replace(System.Net.WebUtility.HtmlEncode(s ?? ""), "`([^`]+)`", "<code>$1</code>"));
+    string Chip(string? s) => (Model.Sev ?? "") == (s ?? "") ? "chip active" : "chip";
+    var areaHouse = Model.Area is null || Model.Area == RulesModel.StoreView ? house.Rules.ToList() : house.Rules.Where(h => h.Area == Model.Area).ToList();
+}
+
+<h1>@L["Rules"]</h1>
+<p class="lead">@L["Every rule the store checks, grouped by area: errors block an upload, warnings and notes do not. The rule texts are in English, exactly as AI assistants read them in the agent guide."]</p>
+<p style="font-size:.88rem;color:var(--tun-slate);margin-top:-6px">
+    @L["Machine-readable"]: <a href="/api/rules">/api/rules</a> · <a href="/agent-guide/checklist">@L["Pre-flight checklist"]</a> · <a href="/agent-guide">@L["Agent guide"]</a>
+</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+}
+
+<div class="report-layout">
+<nav class="report-nav" aria-label="@L["Sections"]">
+    @foreach (var a in RuleCatalog.Areas)
+    {
+        <a href="@Url.Page("/Admin/Rules", new { area = a, sev = Model.Sev })" class="@(Model.Area == a ? "active" : "")"
+           aria-current="@(Model.Area == a ? "page" : null)">@L[a] <span style="color:var(--tun-slate);font-size:.8rem">(@Model.Count(a))</span></a>
+    }
+    <a href="@Url.Page("/Admin/Rules", new { area = RulesModel.StoreView })" class="@(Model.Area == RulesModel.StoreView ? "active" : "")"
+       style="border-top:1px solid var(--tun-gray-200);margin-top:6px;padding-top:10px">@L["Rules of this store"] <span style="color:var(--tun-slate);font-size:.8rem">(@(house.Rules.Count + house.Escalated.Count))</span></a>
+</nav>
+<div class="report-main">
+
+<form method="get" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:0 0 14px">
+    <div class="chips">
+        <a class="@Chip(null)" href="@Url.Page("/Admin/Rules", new { area = Model.Area, q = Model.Q })">@L["All"] (@rules.Count)</a>
+        <a class="@Chip("error")" href="@Url.Page("/Admin/Rules", new { area = Model.Area, sev = "error", q = Model.Q })">@L["Errors"] (@nErr)</a>
+        <a class="@Chip("warning")" href="@Url.Page("/Admin/Rules", new { area = Model.Area, sev = "warning", q = Model.Q })">@L["Warnings"] (@nWarn)</a>
+        <a class="@Chip("info")" href="@Url.Page("/Admin/Rules", new { area = Model.Area, sev = "info", q = Model.Q })">@L["Notes"] (@nInfo)</a>
+        <a class="@Chip("api")" href="@Url.Page("/Admin/Rules", new { area = Model.Area, sev = "api", q = Model.Q })">@L["API responses"] (@nApi)</a>
+    </div>
+    <input type="hidden" name="sev" value="@Model.Sev" />
+    <input type="search" name="q" value="@Model.Q" placeholder="@L["Search code or text"]" style="flex:1;min-width:200px;max-width:320px" />
+</form>
+
+@if (Model.Area == RulesModel.StoreView && string.IsNullOrWhiteSpace(Model.Q))
+{
+    <h2 style="margin-top:0">@L["Rules of this store"]</h2>
+    <p>@L["What this store adds to the standard rules. House rules are guidelines in plain words: reviewers check them before approval, recommendations only advise. Mandatory warnings are enforced by the automatic check like errors."]</p>
+    <h3>@L["Warnings that are mandatory here"]</h3>
+    @if (house.Escalated.Count == 0)
+    {
+        <p style="color:var(--tun-slate)">@L["None yet. Open an area and choose \"Make mandatory\" next to a warning."]</p>
+    }
+    else
+    {
+        <table>
+            <tr><th>@L["Code"]</th><th>@L["Rule"]</th><th>@L["Area"]</th></tr>
+            @foreach (var c in house.Escalated)
+            {
+                var r = rules.FirstOrDefault(x => x.Code == c);
+                <tr><td><code>@c</code></td><td>@Text(r?.Description)</td><td>@L[r?.Area ?? ""]</td></tr>
+            }
+        </table>
+    }
+}
+
+@if (Model.Area is not null)
+{
+    @if (Model.Area != RulesModel.StoreView)
+    {
+        <h2 style="margin-top:0">@L[Model.Area]</h2>
+    }
+    @if (Model.Area == RulesModel.StoreView || areaHouse.Count > 0 || Model.IsAdmin)
+    {
+        <h3>@L["House rules"]</h3>
+    }
+    @foreach (var h in areaHouse)
+    {
+        <div class="card" style="margin-bottom:10px;border-left:4px solid var(--tun-blue)">
+            <div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+                <strong>@h.Title</strong>
+                <span class="badge @(h.Kind == "review" ? "pending" : "submitted")">@L[h.Kind == "review" ? "Checked at approval" : "Recommendation"]</span>
+                @if (Model.Area == RulesModel.StoreView) { <span style="color:var(--tun-slate);font-size:.85rem">@L[h.Area]</span> }
+                <span style="margin-left:auto;color:var(--tun-slate);font-size:.8rem">@h.CreatedBy</span>
+            </div>
+            <p style="white-space:pre-wrap;margin:6px 0 0">@h.Text</p>
+            @if (Model.IsAdmin)
+            {
+                <div style="display:flex;gap:8px;margin-top:8px">
+                    <a class="btn small secondary" href="@Url.Page("/Admin/Rules", new { area = Model.Area, edit = h.Id })">@L["Edit"]</a>
+                    <form method="post" asp-page-handler="HouseDelete" data-confirm="@L["Delete the house rule \"{0}\"?", h.Title]">
+                        <input type="hidden" name="id" value="@h.Id" /><input type="hidden" name="area" value="@Model.Area" />
+                        <button type="submit" class="btn small danger">@L["Delete"]</button>
+                    </form>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.Area == RulesModel.StoreView && areaHouse.Count == 0)
+    {
+        <p style="color:var(--tun-slate)">@L["None yet. Open an area to add a house rule there."]</p>
+    }
+    @if (Model.IsAdmin && Model.Area != RulesModel.StoreView)
+    {
+        var e = Model.Editing;
+        <details class="card newcust" @(e is not null ? "open" : "")>
+            <summary class="btn small">@(e is null ? "+ " + L["New house rule"].Value : L["Edit house rule"].Value)</summary>
+            <form method="post" asp-page-handler="HouseSave" class="stack" style="max-width:none;margin-top:12px">
+                <input type="hidden" name="id" value="@e?.Id" />
+                <div><label for="hr-area">@L["Area"]</label>
+                    <select id="hr-area" name="area">
+                        @foreach (var a in RuleCatalog.Areas) { <option value="@a" selected="@(a == (e?.Area ?? Model.Area))">@L[a]</option> }
+                    </select></div>
+                <div><label for="hr-title">@L["Title"]</label>
+                    <input id="hr-title" name="title" required maxlength="@RulesModel.MaxTitle" value="@e?.Title" placeholder="@L["e.g. Signing add-ons use the customer's certificate rules"]" /></div>
+                <div><label for="hr-text">@L["Rule"]</label>
+                    <textarea id="hr-text" name="text" required maxlength="@RulesModel.MaxText" rows="4">@e?.Text</textarea>
+                    <small style="color:var(--tun-slate)">@L["Write it so a developer and an AI assistant can follow it; it appears in the agent guide, the pre-flight checklist and the manual."]</small></div>
+                <div><label for="hr-kind">@L["Type"]</label>
+                    <select id="hr-kind" name="kind">
+                        <option value="review" selected="@((e?.Kind ?? "review") == "review")">@L["Checked at approval"]</option>
+                        <option value="recommendation" selected="@(e?.Kind == "recommendation")">@L["Recommendation"]</option>
+                    </select></div>
+                <button type="submit" class="btn">@L["Save"]</button>
+            </form>
+        </details>
+    }
+}
+
+@if (Model.Shown.Count > 0 || !string.IsNullOrWhiteSpace(Model.Q))
+{
+    <h3>@(string.IsNullOrWhiteSpace(Model.Q) ? L["Standard rules"] : L["Search results"]) <span style="color:var(--tun-slate);font-weight:400">(@Model.Shown.Count)</span></h3>
+    <table>
+        <tr><th>@L["Code"]</th><th>@L["Severity"]</th><th>@L["Rule"]</th>@if (!string.IsNullOrWhiteSpace(Model.Q)) { <th>@L["Area"]</th> }@if (Model.IsAdmin) { <th></th> }</tr>
+        @foreach (var r in AddonStore.Web.Services.Paging.Items(Model.Shown, ViewContext.HttpContext.Request, "rules"))
+        {
+            var sev = RulesModel.SeverityOf(r, house);
+            var stricter = house.Escalated.Contains(r.Code);
+            <tr>
+                <td><code>@r.Code</code></td>
+                <td style="white-space:nowrap"><span class="badge @Badge(sev)">@L[SevLabel(sev)]</span>
+                    @if (stricter) { <br /><small style="color:var(--tun-slate)">@L["mandatory here"]</small> }</td>
+                <td>@Text(r.Description)</td>
+                @if (!string.IsNullOrWhiteSpace(Model.Q)) { <td>@L[r.Area]</td> }
+                @if (Model.IsAdmin)
+                {
+                    <td style="white-space:nowrap">
+                        @if (r.Severity == "warning" && !r.Api)
+                        {
+                            <form method="post" asp-page-handler="Escalate"
+                                  data-confirm="@(stricter ? L["Treat {0} as a warning again?", r.Code] : L["Make {0} mandatory? Uploads with this finding are then refused.", r.Code])">
+                                <input type="hidden" name="code" value="@r.Code" /><input type="hidden" name="on" value="@(stricter ? "false" : "true")" />
+                                <input type="hidden" name="area" value="@Model.Area" />
+                                <button type="submit" class="btn small @(stricter ? "secondary" : "")">@L[stricter ? "Back to warning" : "Make mandatory"]</button>
+                            </form>
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+    <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("rules", Model.Shown.Count)' />
+}
+
+</div>
+</div>

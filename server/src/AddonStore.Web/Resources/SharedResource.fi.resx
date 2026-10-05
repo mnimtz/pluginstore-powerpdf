@@ -732,7 +732,6 @@
   <data name="Request a developer account" xml:space="preserve"><value>Pyydä kehittäjätiliä</value></data>
   <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>Varmuuskopio palautettiin uudelle palvelimelle. Kirjaudu sisään varmuuskopion ylläpitäjätilillä.</value></data>
   <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>Tilisi ei ole aktiivinen ylläpitäjä tässä varmuuskopiossa (ei tämä tili eikä sen sähköpostiosoite); palautus lukitsisi sinut ulos.</value></data>
-  <data name="Failed" xml:space="preserve"><value>Epäonnistui</value></data>
   <data name="This backup was downloaded without the key ring, and this server cannot read its package signing key. Confirm the restore without the key ring, or use a backup downloaded with a key ring password." xml:space="preserve"><value>Tämä varmuuskopio ladattiin ilman avainrengasta, eikä tämä palvelin pysty lukemaan sen pakettien allekirjoitusavainta. Vahvista palautus ilman avainrengasta tai käytä varmuuskopiota, joka on ladattu avainrenkaan salasanalla.</value></data>
   <data name="The restore failed (damaged archive or full disk). The previous state was put back; nothing changed." xml:space="preserve"><value>Palautus epäonnistui (vaurioitunut arkisto tai täysi levy). Edellinen tila palautettiin; mikään ei muuttunut.</value></data>
   <data name="The restore failed and the previous state could not be put back automatically. Download the safety backup {0} under Safety backups and restore it." xml:space="preserve"><value>Palautus epäonnistui, eikä edellistä tilaa voitu palauttaa automaattisesti. Lataa turvavarmuuskopio {0} kohdasta Turvakopiot ja palauta se.</value></data>
@@ -816,4 +815,50 @@
   <data name="The .ppak in the upload package is larger than 200 MB." xml:space="preserve"><value>Latauspaketin .ppak on yli 200 Mt.</value></data>
   <data name="The source ZIP in the upload package is larger than 100 MB." xml:space="preserve"><value>Latauspaketin lähdekoodin ZIP on yli 100 Mt.</value></data>
   <data name="A file in the upload package is larger than allowed." xml:space="preserve"><value>Latauspaketin tiedosto on sallittua suurempi.</value></data>
+  <data name="API" xml:space="preserve"><value>API</value></data>
+  <data name="API responses" xml:space="preserve"><value>API-vastaukset</value></data>
+  <data name="API, accounts and limits" xml:space="preserve"><value>API, tilit ja rajat</value></data>
+  <data name="Agent guide" xml:space="preserve"><value>Agenttiopas</value></data>
+  <data name="Area" xml:space="preserve"><value>Alue</value></data>
+  <data name="Back to warning" xml:space="preserve"><value>Takaisin varoitukseksi</value></data>
+  <data name="Checked at approval" xml:space="preserve"><value>Tarkistetaan hyväksynnässä</value></data>
+  <data name="Customer deliveries" xml:space="preserve"><value>Asiakastoimitukset</value></data>
+  <data name="Delete the house rule &quot;{0}&quot;?" xml:space="preserve"><value>Poistetaanko oma sääntö "{0}"?</value></data>
+  <data name="Edit" xml:space="preserve"><value>Muokkaa</value></data>
+  <data name="Edit house rule" xml:space="preserve"><value>Muokkaa omaa sääntöä</value></data>
+  <data name="Error" xml:space="preserve"><value>Virhe</value></data>
+  <data name="Errors" xml:space="preserve"><value>Virheet</value></data>
+  <data name="Every rule grouped by area, with the rules of this store" xml:space="preserve"><value>Kaikki säännöt alueittain, mukana tämän Storen säännöt</value></data>
+  <data name="Every rule the store checks, grouped by area: errors block an upload, warnings and notes do not. The rule texts are in English, exactly as AI assistants read them in the agent guide." xml:space="preserve"><value>Kaikki Storen tarkistamat säännöt alueittain: virheet estävät latauksen, varoitukset ja huomautukset eivät. Sääntötekstit ovat englanniksi, juuri kuten tekoälyavustajat lukevat ne agenttioppaasta.</value></data>
+  <data name="Fill in area, title (up to 120 characters) and text (up to 2000 characters)." xml:space="preserve"><value>Täytä alue, otsikko (enintään 120 merkkiä) ja teksti (enintään 2000 merkkiä).</value></data>
+  <data name="House rules" xml:space="preserve"><value>Omat säännöt</value></data>
+  <data name="House rules to check before approval" xml:space="preserve"><value>Ennen hyväksyntää tarkistettavat omat säännöt</value></data>
+  <data name="Icon and screenshots" xml:space="preserve"><value>Kuvake ja kuvakaappaukset</value></data>
+  <data name="Machine-readable" xml:space="preserve"><value>Koneluettava</value></data>
+  <data name="Make mandatory" xml:space="preserve"><value>Tee pakolliseksi</value></data>
+  <data name="Make {0} mandatory? Uploads with this finding are then refused." xml:space="preserve"><value>Tehdäänkö {0} pakolliseksi? Lataukset, joissa on tämä havainto, hylätään.</value></data>
+  <data name="New house rule" xml:space="preserve"><value>Uusi oma sääntö</value></data>
+  <data name="None yet. Open an area and choose &quot;Make mandatory&quot; next to a warning." xml:space="preserve"><value>Ei vielä yhtään. Avaa alue ja valitse varoituksen vierestä "Tee pakolliseksi".</value></data>
+  <data name="None yet. Open an area to add a house rule there." xml:space="preserve"><value>Ei vielä yhtään. Avaa alue lisätäksesi sinne oman säännön.</value></data>
+  <data name="Notes" xml:space="preserve"><value>Huomautukset</value></data>
+  <data name="Only warnings can be made mandatory." xml:space="preserve"><value>Vain varoitukset voi tehdä pakollisiksi.</value></data>
+  <data name="Pre-flight checklist" xml:space="preserve"><value>Tarkistuslista ennen latausta</value></data>
+  <data name="Recommendation" xml:space="preserve"><value>Suositus</value></data>
+  <data name="Rule" xml:space="preserve"><value>Sääntö</value></data>
+  <data name="Rules" xml:space="preserve"><value>Säännöt</value></data>
+  <data name="Rules of this store" xml:space="preserve"><value>Tämän Storen säännöt</value></data>
+  <data name="Saved." xml:space="preserve"><value>Tallennettu.</value></data>
+  <data name="Search code or text" xml:space="preserve"><value>Hae koodia tai tekstiä</value></data>
+  <data name="Search results" xml:space="preserve"><value>Hakutulokset</value></data>
+  <data name="Severity" xml:space="preserve"><value>Vakavuus</value></data>
+  <data name="Standard rules" xml:space="preserve"><value>Vakiosäännöt</value></data>
+  <data name="Title" xml:space="preserve"><value>Otsikko</value></data>
+  <data name="Treat {0} as a warning again?" xml:space="preserve"><value>Käsitelläänkö {0} taas varoituksena?</value></data>
+  <data name="Warnings" xml:space="preserve"><value>Varoitukset</value></data>
+  <data name="Warnings that are mandatory here" xml:space="preserve"><value>Täällä pakolliset varoitukset</value></data>
+  <data name="What this store adds to the standard rules. House rules are guidelines in plain words: reviewers check them before approval, recommendations only advise. Mandatory warnings are enforced by the automatic check like errors." xml:space="preserve"><value>Mitä tämä Store lisää vakiosääntöihin. Omat säännöt ovat selkokielisiä ohjeita: tarkastajat tarkistavat ne ennen hyväksyntää, suositukset vain neuvovat. Automaattinen tarkistus käsittelee pakolliset varoitukset virheinä.</value></data>
+  <data name="Write it so a developer and an AI assistant can follow it; it appears in the agent guide, the pre-flight checklist and the manual." xml:space="preserve"><value>Kirjoita se niin, että kehittäjä ja tekoälyavustaja voivat noudattaa sitä; se näkyy agenttioppaassa, tarkistuslistassa ja käsikirjassa.</value></data>
+  <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>esim. allekirjoituslisäosat käyttävät asiakkaan varmennesääntöjä</value></data>
+  <data name="mandatory here" xml:space="preserve"><value>pakollinen täällä</value></data>
+  <data name="Last run failed" xml:space="preserve"><value>Viimeisin ajo epäonnistui</value></data>
 </root>
