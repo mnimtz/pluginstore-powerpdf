@@ -28,6 +28,13 @@ Server and client have separate version numbers with a visible prefix:
    fields, limits, lifecycle, install behaviour), not only API changes: `Api/AgentGuide.cs`
    (guide, manifest schema, SKILL.md), the `/api` endpoint list, the API page
    (`Pages/Developer.cshtml`, all 16 languages) and `README.md`.
+6. Regenerate the English PDF manual once the release is live:
+   `python tools/make_manual.py --base https://addon.power-pdf.de`
+   (writes `docs/manual/AddonStore-Manual-<version>.pdf`). It pulls the guide,
+   `/api/rules` (with the store's house rules and mandatory warnings),
+   `/api/openapi.json` and the manifest schema from the server, so it always
+   shows what the store enforces; Part I (introduction and principles) lives in
+   the generator. Needs Windows (Arial/Consolas fonts) and `pip install reportlab`.
 
 ## Add-on Store client (ribbon add-on)
 
