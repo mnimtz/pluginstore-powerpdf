@@ -107,10 +107,7 @@
                     }
                     @if (Model.CanReview && v.Status == VersionStatus.Beta)
                     {
-                        <form method="post" asp-page-handler="Approve" asp-route-id="@pkg.Id">
-                            <input type="hidden" name="versionId" value="@v.Id" />
-                            <button type="submit" class="btn small">@L["Approve"]</button>
-                        </form>
+                        <partial name="_ApprovalForm" model='(v.Id, "versionId", (string?)pkg.Id, "Approve")' />
                     }
                     @if (VersionActionService.CanDemote(v, Model.IsAdmin))
                     {

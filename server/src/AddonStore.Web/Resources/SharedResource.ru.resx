@@ -861,4 +861,27 @@
   <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>например, надстройки подписи используют правила сертификатов клиента</value></data>
   <data name="mandatory here" xml:space="preserve"><value>здесь обязательно</value></data>
   <data name="Last run failed" xml:space="preserve"><value>Последний запуск не удался</value></data>
+  <data name="1. Conditions for the import (checked automatically)" xml:space="preserve"><value>1. Условия импорта (проверяются автоматически)</value></data>
+  <data name="2. Conditions for the approval (confirmed by the reviewer)" xml:space="preserve"><value>2. Условия утверждения (подтверждает рецензент)</value></data>
+  <data name="Added by this store" xml:space="preserve"><value>Добавлено этим Store</value></data>
+  <data name="Back to the standard wording of {0}?" xml:space="preserve"><value>Вернуть стандартную формулировку {0}?</value></data>
+  <data name="Condition" xml:space="preserve"><value>Условие</value></data>
+  <data name="Confirm every approval condition:" xml:space="preserve"><value>Подтвердите каждое условие утверждения:</value></data>
+  <data name="Confirm every approval condition before approving." xml:space="preserve"><value>Перед утверждением подтвердите каждое условие.</value></data>
+  <data name="Documentation (PDF)" xml:space="preserve"><value>Документация (PDF)</value></data>
+  <data name="In English, generated from the live rules of this store." xml:space="preserve"><value>На английском, создано из действующих правил этого Store.</value></data>
+  <data name="Mandatory conditions" xml:space="preserve"><value>Обязательные условия</value></data>
+  <data name="Mandatory requirements (PDF)" xml:space="preserve"><value>Обязательные требования (PDF)</value></data>
+  <data name="Mandatory requirements for add-ons" xml:space="preserve"><value>Обязательные требования к надстройкам</value></data>
+  <data name="Manual: API, rules and publishing guide" xml:space="preserve"><value>Руководство: API, правила и публикация</value></data>
+  <data name="New approval condition" xml:space="preserve"><value>Новое условие утверждения</value></data>
+  <data name="Reset" xml:space="preserve"><value>Сбросить</value></data>
+  <data name="Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it." xml:space="preserve"><value>Рецензенты подтверждают его для каждой версии перед утверждением; руководство для агентов просит разработчиков и ИИ-помощников подготовиться к нему.</value></data>
+  <data name="Standard wording" xml:space="preserve"><value>Стандартная формулировка</value></data>
+  <data name="The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area." xml:space="preserve"><value>Автоматические проверки этих условий являются частью Store и не отключаются здесь. Предупреждения можно сделать обязательными в их области.</value></data>
+  <data name="The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store&#x27;s version." xml:space="preserve"><value>Условия, которым должен соответствовать плагин: сначала для импорта (каждая загрузка проверяется автоматически и отклоняется, если хотя бы одно не выполнено), затем для утверждения в публичном Store (рецензент подтверждает каждое). Администраторы могут менять формулировки и добавлять условия; руководство для агентов, контрольный список и PDF-документы показывают версию этого Store.</value></data>
+  <data name="Wording of this store" xml:space="preserve"><value>Формулировка этого Store</value></data>
+  <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Сформулируйте условие не более чем в 600 символах.</value></data>
+  <data name="checked online" xml:space="preserve"><value>проверяется онлайн</value></data>
+  <data name="the standard wording changed since" xml:space="preserve"><value>стандартная формулировка с тех пор изменилась</value></data>
 </root>

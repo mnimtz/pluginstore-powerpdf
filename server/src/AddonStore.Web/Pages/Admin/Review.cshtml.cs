@@ -27,9 +27,9 @@ public class ReviewModel : PageModel
 
     public async Task OnGetAsync() => await LoadAsync();
 
-    public async Task OnPostApproveAsync(int id)
+    public async Task OnPostApproveAsync(int id, string[]? confirmed)
     {
-        Notice = await _actions.DecideAsync(id, (await _users.GetUserAsync(User))!, approve: true, comment: null);
+        Notice = await _actions.DecideAsync(id, (await _users.GetUserAsync(User))!, approve: true, comment: null, confirmed);
         await LoadAsync();
     }
 

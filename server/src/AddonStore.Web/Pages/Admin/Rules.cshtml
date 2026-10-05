@@ -29,6 +29,9 @@
 
 <div class="report-layout">
 <nav class="report-nav" aria-label="@L["Sections"]">
+    <a href="@Url.Page("/Admin/Rules", new { area = RulesModel.ConditionsView })" class="@(Model.Area == RulesModel.ConditionsView ? "active" : "")"
+       style="border-bottom:1px solid var(--tun-gray-200);margin-bottom:6px;padding-bottom:10px;font-weight:600">@L["Mandatory conditions"]
+        <span style="color:var(--tun-slate);font-size:.8rem;font-weight:400">(@(Model.ImportConditions.Count + Model.ApprovalConditions.Count))</span></a>
     @foreach (var a in RuleCatalog.Areas)
     {
         <a href="@Url.Page("/Admin/Rules", new { area = a, sev = Model.Sev })" class="@(Model.Area == a ? "active" : "")"
@@ -40,6 +43,8 @@
 <div class="report-main">
 
 <form method="get" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:0 0 14px">
+    @if (Model.Area != RulesModel.ConditionsView)
+    {
     <div class="chips">
         <a class="@Chip(null)" href="@Url.Page("/Admin/Rules", new { area = Model.Area, q = Model.Q })">@L["All"] (@rules.Count)</a>
         <a class="@Chip("error")" href="@Url.Page("/Admin/Rules", new { area = Model.Area, sev = "error", q = Model.Q })">@L["Errors"] (@nErr)</a>
@@ -47,9 +52,133 @@
         <a class="@Chip("info")" href="@Url.Page("/Admin/Rules", new { area = Model.Area, sev = "info", q = Model.Q })">@L["Notes"] (@nInfo)</a>
         <a class="@Chip("api")" href="@Url.Page("/Admin/Rules", new { area = Model.Area, sev = "api", q = Model.Q })">@L["API responses"] (@nApi)</a>
     </div>
+    }
     <input type="hidden" name="sev" value="@Model.Sev" />
     <input type="search" name="q" value="@Model.Q" placeholder="@L["Search code or text"]" style="flex:1;min-width:200px;max-width:320px" />
 </form>
+
+@if (Model.Area == RulesModel.ConditionsView && string.IsNullOrWhiteSpace(Model.Q))
+{
+    <h2 style="margin-top:0">@L["Mandatory conditions"]</h2>
+    <p>@L["The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store's version."]</p>
+    <p style="font-size:.88rem"><a href="/docs/AddonStore-Requirements.pdf">@L["Mandatory requirements (PDF)"]</a> · <a href="/agent-guide/checklist">@L["Pre-flight checklist"]</a></p>
+
+    <h3>@L["1. Conditions for the import (checked automatically)"]</h3>
+    <table>
+        <tr><th>ID</th><th>@L["Condition"]</th><th>@L["Codes"]</th>@if (Model.IsAdmin) { <th></th> }</tr>
+        @{ string? group = null; }
+        @foreach (var c in Model.ImportConditions)
+        {
+            if (c.Group != group)
+            {
+                group = c.Group;
+                <tr><td colspan="@(Model.IsAdmin ? 4 : 3)" style="background:var(--tun-gray-150);font-weight:600;color:var(--tun-navy)">@c.Group. @c.GroupTitle</td></tr>
+            }
+            <tr>
+                <td class="cond-id">@c.Id</td>
+                <td>
+                    @if (Model.IsAdmin && Model.EditCond == c.Id)
+                    {
+                        <form method="post" asp-page-handler="TextSave" class="stack" style="max-width:none">
+                            <input type="hidden" name="id" value="@c.Id" />
+                            <textarea name="text" rows="3" maxlength="@RulesModel.MaxConditionText" required>@c.Text</textarea>
+                            <small style="color:var(--tun-slate)">@L["Standard wording"]: @Text(c.DefaultText)</small>
+                            <div style="display:flex;gap:8px"><button type="submit" class="btn small">@L["Save"]</button>
+                                <a class="btn small secondary" href="@Url.Page("/Admin/Rules", new { area = RulesModel.ConditionsView })">@L["Cancel"]</a></div>
+                        </form>
+                    }
+                    else
+                    {
+                        @Text(c.Text)
+                        @if (c.Online) { <span class="cond-edited">(@L["checked online"])</span> }
+                        @if (c.Edited) { <br /><span class="cond-edited">@L["Wording of this store"]@(house.Texts.TryGetValue(c.Id, out var o) && o.DefaultAtEdit != c.DefaultText ? " · " + L["the standard wording changed since"].Value : "")</span> }
+                    }
+                </td>
+                <td style="font-size:.78rem">@foreach (var code in c.Codes) { <a href="@Url.Page("/Admin/Rules", new { q = code })"><code>@code</code></a><br /> }</td>
+                @if (Model.IsAdmin)
+                {
+                    <td style="white-space:nowrap">
+                        @if (Model.EditCond != c.Id) { <a class="btn small secondary" href="@Url.Page("/Admin/Rules", new { area = RulesModel.ConditionsView, editcond = c.Id })">@L["Edit"]</a> }
+                        @if (c.Edited)
+                        {
+                            <form method="post" asp-page-handler="TextReset" style="display:inline" data-confirm="@L["Back to the standard wording of {0}?", c.Id]">
+                                <input type="hidden" name="id" value="@c.Id" /><button type="submit" class="btn small secondary">@L["Reset"]</button>
+                            </form>
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+    <p style="font-size:.85rem;color:var(--tun-slate)">@L["The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area."]</p>
+
+    <h3>@L["2. Conditions for the approval (confirmed by the reviewer)"]</h3>
+    <table>
+        <tr><th>ID</th><th>@L["Condition"]</th>@if (Model.IsAdmin) { <th></th> }</tr>
+        @foreach (var c in Model.ApprovalConditions)
+        {
+            <tr>
+                <td class="cond-id">@c.Id</td>
+                <td>
+                    @if (Model.IsAdmin && Model.EditCond == c.Id && c.HouseRuleId is null)
+                    {
+                        <form method="post" asp-page-handler="TextSave" class="stack" style="max-width:none">
+                            <input type="hidden" name="id" value="@c.Id" />
+                            <textarea name="text" rows="3" maxlength="@RulesModel.MaxConditionText" required>@c.Text</textarea>
+                            <small style="color:var(--tun-slate)">@L["Standard wording"]: @c.DefaultText</small>
+                            <div style="display:flex;gap:8px"><button type="submit" class="btn small">@L["Save"]</button>
+                                <a class="btn small secondary" href="@Url.Page("/Admin/Rules", new { area = RulesModel.ConditionsView })">@L["Cancel"]</a></div>
+                        </form>
+                    }
+                    else
+                    {
+                        @c.Text
+                        @if (c.HouseRuleId is not null) { <br /><span class="cond-edited">@L["Added by this store"] · @L[c.GroupTitle]</span> }
+                        else if (c.Edited) { <br /><span class="cond-edited">@L["Wording of this store"]</span> }
+                    }
+                </td>
+                @if (Model.IsAdmin)
+                {
+                    <td style="white-space:nowrap">
+                        @if (c.HouseRuleId is not null)
+                        {
+                            <a class="btn small secondary" href="@Url.Page("/Admin/Rules", new { area = c.GroupTitle, edit = c.HouseRuleId })">@L["Edit"]</a>
+                            <form method="post" asp-page-handler="HouseDelete" style="display:inline" data-confirm="@L["Delete the house rule \"{0}\"?", c.Text]">
+                                <input type="hidden" name="id" value="@c.HouseRuleId" /><input type="hidden" name="area" value="@RulesModel.ConditionsView" />
+                                <button type="submit" class="btn small danger">@L["Delete"]</button>
+                            </form>
+                        }
+                        else
+                        {
+                            @if (Model.EditCond != c.Id) { <a class="btn small secondary" href="@Url.Page("/Admin/Rules", new { area = RulesModel.ConditionsView, editcond = c.Id })">@L["Edit"]</a> }
+                            @if (c.Edited)
+                            {
+                                <form method="post" asp-page-handler="TextReset" style="display:inline" data-confirm="@L["Back to the standard wording of {0}?", c.Id]">
+                                    <input type="hidden" name="id" value="@c.Id" /><button type="submit" class="btn small secondary">@L["Reset"]</button>
+                                </form>
+                            }
+                        }
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+    @if (Model.IsAdmin)
+    {
+        <details class="card newcust">
+            <summary class="btn small">+ @L["New approval condition"]</summary>
+            <form method="post" asp-page-handler="HouseSave" class="stack" style="max-width:none;margin-top:12px">
+                <input type="hidden" name="kind" value="review" /><input type="hidden" name="back" value="@RulesModel.ConditionsView" />
+                <div><label for="nc-area">@L["Area"]</label>
+                    <select id="nc-area" name="area">@foreach (var a in RuleCatalog.Areas) { <option value="@a">@L[a]</option> }</select></div>
+                <div><label for="nc-title">@L["Title"]</label><input id="nc-title" name="title" required maxlength="@RulesModel.MaxTitle" /></div>
+                <div><label for="nc-text">@L["Condition"]</label><textarea id="nc-text" name="text" required maxlength="@RulesModel.MaxText" rows="3"></textarea>
+                    <small style="color:var(--tun-slate)">@L["Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it."]</small></div>
+                <button type="submit" class="btn">@L["Save"]</button>
+            </form>
+        </details>
+    }
+}
 
 @if (Model.Area == RulesModel.StoreView && string.IsNullOrWhiteSpace(Model.Q))
 {

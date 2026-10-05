@@ -861,4 +861,27 @@
   <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>p. ej., los complementos de firma usan las reglas de certificados del cliente</value></data>
   <data name="mandatory here" xml:space="preserve"><value>obligatorio aquí</value></data>
   <data name="Last run failed" xml:space="preserve"><value>Última ejecución fallida</value></data>
+  <data name="1. Conditions for the import (checked automatically)" xml:space="preserve"><value>1. Condiciones para la importación (comprobadas automáticamente)</value></data>
+  <data name="2. Conditions for the approval (confirmed by the reviewer)" xml:space="preserve"><value>2. Condiciones para la aprobación (confirmadas por el revisor)</value></data>
+  <data name="Added by this store" xml:space="preserve"><value>Añadida por esta Store</value></data>
+  <data name="Back to the standard wording of {0}?" xml:space="preserve"><value>¿Volver a la redacción estándar de {0}?</value></data>
+  <data name="Condition" xml:space="preserve"><value>Condición</value></data>
+  <data name="Confirm every approval condition:" xml:space="preserve"><value>Confirme cada condición de aprobación:</value></data>
+  <data name="Confirm every approval condition before approving." xml:space="preserve"><value>Confirme cada condición de aprobación antes de aprobar.</value></data>
+  <data name="Documentation (PDF)" xml:space="preserve"><value>Documentación (PDF)</value></data>
+  <data name="In English, generated from the live rules of this store." xml:space="preserve"><value>En inglés, generada a partir de las reglas vigentes de esta Store.</value></data>
+  <data name="Mandatory conditions" xml:space="preserve"><value>Condiciones obligatorias</value></data>
+  <data name="Mandatory requirements (PDF)" xml:space="preserve"><value>Requisitos obligatorios (PDF)</value></data>
+  <data name="Mandatory requirements for add-ons" xml:space="preserve"><value>Requisitos obligatorios para complementos</value></data>
+  <data name="Manual: API, rules and publishing guide" xml:space="preserve"><value>Manual: API, reglas y publicación</value></data>
+  <data name="New approval condition" xml:space="preserve"><value>Nueva condición de aprobación</value></data>
+  <data name="Reset" xml:space="preserve"><value>Restablecer</value></data>
+  <data name="Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it." xml:space="preserve"><value>Los revisores la confirman para cada versión antes de aprobar; la guía para agentes pide a desarrolladores y asistentes de IA que se preparen para ella.</value></data>
+  <data name="Standard wording" xml:space="preserve"><value>Redacción estándar</value></data>
+  <data name="The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area." xml:space="preserve"><value>Las comprobaciones automáticas de estas condiciones forman parte de la Store y no pueden desactivarse aquí. Las advertencias pueden hacerse obligatorias en su área.</value></data>
+  <data name="The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store&#x27;s version." xml:space="preserve"><value>Las condiciones que debe cumplir un plug-in: primero para importarse (cada carga se comprueba automáticamente y se rechaza si falla una), después para aprobarse en la Store pública (el revisor confirma cada una). Los administradores pueden cambiar la redacción y añadir condiciones; la guía para agentes, la lista de comprobación previa y los documentos PDF muestran la versión de esta Store.</value></data>
+  <data name="Wording of this store" xml:space="preserve"><value>Redacción de esta Store</value></data>
+  <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Redacte la condición en un máximo de 600 caracteres.</value></data>
+  <data name="checked online" xml:space="preserve"><value>comprobada en línea</value></data>
+  <data name="the standard wording changed since" xml:space="preserve"><value>la redacción estándar ha cambiado desde entonces</value></data>
 </root>

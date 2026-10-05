@@ -15,6 +15,8 @@ namespace AddonStore.Web.Pages.Admin;
 public class RulesModel : PageModel
 {
     public const string StoreView = "store";
+    public const string ConditionsView = "conditions";   // default (S1.0.10)
+    public const int MaxConditionText = 600;
     public static readonly string[] Kinds = { "review", "recommendation" };
     public const int MaxTitle = 120, MaxText = 2000;
 
@@ -26,6 +28,9 @@ public class RulesModel : PageModel
     [BindProperty(SupportsGet = true)] public string? Sev { get; set; }
     [BindProperty(SupportsGet = true)] public string? Q { get; set; }
     [BindProperty(SupportsGet = true)] public string? Edit { get; set; }
+    [BindProperty(SupportsGet = true)] public string? EditCond { get; set; }
+    public List<RuleCatalog.Condition> ImportConditions { get; private set; } = new();
+    public List<RuleCatalog.Condition> ApprovalConditions { get; private set; } = new();
 
     public bool IsAdmin => User.IsInRole("Admin");
     public RuleCatalog.HouseState House { get; private set; } = RuleCatalog.HouseState.Empty;
@@ -53,12 +58,15 @@ public class RulesModel : PageModel
     private void Load()
     {
         House = RuleCatalog.House;
-        if (Area != StoreView && !RuleCatalog.Areas.Contains(Area)) Area = string.IsNullOrWhiteSpace(Q) ? RuleCatalog.Areas[0] : null;
+        ImportConditions = RuleCatalog.ImportConditions();
+        ApprovalConditions = RuleCatalog.ApprovalConditions();
+        if (Area != StoreView && Area != ConditionsView && !RuleCatalog.Areas.Contains(Area))
+            Area = string.IsNullOrWhiteSpace(Q) ? ConditionsView : null;
         IEnumerable<RuleCatalog.Rule> rules = RuleCatalog.Rules;
         var q = (Q ?? "").Trim();
         if (q.Length > 0)
             rules = rules.Where(r => r.Code.Contains(q, StringComparison.OrdinalIgnoreCase) || r.Description.Contains(q, StringComparison.OrdinalIgnoreCase));
-        else if (Area is not null && Area != StoreView)
+        else if (Area is not null && Area != StoreView && Area != ConditionsView)
             rules = rules.Where(r => r.Area == Area);
         else
             rules = Array.Empty<RuleCatalog.Rule>();
@@ -83,7 +91,7 @@ public class RulesModel : PageModel
         return Back(area);
     }
 
-    public async Task<IActionResult> OnPostHouseSaveAsync(string? id, string? area, string? title, string? text, string? kind)
+    public async Task<IActionResult> OnPostHouseSaveAsync(string? id, string? area, string? title, string? text, string? kind, string? back)
     {
         if (!IsAdmin) return Forbid();
         title = (title ?? "").Trim(); text = (text ?? "").Trim();
@@ -102,7 +110,43 @@ public class RulesModel : PageModel
         if (old is null) list.Add(rule); else list[list.IndexOf(old)] = rule;
         await RuleCatalog.SaveAsync(_settings, RuleCatalog.House with { Rules = list });
         await _audit.LogAsync(me?.DisplayName ?? "", old is null ? "rules.house.added" : "rules.house.changed", rule.Id, $"{area}: {title}");
-        return Back(area);
+        return Back(back == ConditionsView ? ConditionsView : area);
+    }
+
+    // ---- the store's wording of a standard condition (S1.0.10) -------------------
+    public async Task<IActionResult> OnPostTextSaveAsync(string id, string? text)
+    {
+        if (!IsAdmin) return Forbid();
+        text = RuleCatalog.OneLine(text ?? "");
+        var std = RuleCatalog.ImportConditions().FirstOrDefault(c => c.Id == id)?.DefaultText
+                  ?? RuleCatalog.ReviewDuties.FirstOrDefault(d => d.Id == id).Text;
+        if (std is null || text.Length is 0 or > MaxConditionText)
+        {
+            Notice = "Write the condition in up to 600 characters.";
+            NoticeKind = "error";
+            Area = ConditionsView; EditCond = id; Load();
+            return Page();
+        }
+        var me = await _users.GetUserAsync(User);
+        var texts = RuleCatalog.House.Texts.ToDictionary(kv => kv.Key, kv => kv.Value);
+        if (text == std) texts.Remove(id);
+        else texts[id] = new RuleCatalog.TextOverride(text, std, me?.DisplayName ?? "", DateTime.UtcNow);
+        await RuleCatalog.SaveAsync(_settings, RuleCatalog.House with { Texts = texts });
+        await _audit.LogAsync(me?.DisplayName ?? "", "rules.condition.changed", id, text);
+        return Back(ConditionsView);
+    }
+
+    public async Task<IActionResult> OnPostTextResetAsync(string id)
+    {
+        if (!IsAdmin) return Forbid();
+        var texts = RuleCatalog.House.Texts.ToDictionary(kv => kv.Key, kv => kv.Value);
+        if (texts.Remove(id))
+        {
+            await RuleCatalog.SaveAsync(_settings, RuleCatalog.House with { Texts = texts });
+            var me = await _users.GetUserAsync(User);
+            await _audit.LogAsync(me?.DisplayName ?? "", "rules.condition.reset", id);
+        }
+        return Back(ConditionsView);
     }
 
     public async Task<IActionResult> OnPostHouseDeleteAsync(string id, string? area)

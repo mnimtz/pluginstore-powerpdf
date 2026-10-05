@@ -861,4 +861,27 @@
   <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>esim. allekirjoituslisäosat käyttävät asiakkaan varmennesääntöjä</value></data>
   <data name="mandatory here" xml:space="preserve"><value>pakollinen täällä</value></data>
   <data name="Last run failed" xml:space="preserve"><value>Viimeisin ajo epäonnistui</value></data>
+  <data name="1. Conditions for the import (checked automatically)" xml:space="preserve"><value>1. Tuonnin ehdot (tarkistetaan automaattisesti)</value></data>
+  <data name="2. Conditions for the approval (confirmed by the reviewer)" xml:space="preserve"><value>2. Hyväksynnän ehdot (tarkastaja vahvistaa)</value></data>
+  <data name="Added by this store" xml:space="preserve"><value>Tämän Storen lisäämä</value></data>
+  <data name="Back to the standard wording of {0}?" xml:space="preserve"><value>Palautetaanko {0} vakiomuotoiluun?</value></data>
+  <data name="Condition" xml:space="preserve"><value>Ehto</value></data>
+  <data name="Confirm every approval condition:" xml:space="preserve"><value>Vahvista jokainen hyväksynnän ehto:</value></data>
+  <data name="Confirm every approval condition before approving." xml:space="preserve"><value>Vahvista jokainen hyväksynnän ehto ennen hyväksymistä.</value></data>
+  <data name="Documentation (PDF)" xml:space="preserve"><value>Dokumentaatio (PDF)</value></data>
+  <data name="In English, generated from the live rules of this store." xml:space="preserve"><value>Englanniksi, luotu tämän Storen voimassa olevista säännöistä.</value></data>
+  <data name="Mandatory conditions" xml:space="preserve"><value>Pakolliset ehdot</value></data>
+  <data name="Mandatory requirements (PDF)" xml:space="preserve"><value>Pakolliset vaatimukset (PDF)</value></data>
+  <data name="Mandatory requirements for add-ons" xml:space="preserve"><value>Lisäosien pakolliset vaatimukset</value></data>
+  <data name="Manual: API, rules and publishing guide" xml:space="preserve"><value>Käsikirja: API, säännöt ja julkaisu</value></data>
+  <data name="New approval condition" xml:space="preserve"><value>Uusi hyväksynnän ehto</value></data>
+  <data name="Reset" xml:space="preserve"><value>Palauta</value></data>
+  <data name="Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it." xml:space="preserve"><value>Tarkastajat vahvistavat sen jokaiselle versiolle ennen hyväksyntää; agenttiopas pyytää kehittäjiä ja tekoälyavustajia valmistautumaan siihen.</value></data>
+  <data name="Standard wording" xml:space="preserve"><value>Vakiomuotoilu</value></data>
+  <data name="The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area." xml:space="preserve"><value>Näiden ehtojen automaattiset tarkistukset ovat osa Storea, eikä niitä voi poistaa käytöstä täällä. Varoitukset voi tehdä pakollisiksi omalla alueellaan.</value></data>
+  <data name="The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store&#x27;s version." xml:space="preserve"><value>Ehdot, jotka laajennuksen on täytettävä: ensin tuontia varten (jokainen lataus tarkistetaan automaattisesti ja hylätään, jos yksikin ehto ei täyty), sitten hyväksyntää varten julkiseen Storeen (tarkastaja vahvistaa jokaisen). Ylläpitäjät voivat muuttaa muotoilua ja lisätä ehtoja; agenttiopas, tarkistuslista ja PDF-asiakirjat näyttävät tämän Storen version.</value></data>
+  <data name="Wording of this store" xml:space="preserve"><value>Tämän Storen muotoilu</value></data>
+  <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Kirjoita ehto enintään 600 merkillä.</value></data>
+  <data name="checked online" xml:space="preserve"><value>tarkistetaan verkossa</value></data>
+  <data name="the standard wording changed since" xml:space="preserve"><value>vakiomuotoilu on muuttunut sen jälkeen</value></data>
 </root>

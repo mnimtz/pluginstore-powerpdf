@@ -340,6 +340,19 @@ from the live guide, `/api/rules`, the OpenAPI description and the manifest
 schema: introduction and principles, the full developer and agent guide, every
 rule by area, the API reference and the manifest reference.
 
+**Mandatory conditions (S1.0.10):** the Rules page opens on the numbered
+conditions a plug-in must meet, first for the **import** (A1 to E4, checked
+automatically on every upload) and then for the **approval** (R1 to R4 and the
+store's own, confirmed by the reviewer). Admins change the wording of any
+condition (reset restores the standard) and add approval conditions. The
+approval form lists every approval condition as a required box; the server
+refuses an approval without all of them and records the confirmed ids in the
+audit log. The agent guide shows the store's wording (checklist sections F and
+G) and `GET /api/rules` lists the conditions under `data.conditions`.
+The two PDFs, *Mandatory requirements for add-ons* and the *Manual*, are on the
+API page (`/docs/AddonStore-Requirements.pdf`, `/docs/AddonStore-Manual.pdf`);
+`tools/make_manual.py` regenerates both and copies them to `wwwroot/docs`.
+
 **Rules page and API (S1.0.9):** every rule the store checks, grouped into
 12 areas, is listed under *Settings, Rules* (`/Admin/Rules`, readable by all
 signed-in users) and at `GET /api/rules`. Admins extend them there: **house

@@ -7,7 +7,12 @@ namespace AddonStore.Web.Api;
 /// </summary>
 public static class AgentGuide
 {
-    public static string Markdown(string baseUrl, string version) => $$"""
+    /// <summary>The guide with the store's own wording of the import conditions (S1.0.10).</summary>
+    public static string Markdown(string baseUrl, string version) =>
+        AddonStore.Web.Validation.RuleCatalog.ApplyTextOverrides(MarkdownCore(baseUrl, version));
+
+    /// <summary>The guide as written here (standard wording).</summary>
+    public static string MarkdownCore(string baseUrl, string version) => $$"""
 # Add-on Store for Tungsten Power PDF: developer and agent guide
 
 Server version {{version}}. This server distributes plugins (.ppak packages)

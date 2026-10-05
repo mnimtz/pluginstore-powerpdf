@@ -861,4 +861,27 @@
   <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>bijv. ondertekeningsinvoegtoepassingen gebruiken de certificaatregels van de klant</value></data>
   <data name="mandatory here" xml:space="preserve"><value>hier verplicht</value></data>
   <data name="Last run failed" xml:space="preserve"><value>Laatste run mislukt</value></data>
+  <data name="1. Conditions for the import (checked automatically)" xml:space="preserve"><value>1. Voorwaarden voor de import (automatisch gecontroleerd)</value></data>
+  <data name="2. Conditions for the approval (confirmed by the reviewer)" xml:space="preserve"><value>2. Voorwaarden voor de goedkeuring (bevestigd door de beoordelaar)</value></data>
+  <data name="Added by this store" xml:space="preserve"><value>Toegevoegd door deze Store</value></data>
+  <data name="Back to the standard wording of {0}?" xml:space="preserve"><value>Terug naar de standaardformulering van {0}?</value></data>
+  <data name="Condition" xml:space="preserve"><value>Voorwaarde</value></data>
+  <data name="Confirm every approval condition:" xml:space="preserve"><value>Bevestig elke goedkeuringsvoorwaarde:</value></data>
+  <data name="Confirm every approval condition before approving." xml:space="preserve"><value>Bevestig elke goedkeuringsvoorwaarde voordat u goedkeurt.</value></data>
+  <data name="Documentation (PDF)" xml:space="preserve"><value>Documentatie (PDF)</value></data>
+  <data name="In English, generated from the live rules of this store." xml:space="preserve"><value>In het Engels, gegenereerd uit de actuele regels van deze Store.</value></data>
+  <data name="Mandatory conditions" xml:space="preserve"><value>Verplichte voorwaarden</value></data>
+  <data name="Mandatory requirements (PDF)" xml:space="preserve"><value>Verplichte eisen (PDF)</value></data>
+  <data name="Mandatory requirements for add-ons" xml:space="preserve"><value>Verplichte eisen voor invoegtoepassingen</value></data>
+  <data name="Manual: API, rules and publishing guide" xml:space="preserve"><value>Handleiding: API, regels en publicatie</value></data>
+  <data name="New approval condition" xml:space="preserve"><value>Nieuwe goedkeuringsvoorwaarde</value></data>
+  <data name="Reset" xml:space="preserve"><value>Herstellen</value></data>
+  <data name="Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it." xml:space="preserve"><value>Beoordelaars bevestigen haar voor elke versie vóór goedkeuring; de agentgids vraagt ontwikkelaars en AI-assistenten zich erop voor te bereiden.</value></data>
+  <data name="Standard wording" xml:space="preserve"><value>Standaardformulering</value></data>
+  <data name="The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area." xml:space="preserve"><value>De automatische controles achter deze voorwaarden horen bij de Store en kunnen hier niet worden uitgeschakeld. Waarschuwingen kunnen in hun gebied verplicht worden gemaakt.</value></data>
+  <data name="The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store&#x27;s version." xml:space="preserve"><value>De voorwaarden waaraan een plug-in moet voldoen: eerst om te worden geïmporteerd (elke upload wordt automatisch gecontroleerd en geweigerd als er één faalt), daarna om te worden goedgekeurd voor de live Store (de beoordelaar bevestigt elke voorwaarde). Beheerders kunnen de formulering wijzigen en voorwaarden toevoegen; de agentgids, de controlelijst vooraf en de pdf-documenten tonen de versie van deze Store.</value></data>
+  <data name="Wording of this store" xml:space="preserve"><value>Formulering van deze Store</value></data>
+  <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Formuleer de voorwaarde in maximaal 600 tekens.</value></data>
+  <data name="checked online" xml:space="preserve"><value>online gecontroleerd</value></data>
+  <data name="the standard wording changed since" xml:space="preserve"><value>de standaardformulering is sindsdien gewijzigd</value></data>
 </root>

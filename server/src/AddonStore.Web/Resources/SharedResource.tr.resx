@@ -861,4 +861,27 @@
   <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>örn. imza eklentileri müşterinin sertifika kurallarını kullanır</value></data>
   <data name="mandatory here" xml:space="preserve"><value>burada zorunlu</value></data>
   <data name="Last run failed" xml:space="preserve"><value>Son çalıştırma başarısız</value></data>
+  <data name="1. Conditions for the import (checked automatically)" xml:space="preserve"><value>1. İçe aktarma koşulları (otomatik denetlenir)</value></data>
+  <data name="2. Conditions for the approval (confirmed by the reviewer)" xml:space="preserve"><value>2. Onay koşulları (gözden geçiren onaylar)</value></data>
+  <data name="Added by this store" xml:space="preserve"><value>Bu Store tarafından eklendi</value></data>
+  <data name="Back to the standard wording of {0}?" xml:space="preserve"><value>{0} standart ifadeye döndürülsün mü?</value></data>
+  <data name="Condition" xml:space="preserve"><value>Koşul</value></data>
+  <data name="Confirm every approval condition:" xml:space="preserve"><value>Her onay koşulunu onaylayın:</value></data>
+  <data name="Confirm every approval condition before approving." xml:space="preserve"><value>Onaylamadan önce her onay koşulunu onaylayın.</value></data>
+  <data name="Documentation (PDF)" xml:space="preserve"><value>Belgeler (PDF)</value></data>
+  <data name="In English, generated from the live rules of this store." xml:space="preserve"><value>İngilizce, bu Store'un güncel kurallarından oluşturulmuştur.</value></data>
+  <data name="Mandatory conditions" xml:space="preserve"><value>Zorunlu koşullar</value></data>
+  <data name="Mandatory requirements (PDF)" xml:space="preserve"><value>Zorunlu gereksinimler (PDF)</value></data>
+  <data name="Mandatory requirements for add-ons" xml:space="preserve"><value>Eklentiler için zorunlu gereksinimler</value></data>
+  <data name="Manual: API, rules and publishing guide" xml:space="preserve"><value>El kitabı: API, kurallar ve yayınlama</value></data>
+  <data name="New approval condition" xml:space="preserve"><value>Yeni onay koşulu</value></data>
+  <data name="Reset" xml:space="preserve"><value>Sıfırla</value></data>
+  <data name="Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it." xml:space="preserve"><value>Gözden geçirenler onaydan önce her sürüm için bunu onaylar; ajan kılavuzu geliştiricilerden ve yapay zekâ asistanlarından buna hazırlanmalarını ister.</value></data>
+  <data name="Standard wording" xml:space="preserve"><value>Standart ifade</value></data>
+  <data name="The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area." xml:space="preserve"><value>Bu koşulların ardındaki otomatik denetimler Store'un parçasıdır ve burada kapatılamaz. Uyarılar kendi alanlarında zorunlu yapılabilir.</value></data>
+  <data name="The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store&#x27;s version." xml:space="preserve"><value>Bir eklentinin karşılaması gereken koşullar: önce içe aktarma için (her yükleme otomatik denetlenir ve biri karşılanmazsa reddedilir), ardından herkese açık Store için onay (gözden geçiren her birini onaylar). Yöneticiler ifadeyi değiştirebilir ve koşul ekleyebilir; ajan kılavuzu, kontrol listesi ve PDF belgeleri bu Store'un sürümünü gösterir.</value></data>
+  <data name="Wording of this store" xml:space="preserve"><value>Bu Store'un ifadesi</value></data>
+  <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Koşulu en fazla 600 karakterle yazın.</value></data>
+  <data name="checked online" xml:space="preserve"><value>çevrimiçi denetlenir</value></data>
+  <data name="the standard wording changed since" xml:space="preserve"><value>standart ifade o zamandan beri değişti</value></data>
 </root>

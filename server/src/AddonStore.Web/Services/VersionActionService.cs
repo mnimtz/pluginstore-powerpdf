@@ -49,11 +49,16 @@ public class VersionActionService
     public static VersionStatus RestoreTarget(PackageVersion v) =>
         v.ReviewedAt is not null || v.PackageId == SubmissionService.ClientPackageId ? VersionStatus.Live : VersionStatus.Beta;
 
-    public async Task<string?> DecideAsync(int versionId, AppUser actor, bool approve, string? comment)
+    public async Task<string?> DecideAsync(int versionId, AppUser actor, bool approve, string? comment,
+                                           IReadOnlyCollection<string>? confirmed = null)
     {
         var v = await _db.PackageVersions.Include(x => x.Package).ThenInclude(p => p!.Owner)
             .FirstOrDefaultAsync(x => x.Id == versionId);
         if (v is null || v.Status != VersionStatus.Beta) return null;
+        // Approval conditions (S1.0.10): the reviewer confirms each one; the ids are recorded.
+        var conditions = approve ? Validation.RuleCatalog.ApprovalConditions().Select(c => c.Id).ToList() : new List<string>();
+        if (approve && conditions.Any(id => confirmed is null || !confirmed.Contains(id)))
+            return "Confirm every approval condition before approving.";
         if (approve && await _sources.BlocksApprovalAsync(v))
             return "The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it.";
         // Four-eyes rule (setting Review.FourEyes): nobody approves a version they uploaded or whose package they own.
@@ -66,7 +71,7 @@ public class VersionActionService
         v.ReviewComment = comment;
         await _db.SaveChangesAsync();
         await _audit.LogAsync(actor.DisplayName, approve ? "version.approved" : "version.rejected",
-            $"{v.PackageId} {v.Version}", comment ?? "");
+            $"{v.PackageId} {v.Version}", approve ? "conditions confirmed: " + string.Join(", ", conditions) : comment ?? "");
         if (v.Package?.Owner is { } owner)
             await _notify.NotifyUserAsync("ReviewResult", owner,
                 $"[Add-on Store] {v.PackageId} {v.Version} {(approve ? "approved" : "rejected")}",

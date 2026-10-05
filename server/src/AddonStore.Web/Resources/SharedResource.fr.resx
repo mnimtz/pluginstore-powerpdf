@@ -861,4 +861,27 @@
   <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>p. ex. les modules de signature utilisent les règles de certificat du client</value></data>
   <data name="mandatory here" xml:space="preserve"><value>obligatoire ici</value></data>
   <data name="Last run failed" xml:space="preserve"><value>Dernière exécution échouée</value></data>
+  <data name="1. Conditions for the import (checked automatically)" xml:space="preserve"><value>1. Conditions d'importation (vérifiées automatiquement)</value></data>
+  <data name="2. Conditions for the approval (confirmed by the reviewer)" xml:space="preserve"><value>2. Conditions d'approbation (confirmées par le relecteur)</value></data>
+  <data name="Added by this store" xml:space="preserve"><value>Ajoutée par ce Store</value></data>
+  <data name="Back to the standard wording of {0}?" xml:space="preserve"><value>Rétablir le libellé standard de {0} ?</value></data>
+  <data name="Condition" xml:space="preserve"><value>Condition</value></data>
+  <data name="Confirm every approval condition:" xml:space="preserve"><value>Confirmez chaque condition d'approbation :</value></data>
+  <data name="Confirm every approval condition before approving." xml:space="preserve"><value>Confirmez chaque condition d'approbation avant d'approuver.</value></data>
+  <data name="Documentation (PDF)" xml:space="preserve"><value>Documentation (PDF)</value></data>
+  <data name="In English, generated from the live rules of this store." xml:space="preserve"><value>En anglais, générée à partir des règles en vigueur de ce Store.</value></data>
+  <data name="Mandatory conditions" xml:space="preserve"><value>Conditions obligatoires</value></data>
+  <data name="Mandatory requirements (PDF)" xml:space="preserve"><value>Exigences obligatoires (PDF)</value></data>
+  <data name="Mandatory requirements for add-ons" xml:space="preserve"><value>Exigences obligatoires pour les modules</value></data>
+  <data name="Manual: API, rules and publishing guide" xml:space="preserve"><value>Manuel : API, règles et publication</value></data>
+  <data name="New approval condition" xml:space="preserve"><value>Nouvelle condition d'approbation</value></data>
+  <data name="Reset" xml:space="preserve"><value>Réinitialiser</value></data>
+  <data name="Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it." xml:space="preserve"><value>Les relecteurs la confirment pour chaque version avant l'approbation ; le guide des agents demande aux développeurs et aux assistants IA de s'y préparer.</value></data>
+  <data name="Standard wording" xml:space="preserve"><value>Libellé standard</value></data>
+  <data name="The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area." xml:space="preserve"><value>Les vérifications automatiques derrière ces conditions font partie du Store et ne peuvent pas être désactivées ici. Les avertissements peuvent être rendus obligatoires dans leur domaine.</value></data>
+  <data name="The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store&#x27;s version." xml:space="preserve"><value>Les conditions qu'un plug-in doit remplir : d'abord pour être importé (chaque téléversement est vérifié automatiquement et refusé si l'une échoue), puis pour être approuvé dans le Store public (le relecteur confirme chacune). Les administrateurs peuvent modifier le libellé et ajouter des conditions ; le guide des agents, la liste de contrôle préalable et les documents PDF montrent la version de ce Store.</value></data>
+  <data name="Wording of this store" xml:space="preserve"><value>Libellé de ce Store</value></data>
+  <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Rédigez la condition en 600 caractères au plus.</value></data>
+  <data name="checked online" xml:space="preserve"><value>vérifiée en ligne</value></data>
+  <data name="the standard wording changed since" xml:space="preserve"><value>le libellé standard a changé depuis</value></data>
 </root>

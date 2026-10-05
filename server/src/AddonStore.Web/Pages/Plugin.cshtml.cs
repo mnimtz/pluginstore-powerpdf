@@ -81,13 +81,13 @@ public class PluginModel : PageModel
     {
         if (!await LoadAsync(id ?? "")) return Forbid();
         Notice = await action() ?? "This action is not allowed for this version.";
-        if (Notice.StartsWith("The source code") || Notice.StartsWith("This action")) NoticeKind = "warn";
+        if (Notice.StartsWith("The source code") || Notice.StartsWith("This action") || Notice.StartsWith("Confirm every")) NoticeKind = "warn";
         await LoadAsync(id!);
         return Page();
     }
 
-    public Task<IActionResult> OnPostApproveAsync(string id, int versionId) =>
-        ActAsync(id, () => CanReview ? _actions.DecideAsync(versionId, Me!, true, null) : Task.FromResult<string?>(null));
+    public Task<IActionResult> OnPostApproveAsync(string id, int versionId, string[]? confirmed) =>
+        ActAsync(id, () => CanReview ? _actions.DecideAsync(versionId, Me!, true, null, confirmed) : Task.FromResult<string?>(null));
 
     public Task<IActionResult> OnPostRejectAsync(string id, int versionId, string comment) =>
         ActAsync(id, () => CanReview ? _actions.DecideAsync(versionId, Me!, false, comment) : Task.FromResult<string?>(null));

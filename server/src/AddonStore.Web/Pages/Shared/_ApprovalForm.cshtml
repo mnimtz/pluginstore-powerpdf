@@ -1,0 +1,23 @@
+@* Approval with the store's approval conditions (S1.0.10): every condition must be
+   ticked; the server checks it again and records the confirmed ids. Model: (version id,
+   name of the hidden id field, page route id or null, button label key). *@
+@model (int VersionId, string IdField, string? RouteId, string Label)
+@{
+    var conditions = AddonStore.Web.Validation.RuleCatalog.ApprovalConditions();
+}
+<details class="approve-box">
+    <summary class="btn small">@L[Model.Label]</summary>
+    <form method="post" asp-page-handler="Approve" asp-route-id="@Model.RouteId" class="stack" style="max-width:none;margin-top:8px">
+        <input type="hidden" name="@Model.IdField" value="@Model.VersionId" />
+        <p style="margin:0;font-size:.88rem;color:var(--tun-slate)">@L["Confirm every approval condition:"]</p>
+        @foreach (var c in conditions)
+        {
+            <label style="display:flex;gap:8px;align-items:flex-start;font-weight:400">
+                <input type="checkbox" name="confirmed" value="@c.Id" required style="width:auto;margin-top:3px" />
+                <span><code>@c.Id</code> @c.Text</span>
+            </label>
+        }
+        <div><button type="submit" class="btn small">@L["Approve for live store"]</button>
+            <a href="/Admin/Rules" style="font-size:.85rem;margin-left:8px">@L["Mandatory conditions"] →</a></div>
+    </form>
+</details>

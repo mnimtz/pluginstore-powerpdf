@@ -25,13 +25,99 @@ public static class RuleCatalog
 {
     public record Rule(string Code, string Severity, string Description, string Area, bool Api);
     public record HouseRule(string Id, string Area, string Title, string Text, string Kind, string CreatedBy, DateTime CreatedAt);
-    public record HouseState(IReadOnlyList<HouseRule> Rules, IReadOnlyCollection<string> Escalated)
+    /// <summary>The store's own wording of a standard condition (S1.0.10); DefaultAtEdit shows when the standard changed since.</summary>
+    public record TextOverride(string Text, string DefaultAtEdit, string By, DateTime At);
+    public record HouseState(IReadOnlyList<HouseRule> Rules, IReadOnlyCollection<string> Escalated,
+                             IReadOnlyDictionary<string, TextOverride> Texts)
     {
-        public static readonly HouseState Empty = new(Array.Empty<HouseRule>(), Array.Empty<string>());
+        public static readonly HouseState Empty = new(Array.Empty<HouseRule>(), Array.Empty<string>(),
+                                                      new Dictionary<string, TextOverride>());
     }
 
     public const string HouseKey = "Rules.House";
     public const string EscalatedKey = "Rules.Escalated";
+    public const string TextsKey = "Rules.Texts";
+
+    // ---- mandatory conditions (S1.0.10) -------------------------------------
+    /// <summary>One numbered condition for the import (A1..E4, from the pre-flight checklist) or the approval (R1.., house rules).</summary>
+    public record Condition(string Id, string Group, string GroupTitle, string DefaultText, string Text, string[] Codes,
+                            bool Online, bool Edited, string Raw, string? HouseRuleId = null);
+
+    /// <summary>What a reviewer confirms for every version before approving it (editable wording).</summary>
+    public static readonly (string Id, string Text)[] ReviewDuties =
+    {
+        ("R1", "The compliance declaration (thirdParty, complianceAudit, externalServices) matches what the package really contains and does."),
+        ("R2", "Every warning in the check report was examined; none hides a real problem (weak copyleft, an undeclared service, a third-party brand)."),
+        ("R3", "Name, description, changelog and screenshots describe the add-on correctly and use no other companies' product names or trademarks."),
+        ("R4", "The version was tried in Power PDF, or the change carries no functional risk (for example texts only)."),
+    };
+
+    private static readonly Regex CodeGroups = new(@"\(([A-Z][A-Z0-9_]+(?:, [A-Z][A-Z0-9_]+)*)\)", RegexOptions.Compiled);
+
+    /// <summary>The import conditions A..E of a guide text (raw block kept for replacing it with the store's wording).</summary>
+    public static List<Condition> ParseImportConditions(string md)
+    {
+        var list = new List<Condition>();
+        md = md.Replace("\r\n", "\n");
+        int a = md.IndexOf("## Pre-flight checklist", StringComparison.Ordinal);
+        int b = a < 0 ? -1 : md.IndexOf("## Compliance audit", a, StringComparison.Ordinal);
+        if (a < 0 || b < 0) return list;
+        var lines = md[a..b].Split('\n');
+        string group = "", title = "";
+        int n = 0;
+        for (int i = 0; i < lines.Length; i++)
+        {
+            var g = Regex.Match(lines[i], @"^\*\*([A-E])\. (.+?)\*\*");
+            if (g.Success) { group = g.Groups[1].Value; title = g.Groups[2].Value; n = 0; continue; }
+            if (Regex.IsMatch(lines[i], @"^\*\*[F-Z]\. ")) { group = ""; continue; }
+            if (group.Length == 0 || !lines[i].TrimStart().StartsWith("- [ ]", StringComparison.Ordinal)) continue;
+            var block = new List<string> { lines[i] };
+            while (i + 1 < lines.Length && lines[i + 1].StartsWith("      ", StringComparison.Ordinal) && !lines[i + 1].TrimStart().StartsWith("- [", StringComparison.Ordinal))
+                block.Add(lines[++i]);
+            var raw = string.Join("\n", block);
+            var text = OneLine(string.Join(" ", block.Select(l => l.Trim())).Substring(5));
+            var codes = CodeGroups.Matches(text).SelectMany(m => m.Groups[1].Value.Split(", ")).ToArray();
+            var clean = Regex.Replace(OneLine(CodeGroups.Replace(text, "")), @"\s+([.;,])(?=\s|$)", "$1");   // "x (CODE)." -> "x."; keeps ".zxt"
+            n++;
+            list.Add(new Condition(group + n, group, title, clean, clean, codes, text.Contains("checked online"), false, raw));
+        }
+        return list;
+    }
+
+    /// <summary>The import conditions with the store's wording applied.</summary>
+    public static List<Condition> ImportConditions()
+    {
+        var texts = s_state.Texts;
+        return ParseImportConditions(AgentGuide.MarkdownCore("{baseUrl}", "")).Select(c =>
+            texts.TryGetValue(c.Id, out var o) ? c with { Text = o.Text, Edited = true } : c).ToList();
+    }
+
+    /// <summary>The approval conditions: the review duties (store wording applied) and the house rules a reviewer checks.</summary>
+    public static List<Condition> ApprovalConditions()
+    {
+        var texts = s_state.Texts;
+        var list = ReviewDuties.Select(d => texts.TryGetValue(d.Id, out var o)
+            ? new Condition(d.Id, "R", "Approval", d.Text, o.Text, Array.Empty<string>(), false, true, "")
+            : new Condition(d.Id, "R", "Approval", d.Text, d.Text, Array.Empty<string>(), false, false, "")).ToList();
+        int n = 0;
+        foreach (var h in s_state.Rules.Where(r => r.Kind == "review"))
+            list.Add(new Condition("H" + (++n), "H", h.Area, h.Text, h.Title + ": " + OneLine(h.Text), Array.Empty<string>(), false, false, "", h.Id));
+        return list;
+    }
+
+    /// <summary>The store's wording of the import conditions in a guide text (codes stay, they are what the check reports).</summary>
+    public static string ApplyTextOverrides(string md)
+    {
+        var texts = s_state.Texts;
+        if (texts.Count == 0) return md;
+        var nl = md.Contains("\r\n") ? "\r\n" : "\n";
+        var norm = md.Replace("\r\n", "\n");
+        foreach (var c in ParseImportConditions(norm))
+            if (texts.TryGetValue(c.Id, out var o))
+                norm = norm.Replace(c.Raw, "- [ ] " + OneLine(o.Text) + (c.Codes.Length > 0 ? " (" + string.Join(", ", c.Codes) + ")" : "")
+                                          + (c.Online && !o.Text.Contains("online") ? " (checked online)" : ""));
+        return nl == "\n" ? norm : norm.Replace("\n", nl);
+    }
 
     /// <summary>Areas in display order (English = resx key).</summary>
     public static readonly string[] Areas =
@@ -92,25 +178,34 @@ public static class RuleCatalog
     {
         var house = (await db.AppSettings.AsNoTracking().FirstOrDefaultAsync(s => s.Key == HouseKey))?.Value ?? "";
         var esc = (await db.AppSettings.AsNoTracking().FirstOrDefaultAsync(s => s.Key == EscalatedKey))?.Value ?? "";
-        s_state = Parse(house, esc);
+        var texts = (await db.AppSettings.AsNoTracking().FirstOrDefaultAsync(s => s.Key == TextsKey))?.Value ?? "";
+        s_state = Parse(house, esc, texts);
     }
 
-    public static HouseState Parse(string houseJson, string escalatedJson)
+    public static HouseState Parse(string houseJson, string escalatedJson, string textsJson = "")
     {
         List<HouseRule> rules = new();
         List<string> escalated = new();
+        Dictionary<string, TextOverride> texts = new();
         try { if (houseJson.Length > 0) rules = JsonSerializer.Deserialize<List<HouseRule>>(houseJson) ?? new(); } catch (JsonException) { }
         try { if (escalatedJson.Length > 0) escalated = JsonSerializer.Deserialize<List<string>>(escalatedJson) ?? new(); } catch (JsonException) { }
+        try { if (textsJson.Length > 0) texts = JsonSerializer.Deserialize<Dictionary<string, TextOverride>>(textsJson) ?? new(); } catch (JsonException) { }
         // only real warnings can be made stricter
         var warnings = Rules.Where(r => r.Severity == "warning" && !r.Api).Select(r => r.Code).ToHashSet();
-        return new HouseState(rules, escalated.Where(warnings.Contains).Distinct().OrderBy(c => c).ToList());
+        return new HouseState(rules, escalated.Where(warnings.Contains).Distinct().OrderBy(c => c).ToList(),
+                              texts.Where(kv => Regex.IsMatch(kv.Key, "^[A-ER][0-9]{1,2}$") && kv.Value.Text.Trim().Length > 0)
+                                   .ToDictionary(kv => kv.Key, kv => kv.Value));
     }
 
     public static async Task SaveAsync(Services.SettingsService settings, HouseState state)
     {
-        await settings.SetAsync(HouseKey, JsonSerializer.Serialize(state.Rules));
-        await settings.SetAsync(EscalatedKey, JsonSerializer.Serialize(state.Escalated));
-        s_state = Parse(JsonSerializer.Serialize(state.Rules), JsonSerializer.Serialize(state.Escalated));
+        var rules = JsonSerializer.Serialize(state.Rules);
+        var esc = JsonSerializer.Serialize(state.Escalated);
+        var texts = JsonSerializer.Serialize(state.Texts);
+        await settings.SetAsync(HouseKey, rules);
+        await settings.SetAsync(EscalatedKey, esc);
+        await settings.SetAsync(TextsKey, texts);
+        s_state = Parse(rules, esc, texts);
     }
 
     /// <summary>Stricter rules: the store's escalated warnings become errors.</summary>
@@ -134,18 +229,25 @@ public static class RuleCatalog
     public static string ChecklistMarkdown()
     {
         var s = s_state;
-        if (s.Rules.Count == 0 && s.Escalated.Count == 0) return "";
         var sb = new StringBuilder();
-        sb.Append("**F. Rules of this store** (maintained by the store admins; GET /api/rules)\n");
-        foreach (var code in s.Escalated)
+        var advice = s.Rules.Where(h => h.Kind != "review").ToList();
+        if (s.Escalated.Count > 0 || advice.Count > 0)
         {
-            // the rule list is parsed from this very guide: never force it from in here
-            var r = s_rules.IsValueCreated ? Rules.FirstOrDefault(x => x.Code == code) : null;
-            sb.Append($"- [ ] Mandatory here, not only recommended: {r?.Description ?? code} ({code})\n");
+            sb.Append("**F. Rules of this store** (maintained by the store admins; GET /api/rules)\n");
+            foreach (var code in s.Escalated)
+            {
+                // the rule list is parsed from this very guide: never force it from in here
+                var r = s_rules.IsValueCreated ? Rules.FirstOrDefault(x => x.Code == code) : null;
+                sb.Append($"- [ ] Mandatory here, not only recommended: {r?.Description ?? code} ({code})\n");
+            }
+            foreach (var h in advice)
+                sb.Append($"- [ ] {h.Title}: {OneLine(h.Text)} (recommendation)\n");
+            sb.Append('\n');
         }
-        foreach (var h in s.Rules)
-            sb.Append($"- [ ] {h.Title}: {OneLine(h.Text)}" +
-                      (h.Kind == "review" ? " (checked by the reviewer at approval)" : " (recommendation)") + "\n");
+        // what the reviewer confirms before a version goes live: prepare for it
+        sb.Append("**G. Approval conditions** (the reviewer confirms each before a version goes live; prepare for them)\n");
+        foreach (var c in ApprovalConditions())
+            sb.Append($"- [ ] {OneLine(c.Text)} (checked by the reviewer at approval)\n");
         sb.Append('\n');
         return sb.ToString();
     }

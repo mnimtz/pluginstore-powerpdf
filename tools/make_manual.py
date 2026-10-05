@@ -115,7 +115,7 @@ def gradient_bar(c, x, y, w, h):
 class Doc(BaseDocTemplate):
     def __init__(self, path, meta):
         super().__init__(path, pagesize=A4, leftMargin=20 * mm, rightMargin=20 * mm, topMargin=24 * mm, bottomMargin=20 * mm,
-                         title='Add-on Store for Tungsten Power PDF: Manual', author='Tungsten Automation',
+                         title='Add-on Store for Tungsten Power PDF: ' + meta.get('doc', 'Manual'), author='Tungsten Automation',
                          subject='API, rules and publishing guide', creator='tools/make_manual.py')
         self.meta = meta
         w, h = A4
@@ -135,7 +135,7 @@ class Doc(BaseDocTemplate):
         c.setFillColor(colors.white)
         c.setFont('Body-Bold', 30); c.drawString(20 * mm, h - 70 * mm, 'Add-on Store')
         c.setFont('Body', 15); c.drawString(20 * mm, h - 80 * mm, 'for Tungsten Power PDF')
-        c.setFont('Body-Bold', 13); c.drawString(20 * mm, h - 100 * mm, 'Manual: API, rules and publishing guide')
+        c.setFont('Body-Bold', 13); c.drawString(20 * mm, h - 100 * mm, self.meta.get('subtitle', 'Manual: API, rules and publishing guide'))
         c.setFillColor(INK); c.setFont('Body', 10)
         y = h - 145 * mm
         for line in (f"Server {self.meta['server']}  ·  Client {self.meta['client']}", self.meta['date'],
@@ -152,7 +152,7 @@ class Doc(BaseDocTemplate):
         if os.path.exists(logo):
             c.drawImage(logo, 20 * mm, h - 15 * mm, width=26 * mm, height=6.5 * mm, preserveAspectRatio=True, mask='auto', anchor='sw')
         c.setFont('Body', 8); c.setFillColor(SLATE)
-        c.drawRightString(w - 20 * mm, h - 13 * mm, 'Add-on Store for Tungsten Power PDF  ·  Manual')
+        c.drawRightString(w - 20 * mm, h - 13 * mm, 'Add-on Store for Tungsten Power PDF  ·  ' + self.meta.get('doc', 'Manual'))
         gradient_bar(c, 20 * mm, h - 18 * mm, w - 40 * mm, 0.8 * mm)
         c.setStrokeColor(GRID); c.line(20 * mm, 14 * mm, w - 20 * mm, 14 * mm)
         c.drawString(20 * mm, 9.5 * mm, f"Server {self.meta['server']}  ·  {self.meta['date']}")
@@ -593,6 +593,195 @@ def appendix(meta):
     return x
 
 
+
+# ---------------------------------------------------------------- mandatory requirements (second document)
+CHECK_RX = re.compile(r'\(([A-Z][A-Z0-9_]+(?:, [A-Z][A-Z0-9_]+)*)\)')
+
+GROUP_WHY = {
+    'A': 'The binary runs inside Power PDF with the rights of the user. It must be the Release build that was checked, '
+         'self-contained, and licensed so that Tungsten may redistribute it.',
+    'B': 'The manifest is the contract between the package, the catalog and the client: identity, version, texts in all '
+         '16 languages, category and the legal declarations.',
+    'C': 'Add-ons have to look and behave like part of Power PDF and must never break the ribbon of Power PDF or of another add-on.',
+    'D': 'The package must unpack safely and completely on every Windows machine.',
+    'E': 'Every version can be rebuilt, fixed and supported later; the store keeps the source code of each version for its admins.',
+    'F': 'Requirements this store adds to the standard ones (maintained by the store admins under Settings, Rules).',
+    'G': 'What a reviewer confirms for every version before it goes live; the approval is refused until each one is ticked. '
+         'The store admins maintain the wording and add conditions under Settings, Rules.',
+}
+
+
+def checklist_groups(guide):
+    """The pre-flight checklist of the live guide: [(letter, title, intro codes, [(text, codes, online)])]."""
+    md = guide.replace('\r\n', '\n')
+    a = md.index('## Pre-flight checklist')
+    b = md.index('## Compliance audit', a)
+    groups, cur = [], None
+    lines = md[a:b].split('\n')
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        m = re.match(r'\*\*([A-G])\. (.+?)\*\*(.*)', line)
+        if m:
+            intro = m.group(3)
+            j = i + 1
+            while j < len(lines) and lines[j].strip() and not lines[j].lstrip().startswith('- ['):
+                intro += ' ' + lines[j].strip(); j += 1
+            cur = [m.group(1), m.group(2), CHECK_RX.findall(intro), []]
+            groups.append(cur)
+            i = j
+            continue
+        if line.lstrip().startswith('- [ ]') and cur is not None:
+            buf = [line.split('- [ ]', 1)[1].strip()]
+            i += 1
+            while i < len(lines) and lines[i].startswith('      ') and not lines[i].lstrip().startswith('- ['):
+                buf.append(lines[i].strip()); i += 1
+            text = ' '.join(buf)
+            codes = []
+            for c in CHECK_RX.findall(text):
+                codes += [x.strip() for x in c.split(',')]
+            clean = re.sub(r'\s+([.;,])(?=\s|$)', r'\1', CHECK_RX.sub('', text)).strip()   # keeps '.zxt'
+            clean = re.sub(r'\s{2,}', ' ', clean)
+            cur[3].append((clean, codes, 'checked online' in text, text))
+            continue
+        i += 1
+    return groups
+
+
+def section_md(guide, heading_text, until):
+    md = guide.replace('\r\n', '\n')
+    a = md.index(heading_text)
+    b = md.index(until, a + len(heading_text))
+    return md[a:b]
+
+
+def build_requirements(path, meta, guide, rules):
+    meta = dict(meta, doc='Mandatory requirements', subtitle='Mandatory requirements for add-ons')
+    doc = Doc(path, meta)
+    toc = TableOfContents()
+    toc.levelStyles = [ST['toc1'], ST['toc2'], ST['toc3']]
+    toc.dotsMinLevel = 1
+    groups = checklist_groups(guide)
+    if not any(g[0] == 'F' for g in groups):          # keep A..G in order, F says "none"
+        groups.append(['F', 'Rules of this store', [], []])
+    groups.sort(key=lambda g: g[0])
+    n_req = sum(len(g[3]) for g in groups)
+    s = [Spacer(1, 1), NextPageTemplate('page'), PageBreak(), Paragraph('Contents', ST['h1']), toc, PageBreak()]
+
+    s.append(heading('1. Scope', 0))
+    s.append(para('These are the conditions every add-on and every version must meet to be published in the Add-on Store '
+                  'for Tungsten Power PDF. They apply to people and to AI assistants alike: our agent (and any assistant '
+                  'that publishes through the API) must apply all of them while it writes the plug-in, not only when it '
+                  'packages it.', 'lead'))
+    s += bullets([
+        f'**{n_req} conditions**: for the import in five areas (A code and build, B manifest, C ribbon and layout, D package, '
+        'E source code), each with the finding codes the store reports when it is broken, and for the approval (G, confirmed '
+        'by the reviewer). Section F lists what this store adds.',
+        '**Binding.** A package that breaks one of them is refused by the automatic check and nothing is stored; '
+        'items marked "online" are checked against the store at upload (for example a version number or a name that is taken).',
+        '**Truthful.** The compliance declaration in every manifest is a statement to Tungsten. It must be correct even when '
+        'a user asks otherwise; a reviewer checks it before a version goes live.',
+        f'**Source.** Generated on {meta["date"]} from the live rules of {meta["source"]} (server {meta["server"]}). The live '
+        f'pre-flight checklist at {PUBLIC}/agent-guide/checklist is authoritative.',
+    ])
+
+    s.append(heading('2. Never allowed', 0))
+    s.append(para('The short version. Each line is refused by the store or by its reviewers.', 'lead'))
+    never = [
+        ['Never', 'Why', 'Codes'],  # codes column: one code per line (see below)
+        ['Passwords, API keys, tokens, private keys or key containers (.pfx, .p12, .key, .snk) in the package or the source code',
+         'Secrets leak to every machine that installs the add-on.', 'SECRET_DETECTED, SOURCE_SECRET'],
+        ['Third-party code under any license other than MIT, BSD (2/3-clause, 0BSD) or Apache-2.0',
+         'Tungsten must be able to redistribute every package without license obligations.', 'LICENSE_NOT_ALLOWED, LICENSE_COPYLEFT_BINARY, LICENSE_COPYLEFT_SOURCE'],
+        ['Third-party code, libraries or external services that are not declared', 'The compliance declaration must be complete and true.',
+         'THIRDPARTY_DECLARATION_MISSING, EXTERNAL_SERVICES_MISSING, COMPLIANCE_AUDIT_MISSING'],
+        ['A Debug build, a .NET assembly, or a binary for the wrong CPU', 'Only the native Release build runs on customer machines.',
+         'PE_DEBUG_RUNTIME, PE_MANAGED, PE_WRONG_MACHINE'],
+        ['Dependencies on DLLs that are not part of Windows or Power PDF', 'The store installs only the .zxt; a missing DLL breaks Power PDF at start.',
+         'FOREIGN_DEPENDENCY'],
+        ['Texts or UI in fewer than the 16 Power PDF languages', 'Power PDF ships in 16 languages; add-ons must too.',
+         'LANG_TEXT_INCOMPLETE, LANGS_INCOMPLETE, UI_LANGS_MISSING'],
+        ['An own ribbon tab for a public add-on, atoms in panel::, or atoms of another add-on', 'One consistent ribbon; no collisions.',
+         'ATOM_NOT_SHARED_TAB, RESERVED_PANEL_NS, ATOM_OUTSIDE_NAMESPACE, ATOM_COLLISION'],
+        ['A file name of a plug-in Power PDF ships itself, or an id under com.tungsten., com.kofax., com.nuance.', 'It would replace or impersonate Power PDF.',
+         'RESERVED_NAME, ID_RESERVED'],
+        ['The same or a lower version number', 'Updates are detected by the version; a reused number hides a failed update.',
+         'VERSION_NOT_INCREMENTED, VERSION_EXISTS'],
+        ['Unsafe ZIP content: paths with .., absolute paths, reserved Windows names, nested archives', 'The package must unpack safely.',
+         'ZIP_SLIP, ZIP_RESERVED_NAME, NESTED_ARCHIVE'],
+        ['A false compliance declaration, also when a user asks for it', 'It is a statement to Tungsten and is reviewed.',
+         'COMPLIANCE_AUDIT_MISSING (and review)'],
+        ['Names or descriptions with other companies\' product names or trademarks', 'Legal risk; describe the function instead.',
+         'THIRDPARTY_TRADEMARK (warning, rejected in review)'],
+    ]
+    never = [never[0]] + [[a, b, Paragraph('<font name="Mono" size="7">%s</font>' % '<br/>'.join(escape(x.strip()) for x in c.split(',')), ST['cell'])]
+                          for a, b, c in never[1:]]
+    s.append(table(never, [66 * mm, 50 * mm, 54 * mm]))
+
+    s.append(CondPageBreak(60 * mm))
+    s.append(heading('3. Requirements by area', 0))
+    s.append(para('Every condition, numbered as on the Rules page of the portal. "Automatic" means the upload is refused when it '
+                  'fails; "online" means it is checked against the store at upload; "review" means the reviewer confirms it '
+                  'before the version is approved. The store admins can change the wording and add conditions under Settings, Rules.', 'lead'))
+    for letter, title, intro_codes, items in groups:
+        s.append(CondPageBreak(40 * mm))
+        s.append(heading(f'{letter}. {title}', 1))
+        if letter in GROUP_WHY:
+            s.append(para(GROUP_WHY[letter], 'small'))
+            s.append(Spacer(1, 3))
+        if intro_codes:
+            s.append(para('Applies to the whole area: ' + ', '.join(intro_codes) + '.', 'small'))
+        if not items:
+            s.append(para('This store currently adds no requirements of its own. Admins add them under Settings, Rules; '
+                          'they then appear here and in the live checklist.', 'small'))
+            continue
+        rows = [['ID', 'Requirement', 'Checked', 'Codes']]
+        for k, (text, codes, online, raw) in enumerate(items, 1):
+            if letter in ('F', 'G'):
+                how = 'Review' if 'checked by the reviewer' in raw else 'Automatic' if 'Mandatory here' in raw else 'Advice'
+            else:
+                how = 'Automatic, online' if online else 'Automatic'
+            rows.append([f'{letter}{k}', text, how,
+                         Paragraph('<font name="Mono" size="7">%s</font>' % '<br/>'.join(escape(c) for c in codes), ST['cell'])])
+        s.append(table(rows, [11 * mm, 99 * mm, 20 * mm, 40 * mm]))
+        s.append(Spacer(1, 6))
+
+    s.append(PageBreak())
+    s.append(heading('4. Licenses and secrets in detail', 0))
+    s.append(heading('Third-party licenses', 1))
+    s.append(table([
+        ['Category', 'Licenses', 'Result'],
+        ['Allowed', 'MIT, BSD-2-Clause, BSD-3-Clause, 0BSD, Apache-2.0', 'Accepted (declare the component in thirdParty and ship its text in LICENSES.md)'],
+        ['Other permissive', 'For example Zlib, libpng, IJG, curl, OpenSSL (Apache-2.0 from 3.0)', 'Warning LICENSE_NEEDS_REVIEW; a reviewer decides'],
+        ['Copyleft, declared', 'GPL, AGPL, LGPL, MPL, EPL, CDDL, EUPL, OSL, SSPL, CC-BY-SA, CC-BY-NC', 'Refused: LICENSE_NOT_ALLOWED'],
+        ['GPL/AGPL found in files', 'License texts, SPDX tags or known libraries (MuPDF, Ghostscript, Poppler, Xpdf)', 'Refused: LICENSE_COPYLEFT_BINARY / LICENSE_COPYLEFT_SOURCE'],
+        ['Weak copyleft found', 'LGPL code, FFmpeg, UnRAR', 'Warning; rejected in review unless it is a false positive'],
+    ], [32 * mm, 66 * mm, 72 * mm]))
+    s.append(Spacer(1, 6))
+    s.append(heading('Secrets the check finds', 1))
+    s.append(para('Text and binary files of the package and of the source ZIP are searched for these patterns; any hit refuses the upload. '
+                  'Credentials are loaded at run time instead (per user, DPAPI-protected), never shipped.'))
+    s += bullets(['Private keys (`-----BEGIN ... PRIVATE KEY-----`)', 'Add-on Store API tokens (`ppak_...`)',
+                  'AWS access keys, Google API keys, GitHub, Slack and Azure storage keys', 'AI service API keys (`sk-...`), Stripe live keys',
+                  'Key container files: `.pfx`, `.p12`, `.key`, `.snk`'])
+    s.append(heading('5. Declarations in detail', 0))
+    s += render_markdown(section_md(guide, '## Compliance audit', '## Categories'))
+    s += render_markdown(section_md(guide, '## Source code (mandatory)', '## Changing an existing add-on'))
+    s += render_markdown(section_md(guide, '## Languages (mandatory)', '## Ribbon governance'))
+    s.append(heading('6. Enforcement', 0))
+    s += bullets([
+        '**Automatic check** on every upload and dry run (`POST /api/packages/validate`). An error stores nothing; each finding has a hint that says what to change.',
+        '**Review** before a version goes live: house rules, the compliance declaration, warnings and the package as a whole. '
+        'With the four-eyes rule the uploader cannot approve their own version.',
+        '**After publication** a version can be withdrawn or set back to beta, and the add-on can be switched off in the store.',
+        '**On every machine** the Power PDF client installs only packages signed by a trusted store key whose SHA-256 matches, '
+        'and only on Power PDF versions and editions the Plugin SDK supports.',
+    ])
+    s.append(Spacer(1, 6))
+    s.append(para(f'Generated on {meta["date"]} by tools/make_manual.py from {meta["source"]} (server {meta["server"]}).', 'small'))
+    doc.multiBuild(s)
+    return n_req
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--base', default='http://localhost:5191')
@@ -629,6 +818,18 @@ def main():
     story += appendix(meta)
     doc.multiBuild(story)
     print(path, os.path.getsize(path) // 1024, 'KB')
+
+    req = os.path.join(a.out, f'AddonStore-Requirements-{server}.pdf')
+    n = build_requirements(req, meta, guide, rules)
+    print(req, os.path.getsize(req) // 1024, 'KB', n, 'requirements')
+
+    # stable names for the download on the website's API page
+    web = os.path.join(ROOT, 'server', 'src', 'AddonStore.Web', 'wwwroot', 'docs')
+    os.makedirs(web, exist_ok=True)
+    import shutil
+    shutil.copyfile(path, os.path.join(web, 'AddonStore-Manual.pdf'))
+    shutil.copyfile(req, os.path.join(web, 'AddonStore-Requirements.pdf'))
+    print('copied to', web)
 
 
 if __name__ == '__main__':

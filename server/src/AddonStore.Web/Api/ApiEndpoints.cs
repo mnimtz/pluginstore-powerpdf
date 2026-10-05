@@ -223,6 +223,14 @@ public static class ApiEndpoints
                         houseRules = house.Rules.Where(h => h.Area == a).Select(h => new { id = h.Id, title = h.Title, text = h.Text, kind = h.Kind })
                     }),
                     escalated = house.Escalated,
+                    // the numbered mandatory conditions (S1.0.10), in the store's wording
+                    conditions = new
+                    {
+                        import = AddonStore.Web.Validation.RuleCatalog.ImportConditions().Select(c => new
+                            { id = c.Id, group = c.Group, groupTitle = c.GroupTitle, text = c.Text, codes = c.Codes, online = c.Online, edited = c.Edited }),
+                        approval = AddonStore.Web.Validation.RuleCatalog.ApprovalConditions().Select(c => new
+                            { id = c.Id, text = c.Text, edited = c.Edited, addedByStore = c.HouseRuleId is not null })
+                    },
                     counts = new
                     {
                         rules = rules.Count,

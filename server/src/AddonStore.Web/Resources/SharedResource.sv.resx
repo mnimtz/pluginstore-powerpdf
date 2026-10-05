@@ -861,4 +861,27 @@
   <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>t.ex. signeringstillägg använder kundens certifikatregler</value></data>
   <data name="mandatory here" xml:space="preserve"><value>obligatorisk här</value></data>
   <data name="Last run failed" xml:space="preserve"><value>Senaste körningen misslyckades</value></data>
+  <data name="1. Conditions for the import (checked automatically)" xml:space="preserve"><value>1. Villkor för import (kontrolleras automatiskt)</value></data>
+  <data name="2. Conditions for the approval (confirmed by the reviewer)" xml:space="preserve"><value>2. Villkor för godkännande (bekräftas av granskaren)</value></data>
+  <data name="Added by this store" xml:space="preserve"><value>Tillagd av denna Store</value></data>
+  <data name="Back to the standard wording of {0}?" xml:space="preserve"><value>Tillbaka till standardformuleringen av {0}?</value></data>
+  <data name="Condition" xml:space="preserve"><value>Villkor</value></data>
+  <data name="Confirm every approval condition:" xml:space="preserve"><value>Bekräfta varje godkännandevillkor:</value></data>
+  <data name="Confirm every approval condition before approving." xml:space="preserve"><value>Bekräfta varje godkännandevillkor innan du godkänner.</value></data>
+  <data name="Documentation (PDF)" xml:space="preserve"><value>Dokumentation (PDF)</value></data>
+  <data name="In English, generated from the live rules of this store." xml:space="preserve"><value>På engelska, genererad från de aktuella reglerna i denna Store.</value></data>
+  <data name="Mandatory conditions" xml:space="preserve"><value>Obligatoriska villkor</value></data>
+  <data name="Mandatory requirements (PDF)" xml:space="preserve"><value>Obligatoriska krav (PDF)</value></data>
+  <data name="Mandatory requirements for add-ons" xml:space="preserve"><value>Obligatoriska krav för tillägg</value></data>
+  <data name="Manual: API, rules and publishing guide" xml:space="preserve"><value>Handbok: API, regler och publicering</value></data>
+  <data name="New approval condition" xml:space="preserve"><value>Nytt godkännandevillkor</value></data>
+  <data name="Reset" xml:space="preserve"><value>Återställ</value></data>
+  <data name="Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it." xml:space="preserve"><value>Granskare bekräftar det för varje version före godkännande; agentguiden ber utvecklare och AI-assistenter att förbereda sig på det.</value></data>
+  <data name="Standard wording" xml:space="preserve"><value>Standardformulering</value></data>
+  <data name="The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area." xml:space="preserve"><value>De automatiska kontrollerna bakom dessa villkor är en del av Store och kan inte stängas av här. Varningar kan göras obligatoriska i sitt område.</value></data>
+  <data name="The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store&#x27;s version." xml:space="preserve"><value>Villkoren ett plug-in måste uppfylla: först för att importeras (varje uppladdning kontrolleras automatiskt och avvisas om ett villkor inte uppfylls), sedan för att godkännas för den publika Store (granskaren bekräftar varje villkor). Administratörer kan ändra formuleringen och lägga till villkor; agentguiden, checklistan före uppladdning och PDF-dokumenten visar denna Stores version.</value></data>
+  <data name="Wording of this store" xml:space="preserve"><value>Denna Stores formulering</value></data>
+  <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Skriv villkoret med högst 600 tecken.</value></data>
+  <data name="checked online" xml:space="preserve"><value>kontrolleras online</value></data>
+  <data name="the standard wording changed since" xml:space="preserve"><value>standardformuleringen har ändrats sedan dess</value></data>
 </root>

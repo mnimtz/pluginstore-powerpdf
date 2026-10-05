@@ -861,4 +861,27 @@
   <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>pl. az aláíró bővítmények az ügyfél tanúsítványszabályait használják</value></data>
   <data name="mandatory here" xml:space="preserve"><value>itt kötelező</value></data>
   <data name="Last run failed" xml:space="preserve"><value>Az utolsó futás sikertelen</value></data>
+  <data name="1. Conditions for the import (checked automatically)" xml:space="preserve"><value>1. Az importálás feltételei (automatikusan ellenőrizve)</value></data>
+  <data name="2. Conditions for the approval (confirmed by the reviewer)" xml:space="preserve"><value>2. A jóváhagyás feltételei (az ellenőr erősíti meg)</value></data>
+  <data name="Added by this store" xml:space="preserve"><value>A Store által hozzáadva</value></data>
+  <data name="Back to the standard wording of {0}?" xml:space="preserve"><value>Visszaállítja a(z) {0} alapszövegét?</value></data>
+  <data name="Condition" xml:space="preserve"><value>Feltétel</value></data>
+  <data name="Confirm every approval condition:" xml:space="preserve"><value>Erősítse meg a jóváhagyás minden feltételét:</value></data>
+  <data name="Confirm every approval condition before approving." xml:space="preserve"><value>Jóváhagyás előtt erősítse meg az összes feltételt.</value></data>
+  <data name="Documentation (PDF)" xml:space="preserve"><value>Dokumentáció (PDF)</value></data>
+  <data name="In English, generated from the live rules of this store." xml:space="preserve"><value>Angolul, a Store aktuális szabályaiból készítve.</value></data>
+  <data name="Mandatory conditions" xml:space="preserve"><value>Kötelező feltételek</value></data>
+  <data name="Mandatory requirements (PDF)" xml:space="preserve"><value>Kötelező követelmények (PDF)</value></data>
+  <data name="Mandatory requirements for add-ons" xml:space="preserve"><value>A bővítmények kötelező követelményei</value></data>
+  <data name="Manual: API, rules and publishing guide" xml:space="preserve"><value>Kézikönyv: API, szabályok és közzététel</value></data>
+  <data name="New approval condition" xml:space="preserve"><value>Új jóváhagyási feltétel</value></data>
+  <data name="Reset" xml:space="preserve"><value>Visszaállítás</value></data>
+  <data name="Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it." xml:space="preserve"><value>Az ellenőrök minden verziónál jóváhagyás előtt megerősítik; az ügynök-útmutató kéri a fejlesztőket és az MI-asszisztenseket, hogy készüljenek fel rá.</value></data>
+  <data name="Standard wording" xml:space="preserve"><value>Alapszöveg</value></data>
+  <data name="The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area." xml:space="preserve"><value>A feltételek mögötti automatikus ellenőrzések a Store részei, itt nem kapcsolhatók ki. A figyelmeztetések a saját területükön kötelezővé tehetők.</value></data>
+  <data name="The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store&#x27;s version." xml:space="preserve"><value>A feltételek, amelyeket egy bővítménynek teljesítenie kell: először az importáláshoz (minden feltöltést automatikusan ellenőrzünk, és elutasítunk, ha valamelyik nem teljesül), majd a nyilvános Store-ba való jóváhagyáshoz (az ellenőr egyenként megerősíti). A rendszergazdák módosíthatják a szöveget és új feltételeket adhatnak hozzá; az ügynök-útmutató, az ellenőrzőlista és a PDF-dokumentumok a Store saját változatát mutatják.</value></data>
+  <data name="Wording of this store" xml:space="preserve"><value>A Store saját szövege</value></data>
+  <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>Fogalmazza meg a feltételt legfeljebb 600 karakterben.</value></data>
+  <data name="checked online" xml:space="preserve"><value>online ellenőrizve</value></data>
+  <data name="the standard wording changed since" xml:space="preserve"><value>az alapszöveg azóta megváltozott</value></data>
 </root>
