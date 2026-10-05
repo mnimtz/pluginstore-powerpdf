@@ -240,6 +240,13 @@ msiexec /i PluginStore-<version>.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"
   Power PDF 2025 loads plug-ins in **Business** from 2025.3.7; from **2026.4**
   every edition (Standard, Advanced, Business) does. The MSI refuses other
   editions before 2026.4, the store window explains it.
+- **Add-ons left in an older Power PDF folder** (client 1.1.4+): after an update
+  to a new release the store window finds add-ons the store had installed in
+  another "Power PDF ..." folder (next to the running one, under Program Files
+  \Tungsten and \Kofax; by their `Plug-Ins\<Name>\manifest.json`) that this
+  installation lacks, and offers "Install here" (one after the other, one
+  restart question). "Later" hides the hint for these add-ons
+  (HKCU `...\PluginStore\MigrateDismissed`).
 - The Power PDF Customization Kit can add the files of a plug-in ("Additional
   Files"), but no registry values (URL scheme, policies); the separate silent
   MSI step is the recommended way.

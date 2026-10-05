@@ -350,6 +350,7 @@ protected:
     std::wstring m_preselect;
     int m_catalogGen = 0;
     bool m_jobRunning = false;
+    std::vector<std::wstring> m_migrateKeys;   // "<old root>|<id>" of the add-ons offered (C1.1.4)
     // WebView2 completes its creation callbacks through the message loop, possibly
     // after the dialog (a stack object) is gone: the callbacks check this flag first.
     std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
@@ -489,6 +490,7 @@ protected:
             { L"codeBtn", IDS_PSW_CODE_BTN }, { L"codeIntro", IDS_PSW_CODE_INTRO }, { L"codeApply", IDS_PSW_CODE_APPLY },
             { L"codeRemove", IDS_PSW_CODE_REMOVE }, { L"codeLocked", IDS_PSW_CODE_LOCKED }, { L"codeActive", IDS_PSW_CODE_ACTIVE },
             { L"codeBad", IDS_PSO_CODE_BAD },
+            { L"migrateText", IDS_PSW_MIGRATE_TEXT }, { L"migrateBtn", IDS_PSW_MIGRATE_BTN }, { L"migrateDone", IDS_PSW_MIGRATE_DONE },
         };
         std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) +
                          L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") +
@@ -554,6 +556,7 @@ protected:
                                             PSCompareVersions(PSHostVersion(), e.minHost) < 0 ? e.minHost : std::wstring()) + L"}";
         }
         j += L"]";
+        j += MigrateJson();
         if (m_hasSelfUpdate)
             j += L",\"self\":{\"version\":" + Json(m_self.version) + L",\"installed\":" + Json(FP_VERSION_W) + L"}";
         if (r.flag && !m_preselect.empty() && m_preselect != kClientId)
@@ -563,6 +566,56 @@ protected:
         }
         Send(j + L"}");
         LoadIcons();
+    }
+
+    // Add-ons the store installed into ANOTHER Power PDF folder (an older release
+    // after an update) that this installation lacks and the catalog offers
+    // (C1.1.4). "Later" remembers them per folder and id in HKCU.
+    static std::wstring Lower(std::wstring s) { if (!s.empty()) CharLowerBuffW(&s[0], (DWORD)s.size()); return s; }
+
+    std::wstring MigrateDismissed()
+    {
+        wchar_t buf[8192] = { 0 };
+        DWORD cb = sizeof(buf);
+        if (RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, L"MigrateDismissed", RRF_RT_REG_SZ, NULL, buf, &cb) != ERROR_SUCCESS) return L"";
+        return buf;
+    }
+
+    std::wstring MigrateJson()
+    {
+        m_migrateKeys.clear();
+        if (PSPolicyNoInstall()) return L"";
+        std::vector<PSOldInstall> olds;
+        try { olds = PSFindOldInstalls(); } catch (...) { return L""; }
+        const std::wstring dismissed = L";" + MigrateDismissed() + L";";
+        std::wstring folder, items;
+        for (const auto& o : olds)
+        {
+            const PSCatalogEntry* e = Find(o.id, nullptr);
+            if (!e || !e->installedVersion.empty()) continue;   // unknown here, or installed already
+            if (!e->minHost.empty() && !PSHostVersion().empty() && PSCompareVersions(PSHostVersion(), e->minHost) < 0) continue;
+            std::wstring key = Lower(o.root) + L"|" + o.id;
+            if (dismissed.find(L";" + key + L";") != std::wstring::npos) continue;
+            bool dup = false;
+            for (auto& k : m_migrateKeys) if (k.substr(k.find(L'|')) == key.substr(key.find(L'|'))) dup = true;
+            if (dup) continue;   // the same add-on in two old folders: offer it once
+            m_migrateKeys.push_back(key);
+            if (folder.empty()) folder = o.folder;
+            items += (items.empty() ? L"" : L",") + std::wstring(L"{\"id\":") + Json(o.id) + L",\"name\":" + Json(e->name) + L"}";
+        }
+        if (items.empty()) return L"";
+        FPLogW(L"[Store] offering %u add-on(s) from %s", (unsigned)m_migrateKeys.size(), folder.c_str());
+        return L",\"migrate\":{\"folder\":" + Json(folder) + L",\"items\":[" + items + L"]}";
+    }
+
+    void MigrateDismiss()
+    {
+        std::wstring v = MigrateDismissed();
+        for (const auto& k : m_migrateKeys)
+            if ((L";" + v + L";").find(L";" + k + L";") == std::wstring::npos) v += (v.empty() ? L"" : L";") + k;
+        if (v.size() > 4000) v = v.substr(v.size() - 4000);   // keeps the newest
+        RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"MigrateDismissed", REG_SZ, v.c_str(), (DWORD)((v.size() + 1) * sizeof(wchar_t)));
+        m_migrateKeys.clear();
     }
 
     std::wstring PackageUrl(const PSCatalogEntry& e, const wchar_t* tail)
@@ -834,6 +887,7 @@ protected:
         std::wstring cmd = Field(json, L"cmd");
         if (cmd == L"ready") { SendInit(); LoadCatalog(true); }
         else if (cmd == L"refresh") LoadCatalog(false);
+        else if (cmd == L"migrateDismiss") MigrateDismiss();
         else if (cmd == L"install" || cmd == L"uninstall")
         {
             // The page waits behind a progress dialog until a "result" arrives: every

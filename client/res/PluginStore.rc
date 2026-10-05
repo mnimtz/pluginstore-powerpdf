@@ -205,6 +205,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Requires Power PDF %s or later"
     IDS_PS_HOST_TOO_OLD  "The Add-on Store needs Tungsten Power PDF %s or later (this is %s). Please update Power PDF."
     IDS_PS_HOST_EDITION  "Add-ons need Tungsten Power PDF Business %s or later, or any edition from %s on (this is Power PDF %s %s). Please update Power PDF."
+    IDS_PSW_MIGRATE_TEXT  "Add-ons from an earlier Power PDF installation (%s) are missing in this one: %s"
+    IDS_PSW_MIGRATE_BTN  "Install here"
+    IDS_PSW_MIGRATE_DONE  "%s add-on(s) installed. Restart Power PDF now to load them?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -316,6 +319,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Benötigt Power PDF %s oder neuer"
     IDS_PS_HOST_TOO_OLD  "Der Add-on Store benötigt Tungsten Power PDF %s oder neuer (installiert ist %s). Bitte aktualisieren Sie Power PDF."
     IDS_PS_HOST_EDITION  "Add-ons benötigen Tungsten Power PDF Business ab %s oder eine beliebige Edition ab %s (installiert ist Power PDF %s %s). Bitte aktualisieren Sie Power PDF."
+    IDS_PSW_MIGRATE_TEXT  "Add-ons aus einer früheren Power-PDF-Installation (%s) fehlen in dieser: %s"
+    IDS_PSW_MIGRATE_BTN  "Hier installieren"
+    IDS_PSW_MIGRATE_DONE  "%s Add-on(s) installiert. Power PDF jetzt neu starten, um sie zu laden?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -427,6 +433,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Nécessite Power PDF %s ou ultérieur"
     IDS_PS_HOST_TOO_OLD  "L'Add-on Store nécessite Tungsten Power PDF %s ou ultérieur (version installée : %s). Mettez Power PDF à jour."
     IDS_PS_HOST_EDITION  "Les modules complémentaires nécessitent Tungsten Power PDF Business %s ou ultérieur, ou toute édition à partir de %s (version installée : Power PDF %s %s). Mettez Power PDF à jour."
+    IDS_PSW_MIGRATE_TEXT  "Des modules d'une installation précédente de Power PDF (%s) manquent dans celle-ci : %s"
+    IDS_PSW_MIGRATE_BTN  "Installer ici"
+    IDS_PSW_MIGRATE_DONE  "%s module(s) installé(s). Redémarrer Power PDF maintenant pour les charger ?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -538,6 +547,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Richiede Power PDF %s o successivo"
     IDS_PS_HOST_TOO_OLD  "Add-on Store richiede Tungsten Power PDF %s o successivo (installato: %s). Aggiornare Power PDF."
     IDS_PS_HOST_EDITION  "I componenti aggiuntivi richiedono Tungsten Power PDF Business %s o successivo, oppure qualsiasi edizione dalla %s (installato: Power PDF %s %s). Aggiornare Power PDF."
+    IDS_PSW_MIGRATE_TEXT  "Componenti aggiuntivi di un'installazione precedente di Power PDF (%s) mancano in questa: %s"
+    IDS_PSW_MIGRATE_BTN  "Installa qui"
+    IDS_PSW_MIGRATE_DONE  "%s componente/i aggiuntivo/i installato/i. Riavviare ora Power PDF per caricarli?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -649,6 +661,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Requiere Power PDF %s o posterior"
     IDS_PS_HOST_TOO_OLD  "La Add-on Store necesita Tungsten Power PDF %s o posterior (instalado: %s). Actualice Power PDF."
     IDS_PS_HOST_EDITION  "Los complementos necesitan Tungsten Power PDF Business %s o posterior, o cualquier edición a partir de %s (instalado: Power PDF %s %s). Actualice Power PDF."
+    IDS_PSW_MIGRATE_TEXT  "Faltan en esta instalación complementos de una instalación anterior de Power PDF (%s): %s"
+    IDS_PSW_MIGRATE_BTN  "Instalar aquí"
+    IDS_PSW_MIGRATE_DONE  "%s complemento(s) instalado(s). ¿Reiniciar Power PDF ahora para cargarlos?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -760,6 +775,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Vereist Power PDF %s of hoger"
     IDS_PS_HOST_TOO_OLD  "De Add-on Store vereist Tungsten Power PDF %s of hoger (geïnstalleerd: %s). Werk Power PDF bij."
     IDS_PS_HOST_EDITION  "Invoegtoepassingen vereisen Tungsten Power PDF Business %s of hoger, of elke editie vanaf %s (geïnstalleerd: Power PDF %s %s). Werk Power PDF bij."
+    IDS_PSW_MIGRATE_TEXT  "Invoegtoepassingen uit een eerdere Power PDF-installatie (%s) ontbreken in deze: %s"
+    IDS_PSW_MIGRATE_BTN  "Hier installeren"
+    IDS_PSW_MIGRATE_DONE  "%s invoegtoepassing(en) geïnstalleerd. Power PDF nu opnieuw starten om ze te laden?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -871,6 +889,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Requer Power PDF %s ou posterior"
     IDS_PS_HOST_TOO_OLD  "A Add-on Store requer o Tungsten Power PDF %s ou posterior (instalado: %s). Atualize o Power PDF."
     IDS_PS_HOST_EDITION  "Os suplementos requerem o Tungsten Power PDF Business %s ou posterior, ou qualquer edição a partir da %s (instalado: Power PDF %s %s). Atualize o Power PDF."
+    IDS_PSW_MIGRATE_TEXT  "Faltam nesta instalação suplementos de uma instalação anterior do Power PDF (%s): %s"
+    IDS_PSW_MIGRATE_BTN  "Instalar aqui"
+    IDS_PSW_MIGRATE_DONE  "%s suplemento(s) instalado(s). Reiniciar o Power PDF agora para os carregar?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -982,6 +1003,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Kræver Power PDF %s eller nyere"
     IDS_PS_HOST_TOO_OLD  "Add-on Store kræver Tungsten Power PDF %s eller nyere (installeret: %s). Opdater Power PDF."
     IDS_PS_HOST_EDITION  "Tilføjelsesprogrammer kræver Tungsten Power PDF Business %s eller nyere eller en vilkårlig udgave fra %s (installeret: Power PDF %s %s). Opdater Power PDF."
+    IDS_PSW_MIGRATE_TEXT  "Tilføjelsesprogrammer fra en tidligere Power PDF-installation (%s) mangler i denne: %s"
+    IDS_PSW_MIGRATE_BTN  "Installer her"
+    IDS_PSW_MIGRATE_DONE  "%s tilføjelsesprogram(mer) installeret. Genstart Power PDF nu for at indlæse dem?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1093,6 +1117,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Vaatii Power PDF %s:n tai uudemman"
     IDS_PS_HOST_TOO_OLD  "Add-on Store vaatii Tungsten Power PDF:n version %s tai uudemman (asennettu: %s). Päivitä Power PDF."
     IDS_PS_HOST_EDITION  "Lisäosat vaativat Tungsten Power PDF Business -version %s tai uudemman, tai minkä tahansa version %s alkaen (asennettu: Power PDF %s %s). Päivitä Power PDF."
+    IDS_PSW_MIGRATE_TEXT  "Aiemman Power PDF -asennuksen (%s) lisäosat puuttuvat tästä asennuksesta: %s"
+    IDS_PSW_MIGRATE_BTN  "Asenna tähän"
+    IDS_PSW_MIGRATE_DONE  "%s lisäosaa asennettu. Käynnistetäänkö Power PDF nyt uudelleen niiden lataamiseksi?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1204,6 +1231,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Krever Power PDF %s eller nyere"
     IDS_PS_HOST_TOO_OLD  "Add-on Store krever Tungsten Power PDF %s eller nyere (installert: %s). Oppdater Power PDF."
     IDS_PS_HOST_EDITION  "Tillegg krever Tungsten Power PDF Business %s eller nyere, eller en hvilken som helst utgave fra %s (installert: Power PDF %s %s). Oppdater Power PDF."
+    IDS_PSW_MIGRATE_TEXT  "Tillegg fra en tidligere Power PDF-installasjon (%s) mangler i denne: %s"
+    IDS_PSW_MIGRATE_BTN  "Installer her"
+    IDS_PSW_MIGRATE_DONE  "%s tillegg installert. Starte Power PDF på nytt nå for å laste dem?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1315,6 +1345,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Kräver Power PDF %s eller senare"
     IDS_PS_HOST_TOO_OLD  "Add-on Store kräver Tungsten Power PDF %s eller senare (installerad: %s). Uppdatera Power PDF."
     IDS_PS_HOST_EDITION  "Tillägg kräver Tungsten Power PDF Business %s eller senare, eller valfri utgåva från %s (installerad: Power PDF %s %s). Uppdatera Power PDF."
+    IDS_PSW_MIGRATE_TEXT  "Tillägg från en tidigare Power PDF-installation (%s) saknas i den här: %s"
+    IDS_PSW_MIGRATE_BTN  "Installera här"
+    IDS_PSW_MIGRATE_DONE  "%s tillägg installerade. Starta om Power PDF nu för att läsa in dem?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1426,6 +1459,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Wymaga Power PDF %s lub nowszego"
     IDS_PS_HOST_TOO_OLD  "Add-on Store wymaga programu Tungsten Power PDF %s lub nowszego (zainstalowano: %s). Zaktualizuj Power PDF."
     IDS_PS_HOST_EDITION  "Dodatki wymagają programu Tungsten Power PDF Business %s lub nowszego albo dowolnej edycji od %s (zainstalowano: Power PDF %s %s). Zaktualizuj Power PDF."
+    IDS_PSW_MIGRATE_TEXT  "W tej instalacji brakuje dodatków z wcześniejszej instalacji Power PDF (%s): %s"
+    IDS_PSW_MIGRATE_BTN  "Zainstaluj tutaj"
+    IDS_PSW_MIGRATE_DONE  "Zainstalowano dodatki: %s. Uruchomić ponownie Power PDF teraz, aby je załadować?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1537,6 +1573,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Vyžaduje Power PDF %s nebo novější"
     IDS_PS_HOST_TOO_OLD  "Add-on Store vyžaduje Tungsten Power PDF %s nebo novější (nainstalováno: %s). Aktualizujte Power PDF."
     IDS_PS_HOST_EDITION  "Doplňky vyžadují Tungsten Power PDF Business %s nebo novější, případně libovolnou edici od verze %s (nainstalováno: Power PDF %s %s). Aktualizujte Power PDF."
+    IDS_PSW_MIGRATE_TEXT  "V této instalaci chybí doplňky z dřívější instalace Power PDF (%s): %s"
+    IDS_PSW_MIGRATE_BTN  "Nainstalovat sem"
+    IDS_PSW_MIGRATE_DONE  "Nainstalováno doplňků: %s. Restartovat nyní Power PDF a načíst je?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1648,6 +1687,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Power PDF %s vagy újabb szükséges"
     IDS_PS_HOST_TOO_OLD  "Az Add-on Store a Tungsten Power PDF %s vagy újabb verzióját igényli (telepítve: %s). Frissítse a Power PDF-et."
     IDS_PS_HOST_EDITION  "A bővítményekhez Tungsten Power PDF Business %s vagy újabb, illetve %s verziótól bármely kiadás szükséges (telepítve: Power PDF %s %s). Frissítse a Power PDF-et."
+    IDS_PSW_MIGRATE_TEXT  "Egy korábbi Power PDF-telepítés (%s) bővítményei hiányoznak ebből: %s"
+    IDS_PSW_MIGRATE_BTN  "Telepítés ide"
+    IDS_PSW_MIGRATE_DONE  "%s bővítmény telepítve. Újraindítja most a Power PDF-et a betöltésükhöz?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1759,6 +1801,9 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Требуется Power PDF %s или новее"
     IDS_PS_HOST_TOO_OLD  "Для Add-on Store требуется Tungsten Power PDF %s или новее (установлено: %s). Обновите Power PDF."
     IDS_PS_HOST_EDITION  "Для надстроек требуется Tungsten Power PDF Business %s или новее либо любая редакция начиная с %s (установлено: Power PDF %s %s). Обновите Power PDF."
+    IDS_PSW_MIGRATE_TEXT  "В этой установке отсутствуют надстройки из предыдущей установки Power PDF (%s): %s"
+    IDS_PSW_MIGRATE_BTN  "Установить сюда"
+    IDS_PSW_MIGRATE_DONE  "Установлено надстроек: %s. Перезапустить Power PDF сейчас, чтобы загрузить их?"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1870,4 +1915,7 @@ BEGIN
     IDS_PSW_NEEDS_HOST   "Power PDF %s veya üstünü gerektirir"
     IDS_PS_HOST_TOO_OLD  "Add-on Store, Tungsten Power PDF %s veya üstünü gerektirir (yüklü: %s). Lütfen Power PDF'i güncelleyin."
     IDS_PS_HOST_EDITION  "Eklentiler için Tungsten Power PDF Business %s veya üstü ya da %s sürümünden itibaren herhangi bir sürüm gerekir (yüklü: Power PDF %s %s). Lütfen Power PDF'i güncelleyin."
+    IDS_PSW_MIGRATE_TEXT  "Önceki bir Power PDF kurulumunun (%s) eklentileri bu kurulumda eksik: %s"
+    IDS_PSW_MIGRATE_BTN  "Buraya yükle"
+    IDS_PSW_MIGRATE_DONE  "%s eklenti yüklendi. Yüklemek için Power PDF şimdi yeniden başlatılsın mı?"
 END

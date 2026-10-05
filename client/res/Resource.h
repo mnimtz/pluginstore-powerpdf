@@ -124,6 +124,9 @@
 #define IDS_PSW_NEEDS_HOST      319
 #define IDS_PS_HOST_TOO_OLD     320
 #define IDS_PS_HOST_EDITION     321
+#define IDS_PSW_MIGRATE_TEXT    322
+#define IDS_PSW_MIGRATE_BTN     323
+#define IDS_PSW_MIGRATE_DONE    324
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261

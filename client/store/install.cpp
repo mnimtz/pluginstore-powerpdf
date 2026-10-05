@@ -86,6 +86,13 @@ static std::wstring JsonValue(const std::string& json, const char* key)
     return w;
 }
 
+std::vector<PSOldInstall> PSFindOldInstalls()
+{
+    std::vector<PSOldInstall> out = PSFindOldInstallsFrom(cspath::FindRoot((HMODULE)gHINSTANCE));
+    FPLogW(L"[Store] %u add-on(s) found in other Power PDF folders", (unsigned)out.size());
+    return out;
+}
+
 std::wstring PSInstalledVersion(const std::wstring& zxtName)
 {
     std::wstring dir = PluginsDir();

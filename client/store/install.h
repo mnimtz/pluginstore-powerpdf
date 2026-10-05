@@ -9,12 +9,18 @@
 
 #pragma once
 #include <string>
+#include <vector>
+#include "oldinstalls.h"
 
 struct PSCatalogEntry;
 
 // Version of an installed plugin, read from <bin>\Plug-Ins\<zxtName>\manifest.json
 // ("" when not installed or no manifest).
 std::wstring PSInstalledVersion(const std::wstring& zxtName);
+
+// Add-ons the store installed into ANOTHER Power PDF folder (C1.1.4), see
+// oldinstalls.h; the running installation is never reported.
+std::vector<PSOldInstall> PSFindOldInstalls();
 
 // Full flow: download -> hash check -> elevated copy. Returns 0 on success,
 // 1 = download failed, 2 = hash mismatch, 3 = elevation declined/failed,

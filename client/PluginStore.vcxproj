@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClInclude Include="common\clocale.h" />
     <ClInclude Include="common\layoutpatch.h" />
+    <ClInclude Include="store\oldinstalls.h" />
     <ClInclude Include="common\loc.h" />
     <ClInclude Include="common\logging.h" />
     <ClInclude Include="common\pluginapp.h" />
