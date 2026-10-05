@@ -1,0 +1,35 @@
+@page
+@model AddonStore.Web.Pages.Account.ResetModel
+@{
+    ViewData["Title"] = "New password";
+}
+
+<h1>@L["Choose a new password"]</h1>
+
+@if (Model.Error is not null)
+{
+    <div class="alert error">@L[Model.Error]</div>
+}
+@if (Model.LinkOk)
+{
+    <p class="lead">@L["New password for {0}. At least 10 characters.", Model.Email]</p>
+    <div class="card" style="max-width:480px">
+        <form method="post" class="stack">
+            <input type="hidden" name="uid" value="@Model.Uid" />
+            <input type="hidden" name="token" value="@Model.Token" />
+            <div>
+                <label for="password">@L["New password"]</label>
+                <input type="password" id="password" name="password" required minlength="10" maxlength="200" autocomplete="new-password" />
+            </div>
+            <div>
+                <label for="password2">@L["Repeat the new password"]</label>
+                <input type="password" id="password2" name="password2" required minlength="10" maxlength="200" autocomplete="new-password" />
+            </div>
+            <button type="submit" class="btn cta">@L["Save password"]</button>
+        </form>
+    </div>
+}
+else
+{
+    <p><a href="/Account/Forgot">@L["Forgot password?"]</a></p>
+}

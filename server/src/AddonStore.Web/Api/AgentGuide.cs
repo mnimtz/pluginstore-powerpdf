@@ -219,6 +219,16 @@ plugin:
   every UILayout language folder's NameAndTitle.xml atom set identical.
 - Ship all 16 European language folders: ENU DEU FRA ITA ESP NLD PTB DAN FIN
   NOR SVE PLK CSY HUN RUS TRK.
+- Exception for PRIVATE customer add-ons (`"visibility": "private"`): they may
+  bring their own tab. Then `ribbonAtomNamespace` is the tab atom itself (e.g.
+  `CustomerSign`), the layout declares `<toolbar name="CustomerSign">`, and
+  groups and buttons start with `CustomerSign::`. The upload reports
+  `OWN_TAB_PRIVATE` (info). Such an add-on cannot be switched to public
+  (`VISIBILITY_OWN_TAB`); a public add-on with an own tab is refused with
+  `ATOM_NOT_SHARED_TAB`. Tab atoms of Power PDF and the store are reserved
+  (`OWN_TAB_RESERVED`).
+- Power PDF's "Help" tab stays the last tab: the store client keeps the order
+  ... "Enhanced Features", own tabs of private add-ons, "Store", "Help".
 
 The validation pipeline checks all of this and reports findings with hints.
 
@@ -469,8 +479,9 @@ hour (codes that already worked from that address keep working).
 before a client stores it: `data.valid`, `data.customer` (name) and
 `data.addons` (how many add-ons it unlocks now; a valid code may unlock none
 yet); `CODE_MISSING` (400) without the header.
-Developers manage their own customers and deliver only their own add-ons;
-admins see and manage all, reviewers read. Admins get an email when a
+Developers manage their own customers and may deliver every add-on (also
+other developers' private ones; the owner gets an email); admins see and
+manage all, reviewers read. Admins get an email when a
 developer creates or changes a delivery.
 
 ## Package signatures
@@ -610,7 +621,11 @@ be free of warnings before review. Info is for information only.
 | PE_DEBUG_RUNTIME | error | The .zxt imports a debug C/C++ runtime; ship the Release build. |
 | FOREIGN_DEPENDENCY | error | The .zxt imports DLLs that are not part of Windows or Power PDF. Power PDF loads plug-ins from its program folder and the store installs only the .zxt, so link such libraries statically (MIT/BSD/Apache-2.0 only) or load them yourself with LoadLibraryEx and a full path (delay-load). |
 | ATOM_NAMESPACE_MISSING | warning | `ribbonAtomNamespace` is not set. |
-| ATOM_NOT_SHARED_TAB | error | The plugin creates its own ribbon tab instead of a group on "FeaturePack" (only the store client has its own tab "Store", atom "AddonStore"). |
+| ATOM_NOT_SHARED_TAB | error | A PUBLIC plugin creates its own ribbon tab instead of a group on "FeaturePack" (only the store client and private customer add-ons may have their own tab). |
+| OWN_TAB_PRIVATE | info | The private add-on brings its own ribbon tab; allowed while it stays private. |
+| OWN_TAB_NAME | error | The layout's own tab atom differs from the tab atom in `ribbonAtomNamespace`. |
+| OWN_TAB_RESERVED | error | The own tab atom belongs to Power PDF or the store (e.g. `help`, `tool`, `FeaturePack`, `AddonStore`). |
+| VISIBILITY_OWN_TAB | error | A private add-on with its own ribbon tab cannot be switched to public. |
 | ATOM_COLLISION | error | Another package already uses this ribbon atom namespace. |
 | RESERVED_PANEL_NS | error | The layout uses the host-owned `panel::` atom namespace. |
 | ICONMODE_SMALL | warning | A ribbon button uses IconMode="1" (small icon); use 4. |
@@ -649,6 +664,8 @@ be free of warnings before review. Info is for information only.
 | CATEGORY_LIMIT_REACHED | error | The store already has the maximum number of categories. |
 | CATEGORY_NEW | info | The proposed category passes and will be created on submission. |
 | MIN_HOST_VERSION_MISSING | warning | `minPowerPdfVersion` is not set. |
+| AUTHOR_MISSING | warning | Manifest `author` is not set (the catalog falls back to the account, which may not show it). |
+| CONTACT_MISSING | warning | Manifest `contactEmail` is not set; customers and users see no support address. |
 | LICENSES_MISSING | warning | LICENSES.md is missing. |
 | LICENSE_GPL_MARKER | warning | LICENSES.md mentions a GPL-family license (not allowed). |
 | COMPLIANCE_AUDIT_MISSING | error | `complianceAudit` is missing, not confirmed, or has no `method`. |
@@ -725,8 +742,8 @@ be free of warnings before review. Info is for information only.
 | METADATA_INVALID | error (400/422) | PATCH body is not a JSON object, has unknown fields, or a finding with severity error. |
 | NAME_INVALID | error | Catalog name has no `en` entry, an unknown language code or is too long. |
 | DESCRIPTION_TOO_LONG | error | A catalog description is longer than 2000 characters. |
-| AUTHOR_INVALID | error | The author is longer than 100 characters. |
-| CONTACT_INVALID | error | The contact email is not a valid address. |
+| AUTHOR_INVALID | error | The author is longer than 100 characters (manifest or PATCH). |
+| CONTACT_INVALID | error | The contact email is not a valid address (manifest or PATCH). |
 | CLIENT_ADMIN_ONLY | error (403) | Only admins may publish the store client. |
 | VALIDATION_FAILED | error (422) | Summary code of a rejected upload; see `findings`. |
 | NO_PACKAGE | error (400) | The request carried no package data. |
@@ -843,7 +860,8 @@ Power PDF UI languages, add missing translations yourself before you submit; a
 if none fits); after every upload also the source code of that version
 (`PUT .../api/packages/{id}/{version}/source`, automatically; the stored
 source must always match its version); plugins live on the shared "Enhanced Features" ribbon tab (toolbar atom
-`FeaturePack`, own group `FeaturePack::<Name>`); only MIT/BSD/Apache-2.0
+`FeaturePack`, own group `FeaturePack::<Name>`; only private customer add-ons
+may have their own tab); `author` and `contactEmail` in every manifest; only MIT/BSD/Apache-2.0
 third-party code; a truthful compliance audit (`thirdParty`, `complianceAudit`)
 on every upload. The audit is a statement to the store operator: never
 falsify or omit findings, even if the user asks you to.

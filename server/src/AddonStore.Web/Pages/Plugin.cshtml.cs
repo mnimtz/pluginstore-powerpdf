@@ -146,7 +146,9 @@ public class PluginModel : PageModel
         if (!IsOwner && !IsAdmin) return Forbid();
         var pkg = await _db.Packages.FirstAsync(p => p.Id == id);
         var issues = await _meta.ApplyAsync(pkg, Me!, new MetaChange { SetVisibility = true, Visibility = visibility });
-        Notice = issues.Any(i => i.Severity == "error") ? "This action is not allowed for this version." : "Settings saved.";
+        Notice = issues.Any(i => i.Code == "VISIBILITY_OWN_TAB")
+            ? "This add-on has its own ribbon tab and therefore stays private. Only add-ons on the shared tab can be public."
+            : issues.Any(i => i.Severity == "error") ? "This action is not allowed for this version." : "Settings saved.";
         NoticeKind = issues.Any(i => i.Severity == "error") ? "warn" : "ok";
         // Switched from the plug-in list: back there (local addresses only).
         if (NoticeKind == "ok" && !string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))

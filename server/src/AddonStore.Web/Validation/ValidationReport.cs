@@ -39,6 +39,8 @@ public class ParsedManifest
     public string MinPowerPdfVersion { get; set; } = "";
     /// <summary>Manifest "visibility": "public" (default) or "private" (customer deliveries only).</summary>
     public string Visibility { get; set; } = "public";
+    /// <summary>The add-on brings its own ribbon tab (namespace not on "FeaturePack"); private add-ons only.</summary>
+    public bool OwnTab { get; set; }
     /// <summary>Base name of the plug-in binary (files.x64 without folder and .zxt).</summary>
     public string ZxtName { get; set; } = "";
     public string Category { get; set; } = "";

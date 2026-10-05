@@ -37,6 +37,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(o =>
     .AddErrorDescriber<AddonStore.Web.Services.LocalizedIdentityErrors>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
+// password reset links (S1.0.6): valid 24 hours, single use via the security stamp
+builder.Services.Configure<DataProtectionTokenProviderOptions>(o => o.TokenLifespan = AddonStore.Web.Services.PasswordResetService.Lifetime);
 
 builder.Services.ConfigureApplicationCookie(o =>
 {
@@ -150,6 +152,7 @@ builder.Services.AddHostedService<UsageMaintenance>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<SubmissionService>();
 builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<PasswordResetService>();
 
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient("resend", c => c.Timeout = TimeSpan.FromSeconds(15));

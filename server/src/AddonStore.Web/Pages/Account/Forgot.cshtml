@@ -1,0 +1,24 @@
+@page
+@model AddonStore.Web.Pages.Account.ForgotModel
+@{
+    ViewData["Title"] = "Forgot password";
+}
+
+<h1>@L["Forgot password"]</h1>
+<p class="lead">@L["Enter the email address of your account. We send you a link to choose a new password."]</p>
+
+@if (Model.Message is not null)
+{
+    <div class="alert ok">@L[Model.Message]</div>
+}
+
+<div class="card" style="max-width:480px">
+    <form method="post" class="stack">
+        <div>
+            <label for="email">@L["Email"]</label>
+            <input type="email" id="email" name="email" required maxlength="200" />
+        </div>
+        <button type="submit" class="btn">@L["Send link"]</button>
+    </form>
+    <p style="margin-bottom:0;font-size:.9rem"><a href="/Account/Login">@L["Back to sign-in"]</a></p>
+</div>

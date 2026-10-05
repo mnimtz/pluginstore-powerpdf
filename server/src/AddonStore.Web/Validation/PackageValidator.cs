@@ -59,6 +59,28 @@ public class PackageValidator
     private static readonly Regex SemVerPattern = new(@"^[0-9]{1,9}\.[0-9]{1,9}\.[0-9]{1,9}\z", RegexOptions.Compiled);
     private static readonly Regex HostVersionPattern = new(@"^[0-9]{1,4}(\.[0-9]{1,6}){0,3}\z", RegexOptions.Compiled);
 
+    /// <summary>Ribbon tab atoms of Power PDF and the store; a private add-on's own tab must not reuse them.</summary>
+    private static readonly HashSet<string> ReservedToolbars = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "FeaturePack","AddonStore","PluginStore","tool","help","connectors","panel","ZEON:Add-ins","ZEON",
+        "TouchupObjectBar","ReadingOrderToolBar","DrawingTool","HighlightAreaToolBar","UnderlineToolBar",
+        "CrossoutToolBar","HighlightToolBar","FreetextTool","CaretToolBar","StampToolBar","FillSignToolBar",
+        "NoteToolBar","AttachFileToolBar","AttachSoundToolBar","AuthSelectArrange","EditTextFormatBar",
+        "TypeWriter","TextField","AccessmblyToolBar"
+    };
+
+    /// <summary>True when the namespace is not on the shared tab, i.e. the add-on brings its own tab.</summary>
+    public static bool IsOwnTabNamespace(string ns) =>
+        ns.Length > 0 && ns != "FeaturePack" && !ns.StartsWith("FeaturePack::", StringComparison.Ordinal)
+        && !ns.StartsWith("AddonStore::", StringComparison.Ordinal);
+
+    /// <summary>Tab atom of an own-tab namespace ("CustomerSign::Main" -> "CustomerSign").</summary>
+    public static string TabOf(string ns)
+    {
+        int i = ns.IndexOf("::", StringComparison.Ordinal);
+        return i < 0 ? ns : ns[..i];
+    }
+
     /// <summary>Plugin base names Power PDF ships itself; a store plugin must not shadow them.</summary>
     private static readonly HashSet<string> ReservedZxtNames = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -290,6 +312,22 @@ public class PackageValidator
                     report.Warn("MIN_HOST_VERSION_MISSING", "Manifest field 'minPowerPdfVersion' is not set.",
                         "State the lowest Power PDF version the plugin was tested with, e.g. \"5.0\".");
 
+                // author/contactEmail: shown in the catalog and to customers (S1.0.6); without
+                // them the catalog falls back to the account, which may not show its contact.
+                var author = GetString(root, "author")?.Trim();
+                if (string.IsNullOrEmpty(author))
+                    report.Warn("AUTHOR_MISSING", "Manifest field 'author' is not set.",
+                        "Name the person or team behind the add-on, e.g. \"author\": \"Team Signing\"; it is shown in the catalog and in Power PDF.");
+                else if (author.Length > 100)
+                    report.Error("AUTHOR_INVALID", "Manifest field 'author' is longer than 100 characters.", "Use a person's or team's name.");
+                var contact = GetString(root, "contactEmail")?.Trim();
+                if (string.IsNullOrEmpty(contact))
+                    report.Warn("CONTACT_MISSING", "Manifest field 'contactEmail' is not set.",
+                        "Give a reachable support address, e.g. \"contactEmail\": \"team@example.com\"; users and customers see it in the catalog.");
+                else if (contact.Length > 200 || !System.Net.Mail.MailAddress.TryCreate(contact, out _))
+                    report.Error("CONTACT_INVALID", $"Manifest field 'contactEmail' is not a valid email address.",
+                        "Use a reachable address such as team@example.com.");
+
                 // visibility: "private" = only for customers with a delivery and code (S0.14.0)
                 var vis = GetString(root, "visibility")?.Trim().ToLowerInvariant();
                 if (vis is not null and not ("public" or "private"))
@@ -351,15 +389,16 @@ public class PackageValidator
                             "Rename the plugin binary; it must not shadow a built-in Power PDF plugin.");
                 }
 
-                // The store client itself has its own tab "Store" (toolbar atom "AddonStore", C1.1.0);
-                // every add-on lives on the shared tab.
+                // The store client itself has its own tab "Store" (toolbar atom "AddonStore", C1.1.0).
+                // Public add-ons live on the shared tab; a PRIVATE customer add-on may have its own
+                // tab (S1.0.6). Whether the package is private is known only against the catalog,
+                // so the decision is made in CheckAgainstCatalogAsync.
                 bool clientOwnTab = manifest.Id == "com.tungsten.pluginstore" &&
                                     manifest.AtomNamespace.StartsWith("AddonStore::", StringComparison.Ordinal);
-                if (manifest.AtomNamespace.Length > 0 && !clientOwnTab && !manifest.AtomNamespace.StartsWith("FeaturePack::", StringComparison.Ordinal)
-                    && manifest.AtomNamespace != "FeaturePack")
-                    report.Error("ATOM_NOT_SHARED_TAB",
-                        $"ribbonAtomNamespace '{manifest.AtomNamespace}' does not live on the shared tab.",
-                        "Store plugins share ONE ribbon tab (toolbar atom 'FeaturePack', title 'Enhanced Features'). Use a group atom like 'FeaturePack::MyPlugin' instead of creating an own tab.");
+                manifest.OwnTab = manifest.AtomNamespace.Length > 0 && !clientOwnTab && IsOwnTabNamespace(manifest.AtomNamespace);
+                if (manifest.OwnTab && ReservedToolbars.Contains(TabOf(manifest.AtomNamespace)))
+                    report.Error("OWN_TAB_RESERVED", $"The ribbon tab '{TabOf(manifest.AtomNamespace)}' belongs to Power PDF or the store.",
+                        "Choose your own tab atom (e.g. 'CustomerSign'), or use a group on the shared tab ('FeaturePack::MyPlugin').");
 
                 foreach (var arch in architectures)
                 {
@@ -405,7 +444,7 @@ public class PackageValidator
                 CheckScreenshots(report, zip, root);
                 CheckLicenses(report, zip);
                 CheckThirdParty(report, zip, root);
-                CheckUiLayout(report, zip, manifest.AtomNamespace, manifest.Id);
+                CheckUiLayout(report, zip, manifest.AtomNamespace, manifest.Id, manifest.OwnTab);
                 CheckDocs(report, zip);
             }
         }
@@ -483,6 +522,20 @@ public class PackageValidator
                 }
                 catch (JsonException) { }
             }
+        }
+
+        // Own ribbon tab: only for private customer add-ons (S1.0.6). The package's current
+        // visibility counts; on the first upload the manifest's.
+        if (manifest.OwnTab)
+        {
+            var effective = package?.Visibility ?? manifest.Visibility;
+            if (effective == "private")
+                report.Info("OWN_TAB_PRIVATE", $"The add-on brings its own ribbon tab '{TabOf(manifest.AtomNamespace)}'; allowed because it is private.",
+                    "It cannot be switched to public while a version has its own tab; a public version must move to the shared tab ('FeaturePack::...').");
+            else
+                report.Error("ATOM_NOT_SHARED_TAB",
+                    $"ribbonAtomNamespace '{manifest.AtomNamespace}' creates its own ribbon tab, but the add-on is public.",
+                    "Public store plugins share ONE ribbon tab (toolbar atom 'FeaturePack', title 'Enhanced Features'): use a group atom like 'FeaturePack::MyPlugin'. Only private customer add-ons (\"visibility\": \"private\") may have their own tab.");
         }
 
         if (manifest.AtomNamespace == "FeaturePack")
@@ -1189,7 +1242,7 @@ public class PackageValidator
                 "Help under docs/ is installed on user machines and opened locally: plain HTML with local images only, no scripts, frames or external sources.");
     }
 
-    private void CheckUiLayout(ValidationReport report, ZipArchive zip, string atomNamespace, string packageId = "")
+    private void CheckUiLayout(ValidationReport report, ZipArchive zip, string atomNamespace, string packageId = "", bool ownTab = false)
     {
         var layoutEntries = zip.Entries
             .Where(e => e.FullName.Replace('\\', '/').StartsWith("UILayout/", StringComparison.OrdinalIgnoreCase) && !e.FullName.EndsWith('/'))
@@ -1217,13 +1270,19 @@ public class PackageValidator
                 report.Warn("ICONMODE_SMALL", "Publish Mode.xml uses IconMode=\"1\" (large button with a SMALL icon).",
                     "Use IconMode=\"4\" for product-sized buttons; 1 renders a large button with a small icon once merged.");
             foreach (Match tb in Regex.Matches(xml, @"<toolbar\b[^>]*?\bname\s*=\s*[""']([^""']+)[""']", RegexOptions.IgnoreCase))
-                // only the store client has its own tab ("AddonStore", C1.1.0)
-                if (tb.Groups[1].Value != "FeaturePack" && !(packageId == "com.tungsten.pluginstore" && tb.Groups[1].Value == "AddonStore"))
-                {
-                    report.Error("ATOM_NOT_SHARED_TAB", $"{publish.FullName} creates its own ribbon tab '{tb.Groups[1].Value}'.",
-                        "Store plugins share ONE tab: toolbar atom 'FeaturePack' with the localized title 'Enhanced Features'/'Erweiterte Funktionen'.");
-                    break;
-                }
+            {
+                // the store client has its own tab ("AddonStore", C1.1.0); a private add-on may have
+                // its own tab, named like its namespace (S1.0.6; public/private is decided against the catalog)
+                var name = tb.Groups[1].Value;
+                if (name == "FeaturePack" || (packageId == "com.tungsten.pluginstore" && name == "AddonStore")) continue;
+                if (ownTab && name == TabOf(atomNamespace)) continue;
+                report.Error(ownTab ? "OWN_TAB_NAME" : "ATOM_NOT_SHARED_TAB",
+                    ownTab ? $"{publish.FullName} declares the ribbon tab '{name}', but ribbonAtomNamespace is '{atomNamespace}'."
+                           : $"{publish.FullName} creates its own ribbon tab '{name}', but ribbonAtomNamespace '{atomNamespace}' is on the shared tab.",
+                    ownTab ? $"An own tab must carry the atom of the namespace: <toolbar name=\"{TabOf(atomNamespace)}\">, groups and buttons below '{atomNamespace}::'."
+                           : "Public store plugins share ONE tab: toolbar atom 'FeaturePack' with the localized title 'Enhanced Features'/'Erweiterte Funktionen'. Only private customer add-ons may have their own tab.");
+                break;
+            }
         }
 
         // every atom the layout declares lives in the plug-in's own namespace (or is the shared tab)

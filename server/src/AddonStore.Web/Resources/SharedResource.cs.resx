@@ -774,4 +774,32 @@
   <data name="Type RESET to confirm." xml:space="preserve"><value>Pro potvrzení zadejte RESET.</value></data>
   <data name="Choose at least one kind of data." xml:space="preserve"><value>Vyberte alespoň jeden druh dat.</value></data>
   <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>Statistiky vynulovány. Bezpečnostní kopie předchozího stavu je v části Zálohování a obnovení &gt; Bezpečnostní kopie.</value></data>
+  <data name="This add-on has its own ribbon tab and therefore stays private. Only add-ons on the shared tab can be public." xml:space="preserve"><value>Tento doplněk má vlastní kartu pásu karet, a proto zůstává soukromý. Veřejné mohou být jen doplňky na společné kartě.</value></data>
+  <data name="Forgot password" xml:space="preserve"><value>Zapomenuté heslo</value></data>
+  <data name="Forgot password?" xml:space="preserve"><value>Zapomněli jste heslo?</value></data>
+  <data name="Enter the email address of your account. We send you a link to choose a new password." xml:space="preserve"><value>Zadejte e-mailovou adresu svého účtu. Pošleme vám odkaz pro nastavení nového hesla.</value></data>
+  <data name="If an active account exists for this address, we sent it a link to choose a new password. The link is valid for 24 hours." xml:space="preserve"><value>Pokud pro tuto adresu existuje aktivní účet, poslali jsme na ni odkaz pro nastavení nového hesla. Odkaz platí 24 hodin.</value></data>
+  <data name="Send link" xml:space="preserve"><value>Odeslat odkaz</value></data>
+  <data name="Back to sign-in" xml:space="preserve"><value>Zpět na přihlášení</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>Nastavit nové heslo</value></data>
+  <data name="This link is invalid or has expired. Request a new one with &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Tento odkaz je neplatný nebo vypršel. Vyžádejte si nový přes „Zapomněli jste heslo?“ na přihlašovací stránce.</value></data>
+  <data name="New password for {0}. At least 10 characters." xml:space="preserve"><value>Nové heslo pro {0}. Alespoň 10 znaků.</value></data>
+  <data name="New password" xml:space="preserve"><value>Nové heslo</value></data>
+  <data name="Repeat the new password" xml:space="preserve"><value>Zopakujte nové heslo</value></data>
+  <data name="Save password" xml:space="preserve"><value>Uložit heslo</value></data>
+  <data name="Enter a new password (up to 200 characters)." xml:space="preserve"><value>Zadejte nové heslo (až 200 znaků).</value></data>
+  <data name="The two passwords do not match." xml:space="preserve"><value>Hesla se neshodují.</value></data>
+  <data name="Password changed. Sign in with the new password." xml:space="preserve"><value>Heslo bylo změněno. Přihlaste se novým heslem.</value></data>
+  <data name="Change password" xml:space="preserve"><value>Změnit heslo</value></data>
+  <data name="Current password" xml:space="preserve"><value>Současné heslo</value></data>
+  <data name="Enter the current and the new password (up to 200 characters)." xml:space="preserve"><value>Zadejte současné a nové heslo (až 200 znaků).</value></data>
+  <data name="Password changed. Other sessions were signed out." xml:space="preserve"><value>Heslo bylo změněno. Ostatní relace byly odhlášeny.</value></data>
+  <data name="Only active accounts can reset their password." xml:space="preserve"><value>Heslo mohou obnovit jen aktivní účty.</value></data>
+  <data name="Password reset link sent by email." xml:space="preserve"><value>Odkaz pro obnovení hesla byl odeslán e-mailem.</value></data>
+  <data name="You cannot delete your own account." xml:space="preserve"><value>Vlastní účet nemůžete smazat.</value></data>
+  <data name="Account deleted. Its add-ons and customers now belong to you." xml:space="preserve"><value>Účet byl smazán. Jeho doplňky a zákazníci nyní patří vám.</value></data>
+  <data name="Email is not configured; give this password reset link to the user (valid 24 hours, works once):" xml:space="preserve"><value>E-mail není nastaven; předejte tento odkaz pro obnovení hesla uživateli (platí 24 hodin, funguje jednou):</value></data>
+  <data name="Send {0} a link to choose a new password? The current password keeps working until the new one is set." xml:space="preserve"><value>Poslat uživateli {0} odkaz pro nastavení nového hesla? Současné heslo platí, dokud nebude nastaveno nové.</value></data>
+  <data name="Reset password" xml:space="preserve"><value>Obnovit heslo</value></data>
+  <data name="Delete the account of {0} permanently? Its add-ons ({1}) and customers ({2}) move to you, its API tokens stop working. The audit log keeps its name." xml:space="preserve"><value>Trvale smazat účet {0}? Jeho doplňky ({1}) a zákazníci ({2}) přejdou na vás, jeho tokeny API přestanou fungovat. Auditní protokol jméno zachová.</value></data>
 </root>

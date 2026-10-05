@@ -774,4 +774,32 @@
   <data name="Type RESET to confirm." xml:space="preserve"><value>Skriv RESET for å bekrefte.</value></data>
   <data name="Choose at least one kind of data." xml:space="preserve"><value>Velg minst én type data.</value></data>
   <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>Statistikken er tilbakestilt. En beskyttelseskopi av forrige tilstand finnes under Sikkerhetskopiering og gjenoppretting &gt; Beskyttelseskopier.</value></data>
+  <data name="This add-on has its own ribbon tab and therefore stays private. Only add-ons on the shared tab can be public." xml:space="preserve"><value>Dette tillegget har sin egen fane på båndet og forblir derfor privat. Bare tillegg på den felles fanen kan være offentlige.</value></data>
+  <data name="Forgot password" xml:space="preserve"><value>Glemt passord</value></data>
+  <data name="Forgot password?" xml:space="preserve"><value>Glemt passordet?</value></data>
+  <data name="Enter the email address of your account. We send you a link to choose a new password." xml:space="preserve"><value>Skriv inn e-postadressen til kontoen din. Vi sender deg en lenke for å velge et nytt passord.</value></data>
+  <data name="If an active account exists for this address, we sent it a link to choose a new password. The link is valid for 24 hours." xml:space="preserve"><value>Hvis det finnes en aktiv konto for denne adressen, har vi sendt en lenke for å velge et nytt passord. Lenken er gyldig i 24 timer.</value></data>
+  <data name="Send link" xml:space="preserve"><value>Send lenke</value></data>
+  <data name="Back to sign-in" xml:space="preserve"><value>Tilbake til pålogging</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>Velg et nytt passord</value></data>
+  <data name="This link is invalid or has expired. Request a new one with &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Lenken er ugyldig eller utløpt. Be om en ny med «Glemt passordet?» på påloggingssiden.</value></data>
+  <data name="New password for {0}. At least 10 characters." xml:space="preserve"><value>Nytt passord for {0}. Minst 10 tegn.</value></data>
+  <data name="New password" xml:space="preserve"><value>Nytt passord</value></data>
+  <data name="Repeat the new password" xml:space="preserve"><value>Gjenta det nye passordet</value></data>
+  <data name="Save password" xml:space="preserve"><value>Lagre passord</value></data>
+  <data name="Enter a new password (up to 200 characters)." xml:space="preserve"><value>Skriv inn et nytt passord (opptil 200 tegn).</value></data>
+  <data name="The two passwords do not match." xml:space="preserve"><value>De to passordene er ikke like.</value></data>
+  <data name="Password changed. Sign in with the new password." xml:space="preserve"><value>Passordet er endret. Logg på med det nye passordet.</value></data>
+  <data name="Change password" xml:space="preserve"><value>Endre passord</value></data>
+  <data name="Current password" xml:space="preserve"><value>Nåværende passord</value></data>
+  <data name="Enter the current and the new password (up to 200 characters)." xml:space="preserve"><value>Skriv inn nåværende og nytt passord (opptil 200 tegn).</value></data>
+  <data name="Password changed. Other sessions were signed out." xml:space="preserve"><value>Passordet er endret. Andre økter ble logget av.</value></data>
+  <data name="Only active accounts can reset their password." xml:space="preserve"><value>Bare aktive kontoer kan tilbakestille passordet.</value></data>
+  <data name="Password reset link sent by email." xml:space="preserve"><value>Lenke for å tilbakestille passordet er sendt på e-post.</value></data>
+  <data name="You cannot delete your own account." xml:space="preserve"><value>Du kan ikke slette din egen konto.</value></data>
+  <data name="Account deleted. Its add-ons and customers now belong to you." xml:space="preserve"><value>Kontoen er slettet. Tilleggene og kundene tilhører nå deg.</value></data>
+  <data name="Email is not configured; give this password reset link to the user (valid 24 hours, works once):" xml:space="preserve"><value>E-post er ikke konfigurert; gi denne tilbakestillingslenken til brukeren (gyldig i 24 timer, kan brukes én gang):</value></data>
+  <data name="Send {0} a link to choose a new password? The current password keeps working until the new one is set." xml:space="preserve"><value>Sende {0} en lenke for å velge et nytt passord? Det nåværende passordet virker til det nye er satt.</value></data>
+  <data name="Reset password" xml:space="preserve"><value>Tilbakestill passord</value></data>
+  <data name="Delete the account of {0} permanently? Its add-ons ({1}) and customers ({2}) move to you, its API tokens stop working. The audit log keeps its name." xml:space="preserve"><value>Slette kontoen til {0} permanent? Tilleggene ({1}) og kundene ({2}) går over til deg, API-tokenene slutter å virke. Revisjonsloggen beholder navnet.</value></data>
 </root>

@@ -10,7 +10,7 @@ namespace AddonStore.Web.Pages.Admin;
 
 public class UsersModel : PageModel
 {
-    public record Row(AppUser User, string Role);
+    public record Row(AppUser User, string Role, int Packages, int Customers);
 
     public static readonly string[] Roles = SchemaUpgrade.Roles;
 
@@ -18,6 +18,9 @@ public class UsersModel : PageModel
     private readonly UserManager<AppUser> _users;
     private readonly AuditService _audit;
     private readonly NotificationService _notify;
+    private readonly PasswordResetService _reset;
+    private readonly IConfiguration _config;
+    private readonly IWebHostEnvironment _env;
 
     public List<AppUser> Pending { get; private set; } = new();
     public List<Row> All { get; private set; } = new();
@@ -27,10 +30,81 @@ public class UsersModel : PageModel
     public string NoticeKind { get; private set; } = "ok";
     public string? InviteLink { get; private set; }
     public bool InviteMailSent { get; private set; }
+    /// <summary>Reset link, shown only when the mail could not be sent.</summary>
+    public string? ResetLink { get; private set; }
 
-    public UsersModel(AppDbContext db, UserManager<AppUser> users, AuditService audit, NotificationService notify)
+    public UsersModel(AppDbContext db, UserManager<AppUser> users, AuditService audit, NotificationService notify,
+        PasswordResetService reset, IConfiguration config, IWebHostEnvironment env)
     {
-        _db = db; _users = users; _audit = audit; _notify = notify;
+        _db = db; _users = users; _audit = audit; _notify = notify; _reset = reset; _config = config; _env = env;
+    }
+
+    // ---- password reset / delete (S1.0.6) -------------------------------------
+
+    /// <summary>Mails the user a link to choose a new password; without mail the admin gets the link.</summary>
+    public async Task OnPostResetPasswordAsync(string id)
+    {
+        var admin = await _users.GetUserAsync(User);
+        var user = await _users.FindByIdAsync(id ?? "");
+        if (user is null || user.Status != UserStatus.Active)
+        {
+            Notice = "Only active accounts can reset their password.";
+            NoticeKind = "error";
+        }
+        else
+        {
+            var (link, sent) = await _reset.SendAsync(user, admin!.DisplayName);
+            if (sent) Notice = "Password reset link sent by email.";
+            else ResetLink = link;
+        }
+        await LoadAsync();
+    }
+
+    /// <summary>
+    /// Deletes an account. Its add-ons and customers move to the deleting admin (nothing
+    /// that is delivered or installed breaks), its API tokens and avatar are removed;
+    /// audit entries keep the name. The own account cannot be deleted.
+    /// </summary>
+    public async Task OnPostDeleteAsync(string id)
+    {
+        var admin = await _users.GetUserAsync(User);
+        var user = await _users.FindByIdAsync(id ?? "");
+        if (user is null || user.Id == admin!.Id)
+        {
+            Notice = "You cannot delete your own account.";
+            NoticeKind = "error";
+            await LoadAsync();
+            return;
+        }
+        await using var tx = await _db.Database.BeginTransactionAsync();
+        var packages = await _db.Packages.Where(p => p.OwnerId == user.Id).ToListAsync();
+        foreach (var p in packages) p.OwnerId = admin.Id;
+        var customers = await _db.Customers.Where(c => c.OwnerId == user.Id).ToListAsync();
+        foreach (var c in customers) c.OwnerId = admin.Id;
+        _db.ApiTokens.RemoveRange(_db.ApiTokens.Where(t => t.UserId == user.Id));
+        await _db.SaveChangesAsync();
+        var result = await _users.DeleteAsync(user);
+        if (!result.Succeeded)
+        {
+            await tx.RollbackAsync();
+            Notice = string.Join(" ", result.Errors.Select(e => e.Description));
+            NoticeKind = "error";
+            await LoadAsync();
+            return;
+        }
+        await tx.CommitAsync();
+
+        var dataRoot = _config["Storage:Data"];
+        if (string.IsNullOrWhiteSpace(dataRoot)) dataRoot = Path.Combine(_env.ContentRootPath, "data");
+        foreach (var ext in new[] { "png", "jpg" })
+        {
+            var avatar = Path.Combine(dataRoot, "avatars", $"{user.Id}.{ext}");
+            try { if (System.IO.File.Exists(avatar)) System.IO.File.Delete(avatar); } catch (IOException) { }
+        }
+        await _audit.LogAsync(admin.DisplayName, "user.deleted", user.Email ?? user.Id,
+            $"{user.DisplayName}; {packages.Count} add-on(s) and {customers.Count} customer(s) moved to {admin.DisplayName}");
+        Notice = "Account deleted. Its add-ons and customers now belong to you.";
+        await LoadAsync();
     }
 
     public async Task OnGetAsync() => await LoadAsync();
@@ -176,11 +250,14 @@ public class UsersModel : PageModel
         MyId = _users.GetUserId(User);
         var all = await _db.Users.OrderBy(u => u.DisplayName).ToListAsync();
         Pending = all.Where(u => u.Status == UserStatus.Pending).ToList();
+        var pkgCount = await _db.Packages.GroupBy(p => p.OwnerId).Select(g => new { g.Key, N = g.Count() }).ToDictionaryAsync(x => x.Key, x => x.N);
+        var custCount = await _db.Customers.GroupBy(c => c.OwnerId).Select(g => new { g.Key, N = g.Count() }).ToDictionaryAsync(x => x.Key, x => x.N);
         All = new List<Row>();
         foreach (var u in all)
         {
             var roles = await _users.GetRolesAsync(u);
-            All.Add(new Row(u, roles.Contains("Admin") ? "Admin" : roles.Contains("Reviewer") ? "Reviewer" : SchemaUpgrade.DefaultRole));
+            All.Add(new Row(u, roles.Contains("Admin") ? "Admin" : roles.Contains("Reviewer") ? "Reviewer" : SchemaUpgrade.DefaultRole,
+                pkgCount.GetValueOrDefault(u.Id), custCount.GetValueOrDefault(u.Id)));
         }
         OpenInvites = await _db.Invites.Where(i => i.AcceptedAt == null)
             .OrderByDescending(i => i.CreatedAt).ToListAsync();

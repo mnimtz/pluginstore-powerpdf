@@ -16,7 +16,9 @@ The spec is a JSON file:
   "zxt": { "x64": "relative/path/Example.zxt" },   // paths relative to the spec file
   "include": [ { "src": "relative/path", "dst": "zip/path" }, ... ],
   "uninstall": { "registryKeys": [ ... ], "extraPaths": [ ... ] },
-  "visibility": "private"                   // optional: customer add-on, never in the catalog
+  "visibility": "private",                  // optional: customer add-on, never in the catalog
+  "author": "Team Signing",                 // shown in the catalog (warning when missing)
+  "contactEmail": "team@example.com"        // shown in the catalog (warning when missing)
 }
 
 sha256 values and the architectures list are computed automatically.
@@ -79,7 +81,8 @@ def main():
         'uninstall': spec.get('uninstall', {}),
     }
     # License declaration is the author's own statement; never invent defaults.
-    for key in ('thirdParty', 'complianceAudit'):
+    # author/contactEmail: shown in the catalog (the validator warns when missing).
+    for key in ('thirdParty', 'complianceAudit', 'author', 'contactEmail'):
         if key in spec:
             manifest[key] = spec[key]
     # "private": a customer add-on that never appears in the catalog (only

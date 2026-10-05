@@ -774,4 +774,32 @@
   <data name="Type RESET to confirm." xml:space="preserve"><value>Typ RESET om te bevestigen.</value></data>
   <data name="Choose at least one kind of data." xml:space="preserve"><value>Kies minstens één soort gegevens.</value></data>
   <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>Statistieken gereset. Een veiligheidskopie van de vorige toestand staat onder Back-up en herstel &gt; Veiligheidskopieën.</value></data>
+  <data name="This add-on has its own ribbon tab and therefore stays private. Only add-ons on the shared tab can be public." xml:space="preserve"><value>Deze invoegtoepassing heeft een eigen lintabblad en blijft daarom privé. Alleen invoegtoepassingen op het gedeelde tabblad kunnen openbaar zijn.</value></data>
+  <data name="Forgot password" xml:space="preserve"><value>Wachtwoord vergeten</value></data>
+  <data name="Forgot password?" xml:space="preserve"><value>Wachtwoord vergeten?</value></data>
+  <data name="Enter the email address of your account. We send you a link to choose a new password." xml:space="preserve"><value>Voer het e-mailadres van uw account in. U ontvangt een link om een nieuw wachtwoord te kiezen.</value></data>
+  <data name="If an active account exists for this address, we sent it a link to choose a new password. The link is valid for 24 hours." xml:space="preserve"><value>Als er een actief account voor dit adres bestaat, hebben we een link gestuurd om een nieuw wachtwoord te kiezen. De link is 24 uur geldig.</value></data>
+  <data name="Send link" xml:space="preserve"><value>Link versturen</value></data>
+  <data name="Back to sign-in" xml:space="preserve"><value>Terug naar aanmelden</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>Nieuw wachtwoord kiezen</value></data>
+  <data name="This link is invalid or has expired. Request a new one with &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Deze link is ongeldig of verlopen. Vraag een nieuwe aan met "Wachtwoord vergeten?" op de aanmeldpagina.</value></data>
+  <data name="New password for {0}. At least 10 characters." xml:space="preserve"><value>Nieuw wachtwoord voor {0}. Minimaal 10 tekens.</value></data>
+  <data name="New password" xml:space="preserve"><value>Nieuw wachtwoord</value></data>
+  <data name="Repeat the new password" xml:space="preserve"><value>Nieuw wachtwoord herhalen</value></data>
+  <data name="Save password" xml:space="preserve"><value>Wachtwoord opslaan</value></data>
+  <data name="Enter a new password (up to 200 characters)." xml:space="preserve"><value>Voer een nieuw wachtwoord in (maximaal 200 tekens).</value></data>
+  <data name="The two passwords do not match." xml:space="preserve"><value>De twee wachtwoorden komen niet overeen.</value></data>
+  <data name="Password changed. Sign in with the new password." xml:space="preserve"><value>Wachtwoord gewijzigd. Meld u aan met het nieuwe wachtwoord.</value></data>
+  <data name="Change password" xml:space="preserve"><value>Wachtwoord wijzigen</value></data>
+  <data name="Current password" xml:space="preserve"><value>Huidig wachtwoord</value></data>
+  <data name="Enter the current and the new password (up to 200 characters)." xml:space="preserve"><value>Voer het huidige en het nieuwe wachtwoord in (maximaal 200 tekens).</value></data>
+  <data name="Password changed. Other sessions were signed out." xml:space="preserve"><value>Wachtwoord gewijzigd. Andere sessies zijn afgemeld.</value></data>
+  <data name="Only active accounts can reset their password." xml:space="preserve"><value>Alleen actieve accounts kunnen hun wachtwoord resetten.</value></data>
+  <data name="Password reset link sent by email." xml:space="preserve"><value>Link om het wachtwoord te resetten per e-mail verstuurd.</value></data>
+  <data name="You cannot delete your own account." xml:space="preserve"><value>U kunt uw eigen account niet verwijderen.</value></data>
+  <data name="Account deleted. Its add-ons and customers now belong to you." xml:space="preserve"><value>Account verwijderd. De invoegtoepassingen en klanten zijn nu van u.</value></data>
+  <data name="Email is not configured; give this password reset link to the user (valid 24 hours, works once):" xml:space="preserve"><value>E-mail is niet ingesteld; geef deze resetlink aan de gebruiker (24 uur geldig, eenmalig te gebruiken):</value></data>
+  <data name="Send {0} a link to choose a new password? The current password keeps working until the new one is set." xml:space="preserve"><value>{0} een link sturen om een nieuw wachtwoord te kiezen? Het huidige wachtwoord blijft werken tot het nieuwe is ingesteld.</value></data>
+  <data name="Reset password" xml:space="preserve"><value>Wachtwoord resetten</value></data>
+  <data name="Delete the account of {0} permanently? Its add-ons ({1}) and customers ({2}) move to you, its API tokens stop working. The audit log keeps its name." xml:space="preserve"><value>Het account van {0} definitief verwijderen? De invoegtoepassingen ({1}) en klanten ({2}) gaan naar u over, de API-tokens werken niet meer. Het auditlogboek behoudt de naam.</value></data>
 </root>

@@ -774,4 +774,32 @@
   <data name="Type RESET to confirm." xml:space="preserve"><value>Vahvista kirjoittamalla RESET.</value></data>
   <data name="Choose at least one kind of data." xml:space="preserve"><value>Valitse vähintään yksi tietolaji.</value></data>
   <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>Tilastot nollattu. Edellisen tilan turvakopio löytyy kohdasta Varmuuskopiointi ja palautus &gt; Turvakopiot.</value></data>
+  <data name="This add-on has its own ribbon tab and therefore stays private. Only add-ons on the shared tab can be public." xml:space="preserve"><value>Tällä lisäosalla on oma valintanauhan välilehti, joten se pysyy yksityisenä. Vain yhteisen välilehden lisäosat voivat olla julkisia.</value></data>
+  <data name="Forgot password" xml:space="preserve"><value>Unohtunut salasana</value></data>
+  <data name="Forgot password?" xml:space="preserve"><value>Unohditko salasanan?</value></data>
+  <data name="Enter the email address of your account. We send you a link to choose a new password." xml:space="preserve"><value>Anna tilisi sähköpostiosoite. Lähetämme linkin, jolla voit valita uuden salasanan.</value></data>
+  <data name="If an active account exists for this address, we sent it a link to choose a new password. The link is valid for 24 hours." xml:space="preserve"><value>Jos tälle osoitteelle on aktiivinen tili, lähetimme siihen linkin uuden salasanan valitsemiseen. Linkki on voimassa 24 tuntia.</value></data>
+  <data name="Send link" xml:space="preserve"><value>Lähetä linkki</value></data>
+  <data name="Back to sign-in" xml:space="preserve"><value>Takaisin kirjautumiseen</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>Valitse uusi salasana</value></data>
+  <data name="This link is invalid or has expired. Request a new one with &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Linkki on virheellinen tai vanhentunut. Pyydä uusi kirjautumissivun kohdasta "Unohditko salasanan?".</value></data>
+  <data name="New password for {0}. At least 10 characters." xml:space="preserve"><value>Uusi salasana tilille {0}. Vähintään 10 merkkiä.</value></data>
+  <data name="New password" xml:space="preserve"><value>Uusi salasana</value></data>
+  <data name="Repeat the new password" xml:space="preserve"><value>Toista uusi salasana</value></data>
+  <data name="Save password" xml:space="preserve"><value>Tallenna salasana</value></data>
+  <data name="Enter a new password (up to 200 characters)." xml:space="preserve"><value>Anna uusi salasana (enintään 200 merkkiä).</value></data>
+  <data name="The two passwords do not match." xml:space="preserve"><value>Salasanat eivät täsmää.</value></data>
+  <data name="Password changed. Sign in with the new password." xml:space="preserve"><value>Salasana vaihdettu. Kirjaudu uudella salasanalla.</value></data>
+  <data name="Change password" xml:space="preserve"><value>Vaihda salasana</value></data>
+  <data name="Current password" xml:space="preserve"><value>Nykyinen salasana</value></data>
+  <data name="Enter the current and the new password (up to 200 characters)." xml:space="preserve"><value>Anna nykyinen ja uusi salasana (enintään 200 merkkiä).</value></data>
+  <data name="Password changed. Other sessions were signed out." xml:space="preserve"><value>Salasana vaihdettu. Muut istunnot kirjattiin ulos.</value></data>
+  <data name="Only active accounts can reset their password." xml:space="preserve"><value>Vain aktiiviset tilit voivat nollata salasanansa.</value></data>
+  <data name="Password reset link sent by email." xml:space="preserve"><value>Salasanan nollauslinkki lähetettiin sähköpostitse.</value></data>
+  <data name="You cannot delete your own account." xml:space="preserve"><value>Et voi poistaa omaa tiliäsi.</value></data>
+  <data name="Account deleted. Its add-ons and customers now belong to you." xml:space="preserve"><value>Tili poistettu. Sen lisäosat ja asiakkaat kuuluvat nyt sinulle.</value></data>
+  <data name="Email is not configured; give this password reset link to the user (valid 24 hours, works once):" xml:space="preserve"><value>Sähköpostia ei ole määritetty; anna tämä nollauslinkki käyttäjälle (voimassa 24 tuntia, toimii kerran):</value></data>
+  <data name="Send {0} a link to choose a new password? The current password keeps working until the new one is set." xml:space="preserve"><value>Lähetetäänkö käyttäjälle {0} linkki uuden salasanan valitsemiseen? Nykyinen salasana toimii, kunnes uusi on asetettu.</value></data>
+  <data name="Reset password" xml:space="preserve"><value>Nollaa salasana</value></data>
+  <data name="Delete the account of {0} permanently? Its add-ons ({1}) and customers ({2}) move to you, its API tokens stop working. The audit log keeps its name." xml:space="preserve"><value>Poistetaanko käyttäjän {0} tili pysyvästi? Sen lisäosat ({1}) ja asiakkaat ({2}) siirtyvät sinulle, sen API-tunnukset lakkaavat toimimasta. Tarkastusloki säilyttää nimen.</value></data>
 </root>

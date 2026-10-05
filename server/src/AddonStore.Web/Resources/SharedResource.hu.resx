@@ -774,4 +774,32 @@
   <data name="Type RESET to confirm." xml:space="preserve"><value>A megerősítéshez írja be: RESET.</value></data>
   <data name="Choose at least one kind of data." xml:space="preserve"><value>Válasszon legalább egy adattípust.</value></data>
   <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>A statisztika nullázva. Az előző állapot biztonsági másolata itt található: Biztonsági mentés és visszaállítás &gt; Biztonsági másolatok.</value></data>
+  <data name="This add-on has its own ribbon tab and therefore stays private. Only add-ons on the shared tab can be public." xml:space="preserve"><value>Ennek a bővítménynek saját menüszalag-lapja van, ezért privát marad. Csak a közös lapon lévő bővítmények lehetnek nyilvánosak.</value></data>
+  <data name="Forgot password" xml:space="preserve"><value>Elfelejtett jelszó</value></data>
+  <data name="Forgot password?" xml:space="preserve"><value>Elfelejtette a jelszavát?</value></data>
+  <data name="Enter the email address of your account. We send you a link to choose a new password." xml:space="preserve"><value>Adja meg fiókja e-mail-címét. Küldünk egy hivatkozást az új jelszó megadásához.</value></data>
+  <data name="If an active account exists for this address, we sent it a link to choose a new password. The link is valid for 24 hours." xml:space="preserve"><value>Ha ehhez a címhez aktív fiók tartozik, elküldtük rá az új jelszó megadására szolgáló hivatkozást. A hivatkozás 24 óráig érvényes.</value></data>
+  <data name="Send link" xml:space="preserve"><value>Hivatkozás küldése</value></data>
+  <data name="Back to sign-in" xml:space="preserve"><value>Vissza a bejelentkezéshez</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>Új jelszó megadása</value></data>
+  <data name="This link is invalid or has expired. Request a new one with &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Ez a hivatkozás érvénytelen vagy lejárt. Kérjen újat a bejelentkezési oldalon az „Elfelejtette a jelszavát?” hivatkozással.</value></data>
+  <data name="New password for {0}. At least 10 characters." xml:space="preserve"><value>Új jelszó ehhez: {0}. Legalább 10 karakter.</value></data>
+  <data name="New password" xml:space="preserve"><value>Új jelszó</value></data>
+  <data name="Repeat the new password" xml:space="preserve"><value>Új jelszó újra</value></data>
+  <data name="Save password" xml:space="preserve"><value>Jelszó mentése</value></data>
+  <data name="Enter a new password (up to 200 characters)." xml:space="preserve"><value>Adjon meg új jelszót (legfeljebb 200 karakter).</value></data>
+  <data name="The two passwords do not match." xml:space="preserve"><value>A két jelszó nem egyezik.</value></data>
+  <data name="Password changed. Sign in with the new password." xml:space="preserve"><value>A jelszó megváltozott. Jelentkezzen be az új jelszóval.</value></data>
+  <data name="Change password" xml:space="preserve"><value>Jelszó módosítása</value></data>
+  <data name="Current password" xml:space="preserve"><value>Jelenlegi jelszó</value></data>
+  <data name="Enter the current and the new password (up to 200 characters)." xml:space="preserve"><value>Adja meg a jelenlegi és az új jelszót (legfeljebb 200 karakter).</value></data>
+  <data name="Password changed. Other sessions were signed out." xml:space="preserve"><value>A jelszó megváltozott. A többi munkamenet kijelentkezett.</value></data>
+  <data name="Only active accounts can reset their password." xml:space="preserve"><value>Csak aktív fiókok állíthatják vissza a jelszavukat.</value></data>
+  <data name="Password reset link sent by email." xml:space="preserve"><value>A jelszó-visszaállító hivatkozást e-mailben elküldtük.</value></data>
+  <data name="You cannot delete your own account." xml:space="preserve"><value>A saját fiókját nem törölheti.</value></data>
+  <data name="Account deleted. Its add-ons and customers now belong to you." xml:space="preserve"><value>A fiók törölve. Bővítményei és ügyfelei mostantól Önhöz tartoznak.</value></data>
+  <data name="Email is not configured; give this password reset link to the user (valid 24 hours, works once):" xml:space="preserve"><value>Az e-mail nincs beállítva; adja át ezt a jelszó-visszaállító hivatkozást a felhasználónak (24 óráig érvényes, egyszer használható):</value></data>
+  <data name="Send {0} a link to choose a new password? The current password keeps working until the new one is set." xml:space="preserve"><value>Küldjünk {0} részére hivatkozást új jelszó megadásához? A jelenlegi jelszó az új beállításáig érvényes marad.</value></data>
+  <data name="Reset password" xml:space="preserve"><value>Jelszó visszaállítása</value></data>
+  <data name="Delete the account of {0} permanently? Its add-ons ({1}) and customers ({2}) move to you, its API tokens stop working. The audit log keeps its name." xml:space="preserve"><value>Véglegesen törli {0} fiókját? Bővítményei ({1}) és ügyfelei ({2}) Önhöz kerülnek, API-tokenjei nem működnek tovább. A naplóban a név megmarad.</value></data>
 </root>

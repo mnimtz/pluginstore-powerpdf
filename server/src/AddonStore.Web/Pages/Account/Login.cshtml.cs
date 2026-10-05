@@ -31,8 +31,13 @@ public class LoginModel : PageModel
         lock (n) return ++n[0] > MaxAttemptsPer15Min;
     }
 
-    public void OnGet(string? registered)
+    public void OnGet(string? registered, string? reset)
     {
+        if (reset == "1")
+        {
+            Message = "Password changed. Sign in with the new password.";
+            MessageKind = "ok";
+        }
         if (registered == "1")
         {
             Message = "Your access request was submitted. You will receive an email once an admin approves it.";

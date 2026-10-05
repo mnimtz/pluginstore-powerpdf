@@ -46,6 +46,25 @@
     </form>
 </div>
 
+<div class="card" style="max-width:560px">
+    <h2 style="margin-top:0">@L["Change password"]</h2>
+    <form method="post" asp-page-handler="Password" class="stack" style="max-width:none">
+        <div>
+            <label for="current">@L["Current password"]</label>
+            <input type="password" id="current" name="current" required maxlength="200" autocomplete="current-password" />
+        </div>
+        <div>
+            <label for="pw1">@L["New password"]</label>
+            <input type="password" id="pw1" name="password" required minlength="10" maxlength="200" autocomplete="new-password" />
+        </div>
+        <div>
+            <label for="pw2">@L["Repeat the new password"]</label>
+            <input type="password" id="pw2" name="password2" required minlength="10" maxlength="200" autocomplete="new-password" />
+        </div>
+        <button type="submit" class="btn">@L["Change password"]</button>
+    </form>
+</div>
+
 <h2>@L["API tokens"]</h2>
 <p class="lead">@L["Personal API tokens let tools and AI assistants upload and update your plugins on your behalf."]</p>
 

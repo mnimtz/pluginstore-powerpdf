@@ -15,6 +15,7 @@ public class ProfileModel : PageModel
     private readonly AuditService _audit;
     private readonly IConfiguration _config;
     private readonly IWebHostEnvironment _env;
+    private readonly SignInManager<AppUser> _signIn;
 
     public List<ApiToken> Tokens { get; private set; } = new();
     public string? NewToken { get; private set; }
@@ -23,9 +24,35 @@ public class ProfileModel : PageModel
     public string NoticeKind { get; private set; } = "ok";
 
     public ProfileModel(AppDbContext db, UserManager<AppUser> users, TokenService tokens,
-        AuditService audit, IConfiguration config, IWebHostEnvironment env)
+        AuditService audit, IConfiguration config, IWebHostEnvironment env, SignInManager<AppUser> signIn)
     {
-        _db = db; _users = users; _tokens = tokens; _audit = audit; _config = config; _env = env;
+        _db = db; _users = users; _tokens = tokens; _audit = audit; _config = config; _env = env; _signIn = signIn;
+    }
+
+    // Change the own password (S1.0.6): other sessions are signed out, this one stays.
+    public async Task OnPostPasswordAsync(string? current, string? password, string? password2)
+    {
+        var user = await _users.GetUserAsync(User);
+        if (user is null) { await LoadAsync(); return; }
+        NoticeKind = "error";
+        if (string.IsNullOrEmpty(current) || string.IsNullOrEmpty(password) || password.Length > 200)
+            Notice = "Enter the current and the new password (up to 200 characters).";
+        else if (password != password2)
+            Notice = "The two passwords do not match.";
+        else
+        {
+            var result = await _users.ChangePasswordAsync(user, current, password);
+            if (!result.Succeeded)
+                Notice = string.Join(" ", result.Errors.Select(e => e.Description));
+            else
+            {
+                await _signIn.RefreshSignInAsync(user);
+                await _audit.LogAsync(user.DisplayName, "user.password-changed", user.Email ?? user.Id);
+                Notice = "Password changed. Other sessions were signed out.";
+                NoticeKind = "ok";
+            }
+        }
+        await LoadAsync();
     }
 
     public async Task OnGetAsync() => await LoadAsync();

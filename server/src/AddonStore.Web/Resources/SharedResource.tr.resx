@@ -774,4 +774,32 @@
   <data name="Type RESET to confirm." xml:space="preserve"><value>Onaylamak için RESET yazın.</value></data>
   <data name="Choose at least one kind of data." xml:space="preserve"><value>En az bir veri türü seçin.</value></data>
   <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>İstatistikler sıfırlandı. Önceki durumun güvenlik kopyası şurada: Yedekleme ve geri yükleme &gt; Güvenlik kopyaları.</value></data>
+  <data name="This add-on has its own ribbon tab and therefore stays private. Only add-ons on the shared tab can be public." xml:space="preserve"><value>Bu eklentinin kendi şerit sekmesi olduğu için özel kalır. Yalnızca ortak sekmedeki eklentiler herkese açık olabilir.</value></data>
+  <data name="Forgot password" xml:space="preserve"><value>Parolamı unuttum</value></data>
+  <data name="Forgot password?" xml:space="preserve"><value>Parolanızı mı unuttunuz?</value></data>
+  <data name="Enter the email address of your account. We send you a link to choose a new password." xml:space="preserve"><value>Hesabınızın e-posta adresini girin. Yeni bir parola seçmeniz için bir bağlantı göndereceğiz.</value></data>
+  <data name="If an active account exists for this address, we sent it a link to choose a new password. The link is valid for 24 hours." xml:space="preserve"><value>Bu adres için etkin bir hesap varsa, yeni parola seçmek için bir bağlantı gönderdik. Bağlantı 24 saat geçerlidir.</value></data>
+  <data name="Send link" xml:space="preserve"><value>Bağlantı gönder</value></data>
+  <data name="Back to sign-in" xml:space="preserve"><value>Oturum açmaya dön</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>Yeni parola seçin</value></data>
+  <data name="This link is invalid or has expired. Request a new one with &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Bu bağlantı geçersiz veya süresi dolmuş. Oturum açma sayfasında "Parolanızı mı unuttunuz?" ile yenisini isteyin.</value></data>
+  <data name="New password for {0}. At least 10 characters." xml:space="preserve"><value>{0} için yeni parola. En az 10 karakter.</value></data>
+  <data name="New password" xml:space="preserve"><value>Yeni parola</value></data>
+  <data name="Repeat the new password" xml:space="preserve"><value>Yeni parolayı tekrarlayın</value></data>
+  <data name="Save password" xml:space="preserve"><value>Parolayı kaydet</value></data>
+  <data name="Enter a new password (up to 200 characters)." xml:space="preserve"><value>Yeni bir parola girin (en fazla 200 karakter).</value></data>
+  <data name="The two passwords do not match." xml:space="preserve"><value>İki parola eşleşmiyor.</value></data>
+  <data name="Password changed. Sign in with the new password." xml:space="preserve"><value>Parola değiştirildi. Yeni parolayla oturum açın.</value></data>
+  <data name="Change password" xml:space="preserve"><value>Parolayı değiştir</value></data>
+  <data name="Current password" xml:space="preserve"><value>Geçerli parola</value></data>
+  <data name="Enter the current and the new password (up to 200 characters)." xml:space="preserve"><value>Geçerli ve yeni parolayı girin (en fazla 200 karakter).</value></data>
+  <data name="Password changed. Other sessions were signed out." xml:space="preserve"><value>Parola değiştirildi. Diğer oturumlar kapatıldı.</value></data>
+  <data name="Only active accounts can reset their password." xml:space="preserve"><value>Yalnızca etkin hesaplar parolasını sıfırlayabilir.</value></data>
+  <data name="Password reset link sent by email." xml:space="preserve"><value>Parola sıfırlama bağlantısı e-postayla gönderildi.</value></data>
+  <data name="You cannot delete your own account." xml:space="preserve"><value>Kendi hesabınızı silemezsiniz.</value></data>
+  <data name="Account deleted. Its add-ons and customers now belong to you." xml:space="preserve"><value>Hesap silindi. Eklentileri ve müşterileri artık size ait.</value></data>
+  <data name="Email is not configured; give this password reset link to the user (valid 24 hours, works once):" xml:space="preserve"><value>E-posta yapılandırılmamış; bu parola sıfırlama bağlantısını kullanıcıya iletin (24 saat geçerli, bir kez çalışır):</value></data>
+  <data name="Send {0} a link to choose a new password? The current password keeps working until the new one is set." xml:space="preserve"><value>{0} kullanıcısına yeni parola seçmesi için bağlantı gönderilsin mi? Yeni parola belirlenene kadar mevcut parola çalışmaya devam eder.</value></data>
+  <data name="Reset password" xml:space="preserve"><value>Parolayı sıfırla</value></data>
+  <data name="Delete the account of {0} permanently? Its add-ons ({1}) and customers ({2}) move to you, its API tokens stop working. The audit log keeps its name." xml:space="preserve"><value>{0} hesabı kalıcı olarak silinsin mi? Eklentileri ({1}) ve müşterileri ({2}) size geçer, API belirteçleri çalışmaz. Denetim günlüğü adı korur.</value></data>
 </root>

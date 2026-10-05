@@ -109,6 +109,22 @@ public class PackageMetaService
                                 (c.Visibility == "private" && pkg.Id == SubmissionService.ClientPackageId)))
             issues.Add(new("VISIBILITY_INVALID", "error", "visibility must be 'public' or 'private' (the store client is always public).",
                 "Private add-ons appear only for customers with a delivery and code; see 'Customer deliveries' in the guide."));
+        // A private add-on with its own ribbon tab stays private (S1.0.6): public add-ons share one tab.
+        if (c.SetVisibility && c.Visibility == "public" && pkg.Visibility != "public")
+        {
+            // only what clients get now: the newest live and the newest beta version (older
+            // versions from before the shared-tab rule do not count)
+            var offered = (await _db.PackageVersions.AsNoTracking()
+                    .Where(v => v.PackageId == pkg.Id && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta))
+                    .Select(v => new { v.Version, v.Status, v.AtomNamespace }).ToListAsync())
+                .GroupBy(v => v.Status)
+                .Select(g => g.OrderByDescending(v => v.Version, new SemVerComparer()).First());
+            var ownTab = offered.FirstOrDefault(v => PackageValidator.IsOwnTabNamespace(v.AtomNamespace ?? ""));
+            if (ownTab is not null)
+                issues.Add(new("VISIBILITY_OWN_TAB", "error",
+                    $"Version {ownTab.Version} has its own ribbon tab '{PackageValidator.TabOf(ownTab.AtomNamespace!)}'; only private add-ons may have one.",
+                    "Upload a version on the shared tab ('FeaturePack::...') and withdraw the own-tab versions, then switch to public."));
+        }
         if (issues.Any(i => i.Severity == "error")) return issues;
 
         var changed = new List<string>();

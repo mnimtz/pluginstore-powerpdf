@@ -218,8 +218,8 @@ public class CustomerService
         var pkg = await _db.Packages.FirstOrDefaultAsync(p => p.Id == packageId);
         if (pkg is null || packageId == SubmissionService.ClientPackageId)
             return Outcome.Fail("PACKAGE_NOT_FOUND", $"No package with id '{packageId}'.");
-        if (!actorIsAdmin && pkg.OwnerId != actor.Id)
-            return Outcome.Fail("NOT_OWNER", "Developers deliver only their own add-ons.");
+        // Every developer may deliver every add-on to their customers (S1.0.6, Marcus):
+        // add-ons are there for all developers' customers. The owner is told by email.
         if (await _db.Deliveries.AnyAsync(d => d.CustomerId == customer.Id && d.PackageId == packageId))
             return Outcome.Fail("DELIVERY_EXISTS", "This add-on is already delivered to this customer; change that delivery instead.");
         var versions = await DeliverableVersionsAsync(packageId);
@@ -257,6 +257,9 @@ public class CustomerService
         if (!actorIsAdmin)
             await _notify.NotifyStaffAsync("CustomerDelivery", $"[Add-on Store] Delivery: {packageId} to {customer.Name}",
                 System.Net.WebUtility.HtmlEncode($"{actor.DisplayName} delivered {packageId} to the customer {customer.Name} (live: {d.LiveMode} {d.LiveVersion}, beta: {d.BetaMode} {d.BetaVersion})."));
+        if (pkg.OwnerId != actor.Id && await _db.Users.FirstOrDefaultAsync(u => u.Id == pkg.OwnerId) is { } owner)
+            await _notify.NotifyUserAsync("CustomerDelivery", owner, $"[Add-on Store] Your add-on {packageId} was delivered to {customer.Name}",
+                System.Net.WebUtility.HtmlEncode($"{actor.DisplayName} delivered your add-on {packageId} to the customer {customer.Name} (live: {d.LiveMode} {d.LiveVersion}, beta: {d.BetaMode} {d.BetaVersion})."));
         return new Outcome(true, "", "Delivery created.", d);
     }
 

@@ -774,4 +774,32 @@
   <data name="Type RESET to confirm." xml:space="preserve"><value>Saisissez RESET pour confirmer.</value></data>
   <data name="Choose at least one kind of data." xml:space="preserve"><value>Choisissez au moins un type de données.</value></data>
   <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>Statistiques réinitialisées. Une sauvegarde de sécurité de l'état précédent figure sous Sauvegarde et restauration &gt; Sauvegardes de sécurité.</value></data>
+  <data name="This add-on has its own ribbon tab and therefore stays private. Only add-ons on the shared tab can be public." xml:space="preserve"><value>Ce module complémentaire possède son propre onglet de ruban et reste donc privé. Seuls les modules de l'onglet commun peuvent être publics.</value></data>
+  <data name="Forgot password" xml:space="preserve"><value>Mot de passe oublié</value></data>
+  <data name="Forgot password?" xml:space="preserve"><value>Mot de passe oublié ?</value></data>
+  <data name="Enter the email address of your account. We send you a link to choose a new password." xml:space="preserve"><value>Saisissez l'adresse e-mail de votre compte. Nous vous envoyons un lien pour choisir un nouveau mot de passe.</value></data>
+  <data name="If an active account exists for this address, we sent it a link to choose a new password. The link is valid for 24 hours." xml:space="preserve"><value>Si un compte actif existe pour cette adresse, nous lui avons envoyé un lien pour choisir un nouveau mot de passe. Le lien est valable 24 heures.</value></data>
+  <data name="Send link" xml:space="preserve"><value>Envoyer le lien</value></data>
+  <data name="Back to sign-in" xml:space="preserve"><value>Retour à la connexion</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>Choisir un nouveau mot de passe</value></data>
+  <data name="This link is invalid or has expired. Request a new one with &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Ce lien est invalide ou a expiré. Demandez-en un nouveau avec « Mot de passe oublié ? » sur la page de connexion.</value></data>
+  <data name="New password for {0}. At least 10 characters." xml:space="preserve"><value>Nouveau mot de passe pour {0}. Au moins 10 caractères.</value></data>
+  <data name="New password" xml:space="preserve"><value>Nouveau mot de passe</value></data>
+  <data name="Repeat the new password" xml:space="preserve"><value>Répéter le nouveau mot de passe</value></data>
+  <data name="Save password" xml:space="preserve"><value>Enregistrer le mot de passe</value></data>
+  <data name="Enter a new password (up to 200 characters)." xml:space="preserve"><value>Saisissez un nouveau mot de passe (200 caractères maximum).</value></data>
+  <data name="The two passwords do not match." xml:space="preserve"><value>Les deux mots de passe ne correspondent pas.</value></data>
+  <data name="Password changed. Sign in with the new password." xml:space="preserve"><value>Mot de passe modifié. Connectez-vous avec le nouveau mot de passe.</value></data>
+  <data name="Change password" xml:space="preserve"><value>Modifier le mot de passe</value></data>
+  <data name="Current password" xml:space="preserve"><value>Mot de passe actuel</value></data>
+  <data name="Enter the current and the new password (up to 200 characters)." xml:space="preserve"><value>Saisissez le mot de passe actuel et le nouveau (200 caractères maximum).</value></data>
+  <data name="Password changed. Other sessions were signed out." xml:space="preserve"><value>Mot de passe modifié. Les autres sessions ont été déconnectées.</value></data>
+  <data name="Only active accounts can reset their password." xml:space="preserve"><value>Seuls les comptes actifs peuvent réinitialiser leur mot de passe.</value></data>
+  <data name="Password reset link sent by email." xml:space="preserve"><value>Lien de réinitialisation du mot de passe envoyé par e-mail.</value></data>
+  <data name="You cannot delete your own account." xml:space="preserve"><value>Vous ne pouvez pas supprimer votre propre compte.</value></data>
+  <data name="Account deleted. Its add-ons and customers now belong to you." xml:space="preserve"><value>Compte supprimé. Ses modules complémentaires et clients vous appartiennent désormais.</value></data>
+  <data name="Email is not configured; give this password reset link to the user (valid 24 hours, works once):" xml:space="preserve"><value>L'e-mail n'est pas configuré ; transmettez ce lien de réinitialisation à l'utilisateur (valable 24 heures, utilisable une fois) :</value></data>
+  <data name="Send {0} a link to choose a new password? The current password keeps working until the new one is set." xml:space="preserve"><value>Envoyer à {0} un lien pour choisir un nouveau mot de passe ? Le mot de passe actuel reste valable jusqu'à ce que le nouveau soit défini.</value></data>
+  <data name="Reset password" xml:space="preserve"><value>Réinitialiser le mot de passe</value></data>
+  <data name="Delete the account of {0} permanently? Its add-ons ({1}) and customers ({2}) move to you, its API tokens stop working. The audit log keeps its name." xml:space="preserve"><value>Supprimer définitivement le compte de {0} ? Ses modules complémentaires ({1}) et clients ({2}) vous sont transférés, ses jetons API cessent de fonctionner. Le journal d'audit conserve son nom.</value></data>
 </root>

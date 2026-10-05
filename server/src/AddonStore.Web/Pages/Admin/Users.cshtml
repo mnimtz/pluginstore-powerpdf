@@ -10,6 +10,13 @@
 {
     <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
 }
+@if (Model.ResetLink is not null)
+{
+    <div class="alert warn">
+        @L["Email is not configured; give this password reset link to the user (valid 24 hours, works once):"]
+        <div class="token-reveal">@Model.ResetLink</div>
+    </div>
+}
 @if (Model.InviteLink is not null)
 {
     <div class="alert ok">
@@ -150,7 +157,16 @@
                 }
             </td>
             <td><span class="badge @row.User.Status.ToString().ToLowerInvariant()">@L[row.User.Status.ToString()]</span></td>
-            <td>
+            <td style="white-space:nowrap">
+                <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+                @if (row.User.Status == UserStatus.Active)
+                {
+                    <form method="post" asp-page-handler="ResetPassword"
+                          data-confirm="@L["Send {0} a link to choose a new password? The current password keeps working until the new one is set.", row.User.DisplayName]">
+                        <input type="hidden" name="id" value="@row.User.Id" />
+                        <button type="submit" class="btn small secondary">@L["Reset password"]</button>
+                    </form>
+                }
                 @if (row.User.Status == UserStatus.Active && row.User.Id != Model.MyId)
                 {
                     <form method="post" asp-page-handler="Disable">
@@ -165,6 +181,15 @@
                         <button type="submit" class="btn small">@L["Enable"]</button>
                     </form>
                 }
+                @if (row.User.Id != Model.MyId)
+                {
+                    <form method="post" asp-page-handler="Delete"
+                          data-confirm="@L["Delete the account of {0} permanently? Its add-ons ({1}) and customers ({2}) move to you, its API tokens stop working. The audit log keeps its name.", row.User.DisplayName, row.Packages, row.Customers]">
+                        <input type="hidden" name="id" value="@row.User.Id" />
+                        <button type="submit" class="btn small danger">@L["Delete"]</button>
+                    </form>
+                }
+                </div>
             </td>
         </tr>
     }
