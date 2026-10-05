@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "http.h"
+#include "hostversion.h"
 #include "logging.h"
 #include "settings.h"
 #include "version.h"
@@ -89,6 +90,12 @@ static std::wstring BuildUserAgent()
                        HIWORD(fi->dwFileVersionLS), LOWORD(fi->dwFileVersionLS));
             host = v;
         }
+    }
+    // With the hotfix level ("2025.3.8") when the programs list knows it, so the
+    // reports show which hotfixes are in use.
+    {
+        std::wstring hv = PSHostVersion();
+        if (!hv.empty()) host = hv;
     }
 
     // RtlGetVersion reports the real OS version (GetVersionEx is shimmed).

@@ -183,8 +183,13 @@ function actionButtons(x, small) {
   var s = status(x), out = [];
   if (locked) return out;
   function b(label, cls, fn) { var e = el("button", "btn" + (cls ? " " + cls : "") + (small ? " sm" : ""), label); e.disabled = busy; e.onclick = function (ev) { ev.stopPropagation(); fn(); }; out.push(e); }
-  if (s === "none") b(S.install, "", function () { confirmAct("install", x); });
-  if (s === "upd") b(S.update, "", function () { confirmAct("install", x); });
+  if (x.needsHost) {
+    // needs a newer Power PDF: no install or update offered, only the reason
+    out.push(el("span", "chip" + (small ? " sm" : ""), fmt(S.needsHost, x.needsHost)));
+  } else {
+    if (s === "none") b(S.install, "", function () { confirmAct("install", x); });
+    if (s === "upd") b(S.update, "", function () { confirmAct("install", x); });
+  }
   if (s === "inst" || (s === "upd" && !small)) b(S.remove, "sec", function () { confirmAct("uninstall", x); });
   return out;
 }

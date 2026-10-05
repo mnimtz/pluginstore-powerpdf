@@ -3,6 +3,7 @@
 <WixLocalization Culture="tr-TR" Codepage="1254" xmlns="http://schemas.microsoft.com/wix/2006/localization">
   <String Id="ProductLanguage">1055</String>
   <String Id="NoPowerPdf">Bu bilgisayarda Tungsten Power PDF bulunamadı. Lütfen önce Power PDF'i yükleyin.</String>
+  <String Id="PowerPdfTooOld">Add-on Store, Tungsten Power PDF 2025.3.7 veya üstünü gerektirir. Lütfen önce Power PDF'i güncelleyin.</String>
   <String Id="ClosePowerPdf">Lütfen Tungsten Power PDF'i kapatın ve devam edin.</String>
   <String Id="Downgrade">Add-on Store'un daha yeni bir sürümü zaten yüklü.</String>
 </WixLocalization>

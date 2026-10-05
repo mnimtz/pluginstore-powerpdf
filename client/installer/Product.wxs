@@ -69,6 +69,25 @@
       <![CDATA[Installed OR POWERPDFBIN]]>
     </Condition>
 
+    <!-- Minimum Power PDF version (C1.1.0): 2025.3, the Plugin SDK the client is
+         built with. PPDFEXE = path from App Paths; PPDFNEWENOUGH is only set when
+         that file is at least 2025.3. Blocks only when the exe was found and is older. -->
+    <Property Id="PPDFEXE">
+      <RegistrySearch Id="PowerPdfExePath" Root="HKLM"
+                      Key="SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\PowerPDF.exe"
+                      Type="raw" Win64="yes" />
+    </Property>
+    <Property Id="PPDFNEWENOUGH">
+      <RegistrySearch Id="PowerPdfExeVersion" Root="HKLM"
+                      Key="SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\PowerPDF.exe"
+                      Type="file" Win64="yes">
+        <FileSearch Id="PowerPdfExeMin" Name="PowerPDF.exe" MinVersion="2025.2.65535.65535" />
+      </RegistrySearch>
+    </Property>
+    <Condition Message="!(loc.PowerPdfTooOld)">
+      <![CDATA[Installed OR NOT PPDFEXE OR PPDFNEWENOUGH]]>
+    </Condition>
+
     <!-- Power PDF must be closed: the .zxt is locked while it runs. -->
     <util:CloseApplication Id="ClosePowerPDF"
                            Target="PowerPDF.exe"

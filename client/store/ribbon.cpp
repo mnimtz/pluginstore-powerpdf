@@ -1,12 +1,14 @@
 // ribbon.cpp — the Add-on Store group on the shared "Enhanced Features" tab.
-// One button that opens the store dialog. The group stays the FIRST one on the
-// tab (it registers before the other plug-ins; decision Marcus, Oct 4, 2026).
+// One button that opens the store dialog, on the store's own tab "Store"
+// (toolbar atom AddonStore, C1.1.0); add-ons keep the shared tab.
 
 #include "stdafx.h"
 #include "dialog.h"
 #include "loc.h"
 #include "logging.h"
 #include "link.h"
+#include "install.h"      // PSCompareVersions
+#include "hostversion.h"
 #include "Resource.h"
 
 extern "C" HINSTANCE gHINSTANCE;
@@ -21,6 +23,17 @@ static DUText MakeDUText(const std::wstring& s)
 static DCCB1 void DCCB2 OnOpenStore(void* /*data*/)
 {
     AFX_MANAGE_MODULE_STATE;
+    // Older Power PDF than the client is built for (an MSI from another source,
+    // or Power PDF downgraded afterwards): explain instead of failing half-way.
+    const std::wstring host = PSHostVersion();
+    if (PSHostTooOld())
+    {
+        wchar_t msg[600];
+        _snwprintf_s(msg, _countof(msg), _TRUNCATE, FPLoc(IDS_PS_HOST_TOO_OLD).c_str(), kPSMinHost, host.c_str());
+        FPLogW(L"[Store] host %s is older than %s - store not opened", host.c_str(), kPSMinHost);
+        MessageBoxW(NULL, msg, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
+        return;
+    }
     DURING PSShowStoreDialog(std::wstring()); HANDLER END_HANDLER
     PSUpdateCheckSoon();   // an install or update may have cleared the badge
 }

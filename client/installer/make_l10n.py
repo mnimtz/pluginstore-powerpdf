@@ -123,10 +123,34 @@ def xml(s):
     return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
 
 
+# Minimum Power PDF version of the client (C1.1.0): the Plugin SDK it is built with.
+# Keep in sync with Product.wxs (PPDFNEWENOUGH) and common/hostversion.h.
+MIN_PPDF = '2025.3.7'   # 2025.3 hotfix 7: the MSI checks 2025.3, the client the hotfix level
+TOO_OLD = {
+    'en-US': "The Add-on Store needs Tungsten Power PDF {v} or later. Please update Power PDF first.",
+    'de-DE': "Der Add-on Store benötigt Tungsten Power PDF {v} oder neuer. Bitte aktualisieren Sie zuerst Power PDF.",
+    'fr-FR': "L'Add-on Store nécessite Tungsten Power PDF {v} ou une version ultérieure. Mettez d'abord Power PDF à jour.",
+    'it-IT': "Add-on Store richiede Tungsten Power PDF {v} o versione successiva. Aggiornare prima Power PDF.",
+    'es-ES': "La Add-on Store necesita Tungsten Power PDF {v} o posterior. Actualice primero Power PDF.",
+    'nl-NL': "De Add-on Store vereist Tungsten Power PDF {v} of hoger. Werk eerst Power PDF bij.",
+    'pt-BR': "A Add-on Store requer o Tungsten Power PDF {v} ou posterior. Atualize primeiro o Power PDF.",
+    'da-DK': "Add-on Store kræver Tungsten Power PDF {v} eller nyere. Opdater Power PDF først.",
+    'fi-FI': "Add-on Store vaatii Tungsten Power PDF:n version {v} tai uudemman. Päivitä ensin Power PDF.",
+    'nb-NO': "Add-on Store krever Tungsten Power PDF {v} eller nyere. Oppdater Power PDF først.",
+    'sv-SE': "Add-on Store kräver Tungsten Power PDF {v} eller senare. Uppdatera Power PDF först.",
+    'pl-PL': "Add-on Store wymaga programu Tungsten Power PDF w wersji {v} lub nowszej. Najpierw zaktualizuj Power PDF.",
+    'cs-CZ': "Add-on Store vyžaduje Tungsten Power PDF {v} nebo novější. Nejprve aktualizujte Power PDF.",
+    'hu-HU': "Az Add-on Store a Tungsten Power PDF {v} vagy újabb verzióját igényli. Először frissítse a Power PDF-et.",
+    'ru-RU': "Для Add-on Store требуется Tungsten Power PDF {v} или новее. Сначала обновите Power PDF.",
+    'tr-TR': "Add-on Store, Tungsten Power PDF {v} veya üstünü gerektirir. Lütfen önce Power PDF'i güncelleyin.",
+}
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     for culture, lcid, cp in CULTURES:
         no_ppdf, close, downgrade, note = TEXT[culture]
+        too_old = TOO_OLD[culture].format(v=MIN_PPDF)
         for t in (no_ppdf, close, downgrade, note):
             assert '\u2014' not in t, culture
         wxl = (f'<?xml version="1.0" encoding="utf-8"?>\n'
@@ -134,6 +158,7 @@ def main():
                f'<WixLocalization Culture="{culture}" Codepage="{cp}" xmlns="http://schemas.microsoft.com/wix/2006/localization">\n'
                f'  <String Id="ProductLanguage">{lcid}</String>\n'
                f'  <String Id="NoPowerPdf">{xml(no_ppdf)}</String>\n'
+               f'  <String Id="PowerPdfTooOld">{xml(too_old)}</String>\n'
                f'  <String Id="ClosePowerPdf">{xml(close)}</String>\n'
                f'  <String Id="Downgrade">{xml(downgrade)}</String>\n'
                f'</WixLocalization>\n')

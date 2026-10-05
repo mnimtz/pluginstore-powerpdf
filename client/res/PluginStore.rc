@@ -202,6 +202,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Your IT manages the customer code on this computer."
     IDS_PSW_CODE_REMOVED "The customer code was removed."
     IDS_PSW_CODE_ACTIVE  "Customer code active: %s"
+    IDS_PSW_NEEDS_HOST   "Requires Power PDF %s or later"
+    IDS_PS_HOST_TOO_OLD  "The Add-on Store needs Tungsten Power PDF %s or later (this is %s). Please update Power PDF."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -310,6 +312,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Ihre IT verwaltet den Kundencode auf diesem Computer."
     IDS_PSW_CODE_REMOVED "Der Kundencode wurde entfernt."
     IDS_PSW_CODE_ACTIVE  "Kundencode aktiv: %s"
+    IDS_PSW_NEEDS_HOST   "Benötigt Power PDF %s oder neuer"
+    IDS_PS_HOST_TOO_OLD  "Der Add-on Store benötigt Tungsten Power PDF %s oder neuer (installiert ist %s). Bitte aktualisieren Sie Power PDF."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -418,6 +422,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Votre service informatique gère le code client sur cet ordinateur."
     IDS_PSW_CODE_REMOVED "Le code client a été supprimé."
     IDS_PSW_CODE_ACTIVE  "Code client actif : %s"
+    IDS_PSW_NEEDS_HOST   "Nécessite Power PDF %s ou ultérieur"
+    IDS_PS_HOST_TOO_OLD  "L'Add-on Store nécessite Tungsten Power PDF %s ou ultérieur (version installée : %s). Mettez Power PDF à jour."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -526,6 +532,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Il reparto IT gestisce il codice cliente su questo computer."
     IDS_PSW_CODE_REMOVED "Il codice cliente è stato rimosso."
     IDS_PSW_CODE_ACTIVE  "Codice cliente attivo: %s"
+    IDS_PSW_NEEDS_HOST   "Richiede Power PDF %s o successivo"
+    IDS_PS_HOST_TOO_OLD  "Add-on Store richiede Tungsten Power PDF %s o successivo (installato: %s). Aggiornare Power PDF."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -634,6 +642,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Su departamento de TI gestiona el código de cliente en este equipo."
     IDS_PSW_CODE_REMOVED "Se ha quitado el código de cliente."
     IDS_PSW_CODE_ACTIVE  "Código de cliente activo: %s"
+    IDS_PSW_NEEDS_HOST   "Requiere Power PDF %s o posterior"
+    IDS_PS_HOST_TOO_OLD  "La Add-on Store necesita Tungsten Power PDF %s o posterior (instalado: %s). Actualice Power PDF."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -742,6 +752,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Uw IT-afdeling beheert de klantcode op deze computer."
     IDS_PSW_CODE_REMOVED "De klantcode is verwijderd."
     IDS_PSW_CODE_ACTIVE  "Klantcode actief: %s"
+    IDS_PSW_NEEDS_HOST   "Vereist Power PDF %s of hoger"
+    IDS_PS_HOST_TOO_OLD  "De Add-on Store vereist Tungsten Power PDF %s of hoger (geïnstalleerd: %s). Werk Power PDF bij."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -850,6 +862,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "O seu departamento de TI gere o código de cliente neste computador."
     IDS_PSW_CODE_REMOVED "O código de cliente foi removido."
     IDS_PSW_CODE_ACTIVE  "Código de cliente ativo: %s"
+    IDS_PSW_NEEDS_HOST   "Requer Power PDF %s ou posterior"
+    IDS_PS_HOST_TOO_OLD  "A Add-on Store requer o Tungsten Power PDF %s ou posterior (instalado: %s). Atualize o Power PDF."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -958,6 +972,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Din IT-afdeling administrerer kundekoden på denne computer."
     IDS_PSW_CODE_REMOVED "Kundekoden er fjernet."
     IDS_PSW_CODE_ACTIVE  "Kundekode aktiv: %s"
+    IDS_PSW_NEEDS_HOST   "Kræver Power PDF %s eller nyere"
+    IDS_PS_HOST_TOO_OLD  "Add-on Store kræver Tungsten Power PDF %s eller nyere (installeret: %s). Opdater Power PDF."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1066,6 +1082,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "IT-osasto hallitsee asiakaskoodia tällä tietokoneella."
     IDS_PSW_CODE_REMOVED "Asiakaskoodi poistettiin."
     IDS_PSW_CODE_ACTIVE  "Asiakaskoodi käytössä: %s"
+    IDS_PSW_NEEDS_HOST   "Vaatii Power PDF %s:n tai uudemman"
+    IDS_PS_HOST_TOO_OLD  "Add-on Store vaatii Tungsten Power PDF:n version %s tai uudemman (asennettu: %s). Päivitä Power PDF."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1174,6 +1192,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "IT-avdelingen administrerer kundekoden på denne datamaskinen."
     IDS_PSW_CODE_REMOVED "Kundekoden ble fjernet."
     IDS_PSW_CODE_ACTIVE  "Kundekode aktiv: %s"
+    IDS_PSW_NEEDS_HOST   "Krever Power PDF %s eller nyere"
+    IDS_PS_HOST_TOO_OLD  "Add-on Store krever Tungsten Power PDF %s eller nyere (installert: %s). Oppdater Power PDF."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1282,6 +1302,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Din IT-avdelning hanterar kundkoden på den här datorn."
     IDS_PSW_CODE_REMOVED "Kundkoden togs bort."
     IDS_PSW_CODE_ACTIVE  "Kundkod aktiv: %s"
+    IDS_PSW_NEEDS_HOST   "Kräver Power PDF %s eller senare"
+    IDS_PS_HOST_TOO_OLD  "Add-on Store kräver Tungsten Power PDF %s eller senare (installerad: %s). Uppdatera Power PDF."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1390,6 +1412,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Kodem klienta na tym komputerze zarządza dział IT."
     IDS_PSW_CODE_REMOVED "Kod klienta został usunięty."
     IDS_PSW_CODE_ACTIVE  "Aktywny kod klienta: %s"
+    IDS_PSW_NEEDS_HOST   "Wymaga Power PDF %s lub nowszego"
+    IDS_PS_HOST_TOO_OLD  "Add-on Store wymaga programu Tungsten Power PDF %s lub nowszego (zainstalowano: %s). Zaktualizuj Power PDF."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1498,6 +1522,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Kód zákazníka na tomto počítači spravuje vaše IT oddělení."
     IDS_PSW_CODE_REMOVED "Kód zákazníka byl odebrán."
     IDS_PSW_CODE_ACTIVE  "Aktivní kód zákazníka: %s"
+    IDS_PSW_NEEDS_HOST   "Vyžaduje Power PDF %s nebo novější"
+    IDS_PS_HOST_TOO_OLD  "Add-on Store vyžaduje Tungsten Power PDF %s nebo novější (nainstalováno: %s). Aktualizujte Power PDF."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1606,6 +1632,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Ezen a számítógépen az ügyfélkódot az informatikai részleg kezeli."
     IDS_PSW_CODE_REMOVED "Az ügyfélkód eltávolítva."
     IDS_PSW_CODE_ACTIVE  "Aktív ügyfélkód: %s"
+    IDS_PSW_NEEDS_HOST   "Power PDF %s vagy újabb szükséges"
+    IDS_PS_HOST_TOO_OLD  "Az Add-on Store a Tungsten Power PDF %s vagy újabb verzióját igényli (telepítve: %s). Frissítse a Power PDF-et."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1714,6 +1742,8 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Кодом клиента на этом компьютере управляет ваш ИТ-отдел."
     IDS_PSW_CODE_REMOVED "Код клиента удалён."
     IDS_PSW_CODE_ACTIVE  "Активный код клиента: %s"
+    IDS_PSW_NEEDS_HOST   "Требуется Power PDF %s или новее"
+    IDS_PS_HOST_TOO_OLD  "Для Add-on Store требуется Tungsten Power PDF %s или новее (установлено: %s). Обновите Power PDF."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1822,4 +1852,6 @@ BEGIN
     IDS_PSW_CODE_LOCKED  "Bu bilgisayardaki müşteri kodunu BT bölümünüz yönetiyor."
     IDS_PSW_CODE_REMOVED "Müşteri kodu kaldırıldı."
     IDS_PSW_CODE_ACTIVE  "Müşteri kodu etkin: %s"
+    IDS_PSW_NEEDS_HOST   "Power PDF %s veya üstünü gerektirir"
+    IDS_PS_HOST_TOO_OLD  "Add-on Store, Tungsten Power PDF %s veya üstünü gerektirir (yüklü: %s). Lütfen Power PDF'i güncelleyin."
 END

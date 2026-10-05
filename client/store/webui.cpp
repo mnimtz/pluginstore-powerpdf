@@ -10,6 +10,7 @@
 #include "loc.h"
 #include "logging.h"
 #include "clocale.h"
+#include "hostversion.h"
 #include "Resource.h"
 #include "version.h"
 #include <wrl.h>
@@ -473,7 +474,7 @@ protected:
             { L"beta", IDS_PSW_BETA }, { L"install", IDS_PSD_BTN_INSTALL }, { L"update", IDS_PSW_UPDATE },
             { L"remove", IDS_PSW_REMOVE }, { L"cancel", IDS_PSW_CANCEL }, { L"version", IDS_PSW_VERSION },
             { L"colInstalled", IDS_PSD_C_INSTALLED }, { L"whatsNew", IDS_PSW_WHATSNEW }, { L"author", IDS_PSD_C_AUTHOR },
-            { L"adminNote", IDS_PSD_ADMIN_NOTE }, { L"confirmInstall", IDS_PSD_CONFIRM }, { L"confirmUninstall", IDS_PSD_CONFIRM_UNINST },
+            { L"adminNote", IDS_PSD_ADMIN_NOTE }, { L"confirmInstall", IDS_PSD_CONFIRM }, { L"needsHost", IDS_PSW_NEEDS_HOST }, { L"confirmUninstall", IDS_PSD_CONFIRM_UNINST },
             { L"installing", IDS_PSW_INSTALLING }, { L"removing", IDS_PSW_REMOVING }, { L"later", IDS_PSW_LATER },
             { L"restartNow", IDS_PSW_RESTARTNOW }, { L"disclaimer", IDS_PSD_DISCLAIMER }, { L"disclaimerBtn", IDS_PSD_BTN_DISCLAIMER },
             { L"disclaimerFull", IDS_PSD_DISCLAIMER_FULL }, { L"selfUpdate", IDS_PSD_SELF_UPDATE }, { L"selfUpdateBtn", IDS_PSD_BTN_SELFUPD },
@@ -547,7 +548,10 @@ protected:
                  L",\"size\":" + size + L",\"author\":" + Json(e.author) + L",\"contact\":" + Json(e.contactEmail) +
                  L",\"rating\":" + Tenths(e.rating) + L",\"ratingCount\":" + std::to_wstring(e.ratingCount) +
                  L",\"shots\":" + std::to_wstring(e.screenshots) + L",\"mine\":" + std::to_wstring(PSMyRating(e.id)) +
-                 L",\"customer\":" + Json(e.customer) + L"}";
+                 L",\"customer\":" + Json(e.customer) +
+                 // needs a newer Power PDF than this one: shown, but not installable
+                 L",\"needsHost\":" + Json(!e.minHost.empty() && !PSHostVersion().empty() &&
+                                            PSCompareVersions(PSHostVersion(), e.minHost) < 0 ? e.minHost : std::wstring()) + L"}";
         }
         j += L"]";
         if (m_hasSelfUpdate)
@@ -839,6 +843,9 @@ protected:
             std::wstring refusal = PSPolicyNoInstall() ? FPLoc(IDS_PSD_POLICY_INSTALL)
                                  : m_jobRunning ? FPLoc(IDS_PSD_MSG_FAIL)
                                  : !e ? FPLoc(IDS_PSD_EMPTY) : std::wstring();
+            if (refusal.empty() && cmd == L"install" && !e->minHost.empty() && !PSHostVersion().empty() &&
+                PSCompareVersions(PSHostVersion(), e->minHost) < 0)
+                refusal = Fmt(IDS_PSW_NEEDS_HOST, e->minHost);   // needs a newer Power PDF
             if (refusal.empty()) RunJob(cmd == L"install" ? JobInstall : JobUninstall, m_entries[idx]);
             else Send(L"{\"type\":\"result\",\"ok\":false,\"title\":" + Json(e ? e->name : std::wstring()) + L",\"message\":" + Json(refusal) + L"}");
         }

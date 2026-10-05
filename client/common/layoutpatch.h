@@ -143,6 +143,46 @@ inline bool EnsureStoreToolbar(std::wstring& text)
     return true;
 }
 
+// The "Store" tab is the LAST tab of the ribbon: an add-on that creates the shared
+// "FeaturePack" tab later would otherwise put "Enhanced Features" behind it.
+// Moves our toolbar block to the end of <Top>. Returns true when moved.
+inline bool MoveStoreToolbarToEnd(std::wstring& text)
+{
+    size_t tb = text.find(std::wstring(L"<toolbar name=\"") + kStoreToolbar + L"\"");
+    if (tb == std::wstring::npos) return false;
+    size_t topEnd = text.find(L"</Top>", tb);
+    size_t end = text.find(L"</toolbar>", tb);
+    if (topEnd == std::wstring::npos || end == std::wstring::npos || end > topEnd) return false;
+    end += wcslen(L"</toolbar>");
+    // nothing but whitespace between our block and </Top>: already last
+    bool last = true;
+    for (size_t i = end; i < topEnd; ++i)
+        if (!iswspace(text[i])) { last = false; break; }
+    if (last) return false;
+    size_t start = tb;
+    while (start > 0 && (text[start - 1] == L' ' || text[start - 1] == L'\t')) --start;
+    std::wstring block = text.substr(start, end - start);
+    text.erase(start, end - start);
+    topEnd = text.find(L"</Top>", start);
+    text.insert(topEnd, block + L"\n");
+    return true;
+}
+
+// The shared "FeaturePack" tab must stand in the file BEFORE our tab. Add-ons
+// create it at run time when it is missing, and the host appends such tabs after
+// every tab of the file, so "Store" would land in front of "Enhanced Features".
+// An empty placeholder is hidden by the host (no empty tab without add-ons); an
+// add-on fills it, the host saves that, and from the next start on "Store" is the
+// last tab. Returns true when inserted.
+inline bool EnsureSharedToolbarBeforeStore(std::wstring& text)
+{
+    if (text.find(L"<toolbar name=\"FeaturePack\"") != std::wstring::npos) return false;
+    size_t ours = text.find(std::wstring(L"<toolbar name=\"") + kStoreToolbar + L"\"");
+    if (ours == std::wstring::npos) return false;
+    text.insert(ours, L"<toolbar name=\"FeaturePack\" shortKey=\"U\">\n</toolbar>\n");
+    return true;
+}
+
 // Removes a whole group (and the line break in front of it). Returns true when removed.
 inline bool RemoveGroup(std::wstring& text, const wchar_t* name)
 {
@@ -457,6 +497,8 @@ inline int ApplyButtons()
         bool changed = false;
         if (RemoveGroup(text, kLegacyGroup)) changed = true;      // C1.0.0 and older: group on the shared tab
         if (EnsureStoreToolbar(text)) changed = true;
+        if (MoveStoreToolbarToEnd(text)) changed = true;
+        if (EnsureSharedToolbarBeforeStore(text)) changed = true;
         for (int gi = 0; gi < kGroupCount; ++gi)
         {
             if (EnsureGroup(text, kGroups[gi]))        changed = true;

@@ -3,6 +3,7 @@
 <WixLocalization Culture="cs-CZ" Codepage="1250" xmlns="http://schemas.microsoft.com/wix/2006/localization">
   <String Id="ProductLanguage">1029</String>
   <String Id="NoPowerPdf">Na tomto počítači nebyl nalezen Tungsten Power PDF. Nejprve nainstalujte Power PDF.</String>
+  <String Id="PowerPdfTooOld">Add-on Store vyžaduje Tungsten Power PDF 2025.3.7 nebo novější. Nejprve aktualizujte Power PDF.</String>
   <String Id="ClosePowerPdf">Zavřete Tungsten Power PDF a pokračujte.</String>
   <String Id="Downgrade">Novější verze Add-on Store je již nainstalována.</String>
 </WixLocalization>
