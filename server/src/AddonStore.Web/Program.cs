@@ -213,6 +213,27 @@ app.Use(async (ctx, next) =>
     await next();
 });
 
+// HEAD on the API and the documentation entry points (S1.0.4): link checkers and
+// the fetch tools of AI assistants often ask HEAD first and give up on 405.
+// Answered like GET, without a body.
+app.Use(async (ctx, next) =>
+{
+    // Documentation only: a HEAD on a download or the catalog must not count as usage.
+    var path = ctx.Request.Path.Value ?? "";
+    if (HttpMethods.IsHead(ctx.Request.Method) &&
+        (path is "/llms.txt" or "/robots.txt" or "/agent-guide" or "/api" or "/api/" or "/api/ping" or "/api/agent-guide"
+             or "/api/openapi.json" or "/api/agents-md" or "/api/skill" || path.StartsWith("/api/schema/", StringComparison.Ordinal)))
+    {
+        ctx.Request.Method = HttpMethods.Get;
+        var body = ctx.Response.Body;
+        ctx.Response.Body = Stream.Null;
+        try { await next(); }
+        finally { ctx.Response.Body = body; }
+        return;
+    }
+    await next();
+});
+
 app.UseRequestLocalization();
 app.UseStaticFiles();
 app.UseRouting();

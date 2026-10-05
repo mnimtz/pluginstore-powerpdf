@@ -91,8 +91,40 @@ public static class ApiEndpoints
         });
 
         // llms.txt (llmstxt.org): entry point for any language model or AI assistant.
-        app.MapGet("/llms.txt", (HttpContext ctx, AppVersion ver) =>
-            Results.Text(AgentGuide.LlmsTxt(Base(ctx), ver.Value), "text/markdown; charset=utf-8"));
+        app.MapGet("/llms.txt", (HttpContext ctx, AppVersion ver) => MarkdownText(ctx, AgentGuide.LlmsTxt(Base(ctx), ver.Value)));
+
+        // The agent guide as a plain HTML page (S1.0.4): the web readers of some
+        // assistants (ChatGPT, Gemini) refuse text/markdown but read any web page.
+        app.MapGet("/agent-guide", (HttpContext ctx, AppVersion ver) =>
+        {
+            var md = AgentGuide.Markdown(Base(ctx), ver.Value);
+            var html = "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" +
+                       "<title>Agent guide - Add-on Store for Tungsten Power PDF</title>" +
+                       "<meta name=\"description\" content=\"How an AI assistant publishes, updates and maintains Power PDF add-ons through the Add-on Store API.\"></head>" +
+                       "<body style=\"font-family:Arial,sans-serif;max-width:980px;margin:24px auto;padding:0 16px;color:#002854\">" +
+                       "<p>Machine-readable versions: <a href=\"/api/agent-guide\">/api/agent-guide</a> (Markdown), " +
+                       "<a href=\"/api/openapi.json\">/api/openapi.json</a>, <a href=\"/llms.txt\">/llms.txt</a>.</p>" +
+                       "<pre style=\"white-space:pre-wrap;word-wrap:break-word;font:14px/1.5 Consolas,monospace\">" +
+                       System.Net.WebUtility.HtmlEncode(md) + "</pre></body></html>";
+            return Results.Content(html, "text/html; charset=utf-8");
+        });
+
+        // robots.txt: public pages and every documentation entry point may be read by anyone.
+        app.MapGet("/robots.txt", () => Results.Text(
+            """
+            User-agent: *
+            Allow: /
+            Allow: /llms.txt
+            Allow: /agent-guide
+            Allow: /api/agent-guide
+            Allow: /api/openapi.json
+            Disallow: /Admin/
+            Disallow: /Account/
+            Disallow: /Dashboard
+            Disallow: /Profile
+            Disallow: /Customer
+            Disallow: /Customers
+            """, "text/plain; charset=utf-8"));
 
         var api = app.MapGroup("/api");
 
@@ -147,8 +179,7 @@ public static class ApiEndpoints
 
         api.MapGet("/ping", (AppVersion ver) => Results.Json(new { ok = true, data = new { name = "pluginstore-powerpdf", version = ver.Value } }));
 
-        api.MapGet("/agent-guide", (HttpContext ctx, AppVersion ver) =>
-            Results.Text(AgentGuide.Markdown(Base(ctx), ver.Value), "text/markdown; charset=utf-8"));
+        api.MapGet("/agent-guide", (HttpContext ctx, AppVersion ver) => MarkdownText(ctx, AgentGuide.Markdown(Base(ctx), ver.Value)));
 
         api.MapGet("/schema/manifest", () => Results.Text(AgentGuide.ManifestSchema, "application/json"));
 
@@ -156,13 +187,14 @@ public static class ApiEndpoints
         api.MapGet("/openapi.json", (HttpContext ctx, AppVersion ver) =>
             Results.Text(OpenApiDoc.Json(Base(ctx), ver.Value), "application/json; charset=utf-8"));
 
-        api.MapGet("/agents-md", (HttpContext ctx) =>
-            Results.File(System.Text.Encoding.UTF8.GetBytes(AgentGuide.AgentsMarkdown(Base(ctx))),
-                         "text/markdown; charset=utf-8", "AGENTS.md"));
+        // Shown inline (readable by web readers); "?download=1" saves it as a file.
+        api.MapGet("/agents-md", (HttpContext ctx) => ctx.Request.Query.ContainsKey("download")
+            ? Results.File(System.Text.Encoding.UTF8.GetBytes(AgentGuide.AgentsMarkdown(Base(ctx)).Replace("\r\n", "\n")), "text/markdown; charset=utf-8", "AGENTS.md")
+            : MarkdownText(ctx, AgentGuide.AgentsMarkdown(Base(ctx))));
 
-        api.MapGet("/skill", (HttpContext ctx) =>
-            Results.File(System.Text.Encoding.UTF8.GetBytes(AgentGuide.SkillMarkdown(Base(ctx))),
-                         "text/markdown; charset=utf-8", "SKILL.md"));
+        api.MapGet("/skill", (HttpContext ctx) => ctx.Request.Query.ContainsKey("download")
+            ? Results.File(System.Text.Encoding.UTF8.GetBytes(AgentGuide.SkillMarkdown(Base(ctx)).Replace("\r\n", "\n")), "text/markdown; charset=utf-8", "SKILL.md")
+            : MarkdownText(ctx, AgentGuide.SkillMarkdown(Base(ctx))));
 
         api.MapGet("/me", async (HttpContext ctx, AppDbContext db, UserManager<AppUser> users) =>
         {
@@ -1005,6 +1037,19 @@ public static class ApiEndpoints
     // ---- helpers -----------------------------------------------------------
 
     private static string Base(HttpContext ctx) => $"{ctx.Request.Scheme}://{ctx.Request.Host}";
+
+    /// <summary>
+    /// Markdown documents for assistants: text/markdown only when the caller asks for it
+    /// (Accept), otherwise text/plain. The web readers of several assistants refuse
+    /// text/markdown outright although the text is the same.
+    /// </summary>
+    private static IResult MarkdownText(HttpContext ctx, string text)
+    {
+        var accept = ctx.Request.Headers.Accept.ToString();
+        var type = accept.Contains("text/markdown", StringComparison.OrdinalIgnoreCase) ? "text/markdown" : "text/plain";
+        // LF everywhere: the texts are raw string literals, whose line ends follow the checkout (CRLF on Windows).
+        return Results.Text(text.Replace("\r\n", "\n"), type + "; charset=utf-8");
+    }
 
     /// <summary>Maps Power PDF's 3-letter resource codes (DEU, FRA, ...) to two-letter culture names.</summary>
     private static string MapHostLang(string code) => code.Length > 2 && (code[2] == '-' || code[2] == '_')

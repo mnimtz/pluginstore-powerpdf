@@ -351,7 +351,11 @@ public class PackageValidator
                             "Rename the plugin binary; it must not shadow a built-in Power PDF plugin.");
                 }
 
-                if (manifest.AtomNamespace.Length > 0 && !manifest.AtomNamespace.StartsWith("FeaturePack::", StringComparison.Ordinal)
+                // The store client itself has its own tab "Store" (toolbar atom "AddonStore", C1.1.0);
+                // every add-on lives on the shared tab.
+                bool clientOwnTab = manifest.Id == "com.tungsten.pluginstore" &&
+                                    manifest.AtomNamespace.StartsWith("AddonStore::", StringComparison.Ordinal);
+                if (manifest.AtomNamespace.Length > 0 && !clientOwnTab && !manifest.AtomNamespace.StartsWith("FeaturePack::", StringComparison.Ordinal)
                     && manifest.AtomNamespace != "FeaturePack")
                     report.Error("ATOM_NOT_SHARED_TAB",
                         $"ribbonAtomNamespace '{manifest.AtomNamespace}' does not live on the shared tab.",
@@ -401,7 +405,7 @@ public class PackageValidator
                 CheckScreenshots(report, zip, root);
                 CheckLicenses(report, zip);
                 CheckThirdParty(report, zip, root);
-                CheckUiLayout(report, zip, manifest.AtomNamespace);
+                CheckUiLayout(report, zip, manifest.AtomNamespace, manifest.Id);
                 CheckDocs(report, zip);
             }
         }
@@ -1185,7 +1189,7 @@ public class PackageValidator
                 "Help under docs/ is installed on user machines and opened locally: plain HTML with local images only, no scripts, frames or external sources.");
     }
 
-    private void CheckUiLayout(ValidationReport report, ZipArchive zip, string atomNamespace)
+    private void CheckUiLayout(ValidationReport report, ZipArchive zip, string atomNamespace, string packageId = "")
     {
         var layoutEntries = zip.Entries
             .Where(e => e.FullName.Replace('\\', '/').StartsWith("UILayout/", StringComparison.OrdinalIgnoreCase) && !e.FullName.EndsWith('/'))
@@ -1213,7 +1217,8 @@ public class PackageValidator
                 report.Warn("ICONMODE_SMALL", "Publish Mode.xml uses IconMode=\"1\" (large button with a SMALL icon).",
                     "Use IconMode=\"4\" for product-sized buttons; 1 renders a large button with a small icon once merged.");
             foreach (Match tb in Regex.Matches(xml, @"<toolbar\b[^>]*?\bname\s*=\s*[""']([^""']+)[""']", RegexOptions.IgnoreCase))
-                if (tb.Groups[1].Value != "FeaturePack")
+                // only the store client has its own tab ("AddonStore", C1.1.0)
+                if (tb.Groups[1].Value != "FeaturePack" && !(packageId == "com.tungsten.pluginstore" && tb.Groups[1].Value == "AddonStore"))
                 {
                     report.Error("ATOM_NOT_SHARED_TAB", $"{publish.FullName} creates its own ribbon tab '{tb.Groups[1].Value}'.",
                         "Store plugins share ONE tab: toolbar atom 'FeaturePack' with the localized title 'Enhanced Features'/'Erweiterte Funktionen'.");

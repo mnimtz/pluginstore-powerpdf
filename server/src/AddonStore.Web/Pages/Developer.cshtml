@@ -17,7 +17,7 @@
 
 <div class="card">
     <h2 style="margin-top:0">2. @L["Give your AI assistant one line"]</h2>
-    <pre class="code">Read @(b)/api/agent-guide and publish the plugin in this folder.</pre>
+    <pre class="code">Read @(b)/agent-guide and publish the plugin in this folder.</pre>
     <p>@L["That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules."]</p>
 </div>
 
@@ -26,7 +26,7 @@
     <h3>AGENTS.md</h3>
     <p>@L["Coding assistants that read AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): save it in the plugin project."]</p>
     <pre class="code">Invoke-WebRequest @(b)/api/agents-md -OutFile AGENTS.md</pre>
-    <p><a class="btn small secondary" href="/api/agents-md">@L["Download AGENTS.md"]</a></p>
+    <p><a class="btn small secondary" href="/api/agents-md?download=1">@L["Download AGENTS.md"]</a></p>
     <h3>OpenAPI</h3>
     <p>@L["ChatGPT (custom GPT actions), Gemini function calling and other tools: import the OpenAPI description and enter the personal token as Bearer key."]</p>
     <pre class="code">@(b)/api/openapi.json</pre>
@@ -34,7 +34,7 @@
     <p>@L["Claude Code: install the skill. It always loads the current rules from the server, so it never needs updating."]</p>
     <pre class="code">New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills\powerpdf-plugin-store" | Out-Null
 Invoke-WebRequest @(b)/api/skill -OutFile "$env:USERPROFILE\.claude\skills\powerpdf-plugin-store\SKILL.md"</pre>
-    <p><a class="btn small secondary" href="/api/skill">@L["Download SKILL.md"]</a></p>
+    <p><a class="btn small secondary" href="/api/skill?download=1">@L["Download SKILL.md"]</a></p>
 </details>
 
 <div class="card">
@@ -53,7 +53,8 @@ Invoke-WebRequest @(b)/api/skill -OutFile "$env:USERPROFILE\.claude\skills\power
     <h2 style="margin-top:0">@L["Endpoints"]</h2>
     <table>
         <tr><th>@L["Address"]</th><th>@L["Purpose"]</th></tr>
-        <tr><td><code>@b/api/agent-guide</code></td><td>@L["Complete guide for developers and AI assistants"]</td></tr>
+        <tr><td><code>@b/agent-guide</code></td><td>@L["Complete guide for developers and AI assistants"] (HTML)</td></tr>
+        <tr><td><code>@b/api/agent-guide</code></td><td>@L["Complete guide for developers and AI assistants"] (Markdown)</td></tr>
         <tr><td><code>@b/api/openapi.json</code></td><td>@L["Description of all endpoints (OpenAPI 3.1)"]</td></tr>
         <tr><td><code>@b/llms.txt</code></td><td>@L["Short index for language models"]</td></tr>
         <tr><td><code>@b/api/schema/manifest</code></td><td>@L["Schema of manifest.json"]</td></tr>

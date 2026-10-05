@@ -225,6 +225,10 @@ msiexec /i PluginStore-<version>.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"
   language transforms (`python client\installer\build_msi.py`, texts in
   `client\installer\make_l10n.py`); Windows picks the user's language, and
   the self-update passes the store window's language as `TRANSFORMS=:<LCID>`.
+- **Own ribbon tab "Store"** (client 1.1.0+): the store client sits on its own
+  tab "Store" (toolbar atom `AddonStore`, Alt then A); add-ons stay on the
+  shared "Enhanced Features" tab. The client moves itself there in existing
+  profiles (removes its old group from the shared tab) at the first start.
 - The Power PDF Customization Kit can add the files of a plug-in ("Additional
   Files"), but no registry values (URL scheme, policies); the separate silent
   MSI step is the recommended way.
@@ -239,7 +243,7 @@ live immediately) is described step by step in
 
 **One URL is enough for an AI assistant** (Claude, ChatGPT, Gemini, Copilot
 or any other): tell it
-*"Read https://<host>/api/agent-guide and publish the plugin in this folder."*
+*"Read https://<host>/agent-guide and publish the plugin in this folder."* (`/agent-guide` is the guide as a web page, which every assistant's web reader accepts; `/api/agent-guide` is the same text as text/plain, or text/markdown when the Accept header asks for it; HEAD works on all documentation addresses, and `/robots.txt` allows them)
 The guide explains the token (environment variable `PPAK_TOKEN`), lets the
 assistant remember the store in the way its tool supports (`AGENTS.md`, the
 OpenAPI description or the Claude Code skill) and walks through packaging,
@@ -248,7 +252,7 @@ validation and submission. Signed-in users find the same instructions on the
 
 ```bash
 curl https://<host>/api                  # discover all endpoints
-curl https://<host>/api/agent-guide      # the full guide (markdown)
+curl https://<host>/api/agent-guide      # the full guide (markdown text)
 curl https://<host>/api/schema/manifest  # manifest.json schema
 
 curl https://<host>/llms.txt             # short index for language models

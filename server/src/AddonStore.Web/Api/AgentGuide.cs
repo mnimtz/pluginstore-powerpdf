@@ -610,7 +610,7 @@ be free of warnings before review. Info is for information only.
 | PE_DEBUG_RUNTIME | error | The .zxt imports a debug C/C++ runtime; ship the Release build. |
 | FOREIGN_DEPENDENCY | error | The .zxt imports DLLs that are not part of Windows or Power PDF. Power PDF loads plug-ins from its program folder and the store installs only the .zxt, so link such libraries statically (MIT/BSD/Apache-2.0 only) or load them yourself with LoadLibraryEx and a full path (delay-load). |
 | ATOM_NAMESPACE_MISSING | warning | `ribbonAtomNamespace` is not set. |
-| ATOM_NOT_SHARED_TAB | error | The plugin creates its own ribbon tab instead of a group on "FeaturePack". |
+| ATOM_NOT_SHARED_TAB | error | The plugin creates its own ribbon tab instead of a group on "FeaturePack" (only the store client has its own tab "Store", atom "AddonStore"). |
 | ATOM_COLLISION | error | Another package already uses this ribbon atom namespace. |
 | RESERVED_PANEL_NS | error | The layout uses the host-owned `panel::` atom namespace. |
 | ICONMODE_SMALL | warning | A ribbon button uses IconMode="1" (small icon); use 4. |
@@ -786,7 +786,8 @@ coding assistant working here; the store API is plain HTTPS + JSON
 
 ## Docs
 
-- [Developer and agent guide]({{baseUrl}}/api/agent-guide): complete workflow and every rule (markdown, authoritative)
+- [Developer and agent guide]({{baseUrl}}/api/agent-guide): complete workflow and every rule (authoritative; text/plain, or text/markdown when asked for in Accept)
+- [The same guide as a web page]({{baseUrl}}/agent-guide): for assistants whose web reader only reads HTML
 - [OpenAPI 3.1 description]({{baseUrl}}/api/openapi.json): all endpoints, for tools and function calling
 - [manifest.json schema]({{baseUrl}}/api/schema/manifest): JSON Schema of the package manifest
 - [AGENTS.md]({{baseUrl}}/api/agents-md): project instructions for coding assistants (Codex, Copilot, Cursor, Gemini CLI)
