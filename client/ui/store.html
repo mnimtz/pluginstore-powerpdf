@@ -58,6 +58,7 @@ header .s{font-size:12px;color:#9fd8ff}
 .dname{font-size:19px;font-weight:600;color:var(--navy)}
 .dmeta{font-size:12px;color:var(--slate);margin-top:2px}
 .ddesc{font-size:13px;line-height:1.6;margin:14px 0;user-select:text;white-space:pre-wrap}
+.dnote{margin-top:12px;padding:8px 12px;border-radius:8px;background:#E8F6FE;color:var(--navy);font-size:12.5px;line-height:1.5}
 .news{background:var(--soft);border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.5;user-select:text}
 .news b{display:block;color:var(--navy);margin-bottom:3px}
 .who{display:flex;gap:8px;align-items:center;margin:14px 0 4px;font-size:12px;color:var(--slate);flex-wrap:wrap}
@@ -265,6 +266,7 @@ function renderDetail() {
   t.appendChild(el("div", "dmeta", [x.categoryName || x.category, fmt(S.version, x.version), Math.max(1, Math.round(x.size / 1024)) + " KB"].concat(x.installed && x.installed !== x.version ? [S.colInstalled + ": " + x.installed] : []).join("  ·  ")));
   var ds = stars(x.rating, x.ratingCount); if (ds) { var dw = el("div", "cstars"); dw.appendChild(ds); t.appendChild(dw); }
   h.appendChild(t); d.appendChild(h);
+  if (x.noUi) d.appendChild(el("div", "dnote", S.noUi));   // add-on without ribbon buttons (C1.2.1)
   d.appendChild(el("div", "ddesc", x.description));
   if (x.shots > 0 && !shotsAsked[x.id]) { shotsAsked[x.id] = true; post({ cmd: "shots", id: x.id }); }
   if (shots[x.id] && shots[x.id].length) {

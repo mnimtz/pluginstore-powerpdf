@@ -123,6 +123,7 @@ bool PSFetchCatalogFor(const std::wstring& lang, std::vector<PSCatalogEntry>& ou
         if (f.size() > 18) e.screenshots = _wtoi(f[18].c_str());
         if (f.size() > 19) e.customer = f[19];
         if (f.size() > 20) e.signature = f[20];
+        if (f.size() > 21) e.noUi = f[21] == L"none";
         if (!PSLinkIsValidId(e.id) || !IsVersion(e.version) || !IsSha256(e.sha256) ||
             !PSIsValidZxtName(e.zxtName) || !IsHttpUrl(e.downloadUrl) || (!e.iconUrl.empty() && !IsHttpUrl(e.iconUrl)))
         {

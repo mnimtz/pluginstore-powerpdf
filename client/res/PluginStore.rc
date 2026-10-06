@@ -219,6 +219,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Report a problem with the Add-on Store"
     IDS_PSW_NEWS_TITLE  "What's new"
     IDS_PSW_NEWS_OK  "Got it"
+    IDS_PSW_NO_UI  "No ribbon buttons: this add-on works inside Power PDF features; the description says where."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -344,6 +345,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Problem mit dem Add-on Store melden"
     IDS_PSW_NEWS_TITLE  "Was ist neu"
     IDS_PSW_NEWS_OK  "Verstanden"
+    IDS_PSW_NO_UI  "Ohne eigene Schaltfläche: Dieses Add-on arbeitet in Funktionen von Power PDF; wo genau, steht in der Beschreibung."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -469,6 +471,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Signaler un problème avec l'Add-on Store"
     IDS_PSW_NEWS_TITLE  "Nouveautés"
     IDS_PSW_NEWS_OK  "Compris"
+    IDS_PSW_NO_UI  "Sans bouton propre : ce module agit dans des fonctions de Power PDF ; la description indique où."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -594,6 +597,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Segnala un problema con Add-on Store"
     IDS_PSW_NEWS_TITLE  "Novità"
     IDS_PSW_NEWS_OK  "Ho capito"
+    IDS_PSW_NO_UI  "Senza pulsanti propri: questo componente aggiuntivo agisce nelle funzioni di Power PDF; la descrizione indica dove."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -719,6 +723,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Notificar un problema con la Add-on Store"
     IDS_PSW_NEWS_TITLE  "Novedades"
     IDS_PSW_NEWS_OK  "Entendido"
+    IDS_PSW_NO_UI  "Sin botones propios: este complemento actúa dentro de funciones de Power PDF; la descripción indica dónde."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -844,6 +849,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Een probleem met de Add-on Store melden"
     IDS_PSW_NEWS_TITLE  "Wat is er nieuw"
     IDS_PSW_NEWS_OK  "Begrepen"
+    IDS_PSW_NO_UI  "Zonder eigen knoppen: deze invoegtoepassing werkt binnen functies van Power PDF; de beschrijving vermeldt waar."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -969,6 +975,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Comunicar um problema com a Add-on Store"
     IDS_PSW_NEWS_TITLE  "Novidades"
     IDS_PSW_NEWS_OK  "Entendido"
+    IDS_PSW_NO_UI  "Sem botões próprios: este suplemento atua em funções do Power PDF; a descrição indica onde."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1094,6 +1101,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Rapportér et problem med Add-on Store"
     IDS_PSW_NEWS_TITLE  "Nyheder"
     IDS_PSW_NEWS_OK  "Forstået"
+    IDS_PSW_NO_UI  "Uden egne knapper: dette tilføjelsesprogram virker i funktioner i Power PDF; beskrivelsen siger hvor."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1219,6 +1227,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Ilmoita Add-on Storen ongelmasta"
     IDS_PSW_NEWS_TITLE  "Uutta"
     IDS_PSW_NEWS_OK  "Selvä"
+    IDS_PSW_NO_UI  "Ei omia painikkeita: tämä lisäosa toimii Power PDF:n toiminnoissa; kuvaus kertoo missä."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1344,6 +1353,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Rapporter et problem med Add-on Store"
     IDS_PSW_NEWS_TITLE  "Nyheter"
     IDS_PSW_NEWS_OK  "Skjønner"
+    IDS_PSW_NO_UI  "Uten egne knapper: dette tillegget virker i funksjoner i Power PDF; beskrivelsen sier hvor."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1469,6 +1479,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Rapportera ett problem med Add-on Store"
     IDS_PSW_NEWS_TITLE  "Nyheter"
     IDS_PSW_NEWS_OK  "Uppfattat"
+    IDS_PSW_NO_UI  "Utan egna knappar: det här tillägget verkar i funktioner i Power PDF; beskrivningen anger var."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1594,6 +1605,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Zgłoś problem z Add-on Store"
     IDS_PSW_NEWS_TITLE  "Co nowego"
     IDS_PSW_NEWS_OK  "Rozumiem"
+    IDS_PSW_NO_UI  "Bez własnych przycisków: ten dodatek działa w funkcjach Power PDF; opis wskazuje, gdzie."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1719,6 +1731,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Nahlásit problém s obchodem Add-on Store"
     IDS_PSW_NEWS_TITLE  "Co je nového"
     IDS_PSW_NEWS_OK  "Rozumím"
+    IDS_PSW_NO_UI  "Bez vlastních tlačítek: tento doplněk pracuje ve funkcích Power PDF; popis uvádí kde."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1844,6 +1857,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Probléma bejelentése az Add-on Store-ral kapcsolatban"
     IDS_PSW_NEWS_TITLE  "Újdonságok"
     IDS_PSW_NEWS_OK  "Értem"
+    IDS_PSW_NO_UI  "Saját gombok nélkül: ez a bővítmény a Power PDF funkcióiban működik; a leírás megmondja, hol."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1969,6 +1983,7 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Сообщить о проблеме с Add-on Store"
     IDS_PSW_NEWS_TITLE  "Что нового"
     IDS_PSW_NEWS_OK  "Понятно"
+    IDS_PSW_NO_UI  "Без собственных кнопок: эта надстройка работает в функциях Power PDF; где именно, указано в описании."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2094,4 +2109,5 @@ BEGIN
     IDS_PSW_REPORT_STORE  "Add-on Store ile ilgili sorun bildir"
     IDS_PSW_NEWS_TITLE  "Yenilikler"
     IDS_PSW_NEWS_OK  "Anladım"
+    IDS_PSW_NO_UI  "Kendi düğmesi yok: bu eklenti Power PDF işlevlerinin içinde çalışır; nerede olduğu açıklamada yazar."
 END

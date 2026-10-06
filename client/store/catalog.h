@@ -35,6 +35,7 @@ struct PSCatalogEntry
     int screenshots = 0;         // number of screenshots (TSV column 19)
     std::wstring customer;       // customer name when delivered by a customer code (TSV column 20)
     std::wstring signature;      // "keyId:base64(r||s)" of the server (TSV column 21, see signature.h)
+    bool noUi = false;           // "ui": "none": no ribbon buttons (TSV column 22, server 1.1.1+)
     std::wstring installedVersion; // filled by the install module, empty = not installed
 };
 

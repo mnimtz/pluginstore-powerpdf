@@ -138,6 +138,7 @@
 #define IDS_PSW_REPORT_STORE    333
 #define IDS_PSW_NEWS_TITLE      334
 #define IDS_PSW_NEWS_OK         335
+#define IDS_PSW_NO_UI           336
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261
