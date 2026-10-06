@@ -90,6 +90,11 @@ The template provisions a Linux App Service running the GHCR container plus a
 storage account with a file share mounted at `/data` (SQLite database, plugin
 packages, developer kit). No connection strings, no secrets to manage.
 
+**Deployment fails with "SubscriptionIsOverQuotaForSku"** (B1 VMs: limit 0):
+the Azure subscription has no App Service quota in that region yet. Request a
+quota of 1, pick another region or size, or use a company subscription; step by
+step in [docs/azure-quota.md](docs/azure-quota.md).
+
 **First run:** open the site, the setup wizard creates the first administrator
 account. Colleagues use *Request access* on the login page; admins approve on
 the Users page.
