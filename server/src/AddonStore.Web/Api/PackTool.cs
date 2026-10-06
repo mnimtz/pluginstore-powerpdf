@@ -103,6 +103,7 @@ if ($m.ui -eq 'none') {
     # add-on without ribbon buttons: no layout at all (UI_NONE_HAS_LAYOUT)
     if (Test-Path -LiteralPath $layout) { Fail 'manifest "ui": "none" but a UILayout folder exists; remove it or set "ui": "ribbon" (UI_NONE_HAS_LAYOUT)' }
 } else {
+    if (-not (Test-Path -LiteralPath $layout)) { Fail 'UILayout folder is missing (UILAYOUT_MISSING). If the add-on intentionally has no ribbon buttons, set "ui": "none" in manifest.json.' }
     if (-not (Test-Path -LiteralPath (Join-Path $layout 'Publish Mode.xml'))) { Warn 'UILayout\Publish Mode.xml is missing' }
     if (-not (Test-Path -LiteralPath (Join-Path $layout 'NameAndTitle.xml'))) { Fail 'UILayout\NameAndTitle.xml is missing (required next to the 16 language folders; LANGS_INCOMPLETE). Add-ons without ribbon buttons set "ui": "none" in manifest.json.' }
     $noLang = @('ENU', 'DEU', 'FRA', 'ITA', 'ESP', 'NLD', 'PTB', 'DAN', 'FIN', 'NOR', 'SVE', 'PLK', 'CSY', 'HUN', 'RUS', 'TRK' |

@@ -361,7 +361,9 @@ before customers in these markets use the store.
 **Add-ons without ribbon buttons (S1.1.1):** an add-on that only works inside
 a Power PDF feature (for example an engine for an assistant) declares
 `"ui": "none"` in manifest.json. It ships no `UILayout/` and no
-`ribbonAtomNamespace` (a layout is refused with `UI_NONE_HAS_LAYOUT`), the
+`ribbonAtomNamespace` (a layout is refused with `UI_NONE_HAS_LAYOUT`; since
+S1.2.1 a package without UILayout and without this declaration is refused
+with `UILAYOUT_MISSING`, so the declaration is the creator's confirmation), the
 ribbon rules do not apply, every other check does (binaries, licenses, source,
 compliance, network/injection/download checks, languages of visible texts).
 The description must say where the function appears and how to switch it off

@@ -6,6 +6,10 @@ Server and client have separate version numbers with a visible prefix:
 `S<version>` for the server (`VERSION`), `C<version>` for the client
 (`client/common/version.h`).
 
+- Push server and client releases separately (one push per version): GitHub
+  Actions starts one run per push and names it after the newest commit, so a
+  joint push hides the server version behind the client title. A commit that
+  ships both is titled `S<x> + C<y>: ...`.
 - A release commit's title starts with the version(s) it ships, e.g.
   `S0.5.0: …`, `C0.3.4: …` or `S0.5.0 + C0.3.4: …`. The Actions run list shows
   the commit title, so every build is identifiable.

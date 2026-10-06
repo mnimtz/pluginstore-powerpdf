@@ -1402,8 +1402,11 @@ public class PackageValidator
             .ToList();
         if (layoutEntries.Count == 0)
         {
-            report.Warn("UILAYOUT_MISSING", "The package has no UILayout folder.",
-                "Ship UILayout/Publish Mode.xml and NameAndTitle.xml (root and the 16 language folders) so the ribbon group appears in every language.");
+            // A missing layout is almost always a packaging mistake (S1.2.1): an add-on without
+            // ribbon buttons confirms it explicitly with "ui": "none".
+            report.Error("UILAYOUT_MISSING", "The package has no UILayout folder.",
+                "Ship UILayout/Publish Mode.xml and NameAndTitle.xml (root and the 16 language folders) so the ribbon group appears in every language. " +
+                "If the add-on intentionally has no ribbon buttons, confirm it with \"ui\": \"none\" in manifest.json.");
             return;
         }
 

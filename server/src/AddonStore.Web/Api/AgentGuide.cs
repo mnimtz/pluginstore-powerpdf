@@ -264,7 +264,9 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
 - [ ] Add-ons WITHOUT ribbon buttons (an engine or service for a Power PDF
       feature): `"ui": "none"` in manifest.json, no UILayout folder, no
       ribbonAtomNamespace; the other C items then do not apply, everything
-      else does. (UI_INVALID, UI_NONE_HAS_LAYOUT)
+      else does. A package without UILayout and without this declaration
+      is refused: the declaration is the creator's confirmation that the
+      layout is missing on purpose. (UI_INVALID, UI_NONE_HAS_LAYOUT, UILAYOUT_MISSING)
 - [ ] Public plugins: ONE group on the shared tab, toolbar atom `FeaturePack`,
       `ribbonAtomNamespace` = `FeaturePack::<Name>`, buttons
       `FeaturePack::<Name>::<Action>` with `IconMode="4"`. In code:
@@ -1037,7 +1039,7 @@ be free of warnings before review. Info is for information only.
 | VERSIONINFO_MISSING | warning | The .zxt has no VERSIONINFO resource. |
 | VERSIONINFO_MISMATCH | warning | The FILEVERSION of the .zxt differs from the manifest version (usually an old build was packaged). |
 | UI_LANGS_UNREADABLE | warning | The resources of the .zxt could not be read to check the languages. |
-| UILAYOUT_MISSING | warning | The package has no UILayout folder (add-ons without buttons declare `"ui": "none"`). |
+| UILAYOUT_MISSING | error | The package has no UILayout folder. If that is intended (no ribbon buttons), the creator confirms it with `"ui": "none"`. |
 | UI_INVALID | error | Manifest field `ui` is neither `ribbon` nor `none`. |
 | UI_NONE_HAS_LAYOUT | error | `"ui": "none"`, but the package ships a UILayout folder. |
 | UI_NONE_ATOM | warning | `"ui": "none"` with a ribbonAtomNamespace; the namespace is ignored. |
