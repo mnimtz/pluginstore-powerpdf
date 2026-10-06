@@ -172,6 +172,34 @@ static std::wstring SystemPath(const wchar_t* rel)
 
 static std::wstring PowerShellExe() { return SystemPath(L"WindowsPowerShell\\v1.0\\powershell.exe"); }
 
+// PowerShell helpers for an add-on's own DLLs in Plug-Ins\<Name>\bin\ (C1.4.0). A DLL that
+// Power PDF has loaded cannot be deleted, but it can be moved: Clear-Bin moves such files
+// aside as Plug-Ins\.psold-<guid>-<file>, which the next store operation sweeps. Install-Bin
+// copies only *.dll directly from the package's bin\ (the server allows nothing else).
+// The lines between the markers are also run by the client test (scratchpad c140_bin_test).
+static std::wstring BinFunctions()
+{
+    return std::wstring() +
+        // BIN-PS-BEGIN
+        L"function Clear-Bin($dir) {\r\n" +
+        L"  if (-not (Test-Path -LiteralPath $dir)) { return }\r\n" +
+        L"  foreach ($f in @(Get-ChildItem -LiteralPath $dir -Force -Recurse -File)) {\r\n" +
+        L"    try { Remove-Item -LiteralPath $f.FullName -Force }\r\n" +
+        L"    catch { Move-Item -LiteralPath $f.FullName -Destination (Join-Path $plugins ('.psold-'+[guid]::NewGuid().ToString('N')+'-'+$f.Name)) -Force }\r\n" +
+        L"  }\r\n" +
+        L"  Remove-Item -LiteralPath $dir -Recurse -Force\r\n" +
+        L"}\r\n" +
+        L"function Install-Bin($from, $to) {\r\n" +
+        L"  Clear-Bin $to\r\n" +
+        L"  $dlls = @(Get-ChildItem -LiteralPath $from -Filter '*.dll' -File -ErrorAction SilentlyContinue)\r\n" +
+        L"  if ($dlls.Count -eq 0) { return }\r\n" +
+        L"  New-Item -ItemType Directory -Force -Path $to | Out-Null\r\n" +
+        L"  foreach ($f in $dlls) { Copy-Item -LiteralPath $f.FullName -Destination (Join-Path $to $f.Name) -Force }\r\n" +
+        L"}\r\n" +
+        L"Get-ChildItem -LiteralPath $plugins -Filter '.psold-*' -File -Force -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue\r\n";
+        // BIN-PS-END
+}
+
 // Script lines that create $stage with its own protected ACL (C1.3.1): SYSTEM and
 // Administrators only, nothing inherited from a Plug-Ins folder whose rights an
 // installer may have widened. Created in one call, so there is no moment with
@@ -288,6 +316,7 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
         L"$name=" + PsQuote(e.zxtName) + L"\r\n" +
         L"$sha=" + PsQuote(sha) + L"\r\n" +
         L"$rc=0\r\n" +
+        BinFunctions() +
         L"$stage=Join-Path $plugins ('.psstage-'+[guid]::NewGuid().ToString('N'))\r\n" +
         L"try {\r\n" +
         L"  Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
@@ -313,6 +342,8 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
         L"        $s=Join-Path $tmp $extra; $d=Join-Path $data $extra\r\n" +
         L"        if (Test-Path -LiteralPath $s) { if (Test-Path -LiteralPath $d) { Remove-Item -LiteralPath $d -Recurse -Force }; Copy-Item -LiteralPath $s -Destination $d -Recurse -Force }\r\n" +
         L"      }\r\n" +
+        // the add-on's own DLLs (C1.4.0): replaced as a whole, loaded ones moved aside
+        L"      Install-Bin (Join-Path $tmp 'bin') (Join-Path $data 'bin')\r\n" +
         L"    }\r\n" +
         L"  }\r\n" +
         L"} catch { $rc=4 }\r\n" +
@@ -562,10 +593,12 @@ int PSUninstallPackage(const std::wstring& zxtName, HWND owner)
         L"$ErrorActionPreference='Stop'\r\n" +
         L"$plugins=" + PsQuote(pluginsDir) + L"\r\n" +
         L"$name=" + PsQuote(zxtName) + L"\r\n" +
+        BinFunctions() +
         L"Get-ChildItem -LiteralPath $plugins -Filter '*.zxt.old-*' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue\r\n" +
         L"$zxt=Join-Path $plugins ($name + '.zxt')\r\n" +
         L"if (Test-Path -LiteralPath $zxt) { try { Remove-Item -LiteralPath $zxt -Force } catch { Rename-Item -LiteralPath $zxt ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
         L"$data=Join-Path $plugins $name\r\n" +
+        L"Clear-Bin (Join-Path $data 'bin')\r\n" +
         L"if (Test-Path -LiteralPath $data) { Remove-Item -LiteralPath $data -Recurse -Force }\r\n" +
         L"exit 0\r\n";
 
