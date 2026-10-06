@@ -1047,4 +1047,10 @@
   <data name="not uploaded" xml:space="preserve"><value>yüklenmedi</value></data>
   <data name="only for live and beta versions" xml:space="preserve"><value>yalnızca canlı ve beta sürümler için</value></data>
   <data name="passed" xml:space="preserve"><value>başarılı</value></data>
+  <data name="Another account already uses this name." xml:space="preserve"><value>Bu ad zaten başka bir hesap tarafından kullanılıyor.</value></data>
+  <data name="The name may have at most 100 characters." xml:space="preserve"><value>Ad en fazla 100 karakter olabilir.</value></data>
+  <data name="Password changed. Other sessions were signed out and your API tokens revoked; create new ones if needed." xml:space="preserve"><value>Parola değiştirildi. Diğer oturumlar kapatıldı ve API belirteçleriniz iptal edildi; gerekirse yenilerini oluşturun.</value></data>
+  <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Son bir saat içinde bu hesaptan çok fazla karşıya yükleme yapıldı.</value></data>
+  <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Sıfırlama bağlantıları göndermek için mağazanın genel adresini ayarlayın (Ayarlar, Sunucu).</value></data>
+  <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>Sıfırlama e-postası gönderilemedi. Yönetici hesaplarında bağlantı gösterilmez; e-posta ayarlarını denetleyin.</value></data>
 </root>

@@ -68,7 +68,7 @@ public class UsageService
         {
             var c = Classify(ctx);
             var geo = _geo.Lookup(ctx);
-            var day = DateTime.UtcNow.ToString("yyyy-MM-dd");
+            var day = DateTime.UtcNow.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             string k = Clean(kind), p = Clean(packageId), v = Clean(version), l = Clean(lang).ToUpperInvariant();
             await _db.Database.ExecuteSqlInterpolatedAsync($@"
                 INSERT INTO UsageStats (Day, Kind, PackageId, Version, Source, Lang, ClientVersion,

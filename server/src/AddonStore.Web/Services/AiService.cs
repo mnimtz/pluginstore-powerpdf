@@ -185,7 +185,7 @@ public class AiService
     {
         lock (_gate)
         {
-            var day = DateTime.UtcNow.ToString("yyyyMMdd");
+            var day = DateTime.UtcNow.ToString("yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
             if (day != _day) { _day = day; _callsToday = 0; _searchCallsToday = 0; }
             if (_callsToday >= limit) return false;
             if (anonymous && _searchCallsToday >= Math.Max(1, limit / 3)) return false;

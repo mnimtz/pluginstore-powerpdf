@@ -26,8 +26,15 @@ public class PasswordResetService
     /// <summary>Creates the link and mails it to the user. Returns the link (for the admin) and whether the mail went out.</summary>
     public async Task<(string Link, bool Sent)> SendAsync(AppUser user, string actor)
     {
+        var baseUrl = await _notify.SecureBaseUrlAsync();
+        if (baseUrl is null)
+        {
+            // no public base URL and an unknown host: no reset link at all (audit S1.3.1)
+            await _audit.LogAsync(actor, "user.password-reset-refused", user.Email ?? user.Id, "no public base URL set (Settings, Server)");
+            return ("", false);
+        }
         var token = await _users.GeneratePasswordResetTokenAsync(user);
-        var link = $"{await _notify.BaseUrlAsync()}/Account/Reset?uid={Uri.EscapeDataString(user.Id)}&token={Uri.EscapeDataString(token)}";
+        var link = $"{baseUrl}/Account/Reset?uid={Uri.EscapeDataString(user.Id)}&token={Uri.EscapeDataString(token)}";
         var byAdmin = actor != user.DisplayName;
         var intro = byAdmin
             ? $"<p><b>{System.Net.WebUtility.HtmlEncode(actor)}</b> started a password reset for your Add-on Store account.</p>"

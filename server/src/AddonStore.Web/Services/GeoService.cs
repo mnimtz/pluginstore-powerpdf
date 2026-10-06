@@ -58,6 +58,10 @@ public sealed class GeoService : BackgroundService
         }
     }
 
+    /// <summary>ASPNETCORE_FORWARDEDHEADERS_ENABLED: the framework moves the forwarded address into RemoteIpAddress (audit S1.3.1).</summary>
+    private static readonly bool ForwardedByMiddleware =
+        string.Equals(Environment.GetEnvironmentVariable("ASPNETCORE_FORWARDEDHEADERS_ENABLED"), "true", StringComparison.OrdinalIgnoreCase);
+
     /// <summary>The caller's IP: X-Client-IP / last X-Forwarded-For entry set by the App Service front end, else the socket.</summary>
     public static IPAddress? ClientIp(HttpContext ctx)
     {
@@ -74,6 +78,11 @@ public sealed class GeoService : BackgroundService
         // front end APPENDS the address it saw to X-Forwarded-For, so only the
         // rightmost entry is trustworthy (values a client sent stand before it).
         IPAddress? ip = null;
+        if (ForwardedByMiddleware || ctx.Request.Headers.ContainsKey("X-Original-For"))
+        {
+            var remote = ctx.Connection.RemoteIpAddress;
+            return remote is { IsIPv4MappedToIPv6: true } ? remote.MapToIPv4() : remote;
+        }
         // Setting Network:TrustForwardedFor (default true for App Service); set it to false when
         // the container is reachable directly, because then a client can send the header itself.
         var trust = ctx.RequestServices.GetService<IConfiguration>()?["Network:TrustForwardedFor"] is not ("false" or "False" or "0");

@@ -76,7 +76,8 @@ Send it on every authenticated call:
 The token acts on behalf of its user and can only manage that user's own
 packages. 401 responses carry a code: TOKEN_INVALID (wrong or unknown value),
 TOKEN_REVOKED (recreate one in the profile), USER_NOT_ACTIVE (account not
-approved yet).
+approved yet). Changing or resetting the password of an account revokes all
+of its API tokens; create new ones on the profile page afterwards.
 
 ## Package format (.ppak)
 
@@ -253,7 +254,9 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       "Compliance audit". (COMPLIANCE_AUDIT_MISSING, EXTERNAL_SERVICES_MISSING)
 - [ ] `visibility`: `public` or `private` (or left out). (VISIBILITY_INVALID)
 - [ ] `author` at most 100 characters, `contactEmail` a valid address.
-      (AUTHOR_INVALID, CONTACT_INVALID)
+      (AUTHOR_INVALID, CONTACT_INVALID) Catalog edits (PATCH) carry no
+      text-direction overrides and no line breaks in name, author or contact.
+      (TEXT_CONTROL_CHARS)
 - [ ] `screenshots` (optional): an array of at most 6 `{ "file": "assets/..." }`,
       PNG or JPEG, each at most 3 MB and in the package; a caption in all 16
       languages or none. (SCREENSHOTS_INVALID, SCREENSHOTS_TOO_MANY,
@@ -724,7 +727,10 @@ release), `done`, `declined`. `assignedTo` is the display name of the owner
 or an admin (`""` clears it); `GET /api/feedback/{id}` lists the possible
 names under `assignees`. A note with `"reply": true` is mailed to the
 reporter (only when the report has a reply address, `canReply`) and moves an
-open report to `waiting`.
+open report to `waiting`. The mail names you as its author and says the store
+only forwards it; at most 50 replies per account and day (`RATE_LIMITED`).
+A PATCH with an invalid status or assignee changes nothing (400
+`FEEDBACK_STATUS_INVALID` or `ASSIGNEE_INVALID`).
 
 Recommended workflow for an AI assistant:
 
@@ -868,7 +874,8 @@ security blocks, problem reports and the audit trail of the version and the
 add-on. Two versions with the same rules hash were checked against the same
 rules. Every JSON export is recorded in the audit log (`dossier.export`).
 Versions checked before S1.3.0 have no rules snapshot; their findings are
-still the complete check result of that time.
+still the complete check result of that time. The AI review aid appears only
+for reviewers and admins; owners see every other part.
 
 ## Security blocks
 
@@ -907,6 +914,10 @@ submitter: the server signs what it accepted.
   approves it, or `rejected` with a reason. Exception: the store client itself
   (`com.tungsten.pluginstore`) may only be uploaded by admins and goes live
   immediately.
+- Nobody reviews their own work: a reviewer cannot approve a version of an
+  add-on they own or submitted; an admin can only while the four-eyes rule is
+  off. Demoting a live version to beta clears its approval record (the audit
+  log keeps it).
 
 ## Changing the catalog entry (no new version)
 
@@ -932,6 +943,10 @@ change them.
   `description` needs all 16 languages (max. 2000 characters each), exactly
   like the manifest rule.
 - `contactEmail` must be a valid address; `author` max. 100 characters.
+- Tabs and other control characters are removed; text-direction overrides
+  (U+202A to U+202E, U+2066 to U+2069) and line breaks in name, author or
+  contact are refused with `TEXT_CONTROL_CHARS` (the description may keep
+  line breaks).
 - `category` sets the catalog category to an existing slug (see Categories);
   `null` returns to the manifest's category.
 - The response carries `findings` like a validation report; third-party brand
@@ -985,6 +1000,12 @@ and installs it with ONE administrator prompt:
 | Everything inflated together | 400 MB |
 
 Larger payloads must be downloaded by the plugin at install or first run.
+
+Uploads (validate, submit, source code, the web upload form): at most 60 per
+account and hour, then 429 `RATE_LIMITED`. A ZIP whose directory declares
+more entries than allowed is refused before it is opened
+(`ZIP_TOO_MANY_ENTRIES`, `SOURCE_INVALID`). Every other request body is
+limited to 2 MB (problem reports with attachments: 15 MB).
 
 ## Complete rule reference
 
@@ -1169,6 +1190,7 @@ be free of warnings before review. Info is for information only.
 | NAME_INVALID | error | Catalog name has no `en` entry, an unknown language code or is too long. |
 | DESCRIPTION_TOO_LONG | error | A catalog description is longer than 2000 characters. |
 | AUTHOR_INVALID | error | The author is longer than 100 characters (manifest or PATCH). |
+| TEXT_CONTROL_CHARS | error | Name, author, contact or description contain text-direction overrides or line breaks where none are allowed (PATCH). |
 | CONTACT_INVALID | error | The contact email is not a valid address (manifest or PATCH). |
 | CLIENT_ADMIN_ONLY | error (403) | Only admins may publish the store client. |
 | VALIDATION_FAILED | error (422) | Summary code of a rejected upload; see `findings`. |

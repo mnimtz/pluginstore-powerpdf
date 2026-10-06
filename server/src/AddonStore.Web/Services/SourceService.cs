@@ -16,10 +16,11 @@ public class SourceService
     /// <summary>Ways to switch off HTTPS certificate validation in C, C++ and C# (S1.0.11).</summary>
     internal static readonly (string Label, System.Text.RegularExpressions.Regex Rx)[] TlsBypassPatterns =
     {
-        ("WinHTTP/WinINet ignore flags", new(@"\b(SECURITY_FLAG_IGNORE_(UNKNOWN_CA|CERT_CN_INVALID|CERT_DATE_INVALID|CERT_WRONG_USAGE|ALL_CERT_ERRORS)|INTERNET_FLAG_IGNORE_CERT_(CN|DATE)_INVALID)\b")),
-        ("curl verification off", new(@"CURLOPT_SSL_VERIFY(PEER|HOST)\s*,\s*0")),
-        ("OpenSSL verification off", new(@"SSL_(CTX_)?set_verify\s*\([^;]*SSL_VERIFY_NONE")),
-        (".NET accept-all certificate callback", new(@"ServerCertificate(Validation|CustomValidation)Callback\s*=\s*[^;]*=>\s*true")),
+        // NonBacktracking: linear time on crafted sources (audit S1.3.1)
+        ("WinHTTP/WinINet ignore flags", new(@"\b(SECURITY_FLAG_IGNORE_(UNKNOWN_CA|CERT_CN_INVALID|CERT_DATE_INVALID|CERT_WRONG_USAGE|ALL_CERT_ERRORS)|INTERNET_FLAG_IGNORE_CERT_(CN|DATE)_INVALID)\b", System.Text.RegularExpressions.RegexOptions.NonBacktracking)),
+        ("curl verification off", new(@"CURLOPT_SSL_VERIFY(PEER|HOST)\s*,\s*0", System.Text.RegularExpressions.RegexOptions.NonBacktracking)),
+        ("OpenSSL verification off", new(@"SSL_(CTX_)?set_verify\s*\([^;]{0,400}SSL_VERIFY_NONE", System.Text.RegularExpressions.RegexOptions.NonBacktracking)),
+        (".NET accept-all certificate callback", new(@"ServerCertificate(Validation|CustomValidation)Callback\s*=\s*[^;]{0,400}=>\s*true", System.Text.RegularExpressions.RegexOptions.NonBacktracking)),
     };
 
     public const long MaxZipBytes = 100L * 1024 * 1024;
@@ -108,6 +109,11 @@ public class SourceService
             return report;
         }
 
+        if (UploadLimits.DeclaredEntries(zipPath) > MaxEntries)   // before the entries are loaded (audit S1.3.1)
+        {
+            report.Error("SOURCE_INVALID", $"The source ZIP has more than {MaxEntries} files.", "Leave out build output and dependencies that can be restored.");
+            return report;
+        }
         ZipArchive zip;
         try { zip = ZipFile.OpenRead(zipPath); }
         catch (Exception)

@@ -25,7 +25,7 @@ public class DossierModel : PageModel
         var owner = await _db.Packages.AsNoTracking().Where(p => p.Id == id).Select(p => p.OwnerId).FirstOrDefaultAsync();
         if (owner is null) return NotFound();
         if (owner != user.Id && !User.IsInRole("Admin") && !VersionActionService.CanReview(User)) return NotFound();
-        D = await _dossiers.BuildAsync(id, version, user);
+        D = await _dossiers.BuildAsync(id, version, user, User.IsInRole("Admin") || VersionActionService.CanReview(User));
         return D is null ? NotFound() : Page();
     }
 }

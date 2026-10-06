@@ -55,6 +55,13 @@ public class UsersModel : PageModel
         {
             var (link, sent) = await _reset.SendAsync(user, admin!.DisplayName);
             if (sent) Notice = "Password reset link sent by email.";
+            else if (link.Length == 0) { Notice = "Set the public address of the store (Settings, Server) to send reset links."; NoticeKind = "error"; }
+            else if (await _users.IsInRoleAsync(user, "Admin") && user.Id != admin.Id)
+            {
+                // the link would let one admin take over another admin's account (audit S1.3.1)
+                Notice = "The reset mail could not be sent. For admin accounts the link is not shown; check the email settings.";
+                NoticeKind = "error";
+            }
             else ResetLink = link;
         }
         await LoadAsync();
@@ -134,6 +141,12 @@ public class UsersModel : PageModel
         var admin = await _users.GetUserAsync(User);
         if (!Roles.Contains(role)) role = SchemaUpgrade.DefaultRole;
 
+        if (await Services.DisplayNames.TakenAsync(_db.Users, name ?? ""))
+        {
+            Notice = "Another account already uses this name."; NoticeKind = "error";
+            await LoadAsync();
+            return;
+        }
         var user = new AppUser { UserName = email, Email = email, DisplayName = name, Status = UserStatus.Active };
         var result = await _users.CreateAsync(user, password);
         if (!result.Succeeded)

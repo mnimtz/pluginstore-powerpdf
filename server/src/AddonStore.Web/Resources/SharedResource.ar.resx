@@ -1047,4 +1047,10 @@
   <data name="not uploaded" xml:space="preserve"><value>لم يتم التحميل</value></data>
   <data name="only for live and beta versions" xml:space="preserve"><value>لإصدارات الإنتاج والإصدارات التجريبية فقط</value></data>
   <data name="passed" xml:space="preserve"><value>ناجح</value></data>
+  <data name="Another account already uses this name." xml:space="preserve"><value>هناك حساب آخر يستخدم هذا الاسم بالفعل.</value></data>
+  <data name="The name may have at most 100 characters." xml:space="preserve"><value>يمكن أن يحتوي الاسم على 100 حرف كحد أقصى.</value></data>
+  <data name="Password changed. Other sessions were signed out and your API tokens revoked; create new ones if needed." xml:space="preserve"><value>تم تغيير كلمة المرور. تم تسجيل الخروج من الجلسات الأخرى وإبطال الرموز المميزة لواجهة API الخاصة بك؛ أنشئ رموزاً جديدة عند الحاجة.</value></data>
+  <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>عدد كبير جداً من عمليات التحميل من هذا الحساب خلال الساعة الماضية.</value></data>
+  <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>قم بتعيين العنوان العام للمتجر (الإعدادات، الخادم) لإرسال ارتباطات إعادة التعيين.</value></data>
+  <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>تعذّر إرسال بريد إعادة التعيين. لا يتم عرض الارتباط لحسابات المسؤولين؛ تحقق من إعدادات البريد الإلكتروني.</value></data>
 </root>

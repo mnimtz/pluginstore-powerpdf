@@ -87,6 +87,15 @@ public class PackageMetaService
             issues.Add(new("CONTACT_INVALID", "error", $"'{c.ContactEmail}' is not a valid email address.",
                 "Use a reachable address such as team@example.com, or reset the field to fall back to the publishing account."));
 
+        // control characters break the catalog TSV and the client's list (audit S1.3.1); the description may keep line breaks
+        static bool Bad(string? s, bool lines) => s is not null && s.Any(ch =>
+            (char.IsControl(ch) && !(lines && ch is '\n' or '\r')) || ch is '\u202A' or '\u202B' or '\u202C' or '\u202D' or '\u202E' or '\u2066' or '\u2067' or '\u2068' or '\u2069');
+        if ((c.SetName && c.Name is not null && c.Name.Values.Any(t => Bad(t, false))) ||
+            (c.SetDescription && c.Description is not null && c.Description.Values.Any(t => Bad(t, true))) ||
+            (c.SetAuthor && Bad(c.Author, false)) || (c.SetContact && Bad(c.ContactEmail, false)))
+            issues.Add(new("TEXT_CONTROL_CHARS", "error", "Name, author, contact or description contain control or text-direction characters.",
+                "Remove tabs, control characters and bidi overrides; the description may contain line breaks."));
+
         var texts = new List<string>();
         if (c.SetName && c.Name is not null) texts.AddRange(c.Name.Values);
         if (c.SetDescription && c.Description is not null) texts.AddRange(c.Description.Values);

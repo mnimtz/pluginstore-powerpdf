@@ -45,6 +45,12 @@ public class DashboardModel : PageModel
 
     public async Task OnPostAsync(IFormFile? package)
     {
+        if (UploadLimits.TooMany(HttpContext))   // same limit as the API (audit S1.3.1)
+        {
+            Notice = "Too many uploads from this account in the last hour."; NoticeKind = "error";
+            await LoadAsync();
+            return;
+        }
         var user = await _users.GetUserAsync(User);
         if (user is null || package is null || package.Length == 0)
         {

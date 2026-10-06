@@ -130,6 +130,27 @@ public class NotificationService
         return s_lastRequestBase;
     }
 
+    /// <summary>
+    /// Base URL for links that carry a secret (password reset): the configured public base URL,
+    /// else the request's address only on a host we trust (loopback, the App Service host name,
+    /// or App:TrustedHosts). Null otherwise: a forged Host header must never receive a reset token
+    /// (audit S1.3.1).
+    /// </summary>
+    public async Task<string?> SecureBaseUrlAsync()
+    {
+        var configured = (await _settings.GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl")).TrimEnd('/');
+        if (configured.Length > 0) return configured;
+        var r = _http.HttpContext?.Request;
+        if (r is null || !r.Host.HasValue) return null;
+        var host = r.Host.Host;
+        var trusted = host is "localhost" or "127.0.0.1" or "[::1]" or "::1" ||
+                      string.Equals(host, Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME"), StringComparison.OrdinalIgnoreCase) ||
+                      (_http.HttpContext!.RequestServices.GetService<IConfiguration>()?["App:TrustedHosts"] ?? "")
+                          .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                          .Any(h => string.Equals(h, host, StringComparison.OrdinalIgnoreCase));
+        return trusted ? await BaseUrlAsync() : null;
+    }
+
     public async Task<bool> IsEnabledAsync(string eventKey) =>
         await _settings.GetAsync("Notify." + eventKey) != "0";
 

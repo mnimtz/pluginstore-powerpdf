@@ -11,6 +11,7 @@ public class ResetModel : PageModel
 {
     private readonly UserManager<AppUser> _users;
     private readonly AuditService _audit;
+    private readonly AppDbContext _db;
     private const string Invalid = "This link is invalid or has expired. Request a new one with \"Forgot password?\" on the sign-in page.";
 
     public string? Error { get; private set; }
@@ -19,9 +20,9 @@ public class ResetModel : PageModel
     public string Token { get; private set; } = "";
     public string Email { get; private set; } = "";
 
-    public ResetModel(UserManager<AppUser> users, AuditService audit)
+    public ResetModel(UserManager<AppUser> users, AuditService audit, AppDbContext db)
     {
-        _users = users; _audit = audit;
+        _users = users; _audit = audit; _db = db;
     }
 
     private async Task<AppUser?> FindAsync(string? uid, string? token)
@@ -65,7 +66,9 @@ public class ResetModel : PageModel
         // a forgotten password often ends in a lockout: the new password opens it again
         await _users.SetLockoutEndDateAsync(user, null);
         await _users.ResetAccessFailedCountAsync(user);
-        await _audit.LogAsync(user.DisplayName, "user.password-reset", user.Email ?? user.Id);
+        // someone who could reset the password may have created tokens: they end here too (audit S1.3.1)
+        var revoked = await TokenService.RevokeAllAsync(_db, user.Id);
+        await _audit.LogAsync(user.DisplayName, "user.password-reset", user.Email ?? user.Id, revoked > 0 ? $"{revoked} API tokens revoked" : "");
         return RedirectToPage("/Account/Login", new { reset = "1" });
     }
 }

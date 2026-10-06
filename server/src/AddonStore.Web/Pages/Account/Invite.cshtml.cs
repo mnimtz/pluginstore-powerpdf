@@ -52,6 +52,12 @@ public class InviteModel : PageModel
             Error = bad;
             return Page();
         }
+        if (await AddonStore.Web.Services.DisplayNames.TakenAsync(_db.Users, name))
+        {
+            Email = invite.Email; Role = invite.Role; Token = token;
+            Error = "Another account already uses this name.";
+            return Page();
+        }
 
         var user = new AppUser
         {

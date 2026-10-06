@@ -52,7 +52,7 @@ public class FeedbackService
     /// <summary>Simple sliding limit per key and day (in memory; enough against casual abuse).</summary>
     private bool Allow(string key, int perDay)
     {
-        var k = "fb:" + key + ":" + DateTime.UtcNow.ToString("yyyyMMdd");
+        var k = "fb:" + key + ":" + DateTime.UtcNow.ToString("yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
         var n = _cache.GetOrCreate(k, e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1); return new int[1]; })!;
         lock (n) { if (n[0] >= perDay) return false; n[0]++; return true; }
     }
@@ -96,12 +96,13 @@ public class FeedbackService
         email = string.IsNullOrWhiteSpace(email) ? null : email.Trim();
         if (email is not null && (email.Length > 200 || !System.Net.Mail.MailAddress.TryCreate(email, out _)))
             return new(false, "FEEDBACK_EMAIL_INVALID", "email is not a valid address.");
+        // limits first (audit S1.3.1): IP, then installation, then package; decoding comes after
+        var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
+        if (!Allow("fb-ip:" + ip, 20) || !Allow("fb-install:" + installId!.ToLowerInvariant(), 10) || !Allow("fb-pkg:" + packageId, 200))
+            return new(false, "RATE_LIMITED", "Too many reports today; please try again tomorrow.");
         var (files, fileError) = IssueService.ReadAttachments(attachments);
         if (fileError is not null) return new(false, fileError.Code, fileError.Message);
         if (!await IsPublishedAsync(packageId)) return new(false, "PACKAGE_NOT_FOUND", $"No released package with id '{packageId}'.");
-        var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
-        if (!Allow("fb-install:" + installId!.ToLowerInvariant(), 10) || !Allow("fb-ip:" + ip, 20) || !Allow("fb-pkg:" + packageId, 200))
-            return new(false, "RATE_LIMITED", "Too many reports today; please try again tomorrow.");
 
         var ua = ctx.Request.Headers.UserAgent.ToString();
         var fb = new Feedback

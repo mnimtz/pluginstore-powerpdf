@@ -15,11 +15,12 @@ public class VersionActionService
     private readonly NotificationService _notify;
     private readonly SourceService _sources;
     private readonly SettingsService _settings;
+    private readonly Microsoft.AspNetCore.Identity.UserManager<AppUser> _users;
 
     public VersionActionService(AppDbContext db, AuditService audit, NotificationService notify, SourceService sources,
-                                SettingsService settings)
+                                SettingsService settings, Microsoft.AspNetCore.Identity.UserManager<AppUser> users)
     {
-        _db = db; _audit = audit; _notify = notify; _sources = sources; _settings = settings;
+        _db = db; _audit = audit; _notify = notify; _sources = sources; _settings = settings; _users = users;
     }
 
     private static string Enc(string s) => System.Net.WebUtility.HtmlEncode(s);
@@ -140,8 +141,10 @@ public class VersionActionService
         if (approve && await _sources.BlocksApprovalAsync(v))
             return "The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it.";
         // Four-eyes rule (setting Review.FourEyes): nobody approves a version they uploaded or whose package they own.
-        if (approve && v.PackageId != SubmissionService.ClientPackageId && await FourEyesAsync() &&
-            (v.SubmittedById == actor.Id || v.Package?.OwnerId == actor.Id))
+        // Reviewers who are not admins never do, whatever the setting (audit S1.3.1).
+        var own = v.SubmittedById == actor.Id || v.Package?.OwnerId == actor.Id;
+        var actorIsAdmin = (await _users.GetRolesAsync(actor)).Contains("Admin");
+        if (approve && v.PackageId != SubmissionService.ClientPackageId && own && (!actorIsAdmin || await FourEyesAsync()))
             return "Four-eyes rule: another admin or reviewer has to approve a version you uploaded or own.";
         v.Status = approve ? VersionStatus.Live : VersionStatus.Rejected;
         v.ReviewedById = actor.Id;
@@ -205,6 +208,7 @@ public class VersionActionService
         v.Status = VersionStatus.Beta;
         v.ReviewedAt = null;
         v.ReviewedById = null;
+        v.ApprovalJson = null;   // the earlier decision stays in the audit log; the dossier shows "not reviewed" (audit S1.3.1)
         await _db.SaveChangesAsync();
         await _audit.LogAsync(actor.DisplayName, "version.demoted", $"{v.PackageId} {v.Version}", "live -> beta, needs approval again");
         await TellOwnerAsync(v.Package?.Owner, actor, v.PackageId, $"[Add-on Store] {v.PackageId} {v.Version} back to beta",

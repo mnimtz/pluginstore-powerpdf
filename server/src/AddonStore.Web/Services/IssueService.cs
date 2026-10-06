@@ -19,6 +19,7 @@ public class IssueService
     public const long MaxFileBytes = 5L * 1024 * 1024;
     public const long MaxTotalBytes = 10L * 1024 * 1024;
     public const int MaxNote = 4000;
+    public const int MaxRepliesPerDay = 50;
     public const int DefaultRetentionDays = 180;
     public const string RetentionKey = "Feedback.RetentionDays";
 
@@ -133,8 +134,9 @@ public class IssueService
         if (f.Status == status) return null;
         var old = f.Status;
         f.Status = status;
-        f.DoneAt = Closed.Contains(status) ? DateTime.UtcNow : null;
-        f.DoneBy = Closed.Contains(status) ? user.DisplayName : null;
+        var wasClosed = Closed.Contains(old);
+        f.DoneAt = !Closed.Contains(status) ? null : wasClosed ? f.DoneAt : DateTime.UtcNow;   // done <-> declined keeps the retention clock
+        f.DoneBy = !Closed.Contains(status) ? null : wasClosed ? f.DoneBy : user.DisplayName;
         f.UpdatedAt = DateTime.UtcNow;
         _db.FeedbackNotes.Add(new FeedbackNote { FeedbackId = f.Id, Author = user.DisplayName, Kind = "status", Text = old + " -> " + status, ViaApi = viaApi });
         await _db.SaveChangesAsync();
@@ -182,12 +184,18 @@ public class IssueService
         if (reply)
         {
             if (string.IsNullOrEmpty(f.Email)) return (null, new("NO_REPLY_ADDRESS", "The reporter left no email address; add an internal note instead."));
+            var dayStart = DateTime.UtcNow.Date;
+            if (await _db.FeedbackNotes.CountAsync(n => n.Kind == "reply" && n.Author == user.DisplayName && n.At >= dayStart) >= MaxRepliesPerDay)
+                return (null, new("RATE_LIMITED", $"At most {MaxRepliesPerDay} replies to reporters per day."));
             var pkg = await _db.Packages.AsNoTracking().Include(p => p.Versions).FirstOrDefaultAsync(p => p.Id == f.PackageId);
             var name = pkg is null ? f.PackageId
                 : CatalogUi.DisplayName(pkg, pkg.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault(), "en");
             static string enc(string? v) => System.Net.WebUtility.HtmlEncode(v ?? "");
-            var html = $"<p>{enc(text).Replace("\n", "<br />")}</p>" +
-                       $"<p style=\"color:#8094AA\">{enc(user.DisplayName)}, about your report on {enc(name)} {enc(f.Version)}:</p>" +
+            // the text is the developer's, not the store's: say so above it (audit S1.3.1)
+            var html = $"<p style=\"color:#8094AA\">Reply from {enc(user.DisplayName)}, who looks after the add-on {enc(name)}, sent through the Add-on Store. " +
+                       "The store forwards this message; it did not write it.</p>" +
+                       $"<p>{enc(text).Replace("\n", "<br />")}</p>" +
+                       $"<p style=\"color:#8094AA\">About your report on {enc(name)} {enc(f.Version)}:</p>" +
                        $"<blockquote style=\"white-space:pre-wrap;color:#8094AA\">{enc(f.Message.Length > 1500 ? f.Message[..1500] + " ..." : f.Message)}</blockquote>";
             var sent = await _notify.SendDirectAsync(f.Email, $"[Add-on Store] Re: your report on {name}", html, "Feedback");
             if (!sent.Sent) return (null, new("MAIL_FAILED", "The reply could not be sent: " + sent.Detail));
@@ -196,7 +204,11 @@ public class IssueService
         var note = new FeedbackNote { FeedbackId = f.Id, Author = user.DisplayName, Kind = reply ? "reply" : "note", Text = text, SentTo = sentTo, ViaApi = viaApi };
         _db.FeedbackNotes.Add(note);
         f.UpdatedAt = DateTime.UtcNow;
-        if (reply && f.Status == "open") f.Status = "waiting";
+        if (reply && f.Status == "open")
+        {
+            f.Status = "waiting";
+            _db.FeedbackNotes.Add(new FeedbackNote { FeedbackId = f.Id, Author = user.DisplayName, Kind = "status", Text = "open -> waiting", ViaApi = viaApi });
+        }
         await _db.SaveChangesAsync();
         await _audit.LogAsync(user.DisplayName, reply ? "feedback.reply" : "feedback.note", $"{f.PackageId} #{f.Id}", viaApi ? "API" : "");
         return (note, null);
@@ -214,15 +226,15 @@ public class IssueService
     public async Task<int> PurgeAsync()
     {
         var cutoff = DateTime.UtcNow.AddDays(-await RetentionDaysAsync());
-        var old = await _db.Feedbacks.Where(f => (f.Status == "done" || f.Status == "declined") && f.DoneAt != null && f.DoneAt < cutoff &&
-                                                 (f.LogExcerpt != null || f.Email != null || f.AttachmentCount > 0))
-                                     .Take(200).ToListAsync();
-        if (old.Count == 0) return 0;
-        var ids = old.Select(f => f.Id).ToList();
-        var files = await _db.FeedbackAttachments.Where(a => ids.Contains(a.FeedbackId) && a.Data != null).ToListAsync();
-        foreach (var a in files) { a.Data = null; a.PurgedAt = DateTime.UtcNow; }
-        foreach (var f in old) { f.LogExcerpt = null; f.Email = null; f.AttachmentCount = 0; }
-        await _db.SaveChangesAsync();
-        return old.Count;
+        // set-based in the database (audit S1.3.1): attachment bytes are never loaded, and every
+        // expired report is cleaned in one run, not 200
+        var now = DateTime.UtcNow;
+        var expired = _db.Feedbacks.Where(f => (f.Status == "done" || f.Status == "declined") && f.DoneAt != null && f.DoneAt < cutoff);
+        var ids = expired.Select(f => f.Id);
+        await _db.FeedbackAttachments.Where(a => ids.Contains(a.FeedbackId) && a.Data != null)
+            .ExecuteUpdateAsync(s => s.SetProperty(a => a.Data, (byte[]?)null).SetProperty(a => a.PurgedAt, now));
+        return await expired.Where(f => f.LogExcerpt != null || f.Email != null || f.AttachmentCount > 0)
+            .ExecuteUpdateAsync(s => s.SetProperty(f => f.LogExcerpt, (string?)null).SetProperty(f => f.Email, (string?)null)
+                                      .SetProperty(f => f.AttachmentCount, 0));
     }
 }

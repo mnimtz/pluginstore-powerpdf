@@ -1047,4 +1047,10 @@
   <data name="not uploaded" xml:space="preserve"><value>nenahráno</value></data>
   <data name="only for live and beta versions" xml:space="preserve"><value>pouze pro produkční a beta verze</value></data>
   <data name="passed" xml:space="preserve"><value>úspěšně</value></data>
+  <data name="Another account already uses this name." xml:space="preserve"><value>Toto jméno už používá jiný účet.</value></data>
+  <data name="The name may have at most 100 characters." xml:space="preserve"><value>Jméno může mít nejvýše 100 znaků.</value></data>
+  <data name="Password changed. Other sessions were signed out and your API tokens revoked; create new ones if needed." xml:space="preserve"><value>Heslo bylo změněno. Ostatní relace byly odhlášeny a vaše tokeny API odvolány; v případě potřeby vytvořte nové.</value></data>
+  <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Z tohoto účtu bylo za poslední hodinu nahráno příliš mnoho souborů.</value></data>
+  <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Nastavte veřejnou adresu obchodu (Nastavení, Server), aby bylo možné odesílat odkazy pro resetování.</value></data>
+  <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>E-mail pro resetování se nepodařilo odeslat. U účtů správců se odkaz nezobrazuje; zkontrolujte nastavení e-mailu.</value></data>
 </root>

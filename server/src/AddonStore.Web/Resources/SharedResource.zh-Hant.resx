@@ -1047,4 +1047,10 @@
   <data name="not uploaded" xml:space="preserve"><value>未上傳</value></data>
   <data name="only for live and beta versions" xml:space="preserve"><value>僅限正式版與 Beta 版</value></data>
   <data name="passed" xml:space="preserve"><value>已通過</value></data>
+  <data name="Another account already uses this name." xml:space="preserve"><value>其他帳戶已在使用此名稱。</value></data>
+  <data name="The name may have at most 100 characters." xml:space="preserve"><value>名稱最多可包含 100 個字元。</value></data>
+  <data name="Password changed. Other sessions were signed out and your API tokens revoked; create new ones if needed." xml:space="preserve"><value>密碼已變更。其他工作階段已登出，您的 API 權杖已撤銷；如有需要，請建立新的權杖。</value></data>
+  <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>此帳戶在過去一小時內上傳次數過多。</value></data>
+  <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>請設定商店的公用位址（設定，伺服器）以傳送重設連結。</value></data>
+  <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>無法傳送重設郵件。系統管理員帳戶不會顯示連結；請檢查電子郵件設定。</value></data>
 </root>

@@ -20,7 +20,11 @@ public static class PeImports
             if (pe <= 0 || pe + 24 > bytes.Length) return new(dlls, funcs);
             int opt = pe + 24;
             if (BitConverter.ToUInt16(bytes, opt) != 0x20B) return new(dlls, funcs);   // PE32+ only
-            int numSections = BitConverter.ToUInt16(bytes, pe + 6);
+            // bounded work on crafted files (audit S1.3.1): at most 96 sections (as PeResources),
+            // a global budget of thunk entries, and every thunk table only once
+            int numSections = Math.Min((int)BitConverter.ToUInt16(bytes, pe + 6), 96);
+            var budget = 200_000;
+            var seen = new HashSet<uint>();
             int optSize = BitConverter.ToUInt16(bytes, pe + 20);
             var sections = new List<(uint va, uint size, uint raw)>();
             for (int i = 0; i < numSections; i++)
@@ -46,8 +50,9 @@ public static class PeImports
             }
             void Thunks(uint rva)
             {
+                if (!seen.Add(rva)) return;
                 long o = Off(rva);
-                for (int k = 0; o >= 0 && o + 8 <= bytes.Length && k < 20000; k++, o += 8)
+                for (int k = 0; o >= 0 && o + 8 <= bytes.Length && k < 20000 && budget-- > 0; k++, o += 8)
                 {
                     ulong t = BitConverter.ToUInt64(bytes, (int)o);
                     if (t == 0) break;

@@ -24,7 +24,7 @@ public class DossierService
     public record AuditLine(DateTime At, string Actor, string Action, string Subject, string Details);
     public record Dossier(
         string PackageId, string Name, string Owner, string Visibility, string Category,
-        string Version, VersionStatus Status, string Channel, DateTime SubmittedAt, string SubmittedBy, string SubmittedVia,
+        string Version, VersionStatus Status, string StatusName, string Channel, DateTime SubmittedAt, string SubmittedBy, string SubmittedVia,
         string PackageSha256, long SizeBytes, int Downloads, string MinHost, bool NoUi, string AtomNamespace,
         List<FileHash> Files, string? Signature, string SigningKeyId,
         JsonElement? Compliance, JsonElement? ThirdParty, JsonElement? ExternalServices,
@@ -36,7 +36,7 @@ public class DossierService
         Dictionary<string, int> Reports, List<AuditLine> VersionAudit, List<AuditLine> PackageAudit,
         DateTime GeneratedAt, string GeneratedBy, string ServerVersion);
 
-    public async Task<Dossier?> BuildAsync(string id, string version, AppUser viewer)
+    public async Task<Dossier?> BuildAsync(string id, string version, AppUser viewer, bool viewerMayReview = true)
     {
         var v = await _db.PackageVersions.AsNoTracking().Include(x => x.Package).ThenInclude(p => p!.Owner)
             .FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version);
@@ -69,18 +69,25 @@ public class DossierService
         var sourceReport = string.IsNullOrWhiteSpace(v.SourceReportJson) ? null : ReportView.Parse(v.SourceReportJson).Findings;
 
         // audit: entries of exactly this version, and package-wide ones (catalog entry, blocks, visibility, reports)
+        // audit (audit S1.3.1): every entry of this version, and the newest 500 add-on-wide ones
         var subject = $"{v.PackageId} {v.Version}";
-        var audit = await _db.AuditEntries.AsNoTracking()
-            .Where(e => e.Subject == subject || e.Subject == v.PackageId || e.Subject.StartsWith(v.PackageId + " "))
-            .OrderBy(e => e.At).Take(2000).ToListAsync();
         AuditLine L(AuditEntry e) => new(e.At, e.Actor, e.Action, e.Subject, e.Details);
+        var versionRows = await _db.AuditEntries.AsNoTracking().Where(e => e.Subject == subject).OrderBy(e => e.At).ToListAsync();
         var otherVersions = await _db.PackageVersions.AsNoTracking().Where(x => x.PackageId == v.PackageId && x.Version != v.Version)
             .Select(x => x.PackageId + " " + x.Version).ToListAsync();
-        var versionAudit = audit.Where(e => e.Subject == subject).Select(L).ToList();
-        var packageAudit = audit.Where(e => e.Subject != subject && !otherVersions.Contains(e.Subject)).Select(L).ToList();
+        var packageRows = await _db.AuditEntries.AsNoTracking()
+            .Where(e => e.Subject != subject && (e.Subject == v.PackageId || e.Subject.StartsWith(v.PackageId + " ")) && !otherVersions.Contains(e.Subject))
+            .OrderByDescending(e => e.At).Take(500).ToListAsync();
+        var versionAudit = versionRows.Select(L).ToList();
+        var packageAudit = packageRows.OrderBy(e => e.At).Select(L).ToList();
         var legacy = v.ApprovalJson is null
-            ? audit.Where(e => e.Subject == subject && e.Action == "version.approved").Select(e => e.Details).LastOrDefault()
+            ? versionRows.Where(e => e.Action == "version.approved").Select(e => e.Details).LastOrDefault()
+              ?? (v.PackageId == SubmissionService.ClientPackageId && v.ReviewedAt is not null ? "Store client: published by an admin, live at once (no review queue)." : null)
             : null;
+        var known = await _db.Categories.AsNoTracking().ToDictionaryAsync(c => c.Slug);
+        // externalServices sits inside complianceAudit (older manifests: at the root)
+        JsonElement? services = root.TryGetProperty("complianceAudit", out var ca) && ca.ValueKind == JsonValueKind.Object &&
+                                ca.TryGetProperty("externalServices", out var es) ? es.Clone() : Clone("externalServices");
         var reviewer = v.ReviewedById is null ? null : await _db.Users.Where(u => u.Id == v.ReviewedById).Select(u => u.DisplayName).FirstOrDefaultAsync();
         var reports = await _db.Feedbacks.AsNoTracking().Where(f => f.PackageId == v.PackageId && f.Version == v.Version)
             .GroupBy(f => f.Status).Select(g => new { g.Key, N = g.Count() }).ToDictionaryAsync(g => g.Key, g => g.N);
@@ -88,14 +95,15 @@ public class DossierService
 
         return new Dossier(
             v.PackageId, CatalogUi.DisplayName(pkg, v, culture), pkg.Owner?.DisplayName ?? "", pkg.Visibility,
-            CatalogUi.EffectiveCategory(pkg, root, new Dictionary<string, Category>()),
-            v.Version, v.Status, v.Status == VersionStatus.Live ? "live" : v.Status == VersionStatus.Beta ? "beta" : "-",
+            CatalogUi.EffectiveCategory(pkg, root, known),
+            v.Version, v.Status, v.Status.ToString().ToLowerInvariant(), v.Status == VersionStatus.Live ? "live" : v.Status == VersionStatus.Beta ? "beta" : "-",
             v.SubmittedAt, v.SubmittedBy, v.SubmittedVia, v.Sha256, v.SizeBytes, v.Downloads, v.MinPowerPdfVersion,
             CatalogUi.IsNoUi(root), v.AtomNamespace, files, signature, _signing.KeyId,
-            Clone("complianceAudit"), Clone("thirdParty"), Clone("externalServices"),
+            Clone("complianceAudit"), Clone("thirdParty"), services,
             report.Passed, report.Findings, Parse(v.RulesSnapshotJson),
             v.SourceSha256, v.SourceSizeBytes, v.SourceUploadedAt, v.SourceUploadedBy, sourceReport,
-            AiAssist.ParseReview(v.AiReviewJson), v.AiReviewModel, v.AiReviewAt,
+            // the AI review aid is a reviewer tool (plug-in page and /ai-review): owners do not see it (audit S1.3.1)
+            viewerMayReview ? AiAssist.ParseReview(v.AiReviewJson) : null, viewerMayReview ? v.AiReviewModel : null, viewerMayReview ? v.AiReviewAt : null,
             Parse(v.ApprovalJson), reviewer, v.ReviewedAt, v.ReviewComment, legacy,
             v.BlockedAt, v.BlockReason, v.BlockedBy, pkg.BlockedAt, pkg.BlockReason,
             reports, versionAudit, packageAudit,

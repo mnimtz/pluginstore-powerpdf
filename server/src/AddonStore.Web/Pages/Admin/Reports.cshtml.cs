@@ -86,8 +86,8 @@ public class ReportsModel : PageModel
     public Dictionary<string, string?> RouteValues(bool print = false) => new()
     {
         ["days"] = CustomRange ? null : Days.ToString(CultureInfo.InvariantCulture),
-        ["from"] = From?.ToString("yyyy-MM-dd"),
-        ["to"] = To?.ToString("yyyy-MM-dd"),
+        ["from"] = From?.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
+        ["to"] = To?.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture),
         ["pkg"] = string.IsNullOrEmpty(Pkg) ? null : Pkg,
         ["country"] = string.IsNullOrEmpty(Country) ? null : Country,
         ["src"] = string.IsNullOrEmpty(Src) ? null : Src,
@@ -182,11 +182,11 @@ public class ReportsModel : PageModel
         RangeFrom = from; RangeTo = to;
         var span = to.DayNumber - from.DayNumber + 1;
         Granularity = span <= 62 ? "day" : span <= 366 ? "week" : "month";
-        string fromKey = from.ToString("yyyy-MM-dd"), toKey = to.ToString("yyyy-MM-dd");
+        string fromKey = from.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture), toKey = to.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
 
         PrevTo = from.AddDays(-1);
         PrevFrom = PrevTo.AddDays(-(span - 1));
-        string prevFromKey = PrevFrom.ToString("yyyy-MM-dd"), prevToKey = PrevTo.ToString("yyyy-MM-dd");
+        string prevFromKey = PrevFrom.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture), prevToKey = PrevTo.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
 
         CountryOptions.AddRange(await _db.UsageStats.AsNoTracking().Where(s => s.Country != "")
             .Select(s => s.Country).Distinct().OrderBy(c => c).ToListAsync());
@@ -353,7 +353,7 @@ public class ReportsModel : PageModel
             var reviewed = subs.Where(v => v.ReviewedAt >= m && v.ReviewedAt < end).ToList();
             var hours = reviewed.Select(v => (v.ReviewedAt!.Value - v.SubmittedAt).TotalHours).Where(h => h >= 0)
                                 .OrderBy(h => h).ToList();
-            Months.Add(new MonthRow(m.ToString("yyyy-MM"),
+            Months.Add(new MonthRow(m.ToString("yyyy-MM", System.Globalization.CultureInfo.InvariantCulture),
                 subs.Count(v => v.SubmittedAt >= m && v.SubmittedAt < end),
                 reviewed.Count(v => v.Status is VersionStatus.Live or VersionStatus.Withdrawn),
                 reviewed.Count(v => v.Status == VersionStatus.Rejected),
@@ -419,7 +419,7 @@ public class ReportsModel : PageModel
     public async Task<IActionResult> OnGetCsvAsync()
     {
         var (from, to) = ResolveRange();
-        string fromKey = from.ToString("yyyy-MM-dd"), toKey = to.ToString("yyyy-MM-dd");
+        string fromKey = from.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture), toKey = to.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
         var rows = await _db.UsageStats.AsNoTracking()
             .Where(s => string.Compare(s.Day, fromKey) >= 0 && string.Compare(s.Day, toKey) <= 0 &&
                         (string.IsNullOrEmpty(Pkg) || s.PackageId == Pkg) &&

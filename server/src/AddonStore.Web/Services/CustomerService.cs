@@ -369,7 +369,7 @@ public class CustomerService
             .Select(Normalize).Where(c => c.Length == 20).Distinct().Take(10).Select(Hash).ToList();
         if (hashes.Count == 0) return new();
         var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
-        var key = "custcode-fail:" + ip + ":" + DateTime.UtcNow.ToString("yyyyMMddHH");
+        var key = "custcode-fail:" + ip + ":" + DateTime.UtcNow.ToString("yyyyMMddHH", System.Globalization.CultureInfo.InvariantCulture);
         var state = _cache.GetOrCreate(key, e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1); return new CodeAttempts(); })!;
         lock (state)
         {

@@ -34,6 +34,7 @@ public static class UploadBundle
     /// </summary>
     public static Result? TryUnpack(string zipPath)
     {
+        if (UploadLimits.DeclaredEntries(zipPath) > 20000) return null;   // not a bundle; the package checks refuse it (audit S1.3.1)
         ZipArchive zip;
         try { zip = ZipFile.OpenRead(zipPath); }
         catch (InvalidDataException) { return null; }

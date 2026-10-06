@@ -55,14 +55,16 @@ public class AiAssist
     {
         var name = await PackageNameAsync(f.PackageId);
         var earlier = await _db.Feedbacks.AsNoTracking()
-            .Where(x => x.PackageId == f.PackageId && x.Id != f.Id && x.Status == "open" && x.AiSummaryEn != null)
+            .Where(x => x.PackageId == f.PackageId && x.Id != f.Id && x.Status != "done" && x.Status != "declined" && x.AiSummaryEn != null)
             .OrderByDescending(x => x.Id).Take(15).Select(x => new { x.Id, x.AiSummaryEn }).ToListAsync(ct);
+        // the plug-in name, version and kind come from developers and reporters too: all inside <data> (audit S1.3.1)
         var user = new StringBuilder()
-            .Append("Plug-in: ").Append(name).Append(" (").Append(f.PackageId).Append("), version ").Append(f.Version).Append('\n')
-            .Append("Kind chosen by the user: ").Append(f.Kind).Append('\n')
-            .Append("Earlier open reports (id: summary):\n")
-            .Append(earlier.Count == 0 ? "none\n" : string.Concat(earlier.Select(e => $"{e.Id}: {e.AiSummaryEn}\n")))
-            .Append("<data>\n").Append(f.Message).Append("\n</data>");
+            .Append("About the report:\n<data>\n")
+            .Append("Plug-in: ").Append(Data(name)).Append(" (").Append(f.PackageId).Append("), version ").Append(Data(f.Version)).Append('\n')
+            .Append("Kind chosen by the user: ").Append(Data(f.Kind)).Append('\n')
+            .Append("</data>\nEarlier open reports (id: summary):\n<data>\n")
+            .Append(earlier.Count == 0 ? "none\n" : string.Concat(earlier.Select(e => $"{e.Id}: {Data(e.AiSummaryEn)}\n")))
+            .Append("</data>\nThe report:\n<data>\n").Append(Data(f.Message)).Append("\n</data>");
         var r = await _ai.JsonAsync(
             "You sort user reports sent from the Add-on Store inside Tungsten Power PDF to the developer of a plug-in. " +
             "Classify the report, rate how urgent it is for the developer, summarize it neutrally, draft a reply and " +
@@ -175,14 +177,17 @@ public class AiAssist
             var removed = (oldSrc?.Keys ?? Enumerable.Empty<string>()).Except(newSrc.Keys).OrderBy(x => x).ToList();
             var changed = oldSrc is null ? new List<string>() : newSrc.Keys.Intersect(oldSrc.Keys).Where(k => newSrc[k] != oldSrc[k]).OrderBy(x => x).ToList();
             facts.Append($"Source files: {newSrc.Count}; added {added.Count}, removed {removed.Count}, changed {changed.Count}\n");
-            facts.Append("Added: ").Append(string.Join(", ", added.Take(60))).Append('\n');
-            facts.Append("Removed: ").Append(string.Join(", ", removed.Take(60))).Append('\n');
-            facts.Append("Changed: ").Append(string.Join(", ", changed.Take(80))).Append('\n');
+            // file names and hosts are the developer's text: inside <data> (audit S1.3.1)
+            facts.Append("File names:\n<data>\n");
+            facts.Append("Added: ").Append(Data(string.Join(", ", added.Take(60)))).Append('\n');
+            facts.Append("Removed: ").Append(Data(string.Join(", ", removed.Take(60)))).Append('\n');
+            facts.Append("Changed: ").Append(Data(string.Join(", ", changed.Take(80)))).Append('\n');
+            facts.Append("</data>\n");
             // Hosts that appear in the new source but not in the old one (deterministic, not AI).
             var hostsNew = Hosts(newSrc.Values);
             var hostsOld = oldSrc is null ? new HashSet<string>() : Hosts(oldSrc.Values);
-            facts.Append("Web hosts referenced in the source: ").Append(string.Join(", ", hostsNew.Take(40)))
-                 .Append("; new since the previous version: ").Append(string.Join(", ", hostsNew.Except(hostsOld).Take(40))).Append('\n');
+            facts.Append("Web hosts referenced in the source:\n<data>\n").Append(Data(string.Join(", ", hostsNew.Take(40))))
+                 .Append("; new since the previous version: ").Append(Data(string.Join(", ", hostsNew.Except(hostsOld).Take(40)))).Append("\n</data>\n");
             if (cfg.ReviewSource)
             {
                 var budget = 60000;
@@ -197,14 +202,14 @@ public class AiAssist
                     budget -= chunk.Length;
                     if (budget <= 0) break;
                 }
-                facts.Append("Changed lines (+ added, - removed), possibly shortened:\n<data>\n").Append(diff).Append("\n</data>\n");
+                facts.Append("Changed lines (+ added, - removed), possibly shortened:\n<data>\n").Append(Data(diff.ToString())).Append("\n</data>\n");
             }
             else facts.Append("Source excerpts are not sent (setting off); judge from the file lists, hosts and manifest.\n");
         }
 
         var manifest = new StringBuilder();
-        manifest.Append("New manifest:\n<data>\n").Append(ManifestDigest(v.ManifestJson)).Append("\n</data>\n");
-        if (prev is not null) manifest.Append("Previous manifest:\n<data>\n").Append(ManifestDigest(prev.ManifestJson)).Append("\n</data>\n");
+        manifest.Append("New manifest:\n<data>\n").Append(Data(ManifestDigest(v.ManifestJson))).Append("\n</data>\n");
+        if (prev is not null) manifest.Append("Previous manifest:\n<data>\n").Append(Data(ManifestDigest(prev.ManifestJson))).Append("\n</data>\n");
 
         var lang = ReviewLanguages[language];
         var r = await _ai.JsonAsync(
@@ -353,7 +358,7 @@ public class AiAssist
                 "You are the search of the Add-on Store for Tungsten Power PDF. From the catalog below pick at most 5 add-ons " +
                 "that help with what the user wants to do, best first, and give each a one-sentence reason in the user's " +
                 $"language (UI language code: {culture}). Only use ids from the catalog; return an empty list if nothing fits. " + Untrusted,
-                "Catalog (id | name | category | description):\n<data>\n" + catalog + "</data>\nUser request:\n<data>\n" + query + "\n</data>",
+                "Catalog (id | name | category | description):\n<data>\n" + Data(catalog) + "</data>\nUser request:\n<data>\n" + Data(query) + "\n</data>",
                 SearchSchema, false, ct, anonymous: true);
             if (r is { } e && e.TryGetProperty("results", out var arr) && arr.ValueKind == JsonValueKind.Array)
             {
@@ -393,6 +398,20 @@ public class AiAssist
     }
 
     private static string Clip(string v, int max) => v.Length > max ? v[..max] : v;
+
+    /// <summary>
+    /// Third-party text for a prompt (audit S1.3.1): control characters out (line breaks and tabs stay),
+    /// and a &lt;data&gt; or &lt;/data&gt; inside cannot close or open the data block.
+    /// </summary>
+    internal static string Data(string? s)
+    {
+        if (string.IsNullOrEmpty(s)) return "";
+        var sb = new StringBuilder(s.Length);
+        foreach (var ch in s)
+            if (ch is '\n' or '\t' || (!char.IsControl(ch) && ch is not ('\u2028' or '\u2029' or '\u202E' or '\u202D'))) sb.Append(ch);
+        return System.Text.RegularExpressions.Regex.Replace(sb.ToString(), @"<\s*/?\s*data\b", m => "[" + m.Value.TrimStart('<'),
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.NonBacktracking);
+    }
 }
 
 /// <summary>Background AI work: sorts new problem reports and prepares review aids, once a minute.</summary>

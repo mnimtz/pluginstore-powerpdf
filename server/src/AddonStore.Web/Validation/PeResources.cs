@@ -194,7 +194,8 @@ public sealed class PeResources
         var primary = langId & 0x3FF;
         if (primary != 0x04) return primary;
         var sub = langId >> 10;
-        return sub is 0x02 or 0x04 ? ChineseSimplified : ChineseTraditional;
+        // Traditional: Taiwan (1), Hong Kong (3), Macao (5), neutral zh-Hant (0x1F); everything else is Simplified
+        return sub is 0x01 or 0x03 or 0x05 or 0x1F ? ChineseTraditional : ChineseSimplified;
     }
     public const int ChineseSimplified = 0x10002, ChineseTraditional = 0x10001;
 

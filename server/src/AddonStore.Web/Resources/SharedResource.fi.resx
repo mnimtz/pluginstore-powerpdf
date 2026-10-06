@@ -1047,4 +1047,10 @@
   <data name="not uploaded" xml:space="preserve"><value>ei ladattu</value></data>
   <data name="only for live and beta versions" xml:space="preserve"><value>vain julkaistuille ja beetaversioille</value></data>
   <data name="passed" xml:space="preserve"><value>läpäisty</value></data>
+  <data name="Another account already uses this name." xml:space="preserve"><value>Toinen tili käyttää jo tätä nimeä.</value></data>
+  <data name="The name may have at most 100 characters." xml:space="preserve"><value>Nimessä saa olla enintään 100 merkkiä.</value></data>
+  <data name="Password changed. Other sessions were signed out and your API tokens revoked; create new ones if needed." xml:space="preserve"><value>Salasana vaihdettu. Muut istunnot kirjattiin ulos ja API-tunnuksesi peruutettiin; luo tarvittaessa uudet.</value></data>
+  <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Liian monta latausta palvelimeen tältä tililtä viimeisen tunnin aikana.</value></data>
+  <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Määritä kaupan julkinen osoite (Asetukset, Palvelin), jotta palautuslinkkejä voidaan lähettää.</value></data>
+  <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>Palautusviestiä ei voitu lähettää. Järjestelmänvalvojan tileillä linkkiä ei näytetä; tarkista sähköpostiasetukset.</value></data>
 </root>

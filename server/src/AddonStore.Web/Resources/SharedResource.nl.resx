@@ -1047,4 +1047,10 @@
   <data name="not uploaded" xml:space="preserve"><value>niet geüpload</value></data>
   <data name="only for live and beta versions" xml:space="preserve"><value>alleen voor live- en bètaversies</value></data>
   <data name="passed" xml:space="preserve"><value>geslaagd</value></data>
+  <data name="Another account already uses this name." xml:space="preserve"><value>Een ander account gebruikt deze naam al.</value></data>
+  <data name="The name may have at most 100 characters." xml:space="preserve"><value>De naam mag maximaal 100 tekens bevatten.</value></data>
+  <data name="Password changed. Other sessions were signed out and your API tokens revoked; create new ones if needed." xml:space="preserve"><value>Wachtwoord gewijzigd. Andere sessies zijn afgemeld en uw API-tokens zijn ingetrokken; maak indien nodig nieuwe aan.</value></data>
+  <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Te veel uploads vanaf dit account in het afgelopen uur.</value></data>
+  <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Stel het openbare adres van de Store in (Instellingen, Server) om koppelingen voor opnieuw instellen te verzenden.</value></data>
+  <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>De e-mail voor opnieuw instellen kan niet worden verzonden. Voor beheerdersaccounts wordt de koppeling niet weergegeven; controleer de e-mailinstellingen.</value></data>
 </root>

@@ -47,8 +47,10 @@ public class ProfileModel : PageModel
             else
             {
                 await _signIn.RefreshSignInAsync(user);
-                await _audit.LogAsync(user.DisplayName, "user.password-changed", user.Email ?? user.Id);
-                Notice = "Password changed. Other sessions were signed out.";
+                var revoked = await TokenService.RevokeAllAsync(_db, user.Id);   // audit S1.3.1
+                await _audit.LogAsync(user.DisplayName, "user.password-changed", user.Email ?? user.Id, revoked > 0 ? $"{revoked} API tokens revoked" : "");
+                Notice = revoked > 0 ? "Password changed. Other sessions were signed out and your API tokens revoked; create new ones if needed."
+                                     : "Password changed. Other sessions were signed out.";
                 NoticeKind = "ok";
             }
         }
@@ -76,7 +78,17 @@ public class ProfileModel : PageModel
 
         if (!string.IsNullOrWhiteSpace(name) && name.Trim() != user.DisplayName)
         {
-            user.DisplayName = name.Trim();
+            // names identify people in audit entries, notes and assignments: bounded and unique (audit S1.3.1)
+            var n = name.Trim();
+            if (n.Length > 100 || n.Any(char.IsControl))
+            {
+                Notice = "The name may have at most 100 characters."; NoticeKind = "error"; await LoadAsync(); return;
+            }
+            if (await DisplayNames.TakenAsync(_db.Users, n, user.Id))
+            {
+                Notice = "Another account already uses this name."; NoticeKind = "error"; await LoadAsync(); return;
+            }
+            user.DisplayName = n;
             Notice = "Profile updated.";
         }
 

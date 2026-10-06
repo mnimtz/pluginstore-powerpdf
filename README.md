@@ -361,6 +361,33 @@ house rules, warnings made mandatory, condition wording), the source code
 check, the AI review aid, the review decision with the approval conditions in
 the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
+The AI review aid in the dossier is shown to reviewers and admins only.
+
+**Security hardening (S1.3.1, client 1.3.1):** after a full code audit and
+hardening test:
+- Password reset links are only built on the configured public address (or
+  localhost and the App Service host name). A forged `Host` header gets none.
+- Behind Azure's forwarded headers the client IP can no longer be spoofed.
+- Reviewers never approve their own add-ons. Admins can do so only while the
+  four-eyes rule is off.
+- Admins never see another admin's reset link.
+- Changing or resetting a password revokes all API tokens of the account.
+- Display names are unique.
+- Uploads: at most 60 per account and hour. ZIP entry counts are checked
+  before unpacking.
+- Request bodies outside the uploads are limited to 2 MB.
+- The import-table scan and the text checks are protected against crafted
+  binaries and backtracking patterns.
+- AI prompts keep all third-party text (names, file names, hosts) inside
+  marked data blocks with control characters removed.
+- Developer replies to reporters are labelled as such and limited to 50 a day.
+- Catalog texts refuse text-direction overrides.
+- The retention purge runs set-based in the database.
+- Dates use the Gregorian calendar in every language.
+
+Client 1.3.1 refuses downgrades, protects its staging folder, keeps the last
+good blocklist when the server is unreachable and locks down the store
+window's WebView2.
 
 **21 Power PDF languages (S1.2.0, client 1.3.0):** Power PDF has 21 UI
 languages. Portal, store window, MSI and catalog follow all of them: the 16

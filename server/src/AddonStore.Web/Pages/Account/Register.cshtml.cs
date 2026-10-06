@@ -47,6 +47,12 @@ public class RegisterModel : PageModel
             OnGet(dp);
             return Page();
         }
+        if (await AddonStore.Web.Services.DisplayNames.TakenAsync(_users.Users, name))
+        {
+            Error = "Another account already uses this name.";
+            OnGet(dp);
+            return Page();
+        }
 
         // at most 5 access requests per address and hour
         var ip = AddonStore.Web.Services.GeoService.ClientIp(HttpContext)?.ToString() ?? "";

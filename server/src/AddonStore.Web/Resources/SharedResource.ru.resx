@@ -1047,4 +1047,10 @@
   <data name="not uploaded" xml:space="preserve"><value>не загружено</value></data>
   <data name="only for live and beta versions" xml:space="preserve"><value>только для рабочих и бета-версий</value></data>
   <data name="passed" xml:space="preserve"><value>пройдено</value></data>
+  <data name="Another account already uses this name." xml:space="preserve"><value>Это имя уже используется другой учетной записью.</value></data>
+  <data name="The name may have at most 100 characters." xml:space="preserve"><value>Имя может содержать не более 100 символов.</value></data>
+  <data name="Password changed. Other sessions were signed out and your API tokens revoked; create new ones if needed." xml:space="preserve"><value>Пароль изменен. Выполнен выход из других сеансов, а ваши токены API отозваны; при необходимости создайте новые.</value></data>
+  <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Слишком много загрузок с этой учетной записи за последний час.</value></data>
+  <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Укажите общедоступный адрес магазина (Настройки, Сервер), чтобы отправлять ссылки для сброса.</value></data>
+  <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>Не удалось отправить письмо для сброса. Для учетных записей администраторов ссылка не отображается; проверьте настройки электронной почты.</value></data>
 </root>

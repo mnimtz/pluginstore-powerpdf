@@ -1047,4 +1047,10 @@
   <data name="not uploaded" xml:space="preserve"><value>non chargé</value></data>
   <data name="only for live and beta versions" xml:space="preserve"><value>uniquement pour les versions publiées et bêta</value></data>
   <data name="passed" xml:space="preserve"><value>réussi</value></data>
+  <data name="Another account already uses this name." xml:space="preserve"><value>Un autre compte utilise déjà ce nom.</value></data>
+  <data name="The name may have at most 100 characters." xml:space="preserve"><value>Le nom ne peut pas dépasser 100 caractères.</value></data>
+  <data name="Password changed. Other sessions were signed out and your API tokens revoked; create new ones if needed." xml:space="preserve"><value>Mot de passe modifié. Les autres sessions ont été déconnectées et vos jetons d'API révoqués ; créez-en de nouveaux si nécessaire.</value></data>
+  <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Trop de chargements depuis ce compte au cours de la dernière heure.</value></data>
+  <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Définissez l'adresse publique du Store (Paramètres, Serveur) pour envoyer des liens de réinitialisation.</value></data>
+  <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>L'e-mail de réinitialisation n'a pas pu être envoyé. Pour les comptes administrateur, le lien n'est pas affiché ; vérifiez les paramètres de messagerie.</value></data>
 </root>

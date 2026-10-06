@@ -25,6 +25,15 @@ public class TokenService
         return (plain, token);
     }
 
+    /// <summary>Revokes every active API token of a user (after a password reset or change, audit S1.3.1).</summary>
+    public static async Task<int> RevokeAllAsync(AppDbContext db, string userId)
+    {
+        var active = db.ApiTokens.Where(t => t.UserId == userId && t.RevokedAt == null).ToList();
+        foreach (var t in active) t.RevokedAt = DateTime.UtcNow;
+        if (active.Count > 0) await db.SaveChangesAsync();
+        return active.Count;
+    }
+
     public static string Hash(string plain) =>
         Convert.ToHexString(SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(plain))).ToLowerInvariant();
 }

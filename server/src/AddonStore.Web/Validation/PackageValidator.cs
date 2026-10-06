@@ -54,7 +54,8 @@ public class PackageValidator
         return ms.ToArray();
     }
 
-    private static readonly Regex IdPattern = new(@"^[a-z0-9][a-z0-9-]*(\.[a-z0-9][a-z0-9-]*)+$", RegexOptions.Compiled);
+    // \z, not $: $ also matches before a trailing newline (audit S1.3.1)
+    private static readonly Regex IdPattern = new(@"^[a-z0-9][a-z0-9-]*(\.[a-z0-9][a-z0-9-]*)+\z", RegexOptions.Compiled);
     // [0-9] and \z: no non-ASCII digits, no trailing newline ($ would allow one); 9 digits fit an int
     private static readonly Regex SemVerPattern = new(@"^[0-9]{1,9}\.[0-9]{1,9}\.[0-9]{1,9}\z", RegexOptions.Compiled);
     private static readonly Regex HostVersionPattern = new(@"^[0-9]{1,4}(\.[0-9]{1,6}){0,3}\z", RegexOptions.Compiled);
@@ -157,6 +158,13 @@ public class PackageValidator
             return (report, null);
         }
 
+        // the number of entries from the end record, before ZipArchive loads them all (audit S1.3.1)
+        if (Services.UploadLimits.DeclaredEntries(zipPath) is var declaredEntries && declaredEntries > MaxEntries)
+        {
+            report.Error("ZIP_TOO_MANY_ENTRIES", $"The package declares {(declaredEntries == int.MaxValue ? "a ZIP64 or inconsistent directory" : declaredEntries + " entries")} (at most {MaxEntries}).",
+                "Pack only manifest.json, the binaries, UILayout, assets and docs; a package never needs that many files.");
+            return (report, null);
+        }
         ZipArchive zip;
         try
         {
@@ -1377,7 +1385,7 @@ public class PackageValidator
             var html = System.Text.Encoding.UTF8.GetString(raw);
             if (Regex.IsMatch(html, @"<script\b|\bon[a-z]+\s*=|javascript:", RegexOptions.IgnoreCase) ||
                 Regex.IsMatch(html, @"<(?:iframe|object|embed)\b", RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(html, @"\b(?:src|href)\s*=\s*[""']?\s*(?:https?:)?//", RegexOptions.IgnoreCase) && Regex.IsMatch(html, @"<(?:img|script|link|iframe)\b[^>]*\b(?:src|href)\s*=\s*[""']?\s*(?:https?:)?//", RegexOptions.IgnoreCase))
+                Regex.IsMatch(html, @"\b(?:src|href)\s*=\s*[""']?\s*(?:https?:)?//", RegexOptions.IgnoreCase) && Regex.IsMatch(html, @"<(?:img|script|link|iframe)\b[^>]{0,2000}\b(?:src|href)\s*=\s*[""']?\s*(?:https?:)?//", RegexOptions.IgnoreCase | RegexOptions.NonBacktracking))
                 bad.Add(e.FullName);
         }
         if (bad.Count > 0)
@@ -1425,7 +1433,7 @@ public class PackageValidator
             if (Regex.IsMatch(xml, "IconMode=\"1\""))
                 report.Warn("ICONMODE_SMALL", "Publish Mode.xml uses IconMode=\"1\" (large button with a SMALL icon).",
                     "Use IconMode=\"4\" for product-sized buttons; 1 renders a large button with a small icon once merged.");
-            foreach (Match tb in Regex.Matches(xml, @"<toolbar\b[^>]*?\bname\s*=\s*[""']([^""']+)[""']", RegexOptions.IgnoreCase))
+            foreach (Match tb in Regex.Matches(xml, @"<toolbar\b[^>]{0,2000}?\bname\s*=\s*[""']([^""']{1,200})[""']", RegexOptions.IgnoreCase, TimeSpan.FromSeconds(2)))
             {
                 // the store client has its own tab ("AddonStore", C1.1.0); a private add-on may have
                 // its own tab, named like its namespace (S1.0.6; public/private is decided against the catalog)

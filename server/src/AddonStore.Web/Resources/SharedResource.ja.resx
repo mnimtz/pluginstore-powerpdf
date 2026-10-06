@@ -1047,4 +1047,10 @@
   <data name="not uploaded" xml:space="preserve"><value>未アップロード</value></data>
   <data name="only for live and beta versions" xml:space="preserve"><value>公開版とベータ版のみ</value></data>
   <data name="passed" xml:space="preserve"><value>合格</value></data>
+  <data name="Another account already uses this name." xml:space="preserve"><value>この名前は別のアカウントで既に使用されています。</value></data>
+  <data name="The name may have at most 100 characters." xml:space="preserve"><value>名前は 100 文字以内で指定してください。</value></data>
+  <data name="Password changed. Other sessions were signed out and your API tokens revoked; create new ones if needed." xml:space="preserve"><value>パスワードが変更されました。他のセッションはサインアウトされ、API トークンは失効しました。必要に応じて新しいトークンを作成してください。</value></data>
+  <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>過去 1 時間にこのアカウントからのアップロードが多すぎます。</value></data>
+  <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>リセット リンクを送信するには、ストアの公開アドレス（設定、サーバー）を設定してください。</value></data>
+  <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>リセット メールを送信できませんでした。管理者アカウントの場合、リンクは表示されません。メール設定を確認してください。</value></data>
 </root>

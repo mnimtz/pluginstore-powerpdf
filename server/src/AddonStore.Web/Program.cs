@@ -95,7 +95,14 @@ builder.Services.AddLocalization(o => o.ResourcesPath = "Resources");
 builder.Services.Configure<RequestLocalizationOptions>(o =>
 {
     o.DefaultRequestCulture = new RequestCulture("en");
-    o.SupportedCultures = cultures.Select(c => new CultureInfo(c)).ToList();
+    // Gregorian calendar in every culture (audit S1.3.1): Arabic may default to another calendar,
+    // and dates in keys, reports and mails must stay comparable
+    o.SupportedCultures = cultures.Select(c =>
+    {
+        var ci = new CultureInfo(c);
+        if (ci.Calendar is not GregorianCalendar) ci.DateTimeFormat.Calendar = new GregorianCalendar();
+        return ci;
+    }).ToList();
     o.SupportedUICultures = o.SupportedCultures;
     // ?rlang= (report language, admin reports and their PDF view) wins over everything else.
     o.RequestCultureProviders.Insert(0, new QueryStringRequestCultureProvider
@@ -259,7 +266,11 @@ app.Use(async (ctx, next) =>
     var p = ctx.Request.Path;
     var upload = (HttpMethods.IsPost(ctx.Request.Method) && (p.Equals("/api/packages") || p.Equals("/api/packages/validate")))
                  || (HttpMethods.IsPut(ctx.Request.Method) && p.StartsWithSegments("/api/packages") && p.Value!.EndsWith("/source"));
-    if (!upload && (p.StartsWithSegments("/api") || p.StartsWithSegments("/a")))
+    // web uploads: the package form, the source upload of a version, backup restore
+    upload |= HttpMethods.IsPost(ctx.Request.Method) &&
+              (p.Equals("/Dashboard") || p.StartsWithSegments("/Admin/Backup") ||
+               (p.Equals("/Plugin") && string.Equals(ctx.Request.Query["handler"], "Source", StringComparison.OrdinalIgnoreCase)));
+    if (!upload)
     {
         var f = ctx.Features.Get<Microsoft.AspNetCore.Http.Features.IHttpMaxRequestBodySizeFeature>();
         // problem reports carry up to 10 MB of attachments as base64 (S1.1.0); the daily limits per

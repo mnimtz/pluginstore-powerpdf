@@ -1047,4 +1047,10 @@
   <data name="not uploaded" xml:space="preserve"><value>no cargado</value></data>
   <data name="only for live and beta versions" xml:space="preserve"><value>solo para versiones publicadas y beta</value></data>
   <data name="passed" xml:space="preserve"><value>superado</value></data>
+  <data name="Another account already uses this name." xml:space="preserve"><value>Otra cuenta ya usa este nombre.</value></data>
+  <data name="The name may have at most 100 characters." xml:space="preserve"><value>El nombre puede tener como máximo 100 caracteres.</value></data>
+  <data name="Password changed. Other sessions were signed out and your API tokens revoked; create new ones if needed." xml:space="preserve"><value>Contraseña cambiada. Se cerraron las demás sesiones y se revocaron sus tokens de API; cree otros nuevos si es necesario.</value></data>
+  <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Demasiadas cargas desde esta cuenta en la última hora.</value></data>
+  <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Configure la dirección pública de la tienda (Configuración, Servidor) para enviar vínculos de restablecimiento.</value></data>
+  <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>No se pudo enviar el correo de restablecimiento. En las cuentas de administrador no se muestra el vínculo; compruebe la configuración de correo electrónico.</value></data>
 </root>

@@ -325,7 +325,7 @@ public static class ApiEndpoints
             if (string.Equals(format, "tsv", StringComparison.OrdinalIgnoreCase))
             {
                 var culture = (lang ?? "en").Trim();
-                if (culture.Length > 2) culture = MapHostLang(culture);
+                culture = MapHostLang(culture);
                 // Store window opened (or refreshed) in a client: basis of the
                 // "clients in use" report; anonymous, see UsageService.
                 await usage.CountAsync(ctx, "catalog", lang: culture);
@@ -342,7 +342,10 @@ public static class ApiEndpoints
                         items.Add(Services.CatalogUi.Item(cctx, v, ch, culture, g.Customer.Name));
                     }
                 }
-                static string Flat(string s) => s.Replace('\t', ' ').Replace('\r', ' ').Replace('\n', ' ');
+                // one TSV cell: tabs and line breaks become spaces, other control and bidi-override characters go (audit S1.3.1)
+                static string Flat(string s) => string.Concat(s.Select(ch => ch is '\t' or '\r' or '\n' ? " "
+                    : char.IsControl(ch) || ch is '\u202A' or '\u202B' or '\u202C' or '\u202D' or '\u202E' or '\u2066' or '\u2067' or '\u2068' or '\u2069' ? ""
+                    : ch.ToString()));
                 var sb = new System.Text.StringBuilder();
                 foreach (var i in items)
                 {
@@ -350,7 +353,7 @@ public static class ApiEndpoints
                       .Append(Flat(i.Name)).Append('\t').Append(Flat(i.Description)).Append('\t')
                       .Append(Flat(i.Changelog)).Append('\t').Append(Flat(i.MinHost)).Append('\t')
                       .Append(i.SizeBytes).Append('\t').Append(i.Sha256).Append('\t')
-                      .Append($"{Base(ctx)}/api/packages/{i.Id}/{i.Version}/download").Append('\t')
+                      .Append($"{Base(ctx)}/api/packages/{i.Id}/{i.Version}/download?lang={Uri.EscapeDataString(culture)}").Append('\t')   // the language counts with the download (audit S1.3.1)
                       .Append(Flat(i.ZxtName)).Append('\t').Append(Flat(i.Category)).Append('\t')
                       .Append(Flat(i.Author)).Append('\t').Append(Flat(i.ContactEmail)).Append('\t')
                       .Append(Flat(i.CategoryName)).Append('\t')
@@ -536,6 +539,8 @@ public static class ApiEndpoints
         {
             var user = await RequireUserAsync(ctx, users);
             if (user is null) return Unauthorized();
+            if (UploadLimits.TooMany(ctx)) return Results.Json(new { ok = false, error = new { code = "RATE_LIMITED",
+                message = "Too many uploads from this account in the last hour.", hint = "Wait a while; at most 60 checks, submissions and source uploads per account and hour." } }, statusCode: 429);
             var v = await db.PackageVersions.Include(x => x.Package).FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version);
             if (v is null) return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}'. Upload the package first (POST /api/packages).");
             if (v.Package!.OwnerId != user.Id && !ctx.User.IsInRole("Admin"))
@@ -637,7 +642,7 @@ public static class ApiEndpoints
             var v = await ScreenshotService.DisplayVersionAsync(db, id);
             if (v is null) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
             var culture = (lang ?? AddonStore.Web.Services.Lang.Current).Trim();
-            if (culture.Length > 2) culture = MapHostLang(culture);
+            culture = MapHostLang(culture);
             var shots = ScreenshotService.FromManifest(v.ManifestJson, culture);
             string Url(int n) => $"{Base(ctx)}/api/packages/{id}/screenshots/{n}?v={v.Version}";
             if (string.Equals(format, "tsv", StringComparison.OrdinalIgnoreCase))
@@ -693,7 +698,10 @@ public static class ApiEndpoints
             if (pkg.OwnerId != user.Id && !ctx.User.IsInRole("Admin"))
                 return Results.Json(new { ok = false, error = new { code = "NOT_OWNER", message = "This package belongs to another user.", hint = "Only the owner or an admin can read its feedback." } }, statusCode: 403);
             var q = db.Feedbacks.AsNoTracking().Where(f => f.PackageId == id);
-            if (status is not null && IssueService.Statuses.Contains(status)) q = q.Where(f => f.Status == status);
+            var st = (status ?? "").Trim().ToLowerInvariant();
+            if (st == "active") q = q.Where(f => f.Status != "done" && f.Status != "declined");
+            else if (st == "closed") q = q.Where(f => f.Status == "done" || f.Status == "declined");
+            else if (IssueService.Statuses.Contains(st)) q = q.Where(f => f.Status == st);
             var rows = await q.OrderByDescending(f => f.Id).Take(500).ToListAsync();
             var ratings = await db.Ratings.AsNoTracking().Where(r => r.PackageId == id).GroupBy(r => r.Stars)
                 .Select(g => new { stars = g.Key, count = g.Count() }).ToListAsync();
@@ -837,6 +845,11 @@ public static class ApiEndpoints
             if (f is null) return NotFound("FEEDBACK_NOT_FOUND", $"No problem report {fid} that you may see.");
             if (body.Status is null && body.AssignedTo is null)
                 return Results.Json(new { ok = false, error = new { code = "FEEDBACK_PATCH_EMPTY", message = "Send status and/or assignedTo.", hint = "assignedTo \"\" clears the assignment." } }, statusCode: 400);
+            // both values checked first, so a bad assignee does not leave a half-applied change (audit S1.3.1)
+            if (body.Status is not null && !IssueService.Statuses.Contains(body.Status.Trim().ToLowerInvariant()))
+                return Results.Json(new { ok = false, error = new { code = "FEEDBACK_STATUS_INVALID", message = "status must be one of: " + string.Join(", ", IssueService.Statuses) + ".", hint = "" } }, statusCode: 400);
+            if (!string.IsNullOrWhiteSpace(body.AssignedTo) && !(await issues.AssigneesAsync(f.PackageId)).Contains(body.AssignedTo.Trim()))
+                return Results.Json(new { ok = false, error = new { code = "ASSIGNEE_INVALID", message = "assignedTo must be the owner of the add-on or an admin (display name), or empty.", hint = "" } }, statusCode: 400);
             var err = body.Status is null ? null : await issues.SetStatusAsync(f, body.Status, user, viaApi: true);
             err ??= body.AssignedTo is null ? null : await issues.AssignAsync(f, body.AssignedTo, user, viaApi: true);
             if (err is not null) return Results.Json(new { ok = false, error = new { code = err.Code, message = err.Message, hint = "" } }, statusCode: 400);
@@ -852,7 +865,7 @@ public static class ApiEndpoints
             var owner = await db.Packages.AsNoTracking().Where(p => p.Id == id).Select(p => p.OwnerId).FirstOrDefaultAsync();
             if (owner is null || (owner != user.Id && !ctx.User.IsInRole("Admin") && !Services.VersionActionService.CanReview(ctx.User)))
                 return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}' that you may see.");
-            var d = await dossiers.BuildAsync(id, version, user);
+            var d = await dossiers.BuildAsync(id, version, user, ctx.User.IsInRole("Admin") || Services.VersionActionService.CanReview(ctx.User));
             if (d is null) return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}'.");
             await audit.LogAsync(user.DisplayName, "dossier.export", $"{id} {version}", "API");
             return Results.Json(new
@@ -931,11 +944,11 @@ public static class ApiEndpoints
             if (q.Length < 2 || q.Length > 300)
                 return Results.Json(new { ok = false, error = new { code = "QUERY_INVALID", message = "q must have 2 to 300 characters.", hint = "" } }, statusCode: 400);
             var culture = (lang ?? "en").Trim();
-            if (culture.Length > 2) culture = MapHostLang(culture);
+            culture = MapHostLang(culture);
             var beta = string.Equals(channel, "beta", StringComparison.OrdinalIgnoreCase);
             // At most 40 AI searches per address and day; after that the plain word search answers.
             var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
-            var counter = cache.GetOrCreate("ai-search-ip:" + ip + ":" + DateTime.UtcNow.ToString("yyyyMMdd"),
+            var counter = cache.GetOrCreate("ai-search-ip:" + ip + ":" + DateTime.UtcNow.ToString("yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture),
                 e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1); return new int[1]; })!;
             bool allowAi;
             lock (counter) { allowAi = counter[0] < 40; if (allowAi) counter[0]++; }
@@ -1338,7 +1351,8 @@ public static class ApiEndpoints
             if (!File.Exists(path)) return NotFound("FILE_MISSING", "The package file is missing on the server; contact an admin.");
             // atomic increment: concurrent downloads must not lose counts
             await db.PackageVersions.Where(x => x.Id == v.Id).ExecuteUpdateAsync(s => s.SetProperty(x => x.Downloads, x => x.Downloads + 1));
-            await usage.CountAsync(ctx, "download", v.PackageId, v.Version);
+            var dlLang = Services.Lang.Normalize(ctx.Request.Query["lang"].ToString());
+            await usage.CountAsync(ctx, "download", v.PackageId, v.Version, lang: PackageValidator.AllLanguages.Contains(dlLang) ? dlLang : "");
             return Results.File(path, "application/zip", $"{id}-{version}.ppak");
         });
 
@@ -1399,7 +1413,9 @@ public static class ApiEndpoints
     }
 
     /// <summary>Maps Power PDF's 3-letter resource codes (DEU, FRA, ...) to two-letter culture names.</summary>
-    private static string MapHostLang(string code) => code.Length > 2 && (code[2] == '-' || code[2] == '_')
+    private static string MapHostLang(string code) => code.Length == 2 || code.StartsWith("zh-", StringComparison.OrdinalIgnoreCase)
+        ? Services.Lang.Normalize(code) is var c2 && PackageValidator.AllLanguages.Contains(c2) ? c2 : "en"
+        : code.Length > 2 && (code[2] == '-' || code[2] == '_')
         ? Services.Lang.Normalize(code) is var two && PackageValidator.AllLanguages.Contains(two) ? two : "en"
         : code.ToUpperInvariant() switch
     {
@@ -1513,13 +1529,7 @@ public static class ApiEndpoints
         return await RequireUserAsync(ctx, users);
     }
 
-    private static bool TooManyUploads(HttpContext ctx, IMemoryCache cache)
-    {
-        var who = ctx.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? GeoService.ClientIp(ctx)?.ToString() ?? "?";
-        var counter = cache.GetOrCreate("uploads:" + who + ":" + DateTime.UtcNow.ToString("yyyyMMddHH"),
-            e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1); return new int[1]; })!;
-        lock (counter) { return ++counter[0] > 60; }
-    }
+    private static bool TooManyUploads(HttpContext ctx, IMemoryCache cache) => UploadLimits.TooMany(ctx, cache);
 
     private static async Task<string?> SaveUploadAsync(HttpRequest request)
     {

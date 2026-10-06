@@ -57,7 +57,7 @@ public class ShareService
         if (!Kinds.Contains(kind) || packageId.Length is 0 or > 120) return;
         try
         {
-            var day = DateTime.UtcNow.ToString("yyyy-MM-dd");
+            var day = DateTime.UtcNow.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             var r = CleanRef(reference);
             await _db.Database.ExecuteSqlInterpolatedAsync($@"
                 INSERT INTO ShareStats (Day, PackageId, Ref, Kind, Count) VALUES ({day}, {packageId}, {r}, {kind}, 1)

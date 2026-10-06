@@ -68,7 +68,7 @@ public class PluginModel : PageModel
                                        .Select(g => new { g.Key, N = g.Count() }).ToListAsync())
             if (g.Key is >= 1 and <= 5) RatingDist[g.Key - 1] = g.N;
         Feedbacks = (IsOwner || IsAdmin)
-            ? await _db.Feedbacks.AsNoTracking().Where(f => f.PackageId == Pkg.Id).OrderByDescending(f => f.Id).ToListAsync()
+            ? await _db.Feedbacks.AsNoTracking().Where(f => f.PackageId == Pkg.Id).OrderByDescending(f => f.Id).Take(25).ToListAsync()
             : new();
         var ai = await _ai.ConfigAsync();
         AiReviewOn = CanReview && ai.On && ai.Review;
@@ -105,6 +105,11 @@ public class PluginModel : PageModel
     public async Task<IActionResult> OnPostSourceAsync(string id, int versionId, IFormFile? source)
     {
         if (!await LoadAsync(id ?? "")) return Forbid();
+        if (UploadLimits.TooMany(HttpContext))   // audit S1.3.1
+        {
+            Notice = "Too many uploads from this account in the last hour."; NoticeKind = "error";
+            return Page();
+        }
         var v = Versions.FirstOrDefault(x => x.Id == versionId);
         if (v is null || (!IsOwner && !IsAdmin) || source is null || source.Length == 0)
         {
@@ -130,13 +135,8 @@ public class PluginModel : PageModel
         if (!await LoadAsync(id ?? "")) return Forbid();
         if (!IsOwner && !IsAdmin) return Forbid();
         var f = await _db.Feedbacks.FirstOrDefaultAsync(x => x.Id == fid && x.PackageId == id);
-        if (f is not null && status is "open" or "done")
-        {
-            f.Status = status;
-            f.DoneAt = status == "done" ? DateTime.UtcNow : null;
-            f.DoneBy = status == "done" ? Me!.DisplayName : null;
-            await _db.SaveChangesAsync();
-        }
+        // through the queue service: history note and audit entry like everywhere else (audit S1.3.1)
+        if (f is not null) await HttpContext.RequestServices.GetRequiredService<IssueService>().SetStatusAsync(f, status, Me!, viaApi: false);
         return RedirectToPage(new { id });
     }
 
