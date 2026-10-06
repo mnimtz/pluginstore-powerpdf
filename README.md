@@ -247,6 +247,12 @@ msiexec /i PluginStore-<version>.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"
   installation lacks, and offers "Install here" (one after the other, one
   restart question). "Later" hides the hint for these add-ons
   (HKCU `...\PluginStore\MigrateDismissed`).
+- **Problem reports and "What's new"** (client 1.2.0+): the report form takes up
+  to 3 attachments (PNG, JPEG, PDF, txt/log; 5 MB each, 10 MB together), and the
+  footer of the store window reports a problem with the store itself. After an
+  update (by the store, IT or the self-update) the store window shows once what
+  is new in the installed add-ons and the store (HKCU `...\PluginStore\Seen`
+  keeps the versions seen; installs from the store window count as seen).
 - The Power PDF Customization Kit can add the files of a plug-in ("Additional
   Files"), but no registry values (URL scheme, policies); the separate silent
   MSI step is the recommended way.

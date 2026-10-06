@@ -213,6 +213,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Blocked add-ons removed. Restart Power PDF now so they are no longer loaded?"
     IDS_PSW_BLOCKED_BANNER  "Blocked by the Add-on Store for a security reason, please remove: %s"
     IDS_PSW_BLOCKED_BTN  "Remove now"
+    IDS_PSW_ATTACH  "Attach files"
+    IDS_PSW_ATTACH_HINT  "Screenshots, PDF or logs: up to 3 files, 5 MB each. Please no confidential documents."
+    IDS_PSW_ATTACH_REFUSED  "Too large or not allowed: %s"
+    IDS_PSW_REPORT_STORE  "Report a problem with the Add-on Store"
+    IDS_PSW_NEWS_TITLE  "What's new"
+    IDS_PSW_NEWS_OK  "Got it"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -332,6 +338,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Gesperrte Add-ons entfernt. Power PDF jetzt neu starten, damit sie nicht mehr geladen sind?"
     IDS_PSW_BLOCKED_BANNER  "Vom Add-on Store aus Sicherheitsgründen gesperrt, bitte entfernen: %s"
     IDS_PSW_BLOCKED_BTN  "Jetzt entfernen"
+    IDS_PSW_ATTACH  "Dateien anhängen"
+    IDS_PSW_ATTACH_HINT  "Bildschirmfotos, PDF oder Logs: bis zu 3 Dateien, je 5 MB. Bitte keine vertraulichen Dokumente."
+    IDS_PSW_ATTACH_REFUSED  "Zu groß oder nicht erlaubt: %s"
+    IDS_PSW_REPORT_STORE  "Problem mit dem Add-on Store melden"
+    IDS_PSW_NEWS_TITLE  "Was ist neu"
+    IDS_PSW_NEWS_OK  "Verstanden"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -451,6 +463,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Modules bloqués supprimés. Redémarrer Power PDF maintenant pour qu'ils ne soient plus chargés ?"
     IDS_PSW_BLOCKED_BANNER  "Bloqué par l'Add-on Store pour une raison de sécurité, veuillez supprimer : %s"
     IDS_PSW_BLOCKED_BTN  "Supprimer maintenant"
+    IDS_PSW_ATTACH  "Joindre des fichiers"
+    IDS_PSW_ATTACH_HINT  "Captures d'écran, PDF ou journaux : jusqu'à 3 fichiers de 5 Mo chacun. Pas de documents confidentiels, s'il vous plaît."
+    IDS_PSW_ATTACH_REFUSED  "Trop volumineux ou non autorisé : %s"
+    IDS_PSW_REPORT_STORE  "Signaler un problème avec l'Add-on Store"
+    IDS_PSW_NEWS_TITLE  "Nouveautés"
+    IDS_PSW_NEWS_OK  "Compris"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -570,6 +588,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Componenti bloccati rimossi. Riavviare ora Power PDF affinché non vengano più caricati?"
     IDS_PSW_BLOCKED_BANNER  "Bloccato da Add-on Store per motivi di sicurezza, rimuovere: %s"
     IDS_PSW_BLOCKED_BTN  "Rimuovi ora"
+    IDS_PSW_ATTACH  "Allega file"
+    IDS_PSW_ATTACH_HINT  "Screenshot, PDF o log: fino a 3 file da 5 MB ciascuno. Per favore nessun documento riservato."
+    IDS_PSW_ATTACH_REFUSED  "Troppo grande o non consentito: %s"
+    IDS_PSW_REPORT_STORE  "Segnala un problema con Add-on Store"
+    IDS_PSW_NEWS_TITLE  "Novità"
+    IDS_PSW_NEWS_OK  "Ho capito"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -689,6 +713,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Complementos bloqueados eliminados. ¿Reiniciar Power PDF ahora para que dejen de cargarse?"
     IDS_PSW_BLOCKED_BANNER  "Bloqueado por la Add-on Store por motivos de seguridad, elimínelo: %s"
     IDS_PSW_BLOCKED_BTN  "Eliminar ahora"
+    IDS_PSW_ATTACH  "Adjuntar archivos"
+    IDS_PSW_ATTACH_HINT  "Capturas de pantalla, PDF o registros: hasta 3 archivos de 5 MB cada uno. Por favor, ningún documento confidencial."
+    IDS_PSW_ATTACH_REFUSED  "Demasiado grande o no permitido: %s"
+    IDS_PSW_REPORT_STORE  "Notificar un problema con la Add-on Store"
+    IDS_PSW_NEWS_TITLE  "Novedades"
+    IDS_PSW_NEWS_OK  "Entendido"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -808,6 +838,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Geblokkeerde invoegtoepassingen verwijderd. Power PDF nu opnieuw starten zodat ze niet meer worden geladen?"
     IDS_PSW_BLOCKED_BANNER  "Om veiligheidsredenen geblokkeerd door de Add-on Store, verwijder: %s"
     IDS_PSW_BLOCKED_BTN  "Nu verwijderen"
+    IDS_PSW_ATTACH  "Bestanden bijvoegen"
+    IDS_PSW_ATTACH_HINT  "Schermafbeeldingen, pdf of logs: maximaal 3 bestanden van elk 5 MB. Graag geen vertrouwelijke documenten."
+    IDS_PSW_ATTACH_REFUSED  "Te groot of niet toegestaan: %s"
+    IDS_PSW_REPORT_STORE  "Een probleem met de Add-on Store melden"
+    IDS_PSW_NEWS_TITLE  "Wat is er nieuw"
+    IDS_PSW_NEWS_OK  "Begrepen"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -927,6 +963,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Suplementos bloqueados removidos. Reiniciar o Power PDF agora para que deixem de ser carregados?"
     IDS_PSW_BLOCKED_BANNER  "Bloqueado pela Add-on Store por motivos de segurança, remova: %s"
     IDS_PSW_BLOCKED_BTN  "Remover agora"
+    IDS_PSW_ATTACH  "Anexar ficheiros"
+    IDS_PSW_ATTACH_HINT  "Capturas de ecrã, PDF ou registos: até 3 ficheiros de 5 MB cada. Por favor, nenhum documento confidencial."
+    IDS_PSW_ATTACH_REFUSED  "Demasiado grande ou não permitido: %s"
+    IDS_PSW_REPORT_STORE  "Comunicar um problema com a Add-on Store"
+    IDS_PSW_NEWS_TITLE  "Novidades"
+    IDS_PSW_NEWS_OK  "Entendido"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1046,6 +1088,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Blokerede tilføjelsesprogrammer er fjernet. Genstart Power PDF nu, så de ikke længere indlæses?"
     IDS_PSW_BLOCKED_BANNER  "Blokeret af Add-on Store af sikkerhedsgrunde, fjern venligst: %s"
     IDS_PSW_BLOCKED_BTN  "Fjern nu"
+    IDS_PSW_ATTACH  "Vedhæft filer"
+    IDS_PSW_ATTACH_HINT  "Skærmbilleder, PDF eller logfiler: op til 3 filer på hver 5 MB. Ingen fortrolige dokumenter, tak."
+    IDS_PSW_ATTACH_REFUSED  "For stor eller ikke tilladt: %s"
+    IDS_PSW_REPORT_STORE  "Rapportér et problem med Add-on Store"
+    IDS_PSW_NEWS_TITLE  "Nyheder"
+    IDS_PSW_NEWS_OK  "Forstået"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1165,6 +1213,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Estetyt lisäosat poistettu. Käynnistetäänkö Power PDF nyt uudelleen, jotta niitä ei enää ladata?"
     IDS_PSW_BLOCKED_BANNER  "Add-on Store on estänyt tietoturvasyistä, poista: %s"
     IDS_PSW_BLOCKED_BTN  "Poista nyt"
+    IDS_PSW_ATTACH  "Liitä tiedostoja"
+    IDS_PSW_ATTACH_HINT  "Kuvakaappaukset, PDF tai lokit: enintään 3 tiedostoa, kukin 5 Mt. Ei luottamuksellisia asiakirjoja."
+    IDS_PSW_ATTACH_REFUSED  "Liian suuri tai ei sallittu: %s"
+    IDS_PSW_REPORT_STORE  "Ilmoita Add-on Storen ongelmasta"
+    IDS_PSW_NEWS_TITLE  "Uutta"
+    IDS_PSW_NEWS_OK  "Selvä"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1284,6 +1338,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Blokkerte tillegg er fjernet. Starte Power PDF på nytt nå slik at de ikke lenger lastes?"
     IDS_PSW_BLOCKED_BANNER  "Blokkert av Add-on Store av sikkerhetsgrunner, fjern: %s"
     IDS_PSW_BLOCKED_BTN  "Fjern nå"
+    IDS_PSW_ATTACH  "Legg ved filer"
+    IDS_PSW_ATTACH_HINT  "Skjermbilder, PDF eller logger: opptil 3 filer på 5 MB hver. Ingen fortrolige dokumenter."
+    IDS_PSW_ATTACH_REFUSED  "For stor eller ikke tillatt: %s"
+    IDS_PSW_REPORT_STORE  "Rapporter et problem med Add-on Store"
+    IDS_PSW_NEWS_TITLE  "Nyheter"
+    IDS_PSW_NEWS_OK  "Skjønner"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1403,6 +1463,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Spärrade tillägg har tagits bort. Starta om Power PDF nu så att de inte längre läses in?"
     IDS_PSW_BLOCKED_BANNER  "Spärrat av Add-on Store av säkerhetsskäl, ta bort: %s"
     IDS_PSW_BLOCKED_BTN  "Ta bort nu"
+    IDS_PSW_ATTACH  "Bifoga filer"
+    IDS_PSW_ATTACH_HINT  "Skärmbilder, PDF eller loggar: upp till 3 filer om 5 MB vardera. Inga konfidentiella dokument, tack."
+    IDS_PSW_ATTACH_REFUSED  "För stor eller inte tillåten: %s"
+    IDS_PSW_REPORT_STORE  "Rapportera ett problem med Add-on Store"
+    IDS_PSW_NEWS_TITLE  "Nyheter"
+    IDS_PSW_NEWS_OK  "Uppfattat"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1522,6 +1588,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Zablokowane dodatki usunięto. Uruchomić ponownie Power PDF teraz, aby nie były już ładowane?"
     IDS_PSW_BLOCKED_BANNER  "Zablokowane przez Add-on Store ze względów bezpieczeństwa, usuń: %s"
     IDS_PSW_BLOCKED_BTN  "Usuń teraz"
+    IDS_PSW_ATTACH  "Dołącz pliki"
+    IDS_PSW_ATTACH_HINT  "Zrzuty ekranu, PDF lub dzienniki: do 3 plików po 5 MB. Prosimy nie dołączać poufnych dokumentów."
+    IDS_PSW_ATTACH_REFUSED  "Za duży lub niedozwolony: %s"
+    IDS_PSW_REPORT_STORE  "Zgłoś problem z Add-on Store"
+    IDS_PSW_NEWS_TITLE  "Co nowego"
+    IDS_PSW_NEWS_OK  "Rozumiem"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1641,6 +1713,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Zablokované doplňky byly odebrány. Restartovat nyní Power PDF, aby se už nenačítaly?"
     IDS_PSW_BLOCKED_BANNER  "Zablokováno obchodem Add-on Store z bezpečnostních důvodů, odeberte: %s"
     IDS_PSW_BLOCKED_BTN  "Odebrat nyní"
+    IDS_PSW_ATTACH  "Přiložit soubory"
+    IDS_PSW_ATTACH_HINT  "Snímky obrazovky, PDF nebo protokoly: až 3 soubory po 5 MB. Prosím žádné důvěrné dokumenty."
+    IDS_PSW_ATTACH_REFUSED  "Příliš velký nebo nepovolený: %s"
+    IDS_PSW_REPORT_STORE  "Nahlásit problém s obchodem Add-on Store"
+    IDS_PSW_NEWS_TITLE  "Co je nového"
+    IDS_PSW_NEWS_OK  "Rozumím"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1760,6 +1838,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "A letiltott bővítmények eltávolítva. Újraindítja most a Power PDF-et, hogy ne töltődjenek be?"
     IDS_PSW_BLOCKED_BANNER  "Az Add-on Store biztonsági okból letiltotta, távolítsa el: %s"
     IDS_PSW_BLOCKED_BTN  "Eltávolítás most"
+    IDS_PSW_ATTACH  "Fájlok csatolása"
+    IDS_PSW_ATTACH_HINT  "Képernyőképek, PDF vagy naplók: legfeljebb 3 fájl, egyenként 5 MB. Kérjük, ne csatoljon bizalmas dokumentumot."
+    IDS_PSW_ATTACH_REFUSED  "Túl nagy vagy nem engedélyezett: %s"
+    IDS_PSW_REPORT_STORE  "Probléma bejelentése az Add-on Store-ral kapcsolatban"
+    IDS_PSW_NEWS_TITLE  "Újdonságok"
+    IDS_PSW_NEWS_OK  "Értem"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1879,6 +1963,12 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Заблокированные надстройки удалены. Перезапустить Power PDF сейчас, чтобы они больше не загружались?"
     IDS_PSW_BLOCKED_BANNER  "Заблокировано Add-on Store по соображениям безопасности, удалите: %s"
     IDS_PSW_BLOCKED_BTN  "Удалить сейчас"
+    IDS_PSW_ATTACH  "Прикрепить файлы"
+    IDS_PSW_ATTACH_HINT  "Снимки экрана, PDF или журналы: до 3 файлов по 5 МБ. Пожалуйста, без конфиденциальных документов."
+    IDS_PSW_ATTACH_REFUSED  "Слишком большой или недопустимый файл: %s"
+    IDS_PSW_REPORT_STORE  "Сообщить о проблеме с Add-on Store"
+    IDS_PSW_NEWS_TITLE  "Что нового"
+    IDS_PSW_NEWS_OK  "Понятно"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1998,4 +2088,10 @@ BEGIN
     IDS_PS_BLOCKED_REMOVED  "Engellenen eklentiler kaldırıldı. Artık yüklenmemeleri için Power PDF şimdi yeniden başlatılsın mı?"
     IDS_PSW_BLOCKED_BANNER  "Güvenlik nedeniyle Add-on Store tarafından engellendi, lütfen kaldırın: %s"
     IDS_PSW_BLOCKED_BTN  "Şimdi kaldır"
+    IDS_PSW_ATTACH  "Dosya ekle"
+    IDS_PSW_ATTACH_HINT  "Ekran görüntüleri, PDF veya günlükler: her biri 5 MB olmak üzere en fazla 3 dosya. Lütfen gizli belge eklemeyin."
+    IDS_PSW_ATTACH_REFUSED  "Çok büyük veya izin verilmiyor: %s"
+    IDS_PSW_REPORT_STORE  "Add-on Store ile ilgili sorun bildir"
+    IDS_PSW_NEWS_TITLE  "Yenilikler"
+    IDS_PSW_NEWS_OK  "Anladım"
 END

@@ -100,6 +100,13 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .form .kinds label,.form .chk{display:flex;gap:6px;align-items:center;margin:0;color:var(--ink);font-size:13px}
 .form .chk{margin-top:10px}
 .form .note{font-size:11.5px;color:var(--slate);margin-top:10px;line-height:1.5}
+.form .note.bad{color:#9B2C2C}
+.form .att{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.form .attlist{display:flex;gap:6px;flex-wrap:wrap}
+.form .attlist .chip{display:inline-flex;align-items:center;gap:4px}
+.form .attlist .x{border:0;background:transparent;color:inherit;cursor:pointer;font-size:14px;line-height:1;padding:0 2px}
+.news-name{font-weight:700;color:var(--navy);margin:12px 0 4px}
+.news-text{white-space:pre-wrap;font-size:13px;line-height:1.5;color:#333;max-height:300px;overflow:auto}
 </style>
 </head>
 <body>
@@ -134,6 +141,7 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
     <svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
     <span class="grow" id="disc"></span>
     <a class="link" id="discLink"></a>
+    <a class="link" id="reportStore"></a>
   </footer>
 </div>
 <div class="veil" id="veil"><div class="modal" id="modal"></div></div>
@@ -372,6 +380,32 @@ function reportForm(x) {
   var lt = el("label", "", S.reportText); var ta = el("textarea"); ta.maxLength = 4000; ta.id = "rtext"; lt.htmlFor = "rtext"; f.appendChild(lt); f.appendChild(ta);
   var le = el("label", "", S.reportEmail); var em = el("input"); em.type = "email"; em.maxLength = 200; em.id = "remail"; le.htmlFor = "remail"; f.appendChild(le); f.appendChild(em);
   var lc = el("label", "chk"), cb = el("input"); cb.type = "checkbox"; lc.appendChild(cb); lc.appendChild(document.createTextNode(S.reportLog)); f.appendChild(lc);
+  // attachments (C1.2.0): up to 3 files, 5 MB each, 10 MB together; the server checks the content again
+  var files = [], fileIn = el("input"); fileIn.type = "file"; fileIn.multiple = true; fileIn.accept = ".png,.jpg,.jpeg,.pdf,.txt,.log"; fileIn.style.display = "none";
+  var attRow = el("div", "att"), attBtn = el("button", "btn sec sm", S.attach), attList = el("div", "attlist"), attNote = el("div", "note", S.attachHint);
+  attBtn.type = "button"; attBtn.onclick = function () { fileIn.click(); };
+  function showFiles() {
+    attList.textContent = "";
+    files.forEach(function (fl, i) {
+      var chip = el("span", "chip on"); chip.textContent = fl.name + " (" + Math.max(1, Math.round(fl.size / 1024)) + " KB) ";
+      var x = el("button", "x", "\u00d7"); x.type = "button"; x.title = S.remove; x.onclick = function () { files.splice(i, 1); showFiles(); };
+      chip.appendChild(x); attList.appendChild(chip);
+    });
+    attBtn.disabled = files.length >= 3;
+  }
+  fileIn.onchange = function () {
+    var refused = [];
+    Array.prototype.forEach.call(fileIn.files, function (fl) {
+      var total = files.reduce(function (s, x) { return s + x.size; }, 0);
+      if (files.length >= 3 || fl.size > 5 * 1024 * 1024 || total + fl.size > 10 * 1024 * 1024 || !/\.(png|jpe?g|pdf|txt|log)$/i.test(fl.name)) refused.push(fl.name);
+      else files.push(fl);
+    });
+    fileIn.value = "";
+    attNote.textContent = refused.length ? fmt(S.attachRefused, refused.join(", ")) : S.attachHint;
+    attNote.className = refused.length ? "note bad" : "note";
+    showFiles();
+  };
+  attRow.appendChild(attBtn); attRow.appendChild(attList); f.appendChild(attRow); f.appendChild(attNote); f.appendChild(fileIn);
   f.appendChild(el("div", "note", S.reportPrivacy));
   m.appendChild(f);
   var a = el("div", "acts");
@@ -380,9 +414,17 @@ function reportForm(x) {
   send.onclick = function () {
     var text = ta.value.trim();
     if (text.length < 5) { ta.focus(); return; }
-    var kind = f.querySelector("input[name=kind]:checked").value;
+    var kind = f.querySelector("input[name=kind]:checked").value, email = em.value.trim(), withLog = cb.checked ? "1" : "0";
     busyModal(S.send);
-    post({ cmd: "feedback", id: x.id, kind: kind, message: text, email: em.value.trim(), log: cb.checked ? "1" : "0" });
+    post({ cmd: "attachClear" });
+    var pending = files.slice();
+    (function next() {
+      if (!pending.length) { post({ cmd: "feedback", id: x.id, kind: kind, message: text, email: email, log: withLog }); return; }
+      var fl = pending.shift(), rd = new FileReader();
+      rd.onload = function () { var s = String(rd.result); post({ cmd: "attach", data: s.slice(s.indexOf(",") + 1), name: fl.name }); next(); };
+      rd.onerror = next;
+      rd.readAsDataURL(fl);
+    })();
   };
   a.appendChild(cancel); a.appendChild(send); m.appendChild(a);
   $("veil").classList.add("on"); ta.focus();
@@ -402,6 +444,7 @@ function confirmAct(action, x) {
 // Add-ons from an earlier Power PDF folder (C1.1.4): installed one after the
 // other, one restart question at the end.
 var migQueue = null, migDone = 0;
+var newsShown = false;   // "What's new" once per store window (C1.2.0)
 function migNext() {
   if (!migQueue || !migQueue.length) {
     var n = migDone; migQueue = null; migDone = 0;
@@ -437,6 +480,8 @@ function apply(m) {
     $("disc").textContent = S.disclaimer; $("disc").title = S.disclaimer;
     $("discLink").textContent = S.disclaimerBtn;
     $("discLink").onclick = function () { modal(S.disclaimerBtn, S.disclaimerFull, [{ label: S.close }]); };
+    $("reportStore").textContent = S.reportStore || "";
+    $("reportStore").onclick = function () { reportForm({ id: "com.tungsten.pluginstore", name: S.title }); };
     $("migBtn").textContent = S.migrateBtn || ""; $("migLater").textContent = S.later || "";
     $("blkBtn").textContent = S.blockedBtn || "";
     $("blkBtn").onclick = function () { if (!busy) post({ cmd: "removeBlocked" }); };
@@ -453,6 +498,19 @@ function apply(m) {
     codeButton();
     $("err").style.display = m.error ? "flex" : "none"; $("err").textContent = m.error || "";
     $("upd").style.display = self ? "flex" : "none";
+    if (m.news && m.news.length && !newsShown && !busy) {
+      newsShown = true;
+      var nm = $("modal"); nm.textContent = ""; nm.classList.add("wide");
+      nm.appendChild(el("h3", "", S.newsTitle));
+      m.news.forEach(function (n) {
+        nm.appendChild(el("p", "news-name", n.name + " " + n.version));
+        var c = el("div", "news-text"); c.textContent = n.changelog; nm.appendChild(c);
+      });
+      var na = el("div", "acts"), ok = el("button", "btn", S.newsOk);
+      ok.onclick = function () { post({ cmd: "newsSeen" }); closeModal(); };
+      na.appendChild(ok); nm.appendChild(na);
+      $("veil").classList.add("on"); ok.focus();
+    }
     var blk = m.blocked && m.blocked.length ? m.blocked : null;
     $("blk").style.display = blk ? "flex" : "none";
     if (blk) $("blkText").textContent = fmt(S.blockedText, blk.map(function (b) { return b.name + " " + b.version + (b.reason ? " (" + b.reason + ")" : ""); }).join("; "));

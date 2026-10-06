@@ -132,6 +132,12 @@
 #define IDS_PS_BLOCKED_REMOVED  327
 #define IDS_PSW_BLOCKED_BANNER  328
 #define IDS_PSW_BLOCKED_BTN     329
+#define IDS_PSW_ATTACH          330
+#define IDS_PSW_ATTACH_HINT     331
+#define IDS_PSW_ATTACH_REFUSED  332
+#define IDS_PSW_REPORT_STORE    333
+#define IDS_PSW_NEWS_TITLE      334
+#define IDS_PSW_NEWS_OK         335
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261

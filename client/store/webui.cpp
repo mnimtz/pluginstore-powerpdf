@@ -352,6 +352,9 @@ protected:
     int m_catalogGen = 0;
     bool m_jobRunning = false;
     std::vector<std::wstring> m_migrateKeys;   // "<old root>|<id>" of the add-ons offered (C1.1.4)
+    struct Attachment { std::wstring name, data; };   // data: base64 from the page (C1.2.0)
+    std::vector<Attachment> m_attach;
+    std::vector<std::pair<std::wstring, std::wstring>> m_news;   // id, version shown under "What's new" (C1.2.0)
     // WebView2 completes its creation callbacks through the message loop, possibly
     // after the dialog (a stack object) is gone: the callbacks check this flag first.
     std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
@@ -493,6 +496,8 @@ protected:
             { L"codeBad", IDS_PSO_CODE_BAD },
             { L"migrateText", IDS_PSW_MIGRATE_TEXT }, { L"migrateBtn", IDS_PSW_MIGRATE_BTN }, { L"migrateDone", IDS_PSW_MIGRATE_DONE },
             { L"blockedText", IDS_PSW_BLOCKED_BANNER }, { L"blockedBtn", IDS_PSW_BLOCKED_BTN },
+            { L"attach", IDS_PSW_ATTACH }, { L"attachHint", IDS_PSW_ATTACH_HINT }, { L"attachRefused", IDS_PSW_ATTACH_REFUSED },
+            { L"reportStore", IDS_PSW_REPORT_STORE }, { L"newsTitle", IDS_PSW_NEWS_TITLE }, { L"newsOk", IDS_PSW_NEWS_OK },
         };
         std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) +
                          L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") +
@@ -559,6 +564,7 @@ protected:
         }
         j += L"]";
         j += MigrateJson();
+        j += NewsJson();
         // installed add-ons the store has blocked for a security reason (C1.1.5)
         {
             std::wstring b;
@@ -618,6 +624,50 @@ protected:
         return L",\"migrate\":{\"folder\":" + Json(folder) + L",\"items\":[" + items + L"]}";
     }
 
+    // "What's new" (C1.2.0): the last version per add-on whose changes the user has seen
+    // (HKCU ...\PluginStore\Seen). A first sight records silently: a fresh install or the
+    // first start of this client has nothing to tell.
+    static std::wstring SeenVersion(const std::wstring& id)
+    {
+        wchar_t buf[64] = { 0 };
+        DWORD cb = sizeof(buf);
+        std::wstring key = std::wstring(kPSRegKey) + L"\\Seen";
+        if (RegGetValueW(HKEY_CURRENT_USER, key.c_str(), id.c_str(), RRF_RT_REG_SZ, NULL, buf, &cb) != ERROR_SUCCESS) return L"";
+        return buf;
+    }
+
+    static void SetSeen(const std::wstring& id, const std::wstring& version)
+    {
+        std::wstring key = std::wstring(kPSRegKey) + L"\\Seen";
+        RegSetKeyValueW(HKEY_CURRENT_USER, key.c_str(), id.c_str(), REG_SZ, version.c_str(), (DWORD)((version.size() + 1) * sizeof(wchar_t)));
+    }
+
+    std::wstring NewsJson()
+    {
+        m_news.clear();
+        std::wstring items;
+        auto add = [&](const std::wstring& id, const std::wstring& name, const std::wstring& installed,
+                       const std::wstring& latest, const std::wstring& changelog) {
+            if (id.empty() || installed.empty() || id.size() > 200) return;
+            std::wstring seen = SeenVersion(id);
+            if (seen.empty()) { SetSeen(id, installed); return; }
+            if (seen == installed || installed != latest) return;   // nothing new, or the changelog is of another version
+            if (changelog.empty()) { SetSeen(id, installed); return; }
+            m_news.push_back({ id, installed });
+            items += (items.empty() ? L"" : L",") + std::wstring(L"{\"name\":") + Json(name) + L",\"version\":" + Json(installed) +
+                     L",\"changelog\":" + Json(changelog) + L"}";
+        };
+        if (!m_self.id.empty()) add(kClientId, m_self.name, FP_VERSION_W, m_self.version, m_self.changelog);
+        for (const auto& e : m_entries) add(e.id, e.name, e.installedVersion, e.version, e.changelog);
+        return items.empty() ? L"" : L",\"news\":[" + items + L"]";
+    }
+
+    void NewsSeen()
+    {
+        for (const auto& n : m_news) SetSeen(n.first, n.second);
+        m_news.clear();
+    }
+
     void MigrateDismiss()
     {
         std::wstring v = MigrateDismissed();
@@ -668,15 +718,39 @@ protected:
     }
 
     // Problem report or comment to the add-on's developer.
+    // Files the page attached to the report being written (C1.2.0): base64, checked again by the server.
+    void Attach(const std::wstring& name, const std::wstring& data)
+    {
+        if (m_attach.size() >= 3 || data.empty() || data.size() > 7 * 1024 * 1024) return;
+        for (wchar_t c : data)
+            if (!(iswalnum(c) || c == L'+' || c == L'/' || c == L'=')) return;   // base64 only
+        m_attach.push_back({ name.substr(0, 200), data });
+    }
+
     void SendFeedback(size_t i, std::wstring kind, const std::wstring& message, const std::wstring& email, bool withLog)
     {
         if (i >= m_entries.size()) return;
-        const PSCatalogEntry& e = m_entries[i];
+        SendFeedbackFor(m_entries[i], kind, message, email, withLog);
+    }
+
+    void SendFeedbackFor(const PSCatalogEntry& e, std::wstring kind, const std::wstring& message, const std::wstring& email, bool withLog)
+    {
         if (kind != L"comment") kind = L"problem";
+        std::string files;
+        for (const auto& a : m_attach)
+        {
+            std::string data;   // base64, checked in Attach(): ASCII only
+            data.reserve(a.data.size());
+            for (wchar_t ch : a.data) data += static_cast<char>(ch);
+            files += (files.empty() ? "" : ",") + std::string("{\"name\":") + U8(Json(a.name)) + ",\"data\":\"" + data + "\"}";
+        }
+        m_attach.clear();
         std::string body = "{\"installId\":" + U8(Json(PSInstallId())) + ",\"kind\":" + U8(Json(kind)) +
                            ",\"message\":" + U8(Json(message)) + ",\"email\":" + U8(Json(email)) +
-                           ",\"version\":" + U8(Json(e.installedVersion.empty() ? e.version : e.installedVersion)) +
-                           ",\"log\":" + U8(Json(withLog ? LogTail(80) : std::wstring())) + "}";
+                           ",\"version\":" + U8(Json(e.id == kClientId ? std::wstring(FP_VERSION_W)
+                                                     : e.installedVersion.empty() ? e.version : e.installedVersion)) +
+                           ",\"log\":" + U8(Json(withLog ? LogTail(80) : std::wstring())) +
+                           (files.empty() ? "" : ",\"attachments\":[" + files + "]") + "}";
         std::wstring url = PackageUrl(e, L"/feedback");
         HWND h = m_hWnd;
         Spawn([h, url, body]() {
@@ -941,10 +1015,16 @@ protected:
             size_t idx = 0;
             if (Find(Field(json, L"id"), &idx)) Rate(idx, _wtoi(Field(json, L"stars").c_str()));
         }
+        else if (cmd == L"attachClear") m_attach.clear();
+        else if (cmd == L"attach") Attach(Field(json, L"name", 200), Field(json, L"data", 7 * 1024 * 1024));
+        else if (cmd == L"newsSeen") NewsSeen();
         else if (cmd == L"feedback")
         {
             size_t idx = 0;
-            if (Find(Field(json, L"id"), &idx))
+            std::wstring id = Field(json, L"id");
+            if (id == kClientId && !m_self.id.empty())
+                SendFeedbackFor(m_self, Field(json, L"kind"), Field(json, L"message", 4000), Field(json, L"email", 200), Field(json, L"log") == L"1");
+            else if (Find(id, &idx))
                 SendFeedback(idx, Field(json, L"kind"), Field(json, L"message", 4000), Field(json, L"email", 200), Field(json, L"log") == L"1");
         }
         else if (cmd == L"need") NeedSearch(Field(json, L"q", 300));
@@ -1002,6 +1082,7 @@ protected:
         int rc = r.count;
         if (rc == 0)
         {
+            if (r.number == JobInstall) SetSeen(e.id, e.version);
             LoadCatalog(false);
             Send(L"{\"type\":\"result\",\"ok\":true,\"restart\":true,\"title\":" + Json(e.name) + L",\"message\":" +
                  Json(Fmt(r.number == JobInstall ? IDS_PSD_ASK_RESTART : IDS_PSD_ASK_RESTART_UN, e.name)) + L"}");
