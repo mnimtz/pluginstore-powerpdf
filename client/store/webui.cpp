@@ -646,7 +646,7 @@ protected:
             j += (i ? L"," : L"") + std::wstring(L"{\"id\":") + Json(e.id) + L",\"name\":" + Json(e.name) +
                  L",\"description\":" + Json(e.description) + L",\"changelog\":" + Json(e.changelog) +
                  L",\"version\":" + Json(e.version) + L",\"installed\":" + Json(e.installedVersion) +
-                 L",\"update\":" + (PSIsUpdate(e.version, e.installedVersion) ? L"true" : L"false") +
+                 L",\"update\":" + (!e.orphan && PSIsUpdate(e.version, e.installedVersion) ? L"true" : L"false") +
                  L",\"channel\":" + Json(e.channel) + L",\"category\":" + Json(e.category) +
                  L",\"categoryName\":" + Json(e.categoryName.empty() ? e.category : e.categoryName) +
                  L",\"size\":" + size + L",\"author\":" + Json(e.author) + L",\"contact\":" + Json(e.contactEmail) +
@@ -1103,14 +1103,12 @@ protected:
             for (const auto& e : remove) zxts.push_back(e.zxtName);
             try
             {
-                m->count = PSUninstallPackages(zxts, h);
-                if (m->count == 0)
-                {
-                    // while the code is still stored: free the installations it took
-                    std::vector<std::wstring> ids;
-                    for (const auto& e : remove) ids.push_back(e.id);
-                    PSReleaseInstallations(ids);
-                }
+                std::vector<bool> gone;
+                m->count = PSUninstallPackages(zxts, h, &gone);
+                // while the code is still stored: free the installations of what was removed (all, or some)
+                std::vector<std::wstring> ids;
+                for (size_t i = 0; i < remove.size() && i < gone.size(); ++i) if (gone[i]) ids.push_back(remove[i].id);
+                PSReleaseInstallations(ids);
             }
             catch (...) { FPLogW(L"[Store] removing the add-ons of a code failed"); }
             PostAsync(h, m);
@@ -1333,8 +1331,11 @@ protected:
                      L",\"message\":" + Json(Fmt(IDS_PSW_CODE_REMOVED_ADDONS, names)) + L"}");
             }
             else
+            {
+                LoadCatalog(false);   // some may be gone (C1.4.2)
                 Send(L"{\"type\":\"result\",\"ok\":false,\"title\":" + Json(FPLoc(IDS_PSW_CODE_BTN)) +
                      L",\"message\":" + Json(FPLoc(IDS_PSW_CODE_KEPT)) + L"}");
+            }
             FPLogW(L"[Store] code removal with %u add-on(s) -> %d", (unsigned)r.entries.size(), r.count);
             return;
         }

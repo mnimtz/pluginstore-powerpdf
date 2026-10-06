@@ -25,6 +25,35 @@ std::vector<PSBlocked> g_blocked;          // UI thread only
 struct Rule { std::wstring hash, version; };
 std::vector<Rule> g_rules;                 // guarded by g_rulesLock
 SRWLOCK g_rulesLock = SRWLOCK_INIT;
+bool g_rulesLoaded = false;                // the stored list was read (guarded by g_rulesLock)
+
+// The last good list in HKCU BlockedRules (REG_MULTI_SZ "hash<TAB>version", C1.4.2): a block
+// holds from the start of Power PDF, before the first check and while the server is unreachable.
+void SaveRules(const std::vector<Rule>& rules)
+{
+    std::wstring multi;
+    for (const auto& r : rules) { multi += r.hash + L"\t" + r.version; multi.push_back(0); }
+    multi.push_back(0);
+    if (rules.empty()) RegDeleteKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"BlockedRules");
+    else RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"BlockedRules", REG_MULTI_SZ, multi.data(), (DWORD)(multi.size() * sizeof(wchar_t)));
+}
+
+std::vector<Rule> LoadRules()
+{
+    std::vector<Rule> out;
+    DWORD type = 0, size = 0;
+    if (RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, L"BlockedRules", RRF_RT_REG_MULTI_SZ, &type, NULL, &size) != ERROR_SUCCESS ||
+        size == 0 || size > 256 * 1024) return out;
+    std::vector<wchar_t> buf(size / sizeof(wchar_t) + 2, 0);
+    if (RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, L"BlockedRules", RRF_RT_REG_MULTI_SZ, &type, buf.data(), &size) != ERROR_SUCCESS) return out;
+    for (const wchar_t* p = buf.data(); *p; p += wcslen(p) + 1)
+    {
+        std::wstring line = p;
+        size_t tab = line.find(L'\t');
+        if (tab == 64) out.push_back({ line.substr(0, 64), line.substr(65, 40) });
+    }
+    return out;
+}
 std::set<std::wstring> g_asked;            // "<id>|<version>" asked this session
 volatile LONG g_running = 0;
 
@@ -133,8 +162,10 @@ DWORD WINAPI Worker(LPVOID p)
                 if (i.hash == hash && (ver == L"*" || ver == i.version))
                     found->push_back({ i.id, i.name, i.version, i.zxt, reason });
         }
+        SaveRules(rules);
         AcquireSRWLockExclusive(&g_rulesLock);
         g_rules.swap(rules);
+        g_rulesLoaded = true;
         ReleaseSRWLockExclusive(&g_rulesLock);
         FPLogW(L"[Store] blocklist checked: %u blocked add-on(s) installed", (unsigned)found->size());
     }
@@ -178,6 +209,9 @@ bool PSIsBlockedVersion(const std::wstring& id, const std::wstring& version)
 {
     std::wstring hash = Sha256Hex(Utf8Lower(id));
     bool blocked = false;
+    AcquireSRWLockExclusive(&g_rulesLock);
+    if (!g_rulesLoaded) { g_rules = LoadRules(); g_rulesLoaded = true; }   // before the first check of this session
+    ReleaseSRWLockExclusive(&g_rulesLock);
     AcquireSRWLockShared(&g_rulesLock);
     for (const auto& r : g_rules)
         if (r.hash == hash && (r.version == L"*" || r.version == version)) { blocked = true; break; }

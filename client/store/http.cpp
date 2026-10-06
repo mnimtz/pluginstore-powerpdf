@@ -230,7 +230,7 @@ bool PSHttpGetText(const std::wstring& url, std::string& outUtf8, DWORD* status)
     return true;
 }
 
-bool PSHttpCheckCustomerCode(const std::wstring& url, const std::wstring& code, std::string& outUtf8, DWORD* status)
+bool PSHttpCheckCustomerCode(const std::wstring& url, const std::wstring& code, std::string& outUtf8, DWORD* status, size_t maxBytes)
 {
     Url u;
     if (!Crack(url, u)) return false;
@@ -249,7 +249,7 @@ bool PSHttpCheckCustomerCode(const std::wstring& url, const std::wstring& code, 
         if (!WinHttpReadData(r, chunk.data(), avail, &got)) return false;
         if (got == 0) break;
         outUtf8.append(chunk.data(), got);
-        if (outUtf8.size() > 64 * 1024) return false;
+        if (outUtf8.size() > maxBytes) return false;
     }
     return true;
 }

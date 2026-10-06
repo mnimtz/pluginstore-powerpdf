@@ -41,7 +41,8 @@ std::vector<PSInstalledAddon> PSListInstalledAddons(const std::wstring& lang);
 
 // Removes several add-ons with ONE elevated step (C1.4.1, e.g. the add-ons of a removed
 // customer code). Same return codes as PSUninstallPackage.
-int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner);
+int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner, std::vector<bool>* removed = nullptr);
+// (removed, C1.4.2: one flag per name, also when only some could be removed; 4 = not all)
 
 // Tells the store that these delivered add-ons were removed here, so their installations
 // are free again (C1.4.1). Sent with the stored customer codes; best effort.

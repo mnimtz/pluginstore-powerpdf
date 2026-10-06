@@ -191,7 +191,7 @@ static std::wstring BinFunctions()
         L"}\r\n" +
         L"function Install-Bin($from, $to) {\r\n" +
         L"  Clear-Bin $to\r\n" +
-        L"  $dlls = @(Get-ChildItem -LiteralPath $from -Filter '*.dll' -File -ErrorAction SilentlyContinue)\r\n" +
+        L"  $dlls = @(Get-ChildItem -LiteralPath $from -Filter '*.dll' -File -ErrorAction SilentlyContinue | Where-Object { $_.Extension -eq '.dll' })\r\n" +
         L"  if ($dlls.Count -eq 0) { return }\r\n" +
         L"  New-Item -ItemType Directory -Force -Path $to | Out-Null\r\n" +
         L"  foreach ($f in $dlls) { Copy-Item -LiteralPath $f.FullName -Destination (Join-Path $to $f.Name) -Force }\r\n" +
@@ -210,6 +210,8 @@ static std::wstring StageCreate()
         L"  $acl=New-Object System.Security.AccessControl.DirectorySecurity\r\n" +
         L"  $acl.SetAccessRuleProtection($true,$false)\r\n" +
         L"  foreach ($sid in @('S-1-5-18','S-1-5-32-544')) { $acl.AddAccessRule((New-Object System.Security.AccessControl.FileSystemAccessRule((New-Object System.Security.Principal.SecurityIdentifier $sid),'FullControl','ContainerInherit,ObjectInherit','None','Allow'))) }\r\n" +
+        // OWNER RIGHTS (C1.4.2): whoever owns the folder gets no implicit WRITE_DAC, only reading
+        L"  $acl.AddAccessRule((New-Object System.Security.AccessControl.FileSystemAccessRule((New-Object System.Security.Principal.SecurityIdentifier 'S-1-3-4'),'ReadAndExecute','ContainerInherit,ObjectInherit','None','Allow')))\r\n" +
         L"  [System.IO.Directory]::CreateDirectory($stage,$acl) | Out-Null\r\n";
 }
 
@@ -595,12 +597,16 @@ std::vector<PSInstalledAddon> PSListInstalledAddons(const std::wstring& lang)
         a.version = JsonValue(json, "version");
         a.zxtName = zxt;
         size_t n = json.find("\"name\"");
-        if (n != std::string::npos)
+        size_t open = n == std::string::npos ? n : json.find('{', n);
+        size_t close = open == std::string::npos ? open : json.find('}', open);
+        if (close != std::string::npos && json.find(':', n) < open)
         {
+            // only inside the name object (C1.4.2): a language missing there must not pick the description
+            std::string nameObj = json.substr(open, close - open + 1);
             std::string lc;
             for (wchar_t ch : lang) if (ch < 0x80) lc += (char)ch;   // ASCII language codes only
-            a.name = psold::Value(json.substr(n), lc.c_str());
-            if (a.name.empty()) a.name = psold::Value(json.substr(n), "en");
+            a.name = psold::Value(nameObj, lc.c_str());
+            if (a.name.empty()) a.name = psold::Value(nameObj, "en");
         }
         if (a.name.empty()) a.name = a.id;
         out.push_back(a);
@@ -628,11 +634,13 @@ void PSReleaseInstallations(const std::vector<std::wstring>& packageIds)
     std::string answer;
     DWORD status = 0;
     bool ok = PSHttpPostJson(PSServerUrl() + L"/api/deliveries/release", body, answer, &status);
-    FPLogW(L"[Store] released installations of %u add-on(s): HTTP %lu", (unsigned)packageIds.size(), ok ? status : status);
+    FPLogW(L"[Store] released installations of %u add-on(s): %s (HTTP %lu)", (unsigned)packageIds.size(), ok ? L"ok" : L"failed", status);
 }
 
-int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner)
+int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner, std::vector<bool>* removed)
 {
+    if (removed) removed->assign(zxtNames.size(), false);
+    if (zxtNames.size() > 29) return 4;   // the exit code carries one bit per add-on (bit 0: the script failed)
     if (PSPolicyNoInstall())
     {
         FPLogW(L"[Store] install/remove blocked by policy DisableInstall");
@@ -665,28 +673,38 @@ int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner)
         L"$plugins=" + PsQuote(pluginsDir) + L"\r\n" +
         BinFunctions() +
         L"Get-ChildItem -LiteralPath $plugins -Filter '*.zxt.old-*' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue\r\n" +
+        // each add-on on its own (C1.4.2): one that is locked must not stop the others; bit i+1 = add-on i
+        // failed, bit 0 (any other error, e.g. exit 1 of PowerShell itself) = nothing is certain
+        L"$failed=0; $i=0\r\n" +
         L"foreach ($name in @(" + names + L")) {\r\n" +
-        L"  $zxt=Join-Path $plugins ($name + '.zxt')\r\n" +
-        L"  if (Test-Path -LiteralPath $zxt) { try { Remove-Item -LiteralPath $zxt -Force } catch { Rename-Item -LiteralPath $zxt ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
-        L"  $data=Join-Path $plugins $name\r\n" +
-        L"  Clear-Bin (Join-Path $data 'bin')\r\n" +
-        L"  if (Test-Path -LiteralPath $data) { Remove-Item -LiteralPath $data -Recurse -Force }\r\n" +
+        L"  try {\r\n" +
+        L"    $zxt=Join-Path $plugins ($name + '.zxt')\r\n" +
+        L"    if (Test-Path -LiteralPath $zxt) { try { Remove-Item -LiteralPath $zxt -Force } catch { Rename-Item -LiteralPath $zxt ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
+        L"    $data=Join-Path $plugins $name\r\n" +
+        L"    Clear-Bin (Join-Path $data 'bin')\r\n" +
+        L"    if (Test-Path -LiteralPath $data) { Remove-Item -LiteralPath $data -Recurse -Force }\r\n" +
+        L"  } catch { $failed = $failed -bor (1 -shl $i) }\r\n" +
+        L"  $i++\r\n" +
         L"}\r\n" +
-        L"exit 0\r\n";
+        L"exit ($failed -shl 1)\r\n";
 
     int result;
     DWORD code = 1;
+    // a timeout or a crashed script reports every add-on as not removed
     if (!RunElevated(script, owner, 60000, &code))
         result = 3;
     else
         result = code == 0 ? 0 : 4;
+    if (result == 3) code = 0xFFFFFFFF;
 
-    if (result == 0)
-        for (const auto& zxtName : zxtNames)
-        {
-            std::wstring key = L"Software\\Kofax\\PDF\\Tungsten Power PDF\\" + zxtName;
-            RegDeleteTreeW(HKEY_CURRENT_USER, key.c_str());
-        }
+    for (size_t i = 0; i < zxtNames.size(); ++i)
+    {
+        bool gone = result != 3 && (code & 1u) == 0 && (code & (1u << (i + 1))) == 0;
+        if (removed) (*removed)[i] = gone;
+        if (!gone) continue;
+        std::wstring key = L"Software\\Kofax\\PDF\\Tungsten Power PDF\\" + zxtNames[i];
+        RegDeleteTreeW(HKEY_CURRENT_USER, key.c_str());
+    }
 
     FPLogW(L"[Store] uninstall %s -> %d", names.c_str(), result);
     return result;
