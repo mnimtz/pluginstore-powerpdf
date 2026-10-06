@@ -3,7 +3,26 @@
   "version": "1.1.0",
   "name": {
     "en": "Barcode Stamps",
-    "de": "Barcode-Stempel"
+    "de": "Barcode-Stempel",
+    "fr": "Tampons code-barres",
+    "it": "Timbri con codice a barre",
+    "es": "Sellos de código de barras",
+    "nl": "Barcodestempels",
+    "pt": "Carimbos de código de barras",
+    "da": "Stregkodestempler",
+    "fi": "Viivakoodileimasimet",
+    "nb": "Strekkodestempler",
+    "sv": "Streckkodsstämplar",
+    "pl": "Pieczątki z kodem kreskowym",
+    "cs": "Razítka s čárovým kódem",
+    "hu": "Vonalkódbélyegzők",
+    "ru": "Штампы со штрихкодом",
+    "tr": "Barkod Damgaları",
+    "zh-Hans": "条形码图章",
+    "zh-Hant": "條碼圖章",
+    "ja": "バーコード スタンプ",
+    "ko": "바코드 스탬프",
+    "ar": "أختام الرموز الشريطية"
   },
   "description": {
     "en": "Creates barcode stamps (QR Code, DataMatrix, PDF417, Aztec, Code 128, EAN and more) with an assistant and adds them to the Power PDF stamp palette, ready to place on any page.",

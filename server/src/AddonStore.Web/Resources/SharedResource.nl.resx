@@ -1053,4 +1053,8 @@
   <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Te veel uploads vanaf dit account in het afgelopen uur.</value></data>
   <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Stel het openbare adres van de Store in (Instellingen, Server) om koppelingen voor opnieuw instellen te verzenden.</value></data>
   <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>De e-mail voor opnieuw instellen kan niet worden verzonden. Voor beheerdersaccounts wordt de koppeling niet weergegeven; controleer de e-mailinstellingen.</value></data>
+  <data name="Review (optional)" xml:space="preserve"><value>Controleren (optioneel)</value></data>
+  <data name="Record the review" xml:space="preserve"><value>Controle vastleggen</value></data>
+  <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Privé-invoegtoepassing: deze verschijnt nooit in de openbare catalogus. Goedkeuren legt alleen uw controle vast; leveringen aan klanten verstrekken in elk geval de nieuwste gecontroleerde versie.</value></data>
+  <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Privé: geleverd aan klanten, geen goedkeuring nodig</value></data>
 </root>

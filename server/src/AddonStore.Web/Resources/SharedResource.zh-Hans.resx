@@ -1053,4 +1053,8 @@
   <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>此帐户在过去一小时内上传次数过多。</value></data>
   <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>请设置商店的公共地址（设置，服务器）以发送重置链接。</value></data>
   <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>无法发送重置邮件。对于管理员帐户，不显示链接；请检查电子邮件设置。</value></data>
+  <data name="Review (optional)" xml:space="preserve"><value>审核（可选）</value></data>
+  <data name="Record the review" xml:space="preserve"><value>记录审核</value></data>
+  <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>私有加载项：它永远不会出现在公共目录中。批准仅记录你的审核；无论如何，客户交付都会提供最新的已审核版本。</value></data>
+  <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>私有：交付给客户，无需批准</value></data>
 </root>

@@ -1053,4 +1053,8 @@
   <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Слишком много загрузок с этой учетной записи за последний час.</value></data>
   <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Укажите общедоступный адрес магазина (Настройки, Сервер), чтобы отправлять ссылки для сброса.</value></data>
   <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>Не удалось отправить письмо для сброса. Для учетных записей администраторов ссылка не отображается; проверьте настройки электронной почты.</value></data>
+  <data name="Review (optional)" xml:space="preserve"><value>Проверка (необязательно)</value></data>
+  <data name="Record the review" xml:space="preserve"><value>Зафиксировать проверку</value></data>
+  <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Частная надстройка: она никогда не отображается в общедоступном каталоге. Утверждение лишь документирует вашу проверку; при поставке клиентам в любом случае выдается последняя проверенная версия.</value></data>
+  <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Частная: поставляется клиентам, утверждение не требуется</value></data>
 </root>

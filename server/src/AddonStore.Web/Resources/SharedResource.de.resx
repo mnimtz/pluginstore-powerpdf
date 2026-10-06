@@ -1053,4 +1053,8 @@
   <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Zu viele Uploads von diesem Konto in der letzten Stunde.</value></data>
   <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Legen Sie die öffentliche Adresse des Stores fest (Einstellungen, Server), um Links zum Zurücksetzen zu senden.</value></data>
   <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>Die E-Mail zum Zurücksetzen konnte nicht gesendet werden. Bei Administratorkonten wird der Link nicht angezeigt; prüfen Sie die E-Mail-Einstellungen.</value></data>
+  <data name="Review (optional)" xml:space="preserve"><value>Prüfen (optional)</value></data>
+  <data name="Record the review" xml:space="preserve"><value>Prüfung festhalten</value></data>
+  <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Privates Add-on: Es erscheint nie im öffentlichen Katalog. Die Freigabe dokumentiert nur Ihre Prüfung; Kundenauslieferungen geben in jedem Fall die neueste geprüfte Version aus.</value></data>
+  <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Privat: an Kunden ausgeliefert, keine Freigabe erforderlich</value></data>
 </root>

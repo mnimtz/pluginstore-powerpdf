@@ -54,6 +54,11 @@ public class PackageMetaService
             if (!c.Name.TryGetValue("en", out var en) || string.IsNullOrWhiteSpace(en))
                 issues.Add(new("NAME_INVALID", "error", "The name needs at least an English entry (\"en\").",
                     "Send name as an object, e.g. {\"en\": \"Smart Bookmarks\", \"de\": \"Smart Bookmarks\"}."));
+            // every language should have its entry (S1.4.0), as for an upload
+            var nameMissing = PackageValidator.RequiredLanguages.Where(l => !c.Name.ContainsKey(l) && !(l == "nb" && c.Name.ContainsKey("no"))).ToList();
+            if (nameMissing.Count > 0)
+                issues.Add(new("NAME_NOT_LOCALIZED", "warning", $"The name is missing languages: {string.Join(", ", nameMissing)}; the catalog shows the English name there.",
+                    "Give the name an entry for every language; a product name may read the same in every language."));
             foreach (var (lang, text) in c.Name)
             {
                 if (!KnownLangs.Contains(lang))

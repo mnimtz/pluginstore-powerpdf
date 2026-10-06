@@ -1,7 +1,9 @@
 @* Approval with the store's approval conditions (S1.0.10): every condition must be
    ticked; the server checks it again and records the confirmed ids. Model: (version id,
-   name of the hidden id field, page route id or null, button label key). *@
-@model (int VersionId, string IdField, string? RouteId, string Label)
+   name of the hidden id field, page route id or null, button label key, private add-on).
+   A private add-on never enters the public catalog: approving only documents a review
+   (S1.4.0), so the form says so. *@
+@model (int VersionId, string IdField, string? RouteId, string Label, bool Private)
 @{
     var conditions = AddonStore.Web.Validation.RuleCatalog.ApprovalConditions();
 }
@@ -9,6 +11,10 @@
     <summary class="btn small">@L[Model.Label]</summary>
     <form method="post" asp-page-handler="Approve" asp-route-id="@Model.RouteId" class="stack" style="max-width:none;margin-top:8px">
         <input type="hidden" name="@Model.IdField" value="@Model.VersionId" />
+        @if (Model.Private)
+        {
+            <p style="margin:0;font-size:.88rem;color:var(--tun-slate)">@L["Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way."]</p>
+        }
         <p style="margin:0;font-size:.88rem;color:var(--tun-slate)">@L["Confirm every approval condition:"]</p>
         @foreach (var c in conditions)
         {
@@ -17,7 +23,7 @@
                 <span><code>@c.Id</code> @c.Text</span>
             </label>
         }
-        <div><button type="submit" class="btn small">@L["Approve for live store"]</button>
+        <div><button type="submit" class="btn small">@L[Model.Private ? "Record the review" : "Approve for live store"]</button>
             <a href="/Admin/Rules" style="font-size:.85rem;margin-left:8px">@L["Mandatory conditions"] →</a></div>
     </form>
 </details>

@@ -3,7 +3,26 @@
   "version": "1.1.0",
   "name": {
     "en": "Stamp Assistant",
-    "de": "Stempel-Assistent"
+    "de": "Stempel-Assistent",
+    "fr": "Assistant Tampons",
+    "it": "Assistente timbri",
+    "es": "Asistente de sellos",
+    "nl": "Stempelassistent",
+    "pt": "Assistente de carimbos",
+    "da": "Stempelassistent",
+    "fi": "Leimasinavustaja",
+    "nb": "Stempelassistent",
+    "sv": "Stämpelassistent",
+    "pl": "Asystent pieczątek",
+    "cs": "Pomocník pro razítka",
+    "hu": "Bélyegzősegéd",
+    "ru": "Помощник по штампам",
+    "tr": "Damga Yardımcısı",
+    "zh-Hans": "图章助手",
+    "zh-Hant": "圖章助理",
+    "ja": "スタンプ アシスタント",
+    "ko": "스탬프 도우미",
+    "ar": "مساعد الأختام"
   },
   "description": {
     "en": "Dynamic stamps without JavaScript: compose the stamp text from building blocks such as date, time, user, page, file name, an input prompt, a CSV lookup, a running counter and a due date, then click on the page to place it. A side panel offers one-click stamps and your saved favorites.",

@@ -3,7 +3,26 @@
   "version": "1.1.0",
   "name": {
     "en": "Mail Merge",
-    "de": "Serienbrief"
+    "de": "Serienbrief",
+    "fr": "Publipostage",
+    "it": "Stampa unione",
+    "es": "Combinación de correspondencia",
+    "nl": "Afdruk samenvoegen",
+    "pt": "Mala direta",
+    "da": "Brevfletning",
+    "fi": "Joukkokirje",
+    "nb": "Utskriftsfletting",
+    "sv": "Koppla dokument",
+    "pl": "Korespondencja seryjna",
+    "cs": "Hromadná korespondence",
+    "hu": "Körlevél",
+    "ru": "Слияние",
+    "tr": "Adres Mektup Birleştirme",
+    "zh-Hans": "邮件合并",
+    "zh-Hant": "合併列印",
+    "ja": "差し込み印刷",
+    "ko": "편지 병합",
+    "ar": "دمج المراسلات"
   },
   "description": {
     "en": "Creates one PDF per record from a PDF form template and a CSV table: automatic or manual mapping of columns to form fields, file names from a pattern such as {Name}_{ROW}, optional flattening of the filled values.",

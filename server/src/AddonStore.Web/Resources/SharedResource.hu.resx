@@ -1053,4 +1053,8 @@
   <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Túl sok feltöltés ebből a fiókból az elmúlt órában.</value></data>
   <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Adja meg az áruház nyilvános címét (Beállítások, Kiszolgáló) a visszaállítási hivatkozások küldéséhez.</value></data>
   <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>A visszaállítási e-mailt nem sikerült elküldeni. Rendszergazdai fiókok esetén a hivatkozás nem jelenik meg; ellenőrizze az e-mail-beállításokat.</value></data>
+  <data name="Review (optional)" xml:space="preserve"><value>Ellenőrzés (nem kötelező)</value></data>
+  <data name="Record the review" xml:space="preserve"><value>Ellenőrzés rögzítése</value></data>
+  <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Privát bővítmény: soha nem jelenik meg a nyilvános katalógusban. A jóváhagyás csak az Ön ellenőrzését dokumentálja; az ügyfeleknek történő kézbesítések mindenképpen a legújabb ellenőrzött verziót adják ki.</value></data>
+  <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Privát: ügyfeleknek kézbesítve, nincs szükség jóváhagyásra</value></data>
 </root>

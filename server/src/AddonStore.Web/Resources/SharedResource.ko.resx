@@ -1053,4 +1053,8 @@
   <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>지난 1시간 동안 이 계정에서 업로드한 횟수가 너무 많습니다.</value></data>
   <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>재설정 링크를 보내려면 스토어의 공용 주소(설정, 서버)를 설정하십시오.</value></data>
   <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>재설정 메일을 보낼 수 없습니다. 관리자 계정의 경우 링크가 표시되지 않습니다. 전자 메일 설정을 확인하십시오.</value></data>
+  <data name="Review (optional)" xml:space="preserve"><value>검토(선택 사항)</value></data>
+  <data name="Record the review" xml:space="preserve"><value>검토 기록</value></data>
+  <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>비공개 추가 기능: 공개 카탈로그에는 표시되지 않습니다. 승인은 검토 내용을 기록할 뿐이며, 고객 배포에서는 어떤 경우에도 검토된 최신 버전이 제공됩니다.</value></data>
+  <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>비공개: 고객에게 배포되며 승인이 필요하지 않습니다</value></data>
 </root>

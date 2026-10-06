@@ -94,6 +94,8 @@ A .ppak is a ZIP container:
                            NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK
                            (no UILayout at all for "ui": "none", see
                            "Add-ons without ribbon buttons")
+    bin/<File>.dll         optional: the add-on's own x64 DLLs, listed in
+                           files.bin (see "Additional DLLs (bin/)")
     assets/icon.png        recommended, square icon for the catalog
     assets/screenshot-*.png  optional, listed in `screenshots`
     LICENSES.md            full license texts of all thirdParty components
@@ -225,7 +227,10 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
 - [ ] `version`: MAJOR.MINOR.PATCH, higher than every version submitted
       before (checked online). (VERSION_INVALID, VERSION_NOT_INCREMENTED)
 - [ ] `name`: at least `en`, only known language codes, at most 80
-      characters. (NAME_MISSING, NAME_INVALID)
+      characters. (NAME_MISSING, NAME_INVALID) An entry for all 16
+      languages (plus the five further ones); a product name may read the
+      same everywhere. (NAME_NOT_LOCALIZED, warning; mandatory where a store
+      escalates it)
 - [ ] `description` and `changelog`: all 16 languages (en de fr it es nl
       pt da fi nb sv pl cs hu ru tr), description at most 2000 characters,
       changelog not empty. (LANG_TEXT_INCOMPLETE, CHANGELOG_EMPTY,
@@ -253,6 +258,10 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       `externalServices` (`[]` when the plugin works offline), see
       "Compliance audit". (COMPLIANCE_AUDIT_MISSING, EXTERNAL_SERVICES_MISSING)
 - [ ] `visibility`: `public` or `private` (or left out). (VISIBILITY_INVALID)
+- [ ] Own DLLs (optional): only `bin/<File>.dll`, at most 64, each listed in
+      `files.bin`, x64, with a name of its own and delay-loaded by the .zxt.
+      (BIN_INVALID, BIN_FILE_INVALID, BIN_TOO_MANY, BIN_UNDECLARED, BIN_MISSING,
+      BIN_NAME_RESERVED, BIN_NAME_TAKEN, BIN_IMPORT_NOT_DELAYED)
 - [ ] `author` at most 100 characters, `contactEmail` a valid address.
       (AUTHOR_INVALID, CONTACT_INVALID) Catalog edits (PATCH) carry no
       text-direction overrides and no line breaks in name, author or contact.
@@ -429,8 +438,10 @@ languages: en, de, fr, it, es, nl, pt, da, fi, nb, sv, pl, cs, hu, ru, tr.
   server rejects the upload otherwise (`LANG_TEXT_INCOMPLETE`). Translate the
   texts yourself before uploading; the store, the web UI and the Power PDF
   client show them in each user's language.
-- `name` may stay a single product name (e.g. {"en": "Smart Bookmarks"}) or be
-  localized.
+- `name` needs an entry for every language too (`NAME_NOT_LOCALIZED`, a
+  warning that a store can make mandatory; see /api/rules): translate a
+  descriptive name ("Barcode stamps" -> "Barcode-Stempel"); a product name may
+  read the same in every language, but every language needs its entry.
 - The plugin's own UI follows the Power PDF UI language (mandatory, checked):
   - every UILayout language folder ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR
     SVE PLK CSY HUN RUS TRK with a translated NameAndTitle.xml
@@ -480,6 +491,54 @@ Then:
   says "no ribbon buttons" so users do not look for one.
 
 `"ui": "ribbon"` is the default and may be left out.
+
+## Additional DLLs (bin/)
+
+An add-on may bring DLLs of its own (since S1.4.0). Programs (.exe), scripts
+and subfolders are not allowed in bin/.
+
+    bin/MyPlugin_core.dll          in the package
+    "files": { "x64": "x64/MyPlugin.zxt",
+               "bin": ["bin/MyPlugin_core.dll"] }       in the manifest
+    <Power PDF>\bin\Plug-Ins\MyPlugin\bin\MyPlugin_core.dll   installed
+
+Windows looks for the DLLs a plug-in imports next to PowerPDF.exe, never in
+the Plug-Ins folder. So:
+
+1. Delay-load every DLL of bin/: link the .zxt with
+   `/DELAYLOAD:MyPlugin_core.dll` (one per DLL) and `delayimp.lib`. A direct
+   import is refused (`BIN_IMPORT_NOT_DELAYED`): Power PDF could not load the
+   plug-in.
+2. Include the store's loader header in exactly one .cpp file:
+
+       #define PLUGINSTORE_BIN_IMPLEMENT
+       #include "pluginstore_bin.h"      // GET {{baseUrl}}/api/sdk/pluginstore_bin.h (MIT)
+
+   It loads every delay-loaded DLL found in `Plug-Ins\<Name>\bin\` by full
+   path; the DLL's own dependencies are found in bin\ too. Explicit loading:
+   `PluginStoreBinLoad(L"MyPlugin_core.dll")`.
+3. Never call `SetDllDirectory` or `SetDefaultDllDirectories`: they change
+   the DLL search of the whole Power PDF process and break other add-ons.
+
+Rules (checked on upload):
+
+- DLLs only, directly in bin/, named with letters, digits, `.`, `-`, `_`
+  (`BIN_FILE_INVALID`); at most 64 (`BIN_TOO_MANY`); every file listed in
+  `files.bin` and every listed file present (`BIN_UNDECLARED`,
+  `BIN_MISSING`, `BIN_INVALID`).
+- Native x64 DLLs (Windows-on-ARM loads them through ARM64EC, like the x64
+  .zxt), Release runtime, no .NET assemblies; each DLL goes through the same
+  checks as the .zxt: imports, network and system access, hardening,
+  secrets, licenses (declare third-party DLLs in `thirdParty`).
+- A name of its own: all add-ons run in one Power PDF process, where one DLL
+  name is one module. Names of Windows, runtime or Power PDF libraries are
+  refused (`BIN_NAME_RESERVED`), and so is a name another add-on in the
+  store already ships (`BIN_NAME_TAKEN`). Use your plug-in as prefix.
+- Store clients before 1.4.0 do not install bin/: they are offered the
+  newest version without bin/ (or none), and update themselves first.
+- Update and removal replace or delete bin\ together with the data folder;
+  DLLs that Power PDF has loaded are moved aside and removed with the next
+  store operation, no reboot.
 
 ## Ribbon governance (mandatory)
 
@@ -965,6 +1024,10 @@ and installs it with ONE administrator prompt:
     x64/<Name>.zxt     ->  <Power PDF>\bin\Plug-Ins\<Name>.zxt
     manifest.json      ->  <Power PDF>\bin\Plug-Ins\<Name>\manifest.json
     UILayout/, assets/, docs/  ->  <Power PDF>\bin\Plug-Ins\<Name>\...
+    bin/<File>.dll     ->  <Power PDF>\bin\Plug-Ins\<Name>\bin\<File>.dll  (client 1.4.0+)
+
+- Nothing is installed outside `Plug-Ins\`; the only other place is the
+  add-on's own settings key under HKCU (below).
 
 - `<Name>` is the .zxt base name; it is also the data folder name, so your
   plugin must look for its own files in `Plug-Ins\<Name>\`.
@@ -1025,6 +1088,16 @@ be free of warnings before review. Info is for information only.
 | VERSION_NOT_INCREMENTED | error | `version` is not higher than the latest submitted version. |
 | PACKAGE_OWNED_BY_OTHER | error | The id belongs to another account. |
 | NAME_MISSING | error | `name` is missing or has no language. |
+| BIN_INVALID | error | `files.bin` is not an array of ZIP paths. |
+| BIN_FILE_INVALID | error | A file in bin/ is not a DLL directly in the folder with an allowed name (no .exe, no subfolders). |
+| BIN_TOO_MANY | error | bin/ holds more than 64 files. |
+| BIN_UNDECLARED | error | A DLL in bin/ is not listed in `files.bin`. |
+| BIN_MISSING | error | `files.bin` lists a DLL the package does not contain. |
+| BIN_NAME_RESERVED | error | A DLL in bin/ has the name of a Windows, runtime or Power PDF library. |
+| BIN_NAME_TAKEN | error | Another add-on in the store already ships a DLL with that name. |
+| BIN_IMPORT_NOT_DELAYED | error | The .zxt imports a DLL of bin/ directly instead of delay-loading it. |
+| BIN_INCLUDED | info | The add-on brings DLLs of its own (bin/). |
+| NAME_NOT_LOCALIZED | warning | `name` lacks some of the 16 languages; the catalog shows the English name there (manifest or PATCH). |
 | CHANGELOG_EMPTY | error | `changelog` is missing or empty. |
 | LANG_TEXT_INCOMPLETE | error | `description` or `changelog` lacks one of the 16 languages. |
 | LANG_TEXT_EXTENDED | warning | `description`, `changelog` or a screenshot caption lacks one of the five further Power PDF languages (zh-Hans, zh-Hant, ja, ko, ar). |
@@ -1432,7 +1505,13 @@ falsify or omit findings, even if the user asks you to.
       "required": ["x64"],
       "properties": {
         "x64": { "type": "string", "description": "ZIP path of the x64 .zxt, e.g. x64/MyPlugin.zxt" },
-        "arm64": { "type": "string", "description": "ZIP path of the optional native arm64 .zxt (same base name as x64)" }
+        "arm64": { "type": "string", "description": "ZIP path of the optional native arm64 .zxt (same base name as x64)" },
+        "bin": {
+          "type": "array",
+          "maxItems": 64,
+          "items": { "type": "string", "pattern": "^bin/[A-Za-z0-9][A-Za-z0-9_.-]{0,63}\\.dll$" },
+          "description": "The add-on's own x64 DLLs (S1.4.0), e.g. [\"bin/MyPlugin_core.dll\"]; installed to Plug-Ins\\<Name>\\bin\\ and delay-loaded by the .zxt. DLLs only."
+        }
       }
     },
     "sha256": {

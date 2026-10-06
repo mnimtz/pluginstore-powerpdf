@@ -15,6 +15,8 @@ The spec is a JSON file:
   "ribbonAtomNamespace": "FeaturePack::Example",
   "zxt": { "x64": "relative/path/Example.zxt" },   // paths relative to the spec file
   "include": [ { "src": "relative/path", "dst": "zip/path" }, ... ],
+  "bin": [ "relative/path/MyPlugin_core.dll", ... ],   // optional own x64 DLLs -> bin/ + files.bin (S1.4.0);
+                                            // delay-load them, see "Additional DLLs (bin/)" in the guide
   "uninstall": { "registryKeys": [ ... ], "extraPaths": [ ... ] },
   "visibility": "private",                  // optional: customer add-on, never in the catalog
   "author": "Team Signing",                 // shown in the catalog (warning when missing)
@@ -75,7 +77,8 @@ def main():
         'minPowerPdfVersion': spec.get('minPowerPdfVersion', '5.0'),
         'category': spec.get('category', 'other'),
         'architectures': sorted(spec['zxt'].keys()),
-        'files': {arch: f'{arch}/{zxt_name}' for arch in spec['zxt']},
+        'files': {arch: f'{arch}/{zxt_name}' for arch in spec['zxt']} |
+                 ({'bin': [f"bin/{os.path.basename(p)}" for p in spec['bin']]} if spec.get('bin') else {}),
         'sha256': {arch: sha256(os.path.join(base, p)) for arch, p in spec['zxt'].items()},
         'ribbonAtomNamespace': spec.get('ribbonAtomNamespace', ''),
         'uninstall': spec.get('uninstall', {}),
@@ -106,6 +109,10 @@ def main():
         z.writestr('manifest.json', json.dumps(manifest, indent=2, ensure_ascii=False))
         for arch, p in spec['zxt'].items():
             z.write(os.path.join(base, p), f'{arch}/{zxt_name}')
+        for p in spec.get('bin', []):
+            if not p.lower().endswith('.dll'):
+                raise SystemExit(f'ABORT: bin/ takes DLLs only, not {p}.')
+            z.write(os.path.join(base, p), f'bin/{os.path.basename(p)}')
         for item in spec.get('include', []):
             src = os.path.join(base, item['src'])
             if os.path.isdir(src):

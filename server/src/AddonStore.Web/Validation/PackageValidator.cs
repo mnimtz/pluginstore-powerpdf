@@ -101,7 +101,11 @@ public class PackageValidator
         "LPT1","LPT2","LPT3","LPT4","LPT5","LPT6","LPT7","LPT8","LPT9"
     };
     private static readonly HashSet<string> AllowedTopFolders = new(StringComparer.OrdinalIgnoreCase)
-        { "x64", "arm64", "assets", "docs", "UILayout", "installer" };
+        { "x64", "arm64", "assets", "docs", "UILayout", "installer", "bin" };
+    /// <summary>bin/ (S1.4.0): the add-on's own DLLs, installed to Plug-Ins\&lt;Name&gt;\bin\. DLLs only.</summary>
+    public const int MaxBinFiles = 64;
+    private static readonly System.Text.RegularExpressions.Regex BinPath =
+        new(@"^bin/[A-Za-z0-9][A-Za-z0-9_.-]{0,63}\.dll$", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
     /// <summary>Id prefixes of the store operators; only admins create packages there.</summary>
     private static readonly string[] ReservedIdPrefixes = { "com.tungsten.", "com.kofax.", "com.nuance." };
     private static string Printable(string s) => new(s.Select(c => c < 0x20 || c == 0x7F ? '?' : c).ToArray());
@@ -310,8 +314,25 @@ public class PackageValidator
                         "Describe briefly what changed in this version, e.g. {\"en\": \"Fixes crash when ...\", \"de\": \"...\"}. Admins review this text.");
                 else manifest.Changelog = changelog.Trim();
 
+                // the catalog name in every language too (S1.4.0): a warning, which a store can make
+                // mandatory (Settings, Rules); a product name may read the same in every language
+                var nameMissing = MissingLanguages(root, "name");
+                if (nameMissing.Count > 0)
+                    report.Warn("NAME_NOT_LOCALIZED",
+                        $"'name' is missing languages: {string.Join(", ", nameMissing)}; the catalog shows the English name there.",
+                        $"Give 'name' an entry for each of {string.Join(", ", RequiredLanguages)} (and zh-Hans, zh-Hant, ja, ko, ar). " +
+                        "Translate descriptive names; a product name may read the same in every language, but every language needs its entry.");
+                if (nameMissing.Count == 0)
+                {
+                    var nameExtended = MissingExtended(root, "name");
+                    if (nameExtended.Count > 0)
+                        report.Warn("LANG_TEXT_EXTENDED",
+                            $"'name' lacks the further Power PDF languages: {string.Join(", ", nameExtended)}.",
+                            "Add \"zh-Hans\", \"zh-Hant\", \"ja\", \"ko\" and \"ar\" to the name (a product name may stay the same).");
+                }
+
                 // Every user-facing text ships in ALL European Power PDF languages
-                // (standing team rule); the name may stay a single product name.
+                // (standing team rule).
                 foreach (var field in new[] { "description", "changelog" })
                 {
                     var missing = MissingLanguages(root, field);
@@ -450,6 +471,9 @@ public class PackageValidator
                     report.Error("OWN_TAB_RESERVED", $"The ribbon tab '{TabOf(manifest.AtomNamespace)}' belongs to Power PDF or the store.",
                         "Choose your own tab atom (e.g. 'CustomerSign'), or use a group on the shared tab ('FeaturePack::MyPlugin').");
 
+                var bundled = new HashSet<string>(
+                    zip.Entries.Where(e => e.Length > 0 && e.FullName.Replace('\\', '/').StartsWith("bin/", StringComparison.OrdinalIgnoreCase))
+                               .Select(e => e.Name), StringComparer.OrdinalIgnoreCase);
                 foreach (var arch in architectures)
                 {
                     string? file = root.TryGetProperty("files", out var filesEl) && filesEl.ValueKind == JsonValueKind.Object
@@ -487,9 +511,10 @@ public class PackageValidator
                         report.Error("HASH_MISMATCH", $"'sha256.{arch}' does not match the file in the ZIP.",
                             $"Recompute the hash after the final build; the actual value is \"{actual}\".");
 
-                    CheckPe(report, arch, file, bytes, manifest.Version);
+                    CheckPe(report, arch, file, bytes, manifest.Version, bundled);
                     CheckCapabilities(report, file, bytes, root);   // network, injection, downloads, processes, persistence (S1.0.11)
                 }
+                CheckBin(report, zip, root, manifest, bundled);
 
                 CheckIcon(report, zip);
                 CheckScreenshots(report, zip, root);
@@ -585,6 +610,24 @@ public class PackageValidator
             }
         }
 
+        // DLLs of different add-ons share the Power PDF process: one name, one module (S1.4.0)
+        if (manifest.BinFiles.Count > 0)
+        {
+            var mine = new HashSet<string>(manifest.BinFiles, StringComparer.OrdinalIgnoreCase);
+            var others = await _db.PackageVersions.AsNoTracking()
+                .Where(v => v.PackageId != manifest.Id && v.Status != VersionStatus.Rejected && v.Status != VersionStatus.Withdrawn)
+                .Select(v => new { v.PackageId, v.ManifestJson, Private = _db.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private") })
+                .ToListAsync();
+            var reported = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var o in others)
+                foreach (var dll in BinFilesOf(o.ManifestJson).Where(mine.Contains))
+                    if (reported.Add(dll))
+                        report.Error("BIN_NAME_TAKEN", o.Private
+                                ? $"bin/{dll} has the same name as a DLL of another add-on."
+                                : $"bin/{dll} has the same name as a DLL of the add-on '{o.PackageId}'.",
+                            "All add-ons run in one Power PDF process, where one DLL name means one module. Rename your DLL with your own prefix (e.g. MyPlugin_core.dll).");
+        }
+
         // Own ribbon tab: only for private customer add-ons (S1.0.6). The package's current
         // visibility counts; on the first upload the manifest's.
         if (manifest.OwnTab)
@@ -618,7 +661,8 @@ public class PackageValidator
         }
     }
 
-    private static void CheckPe(ValidationReport report, string arch, string file, byte[] bytes, string manifestVersion)
+    private static void CheckPe(ValidationReport report, string arch, string file, byte[] bytes, string manifestVersion,
+                                ISet<string>? bundled = null)
     {
         const ushort MachineX64 = 0x8664, MachineArm64 = 0xAA64, DllFlag = 0x2000;
         var expectedMachine = arch == "x64" ? MachineX64 : MachineArm64;
@@ -647,7 +691,7 @@ public class PackageValidator
             report.Error("PE_NOT_DLL", $"'{file}' is not a DLL.",
                 "A .zxt is a renamed DLL; check the project type (dynamic library).");
 
-        CheckImports(report, file, bytes, peOffset);
+        CheckImports(report, file, bytes, peOffset, bundled, isZxt: true);
         var pe = PeResources.Open(bytes);
         if (!pe.Valid) return;
         if (pe.IsManaged)
@@ -823,8 +867,10 @@ public class PackageValidator
     /// known system/runtime set are flagged so the reviewer checks whether the
     /// dependency is bundled and license-clean.
     /// </summary>
-    private static void CheckImports(ValidationReport report, string file, byte[] bytes, int peOffset)
+    private static void CheckImports(ValidationReport report, string file, byte[] bytes, int peOffset,
+                                     ISet<string>? bundled = null, bool isZxt = true)
     {
+        var notDelayed = new List<string>();
         try
         {
             var optOffset = peOffset + 24;
@@ -872,6 +918,12 @@ public class PackageValidator
                 if (lower.Contains("d.dll") &&
                     (lower.StartsWith("vcruntime") || lower.StartsWith("msvcp") || lower.StartsWith("ucrtbased") || lower.StartsWith("mfc")))
                     debugCrt = true;
+                else if (bundled is not null && bundled.Contains(dll))
+                {
+                    // a DLL of the add-on's own bin/ (S1.4.0): the .zxt must delay-load it (Windows
+                    // would look for it next to PowerPDF.exe at start); DLLs in bin/ find each other
+                    if (isZxt) notDelayed.Add(dll);
+                }
                 else if (!KnownImportPrefixes.Any(p => lower.StartsWith(p)))
                     foreign.Add(dll);
             }
@@ -881,13 +933,117 @@ public class PackageValidator
                     "Package the Release build; debug runtimes are not present on user machines (the .zxt must run with the same runtime as PowerPDF.exe).");
             if (foreign.Count > 0)
                 report.Error("FOREIGN_DEPENDENCY",
-                    $"'{file}' imports DLLs that are not part of Windows or Power PDF: {string.Join(", ", foreign.Distinct())}.",
-                    "Power PDF loads plug-ins from its own program folder, so extra DLLs are never found there (the store installs only the .zxt). Link these libraries statically (MIT/BSD/Apache-2.0 only), or load them yourself from the plug-in's data folder with LoadLibraryEx and a full path and delay-load the import.");
+                    $"'{file}' imports DLLs that are neither part of Windows or Power PDF nor in the package's bin/: {string.Join(", ", foreign.Distinct())}.",
+                    "Ship your own DLLs in bin/ (declared in files.bin) and delay-load them with the store's loader header (see \"Additional DLLs\" in the guide), or link the libraries statically (MIT/BSD/Apache-2.0 only).");
+            if (notDelayed.Count > 0)
+                report.Error("BIN_IMPORT_NOT_DELAYED",
+                    $"'{file}' imports DLLs of bin/ directly: {string.Join(", ", notDelayed.Distinct())}.",
+                    "Windows looks for directly imported DLLs next to PowerPDF.exe, so Power PDF would fail to load the plug-in. Delay-load them (linker /DELAYLOAD:<name>.dll and delayimp.lib) and include pluginstore_bin.h from the developer kit, which loads them from Plug-Ins\\<Name>\\bin\\.");
         }
         catch
         {
             // import walking is best effort; a malformed table was already caught by the PE checks
         }
+    }
+
+    /// <summary>
+    /// bin/ (S1.4.0): the add-on's own DLLs, installed to Plug-Ins\&lt;Name&gt;\bin\ and
+    /// delay-loaded by the .zxt. DLLs only (no programs, no subfolders), each declared in
+    /// files.bin, native x64 (Windows-on-ARM loads them through ARM64EC) and checked like
+    /// the .zxt itself: PE format, runtime, imports, network and system access, hardening.
+    /// </summary>
+    private void CheckBin(ValidationReport report, ZipArchive zip, JsonElement root, ParsedManifest manifest, ISet<string> bundled)
+    {
+        var entries = zip.Entries.Where(e => e.FullName.Replace('\\', '/').StartsWith("bin/", StringComparison.OrdinalIgnoreCase) && e.Length > 0).ToList();
+        var declared = new List<string>();
+        var declaredOk = true;
+        if (root.TryGetProperty("files", out var files) && files.ValueKind == JsonValueKind.Object && files.TryGetProperty("bin", out var bin))
+        {
+            if (bin.ValueKind != JsonValueKind.Array || bin.EnumerateArray().Any(x => x.ValueKind != JsonValueKind.String))
+            {
+                report.Error("BIN_INVALID", "'files.bin' must be an array of ZIP paths, e.g. [\"bin/MyPlugin_core.dll\"].",
+                    "List every DLL of bin/ in files.bin, or leave files.bin out when the add-on has no DLLs of its own.");
+                declaredOk = false;
+            }
+            else declared = bin.EnumerateArray().Select(x => (x.GetString() ?? "").Replace('\\', '/')).ToList();
+        }
+        if (entries.Count == 0 && declared.Count == 0) return;
+
+        if (entries.Count > MaxBinFiles)
+            report.Error("BIN_TOO_MANY", $"bin/ holds {entries.Count} files (at most {MaxBinFiles}).",
+                "Combine libraries or link them statically; an add-on rarely needs more than a few DLLs.");
+        foreach (var e in entries)
+        {
+            var path = e.FullName.Replace('\\', '/');
+            if (!BinPath.IsMatch(path))
+            {
+                report.Error("BIN_FILE_INVALID", $"'{Printable(path)}' is not allowed in bin/.",
+                    "bin/ holds DLLs only, directly in the folder, named with letters, digits, '.', '-' or '_' and ending in .dll. Programs (.exe), scripts and subfolders are not allowed.");
+                continue;
+            }
+            if (declaredOk && !declared.Contains(path, StringComparer.OrdinalIgnoreCase))
+                report.Error("BIN_UNDECLARED", $"'{path}' is not listed in files.bin.",
+                    $"Add \"{path}\" to files.bin in the manifest.");
+            var stem = Path.GetFileNameWithoutExtension(e.Name).ToLowerInvariant();
+            if (IsReservedDllName(stem) || ReservedZxtNames.Contains(stem))
+                report.Error("BIN_NAME_RESERVED", $"'{path}' has the name of a Windows, runtime or Power PDF library.",
+                    "Give your DLL its own name, e.g. with your add-on as prefix (MyPlugin_core.dll); a second DLL with a system name in the same process breaks Power PDF or other add-ons.");
+            var bytes = ReadCapped(e, MaxZxtBytes);
+            if (bytes is null)
+            {
+                report.Error("ENTRY_TOO_LARGE", $"'{path}' inflates beyond the allowed size.",
+                    "A single DLL may be at most 120 MB uncompressed.");
+                continue;
+            }
+            CheckBinPe(report, path, bytes, bundled);
+            CheckCapabilities(report, path, bytes, root);
+            manifest.BinFiles.Add(e.Name);
+        }
+        foreach (var d in declared.Where(d => !entries.Any(e => string.Equals(e.FullName.Replace('\\', '/'), d, StringComparison.OrdinalIgnoreCase))))
+            report.Error("BIN_MISSING", $"files.bin lists '{Printable(d)}', but the package does not contain it.",
+                "Add the DLL at exactly that path, or remove it from files.bin.");
+        if (manifest.BinFiles.Count > 0)
+            report.Info("BIN_INCLUDED", $"The add-on brings {manifest.BinFiles.Count} DLL(s) of its own: {string.Join(", ", manifest.BinFiles.Take(10))}.",
+                "Installed to Plug-Ins\\<Name>\\bin\\; clients from 1.4.0 on install it (older clients are offered the previous version).");
+    }
+
+    /// <summary>Names a DLL in bin/ must not use: Windows, the C/C++ runtimes, MFC and other system libraries.</summary>
+    private static bool IsReservedDllName(string stem) =>
+        KnownImportPrefixes.Any(p => !p.EndsWith('-') && stem == p) ||
+        new[] { "api-ms-", "ext-ms-", "vcruntime", "msvcp", "msvcr", "ucrtbase", "concrt", "vccorlib", "mfcm" }.Any(p => stem.StartsWith(p, StringComparison.Ordinal)) ||
+        System.Text.RegularExpressions.Regex.IsMatch(stem, @"^mfc\d") ||
+        stem is "advapi32" or "kernel32" or "user32" or "ntdll" or "comctl32" or "dbghelp" or "msvcrt" or "zlib1" or "libcrypto" or "libssl";
+
+    private static void CheckBinPe(ValidationReport report, string file, byte[] bytes, ISet<string> bundled)
+    {
+        const ushort MachineX64 = 0x8664, DllFlag = 0x2000;
+        if (bytes.Length < 0x40 || bytes[0] != (byte)'M' || bytes[1] != (byte)'Z')
+        {
+            report.Error("PE_INVALID", $"'{file}' is not a Windows PE binary.", "bin/ holds native Windows DLLs only.");
+            return;
+        }
+        var peOffset = BitConverter.ToInt32(bytes, 0x3C);
+        if (peOffset <= 0 || (long)peOffset + 24 > bytes.Length ||
+            bytes[peOffset] != 'P' || bytes[peOffset + 1] != 'E' || bytes[peOffset + 2] != 0 || bytes[peOffset + 3] != 0)
+        {
+            report.Error("PE_INVALID", $"'{file}' has no valid PE header.", "Rebuild the DLL; the file seems truncated or corrupted.");
+            return;
+        }
+        var machine = BitConverter.ToUInt16(bytes, peOffset + 4);
+        if (machine != MachineX64)
+            report.Error("PE_WRONG_MACHINE", $"'{file}' is built for machine 0x{machine:X4}, expected 0x8664 (x64).",
+                "Ship x64 DLLs in bin/; Power PDF on Windows-on-ARM loads them through ARM64EC like the x64 .zxt.");
+        if ((BitConverter.ToUInt16(bytes, peOffset + 22) & DllFlag) == 0)
+            report.Error("BIN_FILE_INVALID", $"'{file}' is not a DLL.", "bin/ holds DLLs only; programs (.exe) are not allowed.");
+        CheckImports(report, file, bytes, peOffset, bundled, isZxt: false);
+        var pe = PeResources.Open(bytes);
+        if (!pe.Valid) return;
+        if (pe.IsManaged)
+            report.Error("PE_MANAGED", $"'{file}' is a .NET assembly.", "bin/ holds native DLLs only.");
+        const ushort DynamicBase = 0x40, NxCompat = 0x100;
+        if ((pe.DllCharacteristics & DynamicBase) == 0 || (pe.DllCharacteristics & NxCompat) == 0)
+            report.Warn("PE_HARDENING", $"'{file}' is built without ASLR (/DYNAMICBASE) or DEP (/NXCOMPAT).",
+                "Keep the default linker options /DYNAMICBASE and /NXCOMPAT (and /HIGHENTROPYVA).");
     }
 
     private void CheckIcon(ValidationReport report, ZipArchive zip)
@@ -1499,6 +1655,22 @@ public class PackageValidator
                     $"UILayout folders of the further Power PDF languages missing: {string.Join(", ", further)}.",
                     "Power PDF also runs in CHS (Simplified Chinese), CHT (Traditional Chinese), JPN, KOR and ARA: add a translated NameAndTitle.xml in each, so the ribbon follows these languages too.");
         }
+    }
+
+    /// <summary>DLL file names a stored manifest declares in files.bin (S1.4.0).</summary>
+    public static IEnumerable<string> BinFilesOf(string? manifestJson)
+    {
+        if (string.IsNullOrEmpty(manifestJson)) return Array.Empty<string>();
+        try
+        {
+            using var d = JsonDocument.Parse(manifestJson);
+            if (d.RootElement.TryGetProperty("files", out var f) && f.ValueKind == JsonValueKind.Object &&
+                f.TryGetProperty("bin", out var b) && b.ValueKind == JsonValueKind.Array)
+                return b.EnumerateArray().Where(x => x.ValueKind == JsonValueKind.String)
+                        .Select(x => Path.GetFileName((x.GetString() ?? "").Replace('\\', '/'))).Where(n => n.Length > 0).ToList();
+        }
+        catch (JsonException) { }
+        return Array.Empty<string>();
     }
 
     /// <summary>The 16 European Power PDF UI languages (manifest language codes); required.</summary>

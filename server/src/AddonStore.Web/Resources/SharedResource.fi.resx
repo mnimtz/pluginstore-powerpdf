@@ -1053,4 +1053,8 @@
   <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Liian monta latausta palvelimeen tältä tililtä viimeisen tunnin aikana.</value></data>
   <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Määritä kaupan julkinen osoite (Asetukset, Palvelin), jotta palautuslinkkejä voidaan lähettää.</value></data>
   <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>Palautusviestiä ei voitu lähettää. Järjestelmänvalvojan tileillä linkkiä ei näytetä; tarkista sähköpostiasetukset.</value></data>
+  <data name="Review (optional)" xml:space="preserve"><value>Tarkista (valinnainen)</value></data>
+  <data name="Record the review" xml:space="preserve"><value>Kirjaa tarkistus</value></data>
+  <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Yksityinen apuohjelma: se ei koskaan näy julkisessa luettelossa. Hyväksyminen vain dokumentoi tarkistuksesi; asiakastoimitukset jakavat joka tapauksessa uusimman tarkistetun version.</value></data>
+  <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Yksityinen: toimitetaan asiakkaille, ei vaadi hyväksyntää</value></data>
 </root>

@@ -3,7 +3,26 @@
   "version": "1.1.0",
   "name": {
     "en": "DORA PDF Check",
-    "de": "DORA-PDF-Prüfung"
+    "de": "DORA-PDF-Prüfung",
+    "fr": "Contrôle PDF DORA",
+    "it": "Verifica PDF DORA",
+    "es": "Comprobación PDF DORA",
+    "nl": "DORA PDF-controle",
+    "pt": "Verificação de PDF DORA",
+    "da": "DORA PDF-kontrol",
+    "fi": "DORA PDF -tarkistus",
+    "nb": "DORA PDF-kontroll",
+    "sv": "DORA PDF-kontroll",
+    "pl": "Kontrola PDF DORA",
+    "cs": "Kontrola PDF DORA",
+    "hu": "DORA PDF-ellenőrzés",
+    "ru": "Проверка PDF по DORA",
+    "tr": "DORA PDF Denetimi",
+    "zh-Hans": "DORA PDF 检查",
+    "zh-Hant": "DORA PDF 檢查",
+    "ja": "DORA PDF チェック",
+    "ko": "DORA PDF 검사",
+    "ar": "فحص PDF وفق DORA"
   },
   "description": {
     "en": "Checks the document-side requirements that matter in the DORA context (EU 2022/2554): PDF/A identification, encryption, signatures and changes after signing, weak cryptography, JavaScript, risky actions, attachments, XFA, fonts and metadata; shows a traffic-light report and writes a fixed copy where a click can fix it.",

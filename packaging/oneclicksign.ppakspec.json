@@ -3,7 +3,26 @@
   "version": "1.1.2",
   "name": {
     "en": "1-Click Signing",
-    "de": "1-Klick-Signatur"
+    "de": "1-Klick-Signatur",
+    "fr": "Signature en 1 clic",
+    "it": "Firma con 1 clic",
+    "es": "Firma con 1 clic",
+    "nl": "Ondertekenen met 1 klik",
+    "pt": "Assinatura com 1 clique",
+    "da": "Signering med 1 klik",
+    "fi": "Allekirjoitus yhdellä napsautuksella",
+    "nb": "Signering med 1 klikk",
+    "sv": "Signering med 1 klick",
+    "pl": "Podpis jednym kliknięciem",
+    "cs": "Podpis jedním kliknutím",
+    "hu": "Aláírás egy kattintással",
+    "ru": "Подписание одним щелчком",
+    "tr": "Tek Tıkla İmzalama",
+    "zh-Hans": "一键签名",
+    "zh-Hant": "一鍵簽署",
+    "ja": "ワンクリック署名",
+    "ko": "원클릭 서명",
+    "ar": "التوقيع بنقرة واحدة"
   },
   "description": {
     "en": "Signs PDFs with a digital signature in one click: three preconfigured signature area sizes plus a freely drawn area, placement by click with live preview or at a fixed position, automatic certificate selection, optional timestamp and configurable stamp appearance.",

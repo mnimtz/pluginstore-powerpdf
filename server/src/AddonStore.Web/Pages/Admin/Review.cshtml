@@ -52,7 +52,7 @@
         }
         <div style="display:flex;gap:10px;align-items:flex-start;margin-top:10px;flex-wrap:wrap">
             <a class="btn small secondary" href="/api/packages/@v.PackageId/@v.Version/download">@L["Download"]</a>
-            <partial name="_ApprovalForm" model='(v.Id, "id", (string?)null, "Approve for live store")' />
+            <partial name="_ApprovalForm" model='(v.Id, "id", (string?)null, "Approve for live store", false)' />
             <form method="post" asp-page-handler="Reject" style="display:flex;gap:8px;flex:1;min-width:280px">
                 <input type="hidden" name="id" value="@v.Id" />
                 <input type="text" name="comment" placeholder="@L["Reason (sent to the submitter)"]" required style="flex:1" />

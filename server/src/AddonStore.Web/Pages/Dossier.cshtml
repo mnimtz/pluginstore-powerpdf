@@ -7,6 +7,7 @@
     var d = Model.D!;
     ViewData["PrintTitle"] = L["Audit dossier"].Value + " " + d.PackageId + " " + d.Version;
     ViewData["NoAutoPrint"] = true;
+    ViewData["LangSwitch"] = true;   // English by default, other languages on request (S1.4.0)
     var ci = System.Globalization.CultureInfo.CurrentCulture;
     var pretty = new JsonSerializerOptions { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
     string Json(JsonElement? e) => e is null ? "-" : JsonSerializer.Serialize(e.Value, pretty);

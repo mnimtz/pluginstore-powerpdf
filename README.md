@@ -363,6 +363,24 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Own DLLs, localized names, English dossier (S1.4.0, client 1.4.0):**
+- Add-ons may bring their own x64 DLLs in `bin/` (listed in `files.bin`).
+  The client installs them to `Plug-Ins\<Name>\bin\`; nothing is installed
+  outside the Plug-Ins folder.
+- The .zxt must delay-load them through the MIT loader header
+  `GET /api/sdk/pluginstore_bin.h`.
+- The server checks every DLL like the .zxt. It refuses programs, direct
+  imports, system or runtime names and names another add-on already ships.
+- Store clients before 1.4.0 are offered the newest version without `bin/`.
+  DLLs that Power PDF has loaded are moved aside on update or removal and swept
+  later, no reboot.
+- `tools/make_ppak.py` takes `"bin": [...]` in the spec.
+- The catalog name should exist in every language (`NAME_NOT_LOCALIZED`, a
+  warning that admins can make mandatory under Settings, Rules).
+- The audit dossier opens in English and offers all 21 languages.
+- Private add-ons show approval as an optional review, since customer
+  deliveries hand out the newest checked version anyway.
+
 **Security hardening (S1.3.1, client 1.3.1):** after a full code audit and
 hardening test:
 - Password reset links are only built on the configured public address (or

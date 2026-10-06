@@ -126,6 +126,10 @@
                 {
                     <br /><span class="badge rejected">@L["Blocked"]</span> <small style="color:var(--tun-slate)">@v.BlockReason · @v.BlockedBy · @Time.Fmt(v.BlockedAt.Value, false)</small>
                 }
+                @if (pkg.Visibility == "private" && v.Status == VersionStatus.Beta)
+                {
+                    <br /><small style="color:var(--tun-slate)">@L["Private: delivered to customers, needs no approval"]</small>
+                }
                 @if (v.Status == VersionStatus.Live && v.Id != offeredLive)
                 {
                     <br /><small style="color:var(--tun-slate)">@L["Older version, no longer offered"]</small>
@@ -148,7 +152,7 @@
                        title="@L["Everything about how this version was checked and released; print or save as PDF."]">@L["Audit dossier"]</a>
                     @if (Model.CanReview && v.Status == VersionStatus.Beta)
                     {
-                        <partial name="_ApprovalForm" model='(v.Id, "versionId", (string?)pkg.Id, "Approve")' />
+                        <partial name="_ApprovalForm" model='(v.Id, "versionId", (string?)pkg.Id, pkg.Visibility == "private" ? "Review (optional)" : "Approve", pkg.Visibility == "private")' />
                     }
                     @if (VersionActionService.CanDemote(v, Model.IsAdmin))
                     {

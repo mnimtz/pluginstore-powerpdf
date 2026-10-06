@@ -3,7 +3,26 @@
   "version": "1.1.0",
   "name": {
     "en": "QES Sign",
-    "de": "QES Sign"
+    "de": "QES Sign",
+    "fr": "QES Sign",
+    "it": "QES Sign",
+    "es": "QES Sign",
+    "nl": "QES Sign",
+    "pt": "QES Sign",
+    "da": "QES Sign",
+    "fi": "QES Sign",
+    "nb": "QES Sign",
+    "sv": "QES Sign",
+    "pl": "QES Sign",
+    "cs": "QES Sign",
+    "hu": "QES Sign",
+    "ru": "QES Sign",
+    "tr": "QES Sign",
+    "zh-Hans": "QES Sign",
+    "zh-Hant": "QES Sign",
+    "ja": "QES Sign",
+    "ko": "QES Sign",
+    "ar": "QES Sign"
   },
   "description": {
     "en": "Qualified electronic signatures straight from the signature card: pick the card certificate, reason and timestamp in one dialog, sign already signed documents incrementally (four-eyes principle), batch-sign several PDFs and add long-term validation data (PAdES LTV).",

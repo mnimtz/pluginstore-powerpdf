@@ -3,7 +3,26 @@
   "version": "1.3.1",
   "name": {
     "en": "Smart Bookmarks",
-    "de": "Smart Bookmarks"
+    "de": "Smart Bookmarks",
+    "fr": "Smart Bookmarks",
+    "it": "Smart Bookmarks",
+    "es": "Smart Bookmarks",
+    "nl": "Smart Bookmarks",
+    "pt": "Smart Bookmarks",
+    "da": "Smart Bookmarks",
+    "fi": "Smart Bookmarks",
+    "nb": "Smart Bookmarks",
+    "sv": "Smart Bookmarks",
+    "pl": "Smart Bookmarks",
+    "cs": "Smart Bookmarks",
+    "hu": "Smart Bookmarks",
+    "ru": "Smart Bookmarks",
+    "tr": "Smart Bookmarks",
+    "zh-Hans": "Smart Bookmarks",
+    "zh-Hant": "Smart Bookmarks",
+    "ja": "Smart Bookmarks",
+    "ko": "Smart Bookmarks",
+    "ar": "Smart Bookmarks"
   },
   "description": {
     "en": "Automatically creates a multi-level bookmark outline for any PDF: heading detection, live preview panel, table of contents, optional OCR.",

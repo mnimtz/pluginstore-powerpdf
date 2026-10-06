@@ -43,6 +43,8 @@ public class ParsedManifest
     public bool OwnTab { get; set; }
     /// <summary>Manifest "ui": "none" (S1.1.1): an add-on without ribbon buttons, e.g. an engine for Power PDF features.</summary>
     public bool NoUi { get; set; }
+    /// <summary>File names of the add-on's own DLLs in bin/ (S1.4.0), as declared in files.bin.</summary>
+    public List<string> BinFiles { get; set; } = new();
     /// <summary>Base name of the plug-in binary (files.x64 without folder and .zxt).</summary>
     public string ZxtName { get; set; } = "";
     public string Category { get; set; } = "";

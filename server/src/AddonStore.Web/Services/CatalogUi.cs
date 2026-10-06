@@ -80,12 +80,26 @@ public static class CatalogUi
     }
 
     /// <summary>The public catalog: newest live (or beta) version of every public package.</summary>
-    public static async Task<List<CatalogItem>> GetAsync(AppDbContext db, string culture, bool includeBeta = false)
+    /// <summary>The first store client that installs bin/ (S1.4.0).</summary>
+    public static readonly Version BinClient = new(1, 4, 0);
+
+    /// <summary>The version brings DLLs in bin/ (files.bin, S1.4.0).</summary>
+    public static bool HasBin(PackageVersion v) => Validation.PackageValidator.BinFilesOf(v.ManifestJson).Any();
+
+    /// <summary>False for store clients older than 1.4.0: they would install the .zxt without its DLLs.</summary>
+    public static bool ClientSupportsBin(HttpContext ctx)
     {
-        var all = await db.PackageVersions
+        var c = UsageService.Classify(ctx);
+        return c.Source != "client" || (Version.TryParse(c.ClientVersion, out var cv) && cv >= BinClient);
+    }
+
+    public static async Task<List<CatalogItem>> GetAsync(AppDbContext db, string culture, bool includeBeta = false, bool binOk = true)
+    {
+        var all = (await db.PackageVersions
             .Where(v => v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta))
             .Where(v => db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private"))
-            .ToListAsync();
+            .ToListAsync())
+            .Where(v => binOk || !HasBin(v)).ToList();   // an older client gets the newest version it can install
         var cmp = new SemVerComparer();
         var items = new List<CatalogItem>();
         var ctx = await Context.LoadAsync(db);

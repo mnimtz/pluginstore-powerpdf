@@ -1053,4 +1053,8 @@
   <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Trop de chargements depuis ce compte au cours de la dernière heure.</value></data>
   <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Définissez l'adresse publique du Store (Paramètres, Serveur) pour envoyer des liens de réinitialisation.</value></data>
   <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>L'e-mail de réinitialisation n'a pas pu être envoyé. Pour les comptes administrateur, le lien n'est pas affiché ; vérifiez les paramètres de messagerie.</value></data>
+  <data name="Review (optional)" xml:space="preserve"><value>Vérifier (facultatif)</value></data>
+  <data name="Record the review" xml:space="preserve"><value>Enregistrer la vérification</value></data>
+  <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Complément privé : il n'apparaît jamais dans le catalogue public. L'approbation documente uniquement votre vérification ; les livraisons aux clients fournissent dans tous les cas la dernière version vérifiée.</value></data>
+  <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Privé : livré aux clients, aucune approbation requise</value></data>
 </root>

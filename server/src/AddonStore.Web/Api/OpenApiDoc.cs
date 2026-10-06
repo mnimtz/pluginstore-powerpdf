@@ -89,6 +89,7 @@ public static class OpenApiDoc
         new("delete", "/api/packages/{id}/block", "unblockPackage", "Lift the block of an add-on; its versions stay withdrawn until restored.", "admin", new[] { "id:path:package id" }),
         new("get", "/api/tools/make-ppak.ps1", "getMakePpakScript", "Offline packer (Windows PowerShell 5.1): fills architectures/files/sha256, writes the .ppak and, with -Source, the upload package (.ppak + source ZIP) for one manual upload on the website. ?download=1 saves it as a file.", "none", Array.Empty<string>(), Returns: "file"),
         new("get", "/api/devkit", "listDevkit", "SDK documentation, knowledge files and templates for plugin development.", "none", Array.Empty<string>()),
+        new("get", "/api/sdk/{name}", "getSdkFile", "Store SDK file shipped with the server: pluginstore_bin.h loads an add-on's own DLLs from Plug-Ins/<Name>/bin (MIT).", "none", new[] { "name:path:pluginstore_bin.h" }, Returns: "file"),
         new("get", "/api/devkit/{path}", "getDevkitFile", "One developer kit file.", "none", new[] { "path:path:file path from the list" }, Returns: "file"),
     };
 

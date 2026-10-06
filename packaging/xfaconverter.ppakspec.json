@@ -2,7 +2,27 @@
   "id": "com.tungsten.xfaconverter",
   "version": "0.2.0",
   "name": {
-    "en": "XFA Converter"
+    "en": "XFA Converter",
+    "de": "XFA-Konverter",
+    "fr": "Convertisseur XFA",
+    "it": "Convertitore XFA",
+    "es": "Convertidor XFA",
+    "nl": "XFA-converter",
+    "pt": "Conversor XFA",
+    "da": "XFA-konverter",
+    "fi": "XFA-muunnin",
+    "nb": "XFA-konverterer",
+    "sv": "XFA-konverterare",
+    "pl": "Konwerter XFA",
+    "cs": "Převaděč XFA",
+    "hu": "XFA-átalakító",
+    "ru": "Конвертер XFA",
+    "tr": "XFA Dönüştürücü",
+    "zh-Hans": "XFA 转换器",
+    "zh-Hant": "XFA 轉換器",
+    "ja": "XFA コンバーター",
+    "ko": "XFA 변환기",
+    "ar": "محوّل XFA"
   },
   "description": {
     "en": "Converts XFA forms into standard AcroForms and exports form data as CSV; dynamic XFA is rebuilt as a local reflow AcroForm, optional online providers are opt-in.",

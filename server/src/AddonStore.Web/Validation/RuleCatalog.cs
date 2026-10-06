@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using AddonStore.Web.Api;
@@ -137,9 +137,9 @@ public static class RuleCatalog
         if (Any("CUSTOMER_", "DELIVERY_") || code is "PROMOTE_NOTHING" or "CODE_NOT_FOUND" or "CODE_MISSING") return "Customer deliveries";
         if (Any("CATEGORY_")) return "Categories";
         if (Any("ICON_", "SCREENSHOT")) return "Icon and screenshots";
-        if (Any("LANG", "UI_LANGS", "UI_STRINGS")) return "Languages";
+        if (Any("LANG", "UI_LANGS", "UI_STRINGS") || code is "NAME_NOT_LOCALIZED") return "Languages";
         if (Any("ATOM_", "OWN_TAB_", "UI_NONE") || code is "UI_INVALID" or "VISIBILITY_OWN_TAB" or "RESERVED_PANEL_NS" or "ICONMODE_SMALL" or "UILAYOUT_MISSING") return "Ribbon and layout";
-        if (code is "PE_DEBUG_RUNTIME" or "FOREIGN_DEPENDENCY") return "Runtime and dependencies";
+        if (Any("BIN_") || code is "PE_DEBUG_RUNTIME" or "FOREIGN_DEPENDENCY") return "Runtime and dependencies";   // bin/: S1.4.0
         if (Any("ARCH_", "HASH_", "PE_", "VERSIONINFO_", "ZXT_NAME_") || code is "FILE_DECLARATION_MISSING" or "FILE_MISSING" or "FILENAME_MISMATCH" or "RESERVED_NAME")
             return "Binaries and integrity";
         if (Any("LICENSE", "COMPLIANCE_", "EXTERNAL_SERVICE", "THIRDPARTY_") || code is "SECRET_DETECTED") return "Licenses, legal and privacy";

@@ -110,9 +110,13 @@ builder.Services.Configure<RequestLocalizationOptions>(o =>
         QueryStringKey = "rlang",
         UIQueryStringKey = "rlang"
     });
+    // The audit dossier is an English document unless ?rlang= asks for another language (S1.4.0):
+    // the same record reads the same for every reviewer, auditor and developer.
+    o.RequestCultureProviders.Insert(1, new CustomRequestCultureProvider(ctx =>
+        Task.FromResult(ctx.Request.Path.StartsWithSegments("/Dossier") ? new ProviderCultureResult("en") : (ProviderCultureResult?)null)));
     // cookie (manual switch) wins over Accept-Language (automatic detection).
     // Norwegian browsers often send "no" or "nn"; both map to our Bokmål texts.
-    o.RequestCultureProviders.Insert(3, new CustomRequestCultureProvider(ctx =>
+    o.RequestCultureProviders.Insert(4, new CustomRequestCultureProvider(ctx =>
     {
         var first = ctx.Request.Headers.AcceptLanguage.ToString().Split(',')[0].Split(';')[0].Trim().ToLowerInvariant();
         return Task.FromResult(first is "no" or "nn" or "no-no" or "nn-no"

@@ -1053,4 +1053,8 @@
   <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Z tohoto účtu bylo za poslední hodinu nahráno příliš mnoho souborů.</value></data>
   <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Nastavte veřejnou adresu obchodu (Nastavení, Server), aby bylo možné odesílat odkazy pro resetování.</value></data>
   <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>E-mail pro resetování se nepodařilo odeslat. U účtů správců se odkaz nezobrazuje; zkontrolujte nastavení e-mailu.</value></data>
+  <data name="Review (optional)" xml:space="preserve"><value>Zkontrolovat (volitelné)</value></data>
+  <data name="Record the review" xml:space="preserve"><value>Zaznamenat kontrolu</value></data>
+  <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Soukromý doplněk: nikdy se nezobrazí ve veřejném katalogu. Schválení pouze dokumentuje vaši kontrolu; dodávky zákazníkům v každém případě poskytují nejnovější zkontrolovanou verzi.</value></data>
+  <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Soukromý: doručuje se zákazníkům, nevyžaduje schválení</value></data>
 </root>

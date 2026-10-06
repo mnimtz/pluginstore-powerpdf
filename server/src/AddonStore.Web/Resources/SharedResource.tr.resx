@@ -1053,4 +1053,8 @@
   <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>Son bir saat içinde bu hesaptan çok fazla karşıya yükleme yapıldı.</value></data>
   <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Sıfırlama bağlantıları göndermek için mağazanın genel adresini ayarlayın (Ayarlar, Sunucu).</value></data>
   <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>Sıfırlama e-postası gönderilemedi. Yönetici hesaplarında bağlantı gösterilmez; e-posta ayarlarını denetleyin.</value></data>
+  <data name="Review (optional)" xml:space="preserve"><value>İnceleme (isteğe bağlı)</value></data>
+  <data name="Record the review" xml:space="preserve"><value>İncelemeyi kaydet</value></data>
+  <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Özel eklenti: Genel katalogda hiçbir zaman görünmez. Onaylama yalnızca incelemenizi belgeler; müşteri teslimatları her durumda en yeni incelenmiş sürümü sağlar.</value></data>
+  <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Özel: Müşterilere teslim edilir, onay gerektirmez</value></data>
 </root>

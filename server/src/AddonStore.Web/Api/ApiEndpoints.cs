@@ -186,6 +186,7 @@ public static class ApiEndpoints
                     "GET  /api/customer-code          check the customer code in the X-Customer-Code header (valid, customer, add-ons)",
                     "GET  /api/packages/{id}/icon[?v=version]  catalog icon (PNG), of the given or the newest released version",
                     "GET  /api/devkit                 SDK documentation and developer kit files",
+                    "GET  /api/sdk/pluginstore_bin.h  loader header for the add-on's own DLLs in bin/ (MIT)",
                     "GET  /api/agent-guide/checklist  every hard rule on one short page (HTML: /agent-guide/checklist)",
                     "GET  /api/rules                  every rule grouped by area, with the store's own rules (house rules, stricter warnings)",
                     "GET  /api/agent-guide/manual-upload  package format, step-by-step creation and the one-file manual upload",
@@ -329,7 +330,8 @@ public static class ApiEndpoints
                 // Store window opened (or refreshed) in a client: basis of the
                 // "clients in use" report; anonymous, see UsageService.
                 await usage.CountAsync(ctx, "catalog", lang: culture);
-                var items = await Services.CatalogUi.GetAsync(db, culture, beta);
+                var binOk = Services.CatalogUi.ClientSupportsBin(ctx);   // S1.4.0
+                var items = await Services.CatalogUi.GetAsync(db, culture, beta, binOk);
                 if (grants.Count > 0)
                 {
                     var cctx = await Services.CatalogUi.Context.LoadAsync(db);
@@ -337,7 +339,7 @@ public static class ApiEndpoints
                     foreach (var g in grants)
                     {
                         var (v, ch) = CustomerService.Pick(g, beta);
-                        if (v is null || !deliveredIds.Add(v.PackageId)) continue;
+                        if (v is null || (!binOk && Services.CatalogUi.HasBin(v)) || !deliveredIds.Add(v.PackageId)) continue;
                         items.RemoveAll(i => i.Id == v.PackageId);   // a delivery overrides the public entry
                         items.Add(Services.CatalogUi.Item(cctx, v, ch, culture, g.Customer.Name));
                     }
@@ -1374,6 +1376,14 @@ public static class ApiEndpoints
                         : "Fetch a file via GET /api/devkit/{path}."
                 }
             });
+        });
+
+        // Store SDK files that ship with the server (S1.4.0): the bin/ loader header
+        api.MapGet("/sdk/{name}", (string name, IWebHostEnvironment env) =>
+        {
+            if (name is not "pluginstore_bin.h") return NotFound("FILE_NOT_FOUND", $"No SDK file '{name}'. Available: pluginstore_bin.h.");
+            var full = Path.Combine(env.WebRootPath, "sdk", name);
+            return File.Exists(full) ? Results.File(full, "text/plain; charset=utf-8", name) : NotFound("FILE_NOT_FOUND", $"No SDK file '{name}'.");
         });
 
         api.MapGet("/devkit/{**path}", (string path, IConfiguration config, IWebHostEnvironment env) =>

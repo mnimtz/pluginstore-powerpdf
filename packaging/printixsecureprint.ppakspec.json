@@ -3,7 +3,26 @@
   "version": "1.1.1",
   "name": {
     "en": "Printix Secure Print",
-    "de": "Printix Secure Print"
+    "de": "Printix Secure Print",
+    "fr": "Printix Secure Print",
+    "it": "Printix Secure Print",
+    "es": "Printix Secure Print",
+    "nl": "Printix Secure Print",
+    "pt": "Printix Secure Print",
+    "da": "Printix Secure Print",
+    "fi": "Printix Secure Print",
+    "nb": "Printix Secure Print",
+    "sv": "Printix Secure Print",
+    "pl": "Printix Secure Print",
+    "cs": "Printix Secure Print",
+    "hu": "Printix Secure Print",
+    "ru": "Printix Secure Print",
+    "tr": "Printix Secure Print",
+    "zh-Hans": "Printix Secure Print",
+    "zh-Hant": "Printix Secure Print",
+    "ja": "Printix Secure Print",
+    "ko": "Printix Secure Print",
+    "ar": "Printix Secure Print"
   },
   "description": {
     "en": "Sends the active, saved PDF directly from Power PDF to your Printix Secure Print queue with one click; release the job at the printer as usual. Tenant, client ID, client secret and default queue are set under Options; the client secret is stored encrypted with Windows DPAPI, and administrators can enforce settings by policy.",

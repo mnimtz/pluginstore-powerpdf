@@ -3,7 +3,26 @@
   "version": "1.5.1",
   "name": {
     "en": "Commerzbank Sign",
-    "de": "Commerzbank Sign"
+    "de": "Commerzbank Sign",
+    "fr": "Commerzbank Sign",
+    "it": "Commerzbank Sign",
+    "es": "Commerzbank Sign",
+    "nl": "Commerzbank Sign",
+    "pt": "Commerzbank Sign",
+    "da": "Commerzbank Sign",
+    "fi": "Commerzbank Sign",
+    "nb": "Commerzbank Sign",
+    "sv": "Commerzbank Sign",
+    "pl": "Commerzbank Sign",
+    "cs": "Commerzbank Sign",
+    "hu": "Commerzbank Sign",
+    "ru": "Commerzbank Sign",
+    "tr": "Commerzbank Sign",
+    "zh-Hans": "Commerzbank Sign",
+    "zh-Hant": "Commerzbank Sign",
+    "ja": "Commerzbank Sign",
+    "ko": "Commerzbank Sign",
+    "ar": "Commerzbank Sign"
   },
   "description": {
     "en": "Signs PDFs with a digital signature in one click: three preconfigured signature area sizes plus a freely drawn area, placement by click with live preview or at a fixed position, automatic certificate selection, optional timestamp and configurable stamp appearance. Customer edition for Commerzbank with the Commerzbank logo; settings of Commerzbank Sign 1.4 (registry and INI) are kept.",

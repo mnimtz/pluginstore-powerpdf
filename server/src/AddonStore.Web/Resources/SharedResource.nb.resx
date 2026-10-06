@@ -1053,4 +1053,8 @@
   <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>For mange opplastinger fra denne kontoen den siste timen.</value></data>
   <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>Angi den offentlige adressen til butikken (Innstillinger, Server) for å sende koblinger for tilbakestilling.</value></data>
   <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>E-posten for tilbakestilling kunne ikke sendes. For administratorkontoer vises ikke koblingen; kontroller e-postinnstillingene.</value></data>
+  <data name="Review (optional)" xml:space="preserve"><value>Gjennomgå (valgfritt)</value></data>
+  <data name="Record the review" xml:space="preserve"><value>Registrer gjennomgangen</value></data>
+  <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Privat tillegg: Det vises aldri i den offentlige katalogen. Godkjenning dokumenterer bare gjennomgangen din; leveranser til kunder gir uansett ut den nyeste gjennomgåtte versjonen.</value></data>
+  <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Privat: leveres til kunder, krever ingen godkjenning</value></data>
 </root>

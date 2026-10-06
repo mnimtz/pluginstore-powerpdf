@@ -3,7 +3,26 @@
   "version": "1.1.0",
   "name": {
     "en": "E-Invoice Viewer",
-    "de": "E-Rechnung"
+    "de": "E-Rechnung",
+    "fr": "Visionneuse de factures électroniques",
+    "it": "Visualizzatore fatture elettroniche",
+    "es": "Visor de facturas electrónicas",
+    "nl": "E-factuurviewer",
+    "pt": "Visualizador de faturas eletrônicas",
+    "da": "E-fakturafremviser",
+    "fi": "E-laskujen katseluohjelma",
+    "nb": "Visningsprogram for e-faktura",
+    "sv": "Visningsprogram för e-fakturor",
+    "pl": "Przeglądarka e-faktur",
+    "cs": "Prohlížeč e-faktur",
+    "hu": "E-számla-megjelenítő",
+    "ru": "Просмотр электронных счетов",
+    "tr": "E-Fatura Görüntüleyici",
+    "zh-Hans": "电子发票查看器",
+    "zh-Hant": "電子發票檢視器",
+    "ja": "電子請求書ビューアー",
+    "ko": "전자 청구서 뷰어",
+    "ar": "عارض الفواتير الإلكترونية"
   },
   "description": {
     "en": "Shows the invoice data embedded in hybrid e-invoices (ZUGFeRD, Factur-X, XRechnung): key fields, line items, VAT breakdown and all XML fields; saves the XML and embeds an invoice XML into a PDF to create a hybrid e-invoice copy.",

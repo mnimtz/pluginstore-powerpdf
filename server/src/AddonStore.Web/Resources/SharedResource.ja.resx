@@ -1053,4 +1053,8 @@
   <data name="Too many uploads from this account in the last hour." xml:space="preserve"><value>過去 1 時間にこのアカウントからのアップロードが多すぎます。</value></data>
   <data name="Set the public address of the store (Settings, Server) to send reset links." xml:space="preserve"><value>リセット リンクを送信するには、ストアの公開アドレス（設定、サーバー）を設定してください。</value></data>
   <data name="The reset mail could not be sent. For admin accounts the link is not shown; check the email settings." xml:space="preserve"><value>リセット メールを送信できませんでした。管理者アカウントの場合、リンクは表示されません。メール設定を確認してください。</value></data>
+  <data name="Review (optional)" xml:space="preserve"><value>レビュー (任意)</value></data>
+  <data name="Record the review" xml:space="preserve"><value>レビューを記録</value></data>
+  <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>プライベート アドイン: 公開カタログには表示されません。承認はレビューを記録するだけです。顧客への配信では、いずれの場合も確認済みの最新バージョンが提供されます。</value></data>
+  <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>プライベート: 顧客に配信されます。承認は不要です</value></data>
 </root>
