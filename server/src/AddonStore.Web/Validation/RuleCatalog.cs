@@ -177,6 +177,37 @@ public static class RuleCatalog
     private static volatile HouseState s_state = HouseState.Empty;
     public static HouseState House => s_state;
 
+    /// <summary>Version of the running server (set at start-up), recorded in every rules snapshot.</summary>
+    public static string ServerVersion { get; set; } = "0.0.0-dev";
+
+    /// <summary>
+    /// The rules in force right now (S1.3.0), stored with every checked upload and every review
+    /// decision: which server version checked, a hash over every rule with its effective severity,
+    /// the store's house rules, the warnings made mandatory and the wording of every condition.
+    /// The hash tells at a glance whether two versions were checked against the same rules.
+    /// </summary>
+    public static object Snapshot()
+    {
+        var esc = s_state.Escalated.OrderBy(c => c, StringComparer.Ordinal).ToList();
+        var rules = Rules.Select(r => new { code = r.Code, severity = esc.Contains(r.Code) ? "error" : r.Severity, text = r.Description }).ToList();
+        var house = s_state.Rules.Select(h => new { id = h.Id, area = h.Area, kind = h.Kind, title = h.Title, text = h.Text }).ToList();
+        var conditions = ImportConditions().Concat(ApprovalConditions()).Select(c => new { id = c.Id, text = c.Text }).ToList();
+        var canonical = System.Text.Json.JsonSerializer.Serialize(new { rules, house, escalated = esc, conditions });
+        var hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(canonical))).ToLowerInvariant();
+        return new
+        {
+            serverVersion = ServerVersion,
+            at = DateTime.UtcNow,
+            rulesHash = hash,
+            ruleCount = rules.Count,
+            houseRules = house,
+            mandatoryWarnings = esc,
+            conditions,
+        };
+    }
+
+    public static string SnapshotJson() => System.Text.Json.JsonSerializer.Serialize(Snapshot());
+
     public static async Task LoadAsync(AppDbContext db)
     {
         var house = (await db.AppSettings.AsNoTracking().FirstOrDefaultAsync(s => s.Key == HouseKey))?.Value ?? "";

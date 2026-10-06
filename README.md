@@ -351,6 +351,17 @@ from the live guide, `/api/rules`, the OpenAPI description and the manifest
 schema: introduction and principles, the full developer and agent guide, every
 rule by area, the API reference and the manifest reference.
 
+**Audit dossier (S1.3.0):** each version on the plug-in page has an *Audit
+dossier* button (`/Dossier/{id}/{version}`, print or save as PDF; JSON at
+`GET /api/packages/{id}/{version}/dossier`) for owners, admins and reviewers:
+package and binary hashes with the catalog signature, the compliance
+declaration, the automatic checks together with the rules in force at that
+time (every upload now stores a rules snapshot: server version, rules hash,
+house rules, warnings made mandatory, condition wording), the source code
+check, the AI review aid, the review decision with the approval conditions in
+the wording confirmed, blocks, problem reports and the audit trail. Admins also
+get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
+
 **21 Power PDF languages (S1.2.0, client 1.3.0):** Power PDF has 21 UI
 languages. Portal, store window, MSI and catalog follow all of them: the 16
 European ones plus Simplified Chinese (`zh-Hans`, UILayout `CHS`), Traditional

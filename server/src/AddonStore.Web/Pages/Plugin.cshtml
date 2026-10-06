@@ -60,6 +60,10 @@
             </table>
         </div>
         <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            @if (Model.IsAdmin)
+            {
+                <a class="btn small secondary" href="/Admin/Audit?q=@Uri.EscapeDataString(pkg.Id)">@L["Audit log of this add-on"]</a>
+            }
             @if (Model.IsOwner || Model.IsAdmin)
             {
                 <a class="btn small" href="/CatalogEntry?id=@pkg.Id">@L["Edit catalog entry"]</a>
@@ -140,6 +144,8 @@
                     {
                         <a class="btn small secondary" href="/api/packages/@v.PackageId/@v.Version/download">@L["Download"]</a>
                     }
+                    <a class="btn small secondary" href="/Dossier/@Uri.EscapeDataString(v.PackageId)/@Uri.EscapeDataString(v.Version)" target="_blank" rel="noopener"
+                       title="@L["Everything about how this version was checked and released; print or save as PDF."]">@L["Audit dossier"]</a>
                     @if (Model.CanReview && v.Status == VersionStatus.Beta)
                     {
                         <partial name="_ApprovalForm" model='(v.Id, "versionId", (string?)pkg.Id, "Approve")' />

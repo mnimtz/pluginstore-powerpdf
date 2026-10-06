@@ -1005,4 +1005,46 @@
   <data name="{0} new" xml:space="preserve"><value>{0} 个新</value></data>
   <data name="Ribbon" xml:space="preserve"><value>功能区</value></data>
   <data name="No ribbon buttons" xml:space="preserve"><value>无功能区按钮</value></data>
+  <data name="A machine assessment that helps the reviewer; it is not the decision." xml:space="preserve"><value>机器评估，用于协助审阅者，并非最终决定。</value></data>
+  <data name="Add-on blocked" xml:space="preserve"><value>加载项已阻止</value></data>
+  <data name="All mandatory checks passed." xml:space="preserve"><value>所有必需检查均已通过。</value></data>
+  <data name="Approval conditions" xml:space="preserve"><value>审批条件</value></data>
+  <data name="Approval conditions confirmed (wording at that time)" xml:space="preserve"><value>已确认的审批条件（当时的措辞）</value></data>
+  <data name="As declared by the uploader in manifest.json; reviewers confirm it matches the package (approval condition R1)." xml:space="preserve"><value>由上传者在 manifest.json 中声明；审阅者确认其与包一致（审批条件 R1）。</value></data>
+  <data name="Audit dossier" xml:space="preserve"><value>审核档案</value></data>
+  <data name="Audit log of this add-on" xml:space="preserve"><value>此加载项的审核日志</value></data>
+  <data name="Audit trail" xml:space="preserve"><value>审核跟踪</value></data>
+  <data name="Catalog signature" xml:space="preserve"><value>目录签名</value></data>
+  <data name="Compliance declaration" xml:space="preserve"><value>合规声明</value></data>
+  <data name="Decision" xml:space="preserve"><value>决定</value></data>
+  <data name="Everything about how this version was checked and released; print or save as PDF." xml:space="preserve"><value>此版本检查与发布过程的全部信息；可打印或另存为 PDF。</value></data>
+  <data name="Four-eyes rule" xml:space="preserve"><value>双人复核原则</value></data>
+  <data name="Generated" xml:space="preserve"><value>生成时间</value></data>
+  <data name="Integrity" xml:space="preserve"><value>完整性</value></data>
+  <data name="Key" xml:space="preserve"><value>密钥</value></data>
+  <data name="Machine-readable: GET /api/packages/{0}/{1}/dossier" xml:space="preserve"><value>机器可读：GET /api/packages/{0}/{1}/dossier</value></data>
+  <data name="Mandatory checks failed." xml:space="preserve"><value>必需检查未通过。</value></data>
+  <data name="Minimum Power PDF version" xml:space="preserve"><value>最低 Power PDF 版本</value></data>
+  <data name="No problem reports for this version." xml:space="preserve"><value>此版本没有问题报告。</value></data>
+  <data name="No source code stored for this version." xml:space="preserve"><value>此版本未存储源代码。</value></data>
+  <data name="None (AI assistant off, or not requested)." xml:space="preserve"><value>无（AI 助手已关闭或未请求）。</value></data>
+  <data name="Not recorded: this version was checked before the store kept a rules snapshot (S1.3.0). The findings above are the complete check result of that time." xml:space="preserve"><value>未记录：此版本的检查早于商店开始保存规则快照（S1.3.0）。上方的检查发现即为当时完整的检查结果。</value></data>
+  <data name="Not reviewed yet." xml:space="preserve"><value>尚未审阅。</value></data>
+  <data name="Package (.ppak) SHA-256" xml:space="preserve"><value>包 (.ppak) SHA-256</value></data>
+  <data name="Package and version" xml:space="preserve"><value>包和版本</value></data>
+  <data name="Per version on the plug-in page: hashes, checks with the rules in force, review with conditions, audit trail." xml:space="preserve"><value>在插件页面上按版本提供：哈希值、依据当时有效规则的检查、含条件的审阅、审核跟踪。</value></data>
+  <data name="Recorded before S1.3.0: the condition ids come from the audit log, their wording was not stored." xml:space="preserve"><value>在 S1.3.0 之前记录：条件 ID 来自审核日志，其措辞未存储。</value></data>
+  <data name="Review decision" xml:space="preserve"><value>审阅决定</value></data>
+  <data name="Rules hash" xml:space="preserve"><value>规则哈希值</value></data>
+  <data name="Rules in force at the check" xml:space="preserve"><value>检查时有效的规则</value></data>
+  <data name="Server version" xml:space="preserve"><value>服务器版本</value></data>
+  <data name="Summary" xml:space="preserve"><value>摘要</value></data>
+  <data name="The add-on as a whole" xml:space="preserve"><value>整个加载项</value></data>
+  <data name="This version" xml:space="preserve"><value>此版本</value></data>
+  <data name="Uploaded" xml:space="preserve"><value>上传时间</value></data>
+  <data name="Version blocked" xml:space="preserve"><value>版本已阻止</value></data>
+  <data name="Warnings made mandatory" xml:space="preserve"><value>已设为必需的警告</value></data>
+  <data name="not uploaded" xml:space="preserve"><value>未上传</value></data>
+  <data name="only for live and beta versions" xml:space="preserve"><value>仅限正式版和测试版</value></data>
+  <data name="passed" xml:space="preserve"><value>已通过</value></data>
 </root>

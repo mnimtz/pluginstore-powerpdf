@@ -1,0 +1,234 @@
+@page "/Dossier/{id}/{version}"
+@model AddonStore.Web.Pages.DossierModel
+@using System.Text.Json
+@using AddonStore.Web.Data
+@{
+    Layout = "_ReportPrintLayout";
+    var d = Model.D!;
+    ViewData["PrintTitle"] = L["Audit dossier"].Value + " " + d.PackageId + " " + d.Version;
+    ViewData["NoAutoPrint"] = true;
+    var ci = System.Globalization.CultureInfo.CurrentCulture;
+    var pretty = new JsonSerializerOptions { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+    string Json(JsonElement? e) => e is null ? "-" : JsonSerializer.Serialize(e.Value, pretty);
+    string Kb(long b) => b < 1024 * 1024 ? $"{(b + 1023) / 1024} KB" : $"{b / 1024.0 / 1024.0:0.0} MB";
+    string? Str(JsonElement? e, string name) => e is { ValueKind: JsonValueKind.Object } o && o.TryGetProperty(name, out var v) && v.ValueKind == JsonValueKind.String ? v.GetString() : null;
+    JsonElement? Sub(JsonElement? e, string name) => e is { ValueKind: JsonValueKind.Object } o && o.TryGetProperty(name, out var v) && v.ValueKind != JsonValueKind.Null ? v : null;
+    string Badge(string sev) => sev switch { "error" => "rejected", "warning" => "beta", "info" => "submitted", _ => "withdrawn" };
+    var statusLabel = d.Status switch { VersionStatus.Live => "Live", VersionStatus.Beta => "Beta", VersionStatus.Rejected => "Rejected", VersionStatus.Withdrawn => "Withdrawn", _ => "Submitted" };
+    var errors = d.Findings.Count(f => f.Severity == "error");
+    var warnings = d.Findings.Count(f => f.Severity == "warning");
+    var snap = d.RulesSnapshot;
+    var approval = d.Approval;
+}
+<style>
+    .dossier h2 { margin-top: 26px; padding-bottom: 4px; border-bottom: 2px solid var(--tun-gray-200); }
+    .dossier table.kv th { width: 230px; color: var(--tun-slate); font-weight: 500; }
+    .dossier td.mono, .dossier .mono { font-family: Consolas, monospace; font-size: .8rem; word-break: break-all; }
+    .dossier pre.code { white-space: pre-wrap; max-height: none; font-size: .78rem; background: var(--tun-gray-100); color: var(--tun-ink); border: 1px solid var(--tun-gray-200); }
+    .dossier .lead-box { background: var(--tun-gray-100); border: 1px solid var(--tun-gray-200); border-radius: 8px; padding: 12px 14px; margin: 10px 0 0; }
+    @@media print { .dossier h2 { break-after: avoid; } .dossier table { break-inside: auto; } }
+</style>
+<div class="dossier">
+<div class="report-head" style="display:flex">
+    <img src="/img/tungsten-logo-navy.svg" alt="Tungsten Automation" />
+    <div>
+        <h1 style="margin:0">@L["Audit dossier"]: @d.Name @d.Version</h1>
+        <div class="muted small"><span class="mono">@d.PackageId</span> · @L["Generated"] @Time.Fmt(d.GeneratedAt) · @d.GeneratedBy · Add-on Store S@(d.ServerVersion)</div>
+    </div>
+</div>
+
+<div class="lead-box small">
+    <b>@L["Summary"]:</b>
+    <span class="badge @(d.Status == VersionStatus.Live ? "live" : d.Status == VersionStatus.Beta ? "beta" : d.Status == VersionStatus.Rejected ? "rejected" : "withdrawn")">@L[statusLabel]</span>
+    · @L["Automatic checks"]: @(d.Passed ? L["passed"] : L["failed"]) (@errors @L["Errors"], @warnings @L["Warnings"])
+    · @L["Source code"]: @(d.SourceSha256 is null ? L["not uploaded"] : L["stored"])
+    · @L["Review"]: @(approval is not null ? (Str(approval, "decision") == "approved" ? L["Approved"] : L["Rejected"]) : d.ReviewedAt is not null ? (d.Status == VersionStatus.Rejected ? L["Rejected"] : L["Approved"]) : L["open"])
+    @if (d.BlockedAt is not null || d.PackageBlockedAt is not null) { <text> · </text><span class="badge rejected">@L["Blocked"]</span> }
+</div>
+
+<h2>1. @L["Package and version"]</h2>
+<table class="kv">
+    <tr><th>@L["Add-on"]</th><td>@d.Name (<span class="mono">@d.PackageId</span>)</td></tr>
+    <tr><th>@L["Owner"]</th><td>@d.Owner</td></tr>
+    <tr><th>@L["Visibility"]</th><td>@d.Visibility</td></tr>
+    <tr><th>@L["Category"]</th><td>@d.Category</td></tr>
+    <tr><th>@L["Version"]</th><td>@d.Version · @L[statusLabel]</td></tr>
+    <tr><th>@L["Submitted"]</th><td>@Time.Fmt(d.SubmittedAt) · @d.SubmittedBy · @d.SubmittedVia</td></tr>
+    <tr><th>@L["Minimum Power PDF version"]</th><td>@(d.MinHost.Length > 0 ? d.MinHost : "-")</td></tr>
+    <tr><th>@L["Ribbon"]</th><td>@if (d.NoUi) { @L["No ribbon buttons"] } else { <span class="mono">@(d.AtomNamespace.Length > 0 ? d.AtomNamespace : "-")</span> }</td></tr>
+    <tr><th>@L["Downloads"]</th><td>@d.Downloads.ToString("N0", ci)</td></tr>
+</table>
+
+<h2>2. @L["Integrity"]</h2>
+<table class="kv">
+    <tr><th>@L["Package (.ppak) SHA-256"]</th><td class="mono">@d.PackageSha256 (@Kb(d.SizeBytes))</td></tr>
+    @foreach (var f in d.Files)
+    {
+        <tr><th>@f.Arch: @f.Path</th><td class="mono">@f.Sha256</td></tr>
+    }
+    <tr><th>@L["Catalog signature"]</th><td class="mono">@(string.IsNullOrEmpty(d.Signature) ? L["only for live and beta versions"].Value : d.Signature) @if (d.SigningKeyId.Length > 0) { <br /><span class="muted">@L["Key"]: @d.SigningKeyId</span> }</td></tr>
+</table>
+
+<h2>3. @L["Compliance declaration"]</h2>
+<p class="small muted">@L["As declared by the uploader in manifest.json; reviewers confirm it matches the package (approval condition R1)."]</p>
+<h3>complianceAudit</h3><pre class="code">@Json(d.Compliance)</pre>
+<h3>thirdParty</h3><pre class="code">@Json(d.ThirdParty)</pre>
+<h3>externalServices</h3><pre class="code">@Json(d.ExternalServices)</pre>
+
+<h2>4. @L["Automatic checks"]</h2>
+<p>@(d.Passed ? L["All mandatory checks passed."] : L["Mandatory checks failed."]) @errors @L["Errors"], @warnings @L["Warnings"], @d.Findings.Count(f => f.Severity == "info") @L["Notes"].</p>
+@if (d.Findings.Count > 0)
+{
+    <table>
+        <tr><th>@L["Severity"]</th><th>@L["Code"]</th><th>@L["Message"]</th></tr>
+        @foreach (var f in d.Findings.OrderBy(f => f.Severity == "error" ? 0 : f.Severity == "warning" ? 1 : 2))
+        {
+            <tr><td><span class="badge @Badge(f.Severity)">@f.Severity</span></td><td class="mono">@f.Code</td><td class="small">@f.Message</td></tr>
+        }
+    </table>
+}
+
+<h2>5. @L["Rules in force at the check"]</h2>
+@if (snap is null)
+{
+    <p class="muted">@L["Not recorded: this version was checked before the store kept a rules snapshot (S1.3.0). The findings above are the complete check result of that time."]</p>
+}
+else
+{
+    var mand = Sub(snap, "mandatoryWarnings");
+    var house = Sub(snap, "houseRules");
+    <table class="kv">
+        <tr><th>@L["Server version"]</th><td>S@(Str(snap, "serverVersion"))</td></tr>
+        <tr><th>@L["Rules hash"]</th><td class="mono">@Str(snap, "rulesHash")</td></tr>
+        <tr><th>@L["Rules"]</th><td>@(Sub(snap, "ruleCount")?.ToString())</td></tr>
+        <tr><th>@L["Warnings made mandatory"]</th><td class="mono">@(mand is { ValueKind: JsonValueKind.Array } m && m.GetArrayLength() > 0 ? string.Join(", ", m.EnumerateArray().Select(x => x.GetString())) : "-")</td></tr>
+        <tr><th>@L["Rules of this store"]</th><td>@(house is { ValueKind: JsonValueKind.Array } h ? h.GetArrayLength() : 0)</td></tr>
+    </table>
+    @if (house is { ValueKind: JsonValueKind.Array } hr && hr.GetArrayLength() > 0)
+    {
+        <ul class="small">
+            @foreach (var r in hr.EnumerateArray())
+            {
+                <li><b>@Str(r, "title")</b> (@Str(r, "kind")): @Str(r, "text")</li>
+            }
+        </ul>
+    }
+}
+
+<h2>6. @L["Source code"]</h2>
+@if (d.SourceSha256 is null)
+{
+    <p class="muted">@L["No source code stored for this version."]</p>
+}
+else
+{
+    <table class="kv">
+        <tr><th>SHA-256</th><td class="mono">@d.SourceSha256 (@Kb(d.SourceSizeBytes))</td></tr>
+        <tr><th>@L["Uploaded"]</th><td>@(d.SourceUploadedAt is { } su ? Time.Fmt(su) : "-") · @d.SourceUploadedBy</td></tr>
+    </table>
+    @if (d.SourceFindings is { Count: > 0 } sf)
+    {
+        <table>
+            <tr><th>@L["Severity"]</th><th>@L["Code"]</th><th>@L["Message"]</th></tr>
+            @foreach (var f in sf)
+            {
+                <tr><td><span class="badge @Badge(f.Severity)">@f.Severity</span></td><td class="mono">@f.Code</td><td class="small">@f.Message</td></tr>
+            }
+        </table>
+    }
+}
+
+<h2>7. @L["AI review aid"]</h2>
+@if (d.AiReview is null)
+{
+    <p class="muted">@L["None (AI assistant off, or not requested)."]</p>
+}
+else
+{
+    <p><b>@L["Recommendation"]:</b> @d.AiReview.Recommendation · <span class="muted small">@d.AiModel · @(d.AiAt is { } aa ? Time.Fmt(aa) : "")</span></p>
+    <p>@d.AiReview.Summary</p>
+    @if (d.AiReview.Concerns.Count > 0)
+    {
+        <ul class="small">@foreach (var (sev, text) in d.AiReview.Concerns) { <li><span class="badge @Badge(sev == "high" ? "error" : sev)">@sev</span> @text</li> }</ul>
+    }
+    <p class="small muted">@L["A machine assessment that helps the reviewer; it is not the decision."]</p>
+}
+
+<h2>8. @L["Review decision"]</h2>
+@if (approval is not null)
+{
+    var conds = Sub(approval, "conditions");
+    <table class="kv">
+        <tr><th>@L["Decision"]</th><td><b>@(Str(approval, "decision") == "approved" ? L["Approved"] : L["Rejected"])</b></td></tr>
+        <tr><th>@L["Reviewer"]</th><td>@Str(approval, "by")</td></tr>
+        <tr><th>@L["Time"]</th><td>@(d.ReviewedAt is { } ra ? Time.Fmt(ra) : "-")</td></tr>
+        <tr><th>@L["Four-eyes rule"]</th><td>@(Sub(approval, "fourEyesRule")?.ValueKind == JsonValueKind.True ? L["On"] : L["Off"])</td></tr>
+        <tr><th>@L["Comment"]</th><td>@(Str(approval, "comment") ?? "-")</td></tr>
+        <tr><th>@L["Rules hash"]</th><td class="mono">@Str(Sub(approval, "rules"), "rulesHash")</td></tr>
+    </table>
+    @if (conds is { ValueKind: JsonValueKind.Array } ca && ca.GetArrayLength() > 0)
+    {
+        <h3>@L["Approval conditions confirmed (wording at that time)"]</h3>
+        <table>
+            @foreach (var c in ca.EnumerateArray())
+            {
+                <tr><td class="mono" style="width:60px">@Str(c, "id")</td><td class="small">☑ @Str(c, "text")</td></tr>
+            }
+        </table>
+    }
+}
+else if (d.ReviewedAt is not null)
+{
+    <table class="kv">
+        <tr><th>@L["Decision"]</th><td><b>@(d.Status == VersionStatus.Rejected ? L["Rejected"] : L["Approved"])</b></td></tr>
+        <tr><th>@L["Reviewer"]</th><td>@(d.ReviewedBy ?? "-")</td></tr>
+        <tr><th>@L["Time"]</th><td>@Time.Fmt(d.ReviewedAt.Value)</td></tr>
+        <tr><th>@L["Comment"]</th><td>@(d.ReviewComment ?? "-")</td></tr>
+        <tr><th>@L["Approval conditions"]</th><td>@(d.LegacyConditions ?? "-")</td></tr>
+    </table>
+    <p class="small muted">@L["Recorded before S1.3.0: the condition ids come from the audit log, their wording was not stored."]</p>
+}
+else
+{
+    <p class="muted">@L["Not reviewed yet."]</p>
+}
+
+@if (d.BlockedAt is not null || d.PackageBlockedAt is not null)
+{
+    <h2>9. @L["Security block"]</h2>
+    <table class="kv">
+        @if (d.BlockedAt is { } ba) { <tr><th>@L["Version blocked"]</th><td>@Time.Fmt(ba) · @d.BlockedBy · @d.BlockReason</td></tr> }
+        @if (d.PackageBlockedAt is { } pa) { <tr><th>@L["Add-on blocked"]</th><td>@Time.Fmt(pa) · @d.PackageBlockReason</td></tr> }
+    </table>
+}
+
+<h2>10. @L["Problem reports"]</h2>
+<p>@(d.Reports.Count == 0 ? L["No problem reports for this version."].Value : string.Join(" · ", d.Reports.Select(r => $"{L[AddonStore.Web.Services.IssueService.Label(r.Key)].Value}: {r.Value}")))</p>
+
+<h2>11. @L["Audit trail"]</h2>
+<h3>@L["This version"]</h3>
+@if (d.VersionAudit.Count == 0) { <p class="muted">-</p> }
+else
+{
+    <table>
+        <tr><th>@L["Time"]</th><th>@L["Actor"]</th><th>@L["Action"]</th><th>@L["Details"]</th></tr>
+        @foreach (var a in d.VersionAudit)
+        {
+            <tr><td class="small">@Time.Fmt(a.At)</td><td class="small">@a.Actor</td><td class="mono">@a.Action</td><td class="small">@a.Details</td></tr>
+        }
+    </table>
+}
+<h3>@L["The add-on as a whole"]</h3>
+@if (d.PackageAudit.Count == 0) { <p class="muted">-</p> }
+else
+{
+    <table>
+        <tr><th>@L["Time"]</th><th>@L["Actor"]</th><th>@L["Action"]</th><th>@L["Subject"]</th><th>@L["Details"]</th></tr>
+        @foreach (var a in d.PackageAudit)
+        {
+            <tr><td class="small">@Time.Fmt(a.At)</td><td class="small">@a.Actor</td><td class="mono">@a.Action</td><td class="mono">@a.Subject</td><td class="small">@a.Details</td></tr>
+        }
+    </table>
+}
+<p class="small muted" style="margin-top:20px">@L["Machine-readable: GET /api/packages/{0}/{1}/dossier", d.PackageId, d.Version]</p>
+</div>

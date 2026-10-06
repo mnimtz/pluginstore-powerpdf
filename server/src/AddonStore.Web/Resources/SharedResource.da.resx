@@ -1005,4 +1005,46 @@
   <data name="{0} new" xml:space="preserve"><value>{0} nye</value></data>
   <data name="Ribbon" xml:space="preserve"><value>Bånd</value></data>
   <data name="No ribbon buttons" xml:space="preserve"><value>Uden knapper på båndet</value></data>
+  <data name="A machine assessment that helps the reviewer; it is not the decision." xml:space="preserve"><value>En maskinel vurdering, der hjælper bedømmeren; den er ikke beslutningen.</value></data>
+  <data name="Add-on blocked" xml:space="preserve"><value>Tilføjelsesprogram blokeret</value></data>
+  <data name="All mandatory checks passed." xml:space="preserve"><value>Alle obligatoriske kontroller bestået.</value></data>
+  <data name="Approval conditions" xml:space="preserve"><value>Godkendelsesbetingelser</value></data>
+  <data name="Approval conditions confirmed (wording at that time)" xml:space="preserve"><value>Bekræftede godkendelsesbetingelser (ordlyd på det tidspunkt)</value></data>
+  <data name="As declared by the uploader in manifest.json; reviewers confirm it matches the package (approval condition R1)." xml:space="preserve"><value>Som angivet af uploaderen i manifest.json; bedømmere bekræfter, at det svarer til pakken (godkendelsesbetingelse R1).</value></data>
+  <data name="Audit dossier" xml:space="preserve"><value>Revisionsdossier</value></data>
+  <data name="Audit log of this add-on" xml:space="preserve"><value>Overvågningslog for dette tilføjelsesprogram</value></data>
+  <data name="Audit trail" xml:space="preserve"><value>Revisionsspor</value></data>
+  <data name="Catalog signature" xml:space="preserve"><value>Katalogsignatur</value></data>
+  <data name="Compliance declaration" xml:space="preserve"><value>Overholdelseserklæring</value></data>
+  <data name="Decision" xml:space="preserve"><value>Beslutning</value></data>
+  <data name="Everything about how this version was checked and released; print or save as PDF." xml:space="preserve"><value>Alt om, hvordan denne version blev kontrolleret og frigivet; udskriv eller gem som PDF.</value></data>
+  <data name="Four-eyes rule" xml:space="preserve"><value>Fireøjneprincip</value></data>
+  <data name="Generated" xml:space="preserve"><value>Genereret</value></data>
+  <data name="Integrity" xml:space="preserve"><value>Integritet</value></data>
+  <data name="Key" xml:space="preserve"><value>Nøgle</value></data>
+  <data name="Machine-readable: GET /api/packages/{0}/{1}/dossier" xml:space="preserve"><value>Maskinlæsbar: GET /api/packages/{0}/{1}/dossier</value></data>
+  <data name="Mandatory checks failed." xml:space="preserve"><value>Obligatoriske kontroller ikke bestået.</value></data>
+  <data name="Minimum Power PDF version" xml:space="preserve"><value>Minimumsversion af Power PDF</value></data>
+  <data name="No problem reports for this version." xml:space="preserve"><value>Ingen problemrapporter for denne version.</value></data>
+  <data name="No source code stored for this version." xml:space="preserve"><value>Ingen kildekode gemt for denne version.</value></data>
+  <data name="None (AI assistant off, or not requested)." xml:space="preserve"><value>Ingen (AI-assistent slået fra eller ikke anmodet).</value></data>
+  <data name="Not recorded: this version was checked before the store kept a rules snapshot (S1.3.0). The findings above are the complete check result of that time." xml:space="preserve"><value>Ikke registreret: Denne version blev kontrolleret, før butikken gemte et øjebliksbillede af reglerne (S1.3.0). Resultaterne ovenfor er det fuldstændige kontrolresultat fra dengang.</value></data>
+  <data name="Not reviewed yet." xml:space="preserve"><value>Endnu ikke gennemgået.</value></data>
+  <data name="Package (.ppak) SHA-256" xml:space="preserve"><value>SHA-256 for pakke (.ppak)</value></data>
+  <data name="Package and version" xml:space="preserve"><value>Pakke og version</value></data>
+  <data name="Per version on the plug-in page: hashes, checks with the rules in force, review with conditions, audit trail." xml:space="preserve"><value>Pr. version på plug-in-siden: hashværdier, kontroller med de gældende regler, gennemgang med betingelser, revisionsspor.</value></data>
+  <data name="Recorded before S1.3.0: the condition ids come from the audit log, their wording was not stored." xml:space="preserve"><value>Registreret før S1.3.0: Betingelses-id'erne stammer fra overvågningsloggen, deres ordlyd blev ikke gemt.</value></data>
+  <data name="Review decision" xml:space="preserve"><value>Gennemgangsbeslutning</value></data>
+  <data name="Rules hash" xml:space="preserve"><value>Regel-hash</value></data>
+  <data name="Rules in force at the check" xml:space="preserve"><value>Gældende regler ved kontrollen</value></data>
+  <data name="Server version" xml:space="preserve"><value>Serverversion</value></data>
+  <data name="Summary" xml:space="preserve"><value>Oversigt</value></data>
+  <data name="The add-on as a whole" xml:space="preserve"><value>Tilføjelsesprogrammet som helhed</value></data>
+  <data name="This version" xml:space="preserve"><value>Denne version</value></data>
+  <data name="Uploaded" xml:space="preserve"><value>Uploadet</value></data>
+  <data name="Version blocked" xml:space="preserve"><value>Version blokeret</value></data>
+  <data name="Warnings made mandatory" xml:space="preserve"><value>Advarsler gjort obligatoriske</value></data>
+  <data name="not uploaded" xml:space="preserve"><value>ikke uploadet</value></data>
+  <data name="only for live and beta versions" xml:space="preserve"><value>kun for live- og betaversioner</value></data>
+  <data name="passed" xml:space="preserve"><value>bestået</value></data>
 </root>

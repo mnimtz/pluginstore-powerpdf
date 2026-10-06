@@ -1005,4 +1005,46 @@
   <data name="{0} new" xml:space="preserve"><value>новых: {0}</value></data>
   <data name="Ribbon" xml:space="preserve"><value>Лента</value></data>
   <data name="No ribbon buttons" xml:space="preserve"><value>Без кнопок на ленте</value></data>
+  <data name="A machine assessment that helps the reviewer; it is not the decision." xml:space="preserve"><value>Машинная оценка, помогающая проверяющему; она не является решением.</value></data>
+  <data name="Add-on blocked" xml:space="preserve"><value>Надстройка заблокирована</value></data>
+  <data name="All mandatory checks passed." xml:space="preserve"><value>Все обязательные проверки пройдены.</value></data>
+  <data name="Approval conditions" xml:space="preserve"><value>Условия утверждения</value></data>
+  <data name="Approval conditions confirmed (wording at that time)" xml:space="preserve"><value>Подтвержденные условия утверждения (формулировка на тот момент)</value></data>
+  <data name="As declared by the uploader in manifest.json; reviewers confirm it matches the package (approval condition R1)." xml:space="preserve"><value>Согласно данным загрузившего в manifest.json; проверяющие подтверждают соответствие пакету (условие утверждения R1).</value></data>
+  <data name="Audit dossier" xml:space="preserve"><value>Досье проверки</value></data>
+  <data name="Audit log of this add-on" xml:space="preserve"><value>Журнал аудита этой надстройки</value></data>
+  <data name="Audit trail" xml:space="preserve"><value>История аудита</value></data>
+  <data name="Catalog signature" xml:space="preserve"><value>Подпись каталога</value></data>
+  <data name="Compliance declaration" xml:space="preserve"><value>Декларация соответствия</value></data>
+  <data name="Decision" xml:space="preserve"><value>Решение</value></data>
+  <data name="Everything about how this version was checked and released; print or save as PDF." xml:space="preserve"><value>Все о том, как эта версия была проверена и выпущена; распечатайте или сохраните как PDF.</value></data>
+  <data name="Four-eyes rule" xml:space="preserve"><value>Принцип четырех глаз</value></data>
+  <data name="Generated" xml:space="preserve"><value>Создано</value></data>
+  <data name="Integrity" xml:space="preserve"><value>Целостность</value></data>
+  <data name="Key" xml:space="preserve"><value>Ключ</value></data>
+  <data name="Machine-readable: GET /api/packages/{0}/{1}/dossier" xml:space="preserve"><value>Машиночитаемый формат: GET /api/packages/{0}/{1}/dossier</value></data>
+  <data name="Mandatory checks failed." xml:space="preserve"><value>Обязательные проверки не пройдены.</value></data>
+  <data name="Minimum Power PDF version" xml:space="preserve"><value>Минимальная версия Power PDF</value></data>
+  <data name="No problem reports for this version." xml:space="preserve"><value>Для этой версии нет сообщений о проблемах.</value></data>
+  <data name="No source code stored for this version." xml:space="preserve"><value>Для этой версии исходный код не сохранен.</value></data>
+  <data name="None (AI assistant off, or not requested)." xml:space="preserve"><value>Нет (ИИ-помощник отключен или не запрошен).</value></data>
+  <data name="Not recorded: this version was checked before the store kept a rules snapshot (S1.3.0). The findings above are the complete check result of that time." xml:space="preserve"><value>Не зафиксировано: эта версия была проверена до того, как магазин начал сохранять снимок правил (S1.3.0). Приведенные выше результаты представляют собой полный результат проверки на тот момент.</value></data>
+  <data name="Not reviewed yet." xml:space="preserve"><value>Еще не проверено.</value></data>
+  <data name="Package (.ppak) SHA-256" xml:space="preserve"><value>SHA-256 пакета (.ppak)</value></data>
+  <data name="Package and version" xml:space="preserve"><value>Пакет и версия</value></data>
+  <data name="Per version on the plug-in page: hashes, checks with the rules in force, review with conditions, audit trail." xml:space="preserve"><value>Для каждой версии на странице подключаемого модуля: хэши, проверки с действующими правилами, рецензирование с условиями, история аудита.</value></data>
+  <data name="Recorded before S1.3.0: the condition ids come from the audit log, their wording was not stored." xml:space="preserve"><value>Зафиксировано до S1.3.0: идентификаторы условий взяты из журнала аудита, их формулировка не сохранялась.</value></data>
+  <data name="Review decision" xml:space="preserve"><value>Решение по рецензированию</value></data>
+  <data name="Rules hash" xml:space="preserve"><value>Хэш правил</value></data>
+  <data name="Rules in force at the check" xml:space="preserve"><value>Правила, действовавшие при проверке</value></data>
+  <data name="Server version" xml:space="preserve"><value>Версия сервера</value></data>
+  <data name="Summary" xml:space="preserve"><value>Сводка</value></data>
+  <data name="The add-on as a whole" xml:space="preserve"><value>Надстройка в целом</value></data>
+  <data name="This version" xml:space="preserve"><value>Эта версия</value></data>
+  <data name="Uploaded" xml:space="preserve"><value>Загружено</value></data>
+  <data name="Version blocked" xml:space="preserve"><value>Версия заблокирована</value></data>
+  <data name="Warnings made mandatory" xml:space="preserve"><value>Предупреждения, ставшие обязательными</value></data>
+  <data name="not uploaded" xml:space="preserve"><value>не загружено</value></data>
+  <data name="only for live and beta versions" xml:space="preserve"><value>только для рабочих и бета-версий</value></data>
+  <data name="passed" xml:space="preserve"><value>пройдено</value></data>
 </root>

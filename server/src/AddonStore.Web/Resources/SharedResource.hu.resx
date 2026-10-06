@@ -1005,4 +1005,46 @@
   <data name="{0} new" xml:space="preserve"><value>{0} új</value></data>
   <data name="Ribbon" xml:space="preserve"><value>Menüszalag</value></data>
   <data name="No ribbon buttons" xml:space="preserve"><value>Menüszalaggombok nélkül</value></data>
+  <data name="A machine assessment that helps the reviewer; it is not the decision." xml:space="preserve"><value>Gépi értékelés, amely az ellenőrt segíti; nem maga a döntés.</value></data>
+  <data name="Add-on blocked" xml:space="preserve"><value>Bővítmény letiltva</value></data>
+  <data name="All mandatory checks passed." xml:space="preserve"><value>Minden kötelező ellenőrzés sikeres.</value></data>
+  <data name="Approval conditions" xml:space="preserve"><value>Jóváhagyási feltételek</value></data>
+  <data name="Approval conditions confirmed (wording at that time)" xml:space="preserve"><value>Megerősített jóváhagyási feltételek (akkori megfogalmazás)</value></data>
+  <data name="As declared by the uploader in manifest.json; reviewers confirm it matches the package (approval condition R1)." xml:space="preserve"><value>A feltöltő által a manifest.json fájlban megadottak szerint; az ellenőrök megerősítik, hogy ez megfelel a csomagnak (R1 jóváhagyási feltétel).</value></data>
+  <data name="Audit dossier" xml:space="preserve"><value>Ellenőrzési dosszié</value></data>
+  <data name="Audit log of this add-on" xml:space="preserve"><value>A bővítmény vizsgálati naplója</value></data>
+  <data name="Audit trail" xml:space="preserve"><value>Vizsgálati nyomvonal</value></data>
+  <data name="Catalog signature" xml:space="preserve"><value>Katalógus aláírása</value></data>
+  <data name="Compliance declaration" xml:space="preserve"><value>Megfelelőségi nyilatkozat</value></data>
+  <data name="Decision" xml:space="preserve"><value>Döntés</value></data>
+  <data name="Everything about how this version was checked and released; print or save as PDF." xml:space="preserve"><value>Minden arról, hogyan ellenőrizték és adták ki ezt a verziót; nyomtassa ki, vagy mentse PDF-ként.</value></data>
+  <data name="Four-eyes rule" xml:space="preserve"><value>Négy szem elve</value></data>
+  <data name="Generated" xml:space="preserve"><value>Létrehozva</value></data>
+  <data name="Integrity" xml:space="preserve"><value>Integritás</value></data>
+  <data name="Key" xml:space="preserve"><value>Kulcs</value></data>
+  <data name="Machine-readable: GET /api/packages/{0}/{1}/dossier" xml:space="preserve"><value>Géppel olvasható: GET /api/packages/{0}/{1}/dossier</value></data>
+  <data name="Mandatory checks failed." xml:space="preserve"><value>A kötelező ellenőrzések sikertelenek.</value></data>
+  <data name="Minimum Power PDF version" xml:space="preserve"><value>Power PDF minimális verziója</value></data>
+  <data name="No problem reports for this version." xml:space="preserve"><value>Ehhez a verzióhoz nincs hibajelentés.</value></data>
+  <data name="No source code stored for this version." xml:space="preserve"><value>Ehhez a verzióhoz nincs tárolt forráskód.</value></data>
+  <data name="None (AI assistant off, or not requested)." xml:space="preserve"><value>Nincs (az AI-asszisztens ki van kapcsolva, vagy nem kérték).</value></data>
+  <data name="Not recorded: this version was checked before the store kept a rules snapshot (S1.3.0). The findings above are the complete check result of that time." xml:space="preserve"><value>Nincs rögzítve: ezt a verziót azelőtt ellenőrizték, hogy az áruház szabálypillanatképet tárolt volna (S1.3.0). A fenti megállapítások az akkori ellenőrzés teljes eredményét jelentik.</value></data>
+  <data name="Not reviewed yet." xml:space="preserve"><value>Még nincs ellenőrizve.</value></data>
+  <data name="Package (.ppak) SHA-256" xml:space="preserve"><value>Csomag (.ppak) SHA-256</value></data>
+  <data name="Package and version" xml:space="preserve"><value>Csomag és verzió</value></data>
+  <data name="Per version on the plug-in page: hashes, checks with the rules in force, review with conditions, audit trail." xml:space="preserve"><value>Verziónként a beépülő modul oldalán: kivonatok, ellenőrzések az érvényes szabályokkal, felülvizsgálat feltételekkel, vizsgálati nyomvonal.</value></data>
+  <data name="Recorded before S1.3.0: the condition ids come from the audit log, their wording was not stored." xml:space="preserve"><value>S1.3.0 előtt rögzítve: a feltételazonosítók a vizsgálati naplóból származnak, a megfogalmazásukat nem tárolták.</value></data>
+  <data name="Review decision" xml:space="preserve"><value>Felülvizsgálati döntés</value></data>
+  <data name="Rules hash" xml:space="preserve"><value>Szabálykivonat</value></data>
+  <data name="Rules in force at the check" xml:space="preserve"><value>Az ellenőrzéskor érvényes szabályok</value></data>
+  <data name="Server version" xml:space="preserve"><value>Kiszolgáló verziója</value></data>
+  <data name="Summary" xml:space="preserve"><value>Összegzés</value></data>
+  <data name="The add-on as a whole" xml:space="preserve"><value>A bővítmény egésze</value></data>
+  <data name="This version" xml:space="preserve"><value>Ez a verzió</value></data>
+  <data name="Uploaded" xml:space="preserve"><value>Feltöltve</value></data>
+  <data name="Version blocked" xml:space="preserve"><value>Verzió letiltva</value></data>
+  <data name="Warnings made mandatory" xml:space="preserve"><value>Kötelezővé tett figyelmeztetések</value></data>
+  <data name="not uploaded" xml:space="preserve"><value>nincs feltöltve</value></data>
+  <data name="only for live and beta versions" xml:space="preserve"><value>csak élő és bétaverziókhoz</value></data>
+  <data name="passed" xml:space="preserve"><value>sikeres</value></data>
 </root>

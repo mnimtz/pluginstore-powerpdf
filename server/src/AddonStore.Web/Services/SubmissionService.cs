@@ -131,7 +131,8 @@ public class SubmissionService
             SubmittedBy = user.DisplayName,
             SubmittedById = user.Id,
             SubmittedVia = via,
-            ValidationReportJson = report.ToJson()
+            ValidationReportJson = report.ToJson(),
+            RulesSnapshotJson = Validation.RuleCatalog.SnapshotJson(),   // the rules it was checked against (S1.3.0)
         };
         _db.PackageVersions.Add(version);
         if (manifest.NewCategoryNames is not null)

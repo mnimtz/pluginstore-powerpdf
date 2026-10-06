@@ -171,6 +171,7 @@ public static class ApiEndpoints
                     "PATCH /api/feedback/{id}         {status?, assignedTo?} change status or assignment",
                     "POST /api/feedback/{id}/notes    {text, reply?: true mails the reporter} internal note or reply",
                     "GET  /api/insights               developer dashboard: downloads, versions, Power PDF versions, ratings, reports (?days=, package)",
+                    "GET  /api/packages/{id}/{version}/dossier  audit dossier: hashes, signature, compliance, checks with the rules in force, source, AI aid, review with conditions, blocks, audit trail (owner/admin/reviewer)",
                     "GET  /api/features               which optional AI features are switched on",
                     "GET  /api/search?q=&lang=&channel=  find add-ons by need (AI ranking with reasons when enabled, else word search; ?format=tsv)",
                     "GET  /api/signing-key              public key of the catalog signatures (ECDSA P-256)",
@@ -840,6 +841,35 @@ public static class ApiEndpoints
             err ??= body.AssignedTo is null ? null : await issues.AssignAsync(f, body.AssignedTo, user, viaApi: true);
             if (err is not null) return Results.Json(new { ok = false, error = new { code = err.Code, message = err.Message, hint = "" } }, statusCode: 400);
             return Results.Json(new { ok = true, data = new { f.Id, f.Status, assignedTo = f.AssignedTo } });
+        }).RequireAuthorization("ApiOrCookie");
+
+        // Audit dossier of one version (S1.3.0): owner, admins and reviewers; every export is audited.
+        api.MapGet("/packages/{id}/{version}/dossier", async (string id, string version, HttpContext ctx, UserManager<AppUser> users,
+            AppDbContext db, DossierService dossiers, AuditService audit) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var owner = await db.Packages.AsNoTracking().Where(p => p.Id == id).Select(p => p.OwnerId).FirstOrDefaultAsync();
+            if (owner is null || (owner != user.Id && !ctx.User.IsInRole("Admin") && !Services.VersionActionService.CanReview(ctx.User)))
+                return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}' that you may see.");
+            var d = await dossiers.BuildAsync(id, version, user);
+            if (d is null) return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}'.");
+            await audit.LogAsync(user.DisplayName, "dossier.export", $"{id} {version}", "API");
+            return Results.Json(new
+            {
+                ok = true,
+                data = new
+                {
+                    dossier = d with { AiReview = null },
+                    aiReview = d.AiReview is null ? null : new
+                    {
+                        summary = d.AiReview.Summary, changes = d.AiReview.Changes, changelogFits = d.AiReview.ChangelogFits,
+                        recommendation = d.AiReview.Recommendation,
+                        concerns = d.AiReview.Concerns.Select(c => new { severity = c.Severity, text = c.Text }),
+                    },
+                    page = $"{Base(ctx)}/Dossier/{Uri.EscapeDataString(id)}/{Uri.EscapeDataString(version)}",
+                }
+            });
         }).RequireAuthorization("ApiOrCookie");
 
         // Developer dashboard as data (S1.1.0): own add-ons, admins all (?dev= one developer).

@@ -63,6 +63,9 @@ public static class SchemaUpgrade
             "ALTER TABLE Packages ADD COLUMN BlockReason TEXT NULL",
             "ALTER TABLE Packages ADD COLUMN BlockedBy TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN SourceUploadedAt TEXT NULL",
+            // audit dossier (S1.3.0)
+            "ALTER TABLE PackageVersions ADD COLUMN RulesSnapshotJson TEXT NULL",
+            "ALTER TABLE PackageVersions ADD COLUMN ApprovalJson TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN SourceUploadedBy TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN SourceReportJson TEXT NULL",
             "CREATE TABLE IF NOT EXISTS Categories (Slug TEXT NOT NULL PRIMARY KEY, NameJson TEXT NULL, " +

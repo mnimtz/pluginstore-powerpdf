@@ -849,6 +849,27 @@ other developers' private ones; the owner gets an email); admins see and
 manage all, reviewers read. Admins get an email when a
 developer creates or changes a delivery.
 
+## Audit dossier
+
+Every version has an audit dossier: everything the store knows about how it
+was checked and released, for the owner, admins and reviewers. On the plug-in
+page each version has an "Audit dossier" button (a printable page, "Save as
+PDF"); the same as JSON:
+
+    GET {{baseUrl}}/api/packages/{id}/{version}/dossier
+
+It holds the package and binary hashes with the catalog signature, the
+compliance declaration (complianceAudit, thirdParty, externalServices), the
+automatic checks, the rules in force at that check (server version, a hash
+over every rule with its severity, the store's house rules and the warnings
+made mandatory), the source code check, the AI review aid, the review
+decision with the approval conditions in the wording the reviewer confirmed,
+security blocks, problem reports and the audit trail of the version and the
+add-on. Two versions with the same rules hash were checked against the same
+rules. Every JSON export is recorded in the audit log (`dossier.export`).
+Versions checked before S1.3.0 have no rules snapshot; their findings are
+still the complete check result of that time.
+
 ## Security blocks
 
 When a version or a whole add-on turns out to be unsafe, an admin blocks it on

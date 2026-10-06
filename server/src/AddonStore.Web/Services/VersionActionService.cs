@@ -147,6 +147,19 @@ public class VersionActionService
         v.ReviewedById = actor.Id;
         v.ReviewedAt = DateTime.UtcNow;
         v.ReviewComment = comment;
+        // audit dossier (S1.3.0): the decision with the conditions in the wording the reviewer confirmed
+        var fourEyes = await FourEyesAsync();
+        v.ApprovalJson = System.Text.Json.JsonSerializer.Serialize(new
+        {
+            decision = approve ? "approved" : "rejected",
+            by = actor.DisplayName,
+            byId = actor.Id,
+            at = v.ReviewedAt,
+            comment,
+            fourEyesRule = fourEyes,
+            conditions = approve ? Validation.RuleCatalog.ApprovalConditions().Select(c => new { id = c.Id, text = c.Text }).ToList() : null,
+            rules = Validation.RuleCatalog.Snapshot(),
+        });
         await _db.SaveChangesAsync();
         await _audit.LogAsync(actor.DisplayName, approve ? "version.approved" : "version.rejected",
             $"{v.PackageId} {v.Version}", approve ? "conditions confirmed: " + string.Join(", ", conditions) : comment ?? "");

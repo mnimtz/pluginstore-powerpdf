@@ -1005,4 +1005,46 @@
   <data name="{0} new" xml:space="preserve"><value>nová: {0}</value></data>
   <data name="Ribbon" xml:space="preserve"><value>Pás karet</value></data>
   <data name="No ribbon buttons" xml:space="preserve"><value>Bez tlačítek na pásu karet</value></data>
+  <data name="A machine assessment that helps the reviewer; it is not the decision." xml:space="preserve"><value>Strojové hodnocení, které pomáhá posuzovateli; nejde o rozhodnutí.</value></data>
+  <data name="Add-on blocked" xml:space="preserve"><value>Doplněk zablokován</value></data>
+  <data name="All mandatory checks passed." xml:space="preserve"><value>Všechny povinné kontroly proběhly úspěšně.</value></data>
+  <data name="Approval conditions" xml:space="preserve"><value>Podmínky schválení</value></data>
+  <data name="Approval conditions confirmed (wording at that time)" xml:space="preserve"><value>Potvrzené podmínky schválení (tehdejší znění)</value></data>
+  <data name="As declared by the uploader in manifest.json; reviewers confirm it matches the package (approval condition R1)." xml:space="preserve"><value>Podle údaje nahrávajícího v souboru manifest.json; posuzovatelé potvrzují, že odpovídá balíčku (podmínka schválení R1).</value></data>
+  <data name="Audit dossier" xml:space="preserve"><value>Auditní spis</value></data>
+  <data name="Audit log of this add-on" xml:space="preserve"><value>Protokol auditu tohoto doplňku</value></data>
+  <data name="Audit trail" xml:space="preserve"><value>Záznam auditu</value></data>
+  <data name="Catalog signature" xml:space="preserve"><value>Podpis katalogu</value></data>
+  <data name="Compliance declaration" xml:space="preserve"><value>Prohlášení o dodržování předpisů</value></data>
+  <data name="Decision" xml:space="preserve"><value>Rozhodnutí</value></data>
+  <data name="Everything about how this version was checked and released; print or save as PDF." xml:space="preserve"><value>Vše o tom, jak byla tato verze zkontrolována a vydána; vytiskněte nebo uložte jako PDF.</value></data>
+  <data name="Four-eyes rule" xml:space="preserve"><value>Princip čtyř očí</value></data>
+  <data name="Generated" xml:space="preserve"><value>Vygenerováno</value></data>
+  <data name="Integrity" xml:space="preserve"><value>Integrita</value></data>
+  <data name="Key" xml:space="preserve"><value>Klíč</value></data>
+  <data name="Machine-readable: GET /api/packages/{0}/{1}/dossier" xml:space="preserve"><value>Strojově čitelné: GET /api/packages/{0}/{1}/dossier</value></data>
+  <data name="Mandatory checks failed." xml:space="preserve"><value>Povinné kontroly selhaly.</value></data>
+  <data name="Minimum Power PDF version" xml:space="preserve"><value>Minimální verze Power PDF</value></data>
+  <data name="No problem reports for this version." xml:space="preserve"><value>Pro tuto verzi nejsou žádná hlášení problémů.</value></data>
+  <data name="No source code stored for this version." xml:space="preserve"><value>Pro tuto verzi není uložen žádný zdrojový kód.</value></data>
+  <data name="None (AI assistant off, or not requested)." xml:space="preserve"><value>Žádné (asistent AI vypnut nebo nevyžádán).</value></data>
+  <data name="Not recorded: this version was checked before the store kept a rules snapshot (S1.3.0). The findings above are the complete check result of that time." xml:space="preserve"><value>Nezaznamenáno: tato verze byla zkontrolována dříve, než obchod začal ukládat snímek pravidel (S1.3.0). Výše uvedená zjištění představují úplný tehdejší výsledek kontroly.</value></data>
+  <data name="Not reviewed yet." xml:space="preserve"><value>Zatím neposouzeno.</value></data>
+  <data name="Package (.ppak) SHA-256" xml:space="preserve"><value>SHA-256 balíčku (.ppak)</value></data>
+  <data name="Package and version" xml:space="preserve"><value>Balíček a verze</value></data>
+  <data name="Per version on the plug-in page: hashes, checks with the rules in force, review with conditions, audit trail." xml:space="preserve"><value>Pro každou verzi na stránce modulu plug-in: hodnoty hash, kontroly s platnými pravidly, posouzení s podmínkami, záznam auditu.</value></data>
+  <data name="Recorded before S1.3.0: the condition ids come from the audit log, their wording was not stored." xml:space="preserve"><value>Zaznamenáno před S1.3.0: ID podmínek pocházejí z protokolu auditu, jejich znění nebylo uloženo.</value></data>
+  <data name="Review decision" xml:space="preserve"><value>Rozhodnutí o posouzení</value></data>
+  <data name="Rules hash" xml:space="preserve"><value>Hodnota hash pravidel</value></data>
+  <data name="Rules in force at the check" xml:space="preserve"><value>Pravidla platná při kontrole</value></data>
+  <data name="Server version" xml:space="preserve"><value>Verze serveru</value></data>
+  <data name="Summary" xml:space="preserve"><value>Souhrn</value></data>
+  <data name="The add-on as a whole" xml:space="preserve"><value>Doplněk jako celek</value></data>
+  <data name="This version" xml:space="preserve"><value>Tato verze</value></data>
+  <data name="Uploaded" xml:space="preserve"><value>Nahráno</value></data>
+  <data name="Version blocked" xml:space="preserve"><value>Verze zablokována</value></data>
+  <data name="Warnings made mandatory" xml:space="preserve"><value>Upozornění změněná na povinná</value></data>
+  <data name="not uploaded" xml:space="preserve"><value>nenahráno</value></data>
+  <data name="only for live and beta versions" xml:space="preserve"><value>pouze pro produkční a beta verze</value></data>
+  <data name="passed" xml:space="preserve"><value>úspěšně</value></data>
 </root>

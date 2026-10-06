@@ -1005,4 +1005,46 @@
   <data name="{0} new" xml:space="preserve"><value>{0} nuove</value></data>
   <data name="Ribbon" xml:space="preserve"><value>Barra multifunzione</value></data>
   <data name="No ribbon buttons" xml:space="preserve"><value>Senza pulsanti nella barra multifunzione</value></data>
+  <data name="A machine assessment that helps the reviewer; it is not the decision." xml:space="preserve"><value>Una valutazione automatica che aiuta il revisore; non è la decisione.</value></data>
+  <data name="Add-on blocked" xml:space="preserve"><value>Componente aggiuntivo bloccato</value></data>
+  <data name="All mandatory checks passed." xml:space="preserve"><value>Tutti i controlli obbligatori superati.</value></data>
+  <data name="Approval conditions" xml:space="preserve"><value>Condizioni di approvazione</value></data>
+  <data name="Approval conditions confirmed (wording at that time)" xml:space="preserve"><value>Condizioni di approvazione confermate (formulazione dell'epoca)</value></data>
+  <data name="As declared by the uploader in manifest.json; reviewers confirm it matches the package (approval condition R1)." xml:space="preserve"><value>Come dichiarato in manifest.json da chi ha caricato il pacchetto; i revisori confermano che corrisponde al pacchetto (condizione di approvazione R1).</value></data>
+  <data name="Audit dossier" xml:space="preserve"><value>Dossier di audit</value></data>
+  <data name="Audit log of this add-on" xml:space="preserve"><value>Registro di controllo di questo componente aggiuntivo</value></data>
+  <data name="Audit trail" xml:space="preserve"><value>Traccia di controllo</value></data>
+  <data name="Catalog signature" xml:space="preserve"><value>Firma del catalogo</value></data>
+  <data name="Compliance declaration" xml:space="preserve"><value>Dichiarazione di conformità</value></data>
+  <data name="Decision" xml:space="preserve"><value>Decisione</value></data>
+  <data name="Everything about how this version was checked and released; print or save as PDF." xml:space="preserve"><value>Tutto su come questa versione è stata verificata e rilasciata; stampare o salvare come PDF.</value></data>
+  <data name="Four-eyes rule" xml:space="preserve"><value>Principio dei quattro occhi</value></data>
+  <data name="Generated" xml:space="preserve"><value>Generato</value></data>
+  <data name="Integrity" xml:space="preserve"><value>Integrità</value></data>
+  <data name="Key" xml:space="preserve"><value>Chiave</value></data>
+  <data name="Machine-readable: GET /api/packages/{0}/{1}/dossier" xml:space="preserve"><value>Leggibile dalla macchina: GET /api/packages/{0}/{1}/dossier</value></data>
+  <data name="Mandatory checks failed." xml:space="preserve"><value>Controlli obbligatori non superati.</value></data>
+  <data name="Minimum Power PDF version" xml:space="preserve"><value>Versione minima di Power PDF</value></data>
+  <data name="No problem reports for this version." xml:space="preserve"><value>Nessuna segnalazione di problemi per questa versione.</value></data>
+  <data name="No source code stored for this version." xml:space="preserve"><value>Nessun codice sorgente archiviato per questa versione.</value></data>
+  <data name="None (AI assistant off, or not requested)." xml:space="preserve"><value>Nessuna (assistente IA disattivato o non richiesto).</value></data>
+  <data name="Not recorded: this version was checked before the store kept a rules snapshot (S1.3.0). The findings above are the complete check result of that time." xml:space="preserve"><value>Non registrato: questa versione è stata verificata prima che lo Store conservasse uno snapshot delle regole (S1.3.0). I risultati sopra riportati costituiscono l'esito completo del controllo di allora.</value></data>
+  <data name="Not reviewed yet." xml:space="preserve"><value>Non ancora revisionato.</value></data>
+  <data name="Package (.ppak) SHA-256" xml:space="preserve"><value>SHA-256 del pacchetto (.ppak)</value></data>
+  <data name="Package and version" xml:space="preserve"><value>Pacchetto e versione</value></data>
+  <data name="Per version on the plug-in page: hashes, checks with the rules in force, review with conditions, audit trail." xml:space="preserve"><value>Per ogni versione nella pagina del plug-in: hash, controlli con le regole in vigore, revisione con condizioni, traccia di controllo.</value></data>
+  <data name="Recorded before S1.3.0: the condition ids come from the audit log, their wording was not stored." xml:space="preserve"><value>Registrato prima di S1.3.0: gli ID delle condizioni provengono dal registro di controllo, la loro formulazione non è stata archiviata.</value></data>
+  <data name="Review decision" xml:space="preserve"><value>Decisione di revisione</value></data>
+  <data name="Rules hash" xml:space="preserve"><value>Hash delle regole</value></data>
+  <data name="Rules in force at the check" xml:space="preserve"><value>Regole in vigore al momento del controllo</value></data>
+  <data name="Server version" xml:space="preserve"><value>Versione del server</value></data>
+  <data name="Summary" xml:space="preserve"><value>Riepilogo</value></data>
+  <data name="The add-on as a whole" xml:space="preserve"><value>Il componente aggiuntivo nel suo insieme</value></data>
+  <data name="This version" xml:space="preserve"><value>Questa versione</value></data>
+  <data name="Uploaded" xml:space="preserve"><value>Caricato</value></data>
+  <data name="Version blocked" xml:space="preserve"><value>Versione bloccata</value></data>
+  <data name="Warnings made mandatory" xml:space="preserve"><value>Avvisi resi obbligatori</value></data>
+  <data name="not uploaded" xml:space="preserve"><value>non caricato</value></data>
+  <data name="only for live and beta versions" xml:space="preserve"><value>solo per le versioni live e beta</value></data>
+  <data name="passed" xml:space="preserve"><value>superato</value></data>
 </root>

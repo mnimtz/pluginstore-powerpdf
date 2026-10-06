@@ -1005,4 +1005,46 @@
   <data name="{0} new" xml:space="preserve"><value>{0} 件が新規</value></data>
   <data name="Ribbon" xml:space="preserve"><value>リボン</value></data>
   <data name="No ribbon buttons" xml:space="preserve"><value>リボン ボタンなし</value></data>
+  <data name="A machine assessment that helps the reviewer; it is not the decision." xml:space="preserve"><value>レビュー担当者を支援する機械による評価です。決定ではありません。</value></data>
+  <data name="Add-on blocked" xml:space="preserve"><value>アドインはブロックされています</value></data>
+  <data name="All mandatory checks passed." xml:space="preserve"><value>すべての必須チェックに合格しました。</value></data>
+  <data name="Approval conditions" xml:space="preserve"><value>承認条件</value></data>
+  <data name="Approval conditions confirmed (wording at that time)" xml:space="preserve"><value>確認済みの承認条件（当時の文言）</value></data>
+  <data name="As declared by the uploader in manifest.json; reviewers confirm it matches the package (approval condition R1)." xml:space="preserve"><value>アップロード者が manifest.json で宣言した内容です。レビュー担当者がパッケージとの一致を確認します（承認条件 R1）。</value></data>
+  <data name="Audit dossier" xml:space="preserve"><value>監査資料</value></data>
+  <data name="Audit log of this add-on" xml:space="preserve"><value>このアドインの監査ログ</value></data>
+  <data name="Audit trail" xml:space="preserve"><value>監査証跡</value></data>
+  <data name="Catalog signature" xml:space="preserve"><value>カタログ署名</value></data>
+  <data name="Compliance declaration" xml:space="preserve"><value>コンプライアンス宣言</value></data>
+  <data name="Decision" xml:space="preserve"><value>決定</value></data>
+  <data name="Everything about how this version was checked and released; print or save as PDF." xml:space="preserve"><value>このバージョンのチェックとリリースに関するすべての情報です。印刷するか PDF として保存できます。</value></data>
+  <data name="Four-eyes rule" xml:space="preserve"><value>二者確認の原則</value></data>
+  <data name="Generated" xml:space="preserve"><value>生成日時</value></data>
+  <data name="Integrity" xml:space="preserve"><value>整合性</value></data>
+  <data name="Key" xml:space="preserve"><value>キー</value></data>
+  <data name="Machine-readable: GET /api/packages/{0}/{1}/dossier" xml:space="preserve"><value>機械可読：GET /api/packages/{0}/{1}/dossier</value></data>
+  <data name="Mandatory checks failed." xml:space="preserve"><value>必須チェックに合格しませんでした。</value></data>
+  <data name="Minimum Power PDF version" xml:space="preserve"><value>Power PDF の最小バージョン</value></data>
+  <data name="No problem reports for this version." xml:space="preserve"><value>このバージョンの問題レポートはありません。</value></data>
+  <data name="No source code stored for this version." xml:space="preserve"><value>このバージョンのソース コードは保存されていません。</value></data>
+  <data name="None (AI assistant off, or not requested)." xml:space="preserve"><value>なし（AI アシスタントがオフ、または要求されていません）。</value></data>
+  <data name="Not recorded: this version was checked before the store kept a rules snapshot (S1.3.0). The findings above are the complete check result of that time." xml:space="preserve"><value>記録なし：このバージョンは、ストアがルールのスナップショットを保存するようになる前（S1.3.0）にチェックされました。上記の検出結果が当時の完全なチェック結果です。</value></data>
+  <data name="Not reviewed yet." xml:space="preserve"><value>まだレビューされていません。</value></data>
+  <data name="Package (.ppak) SHA-256" xml:space="preserve"><value>パッケージ (.ppak) SHA-256</value></data>
+  <data name="Package and version" xml:space="preserve"><value>パッケージとバージョン</value></data>
+  <data name="Per version on the plug-in page: hashes, checks with the rules in force, review with conditions, audit trail." xml:space="preserve"><value>プラグイン ページでバージョンごとに表示：ハッシュ、適用ルールによるチェック、条件付きのレビュー、監査証跡。</value></data>
+  <data name="Recorded before S1.3.0: the condition ids come from the audit log, their wording was not stored." xml:space="preserve"><value>S1.3.0 より前に記録：条件 ID は監査ログから取得したもので、文言は保存されていません。</value></data>
+  <data name="Review decision" xml:space="preserve"><value>レビューの決定</value></data>
+  <data name="Rules hash" xml:space="preserve"><value>ルールのハッシュ</value></data>
+  <data name="Rules in force at the check" xml:space="preserve"><value>チェック時に適用されていたルール</value></data>
+  <data name="Server version" xml:space="preserve"><value>サーバー バージョン</value></data>
+  <data name="Summary" xml:space="preserve"><value>概要</value></data>
+  <data name="The add-on as a whole" xml:space="preserve"><value>アドイン全体</value></data>
+  <data name="This version" xml:space="preserve"><value>このバージョン</value></data>
+  <data name="Uploaded" xml:space="preserve"><value>アップロード日時</value></data>
+  <data name="Version blocked" xml:space="preserve"><value>バージョンはブロックされています</value></data>
+  <data name="Warnings made mandatory" xml:space="preserve"><value>必須に設定された警告</value></data>
+  <data name="not uploaded" xml:space="preserve"><value>未アップロード</value></data>
+  <data name="only for live and beta versions" xml:space="preserve"><value>公開版とベータ版のみ</value></data>
+  <data name="passed" xml:space="preserve"><value>合格</value></data>
 </root>

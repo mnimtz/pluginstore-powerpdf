@@ -1005,4 +1005,46 @@
   <data name="{0} new" xml:space="preserve"><value>신규 {0}개</value></data>
   <data name="Ribbon" xml:space="preserve"><value>리본</value></data>
   <data name="No ribbon buttons" xml:space="preserve"><value>리본 단추 없음</value></data>
+  <data name="A machine assessment that helps the reviewer; it is not the decision." xml:space="preserve"><value>검토자를 돕는 자동 평가이며 결정이 아닙니다.</value></data>
+  <data name="Add-on blocked" xml:space="preserve"><value>추가 기능 차단됨</value></data>
+  <data name="All mandatory checks passed." xml:space="preserve"><value>모든 필수 검사를 통과했습니다.</value></data>
+  <data name="Approval conditions" xml:space="preserve"><value>승인 조건</value></data>
+  <data name="Approval conditions confirmed (wording at that time)" xml:space="preserve"><value>확인된 승인 조건(당시 문구)</value></data>
+  <data name="As declared by the uploader in manifest.json; reviewers confirm it matches the package (approval condition R1)." xml:space="preserve"><value>업로더가 manifest.json에 선언한 내용입니다. 검토자가 패키지와 일치하는지 확인합니다(승인 조건 R1).</value></data>
+  <data name="Audit dossier" xml:space="preserve"><value>감사 자료</value></data>
+  <data name="Audit log of this add-on" xml:space="preserve"><value>이 추가 기능의 감사 로그</value></data>
+  <data name="Audit trail" xml:space="preserve"><value>감사 내역</value></data>
+  <data name="Catalog signature" xml:space="preserve"><value>카탈로그 서명</value></data>
+  <data name="Compliance declaration" xml:space="preserve"><value>규정 준수 선언</value></data>
+  <data name="Decision" xml:space="preserve"><value>결정</value></data>
+  <data name="Everything about how this version was checked and released; print or save as PDF." xml:space="preserve"><value>이 버전의 검사 및 릴리스 과정에 대한 모든 정보입니다. 인쇄하거나 PDF로 저장할 수 있습니다.</value></data>
+  <data name="Four-eyes rule" xml:space="preserve"><value>이중 확인 원칙</value></data>
+  <data name="Generated" xml:space="preserve"><value>생성 일시</value></data>
+  <data name="Integrity" xml:space="preserve"><value>무결성</value></data>
+  <data name="Key" xml:space="preserve"><value>키</value></data>
+  <data name="Machine-readable: GET /api/packages/{0}/{1}/dossier" xml:space="preserve"><value>기계 판독용: GET /api/packages/{0}/{1}/dossier</value></data>
+  <data name="Mandatory checks failed." xml:space="preserve"><value>필수 검사에 실패했습니다.</value></data>
+  <data name="Minimum Power PDF version" xml:space="preserve"><value>최소 Power PDF 버전</value></data>
+  <data name="No problem reports for this version." xml:space="preserve"><value>이 버전에 대한 문제 보고가 없습니다.</value></data>
+  <data name="No source code stored for this version." xml:space="preserve"><value>이 버전에 대해 저장된 소스 코드가 없습니다.</value></data>
+  <data name="None (AI assistant off, or not requested)." xml:space="preserve"><value>없음(AI 도우미가 꺼져 있거나 요청되지 않음).</value></data>
+  <data name="Not recorded: this version was checked before the store kept a rules snapshot (S1.3.0). The findings above are the complete check result of that time." xml:space="preserve"><value>기록되지 않음: 이 버전은 스토어가 규칙 스냅샷을 보관하기 전(S1.3.0)에 검사되었습니다. 위의 결과가 당시의 전체 검사 결과입니다.</value></data>
+  <data name="Not reviewed yet." xml:space="preserve"><value>아직 검토되지 않았습니다.</value></data>
+  <data name="Package (.ppak) SHA-256" xml:space="preserve"><value>패키지(.ppak) SHA-256</value></data>
+  <data name="Package and version" xml:space="preserve"><value>패키지 및 버전</value></data>
+  <data name="Per version on the plug-in page: hashes, checks with the rules in force, review with conditions, audit trail." xml:space="preserve"><value>플러그 인 페이지에서 버전별로 제공: 해시, 적용 규칙에 따른 검사, 조건이 포함된 검토, 감사 내역.</value></data>
+  <data name="Recorded before S1.3.0: the condition ids come from the audit log, their wording was not stored." xml:space="preserve"><value>S1.3.0 이전에 기록됨: 조건 ID는 감사 로그에서 가져온 것이며 문구는 저장되지 않았습니다.</value></data>
+  <data name="Review decision" xml:space="preserve"><value>검토 결정</value></data>
+  <data name="Rules hash" xml:space="preserve"><value>규칙 해시</value></data>
+  <data name="Rules in force at the check" xml:space="preserve"><value>검사 시 적용된 규칙</value></data>
+  <data name="Server version" xml:space="preserve"><value>서버 버전</value></data>
+  <data name="Summary" xml:space="preserve"><value>요약</value></data>
+  <data name="The add-on as a whole" xml:space="preserve"><value>추가 기능 전체</value></data>
+  <data name="This version" xml:space="preserve"><value>이 버전</value></data>
+  <data name="Uploaded" xml:space="preserve"><value>업로드 일시</value></data>
+  <data name="Version blocked" xml:space="preserve"><value>버전 차단됨</value></data>
+  <data name="Warnings made mandatory" xml:space="preserve"><value>필수로 지정된 경고</value></data>
+  <data name="not uploaded" xml:space="preserve"><value>업로드되지 않음</value></data>
+  <data name="only for live and beta versions" xml:space="preserve"><value>정식 버전 및 베타 버전만</value></data>
+  <data name="passed" xml:space="preserve"><value>통과</value></data>
 </root>

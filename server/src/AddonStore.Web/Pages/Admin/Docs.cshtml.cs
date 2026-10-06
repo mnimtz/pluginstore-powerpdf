@@ -24,6 +24,7 @@ public class DocsModel : PageModel
             new("shield", "Rules", "All rules by area, the mandatory conditions and the rules of this store; admins edit them here.", "/Admin/Rules"),
             new("check", "Pre-flight checklist", "The hard rules as a short checklist to work through before an upload.", "/agent-guide/checklist"),
             new("data", "Rules as data", "Every rule and condition as JSON, for tools and AI assistants.", "/api/rules", "JSON"),
+            new("audit", "Audit dossier", "Per version on the plug-in page: hashes, checks with the rules in force, review with conditions, audit trail.", "/Dashboard"),
         }),
         new("ai", "For AI assistants", "Readable without signing in; works with Claude, ChatGPT, Gemini, Copilot and others.", new DocLink[]
         {

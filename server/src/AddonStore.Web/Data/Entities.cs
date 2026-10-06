@@ -279,6 +279,10 @@ public class PackageVersion
     public string? SubmittedById { get; set; }   // S0.15.0: account that uploaded (four-eyes rule)
     public string SubmittedVia { get; set; } = "";   // "web" or "api:<token name>"
     public string ValidationReportJson { get; set; } = "{}";
+    /// <summary>Rules in force when the upload was checked (S1.3.0): server version, rules hash, house rules, mandatory warnings, condition wording.</summary>
+    public string? RulesSnapshotJson { get; set; }
+    /// <summary>The review decision (S1.3.0): approve or reject, reviewer, time, comment and the approval conditions confirmed in their wording at that time.</summary>
+    public string? ApprovalJson { get; set; }
     public string? ReviewedById { get; set; }
     public DateTime? ReviewedAt { get; set; }
     public string? ReviewComment { get; set; }

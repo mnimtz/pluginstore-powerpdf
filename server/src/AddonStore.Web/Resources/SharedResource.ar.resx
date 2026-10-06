@@ -1005,4 +1005,46 @@
   <data name="{0} new" xml:space="preserve"><value>{0} جديد</value></data>
   <data name="Ribbon" xml:space="preserve"><value>الشريط</value></data>
   <data name="No ribbon buttons" xml:space="preserve"><value>لا توجد أزرار في الشريط</value></data>
+  <data name="A machine assessment that helps the reviewer; it is not the decision." xml:space="preserve"><value>تقييم آلي يساعد المراجع؛ وليس هو القرار.</value></data>
+  <data name="Add-on blocked" xml:space="preserve"><value>تم حظر الوظيفة الإضافية</value></data>
+  <data name="All mandatory checks passed." xml:space="preserve"><value>تم اجتياز جميع الفحوصات الإلزامية.</value></data>
+  <data name="Approval conditions" xml:space="preserve"><value>شروط الموافقة</value></data>
+  <data name="Approval conditions confirmed (wording at that time)" xml:space="preserve"><value>شروط الموافقة المؤكدة (بصيغتها في ذلك الوقت)</value></data>
+  <data name="As declared by the uploader in manifest.json; reviewers confirm it matches the package (approval condition R1)." xml:space="preserve"><value>كما صرّح به القائم بالتحميل في manifest.json؛ ويؤكد المراجعون مطابقته للحزمة (شرط الموافقة R1).</value></data>
+  <data name="Audit dossier" xml:space="preserve"><value>ملف التدقيق</value></data>
+  <data name="Audit log of this add-on" xml:space="preserve"><value>سجل تدقيق هذه الوظيفة الإضافية</value></data>
+  <data name="Audit trail" xml:space="preserve"><value>مسار التدقيق</value></data>
+  <data name="Catalog signature" xml:space="preserve"><value>توقيع الكتالوج</value></data>
+  <data name="Compliance declaration" xml:space="preserve"><value>إقرار الامتثال</value></data>
+  <data name="Decision" xml:space="preserve"><value>القرار</value></data>
+  <data name="Everything about how this version was checked and released; print or save as PDF." xml:space="preserve"><value>كل ما يتعلق بكيفية فحص هذا الإصدار وإطلاقه؛ يمكنك طباعته أو حفظه بتنسيق PDF.</value></data>
+  <data name="Four-eyes rule" xml:space="preserve"><value>مبدأ الأعين الأربع</value></data>
+  <data name="Generated" xml:space="preserve"><value>تاريخ الإنشاء</value></data>
+  <data name="Integrity" xml:space="preserve"><value>السلامة</value></data>
+  <data name="Key" xml:space="preserve"><value>المفتاح</value></data>
+  <data name="Machine-readable: GET /api/packages/{0}/{1}/dossier" xml:space="preserve"><value>صيغة قابلة للقراءة آليًا: GET /api/packages/{0}/{1}/dossier</value></data>
+  <data name="Mandatory checks failed." xml:space="preserve"><value>فشلت الفحوصات الإلزامية.</value></data>
+  <data name="Minimum Power PDF version" xml:space="preserve"><value>الحد الأدنى لإصدار Power PDF</value></data>
+  <data name="No problem reports for this version." xml:space="preserve"><value>لا توجد تقارير مشكلات لهذا الإصدار.</value></data>
+  <data name="No source code stored for this version." xml:space="preserve"><value>لم يتم تخزين أي تعليمات برمجية مصدرية لهذا الإصدار.</value></data>
+  <data name="None (AI assistant off, or not requested)." xml:space="preserve"><value>لا شيء (مساعد الذكاء الاصطناعي متوقف، أو لم يُطلب).</value></data>
+  <data name="Not recorded: this version was checked before the store kept a rules snapshot (S1.3.0). The findings above are the complete check result of that time." xml:space="preserve"><value>غير مسجّل: تم فحص هذا الإصدار قبل أن يبدأ المتجر بالاحتفاظ بلقطة من القواعد (S1.3.0). النتائج أعلاه هي نتيجة الفحص الكاملة في ذلك الوقت.</value></data>
+  <data name="Not reviewed yet." xml:space="preserve"><value>لم تتم مراجعته بعد.</value></data>
+  <data name="Package (.ppak) SHA-256" xml:space="preserve"><value>SHA-256 للحزمة (.ppak)</value></data>
+  <data name="Package and version" xml:space="preserve"><value>الحزمة والإصدار</value></data>
+  <data name="Per version on the plug-in page: hashes, checks with the rules in force, review with conditions, audit trail." xml:space="preserve"><value>لكل إصدار في صفحة المكوّن الإضافي: قيم التجزئة، والفحوصات وفق القواعد السارية، والمراجعة مع الشروط، ومسار التدقيق.</value></data>
+  <data name="Recorded before S1.3.0: the condition ids come from the audit log, their wording was not stored." xml:space="preserve"><value>مسجّل قبل S1.3.0: معرّفات الشروط مأخوذة من سجل التدقيق، ولم يتم تخزين صيغتها.</value></data>
+  <data name="Review decision" xml:space="preserve"><value>قرار المراجعة</value></data>
+  <data name="Rules hash" xml:space="preserve"><value>تجزئة القواعد</value></data>
+  <data name="Rules in force at the check" xml:space="preserve"><value>القواعد السارية وقت الفحص</value></data>
+  <data name="Server version" xml:space="preserve"><value>إصدار الخادم</value></data>
+  <data name="Summary" xml:space="preserve"><value>الملخص</value></data>
+  <data name="The add-on as a whole" xml:space="preserve"><value>الوظيفة الإضافية ككل</value></data>
+  <data name="This version" xml:space="preserve"><value>هذا الإصدار</value></data>
+  <data name="Uploaded" xml:space="preserve"><value>تاريخ التحميل</value></data>
+  <data name="Version blocked" xml:space="preserve"><value>تم حظر الإصدار</value></data>
+  <data name="Warnings made mandatory" xml:space="preserve"><value>التحذيرات التي أصبحت إلزامية</value></data>
+  <data name="not uploaded" xml:space="preserve"><value>لم يتم التحميل</value></data>
+  <data name="only for live and beta versions" xml:space="preserve"><value>لإصدارات الإنتاج والإصدارات التجريبية فقط</value></data>
+  <data name="passed" xml:space="preserve"><value>ناجح</value></data>
 </root>

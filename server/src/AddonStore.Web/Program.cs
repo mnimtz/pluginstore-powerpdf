@@ -128,6 +128,7 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AddPageRoute("/Admin/Docs", "Docs");               // short address for developers (S1.0.13)
         o.Conventions.AuthorizeFolder("/Issues", "PageUser");           // problem report queue: own add-ons, admins all (S1.1.0)
         o.Conventions.AuthorizePage("/Insights", "PageUser");           // developer dashboard (S1.1.0)
+        o.Conventions.AuthorizePage("/Dossier", "PageUser");            // audit dossier: owner, admins, reviewers (S1.3.0)
         o.Conventions.AuthorizePage("/Admin/Reports", "PageAdmin");
         o.Conventions.AuthorizePage("/Dashboard", "PageUser");
         o.Conventions.AuthorizePage("/CatalogEntry", "PageUser");
@@ -146,6 +147,7 @@ builder.Services.AddScoped<ShareService>();
 builder.Services.AddScoped<FeedbackService>();
 builder.Services.AddScoped<IssueService>();
 builder.Services.AddScoped<InsightsService>();
+builder.Services.AddScoped<DossierService>();
 builder.Services.AddScoped<AiService>();
 builder.Services.AddScoped<AiAssist>();
 builder.Services.AddScoped<CustomerService>();
@@ -178,8 +180,9 @@ builder.Services.AddScoped<SourceService>();
 builder.Services.AddScoped<IAppEmailSender, ResendEmailSender>();
 
 var versionFile = Path.Combine(AppContext.BaseDirectory, "VERSION");
-builder.Services.AddSingleton(new AppVersion(
-    File.Exists(versionFile) ? File.ReadAllText(versionFile).Trim() : "0.0.0-dev"));
+var appVersion = File.Exists(versionFile) ? File.ReadAllText(versionFile).Trim() : "0.0.0-dev";
+builder.Services.AddSingleton(new AppVersion(appVersion));
+AddonStore.Web.Validation.RuleCatalog.ServerVersion = appVersion;   // recorded in the rules snapshots (S1.3.0)
 
 builder.Services.Configure<KestrelServerOptions>(o =>
 {

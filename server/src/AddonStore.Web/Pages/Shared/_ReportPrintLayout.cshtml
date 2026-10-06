@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Add-on Store · @L["Reports"] · @DateTime.UtcNow.ToString("yyyy-MM-dd")</title>
+    <title>Add-on Store · @(ViewData["PrintTitle"] as string ?? L["Reports"].Value) · @DateTime.UtcNow.ToString("yyyy-MM-dd")</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -18,8 +18,11 @@
 </main>
 <script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
 document.getElementById('print-btn').addEventListener('click', function () { window.print(); });
-    // Open the print dialog once the page (including the logo) has rendered.
-    window.addEventListener('load', function () { setTimeout(function () { window.print(); }, 300); });
+    // Open the print dialog once the page (including the logo) has rendered (not for the audit dossier, S1.3.0).
+    @if (ViewData["NoAutoPrint"] is not true)
+    {
+        @:window.addEventListener('load', function () { setTimeout(function () { window.print(); }, 300); });
+    }
 </script>
 </body>
 </html>
