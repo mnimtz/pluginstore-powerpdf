@@ -132,7 +132,12 @@ public class UsageService
         if (shares) s = await _db.ShareStats.ExecuteDeleteAsync();
         if (ipEvents) ip = await _db.UsageEvents.ExecuteDeleteAsync();
         if (ratings) r = await _db.Ratings.ExecuteDeleteAsync();
-        if (feedback) f = await _db.Feedbacks.ExecuteDeleteAsync();
+        if (feedback)
+        {
+            await _db.FeedbackAttachments.ExecuteDeleteAsync();
+            await _db.FeedbackNotes.ExecuteDeleteAsync();
+            f = await _db.Feedbacks.ExecuteDeleteAsync();
+        }
         await _settings.SetAsync("Stats.ResetAt", DateTime.UtcNow.ToString("O"));
         return new ResetCounts(u, d, s, ip, r, f);
     }
@@ -174,6 +179,9 @@ public sealed class UsageMaintenance : BackgroundService
                 {
                     var n = await scope.ServiceProvider.GetRequiredService<UsageService>().PurgeAsync();
                     if (n > 0) _log.LogInformation("usage: {Count} IP events past the retention period deleted", n);
+                    // problem reports closed longer than the retention period lose attachments, log and address (S1.1.0)
+                    var r = await scope.ServiceProvider.GetRequiredService<IssueService>().PurgeAsync();
+                    if (r > 0) _log.LogInformation("feedback: attachments and logs of {Count} closed reports deleted", r);
                     nextPurge = DateTime.UtcNow.AddHours(12);
                 }
                 await ResolveHostnamesAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>(), stop);

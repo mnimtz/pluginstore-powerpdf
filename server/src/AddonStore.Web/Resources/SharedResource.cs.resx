@@ -941,4 +941,66 @@
   <data name="The machine-readable API description for code generators and tools." xml:space="preserve"><value>Strojově čitelný popis API pro generátory kódu a nástroje.</value></data>
   <data name="Offline packer (make-ppak.ps1)" xml:space="preserve"><value>Offline balicí nástroj (make-ppak.ps1)</value></data>
   <data name="Builds the .ppak, the source ZIP and the upload package without network or token." xml:space="preserve"><value>Vytvoří .ppak, ZIP se zdrojovým kódem a balíček k nahrání bez sítě a tokenu.</value></data>
+  <data name="Problem reports" xml:space="preserve"><value>Hlášení</value></data>
+  <data name="Problem report queue" xml:space="preserve"><value>Fronta hlášení</value></data>
+  <data name="New problem reports" xml:space="preserve"><value>Nová hlášení</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>Přehled</value></data>
+  <data name="Active problem reports" xml:space="preserve"><value>Aktivní hlášení</value></data>
+  <data name="All developers" xml:space="preserve"><value>Všichni vývojáři</value></data>
+  <data name="Anyone" xml:space="preserve"><value>Kdokoli</value></data>
+  <data name="Assigned to" xml:space="preserve"><value>Přiřazeno</value></data>
+  <data name="Assignment changed." xml:space="preserve"><value>Přiřazení změněno.</value></data>
+  <data name="Attachments" xml:space="preserve"><value>Přílohy</value></data>
+  <data name="Attachments, log and reply address are deleted {0} days after the report is closed." xml:space="preserve"><value>Přílohy, protokol a adresa pro odpověď se odstraní {0} dní po uzavření hlášení.</value></data>
+  <data name="Declined" xml:space="preserve"><value>Odmítnuto</value></data>
+  <data name="In progress" xml:space="preserve"><value>Rozpracováno</value></data>
+  <data name="Waiting" xml:space="preserve"><value>Čeká</value></data>
+  <data name="Deleted after the retention period" xml:space="preserve"><value>Odstraněno po uplynutí doby uchování</value></data>
+  <data name="Download channel" xml:space="preserve"><value>Kanál stahování</value></data>
+  <data name="Downloads, versions, Power PDF versions, ratings and reports of your add-ons." xml:space="preserve"><value>Stažení, verze, verze Power PDF, hodnocení a hlášení vašich doplňků.</value></data>
+  <data name="Downloads, versions, users and reports of all add-ons." xml:space="preserve"><value>Stažení, verze, uživatelé a hlášení všech doplňků.</value></data>
+  <data name="Downloads, versions, users and reports of your add-ons." xml:space="preserve"><value>Stažení, verze, uživatelé a hlášení vašich doplňků.</value></data>
+  <data name="From downloads in the period; Power PDF, Windows, architecture and language only from the store window." xml:space="preserve"><value>Ze stažení v období; Power PDF, Windows, architektura a jazyk jen z okna obchodu.</value></data>
+  <data name="History" xml:space="preserve"><value>Historie</value></data>
+  <data name="Log" xml:space="preserve"><value>Protokol</value></data>
+  <data name="Me" xml:space="preserve"><value>Mně</value></data>
+  <data name="No data in this period." xml:space="preserve"><value>Žádná data v tomto období.</value></data>
+  <data name="No notes yet." xml:space="preserve"><value>Zatím žádné poznámky.</value></data>
+  <data name="No reports in this view." xml:space="preserve"><value>V tomto zobrazení nejsou žádná hlášení.</value></data>
+  <data name="Nobody" xml:space="preserve"><value>Nikdo</value></data>
+  <data name="Note or reply" xml:space="preserve"><value>Poznámka nebo odpověď</value></data>
+  <data name="Note saved." xml:space="preserve"><value>Poznámka uložena.</value></data>
+  <data name="Only the owner of the add-on or an admin can be assigned." xml:space="preserve"><value>Přiřadit lze jen vlastníka doplňku nebo správce.</value></data>
+  <data name="Open in the problem report queue" xml:space="preserve"><value>Otevřít ve frontě hlášení</value></data>
+  <data name="Open the plug-in page" xml:space="preserve"><value>Otevřít stránku plug-inu</value></data>
+  <data name="Rating" xml:space="preserve"><value>Hodnocení</value></data>
+  <data name="Reply mailed to the reporter" xml:space="preserve"><value>Odpověď odeslána oznamovateli</value></data>
+  <data name="Reply possible" xml:space="preserve"><value>Odpověď možná</value></data>
+  <data name="Reply sent to the reporter." xml:space="preserve"><value>Odpověď odeslána oznamovateli.</value></data>
+  <data name="Reporters may attach screenshots, PDFs and logs and leave an email address. These are deleted automatically once a report has been closed for the period below; the report text and the notes stay." xml:space="preserve"><value>Oznamovatelé mohou přiložit snímky obrazovky, PDF a protokoly a zanechat e-mailovou adresu. Ty se automaticky odstraní, jakmile je hlášení uzavřeno po dobu uvedenou níže; text a poznámky zůstávají.</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for all add-ons." xml:space="preserve"><value>Hlášení a komentáře z okna obchodu v Power PDF pro všechny doplňky.</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for your add-ons." xml:space="preserve"><value>Hlášení a komentáře z okna obchodu v Power PDF pro vaše doplňky.</value></data>
+  <data name="Reports from the store window with attachments; an AI assistant works through them with your token." xml:space="preserve"><value>Hlášení z okna obchodu s přílohami; asistent AI je zpracuje s vaším tokenem.</value></data>
+  <data name="Save internal note" xml:space="preserve"><value>Uložit interní poznámku</value></data>
+  <data name="Send as reply to the reporter" xml:space="preserve"><value>Odeslat jako odpověď oznamovateli</value></data>
+  <data name="Send this text by email to the reporter?" xml:space="preserve"><value>Odeslat tento text e-mailem oznamovateli?</value></data>
+  <data name="Status changed." xml:space="preserve"><value>Stav změněn.</value></data>
+  <data name="Text or #number" xml:space="preserve"><value>Text nebo #číslo</value></data>
+  <data name="The reply could not be sent. Check the email settings." xml:space="preserve"><value>Odpověď se nepodařilo odeslat. Zkontrolujte nastavení e-mailu.</value></data>
+  <data name="The reporter left no email address; add an internal note instead." xml:space="preserve"><value>Oznamovatel nezanechal e-mailovou adresu; přidejte místo toho interní poznámku.</value></data>
+  <data name="The reporter left no email address; replies are not possible." xml:space="preserve"><value>Oznamovatel nezanechal e-mailovou adresu; odpověď není možná.</value></data>
+  <data name="This action is not possible." xml:space="preserve"><value>Tato akce není možná.</value></data>
+  <data name="Upload one" xml:space="preserve"><value>Nahrajte doplněk</value></data>
+  <data name="Versions of {0}" xml:space="preserve"><value>Verze {0}</value></data>
+  <data name="Waiting for approval" xml:space="preserve"><value>Čeká na schválení</value></data>
+  <data name="Who uses it" xml:space="preserve"><value>Kdo jej používá</value></data>
+  <data name="Work on them with an AI assistant" xml:space="preserve"><value>Zpracujte je s asistentem AI</value></data>
+  <data name="Write 2 to 4000 characters." xml:space="preserve"><value>Napište 2 až 4000 znaků.</value></data>
+  <data name="You have no add-ons in the store yet." xml:space="preserve"><value>V obchodě zatím nemáte žádné doplňky.</value></data>
+  <data name="Your AI assistant reads the same figures with GET /api/insights." xml:space="preserve"><value>Váš asistent AI čte stejná čísla pomocí GET /api/insights.</value></data>
+  <data name="Your assistant reads this report with your API token:" xml:space="preserve"><value>Váš asistent čte toto hlášení s vaším tokenem API:</value></data>
+  <data name="before" xml:space="preserve"><value>dříve</value></data>
+  <data name="{0} active" xml:space="preserve"><value>aktivní: {0}</value></data>
+  <data name="{0} days" xml:space="preserve"><value>{0} dní</value></data>
+  <data name="{0} new" xml:space="preserve"><value>nová: {0}</value></data>
 </root>

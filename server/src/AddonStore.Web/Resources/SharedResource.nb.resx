@@ -941,4 +941,66 @@
   <data name="The machine-readable API description for code generators and tools." xml:space="preserve"><value>Den maskinlesbare API-beskrivelsen for kodegeneratorer og verktøy.</value></data>
   <data name="Offline packer (make-ppak.ps1)" xml:space="preserve"><value>Frakoblet pakker (make-ppak.ps1)</value></data>
   <data name="Builds the .ppak, the source ZIP and the upload package without network or token." xml:space="preserve"><value>Bygger .ppak, kildekode-ZIP og opplastingspakke uten nettverk eller token.</value></data>
+  <data name="Problem reports" xml:space="preserve"><value>Rapporter</value></data>
+  <data name="Problem report queue" xml:space="preserve"><value>Rapportkø</value></data>
+  <data name="New problem reports" xml:space="preserve"><value>Nye rapporter</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>Dashbord</value></data>
+  <data name="Active problem reports" xml:space="preserve"><value>Aktive rapporter</value></data>
+  <data name="All developers" xml:space="preserve"><value>Alle utviklere</value></data>
+  <data name="Anyone" xml:space="preserve"><value>Alle</value></data>
+  <data name="Assigned to" xml:space="preserve"><value>Tildelt</value></data>
+  <data name="Assignment changed." xml:space="preserve"><value>Tildelingen er endret.</value></data>
+  <data name="Attachments" xml:space="preserve"><value>Vedlegg</value></data>
+  <data name="Attachments, log and reply address are deleted {0} days after the report is closed." xml:space="preserve"><value>Vedlegg, logg og svaradresse slettes {0} dager etter at rapporten er lukket.</value></data>
+  <data name="Declined" xml:space="preserve"><value>Avvist</value></data>
+  <data name="In progress" xml:space="preserve"><value>Pågår</value></data>
+  <data name="Waiting" xml:space="preserve"><value>Venter</value></data>
+  <data name="Deleted after the retention period" xml:space="preserve"><value>Slettet etter oppbevaringsperioden</value></data>
+  <data name="Download channel" xml:space="preserve"><value>Nedlastingskanal</value></data>
+  <data name="Downloads, versions, Power PDF versions, ratings and reports of your add-ons." xml:space="preserve"><value>Nedlastinger, versjoner, Power PDF-versjoner, vurderinger og rapporter for tilleggene dine.</value></data>
+  <data name="Downloads, versions, users and reports of all add-ons." xml:space="preserve"><value>Nedlastinger, versjoner, brukere og rapporter for alle tillegg.</value></data>
+  <data name="Downloads, versions, users and reports of your add-ons." xml:space="preserve"><value>Nedlastinger, versjoner, brukere og rapporter for tilleggene dine.</value></data>
+  <data name="From downloads in the period; Power PDF, Windows, architecture and language only from the store window." xml:space="preserve"><value>Fra nedlastinger i perioden; Power PDF, Windows, arkitektur og språk bare fra butikkvinduet.</value></data>
+  <data name="History" xml:space="preserve"><value>Historikk</value></data>
+  <data name="Log" xml:space="preserve"><value>Logg</value></data>
+  <data name="Me" xml:space="preserve"><value>Meg</value></data>
+  <data name="No data in this period." xml:space="preserve"><value>Ingen data i denne perioden.</value></data>
+  <data name="No notes yet." xml:space="preserve"><value>Ingen notater ennå.</value></data>
+  <data name="No reports in this view." xml:space="preserve"><value>Ingen rapporter i denne visningen.</value></data>
+  <data name="Nobody" xml:space="preserve"><value>Ingen</value></data>
+  <data name="Note or reply" xml:space="preserve"><value>Notat eller svar</value></data>
+  <data name="Note saved." xml:space="preserve"><value>Notatet er lagret.</value></data>
+  <data name="Only the owner of the add-on or an admin can be assigned." xml:space="preserve"><value>Bare eieren av tillegget eller en administrator kan tildeles.</value></data>
+  <data name="Open in the problem report queue" xml:space="preserve"><value>Åpne i rapportkøen</value></data>
+  <data name="Open the plug-in page" xml:space="preserve"><value>Åpne plugin-siden</value></data>
+  <data name="Rating" xml:space="preserve"><value>Vurdering</value></data>
+  <data name="Reply mailed to the reporter" xml:space="preserve"><value>Svar sendt til innsenderen</value></data>
+  <data name="Reply possible" xml:space="preserve"><value>Svar mulig</value></data>
+  <data name="Reply sent to the reporter." xml:space="preserve"><value>Svaret er sendt til innsenderen.</value></data>
+  <data name="Reporters may attach screenshots, PDFs and logs and leave an email address. These are deleted automatically once a report has been closed for the period below; the report text and the notes stay." xml:space="preserve"><value>Innsendere kan legge ved skjermbilder, PDF-er og logger og oppgi en e-postadresse. De slettes automatisk når en rapport har vært lukket i perioden nedenfor; teksten og notatene beholdes.</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for all add-ons." xml:space="preserve"><value>Rapporter og kommentarer fra butikkvinduet i Power PDF for alle tillegg.</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for your add-ons." xml:space="preserve"><value>Rapporter og kommentarer fra butikkvinduet i Power PDF for tilleggene dine.</value></data>
+  <data name="Reports from the store window with attachments; an AI assistant works through them with your token." xml:space="preserve"><value>Rapporter fra butikkvinduet med vedlegg; en KI-assistent behandler dem med tokenet ditt.</value></data>
+  <data name="Save internal note" xml:space="preserve"><value>Lagre internt notat</value></data>
+  <data name="Send as reply to the reporter" xml:space="preserve"><value>Send som svar til innsenderen</value></data>
+  <data name="Send this text by email to the reporter?" xml:space="preserve"><value>Sende denne teksten på e-post til innsenderen?</value></data>
+  <data name="Status changed." xml:space="preserve"><value>Status endret.</value></data>
+  <data name="Text or #number" xml:space="preserve"><value>Tekst eller #nummer</value></data>
+  <data name="The reply could not be sent. Check the email settings." xml:space="preserve"><value>Svaret kunne ikke sendes. Kontroller e-postinnstillingene.</value></data>
+  <data name="The reporter left no email address; add an internal note instead." xml:space="preserve"><value>Innsenderen oppga ingen e-postadresse; legg til et internt notat i stedet.</value></data>
+  <data name="The reporter left no email address; replies are not possible." xml:space="preserve"><value>Innsenderen oppga ingen e-postadresse; svar er ikke mulig.</value></data>
+  <data name="This action is not possible." xml:space="preserve"><value>Denne handlingen er ikke mulig.</value></data>
+  <data name="Upload one" xml:space="preserve"><value>Last opp et</value></data>
+  <data name="Versions of {0}" xml:space="preserve"><value>Versjoner av {0}</value></data>
+  <data name="Waiting for approval" xml:space="preserve"><value>Venter på godkjenning</value></data>
+  <data name="Who uses it" xml:space="preserve"><value>Hvem bruker det</value></data>
+  <data name="Work on them with an AI assistant" xml:space="preserve"><value>Behandle dem med en KI-assistent</value></data>
+  <data name="Write 2 to 4000 characters." xml:space="preserve"><value>Skriv 2 til 4000 tegn.</value></data>
+  <data name="You have no add-ons in the store yet." xml:space="preserve"><value>Du har ingen tillegg i butikken ennå.</value></data>
+  <data name="Your AI assistant reads the same figures with GET /api/insights." xml:space="preserve"><value>KI-assistenten din leser de samme tallene med GET /api/insights.</value></data>
+  <data name="Your assistant reads this report with your API token:" xml:space="preserve"><value>Assistenten din leser denne rapporten med API-tokenet ditt:</value></data>
+  <data name="before" xml:space="preserve"><value>før</value></data>
+  <data name="{0} active" xml:space="preserve"><value>{0} aktive</value></data>
+  <data name="{0} days" xml:space="preserve"><value>{0} dager</value></data>
+  <data name="{0} new" xml:space="preserve"><value>{0} nye</value></data>
 </root>

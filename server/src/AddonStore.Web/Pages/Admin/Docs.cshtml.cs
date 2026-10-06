@@ -37,6 +37,8 @@ public class DocsModel : PageModel
         new("api", "API and tools", "For developers and scripts.", new DocLink[]
         {
             new("key", "API page", "Tokens, prompt templates for publishing and the most important endpoints.", "/Developer"),
+            new("inbox", "Problem report queue", "Reports from the store window with attachments; an AI assistant works through them with your token.", "/Issues"),
+            new("chart", "Dashboard", "Downloads, versions, Power PDF versions, ratings and reports of your add-ons.", "/Insights"),
             new("list", "All API endpoints", "The short list of every endpoint with method and purpose.", "/api", "TXT"),
             new("code", "OpenAPI description", "The machine-readable API description for code generators and tools.", "/api/openapi.json", "JSON"),
             new("tool", "Offline packer (make-ppak.ps1)", "Builds the .ppak, the source ZIP and the upload package without network or token.", "/api/tools/make-ppak.ps1", "PS1"),

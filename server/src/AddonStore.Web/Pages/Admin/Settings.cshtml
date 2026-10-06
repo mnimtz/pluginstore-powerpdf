@@ -309,6 +309,17 @@ else if (Model.SigningKeyId.Length > 0)
         </form>
     }
 </div>
+<div class="card" style="max-width:760px" id="feedback-retention">
+    <h2 style="margin-top:0">@L["Problem reports"]</h2>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["Reporters may attach screenshots, PDFs and logs and leave an email address. These are deleted automatically once a report has been closed for the period below; the report text and the notes stay."]</p>
+    <form method="post" asp-page-handler="FeedbackRetention">
+        <label>@L["Retention period (days)"]</label>
+        <div style="display:flex;gap:6px;align-items:center">
+            <input type="number" name="feedbackDays" min="7" max="3650" value="@Model.FeedbackRetentionDays" style="width:100px" />
+            <button type="submit" class="btn small secondary">@L["Save retention period"]</button>
+        </div>
+    </form>
+</div>
 }
 
 </div>

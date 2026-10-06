@@ -941,4 +941,66 @@
   <data name="The machine-readable API description for code generators and tools." xml:space="preserve"><value>A descrição da API legível por máquina para geradores de código e ferramentas.</value></data>
   <data name="Offline packer (make-ppak.ps1)" xml:space="preserve"><value>Empacotador offline (make-ppak.ps1)</value></data>
   <data name="Builds the .ppak, the source ZIP and the upload package without network or token." xml:space="preserve"><value>Cria o .ppak, o ZIP do código-fonte e o pacote de carregamento sem rede nem token.</value></data>
+  <data name="Problem reports" xml:space="preserve"><value>Relatórios</value></data>
+  <data name="Problem report queue" xml:space="preserve"><value>Fila de relatórios</value></data>
+  <data name="New problem reports" xml:space="preserve"><value>Novos relatórios</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>Painel</value></data>
+  <data name="Active problem reports" xml:space="preserve"><value>Relatórios ativos</value></data>
+  <data name="All developers" xml:space="preserve"><value>Todos os programadores</value></data>
+  <data name="Anyone" xml:space="preserve"><value>Qualquer pessoa</value></data>
+  <data name="Assigned to" xml:space="preserve"><value>Atribuído a</value></data>
+  <data name="Assignment changed." xml:space="preserve"><value>Atribuição alterada.</value></data>
+  <data name="Attachments" xml:space="preserve"><value>Anexos</value></data>
+  <data name="Attachments, log and reply address are deleted {0} days after the report is closed." xml:space="preserve"><value>Os anexos, o registo e o endereço de resposta são eliminados {0} dias após o fecho do relatório.</value></data>
+  <data name="Declined" xml:space="preserve"><value>Recusado</value></data>
+  <data name="In progress" xml:space="preserve"><value>Em curso</value></data>
+  <data name="Waiting" xml:space="preserve"><value>Em espera</value></data>
+  <data name="Deleted after the retention period" xml:space="preserve"><value>Eliminado após o período de retenção</value></data>
+  <data name="Download channel" xml:space="preserve"><value>Canal de transferência</value></data>
+  <data name="Downloads, versions, Power PDF versions, ratings and reports of your add-ons." xml:space="preserve"><value>Transferências, versões, versões do Power PDF, avaliações e relatórios dos seus suplementos.</value></data>
+  <data name="Downloads, versions, users and reports of all add-ons." xml:space="preserve"><value>Transferências, versões, utilizadores e relatórios de todos os suplementos.</value></data>
+  <data name="Downloads, versions, users and reports of your add-ons." xml:space="preserve"><value>Transferências, versões, utilizadores e relatórios dos seus suplementos.</value></data>
+  <data name="From downloads in the period; Power PDF, Windows, architecture and language only from the store window." xml:space="preserve"><value>A partir das transferências do período; Power PDF, Windows, arquitetura e idioma apenas a partir da janela da loja.</value></data>
+  <data name="History" xml:space="preserve"><value>Histórico</value></data>
+  <data name="Log" xml:space="preserve"><value>Registo</value></data>
+  <data name="Me" xml:space="preserve"><value>Mim</value></data>
+  <data name="No data in this period." xml:space="preserve"><value>Sem dados neste período.</value></data>
+  <data name="No notes yet." xml:space="preserve"><value>Ainda sem notas.</value></data>
+  <data name="No reports in this view." xml:space="preserve"><value>Sem relatórios nesta vista.</value></data>
+  <data name="Nobody" xml:space="preserve"><value>Ninguém</value></data>
+  <data name="Note or reply" xml:space="preserve"><value>Nota ou resposta</value></data>
+  <data name="Note saved." xml:space="preserve"><value>Nota guardada.</value></data>
+  <data name="Only the owner of the add-on or an admin can be assigned." xml:space="preserve"><value>Só é possível atribuir ao proprietário do suplemento ou a um administrador.</value></data>
+  <data name="Open in the problem report queue" xml:space="preserve"><value>Abrir na fila de relatórios</value></data>
+  <data name="Open the plug-in page" xml:space="preserve"><value>Abrir a página do plug-in</value></data>
+  <data name="Rating" xml:space="preserve"><value>Avaliação</value></data>
+  <data name="Reply mailed to the reporter" xml:space="preserve"><value>Resposta enviada por e-mail ao autor</value></data>
+  <data name="Reply possible" xml:space="preserve"><value>Resposta possível</value></data>
+  <data name="Reply sent to the reporter." xml:space="preserve"><value>Resposta enviada ao autor.</value></data>
+  <data name="Reporters may attach screenshots, PDFs and logs and leave an email address. These are deleted automatically once a report has been closed for the period below; the report text and the notes stay." xml:space="preserve"><value>Os autores podem anexar capturas de ecrã, PDF e registos e deixar um endereço de e-mail. Estes são eliminados automaticamente quando um relatório está fechado há mais do que o período abaixo; o texto e as notas mantêm-se.</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for all add-ons." xml:space="preserve"><value>Relatórios e comentários da janela da loja no Power PDF, para todos os suplementos.</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for your add-ons." xml:space="preserve"><value>Relatórios e comentários da janela da loja no Power PDF, para os seus suplementos.</value></data>
+  <data name="Reports from the store window with attachments; an AI assistant works through them with your token." xml:space="preserve"><value>Relatórios da janela da loja com anexos; um assistente de IA trata-os com o seu token.</value></data>
+  <data name="Save internal note" xml:space="preserve"><value>Guardar nota interna</value></data>
+  <data name="Send as reply to the reporter" xml:space="preserve"><value>Enviar como resposta ao autor</value></data>
+  <data name="Send this text by email to the reporter?" xml:space="preserve"><value>Enviar este texto por e-mail ao autor?</value></data>
+  <data name="Status changed." xml:space="preserve"><value>Estado alterado.</value></data>
+  <data name="Text or #number" xml:space="preserve"><value>Texto ou #número</value></data>
+  <data name="The reply could not be sent. Check the email settings." xml:space="preserve"><value>Não foi possível enviar a resposta. Verifique as definições de e-mail.</value></data>
+  <data name="The reporter left no email address; add an internal note instead." xml:space="preserve"><value>O autor não deixou endereço de e-mail; adicione antes uma nota interna.</value></data>
+  <data name="The reporter left no email address; replies are not possible." xml:space="preserve"><value>O autor não deixou endereço de e-mail; não é possível responder.</value></data>
+  <data name="This action is not possible." xml:space="preserve"><value>Esta ação não é possível.</value></data>
+  <data name="Upload one" xml:space="preserve"><value>Carregar um</value></data>
+  <data name="Versions of {0}" xml:space="preserve"><value>Versões de {0}</value></data>
+  <data name="Waiting for approval" xml:space="preserve"><value>A aguardar aprovação</value></data>
+  <data name="Who uses it" xml:space="preserve"><value>Quem o usa</value></data>
+  <data name="Work on them with an AI assistant" xml:space="preserve"><value>Tratá-los com um assistente de IA</value></data>
+  <data name="Write 2 to 4000 characters." xml:space="preserve"><value>Escreva de 2 a 4000 caracteres.</value></data>
+  <data name="You have no add-ons in the store yet." xml:space="preserve"><value>Ainda não tem suplementos na loja.</value></data>
+  <data name="Your AI assistant reads the same figures with GET /api/insights." xml:space="preserve"><value>O seu assistente de IA lê os mesmos números com GET /api/insights.</value></data>
+  <data name="Your assistant reads this report with your API token:" xml:space="preserve"><value>O seu assistente lê este relatório com o seu token de API:</value></data>
+  <data name="before" xml:space="preserve"><value>antes</value></data>
+  <data name="{0} active" xml:space="preserve"><value>{0} ativos</value></data>
+  <data name="{0} days" xml:space="preserve"><value>{0} dias</value></data>
+  <data name="{0} new" xml:space="preserve"><value>{0} novos</value></data>
 </root>

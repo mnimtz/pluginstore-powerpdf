@@ -39,14 +39,14 @@ header.site {
   color: #fff;
 }
 header.site .bar {
-  max-width: 1080px; margin: 0 auto; padding: 14px 20px;
+  max-width: 1200px; margin: 0 auto; padding: 14px 20px;
   display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
 }
 header.site img.logo { height: 34px; }
 header.site .title { font-weight: 700; font-size: 1.05rem; letter-spacing: .02em; }
 header.site .title small { display: block; font-weight: 400; color: var(--tun-blue-light); font-size: .72rem; }
-header.site nav { margin-left: auto; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-header.site nav a { color: #fff; text-decoration: none; font-weight: 500; font-size: .92rem; }
+header.site nav { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+header.site nav a { color: #fff; text-decoration: none; font-weight: 500; font-size: .88rem; }
 header.site nav a:hover { color: var(--tun-blue-light); }
 .accent-line { height: 4px; background: var(--tun-accent-pdf); }
 
@@ -461,3 +461,7 @@ dialog.pp-confirm { border: none; border-radius: 12px; padding: 22px 24px 18px; 
 dialog.pp-confirm::backdrop { background: rgba(0, 40, 84, .45); }
 dialog.pp-confirm p { margin: 0 0 18px; line-height: 1.5; }
 .pp-confirm-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+
+/* problem report queue (S1.1.0) */
+.nav-count { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 5px; border-radius: 999px; background: var(--tun-coral); color: #fff; font-size: .72rem; font-weight: 700; line-height: 18px; text-align: center; vertical-align: 1px; }
+.cap { display: inline-block; } .cap::first-letter { text-transform: uppercase; }

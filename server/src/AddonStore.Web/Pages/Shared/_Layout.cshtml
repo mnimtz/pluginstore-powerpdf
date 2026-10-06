@@ -1,3 +1,5 @@
+@inject AddonStore.Web.Services.IssueService IssuesNav
+@using Microsoft.EntityFrameworkCore
 @using System.Globalization
 @inject AddonStore.Web.Api.AppVersion AppVer
 <!DOCTYPE html>
@@ -65,6 +67,10 @@
                 <a href="/Dashboard">@L["Plug-ins"]</a>
                 <a href="/Profile">@L["Profile"]</a>
                 <a href="/Customers">@L["Customers"]</a>
+                <a href="/Insights">@L["Dashboard"]</a>
+                var meNav = await UserManager.GetUserAsync(User);
+                var openReports = meNav is null ? 0 : await IssuesNav.Scope(meNav, User.IsInRole("Admin")).CountAsync(f => f.Status == "open");
+                <a href="/Issues">@L["Problem reports"]@if (openReports > 0) { <span class="nav-count" title="@L["New problem reports"]">@openReports</span> }</a>
                 <a href="/Developer">API</a>
                 <a href="/Docs">@L["Documentation"]</a>
                 @if (User.IsInRole("Admin") || User.IsInRole("Reviewer"))

@@ -941,4 +941,66 @@
   <data name="The machine-readable API description for code generators and tools." xml:space="preserve"><value>Koneluettava API-kuvaus koodigeneraattoreille ja työkaluille.</value></data>
   <data name="Offline packer (make-ppak.ps1)" xml:space="preserve"><value>Offline-paketoija (make-ppak.ps1)</value></data>
   <data name="Builds the .ppak, the source ZIP and the upload package without network or token." xml:space="preserve"><value>Rakentaa .ppak-tiedoston, lähdekoodi-ZIPin ja latauspaketin ilman verkkoa tai tunnusta.</value></data>
+  <data name="Problem reports" xml:space="preserve"><value>Ilmoitukset</value></data>
+  <data name="Problem report queue" xml:space="preserve"><value>Ilmoitusjono</value></data>
+  <data name="New problem reports" xml:space="preserve"><value>Uudet ilmoitukset</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>Koontinäyttö</value></data>
+  <data name="Active problem reports" xml:space="preserve"><value>Aktiiviset ilmoitukset</value></data>
+  <data name="All developers" xml:space="preserve"><value>Kaikki kehittäjät</value></data>
+  <data name="Anyone" xml:space="preserve"><value>Kuka tahansa</value></data>
+  <data name="Assigned to" xml:space="preserve"><value>Määritetty</value></data>
+  <data name="Assignment changed." xml:space="preserve"><value>Määritys muutettu.</value></data>
+  <data name="Attachments" xml:space="preserve"><value>Liitteet</value></data>
+  <data name="Attachments, log and reply address are deleted {0} days after the report is closed." xml:space="preserve"><value>Liitteet, loki ja vastausosoite poistetaan {0} päivää ilmoituksen sulkemisen jälkeen.</value></data>
+  <data name="Declined" xml:space="preserve"><value>Hylätty</value></data>
+  <data name="In progress" xml:space="preserve"><value>Työn alla</value></data>
+  <data name="Waiting" xml:space="preserve"><value>Odottaa</value></data>
+  <data name="Deleted after the retention period" xml:space="preserve"><value>Poistettu säilytysajan jälkeen</value></data>
+  <data name="Download channel" xml:space="preserve"><value>Latauskanava</value></data>
+  <data name="Downloads, versions, Power PDF versions, ratings and reports of your add-ons." xml:space="preserve"><value>Lisäosiesi lataukset, versiot, Power PDF -versiot, arviot ja ilmoitukset.</value></data>
+  <data name="Downloads, versions, users and reports of all add-ons." xml:space="preserve"><value>Kaikkien lisäosien lataukset, versiot, käyttäjät ja ilmoitukset.</value></data>
+  <data name="Downloads, versions, users and reports of your add-ons." xml:space="preserve"><value>Lisäosiesi lataukset, versiot, käyttäjät ja ilmoitukset.</value></data>
+  <data name="From downloads in the period; Power PDF, Windows, architecture and language only from the store window." xml:space="preserve"><value>Jakson latauksista; Power PDF, Windows, arkkitehtuuri ja kieli vain kauppaikkunasta.</value></data>
+  <data name="History" xml:space="preserve"><value>Historia</value></data>
+  <data name="Log" xml:space="preserve"><value>Loki</value></data>
+  <data name="Me" xml:space="preserve"><value>Minulle</value></data>
+  <data name="No data in this period." xml:space="preserve"><value>Ei tietoja tältä jaksolta.</value></data>
+  <data name="No notes yet." xml:space="preserve"><value>Ei vielä muistiinpanoja.</value></data>
+  <data name="No reports in this view." xml:space="preserve"><value>Ei ilmoituksia tässä näkymässä.</value></data>
+  <data name="Nobody" xml:space="preserve"><value>Ei kukaan</value></data>
+  <data name="Note or reply" xml:space="preserve"><value>Muistiinpano tai vastaus</value></data>
+  <data name="Note saved." xml:space="preserve"><value>Muistiinpano tallennettu.</value></data>
+  <data name="Only the owner of the add-on or an admin can be assigned." xml:space="preserve"><value>Vain lisäosan omistajan tai järjestelmänvalvojan voi määrittää.</value></data>
+  <data name="Open in the problem report queue" xml:space="preserve"><value>Avaa ilmoitusjonossa</value></data>
+  <data name="Open the plug-in page" xml:space="preserve"><value>Avaa laajennuksen sivu</value></data>
+  <data name="Rating" xml:space="preserve"><value>Arvio</value></data>
+  <data name="Reply mailed to the reporter" xml:space="preserve"><value>Vastaus lähetetty ilmoittajalle</value></data>
+  <data name="Reply possible" xml:space="preserve"><value>Vastaus mahdollinen</value></data>
+  <data name="Reply sent to the reporter." xml:space="preserve"><value>Vastaus lähetetty ilmoittajalle.</value></data>
+  <data name="Reporters may attach screenshots, PDFs and logs and leave an email address. These are deleted automatically once a report has been closed for the period below; the report text and the notes stay." xml:space="preserve"><value>Ilmoittajat voivat liittää kuvakaappauksia, PDF-tiedostoja ja lokeja sekä jättää sähköpostiosoitteen. Ne poistetaan automaattisesti, kun ilmoitus on ollut suljettuna alla olevan ajan; teksti ja muistiinpanot säilyvät.</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for all add-ons." xml:space="preserve"><value>Ilmoitukset ja kommentit Power PDF:n kauppaikkunasta kaikille lisäosille.</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for your add-ons." xml:space="preserve"><value>Ilmoitukset ja kommentit Power PDF:n kauppaikkunasta lisäosillesi.</value></data>
+  <data name="Reports from the store window with attachments; an AI assistant works through them with your token." xml:space="preserve"><value>Ilmoitukset kauppaikkunasta liitteineen; tekoälyavustaja käsittelee ne tunnuksellasi.</value></data>
+  <data name="Save internal note" xml:space="preserve"><value>Tallenna sisäinen muistiinpano</value></data>
+  <data name="Send as reply to the reporter" xml:space="preserve"><value>Lähetä vastauksena ilmoittajalle</value></data>
+  <data name="Send this text by email to the reporter?" xml:space="preserve"><value>Lähetetäänkö tämä teksti sähköpostilla ilmoittajalle?</value></data>
+  <data name="Status changed." xml:space="preserve"><value>Tila muutettu.</value></data>
+  <data name="Text or #number" xml:space="preserve"><value>Teksti tai #numero</value></data>
+  <data name="The reply could not be sent. Check the email settings." xml:space="preserve"><value>Vastausta ei voitu lähettää. Tarkista sähköpostiasetukset.</value></data>
+  <data name="The reporter left no email address; add an internal note instead." xml:space="preserve"><value>Ilmoittaja ei jättänyt sähköpostiosoitetta; lisää sen sijaan sisäinen muistiinpano.</value></data>
+  <data name="The reporter left no email address; replies are not possible." xml:space="preserve"><value>Ilmoittaja ei jättänyt sähköpostiosoitetta; vastaaminen ei ole mahdollista.</value></data>
+  <data name="This action is not possible." xml:space="preserve"><value>Tämä toiminto ei ole mahdollinen.</value></data>
+  <data name="Upload one" xml:space="preserve"><value>Lataa yksi</value></data>
+  <data name="Versions of {0}" xml:space="preserve"><value>Kohteen {0} versiot</value></data>
+  <data name="Waiting for approval" xml:space="preserve"><value>Odottaa hyväksyntää</value></data>
+  <data name="Who uses it" xml:space="preserve"><value>Kuka käyttää</value></data>
+  <data name="Work on them with an AI assistant" xml:space="preserve"><value>Käsittele tekoälyavustajalla</value></data>
+  <data name="Write 2 to 4000 characters." xml:space="preserve"><value>Kirjoita 2-4000 merkkiä.</value></data>
+  <data name="You have no add-ons in the store yet." xml:space="preserve"><value>Sinulla ei ole vielä lisäosia kaupassa.</value></data>
+  <data name="Your AI assistant reads the same figures with GET /api/insights." xml:space="preserve"><value>Tekoälyavustajasi lukee samat luvut kutsulla GET /api/insights.</value></data>
+  <data name="Your assistant reads this report with your API token:" xml:space="preserve"><value>Avustajasi lukee tämän ilmoituksen API-tunnuksellasi:</value></data>
+  <data name="before" xml:space="preserve"><value>aiemmin</value></data>
+  <data name="{0} active" xml:space="preserve"><value>{0} aktiivista</value></data>
+  <data name="{0} days" xml:space="preserve"><value>{0} päivää</value></data>
+  <data name="{0} new" xml:space="preserve"><value>{0} uutta</value></data>
 </root>

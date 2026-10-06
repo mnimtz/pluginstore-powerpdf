@@ -1,0 +1,139 @@
+@page
+@model AddonStore.Web.Pages.InsightsModel
+@using AddonStore.Web.Services
+@{
+    ViewData["Title"] = "Dashboard";
+    var r = Model.R!;
+    var ci = System.Globalization.CultureInfo.CurrentCulture;
+    var max = Math.Max(1, r.Daily.Max(d => d.Downloads));
+    double? delta = r.DownloadsPrevious == 0 ? null : 100.0 * (r.Downloads - r.DownloadsPrevious) / r.DownloadsPrevious;
+    string Pct(double v) => v.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture);
+    var selected = r.Package is null ? null : r.Addons.FirstOrDefault(a => a.Id == r.Package);
+    void Shares(string title, List<InsightsService.Share> list)
+    {
+        <div class="card">
+            <h3 style="margin-top:0">@L[title]</h3>
+            @if (list.Count == 0) { <p class="muted small" style="margin:0">@L["No data in this period."]</p> }
+            @foreach (var s in list.Take(8))
+            {
+                <div class="share"><span title="@s.Key">@s.Key</span><span class="track"><i style="width:@Pct(s.Percent)%"></i></span><span class="small">@s.Count.ToString("N0", ci) · @Pct(s.Percent) %</span></div>
+            }
+        </div>
+    }
+}
+
+<h1>@L["Dashboard"]</h1>
+<p class="lead">@(Model.IsAdmin ? L["Downloads, versions, users and reports of all add-ons."] : L["Downloads, versions, users and reports of your add-ons."])</p>
+
+<form method="get" class="filter-form card" style="padding:12px 14px">
+    <div class="chips" style="margin:0">
+        @foreach (var d in InsightsService.Periods)
+        {
+            <a class="chip @(Model.Days == d ? "active" : "")" href="@Model.Link(days: d)">@L["{0} days", d]</a>
+        }
+    </div>
+    <input type="hidden" name="days" value="@Model.Days" />
+    <label>@L["Add-on"]
+        <select name="pkg">
+            <option value="">@L["All add-ons"]</option>
+            @foreach (var (id, name) in r.Options)
+            {
+                <option value="@id" selected="@(r.Package == id)">@name</option>
+            }
+        </select>
+    </label>
+    @if (Model.IsAdmin)
+    {
+        <label>@L["Developer"]
+            <select name="dev">
+                <option value="">@L["All developers"]</option>
+                @foreach (var (id, name) in r.Developers)
+                {
+                    <option value="@id" selected="@(r.OwnerId == id)">@name</option>
+                }
+            </select>
+        </label>
+    }
+    <span class="spacer"></span>
+    <button type="submit" class="btn small">@L["Filter"]</button>
+</form>
+
+@if (r.Addons.Count == 0)
+{
+    <div class="card"><p style="margin:0">@L["You have no add-ons in the store yet."] <a href="/Dashboard">@L["Upload one"] →</a></p></div>
+}
+else
+{
+<div class="kpis">
+    <div class="kpi accent"><b>@r.Downloads.ToString("N0", ci)</b><span>@L["Downloads in period"]</span>
+        @if (delta is { } dv) { <div class="small" style="color:@(dv >= 0 ? "#016839" : "#9B2C2C")">@(dv >= 0 ? "▲" : "▼") @Pct(Math.Abs(dv)) %</div> }</div>
+    <div class="kpi"><b>@r.DownloadsAllTime.ToString("N0", ci)</b><span>@L["Downloads (all time)"]</span></div>
+    <div class="kpi"><b>@r.LiveAddons</b><span>@L["Live add-ons"]</span></div>
+    <div class="kpi"><b>@r.PendingReviews</b><span>@L["Waiting for approval"]</span></div>
+    <div class="kpi"><b>@(r.Rating is { } rt ? rt.ToString("0.0", ci) + " ★" : "–")</b><span>@L["Rating"] (@r.Ratings)</span></div>
+    <div class="kpi" style="@(r.OpenReports > 0 ? "border-top-color:var(--tun-coral)" : "")"><b><a href="/Issues@(r.Package is null ? "" : "?pkg=" + Uri.EscapeDataString(r.Package))" style="color:inherit;text-decoration:none">@r.ActiveReports</a></b><span>@L["Active problem reports"] (@L["{0} new", r.OpenReports])</span></div>
+</div>
+
+<div class="card">
+    <h3 style="margin-top:0">@L["Downloads per day"]</h3>
+    <div class="bars" role="img" aria-label="@L["Downloads per day"]">
+        @foreach (var d in r.Daily)
+        {
+            <div class="bar" title="@d.Date.ToString("d", ci): @d.Downloads"><i class="d" style="height:@Pct(100.0 * d.Downloads / max)%"></i></div>
+        }
+    </div>
+    <div class="bar-axis small muted"><span>@r.From.ToString("d", ci)</span><span>@r.To.ToString("d", ci)</span></div>
+</div>
+
+<h2>@L["Add-ons"]</h2>
+<div class="table-wrap">
+<table>
+    <tr><th>@L["Add-on"]</th><th>@L["Versions"]</th><th style="text-align:right">@L["Downloads in period"]</th><th style="text-align:right">@L["All time"]</th><th>@L["Rating"]</th><th>@L["Reports"]</th></tr>
+    @foreach (var a in r.Addons)
+    {
+        <tr>
+            <td><a href="@Model.Link(pkg: a.Id)"><b>@a.Name</b></a>@if (Model.IsAdmin) { <div class="small muted">@a.Owner</div> }</td>
+            <td class="small">
+                @if (a.Live is not null) { <span class="badge live">@a.Live</span> }
+                @if (a.Beta is not null) { <span class="badge beta">@a.Beta</span> }
+                @if (a.PendingReview) { <div class="muted">@L["Waiting for approval"]</div> }
+            </td>
+            <td style="text-align:right">@a.Period.ToString("N0", ci)
+                @if (a.Previous > 0) { <div class="small muted">@L["before"]: @a.Previous.ToString("N0", ci)</div> }</td>
+            <td style="text-align:right">@a.AllTime.ToString("N0", ci)</td>
+            <td>@(a.Rating is { } ar ? ar.ToString("0.0", ci) + " ★ (" + a.Ratings + ")" : "–")</td>
+            <td>@if (a.ActiveReports > 0) { <a href="/Issues?pkg=@Uri.EscapeDataString(a.Id)">@L["{0} active", a.ActiveReports]</a> } else { <span class="muted">–</span> }</td>
+        </tr>
+    }
+</table>
+</div>
+
+@if (selected is not null)
+{
+    <h2>@L["Versions of {0}", selected.Name]</h2>
+    <div class="table-wrap">
+    <table>
+        <tr><th>@L["Version"]</th><th>@L["Status"]</th><th>@L["Submitted"]</th><th style="text-align:right">@L["Downloads"]</th></tr>
+        @foreach (var v in AddonStore.Web.Services.Paging.Items(selected.Versions, ViewContext.HttpContext.Request, "versions"))
+        {
+            <tr><td>@v.Version</td><td><span class="badge @(v.Status == "live" ? "live" : v.Status == "beta" ? "beta" : v.Status == "rejected" ? "rejected" : v.Status == "submitted" ? "submitted" : "withdrawn")">@L[v.Status]</span></td>
+                <td class="small">@Time.Fmt(v.SubmittedAt)</td><td style="text-align:right">@v.Downloads.ToString("N0", ci)</td></tr>
+        }
+    </table>
+    </div>
+    <partial name="_Pager" model='new PagerModel("versions", selected.Versions.Count)' />
+    <p><a href="/Plugin?id=@Uri.EscapeDataString(selected.Id)">@L["Open the plug-in page"] →</a></p>
+}
+
+<h2>@L["Who uses it"]</h2>
+<p class="muted small" style="margin-top:-6px">@L["From downloads in the period; Power PDF, Windows, architecture and language only from the store window."]</p>
+<div class="grid">
+    @{ Shares("Power PDF versions", r.PowerPdf); }
+    @{ Shares("Windows versions", r.Windows); }
+    @{ Shares("Architecture", r.Architectures); }
+    @{ Shares("Languages", r.Languages); }
+    @{ Shares("Countries", r.Countries); }
+    @{ Shares("Download channel", r.Channels); }
+</div>
+<p class="small muted">@L["Your AI assistant reads the same figures with GET /api/insights."]</p>
+}

@@ -1,0 +1,93 @@
+@page "/Issues"
+@model AddonStore.Web.Pages.Issues.IndexModel
+@using AddonStore.Web.Services
+@{
+    ViewData["Title"] = "Problem reports";
+}
+
+<h1>@L["Problem reports"]</h1>
+<p class="lead">@(Model.IsAdmin
+    ? L["Reports and comments from the store window inside Power PDF, for all add-ons."]
+    : L["Reports and comments from the store window inside Power PDF, for your add-ons."])
+    <a href="/Docs#ai">@L["Work on them with an AI assistant"] →</a></p>
+
+<div class="report-layout">
+<nav class="report-nav" aria-label="@L["Sections"]">
+    @foreach (var (key, label) in AddonStore.Web.Pages.Issues.IndexModel.Views)
+    {
+        <a href="@Model.ViewUrl(key)" class="@(Model.View == key ? "active" : "")" aria-current="@(Model.View == key ? "page" : null)">
+            <span class="cap">@L[label]</span> <span class="muted" style="float:right">@Model.Counts.GetValueOrDefault(key)</span></a>
+    }
+</nav>
+<div class="report-main">
+    <form method="get" class="filter-form card" style="padding:12px 14px">
+        <input type="hidden" name="view" value="@(Model.View == "active" ? null : Model.View)" />
+        <label>@L["Add-on"]
+            <select name="pkg">
+                <option value="">@L["All add-ons"]</option>
+                @foreach (var (id, name) in Model.PackageOptions)
+                {
+                    <option value="@id" selected="@(Model.Pkg == id)">@name</option>
+                }
+            </select>
+        </label>
+        <label>@L["Type"]
+            <select name="kind">
+                <option value="">@L["All"]</option>
+                <option value="problem" selected="@(Model.Kind == "problem")">@L["Problem"]</option>
+                <option value="comment" selected="@(Model.Kind == "comment")">@L["Comment"]</option>
+            </select>
+        </label>
+        <label>@L["Assigned to"]
+            <select name="who">
+                <option value="">@L["Anyone"]</option>
+                <option value="me" selected="@(Model.Who == "me")">@L["Me"]</option>
+                <option value="none" selected="@(Model.Who == "none")">@L["Nobody"]</option>
+            </select>
+        </label>
+        <label>@L["Search"]
+            <input type="search" name="q" value="@Model.Q" placeholder="@L["Text or #number"]" maxlength="100" />
+        </label>
+        <span class="spacer"></span>
+        <button type="submit" class="btn small">@L["Filter"]</button>
+    </form>
+
+    @if (Model.Total == 0)
+    {
+        <div class="card"><p class="muted" style="margin:0">@L["No reports in this view."]</p></div>
+    }
+    else
+    {
+        <div class="table-wrap" id="issues">
+        <table>
+            <tr><th>#</th><th>@L["Add-on"]</th><th>@L["Message"]</th><th>@L["Status"]</th><th>@L["Received"]</th></tr>
+            @foreach (var r in Model.Rows)
+            {
+                var f = r.F;
+                <tr>
+                    <td><a href="/Issues/@f.Id"><b>#@f.Id</b></a></td>
+                    <td class="small">@r.Name<br /><span class="muted">@f.Version</span></td>
+                    <td style="max-width:460px">
+                        <a href="/Issues/@f.Id" style="color:inherit;text-decoration:none">@(f.Message.Length > 160 ? f.Message[..160] + " …" : f.Message)</a>
+                        <div class="small" style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+                            <span class="badge @(f.Kind == "problem" ? "rejected" : "submitted")">@L[f.Kind == "problem" ? "Problem" : "Comment"]</span>
+                            @if (f.AiSeverity is not null)
+                            {
+                                <span class="badge @(f.AiSeverity == "high" ? "rejected" : f.AiSeverity == "medium" ? "beta" : "withdrawn")">@L[f.AiSeverity == "high" ? "high" : f.AiSeverity == "medium" ? "medium" : "low"]</span>
+                            }
+                            @if (f.AttachmentCount > 0) { <span class="muted" title="@L["Attachments"]">📎 @f.AttachmentCount</span> }
+                            @if (f.LogExcerpt is not null) { <span class="muted">@L["Log"]</span> }
+                            @if (f.Email is not null) { <span class="muted">@L["Reply possible"]</span> }
+                        </div>
+                    </td>
+                    <td><span class="badge cap @IssueService.Badge(f.Status)">@L[IssueService.Label(f.Status)]</span>
+                        @if (f.AssignedTo is not null) { <div class="small muted" style="margin-top:4px">@f.AssignedTo</div> }</td>
+                    <td class="small">@Time.Fmt(f.CreatedAt)@if (f.Country != "") { <br /><span class="muted">@f.Country</span> }</td>
+                </tr>
+            }
+        </table>
+        </div>
+        <partial name="_Pager" model='new PagerModel("issues", Model.Total)' />
+    }
+</div>
+</div>

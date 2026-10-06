@@ -178,6 +178,21 @@ public class SettingsModel : PageModel
         await LoadAsync();
     }
 
+    public int FeedbackRetentionDays { get; private set; } = IssueService.DefaultRetentionDays;
+
+    /// <summary>Attachments, logs and reply addresses of closed problem reports (S1.1.0).</summary>
+    public async Task OnPostFeedbackRetentionAsync(int feedbackDays, [FromServices] IssueService issues)
+    {
+        View = "privacy";
+        var admin = await _users.GetUserAsync(User);
+        var days = Math.Clamp(feedbackDays, 7, 3650);
+        await _settings.SetAsync(IssueService.RetentionKey, days.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        var n = await issues.PurgeAsync();
+        await _audit.LogAsync(admin!.DisplayName, "feedback.retention", "Problem reports", $"retention {days} days; {n} closed reports cleaned");
+        Notice = "Retention period saved.";
+        await LoadAsync();
+    }
+
     public async Task OnPostIpRetentionAsync(int retentionDays, bool permanent)
     {
         var admin = await _users.GetUserAsync(User);
@@ -301,6 +316,8 @@ public class SettingsModel : PageModel
 
     private async Task LoadAsync()
     {
+        FeedbackRetentionDays = int.TryParse(await _settings.GetAsync(IssueService.RetentionKey), out var frd) && frd is >= 7 and <= 3650
+            ? frd : IssueService.DefaultRetentionDays;
         // After a POST the section follows from the handler (?handler=AiTest -> ai).
         if (!Views.Any(v => v.Key == View))
         {

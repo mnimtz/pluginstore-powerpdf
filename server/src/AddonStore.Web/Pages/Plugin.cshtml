@@ -269,7 +269,8 @@
 {
     <div class="card">
         <h3 style="margin-top:0" id="feedback">@L["Problem reports and comments"]</h3>
-        <p class="muted small">@L["Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/<id>/feedback."]</p>
+        <p class="muted small">@L["Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/<id>/feedback."]
+            <a href="/Issues?pkg=@Uri.EscapeDataString(Model.Pkg!.Id)&amp;view=all">@L["Open in the problem report queue"] →</a></p>
         @if (Model.Feedbacks.Count == 0)
         {
             <p class="muted">@L["Nothing received yet."]</p>
@@ -311,19 +312,8 @@
                             }
                         </td>
                         <td>
-                            <form method="post" asp-page-handler="FeedbackStatus" asp-route-id="@Model.Pkg!.Id">
-                                <input type="hidden" name="fid" value="@f.Id" />
-                                @if (f.Status == "open")
-                                {
-                                    <span class="badge pending">@L["open"]</span>
-                                    <button type="submit" name="status" value="done" class="btn small secondary">@L["Mark as done"]</button>
-                                }
-                                else
-                                {
-                                    <span class="badge live">@L["done"]</span>
-                                    <button type="submit" name="status" value="open" class="btn small secondary">@L["Reopen"]</button>
-                                }
-                            </form>
+                            <span class="badge cap @AddonStore.Web.Services.IssueService.Badge(f.Status)">@L[AddonStore.Web.Services.IssueService.Label(f.Status)]</span>
+                            <div style="margin-top:6px"><a class="btn small secondary" href="/Issues/@f.Id">#@f.Id @L["Details"]</a></div>
                         </td>
                     </tr>
                 }

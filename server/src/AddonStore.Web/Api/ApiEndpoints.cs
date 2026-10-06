@@ -162,9 +162,15 @@ public static class ApiEndpoints
                     "GET  /api/packages/{id}/source/latest  source code of the newest version that has one (admins only; header X-Source-Version)",
                     "GET  /api/packages/{id}/screenshots  screenshot list with captions (?lang=, ?format=tsv); /screenshots/{n} the image",
                     "POST /api/packages/{id}/rating  {installId, stars 1-5, version} from the store client (anonymous)",
-                    "POST /api/packages/{id}/feedback  {installId, kind problem|comment, message, email?, version, log?} from the store client",
-                    "GET  /api/packages/{id}/feedback  ratings and feedback of your package (owner/admin, ?status=open|done)",
-                    "PATCH /api/packages/{id}/feedback/{fid}  {status: open|done} (owner/admin)",
+                    "POST /api/packages/{id}/feedback  {installId, kind problem|comment, message, email?, version, log?, attachments?[{name,contentType,data base64}]} from the store client",
+                    "GET  /api/packages/{id}/feedback  ratings and feedback of your package (owner/admin, ?status=)",
+                    "PATCH /api/packages/{id}/feedback/{fid}  {status: open|in_progress|waiting|done|declined} (owner/admin)",
+                    "GET  /api/feedback               problem report queue: your add-ons, admins all (?status=active|closed|all|<status>, package, kind, assignee, q, limit, offset)",
+                    "GET  /api/feedback/{id}          one report with log, attachments, notes and AI assessment",
+                    "GET  /api/feedback/{id}/attachments/{aid}  download an attachment",
+                    "PATCH /api/feedback/{id}         {status?, assignedTo?} change status or assignment",
+                    "POST /api/feedback/{id}/notes    {text, reply?: true mails the reporter} internal note or reply",
+                    "GET  /api/insights               developer dashboard: downloads, versions, Power PDF versions, ratings, reports (?days=, package)",
                     "GET  /api/features               which optional AI features are switched on",
                     "GET  /api/search?q=&lang=&channel=  find add-ons by need (AI ranking with reasons when enabled, else word search; ?format=tsv)",
                     "GET  /api/signing-key              public key of the catalog signatures (ECDSA P-256)",
@@ -669,9 +675,9 @@ public static class ApiEndpoints
         {
             if (!await MayAccessAsync(ctx, id, db, users, customers))
                 return Results.Json(new { ok = false, error = new { code = "PACKAGE_NOT_FOUND", message = $"No released package with id '{id}'.", hint = "" } }, statusCode: 404);
-            var r = await fb.AddAsync(ctx, id, body.InstallId, body.Kind, body.Message, body.Email, body.Version, body.Log);
+            var r = await fb.AddAsync(ctx, id, body.InstallId, body.Kind, body.Message, body.Email, body.Version, body.Log, body.Attachments);
             if (!r.Ok) return Results.Json(new { ok = false, error = new { code = r.Code, message = r.Message, hint = "" } },
-                                           statusCode: r.Code == "PACKAGE_NOT_FOUND" ? 404 : r.Code == "RATE_LIMITED" ? 429 : 400);
+                                           statusCode: r.Code switch { "PACKAGE_NOT_FOUND" => 404, "RATE_LIMITED" => 429, "ATTACHMENT_TOO_LARGE" => 413, _ => 400 });
             return Results.Json(new { ok = true, data = new { id, message = r.Message } });
         });
 
@@ -685,7 +691,7 @@ public static class ApiEndpoints
             if (pkg.OwnerId != user.Id && !ctx.User.IsInRole("Admin"))
                 return Results.Json(new { ok = false, error = new { code = "NOT_OWNER", message = "This package belongs to another user.", hint = "Only the owner or an admin can read its feedback." } }, statusCode: 403);
             var q = db.Feedbacks.AsNoTracking().Where(f => f.PackageId == id);
-            if (status is "open" or "done") q = q.Where(f => f.Status == status);
+            if (status is not null && IssueService.Statuses.Contains(status)) q = q.Where(f => f.Status == status);
             var rows = await q.OrderByDescending(f => f.Id).Take(500).ToListAsync();
             var ratings = await db.Ratings.AsNoTracking().Where(r => r.PackageId == id).GroupBy(r => r.Stars)
                 .Select(g => new { stars = g.Key, count = g.Count() }).ToListAsync();
@@ -699,6 +705,7 @@ public static class ApiEndpoints
                     feedback = rows.Select(f => new
                     {
                         f.Id, f.Kind, f.Version, f.Message, f.Email, f.ClientInfo, log = f.LogExcerpt, f.Country, f.CreatedAt, f.Status, f.DoneAt, f.DoneBy,
+                        assignedTo = f.AssignedTo, attachments = f.AttachmentCount, url = $"{Base(ctx)}/api/feedback/{f.Id}",
                         ai = f.AiAt is null ? null : new
                         {
                             category = f.AiCategory, severity = f.AiSeverity, language = f.AiLanguage, summaryEn = f.AiSummaryEn,
@@ -710,7 +717,7 @@ public static class ApiEndpoints
         }).RequireAuthorization("ApiOrCookie");
 
         api.MapMethods("/packages/{id}/feedback/{fid:int}", new[] { "PATCH" }, async (string id, int fid, HttpContext ctx, AppDbContext db,
-            UserManager<AppUser> users, AuditService audit, FeedbackStatusBody body) =>
+            UserManager<AppUser> users, IssueService issues, FeedbackStatusBody body) =>
         {
             var user = await RequireUserAsync(ctx, users);
             if (user is null) return Unauthorized();
@@ -720,14 +727,162 @@ public static class ApiEndpoints
                 return Results.Json(new { ok = false, error = new { code = "NOT_OWNER", message = "This package belongs to another user.", hint = "" } }, statusCode: 403);
             var f = await db.Feedbacks.FirstOrDefaultAsync(x => x.Id == fid && x.PackageId == id);
             if (f is null) return NotFound("FEEDBACK_NOT_FOUND", $"No feedback {fid} for '{id}'.");
-            if (body.Status is not ("open" or "done"))
-                return Results.Json(new { ok = false, error = new { code = "FEEDBACK_STATUS_INVALID", message = "status must be 'open' or 'done'.", hint = "" } }, statusCode: 400);
-            f.Status = body.Status;
-            f.DoneAt = body.Status == "done" ? DateTime.UtcNow : null;
-            f.DoneBy = body.Status == "done" ? user.DisplayName : null;
-            await db.SaveChangesAsync();
-            await audit.LogAsync(user.DisplayName, "feedback." + body.Status, $"{id} #{fid}");
+            var err = await issues.SetStatusAsync(f, body.Status ?? "", user, viaApi: true);
+            if (err is not null)
+                return Results.Json(new { ok = false, error = new { code = err.Code, message = err.Message, hint = "" } }, statusCode: 400);
             return Results.Json(new { ok = true, data = new { id, feedback = fid, status = f.Status } });
+        }).RequireAuthorization("ApiOrCookie");
+
+        // ---- problem report queue (S1.1.0) ------------------------------------
+        // Owners see the reports of their own add-ons, admins all; an AI assistant
+        // with a token works through the same queue (see the agent guide).
+        api.MapGet("/feedback", async (HttpContext ctx, AppDbContext db, UserManager<AppUser> users, IssueService issues,
+            string? status, string? package, string? kind, string? assignee, string? q, int? limit, int? offset) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var query = issues.Scope(user, ctx.User.IsInRole("Admin")).AsNoTracking();
+            status = (status ?? "active").Trim().ToLowerInvariant();
+            if (status == "active") query = query.Where(f => f.Status != "done" && f.Status != "declined");
+            else if (status == "closed") query = query.Where(f => f.Status == "done" || f.Status == "declined");
+            else if (IssueService.Statuses.Contains(status)) query = query.Where(f => f.Status == status);
+            else if (status != "all")
+                return Results.Json(new { ok = false, error = new { code = "FEEDBACK_STATUS_INVALID", message = "status must be active, closed, all or one of: " + string.Join(", ", IssueService.Statuses) + ".", hint = "" } }, statusCode: 400);
+            if (!string.IsNullOrWhiteSpace(package)) query = query.Where(f => f.PackageId == package);
+            if (kind is "problem" or "comment") query = query.Where(f => f.Kind == kind);
+            if (assignee == "none") query = query.Where(f => f.AssignedTo == null);
+            else if (!string.IsNullOrWhiteSpace(assignee)) query = query.Where(f => f.AssignedTo == assignee);
+            if (!string.IsNullOrWhiteSpace(q)) query = query.Where(f => f.Message.Contains(q) || f.PackageId.Contains(q));
+            var total = await query.CountAsync();
+            var take = Math.Clamp(limit ?? 50, 1, 200);
+            var rows = await query.OrderByDescending(f => f.Id).Skip(Math.Max(0, offset ?? 0)).Take(take).ToListAsync();
+            var b = Base(ctx);
+            return Results.Json(new
+            {
+                ok = true,
+                data = new
+                {
+                    total, offset = Math.Max(0, offset ?? 0), limit = take,
+                    items = rows.Select(f => new
+                    {
+                        f.Id, package = f.PackageId, f.Version, f.Kind, f.Status, assignedTo = f.AssignedTo, f.CreatedAt, f.UpdatedAt,
+                        preview = f.Message.Length > 300 ? f.Message[..300] + " ..." : f.Message,
+                        attachments = f.AttachmentCount, hasLog = f.LogExcerpt != null, canReply = f.Email != null,
+                        ai = f.AiAt is null ? null : new { category = f.AiCategory, severity = f.AiSeverity, duplicateOf = f.AiDuplicateOf },
+                        url = $"{b}/api/feedback/{f.Id}", portal = $"{b}/Issues/{f.Id}",
+                    }),
+                    next = "Read one report with GET /api/feedback/{id}; see the agent guide, section 'Problem reports'.",
+                }
+            });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapGet("/feedback/{fid:int}", async (int fid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, IssueService issues) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var f = await issues.FindAsync(fid, user, ctx.User.IsInRole("Admin"));
+            if (f is null) return NotFound("FEEDBACK_NOT_FOUND", $"No problem report {fid} that you may see.");
+            var notes = await db.FeedbackNotes.AsNoTracking().Where(n => n.FeedbackId == fid).OrderBy(n => n.Id).ToListAsync();
+            var files = await db.FeedbackAttachments.AsNoTracking().Where(a => a.FeedbackId == fid).OrderBy(a => a.Id)
+                .Select(a => new { a.Id, a.FileName, a.ContentType, a.Size, a.Sha256, a.CreatedAt, available = a.Data != null }).ToListAsync();
+            var b = Base(ctx);
+            return Results.Json(new
+            {
+                ok = true,
+                data = new
+                {
+                    f.Id, package = f.PackageId, f.Version, f.Kind, f.Status, assignedTo = f.AssignedTo, f.Message,
+                    canReply = f.Email != null, f.ClientInfo, log = f.LogExcerpt, f.Country, f.CreatedAt, f.UpdatedAt, f.DoneAt, f.DoneBy,
+                    ai = f.AiAt is null ? null : new
+                    {
+                        category = f.AiCategory, severity = f.AiSeverity, language = f.AiLanguage, summaryEn = f.AiSummaryEn,
+                        summaryDe = f.AiSummaryDe, suggestedReply = f.AiReply, duplicateOf = f.AiDuplicateOf, at = f.AiAt
+                    },
+                    attachments = files.Select(a => new { a.Id, name = a.FileName, type = a.ContentType, a.Size, a.Sha256, a.CreatedAt, a.available,
+                                                          url = a.available ? $"{b}/api/feedback/{fid}/attachments/{a.Id}" : null }),
+                    notes = notes.Select(n => new { n.Id, n.At, n.Author, n.Kind, n.Text, sentTo = n.SentTo is null ? null : "reporter", viaApi = n.ViaApi }),
+                    assignees = await issues.AssigneesAsync(f.PackageId),
+                    portal = $"{b}/Issues/{f.Id}",
+                }
+            });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapGet("/feedback/{fid:int}/attachments/{aid:int}", async (int fid, int aid, bool? inline, HttpContext ctx, AppDbContext db,
+            UserManager<AppUser> users, IssueService issues) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            if (await issues.FindAsync(fid, user, ctx.User.IsInRole("Admin")) is null)
+                return NotFound("FEEDBACK_NOT_FOUND", $"No problem report {fid} that you may see.");
+            var a = await db.FeedbackAttachments.AsNoTracking().FirstOrDefaultAsync(x => x.Id == aid && x.FeedbackId == fid);
+            if (a is null) return NotFound("ATTACHMENT_NOT_FOUND", $"No attachment {aid} on report {fid}.");
+            if (a.Data is null)
+                return Results.Json(new { ok = false, error = new { code = "ATTACHMENT_PURGED", message = "The attachment was deleted after the retention period.", hint = "" } }, statusCode: 410);
+            ctx.Response.Headers["X-Content-Type-Options"] = "nosniff";
+            ctx.Response.Headers["Cache-Control"] = "private, no-store";
+            ctx.Response.Headers["Content-Security-Policy"] = "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; sandbox";
+            // images may show inline in the portal; everything else is a download
+            var asInline = inline == true && a.ContentType.StartsWith("image/", StringComparison.Ordinal);
+            return asInline ? Results.File(a.Data, a.ContentType) : Results.File(a.Data, a.ContentType, a.FileName);
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapMethods("/feedback/{fid:int}", new[] { "PATCH" }, async (int fid, HttpContext ctx, UserManager<AppUser> users,
+            IssueService issues, FeedbackPatchBody body) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var f = await issues.FindAsync(fid, user, ctx.User.IsInRole("Admin"));
+            if (f is null) return NotFound("FEEDBACK_NOT_FOUND", $"No problem report {fid} that you may see.");
+            if (body.Status is null && body.AssignedTo is null)
+                return Results.Json(new { ok = false, error = new { code = "FEEDBACK_PATCH_EMPTY", message = "Send status and/or assignedTo.", hint = "assignedTo \"\" clears the assignment." } }, statusCode: 400);
+            var err = body.Status is null ? null : await issues.SetStatusAsync(f, body.Status, user, viaApi: true);
+            err ??= body.AssignedTo is null ? null : await issues.AssignAsync(f, body.AssignedTo, user, viaApi: true);
+            if (err is not null) return Results.Json(new { ok = false, error = new { code = err.Code, message = err.Message, hint = "" } }, statusCode: 400);
+            return Results.Json(new { ok = true, data = new { f.Id, f.Status, assignedTo = f.AssignedTo } });
+        }).RequireAuthorization("ApiOrCookie");
+
+        // Developer dashboard as data (S1.1.0): own add-ons, admins all (?dev= one developer).
+        api.MapGet("/insights", async (HttpContext ctx, UserManager<AppUser> users, InsightsService insights, int? days, string? package, string? dev) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var r = await insights.ComputeAsync(user, ctx.User.IsInRole("Admin"), days ?? 30, package, dev, "en");
+            static object S(List<InsightsService.Share> l) => l.Select(s => new { key = s.Key, count = s.Count, percent = s.Percent });
+            return Results.Json(new
+            {
+                ok = true,
+                data = new
+                {
+                    r.Days, from = r.From, to = r.To, package = r.Package, developer = r.OwnerId,
+                    downloads = r.Downloads, downloadsPrevious = r.DownloadsPrevious, downloadsAllTime = r.DownloadsAllTime,
+                    liveAddons = r.LiveAddons, pendingReviews = r.PendingReviews, rating = r.Rating, ratings = r.Ratings,
+                    activeReports = r.ActiveReports, openReports = r.OpenReports,
+                    daily = r.Daily.Select(d => new { date = d.Date, downloads = d.Downloads }),
+                    addons = r.Addons.Select(a => new
+                    {
+                        id = a.Id, name = a.Name, owner = a.Owner, live = a.Live, beta = a.Beta, pendingReview = a.PendingReview,
+                        downloads = a.Period, downloadsPrevious = a.Previous, downloadsAllTime = a.AllTime,
+                        rating = a.Rating, ratings = a.Ratings, activeReports = a.ActiveReports, openReports = a.OpenReports,
+                        versions = a.Versions.Select(v => new { version = v.Version, status = v.Status, downloads = v.Downloads, submittedAt = v.SubmittedAt }),
+                    }),
+                    powerPdf = S(r.PowerPdf), windows = S(r.Windows), architectures = S(r.Architectures), languages = S(r.Languages),
+                    countries = S(r.Countries), channels = S(r.Channels),
+                }
+            });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapPost("/feedback/{fid:int}/notes", async (int fid, HttpContext ctx, UserManager<AppUser> users,
+            IssueService issues, FeedbackNoteBody body) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var f = await issues.FindAsync(fid, user, ctx.User.IsInRole("Admin"));
+            if (f is null) return NotFound("FEEDBACK_NOT_FOUND", $"No problem report {fid} that you may see.");
+            var (note, err) = await issues.AddNoteAsync(f, body.Text, body.Reply == true, user, viaApi: true);
+            if (err is not null)
+                return Results.Json(new { ok = false, error = new { code = err.Code, message = err.Message, hint = "" } },
+                                    statusCode: err.Code switch { "NO_REPLY_ADDRESS" => 409, "MAIL_FAILED" => 502, _ => 400 });
+            return Results.Json(new { ok = true, data = new { note = note!.Id, kind = note.Kind, mailed = note.SentTo is not null, status = f.Status } });
         }).RequireAuthorization("ApiOrCookie");
 
         // Optional AI features (S0.12.0). The probe tells clients which ones are switched on.
@@ -1485,9 +1640,14 @@ public record AppVersion(string Value);
 /// <summary>POST /api/packages/{id}/rating</summary>
 public record RatingBody(string? InstallId, int Stars, string? Version);
 /// <summary>POST /api/packages/{id}/feedback</summary>
-public record FeedbackBody(string? InstallId, string? Kind, string? Message, string? Email, string? Version, string? Log);
+public record FeedbackBody(string? InstallId, string? Kind, string? Message, string? Email, string? Version, string? Log,
+                           List<IssueService.AttachmentIn>? Attachments = null);
 /// <summary>PATCH /api/packages/{id}/feedback/{fid}</summary>
 public record FeedbackStatusBody(string? Status);
+/// <summary>PATCH /api/feedback/{id} (S1.1.0); assignedTo "" clears the assignment.</summary>
+public record FeedbackPatchBody(string? Status, string? AssignedTo);
+/// <summary>POST /api/feedback/{id}/notes (S1.1.0)</summary>
+public record FeedbackNoteBody(string? Text, bool? Reply);
 
 /// <summary>POST/PATCH /api/customers[/{cid}] (S0.14.0)</summary>
 public record CustomerBody(string? Name, string? ContactName, string? ContactEmail, string? Language, string? Note, string? Status, bool? WithCode);

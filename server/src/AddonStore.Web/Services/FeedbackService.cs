@@ -84,7 +84,8 @@ public class FeedbackService
     }
 
     public async Task<Outcome> AddAsync(HttpContext ctx, string packageId, string? installId, string? kind, string? message,
-                                        string? email, string? version, string? log)
+                                        string? email, string? version, string? log,
+                                        IReadOnlyList<IssueService.AttachmentIn>? attachments = null)
     {
         if (!ValidInstallId(installId)) return new(false, "INSTALL_ID_INVALID", "installId must be a GUID.");
         kind = (kind ?? "problem").Trim().ToLowerInvariant();
@@ -95,6 +96,8 @@ public class FeedbackService
         email = string.IsNullOrWhiteSpace(email) ? null : email.Trim();
         if (email is not null && (email.Length > 200 || !System.Net.Mail.MailAddress.TryCreate(email, out _)))
             return new(false, "FEEDBACK_EMAIL_INVALID", "email is not a valid address.");
+        var (files, fileError) = IssueService.ReadAttachments(attachments);
+        if (fileError is not null) return new(false, fileError.Code, fileError.Message);
         if (!await IsPublishedAsync(packageId)) return new(false, "PACKAGE_NOT_FOUND", $"No released package with id '{packageId}'.");
         var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
         if (!Allow("fb-install:" + installId!.ToLowerInvariant(), 10) || !Allow("fb-ip:" + ip, 20) || !Allow("fb-pkg:" + packageId, 200))
@@ -112,9 +115,15 @@ public class FeedbackService
             LogExcerpt = string.IsNullOrWhiteSpace(log) ? null : Clip(log, MaxLog),
             Country = _geo.Lookup(ctx).Country,
             InstallHash = InstallHash(installId, packageId),
+            AttachmentCount = files.Count,
         };
         _db.Feedbacks.Add(fb);
         await _db.SaveChangesAsync();
+        if (files.Count > 0)
+        {
+            foreach (var a in files) { a.FeedbackId = fb.Id; _db.FeedbackAttachments.Add(a); }
+            await _db.SaveChangesAsync();
+        }
 
         try
         {
@@ -127,8 +136,9 @@ public class FeedbackService
                 var text = $"<p>{(kind == "problem" ? "A user reported a problem" : "A user left a comment")} for <b>{enc(packageId)}</b> " +
                            $"version {enc(fb.Version)}:</p><blockquote style=\"white-space:pre-wrap\">{enc(message)}</blockquote>" +
                            (email is null ? "<p>No reply address was given.</p>" : $"<p>Reply to: <a href=\"mailto:{enc(email)}\">{enc(email)}</a></p>") +
-                           $"<p style=\"color:#8094AA\">{enc(fb.ClientInfo)}{(fb.LogExcerpt is null ? "" : " · log excerpt attached in the portal")}</p>" +
-                           await _notify.PluginLinkAsync(packageId);
+                           $"<p style=\"color:#8094AA\">{enc(fb.ClientInfo)}{(fb.LogExcerpt is null ? "" : " · log excerpt attached in the portal")}" +
+                           $"{(files.Count == 0 ? "" : $" · {files.Count} attachment(s) in the portal")}</p>" +
+                           $"<p><a href=\"{await _notify.BaseUrlAsync()}/Issues/{fb.Id}\">{enc($"{await _notify.BaseUrlAsync()}/Issues/{fb.Id}")}</a></p>";
                 await _notify.NotifyUserAsync("Feedback", pkg.Owner, subject, text);
             }
         }

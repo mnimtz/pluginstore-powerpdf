@@ -19,6 +19,8 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<ShareStat> ShareStats => Set<ShareStat>();
     public DbSet<Rating> Ratings => Set<Rating>();
     public DbSet<Feedback> Feedbacks => Set<Feedback>();
+    public DbSet<FeedbackNote> FeedbackNotes => Set<FeedbackNote>();
+    public DbSet<FeedbackAttachment> FeedbackAttachments => Set<FeedbackAttachment>();
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<CustomerCode> CustomerCodes => Set<CustomerCode>();
     public DbSet<Delivery> Deliveries => Set<Delivery>();
@@ -35,6 +37,9 @@ public class AppDbContext : IdentityDbContext<AppUser>
         b.Entity<ShareStat>().HasKey(s => new { s.Day, s.PackageId, s.Ref, s.Kind });
         b.Entity<Rating>().HasIndex(r => new { r.PackageId, r.InstallHash }).IsUnique();
         b.Entity<Feedback>().ToTable("Feedback").HasIndex(f => new { f.PackageId, f.CreatedAt });
+        b.Entity<Feedback>().HasIndex(f => f.Status);
+        b.Entity<FeedbackNote>().HasIndex(n => n.FeedbackId);
+        b.Entity<FeedbackAttachment>().HasIndex(a => a.FeedbackId);
         b.Entity<Invite>().HasIndex(i => i.TokenHash).IsUnique();
         b.Entity<PackageVersion>().HasIndex(v => new { v.PackageId, v.Version }).IsUnique();
         b.Entity<AuditEntry>().HasIndex(a => a.At);

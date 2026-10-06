@@ -136,9 +136,13 @@ public class Feedback
     public string Country { get; set; } = "";
     public string InstallHash { get; set; } = "";
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public string Status { get; set; } = "open";         // open, done
+    public string Status { get; set; } = "open";         // open, in_progress, waiting, done, declined (S1.1.0)
     public DateTime? DoneAt { get; set; }
     public string? DoneBy { get; set; }
+    // Queue (S1.1.0)
+    public string? AssignedTo { get; set; }              // display name of the user working on it
+    public DateTime? UpdatedAt { get; set; }
+    public int AttachmentCount { get; set; }
 
     // AI triage (S0.12.0, optional): filled by AiWorker when the admin enabled it.
     public string? AiCategory { get; set; }              // bug, wish, question, praise, other
@@ -149,6 +153,33 @@ public class Feedback
     public string? AiReply { get; set; }                 // suggested reply in the reporter's language
     public int? AiDuplicateOf { get; set; }
     public DateTime? AiAt { get; set; }
+}
+
+/// <summary>Note on a problem report (S1.1.0): internal note, reply mailed to the reporter, or status change.</summary>
+public class FeedbackNote
+{
+    public int Id { get; set; }
+    public int FeedbackId { get; set; }
+    public DateTime At { get; set; } = DateTime.UtcNow;
+    public string Author { get; set; } = "";
+    public string Kind { get; set; } = "note";           // note, reply, status
+    public string Text { get; set; } = "";
+    public string? SentTo { get; set; }                  // reply: address it was mailed to
+    public bool ViaApi { get; set; }
+}
+
+/// <summary>File attached to a problem report by the reporter (S1.1.0); kept in the database, so in every backup.</summary>
+public class FeedbackAttachment
+{
+    public int Id { get; set; }
+    public int FeedbackId { get; set; }
+    public string FileName { get; set; } = "";
+    public string ContentType { get; set; } = "";
+    public long Size { get; set; }
+    public string Sha256 { get; set; } = "";
+    public byte[]? Data { get; set; }                    // null after the retention period
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? PurgedAt { get; set; }
 }
 
 /// <summary>Daily counter for shared add-on links /a/{slug}?ref= (S0.10.0); Kind: view, install, client.</summary>

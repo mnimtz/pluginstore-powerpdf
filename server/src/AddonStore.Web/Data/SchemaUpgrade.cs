@@ -107,6 +107,18 @@ public static class SchemaUpgrade
             "ALTER TABLE Feedback ADD COLUMN AiReply TEXT NULL",
             "ALTER TABLE Feedback ADD COLUMN AiDuplicateOf INTEGER NULL",
             "ALTER TABLE Feedback ADD COLUMN AiAt TEXT NULL",
+            // Problem report queue (S1.1.0)
+            "ALTER TABLE Feedback ADD COLUMN AssignedTo TEXT NULL",
+            "ALTER TABLE Feedback ADD COLUMN UpdatedAt TEXT NULL",
+            "ALTER TABLE Feedback ADD COLUMN AttachmentCount INTEGER NOT NULL DEFAULT 0",
+            "CREATE INDEX IF NOT EXISTS IX_Feedback_Status ON Feedback (Status)",
+            "CREATE TABLE IF NOT EXISTS FeedbackNotes (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, FeedbackId INTEGER NOT NULL, " +
+                "At TEXT NOT NULL, Author TEXT NOT NULL, Kind TEXT NOT NULL, Text TEXT NOT NULL, SentTo TEXT NULL, ViaApi INTEGER NOT NULL DEFAULT 0)",
+            "CREATE INDEX IF NOT EXISTS IX_FeedbackNotes_FeedbackId ON FeedbackNotes (FeedbackId)",
+            "CREATE TABLE IF NOT EXISTS FeedbackAttachments (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, FeedbackId INTEGER NOT NULL, " +
+                "FileName TEXT NOT NULL, ContentType TEXT NOT NULL, Size INTEGER NOT NULL, Sha256 TEXT NOT NULL, Data BLOB NULL, " +
+                "CreatedAt TEXT NOT NULL, PurgedAt TEXT NULL)",
+            "CREATE INDEX IF NOT EXISTS IX_FeedbackAttachments_FeedbackId ON FeedbackAttachments (FeedbackId)",
             "ALTER TABLE PackageVersions ADD COLUMN AiReviewJson TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN AiReviewAt TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN AiReviewModel TEXT NULL",

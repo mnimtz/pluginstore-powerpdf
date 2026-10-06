@@ -1,0 +1,180 @@
+@page "/Issues/{id:int}"
+@model AddonStore.Web.Pages.Issues.DetailModel
+@using AddonStore.Web.Services
+@{
+    var f = Model.F!;
+    ViewData["Title"] = $"#{f.Id}";
+    var de = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "de";
+    var closed = IssueService.Closed.Contains(f.Status);
+    string Kb(long b) => b < 1024 * 1024 ? $"{(b + 1023) / 1024} KB" : $"{b / 1024.0 / 1024.0:0.0} MB";
+}
+
+<p class="small" style="margin:0 0 6px"><a href="/Issues">← @L["Problem reports"]</a></p>
+<h1 style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">#@f.Id
+    <span class="badge cap @IssueService.Badge(f.Status)" style="font-size:.8rem">@L[IssueService.Label(f.Status)]</span>
+    <span class="badge @(f.Kind == "problem" ? "rejected" : "submitted")" style="font-size:.8rem">@L[f.Kind == "problem" ? "Problem" : "Comment"]</span>
+</h1>
+<p class="lead"><a href="/Plugin?id=@Uri.EscapeDataString(f.PackageId)">@Model.Name</a> @f.Version ·
+    @L["Received"] @Time.Fmt(f.CreatedAt)@if (f.Country != "") { <text> · @f.Country</text> }</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+}
+
+<div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:18px;align-items:start" class="issue-grid">
+<div>
+    <div class="card">
+        <h2 style="margin-top:0">@L["Message"]</h2>
+        <div style="white-space:pre-wrap">@f.Message</div>
+        <p class="small muted" style="margin-bottom:0">@f.ClientInfo</p>
+    </div>
+
+    @if (f.AiAt is not null)
+    {
+        <div class="card ai-box">
+            <div class="ai-head" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                <b>@L["AI assessment"]</b>
+                <span class="badge submitted">@L[f.AiCategory switch { "bug" => "Bug", "wish" => "Wish", "question" => "Question", "praise" => "Praise", _ => "Other" }]</span>
+                <span class="badge @(f.AiSeverity == "high" ? "rejected" : f.AiSeverity == "medium" ? "beta" : "withdrawn")">@L[f.AiSeverity == "high" ? "high" : f.AiSeverity == "medium" ? "medium" : "low"]</span>
+                @if (f.AiDuplicateOf is not null) { <a class="small" href="/Issues/@f.AiDuplicateOf">@L["Similar to report #{0}", f.AiDuplicateOf]</a> }
+            </div>
+            <p>@(de ? f.AiSummaryDe : f.AiSummaryEn)</p>
+            @if (!string.IsNullOrEmpty(f.AiReply))
+            {
+                <details><summary>@L["Suggested reply"]</summary><pre class="code" style="white-space:pre-wrap">@f.AiReply</pre></details>
+            }
+        </div>
+    }
+
+    @if (Model.Files.Count > 0 || f.LogExcerpt is not null)
+    {
+        <div class="card">
+            <h2 style="margin-top:0">@L["Attachments"]</h2>
+            @if (Model.Files.Count > 0)
+            {
+                <div style="display:flex;gap:12px;flex-wrap:wrap">
+                @foreach (var a in Model.Files)
+                {
+                    var url = $"/api/feedback/{f.Id}/attachments/{a.Id}";
+                    <div style="border:1px solid var(--tun-gray-200);border-radius:8px;padding:10px;width:200px">
+                        @if (a.Data is not null && a.ContentType.StartsWith("image/"))
+                        {
+                            <a href="@url?inline=true" target="_blank" rel="noopener"><img src="@url?inline=true" alt="@a.FileName" style="width:100%;height:120px;object-fit:cover;border-radius:4px;background:var(--tun-gray-150)" /></a>
+                        }
+                        <div class="small" style="margin-top:6px;word-break:break-all"><b>@a.FileName</b></div>
+                        <div class="small muted">@a.ContentType · @Kb(a.Size)</div>
+                        @if (a.Data is not null) { <a class="btn small secondary" style="margin-top:6px" href="@url">@L["Download"]</a> }
+                        else { <div class="small muted" style="margin-top:6px">@L["Deleted after the retention period"]</div> }
+                    </div>
+                }
+                </div>
+            }
+            @if (f.LogExcerpt is not null)
+            {
+                <details class="small" style="margin-top:12px"><summary>@L["Log excerpt"]</summary><pre class="code" style="max-height:360px;overflow:auto">@f.LogExcerpt</pre></details>
+            }
+            <p class="small muted" style="margin-bottom:0">@L["Attachments, log and reply address are deleted {0} days after the report is closed.", Model.RetentionDays]</p>
+        </div>
+    }
+
+    <div class="card">
+        <h2 style="margin-top:0">@L["History"]</h2>
+        @if (Model.Notes.Count == 0)
+        {
+            <p class="muted">@L["No notes yet."]</p>
+        }
+        @foreach (var n in Model.Notes)
+        {
+            <div style="border-left:3px solid @(n.Kind == "reply" ? "var(--tun-green)" : n.Kind == "status" ? "var(--tun-gray-200)" : "var(--tun-blue)");padding:4px 0 4px 12px;margin:10px 0">
+                <div class="small muted">@Time.Fmt(n.At) · <b>@n.Author</b>
+                    @if (n.Kind == "reply") { <span class="badge live">@L["Reply mailed to the reporter"]</span> }
+                    @if (n.ViaApi) { <span class="badge submitted">API</span> }</div>
+                @if (n.Kind == "status")
+                {
+                    var parts = n.Text.Split(" -> ");
+                    if (parts.Length == 2 && IssueService.Statuses.Contains(parts[0]) && IssueService.Statuses.Contains(parts[1]))
+                    {
+                        <div class="small"><span class="cap">@L[IssueService.Label(parts[0])]</span> → <b class="cap">@L[IssueService.Label(parts[1])]</b></div>
+                    }
+                    else if (n.Text.StartsWith("assigned to "))
+                    {
+                        <div class="small">@L["Assigned to"]: <b>@n.Text["assigned to ".Length..]</b></div>
+                    }
+                    else if (n.Text == "unassigned")
+                    {
+                        <div class="small">@L["Assigned to"]: @L["Nobody"]</div>
+                    }
+                    else
+                    {
+                        <div class="small">@n.Text</div>
+                    }
+                }
+                else
+                {
+                    <div style="white-space:pre-wrap">@n.Text</div>
+                }
+            </div>
+        }
+        <form method="post" asp-page-handler="Note" asp-route-id="@f.Id" style="margin-top:14px" class="stack" id="note-form">
+            <textarea name="text" rows="4" maxlength="4000" required placeholder="@L["Note or reply"]">@Model.Draft</textarea>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button type="submit" name="mode" value="note" class="btn small secondary">@L["Save internal note"]</button>
+                @if (f.Email is not null)
+                {
+                    <button type="submit" name="mode" value="reply" class="btn small" data-reply="1">@L["Send as reply to the reporter"]</button>
+                }
+            </div>
+            @if (f.Email is null)
+            {
+                <p class="small muted" style="margin:0">@L["The reporter left no email address; replies are not possible."]</p>
+            }
+        </form>
+    </div>
+</div>
+
+<aside>
+    <div class="card">
+        <h3 style="margin-top:0">@L["Status"]</h3>
+        <form method="post" asp-page-handler="Status" asp-route-id="@f.Id" style="display:flex;flex-direction:column;gap:6px">
+            @foreach (var s in IssueService.Statuses)
+            {
+                <button type="submit" name="status" value="@s" class="btn small cap @(f.Status == s ? "" : "secondary")" disabled="@(f.Status == s)">@L[IssueService.Label(s)]</button>
+            }
+        </form>
+        @if (closed && f.DoneBy is not null) { <p class="small muted" style="margin-bottom:0">@f.DoneBy · @Time.Fmt(f.DoneAt!.Value)</p> }
+    </div>
+    <div class="card">
+        <h3 style="margin-top:0">@L["Assigned to"]</h3>
+        <form method="post" asp-page-handler="Assign" asp-route-id="@f.Id" style="display:flex;gap:6px;flex-wrap:wrap">
+            <select name="assignee" style="flex:1;min-width:140px">
+                <option value="">@L["Nobody"]</option>
+                @foreach (var a in Model.Assignees)
+                {
+                    <option value="@a" selected="@(f.AssignedTo == a)">@a</option>
+                }
+            </select>
+            <button type="submit" class="btn small secondary">@L["Save"]</button>
+        </form>
+    </div>
+    <div class="card small">
+        <h3 style="margin-top:0">@L["For AI assistants"]</h3>
+        <p>@L["Your assistant reads this report with your API token:"]</p>
+        <pre class="code" style="white-space:pre-wrap;word-break:break-all">GET /api/feedback/@f.Id</pre>
+        <a href="/Docs#ai">@L["All documentation"] →</a>
+    </div>
+</aside>
+</div>
+
+<style>
+    @@media (max-width: 860px) { .issue-grid { grid-template-columns: minmax(0, 1fr) !important; } }
+</style>
+<script nonce="@HttpContext.Items["CspNonce"]">
+    // a reply goes to the reporter by mail: ask first (in-page dialog of the layout)
+    (function () {
+        var f = document.getElementById("note-form"), b = f && f.querySelector("button[data-reply]");
+        if (!b) return;
+        b.addEventListener("click", function () { f.dataset.confirm = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Send this text by email to the reporter?"].Value)); });
+        f.querySelector("button[value=note]").addEventListener("click", function () { delete f.dataset.confirm; });
+    })();
+</script>

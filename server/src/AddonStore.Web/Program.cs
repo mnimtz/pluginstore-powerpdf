@@ -126,6 +126,8 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Admin/Rules", "PageUser");        // read: everyone signed in; edit: admins (S1.0.9)
         o.Conventions.AuthorizePage("/Admin/Docs", "PageUser");         // every document in one place (S1.0.12)
         o.Conventions.AddPageRoute("/Admin/Docs", "Docs");               // short address for developers (S1.0.13)
+        o.Conventions.AuthorizeFolder("/Issues", "PageUser");           // problem report queue: own add-ons, admins all (S1.1.0)
+        o.Conventions.AuthorizePage("/Insights", "PageUser");           // developer dashboard (S1.1.0)
         o.Conventions.AuthorizePage("/Admin/Reports", "PageAdmin");
         o.Conventions.AuthorizePage("/Dashboard", "PageUser");
         o.Conventions.AuthorizePage("/CatalogEntry", "PageUser");
@@ -142,6 +144,8 @@ builder.Services.AddScoped<AuditService>();
 builder.Services.AddScoped<UsageService>();
 builder.Services.AddScoped<ShareService>();
 builder.Services.AddScoped<FeedbackService>();
+builder.Services.AddScoped<IssueService>();
+builder.Services.AddScoped<InsightsService>();
 builder.Services.AddScoped<AiService>();
 builder.Services.AddScoped<AiAssist>();
 builder.Services.AddScoped<CustomerService>();
@@ -255,7 +259,10 @@ app.Use(async (ctx, next) =>
     if (!upload && (p.StartsWithSegments("/api") || p.StartsWithSegments("/a")))
     {
         var f = ctx.Features.Get<Microsoft.AspNetCore.Http.Features.IHttpMaxRequestBodySizeFeature>();
-        if (f is { IsReadOnly: false }) f.MaxRequestBodySize = 2 * 1024 * 1024;
+        // problem reports carry up to 10 MB of attachments as base64 (S1.1.0); the daily limits per
+        // installation and network still apply
+        var report = HttpMethods.IsPost(ctx.Request.Method) && p.StartsWithSegments("/api/packages") && p.Value!.EndsWith("/feedback");
+        if (f is { IsReadOnly: false }) f.MaxRequestBodySize = report ? 15 * 1024 * 1024 : 2 * 1024 * 1024;
     }
     await next();
 });

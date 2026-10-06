@@ -340,6 +340,22 @@ from the live guide, `/api/rules`, the OpenAPI description and the manifest
 schema: introduction and principles, the full developer and agent guide, every
 rule by area, the API reference and the manifest reference.
 
+**Problem report queue and dashboard (S1.1.0):** reports from the store window
+(with up to 3 attachments: PNG, JPEG, PDF or text, 5 MB each, 10 MB together,
+checked by content) land in the queue *Problem reports* (`/Issues`): developers
+see their own add-ons, admins all. Sections by status on the left (open,
+in progress, waiting, done, declined), filters, paging; each report has its
+log, attachments, AI assessment, assignment, internal notes and replies that
+are mailed to the reporter. The same queue is an API for AI assistants with a
+token: `GET /api/feedback`, `GET /api/feedback/{id}` (+ `/attachments/{aid}`),
+`PATCH /api/feedback/{id}`, `POST /api/feedback/{id}/notes`. Attachments live
+in the database (so in every backup); attachments, log and reply address of
+reports closed longer than the retention period (Settings, IP address logging;
+default 180 days) are deleted. *Dashboard* (`/Insights`, `GET /api/insights`)
+shows each developer downloads per day and version, ratings, active reports and
+the Power PDF and Windows versions, architecture, language, country and channel
+of the users; admins see all add-ons and can pick one developer.
+
 **Documentation page (S1.0.12):** *Documentation* in the top menu (`/Docs`, also `/Admin/Docs`;
 all signed-in users, so developers too; also under Settings and linked from the API and Rules pages)
 lists every document in one place: the two PDFs, the rules and checklist, the
