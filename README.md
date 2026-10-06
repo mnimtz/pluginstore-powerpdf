@@ -340,8 +340,8 @@ from the live guide, `/api/rules`, the OpenAPI description and the manifest
 schema: introduction and principles, the full developer and agent guide, every
 rule by area, the API reference and the manifest reference.
 
-**Documentation page (S1.0.12):** *Settings, Documentation* (`/Admin/Docs`,
-readable by all signed-in users, also linked from the API and Rules pages)
+**Documentation page (S1.0.12):** *Documentation* in the top menu (`/Docs`, also `/Admin/Docs`;
+all signed-in users, so developers too; also under Settings and linked from the API and Rules pages)
 lists every document in one place: the two PDFs, the rules and checklist, the
 guides AI assistants read (agent guide, manual upload, llms.txt, AGENTS.md,
 SKILL.md) and the API tools. Every link opens in a new tab; each card shows the
