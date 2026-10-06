@@ -1003,4 +1003,6 @@
   <data name="{0} active" xml:space="preserve"><value>{0} actief</value></data>
   <data name="{0} days" xml:space="preserve"><value>{0} dagen</value></data>
   <data name="{0} new" xml:space="preserve"><value>{0} nieuw</value></data>
+  <data name="Ribbon" xml:space="preserve"><value>Lint</value></data>
+  <data name="No ribbon buttons" xml:space="preserve"><value>Zonder knoppen in het lint</value></data>
 </root>

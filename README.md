@@ -346,6 +346,17 @@ from the live guide, `/api/rules`, the OpenAPI description and the manifest
 schema: introduction and principles, the full developer and agent guide, every
 rule by area, the API reference and the manifest reference.
 
+**Add-ons without ribbon buttons (S1.1.1):** an add-on that only works inside
+a Power PDF feature (for example an engine for an assistant) declares
+`"ui": "none"` in manifest.json. It ships no `UILayout/` and no
+`ribbonAtomNamespace` (a layout is refused with `UI_NONE_HAS_LAYOUT`), the
+ribbon rules do not apply, every other check does (binaries, licenses, source,
+compliance, network/injection/download checks, languages of visible texts).
+The description must say where the function appears and how to switch it off
+(`UI_NONE_DESCRIPTION`, approval condition R5). The catalog carries
+`"ui": "none"` (TSV column 22); client 1.2.1+ shows "no ribbon buttons" in the
+store window. The offline packer no longer requires UILayout for such add-ons.
+
 **Problem report queue and dashboard (S1.1.0):** reports from the store window
 (with up to 3 attachments: PNG, JPEG, PDF or text, 5 MB each, 10 MB together,
 checked by content) land in the queue *Problem reports* (`/Issues`): developers

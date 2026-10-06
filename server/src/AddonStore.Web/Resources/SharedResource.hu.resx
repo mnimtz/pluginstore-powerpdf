@@ -1003,4 +1003,6 @@
   <data name="{0} active" xml:space="preserve"><value>{0} aktív</value></data>
   <data name="{0} days" xml:space="preserve"><value>{0} nap</value></data>
   <data name="{0} new" xml:space="preserve"><value>{0} új</value></data>
+  <data name="Ribbon" xml:space="preserve"><value>Menüszalag</value></data>
+  <data name="No ribbon buttons" xml:space="preserve"><value>Menüszalaggombok nélkül</value></data>
 </root>

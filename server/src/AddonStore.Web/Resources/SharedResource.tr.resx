@@ -1003,4 +1003,6 @@
   <data name="{0} active" xml:space="preserve"><value>{0} etkin</value></data>
   <data name="{0} days" xml:space="preserve"><value>{0} gün</value></data>
   <data name="{0} new" xml:space="preserve"><value>{0} yeni</value></data>
+  <data name="Ribbon" xml:space="preserve"><value>Şerit</value></data>
+  <data name="No ribbon buttons" xml:space="preserve"><value>Şerit düğmesi yok</value></data>
 </root>

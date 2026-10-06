@@ -1003,4 +1003,6 @@
   <data name="{0} active" xml:space="preserve"><value>aktivní: {0}</value></data>
   <data name="{0} days" xml:space="preserve"><value>{0} dní</value></data>
   <data name="{0} new" xml:space="preserve"><value>nová: {0}</value></data>
+  <data name="Ribbon" xml:space="preserve"><value>Pás karet</value></data>
+  <data name="No ribbon buttons" xml:space="preserve"><value>Bez tlačítek na pásu karet</value></data>
 </root>

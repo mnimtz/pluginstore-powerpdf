@@ -311,10 +311,30 @@ public class PackageValidator
                             "Translate the text yourself; the store shows it in the user's language.");
                 }
 
+                // Add-ons without ribbon buttons (S1.1.1) declare "ui": "none"; the ribbon rules
+                // do not apply to them, every other check does.
+                var ui = GetString(root, "ui");
+                if (ui is not null && ui != "ribbon" && ui != "none")
+                    report.Error("UI_INVALID", $"Manifest field 'ui' is '{ui.Replace("\n", " ")}'.",
+                        "Use \"ribbon\" (default, buttons on the shared tab) or \"none\" (no ribbon buttons, e.g. an engine for a Power PDF feature).");
+                manifest.NoUi = ui == "none";
                 manifest.AtomNamespace = GetString(root, "ribbonAtomNamespace") ?? "";
-                if (manifest.AtomNamespace.Length == 0)
+                if (manifest.NoUi)
+                {
+                    if (manifest.AtomNamespace.Length > 0)
+                        report.Warn("UI_NONE_ATOM", "The add-on declares \"ui\": \"none\" and a ribbonAtomNamespace; the namespace is ignored.",
+                            "Remove ribbonAtomNamespace, or set \"ui\": \"ribbon\" and ship the UILayout files.");
+                    manifest.AtomNamespace = "";
+                    report.Info("UI_NONE", "Add-on without ribbon buttons (\"ui\": \"none\").",
+                        "Reviewers check that the description says where the function appears in Power PDF and how to switch it off (approval condition R5).");
+                    var en = root.TryGetProperty("description", out var dEl) && dEl.ValueKind == JsonValueKind.Object ? GetString(dEl, "en") ?? "" : "";
+                    if (en.Trim().Length < 80)
+                        report.Warn("UI_NONE_DESCRIPTION", "The description of an add-on without ribbon buttons is short.",
+                            "Users see no button: describe in 'description' (all 16 languages) where the function appears in Power PDF (e.g. an engine in a feature's settings) and how to switch it off.");
+                }
+                else if (manifest.AtomNamespace.Length == 0)
                     report.Warn("ATOM_NAMESPACE_MISSING", "Manifest field 'ribbonAtomNamespace' is not set.",
-                        "Declare the ribbon atom namespace your plugin uses; the host caches ribbons by atom name and the store checks for collisions.");
+                        "Declare the ribbon atom namespace your plugin uses; the host caches ribbons by atom name and the store checks for collisions. Add-ons without ribbon buttons declare \"ui\": \"none\" instead.");
 
                 manifest.MinPowerPdfVersion = GetString(root, "minPowerPdfVersion") ?? "";
                 if (manifest.MinPowerPdfVersion.Length > 0 && !HostVersionPattern.IsMatch(manifest.MinPowerPdfVersion))
@@ -457,7 +477,8 @@ public class PackageValidator
                 CheckScreenshots(report, zip, root);
                 CheckLicenses(report, zip);
                 CheckThirdParty(report, zip, root);
-                CheckUiLayout(report, zip, manifest.AtomNamespace, manifest.Id, manifest.OwnTab);
+                if (manifest.NoUi) CheckNoUiLayout(report, zip);
+                else CheckUiLayout(report, zip, manifest.AtomNamespace, manifest.Id, manifest.OwnTab);
                 CheckDocs(report, zip);
             }
         }
@@ -1342,6 +1363,16 @@ public class PackageValidator
         if (bad.Count > 0)
             report.Warn("DOCS_ACTIVE_CONTENT", $"Help pages contain scripts or load external resources: {string.Join(", ", bad.Take(5))}.",
                 "Help under docs/ is installed on user machines and opened locally: plain HTML with local images only, no scripts, frames or external sources.");
+    }
+
+    /// <summary>"ui": "none" (S1.1.1): no ribbon layout may be shipped, it would contradict the declaration.</summary>
+    private static void CheckNoUiLayout(ValidationReport report, ZipArchive zip)
+    {
+        var layout = zip.Entries.Where(e => e.FullName.Replace('\\', '/').StartsWith("UILayout/", StringComparison.OrdinalIgnoreCase) && !e.FullName.EndsWith('/'))
+                                .Select(e => e.FullName).Take(3).ToList();
+        if (layout.Count > 0)
+            report.Error("UI_NONE_HAS_LAYOUT", $"The add-on declares \"ui\": \"none\" but ships a ribbon layout ({string.Join(", ", layout)}).",
+                "Remove the UILayout folder, or set \"ui\": \"ribbon\" when the add-on has buttons.");
     }
 
     private void CheckUiLayout(ValidationReport report, ZipArchive zip, string atomNamespace, string packageId = "", bool ownTab = false)

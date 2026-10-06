@@ -50,6 +50,7 @@ public static class RuleCatalog
         ("R2", "Every warning in the check report was examined; none hides a real problem (weak copyleft, an undeclared service, a third-party brand)."),
         ("R3", "Name, description, changelog and screenshots describe the add-on correctly and use no other companies' product names or trademarks."),
         ("R4", "The version was tried in Power PDF, or the change carries no functional risk (for example texts only)."),
+        ("R5", "An add-on without ribbon buttons (\"ui\": \"none\") says in its description where the function appears in Power PDF and how to switch it off; it does nothing in the background beyond that (otherwise: not applicable)."),
     };
 
     private static readonly Regex CodeGroups = new(@"\(([A-Z][A-Z0-9_]+(?:, [A-Z][A-Z0-9_]+)*)\)", RegexOptions.Compiled);
@@ -137,7 +138,7 @@ public static class RuleCatalog
         if (Any("CATEGORY_")) return "Categories";
         if (Any("ICON_", "SCREENSHOT")) return "Icon and screenshots";
         if (Any("LANG", "UI_LANGS", "UI_STRINGS")) return "Languages";
-        if (Any("ATOM_", "OWN_TAB_") || code is "VISIBILITY_OWN_TAB" or "RESERVED_PANEL_NS" or "ICONMODE_SMALL" or "UILAYOUT_MISSING") return "Ribbon and layout";
+        if (Any("ATOM_", "OWN_TAB_", "UI_NONE") || code is "UI_INVALID" or "VISIBILITY_OWN_TAB" or "RESERVED_PANEL_NS" or "ICONMODE_SMALL" or "UILAYOUT_MISSING") return "Ribbon and layout";
         if (code is "PE_DEBUG_RUNTIME" or "FOREIGN_DEPENDENCY") return "Runtime and dependencies";
         if (Any("ARCH_", "HASH_", "PE_", "VERSIONINFO_", "ZXT_NAME_") || code is "FILE_DECLARATION_MISSING" or "FILE_MISSING" or "FILENAME_MISMATCH" or "RESERVED_NAME")
             return "Binaries and integrity";

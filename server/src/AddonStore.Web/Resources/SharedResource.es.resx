@@ -1003,4 +1003,6 @@
   <data name="{0} active" xml:space="preserve"><value>{0} activos</value></data>
   <data name="{0} days" xml:space="preserve"><value>{0} días</value></data>
   <data name="{0} new" xml:space="preserve"><value>{0} nuevos</value></data>
+  <data name="Ribbon" xml:space="preserve"><value>Cinta de opciones</value></data>
+  <data name="No ribbon buttons" xml:space="preserve"><value>Sin botones en la cinta</value></data>
 </root>

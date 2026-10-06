@@ -17,6 +17,8 @@ public record CatalogItem(string Id, string Name, string Description, string Ver
     public int Screenshots { get; init; }
     /// <summary>Customer name when the entry comes from a customer delivery (S0.14.0), else empty.</summary>
     public string Customer { get; init; } = "";
+    /// <summary>"ui": "none" in the manifest (S1.1.1): no ribbon buttons.</summary>
+    public bool NoUi { get; init; }
 }
 
 public static class CatalogUi
@@ -41,6 +43,10 @@ public static class CatalogUi
             Ratings = await FeedbackService.SummariesAsync(db),
         };
     }
+
+    /// <summary>The manifest declares "ui": "none": an add-on without ribbon buttons (S1.1.1).</summary>
+    public static bool IsNoUi(JsonElement root) =>
+        root.TryGetProperty("ui", out var u) && u.ValueKind == JsonValueKind.String && u.GetString() == "none";
 
     /// <summary>One catalog entry for a given version (public catalog or customer delivery).</summary>
     public static CatalogItem Item(Context ctx, PackageVersion pick, string channel, string culture, string customer = "")
@@ -69,6 +75,7 @@ public static class CatalogUi
             RatingCount = ctx.Ratings.GetValueOrDefault(pick.PackageId)?.Count ?? 0,
             Screenshots = ScreenshotService.Count(pick.ManifestJson),
             Customer = customer,
+            NoUi = IsNoUi(doc.RootElement),
         };
     }
 

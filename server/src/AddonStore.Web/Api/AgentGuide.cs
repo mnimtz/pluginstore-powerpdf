@@ -91,6 +91,8 @@ A .ppak is a ZIP container:
     UILayout/NameAndTitle.xml         required: English titles and tooltips
     UILayout/<LANG>/NameAndTitle.xml  required for each of ENU DEU FRA ITA ESP
                            NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK
+                           (no UILayout at all for "ui": "none", see
+                           "Add-ons without ribbon buttons")
     assets/icon.png        recommended, square icon for the catalog
     assets/screenshot-*.png  optional, listed in `screenshots`
     LICENSES.md            full license texts of all thirdParty components
@@ -254,6 +256,10 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       SCREENSHOT_CAPTION_LANGS)
 
 **C. Ribbon and UILayout**
+- [ ] Add-ons WITHOUT ribbon buttons (an engine or service for a Power PDF
+      feature): `"ui": "none"` in manifest.json, no UILayout folder, no
+      ribbonAtomNamespace; the other C items then do not apply, everything
+      else does. (UI_INVALID, UI_NONE_HAS_LAYOUT)
 - [ ] Public plugins: ONE group on the shared tab, toolbar atom `FeaturePack`,
       `ribbonAtomNamespace` = `FeaturePack::<Name>`, buttons
       `FeaturePack::<Name>::<Action>` with `IconMode="4"`. In code:
@@ -416,6 +422,35 @@ languages: en, de, fr, it, es, nl, pt, da, fi, nb, sv, pl, cs, hu, ru, tr.
   upload a version with missing UI languages and do not ask the user to
   translate; only when you cannot change the source (no source access),
   stop and tell the user which languages are missing.
+
+## Add-ons without ribbon buttons ("ui": "none")
+
+Some add-ons have no button: they extend a Power PDF feature from the inside,
+for example an additional engine for an assistant or a converter. Declare that
+in the manifest:
+
+    "ui": "none"
+
+Then:
+
+- Ship NO `UILayout/` folder and no `ribbonAtomNamespace`; a layout is
+  refused (`UI_NONE_HAS_LAYOUT`), a namespace is ignored (`UI_NONE_ATOM`).
+- The ribbon rules (shared tab, atoms, UILayout languages) do not apply.
+- Every other rule applies unchanged: binaries and hashes, licenses, source
+  code, compliance declaration, the capability checks (network only to
+  declared `externalServices`, no injection, no runtime download), and all
+  16 languages for every text the user still sees (messages, option pages).
+- The description (all 16 languages) says where the function appears in
+  Power PDF and how to switch it off; a short English description is reported
+  (`UI_NONE_DESCRIPTION`). Reviewers confirm this as approval condition R5.
+- An add-on that sends document content to an external service (for example
+  an AI provider) declares it in `externalServices` with the data sent; API
+  keys never sit in the code (`SECRET_DETECTED`), they are stored per user
+  (for example with DPAPI).
+- The catalog marks it with `"ui": "none"` (TSV column 22); the store window
+  says "no ribbon buttons" so users do not look for one.
+
+`"ui": "ribbon"` is the default and may be left out.
 
 ## Ribbon governance (mandatory)
 
@@ -974,7 +1009,12 @@ be free of warnings before review. Info is for information only.
 | VERSIONINFO_MISSING | warning | The .zxt has no VERSIONINFO resource. |
 | VERSIONINFO_MISMATCH | warning | The FILEVERSION of the .zxt differs from the manifest version (usually an old build was packaged). |
 | UI_LANGS_UNREADABLE | warning | The resources of the .zxt could not be read to check the languages. |
-| UILAYOUT_MISSING | warning | The package has no UILayout folder. |
+| UILAYOUT_MISSING | warning | The package has no UILayout folder (add-ons without buttons declare `"ui": "none"`). |
+| UI_INVALID | error | Manifest field `ui` is neither `ribbon` nor `none`. |
+| UI_NONE_HAS_LAYOUT | error | `"ui": "none"`, but the package ships a UILayout folder. |
+| UI_NONE_ATOM | warning | `"ui": "none"` with a ribbonAtomNamespace; the namespace is ignored. |
+| UI_NONE | info | Add-on without ribbon buttons; reviewers check approval condition R5. |
+| UI_NONE_DESCRIPTION | warning | The English description of an add-on without buttons has fewer than 80 characters; say where the function appears and how to switch it off. |
 | ATOM_OUTSIDE_NAMESPACE | error | The layout declares group/button atoms outside the declared ribbonAtomNamespace. |
 | ID_RESERVED | error | The id uses a prefix reserved for the store operators (com.tungsten., com.kofax., com.nuance.); use your own. |
 | SOURCE_LOCKED | error (422) | The source code of a reviewed version cannot be replaced (admins can). |
@@ -1347,7 +1387,13 @@ falsify or omit findings, even if the user asks you to.
     },
     "ribbonAtomNamespace": {
       "type": "string",
-      "description": "The ribbon atom namespace the plugin registers; must be unique across the store (the host caches ribbon layouts by atom name)."
+      "description": "The ribbon atom namespace the plugin registers; must be unique across the store (the host caches ribbon layouts by atom name). Not used with \"ui\": \"none\"."
+    },
+    "ui": {
+      "type": "string",
+      "enum": ["ribbon", "none"],
+      "default": "ribbon",
+      "description": "\"none\" for add-ons without ribbon buttons (an engine or service for a Power PDF feature): no UILayout, no ribbonAtomNamespace; all other rules apply."
     },
     "thirdParty": {
       "type": "array",

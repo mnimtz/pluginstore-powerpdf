@@ -1003,4 +1003,6 @@
   <data name="{0} active" xml:space="preserve"><value>{0} aktive</value></data>
   <data name="{0} days" xml:space="preserve"><value>{0} dager</value></data>
   <data name="{0} new" xml:space="preserve"><value>{0} nye</value></data>
+  <data name="Ribbon" xml:space="preserve"><value>Bånd</value></data>
+  <data name="No ribbon buttons" xml:space="preserve"><value>Uten knapper på båndet</value></data>
 </root>

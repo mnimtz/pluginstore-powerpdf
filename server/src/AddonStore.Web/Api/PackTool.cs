@@ -99,11 +99,16 @@ $m | Add-Member -NotePropertyName sha256 -NotePropertyValue ([pscustomobject]$ha
 
 # ---- layout and assets (the store checks the details) ------------------------
 $layout = Join-Path $Package 'UILayout'
-if (-not (Test-Path -LiteralPath (Join-Path $layout 'Publish Mode.xml'))) { Warn 'UILayout\Publish Mode.xml is missing' }
-if (-not (Test-Path -LiteralPath (Join-Path $layout 'NameAndTitle.xml'))) { Fail 'UILayout\NameAndTitle.xml is missing (required next to the 16 language folders; LANGS_INCOMPLETE)' }
-$noLang = @('ENU', 'DEU', 'FRA', 'ITA', 'ESP', 'NLD', 'PTB', 'DAN', 'FIN', 'NOR', 'SVE', 'PLK', 'CSY', 'HUN', 'RUS', 'TRK' |
-    Where-Object { -not (Test-Path -LiteralPath (Join-Path $layout "$_\NameAndTitle.xml")) })
-if ($noLang.Count -gt 0) { Fail "UILayout language folders without NameAndTitle.xml: $($noLang -join ' ') (all 16 are required; LANGS_INCOMPLETE)" }
+if ($m.ui -eq 'none') {
+    # add-on without ribbon buttons: no layout at all (UI_NONE_HAS_LAYOUT)
+    if (Test-Path -LiteralPath $layout) { Fail 'manifest "ui": "none" but a UILayout folder exists; remove it or set "ui": "ribbon" (UI_NONE_HAS_LAYOUT)' }
+} else {
+    if (-not (Test-Path -LiteralPath (Join-Path $layout 'Publish Mode.xml'))) { Warn 'UILayout\Publish Mode.xml is missing' }
+    if (-not (Test-Path -LiteralPath (Join-Path $layout 'NameAndTitle.xml'))) { Fail 'UILayout\NameAndTitle.xml is missing (required next to the 16 language folders; LANGS_INCOMPLETE). Add-ons without ribbon buttons set "ui": "none" in manifest.json.' }
+    $noLang = @('ENU', 'DEU', 'FRA', 'ITA', 'ESP', 'NLD', 'PTB', 'DAN', 'FIN', 'NOR', 'SVE', 'PLK', 'CSY', 'HUN', 'RUS', 'TRK' |
+        Where-Object { -not (Test-Path -LiteralPath (Join-Path $layout "$_\NameAndTitle.xml")) })
+    if ($noLang.Count -gt 0) { Fail "UILayout language folders without NameAndTitle.xml: $($noLang -join ' ') (all 16 are required; LANGS_INCOMPLETE)" }
+}
 if (-not (Test-Path -LiteralPath (Join-Path $Package 'assets\icon.png'))) { Warn 'assets\icon.png is missing (recommended)' }
 if (-not (Test-Path -LiteralPath (Join-Path $Package 'LICENSES.md'))) { Warn 'LICENSES.md is missing' }
 

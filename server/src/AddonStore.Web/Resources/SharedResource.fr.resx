@@ -1003,4 +1003,6 @@
   <data name="{0} active" xml:space="preserve"><value>{0} actif(s)</value></data>
   <data name="{0} days" xml:space="preserve"><value>{0} jours</value></data>
   <data name="{0} new" xml:space="preserve"><value>{0} nouveau(x)</value></data>
+  <data name="Ribbon" xml:space="preserve"><value>Ruban</value></data>
+  <data name="No ribbon buttons" xml:space="preserve"><value>Sans boutons dans le ruban</value></data>
 </root>

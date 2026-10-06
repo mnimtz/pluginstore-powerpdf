@@ -357,7 +357,8 @@ public static class ApiEndpoints
                       .Append(i.Rating.ToString("0.0", System.Globalization.CultureInfo.InvariantCulture)).Append('\t')
                       .Append(i.RatingCount).Append('\t').Append(i.Screenshots).Append('\t')
                       .Append(Flat(i.Customer)).Append('\t')
-                      .Append(signing.Sign(i.Id, i.Version, i.Sha256, i.ZxtName)).Append('\n');
+                      .Append(signing.Sign(i.Id, i.Version, i.Sha256, i.ZxtName)).Append('\t')
+                      .Append(i.NoUi ? "none" : "ribbon").Append('\n');   // column 22 (S1.1.1)
                 }
                 return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
             }
@@ -1596,6 +1597,7 @@ public static class ApiEndpoints
                 downloadUrl = $"{baseUrl}/api/packages/{pick.PackageId}/{pick.Version}/download",
                 iconUrl = $"{baseUrl}/api/packages/{pick.PackageId}/icon?v={Uri.EscapeDataString(pick.Version)}",
                 zxtName = ZxtNameOf(root),
+                ui = Services.CatalogUi.IsNoUi(root) ? "none" : "ribbon",
                 customer,
                 signature = signing?.Sign(pick.PackageId, pick.Version, pick.Sha256, ZxtNameOf(root)),
             };
