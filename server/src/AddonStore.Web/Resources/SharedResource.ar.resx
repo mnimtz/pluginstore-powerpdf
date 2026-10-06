@@ -1070,4 +1070,9 @@
   <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>أدخل عدد عمليات التثبيت، أو اترك الحقل فارغًا لعدد غير محدود.</value></data>
   <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>إدخال واحد لكل مستخدم Windows لعميل Store؛ ولا يُخزَّن سوى رقم مجهول الهوية. تؤدي إزالة الوظيفة الإضافية إلى إخلاء إدخالها؛ أخلِ إدخالاً بنفسك عند إعادة تعيين جهاز كمبيوتر.</value></data>
   <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>هل تريد إخلاء هذا التثبيت؟ تستمر الوظيفة الإضافية في العمل على ذلك الكمبيوتر حتى يتم تحديثها أو إعادة تثبيتها؛ ويمكن لكمبيوتر آخر استخدام هذا المقعد.</value></data>
+  <data name="The {0} most recently seen installations are listed; the API lists all." xml:space="preserve"><value>يتم سرد أحدث عمليات التثبيت المرصودة (بحد أقصى {0})؛ وتسرد واجهة API جميعها.</value></data>
+  <data name="Free every installation not seen for 90 days? Their computers keep the add-on until it is updated or reinstalled." xml:space="preserve"><value>هل تريد تحرير كل عمليات التثبيت التي لم تُرصد منذ 90 يومًا؟ تحتفظ أجهزة الكمبيوتر بالوظيفة الإضافية إلى أن يتم تحديثها أو إعادة تثبيتها.</value></data>
+  <data name="Free installations not seen for 90 days" xml:space="preserve"><value>تحرير عمليات التثبيت التي لم تُرصد منذ 90 يومًا</value></data>
+  <data name="No installation was older than 90 days." xml:space="preserve"><value>لم تكن هناك أي عملية تثبيت أقدم من 90 يومًا.</value></data>
+  <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>تم تحرير عمليات التثبيت التي لم تُرصد منذ 90 يومًا.</value></data>
 </root>

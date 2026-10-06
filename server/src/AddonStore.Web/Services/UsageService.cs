@@ -182,6 +182,8 @@ public sealed class UsageMaintenance : BackgroundService
                     // problem reports closed longer than the retention period lose attachments, log and address (S1.1.0)
                     var r = await scope.ServiceProvider.GetRequiredService<IssueService>().PurgeAsync();
                     if (r > 0) _log.LogInformation("feedback: attachments and logs of {Count} closed reports deleted", r);
+                    var s = await scope.ServiceProvider.GetRequiredService<SeatService>().PurgeAsync();   // S1.4.3
+                    if (s > 0) _log.LogInformation("deliveries: {Count} freed installations deleted", s);
                     nextPurge = DateTime.UtcNow.AddHours(12);
                 }
                 await ResolveHostnamesAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>(), stop);

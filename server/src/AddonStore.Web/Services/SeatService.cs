@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using AddonStore.Web.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace AddonStore.Web.Services;
 
@@ -16,10 +17,26 @@ namespace AddonStore.Web.Services;
 public class SeatService
 {
     public const string HeaderName = "X-Install-Id";
+    /// <summary>New seats per network address and hour; a rollout behind one NAT address stays well below (S1.4.3).</summary>
+    public const int NewSeatsPerHour = 200;
+    public const int ReleasesPerHour = 300;
+    /// <summary>Freed seats are deleted after this many days (S1.4.3).</summary>
+    public const int KeepReleasedDays = 180;
+    // one claim at a time: count and insert must not interleave (two downloads with one seat left)
+    private static readonly SemaphoreSlim s_claim = new(1, 1);
     private readonly AppDbContext _db;
     private readonly AuditService _audit;
+    private readonly IMemoryCache _cache;
 
-    public SeatService(AppDbContext db, AuditService audit) { _db = db; _audit = audit; }
+    public SeatService(AppDbContext db, AuditService audit, IMemoryCache cache) { _db = db; _audit = audit; _cache = cache; }
+
+    private bool Allow(HttpContext ctx, string kind, int max)
+    {
+        var ip = GeoService.ClientIp(ctx)?.ToString() ?? "?";
+        var key = $"seats:{kind}:{ip}:{DateTime.UtcNow:yyyyMMddHH}";
+        var n = _cache.GetOrCreate(key, e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(61); return new int[1]; })!;
+        lock (n) return ++n[0] <= max;
+    }
 
     /// <summary>The client's installation id (a GUID), or null.</summary>
     public static string? InstallIdOf(HttpContext ctx)
@@ -56,28 +73,57 @@ public class SeatService
             return deliveries.Any(d => d.MaxInstalls is null)
                 ? new(true, "", "")
                 : new(false, "INSTALL_ID_MISSING", "This delivery allows a limited number of installations; update the Add-on Store client (1.4.1 or later) to install it.");
-        var now = DateTime.UtcNow;
         var hashes = deliveries.ToDictionary(d => d.Id, d => HashOf(d.Id, installId));
         var ids = hashes.Keys.ToList();
-        var mine = await _db.DeliverySeats.Where(s => ids.Contains(s.DeliveryId) && s.ReleasedAt == null).ToListAsync();
-        var held = mine.FirstOrDefault(s => hashes.TryGetValue(s.DeliveryId, out var h) && h == s.InstallHash);
-        if (held is not null)
+        var hashList = hashes.Values.ToList();
+        await s_claim.WaitAsync();
+        try
         {
-            held.LastSeenAt = now; held.Version = version;
-            await _db.SaveChangesAsync();
-            return new(true, "", "");
+            var now = DateTime.UtcNow;
+            // this installation's seat (an update keeps it): looked up by its hashes, not by loading every seat
+            var held = (await _db.DeliverySeats.Where(s => ids.Contains(s.DeliveryId) && hashList.Contains(s.InstallHash) && s.ReleasedAt == null).ToListAsync())
+                .FirstOrDefault(s => hashes.TryGetValue(s.DeliveryId, out var h) && h == s.InstallHash);
+            if (held is not null)
+            {
+                held.LastSeenAt = now; held.Version = version;
+                await _db.SaveChangesAsync();
+                return new(true, "", "");
+            }
+            if (!Allow(ctx, "claim", NewSeatsPerHour))
+                return new(false, "SEATS_RATE_LIMITED", "Too many new installations from this network in the last hour; try again later.");
+            var used = await _db.DeliverySeats.AsNoTracking().Where(s => ids.Contains(s.DeliveryId) && s.ReleasedAt == null)
+                .GroupBy(s => s.DeliveryId).Select(g => new { g.Key, N = g.Count() }).ToDictionaryAsync(x => x.Key, x => x.N);
+            // unlimited first, then the delivery with the most free seats
+            var pick = deliveries.OrderBy(d => d.MaxInstalls is null ? 0 : 1)
+                                 .ThenByDescending(d => (d.MaxInstalls ?? int.MaxValue) - used.GetValueOrDefault(d.Id))
+                                 .First();
+            var u = used.GetValueOrDefault(pick.Id);
+            if (pick.MaxInstalls is int max && u >= max)
+                return new(false, "SEATS_EXHAUSTED", $"All {max} installations of this delivery are in use. Remove the add-on on a computer that no longer needs it, or ask the provider for more installations.", u, max);
+            var seat = new DeliverySeat { DeliveryId = pick.Id, InstallHash = hashes[pick.Id], Version = version, FirstAt = now, LastSeenAt = now };
+            _db.DeliverySeats.Add(seat);
+            try
+            {
+                // a database briefly locked by a parallel write: wait and try again (SQLite)
+                for (var attempt = 1; ; attempt++)
+                {
+                    try { await _db.SaveChangesAsync(); break; }
+                    catch (DbUpdateException ex) when (attempt < 3 && ex.InnerException is Microsoft.Data.Sqlite.SqliteException { SqliteErrorCode: 5 or 6 })
+                    { await Task.Delay(100 * attempt); }
+                }
+            }
+            catch (DbUpdateException)
+            {
+                // the same installation in a parallel request (unique index) holds its seat now; any other
+                // failure (e.g. a busy database) must not hand out the add-on without a seat
+                _db.Entry(seat).State = EntityState.Detached;
+                var heldNow = await _db.DeliverySeats.AsNoTracking()
+                    .AnyAsync(s => s.DeliveryId == pick.Id && s.InstallHash == seat.InstallHash && s.ReleasedAt == null);
+                if (!heldNow) return new(false, "SEATS_BUSY", "The store is busy right now; try again in a moment.");
+            }
+            return new(true, "", "", u + 1, pick.MaxInstalls);
         }
-        var used = mine.GroupBy(s => s.DeliveryId).ToDictionary(g => g.Key, g => g.Count());
-        // unlimited first, then the delivery with the most free seats
-        var pick = deliveries.OrderBy(d => d.MaxInstalls is null ? 0 : 1)
-                             .ThenByDescending(d => (d.MaxInstalls ?? int.MaxValue) - used.GetValueOrDefault(d.Id))
-                             .First();
-        var u = used.GetValueOrDefault(pick.Id);
-        if (pick.MaxInstalls is int max && u >= max)
-            return new(false, "SEATS_EXHAUSTED", $"All {max} installations of this delivery are in use. Remove the add-on on a computer that no longer needs it, or ask the provider for more installations.", u, max);
-        _db.DeliverySeats.Add(new DeliverySeat { DeliveryId = pick.Id, InstallHash = hashes[pick.Id], Version = version, FirstAt = now, LastSeenAt = now });
-        await _db.SaveChangesAsync();
-        return new(true, "", "", u + 1, pick.MaxInstalls);
+        finally { s_claim.Release(); }
     }
 
     /// <summary>The client removed the add-on: free its seats in these deliveries.</summary>
@@ -85,6 +131,7 @@ public class SeatService
     {
         var installId = InstallIdOf(ctx);
         if (installId is null || deliveries.Count == 0) return 0;
+        if (!Allow(ctx, "release", ReleasesPerHour)) return 0;
         var now = DateTime.UtcNow;
         var hashes = deliveries.Select(d => HashOf(d.Id, installId)).ToList();
         var ids = deliveries.Select(d => d.Id).ToList();
@@ -101,6 +148,24 @@ public class SeatService
         await _db.SaveChangesAsync();
         await _audit.LogAsync(actor.DisplayName, "delivery.seat-released", $"delivery {deliveryId}", $"seat {seatId}");
         return true;
+    }
+
+    /// <summary>A manager frees every installation of a delivery not seen for the given days (S1.4.3).</summary>
+    public async Task<int> ReleaseStaleAsync(int deliveryId, int days, AppUser actor)
+    {
+        var before = DateTime.UtcNow.AddDays(-days);
+        var now = DateTime.UtcNow;
+        var n = await _db.DeliverySeats.Where(s => s.DeliveryId == deliveryId && s.ReleasedAt == null && s.LastSeenAt < before)
+            .ExecuteUpdateAsync(s => s.SetProperty(x => x.ReleasedAt, now).SetProperty(x => x.ReleasedBy, actor.DisplayName));
+        if (n > 0) await _audit.LogAsync(actor.DisplayName, "delivery.seats-released", $"delivery {deliveryId}", $"{n} installation(s) not seen for {days} days");
+        return n;
+    }
+
+    /// <summary>Freed seats older than KeepReleasedDays are deleted (maintenance, S1.4.3).</summary>
+    public async Task<int> PurgeAsync()
+    {
+        var before = DateTime.UtcNow.AddDays(-KeepReleasedDays);
+        return await _db.DeliverySeats.Where(s => s.ReleasedAt != null && s.ReleasedAt < before).ExecuteDeleteAsync();
     }
 
     /// <summary>A delivered add-on still in use: refresh "last seen" of this installation (at most hourly).</summary>

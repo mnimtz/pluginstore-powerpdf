@@ -299,9 +299,19 @@ public class CustomerService
 
     /// <summary>Installations allowed for a delivery (S1.4.2): 0 or null = unlimited, else 1 to 100000.
     /// Lowering it below the seats in use keeps those installations; new ones wait for a free seat.</summary>
+    /// <summary>Checks a maxInstalls value before anything is saved (S1.4.3): range, and private add-ons only.</summary>
+    public async Task<string?> CheckMaxInstallsAsync(string packageId, int? max)
+    {
+        if (max is null) return null;
+        if (max is < 0 or > MaxInstallsLimit) return $"maxInstalls must be 0 (unlimited) to {MaxInstallsLimit}.";
+        if (max > 0 && !await _db.Packages.AnyAsync(p => p.Id == packageId && p.Visibility == "private"))
+            return "Installations can only be limited for private add-ons; public ones are downloadable by everyone.";
+        return null;
+    }
+
     public async Task<Outcome> SetMaxInstallsAsync(Delivery d, int? max, AppUser actor)
     {
-        if (max is < 0 or > MaxInstallsLimit) return Outcome.Fail("DELIVERY_INVALID", $"maxInstalls must be 0 (unlimited) to {MaxInstallsLimit}.");
+        if (await CheckMaxInstallsAsync(d.PackageId, max) is { } err) return Outcome.Fail("DELIVERY_INVALID", err);
         var value = max is null or 0 ? (int?)null : max;
         if (d.MaxInstalls == value) return new Outcome(true, "", "Delivery saved.", d);
         d.MaxInstalls = value;
@@ -440,7 +450,12 @@ public class CustomerService
         foreach (var c in codes.Where(c => c.LastUsedAt is null || c.LastUsedAt < now.AddMinutes(-10))) c.LastUsedAt = now;
         foreach (var cu in customers.Values.Where(c => c.LastSeenAt is null || c.LastSeenAt < now.AddMinutes(-10))) cu.LastSeenAt = now;
         foreach (var d in allowed.Where(d => d.LastSeenAt is null || d.LastSeenAt < now.AddMinutes(-10))) d.LastSeenAt = now;
-        await _db.SaveChangesAsync();
+        // activity stamps only: a database briefly locked by a parallel request must not fail the request (S1.4.3)
+        try { await _db.SaveChangesAsync(); }
+        catch (DbUpdateException ex) when (ex.InnerException is Microsoft.Data.Sqlite.SqliteException { SqliteErrorCode: 5 or 6 })
+        {
+            foreach (var e in _db.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified).ToList()) e.State = EntityState.Unchanged;
+        }
 
         var pkgIds = allowed.Select(d => d.PackageId).Distinct().ToList();
         var pkgs = await _db.Packages.Where(p => pkgIds.Contains(p.Id)).ToDictionaryAsync(p => p.Id);
@@ -462,6 +477,18 @@ public class CustomerService
     /// valid, the customer's name and how many add-ons it unlocks now. Unknown codes
     /// count against the same per-address limit as the catalog (no guessing).
     /// </summary>
+    /// <summary>Every delivery the request's valid codes cover, whatever its status or period: a removal must
+    /// free its installation also while the delivery is paused or ended (S1.4.3).</summary>
+    public async Task<List<Delivery>> DeliveriesOfCodesAsync(HttpContext ctx, IEnumerable<string> packageIds)
+    {
+        var codes = await ValidCodesAsync(ctx);
+        if (codes.Count == 0) return new();
+        var ids = packageIds.ToList();
+        var customerIds = codes.Select(c => c.CustomerId).Distinct().ToList();
+        var deliveries = await _db.Deliveries.Where(d => customerIds.Contains(d.CustomerId) && ids.Contains(d.PackageId)).ToListAsync();
+        return deliveries.Where(d => codes.Any(c => c.CustomerId == d.CustomerId && (c.DeliveryId is null || c.DeliveryId == d.Id))).ToList();
+    }
+
     /// <summary>Valid code(s), the customer name(s) and the add-ons they unlock now (ids, S1.4.2).</summary>
     public record SeatInfo(string Package, int Used, int? Max);
 
@@ -475,7 +502,8 @@ public class CustomerService
     /// (null = unlimited), summed over the deliveries the codes unlock.</summary>
     public async Task<(bool Valid, string Customer, int Addons, List<string> Packages, List<SeatInfo> Seats)> CheckWithSeatsAsync(HttpContext ctx)
     {
-        var grants = await GrantsAsync(ctx);
+        // only what the catalog shows: deliveries that hand out a version now (S1.4.3)
+        var grants = (await GrantsAsync(ctx)).Where(g => g.Beta is not null || g.Live is not null).ToList();
         if (grants.Count > 0)
         {
             var pkgs = grants.Select(g => g.Package.Id).Distinct().OrderBy(x => x, StringComparer.Ordinal).ToList();

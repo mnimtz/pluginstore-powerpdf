@@ -1070,4 +1070,9 @@
   <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Angi et antall installasjoner, eller la feltet stå tomt for ubegrenset.</value></data>
   <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Én oppføring per Windows-bruker av Store-klienten; bare et anonymt nummer lagres. Når tillegget fjernes, frigis oppføringen; frigi en oppføring selv når en datamaskin er tilbakestilt.</value></data>
   <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Vil du frigi denne installasjonen? Tillegget fortsetter å fungere på den datamaskinen til det oppdateres eller installeres på nytt; plassen kan brukes av en annen datamaskin.</value></data>
+  <data name="The {0} most recently seen installations are listed; the API lists all." xml:space="preserve"><value>De {0} sist sette installasjonene vises; API-et viser alle.</value></data>
+  <data name="Free every installation not seen for 90 days? Their computers keep the add-on until it is updated or reinstalled." xml:space="preserve"><value>Vil du frigi alle installasjoner som ikke er sett på 90 dager? Datamaskinene beholder tillegget til det oppdateres eller installeres på nytt.</value></data>
+  <data name="Free installations not seen for 90 days" xml:space="preserve"><value>Frigi installasjoner som ikke er sett på 90 dager</value></data>
+  <data name="No installation was older than 90 days." xml:space="preserve"><value>Ingen installasjon var eldre enn 90 dager.</value></data>
+  <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>Installasjoner som ikke er sett på 90 dager, ble frigitt.</value></data>
 </root>

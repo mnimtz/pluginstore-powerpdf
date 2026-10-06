@@ -78,7 +78,7 @@ public sealed class GeoService : BackgroundService
         // front end APPENDS the address it saw to X-Forwarded-For, so only the
         // rightmost entry is trustworthy (values a client sent stand before it).
         IPAddress? ip = null;
-        if (ForwardedByMiddleware || ctx.Request.Headers.ContainsKey("X-Original-For"))
+        if (ForwardedByMiddleware)   // a client-sent header never decides (S1.4.3)
         {
             var remote = ctx.Connection.RemoteIpAddress;
             return remote is { IsIPv4MappedToIPv6: true } ? remote.MapToIPv4() : remote;

@@ -1070,4 +1070,9 @@
   <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>インストール数を入力するか、無制限にする場合はフィールドを空欄のままにしてください。</value></data>
   <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Store クライアントの Windows ユーザーごとに 1 つのエントリが作成されます。保存されるのは匿名の番号のみです。アドインを削除すると、そのエントリは解放されます。コンピューターをリセットした場合は、エントリをご自身で解放してください。</value></data>
   <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>このインストールを解放しますか? アドインは、更新または再インストールされるまで、そのコンピューターで引き続き動作します。この枠は別のコンピューターで使用できます。</value></data>
+  <data name="The {0} most recently seen installations are listed; the API lists all." xml:space="preserve"><value>最近確認された {0} 件のインストールを表示しています。API ではすべてが表示されます。</value></data>
+  <data name="Free every installation not seen for 90 days? Their computers keep the add-on until it is updated or reinstalled." xml:space="preserve"><value>90 日間確認されていないインストールをすべて解放しますか? アドインは、更新または再インストールされるまでコンピューターに残ります。</value></data>
+  <data name="Free installations not seen for 90 days" xml:space="preserve"><value>90 日間確認されていないインストールを解放</value></data>
+  <data name="No installation was older than 90 days." xml:space="preserve"><value>90 日を超えたインストールはありませんでした。</value></data>
+  <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>90 日間確認されていないインストールを解放しました。</value></data>
 </root>

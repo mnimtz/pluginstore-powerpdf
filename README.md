@@ -363,6 +363,25 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Code check of the day (S1.4.3, client 1.4.2):** three independent reviews of
+all changes since S1.3.0, with these fixes:
+- Installation seats are claimed one at a time (6 parallel downloads for 2
+  seats: exactly 2), with a unique index and retries on a busy database.
+- Links in mails to admins only follow trusted hosts.
+- Display names are compared culture-independently, and the reply limit is
+  counted per account.
+- The plug-in page pages through all reports again.
+- The packers require author and contact.
+- `pluginstore_bin.h` gets `PLUGINSTORE_BIN_DLLS` and
+  `PluginStoreBinAvailable()`: a missing DLL never falls back to the Windows
+  search.
+- Client 1.4.2 removes several add-ons one by one (a locked one does not stop
+  the others) and fetches the whole catalog for the code preview.
+- The client keeps the last security block list across restarts, and its
+  staging folder gives its owner no implicit rights.
+- Installed add-ons that are no longer offered are named from the manifest's
+  name and never offer an update.
+
 **Customer codes and installations (S1.4.2, client 1.4.1):**
 - The store window keeps up to 10 customer codes. Each code shows its customer
   and the add-ons it unlocks.
@@ -377,6 +396,14 @@ The AI review aid in the dossier is shown to reviewers and admins only.
   the seat (`POST /api/deliveries/release`).
 - When every seat is in use, a new installation is refused with a clear
   message (`SEATS_EXHAUSTED`).
+- The limit is a fair-use count, not copy protection (S1.4.3). Claims are
+  serialized, and a unique index keeps one seat per installation. New seats
+  are limited to 200 per address and hour.
+- Releases also work for paused or ended deliveries. Freed entries are
+  deleted after 180 days, and the portal can free all installations not seen
+  for 90 days at once.
+- `maxInstalls` is checked before anything is saved and applies to private
+  add-ons only.
 - The customer page shows "Installations: 3 / 10" with every installation and
   a "Free" button. The store window shows the same count per add-on.
 - `GET /api/customer-code` also returns the add-on ids and installations.

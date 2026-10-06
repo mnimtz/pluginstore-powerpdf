@@ -1070,4 +1070,9 @@
   <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Zadejte počet instalací nebo ponechte pole prázdné pro neomezený počet.</value></data>
   <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Jedna položka na každého uživatele Windows klienta Store; ukládá se pouze anonymní číslo. Odebráním doplňku se jeho položka uvolní; pokud byl počítač resetován, uvolněte položku sami.</value></data>
   <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Uvolnit tuto instalaci? Doplněk bude na daném počítači fungovat i nadále, dokud nebude aktualizován nebo přeinstalován; místo může využít jiný počítač.</value></data>
+  <data name="The {0} most recently seen installations are listed; the API lists all." xml:space="preserve"><value>Zobrazují se naposledy viděné instalace (max. {0}); rozhraní API zobrazuje všechny.</value></data>
+  <data name="Free every installation not seen for 90 days? Their computers keep the add-on until it is updated or reinstalled." xml:space="preserve"><value>Uvolnit všechny instalace, které nebyly viděny 90 dní? Počítače si doplněk ponechají, dokud nebude aktualizován nebo přeinstalován.</value></data>
+  <data name="Free installations not seen for 90 days" xml:space="preserve"><value>Uvolnit instalace neviděné 90 dní</value></data>
+  <data name="No installation was older than 90 days." xml:space="preserve"><value>Žádná instalace nebyla starší než 90 dní.</value></data>
+  <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>Instalace neviděné 90 dní byly uvolněny.</value></data>
 </root>

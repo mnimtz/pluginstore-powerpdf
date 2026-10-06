@@ -106,7 +106,7 @@ public class PackageValidator
     /// <summary>bin/ (S1.4.0): the add-on's own DLLs, installed to Plug-Ins\&lt;Name&gt;\bin\. DLLs only.</summary>
     public const int MaxBinFiles = 64;
     private static readonly System.Text.RegularExpressions.Regex BinPath =
-        new(@"^bin/[A-Za-z0-9][A-Za-z0-9_.-]{0,63}\.dll$", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        new(@"^bin/[A-Za-z0-9][A-Za-z0-9_.-]{0,63}\.dll\z", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
     /// <summary>Id prefixes of the store operators; only admins create packages there.</summary>
     private static readonly string[] ReservedIdPrefixes = { "com.tungsten.", "com.kofax.", "com.nuance." };
     private static string Printable(string s) => new(s.Select(c => c < 0x20 || c == 0x7F ? '?' : c).ToArray());
@@ -616,7 +616,8 @@ public class PackageValidator
         {
             var mine = new HashSet<string>(manifest.BinFiles, StringComparer.OrdinalIgnoreCase);
             var others = await _db.PackageVersions.AsNoTracking()
-                .Where(v => v.PackageId != manifest.Id && v.Status != VersionStatus.Rejected && v.Status != VersionStatus.Withdrawn)
+                // withdrawn versions count: they may still be installed somewhere (S1.4.3)
+                .Where(v => v.PackageId != manifest.Id && v.Status != VersionStatus.Rejected)
                 .Select(v => new { v.PackageId, v.ManifestJson, Private = _db.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private") })
                 .ToListAsync();
             var reported = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -999,6 +1000,10 @@ public class PackageValidator
                     "A single DLL may be at most 120 MB uncompressed.");
                 continue;
             }
+            // a name of the add-on's own (S1.4.3): <ZxtName>... never collides with other software in the process
+            if (manifest.ZxtName.Length > 0 && !stem.StartsWith(manifest.ZxtName.ToLowerInvariant(), StringComparison.Ordinal))
+                report.Warn("BIN_NAME_GENERIC", $"'{path}' does not start with the plug-in name '{manifest.ZxtName}'.",
+                    $"Name your DLLs after the plug-in (e.g. bin/{manifest.ZxtName}_core.dll): all add-ons and Power PDF share one process, where one DLL name is one module.");
             CheckBinPe(report, path, bytes, bundled);
             CheckCapabilities(report, path, bytes, root);
             manifest.BinFiles.Add(e.Name);
@@ -1014,7 +1019,10 @@ public class PackageValidator
     /// <summary>Names a DLL in bin/ must not use: Windows, the C/C++ runtimes, MFC and other system libraries.</summary>
     private static bool IsReservedDllName(string stem) =>
         KnownImportPrefixes.Any(p => !p.EndsWith('-') && stem == p) ||
-        new[] { "api-ms-", "ext-ms-", "vcruntime", "msvcp", "msvcr", "ucrtbase", "concrt", "vccorlib", "mfcm" }.Any(p => stem.StartsWith(p, StringComparison.Ordinal)) ||
+        new[] { "api-ms-", "ext-ms-", "vcruntime", "msvcp", "msvcr", "ucrtbase", "concrt", "vccorlib", "mfcm", "vcomp",
+                // widespread libraries (S1.4.3): another component of the process may load the same name
+                "libcrypto", "libssl", "zlib", "sqlite3", "libcurl", "icu", "qt5", "qt6", "libxml2", "libiconv", "libpng", "libjpeg",
+                "freetype", "pdfium", "libgcc", "libstdc", "libwinpthread", "onnxruntime", "opencv" }.Any(p => stem.StartsWith(p, StringComparison.Ordinal)) ||
         System.Text.RegularExpressions.Regex.IsMatch(stem, @"^mfc\d") ||
         stem is "advapi32" or "kernel32" or "user32" or "ntdll" or "comctl32" or "dbghelp" or "msvcrt" or "zlib1" or "libcrypto" or "libssl";
 

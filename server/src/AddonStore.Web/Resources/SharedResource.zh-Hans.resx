@@ -1070,4 +1070,9 @@
   <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>请输入安装数，或将该字段留空表示无限制。</value></data>
   <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Store 客户端的每个 Windows 用户对应一个条目；仅存储一个匿名编号。删除加载项会释放其条目；如果计算机已重置，请自行释放条目。</value></data>
   <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>是否释放此安装？在更新或重新安装之前，该加载项将继续在该计算机上运行；此席位可供其他计算机使用。</value></data>
+  <data name="The {0} most recently seen installations are listed; the API lists all." xml:space="preserve"><value>列出最近检测到的 {0} 个安装；API 会列出全部。</value></data>
+  <data name="Free every installation not seen for 90 days? Their computers keep the add-on until it is updated or reinstalled." xml:space="preserve"><value>是否释放所有 90 天未检测到的安装？在更新或重新安装之前，这些计算机上将保留该加载项。</value></data>
+  <data name="Free installations not seen for 90 days" xml:space="preserve"><value>释放 90 天未检测到的安装</value></data>
+  <data name="No installation was older than 90 days." xml:space="preserve"><value>没有超过 90 天的安装。</value></data>
+  <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>已释放 90 天未检测到的安装。</value></data>
 </root>

@@ -616,8 +616,8 @@ public static class ApiEndpoints
                 .Where(p => !string.IsNullOrWhiteSpace(p)).Select(p => p.Trim()).Distinct().Take(50).ToList();
             if (ids.Count == 0) return Fail("RELEASE_INVALID", "Send packageId or packages.", 400);
             if (SeatService.InstallIdOf(ctx) is null) return Fail("INSTALL_ID_MISSING", "Send the installation id in the X-Install-Id header.", 400);
-            var grants = (await customers.GrantsAsync(ctx)).Where(g => ids.Contains(g.Package.Id)).Select(g => g.Delivery).ToList();
-            var released = await seatsSvc.ReleaseAsync(ctx, grants);
+            var dels = await customers.DeliveriesOfCodesAsync(ctx, ids);   // also paused or ended deliveries (S1.4.3)
+            var released = await seatsSvc.ReleaseAsync(ctx, dels);
             return Results.Json(new { ok = true, data = new { released } });
         });
 
@@ -1111,6 +1111,7 @@ public static class ApiEndpoints
             var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
             if (c is null || !CustomerService.CanSee(ctx.User, c, user.Id)) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
             if (!CustomerService.CanManage(ctx.User, c, user.Id)) return Fail("NOT_OWNER", "Only the creator of the customer or an admin can deliver to it.", 403);
+            if (await cs.CheckMaxInstallsAsync(body.PackageId ?? "", body.MaxInstalls) is { } maxErr) return Fail("DELIVERY_INVALID", maxErr, 400);
             var r = await cs.CreateDeliveryAsync(c, body.PackageId ?? "", new(body.Beta?.Mode, body.Beta?.Version),
                 new(body.Live?.Mode, body.Live?.Version), AsUtc(body.StartsAt), AsUtc(body.EndsAt), body.OwnCode ?? false, user, ctx.User.IsInRole("Admin"));
             if (!r.Ok) return Fail(r.Code, r.Message, r.Code is "PACKAGE_NOT_FOUND" ? 404 : r.Code is "NOT_OWNER" ? 403 : r.Code is "DELIVERY_EXISTS" ? 409 : 400,
@@ -1143,6 +1144,7 @@ public static class ApiEndpoints
         {
             var (d, c, error, user) = await LoadDelivery(did, ctx, db, users);
             if (error is not null) return error;
+            if (await cs.CheckMaxInstallsAsync(d!.PackageId, body.MaxInstalls) is { } maxErr) return Fail("DELIVERY_INVALID", maxErr, 400);
             var clear = body.ClearDates == true;
             var r = await cs.UpdateDeliveryAsync(d!, body.Beta is null ? null : new(body.Beta.Mode, body.Beta.Version),
                 body.Live is null ? null : new(body.Live.Mode, body.Live.Version),
@@ -1167,13 +1169,16 @@ public static class ApiEndpoints
             return Results.Json(new { ok = true, data = await cs.DescribeAsync(c!, true, UiLang(ctx)) });
         }).RequireAuthorization("ApiOrCookie");
 
-        api.MapGet("/deliveries/{did:int}/seats", async (int did, HttpContext ctx, AppDbContext db, UserManager<AppUser> users) =>
+        api.MapGet("/deliveries/{did:int}/seats", async (int did, int? limit, int? offset, HttpContext ctx, AppDbContext db, UserManager<AppUser> users) =>
         {
             var (d, c, error, user) = await LoadDelivery(did, ctx, db, users);
             if (error is not null) return error;
-            var seats = await db.DeliverySeats.AsNoTracking().Where(s => s.DeliveryId == did && s.ReleasedAt == null).OrderBy(s => s.FirstAt)
+            var q = db.DeliverySeats.AsNoTracking().Where(s => s.DeliveryId == did && s.ReleasedAt == null);
+            var used = await q.CountAsync();
+            var take = Math.Clamp(limit ?? 100, 1, 500); var skip = Math.Max(offset ?? 0, 0);
+            var seats = await q.OrderByDescending(s => s.LastSeenAt).Skip(skip).Take(take)
                 .Select(s => new { id = s.Id, installation = s.InstallHash.Substring(0, 8), version = s.Version, firstAt = s.FirstAt, lastSeenAt = s.LastSeenAt }).ToListAsync();
-            return Results.Json(new { ok = true, data = new { delivery = did, max = d!.MaxInstalls, used = seats.Count, seats } });
+            return Results.Json(new { ok = true, data = new { delivery = did, max = d!.MaxInstalls, used, limit = take, offset = skip, seats } });
         }).RequireAuthorization("ApiOrCookie");
 
         api.MapPost("/deliveries/{did:int}/promote", async (int did, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService cs) =>
@@ -1406,7 +1411,8 @@ public static class ApiEndpoints
                 var claim = await seatsSvc.ClaimAsync(ctx, dels, version);
                 if (!claim.Ok)
                     return Results.Json(new { ok = false, error = new { code = claim.Code, message = claim.Message,
-                        hint = "Installations are counted per Windows user of the store client; a removal frees one.", used = claim.Used, max = claim.Max } }, statusCode: 403);
+                        hint = "Installations are counted per Windows user of the store client; a removal frees one.", used = claim.Used, max = claim.Max } },
+                        statusCode: claim.Code switch { "SEATS_BUSY" => 503, "SEATS_RATE_LIMITED" => 429, _ => 403 });
             }
             // atomic increment: concurrent downloads must not lose counts
             await db.PackageVersions.Where(x => x.Id == v.Id).ExecuteUpdateAsync(s => s.SetProperty(x => x.Downloads, x => x.Downloads + 1));

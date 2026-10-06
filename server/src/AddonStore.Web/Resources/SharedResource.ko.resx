@@ -1070,4 +1070,9 @@
   <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>설치 수를 입력하거나 무제한으로 하려면 필드를 비워 두십시오.</value></data>
   <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Store 클라이언트의 Windows 사용자마다 항목이 하나씩 생성되며, 익명 번호만 저장됩니다. 추가 기능을 제거하면 해당 항목이 해제됩니다. 컴퓨터를 초기화한 경우에는 항목을 직접 해제하십시오.</value></data>
   <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>이 설치를 해제하시겠습니까? 추가 기능은 업데이트되거나 다시 설치될 때까지 해당 컴퓨터에서 계속 작동합니다. 이 자리는 다른 컴퓨터에서 사용할 수 있습니다.</value></data>
+  <data name="The {0} most recently seen installations are listed; the API lists all." xml:space="preserve"><value>최근에 확인된 설치 {0}개가 표시됩니다. API에서는 모두 표시됩니다.</value></data>
+  <data name="Free every installation not seen for 90 days? Their computers keep the add-on until it is updated or reinstalled." xml:space="preserve"><value>90일 동안 확인되지 않은 모든 설치를 해제하시겠습니까? 해당 컴퓨터에서는 추가 기능이 업데이트되거나 다시 설치될 때까지 유지됩니다.</value></data>
+  <data name="Free installations not seen for 90 days" xml:space="preserve"><value>90일 동안 확인되지 않은 설치 해제</value></data>
+  <data name="No installation was older than 90 days." xml:space="preserve"><value>90일이 지난 설치가 없습니다.</value></data>
+  <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>90일 동안 확인되지 않은 설치를 해제했습니다.</value></data>
 </root>

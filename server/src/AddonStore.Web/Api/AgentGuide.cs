@@ -532,9 +532,20 @@ Rules (checked on upload):
   checks as the .zxt: imports, network and system access, hardening,
   secrets, licenses (declare third-party DLLs in `thirdParty`).
 - A name of its own: all add-ons run in one Power PDF process, where one DLL
-  name is one module. Names of Windows, runtime or Power PDF libraries are
-  refused (`BIN_NAME_RESERVED`), and so is a name another add-on in the
-  store already ships (`BIN_NAME_TAKEN`). Use your plug-in as prefix.
+  name is one module. Names of Windows, runtime, Power PDF or widespread
+  libraries (OpenSSL, zlib, SQLite, curl, ICU, Qt and others) are refused
+  (`BIN_NAME_RESERVED`), and so is a name another add-on in the store ships or
+  shipped (`BIN_NAME_TAKEN`). Start every DLL name with the plug-in name
+  (`BIN_NAME_GENERIC` warns otherwise), e.g. `MyPlugin_core.dll`; rename
+  third-party DLLs and build them with that name.
+- In `pluginstore_bin.h`, list your DLLs in `PLUGINSTORE_BIN_DLLS`: a listed
+  DLL that is missing or does not load never falls back to the Windows search
+  (no DLL from elsewhere is loaded instead), and `PluginStoreBinAvailable()`
+  at start-up tells the plug-in whether all of them load, so it can switch a
+  feature off instead of failing later.
+- Keep the exports of a DLL compatible within a major version: after an
+  update the old .zxt stays loaded until Power PDF restarts and may load the
+  new DLL.
 - Store clients before 1.4.0 do not install bin/: they are offered the
   newest version without bin/ (or none), and update themselves first.
 - Update and removal replace or delete bin\ together with the data folder;
@@ -933,6 +944,13 @@ the id per delivery is stored. The customer page and
 was reset). `data.deliveries[].installs` (`used`, `max`) is in the customer
 API; the code check reports `data.installs` per add-on, which the store
 window shows as "Installations: 3/10".
+The count is a fair-use limit, not copy protection: it counts installations
+of the store client, and a removal frees one; say so in agreements with
+customers. New installations are limited to 200 per network
+address and hour (`SEATS_RATE_LIMITED`, 429), freed entries are deleted after 180
+days, and the customer page frees all installations not seen for 90 days in
+one step. A limit applies to private add-ons only (public ones are
+downloadable by everyone); validation happens before anything is saved.
 Developers manage their own customers and may deliver every add-on (also
 other developers' private ones; the owner gets an email); admins see and
 manage all, reviewers read. Admins get an email when a
@@ -1128,6 +1146,7 @@ be free of warnings before review. Info is for information only.
 | BIN_NAME_TAKEN | error | Another add-on in the store already ships a DLL with that name. |
 | BIN_IMPORT_NOT_DELAYED | error | The .zxt imports a DLL of bin/ directly instead of delay-loading it. |
 | BIN_INCLUDED | info | The add-on brings DLLs of its own (bin/). |
+| BIN_NAME_GENERIC | warning | A DLL in bin/ does not start with the plug-in name. |
 | NAME_NOT_LOCALIZED | warning | `name` lacks some of the 16 languages; the catalog shows the English name there (manifest or PATCH). |
 | CHANGELOG_EMPTY | error | `changelog` is missing or empty. |
 | LANG_TEXT_INCOMPLETE | error | `description` or `changelog` lacks one of the 16 languages. |
@@ -1289,6 +1308,8 @@ be free of warnings before review. Info is for information only.
 | SOURCE_MISSING | error (404) | No source stored for this version (download). |
 | CODE_MISSING | error (400) | GET /api/customer-code without the X-Customer-Code header. |
 | SEATS_EXHAUSTED | error (403) | Download of a delivered add-on: every installation the delivery allows is in use. |
+| SEATS_RATE_LIMITED | error (429) | More than 200 new installations from one network address within an hour. |
+| SEATS_BUSY | error (503) | The store could not record the installation right now (database busy); try again. |
 | INSTALL_ID_MISSING | error (400/403) | A limited delivery (or the release call) without the X-Install-Id header (store client before 1.4.1). |
 | RELEASE_INVALID | error (400) | POST /api/deliveries/release without packageId or packages. |
 | SEAT_NOT_FOUND | error (404) | DELETE /api/deliveries/{did}/seats/{sid}: no active installation with that id. |

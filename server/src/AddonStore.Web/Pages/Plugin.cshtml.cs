@@ -80,7 +80,7 @@ public class PluginModel : PageModel
                                        .Select(g => new { g.Key, N = g.Count() }).ToListAsync())
             if (g.Key is >= 1 and <= 5) RatingDist[g.Key - 1] = g.N;
         Feedbacks = (IsOwner || IsAdmin)
-            ? await _db.Feedbacks.AsNoTracking().Where(f => f.PackageId == Pkg.Id).OrderByDescending(f => f.Id).Take(25).ToListAsync()
+            ? await _db.Feedbacks.AsNoTracking().Where(f => f.PackageId == Pkg.Id).OrderByDescending(f => f.Id).Take(1000).ToListAsync()   // the pager shows 25/50/100
             : new();
         var ai = await _ai.ConfigAsync();
         AiReviewOn = CanReview && ai.On && ai.Review;

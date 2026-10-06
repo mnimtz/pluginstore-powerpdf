@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using AddonStore.Web.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace AddonStore.Web.Services;
 
@@ -28,9 +29,12 @@ public class IssueService
     private readonly AuditService _audit;
     private readonly SettingsService _settings;
 
-    public IssueService(AppDbContext db, NotificationService notify, AuditService audit, SettingsService settings)
+    private readonly Microsoft.Extensions.Caching.Memory.IMemoryCache? _cache;
+
+    public IssueService(AppDbContext db, NotificationService notify, AuditService audit, SettingsService settings,
+                        Microsoft.Extensions.Caching.Memory.IMemoryCache? cache = null)
     {
-        _db = db; _notify = notify; _audit = audit; _settings = settings;
+        _db = db; _notify = notify; _audit = audit; _settings = settings; _cache = cache;
     }
 
     public record AttachmentIn(string? Name, string? ContentType, string? Data);
@@ -185,8 +189,12 @@ public class IssueService
         {
             if (string.IsNullOrEmpty(f.Email)) return (null, new("NO_REPLY_ADDRESS", "The reporter left no email address; add an internal note instead."));
             var dayStart = DateTime.UtcNow.Date;
-            if (await _db.FeedbackNotes.CountAsync(n => n.Kind == "reply" && n.Author == user.DisplayName && n.At >= dayStart) >= MaxRepliesPerDay)
+            // per account, not per display name (a rename must not reset it, S1.4.3)
+            var perUser = _cache?.GetOrCreate($"replies:{user.Id}:{dayStart:yyyyMMdd}", e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(25); return new int[1]; });
+            if (await _db.FeedbackNotes.CountAsync(n => n.Kind == "reply" && n.Author == user.DisplayName && n.At >= dayStart) >= MaxRepliesPerDay ||
+                (perUser is not null && perUser[0] >= MaxRepliesPerDay))
                 return (null, new("RATE_LIMITED", $"At most {MaxRepliesPerDay} replies to reporters per day."));
+            if (perUser is not null) lock (perUser) perUser[0]++;
             var pkg = await _db.Packages.AsNoTracking().Include(p => p.Versions).FirstOrDefaultAsync(p => p.Id == f.PackageId);
             var name = pkg is null ? f.PackageId
                 : CatalogUi.DisplayName(pkg, pkg.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault(), "en");

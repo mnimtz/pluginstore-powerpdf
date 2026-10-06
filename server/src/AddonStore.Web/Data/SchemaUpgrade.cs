@@ -144,7 +144,9 @@ public static class SchemaUpgrade
             "ALTER TABLE Deliveries ADD COLUMN MaxInstalls INTEGER NULL",
             "CREATE TABLE IF NOT EXISTS DeliverySeats (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, DeliveryId INTEGER NOT NULL, " +
                 "InstallHash TEXT NOT NULL, Version TEXT NOT NULL, FirstAt TEXT NOT NULL, LastSeenAt TEXT NOT NULL, ReleasedAt TEXT NULL, ReleasedBy TEXT NULL)",
-            "CREATE INDEX IF NOT EXISTS IX_DeliverySeats_DeliveryId_InstallHash ON DeliverySeats (DeliveryId, InstallHash)"
+            "CREATE INDEX IF NOT EXISTS IX_DeliverySeats_DeliveryId_InstallHash ON DeliverySeats (DeliveryId, InstallHash)",
+            // one active seat per installation and delivery (S1.4.3)
+            "CREATE UNIQUE INDEX IF NOT EXISTS UX_DeliverySeats_Active ON DeliverySeats (DeliveryId, InstallHash) WHERE ReleasedAt IS NULL"
         })
         {
             // Only what is missing runs (S0.18.1): on the network share every statement

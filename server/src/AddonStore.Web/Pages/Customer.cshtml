@@ -98,8 +98,8 @@
                 <span class="muted small">@L["Last activity"]: @(del.LastSeenAt is null ? "–" : Time.Fmt(del.LastSeenAt))</span>
                 @if (d.Visibility == "private")
                 {
-                    var full = del.MaxInstalls is int mx && d.Seats.Count >= mx;
-                    <span class="badge @(full ? "beta" : "submitted")" title="@L["Installations in use / allowed"]">@L["Installations"]: @d.Seats.Count / @(del.MaxInstalls?.ToString() ?? L["unlimited"].Value)</span>
+                    var full = del.MaxInstalls is int mx && d.SeatCount >= mx;
+                    <span class="badge @(full ? "beta" : "submitted")" title="@L["Installations in use / allowed"]">@L["Installations"]: @d.SeatCount / @(del.MaxInstalls?.ToString() ?? L["unlimited"].Value)</span>
                 }
             </div>
             <p class="small" style="margin:6px 0">
@@ -136,10 +136,10 @@
                     <form method="post" asp-page-handler="Code" asp-route-id="@c.Id"><input type="hidden" name="deliveryId" value="@del.Id" /><input type="hidden" name="transitionDays" value="14" />
                         <button type="submit" class="btn small secondary">@L["Code for this add-on only"]</button></form>
                 </div>
-                @if (d.Visibility == "private" && d.Seats.Count > 0)
+                @if (d.Visibility == "private" && d.SeatCount > 0)
                 {
                     <details style="margin-top:8px">
-                        <summary class="small" style="cursor:pointer">@L["Installations"] (@d.Seats.Count)</summary>
+                        <summary class="small" style="cursor:pointer">@L["Installations"] (@d.SeatCount)</summary>
                         <p class="small muted">@L["One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset."]</p>
                         <div class="table-wrap"><table>
                             <tr><th>@L["Installation"]</th><th>@L["Version"]</th><th>@L["First seen"]</th><th>@L["Last seen"]</th><th class="actions"></th></tr>
@@ -160,6 +160,15 @@
                                 </tr>
                             }
                         </table></div>
+                        @if (d.SeatCount > d.Seats.Count)
+                        {
+                            <p class="small muted">@L["The {0} most recently seen installations are listed; the API lists all.", d.Seats.Count]</p>
+                        }
+                        <form method="post" asp-page-handler="ReleaseStale" asp-route-id="@c.Id" style="margin-top:6px"
+                              data-confirm="@L["Free every installation not seen for 90 days? Their computers keep the add-on until it is updated or reinstalled."]">
+                            <input type="hidden" name="did" value="@del.Id" />
+                            <button type="submit" class="btn small secondary">@L["Free installations not seen for 90 days"]</button>
+                        </form>
                     </details>
                 }
                 <details style="margin-top:8px">

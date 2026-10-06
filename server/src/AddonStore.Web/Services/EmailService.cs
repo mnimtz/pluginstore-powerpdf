@@ -125,7 +125,16 @@ public class NotificationService
         {
             // behind the App Service front end the request itself arrives as http
             var proto = r.Headers["X-Forwarded-Proto"].ToString().Split(',')[0].Trim();
-            s_lastRequestBase = $"{(proto is "https" or "http" ? proto : r.Scheme)}://{r.Host}{r.PathBase}".TrimEnd('/');
+            var here = $"{(proto is "https" or "http" ? proto : r.Scheme)}://{r.Host}{r.PathBase}".TrimEnd('/');
+            // only a trusted host is remembered for later background mails (S1.4.3): an anonymous request
+            // with a forged Host header must not decide where links in mails to admins point
+            if (IsTrustedHost(r.Host.Host)) s_lastRequestBase = here;
+            else
+            {
+                if (s_lastRequestBase.Length > 0) return s_lastRequestBase;
+                var site = Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME");
+                return string.IsNullOrEmpty(site) ? here : $"https://{site}";   // set App.PublicBaseUrl elsewhere
+            }
         }
         return s_lastRequestBase;
     }
@@ -143,13 +152,18 @@ public class NotificationService
         var r = _http.HttpContext?.Request;
         if (r is null || !r.Host.HasValue) return null;
         var host = r.Host.Host;
-        var trusted = host is "localhost" or "127.0.0.1" or "[::1]" or "::1" ||
-                      string.Equals(host, Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME"), StringComparison.OrdinalIgnoreCase) ||
-                      (_http.HttpContext!.RequestServices.GetService<IConfiguration>()?["App:TrustedHosts"] ?? "")
-                          .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                          .Any(h => string.Equals(h, host, StringComparison.OrdinalIgnoreCase));
-        return trusted ? await BaseUrlAsync() : null;
+        if (!IsTrustedHost(host)) return null;
+        // never the client's scheme or port off loopback: a secret link is https on the default port (S1.4.3)
+        return host is "localhost" or "127.0.0.1" or "[::1]" or "::1" ? await BaseUrlAsync() : $"https://{host}{r.PathBase}".TrimEnd('/');
     }
+
+    /// <summary>Loopback, the App Service host name or App:TrustedHosts (S1.3.1/S1.4.3).</summary>
+    private bool IsTrustedHost(string host) =>
+        host is "localhost" or "127.0.0.1" or "[::1]" or "::1" ||
+        string.Equals(host, Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME"), StringComparison.OrdinalIgnoreCase) ||
+        (_http.HttpContext?.RequestServices.GetService<IConfiguration>()?["App:TrustedHosts"] ?? "")
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Any(h => string.Equals(h, host, StringComparison.OrdinalIgnoreCase));
 
     public async Task<bool> IsEnabledAsync(string eventKey) =>
         await _settings.GetAsync("Notify." + eventKey) != "0";

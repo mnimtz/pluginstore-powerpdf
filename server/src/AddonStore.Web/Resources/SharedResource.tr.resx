@@ -1070,4 +1070,9 @@
   <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Bir yükleme sayısı girin veya sınırsız için alanı boş bırakın.</value></data>
   <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Store istemcisinin her Windows kullanıcısı için bir giriş; yalnızca anonim bir numara depolanır. Eklentiyi kaldırmak girişini serbest bırakır; bir bilgisayar sıfırlandığında girişi kendiniz serbest bırakın.</value></data>
   <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Bu yükleme serbest bırakılsın mı? Eklenti, güncellenene veya yeniden yüklenene kadar o bilgisayarda çalışmaya devam eder; bu yer başka bir bilgisayar tarafından kullanılabilir.</value></data>
+  <data name="The {0} most recently seen installations are listed; the API lists all." xml:space="preserve"><value>En son görülen {0} yükleme listelenir; API tümünü listeler.</value></data>
+  <data name="Free every installation not seen for 90 days? Their computers keep the add-on until it is updated or reinstalled." xml:space="preserve"><value>90 gündür görülmeyen tüm yüklemeler serbest bırakılsın mı? Eklenti, güncellenene veya yeniden yüklenene kadar bilgisayarlarda kalır.</value></data>
+  <data name="Free installations not seen for 90 days" xml:space="preserve"><value>90 gündür görülmeyen yüklemeleri serbest bırak</value></data>
+  <data name="No installation was older than 90 days." xml:space="preserve"><value>90 günden eski yükleme yoktu.</value></data>
+  <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>90 gündür görülmeyen yüklemeler serbest bırakıldı.</value></data>
 </root>

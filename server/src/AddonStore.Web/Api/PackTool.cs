@@ -69,7 +69,8 @@ foreach ($f in 'id', 'version', 'name', 'description', 'changelog', 'category', 
 }
 if ($m.version -notmatch '^\d+\.\d+\.\d+(\.\d+)?$') { Fail "version '$($m.version)' is not three or four numbers (e.g. 1.2.3 or 2026.4.0.3)" }
 if ($m.id -notmatch '^[a-z][a-z0-9]*(\.[a-z0-9]+)+$') { Fail "id '$($m.id)' is not reverse-DNS lowercase (e.g. com.example.myplugin)" }
-foreach ($f in 'author', 'contactEmail', 'minPowerPdfVersion') { if (-not $m.$f) { Warn "manifest field '$f' is not set" } }
+foreach ($f in 'author', 'contactEmail') { if (-not $m.$f) { Fail "manifest field '$f' is not set (mandatory: the catalog shows it)" } }
+if (-not $m.minPowerPdfVersion) { Warn "manifest field 'minPowerPdfVersion' is not set" }
 $langs = 'en', 'de', 'fr', 'it', 'es', 'nl', 'pt', 'da', 'fi', 'nb', 'sv', 'pl', 'cs', 'hu', 'ru', 'tr'
 foreach ($f in 'description', 'changelog') {
     if ($m.$f -is [psobject] -and -not ($m.$f -is [string])) {

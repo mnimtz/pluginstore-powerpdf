@@ -1070,4 +1070,9 @@
   <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Insira um número de instalações ou deixe o campo vazio para ilimitado.</value></data>
   <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Uma entrada por usuário do Windows do cliente do Store; apenas um número anônimo é armazenado. A remoção do suplemento libera sua entrada; libere você mesmo uma entrada quando um computador tiver sido redefinido.</value></data>
   <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Liberar esta instalação? O suplemento continua funcionando naquele computador até ser atualizado ou reinstalado; a vaga pode ser usada por outro computador.</value></data>
+  <data name="The {0} most recently seen installations are listed; the API lists all." xml:space="preserve"><value>As {0} instalações vistas mais recentemente são listadas; a API lista todas.</value></data>
+  <data name="Free every installation not seen for 90 days? Their computers keep the add-on until it is updated or reinstalled." xml:space="preserve"><value>Liberar todas as instalações não vistas há 90 dias? Os computadores mantêm o suplemento até que ele seja atualizado ou reinstalado.</value></data>
+  <data name="Free installations not seen for 90 days" xml:space="preserve"><value>Liberar instalações não vistas há 90 dias</value></data>
+  <data name="No installation was older than 90 days." xml:space="preserve"><value>Nenhuma instalação tinha mais de 90 dias.</value></data>
+  <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>As instalações não vistas há 90 dias foram liberadas.</value></data>
 </root>

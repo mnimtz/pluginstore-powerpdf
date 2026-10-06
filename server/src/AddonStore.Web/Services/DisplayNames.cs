@@ -11,7 +11,10 @@ public static class DisplayNames
 {
     public static async Task<bool> TakenAsync(IQueryable<AppUser> users, string name, string? exceptUserId = null)
     {
-        var n = name.Trim().ToLower();
-        return await users.AnyAsync(u => u.Id != exceptUserId && u.DisplayName.ToLower() == n);
+        // compared in .NET, culture-independent (S1.4.3): SQLite lower() folds ASCII only, ToLower() follows the UI culture
+        var n = name.Trim();
+        var names = await users.Where(u => u.Id != exceptUserId).Select(u => u.DisplayName).ToListAsync();
+        return names.Any(x => string.Equals(x.Trim(), n, StringComparison.OrdinalIgnoreCase) ||
+                              string.Equals(x.Trim().ToUpperInvariant(), n.ToUpperInvariant(), StringComparison.Ordinal));
     }
 }

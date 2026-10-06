@@ -16,7 +16,9 @@ public class CustomerModel : PageModel
 
     public record CodeRow(CustomerCode Code, string? Plain, bool Valid, string Scope);
     public record DeliveryRow(Delivery Delivery, string Name, string Visibility, List<string> Versions,
-                              string? BetaResolved, string? LiveResolved, bool Effective, List<DeliverySeat> Seats);
+                              string? BetaResolved, string? LiveResolved, bool Effective, List<DeliverySeat> Seats, int SeatCount);
+    /// <summary>Installations listed per delivery on the page (the newest); the API pages through all (S1.4.3).</summary>
+    public const int SeatsShown = 50;
     public record PackageOption(string Id, string Name, string Visibility, List<string> Versions);
 
     public Customer? Cust { get; private set; }
@@ -51,13 +53,14 @@ public class CustomerModel : PageModel
             var pkg = await _db.Packages.AsNoTracking().FirstOrDefaultAsync(p => p.Id == d.PackageId);
             var versions = await _customers.DeliverableVersionsAsync(d.PackageId);
             var priv = pkg?.Visibility == "private";
-            var seats = await _db.DeliverySeats.AsNoTracking().Where(s => s.DeliveryId == d.Id && s.ReleasedAt == null)
-                .OrderByDescending(s => s.LastSeenAt).ToListAsync();   // installations (S1.4.2)
+            var seatQuery = _db.DeliverySeats.AsNoTracking().Where(s => s.DeliveryId == d.Id && s.ReleasedAt == null);
+            var seatCount = await seatQuery.CountAsync();   // installations (S1.4.2); the newest are listed (S1.4.3)
+            var seats = seatCount == 0 ? new List<DeliverySeat>() : await seatQuery.OrderByDescending(s => s.LastSeenAt).Take(SeatsShown).ToListAsync();
             Deliveries.Add(new DeliveryRow(d, pkg is null ? d.PackageId : CatalogUi.DisplayName(pkg, versions.FirstOrDefault(), lang),
                 pkg?.Visibility ?? "public", versions.Select(v => v.Version).ToList(),
                 CustomerService.Resolve(versions, priv, d.BetaMode, d.BetaVersion, false)?.Version,
                 CustomerService.Resolve(versions, priv, d.LiveMode, d.LiveVersion, true)?.Version,
-                d.Status == "active" && (d.StartsAt is null || d.StartsAt <= now) && (d.EndsAt is null || d.EndsAt > now), seats));
+                d.Status == "active" && (d.StartsAt is null || d.StartsAt <= now) && (d.EndsAt is null || d.EndsAt > now), seats, seatCount));
         }
 
         var codes = await _db.CustomerCodes.Where(c => c.CustomerId == id).OrderByDescending(c => c.Id).ToListAsync();
@@ -160,18 +163,31 @@ public class CustomerModel : PageModel
         {
             var d = await OwnDeliveryAsync(id, did);
             if (d is null) return (false, "This action is not allowed for this version.");
-            var r = await _customers.UpdateDeliveryAsync(d, new(betaMode, betaVersion), new(liveMode, liveVersion),
-                Day(startsAt), Day(endsAt)?.AddDays(1), true, status, me, User.IsInRole("Admin"));
-            if (!r.Ok) return (false, r.Message);
-            // installations (S1.4.2): empty = unlimited (an empty field binds as null, hence the marker)
+            // installations (S1.4.2): empty = unlimited (an empty field binds as null, hence the marker);
+            // checked before anything is saved (S1.4.3)
+            int? max = null;
             if (maxInstallsShown)
             {
                 var raw = (maxInstalls ?? "").Trim();
                 if (raw.Length > 0 && !int.TryParse(raw, out _)) return (false, "Enter a number of installations, or leave the field empty for unlimited.");
-                var m = await _customers.SetMaxInstallsAsync(d, raw.Length == 0 ? 0 : int.Parse(raw), me);
-                if (!m.Ok) return (false, "Enter a number of installations, or leave the field empty for unlimited.");
+                max = raw.Length == 0 ? 0 : int.Parse(raw);
+                if (await _customers.CheckMaxInstallsAsync(d.PackageId, max) is not null)
+                    return (false, "Enter a number of installations, or leave the field empty for unlimited.");
             }
+            var r = await _customers.UpdateDeliveryAsync(d, new(betaMode, betaVersion), new(liveMode, liveVersion),
+                Day(startsAt), Day(endsAt)?.AddDays(1), true, status, me, User.IsInRole("Admin"));
+            if (!r.Ok) return (false, r.Message);
+            if (max is not null) await _customers.SetMaxInstallsAsync(d, max, me);
             return (true, "Delivery saved.");
+        });
+
+    public Task<IActionResult> OnPostReleaseStaleAsync(int id, int did) =>
+        ActAsync(id, async me =>
+        {
+            var d = await OwnDeliveryAsync(id, did);
+            if (d is null) return (false, "This action is not allowed for this version.");
+            var n = await HttpContext.RequestServices.GetRequiredService<SeatService>().ReleaseStaleAsync(d.Id, 90, me);
+            return (true, n == 0 ? "No installation was older than 90 days." : "Installations not seen for 90 days were freed.");
         });
 
     public Task<IActionResult> OnPostReleaseSeatAsync(int id, int did, int sid) =>

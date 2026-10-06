@@ -27,6 +27,14 @@
 // DLL loads as usual. Never call SetDllDirectory or SetDefaultDllDirectories: they change
 // the search for the whole Power PDF process and break other plug-ins.
 //
+// Recommended (S1.4.3): list your DLLs before the include, separated by '|':
+//   #define PLUGINSTORE_BIN_DLLS L"MyPlugin_core.dll|MyPlugin_pdf.dll"
+// A listed DLL that is missing from bin\ or does not load never falls back to the
+// Windows search (so no DLL of the same name from elsewhere is loaded); the call raises
+// the usual delay-load exception instead. Call PluginStoreBinAvailable() once at start
+// (e.g. in PlugInMain) and switch the feature off when it returns false, instead of
+// failing on the first call.
+//
 // Explicit loading:  HMODULE h = PluginStoreBinLoad(L"MyPlugin_core.dll");
 // Own delay-load hook: define PLUGINSTORE_BIN_OWN_HOOK before the include and call
 // PluginStoreBinDelayHook(notify, info) from your hook for dliNotePreLoadLibrary.
@@ -63,6 +71,46 @@ inline HMODULE PluginStoreBinLoad(const wchar_t* file)
     return LoadLibraryExW(path, NULL, LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
 }
 
+// Is <name> one of the DLLs listed in PLUGINSTORE_BIN_DLLS?
+inline bool PluginStoreBinIsListed(const wchar_t* name)
+{
+#ifdef PLUGINSTORE_BIN_DLLS
+    const wchar_t* list = PLUGINSTORE_BIN_DLLS;
+    size_t n = name ? wcslen(name) : 0;
+    for (const wchar_t* p = list; n && *p; )
+    {
+        const wchar_t* e = wcschr(p, L'|');
+        size_t len = e ? (size_t)(e - p) : wcslen(p);
+        if (len == n && _wcsnicmp(p, name, n) == 0) return true;
+        if (!e) break;
+        p = e + 1;
+    }
+#else
+    (void)name;
+#endif
+    return false;
+}
+
+// True when every DLL listed in PLUGINSTORE_BIN_DLLS loads from bin\ (true without a list).
+inline bool PluginStoreBinAvailable()
+{
+#ifdef PLUGINSTORE_BIN_DLLS
+    wchar_t name[MAX_PATH];
+    const wchar_t* p = PLUGINSTORE_BIN_DLLS;
+    while (*p)
+    {
+        const wchar_t* e = wcschr(p, L'|');
+        size_t len = e ? (size_t)(e - p) : wcslen(p);
+        if (len == 0 || len >= MAX_PATH) return false;
+        wmemcpy(name, p, len); name[len] = 0;
+        if (!PluginStoreBinLoad(name)) return false;
+        if (!e) break;
+        p = e + 1;
+    }
+#endif
+    return true;
+}
+
 #ifdef PLUGINSTORE_BIN_IMPLEMENT
 #include <delayimp.h>
 
@@ -72,7 +120,15 @@ FARPROC WINAPI PluginStoreBinDelayHook(unsigned notify, PDelayLoadInfo info)
     if (notify != dliNotePreLoadLibrary || !info || !info->szDll) return NULL;
     wchar_t name[MAX_PATH] = { 0 };
     if (MultiByteToWideChar(CP_ACP, 0, info->szDll, -1, name, MAX_PATH) == 0) return NULL;
-    return reinterpret_cast<FARPROC>(PluginStoreBinLoad(name));
+    HMODULE h = PluginStoreBinLoad(name);
+    if (!h && PluginStoreBinIsListed(name))
+    {
+        // a DLL of this add-on: never the Windows search (a same-named DLL elsewhere), fail like delayimp does
+        info->dwLastError = ERROR_MOD_NOT_FOUND;
+        ULONG_PTR args[1] = { reinterpret_cast<ULONG_PTR>(info) };
+        RaiseException(VcppException(ERROR_SEVERITY_ERROR, ERROR_MOD_NOT_FOUND), 0, 1, args);
+    }
+    return reinterpret_cast<FARPROC>(h);
 }
 
 #ifndef PLUGINSTORE_BIN_OWN_HOOK

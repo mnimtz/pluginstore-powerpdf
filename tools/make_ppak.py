@@ -69,7 +69,7 @@ def main():
 
     # author and contactEmail are mandatory in the store (S1.4.1)
     for key in ('author', 'contactEmail'):
-        if not str(spec.get(key, '')).strip():
+        if not (spec.get(key) or '').strip():
             raise SystemExit(f'ABORT: the spec has no "{key}"; the store requires author and contactEmail.')
 
     zxt_name = os.path.basename(spec['zxt']['x64'])
@@ -89,7 +89,7 @@ def main():
         'uninstall': spec.get('uninstall', {}),
     }
     # License declaration is the author's own statement; never invent defaults.
-    # author/contactEmail: shown in the catalog (the validator warns when missing).
+    # author/contactEmail: shown in the catalog (mandatory since S1.4.1, checked above).
     for key in ('thirdParty', 'complianceAudit', 'author', 'contactEmail'):
         if key in spec:
             manifest[key] = spec[key]
@@ -97,6 +97,13 @@ def main():
     # with a customer code). Takes effect on the FIRST upload of the id.
     if spec.get('visibility') in ('public', 'private'):
         manifest['visibility'] = spec['visibility']
+
+    # bin/ DLLs checked before the package is written (no half-written .ppak, S1.4.3)
+    for p in spec.get('bin', []):
+        if not p.lower().endswith('.dll'):
+            raise SystemExit(f'ABORT: bin/ takes DLLs only, not {p}.')
+        if not os.path.isfile(os.path.join(base, p)):
+            raise SystemExit(f'ABORT: bin DLL not found: {p}.')
 
     # Guard: an included MSI must carry exactly the package version, otherwise
     # users get "Repair/Remove" instead of an upgrade (happened with 0.3.1).
@@ -115,8 +122,6 @@ def main():
         for arch, p in spec['zxt'].items():
             z.write(os.path.join(base, p), f'{arch}/{zxt_name}')
         for p in spec.get('bin', []):
-            if not p.lower().endswith('.dll'):
-                raise SystemExit(f'ABORT: bin/ takes DLLs only, not {p}.')
             z.write(os.path.join(base, p), f'bin/{os.path.basename(p)}')
         for item in spec.get('include', []):
             src = os.path.join(base, item['src'])
