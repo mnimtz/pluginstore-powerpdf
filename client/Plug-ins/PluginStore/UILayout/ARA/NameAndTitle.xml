@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GaaihoLayoutTitle>
+    <toolbar name="AddonStore" title="المتجر"/>
+    <PFFGroup name="AddonStore::Store" title="Add-on Store"/>
+    <PFFButton name="AddonStore::Store::Open" title="Add-on Store" tooltip="استعراض المكونات الإضافية لـ Power PDF وتثبيتها"/>
+</GaaihoLayoutTitle>

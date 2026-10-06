@@ -468,7 +468,7 @@ int PSSelfUpdateFinish(const PSCatalogEntry& e, const std::wstring& ppak, HWND o
 {
     // The MSI cannot replace PluginStore.zxt while Power PDF has it loaded, so
     // Power PDF closes first; ask before that happens ("No" is the default).
-    if (MessageBoxW(owner, FPLoc(IDS_PSD_ASK_SELFUPD).c_str(), FPLoc(IDS_PSD_TITLE).c_str(),
+    if (FPMessageBox(owner, FPLoc(IDS_PSD_ASK_SELFUPD).c_str(), FPLoc(IDS_PSD_TITLE).c_str(),
                     MB_YESNO | MB_ICONQUESTION | MB_DEFBUTTON2) != IDYES)
     {
         DeleteFileW(ppak.c_str());

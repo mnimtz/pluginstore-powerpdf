@@ -180,7 +180,7 @@ void PSOfferBlockedRemoval(HWND owner, bool force)
         if (!force && g_asked.count(key)) continue;
         g_asked.insert(key);
         std::wstring msg = FormatW(FPLoc(IDS_PS_BLOCKED_ASK), b.name, b.version, b.reason.empty() ? L"-" : b.reason);
-        if (MessageBoxW(owner, msg.c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON1) != IDYES)
+        if (FPMessageBox(owner, msg.c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON1) != IDYES)
         {
             FPLogW(L"[Store] blocked %s %s: removal postponed by the user", b.id.c_str(), b.version.c_str());
             continue;
@@ -192,14 +192,14 @@ void PSOfferBlockedRemoval(HWND owner, bool force)
         {
             wchar_t err[1024];
             _snwprintf_s(err, _countof(err), _TRUNCATE, FPLoc(IDS_PS_BLOCKED_FAILED).c_str(), b.name.c_str(), rc);
-            MessageBoxW(owner, err, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONERROR);
+            FPMessageBox(owner, err, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONERROR);
         }
     }
     if (removed > 0)
     {
         g_blocked.erase(std::remove_if(g_blocked.begin(), g_blocked.end(), [&](const PSBlocked& b) {
             return !cspath::FileExists(cspath::FindBin((HMODULE)gHINSTANCE) + L"\\Plug-Ins\\" + b.zxtName + L".zxt"); }), g_blocked.end());
-        if (MessageBoxW(owner, FPLoc(IDS_PS_BLOCKED_REMOVED).c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONINFORMATION) == IDYES
+        if (FPMessageBox(owner, FPLoc(IDS_PS_BLOCKED_REMOVED).c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONINFORMATION) == IDYES
             && PSScheduleRestart())
         {
             HWND main = owner ? GetAncestor(owner, GA_ROOTOWNER) : NULL;

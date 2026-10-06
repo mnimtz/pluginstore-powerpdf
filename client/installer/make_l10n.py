@@ -19,6 +19,12 @@ CULTURES = [
     ('es-ES', 3082, 1252), ('nl-NL', 1043, 1252), ('pt-BR', 1046, 1252), ('da-DK', 1030, 1252),
     ('fi-FI', 1035, 1252), ('nb-NO', 1044, 1252), ('sv-SE', 1053, 1252), ('pl-PL', 1045, 1250),
     ('cs-CZ', 1029, 1250), ('hu-HU', 1038, 1250), ('ru-RU', 1049, 1251), ('tr-TR', 1055, 1254),
+    # the five further Power PDF languages (C1.3.0)
+    ('zh-CN', 2052, 936),
+    ('zh-TW', 1028, 950),
+    ('ja-JP', 1041, 932),
+    ('ko-KR', 1042, 949),
+    ('ar-SA', 1025, 1256),
 ]
 
 # NoPowerPdf, ClosePowerPdf, Downgrade, LicenseNote
@@ -166,6 +172,47 @@ EDITION = {
     'ru-RU': "Для надстроек требуется Tungsten Power PDF Business {v} или новее либо любая редакция (Standard, Advanced, Business) начиная с {e}. Сначала обновите Power PDF.",
     'tr-TR': "Eklentiler için Tungsten Power PDF Business {v} veya üstü ya da {e} sürümünden itibaren herhangi bir sürüm (Standard, Advanced, Business) gerekir. Lütfen önce Power PDF'i güncelleyin.",
 }
+
+
+# Texts of the five further Power PDF languages (C1.3.0)
+TEXT.update({
+    'zh-CN': ('在此计算机上未找到 Tungsten Power PDF。请先安装 Power PDF。',
+              '请关闭 Tungsten Power PDF，然后继续。',
+              '已安装较新版本的 Add-on Store。',
+              '以下 MIT 许可证以其英文原文为准。'),
+    'zh-TW': ('在此電腦上找不到 Tungsten Power PDF。請先安裝 Power PDF。',
+              '請關閉 Tungsten Power PDF，然後繼續。',
+              '已安裝較新版本的 Add-on Store。',
+              '下列 MIT 授權以其英文原文為準。'),
+    'ja-JP': ('このコンピューターで Tungsten Power PDF が見つかりませんでした。先に Power PDF をインストールしてください。',
+              'Tungsten Power PDF を閉じてから続行してください。',
+              'Add-on Store の新しいバージョンが既にインストールされています。',
+              '以下の MIT ライセンスは、英語の原文が適用されます。'),
+    'ko-KR': ('이 컴퓨터에서 Tungsten Power PDF를 찾을 수 없습니다. 먼저 Power PDF를 설치하십시오.',
+              'Tungsten Power PDF를 닫고 계속하십시오.',
+              '최신 버전의 Add-on Store가 이미 설치되어 있습니다.',
+              '다음 MIT 라이선스는 영어 원문으로 적용됩니다.'),
+    'ar-SA': ('لم يتم العثور على Tungsten Power PDF على هذا الكمبيوتر. يرجى تثبيت Power PDF أولاً.',
+              'يرجى إغلاق Tungsten Power PDF والمتابعة.',
+              'إصدار أحدث من Add-on Store مثبت بالفعل.',
+              'ينطبق ترخيص MIT التالي بنصه الإنجليزي الأصلي.'),
+})
+TOO_OLD_X = {
+    'zh-CN': 'Add-on Store 需要 Tungsten Power PDF {v} 或更高版本。请先更新 Power PDF。',
+    'zh-TW': 'Add-on Store 需要 Tungsten Power PDF {v} 或更新版本。請先更新 Power PDF。',
+    'ja-JP': 'Add-on Store には Tungsten Power PDF {v} 以降が必要です。先に Power PDF を更新してください。',
+    'ko-KR': 'Add-on Store에는 Tungsten Power PDF {v} 이상이 필요합니다. 먼저 Power PDF를 업데이트하십시오.',
+    'ar-SA': 'يحتاج Add-on Store إلى Tungsten Power PDF {v} أو أحدث. يرجى تحديث Power PDF أولاً.',
+}
+EDITION_X = {
+    'zh-CN': '加载项需要 Tungsten Power PDF Business {v} 或更高版本，或者 {e} 及更高版本的任意版本（Standard、Advanced、Business）。请先更新 Power PDF。',
+    'zh-TW': '增益集需要 Tungsten Power PDF Business {v} 或更新版本，或 {e} 起的任何版本 (Standard、Advanced、Business)。請先更新 Power PDF。',
+    'ja-JP': 'アドインには Tungsten Power PDF Business {v} 以降、または {e} 以降の任意のエディション (Standard、Advanced、Business) が必要です。先に Power PDF を更新してください。',
+    'ko-KR': '추가 기능에는 Tungsten Power PDF Business {v} 이상 또는 {e}부터의 모든 에디션(Standard, Advanced, Business)이 필요합니다. 먼저 Power PDF를 업데이트하십시오.',
+    'ar-SA': 'تحتاج الوظائف الإضافية إلى Tungsten Power PDF Business {v} أو أحدث، أو أي إصدار (Standard و Advanced و Business) بدءًا من {e}. يرجى تحديث Power PDF أولاً.',
+}
+TOO_OLD.update(TOO_OLD_X)
+EDITION.update(EDITION_X)
 
 
 def main():

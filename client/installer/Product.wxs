@@ -275,6 +275,37 @@
                         Name="NameAndTitle.xml" KeyPath="yes" />
                 </Component>
               </Directory>
+              <!-- the five further Power PDF languages (C1.3.0) -->
+              <Directory Id="LANGCHS" Name="CHS">
+                <Component Id="cmpCHS" Guid="{7F1B98EF-CF03-41F3-97AE-EE43E625C1E6}" Win64="yes">
+                  <File Id="filCHS" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\CHS\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGCHT" Name="CHT">
+                <Component Id="cmpCHT" Guid="{6D9790B4-809C-451D-B638-FA2A12AD3BB5}" Win64="yes">
+                  <File Id="filCHT" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\CHT\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGJPN" Name="JPN">
+                <Component Id="cmpJPN" Guid="{18A7F11E-877C-4796-84DE-3717EAD0C6D3}" Win64="yes">
+                  <File Id="filJPN" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\JPN\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGKOR" Name="KOR">
+                <Component Id="cmpKOR" Guid="{CE520AC3-4F2F-4A96-857B-5887839463C2}" Win64="yes">
+                  <File Id="filKOR" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\KOR\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
+              <Directory Id="LANGARA" Name="ARA">
+                <Component Id="cmpARA" Guid="{BA973546-C11E-452A-8A1D-A8F8FCAD5885}" Win64="yes">
+                  <File Id="filARA" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\ARA\NameAndTitle.xml"
+                        Name="NameAndTitle.xml" KeyPath="yes" />
+                </Component>
+              </Directory>
               <Directory Id="LANGTRK" Name="TRK">
                 <Component Id="cmpTRK" Guid="{5DCAE91D-27FB-4BE4-84DC-D9CEC181C231}" Win64="yes">
                   <File Id="filTRK" Source="$(var.ProjectDir)\Plug-ins\PluginStore\UILayout\TRK\NameAndTitle.xml"
@@ -315,6 +346,11 @@
       <ComponentRef Id="cmpHUN" />
       <ComponentRef Id="cmpRUS" />
       <ComponentRef Id="cmpTRK" />
+      <ComponentRef Id="cmpCHS" />
+      <ComponentRef Id="cmpCHT" />
+      <ComponentRef Id="cmpJPN" />
+      <ComponentRef Id="cmpKOR" />
+      <ComponentRef Id="cmpARA" />
     </Feature>
 
     <UIRef Id="WixUI_Minimal" />

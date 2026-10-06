@@ -15,6 +15,9 @@ void         FPLocInit();
 std::wstring FPLoc(UINT id);
 // The LANGID of the strings in use (Power PDF's UI language, else English).
 LANGID       FPLocLangId();
+// Arabic (C1.3.0): right-to-left; message boxes then read and align right to left.
+bool         FPLocIsRtl();
+int          FPMessageBox(HWND owner, LPCWSTR text, LPCWSTR caption, UINT type);
 
 void FPNote(UINT idMsg);
 void FPNoteText(const std::wstring& msg);

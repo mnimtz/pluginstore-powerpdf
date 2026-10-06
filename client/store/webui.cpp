@@ -500,6 +500,7 @@ protected:
             { L"reportStore", IDS_PSW_REPORT_STORE }, { L"noUi", IDS_PSW_NO_UI }, { L"newsTitle", IDS_PSW_NEWS_TITLE }, { L"newsOk", IDS_PSW_NEWS_OK },
         };
         std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) +
+                         (FPLocIsRtl() ? L",\"dir\":\"rtl\"" : L"") +
                          L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") +
                          L",\"code\":{\"has\":" + (PSCustomerCode().empty() ? L"false" : L"true") +
                          L",\"locked\":" + (PSCustomerCodeLocked() ? L"true" : L"false") + L"},\"strings\":{";
@@ -1038,7 +1039,7 @@ protected:
             HWND mainWnd = ::GetAncestor(m_hWnd, GA_ROOTOWNER);
             if (!PSScheduleRestart())
             {
-                ::MessageBoxW(m_hWnd, FPLoc(IDS_PSD_RESTART_FAIL).c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
+                FPMessageBox(m_hWnd, FPLoc(IDS_PSD_RESTART_FAIL).c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
                 return;
             }
             EndDialog(IDOK);

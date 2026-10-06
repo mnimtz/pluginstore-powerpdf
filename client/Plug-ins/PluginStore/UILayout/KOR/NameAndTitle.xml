@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GaaihoLayoutTitle>
+    <toolbar name="AddonStore" title="스토어"/>
+    <PFFGroup name="AddonStore::Store" title="Add-on Store"/>
+    <PFFButton name="AddonStore::Store::Open" title="Add-on Store" tooltip="Power PDF용 플러그 인 찾아보기 및 설치"/>
+</GaaihoLayoutTitle>

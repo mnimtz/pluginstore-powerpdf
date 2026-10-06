@@ -31,7 +31,7 @@ static DCCB1 void DCCB2 OnOpenStore(void* /*data*/)
         wchar_t msg[600];
         _snwprintf_s(msg, _countof(msg), _TRUNCATE, FPLoc(IDS_PS_HOST_TOO_OLD).c_str(), kPSMinHost, host.c_str());
         FPLogW(L"[Store] host %s is older than %s - store not opened", host.c_str(), kPSMinHost);
-        MessageBoxW(NULL, msg, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
+        FPMessageBox(NULL, msg, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
         return;
     }
     // Standard/Advanced before 2026.4: the SDK is for Business only there (C1.1.3).
@@ -43,7 +43,7 @@ static DCCB1 void DCCB2 OnOpenStore(void* /*data*/)
                      kPSMinHost, kPSAllEditionsFrom, edition.c_str(), host.c_str());
         FPLogW(L"[Store] host %s %s does not load add-ons before %s - store not opened",
                edition.c_str(), host.c_str(), kPSAllEditionsFrom);
-        MessageBoxW(NULL, msg, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
+        FPMessageBox(NULL, msg, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
         return;
     }
     DURING PSShowStoreDialog(std::wstring()); HANDLER END_HANDLER
