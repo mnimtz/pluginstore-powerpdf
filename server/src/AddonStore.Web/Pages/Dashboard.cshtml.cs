@@ -135,7 +135,7 @@ public class DashboardModel : PageModel
             .OrderBy(p => p.Id)
             .ToListAsync();
 
-        var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var lang = AddonStore.Web.Services.Lang.Current;
         var cmp = new SemVerComparer();
         Rows = Packages.Select(p =>
         {

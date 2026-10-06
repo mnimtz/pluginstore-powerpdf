@@ -635,7 +635,7 @@ public static class ApiEndpoints
             if (!await MayAccessAsync(ctx, id, db, users, customers)) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
             var v = await ScreenshotService.DisplayVersionAsync(db, id);
             if (v is null) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
-            var culture = (lang ?? System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName).Trim();
+            var culture = (lang ?? AddonStore.Web.Services.Lang.Current).Trim();
             if (culture.Length > 2) culture = MapHostLang(culture);
             var shots = ScreenshotService.FromManifest(v.ManifestJson, culture);
             string Url(int n) => $"{Base(ctx)}/api/packages/{id}/screenshots/{n}?v={v.Version}";
@@ -947,7 +947,7 @@ public static class ApiEndpoints
         // ---- Customer deliveries (S0.14.0): customers, codes, deliveries ----
         static IResult Fail(string code, string message, int status, string hint = "") =>
             Results.Json(new { ok = false, error = new { code, message, hint } }, statusCode: status);
-        static string UiLang(HttpContext c) => System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        static string UiLang(HttpContext c) => AddonStore.Web.Services.Lang.Current;
         // A date without an offset counts as UTC (create and change alike).
         static DateTime? AsUtc(DateTime? d) => d is null ? null
             : d.Value.Kind == DateTimeKind.Unspecified ? DateTime.SpecifyKind(d.Value, DateTimeKind.Utc) : d.Value.ToUniversalTime();
@@ -1370,9 +1370,14 @@ public static class ApiEndpoints
 
     /// <summary>Maps Power PDF's 3-letter resource codes (DEU, FRA, ...) to two-letter culture names.</summary>
     private static string MapHostLang(string code) => code.Length > 2 && (code[2] == '-' || code[2] == '_')
-        ? code[..2].ToLowerInvariant() is var two && PackageValidator.RequiredLanguages.Contains(two) ? two : "en"
+        ? Services.Lang.Normalize(code) is var two && PackageValidator.AllLanguages.Contains(two) ? two : "en"
         : code.ToUpperInvariant() switch
     {
+        "CHS" or "ZHS" or "ZH" => "zh-Hans",
+        "CHT" or "ZHT" => "zh-Hant",
+        "JPN" or "JAP" or "JA" => "ja",
+        "KOR" or "KO" => "ko",
+        "ARA" or "AR" => "ar",
         "DEU" or "GER" => "de",
         "FRA" or "FRE" => "fr",
         "ITA" => "it",

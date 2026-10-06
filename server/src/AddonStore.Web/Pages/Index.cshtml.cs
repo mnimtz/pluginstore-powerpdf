@@ -28,7 +28,7 @@ public class IndexModel : PageModel
     {
         var ai = await _ai.ConfigAsync();
         AiSearch = ai.On && ai.Search;
-        var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var culture = AddonStore.Web.Services.Lang.Current;
         var items = await CatalogUi.GetAsync(_db, culture, includeBeta: false);
 
         // The client add-on gets its own download box in the hero instead of a

@@ -26,7 +26,7 @@ public class InsightsModel : PageModel
         if (user is null) return;
         IsAdmin = User.IsInRole("Admin");
         R = await _insights.ComputeAsync(user, IsAdmin, Days, Pkg, Dev,
-            System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
+            AddonStore.Web.Services.Lang.Current);
         Days = R.Days; Pkg = R.Package; Dev = R.OwnerId;
     }
 

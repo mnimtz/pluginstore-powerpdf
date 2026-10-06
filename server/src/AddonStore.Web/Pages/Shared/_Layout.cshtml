@@ -3,7 +3,7 @@
 @using System.Globalization
 @inject AddonStore.Web.Api.AppVersion AppVer
 <!DOCTYPE html>
-<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
+<html lang="@AddonStore.Web.Services.Lang.Current" dir="@(AddonStore.Web.Services.Lang.CurrentIsRtl ? "rtl" : "ltr")">
 @{
     // Bookmark / shortcut / tab name: the start page carries the full product
     // name, every other page "<page> · Add-on Store for Power PDF" (localized).
@@ -101,12 +101,11 @@
             <select id="lang-select" aria-label="Language"
                     style="width:auto;padding:4px 6px;font-size:.82rem">
                 @{
-                    var current = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-                    var langs = new[] { "en", "de", "fr", "it", "es", "nl", "pt", "da", "fi", "nb", "sv", "pl", "cs", "hu", "ru", "tr" };
+                    var current = AddonStore.Web.Services.Lang.Current;
                 }
-                @foreach (var lang in langs)
+                @foreach (var lang in AddonStore.Web.Services.Lang.Ui)
                 {
-                    <option value="@lang" selected="@(lang == current || (lang == "nb" && current == "no"))">@lang.ToUpperInvariant()</option>
+                    <option value="@lang" selected="@(lang == current)" title="@AddonStore.Web.Services.Lang.NativeNames[lang]">@AddonStore.Web.Services.Lang.ShortLabel(lang)</option>
                 }
             </select>
         </nav>

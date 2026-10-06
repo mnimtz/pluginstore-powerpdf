@@ -89,8 +89,8 @@ builder.Services.AddAuthorization(o =>
         .RequireAuthenticatedUser());
 });
 
-// --- localization: all European Power PDF languages ----------------------
-string[] cultures = { "en", "de", "fr", "it", "es", "nl", "pt", "da", "fi", "nb", "sv", "pl", "cs", "hu", "ru", "tr" };
+// --- localization: the 21 Power PDF UI languages (S1.2.0) -------------------
+string[] cultures = AddonStore.Web.Services.Lang.Ui;
 builder.Services.AddLocalization(o => o.ResourcesPath = "Resources");
 builder.Services.Configure<RequestLocalizationOptions>(o =>
 {

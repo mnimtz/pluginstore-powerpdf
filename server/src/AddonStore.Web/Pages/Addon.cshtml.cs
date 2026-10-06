@@ -35,7 +35,7 @@ public class AddonModel : PageModel
 
     public async Task<IActionResult> OnGetAsync(string slug, [FromQuery(Name = "ref")] string? reference)
     {
-        var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var culture = AddonStore.Web.Services.Lang.Current;
         var items = await CatalogUi.GetAsync(_db, culture, includeBeta: true);
         var client = items.FirstOrDefault(i => i.Id == SubmissionService.ClientPackageId);
         items = items.Where(i => i.Id != SubmissionService.ClientPackageId).ToList();

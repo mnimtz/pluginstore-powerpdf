@@ -108,6 +108,8 @@ if ($m.ui -eq 'none') {
     $noLang = @('ENU', 'DEU', 'FRA', 'ITA', 'ESP', 'NLD', 'PTB', 'DAN', 'FIN', 'NOR', 'SVE', 'PLK', 'CSY', 'HUN', 'RUS', 'TRK' |
         Where-Object { -not (Test-Path -LiteralPath (Join-Path $layout "$_\NameAndTitle.xml")) })
     if ($noLang.Count -gt 0) { Fail "UILayout language folders without NameAndTitle.xml: $($noLang -join ' ') (all 16 are required; LANGS_INCOMPLETE)" }
+    $noFurther = @('CHS', 'CHT', 'JPN', 'KOR', 'ARA' | Where-Object { -not (Test-Path -LiteralPath (Join-Path $layout "$_\NameAndTitle.xml")) })
+    if ($noFurther.Count -gt 0) { Warn "recommended UILayout folders of the further Power PDF languages missing: $($noFurther -join ' ') (LANGS_EXTENDED_MISSING)" }
 }
 if (-not (Test-Path -LiteralPath (Join-Path $Package 'assets\icon.png'))) { Warn 'assets\icon.png is missing (recommended)' }
 if (-not (Test-Path -LiteralPath (Join-Path $Package 'LICENSES.md'))) { Warn 'LICENSES.md is missing' }

@@ -73,7 +73,7 @@ directly inside Power PDF.
 | 📱 **Phone-ready** | Menu button and card layout on small screens; the whole portal works on a smartphone. |
 | 🛡️ **Licenses, legal and privacy** | Every upload carries a mandatory, truthful compliance statement (`thirdParty` components with SPDX licenses, `complianceAudit` with the external services a plugin contacts). The server verifies independently: copyleft and known-library signatures in binaries, credentials and key files, hosts compiled into the code, third-party brand names. Only MIT/BSD/Apache-2.0 code passes without review; GPL/AGPL/LGPL fails. |
 | ⚖️ **Disclaimer** | Landing page, a dedicated disclaimer page and the Power PDF client state that plugins come from independent authors, without warranty or official support, and that Tungsten Automation accepts no liability. |
-| 🌍 **16 European languages** | Auto-detected from the browser (including `no`/`nn` for Norwegian), manually switchable, with localized catalog texts straight from the package manifests. |
+| 🌍 **21 Power PDF languages** | The 16 European ones plus Simplified and Traditional Chinese, Japanese, Korean and Arabic (right to left); auto-detected from the browser (including `no`/`nn` for Norwegian, `zh-CN`/`zh-TW`), manually switchable, with localized catalog texts straight from the package manifests. |
 
 ## Deploy in one click
 
@@ -215,13 +215,13 @@ msiexec /i PluginStore-<version>.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"
   deployment agents use `reg add ... /reg:64`.
 - Intune detection rule: the file `<bin>\Plug-Ins\PluginStore.zxt` with a
   minimum version (the ProductCode changes with every version).
-- **Customer code in the store window, MSI in 16 languages** (client
+- **Customer code in the store window, MSI in 21 languages** (client
   0.8.0+): a "Customer code" button in the store header opens a dialog that
   checks the code at `GET /api/customer-code` before saving it (unknown codes
   count toward the brute-force limit) and shows the customer and the number
   of unlocked add-ons; customer add-ons come first in the list and get their
   own filter chip; "Remove code" clears it (both locked when the policy
-  `CustomerCode` is set). The client MSI carries all 16 languages as embedded
+  `CustomerCode` is set). The client MSI carries all 21 languages as embedded
   language transforms (`python client\installer\build_msi.py`, texts in
   `client\installer\make_l10n.py`); Windows picks the user's language, and
   the self-update passes the store window's language as `TRANSFORMS=:<LCID>`.
@@ -346,6 +346,18 @@ from the live guide, `/api/rules`, the OpenAPI description and the manifest
 schema: introduction and principles, the full developer and agent guide, every
 rule by area, the API reference and the manifest reference.
 
+**21 Power PDF languages (S1.2.0, client 1.3.0):** Power PDF has 21 UI
+languages. Portal, store window, MSI and catalog follow all of them: the 16
+European ones plus Simplified Chinese (`zh-Hans`, UILayout `CHS`), Traditional
+Chinese (`zh-Hant`, `CHT`), Japanese (`ja`, `JPN`), Korean (`ko`, `KOR`) and
+Arabic (`ar`, `ARA`, right to left: the portal and the store window mirror
+their layout, message boxes read right to left). For add-ons the 16 stay
+mandatory; the five further ones are recommended and reported as warnings
+(`LANG_TEXT_EXTENDED`, `LANGS_EXTENDED_MISSING`, `UI_LANGS_EXTENDED`), which
+admins can make mandatory under *Settings, Rules*. The translations of the
+five languages were machine-made; a review by native speakers is recommended
+before customers in these markets use the store.
+
 **Add-ons without ribbon buttons (S1.1.1):** an add-on that only works inside
 a Power PDF feature (for example an engine for an assistant) declares
 `"ui": "none"` in manifest.json. It ships no `UILayout/` and no
@@ -464,7 +476,7 @@ server/src/AddonStore.Web/   ASP.NET Core 10 app (Razor Pages + minimal API)
   Validation/                the package validation pipeline
   Services/                  submission, tokens, audit, notifications, catalog
   Pages/                     publisher + admin web UI, Tungsten-branded
-  Resources/                 SharedResource.<lang>.resx, 16 languages
+  Resources/                 SharedResource.<lang>.resx, 21 languages (English = the keys)
 client/                      Add-on Store ribbon add-on (C++/MFC .zxt)
 infra/azuredeploy.json       1-click ARM template
 Dockerfile                   container build, published to GHCR by Actions

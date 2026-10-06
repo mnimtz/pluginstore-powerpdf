@@ -35,7 +35,7 @@
 {
     <div class="card">
         @{
-            var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+            var lang = AddonStore.Web.Services.Lang.Current;
         }
         <strong style="color:var(--tun-navy)"><a href="/Plugin?id=@v.PackageId">@(Model.Packages.TryGetValue(v.PackageId, out var rp) ? AddonStore.Web.Services.CatalogUi.DisplayName(rp, v, lang) : AddonStore.Web.Services.CatalogUi.ManifestText(v, "name", lang, v.PackageId))</a></strong>
         <span style="color:var(--tun-slate)">@v.PackageId</span> v@(v.Version)

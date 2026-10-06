@@ -4,7 +4,7 @@
     var v = Model.V;
     var rv = AddonStore.Web.Services.AiAssist.ParseReview(v.AiReviewJson);
     // The text is written in one language; offer to recreate it in the viewer's.
-    var ui = AddonStore.Web.Services.AiAssist.ReviewLanguage(System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
+    var ui = AddonStore.Web.Services.AiAssist.ReviewLanguage(AddonStore.Web.Services.Lang.Current);
     string LangName(string code) { var n = new System.Globalization.CultureInfo(code).NativeName; return char.ToUpper(n[0]) + n[1..]; }
     var otherLang = rv is not null && v.AiReviewLang is not null && v.AiReviewLang != ui;
 }

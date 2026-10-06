@@ -60,7 +60,7 @@ public class CategoriesModel : PageModel
 
     private async Task LoadAsync()
     {
-        var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var lang = AddonStore.Web.Services.Lang.Current;
         var pkgs = await _db.Packages.Include(p => p.Versions).ToListAsync();
         var used = pkgs.GroupBy(CategoryService.EffectiveSlug).ToDictionary(g => g.Key, g => g.Count());
         Rows = (await _categories.AllAsync())

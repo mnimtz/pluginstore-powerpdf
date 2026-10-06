@@ -60,7 +60,7 @@ public class IndexModel : PageModel
         Counts["all"] = byStatus.Sum(x => x.N);
 
         // add-ons that have reports in the scope, with their display names
-        var culture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var culture = AddonStore.Web.Services.Lang.Current;
         var ids = await scope.Select(f => f.PackageId).Distinct().ToListAsync();
         var pkgs = await _db.Packages.AsNoTracking().Include(p => p.Versions).Where(p => ids.Contains(p.Id)).ToListAsync();
         var names = pkgs.ToDictionary(p => p.Id, p => CatalogUi.DisplayName(p, p.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault(), culture));

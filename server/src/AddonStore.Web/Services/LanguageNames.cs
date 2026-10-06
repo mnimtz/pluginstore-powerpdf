@@ -20,9 +20,9 @@ public static class LanguageNames
         catch (CultureNotFoundException) { return code; }
     }
 
-    /// <summary>The 16 store languages as (code, name), sorted by name in the current UI language.</summary>
+    /// <summary>The 21 store languages as (code, name), sorted by name in the current UI language.</summary>
     public static IEnumerable<(string Code, string Name)> Options() =>
-        Validation.PackageValidator.RequiredLanguages
+        Validation.PackageValidator.AllLanguages
             .Select(c => (c, Of(c)))
             .OrderBy(x => x.Item2, StringComparer.Create(CultureInfo.CurrentUICulture, true));
 }

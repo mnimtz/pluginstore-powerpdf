@@ -139,7 +139,7 @@ public sealed class PeResources
                     foreach (var (langId, _, _) in Entries(nameDir).ToList())
                     {
                         if (langId < 0) continue;
-                        var primary = langId & 0x3FF;
+                        var primary = Key(langId);
                         if (!langs.TryGetValue(primary, out var set)) langs[primary] = set = new HashSet<int>();
                         set.Add(nameId);
                     }
@@ -184,6 +184,25 @@ public sealed class PeResources
         catch (ArgumentException) { return null; }
         catch (IndexOutOfRangeException) { return null; }
     }
+
+    /// <summary>
+    /// Key of a resource language: the primary language id, for Chinese (0x04) a key per script:
+    /// Simplified (zh-CN, zh-SG) and Traditional (zh-TW, zh-HK, zh-MO), see <see cref="ExtendedLanguages"/>.
+    /// </summary>
+    public static int Key(int langId)
+    {
+        var primary = langId & 0x3FF;
+        if (primary != 0x04) return primary;
+        var sub = langId >> 10;
+        return sub is 0x02 or 0x04 ? ChineseSimplified : ChineseTraditional;
+    }
+    public const int ChineseSimplified = 0x10002, ChineseTraditional = 0x10001;
+
+    /// <summary>The five further Power PDF UI languages (S1.2.0), keys as in <see cref="Key"/>.</summary>
+    public static readonly (string Code, int Primary)[] ExtendedLanguages =
+    {
+        ("zh-Hans", ChineseSimplified), ("zh-Hant", ChineseTraditional), ("ja", 0x11), ("ko", 0x12), ("ar", 0x01),
+    };
 
     /// <summary>Primary language id of each of the 16 Power PDF UI languages (manifest codes).</summary>
     public static readonly (string Code, int Primary)[] PowerPdfLanguages =

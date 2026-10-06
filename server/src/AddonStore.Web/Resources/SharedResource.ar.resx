@@ -1,0 +1,1008 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Access requests" xml:space="preserve"><value>طلبات الوصول</value></data>
+  <data name="Accounts are for colleagues who develop and publish plugins. An admin reviews every request; you will be notified by email." xml:space="preserve"><value>الحسابات مخصصة للزملاء الذين يطورون المكونات الإضافية وينشرونها. يراجع المسؤول كل طلب، وسيتم إعلامك بالبريد الإلكتروني.</value></data>
+  <data name="Action" xml:space="preserve"><value>الإجراء</value></data>
+  <data name="Actor" xml:space="preserve"><value>المنفِّذ</value></data>
+  <data name="All users" xml:space="preserve"><value>كل المستخدمين</value></data>
+  <data name="Approve" xml:space="preserve"><value>موافقة</value></data>
+  <data name="Approve for live store" xml:space="preserve"><value>الموافقة للمتجر المباشر</value></data>
+  <data name="Approved" xml:space="preserve"><value>تمت الموافقة</value></data>
+  <data name="Audit" xml:space="preserve"><value>التدقيق</value></data>
+  <data name="Audit log" xml:space="preserve"><value>سجل التدقيق</value></data>
+  <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>اجتازت الإصدارات التجريبية جميع الفحوصات التلقائية وهي مرئية لمختبري الإصدارات التجريبية. وافق عليها للمتجر المباشر أو ارفضها مع ذكر السبب.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>استعرض المكونات الإضافية المنشورة أدناه. يتم التثبيت مباشرةً داخل Power PDF عبر شريط Add-on Store؛ هذا الموقع مخصص لمطوري المكونات الإضافية والمسؤولين.</value></data>
+  <data name="Catalog" xml:space="preserve"><value>الكتالوج</value></data>
+  <data name="Changelog" xml:space="preserve"><value>سجل التغييرات</value></data>
+  <data name="Create a token" xml:space="preserve"><value>إنشاء رمز مميز</value></data>
+  <data name="Create admin account" xml:space="preserve"><value>إنشاء حساب مسؤول</value></data>
+  <data name="Create the first administrator account for this Add-on Store instance." xml:space="preserve"><value>أنشئ أول حساب مسؤول لمثيل Add-on Store هذا.</value></data>
+  <data name="Create token" xml:space="preserve"><value>إنشاء رمز مميز</value></data>
+  <data name="Created" xml:space="preserve"><value>تاريخ الإنشاء</value></data>
+  <data name="Details" xml:space="preserve"><value>التفاصيل</value></data>
+  <data name="Disable" xml:space="preserve"><value>تعطيل</value></data>
+  <data name="Display name" xml:space="preserve"><value>اسم العرض</value></data>
+  <data name="Download" xml:space="preserve"><value>تنزيل</value></data>
+  <data name="Downloads" xml:space="preserve"><value>التنزيلات</value></data>
+  <data name="Email" xml:space="preserve"><value>البريد الإلكتروني</value></data>
+  <data name="Enable" xml:space="preserve"><value>تمكين</value></data>
+  <data name="Every relevant action on this server: registrations, approvals, tokens, submissions, reviews." xml:space="preserve"><value>كل إجراء ذي صلة على هذا الخادم: التسجيلات والموافقات والرموز المميزة وعمليات الإرسال والمراجعات.</value></data>
+  <data name="Filter" xml:space="preserve"><value>تصفية</value></data>
+  <data name="Filter (actor, action, subject)" xml:space="preserve"><value>تصفية (المنفِّذ، الإجراء، الموضوع)</value></data>
+  <data name="First-run setup" xml:space="preserve"><value>إعداد التشغيل الأول</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Add-on Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>لمطوري المكونات الإضافية والمسؤولين. يثبّت المستخدمون النهائيون المكونات الإضافية مباشرةً من شريط Add-on Store في Power PDF، دون الحاجة إلى حساب.</value></data>
+  <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>أعطِ الرمز المميز إلى Claude مع هذا السطر:</value></data>
+  <data name="Last used" xml:space="preserve"><value>آخر استخدام</value></data>
+  <data name="Live versions" xml:space="preserve"><value>الإصدارات المباشرة</value></data>
+  <data name="My packages" xml:space="preserve"><value>حزمي</value></data>
+  <data name="My plugins" xml:space="preserve"><value>مكوناتي الإضافية</value></data>
+  <data name="My tokens" xml:space="preserve"><value>رموزي المميزة</value></data>
+  <data name="Name" xml:space="preserve"><value>الاسم</value></data>
+  <data name="No account yet?" xml:space="preserve"><value>ليس لديك حساب بعد؟</value></data>
+  <data name="No live versions yet." xml:space="preserve"><value>لا توجد إصدارات مباشرة بعد.</value></data>
+  <data name="No plugins have been released yet." xml:space="preserve"><value>لم يتم نشر أي مكونات إضافية بعد.</value></data>
+  <data name="Nothing to review right now." xml:space="preserve"><value>لا يوجد ما تتم مراجعته حاليًا.</value></data>
+  <data name="Package" xml:space="preserve"><value>الحزمة</value></data>
+  <data name="Package file (.ppak)" xml:space="preserve"><value>ملف الحزمة (.ppak)</value></data>
+  <data name="Password" xml:space="preserve"><value>كلمة المرور</value></data>
+  <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>تتيح رموز API المميزة الشخصية للأدوات ومساعدي الذكاء الاصطناعي تحميل مكوناتك الإضافية وتحديثها نيابةً عنك.</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>متجر المكونات الإضافية:</value></data>
+  <data name="Add-on Store for Tungsten Power PDF" xml:space="preserve"><value>Add-on Store لـ Tungsten Power PDF</value></data>
+  <data name="Prefix" xml:space="preserve"><value>البادئة</value></data>
+  <data name="Profile" xml:space="preserve"><value>الملف الشخصي</value></data>
+  <data name="Reason (sent to the submitter)" xml:space="preserve"><value>السبب (يُرسل إلى المُرسِل)</value></data>
+  <data name="Reject" xml:space="preserve"><value>رفض</value></data>
+  <data name="Released plugins" xml:space="preserve"><value>المكونات الإضافية المنشورة</value></data>
+  <data name="Request access" xml:space="preserve"><value>طلب الوصول</value></data>
+  <data name="Requested" xml:space="preserve"><value>تاريخ الطلب</value></data>
+  <data name="Review" xml:space="preserve"><value>مراجعة</value></data>
+  <data name="Review comment" xml:space="preserve"><value>تعليق المراجعة</value></data>
+  <data name="Review queue" xml:space="preserve"><value>قائمة انتظار المراجعة</value></data>
+  <data name="Revoke" xml:space="preserve"><value>إبطال</value></data>
+  <data name="Role" xml:space="preserve"><value>الدور</value></data>
+  <data name="Sign in" xml:space="preserve"><value>تسجيل الدخول</value></data>
+  <data name="Sign out" xml:space="preserve"><value>تسجيل الخروج</value></data>
+  <data name="Status" xml:space="preserve"><value>الحالة</value></data>
+  <data name="Subject" xml:space="preserve"><value>الموضوع</value></data>
+  <data name="Submit a package" xml:space="preserve"><value>إرسال حزمة</value></data>
+  <data name="Submit request" xml:space="preserve"><value>إرسال الطلب</value></data>
+  <data name="Submitted" xml:space="preserve"><value>تم الإرسال</value></data>
+  <data name="Submitted by" xml:space="preserve"><value>المُرسِل</value></data>
+  <data name="Time (UTC)" xml:space="preserve"><value>الوقت (UTC)</value></data>
+  <data name="Token created. Copy it now; it is shown only this once:" xml:space="preserve"><value>تم إنشاء الرمز المميز. انسخه الآن، فهو يُعرض هذه المرة فقط:</value></data>
+  <data name="Token name (e.g. &#x27;claude&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>اسم الرمز المميز (مثل 'claude' أو 'build server')</value></data>
+  <data name="Upload a .ppak package below, or automate it via the API with a personal token from your profile." xml:space="preserve"><value>حمّل حزمة .ppak أدناه، أو نفّذ ذلك تلقائيًا عبر API باستخدام رمز مميز شخصي من ملفك الشخصي.</value></data>
+  <data name="Upload and validate" xml:space="preserve"><value>تحميل والتحقق</value></data>
+  <data name="Users" xml:space="preserve"><value>المستخدمون</value></data>
+  <data name="Version" xml:space="preserve"><value>الإصدار</value></data>
+  <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>ما الذي تخطط لنشره؟ (يُعرض للمسؤول)</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>سحب</value></data>
+  <data name="You have not submitted any packages yet." xml:space="preserve"><value>لم ترسل أي حزم بعد.</value></data>
+  <data name="download(s)" xml:space="preserve"><value>تنزيل (تنزيلات)</value></data>
+  <data name="revoked" xml:space="preserve"><value>مُبطَل</value></data>
+  <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>تم إرسال طلب الوصول. ستتلقى رسالة بريد إلكتروني بمجرد موافقة المسؤول عليه.</value></data>
+  <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>فشل تسجيل الدخول. تحقق من البريد الإلكتروني وكلمة المرور.</value></data>
+  <data name="Your access request is still awaiting admin approval." xml:space="preserve"><value>لا يزال طلب الوصول في انتظار موافقة المسؤول.</value></data>
+  <data name="This account is not active. Contact an administrator." xml:space="preserve"><value>هذا الحساب غير نشط. اتصل بأحد المسؤولين.</value></data>
+  <data name="Too many failed attempts; the account is temporarily locked." xml:space="preserve"><value>محاولات فاشلة كثيرة جدًا؛ تم قفل الحساب مؤقتًا.</value></data>
+  <data name="No package received." xml:space="preserve"><value>لم يتم استلام أي حزمة.</value></data>
+  <data name="The package did not pass the automatic checks; nothing was stored. Fix the errors below and upload again." xml:space="preserve"><value>لم تجتز الحزمة الفحوصات التلقائية؛ لم يتم تخزين أي شيء. أصلح الأخطاء أدناه ثم حمّلها مرة أخرى.</value></data>
+  <data name="Submitted. The version is in the beta channel now and awaits admin review." xml:space="preserve"><value>تم الإرسال. الإصدار الآن في القناة التجريبية وينتظر مراجعة المسؤول.</value></data>
+  <data name="Version withdrawn." xml:space="preserve"><value>تم سحب الإصدار.</value></data>
+  <data name="Version approved and live." xml:space="preserve"><value>تمت الموافقة على الإصدار وأصبح مباشرًا.</value></data>
+  <data name="Version rejected." xml:space="preserve"><value>تم رفض الإصدار.</value></data>
+  <data name="Account approved." xml:space="preserve"><value>تمت الموافقة على الحساب.</value></data>
+  <data name="Request rejected." xml:space="preserve"><value>تم رفض الطلب.</value></data>
+  <data name="Account disabled." xml:space="preserve"><value>تم تعطيل الحساب.</value></data>
+  <data name="Account enabled." xml:space="preserve"><value>تم تمكين الحساب.</value></data>
+  <data name="for Power PDF" xml:space="preserve"><value>لـ Power PDF</value></data>
+  <data name="Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>نزّل ملف ZIP واستخرجه، ثم شغّل install.cmd كمسؤول؛ بعد ذلك تُبقي الوظيفة الإضافية نفسها ومكوناتك الإضافية محدّثة.</value></data>
+  <data name="Search" xml:space="preserve"><value>بحث</value></data>
+  <data name="All" xml:space="preserve"><value>الكل</value></data>
+  <data name="Conversion" xml:space="preserve"><value>التحويل</value></data>
+  <data name="Forms" xml:space="preserve"><value>النماذج</value></data>
+  <data name="Signing" xml:space="preserve"><value>التوقيع</value></data>
+  <data name="Navigation" xml:space="preserve"><value>التنقل</value></data>
+  <data name="Printing" xml:space="preserve"><value>الطباعة</value></data>
+  <data name="Productivity" xml:space="preserve"><value>الإنتاجية</value></data>
+  <data name="System" xml:space="preserve"><value>النظام</value></data>
+  <data name="Other" xml:space="preserve"><value>أخرى</value></data>
+  <data name="A user with this email already exists." xml:space="preserve"><value>يوجد مستخدم بهذا البريد الإلكتروني بالفعل.</value></data>
+  <data name="API tokens" xml:space="preserve"><value>رموز API المميزة</value></data>
+  <data name="Account created." xml:space="preserve"><value>تم إنشاء الحساب.</value></data>
+  <data name="Activate account" xml:space="preserve"><value>تنشيط الحساب</value></data>
+  <data name="Admin" xml:space="preserve"><value>المسؤول</value></data>
+  <data name="Choose your display name and a password to activate your Add-on Store account." xml:space="preserve"><value>اختر اسم العرض وكلمة مرور لتنشيط حسابك في Add-on Store.</value></data>
+  <data name="Create a user directly" xml:space="preserve"><value>إنشاء مستخدم مباشرةً</value></data>
+  <data name="Create account" xml:space="preserve"><value>إنشاء حساب</value></data>
+  <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>البريد الإلكتروني غير مكوَّن؛ شارك رابط الدعوة هذا مباشرةً:</value></data>
+  <data name="Email notifications (Resend)" xml:space="preserve"><value>إشعارات البريد الإلكتروني (Resend)</value></data>
+  <data name="Initial password" xml:space="preserve"><value>كلمة المرور الأولية</value></data>
+  <data name="Instance settings; values are stored on the server and take effect immediately." xml:space="preserve"><value>إعدادات المثيل؛ تُخزَّن القيم على الخادم وتسري فورًا.</value></data>
+  <data name="Invitation email sent. The link can also be shared directly:" xml:space="preserve"><value>تم إرسال رسالة الدعوة. يمكن أيضًا مشاركة الرابط مباشرةً:</value></data>
+  <data name="Invitation revoked." xml:space="preserve"><value>تم إبطال الدعوة.</value></data>
+  <data name="Invite a user" xml:space="preserve"><value>دعوة مستخدم</value></data>
+  <data name="Invited by" xml:space="preserve"><value>تمت الدعوة بواسطة</value></data>
+  <data name="My profile" xml:space="preserve"><value>ملفي الشخصي</value></data>
+  <data name="Notifications: access requests and new submissions to admins; approvals, rejections and invitations to users." xml:space="preserve"><value>الإشعارات: طلبات الوصول وعمليات الإرسال الجديدة إلى المسؤولين؛ والموافقات وحالات الرفض والدعوات إلى المستخدمين.</value></data>
+  <data name="Only PNG or JPEG images are accepted." xml:space="preserve"><value>لا تُقبل إلا صور PNG أو JPEG.</value></data>
+  <data name="Open invitations" xml:space="preserve"><value>الدعوات المفتوحة</value></data>
+  <data name="Profile picture (PNG or JPEG, max. 512 KB)" xml:space="preserve"><value>صورة الملف الشخصي (PNG أو JPEG، بحد أقصى 512 KB)</value></data>
+  <data name="Profile updated." xml:space="preserve"><value>تم تحديث الملف الشخصي.</value></data>
+  <data name="Public base URL (used in emails and invite links)" xml:space="preserve"><value>عنوان URL الأساسي العام (يُستخدم في رسائل البريد الإلكتروني وروابط الدعوة)</value></data>
+  <data name="Resend API key" xml:space="preserve"><value>مفتاح API لـ Resend</value></data>
+  <data name="Reviewer" xml:space="preserve"><value>المراجع</value></data>
+  <data name="Role updated." xml:space="preserve"><value>تم تحديث الدور.</value></data>
+  <data name="Save" xml:space="preserve"><value>حفظ</value></data>
+  <data name="Send invitation" xml:space="preserve"><value>إرسال الدعوة</value></data>
+  <data name="Sender address" xml:space="preserve"><value>عنوان المُرسِل</value></data>
+  <data name="Server" xml:space="preserve"><value>الخادم</value></data>
+  <data name="Settings" xml:space="preserve"><value>الإعدادات</value></data>
+  <data name="Settings saved." xml:space="preserve"><value>تم حفظ الإعدادات.</value></data>
+  <data name="The image is too large (maximum 512 KB)." xml:space="preserve"><value>الصورة كبيرة جدًا (الحد الأقصى 512 KB).</value></data>
+  <data name="The last active admin cannot be demoted." xml:space="preserve"><value>لا يمكن خفض دور آخر مسؤول نشط.</value></data>
+  <data name="This invitation link is invalid or was already used." xml:space="preserve"><value>رابط الدعوة هذا غير صالح أو تم استخدامه بالفعل.</value></data>
+  <data name="User" xml:space="preserve"><value>المستخدم</value></data>
+  <data name="You cannot change your own role." xml:space="preserve"><value>لا يمكنك تغيير دورك.</value></data>
+  <data name="You have been invited" xml:space="preserve"><value>تمت دعوتك</value></data>
+  <data name="configured" xml:space="preserve"><value>مكوَّن</value></data>
+  <data name="Active" xml:space="preserve"><value>نشط</value></data>
+  <data name="Beta" xml:space="preserve"><value>تجريبي</value></data>
+  <data name="Disabled" xml:space="preserve"><value>معطَّل</value></data>
+  <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>نزّل برنامج التثبيت وشغّله (تلزم حقوق المسؤول)؛ بعد ذلك تُبقي الوظيفة الإضافية نفسها ومكوناتك الإضافية محدّثة.</value></data>
+  <data name="Live" xml:space="preserve"><value>مباشر</value></data>
+  <data name="Only administrators can publish new versions of the Add-on Store client." xml:space="preserve"><value>يمكن للمسؤولين فقط نشر إصدارات جديدة من عميل Add-on Store.</value></data>
+  <data name="Pending" xml:space="preserve"><value>قيد الانتظار</value></data>
+  <data name="Add-on Store client released. Installed clients offer the update now." xml:space="preserve"><value>تم نشر عميل Add-on Store. تعرض العملاء المثبتة التحديث الآن.</value></data>
+  <data name="Rejected" xml:space="preserve"><value>مرفوض</value></data>
+  <data name="Time" xml:space="preserve"><value>الوقت</value></data>
+  <data name="Time zone for displayed times" xml:space="preserve"><value>المنطقة الزمنية للأوقات المعروضة</value></data>
+  <data name="Withdrawn" xml:space="preserve"><value>مسحوب</value></data>
+  <data name="Author" xml:space="preserve"><value>المؤلف</value></data>
+  <data name="Show my name and email as author of my plugins in the public catalog" xml:space="preserve"><value>إظهار اسمي وبريدي الإلكتروني كمؤلف لمكوناتي الإضافية في الكتالوج العام</value></data>
+  <data name="When off, the catalog shows “Tungsten Automation” instead." xml:space="preserve"><value>عند إيقاف التشغيل، يعرض الكتالوج «Tungsten Automation» بدلاً من ذلك.</value></data>
+  <data name="A new, higher version number (SemVer) for every upload, and a change description." xml:space="preserve"><value>رقم إصدار جديد وأعلى (SemVer) لكل تحميل، ووصف للتغييرات.</value></data>
+  <data name="API and Claude" xml:space="preserve"><value>API و Claude</value></data>
+  <data name="Address" xml:space="preserve"><value>العنوان</value></data>
+  <data name="An x64 build of the plugin (it also runs on Windows on ARM)." xml:space="preserve"><value>إصدار x64 من المكون الإضافي (يعمل أيضًا على Windows on ARM).</value></data>
+  <data name="Automatic checks" xml:space="preserve"><value>الفحوصات التلقائية</value></data>
+  <data name="Binaries and integrity" xml:space="preserve"><value>الملفات الثنائية والسلامة</value></data>
+  <data name="Check your token" xml:space="preserve"><value>تحقق من الرمز المميز</value></data>
+  <data name="Complete guide for developers and AI assistants" xml:space="preserve"><value>دليل كامل للمطورين ومساعدي الذكاء الاصطناعي</value></data>
+  <data name="Create a personal token" xml:space="preserve"><value>إنشاء رمز مميز شخصي</value></data>
+  <data name="Create a token on your profile page and store it as an environment variable, never in a chat or a file:" xml:space="preserve"><value>أنشئ رمزًا مميزًا في صفحة ملفك الشخصي وخزّنه كمتغير بيئة، وليس أبدًا في محادثة أو ملف:</value></data>
+  <data name="Description and change description in all 16 European languages." xml:space="preserve"><value>الوصف ووصف التغييرات بجميع اللغات الأوروبية الـ 16.</value></data>
+  <data name="Download SKILL.md" xml:space="preserve"><value>تنزيل SKILL.md</value></data>
+  <data name="Endpoints" xml:space="preserve"><value>نقاط النهاية</value></data>
+  <data name="Example instruction for a Claude session in your plugin&#x27;s project folder:" xml:space="preserve"><value>مثال على تعليمة لجلسة Claude في مجلد مشروع المكون الإضافي:</value></data>
+  <data name="Example with curl" xml:space="preserve"><value>مثال باستخدام curl</value></data>
+  <data name="Icon" xml:space="preserve"><value>الأيقونة</value></data>
+  <data name="Install the Claude skill (once)" xml:space="preserve"><value>تثبيت مهارة Claude (مرة واحدة)</value></data>
+  <data name="Languages" xml:space="preserve"><value>اللغات</value></data>
+  <data name="Licenses" xml:space="preserve"><value>التراخيص</value></data>
+  <data name="Licenses, legal and privacy" xml:space="preserve"><value>التراخيص والشؤون القانونية والخصوصية</value></data>
+  <data name="List of all endpoints" xml:space="preserve"><value>قائمة بجميع نقاط النهاية</value></data>
+  <data name="Manifest and versioning" xml:space="preserve"><value>البيان وإدارة الإصدارات</value></data>
+  <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>مكونات الجهات الخارجية بموجب MIT أو BSD أو Apache-2.0 فقط.</value></data>
+  <data name="Open a new terminal afterwards so the variable is available." xml:space="preserve"><value>افتح نافذة طرفية جديدة بعد ذلك ليصبح المتغير متاحًا.</value></data>
+  <data name="Other checks" xml:space="preserve"><value>فحوصات أخرى</value></data>
+  <data name="Package structure" xml:space="preserve"><value>بنية الحزمة</value></data>
+  <data name="Publish and update plugins directly from your Claude session. Claude reads the store&#x27;s rules from the API, validates the package until all checks pass, and submits it for review." xml:space="preserve"><value>انشر المكونات الإضافية وحدّثها مباشرةً من جلسة Claude. يقرأ Claude قواعد المتجر من API، ويتحقق من الحزمة حتى تجتاز جميع الفحوصات، ثم يرسلها للمراجعة.</value></data>
+  <data name="Purpose" xml:space="preserve"><value>الغرض</value></data>
+  <data name="Ribbon and layout" xml:space="preserve"><value>الشريط والتخطيط</value></data>
+  <data name="Rules every upload must meet" xml:space="preserve"><value>القواعد التي يجب أن يستوفيها كل تحميل</value></data>
+  <data name="Runtime and dependencies" xml:space="preserve"><value>وقت التشغيل والتبعيات</value></data>
+  <data name="Schema of manifest.json" xml:space="preserve"><value>مخطط manifest.json</value></data>
+  <data name="Security scan" xml:space="preserve"><value>فحص الأمان</value></data>
+  <data name="Status, history and check reports of a package" xml:space="preserve"><value>حالة الحزمة وسجلها وتقارير فحصها</value></data>
+  <data name="Technical details are in English so that developers and AI assistants can act on them directly." xml:space="preserve"><value>التفاصيل الفنية باللغة الإنجليزية حتى يتمكن المطورون ومساعدو الذكاء الاصطناعي من العمل بها مباشرةً.</value></data>
+  <data name="Tell Claude what to do" xml:space="preserve"><value>أخبر Claude بما يجب فعله</value></data>
+  <data name="Test run of all checks, nothing is stored" xml:space="preserve"><value>تشغيل تجريبي لجميع الفحوصات، دون تخزين أي شيء</value></data>
+  <data name="The automatic checks verify these rules; every finding comes with a concrete fix." xml:space="preserve"><value>تتحقق الفحوصات التلقائية من هذه القواعد؛ وتأتي كل نتيجة مع إصلاح محدد.</value></data>
+  <data name="The plugin&#x27;s buttons sit as a group on the shared “Enhanced Features” ribbon tab." xml:space="preserve"><value>توجد أزرار المكون الإضافي كمجموعة على علامة تبويب الشريط المشتركة «الميزات المحسّنة».</value></data>
+  <data name="The skill tells Claude where this store is and how to work with it. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>تُعلم المهارة Claude بمكان هذا المتجر وكيفية العمل معه. وهي تحمّل دائمًا القواعد الحالية من الخادم، لذا لا تحتاج أبدًا إلى تحديث.</value></data>
+  <data name="Without the skill, the URL of the agent guide in the instruction is enough." xml:space="preserve"><value>بدون المهارة، يكفي عنوان URL لدليل الوكيل في التعليمة.</value></data>
+  <data name="all passed" xml:space="preserve"><value>اجتاز الكل</value></data>
+  <data name="failed" xml:space="preserve"><value>فشل</value></data>
+  <data name="passed with warnings" xml:space="preserve"><value>اجتاز مع تحذيرات</value></data>
+  <data name="Give Claude one line" xml:space="preserve"><value>أعطِ Claude سطرًا واحدًا</value></data>
+  <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>هذا كل ما يحتاجه Claude: يقرأ الدليل، ويهيئ نفسه للجلسات المستقبلية، ويتبع القواعد.</value></data>
+  <data name="Optional: install the skill manually" xml:space="preserve"><value>اختياري: تثبيت المهارة يدويًا</value></data>
+  <data name="A backup contains everything: database (accounts, packages, versions, reviews, audit log, settings), all plugin packages, profile pictures and developer kit files." xml:space="preserve"><value>تحتوي النسخة الاحتياطية على كل شيء: قاعدة البيانات (الحسابات والحزم والإصدارات والمراجعات وسجل التدقيق والإعدادات)، وجميع حزم المكونات الإضافية، وصور الملفات الشخصية، وملفات حزمة المطور.</value></data>
+  <data name="Access request approved or declined" xml:space="preserve"><value>تمت الموافقة على طلب الوصول أو رفضه</value></data>
+  <data name="Admins" xml:space="preserve"><value>المسؤولون</value></data>
+  <data name="Admins and reviewers" xml:space="preserve"><value>المسؤولون والمراجعون</value></data>
+  <data name="Applicant" xml:space="preserve"><value>مقدم الطلب</value></data>
+  <data name="Automatic safety backups" xml:space="preserve"><value>نسخ احتياطية تلقائية للأمان</value></data>
+  <data name="Backup and restore" xml:space="preserve"><value>النسخ الاحتياطي والاستعادة</value></data>
+  <data name="Backup file (.zip)" xml:space="preserve"><value>ملف النسخة الاحتياطية (.zip)</value></data>
+  <data name="Backup restored. A safety backup of the previous state was kept on the server." xml:space="preserve"><value>تمت استعادة النسخة الاحتياطية. تم الاحتفاظ بنسخة احتياطية للأمان من الحالة السابقة على الخادم.</value></data>
+  <data name="Plugins from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>مكونات إضافية من مؤلفين مستقلين، وليست منتجات رسمية من Tungsten Automation: تُقدَّم كما هي، دون ضمان أو دعم رسمي. استخدمها على مسؤوليتك الخاصة؛ لا تتحمل Tungsten Automation أي مسؤولية.</value></data>
+  <data name="Create backup" xml:space="preserve"><value>إنشاء نسخة احتياطية</value></data>
+  <data name="Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file." xml:space="preserve"><value>ينشئ لقطة متسقة أثناء استمرار تشغيل المتجر وينزّلها كملف ZIP.</value></data>
+  <data name="Disclaimer" xml:space="preserve"><value>إخلاء المسؤولية</value></data>
+  <data name="Download full backup" xml:space="preserve"><value>تنزيل نسخة احتياطية كاملة</value></data>
+  <data name="Event" xml:space="preserve"><value>الحدث</value></data>
+  <data name="File" xml:space="preserve"><value>الملف</value></data>
+  <data name="Invitation" xml:space="preserve"><value>الدعوة</value></data>
+  <data name="Invited person (always sent)" xml:space="preserve"><value>الشخص المدعو (يُرسل دائمًا)</value></data>
+  <data name="New Add-on Store client released" xml:space="preserve"><value>تم نشر عميل Add-on Store جديد</value></data>
+  <data name="New access request" xml:space="preserve"><value>طلب وصول جديد</value></data>
+  <data name="New plugin version submitted" xml:space="preserve"><value>تم إرسال إصدار جديد من مكون إضافي</value></data>
+  <data name="No backup file received." xml:space="preserve"><value>لم يتم استلام ملف نسخة احتياطية.</value></data>
+  <data name="Notifications" xml:space="preserve"><value>الإشعارات</value></data>
+  <data name="Plugin version approved or rejected" xml:space="preserve"><value>تمت الموافقة على إصدار المكون الإضافي أو رفضه</value></data>
+  <data name="Recipients" xml:space="preserve"><value>المستلمون</value></data>
+  <data name="Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup." xml:space="preserve"><value>يستبدل جميع البيانات الحالية بمحتوى النسخة الاحتياطية. قبل ذلك، يحفظ الخادم تلقائيًا الحالة الحالية كنسخة احتياطية للأمان.</value></data>
+  <data name="Restore" xml:space="preserve"><value>استعادة</value></data>
+  <data name="Restore backup" xml:space="preserve"><value>استعادة نسخة احتياطية</value></data>
+  <data name="Send test email" xml:space="preserve"><value>إرسال رسالة اختبار</value></data>
+  <data name="Size" xml:space="preserve"><value>الحجم</value></data>
+  <data name="Submitter" xml:space="preserve"><value>المُرسِل</value></data>
+  <data name="Test email sent. Please check your inbox." xml:space="preserve"><value>تم إرسال رسالة الاختبار. يرجى التحقق من علبة الوارد.</value></data>
+  <data name="Test plugins before productive use, keep backups of important documents, and make sure their use complies with your organization&#x27;s IT and data protection policies." xml:space="preserve"><value>اختبر المكونات الإضافية قبل الاستخدام الإنتاجي، واحتفظ بنسخ احتياطية من المستندات المهمة، وتأكد من أن استخدامها يتوافق مع سياسات تقنية المعلومات وحماية البيانات في مؤسستك.</value></data>
+  <data name="The archive contains unsafe paths." xml:space="preserve"><value>يحتوي الأرشيف على مسارات غير آمنة.</value></data>
+  <data name="The backup contains password hashes and settings such as the Resend key. Store it like a password." xml:space="preserve"><value>تحتوي النسخة الاحتياطية على تجزئات كلمات المرور وإعدادات مثل مفتاح Resend. احفظها كما تحفظ كلمة المرور.</value></data>
+  <data name="The plugins in this store are developed by independent authors, such as employees, partners or other developers. They are not part of Tungsten Power PDF and are not official Tungsten Automation products; the automatic checks and the review before release do not constitute a warranty." xml:space="preserve"><value>يطوّر المكونات الإضافية في هذا المتجر مؤلفون مستقلون، مثل الموظفين أو الشركاء أو مطورين آخرين. وهي ليست جزءًا من Tungsten Power PDF وليست منتجات رسمية من Tungsten Automation؛ ولا تشكّل الفحوصات التلقائية والمراجعة قبل النشر ضمانًا.</value></data>
+  <data name="The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out." xml:space="preserve"><value>تُرفض الاستعادة إذا لم يكن حسابك مسؤولاً نشطًا في النسخة الاحتياطية، حتى لا تقفل الوصول على نفسك.</value></data>
+  <data name="The test email could not be sent." xml:space="preserve"><value>تعذر إرسال رسالة الاختبار.</value></data>
+  <data name="There is no official support through Tungsten Automation Support. Please contact the author named in the catalog; answers are voluntary and without guaranteed response times." xml:space="preserve"><value>لا يوجد دعم رسمي عبر Tungsten Automation Support. يرجى الاتصال بالمؤلف المذكور في الكتالوج؛ الردود طوعية ودون أوقات استجابة مضمونة.</value></data>
+  <data name="They are provided as is, without warranty of any kind, express or implied, including fitness for a particular purpose, availability or freedom from errors." xml:space="preserve"><value>تُقدَّم كما هي، دون أي ضمان من أي نوع، صريحًا كان أو ضمنيًا، بما في ذلك الملاءمة لغرض معين أو التوفر أو الخلو من الأخطاء.</value></data>
+  <data name="This is not a Add-on Store backup (backup.json or pluginstore.db missing)." xml:space="preserve"><value>هذه ليست نسخة احتياطية من Add-on Store (backup.json أو pluginstore.db مفقود).</value></data>
+  <data name="This is not a Add-on Store backup." xml:space="preserve"><value>هذه ليست نسخة احتياطية من Add-on Store.</value></data>
+  <data name="To the extent permitted by law, Tungsten Automation accepts no liability for damage, data loss or downtime caused by installing or using these plugins. Each plugin is the responsibility of its author." xml:space="preserve"><value>إلى الحد الذي يسمح به القانون، لا تتحمل Tungsten Automation أي مسؤولية عن الأضرار أو فقدان البيانات أو التوقف الناتج عن تثبيت هذه المكونات الإضافية أو استخدامها. ويتحمل مؤلف كل مكون إضافي المسؤولية عنه.</value></data>
+  <data name="Type RESTORE to confirm" xml:space="preserve"><value>اكتب RESTORE للتأكيد</value></data>
+  <data name="Type RESTORE to confirm." xml:space="preserve"><value>اكتب RESTORE للتأكيد.</value></data>
+  <data name="Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log." xml:space="preserve"><value>أي رسائل البريد الإلكتروني تُرسل ومتى وإلى من. يتم تسجيل كل رسالة مرسلة أو فاشلة في سجل التدقيق.</value></data>
+  <data name="Without a verified sender domain, Resend only delivers to the email address of the Resend account owner." xml:space="preserve"><value>بدون مجال مُرسِل تم التحقق منه، لا يسلّم Resend إلا إلى عنوان البريد الإلكتروني لمالك حساب Resend.</value></data>
+  <data name="Your account is not an active admin in this backup; restoring it would lock you out." xml:space="preserve"><value>حسابك ليس مسؤولاً نشطًا في هذه النسخة الاحتياطية؛ ستؤدي استعادتها إلى قفل الوصول عليك.</value></data>
+  <data name="to" xml:space="preserve"><value>إلى</value></data>
+  <data name="Catalog entry" xml:space="preserve"><value>إدخال الكتالوج</value></data>
+  <data name="Owner" xml:space="preserve"><value>المالك</value></data>
+  <data name="Name, description, author and contact shown in the catalog and in the Power PDF client. Changes apply immediately; no new version is needed. The package files are not changed." xml:space="preserve"><value>الاسم والوصف والمؤلف وجهة الاتصال المعروضة في الكتالوج وفي عميل Power PDF. تسري التغييرات فورًا؛ ولا يلزم إصدار جديد. لا يتم تغيير ملفات الحزمة.</value></data>
+  <data name="Last changed" xml:space="preserve"><value>آخر تغيير</value></data>
+  <data name="Contact email" xml:space="preserve"><value>البريد الإلكتروني لجهة الاتصال</value></data>
+  <data name="Empty: name of the publishing account" xml:space="preserve"><value>فارغ: اسم الحساب الناشر</value></data>
+  <data name="Empty: email of the publishing account" xml:space="preserve"><value>فارغ: البريد الإلكتروني للحساب الناشر</value></data>
+  <data name="The name needs at least English; the description is required in all 16 languages." xml:space="preserve"><value>يلزم الاسم باللغة الإنجليزية على الأقل؛ والوصف مطلوب بجميع اللغات الـ 16.</value></data>
+  <data name="Language" xml:space="preserve"><value>اللغة</value></data>
+  <data name="Description" xml:space="preserve"><value>الوصف</value></data>
+  <data name="Cancel" xml:space="preserve"><value>إلغاء</value></data>
+  <data name="Reset name, description, author and contact to the values from the package?" xml:space="preserve"><value>هل تريد إعادة تعيين الاسم والوصف والمؤلف وجهة الاتصال إلى القيم الواردة في الحزمة؟</value></data>
+  <data name="Reset to package values" xml:space="preserve"><value>إعادة التعيين إلى قيم الحزمة</value></data>
+  <data name="Edit catalog entry" xml:space="preserve"><value>تحرير إدخال الكتالوج</value></data>
+  <data name="Catalog entry saved. The catalog and the Power PDF client show it immediately." xml:space="preserve"><value>تم حفظ إدخال الكتالوج. يعرضه الكتالوج وعميل Power PDF فورًا.</value></data>
+  <data name="Catalog entry reset to the values from the package." xml:space="preserve"><value>تمت إعادة تعيين إدخال الكتالوج إلى القيم الواردة في الحزمة.</value></data>
+  <data name="Change name, description, author and contact without a new version" xml:space="preserve"><value>تغيير الاسم والوصف والمؤلف وجهة الاتصال دون إصدار جديد</value></data>
+  <data name="Actions" xml:space="preserve"><value>الإجراءات</value></data>
+  <data name="All plug-ins" xml:space="preserve"><value>كل المكونات الإضافية</value></data>
+  <data name="Awaiting approval" xml:space="preserve"><value>في انتظار الموافقة</value></data>
+  <data name="Catalog entry changed by an admin" xml:space="preserve"><value>تم تغيير إدخال الكتالوج بواسطة مسؤول</value></data>
+  <data name="Category" xml:space="preserve"><value>الفئة</value></data>
+  <data name="Contact" xml:space="preserve"><value>جهة الاتصال</value></data>
+  <data name="Email me about my plug-ins" xml:space="preserve"><value>راسلني بالبريد الإلكتروني بشأن مكوناتي الإضافية</value></data>
+  <data name="Every plug-in in the store. Open Details to approve, withdraw or restore versions and to edit the catalog entry." xml:space="preserve"><value>كل مكون إضافي في المتجر. افتح «التفاصيل» للموافقة على الإصدارات أو سحبها أو استعادتها ولتحرير إدخال الكتالوج.</value></data>
+  <data name="In the store" xml:space="preserve"><value>في المتجر</value></data>
+  <data name="Last activity" xml:space="preserve"><value>آخر نشاط</value></data>
+  <data name="Live plug-ins, older versions, withdrawing and restoring: see the plug-in overview." xml:space="preserve"><value>المكونات الإضافية المباشرة والإصدارات الأقدم والسحب والاستعادة: راجع نظرة عامة على المكونات الإضافية.</value></data>
+  <data name="Menu" xml:space="preserve"><value>القائمة</value></data>
+  <data name="My plug-ins" xml:space="preserve"><value>مكوناتي الإضافية</value></data>
+  <data name="Not in the store" xml:space="preserve"><value>ليس في المتجر</value></data>
+  <data name="Older version, no longer offered" xml:space="preserve"><value>إصدار أقدم، لم يعد متاحًا</value></data>
+  <data name="Open plug-in overview" xml:space="preserve"><value>فتح نظرة عامة على المكونات الإضافية</value></data>
+  <data name="Plug-in" xml:space="preserve"><value>المكون الإضافي</value></data>
+  <data name="Plug-ins" xml:space="preserve"><value>المكونات الإضافية</value></data>
+  <data name="Restore (beta)" xml:space="preserve"><value>استعادة (تجريبي)</value></data>
+  <data name="Restore (live)" xml:space="preserve"><value>استعادة (مباشر)</value></data>
+  <data name="Search name, id or owner" xml:space="preserve"><value>البحث بالاسم أو المعرّف أو المالك</value></data>
+  <data name="Take out of the store" xml:space="preserve"><value>إزالة من المتجر</value></data>
+  <data name="Take this plug-in out of the store? All live and beta versions are withdrawn; installed copies keep working." xml:space="preserve"><value>هل تريد إزالة هذا المكون الإضافي من المتجر؟ سيتم سحب جميع الإصدارات المباشرة والتجريبية؛ وتستمر النسخ المثبتة في العمل.</value></data>
+  <data name="The plug-in was taken out of the store. Installed copies keep working; restore single versions to publish it again." xml:space="preserve"><value>تمت إزالة المكون الإضافي من المتجر. تستمر النسخ المثبتة في العمل؛ استعد إصدارات فردية لنشره مرة أخرى.</value></data>
+  <data name="This action is not allowed for this version." xml:space="preserve"><value>هذا الإجراء غير مسموح به لهذا الإصدار.</value></data>
+  <data name="Upload confirmation with check result" xml:space="preserve"><value>تأكيد التحميل مع نتيجة الفحص</value></data>
+  <data name="Upload confirmation, approval or rejection, withdrawn or restored versions and catalog changes made by an admin." xml:space="preserve"><value>تأكيد التحميل، والموافقة أو الرفض، والإصدارات المسحوبة أو المستعادة، وتغييرات الكتالوج التي أجراها مسؤول.</value></data>
+  <data name="Version restored and live again." xml:space="preserve"><value>تمت استعادة الإصدار وأصبح مباشرًا مرة أخرى.</value></data>
+  <data name="Version restored to the beta channel; it needs approval again." xml:space="preserve"><value>تمت استعادة الإصدار إلى القناة التجريبية؛ ويحتاج إلى موافقة مرة أخرى.</value></data>
+  <data name="Version withdrawn or restored, plug-in taken out of the store" xml:space="preserve"><value>تم سحب إصدار أو استعادته، أو إزالة مكون إضافي من المتجر</value></data>
+  <data name="Versions" xml:space="preserve"><value>الإصدارات</value></data>
+  <data name="Withdraw this version?" xml:space="preserve"><value>هل تريد سحب هذا الإصدار؟</value></data>
+  <data name="Your plug-ins. Open Details for versions, check reports and the catalog entry." xml:space="preserve"><value>مكوناتك الإضافية. افتح «التفاصيل» لعرض الإصدارات وتقارير الفحص وإدخال الكتالوج.</value></data>
+  <data name="No plug-ins match this filter." xml:space="preserve"><value>لا توجد مكونات إضافية تطابق عامل التصفية هذا.</value></data>
+  <data name="Recipient" xml:space="preserve"><value>المستلم</value></data>
+  <data name="Please enter a valid email address." xml:space="preserve"><value>يرجى إدخال عنوان بريد إلكتروني صالح.</value></data>
+  <data name="Install in Power PDF" xml:space="preserve"><value>تثبيت في Power PDF</value></data>
+  <data name="Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)." xml:space="preserve"><value>يفتح Power PDF مع تحديد هذه الوظيفة الإضافية ويطلب التأكيد قبل التثبيت. يتطلب Add-on Store لـ Power PDF (الإصدار 0.3.7 أو أحدث).</value></data>
+  <data name="The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF." xml:space="preserve"><value>برنامج التثبيت ليس معروفًا على نطاق واسع بعد، لذا قد يعرض Windows الرسالة «قام Windows بحماية الكمبيوتر». انقر فوق «مزيد من المعلومات»، ثم «تشغيل على أي حال». يحدث هذا مرة واحدة فقط: يتم تثبيت التحديثات والمكونات الإضافية من داخل Power PDF.</value></data>
+  <data name="Windows warning?" xml:space="preserve"><value>تحذير من Windows؟</value></data>
+  <data name="Download the Add-on Store" xml:space="preserve"><value>تنزيل Add-on Store</value></data>
+  <data name="Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again." xml:space="preserve"><value>لم يحدث شيء؟ يحتاج هذا الزر إلى Add-on Store لـ Power PDF، الإصدار 0.3.7 أو أحدث، على هذا الكمبيوتر. ثبّته مرة واحدة (أو حدّثه في مربع حوار المتجر)، ثم انقر فوق الزر مرة أخرى.</value></data>
+  <data name="Built-in" xml:space="preserve"><value>مضمّن</value></data>
+  <data name="Categories" xml:space="preserve"><value>الفئات</value></data>
+  <data name="Delete" xml:space="preserve"><value>حذف</value></data>
+  <data name="From the package" xml:space="preserve"><value>من الحزمة</value></data>
+  <data name="Maximum number of categories" xml:space="preserve"><value>الحد الأقصى لعدد الفئات</value></data>
+  <data name="Merge into" xml:space="preserve"><value>دمج في</value></data>
+  <data name="New catalog category created by an upload" xml:space="preserve"><value>فئة كتالوج جديدة أنشأها تحميل</value></data>
+  <data name="Uploads may propose a new high-level category when none fits; the server checks length, similarity and the limit and creates it automatically. Merge or delete categories that are not needed." xml:space="preserve"><value>يمكن للتحميلات اقتراح فئة رئيسية جديدة عندما لا تناسب أي فئة؛ يتحقق الخادم من الطول والتشابه والحد الأقصى وينشئها تلقائيًا. ادمج الفئات غير المطلوبة أو احذفها.</value></data>
+  <data name="Category merged." xml:space="preserve"><value>تم دمج الفئة.</value></data>
+  <data name="Category deleted." xml:space="preserve"><value>تم حذف الفئة.</value></data>
+  <data name="This action is not possible for this category." xml:space="preserve"><value>هذا الإجراء غير ممكن لهذه الفئة.</value></data>
+  <data name="The limit must be between 8 and 50." xml:space="preserve"><value>يجب أن يكون الحد بين 8 و50.</value></data>
+  <data name="Download source" xml:space="preserve"><value>تنزيل المصدر</value></data>
+  <data name="Off" xml:space="preserve"><value>إيقاف</value></data>
+  <data name="Recommended: approval possible without source code" xml:space="preserve"><value>موصى به: الموافقة ممكنة دون التعليمات البرمجية المصدر</value></data>
+  <data name="Required before approval." xml:space="preserve"><value>مطلوب قبل الموافقة.</value></data>
+  <data name="Required: no approval without source code" xml:space="preserve"><value>مطلوب: لا موافقة دون التعليمات البرمجية المصدر</value></data>
+  <data name="Source code" xml:space="preserve"><value>التعليمات البرمجية المصدر</value></data>
+  <data name="Source code is stored next to each version and visible to admins only; Power PDF clients never receive it." xml:space="preserve"><value>تُخزَّن التعليمات البرمجية المصدر بجانب كل إصدار ولا تظهر إلا للمسؤولين؛ ولا تتلقاها عملاء Power PDF أبدًا.</value></data>
+  <data name="Source code per version" xml:space="preserve"><value>التعليمات البرمجية المصدر لكل إصدار</value></data>
+  <data name="Source code stored." xml:space="preserve"><value>تم تخزين التعليمات البرمجية المصدر.</value></data>
+  <data name="The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it." xml:space="preserve"><value>التعليمات البرمجية المصدر لهذا الإصدار مفقودة. يمكن الموافقة عليه بمجرد أن يحمّلها المؤلف (أو مسؤول).</value></data>
+  <data name="The source code was not stored." xml:space="preserve"><value>لم يتم تخزين التعليمات البرمجية المصدر.</value></data>
+  <data name="missing" xml:space="preserve"><value>مفقود</value></data>
+  <data name="stored" xml:space="preserve"><value>مخزَّن</value></data>
+  <data name="Upload source (ZIP)" xml:space="preserve"><value>تحميل المصدر (ZIP)</value></data>
+  <data name="Replace source" xml:space="preserve"><value>استبدال المصدر</value></data>
+  <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>الوظائف الإضافية المنشورة لـ Tungsten Power PDF. يتم تثبيتها على كمبيوتر يعمل بنظام Windows، مباشرةً داخل Power PDF.</value></data>
+  <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>وظائف إضافية من مؤلفين مستقلين، دون ضمان أو دعم رسمي.</value></data>
+  <data name="Developer" xml:space="preserve"><value>المطور</value></data>
+  <data name="Reports" xml:space="preserve"><value>التقارير</value></data>
+  <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>استخدام المتجر: التنزيلات والعملاء قيد الاستخدام والمواقع وعمليات الإرسال والمطورون.</value></data>
+  <data name="Last {0} days" xml:space="preserve"><value>آخر {0} يومًا</value></data>
+  <data name="From" xml:space="preserve"><value>من</value></data>
+  <data name="Add-on" xml:space="preserve"><value>الوظيفة الإضافية</value></data>
+  <data name="All add-ons" xml:space="preserve"><value>كل الوظائف الإضافية</value></data>
+  <data name="Country" xml:space="preserve"><value>البلد</value></data>
+  <data name="All countries" xml:space="preserve"><value>كل البلدان</value></data>
+  <data name="Source" xml:space="preserve"><value>المصدر</value></data>
+  <data name="All sources" xml:space="preserve"><value>كل المصادر</value></data>
+  <data name="Client" xml:space="preserve"><value>العميل</value></data>
+  <data name="Web" xml:space="preserve"><value>الويب</value></data>
+  <data name="Apply" xml:space="preserve"><value>تطبيق</value></data>
+  <data name="Reset filters" xml:space="preserve"><value>إعادة تعيين عوامل التصفية</value></data>
+  <data name="Report language" xml:space="preserve"><value>لغة التقرير</value></data>
+  <data name="PDF report" xml:space="preserve"><value>تقرير PDF</value></data>
+  <data name="Download CSV" xml:space="preserve"><value>تنزيل CSV</value></data>
+  <data name="compared with {0} – {1}" xml:space="preserve"><value>مقارنةً بـ {0} – {1}</value></data>
+  <data name="Time series since {0}; the all-time totals include earlier downloads." xml:space="preserve"><value>سلسلة زمنية منذ {0}؛ تتضمن الإجماليات الكلية التنزيلات السابقة.</value></data>
+  <data name="No usage data yet in this period." xml:space="preserve"><value>لا توجد بيانات استخدام بعد في هذه الفترة.</value></data>
+  <data name="Downloads (all time)" xml:space="preserve"><value>التنزيلات (طوال الوقت)</value></data>
+  <data name="Downloads in period" xml:space="preserve"><value>التنزيلات في الفترة</value></data>
+  <data name="Store windows opened" xml:space="preserve"><value>مرات فتح نافذة المتجر</value></data>
+  <data name="Client installer downloads" xml:space="preserve"><value>تنزيلات برنامج تثبيت العميل</value></data>
+  <data name="Live add-ons" xml:space="preserve"><value>الوظائف الإضافية المباشرة</value></data>
+  <data name="Developers" xml:space="preserve"><value>المطورون</value></data>
+  <data name="Awaiting review" xml:space="preserve"><value>في انتظار المراجعة</value></data>
+  <data name="Downloads per day" xml:space="preserve"><value>التنزيلات يوميًا</value></data>
+  <data name="Downloads per week" xml:space="preserve"><value>التنزيلات أسبوعيًا</value></data>
+  <data name="Downloads per month" xml:space="preserve"><value>التنزيلات شهريًا</value></data>
+  <data name="Highest value: {0}" xml:space="preserve"><value>أعلى قيمة: {0}</value></data>
+  <data name="Ranking of add-ons" xml:space="preserve"><value>ترتيب الوظائف الإضافية</value></data>
+  <data name="Sorted by downloads in the period; the trend compares with the previous period of the same length." xml:space="preserve"><value>مرتبة حسب التنزيلات في الفترة؛ يقارن الاتجاه بالفترة السابقة ذات الطول نفسه.</value></data>
+  <data name="In period" xml:space="preserve"><value>في الفترة</value></data>
+  <data name="Trend" xml:space="preserve"><value>الاتجاه</value></data>
+  <data name="Share" xml:space="preserve"><value>الحصة</value></data>
+  <data name="Course" xml:space="preserve"><value>التطور</value></data>
+  <data name="Top country" xml:space="preserve"><value>البلد الأعلى</value></data>
+  <data name="All time" xml:space="preserve"><value>طوال الوقت</value></data>
+  <data name="previous period" xml:space="preserve"><value>الفترة السابقة</value></data>
+  <data name="new" xml:space="preserve"><value>جديد</value></data>
+  <data name="unknown" xml:space="preserve"><value>غير معروف</value></data>
+  <data name="Clients in use" xml:space="preserve"><value>العملاء قيد الاستخدام</value></data>
+  <data name="Store windows opened per client version in the period; shows how far a client update has spread." xml:space="preserve"><value>مرات فتح نافذة المتجر لكل إصدار من العميل في الفترة؛ يوضح مدى انتشار تحديث العميل.</value></data>
+  <data name="Client languages" xml:space="preserve"><value>لغات العميل</value></data>
+  <data name="Language of Power PDF when the store window was opened." xml:space="preserve"><value>لغة Power PDF عند فتح نافذة المتجر.</value></data>
+  <data name="Download sources" xml:space="preserve"><value>مصادر التنزيل</value></data>
+  <data name="Client = Add-on Store in Power PDF, Web = browser, API = scripts and AI agents." xml:space="preserve"><value>العميل = Add-on Store في Power PDF، الويب = المستعرض، API = البرامج النصية ووكلاء الذكاء الاصطناعي.</value></data>
+  <data name="Countries" xml:space="preserve"><value>البلدان</value></data>
+  <data name="Cities" xml:space="preserve"><value>المدن</value></data>
+  <data name="Networks and organisations" xml:space="preserve"><value>الشبكات والمؤسسات</value></data>
+  <data name="Operator of the network the request came from; company networks often show the company name." xml:space="preserve"><value>مشغّل الشبكة التي جاء منها الطلب؛ غالبًا ما تُظهر شبكات الشركات اسم الشركة.</value></data>
+  <data name="Power PDF versions" xml:space="preserve"><value>إصدارات Power PDF</value></data>
+  <data name="Windows versions" xml:space="preserve"><value>إصدارات Windows</value></data>
+  <data name="Architecture" xml:space="preserve"><value>البنية</value></data>
+  <data name="Power PDF, Windows and architecture are reported by Add-on Store clients from version 0.4.2." xml:space="preserve"><value>يُبلغ عملاء Add-on Store عن Power PDF و Windows والبنية بدءًا من الإصدار 0.4.2.</value></data>
+  <data name="Submissions and reviews (12 months)" xml:space="preserve"><value>عمليات الإرسال والمراجعات (12 شهرًا)</value></data>
+  <data name="Month" xml:space="preserve"><value>الشهر</value></data>
+  <data name="Median review time" xml:space="preserve"><value>الوقت الوسيط للمراجعة</value></data>
+  <data name="Last submission" xml:space="preserve"><value>آخر إرسال</value></data>
+  <data name="Store versions without source code" xml:space="preserve"><value>إصدارات المتجر دون تعليمات برمجية مصدر</value></data>
+  <data name="All live and beta versions have source code deposited." xml:space="preserve"><value>جميع الإصدارات المباشرة والتجريبية لها تعليمات برمجية مصدر مودعة.</value></data>
+  <data name="IP address logging" xml:space="preserve"><value>تسجيل عناوين IP</value></data>
+  <data name="IP address logging (reports)" xml:space="preserve"><value>تسجيل عناوين IP (التقارير)</value></data>
+  <data name="Off. Only the daily counters above are kept; they contain no IP address." xml:space="preserve"><value>متوقف. يتم الاحتفاظ بالعدادات اليومية أعلاه فقط؛ ولا تحتوي على أي عنوان IP.</value></data>
+  <data name="Switch on in the settings" xml:space="preserve"><value>التشغيل في الإعدادات</value></data>
+  <data name="On" xml:space="preserve"><value>تشغيل</value></data>
+  <data name="Stored requests: {0}. Older than {1} days are deleted automatically." xml:space="preserve"><value>الطلبات المخزنة: {0}. يتم حذف الطلبات الأقدم من {1} يومًا تلقائيًا.</value></data>
+  <data name="Stored requests: {0}. Kept permanently (no automatic deletion)." xml:space="preserve"><value>الطلبات المخزنة: {0}. يتم الاحتفاظ بها بشكل دائم (دون حذف تلقائي).</value></data>
+  <data name="Download CSV with IP addresses" xml:space="preserve"><value>تنزيل CSV مع عناوين IP</value></data>
+  <data name="Most frequent IP addresses" xml:space="preserve"><value>عناوين IP الأكثر تكرارًا</value></data>
+  <data name="Latest requests" xml:space="preserve"><value>أحدث الطلبات</value></data>
+  <data name="Type" xml:space="preserve"><value>النوع</value></data>
+  <data name="Location" xml:space="preserve"><value>الموقع</value></data>
+  <data name="Network" xml:space="preserve"><value>الشبكة</value></data>
+  <data name="Map" xml:space="preserve"><value>الخريطة</value></data>
+  <data name="Location and network data:" xml:space="preserve"><value>بيانات الموقع والشبكة:</value></data>
+  <data name="Generated on {0}" xml:space="preserve"><value>تم الإنشاء في {0}</value></data>
+  <data name="Use &quot;Save as PDF&quot; as the printer to get the report as a PDF file." xml:space="preserve"><value>استخدم «حفظ بتنسيق PDF» كطابعة للحصول على التقرير كملف PDF.</value></data>
+  <data name="Print / save as PDF" xml:space="preserve"><value>طباعة / حفظ بتنسيق PDF</value></data>
+  <data name="Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports." xml:space="preserve"><value>قيد التشغيل دائمًا: عدادات يومية مع البلد والمنطقة والمدينة ومشغل الشبكة المستمدة من عنوان IP؛ ولا يتم تخزين العنوان نفسه. اختياري: كل تنزيل وطلب كتالوج مع عنوان IP واسم المضيف ووكيل المستخدم للتقارير.</value></data>
+  <data name="GDPR confirmation given by {0} on {1}." xml:space="preserve"><value>تم تقديم تأكيد GDPR بواسطة {0} في {1}.</value></data>
+  <data name="Data protection (GDPR)" xml:space="preserve"><value>حماية البيانات (GDPR)</value></data>
+  <data name="IP addresses are personal data under the GDPR, also without a sign-in. Storing them needs a legal basis (for example legitimate interest), a note in the privacy policy and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>عناوين IP بيانات شخصية بموجب GDPR، حتى دون تسجيل الدخول. يتطلب تخزينها أساسًا قانونيًا (مثل المصلحة المشروعة)، وإشارة في سياسة الخصوصية، وفترة احتفاظ. يرجى توضيح ذلك مع مسؤول حماية البيانات قبل تشغيله.</value></data>
+  <data name="I confirm that a legal basis exists, the privacy policy covers this logging and the retention period below is agreed." xml:space="preserve"><value>أؤكد وجود أساس قانوني، وأن سياسة الخصوصية تغطي هذا التسجيل، وأن فترة الاحتفاظ أدناه متفق عليها.</value></data>
+  <data name="Retention period (days)" xml:space="preserve"><value>فترة الاحتفاظ (بالأيام)</value></data>
+  <data name="Store permanently (no automatic deletion)" xml:space="preserve"><value>التخزين بشكل دائم (دون حذف تلقائي)</value></data>
+  <data name="The GDPR requires that personal data is kept no longer than necessary. Choose this only if your data protection officer agreed." xml:space="preserve"><value>تشترط GDPR عدم الاحتفاظ بالبيانات الشخصية لفترة أطول من اللازم. اختر هذا فقط إذا وافق مسؤول حماية البيانات.</value></data>
+  <data name="Confirm and switch on" xml:space="preserve"><value>تأكيد وتشغيل</value></data>
+  <data name="Switch on" xml:space="preserve"><value>تشغيل</value></data>
+  <data name="Switch off" xml:space="preserve"><value>إيقاف التشغيل</value></data>
+  <data name="Save retention period" xml:space="preserve"><value>حفظ فترة الاحتفاظ</value></data>
+  <data name="Delete all stored IP addresses" xml:space="preserve"><value>حذف كل عناوين IP المخزنة</value></data>
+  <data name="Please confirm the data protection statement first." xml:space="preserve"><value>يرجى تأكيد بيان حماية البيانات أولاً.</value></data>
+  <data name="IP logging is on." xml:space="preserve"><value>تسجيل IP قيد التشغيل.</value></data>
+  <data name="IP logging is off." xml:space="preserve"><value>تسجيل IP متوقف.</value></data>
+  <data name="Retention period saved." xml:space="preserve"><value>تم حفظ فترة الاحتفاظ.</value></data>
+  <data name="All stored IP addresses were deleted." xml:space="preserve"><value>تم حذف كل عناوين IP المخزنة.</value></data>
+  <data name="Type DELETE to confirm." xml:space="preserve"><value>اكتب DELETE للتأكيد.</value></data>
+  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>تحميل التعليمات البرمجية المصدر لإصدار (بعد كل تحميل)</value></data>
+  <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>المسؤولون: التعليمات البرمجية المصدر لأحدث إصدار، نقطة البداية لأي تغيير</value></data>
+  <data name="Share link" xml:space="preserve"><value>رابط المشاركة</value></data>
+  <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>صفحة خاصة بهذه الوظيفة الإضافية مع رابط لإرساله إلى العملاء</value></data>
+  <data name="Add-on not found" xml:space="preserve"><value>لم يتم العثور على الوظيفة الإضافية</value></data>
+  <data name="This add-on is not (or no longer) in the store." xml:space="preserve"><value>هذه الوظيفة الإضافية غير موجودة في المتجر (أو لم تعد موجودة).</value></data>
+  <data name="Show all add-ons" xml:space="preserve"><value>إظهار كل الوظائف الإضافية</value></data>
+  <data name="Add-on for Tungsten Power PDF: {0}" xml:space="preserve"><value>وظيفة إضافية لـ Tungsten Power PDF: {0}</value></data>
+  <data name="Hello," xml:space="preserve"><value>مرحبًا،</value></data>
+  <data name="for Tungsten Power PDF there is the add-on &quot;{0}&quot;:" xml:space="preserve"><value>تتوفر لـ Tungsten Power PDF الوظيفة الإضافية «{0}»:</value></data>
+  <data name="You can look at it and install it directly in Power PDF here:" xml:space="preserve"><value>يمكنك الاطلاع عليها وتثبيتها مباشرةً في Power PDF من هنا:</value></data>
+  <data name="Best regards" xml:space="preserve"><value>مع أطيب التحيات</value></data>
+  <data name="What&#x27;s new in version {0}" xml:space="preserve"><value>ما الجديد في الإصدار {0}</value></data>
+  <data name="First time?" xml:space="preserve"><value>هل هذه أول مرة؟</value></data>
+  <data name="Install the Add-on Store for Power PDF once (administrator rights required)." xml:space="preserve"><value>ثبّت Add-on Store لـ Power PDF مرة واحدة (تلزم حقوق المسؤول).</value></data>
+  <data name="Click &quot;Install in Power PDF&quot; above; Power PDF opens with this add-on selected." xml:space="preserve"><value>انقر فوق «تثبيت في Power PDF» أعلاه؛ يفتح Power PDF مع تحديد هذه الوظيفة الإضافية.</value></data>
+  <data name="Confirm the installation and restart Power PDF." xml:space="preserve"><value>أكّد التثبيت وأعد تشغيل Power PDF.</value></data>
+  <data name="Share this add-on" xml:space="preserve"><value>مشاركة هذه الوظيفة الإضافية</value></data>
+  <data name="Send this link to a customer or colleague; the page shows only this add-on." xml:space="preserve"><value>أرسل هذا الرابط إلى عميل أو زميل؛ تعرض الصفحة هذه الوظيفة الإضافية فقط.</value></data>
+  <data name="Link" xml:space="preserve"><value>الرابط</value></data>
+  <data name="Copy link" xml:space="preserve"><value>نسخ الرابط</value></data>
+  <data name="Link copied." xml:space="preserve"><value>تم نسخ الرابط.</value></data>
+  <data name="Your short name (optional, shows in the reports how often your link was used)" xml:space="preserve"><value>اسمك المختصر (اختياري، يُظهر في التقارير عدد مرات استخدام رابطك)</value></data>
+  <data name="e.g. mmueller" xml:space="preserve"><value>مثل mmueller</value></data>
+  <data name="Send by email" xml:space="preserve"><value>إرسال بالبريد الإلكتروني</value></data>
+  <data name="Shared links" xml:space="preserve"><value>الروابط المشتركة</value></data>
+  <data name="Calls of the add-on pages (/a/...) per short name: page views without link previews, clicks on &quot;Install in Power PDF&quot; and client installer downloads from that page. Without a short name the link was shared without one." xml:space="preserve"><value>زيارات صفحات الوظائف الإضافية (/a/...) لكل اسم مختصر: مشاهدات الصفحة دون معاينات الروابط، والنقرات على «تثبيت في Power PDF»، وتنزيلات برنامج تثبيت العميل من تلك الصفحة. إذا لم يوجد اسم مختصر، فقد تمت مشاركة الرابط دونه.</value></data>
+  <data name="Short name" xml:space="preserve"><value>الاسم المختصر</value></data>
+  <data name="Page views" xml:space="preserve"><value>مشاهدات الصفحة</value></data>
+  <data name="Install clicks" xml:space="preserve"><value>نقرات التثبيت</value></data>
+  <data name="Client downloads" xml:space="preserve"><value>تنزيلات العميل</value></data>
+  <data name="without short name" xml:space="preserve"><value>دون اسم مختصر</value></data>
+  <data name="Total" xml:space="preserve"><value>الإجمالي</value></data>
+  <data name="Add-on Store for Power PDF" xml:space="preserve"><value>Add-on Store لـ Power PDF</value></data>
+  <data name="Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF." xml:space="preserve"><value>وظائف إضافية لـ Tungsten Power PDF: اكتشفها هنا وثبّتها مباشرةً في Power PDF.</value></data>
+  <data name="Backup" xml:space="preserve"><value>النسخ الاحتياطي</value></data>
+  <data name="Setup" xml:space="preserve"><value>الإعداد</value></data>
+  <data name="Close" xml:space="preserve"><value>إغلاق</value></data>
+  <data name="Log excerpt" xml:space="preserve"><value>مقتطف السجل</value></data>
+  <data name="Mark as done" xml:space="preserve"><value>وضع علامة كمنجز</value></data>
+  <data name="Message" xml:space="preserve"><value>الرسالة</value></data>
+  <data name="No ratings yet. Users rate add-ons in the store window inside Power PDF." xml:space="preserve"><value>لا توجد تقييمات بعد. يقيّم المستخدمون الوظائف الإضافية في نافذة المتجر داخل Power PDF.</value></data>
+  <data name="Nothing received yet." xml:space="preserve"><value>لم يتم استلام أي شيء بعد.</value></data>
+  <data name="Problem report or comment from the store client" xml:space="preserve"><value>تقرير مشكلة أو تعليق من عميل المتجر</value></data>
+  <data name="Problem reports and comments" xml:space="preserve"><value>تقارير المشكلات والتعليقات</value></data>
+  <data name="Ratings" xml:space="preserve"><value>التقييمات</value></data>
+  <data name="Ratings and feedback" xml:space="preserve"><value>التقييمات والملاحظات</value></data>
+  <data name="Received" xml:space="preserve"><value>تاريخ الاستلام</value></data>
+  <data name="Reopen" xml:space="preserve"><value>إعادة فتح</value></data>
+  <data name="Screenshots" xml:space="preserve"><value>لقطات الشاشة</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; Claude reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>مُرسلة من نافذة المتجر داخل Power PDF. لا يراها إلا أنت والمسؤولون؛ ويقرأها Claude عبر GET /api/packages/&lt;id&gt;/feedback.</value></data>
+  <data name="open" xml:space="preserve"><value>مفتوح</value></data>
+  <data name="done" xml:space="preserve"><value>منجز</value></data>
+  <data name="{0} rating(s)" xml:space="preserve"><value>{0} تقييم (تقييمات)</value></data>
+  <data name="Problem" xml:space="preserve"><value>المشكلة</value></data>
+  <data name="Comment" xml:space="preserve"><value>تعليق</value></data>
+  <data name="AI assessment" xml:space="preserve"><value>تقييم الذكاء الاصطناعي</value></data>
+  <data name="AI assistant (optional)" xml:space="preserve"><value>مساعد الذكاء الاصطناعي (اختياري)</value></data>
+  <data name="AI review aid" xml:space="preserve"><value>مساعدة المراجعة بالذكاء الاصطناعي</value></data>
+  <data name="AI review aid created." xml:space="preserve"><value>تم إنشاء مساعدة المراجعة بالذكاء الاصطناعي.</value></data>
+  <data name="AI suggestions" xml:space="preserve"><value>اقتراحات الذكاء الاصطناعي</value></data>
+  <data name="API key" xml:space="preserve"><value>مفتاح API</value></data>
+  <data name="Ask AI" xml:space="preserve"><value>اسأل الذكاء الاصطناعي</value></data>
+  <data name="Changelog matches the changes" xml:space="preserve"><value>سجل التغييرات يطابق التغييرات</value></data>
+  <data name="Create automatically for every new version" xml:space="preserve"><value>إنشاء تلقائي لكل إصدار جديد</value></data>
+  <data name="Data sent to the provider: add-on texts from the catalog, the text of problem reports, search queries, manifests and file lists of new versions, and only with the option above changed source code lines. Never sent: email addresses, IP addresses, log excerpts, user accounts. Check with your data protection team before switching it on." xml:space="preserve"><value>البيانات المرسلة إلى الموفّر: نصوص الوظائف الإضافية من الكتالوج، ونص تقارير المشكلات، واستعلامات البحث، وملفات البيان وقوائم الملفات للإصدارات الجديدة، وأسطر التعليمات البرمجية المصدر المتغيرة فقط عند تمكين الخيار أعلاه. لا يُرسل أبدًا: عناوين البريد الإلكتروني، وعناوين IP، ومقتطفات السجل، وحسابات المستخدمين. استشر فريق حماية البيانات قبل التشغيل.</value></data>
+  <data name="Describe what you want to do; AI suggests matching add-ons." xml:space="preserve"><value>صِف ما تريد فعله؛ وسيقترح الذكاء الاصطناعي وظائف إضافية مطابقة.</value></data>
+  <data name="Generated by AI as an aid. The decision and its responsibility stay with the reviewer." xml:space="preserve"><value>تم إنشاؤه بواسطة الذكاء الاصطناعي كأداة مساعدة. يبقى القرار ومسؤوليته على عاتق المراجع.</value></data>
+  <data name="Model (empty = default)" xml:space="preserve"><value>النموذج (فارغ = الافتراضي)</value></data>
+  <data name="Nothing suitable found." xml:space="preserve"><value>لم يتم العثور على شيء مناسب.</value></data>
+  <data name="Provider" xml:space="preserve"><value>الموفّر</value></data>
+  <data name="Remove stored key" xml:space="preserve"><value>إزالة المفتاح المخزن</value></data>
+  <data name="Requests per day (limit)" xml:space="preserve"><value>الطلبات يوميًا (الحد)</value></data>
+  <data name="Review aid for new versions (on request)" xml:space="preserve"><value>مساعدة المراجعة للإصدارات الجديدة (عند الطلب)</value></data>
+  <data name="Search by need on the website and in the store window" xml:space="preserve"><value>البحث حسب الحاجة على موقع الويب وفي نافذة المتجر</value></data>
+  <data name="Searching…" xml:space="preserve"><value>جارٍ البحث…</value></data>
+  <data name="Send changed source code lines to the provider" xml:space="preserve"><value>إرسال أسطر التعليمات البرمجية المصدر المتغيرة إلى الموفّر</value></data>
+  <data name="Sort problem reports (category, urgency, summary, reply draft, duplicates)" xml:space="preserve"><value>فرز تقارير المشكلات (الفئة، والإلحاح، والملخص، ومسودة الرد، والتكرارات)</value></data>
+  <data name="Sorts problem reports, prepares a review aid for new versions and lets users search for add-ons by describing what they need. Off by default; everything works without it." xml:space="preserve"><value>يفرز تقارير المشكلات، ويُعد مساعدة مراجعة للإصدارات الجديدة، ويتيح للمستخدمين البحث عن الوظائف الإضافية بوصف ما يحتاجون إليه. متوقف افتراضيًا؛ يعمل كل شيء بدونه.</value></data>
+  <data name="Stored encrypted on the server and never shown again. Use a key of your own organization with a spending limit." xml:space="preserve"><value>يُخزَّن مشفرًا على الخادم ولا يُعرض مرة أخرى أبدًا. استخدم مفتاحًا خاصًا بمؤسستك مع حد للإنفاق.</value></data>
+  <data name="Suggested by AI from the add-on descriptions; please check the details." xml:space="preserve"><value>اقترحها الذكاء الاصطناعي من أوصاف الوظائف الإضافية؛ يرجى التحقق من التفاصيل.</value></data>
+  <data name="Suggested reply" xml:space="preserve"><value>الرد المقترح</value></data>
+  <data name="Test connection" xml:space="preserve"><value>اختبار الاتصال</value></data>
+  <data name="The AI provider gave no usable answer. Check the connection test in the settings." xml:space="preserve"><value>لم يقدم موفّر الذكاء الاصطناعي إجابة قابلة للاستخدام. تحقق من اختبار الاتصال في الإعدادات.</value></data>
+  <data name="The search is not available right now." xml:space="preserve"><value>البحث غير متاح حاليًا.</value></data>
+  <data name="Bug" xml:space="preserve"><value>خطأ</value></data>
+  <data name="Wish" xml:space="preserve"><value>طلب ميزة</value></data>
+  <data name="Question" xml:space="preserve"><value>سؤال</value></data>
+  <data name="Praise" xml:space="preserve"><value>إشادة</value></data>
+  <data name="high" xml:space="preserve"><value>مرتفع</value></data>
+  <data name="medium" xml:space="preserve"><value>متوسط</value></data>
+  <data name="low" xml:space="preserve"><value>منخفض</value></data>
+  <data name="warning" xml:space="preserve"><value>تحذير</value></data>
+  <data name="info" xml:space="preserve"><value>معلومات</value></data>
+  <data name="yes" xml:space="preserve"><value>نعم</value></data>
+  <data name="partly" xml:space="preserve"><value>جزئيًا</value></data>
+  <data name="no" xml:space="preserve"><value>لا</value></data>
+  <data name="Suggests: approve" xml:space="preserve"><value>الاقتراح: موافقة</value></data>
+  <data name="Suggests: reject" xml:space="preserve"><value>الاقتراح: رفض</value></data>
+  <data name="Suggests: check more closely" xml:space="preserve"><value>الاقتراح: فحص أدق</value></data>
+  <data name="Create AI review aid" xml:space="preserve"><value>إنشاء مساعدة مراجعة بالذكاء الاصطناعي</value></data>
+  <data name="Create again" xml:space="preserve"><value>إنشاء مرة أخرى</value></data>
+  <data name="Similar to report #{0}" xml:space="preserve"><value>مشابه للتقرير #{0}</value></data>
+  <data name="AI connection works." xml:space="preserve"><value>اتصال الذكاء الاصطناعي يعمل.</value></data>
+  <data name="The AI connection test failed." xml:space="preserve"><value>فشل اختبار اتصال الذكاء الاصطناعي.</value></data>
+  <data name="API and AI assistants" xml:space="preserve"><value>API ومساعدو الذكاء الاصطناعي</value></data>
+  <data name="ChatGPT (custom GPT actions), Gemini function calling and other tools: import the OpenAPI description and enter the personal token as Bearer key." xml:space="preserve"><value>ChatGPT (إجراءات GPT المخصصة)، واستدعاء الدوال في Gemini، وأدوات أخرى: استورد وصف OpenAPI وأدخل الرمز المميز الشخصي كمفتاح Bearer.</value></data>
+  <data name="Claude Code: install the skill. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>Claude Code: ثبّت المهارة. فهي تحمّل دائمًا القواعد الحالية من الخادم، لذا لا تحتاج أبدًا إلى تحديث.</value></data>
+  <data name="Coding assistants that read AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): save it in the plugin project." xml:space="preserve"><value>مساعدو البرمجة الذين يقرأون AGENTS.md (OpenAI Codex و GitHub Copilot و Cursor و Gemini CLI): احفظه في مشروع المكون الإضافي.</value></data>
+  <data name="Description of all endpoints (OpenAPI 3.1)" xml:space="preserve"><value>وصف جميع نقاط النهاية (OpenAPI 3.1)</value></data>
+  <data name="Download AGENTS.md" xml:space="preserve"><value>تنزيل AGENTS.md</value></data>
+  <data name="Give the token to your AI assistant together with this line:" xml:space="preserve"><value>أعطِ الرمز المميز إلى مساعد الذكاء الاصطناعي مع هذا السطر:</value></data>
+  <data name="Give your AI assistant one line" xml:space="preserve"><value>أعطِ مساعد الذكاء الاصطناعي سطرًا واحدًا</value></data>
+  <data name="Optional: set up your tool once" xml:space="preserve"><value>اختياري: إعداد أداتك مرة واحدة</value></data>
+  <data name="Publish and update plugins directly from your AI assistant, for example Claude, ChatGPT, Gemini or Copilot. The assistant reads the store&#x27;s rules from the API, validates the package until all checks pass and submits it for review." xml:space="preserve"><value>انشر المكونات الإضافية وحدّثها مباشرةً من مساعد الذكاء الاصطناعي، مثل Claude أو ChatGPT أو Gemini أو Copilot. يقرأ المساعد قواعد المتجر من API، ويتحقق من الحزمة حتى تجتاز جميع الفحوصات، ثم يرسلها للمراجعة.</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>مُرسلة من نافذة المتجر داخل Power PDF. لا يراها إلا أنت والمسؤولون؛ ويقرأها مساعد الذكاء الاصطناعي عبر GET /api/packages/&lt;id&gt;/feedback.</value></data>
+  <data name="Short index for language models" xml:space="preserve"><value>فهرس مختصر لنماذج اللغة</value></data>
+  <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>هذا كل ما يحتاجه: يقرأ الدليل، ويهيئ نفسه للجلسات المستقبلية، ويتبع القواعد.</value></data>
+  <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>اسم الرمز المميز (مثل 'assistant' أو 'build server')</value></data>
+  <data name="Provider and key" xml:space="preserve"><value>الموفّر والمفتاح</value></data>
+  <data name="Connect and load models" xml:space="preserve"><value>الاتصال وتحميل النماذج</value></data>
+  <data name="Model and features" xml:space="preserve"><value>النموذج والميزات</value></data>
+  <data name="Model" xml:space="preserve"><value>النموذج</value></data>
+  <data name="Default" xml:space="preserve"><value>الافتراضي</value></data>
+  <data name="Models this key may use, loaded live from the provider." xml:space="preserve"><value>النماذج التي يمكن لهذا المفتاح استخدامها، محمّلة مباشرةً من الموفّر.</value></data>
+  <data name="No model list loaded yet: use &quot;Connect and load models&quot; above. Until then the default model is used." xml:space="preserve"><value>لم يتم تحميل قائمة النماذج بعد: استخدم «الاتصال وتحميل النماذج» أعلاه. حتى ذلك الحين، يُستخدم النموذج الافتراضي.</value></data>
+  <data name="Test" xml:space="preserve"><value>اختبار</value></data>
+  <data name="Sends one short request with the chosen model." xml:space="preserve"><value>يرسل طلبًا قصيرًا واحدًا باستخدام النموذج المختار.</value></data>
+  <data name="Connected. Choose a model below." xml:space="preserve"><value>تم الاتصال. اختر نموذجًا أدناه.</value></data>
+  <data name="The connection failed." xml:space="preserve"><value>فشل الاتصال.</value></data>
+  <data name="Customers" xml:space="preserve"><value>العملاء</value></data>
+  <data name="Customer" xml:space="preserve"><value>العميل</value></data>
+  <data name="New customer" xml:space="preserve"><value>عميل جديد</value></data>
+  <data name="Create customer" xml:space="preserve"><value>إنشاء عميل</value></data>
+  <data name="No customers yet." xml:space="preserve"><value>لا يوجد عملاء بعد.</value></data>
+  <data name="Deliveries" xml:space="preserve"><value>عمليات التسليم</value></data>
+  <data name="Deliver an add-on" xml:space="preserve"><value>تسليم وظيفة إضافية</value></data>
+  <data name="Deliver" xml:space="preserve"><value>تسليم</value></data>
+  <data name="Codes" xml:space="preserve"><value>الرموز</value></data>
+  <data name="Code" xml:space="preserve"><value>الرمز</value></data>
+  <data name="No codes yet." xml:space="preserve"><value>لا توجد رموز بعد.</value></data>
+  <data name="New customer code" xml:space="preserve"><value>رمز عميل جديد</value></data>
+  <data name="Code for this add-on only" xml:space="preserve"><value>رمز لهذه الوظيفة الإضافية فقط</value></data>
+  <data name="Also create a code for this add-on only" xml:space="preserve"><value>إنشاء رمز لهذه الوظيفة الإضافية فقط أيضًا</value></data>
+  <data name="Create a customer code for all its deliveries right away" xml:space="preserve"><value>إنشاء رمز عميل لجميع عمليات التسليم الخاصة به على الفور</value></data>
+  <data name="Valid for" xml:space="preserve"><value>صالح لـ</value></data>
+  <data name="all deliveries" xml:space="preserve"><value>كل عمليات التسليم</value></data>
+  <data name="Copy" xml:space="preserve"><value>نسخ</value></data>
+  <data name="valid" xml:space="preserve"><value>صالح</value></data>
+  <data name="expired" xml:space="preserve"><value>منتهي الصلاحية</value></data>
+  <data name="valid until {0}" xml:space="preserve"><value>صالح حتى {0}</value></data>
+  <data name="Previous code stays valid for" xml:space="preserve"><value>يبقى الرمز السابق صالحًا لمدة</value></data>
+  <data name="0 days (at once)" xml:space="preserve"><value>0 يوم (فورًا)</value></data>
+  <data name="days" xml:space="preserve"><value>أيام</value></data>
+  <data name="Make live" xml:space="preserve"><value>جعله مباشرًا</value></data>
+  <data name="Pause" xml:space="preserve"><value>إيقاف مؤقت</value></data>
+  <data name="Resume" xml:space="preserve"><value>استئناف</value></data>
+  <data name="End delivery" xml:space="preserve"><value>إنهاء التسليم</value></data>
+  <data name="Change stages and period" xml:space="preserve"><value>تغيير المراحل والفترة</value></data>
+  <data name="Period" xml:space="preserve"><value>الفترة</value></data>
+  <data name="Until" xml:space="preserve"><value>حتى</value></data>
+  <data name="Beta stage" xml:space="preserve"><value>المرحلة التجريبية</value></data>
+  <data name="Live stage" xml:space="preserve"><value>المرحلة المباشرة</value></data>
+  <data name="newest" xml:space="preserve"><value>الأحدث</value></data>
+  <data name="fixed" xml:space="preserve"><value>ثابت</value></data>
+  <data name="paused" xml:space="preserve"><value>متوقف مؤقتًا</value></data>
+  <data name="ended" xml:space="preserve"><value>منتهٍ</value></data>
+  <data name="outside period" xml:space="preserve"><value>خارج الفترة</value></data>
+  <data name="private" xml:space="preserve"><value>خاص</value></data>
+  <data name="Visibility" xml:space="preserve"><value>الرؤية</value></data>
+  <data name="public (catalog)" xml:space="preserve"><value>عام (الكتالوج)</value></data>
+  <data name="private (customer deliveries only)" xml:space="preserve"><value>خاص (عمليات التسليم للعملاء فقط)</value></data>
+  <data name="Customer data" xml:space="preserve"><value>بيانات العميل</value></data>
+  <data name="Contact person" xml:space="preserve"><value>الشخص المسؤول</value></data>
+  <data name="Note" xml:space="preserve"><value>ملاحظة</value></data>
+  <data name="Created by" xml:space="preserve"><value>أنشأه</value></data>
+  <data name="paused (no add-ons for this customer)" xml:space="preserve"><value>متوقف مؤقتًا (لا وظائف إضافية لهذا العميل)</value></data>
+  <data name="Nothing delivered yet." xml:space="preserve"><value>لم يتم تسليم أي شيء بعد.</value></data>
+  <data name="Please check name and email address." xml:space="preserve"><value>يرجى التحقق من الاسم وعنوان البريد الإلكتروني.</value></data>
+  <data name="New code created." xml:space="preserve"><value>تم إنشاء رمز جديد.</value></data>
+  <data name="Code revoked." xml:space="preserve"><value>تم إبطال الرمز.</value></data>
+  <data name="Delivery created." xml:space="preserve"><value>تم إنشاء التسليم.</value></data>
+  <data name="Delivery saved." xml:space="preserve"><value>تم حفظ التسليم.</value></data>
+  <data name="The beta version is now live for this customer." xml:space="preserve"><value>الإصدار التجريبي الآن مباشر لهذا العميل.</value></data>
+  <data name="Customer delivery created or changed by a developer" xml:space="preserve"><value>تسليم للعميل أنشأه مطور أو غيّره</value></data>
+  <data name="Deliver add-ons to individual customers: they see them in the store window with their code, nobody else does. Every delivery has a beta and a live stage." xml:space="preserve"><value>سلّم الوظائف الإضافية إلى عملاء محددين: يرونها في نافذة المتجر باستخدام رمزهم، ولا يراها أحد غيرهم. لكل تسليم مرحلة تجريبية ومرحلة مباشرة.</value></data>
+  <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. Enter the code in the Add-on Store options in Power PDF or distribute it with the policy CustomerCode (client 0.6.0 or later). Several codes can be combined, separated by semicolons." xml:space="preserve"><value>يفتح رمز العميل جميع عمليات التسليم الخاصة بهذا العميل؛ ويفتح رمز التسليم وظيفة إضافية واحدة فقط. أدخل الرمز في خيارات Add-on Store في Power PDF أو وزّعه باستخدام النهج CustomerCode (العميل 0.6.0 أو أحدث). يمكن الجمع بين عدة رموز مفصولة بفواصل منقوطة.</value></data>
+  <data name="Beta stage: workstations of this customer with the beta option (or policy BetaChannel). Live stage: all others. Typical: new version to beta, test, then &quot;Make live&quot;." xml:space="preserve"><value>المرحلة التجريبية: محطات العمل لدى هذا العميل التي فُعّل فيها الخيار التجريبي (أو النهج BetaChannel). المرحلة المباشرة: جميع المحطات الأخرى. الإجراء المعتاد: إصدار جديد إلى المرحلة التجريبية، ثم الاختبار، ثم «جعله مباشرًا».</value></data>
+  <data name="Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>يُبقي الخيار «ثابت» في المرحلة المباشرة العميل على إصدار مختبَر؛ ويتبع «الأحدث» كل إصدار منشور. لا تحتاج الوظائف الإضافية الخاصة إلى موافقة المسؤول؛ ويتم إعلام المسؤولين بالبريد الإلكتروني.</value></data>
+  <data name="No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet." xml:space="preserve"><value>لا توجد وظيفة إضافية للتسليم: يمكنك تسليم وظائفك الإضافية التي اجتازت الفحوصات التلقائية ولم يتم تسليمها لهذا العميل بعد.</value></data>
+  <data name="Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed." xml:space="preserve"><value>الاسم فقط مطلوب. تُستخدم بيانات الاتصال لرسالة التسليم فقط؛ اتركها فارغة إذا لم تكن مطلوبة.</value></data>
+  <data name="Sign-in failed. Check email and password, or try again later." xml:space="preserve"><value>فشل تسجيل الدخول. تحقق من البريد الإلكتروني وكلمة المرور، أو حاول مرة أخرى لاحقًا.</value></data>
+  <data name="Backup restored. The server restarts now to load it completely; sign in again in a minute." xml:space="preserve"><value>تمت استعادة النسخة الاحتياطية. تتم إعادة تشغيل الخادم الآن لتحميلها بالكامل؛ سجّل الدخول مرة أخرى بعد دقيقة.</value></data>
+  <data name="no longer available" xml:space="preserve"><value>لم يعد متاحًا</value></data>
+  <data name="Setup token" xml:space="preserve"><value>رمز الإعداد المميز</value></data>
+  <data name="Shown in the server log at start-up and stored in the file setup-token.txt in the data folder; valid for 24 hours." xml:space="preserve"><value>يُعرض في سجل الخادم عند بدء التشغيل ويُخزَّن في الملف setup-token.txt في مجلد البيانات؛ صالح لمدة 24 ساعة.</value></data>
+  <data name="The setup token is wrong or has expired. Restart the app for a new one." xml:space="preserve"><value>رمز الإعداد المميز غير صحيح أو منتهي الصلاحية. أعد تشغيل التطبيق للحصول على رمز جديد.</value></data>
+  <data name="Password for the key ring (optional)" xml:space="preserve"><value>كلمة مرور حلقة المفاتيح (اختياري)</value></data>
+  <data name="Password for the key ring (only for backups that contain one)" xml:space="preserve"><value>كلمة مرور حلقة المفاتيح (فقط للنسخ الاحتياطية التي تحتوي عليها)</value></data>
+  <data name="With a password, the key ring that decrypts the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: after a restore, enter those keys again; customer codes keep working but can no longer be shown." xml:space="preserve"><value>مع كلمة مرور، تُضمَّن حلقة المفاتيح التي تفك تشفير مفاتيح الذكاء الاصطناعي و Resend المخزنة ورموز العملاء في النسخة الاحتياطية بشكل مشفر (AES-256). وبدونها تُستبعد: بعد الاستعادة، أدخل تلك المفاتيح مرة أخرى؛ تستمر رموز العملاء في العمل ولكن لا يمكن عرضها بعد ذلك.</value></data>
+  <data name="The password must have at least 12 characters." xml:space="preserve"><value>يجب أن تتكون كلمة المرور من 12 حرفًا على الأقل.</value></data>
+  <data name="The password for the key ring is wrong." xml:space="preserve"><value>كلمة مرور حلقة المفاتيح غير صحيحة.</value></data>
+  <data name="Backup restored without its key ring (no password given). Enter the AI and Resend keys again in the settings." xml:space="preserve"><value>تمت استعادة النسخة الاحتياطية دون حلقة المفاتيح الخاصة بها (لم يتم تقديم كلمة مرور). أدخل مفاتيح الذكاء الاصطناعي و Resend مرة أخرى في الإعدادات.</value></data>
+  <data name="Four-eyes rule: nobody approves a version they uploaded or own" xml:space="preserve"><value>مبدأ الأعين الأربع: لا يوافق أحد على إصدار حمّله أو يملكه</value></data>
+  <data name="Needs at least two active admins or reviewers; with only one, own versions can no longer be approved." xml:space="preserve"><value>يتطلب مسؤولَين أو مراجعَين نشطَين على الأقل؛ وإذا وُجد واحد فقط، فلا يمكن الموافقة على إصداراته بعد ذلك.</value></data>
+  <data name="Four-eyes rule: another admin or reviewer has to approve a version you uploaded or own." xml:space="preserve"><value>مبدأ الأعين الأربع: يجب أن يوافق مسؤول أو مراجع آخر على إصدار حمّلته أو تملكه.</value></data>
+  <data name="This backup contains the key ring. Enter its password, or confirm the restore without it." xml:space="preserve"><value>تحتوي هذه النسخة الاحتياطية على حلقة المفاتيح. أدخل كلمة مرورها، أو أكّد الاستعادة بدونها.</value></data>
+  <data name="Restore without the key ring (signing key and stored secrets are lost)" xml:space="preserve"><value>الاستعادة دون حلقة المفاتيح (يُفقد مفتاح التوقيع والأسرار المخزنة)</value></data>
+  <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>تمت استعادة النسخة الاحتياطية دون حلقة المفاتيح الخاصة بها. أدخل مفاتيح الذكاء الاصطناعي و Resend مرة أخرى وعيّن مفتاح استرداد التوقيع (Signing__PrivateKeyPem)؛ حتى ذلك الحين لا يمكن للعملاء التثبيت.</value></data>
+  <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>تتعذر قراءة مفتاح توقيع الحزم. يرفض العملاء عمليات التثبيت حتى تتم استعادة النسخة الاحتياطية مع كلمة مرور حلقة المفاتيح أو يحتوي إعداد التطبيق Signing__PrivateKeyPem على مفتاح الاسترداد.</value></data>
+  <data name="Package signing key" xml:space="preserve"><value>مفتاح توقيع الحزم</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>لغة مساعدات المراجعة التلقائية</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>إنشاء باللغة {0}</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>مساعدة المراجعة هذه مكتوبة باللغة {0}.</value></data>
+  <data name="Overview" xml:space="preserve"><value>نظرة عامة</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>الوظائف الإضافية</value></data>
+  <data name="Clients" xml:space="preserve"><value>العملاء</value></data>
+  <data name="Locations" xml:space="preserve"><value>المواقع</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>عمليات الإرسال والمراجعات</value></data>
+  <data name="Report sections" xml:space="preserve"><value>أقسام التقرير</value></data>
+  <data name="Pages" xml:space="preserve"><value>الصفحات</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>الصفوف لكل صفحة</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>الصفحة {0} من {1}</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>{0} إلى {1} من {2}</value></data>
+  <data name="Previous" xml:space="preserve"><value>السابق</value></data>
+  <data name="Next" xml:space="preserve"><value>التالي</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>أحدث {0} من أصل {1} طلب؛ يحتوي تصدير CSV على جميعها.</value></data>
+  <data name="A backup is already running." xml:space="preserve"><value>هناك نسخ احتياطي قيد التشغيل بالفعل.</value></data>
+  <data name="AI assistant" xml:space="preserve"><value>مساعد الذكاء الاصطناعي</value></data>
+  <data name="Access key (connection string or SAS URL)" xml:space="preserve"><value>مفتاح الوصول (سلسلة الاتصال أو عنوان SAS URL)</value></data>
+  <data name="Automatic backup" xml:space="preserve"><value>النسخ الاحتياطي التلقائي</value></data>
+  <data name="Automatic backup failed" xml:space="preserve"><value>فشل النسخ الاحتياطي التلقائي</value></data>
+  <data name="Automatic backup to Azure Blob Storage" xml:space="preserve"><value>النسخ الاحتياطي التلقائي إلى Azure Blob Storage</value></data>
+  <data name="Back up automatically on the selected days" xml:space="preserve"><value>النسخ الاحتياطي تلقائيًا في الأيام المحددة</value></data>
+  <data name="Back up now" xml:space="preserve"><value>النسخ الاحتياطي الآن</value></data>
+  <data name="Backup file (.zip, or .psbak from the automatic backup)" xml:space="preserve"><value>ملف النسخة الاحتياطية (.zip، أو .psbak من النسخ الاحتياطي التلقائي)</value></data>
+  <data name="Backups in Azure" xml:space="preserve"><value>النسخ الاحتياطية في Azure</value></data>
+  <data name="Backups to keep" xml:space="preserve"><value>عدد النسخ الاحتياطية المحتفظ بها</value></data>
+  <data name="Choose time and weekdays, switch on the automatic backup and save. &quot;Back up now&quot; makes a first backup right away." xml:space="preserve"><value>اختر الوقت وأيام الأسبوع، وشغّل النسخ الاحتياطي التلقائي واحفظ. ينشئ «النسخ الاحتياطي الآن» أول نسخة احتياطية على الفور.</value></data>
+  <data name="Click &quot;Save&quot; and then &quot;Test connection&quot;. The store creates the container by itself." xml:space="preserve"><value>انقر فوق «حفظ» ثم «اختبار الاتصال». ينشئ المتجر الحاوية بنفسه.</value></data>
+  <data name="Connection works: {0}" xml:space="preserve"><value>الاتصال يعمل: {0}</value></data>
+  <data name="Container" xml:space="preserve"><value>الحاوية</value></data>
+  <data name="Container names use 3 to 63 lower-case letters, digits and hyphens." xml:space="preserve"><value>تتكون أسماء الحاويات من 3 إلى 63 حرفًا صغيرًا ورقمًا وواصلة.</value></data>
+  <data name="Created automatically if it does not exist." xml:space="preserve"><value>يتم إنشاؤها تلقائيًا إذا لم تكن موجودة.</value></data>
+  <data name="Encrypts every backup before it leaves the server. Without it a backup cannot be restored: keep it outside the server, for example in a password manager." xml:space="preserve"><value>يُشفِّر كل نسخة احتياطية قبل أن تغادر الخادم. بدونها لا يمكن استعادة النسخة الاحتياطية: احتفظ بها خارج الخادم، مثلاً في مدير كلمات المرور.</value></data>
+  <data name="Enter the access key and the passphrase first." xml:space="preserve"><value>أدخل مفتاح الوصول وعبارة المرور أولاً.</value></data>
+  <data name="Guide" xml:space="preserve"><value>الدليل</value></data>
+  <data name="If a backup fails, all admins get an email (Settings, notifications: &quot;Automatic backup failed&quot;)." xml:space="preserve"><value>إذا فشل النسخ الاحتياطي، يتلقى جميع المسؤولين رسالة بريد إلكتروني (الإعدادات، الإشعارات: «فشل النسخ الاحتياطي التلقائي»).</value></data>
+  <data name="In the Azure portal, open a storage account (or create one: &quot;Storage accounts&quot;, &quot;Create&quot;, standard settings are enough; Redundancy &quot;LRS&quot; is the cheapest)." xml:space="preserve"><value>في مدخل Azure، افتح حساب تخزين (أو أنشئ واحدًا: «حسابات التخزين»، «إنشاء»، الإعدادات القياسية كافية؛ التكرار «LRS» هو الأرخص).</value></data>
+  <data name="In the storage account, open &quot;Security + networking&quot;, &quot;Access keys&quot;, and copy the &quot;Connection string&quot; of key1." xml:space="preserve"><value>في حساب التخزين، افتح «الأمان + الشبكات»، «مفاتيح الوصول»، وانسخ «سلسلة الاتصال» الخاصة بـ key1.</value></data>
+  <data name="Instead of the connection string, a SAS URL of the storage account or of one container works too (permissions: read, write, create, list, delete). It can be limited in time and revoked without changing the account keys." xml:space="preserve"><value>بدلاً من سلسلة الاتصال، يعمل أيضًا عنوان SAS URL لحساب التخزين أو لحاوية واحدة (الأذونات: القراءة، الكتابة، الإنشاء، السرد، الحذف). يمكن تحديده زمنيًا وإبطاله دون تغيير مفاتيح الحساب.</value></data>
+  <data name="Last backup" xml:space="preserve"><value>آخر نسخة احتياطية</value></data>
+  <data name="Manual backup" xml:space="preserve"><value>النسخ الاحتياطي اليدوي</value></data>
+  <data name="Next backup" xml:space="preserve"><value>النسخة الاحتياطية التالية</value></data>
+  <data name="No access key is stored." xml:space="preserve"><value>لم يتم تخزين مفتاح وصول.</value></data>
+  <data name="No backups in the container yet." xml:space="preserve"><value>لا توجد نسخ احتياطية في الحاوية بعد.</value></data>
+  <data name="None yet. The server creates one before every restore." xml:space="preserve"><value>لا يوجد بعد. ينشئ الخادم واحدة قبل كل استعادة.</value></data>
+  <data name="Not set up" xml:space="preserve"><value>غير مُعد</value></data>
+  <data name="OK" xml:space="preserve"><value>موافق</value></data>
+  <data name="Passphrase (at least 12 characters)" xml:space="preserve"><value>عبارة المرور (12 حرفًا على الأقل)</value></data>
+  <data name="Password for the key ring, or the passphrase of an automatic backup" xml:space="preserve"><value>كلمة مرور حلقة المفاتيح، أو عبارة مرور نسخة احتياطية تلقائية</value></data>
+  <data name="Paste it above as the access key, choose a passphrase of at least 12 characters and note it in your password manager." xml:space="preserve"><value>الصقها أعلاه كمفتاح وصول، واختر عبارة مرور من 12 حرفًا على الأقل ودوّنها في مدير كلمات المرور.</value></data>
+  <data name="Recommended in the storage account: &quot;Data protection&quot;, soft delete for blobs (for example 14 days), so a deleted backup can be recovered." xml:space="preserve"><value>يوصى به في حساب التخزين: «حماية البيانات»، الحذف المبدئي للكائنات الثنائية كبيرة الحجم (مثلاً 14 يومًا)، حتى يمكن استرداد نسخة احتياطية محذوفة.</value></data>
+  <data name="Restore: &quot;Backups in Azure&quot; restores a backup directly with the stored passphrase. On a new server, first create the admin account, enter the same access key and passphrase here, then restore." xml:space="preserve"><value>الاستعادة: يستعيد «النسخ الاحتياطية في Azure» نسخة احتياطية مباشرةً باستخدام عبارة المرور المخزنة. على خادم جديد، أنشئ حساب المسؤول أولاً، وأدخل مفتاح الوصول وعبارة المرور نفسيهما هنا، ثم نفّذ الاستعادة.</value></data>
+  <data name="Running" xml:space="preserve"><value>قيد التشغيل</value></data>
+  <data name="Safety backups" xml:space="preserve"><value>نسخ احتياطية للأمان</value></data>
+  <data name="Saved. The schedule stays off until an access key and a passphrase are set." xml:space="preserve"><value>تم الحفظ. يبقى الجدول متوقفًا حتى يتم تعيين مفتاح وصول وعبارة مرور.</value></data>
+  <data name="Sections" xml:space="preserve"><value>الأقسام</value></data>
+  <data name="Storage account" xml:space="preserve"><value>حساب التخزين</value></data>
+  <data name="Stored; leave empty to keep it" xml:space="preserve"><value>مخزَّن؛ اتركه فارغًا للاحتفاظ به</value></data>
+  <data name="The access key is neither a connection string nor a SAS URL of the storage account." xml:space="preserve"><value>مفتاح الوصول ليس سلسلة اتصال ولا عنوان SAS URL لحساب التخزين.</value></data>
+  <data name="The backup could not be downloaded." xml:space="preserve"><value>تعذر تنزيل النسخة الاحتياطية.</value></data>
+  <data name="The backup started. Reload the page in a minute to see the result." xml:space="preserve"><value>بدأ النسخ الاحتياطي. أعد تحميل الصفحة بعد دقيقة لرؤية النتيجة.</value></data>
+  <data name="The connection failed: {0}" xml:space="preserve"><value>فشل الاتصال: {0}</value></data>
+  <data name="The files are encrypted with the passphrase. A downloaded file can be restored under &quot;Restore&quot; with that passphrase." xml:space="preserve"><value>الملفات مشفرة بعبارة المرور. يمكن استعادة ملف تم تنزيله ضمن «استعادة» باستخدام عبارة المرور هذه.</value></data>
+  <data name="The list could not be loaded: {0}" xml:space="preserve"><value>تعذر تحميل القائمة: {0}</value></data>
+  <data name="The passphrase is wrong or the file is damaged." xml:space="preserve"><value>عبارة المرور غير صحيحة أو الملف تالف.</value></data>
+  <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>يجب أن تتكون عبارة المرور من 12 حرفًا على الأقل.</value></data>
+  <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>هذه النسخة الاحتياطية مشفرة. أدخل عبارة المرور الخاصة بها.</value></data>
+  <data name="Weekdays" xml:space="preserve"><value>أيام الأسبوع</value></data>
+  <data name="Request a developer account" xml:space="preserve"><value>طلب حساب مطور</value></data>
+  <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>تمت استعادة النسخة الاحتياطية على الخادم الجديد. سجّل الدخول باستخدام حساب مسؤول من النسخة الاحتياطية.</value></data>
+  <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>حسابك ليس مسؤولاً نشطًا في هذه النسخة الاحتياطية (لا هذا الحساب ولا عنوان بريده الإلكتروني)؛ ستؤدي استعادتها إلى قفل الوصول عليك.</value></data>
+  <data name="This backup was downloaded without the key ring, and this server cannot read its package signing key. Confirm the restore without the key ring, or use a backup downloaded with a key ring password." xml:space="preserve"><value>تم تنزيل هذه النسخة الاحتياطية دون حلقة المفاتيح، ولا يمكن لهذا الخادم قراءة مفتاح توقيع الحزم الخاص بها. أكّد الاستعادة دون حلقة المفاتيح، أو استخدم نسخة احتياطية تم تنزيلها مع كلمة مرور حلقة المفاتيح.</value></data>
+  <data name="The restore failed (damaged archive or full disk). The previous state was put back; nothing changed." xml:space="preserve"><value>فشلت الاستعادة (أرشيف تالف أو قرص ممتلئ). تمت إعادة الحالة السابقة؛ لم يتغير شيء.</value></data>
+  <data name="The restore failed and the previous state could not be put back automatically. Download the safety backup {0} under Safety backups and restore it." xml:space="preserve"><value>فشلت الاستعادة وتعذرت إعادة الحالة السابقة تلقائيًا. نزّل النسخة الاحتياطية للأمان {0} ضمن «نسخ احتياطية للأمان» واستعدها.</value></data>
+  <data name="With a password, the key ring that decrypts the package signing key, the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: restored on another server, the signing key is lost (clients refuse installs until the recovery key is set) and the AI and Resend keys must be entered again; customer codes keep working but can no longer be shown." xml:space="preserve"><value>مع كلمة مرور، تُضمَّن حلقة المفاتيح التي تفك تشفير مفتاح توقيع الحزم ومفاتيح الذكاء الاصطناعي و Resend المخزنة ورموز العملاء في النسخة الاحتياطية بشكل مشفر (AES-256). وبدونها تُستبعد: عند الاستعادة على خادم آخر، يُفقد مفتاح التوقيع (يرفض العملاء عمليات التثبيت حتى يتم تعيين مفتاح الاسترداد) ويجب إدخال مفاتيح الذكاء الاصطناعي و Resend مرة أخرى؛ تستمر رموز العملاء في العمل ولكن لا يمكن عرضها بعد ذلك.</value></data>
+  <data name="An unknown failure has occurred." xml:space="preserve"><value>حدث خطأ غير معروف.</value></data>
+  <data name="Passwords must be at least {0} characters." xml:space="preserve"><value>يجب أن تتكون كلمات المرور من {0} أحرف على الأقل.</value></data>
+  <data name="Passwords must have at least one digit (&#x27;0&#x27;-&#x27;9&#x27;)." xml:space="preserve"><value>يجب أن تحتوي كلمات المرور على رقم واحد على الأقل ('0'-'9').</value></data>
+  <data name="Passwords must have at least one lowercase letter (&#x27;a&#x27;-&#x27;z&#x27;)." xml:space="preserve"><value>يجب أن تحتوي كلمات المرور على حرف صغير واحد على الأقل ('a'-'z').</value></data>
+  <data name="Passwords must have at least one uppercase letter (&#x27;A&#x27;-&#x27;Z&#x27;)." xml:space="preserve"><value>يجب أن تحتوي كلمات المرور على حرف كبير واحد على الأقل ('A'-'Z').</value></data>
+  <data name="Email &#x27;{0}&#x27; is invalid." xml:space="preserve"><value>البريد الإلكتروني '{0}' غير صالح.</value></data>
+  <data name="Email &#x27;{0}&#x27; is already taken." xml:space="preserve"><value>البريد الإلكتروني '{0}' مستخدم بالفعل.</value></data>
+  <data name="Fill in name, email address and password (name up to 100, email address up to 200, reason up to 500 characters)." xml:space="preserve"><value>املأ الاسم وعنوان البريد الإلكتروني وكلمة المرور (الاسم حتى 100 حرف، وعنوان البريد الإلكتروني حتى 200، والسبب حتى 500 حرف).</value></data>
+  <data name="public" xml:space="preserve"><value>عام</value></data>
+  <data name="Make public" xml:space="preserve"><value>جعله عامًا</value></data>
+  <data name="Make private" xml:space="preserve"><value>جعله خاصًا</value></data>
+  <data name="Show in the public catalog" xml:space="preserve"><value>إظهار في الكتالوج العام</value></data>
+  <data name="Customer deliveries only, not in the public catalog" xml:space="preserve"><value>عمليات التسليم للعملاء فقط، ليس في الكتالوج العام</value></data>
+  <data name="Make this add-on public? It then appears in the catalog for everybody (new versions after approval)." xml:space="preserve"><value>هل تريد جعل هذه الوظيفة الإضافية عامة؟ ستظهر بعد ذلك في الكتالوج للجميع (الإصدارات الجديدة بعد الموافقة).</value></data>
+  <data name="Make this add-on private? It disappears from the public catalog; only customers with a delivery and a code still get it." xml:space="preserve"><value>هل تريد جعل هذه الوظيفة الإضافية خاصة؟ ستختفي من الكتالوج العام؛ ولن يحصل عليها إلا العملاء الذين لديهم تسليم ورمز.</value></data>
+  <data name="No private add-on to deliver. Customers get private add-ons (never in the public catalog) that passed the automatic checks and are not delivered to them yet: upload with &quot;visibility&quot;: &quot;private&quot; or switch an add-on to private in the plug-in list." xml:space="preserve"><value>لا توجد وظيفة إضافية خاصة للتسليم. يحصل العملاء على الوظائف الإضافية الخاصة (التي لا تظهر أبدًا في الكتالوج العام) التي اجتازت الفحوصات التلقائية ولم يتم تسليمها إليهم بعد: حمّل باستخدام "visibility": "private" أو حوّل وظيفة إضافية إلى خاصة في قائمة المكونات الإضافية.</value></data>
+  <data name="Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>تُدرج الوظائف الإضافية الخاصة فقط: لا تظهر أبدًا في الكتالوج العام، بل فقط للعملاء الذين لديهم رمز. يُبقي الخيار «ثابت» في المرحلة المباشرة العميل على إصدار مختبَر؛ ويتبع «الأحدث» كل إصدار منشور. لا تحتاج الوظائف الإضافية الخاصة إلى موافقة المسؤول؛ ويتم إعلام المسؤولين بالبريد الإلكتروني.</value></data>
+  <data name="Delete customer" xml:space="preserve"><value>حذف العميل</value></data>
+  <data name="Customer deleted." xml:space="preserve"><value>تم حذف العميل.</value></data>
+  <data name="Delete this customer with all its codes and deliveries? Workstations using its codes lose these add-ons at the next catalog refresh; installed copies keep working." xml:space="preserve"><value>هل تريد حذف هذا العميل مع جميع رموزه وعمليات التسليم الخاصة به؟ تفقد محطات العمل التي تستخدم رموزه هذه الوظائف الإضافية عند التحديث التالي للكتالوج؛ وتستمر النسخ المثبتة في العمل.</value></data>
+  <data name="Back to beta" xml:space="preserve"><value>العودة إلى التجريبي</value></data>
+  <data name="Version set back to beta; it needs approval again." xml:space="preserve"><value>تمت إعادة الإصدار إلى التجريبي؛ ويحتاج إلى موافقة مرة أخرى.</value></data>
+  <data name="Set this version back to beta? Only beta workstations are offered it from now on, the live channel falls back to the previous live version, and it needs approval again. Installed copies keep working." xml:space="preserve"><value>هل تريد إعادة هذا الإصدار إلى التجريبي؟ من الآن فصاعدًا سيُعرض على محطات العمل التجريبية فقط، وتعود القناة المباشرة إلى الإصدار المباشر السابق، ويحتاج إلى موافقة مرة أخرى. تستمر النسخ المثبتة في العمل.</value></data>
+  <data name="Private (customers only)" xml:space="preserve"><value>خاص (للعملاء فقط)</value></data>
+  <data name="The source code of this version is missing: back in beta, it could not be approved again. Upload the source code first." xml:space="preserve"><value>التعليمات البرمجية المصدر لهذا الإصدار مفقودة: بعد عودته إلى التجريبي، لا يمكن الموافقة عليه مرة أخرى. حمّل التعليمات البرمجية المصدر أولاً.</value></data>
+  <data name="Reset statistics" xml:space="preserve"><value>إعادة تعيين الإحصائيات</value></data>
+  <data name="After internal tests: delete the collected statistics so the reports count from here on. Add-ons, versions, accounts, customers and the audit log stay. A safety backup of the whole store is written first." xml:space="preserve"><value>بعد الاختبارات الداخلية: احذف الإحصائيات المجمعة حتى تبدأ التقارير العد من هذه النقطة. تبقى الوظائف الإضافية والإصدارات والحسابات والعملاء وسجل التدقيق. تتم أولاً كتابة نسخة احتياطية للأمان من المتجر بالكامل.</value></data>
+  <data name="Last reset: {0}" xml:space="preserve"><value>آخر إعادة تعيين: {0}</value></data>
+  <data name="Delete the chosen statistics now? This cannot be undone (except from the safety backup)." xml:space="preserve"><value>هل تريد حذف الإحصائيات المختارة الآن؟ لا يمكن التراجع عن ذلك (إلا من النسخة الاحتياطية للأمان).</value></data>
+  <data name="Downloads and usage statistics ({0} rows, {1} downloads)" xml:space="preserve"><value>إحصائيات التنزيلات والاستخدام ({0} صف، {1} تنزيل)</value></data>
+  <data name="Shared-link statistics ({0} rows)" xml:space="preserve"><value>إحصائيات الروابط المشتركة ({0} صف)</value></data>
+  <data name="Stored IP addresses ({0} requests)" xml:space="preserve"><value>عناوين IP المخزنة ({0} طلب)</value></data>
+  <data name="Ratings ({0})" xml:space="preserve"><value>التقييمات ({0})</value></data>
+  <data name="Problem reports and comments ({0})" xml:space="preserve"><value>تقارير المشكلات والتعليقات ({0})</value></data>
+  <data name="Type RESET to confirm." xml:space="preserve"><value>اكتب RESET للتأكيد.</value></data>
+  <data name="Choose at least one kind of data." xml:space="preserve"><value>اختر نوعًا واحدًا على الأقل من البيانات.</value></data>
+  <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>تمت إعادة تعيين الإحصائيات. تُدرج نسخة احتياطية للأمان من الحالة السابقة ضمن النسخ الاحتياطي والاستعادة &gt; نسخ احتياطية للأمان.</value></data>
+  <data name="This add-on has its own ribbon tab and therefore stays private. Only add-ons on the shared tab can be public." xml:space="preserve"><value>تحتوي هذه الوظيفة الإضافية على علامة تبويب خاصة بها في الشريط، ولذلك تبقى خاصة. يمكن أن تكون الوظائف الإضافية الموجودة على علامة التبويب المشتركة فقط عامة.</value></data>
+  <data name="Forgot password" xml:space="preserve"><value>نسيت كلمة المرور</value></data>
+  <data name="Forgot password?" xml:space="preserve"><value>هل نسيت كلمة المرور؟</value></data>
+  <data name="Enter the email address of your account. We send you a link to choose a new password." xml:space="preserve"><value>أدخل عنوان البريد الإلكتروني لحسابك. سنرسل إليك رابطًا لاختيار كلمة مرور جديدة.</value></data>
+  <data name="If an active account exists for this address, we sent it a link to choose a new password. The link is valid for 24 hours." xml:space="preserve"><value>إذا كان هناك حساب نشط لهذا العنوان، فقد أرسلنا إليه رابطًا لاختيار كلمة مرور جديدة. الرابط صالح لمدة 24 ساعة.</value></data>
+  <data name="Send link" xml:space="preserve"><value>إرسال الرابط</value></data>
+  <data name="Back to sign-in" xml:space="preserve"><value>العودة إلى تسجيل الدخول</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>اختيار كلمة مرور جديدة</value></data>
+  <data name="This link is invalid or has expired. Request a new one with &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>هذا الرابط غير صالح أو منتهي الصلاحية. اطلب رابطًا جديدًا باستخدام «هل نسيت كلمة المرور؟» في صفحة تسجيل الدخول.</value></data>
+  <data name="New password for {0}. At least 10 characters." xml:space="preserve"><value>كلمة مرور جديدة لـ {0}. 10 أحرف على الأقل.</value></data>
+  <data name="New password" xml:space="preserve"><value>كلمة المرور الجديدة</value></data>
+  <data name="Repeat the new password" xml:space="preserve"><value>تكرار كلمة المرور الجديدة</value></data>
+  <data name="Save password" xml:space="preserve"><value>حفظ كلمة المرور</value></data>
+  <data name="Enter a new password (up to 200 characters)." xml:space="preserve"><value>أدخل كلمة مرور جديدة (حتى 200 حرف).</value></data>
+  <data name="The two passwords do not match." xml:space="preserve"><value>كلمتا المرور غير متطابقتين.</value></data>
+  <data name="Password changed. Sign in with the new password." xml:space="preserve"><value>تم تغيير كلمة المرور. سجّل الدخول باستخدام كلمة المرور الجديدة.</value></data>
+  <data name="Change password" xml:space="preserve"><value>تغيير كلمة المرور</value></data>
+  <data name="Current password" xml:space="preserve"><value>كلمة المرور الحالية</value></data>
+  <data name="Enter the current and the new password (up to 200 characters)." xml:space="preserve"><value>أدخل كلمة المرور الحالية والجديدة (حتى 200 حرف).</value></data>
+  <data name="Password changed. Other sessions were signed out." xml:space="preserve"><value>تم تغيير كلمة المرور. تم تسجيل الخروج من الجلسات الأخرى.</value></data>
+  <data name="Only active accounts can reset their password." xml:space="preserve"><value>يمكن للحسابات النشطة فقط إعادة تعيين كلمة المرور.</value></data>
+  <data name="Password reset link sent by email." xml:space="preserve"><value>تم إرسال رابط إعادة تعيين كلمة المرور بالبريد الإلكتروني.</value></data>
+  <data name="You cannot delete your own account." xml:space="preserve"><value>لا يمكنك حذف حسابك.</value></data>
+  <data name="Account deleted. Its add-ons and customers now belong to you." xml:space="preserve"><value>تم حذف الحساب. أصبحت وظائفه الإضافية وعملاؤه ملكًا لك الآن.</value></data>
+  <data name="Email is not configured; give this password reset link to the user (valid 24 hours, works once):" xml:space="preserve"><value>البريد الإلكتروني غير مكوَّن؛ أعطِ رابط إعادة تعيين كلمة المرور هذا للمستخدم (صالح لمدة 24 ساعة، يعمل مرة واحدة):</value></data>
+  <data name="Send {0} a link to choose a new password? The current password keeps working until the new one is set." xml:space="preserve"><value>هل تريد إرسال رابط إلى {0} لاختيار كلمة مرور جديدة؟ تستمر كلمة المرور الحالية في العمل حتى يتم تعيين الجديدة.</value></data>
+  <data name="Reset password" xml:space="preserve"><value>إعادة تعيين كلمة المرور</value></data>
+  <data name="Delete the account of {0} permanently? Its add-ons ({1}) and customers ({2}) move to you, its API tokens stop working. The audit log keeps its name." xml:space="preserve"><value>هل تريد حذف حساب {0} نهائيًا؟ تنتقل وظائفه الإضافية ({1}) وعملاؤه ({2}) إليك، وتتوقف رموز API المميزة الخاصة به عن العمل. يحتفظ سجل التدقيق باسمه.</value></data>
+  <data name="Without access to the store (for example a cloud sandbox) or without a token:" xml:space="preserve"><value>دون الوصول إلى المتجر (مثل بيئة معزولة سحابية) أو دون رمز مميز:</value></data>
+  <data name="Upload the ZIP it hands you under Plug-ins, &quot;Submit a package&quot;: the store submits the package and stores the source code in one step." xml:space="preserve"><value>حمّل ملف ZIP الذي يقدمه لك ضمن «المكونات الإضافية»، «إرسال حزمة»: يرسل المتجر الحزمة ويخزن التعليمات البرمجية المصدر في خطوة واحدة.</value></data>
+  <data name="Offline packer: .ppak, source ZIP and upload package" xml:space="preserve"><value>أداة الحزم دون اتصال: .ppak، وملف ZIP للمصدر، وحزمة التحميل</value></data>
+  <data name="An upload package (.zip with the .ppak and the source ZIP, made by make-ppak.ps1 or your AI assistant) submits the version and stores its source code in one step." xml:space="preserve"><value>ترسل حزمة التحميل (ملف .zip يحتوي على .ppak وملف ZIP للمصدر، أنشأها make-ppak.ps1 أو مساعد الذكاء الاصطناعي) الإصدار وتخزن تعليماته البرمجية المصدر في خطوة واحدة.</value></data>
+  <data name="Package file (.ppak or upload package .zip)" xml:space="preserve"><value>ملف الحزمة (.ppak أو حزمة التحميل .zip)</value></data>
+  <data name="The upload package held no source ZIP. Upload the source code on the plug-in page at this version." xml:space="preserve"><value>لم تحتوِ حزمة التحميل على ملف ZIP للمصدر. حمّل التعليمات البرمجية المصدر في صفحة المكون الإضافي عند هذا الإصدار.</value></data>
+  <data name="Source code from the upload package stored at this version." xml:space="preserve"><value>تم تخزين التعليمات البرمجية المصدر من حزمة التحميل في هذا الإصدار.</value></data>
+  <data name="The source code from the upload package was not stored. Fix the findings below and upload the source ZIP on the plug-in page." xml:space="preserve"><value>لم يتم تخزين التعليمات البرمجية المصدر من حزمة التحميل. أصلح النتائج أدناه وحمّل ملف ZIP للمصدر في صفحة المكون الإضافي.</value></data>
+  <data name="The upload package holds no .ppak file." xml:space="preserve"><value>لا تحتوي حزمة التحميل على ملف .ppak.</value></data>
+  <data name="The upload package holds more than one .ppak file; put exactly one in it." xml:space="preserve"><value>تحتوي حزمة التحميل على أكثر من ملف .ppak واحد؛ ضع فيها ملفًا واحدًا بالضبط.</value></data>
+  <data name="The upload package holds more than one ZIP file; put only the source ZIP of this version next to the .ppak." xml:space="preserve"><value>تحتوي حزمة التحميل على أكثر من ملف ZIP واحد؛ ضع فقط ملف ZIP للمصدر لهذا الإصدار بجانب .ppak.</value></data>
+  <data name="The .ppak in the upload package is larger than 200 MB." xml:space="preserve"><value>ملف .ppak في حزمة التحميل أكبر من 200 MB.</value></data>
+  <data name="The source ZIP in the upload package is larger than 100 MB." xml:space="preserve"><value>ملف ZIP للمصدر في حزمة التحميل أكبر من 100 MB.</value></data>
+  <data name="A file in the upload package is larger than allowed." xml:space="preserve"><value>يوجد ملف في حزمة التحميل أكبر من المسموح به.</value></data>
+  <data name="API" xml:space="preserve"><value>API</value></data>
+  <data name="API responses" xml:space="preserve"><value>استجابات API</value></data>
+  <data name="API, accounts and limits" xml:space="preserve"><value>API والحسابات والحدود</value></data>
+  <data name="Agent guide" xml:space="preserve"><value>دليل الوكيل</value></data>
+  <data name="Area" xml:space="preserve"><value>المجال</value></data>
+  <data name="Back to warning" xml:space="preserve"><value>العودة إلى تحذير</value></data>
+  <data name="Checked at approval" xml:space="preserve"><value>يُفحص عند الموافقة</value></data>
+  <data name="Customer deliveries" xml:space="preserve"><value>عمليات التسليم للعملاء</value></data>
+  <data name="Delete the house rule &quot;{0}&quot;?" xml:space="preserve"><value>هل تريد حذف القاعدة الداخلية «{0}»؟</value></data>
+  <data name="Edit" xml:space="preserve"><value>تحرير</value></data>
+  <data name="Edit house rule" xml:space="preserve"><value>تحرير القاعدة الداخلية</value></data>
+  <data name="Error" xml:space="preserve"><value>خطأ</value></data>
+  <data name="Errors" xml:space="preserve"><value>الأخطاء</value></data>
+  <data name="Every rule grouped by area, with the rules of this store" xml:space="preserve"><value>كل القواعد مجمعة حسب المجال، مع قواعد هذا المتجر</value></data>
+  <data name="Every rule the store checks, grouped by area: errors block an upload, warnings and notes do not. The rule texts are in English, exactly as AI assistants read them in the agent guide." xml:space="preserve"><value>كل قاعدة يفحصها المتجر، مجمعة حسب المجال: الأخطاء تمنع التحميل، أما التحذيرات والملاحظات فلا. نصوص القواعد باللغة الإنجليزية، تمامًا كما يقرأها مساعدو الذكاء الاصطناعي في دليل الوكيل.</value></data>
+  <data name="Fill in area, title (up to 120 characters) and text (up to 2000 characters)." xml:space="preserve"><value>املأ المجال والعنوان (حتى 120 حرفًا) والنص (حتى 2000 حرف).</value></data>
+  <data name="House rules" xml:space="preserve"><value>القواعد الداخلية</value></data>
+  <data name="House rules to check before approval" xml:space="preserve"><value>القواعد الداخلية التي يجب فحصها قبل الموافقة</value></data>
+  <data name="Icon and screenshots" xml:space="preserve"><value>الأيقونة ولقطات الشاشة</value></data>
+  <data name="Machine-readable" xml:space="preserve"><value>قابل للقراءة آليًا</value></data>
+  <data name="Make mandatory" xml:space="preserve"><value>جعله إلزاميًا</value></data>
+  <data name="Make {0} mandatory? Uploads with this finding are then refused." xml:space="preserve"><value>هل تريد جعل {0} إلزاميًا؟ سيتم بعد ذلك رفض التحميلات التي تحتوي على هذه النتيجة.</value></data>
+  <data name="New house rule" xml:space="preserve"><value>قاعدة داخلية جديدة</value></data>
+  <data name="None yet. Open an area and choose &quot;Make mandatory&quot; next to a warning." xml:space="preserve"><value>لا يوجد بعد. افتح مجالاً واختر «جعله إلزاميًا» بجانب تحذير.</value></data>
+  <data name="None yet. Open an area to add a house rule there." xml:space="preserve"><value>لا يوجد بعد. افتح مجالاً لإضافة قاعدة داخلية فيه.</value></data>
+  <data name="Notes" xml:space="preserve"><value>الملاحظات</value></data>
+  <data name="Only warnings can be made mandatory." xml:space="preserve"><value>يمكن جعل التحذيرات فقط إلزامية.</value></data>
+  <data name="Pre-flight checklist" xml:space="preserve"><value>قائمة التحقق المسبق</value></data>
+  <data name="Recommendation" xml:space="preserve"><value>توصية</value></data>
+  <data name="Rule" xml:space="preserve"><value>القاعدة</value></data>
+  <data name="Rules" xml:space="preserve"><value>القواعد</value></data>
+  <data name="Rules of this store" xml:space="preserve"><value>قواعد هذا المتجر</value></data>
+  <data name="Saved." xml:space="preserve"><value>تم الحفظ.</value></data>
+  <data name="Search code or text" xml:space="preserve"><value>البحث في الرمز أو النص</value></data>
+  <data name="Search results" xml:space="preserve"><value>نتائج البحث</value></data>
+  <data name="Severity" xml:space="preserve"><value>الخطورة</value></data>
+  <data name="Standard rules" xml:space="preserve"><value>القواعد القياسية</value></data>
+  <data name="Title" xml:space="preserve"><value>العنوان</value></data>
+  <data name="Treat {0} as a warning again?" xml:space="preserve"><value>هل تريد التعامل مع {0} كتحذير مرة أخرى؟</value></data>
+  <data name="Warnings" xml:space="preserve"><value>التحذيرات</value></data>
+  <data name="Warnings that are mandatory here" xml:space="preserve"><value>التحذيرات الإلزامية هنا</value></data>
+  <data name="What this store adds to the standard rules. House rules are guidelines in plain words: reviewers check them before approval, recommendations only advise. Mandatory warnings are enforced by the automatic check like errors." xml:space="preserve"><value>ما يضيفه هذا المتجر إلى القواعد القياسية. القواعد الداخلية إرشادات بكلمات بسيطة: يفحصها المراجعون قبل الموافقة، والتوصيات للنصح فقط. يفرض الفحص التلقائي التحذيرات الإلزامية مثل الأخطاء.</value></data>
+  <data name="Write it so a developer and an AI assistant can follow it; it appears in the agent guide, the pre-flight checklist and the manual." xml:space="preserve"><value>اكتبها بحيث يمكن للمطور ومساعد الذكاء الاصطناعي اتباعها؛ فهي تظهر في دليل الوكيل وقائمة التحقق المسبق والدليل.</value></data>
+  <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>مثل: تستخدم وظائف التوقيع الإضافية قواعد الشهادات الخاصة بالعميل</value></data>
+  <data name="mandatory here" xml:space="preserve"><value>إلزامي هنا</value></data>
+  <data name="Last run failed" xml:space="preserve"><value>فشل التشغيل الأخير</value></data>
+  <data name="1. Conditions for the import (checked automatically)" xml:space="preserve"><value>1. شروط الاستيراد (تُفحص تلقائيًا)</value></data>
+  <data name="2. Conditions for the approval (confirmed by the reviewer)" xml:space="preserve"><value>2. شروط الموافقة (يؤكدها المراجع)</value></data>
+  <data name="Added by this store" xml:space="preserve"><value>أضافها هذا المتجر</value></data>
+  <data name="Back to the standard wording of {0}?" xml:space="preserve"><value>هل تريد العودة إلى الصياغة القياسية لـ {0}؟</value></data>
+  <data name="Condition" xml:space="preserve"><value>الشرط</value></data>
+  <data name="Confirm every approval condition:" xml:space="preserve"><value>أكّد كل شرط من شروط الموافقة:</value></data>
+  <data name="Confirm every approval condition before approving." xml:space="preserve"><value>أكّد كل شرط من شروط الموافقة قبل الموافقة.</value></data>
+  <data name="Documentation (PDF)" xml:space="preserve"><value>الوثائق (PDF)</value></data>
+  <data name="In English, generated from the live rules of this store." xml:space="preserve"><value>باللغة الإنجليزية، تم إنشاؤها من القواعد المباشرة لهذا المتجر.</value></data>
+  <data name="Mandatory conditions" xml:space="preserve"><value>الشروط الإلزامية</value></data>
+  <data name="Mandatory requirements (PDF)" xml:space="preserve"><value>المتطلبات الإلزامية (PDF)</value></data>
+  <data name="Mandatory requirements for add-ons" xml:space="preserve"><value>المتطلبات الإلزامية للوظائف الإضافية</value></data>
+  <data name="Manual: API, rules and publishing guide" xml:space="preserve"><value>الدليل: API والقواعد ودليل النشر</value></data>
+  <data name="New approval condition" xml:space="preserve"><value>شرط موافقة جديد</value></data>
+  <data name="Reset" xml:space="preserve"><value>إعادة تعيين</value></data>
+  <data name="Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it." xml:space="preserve"><value>يؤكده المراجعون لكل إصدار قبل الموافقة؛ ويطلب دليل الوكيل من المطورين ومساعدي الذكاء الاصطناعي الاستعداد له.</value></data>
+  <data name="Standard wording" xml:space="preserve"><value>الصياغة القياسية</value></data>
+  <data name="The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area." xml:space="preserve"><value>الفحوصات التلقائية وراء هذه الشروط جزء من المتجر ولا يمكن إيقافها هنا. يمكن جعل التحذيرات إلزامية في مجالها.</value></data>
+  <data name="The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store&#x27;s version." xml:space="preserve"><value>الشروط التي يجب أن يستوفيها المكون الإضافي: أولاً ليتم استيراده (يُفحص كل تحميل تلقائيًا ويُرفض عند فشل أحدها)، ثم ليُوافق عليه للمتجر المباشر (يؤكد المراجع كل شرط). يمكن للمسؤولين تغيير الصياغة وإضافة شروط؛ ويعرض دليل الوكيل وقائمة التحقق المسبق ومستندات PDF نسخة المتجر.</value></data>
+  <data name="Wording of this store" xml:space="preserve"><value>صياغة هذا المتجر</value></data>
+  <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>اكتب الشرط بما لا يزيد عن 600 حرف.</value></data>
+  <data name="checked online" xml:space="preserve"><value>يُفحص عبر الإنترنت</value></data>
+  <data name="the standard wording changed since" xml:space="preserve"><value>تغيرت الصياغة القياسية منذ</value></data>
+  <data name="Blocked" xml:space="preserve"><value>محظور</value></data>
+  <data name="Block" xml:space="preserve"><value>حظر</value></data>
+  <data name="Block version" xml:space="preserve"><value>حظر الإصدار</value></data>
+  <data name="Block all versions" xml:space="preserve"><value>حظر كل الإصدارات</value></data>
+  <data name="Lift the block" xml:space="preserve"><value>رفع الحظر</value></data>
+  <data name="Security block" xml:space="preserve"><value>حظر أمني</value></data>
+  <data name="Reason (users see it)" xml:space="preserve"><value>السبب (يراه المستخدمون)</value></data>
+  <data name="e.g. sends document content to an undeclared server" xml:space="preserve"><value>مثل: يرسل محتوى المستند إلى خادم غير مُعلن</value></data>
+  <data name="This add-on is blocked for a security reason." xml:space="preserve"><value>هذه الوظيفة الإضافية محظورة لسبب أمني.</value></data>
+  <data name="Block this version? It is withdrawn, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>هل تريد حظر هذا الإصدار؟ سيتم سحبه، وسيطلب كل Power PDF مثبت عليه هذا الإصدار من مستخدمه إزالته.</value></data>
+  <data name="Block the whole add-on? Every version is withdrawn, uploads are refused, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>هل تريد حظر الوظيفة الإضافية بالكامل؟ سيتم سحب كل الإصدارات، ورفض التحميلات، وسيطلب كل Power PDF مثبتة عليه من مستخدمه إزالتها.</value></data>
+  <data name="Lift the block? The version stays withdrawn until you restore it." xml:space="preserve"><value>هل تريد رفع الحظر؟ يبقى الإصدار مسحوبًا حتى تستعيده.</value></data>
+  <data name="Lift the block? The versions stay withdrawn until you restore them." xml:space="preserve"><value>هل تريد رفع الحظر؟ تبقى الإصدارات مسحوبة حتى تستعيدها.</value></data>
+  <data name="Give a reason for the block (3 to 300 characters); users see it." xml:space="preserve"><value>اذكر سببًا للحظر (من 3 إلى 300 حرف)؛ يراه المستخدمون.</value></data>
+  <data name="Version blocked. Clients that have it installed ask the user to remove it." xml:space="preserve"><value>تم حظر الإصدار. تطلب العملاء المثبت عليها من المستخدم إزالته.</value></data>
+  <data name="Block lifted. The version stays withdrawn; restore it if it should be offered again." xml:space="preserve"><value>تم رفع الحظر. يبقى الإصدار مسحوبًا؛ استعده إذا كان يجب عرضه مرة أخرى.</value></data>
+  <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>تم حظر الوظيفة الإضافية. تم سحب كل الإصدارات، ويتم رفض التحميلات، وتطلب العملاء من المستخدم إزالتها.</value></data>
+  <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>تم رفع الحظر. تبقى الإصدارات مسحوبة؛ استعد الإصدارات التي يجب عرضها مرة أخرى.</value></data>
+  <data name="Security and system access" xml:space="preserve"><value>الأمان والوصول إلى النظام</value></data>
+  <data name="Documentation" xml:space="preserve"><value>الوثائق</value></data>
+  <data name="All documentation" xml:space="preserve"><value>كل الوثائق</value></data>
+  <data name="Manual" xml:space="preserve"><value>الدليل</value></data>
+  <data name="Copied" xml:space="preserve"><value>تم النسخ</value></data>
+  <data name="Updated" xml:space="preserve"><value>تم التحديث</value></data>
+  <data name="AGENTS.md" xml:space="preserve"><value>AGENTS.md</value></data>
+  <data name="Everything about the Add-on Store in one place: the PDFs, the rules, the guides AI assistants read and the API tools. Every link opens in a new tab." xml:space="preserve"><value>كل ما يتعلق بـ Add-on Store في مكان واحد: ملفات PDF والقواعد والأدلة التي يقرأها مساعدو الذكاء الاصطناعي وأدوات API. يفتح كل رابط في علامة تبويب جديدة.</value></data>
+  <data name="Documents (PDF)" xml:space="preserve"><value>المستندات (PDF)</value></data>
+  <data name="Rules and conditions" xml:space="preserve"><value>القواعد والشروط</value></data>
+  <data name="For AI assistants" xml:space="preserve"><value>لمساعدي الذكاء الاصطناعي</value></data>
+  <data name="API and tools" xml:space="preserve"><value>API والأدوات</value></data>
+  <data name="What the store checks on every upload and what reviewers confirm at approval." xml:space="preserve"><value>ما يفحصه المتجر في كل تحميل وما يؤكده المراجعون عند الموافقة.</value></data>
+  <data name="Readable without signing in; works with Claude, ChatGPT, Gemini, Copilot and others." xml:space="preserve"><value>قابل للقراءة دون تسجيل الدخول؛ ويعمل مع Claude و ChatGPT و Gemini و Copilot وغيرها.</value></data>
+  <data name="For developers and scripts." xml:space="preserve"><value>للمطورين والبرامج النصية.</value></data>
+  <data name="Every condition a plug-in must meet for import and approval, in compact form." xml:space="preserve"><value>كل شرط يجب أن يستوفيه المكون الإضافي للاستيراد والموافقة، في شكل موجز.</value></data>
+  <data name="The complete reference: principles, developer and agent guide, every rule by area, API and manifest." xml:space="preserve"><value>المرجع الكامل: المبادئ، ودليل المطور والوكيل، وكل قاعدة حسب المجال، و API والبيان.</value></data>
+  <data name="All rules by area, the mandatory conditions and the rules of this store; admins edit them here." xml:space="preserve"><value>كل القواعد حسب المجال، والشروط الإلزامية، وقواعد هذا المتجر؛ يحررها المسؤولون هنا.</value></data>
+  <data name="The hard rules as a short checklist to work through before an upload." xml:space="preserve"><value>القواعد الصارمة كقائمة تحقق قصيرة يجب إكمالها قبل التحميل.</value></data>
+  <data name="Every rule and condition as JSON, for tools and AI assistants." xml:space="preserve"><value>كل قاعدة وشرط بتنسيق JSON، للأدوات ومساعدي الذكاء الاصطناعي.</value></data>
+  <data name="Rules as data" xml:space="preserve"><value>القواعد كبيانات</value></data>
+  <data name="The full guide AI assistants follow to build, check and publish an add-on." xml:space="preserve"><value>الدليل الكامل الذي يتبعه مساعدو الذكاء الاصطناعي لإنشاء وظيفة إضافية وفحصها ونشرها.</value></data>
+  <data name="Agent guide as a file" xml:space="preserve"><value>دليل الوكيل كملف</value></data>
+  <data name="The same guide as Markdown, to save in the plug-in project." xml:space="preserve"><value>الدليل نفسه بتنسيق Markdown، لحفظه في مشروع المكون الإضافي.</value></data>
+  <data name="Manual upload package" xml:space="preserve"><value>حزمة التحميل اليدوي</value></data>
+  <data name="Fallback when an assistant cannot reach the store: it builds the finished upload ZIP." xml:space="preserve"><value>بديل عندما يتعذر على المساعد الوصول إلى المتجر: ينشئ ملف ZIP للتحميل جاهزًا.</value></data>
+  <data name="Entry point for AI (llms.txt)" xml:space="preserve"><value>نقطة الدخول للذكاء الاصطناعي (llms.txt)</value></data>
+  <data name="Short overview that points an assistant to everything else." xml:space="preserve"><value>نظرة عامة قصيرة توجّه المساعد إلى كل شيء آخر.</value></data>
+  <data name="Instructions for coding assistants that read AGENTS.md (Codex, Copilot, Cursor, Gemini CLI)." xml:space="preserve"><value>تعليمات لمساعدي البرمجة الذين يقرأون AGENTS.md (Codex و Copilot و Cursor و Gemini CLI).</value></data>
+  <data name="Claude skill (SKILL.md)" xml:space="preserve"><value>مهارة Claude (SKILL.md)</value></data>
+  <data name="The same rules as a skill for Claude Code." xml:space="preserve"><value>القواعد نفسها كمهارة لـ Claude Code.</value></data>
+  <data name="API page" xml:space="preserve"><value>صفحة API</value></data>
+  <data name="Tokens, prompt templates for publishing and the most important endpoints." xml:space="preserve"><value>الرموز المميزة، وقوالب المطالبات للنشر، وأهم نقاط النهاية.</value></data>
+  <data name="All API endpoints" xml:space="preserve"><value>كل نقاط نهاية API</value></data>
+  <data name="The short list of every endpoint with method and purpose." xml:space="preserve"><value>القائمة المختصرة لكل نقطة نهاية مع الأسلوب والغرض.</value></data>
+  <data name="OpenAPI description" xml:space="preserve"><value>وصف OpenAPI</value></data>
+  <data name="The machine-readable API description for code generators and tools." xml:space="preserve"><value>وصف API القابل للقراءة آليًا لمولدات التعليمات البرمجية والأدوات.</value></data>
+  <data name="Offline packer (make-ppak.ps1)" xml:space="preserve"><value>أداة الحزم دون اتصال (make-ppak.ps1)</value></data>
+  <data name="Builds the .ppak, the source ZIP and the upload package without network or token." xml:space="preserve"><value>تنشئ ملف .ppak وملف ZIP للمصدر وحزمة التحميل دون شبكة أو رمز مميز.</value></data>
+  <data name="Problem reports" xml:space="preserve"><value>تقارير المشكلات</value></data>
+  <data name="Problem report queue" xml:space="preserve"><value>قائمة انتظار تقارير المشكلات</value></data>
+  <data name="New problem reports" xml:space="preserve"><value>تقارير المشكلات الجديدة</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>لوحة المعلومات</value></data>
+  <data name="Active problem reports" xml:space="preserve"><value>تقارير المشكلات النشطة</value></data>
+  <data name="All developers" xml:space="preserve"><value>كل المطورين</value></data>
+  <data name="Anyone" xml:space="preserve"><value>أي شخص</value></data>
+  <data name="Assigned to" xml:space="preserve"><value>معيّن إلى</value></data>
+  <data name="Assignment changed." xml:space="preserve"><value>تم تغيير التعيين.</value></data>
+  <data name="Attachments" xml:space="preserve"><value>المرفقات</value></data>
+  <data name="Attachments, log and reply address are deleted {0} days after the report is closed." xml:space="preserve"><value>يتم حذف المرفقات والسجل وعنوان الرد بعد {0} يومًا من إغلاق التقرير.</value></data>
+  <data name="Declined" xml:space="preserve"><value>مرفوض</value></data>
+  <data name="In progress" xml:space="preserve"><value>قيد التنفيذ</value></data>
+  <data name="Waiting" xml:space="preserve"><value>في الانتظار</value></data>
+  <data name="Deleted after the retention period" xml:space="preserve"><value>يُحذف بعد فترة الاحتفاظ</value></data>
+  <data name="Download channel" xml:space="preserve"><value>قناة التنزيل</value></data>
+  <data name="Downloads, versions, Power PDF versions, ratings and reports of your add-ons." xml:space="preserve"><value>التنزيلات والإصدارات وإصدارات Power PDF والتقييمات والتقارير لوظائفك الإضافية.</value></data>
+  <data name="Downloads, versions, users and reports of all add-ons." xml:space="preserve"><value>التنزيلات والإصدارات والمستخدمون والتقارير لكل الوظائف الإضافية.</value></data>
+  <data name="Downloads, versions, users and reports of your add-ons." xml:space="preserve"><value>التنزيلات والإصدارات والمستخدمون والتقارير لوظائفك الإضافية.</value></data>
+  <data name="From downloads in the period; Power PDF, Windows, architecture and language only from the store window." xml:space="preserve"><value>من التنزيلات في الفترة؛ و Power PDF و Windows والبنية واللغة من نافذة المتجر فقط.</value></data>
+  <data name="History" xml:space="preserve"><value>المحفوظات</value></data>
+  <data name="Log" xml:space="preserve"><value>السجل</value></data>
+  <data name="Me" xml:space="preserve"><value>أنا</value></data>
+  <data name="No data in this period." xml:space="preserve"><value>لا توجد بيانات في هذه الفترة.</value></data>
+  <data name="No notes yet." xml:space="preserve"><value>لا توجد ملاحظات بعد.</value></data>
+  <data name="No reports in this view." xml:space="preserve"><value>لا توجد تقارير في طريقة العرض هذه.</value></data>
+  <data name="Nobody" xml:space="preserve"><value>لا أحد</value></data>
+  <data name="Note or reply" xml:space="preserve"><value>ملاحظة أو رد</value></data>
+  <data name="Note saved." xml:space="preserve"><value>تم حفظ الملاحظة.</value></data>
+  <data name="Only the owner of the add-on or an admin can be assigned." xml:space="preserve"><value>يمكن تعيين مالك الوظيفة الإضافية أو مسؤول فقط.</value></data>
+  <data name="Open in the problem report queue" xml:space="preserve"><value>فتح في قائمة انتظار تقارير المشكلات</value></data>
+  <data name="Open the plug-in page" xml:space="preserve"><value>فتح صفحة المكون الإضافي</value></data>
+  <data name="Rating" xml:space="preserve"><value>التقييم</value></data>
+  <data name="Reply mailed to the reporter" xml:space="preserve"><value>تم إرسال الرد بالبريد إلى المُبلغ</value></data>
+  <data name="Reply possible" xml:space="preserve"><value>الرد ممكن</value></data>
+  <data name="Reply sent to the reporter." xml:space="preserve"><value>تم إرسال الرد إلى المُبلغ.</value></data>
+  <data name="Reporters may attach screenshots, PDFs and logs and leave an email address. These are deleted automatically once a report has been closed for the period below; the report text and the notes stay." xml:space="preserve"><value>يمكن للمُبلغين إرفاق لقطات شاشة وملفات PDF وسجلات وترك عنوان بريد إلكتروني. يتم حذفها تلقائيًا بعد إغلاق التقرير للفترة أدناه؛ ويبقى نص التقرير والملاحظات.</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for all add-ons." xml:space="preserve"><value>التقارير والتعليقات من نافذة المتجر داخل Power PDF، لكل الوظائف الإضافية.</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for your add-ons." xml:space="preserve"><value>التقارير والتعليقات من نافذة المتجر داخل Power PDF، لوظائفك الإضافية.</value></data>
+  <data name="Reports from the store window with attachments; an AI assistant works through them with your token." xml:space="preserve"><value>تقارير من نافذة المتجر مع المرفقات؛ يعالجها مساعد الذكاء الاصطناعي باستخدام رمزك المميز.</value></data>
+  <data name="Save internal note" xml:space="preserve"><value>حفظ ملاحظة داخلية</value></data>
+  <data name="Send as reply to the reporter" xml:space="preserve"><value>إرسال كرد إلى المُبلغ</value></data>
+  <data name="Send this text by email to the reporter?" xml:space="preserve"><value>هل تريد إرسال هذا النص بالبريد الإلكتروني إلى المُبلغ؟</value></data>
+  <data name="Status changed." xml:space="preserve"><value>تم تغيير الحالة.</value></data>
+  <data name="Text or #number" xml:space="preserve"><value>نص أو #رقم</value></data>
+  <data name="The reply could not be sent. Check the email settings." xml:space="preserve"><value>تعذر إرسال الرد. تحقق من إعدادات البريد الإلكتروني.</value></data>
+  <data name="The reporter left no email address; add an internal note instead." xml:space="preserve"><value>لم يترك المُبلغ عنوان بريد إلكتروني؛ أضف ملاحظة داخلية بدلاً من ذلك.</value></data>
+  <data name="The reporter left no email address; replies are not possible." xml:space="preserve"><value>لم يترك المُبلغ عنوان بريد إلكتروني؛ الرد غير ممكن.</value></data>
+  <data name="This action is not possible." xml:space="preserve"><value>هذا الإجراء غير ممكن.</value></data>
+  <data name="Upload one" xml:space="preserve"><value>حمّل واحدة</value></data>
+  <data name="Versions of {0}" xml:space="preserve"><value>إصدارات {0}</value></data>
+  <data name="Waiting for approval" xml:space="preserve"><value>في انتظار الموافقة</value></data>
+  <data name="Who uses it" xml:space="preserve"><value>من يستخدمها</value></data>
+  <data name="Work on them with an AI assistant" xml:space="preserve"><value>عالجها باستخدام مساعد الذكاء الاصطناعي</value></data>
+  <data name="Write 2 to 4000 characters." xml:space="preserve"><value>اكتب من 2 إلى 4000 حرف.</value></data>
+  <data name="You have no add-ons in the store yet." xml:space="preserve"><value>ليس لديك وظائف إضافية في المتجر بعد.</value></data>
+  <data name="Your AI assistant reads the same figures with GET /api/insights." xml:space="preserve"><value>يقرأ مساعد الذكاء الاصطناعي الأرقام نفسها باستخدام GET /api/insights.</value></data>
+  <data name="Your assistant reads this report with your API token:" xml:space="preserve"><value>يقرأ مساعدك هذا التقرير باستخدام رمز API المميز الخاص بك:</value></data>
+  <data name="before" xml:space="preserve"><value>قبل</value></data>
+  <data name="{0} active" xml:space="preserve"><value>{0} نشط</value></data>
+  <data name="{0} days" xml:space="preserve"><value>{0} يوم</value></data>
+  <data name="{0} new" xml:space="preserve"><value>{0} جديد</value></data>
+  <data name="Ribbon" xml:space="preserve"><value>الشريط</value></data>
+  <data name="No ribbon buttons" xml:space="preserve"><value>لا توجد أزرار في الشريط</value></data>
+</root>

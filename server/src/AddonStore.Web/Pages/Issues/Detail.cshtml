@@ -4,7 +4,7 @@
 @{
     var f = Model.F!;
     ViewData["Title"] = $"#{f.Id}";
-    var de = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "de";
+    var de = AddonStore.Web.Services.Lang.Current == "de";
     var closed = IssueService.Closed.Contains(f.Status);
     string Kb(long b) => b < 1024 * 1024 ? $"{(b + 1023) / 1024} KB" : $"{b / 1024.0 / 1024.0:0.0} MB";
 }

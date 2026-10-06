@@ -1,0 +1,1008 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Access requests" xml:space="preserve"><value>アクセス申請</value></data>
+  <data name="Accounts are for colleagues who develop and publish plugins. An admin reviews every request; you will be notified by email." xml:space="preserve"><value>アカウントは、プラグインを開発して公開する社員向けです。すべての申請は管理者が審査し、結果はメールで通知されます。</value></data>
+  <data name="Action" xml:space="preserve"><value>操作</value></data>
+  <data name="Actor" xml:space="preserve"><value>実行者</value></data>
+  <data name="All users" xml:space="preserve"><value>すべてのユーザー</value></data>
+  <data name="Approve" xml:space="preserve"><value>承認</value></data>
+  <data name="Approve for live store" xml:space="preserve"><value>ライブ ストアへの公開を承認</value></data>
+  <data name="Approved" xml:space="preserve"><value>承認済み</value></data>
+  <data name="Audit" xml:space="preserve"><value>監査</value></data>
+  <data name="Audit log" xml:space="preserve"><value>監査ログ</value></data>
+  <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>ベータ版はすべての自動チェックに合格し、ベータ テスターに表示されています。ライブ ストアへの公開を承認するか、理由を付けて却下してください。</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>リリース済みのプラグインを以下で参照できます。インストールは Power PDF 内の Add-on Store リボンから直接行います。このサイトはプラグイン開発者と管理者向けです。</value></data>
+  <data name="Catalog" xml:space="preserve"><value>カタログ</value></data>
+  <data name="Changelog" xml:space="preserve"><value>変更履歴</value></data>
+  <data name="Create a token" xml:space="preserve"><value>トークンを作成する</value></data>
+  <data name="Create admin account" xml:space="preserve"><value>管理者アカウントを作成</value></data>
+  <data name="Create the first administrator account for this Add-on Store instance." xml:space="preserve"><value>この Add-on Store インスタンスの最初の管理者アカウントを作成します。</value></data>
+  <data name="Create token" xml:space="preserve"><value>トークンを作成</value></data>
+  <data name="Created" xml:space="preserve"><value>作成日時</value></data>
+  <data name="Details" xml:space="preserve"><value>詳細</value></data>
+  <data name="Disable" xml:space="preserve"><value>無効にする</value></data>
+  <data name="Display name" xml:space="preserve"><value>表示名</value></data>
+  <data name="Download" xml:space="preserve"><value>ダウンロード</value></data>
+  <data name="Downloads" xml:space="preserve"><value>ダウンロード数</value></data>
+  <data name="Email" xml:space="preserve"><value>メール</value></data>
+  <data name="Enable" xml:space="preserve"><value>有効にする</value></data>
+  <data name="Every relevant action on this server: registrations, approvals, tokens, submissions, reviews." xml:space="preserve"><value>このサーバー上のすべての重要な操作：登録、承認、トークン、提出、レビュー。</value></data>
+  <data name="Filter" xml:space="preserve"><value>フィルター</value></data>
+  <data name="Filter (actor, action, subject)" xml:space="preserve"><value>フィルター (実行者、操作、対象)</value></data>
+  <data name="First-run setup" xml:space="preserve"><value>初回セットアップ</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Add-on Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>プラグイン開発者と管理者向けです。エンド ユーザーは Power PDF の Add-on Store リボンからプラグインを直接インストールでき、アカウントは不要です。</value></data>
+  <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>次の 1 行と一緒にトークンを Claude に渡してください：</value></data>
+  <data name="Last used" xml:space="preserve"><value>最終使用日時</value></data>
+  <data name="Live versions" xml:space="preserve"><value>ライブ バージョン</value></data>
+  <data name="My packages" xml:space="preserve"><value>マイ パッケージ</value></data>
+  <data name="My plugins" xml:space="preserve"><value>マイ プラグイン</value></data>
+  <data name="My tokens" xml:space="preserve"><value>マイ トークン</value></data>
+  <data name="Name" xml:space="preserve"><value>名前</value></data>
+  <data name="No account yet?" xml:space="preserve"><value>アカウントをお持ちでない場合</value></data>
+  <data name="No live versions yet." xml:space="preserve"><value>ライブ バージョンはまだありません。</value></data>
+  <data name="No plugins have been released yet." xml:space="preserve"><value>リリース済みのプラグインはまだありません。</value></data>
+  <data name="Nothing to review right now." xml:space="preserve"><value>現在レビュー対象はありません。</value></data>
+  <data name="Package" xml:space="preserve"><value>パッケージ</value></data>
+  <data name="Package file (.ppak)" xml:space="preserve"><value>パッケージ ファイル (.ppak)</value></data>
+  <data name="Password" xml:space="preserve"><value>パスワード</value></data>
+  <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>個人用 API トークンを使用すると、ツールや AI アシスタントがあなたに代わってプラグインをアップロードおよび更新できます。</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>プラグイン ストア：</value></data>
+  <data name="Add-on Store for Tungsten Power PDF" xml:space="preserve"><value>Add-on Store for Tungsten Power PDF</value></data>
+  <data name="Prefix" xml:space="preserve"><value>プレフィックス</value></data>
+  <data name="Profile" xml:space="preserve"><value>プロファイル</value></data>
+  <data name="Reason (sent to the submitter)" xml:space="preserve"><value>理由 (提出者に送信されます)</value></data>
+  <data name="Reject" xml:space="preserve"><value>却下</value></data>
+  <data name="Released plugins" xml:space="preserve"><value>リリース済みプラグイン</value></data>
+  <data name="Request access" xml:space="preserve"><value>アクセスを申請</value></data>
+  <data name="Requested" xml:space="preserve"><value>申請日時</value></data>
+  <data name="Review" xml:space="preserve"><value>レビュー</value></data>
+  <data name="Review comment" xml:space="preserve"><value>レビュー コメント</value></data>
+  <data name="Review queue" xml:space="preserve"><value>レビュー キュー</value></data>
+  <data name="Revoke" xml:space="preserve"><value>取り消す</value></data>
+  <data name="Role" xml:space="preserve"><value>ロール</value></data>
+  <data name="Sign in" xml:space="preserve"><value>サインイン</value></data>
+  <data name="Sign out" xml:space="preserve"><value>サインアウト</value></data>
+  <data name="Status" xml:space="preserve"><value>状態</value></data>
+  <data name="Subject" xml:space="preserve"><value>対象</value></data>
+  <data name="Submit a package" xml:space="preserve"><value>パッケージを提出する</value></data>
+  <data name="Submit request" xml:space="preserve"><value>申請を送信</value></data>
+  <data name="Submitted" xml:space="preserve"><value>提出日時</value></data>
+  <data name="Submitted by" xml:space="preserve"><value>提出者</value></data>
+  <data name="Time (UTC)" xml:space="preserve"><value>時刻 (UTC)</value></data>
+  <data name="Token created. Copy it now; it is shown only this once:" xml:space="preserve"><value>トークンが作成されました。今すぐコピーしてください。表示されるのはこの 1 回だけです：</value></data>
+  <data name="Token name (e.g. &#x27;claude&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>トークン名 (例：'claude'、'build server')</value></data>
+  <data name="Upload a .ppak package below, or automate it via the API with a personal token from your profile." xml:space="preserve"><value>以下で .ppak パッケージをアップロードするか、プロファイルの個人用トークンを使って API で自動化してください。</value></data>
+  <data name="Upload and validate" xml:space="preserve"><value>アップロードして検証</value></data>
+  <data name="Users" xml:space="preserve"><value>ユーザー</value></data>
+  <data name="Version" xml:space="preserve"><value>バージョン</value></data>
+  <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>何を公開する予定ですか？(管理者に表示されます)</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>取り下げ</value></data>
+  <data name="You have not submitted any packages yet." xml:space="preserve"><value>まだパッケージを提出していません。</value></data>
+  <data name="download(s)" xml:space="preserve"><value>ダウンロード</value></data>
+  <data name="revoked" xml:space="preserve"><value>取り消し済み</value></data>
+  <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>アクセス申請を送信しました。管理者が承認すると、メールが届きます。</value></data>
+  <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>サインインに失敗しました。メール アドレスとパスワードを確認してください。</value></data>
+  <data name="Your access request is still awaiting admin approval." xml:space="preserve"><value>アクセス申請は管理者の承認待ちです。</value></data>
+  <data name="This account is not active. Contact an administrator." xml:space="preserve"><value>このアカウントは有効ではありません。管理者に連絡してください。</value></data>
+  <data name="Too many failed attempts; the account is temporarily locked." xml:space="preserve"><value>失敗した試行が多すぎるため、アカウントは一時的にロックされています。</value></data>
+  <data name="No package received." xml:space="preserve"><value>パッケージを受信していません。</value></data>
+  <data name="The package did not pass the automatic checks; nothing was stored. Fix the errors below and upload again." xml:space="preserve"><value>パッケージが自動チェックに合格しなかったため、何も保存されていません。以下のエラーを修正して、もう一度アップロードしてください。</value></data>
+  <data name="Submitted. The version is in the beta channel now and awaits admin review." xml:space="preserve"><value>提出しました。このバージョンは現在ベータ チャネルにあり、管理者のレビューを待っています。</value></data>
+  <data name="Version withdrawn." xml:space="preserve"><value>バージョンを取り下げました。</value></data>
+  <data name="Version approved and live." xml:space="preserve"><value>バージョンが承認され、ライブになりました。</value></data>
+  <data name="Version rejected." xml:space="preserve"><value>バージョンを却下しました。</value></data>
+  <data name="Account approved." xml:space="preserve"><value>アカウントを承認しました。</value></data>
+  <data name="Request rejected." xml:space="preserve"><value>申請を却下しました。</value></data>
+  <data name="Account disabled." xml:space="preserve"><value>アカウントを無効にしました。</value></data>
+  <data name="Account enabled." xml:space="preserve"><value>アカウントを有効にしました。</value></data>
+  <data name="for Power PDF" xml:space="preserve"><value>for Power PDF</value></data>
+  <data name="Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>ZIP をダウンロードして展開し、install.cmd を管理者として実行してください。以降、アドインは自身とプラグインを自動的に最新の状態に保ちます。</value></data>
+  <data name="Search" xml:space="preserve"><value>検索</value></data>
+  <data name="All" xml:space="preserve"><value>すべて</value></data>
+  <data name="Conversion" xml:space="preserve"><value>変換</value></data>
+  <data name="Forms" xml:space="preserve"><value>フォーム</value></data>
+  <data name="Signing" xml:space="preserve"><value>署名</value></data>
+  <data name="Navigation" xml:space="preserve"><value>ナビゲーション</value></data>
+  <data name="Printing" xml:space="preserve"><value>印刷</value></data>
+  <data name="Productivity" xml:space="preserve"><value>生産性</value></data>
+  <data name="System" xml:space="preserve"><value>システム</value></data>
+  <data name="Other" xml:space="preserve"><value>その他</value></data>
+  <data name="A user with this email already exists." xml:space="preserve"><value>このメール アドレスのユーザーは既に存在します。</value></data>
+  <data name="API tokens" xml:space="preserve"><value>API トークン</value></data>
+  <data name="Account created." xml:space="preserve"><value>アカウントを作成しました。</value></data>
+  <data name="Activate account" xml:space="preserve"><value>アカウントを有効化</value></data>
+  <data name="Admin" xml:space="preserve"><value>管理</value></data>
+  <data name="Choose your display name and a password to activate your Add-on Store account." xml:space="preserve"><value>表示名とパスワードを設定して、Add-on Store アカウントを有効化してください。</value></data>
+  <data name="Create a user directly" xml:space="preserve"><value>ユーザーを直接作成する</value></data>
+  <data name="Create account" xml:space="preserve"><value>アカウントを作成</value></data>
+  <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>メールが構成されていません。この招待リンクを直接共有してください：</value></data>
+  <data name="Email notifications (Resend)" xml:space="preserve"><value>メール通知 (Resend)</value></data>
+  <data name="Initial password" xml:space="preserve"><value>初期パスワード</value></data>
+  <data name="Instance settings; values are stored on the server and take effect immediately." xml:space="preserve"><value>インスタンスの設定です。値はサーバーに保存され、すぐに有効になります。</value></data>
+  <data name="Invitation email sent. The link can also be shared directly:" xml:space="preserve"><value>招待メールを送信しました。リンクを直接共有することもできます：</value></data>
+  <data name="Invitation revoked." xml:space="preserve"><value>招待を取り消しました。</value></data>
+  <data name="Invite a user" xml:space="preserve"><value>ユーザーを招待する</value></data>
+  <data name="Invited by" xml:space="preserve"><value>招待者</value></data>
+  <data name="My profile" xml:space="preserve"><value>マイ プロファイル</value></data>
+  <data name="Notifications: access requests and new submissions to admins; approvals, rejections and invitations to users." xml:space="preserve"><value>通知：アクセス申請と新しい提出は管理者に、承認、却下、招待はユーザーに送信されます。</value></data>
+  <data name="Only PNG or JPEG images are accepted." xml:space="preserve"><value>PNG または JPEG 画像のみ使用できます。</value></data>
+  <data name="Open invitations" xml:space="preserve"><value>未処理の招待</value></data>
+  <data name="Profile picture (PNG or JPEG, max. 512 KB)" xml:space="preserve"><value>プロファイル画像 (PNG または JPEG、最大 512 KB)</value></data>
+  <data name="Profile updated." xml:space="preserve"><value>プロファイルを更新しました。</value></data>
+  <data name="Public base URL (used in emails and invite links)" xml:space="preserve"><value>公開ベース URL (メールと招待リンクで使用)</value></data>
+  <data name="Resend API key" xml:space="preserve"><value>Resend API キー</value></data>
+  <data name="Reviewer" xml:space="preserve"><value>レビュー担当者</value></data>
+  <data name="Role updated." xml:space="preserve"><value>ロールを更新しました。</value></data>
+  <data name="Save" xml:space="preserve"><value>保存</value></data>
+  <data name="Send invitation" xml:space="preserve"><value>招待を送信</value></data>
+  <data name="Sender address" xml:space="preserve"><value>送信元アドレス</value></data>
+  <data name="Server" xml:space="preserve"><value>サーバー</value></data>
+  <data name="Settings" xml:space="preserve"><value>設定</value></data>
+  <data name="Settings saved." xml:space="preserve"><value>設定を保存しました。</value></data>
+  <data name="The image is too large (maximum 512 KB)." xml:space="preserve"><value>画像が大きすぎます (最大 512 KB)。</value></data>
+  <data name="The last active admin cannot be demoted." xml:space="preserve"><value>最後の有効な管理者を降格することはできません。</value></data>
+  <data name="This invitation link is invalid or was already used." xml:space="preserve"><value>この招待リンクは無効か、既に使用されています。</value></data>
+  <data name="User" xml:space="preserve"><value>ユーザー</value></data>
+  <data name="You cannot change your own role." xml:space="preserve"><value>自分のロールは変更できません。</value></data>
+  <data name="You have been invited" xml:space="preserve"><value>招待が届いています</value></data>
+  <data name="configured" xml:space="preserve"><value>構成済み</value></data>
+  <data name="Active" xml:space="preserve"><value>有効</value></data>
+  <data name="Beta" xml:space="preserve"><value>ベータ</value></data>
+  <data name="Disabled" xml:space="preserve"><value>無効</value></data>
+  <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>インストーラーをダウンロードして実行してください (管理者権限が必要です)。以降、アドインは自身とプラグインを自動的に最新の状態に保ちます。</value></data>
+  <data name="Live" xml:space="preserve"><value>ライブ</value></data>
+  <data name="Only administrators can publish new versions of the Add-on Store client." xml:space="preserve"><value>Add-on Store クライアントの新しいバージョンを公開できるのは管理者だけです。</value></data>
+  <data name="Pending" xml:space="preserve"><value>保留中</value></data>
+  <data name="Add-on Store client released. Installed clients offer the update now." xml:space="preserve"><value>Add-on Store クライアントをリリースしました。インストール済みのクライアントで更新が提供されるようになりました。</value></data>
+  <data name="Rejected" xml:space="preserve"><value>却下済み</value></data>
+  <data name="Time" xml:space="preserve"><value>時刻</value></data>
+  <data name="Time zone for displayed times" xml:space="preserve"><value>表示する時刻のタイム ゾーン</value></data>
+  <data name="Withdrawn" xml:space="preserve"><value>取り下げ済み</value></data>
+  <data name="Author" xml:space="preserve"><value>作成者</value></data>
+  <data name="Show my name and email as author of my plugins in the public catalog" xml:space="preserve"><value>公開カタログで、自分の名前とメール アドレスをプラグインの作成者として表示する</value></data>
+  <data name="When off, the catalog shows “Tungsten Automation” instead." xml:space="preserve"><value>オフの場合、カタログには代わりに「Tungsten Automation」と表示されます。</value></data>
+  <data name="A new, higher version number (SemVer) for every upload, and a change description." xml:space="preserve"><value>アップロードごとに新しい上位のバージョン番号 (SemVer) と変更内容の説明。</value></data>
+  <data name="API and Claude" xml:space="preserve"><value>API と Claude</value></data>
+  <data name="Address" xml:space="preserve"><value>アドレス</value></data>
+  <data name="An x64 build of the plugin (it also runs on Windows on ARM)." xml:space="preserve"><value>プラグインの x64 ビルド (Windows on ARM でも動作します)。</value></data>
+  <data name="Automatic checks" xml:space="preserve"><value>自動チェック</value></data>
+  <data name="Binaries and integrity" xml:space="preserve"><value>バイナリと整合性</value></data>
+  <data name="Check your token" xml:space="preserve"><value>トークンを確認する</value></data>
+  <data name="Complete guide for developers and AI assistants" xml:space="preserve"><value>開発者と AI アシスタント向けの完全ガイド</value></data>
+  <data name="Create a personal token" xml:space="preserve"><value>個人用トークンを作成する</value></data>
+  <data name="Create a token on your profile page and store it as an environment variable, never in a chat or a file:" xml:space="preserve"><value>プロファイル ページでトークンを作成し、環境変数として保存してください。チャットやファイルには絶対に保存しないでください：</value></data>
+  <data name="Description and change description in all 16 European languages." xml:space="preserve"><value>説明と変更内容の説明を、ヨーロッパの 16 言語すべてで。</value></data>
+  <data name="Download SKILL.md" xml:space="preserve"><value>SKILL.md をダウンロード</value></data>
+  <data name="Endpoints" xml:space="preserve"><value>エンドポイント</value></data>
+  <data name="Example instruction for a Claude session in your plugin&#x27;s project folder:" xml:space="preserve"><value>プラグインのプロジェクト フォルダーで実行する Claude セッションへの指示の例：</value></data>
+  <data name="Example with curl" xml:space="preserve"><value>curl を使った例</value></data>
+  <data name="Icon" xml:space="preserve"><value>アイコン</value></data>
+  <data name="Install the Claude skill (once)" xml:space="preserve"><value>Claude スキルをインストールする (1 回のみ)</value></data>
+  <data name="Languages" xml:space="preserve"><value>言語</value></data>
+  <data name="Licenses" xml:space="preserve"><value>ライセンス</value></data>
+  <data name="Licenses, legal and privacy" xml:space="preserve"><value>ライセンス、法務、プライバシー</value></data>
+  <data name="List of all endpoints" xml:space="preserve"><value>すべてのエンドポイントの一覧</value></data>
+  <data name="Manifest and versioning" xml:space="preserve"><value>マニフェストとバージョン管理</value></data>
+  <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>サードパーティ コンポーネントは MIT、BSD、Apache-2.0 のもののみ。</value></data>
+  <data name="Open a new terminal afterwards so the variable is available." xml:space="preserve"><value>変数を使用できるように、その後で新しいターミナルを開いてください。</value></data>
+  <data name="Other checks" xml:space="preserve"><value>その他のチェック</value></data>
+  <data name="Package structure" xml:space="preserve"><value>パッケージ構造</value></data>
+  <data name="Publish and update plugins directly from your Claude session. Claude reads the store&#x27;s rules from the API, validates the package until all checks pass, and submits it for review." xml:space="preserve"><value>Claude セッションから直接プラグインを公開および更新できます。Claude は API からストアのルールを読み取り、すべてのチェックに合格するまでパッケージを検証して、レビューに提出します。</value></data>
+  <data name="Purpose" xml:space="preserve"><value>目的</value></data>
+  <data name="Ribbon and layout" xml:space="preserve"><value>リボンとレイアウト</value></data>
+  <data name="Rules every upload must meet" xml:space="preserve"><value>すべてのアップロードが満たす必要があるルール</value></data>
+  <data name="Runtime and dependencies" xml:space="preserve"><value>ランタイムと依存関係</value></data>
+  <data name="Schema of manifest.json" xml:space="preserve"><value>manifest.json のスキーマ</value></data>
+  <data name="Security scan" xml:space="preserve"><value>セキュリティ スキャン</value></data>
+  <data name="Status, history and check reports of a package" xml:space="preserve"><value>パッケージの状態、履歴、チェック レポート</value></data>
+  <data name="Technical details are in English so that developers and AI assistants can act on them directly." xml:space="preserve"><value>開発者と AI アシスタントがそのまま対応できるよう、技術的な詳細は英語で記載されています。</value></data>
+  <data name="Tell Claude what to do" xml:space="preserve"><value>Claude に指示する</value></data>
+  <data name="Test run of all checks, nothing is stored" xml:space="preserve"><value>すべてのチェックのテスト実行 (何も保存されません)</value></data>
+  <data name="The automatic checks verify these rules; every finding comes with a concrete fix." xml:space="preserve"><value>自動チェックではこれらのルールを検証します。検出された問題には、それぞれ具体的な修正方法が示されます。</value></data>
+  <data name="The plugin&#x27;s buttons sit as a group on the shared “Enhanced Features” ribbon tab." xml:space="preserve"><value>プラグインのボタンは、共有の「拡張機能」リボン タブにグループとして配置されます。</value></data>
+  <data name="The skill tells Claude where this store is and how to work with it. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>このスキルは、ストアの場所と操作方法を Claude に伝えます。常にサーバーから最新のルールを読み込むため、更新する必要はありません。</value></data>
+  <data name="Without the skill, the URL of the agent guide in the instruction is enough." xml:space="preserve"><value>スキルがない場合は、指示にエージェント ガイドの URL を含めるだけで十分です。</value></data>
+  <data name="all passed" xml:space="preserve"><value>すべて合格</value></data>
+  <data name="failed" xml:space="preserve"><value>不合格</value></data>
+  <data name="passed with warnings" xml:space="preserve"><value>警告ありで合格</value></data>
+  <data name="Give Claude one line" xml:space="preserve"><value>Claude に 1 行で指示する</value></data>
+  <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Claude に必要なのはこれだけです。ガイドを読み、今後のセッションに向けて自身を設定し、ルールに従います。</value></data>
+  <data name="Optional: install the skill manually" xml:space="preserve"><value>オプション：スキルを手動でインストールする</value></data>
+  <data name="A backup contains everything: database (accounts, packages, versions, reviews, audit log, settings), all plugin packages, profile pictures and developer kit files." xml:space="preserve"><value>バックアップにはすべてが含まれます：データベース (アカウント、パッケージ、バージョン、レビュー、監査ログ、設定)、すべてのプラグイン パッケージ、プロファイル画像、開発者キットのファイル。</value></data>
+  <data name="Access request approved or declined" xml:space="preserve"><value>アクセス申請の承認または却下</value></data>
+  <data name="Admins" xml:space="preserve"><value>管理者</value></data>
+  <data name="Admins and reviewers" xml:space="preserve"><value>管理者とレビュー担当者</value></data>
+  <data name="Applicant" xml:space="preserve"><value>申請者</value></data>
+  <data name="Automatic safety backups" xml:space="preserve"><value>自動安全バックアップ</value></data>
+  <data name="Backup and restore" xml:space="preserve"><value>バックアップと復元</value></data>
+  <data name="Backup file (.zip)" xml:space="preserve"><value>バックアップ ファイル (.zip)</value></data>
+  <data name="Backup restored. A safety backup of the previous state was kept on the server." xml:space="preserve"><value>バックアップを復元しました。以前の状態の安全バックアップがサーバーに保持されています。</value></data>
+  <data name="Plugins from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>独立した作成者によるプラグインであり、Tungsten Automation の公式製品ではありません。現状のまま提供され、保証や公式サポートはありません。ご自身の責任でご使用ください。Tungsten Automation は一切責任を負いません。</value></data>
+  <data name="Create backup" xml:space="preserve"><value>バックアップを作成</value></data>
+  <data name="Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file." xml:space="preserve"><value>ストアを稼働させたまま一貫性のあるスナップショットを作成し、ZIP ファイルとしてダウンロードします。</value></data>
+  <data name="Disclaimer" xml:space="preserve"><value>免責事項</value></data>
+  <data name="Download full backup" xml:space="preserve"><value>完全バックアップをダウンロード</value></data>
+  <data name="Event" xml:space="preserve"><value>イベント</value></data>
+  <data name="File" xml:space="preserve"><value>ファイル</value></data>
+  <data name="Invitation" xml:space="preserve"><value>招待</value></data>
+  <data name="Invited person (always sent)" xml:space="preserve"><value>招待された人 (常に送信)</value></data>
+  <data name="New Add-on Store client released" xml:space="preserve"><value>新しい Add-on Store クライアントのリリース</value></data>
+  <data name="New access request" xml:space="preserve"><value>新しいアクセス申請</value></data>
+  <data name="New plugin version submitted" xml:space="preserve"><value>新しいプラグイン バージョンの提出</value></data>
+  <data name="No backup file received." xml:space="preserve"><value>バックアップ ファイルを受信していません。</value></data>
+  <data name="Notifications" xml:space="preserve"><value>通知</value></data>
+  <data name="Plugin version approved or rejected" xml:space="preserve"><value>プラグイン バージョンの承認または却下</value></data>
+  <data name="Recipients" xml:space="preserve"><value>受信者</value></data>
+  <data name="Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup." xml:space="preserve"><value>現在のすべてのデータをバックアップの内容で置き換えます。その前に、サーバーは現在の状態を安全バックアップとして自動的に保存します。</value></data>
+  <data name="Restore" xml:space="preserve"><value>復元</value></data>
+  <data name="Restore backup" xml:space="preserve"><value>バックアップを復元</value></data>
+  <data name="Send test email" xml:space="preserve"><value>テスト メールを送信</value></data>
+  <data name="Size" xml:space="preserve"><value>サイズ</value></data>
+  <data name="Submitter" xml:space="preserve"><value>提出者</value></data>
+  <data name="Test email sent. Please check your inbox." xml:space="preserve"><value>テスト メールを送信しました。受信トレイを確認してください。</value></data>
+  <data name="Test plugins before productive use, keep backups of important documents, and make sure their use complies with your organization&#x27;s IT and data protection policies." xml:space="preserve"><value>本番環境で使用する前にプラグインをテストし、重要なドキュメントはバックアップを保持し、使用が組織の IT ポリシーおよびデータ保護ポリシーに準拠していることを確認してください。</value></data>
+  <data name="The archive contains unsafe paths." xml:space="preserve"><value>アーカイブに安全でないパスが含まれています。</value></data>
+  <data name="The backup contains password hashes and settings such as the Resend key. Store it like a password." xml:space="preserve"><value>バックアップには、パスワード ハッシュと Resend キーなどの設定が含まれています。パスワードと同様に保管してください。</value></data>
+  <data name="The plugins in this store are developed by independent authors, such as employees, partners or other developers. They are not part of Tungsten Power PDF and are not official Tungsten Automation products; the automatic checks and the review before release do not constitute a warranty." xml:space="preserve"><value>このストアのプラグインは、社員、パートナー、その他の開発者などの独立した作成者によって開発されています。Tungsten Power PDF の一部ではなく、Tungsten Automation の公式製品でもありません。自動チェックとリリース前のレビューは、保証を構成するものではありません。</value></data>
+  <data name="The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out." xml:space="preserve"><value>バックアップ内で自分のアカウントが有効な管理者でない場合、自分自身を締め出すことがないよう、復元は拒否されます。</value></data>
+  <data name="The test email could not be sent." xml:space="preserve"><value>テスト メールを送信できませんでした。</value></data>
+  <data name="There is no official support through Tungsten Automation Support. Please contact the author named in the catalog; answers are voluntary and without guaranteed response times." xml:space="preserve"><value>Tungsten Automation サポートによる公式サポートはありません。カタログに記載されている作成者に連絡してください。回答は任意であり、応答時間の保証はありません。</value></data>
+  <data name="They are provided as is, without warranty of any kind, express or implied, including fitness for a particular purpose, availability or freedom from errors." xml:space="preserve"><value>これらは現状のまま提供され、特定目的への適合性、可用性、エラーがないことを含め、明示または黙示を問わず、いかなる保証もありません。</value></data>
+  <data name="This is not a Add-on Store backup (backup.json or pluginstore.db missing)." xml:space="preserve"><value>これは Add-on Store のバックアップではありません (backup.json または pluginstore.db がありません)。</value></data>
+  <data name="This is not a Add-on Store backup." xml:space="preserve"><value>これは Add-on Store のバックアップではありません。</value></data>
+  <data name="To the extent permitted by law, Tungsten Automation accepts no liability for damage, data loss or downtime caused by installing or using these plugins. Each plugin is the responsibility of its author." xml:space="preserve"><value>法律で認められる範囲において、Tungsten Automation は、これらのプラグインのインストールまたは使用によって生じた損害、データ損失、ダウンタイムについて一切責任を負いません。各プラグインの責任はその作成者にあります。</value></data>
+  <data name="Type RESTORE to confirm" xml:space="preserve"><value>確認のため RESTORE と入力してください</value></data>
+  <data name="Type RESTORE to confirm." xml:space="preserve"><value>確認のため RESTORE と入力してください。</value></data>
+  <data name="Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log." xml:space="preserve"><value>どのメールが、いつ、誰に送信されるか。送信されたメールと送信に失敗したメールはすべて監査ログに記録されます。</value></data>
+  <data name="Without a verified sender domain, Resend only delivers to the email address of the Resend account owner." xml:space="preserve"><value>送信元ドメインが検証されていない場合、Resend は Resend アカウント所有者のメール アドレスにのみ配信します。</value></data>
+  <data name="Your account is not an active admin in this backup; restoring it would lock you out." xml:space="preserve"><value>このバックアップでは、あなたのアカウントは有効な管理者ではありません。復元すると締め出されてしまいます。</value></data>
+  <data name="to" xml:space="preserve"><value>宛先</value></data>
+  <data name="Catalog entry" xml:space="preserve"><value>カタログ エントリ</value></data>
+  <data name="Owner" xml:space="preserve"><value>所有者</value></data>
+  <data name="Name, description, author and contact shown in the catalog and in the Power PDF client. Changes apply immediately; no new version is needed. The package files are not changed." xml:space="preserve"><value>カタログと Power PDF クライアントに表示される名前、説明、作成者、連絡先です。変更はすぐに反映され、新しいバージョンは不要です。パッケージ ファイルは変更されません。</value></data>
+  <data name="Last changed" xml:space="preserve"><value>最終変更日時</value></data>
+  <data name="Contact email" xml:space="preserve"><value>連絡先メール アドレス</value></data>
+  <data name="Empty: name of the publishing account" xml:space="preserve"><value>空の場合：公開したアカウントの名前</value></data>
+  <data name="Empty: email of the publishing account" xml:space="preserve"><value>空の場合：公開したアカウントのメール アドレス</value></data>
+  <data name="The name needs at least English; the description is required in all 16 languages." xml:space="preserve"><value>名前は少なくとも英語が必要です。説明は 16 言語すべてで必須です。</value></data>
+  <data name="Language" xml:space="preserve"><value>言語</value></data>
+  <data name="Description" xml:space="preserve"><value>説明</value></data>
+  <data name="Cancel" xml:space="preserve"><value>キャンセル</value></data>
+  <data name="Reset name, description, author and contact to the values from the package?" xml:space="preserve"><value>名前、説明、作成者、連絡先をパッケージの値にリセットしますか？</value></data>
+  <data name="Reset to package values" xml:space="preserve"><value>パッケージの値にリセット</value></data>
+  <data name="Edit catalog entry" xml:space="preserve"><value>カタログ エントリを編集</value></data>
+  <data name="Catalog entry saved. The catalog and the Power PDF client show it immediately." xml:space="preserve"><value>カタログ エントリを保存しました。カタログと Power PDF クライアントにすぐに表示されます。</value></data>
+  <data name="Catalog entry reset to the values from the package." xml:space="preserve"><value>カタログ エントリをパッケージの値にリセットしました。</value></data>
+  <data name="Change name, description, author and contact without a new version" xml:space="preserve"><value>新しいバージョンなしで名前、説明、作成者、連絡先を変更</value></data>
+  <data name="Actions" xml:space="preserve"><value>操作</value></data>
+  <data name="All plug-ins" xml:space="preserve"><value>すべてのプラグイン</value></data>
+  <data name="Awaiting approval" xml:space="preserve"><value>承認待ち</value></data>
+  <data name="Catalog entry changed by an admin" xml:space="preserve"><value>管理者によるカタログ エントリの変更</value></data>
+  <data name="Category" xml:space="preserve"><value>カテゴリ</value></data>
+  <data name="Contact" xml:space="preserve"><value>連絡先</value></data>
+  <data name="Email me about my plug-ins" xml:space="preserve"><value>自分のプラグインに関するメールを受け取る</value></data>
+  <data name="Every plug-in in the store. Open Details to approve, withdraw or restore versions and to edit the catalog entry." xml:space="preserve"><value>ストア内のすべてのプラグインです。[詳細] を開くと、バージョンの承認、取り下げ、復元や、カタログ エントリの編集ができます。</value></data>
+  <data name="In the store" xml:space="preserve"><value>ストアに掲載中</value></data>
+  <data name="Last activity" xml:space="preserve"><value>最終アクティビティ</value></data>
+  <data name="Live plug-ins, older versions, withdrawing and restoring: see the plug-in overview." xml:space="preserve"><value>ライブのプラグイン、旧バージョン、取り下げと復元：プラグインの概要を参照してください。</value></data>
+  <data name="Menu" xml:space="preserve"><value>メニュー</value></data>
+  <data name="My plug-ins" xml:space="preserve"><value>マイ プラグイン</value></data>
+  <data name="Not in the store" xml:space="preserve"><value>ストアに未掲載</value></data>
+  <data name="Older version, no longer offered" xml:space="preserve"><value>旧バージョン (提供終了)</value></data>
+  <data name="Open plug-in overview" xml:space="preserve"><value>プラグインの概要を開く</value></data>
+  <data name="Plug-in" xml:space="preserve"><value>プラグイン</value></data>
+  <data name="Plug-ins" xml:space="preserve"><value>プラグイン</value></data>
+  <data name="Restore (beta)" xml:space="preserve"><value>復元 (ベータ)</value></data>
+  <data name="Restore (live)" xml:space="preserve"><value>復元 (ライブ)</value></data>
+  <data name="Search name, id or owner" xml:space="preserve"><value>名前、ID、所有者を検索</value></data>
+  <data name="Take out of the store" xml:space="preserve"><value>ストアから削除</value></data>
+  <data name="Take this plug-in out of the store? All live and beta versions are withdrawn; installed copies keep working." xml:space="preserve"><value>このプラグインをストアから削除しますか？ライブ版とベータ版はすべて取り下げられます。インストール済みのコピーは引き続き動作します。</value></data>
+  <data name="The plug-in was taken out of the store. Installed copies keep working; restore single versions to publish it again." xml:space="preserve"><value>プラグインをストアから削除しました。インストール済みのコピーは引き続き動作します。再度公開するには、個々のバージョンを復元してください。</value></data>
+  <data name="This action is not allowed for this version." xml:space="preserve"><value>このバージョンではこの操作は許可されていません。</value></data>
+  <data name="Upload confirmation with check result" xml:space="preserve"><value>チェック結果付きのアップロード確認</value></data>
+  <data name="Upload confirmation, approval or rejection, withdrawn or restored versions and catalog changes made by an admin." xml:space="preserve"><value>アップロード確認、承認または却下、バージョンの取り下げまたは復元、管理者によるカタログの変更。</value></data>
+  <data name="Version restored and live again." xml:space="preserve"><value>バージョンを復元し、再びライブになりました。</value></data>
+  <data name="Version restored to the beta channel; it needs approval again." xml:space="preserve"><value>バージョンをベータ チャネルに復元しました。再度承認が必要です。</value></data>
+  <data name="Version withdrawn or restored, plug-in taken out of the store" xml:space="preserve"><value>バージョンの取り下げまたは復元、プラグインのストアからの削除</value></data>
+  <data name="Versions" xml:space="preserve"><value>バージョン</value></data>
+  <data name="Withdraw this version?" xml:space="preserve"><value>このバージョンを取り下げますか？</value></data>
+  <data name="Your plug-ins. Open Details for versions, check reports and the catalog entry." xml:space="preserve"><value>あなたのプラグインです。[詳細] を開くと、バージョン、チェック レポート、カタログ エントリを確認できます。</value></data>
+  <data name="No plug-ins match this filter." xml:space="preserve"><value>このフィルターに一致するプラグインはありません。</value></data>
+  <data name="Recipient" xml:space="preserve"><value>受信者</value></data>
+  <data name="Please enter a valid email address." xml:space="preserve"><value>有効なメール アドレスを入力してください。</value></data>
+  <data name="Install in Power PDF" xml:space="preserve"><value>Power PDF にインストール</value></data>
+  <data name="Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)." xml:space="preserve"><value>このアドインを選択した状態で Power PDF を開き、インストール前に確認します。Add-on Store for Power PDF (バージョン 0.3.7 以降) が必要です。</value></data>
+  <data name="The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF." xml:space="preserve"><value>このインストーラーはまだ広く知られていないため、Windows に「Windows によって PC が保護されました」と表示される場合があります。[詳細情報] をクリックし、[実行] をクリックしてください。これは初回のみです。更新とプラグインは Power PDF 内からインストールされます。</value></data>
+  <data name="Windows warning?" xml:space="preserve"><value>Windows の警告が表示された場合</value></data>
+  <data name="Download the Add-on Store" xml:space="preserve"><value>Add-on Store をダウンロード</value></data>
+  <data name="Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again." xml:space="preserve"><value>何も起こりませんか？このボタンを使うには、このコンピューターに Add-on Store for Power PDF バージョン 0.3.7 以降が必要です。一度インストール (またはストア ダイアログで更新) してから、もう一度ボタンをクリックしてください。</value></data>
+  <data name="Built-in" xml:space="preserve"><value>組み込み</value></data>
+  <data name="Categories" xml:space="preserve"><value>カテゴリ</value></data>
+  <data name="Delete" xml:space="preserve"><value>削除</value></data>
+  <data name="From the package" xml:space="preserve"><value>パッケージから</value></data>
+  <data name="Maximum number of categories" xml:space="preserve"><value>カテゴリの最大数</value></data>
+  <data name="Merge into" xml:space="preserve"><value>統合先</value></data>
+  <data name="New catalog category created by an upload" xml:space="preserve"><value>アップロードによって作成された新しいカタログ カテゴリ</value></data>
+  <data name="Uploads may propose a new high-level category when none fits; the server checks length, similarity and the limit and creates it automatically. Merge or delete categories that are not needed." xml:space="preserve"><value>適切なカテゴリがない場合、アップロード時に新しい上位カテゴリを提案できます。サーバーが長さ、類似性、上限を確認して自動的に作成します。不要なカテゴリは統合または削除してください。</value></data>
+  <data name="Category merged." xml:space="preserve"><value>カテゴリを統合しました。</value></data>
+  <data name="Category deleted." xml:space="preserve"><value>カテゴリを削除しました。</value></data>
+  <data name="This action is not possible for this category." xml:space="preserve"><value>このカテゴリではこの操作はできません。</value></data>
+  <data name="The limit must be between 8 and 50." xml:space="preserve"><value>上限は 8 から 50 の間にする必要があります。</value></data>
+  <data name="Download source" xml:space="preserve"><value>ソースをダウンロード</value></data>
+  <data name="Off" xml:space="preserve"><value>オフ</value></data>
+  <data name="Recommended: approval possible without source code" xml:space="preserve"><value>推奨：ソース コードなしでも承認可能</value></data>
+  <data name="Required before approval." xml:space="preserve"><value>承認前に必須です。</value></data>
+  <data name="Required: no approval without source code" xml:space="preserve"><value>必須：ソース コードなしでは承認不可</value></data>
+  <data name="Source code" xml:space="preserve"><value>ソース コード</value></data>
+  <data name="Source code is stored next to each version and visible to admins only; Power PDF clients never receive it." xml:space="preserve"><value>ソース コードは各バージョンとともに保存され、管理者のみが閲覧できます。Power PDF クライアントに送信されることはありません。</value></data>
+  <data name="Source code per version" xml:space="preserve"><value>バージョンごとのソース コード</value></data>
+  <data name="Source code stored." xml:space="preserve"><value>ソース コードを保存しました。</value></data>
+  <data name="The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it." xml:space="preserve"><value>このバージョンのソース コードがありません。作成者 (または管理者) がアップロードすると承認できるようになります。</value></data>
+  <data name="The source code was not stored." xml:space="preserve"><value>ソース コードは保存されませんでした。</value></data>
+  <data name="missing" xml:space="preserve"><value>なし</value></data>
+  <data name="stored" xml:space="preserve"><value>保存済み</value></data>
+  <data name="Upload source (ZIP)" xml:space="preserve"><value>ソースをアップロード (ZIP)</value></data>
+  <data name="Replace source" xml:space="preserve"><value>ソースを置き換え</value></data>
+  <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>Tungsten Power PDF 向けのリリース済みアドインです。Windows PC の Power PDF 内に直接インストールされます。</value></data>
+  <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>独立した作成者によるアドインです。保証や公式サポートはありません。</value></data>
+  <data name="Developer" xml:space="preserve"><value>開発者</value></data>
+  <data name="Reports" xml:space="preserve"><value>レポート</value></data>
+  <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>ストアの利用状況：ダウンロード、使用中のクライアント、場所、提出、開発者。</value></data>
+  <data name="Last {0} days" xml:space="preserve"><value>過去 {0} 日間</value></data>
+  <data name="From" xml:space="preserve"><value>開始</value></data>
+  <data name="Add-on" xml:space="preserve"><value>アドイン</value></data>
+  <data name="All add-ons" xml:space="preserve"><value>すべてのアドイン</value></data>
+  <data name="Country" xml:space="preserve"><value>国</value></data>
+  <data name="All countries" xml:space="preserve"><value>すべての国</value></data>
+  <data name="Source" xml:space="preserve"><value>ソース</value></data>
+  <data name="All sources" xml:space="preserve"><value>すべてのソース</value></data>
+  <data name="Client" xml:space="preserve"><value>クライアント</value></data>
+  <data name="Web" xml:space="preserve"><value>Web</value></data>
+  <data name="Apply" xml:space="preserve"><value>適用</value></data>
+  <data name="Reset filters" xml:space="preserve"><value>フィルターをリセット</value></data>
+  <data name="Report language" xml:space="preserve"><value>レポートの言語</value></data>
+  <data name="PDF report" xml:space="preserve"><value>PDF レポート</value></data>
+  <data name="Download CSV" xml:space="preserve"><value>CSV をダウンロード</value></data>
+  <data name="compared with {0} – {1}" xml:space="preserve"><value>{0} – {1} との比較</value></data>
+  <data name="Time series since {0}; the all-time totals include earlier downloads." xml:space="preserve"><value>{0} 以降の時系列です。全期間の合計には、それ以前のダウンロードも含まれます。</value></data>
+  <data name="No usage data yet in this period." xml:space="preserve"><value>この期間の利用データはまだありません。</value></data>
+  <data name="Downloads (all time)" xml:space="preserve"><value>ダウンロード数 (全期間)</value></data>
+  <data name="Downloads in period" xml:space="preserve"><value>期間内のダウンロード数</value></data>
+  <data name="Store windows opened" xml:space="preserve"><value>ストア ウィンドウを開いた回数</value></data>
+  <data name="Client installer downloads" xml:space="preserve"><value>クライアント インストーラーのダウンロード数</value></data>
+  <data name="Live add-ons" xml:space="preserve"><value>ライブのアドイン</value></data>
+  <data name="Developers" xml:space="preserve"><value>開発者</value></data>
+  <data name="Awaiting review" xml:space="preserve"><value>レビュー待ち</value></data>
+  <data name="Downloads per day" xml:space="preserve"><value>1 日あたりのダウンロード数</value></data>
+  <data name="Downloads per week" xml:space="preserve"><value>1 週間あたりのダウンロード数</value></data>
+  <data name="Downloads per month" xml:space="preserve"><value>1 か月あたりのダウンロード数</value></data>
+  <data name="Highest value: {0}" xml:space="preserve"><value>最大値：{0}</value></data>
+  <data name="Ranking of add-ons" xml:space="preserve"><value>アドインのランキング</value></data>
+  <data name="Sorted by downloads in the period; the trend compares with the previous period of the same length." xml:space="preserve"><value>期間内のダウンロード数で並べ替えています。傾向は、同じ長さの前の期間と比較したものです。</value></data>
+  <data name="In period" xml:space="preserve"><value>期間内</value></data>
+  <data name="Trend" xml:space="preserve"><value>傾向</value></data>
+  <data name="Share" xml:space="preserve"><value>割合</value></data>
+  <data name="Course" xml:space="preserve"><value>推移</value></data>
+  <data name="Top country" xml:space="preserve"><value>上位の国</value></data>
+  <data name="All time" xml:space="preserve"><value>全期間</value></data>
+  <data name="previous period" xml:space="preserve"><value>前の期間</value></data>
+  <data name="new" xml:space="preserve"><value>新規</value></data>
+  <data name="unknown" xml:space="preserve"><value>不明</value></data>
+  <data name="Clients in use" xml:space="preserve"><value>使用中のクライアント</value></data>
+  <data name="Store windows opened per client version in the period; shows how far a client update has spread." xml:space="preserve"><value>期間内にクライアント バージョンごとにストア ウィンドウを開いた回数です。クライアントの更新がどの程度普及したかを示します。</value></data>
+  <data name="Client languages" xml:space="preserve"><value>クライアントの言語</value></data>
+  <data name="Language of Power PDF when the store window was opened." xml:space="preserve"><value>ストア ウィンドウを開いたときの Power PDF の言語。</value></data>
+  <data name="Download sources" xml:space="preserve"><value>ダウンロード元</value></data>
+  <data name="Client = Add-on Store in Power PDF, Web = browser, API = scripts and AI agents." xml:space="preserve"><value>クライアント = Power PDF の Add-on Store、Web = ブラウザー、API = スクリプトと AI エージェント。</value></data>
+  <data name="Countries" xml:space="preserve"><value>国</value></data>
+  <data name="Cities" xml:space="preserve"><value>都市</value></data>
+  <data name="Networks and organisations" xml:space="preserve"><value>ネットワークと組織</value></data>
+  <data name="Operator of the network the request came from; company networks often show the company name." xml:space="preserve"><value>要求元のネットワークの運営者です。企業ネットワークでは多くの場合、企業名が表示されます。</value></data>
+  <data name="Power PDF versions" xml:space="preserve"><value>Power PDF のバージョン</value></data>
+  <data name="Windows versions" xml:space="preserve"><value>Windows のバージョン</value></data>
+  <data name="Architecture" xml:space="preserve"><value>アーキテクチャ</value></data>
+  <data name="Power PDF, Windows and architecture are reported by Add-on Store clients from version 0.4.2." xml:space="preserve"><value>Power PDF、Windows、アーキテクチャは、バージョン 0.4.2 以降の Add-on Store クライアントから報告されます。</value></data>
+  <data name="Submissions and reviews (12 months)" xml:space="preserve"><value>提出とレビュー (12 か月)</value></data>
+  <data name="Month" xml:space="preserve"><value>月</value></data>
+  <data name="Median review time" xml:space="preserve"><value>レビュー時間の中央値</value></data>
+  <data name="Last submission" xml:space="preserve"><value>最終提出</value></data>
+  <data name="Store versions without source code" xml:space="preserve"><value>ソース コードのないストア バージョン</value></data>
+  <data name="All live and beta versions have source code deposited." xml:space="preserve"><value>すべてのライブ版とベータ版にソース コードが登録されています。</value></data>
+  <data name="IP address logging" xml:space="preserve"><value>IP アドレスのログ記録</value></data>
+  <data name="IP address logging (reports)" xml:space="preserve"><value>IP アドレスのログ記録 (レポート)</value></data>
+  <data name="Off. Only the daily counters above are kept; they contain no IP address." xml:space="preserve"><value>オフ。上記の日次カウンターのみが保持されます。IP アドレスは含まれません。</value></data>
+  <data name="Switch on in the settings" xml:space="preserve"><value>設定でオンにする</value></data>
+  <data name="On" xml:space="preserve"><value>オン</value></data>
+  <data name="Stored requests: {0}. Older than {1} days are deleted automatically." xml:space="preserve"><value>保存されている要求：{0}。{1} 日を超えたものは自動的に削除されます。</value></data>
+  <data name="Stored requests: {0}. Kept permanently (no automatic deletion)." xml:space="preserve"><value>保存されている要求：{0}。永続的に保持されます (自動削除なし)。</value></data>
+  <data name="Download CSV with IP addresses" xml:space="preserve"><value>IP アドレス付きの CSV をダウンロード</value></data>
+  <data name="Most frequent IP addresses" xml:space="preserve"><value>最も頻繁な IP アドレス</value></data>
+  <data name="Latest requests" xml:space="preserve"><value>最新の要求</value></data>
+  <data name="Type" xml:space="preserve"><value>種類</value></data>
+  <data name="Location" xml:space="preserve"><value>場所</value></data>
+  <data name="Network" xml:space="preserve"><value>ネットワーク</value></data>
+  <data name="Map" xml:space="preserve"><value>地図</value></data>
+  <data name="Location and network data:" xml:space="preserve"><value>場所とネットワークのデータ：</value></data>
+  <data name="Generated on {0}" xml:space="preserve"><value>生成日時：{0}</value></data>
+  <data name="Use &quot;Save as PDF&quot; as the printer to get the report as a PDF file." xml:space="preserve"><value>レポートを PDF ファイルとして取得するには、プリンターとして「PDF として保存」を使用してください。</value></data>
+  <data name="Print / save as PDF" xml:space="preserve"><value>印刷 / PDF として保存</value></data>
+  <data name="Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports." xml:space="preserve"><value>常にオン：IP アドレスから導き出した国、地域、都市、ネットワーク運営者を含む日次カウンター (アドレス自体は保存されません)。オプション：レポート用に、すべてのダウンロードとカタログ要求を IP アドレス、ホスト名、ユーザー エージェントとともに記録。</value></data>
+  <data name="GDPR confirmation given by {0} on {1}." xml:space="preserve"><value>GDPR の確認：{0} が {1} に実施。</value></data>
+  <data name="Data protection (GDPR)" xml:space="preserve"><value>データ保護 (GDPR)</value></data>
+  <data name="IP addresses are personal data under the GDPR, also without a sign-in. Storing them needs a legal basis (for example legitimate interest), a note in the privacy policy and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>IP アドレスは、サインインがなくても GDPR における個人データに該当します。保存するには、法的根拠 (正当な利益など)、プライバシー ポリシーへの記載、保存期間が必要です。オンにする前に、データ保護責任者に確認してください。</value></data>
+  <data name="I confirm that a legal basis exists, the privacy policy covers this logging and the retention period below is agreed." xml:space="preserve"><value>法的根拠が存在し、プライバシー ポリシーがこのログ記録を対象としており、以下の保存期間が合意されていることを確認します。</value></data>
+  <data name="Retention period (days)" xml:space="preserve"><value>保存期間 (日)</value></data>
+  <data name="Store permanently (no automatic deletion)" xml:space="preserve"><value>永続的に保存 (自動削除なし)</value></data>
+  <data name="The GDPR requires that personal data is kept no longer than necessary. Choose this only if your data protection officer agreed." xml:space="preserve"><value>GDPR では、個人データを必要以上に長く保持しないことが求められています。データ保護責任者が同意した場合にのみ選択してください。</value></data>
+  <data name="Confirm and switch on" xml:space="preserve"><value>確認してオンにする</value></data>
+  <data name="Switch on" xml:space="preserve"><value>オンにする</value></data>
+  <data name="Switch off" xml:space="preserve"><value>オフにする</value></data>
+  <data name="Save retention period" xml:space="preserve"><value>保存期間を保存</value></data>
+  <data name="Delete all stored IP addresses" xml:space="preserve"><value>保存されているすべての IP アドレスを削除</value></data>
+  <data name="Please confirm the data protection statement first." xml:space="preserve"><value>まずデータ保護に関する声明を確認してください。</value></data>
+  <data name="IP logging is on." xml:space="preserve"><value>IP のログ記録はオンです。</value></data>
+  <data name="IP logging is off." xml:space="preserve"><value>IP のログ記録はオフです。</value></data>
+  <data name="Retention period saved." xml:space="preserve"><value>保存期間を保存しました。</value></data>
+  <data name="All stored IP addresses were deleted." xml:space="preserve"><value>保存されていたすべての IP アドレスを削除しました。</value></data>
+  <data name="Type DELETE to confirm." xml:space="preserve"><value>確認のため DELETE と入力してください。</value></data>
+  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>バージョンのソース コードをアップロードする (アップロードのたびに)</value></data>
+  <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>管理者：最新バージョンのソース コード (変更の出発点)</value></data>
+  <data name="Share link" xml:space="preserve"><value>共有リンク</value></data>
+  <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>このアドイン専用のページと、顧客に送信するためのリンク</value></data>
+  <data name="Add-on not found" xml:space="preserve"><value>アドインが見つかりません</value></data>
+  <data name="This add-on is not (or no longer) in the store." xml:space="preserve"><value>このアドインはストアにありません (または掲載が終了しています)。</value></data>
+  <data name="Show all add-ons" xml:space="preserve"><value>すべてのアドインを表示</value></data>
+  <data name="Add-on for Tungsten Power PDF: {0}" xml:space="preserve"><value>Tungsten Power PDF 用アドイン：{0}</value></data>
+  <data name="Hello," xml:space="preserve"><value>こんにちは。</value></data>
+  <data name="for Tungsten Power PDF there is the add-on &quot;{0}&quot;:" xml:space="preserve"><value>Tungsten Power PDF 用のアドイン「{0}」があります：</value></data>
+  <data name="You can look at it and install it directly in Power PDF here:" xml:space="preserve"><value>こちらから内容を確認し、Power PDF に直接インストールできます：</value></data>
+  <data name="Best regards" xml:space="preserve"><value>よろしくお願いいたします</value></data>
+  <data name="What&#x27;s new in version {0}" xml:space="preserve"><value>バージョン {0} の新機能</value></data>
+  <data name="First time?" xml:space="preserve"><value>初めてご利用の場合</value></data>
+  <data name="Install the Add-on Store for Power PDF once (administrator rights required)." xml:space="preserve"><value>Add-on Store for Power PDF を一度インストールしてください (管理者権限が必要です)。</value></data>
+  <data name="Click &quot;Install in Power PDF&quot; above; Power PDF opens with this add-on selected." xml:space="preserve"><value>上の [Power PDF にインストール] をクリックすると、このアドインを選択した状態で Power PDF が開きます。</value></data>
+  <data name="Confirm the installation and restart Power PDF." xml:space="preserve"><value>インストールを確認し、Power PDF を再起動してください。</value></data>
+  <data name="Share this add-on" xml:space="preserve"><value>このアドインを共有</value></data>
+  <data name="Send this link to a customer or colleague; the page shows only this add-on." xml:space="preserve"><value>このリンクを顧客や同僚に送信してください。ページにはこのアドインのみが表示されます。</value></data>
+  <data name="Link" xml:space="preserve"><value>リンク</value></data>
+  <data name="Copy link" xml:space="preserve"><value>リンクをコピー</value></data>
+  <data name="Link copied." xml:space="preserve"><value>リンクをコピーしました。</value></data>
+  <data name="Your short name (optional, shows in the reports how often your link was used)" xml:space="preserve"><value>短縮名 (オプション。リンクが使用された回数がレポートに表示されます)</value></data>
+  <data name="e.g. mmueller" xml:space="preserve"><value>例：mmueller</value></data>
+  <data name="Send by email" xml:space="preserve"><value>メールで送信</value></data>
+  <data name="Shared links" xml:space="preserve"><value>共有リンク</value></data>
+  <data name="Calls of the add-on pages (/a/...) per short name: page views without link previews, clicks on &quot;Install in Power PDF&quot; and client installer downloads from that page. Without a short name the link was shared without one." xml:space="preserve"><value>短縮名ごとのアドイン ページ (/a/...) の呼び出し：リンク プレビューを除くページ ビュー、[Power PDF にインストール] のクリック、そのページからのクライアント インストーラーのダウンロード。短縮名がない場合、リンクは短縮名なしで共有されています。</value></data>
+  <data name="Short name" xml:space="preserve"><value>短縮名</value></data>
+  <data name="Page views" xml:space="preserve"><value>ページ ビュー</value></data>
+  <data name="Install clicks" xml:space="preserve"><value>インストールのクリック数</value></data>
+  <data name="Client downloads" xml:space="preserve"><value>クライアントのダウンロード数</value></data>
+  <data name="without short name" xml:space="preserve"><value>短縮名なし</value></data>
+  <data name="Total" xml:space="preserve"><value>合計</value></data>
+  <data name="Add-on Store for Power PDF" xml:space="preserve"><value>Add-on Store for Power PDF</value></data>
+  <data name="Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF." xml:space="preserve"><value>Tungsten Power PDF 用アドイン：ここで見つけて、Power PDF に直接インストールできます。</value></data>
+  <data name="Backup" xml:space="preserve"><value>バックアップ</value></data>
+  <data name="Setup" xml:space="preserve"><value>セットアップ</value></data>
+  <data name="Close" xml:space="preserve"><value>閉じる</value></data>
+  <data name="Log excerpt" xml:space="preserve"><value>ログの抜粋</value></data>
+  <data name="Mark as done" xml:space="preserve"><value>完了にする</value></data>
+  <data name="Message" xml:space="preserve"><value>メッセージ</value></data>
+  <data name="No ratings yet. Users rate add-ons in the store window inside Power PDF." xml:space="preserve"><value>評価はまだありません。ユーザーは Power PDF 内のストア ウィンドウでアドインを評価します。</value></data>
+  <data name="Nothing received yet." xml:space="preserve"><value>まだ何も受信していません。</value></data>
+  <data name="Problem report or comment from the store client" xml:space="preserve"><value>ストア クライアントからの問題報告またはコメント</value></data>
+  <data name="Problem reports and comments" xml:space="preserve"><value>問題報告とコメント</value></data>
+  <data name="Ratings" xml:space="preserve"><value>評価</value></data>
+  <data name="Ratings and feedback" xml:space="preserve"><value>評価とフィードバック</value></data>
+  <data name="Received" xml:space="preserve"><value>受信日時</value></data>
+  <data name="Reopen" xml:space="preserve"><value>再度開く</value></data>
+  <data name="Screenshots" xml:space="preserve"><value>スクリーンショット</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; Claude reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Power PDF 内のストア ウィンドウから送信されたものです。閲覧できるのはあなたと管理者のみです。Claude は GET /api/packages/&lt;id&gt;/feedback で読み取ります。</value></data>
+  <data name="open" xml:space="preserve"><value>未処理</value></data>
+  <data name="done" xml:space="preserve"><value>完了</value></data>
+  <data name="{0} rating(s)" xml:space="preserve"><value>{0} 件の評価</value></data>
+  <data name="Problem" xml:space="preserve"><value>問題</value></data>
+  <data name="Comment" xml:space="preserve"><value>コメント</value></data>
+  <data name="AI assessment" xml:space="preserve"><value>AI による評価</value></data>
+  <data name="AI assistant (optional)" xml:space="preserve"><value>AI アシスタント (オプション)</value></data>
+  <data name="AI review aid" xml:space="preserve"><value>AI レビュー支援</value></data>
+  <data name="AI review aid created." xml:space="preserve"><value>AI レビュー支援を作成しました。</value></data>
+  <data name="AI suggestions" xml:space="preserve"><value>AI の提案</value></data>
+  <data name="API key" xml:space="preserve"><value>API キー</value></data>
+  <data name="Ask AI" xml:space="preserve"><value>AI に質問</value></data>
+  <data name="Changelog matches the changes" xml:space="preserve"><value>変更履歴が変更内容と一致している</value></data>
+  <data name="Create automatically for every new version" xml:space="preserve"><value>新しいバージョンごとに自動的に作成</value></data>
+  <data name="Data sent to the provider: add-on texts from the catalog, the text of problem reports, search queries, manifests and file lists of new versions, and only with the option above changed source code lines. Never sent: email addresses, IP addresses, log excerpts, user accounts. Check with your data protection team before switching it on." xml:space="preserve"><value>プロバイダーに送信されるデータ：カタログのアドイン テキスト、問題報告のテキスト、検索クエリ、新しいバージョンのマニフェストとファイル一覧、および上記のオプションを有効にした場合のみ変更されたソース コード行。送信されないもの：メール アドレス、IP アドレス、ログの抜粋、ユーザー アカウント。オンにする前に、データ保護チームに確認してください。</value></data>
+  <data name="Describe what you want to do; AI suggests matching add-ons." xml:space="preserve"><value>やりたいことを説明してください。AI が適切なアドインを提案します。</value></data>
+  <data name="Generated by AI as an aid. The decision and its responsibility stay with the reviewer." xml:space="preserve"><value>支援として AI が生成したものです。判断とその責任はレビュー担当者にあります。</value></data>
+  <data name="Model (empty = default)" xml:space="preserve"><value>モデル (空 = 既定)</value></data>
+  <data name="Nothing suitable found." xml:space="preserve"><value>適切なものが見つかりませんでした。</value></data>
+  <data name="Provider" xml:space="preserve"><value>プロバイダー</value></data>
+  <data name="Remove stored key" xml:space="preserve"><value>保存されているキーを削除</value></data>
+  <data name="Requests per day (limit)" xml:space="preserve"><value>1 日あたりの要求数 (上限)</value></data>
+  <data name="Review aid for new versions (on request)" xml:space="preserve"><value>新しいバージョンのレビュー支援 (要求時)</value></data>
+  <data name="Search by need on the website and in the store window" xml:space="preserve"><value>Web サイトとストア ウィンドウでのニーズに基づく検索</value></data>
+  <data name="Searching…" xml:space="preserve"><value>検索中…</value></data>
+  <data name="Send changed source code lines to the provider" xml:space="preserve"><value>変更されたソース コード行をプロバイダーに送信する</value></data>
+  <data name="Sort problem reports (category, urgency, summary, reply draft, duplicates)" xml:space="preserve"><value>問題報告の分類 (カテゴリ、緊急度、要約、返信の下書き、重複)</value></data>
+  <data name="Sorts problem reports, prepares a review aid for new versions and lets users search for add-ons by describing what they need. Off by default; everything works without it." xml:space="preserve"><value>問題報告を分類し、新しいバージョンのレビュー支援を準備し、ユーザーが必要なことを説明してアドインを検索できるようにします。既定ではオフです。なくてもすべての機能が動作します。</value></data>
+  <data name="Stored encrypted on the server and never shown again. Use a key of your own organization with a spending limit." xml:space="preserve"><value>サーバー上で暗号化して保存され、再表示されることはありません。利用上限を設定した、自組織のキーを使用してください。</value></data>
+  <data name="Suggested by AI from the add-on descriptions; please check the details." xml:space="preserve"><value>アドインの説明に基づいて AI が提案したものです。詳細を確認してください。</value></data>
+  <data name="Suggested reply" xml:space="preserve"><value>返信の提案</value></data>
+  <data name="Test connection" xml:space="preserve"><value>接続をテスト</value></data>
+  <data name="The AI provider gave no usable answer. Check the connection test in the settings." xml:space="preserve"><value>AI プロバイダーから使用可能な回答がありませんでした。設定で接続テストを確認してください。</value></data>
+  <data name="The search is not available right now." xml:space="preserve"><value>現在、検索は利用できません。</value></data>
+  <data name="Bug" xml:space="preserve"><value>バグ</value></data>
+  <data name="Wish" xml:space="preserve"><value>要望</value></data>
+  <data name="Question" xml:space="preserve"><value>質問</value></data>
+  <data name="Praise" xml:space="preserve"><value>称賛</value></data>
+  <data name="high" xml:space="preserve"><value>高</value></data>
+  <data name="medium" xml:space="preserve"><value>中</value></data>
+  <data name="low" xml:space="preserve"><value>低</value></data>
+  <data name="warning" xml:space="preserve"><value>警告</value></data>
+  <data name="info" xml:space="preserve"><value>情報</value></data>
+  <data name="yes" xml:space="preserve"><value>はい</value></data>
+  <data name="partly" xml:space="preserve"><value>一部</value></data>
+  <data name="no" xml:space="preserve"><value>いいえ</value></data>
+  <data name="Suggests: approve" xml:space="preserve"><value>提案：承認</value></data>
+  <data name="Suggests: reject" xml:space="preserve"><value>提案：却下</value></data>
+  <data name="Suggests: check more closely" xml:space="preserve"><value>提案：詳しく確認</value></data>
+  <data name="Create AI review aid" xml:space="preserve"><value>AI レビュー支援を作成</value></data>
+  <data name="Create again" xml:space="preserve"><value>再作成</value></data>
+  <data name="Similar to report #{0}" xml:space="preserve"><value>報告 #{0} と類似</value></data>
+  <data name="AI connection works." xml:space="preserve"><value>AI 接続は正常に動作しています。</value></data>
+  <data name="The AI connection test failed." xml:space="preserve"><value>AI 接続テストに失敗しました。</value></data>
+  <data name="API and AI assistants" xml:space="preserve"><value>API と AI アシスタント</value></data>
+  <data name="ChatGPT (custom GPT actions), Gemini function calling and other tools: import the OpenAPI description and enter the personal token as Bearer key." xml:space="preserve"><value>ChatGPT (カスタム GPT のアクション)、Gemini の関数呼び出し、その他のツール：OpenAPI の記述をインポートし、個人用トークンを Bearer キーとして入力してください。</value></data>
+  <data name="Claude Code: install the skill. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>Claude Code：スキルをインストールしてください。常にサーバーから最新のルールを読み込むため、更新する必要はありません。</value></data>
+  <data name="Coding assistants that read AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): save it in the plugin project." xml:space="preserve"><value>AGENTS.md を読み取るコーディング アシスタント (OpenAI Codex、GitHub Copilot、Cursor、Gemini CLI)：プラグイン プロジェクトに保存してください。</value></data>
+  <data name="Description of all endpoints (OpenAPI 3.1)" xml:space="preserve"><value>すべてのエンドポイントの記述 (OpenAPI 3.1)</value></data>
+  <data name="Download AGENTS.md" xml:space="preserve"><value>AGENTS.md をダウンロード</value></data>
+  <data name="Give the token to your AI assistant together with this line:" xml:space="preserve"><value>次の 1 行と一緒にトークンを AI アシスタントに渡してください：</value></data>
+  <data name="Give your AI assistant one line" xml:space="preserve"><value>AI アシスタントに 1 行で指示する</value></data>
+  <data name="Optional: set up your tool once" xml:space="preserve"><value>オプション：ツールを一度設定する</value></data>
+  <data name="Publish and update plugins directly from your AI assistant, for example Claude, ChatGPT, Gemini or Copilot. The assistant reads the store&#x27;s rules from the API, validates the package until all checks pass and submits it for review." xml:space="preserve"><value>Claude、ChatGPT、Gemini、Copilot などの AI アシスタントから直接プラグインを公開および更新できます。アシスタントは API からストアのルールを読み取り、すべてのチェックに合格するまでパッケージを検証して、レビューに提出します。</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Power PDF 内のストア ウィンドウから送信されたものです。閲覧できるのはあなたと管理者のみです。AI アシスタントは GET /api/packages/&lt;id&gt;/feedback で読み取ります。</value></data>
+  <data name="Short index for language models" xml:space="preserve"><value>言語モデル向けの短いインデックス</value></data>
+  <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>必要なのはこれだけです。ガイドを読み、今後のセッションに向けて自身を設定し、ルールに従います。</value></data>
+  <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>トークン名 (例：'assistant'、'build server')</value></data>
+  <data name="Provider and key" xml:space="preserve"><value>プロバイダーとキー</value></data>
+  <data name="Connect and load models" xml:space="preserve"><value>接続してモデルを読み込む</value></data>
+  <data name="Model and features" xml:space="preserve"><value>モデルと機能</value></data>
+  <data name="Model" xml:space="preserve"><value>モデル</value></data>
+  <data name="Default" xml:space="preserve"><value>既定</value></data>
+  <data name="Models this key may use, loaded live from the provider." xml:space="preserve"><value>このキーで使用できるモデル (プロバイダーからリアルタイムで読み込み)。</value></data>
+  <data name="No model list loaded yet: use &quot;Connect and load models&quot; above. Until then the default model is used." xml:space="preserve"><value>モデル一覧はまだ読み込まれていません。上の「接続してモデルを読み込む」を使用してください。それまでは既定のモデルが使用されます。</value></data>
+  <data name="Test" xml:space="preserve"><value>テスト</value></data>
+  <data name="Sends one short request with the chosen model." xml:space="preserve"><value>選択したモデルで短い要求を 1 件送信します。</value></data>
+  <data name="Connected. Choose a model below." xml:space="preserve"><value>接続しました。以下でモデルを選択してください。</value></data>
+  <data name="The connection failed." xml:space="preserve"><value>接続に失敗しました。</value></data>
+  <data name="Customers" xml:space="preserve"><value>顧客</value></data>
+  <data name="Customer" xml:space="preserve"><value>顧客</value></data>
+  <data name="New customer" xml:space="preserve"><value>新しい顧客</value></data>
+  <data name="Create customer" xml:space="preserve"><value>顧客を作成</value></data>
+  <data name="No customers yet." xml:space="preserve"><value>顧客はまだありません。</value></data>
+  <data name="Deliveries" xml:space="preserve"><value>配信</value></data>
+  <data name="Deliver an add-on" xml:space="preserve"><value>アドインを配信する</value></data>
+  <data name="Deliver" xml:space="preserve"><value>配信</value></data>
+  <data name="Codes" xml:space="preserve"><value>コード</value></data>
+  <data name="Code" xml:space="preserve"><value>コード</value></data>
+  <data name="No codes yet." xml:space="preserve"><value>コードはまだありません。</value></data>
+  <data name="New customer code" xml:space="preserve"><value>新しい顧客コード</value></data>
+  <data name="Code for this add-on only" xml:space="preserve"><value>このアドイン専用のコード</value></data>
+  <data name="Also create a code for this add-on only" xml:space="preserve"><value>このアドイン専用のコードも作成する</value></data>
+  <data name="Create a customer code for all its deliveries right away" xml:space="preserve"><value>すべての配信に有効な顧客コードを今すぐ作成する</value></data>
+  <data name="Valid for" xml:space="preserve"><value>有効範囲</value></data>
+  <data name="all deliveries" xml:space="preserve"><value>すべての配信</value></data>
+  <data name="Copy" xml:space="preserve"><value>コピー</value></data>
+  <data name="valid" xml:space="preserve"><value>有効</value></data>
+  <data name="expired" xml:space="preserve"><value>期限切れ</value></data>
+  <data name="valid until {0}" xml:space="preserve"><value>{0} まで有効</value></data>
+  <data name="Previous code stays valid for" xml:space="preserve"><value>以前のコードの有効期間</value></data>
+  <data name="0 days (at once)" xml:space="preserve"><value>0 日 (即時)</value></data>
+  <data name="days" xml:space="preserve"><value>日</value></data>
+  <data name="Make live" xml:space="preserve"><value>ライブにする</value></data>
+  <data name="Pause" xml:space="preserve"><value>一時停止</value></data>
+  <data name="Resume" xml:space="preserve"><value>再開</value></data>
+  <data name="End delivery" xml:space="preserve"><value>配信を終了</value></data>
+  <data name="Change stages and period" xml:space="preserve"><value>段階と期間を変更</value></data>
+  <data name="Period" xml:space="preserve"><value>期間</value></data>
+  <data name="Until" xml:space="preserve"><value>終了日</value></data>
+  <data name="Beta stage" xml:space="preserve"><value>ベータ段階</value></data>
+  <data name="Live stage" xml:space="preserve"><value>ライブ段階</value></data>
+  <data name="newest" xml:space="preserve"><value>最新</value></data>
+  <data name="fixed" xml:space="preserve"><value>固定</value></data>
+  <data name="paused" xml:space="preserve"><value>一時停止中</value></data>
+  <data name="ended" xml:space="preserve"><value>終了</value></data>
+  <data name="outside period" xml:space="preserve"><value>期間外</value></data>
+  <data name="private" xml:space="preserve"><value>非公開</value></data>
+  <data name="Visibility" xml:space="preserve"><value>公開範囲</value></data>
+  <data name="public (catalog)" xml:space="preserve"><value>公開 (カタログ)</value></data>
+  <data name="private (customer deliveries only)" xml:space="preserve"><value>非公開 (顧客への配信のみ)</value></data>
+  <data name="Customer data" xml:space="preserve"><value>顧客データ</value></data>
+  <data name="Contact person" xml:space="preserve"><value>担当者</value></data>
+  <data name="Note" xml:space="preserve"><value>メモ</value></data>
+  <data name="Created by" xml:space="preserve"><value>作成者</value></data>
+  <data name="paused (no add-ons for this customer)" xml:space="preserve"><value>一時停止中 (この顧客向けのアドインなし)</value></data>
+  <data name="Nothing delivered yet." xml:space="preserve"><value>まだ何も配信されていません。</value></data>
+  <data name="Please check name and email address." xml:space="preserve"><value>名前とメール アドレスを確認してください。</value></data>
+  <data name="New code created." xml:space="preserve"><value>新しいコードを作成しました。</value></data>
+  <data name="Code revoked." xml:space="preserve"><value>コードを取り消しました。</value></data>
+  <data name="Delivery created." xml:space="preserve"><value>配信を作成しました。</value></data>
+  <data name="Delivery saved." xml:space="preserve"><value>配信を保存しました。</value></data>
+  <data name="The beta version is now live for this customer." xml:space="preserve"><value>この顧客に対して、ベータ版がライブになりました。</value></data>
+  <data name="Customer delivery created or changed by a developer" xml:space="preserve"><value>開発者による顧客配信の作成または変更</value></data>
+  <data name="Deliver add-ons to individual customers: they see them in the store window with their code, nobody else does. Every delivery has a beta and a live stage." xml:space="preserve"><value>アドインを個々の顧客に配信します。顧客は自分のコードを使ってストア ウィンドウでアドインを表示でき、他の人には表示されません。各配信にはベータ段階とライブ段階があります。</value></data>
+  <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. Enter the code in the Add-on Store options in Power PDF or distribute it with the policy CustomerCode (client 0.6.0 or later). Several codes can be combined, separated by semicolons." xml:space="preserve"><value>顧客コードはその顧客のすべての配信を、配信コードは 1 つのアドインのみを利用可能にします。コードは Power PDF の Add-on Store オプションで入力するか、ポリシー CustomerCode (クライアント 0.6.0 以降) で配布してください。複数のコードをセミコロンで区切って組み合わせることができます。</value></data>
+  <data name="Beta stage: workstations of this customer with the beta option (or policy BetaChannel). Live stage: all others. Typical: new version to beta, test, then &quot;Make live&quot;." xml:space="preserve"><value>ベータ段階：ベータ オプション (またはポリシー BetaChannel) が有効なこの顧客のワークステーション。ライブ段階：それ以外のすべて。一般的な流れ：新しいバージョンをベータにし、テストしてから「ライブにする」。</value></data>
+  <data name="Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>ライブの「固定」では顧客をテスト済みのバージョンに留め、「最新」ではリリースされるバージョンすべてに追従します。非公開アドインには管理者の承認は不要で、管理者にはメールで通知されます。</value></data>
+  <data name="No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet." xml:space="preserve"><value>配信できるアドインがありません。配信できるのは、自動チェックに合格し、まだこの顧客に配信されていない自分のアドインです。</value></data>
+  <data name="Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed." xml:space="preserve"><value>必須なのは名前だけです。連絡先データは配信メールにのみ使用されます。不要な場合は空のままにしてください。</value></data>
+  <data name="Sign-in failed. Check email and password, or try again later." xml:space="preserve"><value>サインインに失敗しました。メール アドレスとパスワードを確認するか、後でもう一度お試しください。</value></data>
+  <data name="Backup restored. The server restarts now to load it completely; sign in again in a minute." xml:space="preserve"><value>バックアップを復元しました。完全に読み込むため、サーバーを再起動します。1 分後にもう一度サインインしてください。</value></data>
+  <data name="no longer available" xml:space="preserve"><value>利用できなくなりました</value></data>
+  <data name="Setup token" xml:space="preserve"><value>セットアップ トークン</value></data>
+  <data name="Shown in the server log at start-up and stored in the file setup-token.txt in the data folder; valid for 24 hours." xml:space="preserve"><value>起動時にサーバー ログに表示され、データ フォルダーの setup-token.txt ファイルに保存されます。有効期間は 24 時間です。</value></data>
+  <data name="The setup token is wrong or has expired. Restart the app for a new one." xml:space="preserve"><value>セットアップ トークンが間違っているか、有効期限が切れています。新しいトークンを取得するには、アプリを再起動してください。</value></data>
+  <data name="Password for the key ring (optional)" xml:space="preserve"><value>キー リングのパスワード (オプション)</value></data>
+  <data name="Password for the key ring (only for backups that contain one)" xml:space="preserve"><value>キー リングのパスワード (キー リングを含むバックアップの場合のみ)</value></data>
+  <data name="With a password, the key ring that decrypts the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: after a restore, enter those keys again; customer codes keep working but can no longer be shown." xml:space="preserve"><value>パスワードを指定すると、保存されている AI キーと Resend キー、および顧客コードを復号するキー リングが暗号化 (AES-256) されてバックアップに含まれます。指定しない場合は含まれません。復元後にこれらのキーを再入力する必要があります。顧客コードは引き続き機能しますが、表示できなくなります。</value></data>
+  <data name="The password must have at least 12 characters." xml:space="preserve"><value>パスワードは 12 文字以上にする必要があります。</value></data>
+  <data name="The password for the key ring is wrong." xml:space="preserve"><value>キー リングのパスワードが間違っています。</value></data>
+  <data name="Backup restored without its key ring (no password given). Enter the AI and Resend keys again in the settings." xml:space="preserve"><value>キー リングなしでバックアップを復元しました (パスワードの指定なし)。設定で AI キーと Resend キーを再入力してください。</value></data>
+  <data name="Four-eyes rule: nobody approves a version they uploaded or own" xml:space="preserve"><value>4 つの目の原則：自分がアップロードした、または所有するバージョンは承認できない</value></data>
+  <data name="Needs at least two active admins or reviewers; with only one, own versions can no longer be approved." xml:space="preserve"><value>有効な管理者またはレビュー担当者が 2 人以上必要です。1 人だけの場合、自分のバージョンを承認できなくなります。</value></data>
+  <data name="Four-eyes rule: another admin or reviewer has to approve a version you uploaded or own." xml:space="preserve"><value>4 つの目の原則：自分がアップロードした、または所有するバージョンは、別の管理者またはレビュー担当者が承認する必要があります。</value></data>
+  <data name="This backup contains the key ring. Enter its password, or confirm the restore without it." xml:space="preserve"><value>このバックアップにはキー リングが含まれています。パスワードを入力するか、キー リングなしで復元することを確認してください。</value></data>
+  <data name="Restore without the key ring (signing key and stored secrets are lost)" xml:space="preserve"><value>キー リングなしで復元 (署名キーと保存されているシークレットは失われます)</value></data>
+  <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>キー リングなしでバックアップを復元しました。AI キーと Resend キーを再入力し、署名の回復キー (Signing__PrivateKeyPem) を設定してください。設定するまで、クライアントはインストールできません。</value></data>
+  <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>パッケージ署名キーを読み取れません。キー リングのパスワードを使ってバックアップを復元するか、アプリ設定 Signing__PrivateKeyPem に回復キーを設定するまで、クライアントはインストールを拒否します。</value></data>
+  <data name="Package signing key" xml:space="preserve"><value>パッケージ署名キー</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>自動レビュー支援の言語</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>{0} で作成</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>このレビュー支援は {0} で記述されています。</value></data>
+  <data name="Overview" xml:space="preserve"><value>概要</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>アドイン</value></data>
+  <data name="Clients" xml:space="preserve"><value>クライアント</value></data>
+  <data name="Locations" xml:space="preserve"><value>場所</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>提出とレビュー</value></data>
+  <data name="Report sections" xml:space="preserve"><value>レポートのセクション</value></data>
+  <data name="Pages" xml:space="preserve"><value>ページ</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>1 ページあたりの行数</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>{0} / {1} ページ</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>{2} 件中 {0} ～ {1} 件</value></data>
+  <data name="Previous" xml:space="preserve"><value>前へ</value></data>
+  <data name="Next" xml:space="preserve"><value>次へ</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>{1} 件の要求のうち最新の {0} 件です。CSV エクスポートにはすべてが含まれます。</value></data>
+  <data name="A backup is already running." xml:space="preserve"><value>バックアップは既に実行中です。</value></data>
+  <data name="AI assistant" xml:space="preserve"><value>AI アシスタント</value></data>
+  <data name="Access key (connection string or SAS URL)" xml:space="preserve"><value>アクセス キー (接続文字列または SAS URL)</value></data>
+  <data name="Automatic backup" xml:space="preserve"><value>自動バックアップ</value></data>
+  <data name="Automatic backup failed" xml:space="preserve"><value>自動バックアップの失敗</value></data>
+  <data name="Automatic backup to Azure Blob Storage" xml:space="preserve"><value>Azure Blob Storage への自動バックアップ</value></data>
+  <data name="Back up automatically on the selected days" xml:space="preserve"><value>選択した曜日に自動的にバックアップする</value></data>
+  <data name="Back up now" xml:space="preserve"><value>今すぐバックアップ</value></data>
+  <data name="Backup file (.zip, or .psbak from the automatic backup)" xml:space="preserve"><value>バックアップ ファイル (.zip、または自動バックアップの .psbak)</value></data>
+  <data name="Backups in Azure" xml:space="preserve"><value>Azure 内のバックアップ</value></data>
+  <data name="Backups to keep" xml:space="preserve"><value>保持するバックアップ数</value></data>
+  <data name="Choose time and weekdays, switch on the automatic backup and save. &quot;Back up now&quot; makes a first backup right away." xml:space="preserve"><value>時刻と曜日を選択し、自動バックアップをオンにして保存してください。「今すぐバックアップ」を使うと、最初のバックアップがすぐに作成されます。</value></data>
+  <data name="Click &quot;Save&quot; and then &quot;Test connection&quot;. The store creates the container by itself." xml:space="preserve"><value>「保存」をクリックしてから「接続をテスト」をクリックしてください。コンテナーはストアが自動的に作成します。</value></data>
+  <data name="Connection works: {0}" xml:space="preserve"><value>接続は正常です：{0}</value></data>
+  <data name="Container" xml:space="preserve"><value>コンテナー</value></data>
+  <data name="Container names use 3 to 63 lower-case letters, digits and hyphens." xml:space="preserve"><value>コンテナー名には、3 ～ 63 文字の小文字、数字、ハイフンを使用します。</value></data>
+  <data name="Created automatically if it does not exist." xml:space="preserve"><value>存在しない場合は自動的に作成されます。</value></data>
+  <data name="Encrypts every backup before it leaves the server. Without it a backup cannot be restored: keep it outside the server, for example in a password manager." xml:space="preserve"><value>すべてのバックアップを、サーバーから送信する前に暗号化します。これがないとバックアップを復元できません。パスワード マネージャーなど、サーバーの外部に保管してください。</value></data>
+  <data name="Enter the access key and the passphrase first." xml:space="preserve"><value>まずアクセス キーとパスフレーズを入力してください。</value></data>
+  <data name="Guide" xml:space="preserve"><value>ガイド</value></data>
+  <data name="If a backup fails, all admins get an email (Settings, notifications: &quot;Automatic backup failed&quot;)." xml:space="preserve"><value>バックアップが失敗すると、すべての管理者にメールが送信されます (設定、通知：「自動バックアップの失敗」)。</value></data>
+  <data name="In the Azure portal, open a storage account (or create one: &quot;Storage accounts&quot;, &quot;Create&quot;, standard settings are enough; Redundancy &quot;LRS&quot; is the cheapest)." xml:space="preserve"><value>Azure portal でストレージ アカウントを開きます (または作成します：「ストレージ アカウント」、「作成」。標準設定で十分です。冗長性は「LRS」が最も安価です)。</value></data>
+  <data name="In the storage account, open &quot;Security + networking&quot;, &quot;Access keys&quot;, and copy the &quot;Connection string&quot; of key1." xml:space="preserve"><value>ストレージ アカウントで「セキュリティとネットワーク」、「アクセス キー」を開き、key1 の「接続文字列」をコピーします。</value></data>
+  <data name="Instead of the connection string, a SAS URL of the storage account or of one container works too (permissions: read, write, create, list, delete). It can be limited in time and revoked without changing the account keys." xml:space="preserve"><value>接続文字列の代わりに、ストレージ アカウントまたは 1 つのコンテナーの SAS URL も使用できます (アクセス許可：読み取り、書き込み、作成、一覧表示、削除)。期間を制限でき、アカウント キーを変更せずに取り消すことができます。</value></data>
+  <data name="Last backup" xml:space="preserve"><value>前回のバックアップ</value></data>
+  <data name="Manual backup" xml:space="preserve"><value>手動バックアップ</value></data>
+  <data name="Next backup" xml:space="preserve"><value>次回のバックアップ</value></data>
+  <data name="No access key is stored." xml:space="preserve"><value>アクセス キーが保存されていません。</value></data>
+  <data name="No backups in the container yet." xml:space="preserve"><value>コンテナーにはまだバックアップがありません。</value></data>
+  <data name="None yet. The server creates one before every restore." xml:space="preserve"><value>まだありません。サーバーは復元のたびに作成します。</value></data>
+  <data name="Not set up" xml:space="preserve"><value>未設定</value></data>
+  <data name="OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Passphrase (at least 12 characters)" xml:space="preserve"><value>パスフレーズ (12 文字以上)</value></data>
+  <data name="Password for the key ring, or the passphrase of an automatic backup" xml:space="preserve"><value>キー リングのパスワード、または自動バックアップのパスフレーズ</value></data>
+  <data name="Paste it above as the access key, choose a passphrase of at least 12 characters and note it in your password manager." xml:space="preserve"><value>上のアクセス キーに貼り付け、12 文字以上のパスフレーズを決めて、パスワード マネージャーに記録してください。</value></data>
+  <data name="Recommended in the storage account: &quot;Data protection&quot;, soft delete for blobs (for example 14 days), so a deleted backup can be recovered." xml:space="preserve"><value>ストレージ アカウントでの推奨設定：「データ保護」で BLOB の論理的な削除 (例：14 日) を有効にすると、削除されたバックアップを回復できます。</value></data>
+  <data name="Restore: &quot;Backups in Azure&quot; restores a backup directly with the stored passphrase. On a new server, first create the admin account, enter the same access key and passphrase here, then restore." xml:space="preserve"><value>復元：「Azure 内のバックアップ」では、保存されているパスフレーズを使ってバックアップを直接復元します。新しいサーバーでは、まず管理者アカウントを作成し、ここで同じアクセス キーとパスフレーズを入力してから復元してください。</value></data>
+  <data name="Running" xml:space="preserve"><value>実行中</value></data>
+  <data name="Safety backups" xml:space="preserve"><value>安全バックアップ</value></data>
+  <data name="Saved. The schedule stays off until an access key and a passphrase are set." xml:space="preserve"><value>保存しました。アクセス キーとパスフレーズが設定されるまで、スケジュールはオフのままです。</value></data>
+  <data name="Sections" xml:space="preserve"><value>セクション</value></data>
+  <data name="Storage account" xml:space="preserve"><value>ストレージ アカウント</value></data>
+  <data name="Stored; leave empty to keep it" xml:space="preserve"><value>保存済み。変更しない場合は空のままにしてください</value></data>
+  <data name="The access key is neither a connection string nor a SAS URL of the storage account." xml:space="preserve"><value>アクセス キーが、ストレージ アカウントの接続文字列でも SAS URL でもありません。</value></data>
+  <data name="The backup could not be downloaded." xml:space="preserve"><value>バックアップをダウンロードできませんでした。</value></data>
+  <data name="The backup started. Reload the page in a minute to see the result." xml:space="preserve"><value>バックアップを開始しました。結果を確認するには、1 分後にページを再読み込みしてください。</value></data>
+  <data name="The connection failed: {0}" xml:space="preserve"><value>接続に失敗しました：{0}</value></data>
+  <data name="The files are encrypted with the passphrase. A downloaded file can be restored under &quot;Restore&quot; with that passphrase." xml:space="preserve"><value>ファイルはパスフレーズで暗号化されます。ダウンロードしたファイルは、そのパスフレーズを使って「復元」で復元できます。</value></data>
+  <data name="The list could not be loaded: {0}" xml:space="preserve"><value>一覧を読み込めませんでした：{0}</value></data>
+  <data name="The passphrase is wrong or the file is damaged." xml:space="preserve"><value>パスフレーズが間違っているか、ファイルが破損しています。</value></data>
+  <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>パスフレーズは 12 文字以上にする必要があります。</value></data>
+  <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>このバックアップは暗号化されています。パスフレーズを入力してください。</value></data>
+  <data name="Weekdays" xml:space="preserve"><value>曜日</value></data>
+  <data name="Request a developer account" xml:space="preserve"><value>開発者アカウントを申請する</value></data>
+  <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>新しいサーバーにバックアップを復元しました。バックアップに含まれる管理者アカウントでサインインしてください。</value></data>
+  <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>このバックアップでは、あなたのアカウントは有効な管理者ではありません (このアカウントもそのメール アドレスも該当しません)。復元すると締め出されてしまいます。</value></data>
+  <data name="This backup was downloaded without the key ring, and this server cannot read its package signing key. Confirm the restore without the key ring, or use a backup downloaded with a key ring password." xml:space="preserve"><value>このバックアップはキー リングなしでダウンロードされたものであり、このサーバーはパッケージ署名キーを読み取れません。キー リングなしでの復元を確認するか、キー リングのパスワードを指定してダウンロードしたバックアップを使用してください。</value></data>
+  <data name="The restore failed (damaged archive or full disk). The previous state was put back; nothing changed." xml:space="preserve"><value>復元に失敗しました (アーカイブの破損またはディスクの空き容量不足)。以前の状態に戻したため、何も変更されていません。</value></data>
+  <data name="The restore failed and the previous state could not be put back automatically. Download the safety backup {0} under Safety backups and restore it." xml:space="preserve"><value>復元に失敗し、以前の状態に自動的に戻すことができませんでした。「安全バックアップ」で安全バックアップ {0} をダウンロードして復元してください。</value></data>
+  <data name="With a password, the key ring that decrypts the package signing key, the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: restored on another server, the signing key is lost (clients refuse installs until the recovery key is set) and the AI and Resend keys must be entered again; customer codes keep working but can no longer be shown." xml:space="preserve"><value>パスワードを指定すると、パッケージ署名キー、保存されている AI キーと Resend キー、および顧客コードを復号するキー リングが暗号化 (AES-256) されてバックアップに含まれます。指定しない場合は含まれません。別のサーバーに復元すると署名キーが失われ (回復キーが設定されるまでクライアントはインストールを拒否します)、AI キーと Resend キーを再入力する必要があります。顧客コードは引き続き機能しますが、表示できなくなります。</value></data>
+  <data name="An unknown failure has occurred." xml:space="preserve"><value>不明なエラーが発生しました。</value></data>
+  <data name="Passwords must be at least {0} characters." xml:space="preserve"><value>パスワードは {0} 文字以上にする必要があります。</value></data>
+  <data name="Passwords must have at least one digit (&#x27;0&#x27;-&#x27;9&#x27;)." xml:space="preserve"><value>パスワードには数字 ('0'-'9') を 1 つ以上含める必要があります。</value></data>
+  <data name="Passwords must have at least one lowercase letter (&#x27;a&#x27;-&#x27;z&#x27;)." xml:space="preserve"><value>パスワードには小文字 ('a'-'z') を 1 つ以上含める必要があります。</value></data>
+  <data name="Passwords must have at least one uppercase letter (&#x27;A&#x27;-&#x27;Z&#x27;)." xml:space="preserve"><value>パスワードには大文字 ('A'-'Z') を 1 つ以上含める必要があります。</value></data>
+  <data name="Email &#x27;{0}&#x27; is invalid." xml:space="preserve"><value>メール アドレス '{0}' は無効です。</value></data>
+  <data name="Email &#x27;{0}&#x27; is already taken." xml:space="preserve"><value>メール アドレス '{0}' は既に使用されています。</value></data>
+  <data name="Fill in name, email address and password (name up to 100, email address up to 200, reason up to 500 characters)." xml:space="preserve"><value>名前、メール アドレス、パスワードを入力してください (名前は 100 文字まで、メール アドレスは 200 文字まで、理由は 500 文字まで)。</value></data>
+  <data name="public" xml:space="preserve"><value>公開</value></data>
+  <data name="Make public" xml:space="preserve"><value>公開にする</value></data>
+  <data name="Make private" xml:space="preserve"><value>非公開にする</value></data>
+  <data name="Show in the public catalog" xml:space="preserve"><value>公開カタログに表示</value></data>
+  <data name="Customer deliveries only, not in the public catalog" xml:space="preserve"><value>顧客への配信のみ (公開カタログには非表示)</value></data>
+  <data name="Make this add-on public? It then appears in the catalog for everybody (new versions after approval)." xml:space="preserve"><value>このアドインを公開しますか？カタログですべての人に表示されるようになります (新しいバージョンは承認後)。</value></data>
+  <data name="Make this add-on private? It disappears from the public catalog; only customers with a delivery and a code still get it." xml:space="preserve"><value>このアドインを非公開にしますか？公開カタログから消え、配信とコードを持つ顧客のみが引き続き入手できます。</value></data>
+  <data name="No private add-on to deliver. Customers get private add-ons (never in the public catalog) that passed the automatic checks and are not delivered to them yet: upload with &quot;visibility&quot;: &quot;private&quot; or switch an add-on to private in the plug-in list." xml:space="preserve"><value>配信できる非公開アドインがありません。顧客が入手できるのは、自動チェックに合格し、まだその顧客に配信されていない非公開アドイン (公開カタログには表示されません) です。"visibility": "private" を指定してアップロードするか、プラグイン一覧でアドインを非公開に切り替えてください。</value></data>
+  <data name="Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>非公開アドインのみが表示されます。公開カタログには表示されず、コードを持つ顧客にのみ表示されます。ライブの「固定」では顧客をテスト済みのバージョンに留め、「最新」ではリリースされるバージョンすべてに追従します。非公開アドインには管理者の承認は不要で、管理者にはメールで通知されます。</value></data>
+  <data name="Delete customer" xml:space="preserve"><value>顧客を削除</value></data>
+  <data name="Customer deleted." xml:space="preserve"><value>顧客を削除しました。</value></data>
+  <data name="Delete this customer with all its codes and deliveries? Workstations using its codes lose these add-ons at the next catalog refresh; installed copies keep working." xml:space="preserve"><value>この顧客を、すべてのコードと配信とともに削除しますか？その顧客のコードを使用しているワークステーションでは、次回のカタログ更新時にこれらのアドインが表示されなくなります。インストール済みのコピーは引き続き動作します。</value></data>
+  <data name="Back to beta" xml:space="preserve"><value>ベータに戻す</value></data>
+  <data name="Version set back to beta; it needs approval again." xml:space="preserve"><value>バージョンをベータに戻しました。再度承認が必要です。</value></data>
+  <data name="Set this version back to beta? Only beta workstations are offered it from now on, the live channel falls back to the previous live version, and it needs approval again. Installed copies keep working." xml:space="preserve"><value>このバージョンをベータに戻しますか？今後はベータのワークステーションにのみ提供され、ライブ チャネルは以前のライブ バージョンに戻ります。再度承認が必要です。インストール済みのコピーは引き続き動作します。</value></data>
+  <data name="Private (customers only)" xml:space="preserve"><value>非公開 (顧客のみ)</value></data>
+  <data name="The source code of this version is missing: back in beta, it could not be approved again. Upload the source code first." xml:space="preserve"><value>このバージョンのソース コードがありません。ベータに戻すと、再度承認できなくなります。先にソース コードをアップロードしてください。</value></data>
+  <data name="Reset statistics" xml:space="preserve"><value>統計をリセット</value></data>
+  <data name="After internal tests: delete the collected statistics so the reports count from here on. Add-ons, versions, accounts, customers and the audit log stay. A safety backup of the whole store is written first." xml:space="preserve"><value>社内テストの後：収集された統計を削除し、レポートをここから集計し直します。アドイン、バージョン、アカウント、顧客、監査ログは保持されます。最初にストア全体の安全バックアップが作成されます。</value></data>
+  <data name="Last reset: {0}" xml:space="preserve"><value>前回のリセット：{0}</value></data>
+  <data name="Delete the chosen statistics now? This cannot be undone (except from the safety backup)." xml:space="preserve"><value>選択した統計を今すぐ削除しますか？この操作は元に戻せません (安全バックアップからの復元を除く)。</value></data>
+  <data name="Downloads and usage statistics ({0} rows, {1} downloads)" xml:space="preserve"><value>ダウンロードと利用状況の統計 ({0} 行、{1} 件のダウンロード)</value></data>
+  <data name="Shared-link statistics ({0} rows)" xml:space="preserve"><value>共有リンクの統計 ({0} 行)</value></data>
+  <data name="Stored IP addresses ({0} requests)" xml:space="preserve"><value>保存されている IP アドレス ({0} 件の要求)</value></data>
+  <data name="Ratings ({0})" xml:space="preserve"><value>評価 ({0})</value></data>
+  <data name="Problem reports and comments ({0})" xml:space="preserve"><value>問題報告とコメント ({0})</value></data>
+  <data name="Type RESET to confirm." xml:space="preserve"><value>確認のため RESET と入力してください。</value></data>
+  <data name="Choose at least one kind of data." xml:space="preserve"><value>少なくとも 1 種類のデータを選択してください。</value></data>
+  <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>統計をリセットしました。以前の状態の安全バックアップは、[バックアップと復元] &gt; [安全バックアップ] に表示されます。</value></data>
+  <data name="This add-on has its own ribbon tab and therefore stays private. Only add-ons on the shared tab can be public." xml:space="preserve"><value>このアドインには独自のリボン タブがあるため、非公開のままになります。公開できるのは共有タブ上のアドインのみです。</value></data>
+  <data name="Forgot password" xml:space="preserve"><value>パスワードを忘れた場合</value></data>
+  <data name="Forgot password?" xml:space="preserve"><value>パスワードを忘れた場合</value></data>
+  <data name="Enter the email address of your account. We send you a link to choose a new password." xml:space="preserve"><value>アカウントのメール アドレスを入力してください。新しいパスワードを設定するためのリンクをお送りします。</value></data>
+  <data name="If an active account exists for this address, we sent it a link to choose a new password. The link is valid for 24 hours." xml:space="preserve"><value>このアドレスの有効なアカウントが存在する場合、新しいパスワードを設定するためのリンクを送信しました。リンクの有効期間は 24 時間です。</value></data>
+  <data name="Send link" xml:space="preserve"><value>リンクを送信</value></data>
+  <data name="Back to sign-in" xml:space="preserve"><value>サインインに戻る</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>新しいパスワードを設定する</value></data>
+  <data name="This link is invalid or has expired. Request a new one with &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>このリンクは無効か、有効期限が切れています。サインイン ページの「パスワードを忘れた場合」で新しいリンクを要求してください。</value></data>
+  <data name="New password for {0}. At least 10 characters." xml:space="preserve"><value>{0} の新しいパスワード。10 文字以上。</value></data>
+  <data name="New password" xml:space="preserve"><value>新しいパスワード</value></data>
+  <data name="Repeat the new password" xml:space="preserve"><value>新しいパスワードをもう一度入力</value></data>
+  <data name="Save password" xml:space="preserve"><value>パスワードを保存</value></data>
+  <data name="Enter a new password (up to 200 characters)." xml:space="preserve"><value>新しいパスワードを入力してください (200 文字まで)。</value></data>
+  <data name="The two passwords do not match." xml:space="preserve"><value>2 つのパスワードが一致しません。</value></data>
+  <data name="Password changed. Sign in with the new password." xml:space="preserve"><value>パスワードを変更しました。新しいパスワードでサインインしてください。</value></data>
+  <data name="Change password" xml:space="preserve"><value>パスワードを変更</value></data>
+  <data name="Current password" xml:space="preserve"><value>現在のパスワード</value></data>
+  <data name="Enter the current and the new password (up to 200 characters)." xml:space="preserve"><value>現在のパスワードと新しいパスワードを入力してください (200 文字まで)。</value></data>
+  <data name="Password changed. Other sessions were signed out." xml:space="preserve"><value>パスワードを変更しました。他のセッションはサインアウトされました。</value></data>
+  <data name="Only active accounts can reset their password." xml:space="preserve"><value>パスワードをリセットできるのは有効なアカウントのみです。</value></data>
+  <data name="Password reset link sent by email." xml:space="preserve"><value>パスワード リセット用のリンクをメールで送信しました。</value></data>
+  <data name="You cannot delete your own account." xml:space="preserve"><value>自分のアカウントは削除できません。</value></data>
+  <data name="Account deleted. Its add-ons and customers now belong to you." xml:space="preserve"><value>アカウントを削除しました。そのアドインと顧客はあなたに移管されました。</value></data>
+  <data name="Email is not configured; give this password reset link to the user (valid 24 hours, works once):" xml:space="preserve"><value>メールが構成されていません。このパスワード リセット用リンクをユーザーに渡してください (有効期間 24 時間、1 回のみ使用可能)：</value></data>
+  <data name="Send {0} a link to choose a new password? The current password keeps working until the new one is set." xml:space="preserve"><value>新しいパスワードを設定するためのリンクを {0} に送信しますか？新しいパスワードが設定されるまで、現在のパスワードは引き続き使用できます。</value></data>
+  <data name="Reset password" xml:space="preserve"><value>パスワードをリセット</value></data>
+  <data name="Delete the account of {0} permanently? Its add-ons ({1}) and customers ({2}) move to you, its API tokens stop working. The audit log keeps its name." xml:space="preserve"><value>{0} のアカウントを完全に削除しますか？そのアドイン ({1}) と顧客 ({2}) はあなたに移管され、その API トークンは使用できなくなります。監査ログには名前が残ります。</value></data>
+  <data name="Without access to the store (for example a cloud sandbox) or without a token:" xml:space="preserve"><value>ストアにアクセスできない場合 (クラウド サンドボックスなど) やトークンがない場合：</value></data>
+  <data name="Upload the ZIP it hands you under Plug-ins, &quot;Submit a package&quot;: the store submits the package and stores the source code in one step." xml:space="preserve"><value>受け取った ZIP を [プラグイン] の「パッケージを提出する」でアップロードしてください。ストアはパッケージの提出とソース コードの保存を 1 回の操作で行います。</value></data>
+  <data name="Offline packer: .ppak, source ZIP and upload package" xml:space="preserve"><value>オフライン パッカー：.ppak、ソース ZIP、アップロード パッケージ</value></data>
+  <data name="An upload package (.zip with the .ppak and the source ZIP, made by make-ppak.ps1 or your AI assistant) submits the version and stores its source code in one step." xml:space="preserve"><value>アップロード パッケージ (.ppak とソース ZIP を含む .zip。make-ppak.ps1 または AI アシスタントで作成) を使うと、バージョンの提出とソース コードの保存を 1 回の操作で行えます。</value></data>
+  <data name="Package file (.ppak or upload package .zip)" xml:space="preserve"><value>パッケージ ファイル (.ppak またはアップロード パッケージ .zip)</value></data>
+  <data name="The upload package held no source ZIP. Upload the source code on the plug-in page at this version." xml:space="preserve"><value>アップロード パッケージにソース ZIP が含まれていませんでした。プラグイン ページで、このバージョンのソース コードをアップロードしてください。</value></data>
+  <data name="Source code from the upload package stored at this version." xml:space="preserve"><value>アップロード パッケージのソース コードを、このバージョンに保存しました。</value></data>
+  <data name="The source code from the upload package was not stored. Fix the findings below and upload the source ZIP on the plug-in page." xml:space="preserve"><value>アップロード パッケージのソース コードは保存されませんでした。以下の検出事項を修正し、プラグイン ページでソース ZIP をアップロードしてください。</value></data>
+  <data name="The upload package holds no .ppak file." xml:space="preserve"><value>アップロード パッケージに .ppak ファイルが含まれていません。</value></data>
+  <data name="The upload package holds more than one .ppak file; put exactly one in it." xml:space="preserve"><value>アップロード パッケージに複数の .ppak ファイルが含まれています。1 つだけ入れてください。</value></data>
+  <data name="The upload package holds more than one ZIP file; put only the source ZIP of this version next to the .ppak." xml:space="preserve"><value>アップロード パッケージに複数の ZIP ファイルが含まれています。.ppak と一緒に入れるのは、このバージョンのソース ZIP だけにしてください。</value></data>
+  <data name="The .ppak in the upload package is larger than 200 MB." xml:space="preserve"><value>アップロード パッケージ内の .ppak が 200 MB を超えています。</value></data>
+  <data name="The source ZIP in the upload package is larger than 100 MB." xml:space="preserve"><value>アップロード パッケージ内のソース ZIP が 100 MB を超えています。</value></data>
+  <data name="A file in the upload package is larger than allowed." xml:space="preserve"><value>アップロード パッケージ内のファイルが許容サイズを超えています。</value></data>
+  <data name="API" xml:space="preserve"><value>API</value></data>
+  <data name="API responses" xml:space="preserve"><value>API の応答</value></data>
+  <data name="API, accounts and limits" xml:space="preserve"><value>API、アカウント、制限</value></data>
+  <data name="Agent guide" xml:space="preserve"><value>エージェント ガイド</value></data>
+  <data name="Area" xml:space="preserve"><value>領域</value></data>
+  <data name="Back to warning" xml:space="preserve"><value>警告に戻す</value></data>
+  <data name="Checked at approval" xml:space="preserve"><value>承認時に確認</value></data>
+  <data name="Customer deliveries" xml:space="preserve"><value>顧客への配信</value></data>
+  <data name="Delete the house rule &quot;{0}&quot;?" xml:space="preserve"><value>ハウス ルール「{0}」を削除しますか？</value></data>
+  <data name="Edit" xml:space="preserve"><value>編集</value></data>
+  <data name="Edit house rule" xml:space="preserve"><value>ハウス ルールを編集</value></data>
+  <data name="Error" xml:space="preserve"><value>エラー</value></data>
+  <data name="Errors" xml:space="preserve"><value>エラー</value></data>
+  <data name="Every rule grouped by area, with the rules of this store" xml:space="preserve"><value>このストアのルールを含む、領域別のすべてのルール</value></data>
+  <data name="Every rule the store checks, grouped by area: errors block an upload, warnings and notes do not. The rule texts are in English, exactly as AI assistants read them in the agent guide." xml:space="preserve"><value>ストアがチェックするすべてのルールを領域別にまとめています。エラーがあるとアップロードはブロックされますが、警告と注意事項ではブロックされません。ルールのテキストは、AI アシスタントがエージェント ガイドで読むとおりの英語で記載されています。</value></data>
+  <data name="Fill in area, title (up to 120 characters) and text (up to 2000 characters)." xml:space="preserve"><value>領域、タイトル (120 文字まで)、テキスト (2000 文字まで) を入力してください。</value></data>
+  <data name="House rules" xml:space="preserve"><value>ハウス ルール</value></data>
+  <data name="House rules to check before approval" xml:space="preserve"><value>承認前に確認するハウス ルール</value></data>
+  <data name="Icon and screenshots" xml:space="preserve"><value>アイコンとスクリーンショット</value></data>
+  <data name="Machine-readable" xml:space="preserve"><value>機械可読</value></data>
+  <data name="Make mandatory" xml:space="preserve"><value>必須にする</value></data>
+  <data name="Make {0} mandatory? Uploads with this finding are then refused." xml:space="preserve"><value>{0} を必須にしますか？この検出事項があるアップロードは拒否されるようになります。</value></data>
+  <data name="New house rule" xml:space="preserve"><value>新しいハウス ルール</value></data>
+  <data name="None yet. Open an area and choose &quot;Make mandatory&quot; next to a warning." xml:space="preserve"><value>まだありません。領域を開き、警告の横にある「必須にする」を選択してください。</value></data>
+  <data name="None yet. Open an area to add a house rule there." xml:space="preserve"><value>まだありません。領域を開いて、そこにハウス ルールを追加してください。</value></data>
+  <data name="Notes" xml:space="preserve"><value>注意事項</value></data>
+  <data name="Only warnings can be made mandatory." xml:space="preserve"><value>必須にできるのは警告のみです。</value></data>
+  <data name="Pre-flight checklist" xml:space="preserve"><value>事前チェックリスト</value></data>
+  <data name="Recommendation" xml:space="preserve"><value>推奨</value></data>
+  <data name="Rule" xml:space="preserve"><value>ルール</value></data>
+  <data name="Rules" xml:space="preserve"><value>ルール</value></data>
+  <data name="Rules of this store" xml:space="preserve"><value>このストアのルール</value></data>
+  <data name="Saved." xml:space="preserve"><value>保存しました。</value></data>
+  <data name="Search code or text" xml:space="preserve"><value>コードまたはテキストを検索</value></data>
+  <data name="Search results" xml:space="preserve"><value>検索結果</value></data>
+  <data name="Severity" xml:space="preserve"><value>重大度</value></data>
+  <data name="Standard rules" xml:space="preserve"><value>標準ルール</value></data>
+  <data name="Title" xml:space="preserve"><value>タイトル</value></data>
+  <data name="Treat {0} as a warning again?" xml:space="preserve"><value>{0} を再び警告として扱いますか？</value></data>
+  <data name="Warnings" xml:space="preserve"><value>警告</value></data>
+  <data name="Warnings that are mandatory here" xml:space="preserve"><value>このストアで必須の警告</value></data>
+  <data name="What this store adds to the standard rules. House rules are guidelines in plain words: reviewers check them before approval, recommendations only advise. Mandatory warnings are enforced by the automatic check like errors." xml:space="preserve"><value>このストアが標準ルールに追加する内容です。ハウス ルールはわかりやすい言葉で書かれたガイドラインで、レビュー担当者が承認前に確認します。推奨は助言のみです。必須の警告は、エラーと同様に自動チェックで強制されます。</value></data>
+  <data name="Write it so a developer and an AI assistant can follow it; it appears in the agent guide, the pre-flight checklist and the manual." xml:space="preserve"><value>開発者と AI アシスタントが従えるように記述してください。エージェント ガイド、事前チェックリスト、マニュアルに表示されます。</value></data>
+  <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>例：署名アドインは顧客の証明書ルールを使用する</value></data>
+  <data name="mandatory here" xml:space="preserve"><value>このストアで必須</value></data>
+  <data name="Last run failed" xml:space="preserve"><value>前回の実行は失敗しました</value></data>
+  <data name="1. Conditions for the import (checked automatically)" xml:space="preserve"><value>1. インポートの条件 (自動的にチェック)</value></data>
+  <data name="2. Conditions for the approval (confirmed by the reviewer)" xml:space="preserve"><value>2. 承認の条件 (レビュー担当者が確認)</value></data>
+  <data name="Added by this store" xml:space="preserve"><value>このストアによる追加</value></data>
+  <data name="Back to the standard wording of {0}?" xml:space="preserve"><value>{0} を標準の文言に戻しますか？</value></data>
+  <data name="Condition" xml:space="preserve"><value>条件</value></data>
+  <data name="Confirm every approval condition:" xml:space="preserve"><value>すべての承認条件を確認してください：</value></data>
+  <data name="Confirm every approval condition before approving." xml:space="preserve"><value>承認する前に、すべての承認条件を確認してください。</value></data>
+  <data name="Documentation (PDF)" xml:space="preserve"><value>ドキュメント (PDF)</value></data>
+  <data name="In English, generated from the live rules of this store." xml:space="preserve"><value>英語。このストアの現在のルールから生成されます。</value></data>
+  <data name="Mandatory conditions" xml:space="preserve"><value>必須の条件</value></data>
+  <data name="Mandatory requirements (PDF)" xml:space="preserve"><value>必須要件 (PDF)</value></data>
+  <data name="Mandatory requirements for add-ons" xml:space="preserve"><value>アドインの必須要件</value></data>
+  <data name="Manual: API, rules and publishing guide" xml:space="preserve"><value>マニュアル：API、ルール、公開ガイド</value></data>
+  <data name="New approval condition" xml:space="preserve"><value>新しい承認条件</value></data>
+  <data name="Reset" xml:space="preserve"><value>リセット</value></data>
+  <data name="Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it." xml:space="preserve"><value>レビュー担当者は承認前にバージョンごとにこれを確認します。エージェント ガイドでは、開発者と AI アシスタントに対応の準備を求めています。</value></data>
+  <data name="Standard wording" xml:space="preserve"><value>標準の文言</value></data>
+  <data name="The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area." xml:space="preserve"><value>これらの条件の背後にある自動チェックはストアの一部であり、ここでオフにすることはできません。警告は、それぞれの領域で必須にすることができます。</value></data>
+  <data name="The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store&#x27;s version." xml:space="preserve"><value>プラグインが満たす必要のある条件です。まずインポートの条件 (すべてのアップロードは自動的にチェックされ、1 つでも満たさない場合は拒否されます)、次にライブ ストアへの公開承認の条件 (レビュー担当者が 1 つずつ確認します)。管理者は文言を変更したり、条件を追加したりできます。エージェント ガイド、事前チェックリスト、PDF ドキュメントには、このストアの版が表示されます。</value></data>
+  <data name="Wording of this store" xml:space="preserve"><value>このストアの文言</value></data>
+  <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>条件を 600 文字以内で記述してください。</value></data>
+  <data name="checked online" xml:space="preserve"><value>オンラインでチェック</value></data>
+  <data name="the standard wording changed since" xml:space="preserve"><value>次の時点以降、標準の文言が変更されています：</value></data>
+  <data name="Blocked" xml:space="preserve"><value>ブロック済み</value></data>
+  <data name="Block" xml:space="preserve"><value>ブロック</value></data>
+  <data name="Block version" xml:space="preserve"><value>バージョンをブロック</value></data>
+  <data name="Block all versions" xml:space="preserve"><value>すべてのバージョンをブロック</value></data>
+  <data name="Lift the block" xml:space="preserve"><value>ブロックを解除</value></data>
+  <data name="Security block" xml:space="preserve"><value>セキュリティ ブロック</value></data>
+  <data name="Reason (users see it)" xml:space="preserve"><value>理由 (ユーザーに表示されます)</value></data>
+  <data name="e.g. sends document content to an undeclared server" xml:space="preserve"><value>例：宣言されていないサーバーにドキュメントの内容を送信する</value></data>
+  <data name="This add-on is blocked for a security reason." xml:space="preserve"><value>このアドインはセキュリティ上の理由でブロックされています。</value></data>
+  <data name="Block this version? It is withdrawn, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>このバージョンをブロックしますか？バージョンは取り下げられ、これをインストールしているすべての Power PDF で、ユーザーに削除を求めるメッセージが表示されます。</value></data>
+  <data name="Block the whole add-on? Every version is withdrawn, uploads are refused, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>アドイン全体をブロックしますか？すべてのバージョンが取り下げられ、アップロードは拒否されます。これをインストールしているすべての Power PDF で、ユーザーに削除を求めるメッセージが表示されます。</value></data>
+  <data name="Lift the block? The version stays withdrawn until you restore it." xml:space="preserve"><value>ブロックを解除しますか？バージョンは、復元するまで取り下げられたままです。</value></data>
+  <data name="Lift the block? The versions stay withdrawn until you restore them." xml:space="preserve"><value>ブロックを解除しますか？バージョンは、復元するまで取り下げられたままです。</value></data>
+  <data name="Give a reason for the block (3 to 300 characters); users see it." xml:space="preserve"><value>ブロックの理由を入力してください (3 ～ 300 文字)。ユーザーに表示されます。</value></data>
+  <data name="Version blocked. Clients that have it installed ask the user to remove it." xml:space="preserve"><value>バージョンをブロックしました。これをインストールしているクライアントでは、ユーザーに削除を求めるメッセージが表示されます。</value></data>
+  <data name="Block lifted. The version stays withdrawn; restore it if it should be offered again." xml:space="preserve"><value>ブロックを解除しました。バージョンは取り下げられたままです。再度提供する場合は復元してください。</value></data>
+  <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>アドインをブロックしました。すべてのバージョンが取り下げられ、アップロードは拒否されます。クライアントでは、ユーザーに削除を求めるメッセージが表示されます。</value></data>
+  <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>ブロックを解除しました。バージョンは取り下げられたままです。再度提供するバージョンを復元してください。</value></data>
+  <data name="Security and system access" xml:space="preserve"><value>セキュリティとシステム アクセス</value></data>
+  <data name="Documentation" xml:space="preserve"><value>ドキュメント</value></data>
+  <data name="All documentation" xml:space="preserve"><value>すべてのドキュメント</value></data>
+  <data name="Manual" xml:space="preserve"><value>マニュアル</value></data>
+  <data name="Copied" xml:space="preserve"><value>コピーしました</value></data>
+  <data name="Updated" xml:space="preserve"><value>更新日</value></data>
+  <data name="AGENTS.md" xml:space="preserve"><value>AGENTS.md</value></data>
+  <data name="Everything about the Add-on Store in one place: the PDFs, the rules, the guides AI assistants read and the API tools. Every link opens in a new tab." xml:space="preserve"><value>Add-on Store に関するすべての情報を 1 か所にまとめています：PDF、ルール、AI アシスタントが読むガイド、API ツール。各リンクは新しいタブで開きます。</value></data>
+  <data name="Documents (PDF)" xml:space="preserve"><value>ドキュメント (PDF)</value></data>
+  <data name="Rules and conditions" xml:space="preserve"><value>ルールと条件</value></data>
+  <data name="For AI assistants" xml:space="preserve"><value>AI アシスタント向け</value></data>
+  <data name="API and tools" xml:space="preserve"><value>API とツール</value></data>
+  <data name="What the store checks on every upload and what reviewers confirm at approval." xml:space="preserve"><value>アップロードのたびにストアがチェックする内容と、承認時にレビュー担当者が確認する内容。</value></data>
+  <data name="Readable without signing in; works with Claude, ChatGPT, Gemini, Copilot and others." xml:space="preserve"><value>サインインなしで閲覧できます。Claude、ChatGPT、Gemini、Copilot などで使用できます。</value></data>
+  <data name="For developers and scripts." xml:space="preserve"><value>開発者とスクリプト向け。</value></data>
+  <data name="Every condition a plug-in must meet for import and approval, in compact form." xml:space="preserve"><value>インポートと承認のためにプラグインが満たす必要のあるすべての条件 (簡易版)。</value></data>
+  <data name="The complete reference: principles, developer and agent guide, every rule by area, API and manifest." xml:space="preserve"><value>完全なリファレンス：原則、開発者およびエージェント ガイド、領域別のすべてのルール、API、マニフェスト。</value></data>
+  <data name="All rules by area, the mandatory conditions and the rules of this store; admins edit them here." xml:space="preserve"><value>領域別のすべてのルール、必須の条件、このストアのルール。管理者はここで編集します。</value></data>
+  <data name="The hard rules as a short checklist to work through before an upload." xml:space="preserve"><value>アップロード前に確認する、厳格なルールの短いチェックリスト。</value></data>
+  <data name="Every rule and condition as JSON, for tools and AI assistants." xml:space="preserve"><value>ツールと AI アシスタント向けに、すべてのルールと条件を JSON で提供。</value></data>
+  <data name="Rules as data" xml:space="preserve"><value>データとしてのルール</value></data>
+  <data name="The full guide AI assistants follow to build, check and publish an add-on." xml:space="preserve"><value>AI アシスタントがアドインを作成、チェック、公開するときに従う完全なガイド。</value></data>
+  <data name="Agent guide as a file" xml:space="preserve"><value>ファイル形式のエージェント ガイド</value></data>
+  <data name="The same guide as Markdown, to save in the plug-in project." xml:space="preserve"><value>同じガイドの Markdown 版。プラグイン プロジェクトに保存できます。</value></data>
+  <data name="Manual upload package" xml:space="preserve"><value>手動アップロード パッケージ</value></data>
+  <data name="Fallback when an assistant cannot reach the store: it builds the finished upload ZIP." xml:space="preserve"><value>アシスタントがストアにアクセスできない場合の代替手段：完成したアップロード ZIP を作成します。</value></data>
+  <data name="Entry point for AI (llms.txt)" xml:space="preserve"><value>AI 向けのエントリ ポイント (llms.txt)</value></data>
+  <data name="Short overview that points an assistant to everything else." xml:space="preserve"><value>アシスタントに他のすべての情報の場所を示す簡単な概要。</value></data>
+  <data name="Instructions for coding assistants that read AGENTS.md (Codex, Copilot, Cursor, Gemini CLI)." xml:space="preserve"><value>AGENTS.md を読み取るコーディング アシスタント (Codex、Copilot、Cursor、Gemini CLI) 向けの指示。</value></data>
+  <data name="Claude skill (SKILL.md)" xml:space="preserve"><value>Claude スキル (SKILL.md)</value></data>
+  <data name="The same rules as a skill for Claude Code." xml:space="preserve"><value>Claude Code 用スキルとしての同じルール。</value></data>
+  <data name="API page" xml:space="preserve"><value>API ページ</value></data>
+  <data name="Tokens, prompt templates for publishing and the most important endpoints." xml:space="preserve"><value>トークン、公開用のプロンプト テンプレート、最も重要なエンドポイント。</value></data>
+  <data name="All API endpoints" xml:space="preserve"><value>すべての API エンドポイント</value></data>
+  <data name="The short list of every endpoint with method and purpose." xml:space="preserve"><value>メソッドと目的を含む、すべてのエンドポイントの短い一覧。</value></data>
+  <data name="OpenAPI description" xml:space="preserve"><value>OpenAPI の記述</value></data>
+  <data name="The machine-readable API description for code generators and tools." xml:space="preserve"><value>コード ジェネレーターとツール向けの機械可読な API の記述。</value></data>
+  <data name="Offline packer (make-ppak.ps1)" xml:space="preserve"><value>オフライン パッカー (make-ppak.ps1)</value></data>
+  <data name="Builds the .ppak, the source ZIP and the upload package without network or token." xml:space="preserve"><value>ネットワークやトークンなしで、.ppak、ソース ZIP、アップロード パッケージを作成します。</value></data>
+  <data name="Problem reports" xml:space="preserve"><value>問題報告</value></data>
+  <data name="Problem report queue" xml:space="preserve"><value>問題報告キュー</value></data>
+  <data name="New problem reports" xml:space="preserve"><value>新しい問題報告</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>ダッシュボード</value></data>
+  <data name="Active problem reports" xml:space="preserve"><value>対応中の問題報告</value></data>
+  <data name="All developers" xml:space="preserve"><value>すべての開発者</value></data>
+  <data name="Anyone" xml:space="preserve"><value>全員</value></data>
+  <data name="Assigned to" xml:space="preserve"><value>担当者</value></data>
+  <data name="Assignment changed." xml:space="preserve"><value>担当を変更しました。</value></data>
+  <data name="Attachments" xml:space="preserve"><value>添付ファイル</value></data>
+  <data name="Attachments, log and reply address are deleted {0} days after the report is closed." xml:space="preserve"><value>添付ファイル、ログ、返信先アドレスは、報告がクローズされてから {0} 日後に削除されます。</value></data>
+  <data name="Declined" xml:space="preserve"><value>却下</value></data>
+  <data name="In progress" xml:space="preserve"><value>対応中</value></data>
+  <data name="Waiting" xml:space="preserve"><value>待機中</value></data>
+  <data name="Deleted after the retention period" xml:space="preserve"><value>保存期間後に削除</value></data>
+  <data name="Download channel" xml:space="preserve"><value>ダウンロード チャネル</value></data>
+  <data name="Downloads, versions, Power PDF versions, ratings and reports of your add-ons." xml:space="preserve"><value>自分のアドインのダウンロード、バージョン、Power PDF バージョン、評価、報告。</value></data>
+  <data name="Downloads, versions, users and reports of all add-ons." xml:space="preserve"><value>すべてのアドインのダウンロード、バージョン、ユーザー、報告。</value></data>
+  <data name="Downloads, versions, users and reports of your add-ons." xml:space="preserve"><value>自分のアドインのダウンロード、バージョン、ユーザー、報告。</value></data>
+  <data name="From downloads in the period; Power PDF, Windows, architecture and language only from the store window." xml:space="preserve"><value>期間内のダウンロードに基づきます。Power PDF、Windows、アーキテクチャ、言語はストア ウィンドウからのみ取得されます。</value></data>
+  <data name="History" xml:space="preserve"><value>履歴</value></data>
+  <data name="Log" xml:space="preserve"><value>ログ</value></data>
+  <data name="Me" xml:space="preserve"><value>自分</value></data>
+  <data name="No data in this period." xml:space="preserve"><value>この期間のデータはありません。</value></data>
+  <data name="No notes yet." xml:space="preserve"><value>メモはまだありません。</value></data>
+  <data name="No reports in this view." xml:space="preserve"><value>このビューに報告はありません。</value></data>
+  <data name="Nobody" xml:space="preserve"><value>なし</value></data>
+  <data name="Note or reply" xml:space="preserve"><value>メモまたは返信</value></data>
+  <data name="Note saved." xml:space="preserve"><value>メモを保存しました。</value></data>
+  <data name="Only the owner of the add-on or an admin can be assigned." xml:space="preserve"><value>担当者に割り当てられるのは、アドインの所有者または管理者のみです。</value></data>
+  <data name="Open in the problem report queue" xml:space="preserve"><value>問題報告キューで開く</value></data>
+  <data name="Open the plug-in page" xml:space="preserve"><value>プラグイン ページを開く</value></data>
+  <data name="Rating" xml:space="preserve"><value>評価</value></data>
+  <data name="Reply mailed to the reporter" xml:space="preserve"><value>報告者にメールで返信済み</value></data>
+  <data name="Reply possible" xml:space="preserve"><value>返信可能</value></data>
+  <data name="Reply sent to the reporter." xml:space="preserve"><value>報告者に返信を送信しました。</value></data>
+  <data name="Reporters may attach screenshots, PDFs and logs and leave an email address. These are deleted automatically once a report has been closed for the period below; the report text and the notes stay." xml:space="preserve"><value>報告者はスクリーンショット、PDF、ログを添付し、メール アドレスを残すことができます。これらは、報告がクローズされてから以下の期間が経過すると自動的に削除されます。報告のテキストとメモは保持されます。</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for all add-ons." xml:space="preserve"><value>すべてのアドインについて、Power PDF 内のストア ウィンドウから寄せられた報告とコメント。</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for your add-ons." xml:space="preserve"><value>自分のアドインについて、Power PDF 内のストア ウィンドウから寄せられた報告とコメント。</value></data>
+  <data name="Reports from the store window with attachments; an AI assistant works through them with your token." xml:space="preserve"><value>ストア ウィンドウから寄せられた添付ファイル付きの報告です。AI アシスタントがあなたのトークンを使って処理します。</value></data>
+  <data name="Save internal note" xml:space="preserve"><value>社内メモを保存</value></data>
+  <data name="Send as reply to the reporter" xml:space="preserve"><value>報告者への返信として送信</value></data>
+  <data name="Send this text by email to the reporter?" xml:space="preserve"><value>このテキストを報告者にメールで送信しますか？</value></data>
+  <data name="Status changed." xml:space="preserve"><value>状態を変更しました。</value></data>
+  <data name="Text or #number" xml:space="preserve"><value>テキストまたは #番号</value></data>
+  <data name="The reply could not be sent. Check the email settings." xml:space="preserve"><value>返信を送信できませんでした。メール設定を確認してください。</value></data>
+  <data name="The reporter left no email address; add an internal note instead." xml:space="preserve"><value>報告者がメール アドレスを残していません。代わりに社内メモを追加してください。</value></data>
+  <data name="The reporter left no email address; replies are not possible." xml:space="preserve"><value>報告者がメール アドレスを残していないため、返信できません。</value></data>
+  <data name="This action is not possible." xml:space="preserve"><value>この操作はできません。</value></data>
+  <data name="Upload one" xml:space="preserve"><value>アップロードする</value></data>
+  <data name="Versions of {0}" xml:space="preserve"><value>{0} のバージョン</value></data>
+  <data name="Waiting for approval" xml:space="preserve"><value>承認待ち</value></data>
+  <data name="Who uses it" xml:space="preserve"><value>利用者</value></data>
+  <data name="Work on them with an AI assistant" xml:space="preserve"><value>AI アシスタントで対応する</value></data>
+  <data name="Write 2 to 4000 characters." xml:space="preserve"><value>2 ～ 4000 文字で入力してください。</value></data>
+  <data name="You have no add-ons in the store yet." xml:space="preserve"><value>ストアにはまだ自分のアドインがありません。</value></data>
+  <data name="Your AI assistant reads the same figures with GET /api/insights." xml:space="preserve"><value>AI アシスタントは GET /api/insights で同じ数値を読み取ります。</value></data>
+  <data name="Your assistant reads this report with your API token:" xml:space="preserve"><value>アシスタントは、あなたの API トークンを使ってこのレポートを読み取ります：</value></data>
+  <data name="before" xml:space="preserve"><value>以前</value></data>
+  <data name="{0} active" xml:space="preserve"><value>{0} 件が対応中</value></data>
+  <data name="{0} days" xml:space="preserve"><value>{0} 日</value></data>
+  <data name="{0} new" xml:space="preserve"><value>{0} 件が新規</value></data>
+  <data name="Ribbon" xml:space="preserve"><value>リボン</value></data>
+  <data name="No ribbon buttons" xml:space="preserve"><value>リボン ボタンなし</value></data>
+</root>

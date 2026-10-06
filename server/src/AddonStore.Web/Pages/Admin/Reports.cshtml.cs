@@ -44,8 +44,7 @@ public class ReportsModel : PageModel
     [BindProperty(SupportsGet = true)] public string? Src { get; set; }
     /// <summary>Report language (any of the 16 UI languages); applied by the localization middleware.</summary>
     [BindProperty(SupportsGet = true)] public string? Rlang { get; set; }
-    public static readonly string[] ReportLanguages =
-        { "en", "de", "fr", "it", "es", "nl", "pt", "da", "fi", "nb", "sv", "pl", "cs", "hu", "ru", "tr" };
+    public static readonly string[] ReportLanguages = AddonStore.Web.Services.Lang.Ui;
     /// <summary>Print view for "Save as PDF" (all sections, all rows).</summary>
     [BindProperty(SupportsGet = true)] public bool Print { get; set; }
 
@@ -176,7 +175,7 @@ public class ReportsModel : PageModel
 
     public async Task OnGetAsync()
     {
-        var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var culture = AddonStore.Web.Services.Lang.Current;
         if (!Views.Any(v => v.Key == View)) View = "overview";
         if (!PageSizes.Contains(Size)) Size = PageSizes[0];
         var (from, to) = ResolveRange();

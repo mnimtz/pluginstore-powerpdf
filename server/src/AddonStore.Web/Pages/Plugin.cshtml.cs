@@ -55,7 +55,7 @@ public class PluginModel : PageModel
 
         var cmp = new SemVerComparer();
         Versions = Pkg.Versions.OrderByDescending(v => v.Version, cmp).ThenByDescending(v => v.SubmittedAt).ToList();
-        var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var lang = AddonStore.Web.Services.Lang.Current;
         var shown = Versions.FirstOrDefault(v => v.Status == VersionStatus.Live)
                     ?? Versions.FirstOrDefault(v => v.Status == VersionStatus.Beta) ?? Versions.FirstOrDefault();
         Name = CatalogUi.DisplayName(Pkg, shown, lang);
@@ -167,7 +167,7 @@ public class PluginModel : PageModel
             Notice = "This action is not allowed for this version."; NoticeKind = "warn";
             return Page();
         }
-        var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var lang = AddonStore.Web.Services.Lang.Current;
         var ok = await _assist.ReviewAsync(v, lang, HttpContext.RequestAborted);
         Notice = ok ? "AI review aid created." : "The AI provider gave no usable answer. Check the connection test in the settings.";
         NoticeKind = ok ? "ok" : "error";

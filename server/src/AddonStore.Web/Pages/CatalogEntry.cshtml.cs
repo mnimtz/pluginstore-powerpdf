@@ -16,6 +16,7 @@ public class CatalogEntryModel : PageModel
         ("en", "English"), ("de", "Deutsch"), ("fr", "Français"), ("it", "Italiano"), ("es", "Español"),
         ("nl", "Nederlands"), ("pt", "Português"), ("da", "Dansk"), ("fi", "Suomi"), ("nb", "Norsk bokmål"),
         ("sv", "Svenska"), ("pl", "Polski"), ("cs", "Čeština"), ("hu", "Magyar"), ("ru", "Русский"), ("tr", "Türkçe"),
+        ("zh-Hans", "简体中文"), ("zh-Hant", "繁體中文"), ("ja", "日本語"), ("ko", "한국어"), ("ar", "العربية"),
     };
 
     private readonly AppDbContext _db;

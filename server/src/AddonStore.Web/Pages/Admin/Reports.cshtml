@@ -156,7 +156,7 @@
         </label>
         <label>@L["Report language"]
             <select name="rlang">
-                @{ var uiLang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+                @{ var uiLang = AddonStore.Web.Services.Lang.Current; }
                 @foreach (var lg in AddonStore.Web.Pages.Admin.ReportsModel.ReportLanguages)
                 {
                     var native = System.Globalization.CultureInfo.GetCultureInfo(lg).NativeName;

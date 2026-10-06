@@ -134,20 +134,19 @@ public class AiAssist
                                                  ".wxs", ".md", ".txt", ".ini", ".vcxproj", ".props", ".targets", ".html", ".js", ".css" };
     private static readonly Regex HostRx = new(@"https?://([A-Za-z0-9.\-]+)", RegexOptions.Compiled);
 
-    /// <summary>The 16 store languages the review aid can be written in (code, English name for the prompt).</summary>
+    /// <summary>The 21 store languages the review aid can be written in (code, English name for the prompt).</summary>
     public static readonly IReadOnlyDictionary<string, string> ReviewLanguages = new Dictionary<string, string>
     {
         ["en"] = "English", ["de"] = "German", ["fr"] = "French", ["it"] = "Italian", ["es"] = "Spanish",
         ["nl"] = "Dutch", ["pt"] = "Portuguese", ["da"] = "Danish", ["fi"] = "Finnish", ["nb"] = "Norwegian (Bokmål)",
-        ["sv"] = "Swedish", ["pl"] = "Polish", ["cs"] = "Czech", ["hu"] = "Hungarian", ["ru"] = "Russian", ["tr"] = "Turkish"
+        ["sv"] = "Swedish", ["pl"] = "Polish", ["cs"] = "Czech", ["hu"] = "Hungarian", ["ru"] = "Russian", ["tr"] = "Turkish",
+        ["zh-Hans"] = "Simplified Chinese", ["zh-Hant"] = "Traditional Chinese (Taiwan)", ["ja"] = "Japanese", ["ko"] = "Korean", ["ar"] = "Arabic"
     };
 
     /// <summary>A supported language code for <paramref name="code"/> ("no"/"nn" become "nb"), else <paramref name="fallback"/>.</summary>
     public static string ReviewLanguage(string? code, string fallback = "en")
     {
-        var c = (code ?? "").Trim().ToLowerInvariant();
-        if (c.Length > 2) c = c[..2];
-        if (c is "no" or "nn") c = "nb";
+        var c = Lang.Normalize(code);
         return ReviewLanguages.ContainsKey(c) ? c : fallback;
     }
 

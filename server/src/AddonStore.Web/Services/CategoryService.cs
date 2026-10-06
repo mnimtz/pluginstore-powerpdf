@@ -202,10 +202,15 @@ public class CategoryService
             foreach (var (slug, label) in Builtin)
             {
                 var row = rows.GetValueOrDefault(slug);
-                if (row is not null && row.NameJson is not null) continue;
-                changed = true;
+                // existing names stay (an admin may have renamed them); missing languages are
+                // added, e.g. the five further Power PDF languages (S1.2.0)
                 var names = new Dictionary<string, string>();
-                foreach (var lang in PackageValidator.RequiredLanguages)
+                if (row?.NameJson is { Length: > 0 } json)
+                    try { names = JsonSerializer.Deserialize<Dictionary<string, string>>(json) ?? new(); } catch (JsonException) { }
+                var missing = PackageValidator.AllLanguages.Where(l => !names.ContainsKey(l)).ToList();
+                if (row is not null && missing.Count == 0) continue;
+                changed = true;
+                foreach (var lang in missing)
                 {
                     CultureInfo.CurrentUICulture = new CultureInfo(lang);
                     names[lang] = localizer[label].Value;

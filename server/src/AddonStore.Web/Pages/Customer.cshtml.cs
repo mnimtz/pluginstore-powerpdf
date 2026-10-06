@@ -41,7 +41,7 @@ public class CustomerModel : PageModel
         if (me is null || Cust is null || !CustomerService.CanSee(User, Cust, me.Id)) return false;
         CanManage = CustomerService.CanManage(User, Cust, me.Id);
         Owner = (await _db.Users.FirstOrDefaultAsync(u => u.Id == Cust.OwnerId))?.DisplayName ?? "?";
-        var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var lang = AddonStore.Web.Services.Lang.Current;
         var now = DateTime.UtcNow;
 
         var deliveries = await _db.Deliveries.Where(d => d.CustomerId == id).OrderBy(d => d.PackageId).ToListAsync();

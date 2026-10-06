@@ -35,7 +35,7 @@ public class PackageMetaService
     public const int MaxName = 80, MaxDescription = 2000, MaxAuthor = 100;
 
     private static readonly HashSet<string> KnownLangs =
-        new(PackageValidator.RequiredLanguages.Append("no"), StringComparer.Ordinal);
+        new(PackageValidator.AllLanguages.Append("no"), StringComparer.Ordinal);
 
     private readonly AppDbContext _db;
     private readonly AuditService _audit;
@@ -58,7 +58,7 @@ public class PackageMetaService
             {
                 if (!KnownLangs.Contains(lang))
                     issues.Add(new("NAME_INVALID", "error", $"Unknown language code '{lang}' in name.",
-                        $"Use the codes {string.Join(", ", PackageValidator.RequiredLanguages)}."));
+                        $"Use the codes {string.Join(", ", PackageValidator.AllLanguages)}."));
                 else if (text.Length > MaxName)
                     issues.Add(new("NAME_INVALID", "error", $"The {lang} name is longer than {MaxName} characters.",
                         "Keep the name short; the description carries the details."));
@@ -75,7 +75,7 @@ public class PackageMetaService
             {
                 if (!KnownLangs.Contains(lang))
                     issues.Add(new("LANG_TEXT_INCOMPLETE", "error", $"Unknown language code '{lang}' in description.",
-                        $"Use the codes {string.Join(", ", PackageValidator.RequiredLanguages)}."));
+                        $"Use the codes {string.Join(", ", PackageValidator.AllLanguages)}."));
                 else if (text.Length > MaxDescription)
                     issues.Add(new("DESCRIPTION_TOO_LONG", "error", $"The {lang} description is longer than {MaxDescription} characters.",
                         "Shorten it; put long documentation into docs/ inside the package."));

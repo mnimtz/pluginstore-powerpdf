@@ -331,7 +331,7 @@ def part_intro(meta, rules):
         'dated copy of it plus the rule catalog, the API description and the manifest schema. When they differ, the live '
         'guide and the server checks win.',
         '**Language of the rules.** Rule texts are English on purpose: they are what AI assistants read and what the server '
-        'reports. The web portal and the Power PDF client are available in 16 languages.',
+        'reports. The web portal and the Power PDF client are available in all 21 Power PDF languages.',
         '**Keeping it current.** Regenerate with `python tools/make_manual.py --base https://addon.power-pdf.de` after every '
         'server release. A CI check (`tools/check_docs.py`) already keeps the guide complete: every finding code is '
         'documented and every hard rule is in the pre-flight checklist.',
@@ -346,7 +346,7 @@ def part_intro(meta, rules):
                          'customer deliveries, statistics, backup.'],
         ['Power PDF client', 'The Add-on Store plug-in with its own ribbon tab "Store": catalog window, install, update '
                              'and removal of add-ons, customer codes, self-update. Installed once per machine as an MSI.'],
-        ['Packages (.ppak)', 'ZIP container with manifest.json, the x64 plug-in binary, the UI layout in 16 languages, '
+        ['Packages (.ppak)', 'ZIP container with manifest.json, the x64 plug-in binary, the UI layout in 16 languages (21 recommended), '
                              'icon, licenses and documentation. Signed by the store; the client verifies signature and SHA-256.'],
     ], [38 * mm, 132 * mm]))
     x.append(Spacer(1, 6))
@@ -378,7 +378,7 @@ def part_intro(meta, rules):
         ['Principle', 'What it means', 'Rules that serve it'],
         ['Safe machines', 'An add-on runs inside Power PDF with the user\'s rights. Nothing reaches a machine '
                           'unchecked or altered.', 'Signature and SHA-256, Release builds only, no foreign DLLs, no secrets, ZIP safety, size limits'],
-        ['One consistent product', 'Add-ons feel like part of Power PDF.', 'Shared ribbon tab, large icons, Help stays last, 16 languages in the UI'],
+        ['One consistent product', 'Add-ons feel like part of Power PDF.', 'Shared ribbon tab, large icons, Help stays last, 16 languages in the UI (21 recommended)'],
         ['Legal clarity', 'Tungsten can distribute every package without license or trademark risk.',
          'MIT/BSD/Apache-2.0 only, truthful compliance audit, declared third-party code and services, no third-party brands'],
         ['Privacy', 'Users know which data leaves their machine.', 'Declared external services, no hidden telemetry, AI features optional'],
@@ -699,8 +699,10 @@ def build_requirements(path, meta, guide, rules):
          'PE_DEBUG_RUNTIME, PE_MANAGED, PE_WRONG_MACHINE'],
         ['Dependencies on DLLs that are not part of Windows or Power PDF', 'The store installs only the .zxt; a missing DLL breaks Power PDF at start.',
          'FOREIGN_DEPENDENCY'],
-        ['Texts or UI in fewer than the 16 Power PDF languages', 'Power PDF ships in 16 languages; add-ons must too.',
+        ['Texts or UI in fewer than the 16 European Power PDF languages', 'The 16 are mandatory for every add-on.',
          'LANG_TEXT_INCOMPLETE, LANGS_INCOMPLETE, UI_LANGS_MISSING'],
+        ['No Chinese (Simplified, Traditional), Japanese, Korean or Arabic', 'Power PDF has 21 UI languages; without them those users read English (warnings, may become mandatory).',
+         'LANG_TEXT_EXTENDED, LANGS_EXTENDED_MISSING, UI_LANGS_EXTENDED'],
         ['An own ribbon tab for a public add-on, atoms in panel::, or atoms of another add-on', 'One consistent ribbon; no collisions.',
          'ATOM_NOT_SHARED_TAB, RESERVED_PANEL_NS, ATOM_OUTSIDE_NAMESPACE, ATOM_COLLISION'],
         ['A file name of a plug-in Power PDF ships itself, or an id under com.tungsten., com.kofax., com.nuance.', 'It would replace or impersonate Power PDF.',

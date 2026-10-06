@@ -1,0 +1,1008 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Access requests" xml:space="preserve"><value>存取要求</value></data>
+  <data name="Accounts are for colleagues who develop and publish plugins. An admin reviews every request; you will be notified by email." xml:space="preserve"><value>帳戶供開發並發佈外掛程式的同事使用。每個要求都會由管理員審核，結果將以電子郵件通知您。</value></data>
+  <data name="Action" xml:space="preserve"><value>動作</value></data>
+  <data name="Actor" xml:space="preserve"><value>執行者</value></data>
+  <data name="All users" xml:space="preserve"><value>所有使用者</value></data>
+  <data name="Approve" xml:space="preserve"><value>核准</value></data>
+  <data name="Approve for live store" xml:space="preserve"><value>核准上架正式商店</value></data>
+  <data name="Approved" xml:space="preserve"><value>已核准</value></data>
+  <data name="Audit" xml:space="preserve"><value>稽核</value></data>
+  <data name="Audit log" xml:space="preserve"><value>稽核記錄</value></data>
+  <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>Beta 版本已通過所有自動檢查，Beta 測試人員可以看到。請核准上架正式商店，或附上原因予以拒絕。</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>請瀏覽下方已發行的外掛程式。安裝直接在 Power PDF 中透過 Add-on Store 功能區進行；本網站供外掛程式開發人員和管理員使用。</value></data>
+  <data name="Catalog" xml:space="preserve"><value>目錄</value></data>
+  <data name="Changelog" xml:space="preserve"><value>變更記錄</value></data>
+  <data name="Create a token" xml:space="preserve"><value>建立權杖</value></data>
+  <data name="Create admin account" xml:space="preserve"><value>建立管理員帳戶</value></data>
+  <data name="Create the first administrator account for this Add-on Store instance." xml:space="preserve"><value>為此 Add-on Store 執行個體建立第一個管理員帳戶。</value></data>
+  <data name="Create token" xml:space="preserve"><value>建立權杖</value></data>
+  <data name="Created" xml:space="preserve"><value>建立時間</value></data>
+  <data name="Details" xml:space="preserve"><value>詳細資料</value></data>
+  <data name="Disable" xml:space="preserve"><value>停用</value></data>
+  <data name="Display name" xml:space="preserve"><value>顯示名稱</value></data>
+  <data name="Download" xml:space="preserve"><value>下載</value></data>
+  <data name="Downloads" xml:space="preserve"><value>下載次數</value></data>
+  <data name="Email" xml:space="preserve"><value>電子郵件</value></data>
+  <data name="Enable" xml:space="preserve"><value>啟用</value></data>
+  <data name="Every relevant action on this server: registrations, approvals, tokens, submissions, reviews." xml:space="preserve"><value>此伺服器上的所有相關動作：註冊、核准、權杖、提交、審核。</value></data>
+  <data name="Filter" xml:space="preserve"><value>篩選</value></data>
+  <data name="Filter (actor, action, subject)" xml:space="preserve"><value>篩選 (執行者、動作、對象)</value></data>
+  <data name="First-run setup" xml:space="preserve"><value>首次執行設定</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Add-on Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>供外掛程式開發人員和管理員使用。一般使用者直接從 Power PDF 的 Add-on Store 功能區安裝外掛程式，不需要帳戶。</value></data>
+  <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>請將權杖連同下列這行一起交給您的 Claude：</value></data>
+  <data name="Last used" xml:space="preserve"><value>上次使用</value></data>
+  <data name="Live versions" xml:space="preserve"><value>正式版本</value></data>
+  <data name="My packages" xml:space="preserve"><value>我的套件</value></data>
+  <data name="My plugins" xml:space="preserve"><value>我的外掛程式</value></data>
+  <data name="My tokens" xml:space="preserve"><value>我的權杖</value></data>
+  <data name="Name" xml:space="preserve"><value>名稱</value></data>
+  <data name="No account yet?" xml:space="preserve"><value>還沒有帳戶？</value></data>
+  <data name="No live versions yet." xml:space="preserve"><value>尚無正式版本。</value></data>
+  <data name="No plugins have been released yet." xml:space="preserve"><value>尚未發行任何外掛程式。</value></data>
+  <data name="Nothing to review right now." xml:space="preserve"><value>目前沒有需要審核的項目。</value></data>
+  <data name="Package" xml:space="preserve"><value>套件</value></data>
+  <data name="Package file (.ppak)" xml:space="preserve"><value>套件檔案 (.ppak)</value></data>
+  <data name="Password" xml:space="preserve"><value>密碼</value></data>
+  <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>個人 API 權杖可讓工具和 AI 助理代表您上傳及更新外掛程式。</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>外掛程式商店：</value></data>
+  <data name="Add-on Store for Tungsten Power PDF" xml:space="preserve"><value>Add-on Store for Tungsten Power PDF</value></data>
+  <data name="Prefix" xml:space="preserve"><value>前置詞</value></data>
+  <data name="Profile" xml:space="preserve"><value>設定檔</value></data>
+  <data name="Reason (sent to the submitter)" xml:space="preserve"><value>原因 (將傳送給提交者)</value></data>
+  <data name="Reject" xml:space="preserve"><value>拒絕</value></data>
+  <data name="Released plugins" xml:space="preserve"><value>已發行的外掛程式</value></data>
+  <data name="Request access" xml:space="preserve"><value>要求存取</value></data>
+  <data name="Requested" xml:space="preserve"><value>要求時間</value></data>
+  <data name="Review" xml:space="preserve"><value>審核</value></data>
+  <data name="Review comment" xml:space="preserve"><value>審核意見</value></data>
+  <data name="Review queue" xml:space="preserve"><value>審核佇列</value></data>
+  <data name="Revoke" xml:space="preserve"><value>撤銷</value></data>
+  <data name="Role" xml:space="preserve"><value>角色</value></data>
+  <data name="Sign in" xml:space="preserve"><value>登入</value></data>
+  <data name="Sign out" xml:space="preserve"><value>登出</value></data>
+  <data name="Status" xml:space="preserve"><value>狀態</value></data>
+  <data name="Subject" xml:space="preserve"><value>對象</value></data>
+  <data name="Submit a package" xml:space="preserve"><value>提交套件</value></data>
+  <data name="Submit request" xml:space="preserve"><value>提交要求</value></data>
+  <data name="Submitted" xml:space="preserve"><value>已提交</value></data>
+  <data name="Submitted by" xml:space="preserve"><value>提交者</value></data>
+  <data name="Time (UTC)" xml:space="preserve"><value>時間 (UTC)</value></data>
+  <data name="Token created. Copy it now; it is shown only this once:" xml:space="preserve"><value>權杖已建立。請立即複製；它只會顯示這一次：</value></data>
+  <data name="Token name (e.g. &#x27;claude&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>權杖名稱 (例如 'claude'、'build server')</value></data>
+  <data name="Upload a .ppak package below, or automate it via the API with a personal token from your profile." xml:space="preserve"><value>請在下方上傳 .ppak 套件，或使用設定檔中的個人權杖透過 API 自動執行。</value></data>
+  <data name="Upload and validate" xml:space="preserve"><value>上傳並驗證</value></data>
+  <data name="Users" xml:space="preserve"><value>使用者</value></data>
+  <data name="Version" xml:space="preserve"><value>版本</value></data>
+  <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>您打算發佈什麼？(會顯示給管理員)</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>撤回</value></data>
+  <data name="You have not submitted any packages yet." xml:space="preserve"><value>您尚未提交任何套件。</value></data>
+  <data name="download(s)" xml:space="preserve"><value>次下載</value></data>
+  <data name="revoked" xml:space="preserve"><value>已撤銷</value></data>
+  <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>您的存取要求已提交。管理員核准後，您會收到電子郵件。</value></data>
+  <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>登入失敗。請檢查電子郵件和密碼。</value></data>
+  <data name="Your access request is still awaiting admin approval." xml:space="preserve"><value>您的存取要求仍在等待管理員核准。</value></data>
+  <data name="This account is not active. Contact an administrator." xml:space="preserve"><value>此帳戶未啟用。請聯絡管理員。</value></data>
+  <data name="Too many failed attempts; the account is temporarily locked." xml:space="preserve"><value>失敗次數過多；帳戶已暫時鎖定。</value></data>
+  <data name="No package received." xml:space="preserve"><value>未收到套件。</value></data>
+  <data name="The package did not pass the automatic checks; nothing was stored. Fix the errors below and upload again." xml:space="preserve"><value>套件未通過自動檢查；未儲存任何內容。請修正下列錯誤後重新上傳。</value></data>
+  <data name="Submitted. The version is in the beta channel now and awaits admin review." xml:space="preserve"><value>已提交。此版本現已在 Beta 通道中，等待管理員審核。</value></data>
+  <data name="Version withdrawn." xml:space="preserve"><value>版本已撤回。</value></data>
+  <data name="Version approved and live." xml:space="preserve"><value>版本已核准並上架。</value></data>
+  <data name="Version rejected." xml:space="preserve"><value>版本已拒絕。</value></data>
+  <data name="Account approved." xml:space="preserve"><value>帳戶已核准。</value></data>
+  <data name="Request rejected." xml:space="preserve"><value>要求已拒絕。</value></data>
+  <data name="Account disabled." xml:space="preserve"><value>帳戶已停用。</value></data>
+  <data name="Account enabled." xml:space="preserve"><value>帳戶已啟用。</value></data>
+  <data name="for Power PDF" xml:space="preserve"><value>適用於 Power PDF</value></data>
+  <data name="Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>請下載 ZIP、解壓縮，然後以系統管理員身分執行 install.cmd；之後此增益集會自動讓自身及您的外掛程式保持最新狀態。</value></data>
+  <data name="Search" xml:space="preserve"><value>搜尋</value></data>
+  <data name="All" xml:space="preserve"><value>全部</value></data>
+  <data name="Conversion" xml:space="preserve"><value>轉換</value></data>
+  <data name="Forms" xml:space="preserve"><value>表單</value></data>
+  <data name="Signing" xml:space="preserve"><value>簽署</value></data>
+  <data name="Navigation" xml:space="preserve"><value>導覽</value></data>
+  <data name="Printing" xml:space="preserve"><value>列印</value></data>
+  <data name="Productivity" xml:space="preserve"><value>生產力</value></data>
+  <data name="System" xml:space="preserve"><value>系統</value></data>
+  <data name="Other" xml:space="preserve"><value>其他</value></data>
+  <data name="A user with this email already exists." xml:space="preserve"><value>已有使用此電子郵件的使用者。</value></data>
+  <data name="API tokens" xml:space="preserve"><value>API 權杖</value></data>
+  <data name="Account created." xml:space="preserve"><value>帳戶已建立。</value></data>
+  <data name="Activate account" xml:space="preserve"><value>啟用帳戶</value></data>
+  <data name="Admin" xml:space="preserve"><value>管理員</value></data>
+  <data name="Choose your display name and a password to activate your Add-on Store account." xml:space="preserve"><value>請選擇顯示名稱和密碼，以啟用您的 Add-on Store 帳戶。</value></data>
+  <data name="Create a user directly" xml:space="preserve"><value>直接建立使用者</value></data>
+  <data name="Create account" xml:space="preserve"><value>建立帳戶</value></data>
+  <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>尚未設定電子郵件；請直接分享此邀請連結：</value></data>
+  <data name="Email notifications (Resend)" xml:space="preserve"><value>電子郵件通知 (Resend)</value></data>
+  <data name="Initial password" xml:space="preserve"><value>初始密碼</value></data>
+  <data name="Instance settings; values are stored on the server and take effect immediately." xml:space="preserve"><value>執行個體設定；值儲存在伺服器上，並立即生效。</value></data>
+  <data name="Invitation email sent. The link can also be shared directly:" xml:space="preserve"><value>邀請電子郵件已傳送。也可以直接分享此連結：</value></data>
+  <data name="Invitation revoked." xml:space="preserve"><value>邀請已撤銷。</value></data>
+  <data name="Invite a user" xml:space="preserve"><value>邀請使用者</value></data>
+  <data name="Invited by" xml:space="preserve"><value>邀請者</value></data>
+  <data name="My profile" xml:space="preserve"><value>我的設定檔</value></data>
+  <data name="Notifications: access requests and new submissions to admins; approvals, rejections and invitations to users." xml:space="preserve"><value>通知：存取要求和新提交會通知管理員；核准、拒絕和邀請會通知使用者。</value></data>
+  <data name="Only PNG or JPEG images are accepted." xml:space="preserve"><value>僅接受 PNG 或 JPEG 影像。</value></data>
+  <data name="Open invitations" xml:space="preserve"><value>未接受的邀請</value></data>
+  <data name="Profile picture (PNG or JPEG, max. 512 KB)" xml:space="preserve"><value>個人資料圖片 (PNG 或 JPEG，最大 512 KB)</value></data>
+  <data name="Profile updated." xml:space="preserve"><value>設定檔已更新。</value></data>
+  <data name="Public base URL (used in emails and invite links)" xml:space="preserve"><value>公用基底 URL (用於電子郵件和邀請連結)</value></data>
+  <data name="Resend API key" xml:space="preserve"><value>Resend API 金鑰</value></data>
+  <data name="Reviewer" xml:space="preserve"><value>審核者</value></data>
+  <data name="Role updated." xml:space="preserve"><value>角色已更新。</value></data>
+  <data name="Save" xml:space="preserve"><value>儲存</value></data>
+  <data name="Send invitation" xml:space="preserve"><value>傳送邀請</value></data>
+  <data name="Sender address" xml:space="preserve"><value>寄件者地址</value></data>
+  <data name="Server" xml:space="preserve"><value>伺服器</value></data>
+  <data name="Settings" xml:space="preserve"><value>設定</value></data>
+  <data name="Settings saved." xml:space="preserve"><value>設定已儲存。</value></data>
+  <data name="The image is too large (maximum 512 KB)." xml:space="preserve"><value>影像太大 (最大 512 KB)。</value></data>
+  <data name="The last active admin cannot be demoted." xml:space="preserve"><value>無法將最後一位作用中的管理員降級。</value></data>
+  <data name="This invitation link is invalid or was already used." xml:space="preserve"><value>此邀請連結無效或已使用過。</value></data>
+  <data name="User" xml:space="preserve"><value>使用者</value></data>
+  <data name="You cannot change your own role." xml:space="preserve"><value>您無法變更自己的角色。</value></data>
+  <data name="You have been invited" xml:space="preserve"><value>您已受邀</value></data>
+  <data name="configured" xml:space="preserve"><value>已設定</value></data>
+  <data name="Active" xml:space="preserve"><value>作用中</value></data>
+  <data name="Beta" xml:space="preserve"><value>Beta</value></data>
+  <data name="Disabled" xml:space="preserve"><value>已停用</value></data>
+  <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>請下載並執行安裝程式 (需要系統管理員權限)；之後此增益集會自動讓自身及您的外掛程式保持最新狀態。</value></data>
+  <data name="Live" xml:space="preserve"><value>正式</value></data>
+  <data name="Only administrators can publish new versions of the Add-on Store client." xml:space="preserve"><value>只有管理員可以發佈 Add-on Store 用戶端的新版本。</value></data>
+  <data name="Pending" xml:space="preserve"><value>待處理</value></data>
+  <data name="Add-on Store client released. Installed clients offer the update now." xml:space="preserve"><value>Add-on Store 用戶端已發行。已安裝的用戶端現在會提供更新。</value></data>
+  <data name="Rejected" xml:space="preserve"><value>已拒絕</value></data>
+  <data name="Time" xml:space="preserve"><value>時間</value></data>
+  <data name="Time zone for displayed times" xml:space="preserve"><value>顯示時間所用的時區</value></data>
+  <data name="Withdrawn" xml:space="preserve"><value>已撤回</value></data>
+  <data name="Author" xml:space="preserve"><value>作者</value></data>
+  <data name="Show my name and email as author of my plugins in the public catalog" xml:space="preserve"><value>在公開目錄中將我的名稱和電子郵件顯示為外掛程式作者</value></data>
+  <data name="When off, the catalog shows “Tungsten Automation” instead." xml:space="preserve"><value>關閉時，目錄會改為顯示「Tungsten Automation」。</value></data>
+  <data name="A new, higher version number (SemVer) for every upload, and a change description." xml:space="preserve"><value>每次上傳都需要更高的新版本號碼 (SemVer) 及變更說明。</value></data>
+  <data name="API and Claude" xml:space="preserve"><value>API 與 Claude</value></data>
+  <data name="Address" xml:space="preserve"><value>地址</value></data>
+  <data name="An x64 build of the plugin (it also runs on Windows on ARM)." xml:space="preserve"><value>外掛程式的 x64 組建 (也可在 Windows on ARM 上執行)。</value></data>
+  <data name="Automatic checks" xml:space="preserve"><value>自動檢查</value></data>
+  <data name="Binaries and integrity" xml:space="preserve"><value>二進位檔與完整性</value></data>
+  <data name="Check your token" xml:space="preserve"><value>檢查您的權杖</value></data>
+  <data name="Complete guide for developers and AI assistants" xml:space="preserve"><value>開發人員與 AI 助理完整指南</value></data>
+  <data name="Create a personal token" xml:space="preserve"><value>建立個人權杖</value></data>
+  <data name="Create a token on your profile page and store it as an environment variable, never in a chat or a file:" xml:space="preserve"><value>請在設定檔頁面建立權杖，並將其儲存為環境變數，切勿放在聊天或檔案中：</value></data>
+  <data name="Description and change description in all 16 European languages." xml:space="preserve"><value>以全部 16 種歐洲語言提供說明和變更說明。</value></data>
+  <data name="Download SKILL.md" xml:space="preserve"><value>下載 SKILL.md</value></data>
+  <data name="Endpoints" xml:space="preserve"><value>端點</value></data>
+  <data name="Example instruction for a Claude session in your plugin&#x27;s project folder:" xml:space="preserve"><value>在外掛程式專案資料夾中給 Claude 工作階段的指示範例：</value></data>
+  <data name="Example with curl" xml:space="preserve"><value>curl 範例</value></data>
+  <data name="Icon" xml:space="preserve"><value>圖示</value></data>
+  <data name="Install the Claude skill (once)" xml:space="preserve"><value>安裝 Claude 技能 (一次)</value></data>
+  <data name="Languages" xml:space="preserve"><value>語言</value></data>
+  <data name="Licenses" xml:space="preserve"><value>授權</value></data>
+  <data name="Licenses, legal and privacy" xml:space="preserve"><value>授權、法律與隱私權</value></data>
+  <data name="List of all endpoints" xml:space="preserve"><value>所有端點清單</value></data>
+  <data name="Manifest and versioning" xml:space="preserve"><value>資訊清單與版本設定</value></data>
+  <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>僅限採用 MIT、BSD 或 Apache-2.0 授權的協力廠商元件。</value></data>
+  <data name="Open a new terminal afterwards so the variable is available." xml:space="preserve"><value>之後請開啟新的終端機，讓變數可供使用。</value></data>
+  <data name="Other checks" xml:space="preserve"><value>其他檢查</value></data>
+  <data name="Package structure" xml:space="preserve"><value>套件結構</value></data>
+  <data name="Publish and update plugins directly from your Claude session. Claude reads the store&#x27;s rules from the API, validates the package until all checks pass, and submits it for review." xml:space="preserve"><value>直接從您的 Claude 工作階段發佈和更新外掛程式。Claude 會從 API 讀取商店規則，反覆驗證套件直到所有檢查通過，然後提交審核。</value></data>
+  <data name="Purpose" xml:space="preserve"><value>用途</value></data>
+  <data name="Ribbon and layout" xml:space="preserve"><value>功能區與版面配置</value></data>
+  <data name="Rules every upload must meet" xml:space="preserve"><value>每次上傳都必須符合的規則</value></data>
+  <data name="Runtime and dependencies" xml:space="preserve"><value>執行階段與相依性</value></data>
+  <data name="Schema of manifest.json" xml:space="preserve"><value>manifest.json 的結構描述</value></data>
+  <data name="Security scan" xml:space="preserve"><value>安全性掃描</value></data>
+  <data name="Status, history and check reports of a package" xml:space="preserve"><value>套件的狀態、歷程記錄和檢查報告</value></data>
+  <data name="Technical details are in English so that developers and AI assistants can act on them directly." xml:space="preserve"><value>技術細節以英文提供，讓開發人員和 AI 助理可以直接據以處理。</value></data>
+  <data name="Tell Claude what to do" xml:space="preserve"><value>告訴 Claude 要做什麼</value></data>
+  <data name="Test run of all checks, nothing is stored" xml:space="preserve"><value>試行所有檢查，不會儲存任何內容</value></data>
+  <data name="The automatic checks verify these rules; every finding comes with a concrete fix." xml:space="preserve"><value>自動檢查會驗證這些規則；每項發現都附有具體的修正方法。</value></data>
+  <data name="The plugin&#x27;s buttons sit as a group on the shared “Enhanced Features” ribbon tab." xml:space="preserve"><value>外掛程式的按鈕會以群組形式位於共用的「增強功能」功能區索引標籤上。</value></data>
+  <data name="The skill tells Claude where this store is and how to work with it. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>此技能會告訴 Claude 這個商店的位置及使用方式。它一律從伺服器載入最新規則，因此永遠不需要更新。</value></data>
+  <data name="Without the skill, the URL of the agent guide in the instruction is enough." xml:space="preserve"><value>沒有技能時，在指示中提供代理程式指南的 URL 就足夠了。</value></data>
+  <data name="all passed" xml:space="preserve"><value>全部通過</value></data>
+  <data name="failed" xml:space="preserve"><value>失敗</value></data>
+  <data name="passed with warnings" xml:space="preserve"><value>通過但有警告</value></data>
+  <data name="Give Claude one line" xml:space="preserve"><value>給 Claude 一行指示</value></data>
+  <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Claude 只需要這些：它會讀取指南、為日後的工作階段完成設定，並遵循規則。</value></data>
+  <data name="Optional: install the skill manually" xml:space="preserve"><value>選用：手動安裝技能</value></data>
+  <data name="A backup contains everything: database (accounts, packages, versions, reviews, audit log, settings), all plugin packages, profile pictures and developer kit files." xml:space="preserve"><value>備份包含所有內容：資料庫 (帳戶、套件、版本、審核、稽核記錄、設定)、所有外掛程式套件、個人資料圖片及開發人員套件檔案。</value></data>
+  <data name="Access request approved or declined" xml:space="preserve"><value>存取要求已核准或拒絕</value></data>
+  <data name="Admins" xml:space="preserve"><value>管理員</value></data>
+  <data name="Admins and reviewers" xml:space="preserve"><value>管理員與審核者</value></data>
+  <data name="Applicant" xml:space="preserve"><value>申請者</value></data>
+  <data name="Automatic safety backups" xml:space="preserve"><value>自動安全備份</value></data>
+  <data name="Backup and restore" xml:space="preserve"><value>備份與還原</value></data>
+  <data name="Backup file (.zip)" xml:space="preserve"><value>備份檔 (.zip)</value></data>
+  <data name="Backup restored. A safety backup of the previous state was kept on the server." xml:space="preserve"><value>備份已還原。先前狀態的安全備份已保留在伺服器上。</value></data>
+  <data name="Plugins from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>外掛程式來自獨立作者，並非 Tungsten Automation 官方產品：依「現狀」提供，不提供保固或官方支援。使用風險自負；Tungsten Automation 不承擔任何責任。</value></data>
+  <data name="Create backup" xml:space="preserve"><value>建立備份</value></data>
+  <data name="Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file." xml:space="preserve"><value>在商店持續執行時建立一致的快照，並以 ZIP 檔案下載。</value></data>
+  <data name="Disclaimer" xml:space="preserve"><value>免責聲明</value></data>
+  <data name="Download full backup" xml:space="preserve"><value>下載完整備份</value></data>
+  <data name="Event" xml:space="preserve"><value>事件</value></data>
+  <data name="File" xml:space="preserve"><value>檔案</value></data>
+  <data name="Invitation" xml:space="preserve"><value>邀請</value></data>
+  <data name="Invited person (always sent)" xml:space="preserve"><value>受邀者 (一律傳送)</value></data>
+  <data name="New Add-on Store client released" xml:space="preserve"><value>新的 Add-on Store 用戶端已發行</value></data>
+  <data name="New access request" xml:space="preserve"><value>新的存取要求</value></data>
+  <data name="New plugin version submitted" xml:space="preserve"><value>已提交新的外掛程式版本</value></data>
+  <data name="No backup file received." xml:space="preserve"><value>未收到備份檔。</value></data>
+  <data name="Notifications" xml:space="preserve"><value>通知</value></data>
+  <data name="Plugin version approved or rejected" xml:space="preserve"><value>外掛程式版本已核准或拒絕</value></data>
+  <data name="Recipients" xml:space="preserve"><value>收件者</value></data>
+  <data name="Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup." xml:space="preserve"><value>以備份內容取代所有目前的資料。在此之前，伺服器會自動將目前狀態儲存為安全備份。</value></data>
+  <data name="Restore" xml:space="preserve"><value>還原</value></data>
+  <data name="Restore backup" xml:space="preserve"><value>還原備份</value></data>
+  <data name="Send test email" xml:space="preserve"><value>傳送測試電子郵件</value></data>
+  <data name="Size" xml:space="preserve"><value>大小</value></data>
+  <data name="Submitter" xml:space="preserve"><value>提交者</value></data>
+  <data name="Test email sent. Please check your inbox." xml:space="preserve"><value>測試電子郵件已傳送。請檢查您的收件匣。</value></data>
+  <data name="Test plugins before productive use, keep backups of important documents, and make sure their use complies with your organization&#x27;s IT and data protection policies." xml:space="preserve"><value>請在正式使用前測試外掛程式、保留重要文件的備份，並確保其使用符合貴組織的 IT 和資料保護政策。</value></data>
+  <data name="The archive contains unsafe paths." xml:space="preserve"><value>封存包含不安全的路徑。</value></data>
+  <data name="The backup contains password hashes and settings such as the Resend key. Store it like a password." xml:space="preserve"><value>備份包含密碼雜湊和設定 (例如 Resend 金鑰)。請像保管密碼一樣保管它。</value></data>
+  <data name="The plugins in this store are developed by independent authors, such as employees, partners or other developers. They are not part of Tungsten Power PDF and are not official Tungsten Automation products; the automatic checks and the review before release do not constitute a warranty." xml:space="preserve"><value>此商店中的外掛程式由獨立作者開發，例如員工、合作夥伴或其他開發人員。它們不屬於 Tungsten Power PDF，也不是 Tungsten Automation 官方產品；自動檢查和發行前的審核並不構成保固。</value></data>
+  <data name="The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out." xml:space="preserve"><value>如果您自己的帳戶在備份中不是作用中的管理員，系統會拒絕還原，以免您將自己鎖在外面。</value></data>
+  <data name="The test email could not be sent." xml:space="preserve"><value>無法傳送測試電子郵件。</value></data>
+  <data name="There is no official support through Tungsten Automation Support. Please contact the author named in the catalog; answers are voluntary and without guaranteed response times." xml:space="preserve"><value>Tungsten Automation Support 不提供官方支援。請聯絡目錄中列出的作者；回覆屬自願性質，不保證回應時間。</value></data>
+  <data name="They are provided as is, without warranty of any kind, express or implied, including fitness for a particular purpose, availability or freedom from errors." xml:space="preserve"><value>它們依「現狀」提供，不提供任何明示或默示的保固，包括特定用途的適用性、可用性或無錯誤。</value></data>
+  <data name="This is not a Add-on Store backup (backup.json or pluginstore.db missing)." xml:space="preserve"><value>這不是 Add-on Store 備份 (缺少 backup.json 或 pluginstore.db)。</value></data>
+  <data name="This is not a Add-on Store backup." xml:space="preserve"><value>這不是 Add-on Store 備份。</value></data>
+  <data name="To the extent permitted by law, Tungsten Automation accepts no liability for damage, data loss or downtime caused by installing or using these plugins. Each plugin is the responsibility of its author." xml:space="preserve"><value>在法律允許的範圍內，Tungsten Automation 對於因安裝或使用這些外掛程式而造成的損害、資料遺失或停機不承擔任何責任。每個外掛程式由其作者負責。</value></data>
+  <data name="Type RESTORE to confirm" xml:space="preserve"><value>輸入 RESTORE 以確認</value></data>
+  <data name="Type RESTORE to confirm." xml:space="preserve"><value>請輸入 RESTORE 以確認。</value></data>
+  <data name="Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log." xml:space="preserve"><value>何時傳送哪些電子郵件，以及傳送給誰。每封已傳送或傳送失敗的電子郵件都會記錄在稽核記錄中。</value></data>
+  <data name="Without a verified sender domain, Resend only delivers to the email address of the Resend account owner." xml:space="preserve"><value>若沒有經過驗證的寄件者網域，Resend 只會傳遞到 Resend 帳戶擁有者的電子郵件地址。</value></data>
+  <data name="Your account is not an active admin in this backup; restoring it would lock you out." xml:space="preserve"><value>您的帳戶在此備份中不是作用中的管理員；還原會將您鎖在外面。</value></data>
+  <data name="to" xml:space="preserve"><value>至</value></data>
+  <data name="Catalog entry" xml:space="preserve"><value>目錄項目</value></data>
+  <data name="Owner" xml:space="preserve"><value>擁有者</value></data>
+  <data name="Name, description, author and contact shown in the catalog and in the Power PDF client. Changes apply immediately; no new version is needed. The package files are not changed." xml:space="preserve"><value>目錄和 Power PDF 用戶端中顯示的名稱、說明、作者和聯絡人。變更會立即套用，不需要新版本。套件檔案不會變更。</value></data>
+  <data name="Last changed" xml:space="preserve"><value>上次變更</value></data>
+  <data name="Contact email" xml:space="preserve"><value>聯絡電子郵件</value></data>
+  <data name="Empty: name of the publishing account" xml:space="preserve"><value>空白：發佈帳戶的名稱</value></data>
+  <data name="Empty: email of the publishing account" xml:space="preserve"><value>空白：發佈帳戶的電子郵件</value></data>
+  <data name="The name needs at least English; the description is required in all 16 languages." xml:space="preserve"><value>名稱至少需要英文；說明在全部 16 種語言中皆為必填。</value></data>
+  <data name="Language" xml:space="preserve"><value>語言</value></data>
+  <data name="Description" xml:space="preserve"><value>說明</value></data>
+  <data name="Cancel" xml:space="preserve"><value>取消</value></data>
+  <data name="Reset name, description, author and contact to the values from the package?" xml:space="preserve"><value>要將名稱、說明、作者和聯絡人重設為套件中的值嗎？</value></data>
+  <data name="Reset to package values" xml:space="preserve"><value>重設為套件值</value></data>
+  <data name="Edit catalog entry" xml:space="preserve"><value>編輯目錄項目</value></data>
+  <data name="Catalog entry saved. The catalog and the Power PDF client show it immediately." xml:space="preserve"><value>目錄項目已儲存。目錄和 Power PDF 用戶端會立即顯示。</value></data>
+  <data name="Catalog entry reset to the values from the package." xml:space="preserve"><value>目錄項目已重設為套件中的值。</value></data>
+  <data name="Change name, description, author and contact without a new version" xml:space="preserve"><value>不需新版本即可變更名稱、說明、作者和聯絡人</value></data>
+  <data name="Actions" xml:space="preserve"><value>動作</value></data>
+  <data name="All plug-ins" xml:space="preserve"><value>所有外掛程式</value></data>
+  <data name="Awaiting approval" xml:space="preserve"><value>等待核准</value></data>
+  <data name="Catalog entry changed by an admin" xml:space="preserve"><value>目錄項目已由管理員變更</value></data>
+  <data name="Category" xml:space="preserve"><value>類別</value></data>
+  <data name="Contact" xml:space="preserve"><value>聯絡人</value></data>
+  <data name="Email me about my plug-ins" xml:space="preserve"><value>以電子郵件通知我的外掛程式相關資訊</value></data>
+  <data name="Every plug-in in the store. Open Details to approve, withdraw or restore versions and to edit the catalog entry." xml:space="preserve"><value>商店中的所有外掛程式。開啟「詳細資料」可核准、撤回或還原版本，以及編輯目錄項目。</value></data>
+  <data name="In the store" xml:space="preserve"><value>在商店中</value></data>
+  <data name="Last activity" xml:space="preserve"><value>上次活動</value></data>
+  <data name="Live plug-ins, older versions, withdrawing and restoring: see the plug-in overview." xml:space="preserve"><value>正式外掛程式、舊版本、撤回和還原：請參閱外掛程式概觀。</value></data>
+  <data name="Menu" xml:space="preserve"><value>功能表</value></data>
+  <data name="My plug-ins" xml:space="preserve"><value>我的外掛程式</value></data>
+  <data name="Not in the store" xml:space="preserve"><value>不在商店中</value></data>
+  <data name="Older version, no longer offered" xml:space="preserve"><value>舊版本，已不再提供</value></data>
+  <data name="Open plug-in overview" xml:space="preserve"><value>開啟外掛程式概觀</value></data>
+  <data name="Plug-in" xml:space="preserve"><value>外掛程式</value></data>
+  <data name="Plug-ins" xml:space="preserve"><value>外掛程式</value></data>
+  <data name="Restore (beta)" xml:space="preserve"><value>還原 (Beta)</value></data>
+  <data name="Restore (live)" xml:space="preserve"><value>還原 (正式)</value></data>
+  <data name="Search name, id or owner" xml:space="preserve"><value>搜尋名稱、ID 或擁有者</value></data>
+  <data name="Take out of the store" xml:space="preserve"><value>從商店下架</value></data>
+  <data name="Take this plug-in out of the store? All live and beta versions are withdrawn; installed copies keep working." xml:space="preserve"><value>要將此外掛程式從商店下架嗎？所有正式和 Beta 版本都會撤回；已安裝的複本仍可繼續運作。</value></data>
+  <data name="The plug-in was taken out of the store. Installed copies keep working; restore single versions to publish it again." xml:space="preserve"><value>外掛程式已從商店下架。已安裝的複本仍可繼續運作；還原個別版本即可再次發佈。</value></data>
+  <data name="This action is not allowed for this version." xml:space="preserve"><value>此版本不允許執行此動作。</value></data>
+  <data name="Upload confirmation with check result" xml:space="preserve"><value>附檢查結果的上傳確認</value></data>
+  <data name="Upload confirmation, approval or rejection, withdrawn or restored versions and catalog changes made by an admin." xml:space="preserve"><value>上傳確認、核准或拒絕、已撤回或還原的版本，以及管理員所做的目錄變更。</value></data>
+  <data name="Version restored and live again." xml:space="preserve"><value>版本已還原並重新上架。</value></data>
+  <data name="Version restored to the beta channel; it needs approval again." xml:space="preserve"><value>版本已還原至 Beta 通道；需要再次核准。</value></data>
+  <data name="Version withdrawn or restored, plug-in taken out of the store" xml:space="preserve"><value>版本已撤回或還原，外掛程式已從商店下架</value></data>
+  <data name="Versions" xml:space="preserve"><value>版本</value></data>
+  <data name="Withdraw this version?" xml:space="preserve"><value>要撤回此版本嗎？</value></data>
+  <data name="Your plug-ins. Open Details for versions, check reports and the catalog entry." xml:space="preserve"><value>您的外掛程式。開啟「詳細資料」可查看版本、檢查報告和目錄項目。</value></data>
+  <data name="No plug-ins match this filter." xml:space="preserve"><value>沒有符合此篩選條件的外掛程式。</value></data>
+  <data name="Recipient" xml:space="preserve"><value>收件者</value></data>
+  <data name="Please enter a valid email address." xml:space="preserve"><value>請輸入有效的電子郵件地址。</value></data>
+  <data name="Install in Power PDF" xml:space="preserve"><value>在 Power PDF 中安裝</value></data>
+  <data name="Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)." xml:space="preserve"><value>開啟 Power PDF 並選取此增益集，安裝前會先詢問。需要 Add-on Store for Power PDF (版本 0.3.7 或更新版本)。</value></data>
+  <data name="The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF." xml:space="preserve"><value>此安裝程式尚未廣為人知，因此 Windows 可能會顯示「Windows 已保護您的電腦」。請按一下「其他資訊」，然後按「仍要執行」。這只會發生一次：更新和外掛程式都是從 Power PDF 內部安裝。</value></data>
+  <data name="Windows warning?" xml:space="preserve"><value>Windows 警告？</value></data>
+  <data name="Download the Add-on Store" xml:space="preserve"><value>下載 Add-on Store</value></data>
+  <data name="Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again." xml:space="preserve"><value>沒有反應？此按鈕需要此電腦上安裝 Add-on Store for Power PDF 版本 0.3.7 或更新版本。請安裝一次 (或在商店對話方塊中更新)，然後再按一次按鈕。</value></data>
+  <data name="Built-in" xml:space="preserve"><value>內建</value></data>
+  <data name="Categories" xml:space="preserve"><value>類別</value></data>
+  <data name="Delete" xml:space="preserve"><value>刪除</value></data>
+  <data name="From the package" xml:space="preserve"><value>來自套件</value></data>
+  <data name="Maximum number of categories" xml:space="preserve"><value>類別數目上限</value></data>
+  <data name="Merge into" xml:space="preserve"><value>合併至</value></data>
+  <data name="New catalog category created by an upload" xml:space="preserve"><value>上傳建立的新目錄類別</value></data>
+  <data name="Uploads may propose a new high-level category when none fits; the server checks length, similarity and the limit and creates it automatically. Merge or delete categories that are not needed." xml:space="preserve"><value>當沒有合適的類別時，上傳可以提議新的上層類別；伺服器會檢查長度、相似度和上限，並自動建立。請合併或刪除不需要的類別。</value></data>
+  <data name="Category merged." xml:space="preserve"><value>類別已合併。</value></data>
+  <data name="Category deleted." xml:space="preserve"><value>類別已刪除。</value></data>
+  <data name="This action is not possible for this category." xml:space="preserve"><value>此類別無法執行此動作。</value></data>
+  <data name="The limit must be between 8 and 50." xml:space="preserve"><value>上限必須介於 8 到 50 之間。</value></data>
+  <data name="Download source" xml:space="preserve"><value>下載原始程式碼</value></data>
+  <data name="Off" xml:space="preserve"><value>關閉</value></data>
+  <data name="Recommended: approval possible without source code" xml:space="preserve"><value>建議：沒有原始程式碼也可核准</value></data>
+  <data name="Required before approval." xml:space="preserve"><value>核准前必須提供。</value></data>
+  <data name="Required: no approval without source code" xml:space="preserve"><value>必要：沒有原始程式碼就無法核准</value></data>
+  <data name="Source code" xml:space="preserve"><value>原始程式碼</value></data>
+  <data name="Source code is stored next to each version and visible to admins only; Power PDF clients never receive it." xml:space="preserve"><value>原始程式碼與各版本一起儲存，僅管理員可見；Power PDF 用戶端永遠不會收到。</value></data>
+  <data name="Source code per version" xml:space="preserve"><value>各版本的原始程式碼</value></data>
+  <data name="Source code stored." xml:space="preserve"><value>原始程式碼已儲存。</value></data>
+  <data name="The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it." xml:space="preserve"><value>此版本缺少原始程式碼。作者 (或管理員) 上傳後即可核准。</value></data>
+  <data name="The source code was not stored." xml:space="preserve"><value>原始程式碼未儲存。</value></data>
+  <data name="missing" xml:space="preserve"><value>缺少</value></data>
+  <data name="stored" xml:space="preserve"><value>已儲存</value></data>
+  <data name="Upload source (ZIP)" xml:space="preserve"><value>上傳原始程式碼 (ZIP)</value></data>
+  <data name="Replace source" xml:space="preserve"><value>取代原始程式碼</value></data>
+  <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>已發行的 Tungsten Power PDF 增益集。它們安裝在 Windows 電腦上，直接在 Power PDF 內部安裝。</value></data>
+  <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>來自獨立作者的增益集，不提供保固或官方支援。</value></data>
+  <data name="Developer" xml:space="preserve"><value>開發人員</value></data>
+  <data name="Reports" xml:space="preserve"><value>報告</value></data>
+  <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>商店使用情況：下載、使用中的用戶端、位置、提交和開發人員。</value></data>
+  <data name="Last {0} days" xml:space="preserve"><value>過去 {0} 天</value></data>
+  <data name="From" xml:space="preserve"><value>從</value></data>
+  <data name="Add-on" xml:space="preserve"><value>增益集</value></data>
+  <data name="All add-ons" xml:space="preserve"><value>所有增益集</value></data>
+  <data name="Country" xml:space="preserve"><value>國家/地區</value></data>
+  <data name="All countries" xml:space="preserve"><value>所有國家/地區</value></data>
+  <data name="Source" xml:space="preserve"><value>來源</value></data>
+  <data name="All sources" xml:space="preserve"><value>所有來源</value></data>
+  <data name="Client" xml:space="preserve"><value>用戶端</value></data>
+  <data name="Web" xml:space="preserve"><value>網頁</value></data>
+  <data name="Apply" xml:space="preserve"><value>套用</value></data>
+  <data name="Reset filters" xml:space="preserve"><value>重設篩選</value></data>
+  <data name="Report language" xml:space="preserve"><value>報告語言</value></data>
+  <data name="PDF report" xml:space="preserve"><value>PDF 報告</value></data>
+  <data name="Download CSV" xml:space="preserve"><value>下載 CSV</value></data>
+  <data name="compared with {0} – {1}" xml:space="preserve"><value>與 {0} – {1} 比較</value></data>
+  <data name="Time series since {0}; the all-time totals include earlier downloads." xml:space="preserve"><value>時間序列自 {0} 起；歷來總計包含更早的下載。</value></data>
+  <data name="No usage data yet in this period." xml:space="preserve"><value>此期間尚無使用資料。</value></data>
+  <data name="Downloads (all time)" xml:space="preserve"><value>下載次數 (歷來)</value></data>
+  <data name="Downloads in period" xml:space="preserve"><value>期間內下載次數</value></data>
+  <data name="Store windows opened" xml:space="preserve"><value>商店視窗開啟次數</value></data>
+  <data name="Client installer downloads" xml:space="preserve"><value>用戶端安裝程式下載次數</value></data>
+  <data name="Live add-ons" xml:space="preserve"><value>正式增益集</value></data>
+  <data name="Developers" xml:space="preserve"><value>開發人員</value></data>
+  <data name="Awaiting review" xml:space="preserve"><value>等待審核</value></data>
+  <data name="Downloads per day" xml:space="preserve"><value>每日下載次數</value></data>
+  <data name="Downloads per week" xml:space="preserve"><value>每週下載次數</value></data>
+  <data name="Downloads per month" xml:space="preserve"><value>每月下載次數</value></data>
+  <data name="Highest value: {0}" xml:space="preserve"><value>最高值：{0}</value></data>
+  <data name="Ranking of add-ons" xml:space="preserve"><value>增益集排名</value></data>
+  <data name="Sorted by downloads in the period; the trend compares with the previous period of the same length." xml:space="preserve"><value>依期間內下載次數排序；趨勢與前一個相同長度的期間比較。</value></data>
+  <data name="In period" xml:space="preserve"><value>期間內</value></data>
+  <data name="Trend" xml:space="preserve"><value>趨勢</value></data>
+  <data name="Share" xml:space="preserve"><value>占比</value></data>
+  <data name="Course" xml:space="preserve"><value>走勢</value></data>
+  <data name="Top country" xml:space="preserve"><value>最多的國家/地區</value></data>
+  <data name="All time" xml:space="preserve"><value>歷來</value></data>
+  <data name="previous period" xml:space="preserve"><value>前一期間</value></data>
+  <data name="new" xml:space="preserve"><value>新</value></data>
+  <data name="unknown" xml:space="preserve"><value>未知</value></data>
+  <data name="Clients in use" xml:space="preserve"><value>使用中的用戶端</value></data>
+  <data name="Store windows opened per client version in the period; shows how far a client update has spread." xml:space="preserve"><value>期間內各用戶端版本的商店視窗開啟次數；顯示用戶端更新的普及程度。</value></data>
+  <data name="Client languages" xml:space="preserve"><value>用戶端語言</value></data>
+  <data name="Language of Power PDF when the store window was opened." xml:space="preserve"><value>開啟商店視窗時 Power PDF 的語言。</value></data>
+  <data name="Download sources" xml:space="preserve"><value>下載來源</value></data>
+  <data name="Client = Add-on Store in Power PDF, Web = browser, API = scripts and AI agents." xml:space="preserve"><value>用戶端 = Power PDF 中的 Add-on Store，網頁 = 瀏覽器，API = 指令碼與 AI 代理程式。</value></data>
+  <data name="Countries" xml:space="preserve"><value>國家/地區</value></data>
+  <data name="Cities" xml:space="preserve"><value>城市</value></data>
+  <data name="Networks and organisations" xml:space="preserve"><value>網路與組織</value></data>
+  <data name="Operator of the network the request came from; company networks often show the company name." xml:space="preserve"><value>要求來源網路的營運者；公司網路通常會顯示公司名稱。</value></data>
+  <data name="Power PDF versions" xml:space="preserve"><value>Power PDF 版本</value></data>
+  <data name="Windows versions" xml:space="preserve"><value>Windows 版本</value></data>
+  <data name="Architecture" xml:space="preserve"><value>架構</value></data>
+  <data name="Power PDF, Windows and architecture are reported by Add-on Store clients from version 0.4.2." xml:space="preserve"><value>Power PDF、Windows 和架構由 0.4.2 版起的 Add-on Store 用戶端回報。</value></data>
+  <data name="Submissions and reviews (12 months)" xml:space="preserve"><value>提交與審核 (12 個月)</value></data>
+  <data name="Month" xml:space="preserve"><value>月份</value></data>
+  <data name="Median review time" xml:space="preserve"><value>審核時間中位數</value></data>
+  <data name="Last submission" xml:space="preserve"><value>上次提交</value></data>
+  <data name="Store versions without source code" xml:space="preserve"><value>沒有原始程式碼的商店版本</value></data>
+  <data name="All live and beta versions have source code deposited." xml:space="preserve"><value>所有正式和 Beta 版本都已存放原始程式碼。</value></data>
+  <data name="IP address logging" xml:space="preserve"><value>IP 位址記錄</value></data>
+  <data name="IP address logging (reports)" xml:space="preserve"><value>IP 位址記錄 (報告)</value></data>
+  <data name="Off. Only the daily counters above are kept; they contain no IP address." xml:space="preserve"><value>關閉。只保留上方的每日計數器；其中不含 IP 位址。</value></data>
+  <data name="Switch on in the settings" xml:space="preserve"><value>在設定中開啟</value></data>
+  <data name="On" xml:space="preserve"><value>開啟</value></data>
+  <data name="Stored requests: {0}. Older than {1} days are deleted automatically." xml:space="preserve"><value>已儲存的要求：{0}。超過 {1} 天的要求會自動刪除。</value></data>
+  <data name="Stored requests: {0}. Kept permanently (no automatic deletion)." xml:space="preserve"><value>已儲存的要求：{0}。永久保留 (不自動刪除)。</value></data>
+  <data name="Download CSV with IP addresses" xml:space="preserve"><value>下載含 IP 位址的 CSV</value></data>
+  <data name="Most frequent IP addresses" xml:space="preserve"><value>最常出現的 IP 位址</value></data>
+  <data name="Latest requests" xml:space="preserve"><value>最新要求</value></data>
+  <data name="Type" xml:space="preserve"><value>類型</value></data>
+  <data name="Location" xml:space="preserve"><value>位置</value></data>
+  <data name="Network" xml:space="preserve"><value>網路</value></data>
+  <data name="Map" xml:space="preserve"><value>地圖</value></data>
+  <data name="Location and network data:" xml:space="preserve"><value>位置與網路資料：</value></data>
+  <data name="Generated on {0}" xml:space="preserve"><value>產生於 {0}</value></data>
+  <data name="Use &quot;Save as PDF&quot; as the printer to get the report as a PDF file." xml:space="preserve"><value>請選擇「另存為 PDF」作為印表機，以取得 PDF 檔案格式的報告。</value></data>
+  <data name="Print / save as PDF" xml:space="preserve"><value>列印 / 另存為 PDF</value></data>
+  <data name="Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports." xml:space="preserve"><value>一律開啟：從 IP 位址推導出國家/地區、區域、城市和網路營運者的每日計數器；位址本身不會儲存。選用：為報告記錄每次下載和目錄要求的 IP 位址、主機名稱和使用者代理程式。</value></data>
+  <data name="GDPR confirmation given by {0} on {1}." xml:space="preserve"><value>GDPR 確認由 {0} 於 {1} 提供。</value></data>
+  <data name="Data protection (GDPR)" xml:space="preserve"><value>資料保護 (GDPR)</value></data>
+  <data name="IP addresses are personal data under the GDPR, also without a sign-in. Storing them needs a legal basis (for example legitimate interest), a note in the privacy policy and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>根據 GDPR，即使沒有登入，IP 位址仍屬於個人資料。儲存 IP 位址需要法律依據 (例如正當利益)、在隱私權政策中說明，並設定保留期限。開啟前請先與您的資料保護長確認。</value></data>
+  <data name="I confirm that a legal basis exists, the privacy policy covers this logging and the retention period below is agreed." xml:space="preserve"><value>我確認已具備法律依據、隱私權政策涵蓋此記錄，且已同意下方的保留期限。</value></data>
+  <data name="Retention period (days)" xml:space="preserve"><value>保留期限 (天)</value></data>
+  <data name="Store permanently (no automatic deletion)" xml:space="preserve"><value>永久儲存 (不自動刪除)</value></data>
+  <data name="The GDPR requires that personal data is kept no longer than necessary. Choose this only if your data protection officer agreed." xml:space="preserve"><value>GDPR 要求個人資料的保存時間不得超過必要期限。請僅在資料保護長同意時選擇此選項。</value></data>
+  <data name="Confirm and switch on" xml:space="preserve"><value>確認並開啟</value></data>
+  <data name="Switch on" xml:space="preserve"><value>開啟</value></data>
+  <data name="Switch off" xml:space="preserve"><value>關閉</value></data>
+  <data name="Save retention period" xml:space="preserve"><value>儲存保留期限</value></data>
+  <data name="Delete all stored IP addresses" xml:space="preserve"><value>刪除所有已儲存的 IP 位址</value></data>
+  <data name="Please confirm the data protection statement first." xml:space="preserve"><value>請先確認資料保護聲明。</value></data>
+  <data name="IP logging is on." xml:space="preserve"><value>IP 記錄已開啟。</value></data>
+  <data name="IP logging is off." xml:space="preserve"><value>IP 記錄已關閉。</value></data>
+  <data name="Retention period saved." xml:space="preserve"><value>保留期限已儲存。</value></data>
+  <data name="All stored IP addresses were deleted." xml:space="preserve"><value>所有已儲存的 IP 位址都已刪除。</value></data>
+  <data name="Type DELETE to confirm." xml:space="preserve"><value>請輸入 DELETE 以確認。</value></data>
+  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>上傳版本的原始程式碼 (每次上傳後)</value></data>
+  <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>管理員：最新版本的原始程式碼，作為變更的起點</value></data>
+  <data name="Share link" xml:space="preserve"><value>分享連結</value></data>
+  <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>此增益集的專屬頁面，附有可傳送給客戶的連結</value></data>
+  <data name="Add-on not found" xml:space="preserve"><value>找不到增益集</value></data>
+  <data name="This add-on is not (or no longer) in the store." xml:space="preserve"><value>此增益集不在 (或已不在) 商店中。</value></data>
+  <data name="Show all add-ons" xml:space="preserve"><value>顯示所有增益集</value></data>
+  <data name="Add-on for Tungsten Power PDF: {0}" xml:space="preserve"><value>Tungsten Power PDF 增益集：{0}</value></data>
+  <data name="Hello," xml:space="preserve"><value>您好：</value></data>
+  <data name="for Tungsten Power PDF there is the add-on &quot;{0}&quot;:" xml:space="preserve"><value>Tungsten Power PDF 有一個增益集「{0}」：</value></data>
+  <data name="You can look at it and install it directly in Power PDF here:" xml:space="preserve"><value>您可以在這裡查看，並直接在 Power PDF 中安裝：</value></data>
+  <data name="Best regards" xml:space="preserve"><value>敬祝順心</value></data>
+  <data name="What&#x27;s new in version {0}" xml:space="preserve"><value>{0} 版的新功能</value></data>
+  <data name="First time?" xml:space="preserve"><value>第一次使用？</value></data>
+  <data name="Install the Add-on Store for Power PDF once (administrator rights required)." xml:space="preserve"><value>請安裝一次 Add-on Store for Power PDF (需要系統管理員權限)。</value></data>
+  <data name="Click &quot;Install in Power PDF&quot; above; Power PDF opens with this add-on selected." xml:space="preserve"><value>按一下上方的「在 Power PDF 中安裝」；Power PDF 會開啟並選取此增益集。</value></data>
+  <data name="Confirm the installation and restart Power PDF." xml:space="preserve"><value>確認安裝，然後重新啟動 Power PDF。</value></data>
+  <data name="Share this add-on" xml:space="preserve"><value>分享此增益集</value></data>
+  <data name="Send this link to a customer or colleague; the page shows only this add-on." xml:space="preserve"><value>將此連結傳送給客戶或同事；該頁面只會顯示此增益集。</value></data>
+  <data name="Link" xml:space="preserve"><value>連結</value></data>
+  <data name="Copy link" xml:space="preserve"><value>複製連結</value></data>
+  <data name="Link copied." xml:space="preserve"><value>連結已複製。</value></data>
+  <data name="Your short name (optional, shows in the reports how often your link was used)" xml:space="preserve"><value>您的簡稱 (選用，會在報告中顯示您的連結被使用的次數)</value></data>
+  <data name="e.g. mmueller" xml:space="preserve"><value>例如 mmueller</value></data>
+  <data name="Send by email" xml:space="preserve"><value>以電子郵件傳送</value></data>
+  <data name="Shared links" xml:space="preserve"><value>分享的連結</value></data>
+  <data name="Calls of the add-on pages (/a/...) per short name: page views without link previews, clicks on &quot;Install in Power PDF&quot; and client installer downloads from that page. Without a short name the link was shared without one." xml:space="preserve"><value>各簡稱的增益集頁面 (/a/...) 呼叫次數：不含連結預覽的頁面檢視、「在 Power PDF 中安裝」的點按次數，以及從該頁面下載用戶端安裝程式的次數。沒有簡稱表示分享連結時未附簡稱。</value></data>
+  <data name="Short name" xml:space="preserve"><value>簡稱</value></data>
+  <data name="Page views" xml:space="preserve"><value>頁面檢視</value></data>
+  <data name="Install clicks" xml:space="preserve"><value>安裝點按</value></data>
+  <data name="Client downloads" xml:space="preserve"><value>用戶端下載</value></data>
+  <data name="without short name" xml:space="preserve"><value>無簡稱</value></data>
+  <data name="Total" xml:space="preserve"><value>總計</value></data>
+  <data name="Add-on Store for Power PDF" xml:space="preserve"><value>Add-on Store for Power PDF</value></data>
+  <data name="Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF." xml:space="preserve"><value>Tungsten Power PDF 增益集：在這裡探索，並直接在 Power PDF 中安裝。</value></data>
+  <data name="Backup" xml:space="preserve"><value>備份</value></data>
+  <data name="Setup" xml:space="preserve"><value>設定</value></data>
+  <data name="Close" xml:space="preserve"><value>關閉</value></data>
+  <data name="Log excerpt" xml:space="preserve"><value>記錄摘錄</value></data>
+  <data name="Mark as done" xml:space="preserve"><value>標示為完成</value></data>
+  <data name="Message" xml:space="preserve"><value>訊息</value></data>
+  <data name="No ratings yet. Users rate add-ons in the store window inside Power PDF." xml:space="preserve"><value>尚無評分。使用者會在 Power PDF 內的商店視窗中為增益集評分。</value></data>
+  <data name="Nothing received yet." xml:space="preserve"><value>尚未收到任何內容。</value></data>
+  <data name="Problem report or comment from the store client" xml:space="preserve"><value>來自商店用戶端的問題回報或意見</value></data>
+  <data name="Problem reports and comments" xml:space="preserve"><value>問題回報與意見</value></data>
+  <data name="Ratings" xml:space="preserve"><value>評分</value></data>
+  <data name="Ratings and feedback" xml:space="preserve"><value>評分與意見回饋</value></data>
+  <data name="Received" xml:space="preserve"><value>收到時間</value></data>
+  <data name="Reopen" xml:space="preserve"><value>重新開啟</value></data>
+  <data name="Screenshots" xml:space="preserve"><value>螢幕擷取畫面</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; Claude reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>從 Power PDF 內的商店視窗傳送。只有您和管理員可以看到；Claude 透過 GET /api/packages/&lt;id&gt;/feedback 讀取。</value></data>
+  <data name="open" xml:space="preserve"><value>未處理</value></data>
+  <data name="done" xml:space="preserve"><value>已完成</value></data>
+  <data name="{0} rating(s)" xml:space="preserve"><value>{0} 則評分</value></data>
+  <data name="Problem" xml:space="preserve"><value>問題</value></data>
+  <data name="Comment" xml:space="preserve"><value>意見</value></data>
+  <data name="AI assessment" xml:space="preserve"><value>AI 評估</value></data>
+  <data name="AI assistant (optional)" xml:space="preserve"><value>AI 助理 (選用)</value></data>
+  <data name="AI review aid" xml:space="preserve"><value>AI 審核輔助</value></data>
+  <data name="AI review aid created." xml:space="preserve"><value>AI 審核輔助已建立。</value></data>
+  <data name="AI suggestions" xml:space="preserve"><value>AI 建議</value></data>
+  <data name="API key" xml:space="preserve"><value>API 金鑰</value></data>
+  <data name="Ask AI" xml:space="preserve"><value>詢問 AI</value></data>
+  <data name="Changelog matches the changes" xml:space="preserve"><value>變更記錄與變更內容相符</value></data>
+  <data name="Create automatically for every new version" xml:space="preserve"><value>為每個新版本自動建立</value></data>
+  <data name="Data sent to the provider: add-on texts from the catalog, the text of problem reports, search queries, manifests and file lists of new versions, and only with the option above changed source code lines. Never sent: email addresses, IP addresses, log excerpts, user accounts. Check with your data protection team before switching it on." xml:space="preserve"><value>傳送給提供者的資料：目錄中的增益集文字、問題回報的文字、搜尋查詢、新版本的資訊清單和檔案清單，以及 (僅在啟用上方選項時) 變更的原始程式碼行。絕不傳送：電子郵件地址、IP 位址、記錄摘錄、使用者帳戶。開啟前請先與您的資料保護團隊確認。</value></data>
+  <data name="Describe what you want to do; AI suggests matching add-ons." xml:space="preserve"><value>描述您想做的事；AI 會建議合適的增益集。</value></data>
+  <data name="Generated by AI as an aid. The decision and its responsibility stay with the reviewer." xml:space="preserve"><value>由 AI 產生，僅供輔助。決定及其責任仍由審核者承擔。</value></data>
+  <data name="Model (empty = default)" xml:space="preserve"><value>模型 (空白 = 預設)</value></data>
+  <data name="Nothing suitable found." xml:space="preserve"><value>找不到合適的項目。</value></data>
+  <data name="Provider" xml:space="preserve"><value>提供者</value></data>
+  <data name="Remove stored key" xml:space="preserve"><value>移除已儲存的金鑰</value></data>
+  <data name="Requests per day (limit)" xml:space="preserve"><value>每日要求數 (上限)</value></data>
+  <data name="Review aid for new versions (on request)" xml:space="preserve"><value>新版本的審核輔助 (依要求)</value></data>
+  <data name="Search by need on the website and in the store window" xml:space="preserve"><value>在網站和商店視窗中依需求搜尋</value></data>
+  <data name="Searching…" xml:space="preserve"><value>正在搜尋…</value></data>
+  <data name="Send changed source code lines to the provider" xml:space="preserve"><value>將變更的原始程式碼行傳送給提供者</value></data>
+  <data name="Sort problem reports (category, urgency, summary, reply draft, duplicates)" xml:space="preserve"><value>分類問題回報 (類別、緊急程度、摘要、回覆草稿、重複項目)</value></data>
+  <data name="Sorts problem reports, prepares a review aid for new versions and lets users search for add-ons by describing what they need. Off by default; everything works without it." xml:space="preserve"><value>分類問題回報、為新版本準備審核輔助，並讓使用者透過描述需求來搜尋增益集。預設為關閉；沒有它一切仍可正常運作。</value></data>
+  <data name="Stored encrypted on the server and never shown again. Use a key of your own organization with a spending limit." xml:space="preserve"><value>以加密方式儲存在伺服器上，且不會再次顯示。請使用貴組織自己的金鑰並設定支出上限。</value></data>
+  <data name="Suggested by AI from the add-on descriptions; please check the details." xml:space="preserve"><value>由 AI 根據增益集說明建議；請檢查詳細資料。</value></data>
+  <data name="Suggested reply" xml:space="preserve"><value>建議的回覆</value></data>
+  <data name="Test connection" xml:space="preserve"><value>測試連線</value></data>
+  <data name="The AI provider gave no usable answer. Check the connection test in the settings." xml:space="preserve"><value>AI 提供者未提供可用的回答。請檢查設定中的連線測試。</value></data>
+  <data name="The search is not available right now." xml:space="preserve"><value>搜尋目前無法使用。</value></data>
+  <data name="Bug" xml:space="preserve"><value>錯誤</value></data>
+  <data name="Wish" xml:space="preserve"><value>願望</value></data>
+  <data name="Question" xml:space="preserve"><value>問題</value></data>
+  <data name="Praise" xml:space="preserve"><value>讚美</value></data>
+  <data name="high" xml:space="preserve"><value>高</value></data>
+  <data name="medium" xml:space="preserve"><value>中</value></data>
+  <data name="low" xml:space="preserve"><value>低</value></data>
+  <data name="warning" xml:space="preserve"><value>警告</value></data>
+  <data name="info" xml:space="preserve"><value>資訊</value></data>
+  <data name="yes" xml:space="preserve"><value>是</value></data>
+  <data name="partly" xml:space="preserve"><value>部分</value></data>
+  <data name="no" xml:space="preserve"><value>否</value></data>
+  <data name="Suggests: approve" xml:space="preserve"><value>建議：核准</value></data>
+  <data name="Suggests: reject" xml:space="preserve"><value>建議：拒絕</value></data>
+  <data name="Suggests: check more closely" xml:space="preserve"><value>建議：進一步檢查</value></data>
+  <data name="Create AI review aid" xml:space="preserve"><value>建立 AI 審核輔助</value></data>
+  <data name="Create again" xml:space="preserve"><value>重新建立</value></data>
+  <data name="Similar to report #{0}" xml:space="preserve"><value>與回報 #{0} 相似</value></data>
+  <data name="AI connection works." xml:space="preserve"><value>AI 連線正常。</value></data>
+  <data name="The AI connection test failed." xml:space="preserve"><value>AI 連線測試失敗。</value></data>
+  <data name="API and AI assistants" xml:space="preserve"><value>API 與 AI 助理</value></data>
+  <data name="ChatGPT (custom GPT actions), Gemini function calling and other tools: import the OpenAPI description and enter the personal token as Bearer key." xml:space="preserve"><value>ChatGPT (自訂 GPT 動作)、Gemini 函式呼叫及其他工具：匯入 OpenAPI 描述，並將個人權杖輸入為 Bearer 金鑰。</value></data>
+  <data name="Claude Code: install the skill. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>Claude Code：安裝技能。它一律從伺服器載入最新規則，因此永遠不需要更新。</value></data>
+  <data name="Coding assistants that read AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): save it in the plugin project." xml:space="preserve"><value>讀取 AGENTS.md 的程式碼撰寫助理 (OpenAI Codex、GitHub Copilot、Cursor、Gemini CLI)：將其儲存在外掛程式專案中。</value></data>
+  <data name="Description of all endpoints (OpenAPI 3.1)" xml:space="preserve"><value>所有端點的描述 (OpenAPI 3.1)</value></data>
+  <data name="Download AGENTS.md" xml:space="preserve"><value>下載 AGENTS.md</value></data>
+  <data name="Give the token to your AI assistant together with this line:" xml:space="preserve"><value>請將權杖連同下列這行一起交給您的 AI 助理：</value></data>
+  <data name="Give your AI assistant one line" xml:space="preserve"><value>給您的 AI 助理一行指示</value></data>
+  <data name="Optional: set up your tool once" xml:space="preserve"><value>選用：設定您的工具一次</value></data>
+  <data name="Publish and update plugins directly from your AI assistant, for example Claude, ChatGPT, Gemini or Copilot. The assistant reads the store&#x27;s rules from the API, validates the package until all checks pass and submits it for review." xml:space="preserve"><value>直接從您的 AI 助理 (例如 Claude、ChatGPT、Gemini 或 Copilot) 發佈和更新外掛程式。助理會從 API 讀取商店規則，反覆驗證套件直到所有檢查通過，然後提交審核。</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>從 Power PDF 內的商店視窗傳送。只有您和管理員可以看到；您的 AI 助理透過 GET /api/packages/&lt;id&gt;/feedback 讀取。</value></data>
+  <data name="Short index for language models" xml:space="preserve"><value>供語言模型使用的簡短索引</value></data>
+  <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>這樣就夠了：它會讀取指南、為日後的工作階段完成設定，並遵循規則。</value></data>
+  <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>權杖名稱 (例如 'assistant'、'build server')</value></data>
+  <data name="Provider and key" xml:space="preserve"><value>提供者與金鑰</value></data>
+  <data name="Connect and load models" xml:space="preserve"><value>連線並載入模型</value></data>
+  <data name="Model and features" xml:space="preserve"><value>模型與功能</value></data>
+  <data name="Model" xml:space="preserve"><value>模型</value></data>
+  <data name="Default" xml:space="preserve"><value>預設</value></data>
+  <data name="Models this key may use, loaded live from the provider." xml:space="preserve"><value>此金鑰可使用的模型，從提供者即時載入。</value></data>
+  <data name="No model list loaded yet: use &quot;Connect and load models&quot; above. Until then the default model is used." xml:space="preserve"><value>尚未載入模型清單：請使用上方的「連線並載入模型」。在此之前會使用預設模型。</value></data>
+  <data name="Test" xml:space="preserve"><value>測試</value></data>
+  <data name="Sends one short request with the chosen model." xml:space="preserve"><value>以選取的模型傳送一個簡短的要求。</value></data>
+  <data name="Connected. Choose a model below." xml:space="preserve"><value>已連線。請在下方選擇模型。</value></data>
+  <data name="The connection failed." xml:space="preserve"><value>連線失敗。</value></data>
+  <data name="Customers" xml:space="preserve"><value>客戶</value></data>
+  <data name="Customer" xml:space="preserve"><value>客戶</value></data>
+  <data name="New customer" xml:space="preserve"><value>新增客戶</value></data>
+  <data name="Create customer" xml:space="preserve"><value>建立客戶</value></data>
+  <data name="No customers yet." xml:space="preserve"><value>尚無客戶。</value></data>
+  <data name="Deliveries" xml:space="preserve"><value>交付</value></data>
+  <data name="Deliver an add-on" xml:space="preserve"><value>交付增益集</value></data>
+  <data name="Deliver" xml:space="preserve"><value>交付</value></data>
+  <data name="Codes" xml:space="preserve"><value>代碼</value></data>
+  <data name="Code" xml:space="preserve"><value>代碼</value></data>
+  <data name="No codes yet." xml:space="preserve"><value>尚無代碼。</value></data>
+  <data name="New customer code" xml:space="preserve"><value>新的客戶代碼</value></data>
+  <data name="Code for this add-on only" xml:space="preserve"><value>僅適用於此增益集的代碼</value></data>
+  <data name="Also create a code for this add-on only" xml:space="preserve"><value>同時建立僅適用於此增益集的代碼</value></data>
+  <data name="Create a customer code for all its deliveries right away" xml:space="preserve"><value>立即為此客戶的所有交付建立客戶代碼</value></data>
+  <data name="Valid for" xml:space="preserve"><value>適用於</value></data>
+  <data name="all deliveries" xml:space="preserve"><value>所有交付</value></data>
+  <data name="Copy" xml:space="preserve"><value>複製</value></data>
+  <data name="valid" xml:space="preserve"><value>有效</value></data>
+  <data name="expired" xml:space="preserve"><value>已過期</value></data>
+  <data name="valid until {0}" xml:space="preserve"><value>有效期限至 {0}</value></data>
+  <data name="Previous code stays valid for" xml:space="preserve"><value>先前的代碼仍有效的期間</value></data>
+  <data name="0 days (at once)" xml:space="preserve"><value>0 天 (立即)</value></data>
+  <data name="days" xml:space="preserve"><value>天</value></data>
+  <data name="Make live" xml:space="preserve"><value>設為正式</value></data>
+  <data name="Pause" xml:space="preserve"><value>暫停</value></data>
+  <data name="Resume" xml:space="preserve"><value>繼續</value></data>
+  <data name="End delivery" xml:space="preserve"><value>結束交付</value></data>
+  <data name="Change stages and period" xml:space="preserve"><value>變更階段和期間</value></data>
+  <data name="Period" xml:space="preserve"><value>期間</value></data>
+  <data name="Until" xml:space="preserve"><value>到</value></data>
+  <data name="Beta stage" xml:space="preserve"><value>Beta 階段</value></data>
+  <data name="Live stage" xml:space="preserve"><value>正式階段</value></data>
+  <data name="newest" xml:space="preserve"><value>最新</value></data>
+  <data name="fixed" xml:space="preserve"><value>固定</value></data>
+  <data name="paused" xml:space="preserve"><value>已暫停</value></data>
+  <data name="ended" xml:space="preserve"><value>已結束</value></data>
+  <data name="outside period" xml:space="preserve"><value>不在期間內</value></data>
+  <data name="private" xml:space="preserve"><value>私人</value></data>
+  <data name="Visibility" xml:space="preserve"><value>可見度</value></data>
+  <data name="public (catalog)" xml:space="preserve"><value>公開 (目錄)</value></data>
+  <data name="private (customer deliveries only)" xml:space="preserve"><value>私人 (僅限客戶交付)</value></data>
+  <data name="Customer data" xml:space="preserve"><value>客戶資料</value></data>
+  <data name="Contact person" xml:space="preserve"><value>聯絡人</value></data>
+  <data name="Note" xml:space="preserve"><value>附註</value></data>
+  <data name="Created by" xml:space="preserve"><value>建立者</value></data>
+  <data name="paused (no add-ons for this customer)" xml:space="preserve"><value>已暫停 (此客戶沒有增益集)</value></data>
+  <data name="Nothing delivered yet." xml:space="preserve"><value>尚未交付任何項目。</value></data>
+  <data name="Please check name and email address." xml:space="preserve"><value>請檢查名稱和電子郵件地址。</value></data>
+  <data name="New code created." xml:space="preserve"><value>已建立新代碼。</value></data>
+  <data name="Code revoked." xml:space="preserve"><value>代碼已撤銷。</value></data>
+  <data name="Delivery created." xml:space="preserve"><value>交付已建立。</value></data>
+  <data name="Delivery saved." xml:space="preserve"><value>交付已儲存。</value></data>
+  <data name="The beta version is now live for this customer." xml:space="preserve"><value>Beta 版本現已對此客戶正式上線。</value></data>
+  <data name="Customer delivery created or changed by a developer" xml:space="preserve"><value>開發人員建立或變更了客戶交付</value></data>
+  <data name="Deliver add-ons to individual customers: they see them in the store window with their code, nobody else does. Every delivery has a beta and a live stage." xml:space="preserve"><value>將增益集交付給個別客戶：他們可在商店視窗中使用其代碼看到這些增益集，其他人則看不到。每個交付都有 Beta 階段和正式階段。</value></data>
+  <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. Enter the code in the Add-on Store options in Power PDF or distribute it with the policy CustomerCode (client 0.6.0 or later). Several codes can be combined, separated by semicolons." xml:space="preserve"><value>客戶代碼可解鎖此客戶的所有交付；交付代碼只能解鎖一個增益集。請在 Power PDF 的 Add-on Store 選項中輸入代碼，或透過原則 CustomerCode 散發 (用戶端 0.6.0 或更新版本)。可以組合多個代碼，以分號分隔。</value></data>
+  <data name="Beta stage: workstations of this customer with the beta option (or policy BetaChannel). Live stage: all others. Typical: new version to beta, test, then &quot;Make live&quot;." xml:space="preserve"><value>Beta 階段：此客戶啟用 Beta 選項 (或原則 BetaChannel) 的工作站。正式階段：其他所有工作站。一般流程：新版本進入 Beta，測試，然後按「設為正式」。</value></data>
+  <data name="Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>正式「固定」會讓客戶維持在經過測試的版本；「最新」會跟隨每個已發行的版本。私人增益集不需要管理員核准；系統會以電子郵件通知管理員。</value></data>
+  <data name="No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet." xml:space="preserve"><value>沒有可交付的增益集：您可以交付自己的增益集，前提是已通過自動檢查且尚未交付給此客戶。</value></data>
+  <data name="Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed." xml:space="preserve"><value>只有名稱為必填。聯絡資料僅用於交付電子郵件；如不需要請保留空白。</value></data>
+  <data name="Sign-in failed. Check email and password, or try again later." xml:space="preserve"><value>登入失敗。請檢查電子郵件和密碼，或稍後再試。</value></data>
+  <data name="Backup restored. The server restarts now to load it completely; sign in again in a minute." xml:space="preserve"><value>備份已還原。伺服器現在會重新啟動以完整載入；請在一分鐘後重新登入。</value></data>
+  <data name="no longer available" xml:space="preserve"><value>已不再提供</value></data>
+  <data name="Setup token" xml:space="preserve"><value>設定權杖</value></data>
+  <data name="Shown in the server log at start-up and stored in the file setup-token.txt in the data folder; valid for 24 hours." xml:space="preserve"><value>在啟動時顯示於伺服器記錄中，並儲存在資料資料夾的 setup-token.txt 檔案中；有效期限 24 小時。</value></data>
+  <data name="The setup token is wrong or has expired. Restart the app for a new one." xml:space="preserve"><value>設定權杖錯誤或已過期。請重新啟動應用程式以取得新的權杖。</value></data>
+  <data name="Password for the key ring (optional)" xml:space="preserve"><value>金鑰環密碼 (選用)</value></data>
+  <data name="Password for the key ring (only for backups that contain one)" xml:space="preserve"><value>金鑰環密碼 (僅適用於包含金鑰環的備份)</value></data>
+  <data name="With a password, the key ring that decrypts the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: after a restore, enter those keys again; customer codes keep working but can no longer be shown." xml:space="preserve"><value>設定密碼後，用於解密已儲存的 AI 和 Resend 金鑰及客戶代碼的金鑰環會以加密方式 (AES-256) 納入備份。未設定時則不納入：還原後需重新輸入這些金鑰；客戶代碼仍可使用，但無法再顯示。</value></data>
+  <data name="The password must have at least 12 characters." xml:space="preserve"><value>密碼至少必須有 12 個字元。</value></data>
+  <data name="The password for the key ring is wrong." xml:space="preserve"><value>金鑰環密碼錯誤。</value></data>
+  <data name="Backup restored without its key ring (no password given). Enter the AI and Resend keys again in the settings." xml:space="preserve"><value>已還原備份，但不含金鑰環 (未提供密碼)。請在設定中重新輸入 AI 和 Resend 金鑰。</value></data>
+  <data name="Four-eyes rule: nobody approves a version they uploaded or own" xml:space="preserve"><value>四眼原則：任何人都不能核准自己上傳或擁有的版本</value></data>
+  <data name="Needs at least two active admins or reviewers; with only one, own versions can no longer be approved." xml:space="preserve"><value>至少需要兩位作用中的管理員或審核者；若只有一位，將無法再核准自己的版本。</value></data>
+  <data name="Four-eyes rule: another admin or reviewer has to approve a version you uploaded or own." xml:space="preserve"><value>四眼原則：您上傳或擁有的版本必須由另一位管理員或審核者核准。</value></data>
+  <data name="This backup contains the key ring. Enter its password, or confirm the restore without it." xml:space="preserve"><value>此備份包含金鑰環。請輸入其密碼，或確認不使用金鑰環進行還原。</value></data>
+  <data name="Restore without the key ring (signing key and stored secrets are lost)" xml:space="preserve"><value>不使用金鑰環還原 (簽署金鑰和已儲存的密碼資訊將遺失)</value></data>
+  <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>已還原備份，但不含金鑰環。請重新輸入 AI 和 Resend 金鑰，並設定簽署復原金鑰 (Signing__PrivateKeyPem)；在此之前用戶端無法安裝。</value></data>
+  <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>無法讀取套件簽署金鑰。用戶端會拒絕安裝，直到以金鑰環密碼還原備份，或 App Setting Signing__PrivateKeyPem 中含有復原金鑰為止。</value></data>
+  <data name="Package signing key" xml:space="preserve"><value>套件簽署金鑰</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>自動審核輔助的語言</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>以 {0} 建立</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>此審核輔助以 {0} 撰寫。</value></data>
+  <data name="Overview" xml:space="preserve"><value>概觀</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>增益集</value></data>
+  <data name="Clients" xml:space="preserve"><value>用戶端</value></data>
+  <data name="Locations" xml:space="preserve"><value>位置</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>提交與審核</value></data>
+  <data name="Report sections" xml:space="preserve"><value>報告區段</value></data>
+  <data name="Pages" xml:space="preserve"><value>頁面</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>每頁列數</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>第 {0} 頁，共 {1} 頁</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>第 {0} 到 {1} 項，共 {2} 項</value></data>
+  <data name="Previous" xml:space="preserve"><value>上一頁</value></data>
+  <data name="Next" xml:space="preserve"><value>下一頁</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>{1} 個要求中最新的 {0} 個；CSV 匯出包含全部要求。</value></data>
+  <data name="A backup is already running." xml:space="preserve"><value>已有備份正在執行。</value></data>
+  <data name="AI assistant" xml:space="preserve"><value>AI 助理</value></data>
+  <data name="Access key (connection string or SAS URL)" xml:space="preserve"><value>存取金鑰 (連接字串或 SAS URL)</value></data>
+  <data name="Automatic backup" xml:space="preserve"><value>自動備份</value></data>
+  <data name="Automatic backup failed" xml:space="preserve"><value>自動備份失敗</value></data>
+  <data name="Automatic backup to Azure Blob Storage" xml:space="preserve"><value>自動備份至 Azure Blob 儲存體</value></data>
+  <data name="Back up automatically on the selected days" xml:space="preserve"><value>在選取的日期自動備份</value></data>
+  <data name="Back up now" xml:space="preserve"><value>立即備份</value></data>
+  <data name="Backup file (.zip, or .psbak from the automatic backup)" xml:space="preserve"><value>備份檔 (.zip，或自動備份產生的 .psbak)</value></data>
+  <data name="Backups in Azure" xml:space="preserve"><value>Azure 中的備份</value></data>
+  <data name="Backups to keep" xml:space="preserve"><value>要保留的備份數</value></data>
+  <data name="Choose time and weekdays, switch on the automatic backup and save. &quot;Back up now&quot; makes a first backup right away." xml:space="preserve"><value>選擇時間和星期幾，開啟自動備份並儲存。「立即備份」會馬上建立第一個備份。</value></data>
+  <data name="Click &quot;Save&quot; and then &quot;Test connection&quot;. The store creates the container by itself." xml:space="preserve"><value>按一下「儲存」，然後按「測試連線」。商店會自行建立容器。</value></data>
+  <data name="Connection works: {0}" xml:space="preserve"><value>連線正常：{0}</value></data>
+  <data name="Container" xml:space="preserve"><value>容器</value></data>
+  <data name="Container names use 3 to 63 lower-case letters, digits and hyphens." xml:space="preserve"><value>容器名稱使用 3 到 63 個小寫字母、數字和連字號。</value></data>
+  <data name="Created automatically if it does not exist." xml:space="preserve"><value>如果不存在，會自動建立。</value></data>
+  <data name="Encrypts every backup before it leaves the server. Without it a backup cannot be restored: keep it outside the server, for example in a password manager." xml:space="preserve"><value>每個備份在離開伺服器前都會加密。沒有它就無法還原備份：請將其保存在伺服器之外，例如密碼管理員中。</value></data>
+  <data name="Enter the access key and the passphrase first." xml:space="preserve"><value>請先輸入存取金鑰和複雜密碼。</value></data>
+  <data name="Guide" xml:space="preserve"><value>指南</value></data>
+  <data name="If a backup fails, all admins get an email (Settings, notifications: &quot;Automatic backup failed&quot;)." xml:space="preserve"><value>如果備份失敗，所有管理員都會收到電子郵件 (設定，通知：「自動備份失敗」)。</value></data>
+  <data name="In the Azure portal, open a storage account (or create one: &quot;Storage accounts&quot;, &quot;Create&quot;, standard settings are enough; Redundancy &quot;LRS&quot; is the cheapest)." xml:space="preserve"><value>在 Azure 入口網站中，開啟儲存體帳戶 (或建立一個：「儲存體帳戶」、「建立」，標準設定即可；備援「LRS」最便宜)。</value></data>
+  <data name="In the storage account, open &quot;Security + networking&quot;, &quot;Access keys&quot;, and copy the &quot;Connection string&quot; of key1." xml:space="preserve"><value>在儲存體帳戶中，開啟「安全性 + 網路」、「存取金鑰」，然後複製 key1 的「連接字串」。</value></data>
+  <data name="Instead of the connection string, a SAS URL of the storage account or of one container works too (permissions: read, write, create, list, delete). It can be limited in time and revoked without changing the account keys." xml:space="preserve"><value>除了連接字串，也可以使用儲存體帳戶或某個容器的 SAS URL (權限：讀取、寫入、建立、列出、刪除)。它可以限制時效，且可在不變更帳戶金鑰的情況下撤銷。</value></data>
+  <data name="Last backup" xml:space="preserve"><value>上次備份</value></data>
+  <data name="Manual backup" xml:space="preserve"><value>手動備份</value></data>
+  <data name="Next backup" xml:space="preserve"><value>下次備份</value></data>
+  <data name="No access key is stored." xml:space="preserve"><value>未儲存存取金鑰。</value></data>
+  <data name="No backups in the container yet." xml:space="preserve"><value>容器中尚無備份。</value></data>
+  <data name="None yet. The server creates one before every restore." xml:space="preserve"><value>尚無。伺服器會在每次還原前建立一個。</value></data>
+  <data name="Not set up" xml:space="preserve"><value>未設定</value></data>
+  <data name="OK" xml:space="preserve"><value>確定</value></data>
+  <data name="Passphrase (at least 12 characters)" xml:space="preserve"><value>複雜密碼 (至少 12 個字元)</value></data>
+  <data name="Password for the key ring, or the passphrase of an automatic backup" xml:space="preserve"><value>金鑰環密碼，或自動備份的複雜密碼</value></data>
+  <data name="Paste it above as the access key, choose a passphrase of at least 12 characters and note it in your password manager." xml:space="preserve"><value>將其貼到上方作為存取金鑰，選擇至少 12 個字元的複雜密碼，並記錄在您的密碼管理員中。</value></data>
+  <data name="Recommended in the storage account: &quot;Data protection&quot;, soft delete for blobs (for example 14 days), so a deleted backup can be recovered." xml:space="preserve"><value>建議在儲存體帳戶中設定：「資料保護」，為 Blob 啟用虛刪除 (例如 14 天)，以便復原已刪除的備份。</value></data>
+  <data name="Restore: &quot;Backups in Azure&quot; restores a backup directly with the stored passphrase. On a new server, first create the admin account, enter the same access key and passphrase here, then restore." xml:space="preserve"><value>還原：「Azure 中的備份」會使用已儲存的複雜密碼直接還原備份。在新伺服器上，請先建立管理員帳戶，在此輸入相同的存取金鑰和複雜密碼，然後還原。</value></data>
+  <data name="Running" xml:space="preserve"><value>執行中</value></data>
+  <data name="Safety backups" xml:space="preserve"><value>安全備份</value></data>
+  <data name="Saved. The schedule stays off until an access key and a passphrase are set." xml:space="preserve"><value>已儲存。在設定存取金鑰和複雜密碼之前，排程會保持關閉。</value></data>
+  <data name="Sections" xml:space="preserve"><value>區段</value></data>
+  <data name="Storage account" xml:space="preserve"><value>儲存體帳戶</value></data>
+  <data name="Stored; leave empty to keep it" xml:space="preserve"><value>已儲存；保留空白即維持不變</value></data>
+  <data name="The access key is neither a connection string nor a SAS URL of the storage account." xml:space="preserve"><value>存取金鑰既不是儲存體帳戶的連接字串，也不是 SAS URL。</value></data>
+  <data name="The backup could not be downloaded." xml:space="preserve"><value>無法下載備份。</value></data>
+  <data name="The backup started. Reload the page in a minute to see the result." xml:space="preserve"><value>備份已開始。請在一分鐘後重新載入頁面以查看結果。</value></data>
+  <data name="The connection failed: {0}" xml:space="preserve"><value>連線失敗：{0}</value></data>
+  <data name="The files are encrypted with the passphrase. A downloaded file can be restored under &quot;Restore&quot; with that passphrase." xml:space="preserve"><value>檔案已使用複雜密碼加密。下載的檔案可在「還原」下使用該複雜密碼還原。</value></data>
+  <data name="The list could not be loaded: {0}" xml:space="preserve"><value>無法載入清單：{0}</value></data>
+  <data name="The passphrase is wrong or the file is damaged." xml:space="preserve"><value>複雜密碼錯誤或檔案已損毀。</value></data>
+  <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>複雜密碼至少必須有 12 個字元。</value></data>
+  <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>此備份已加密。請輸入其複雜密碼。</value></data>
+  <data name="Weekdays" xml:space="preserve"><value>星期幾</value></data>
+  <data name="Request a developer account" xml:space="preserve"><value>申請開發人員帳戶</value></data>
+  <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>已在新伺服器上還原備份。請使用備份中的管理員帳戶登入。</value></data>
+  <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>您的帳戶在此備份中不是作用中的管理員 (此帳戶及其電子郵件地址皆不是)；還原會將您鎖在外面。</value></data>
+  <data name="This backup was downloaded without the key ring, and this server cannot read its package signing key. Confirm the restore without the key ring, or use a backup downloaded with a key ring password." xml:space="preserve"><value>此備份是在不含金鑰環的情況下下載的，且此伺服器無法讀取其套件簽署金鑰。請確認不使用金鑰環進行還原，或使用以金鑰環密碼下載的備份。</value></data>
+  <data name="The restore failed (damaged archive or full disk). The previous state was put back; nothing changed." xml:space="preserve"><value>還原失敗 (封存已損毀或磁碟已滿)。已回復先前的狀態；沒有任何變更。</value></data>
+  <data name="The restore failed and the previous state could not be put back automatically. Download the safety backup {0} under Safety backups and restore it." xml:space="preserve"><value>還原失敗，且無法自動回復先前的狀態。請在「安全備份」下下載安全備份 {0} 並進行還原。</value></data>
+  <data name="With a password, the key ring that decrypts the package signing key, the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: restored on another server, the signing key is lost (clients refuse installs until the recovery key is set) and the AI and Resend keys must be entered again; customer codes keep working but can no longer be shown." xml:space="preserve"><value>設定密碼後，用於解密套件簽署金鑰、已儲存的 AI 和 Resend 金鑰及客戶代碼的金鑰環會以加密方式 (AES-256) 納入備份。未設定時則不納入：在其他伺服器上還原時，簽署金鑰會遺失 (在設定復原金鑰之前用戶端會拒絕安裝)，且必須重新輸入 AI 和 Resend 金鑰；客戶代碼仍可使用，但無法再顯示。</value></data>
+  <data name="An unknown failure has occurred." xml:space="preserve"><value>發生未知的失敗。</value></data>
+  <data name="Passwords must be at least {0} characters." xml:space="preserve"><value>密碼至少必須有 {0} 個字元。</value></data>
+  <data name="Passwords must have at least one digit (&#x27;0&#x27;-&#x27;9&#x27;)." xml:space="preserve"><value>密碼至少必須包含一個數字 ('0'-'9')。</value></data>
+  <data name="Passwords must have at least one lowercase letter (&#x27;a&#x27;-&#x27;z&#x27;)." xml:space="preserve"><value>密碼至少必須包含一個小寫字母 ('a'-'z')。</value></data>
+  <data name="Passwords must have at least one uppercase letter (&#x27;A&#x27;-&#x27;Z&#x27;)." xml:space="preserve"><value>密碼至少必須包含一個大寫字母 ('A'-'Z')。</value></data>
+  <data name="Email &#x27;{0}&#x27; is invalid." xml:space="preserve"><value>電子郵件 '{0}' 無效。</value></data>
+  <data name="Email &#x27;{0}&#x27; is already taken." xml:space="preserve"><value>電子郵件 '{0}' 已被使用。</value></data>
+  <data name="Fill in name, email address and password (name up to 100, email address up to 200, reason up to 500 characters)." xml:space="preserve"><value>請填寫名稱、電子郵件地址和密碼 (名稱最多 100 個字元、電子郵件地址最多 200 個字元、原因最多 500 個字元)。</value></data>
+  <data name="public" xml:space="preserve"><value>公開</value></data>
+  <data name="Make public" xml:space="preserve"><value>設為公開</value></data>
+  <data name="Make private" xml:space="preserve"><value>設為私人</value></data>
+  <data name="Show in the public catalog" xml:space="preserve"><value>在公開目錄中顯示</value></data>
+  <data name="Customer deliveries only, not in the public catalog" xml:space="preserve"><value>僅限客戶交付，不在公開目錄中</value></data>
+  <data name="Make this add-on public? It then appears in the catalog for everybody (new versions after approval)." xml:space="preserve"><value>要將此增益集設為公開嗎？之後它會出現在所有人都看得到的目錄中 (新版本須經核准)。</value></data>
+  <data name="Make this add-on private? It disappears from the public catalog; only customers with a delivery and a code still get it." xml:space="preserve"><value>要將此增益集設為私人嗎？它會從公開目錄中消失；只有擁有交付和代碼的客戶才能取得。</value></data>
+  <data name="No private add-on to deliver. Customers get private add-ons (never in the public catalog) that passed the automatic checks and are not delivered to them yet: upload with &quot;visibility&quot;: &quot;private&quot; or switch an add-on to private in the plug-in list." xml:space="preserve"><value>沒有可交付的私人增益集。客戶會取得已通過自動檢查且尚未交付給他們的私人增益集 (絕不會出現在公開目錄中)：以 "visibility": "private" 上傳，或在外掛程式清單中將增益集切換為私人。</value></data>
+  <data name="Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>只會列出私人增益集：它們絕不會出現在公開目錄中，只提供給擁有代碼的客戶。正式「固定」會讓客戶維持在經過測試的版本；「最新」會跟隨每個已發行的版本。私人增益集不需要管理員核准；系統會以電子郵件通知管理員。</value></data>
+  <data name="Delete customer" xml:space="preserve"><value>刪除客戶</value></data>
+  <data name="Customer deleted." xml:space="preserve"><value>客戶已刪除。</value></data>
+  <data name="Delete this customer with all its codes and deliveries? Workstations using its codes lose these add-ons at the next catalog refresh; installed copies keep working." xml:space="preserve"><value>要刪除此客戶及其所有代碼和交付嗎？使用其代碼的工作站會在下次重新整理目錄時失去這些增益集；已安裝的複本仍可繼續運作。</value></data>
+  <data name="Back to beta" xml:space="preserve"><value>退回 Beta</value></data>
+  <data name="Version set back to beta; it needs approval again." xml:space="preserve"><value>版本已退回 Beta；需要再次核准。</value></data>
+  <data name="Set this version back to beta? Only beta workstations are offered it from now on, the live channel falls back to the previous live version, and it needs approval again. Installed copies keep working." xml:space="preserve"><value>要將此版本退回 Beta 嗎？從現在起只會提供給 Beta 工作站，正式通道會回到先前的正式版本，且需要再次核准。已安裝的複本仍可繼續運作。</value></data>
+  <data name="Private (customers only)" xml:space="preserve"><value>私人 (僅限客戶)</value></data>
+  <data name="The source code of this version is missing: back in beta, it could not be approved again. Upload the source code first." xml:space="preserve"><value>此版本缺少原始程式碼：退回 Beta 後將無法再次核准。請先上傳原始程式碼。</value></data>
+  <data name="Reset statistics" xml:space="preserve"><value>重設統計資料</value></data>
+  <data name="After internal tests: delete the collected statistics so the reports count from here on. Add-ons, versions, accounts, customers and the audit log stay. A safety backup of the whole store is written first." xml:space="preserve"><value>內部測試後：刪除收集的統計資料，讓報告從此刻開始計算。增益集、版本、帳戶、客戶和稽核記錄都會保留。系統會先寫入整個商店的安全備份。</value></data>
+  <data name="Last reset: {0}" xml:space="preserve"><value>上次重設：{0}</value></data>
+  <data name="Delete the chosen statistics now? This cannot be undone (except from the safety backup)." xml:space="preserve"><value>要立即刪除選取的統計資料嗎？此動作無法復原 (除非從安全備份還原)。</value></data>
+  <data name="Downloads and usage statistics ({0} rows, {1} downloads)" xml:space="preserve"><value>下載與使用統計資料 ({0} 列，{1} 次下載)</value></data>
+  <data name="Shared-link statistics ({0} rows)" xml:space="preserve"><value>分享連結統計資料 ({0} 列)</value></data>
+  <data name="Stored IP addresses ({0} requests)" xml:space="preserve"><value>已儲存的 IP 位址 ({0} 個要求)</value></data>
+  <data name="Ratings ({0})" xml:space="preserve"><value>評分 ({0})</value></data>
+  <data name="Problem reports and comments ({0})" xml:space="preserve"><value>問題回報與意見 ({0})</value></data>
+  <data name="Type RESET to confirm." xml:space="preserve"><value>請輸入 RESET 以確認。</value></data>
+  <data name="Choose at least one kind of data." xml:space="preserve"><value>請至少選擇一種資料。</value></data>
+  <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>統計資料已重設。先前狀態的安全備份列於「備份與還原 &gt; 安全備份」下。</value></data>
+  <data name="This add-on has its own ribbon tab and therefore stays private. Only add-ons on the shared tab can be public." xml:space="preserve"><value>此增益集有自己的功能區索引標籤，因此維持私人。只有位於共用索引標籤上的增益集才能公開。</value></data>
+  <data name="Forgot password" xml:space="preserve"><value>忘記密碼</value></data>
+  <data name="Forgot password?" xml:space="preserve"><value>忘記密碼？</value></data>
+  <data name="Enter the email address of your account. We send you a link to choose a new password." xml:space="preserve"><value>請輸入您帳戶的電子郵件地址。我們會傳送連結給您，以便選擇新密碼。</value></data>
+  <data name="If an active account exists for this address, we sent it a link to choose a new password. The link is valid for 24 hours." xml:space="preserve"><value>如果此地址有作用中的帳戶，我們已傳送連結以選擇新密碼。連結有效期限為 24 小時。</value></data>
+  <data name="Send link" xml:space="preserve"><value>傳送連結</value></data>
+  <data name="Back to sign-in" xml:space="preserve"><value>返回登入</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>選擇新密碼</value></data>
+  <data name="This link is invalid or has expired. Request a new one with &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>此連結無效或已過期。請在登入頁面使用「忘記密碼？」要求新的連結。</value></data>
+  <data name="New password for {0}. At least 10 characters." xml:space="preserve"><value>{0} 的新密碼。至少 10 個字元。</value></data>
+  <data name="New password" xml:space="preserve"><value>新密碼</value></data>
+  <data name="Repeat the new password" xml:space="preserve"><value>再次輸入新密碼</value></data>
+  <data name="Save password" xml:space="preserve"><value>儲存密碼</value></data>
+  <data name="Enter a new password (up to 200 characters)." xml:space="preserve"><value>請輸入新密碼 (最多 200 個字元)。</value></data>
+  <data name="The two passwords do not match." xml:space="preserve"><value>兩次輸入的密碼不相符。</value></data>
+  <data name="Password changed. Sign in with the new password." xml:space="preserve"><value>密碼已變更。請使用新密碼登入。</value></data>
+  <data name="Change password" xml:space="preserve"><value>變更密碼</value></data>
+  <data name="Current password" xml:space="preserve"><value>目前的密碼</value></data>
+  <data name="Enter the current and the new password (up to 200 characters)." xml:space="preserve"><value>請輸入目前的密碼和新密碼 (最多 200 個字元)。</value></data>
+  <data name="Password changed. Other sessions were signed out." xml:space="preserve"><value>密碼已變更。其他工作階段已登出。</value></data>
+  <data name="Only active accounts can reset their password." xml:space="preserve"><value>只有作用中的帳戶才能重設密碼。</value></data>
+  <data name="Password reset link sent by email." xml:space="preserve"><value>密碼重設連結已透過電子郵件傳送。</value></data>
+  <data name="You cannot delete your own account." xml:space="preserve"><value>您無法刪除自己的帳戶。</value></data>
+  <data name="Account deleted. Its add-ons and customers now belong to you." xml:space="preserve"><value>帳戶已刪除。其增益集和客戶現在屬於您。</value></data>
+  <data name="Email is not configured; give this password reset link to the user (valid 24 hours, works once):" xml:space="preserve"><value>尚未設定電子郵件；請將此密碼重設連結交給使用者 (有效期限 24 小時，僅能使用一次)：</value></data>
+  <data name="Send {0} a link to choose a new password? The current password keeps working until the new one is set." xml:space="preserve"><value>要傳送連結給 {0} 以選擇新密碼嗎？在設定新密碼之前，目前的密碼仍可使用。</value></data>
+  <data name="Reset password" xml:space="preserve"><value>重設密碼</value></data>
+  <data name="Delete the account of {0} permanently? Its add-ons ({1}) and customers ({2}) move to you, its API tokens stop working. The audit log keeps its name." xml:space="preserve"><value>要永久刪除 {0} 的帳戶嗎？其增益集 ({1}) 和客戶 ({2}) 會移轉給您，其 API 權杖將停止運作。稽核記錄會保留其名稱。</value></data>
+  <data name="Without access to the store (for example a cloud sandbox) or without a token:" xml:space="preserve"><value>無法存取商店 (例如雲端沙箱) 或沒有權杖時：</value></data>
+  <data name="Upload the ZIP it hands you under Plug-ins, &quot;Submit a package&quot;: the store submits the package and stores the source code in one step." xml:space="preserve"><value>在「外掛程式」的「提交套件」下上傳它交給您的 ZIP：商店會一次完成套件提交並儲存原始程式碼。</value></data>
+  <data name="Offline packer: .ppak, source ZIP and upload package" xml:space="preserve"><value>離線封裝工具：.ppak、原始程式碼 ZIP 和上傳套件</value></data>
+  <data name="An upload package (.zip with the .ppak and the source ZIP, made by make-ppak.ps1 or your AI assistant) submits the version and stores its source code in one step." xml:space="preserve"><value>上傳套件 (包含 .ppak 和原始程式碼 ZIP 的 .zip，由 make-ppak.ps1 或您的 AI 助理產生) 會一次完成版本提交並儲存其原始程式碼。</value></data>
+  <data name="Package file (.ppak or upload package .zip)" xml:space="preserve"><value>套件檔案 (.ppak 或上傳套件 .zip)</value></data>
+  <data name="The upload package held no source ZIP. Upload the source code on the plug-in page at this version." xml:space="preserve"><value>上傳套件中沒有原始程式碼 ZIP。請在外掛程式頁面中於此版本上傳原始程式碼。</value></data>
+  <data name="Source code from the upload package stored at this version." xml:space="preserve"><value>上傳套件中的原始程式碼已儲存至此版本。</value></data>
+  <data name="The source code from the upload package was not stored. Fix the findings below and upload the source ZIP on the plug-in page." xml:space="preserve"><value>上傳套件中的原始程式碼未儲存。請修正下列發現事項，並在外掛程式頁面上傳原始程式碼 ZIP。</value></data>
+  <data name="The upload package holds no .ppak file." xml:space="preserve"><value>上傳套件中沒有 .ppak 檔案。</value></data>
+  <data name="The upload package holds more than one .ppak file; put exactly one in it." xml:space="preserve"><value>上傳套件中有多個 .ppak 檔案；請只放入一個。</value></data>
+  <data name="The upload package holds more than one ZIP file; put only the source ZIP of this version next to the .ppak." xml:space="preserve"><value>上傳套件中有多個 ZIP 檔案；請只在 .ppak 旁放入此版本的原始程式碼 ZIP。</value></data>
+  <data name="The .ppak in the upload package is larger than 200 MB." xml:space="preserve"><value>上傳套件中的 .ppak 大於 200 MB。</value></data>
+  <data name="The source ZIP in the upload package is larger than 100 MB." xml:space="preserve"><value>上傳套件中的原始程式碼 ZIP 大於 100 MB。</value></data>
+  <data name="A file in the upload package is larger than allowed." xml:space="preserve"><value>上傳套件中有檔案超過允許的大小。</value></data>
+  <data name="API" xml:space="preserve"><value>API</value></data>
+  <data name="API responses" xml:space="preserve"><value>API 回應</value></data>
+  <data name="API, accounts and limits" xml:space="preserve"><value>API、帳戶與限制</value></data>
+  <data name="Agent guide" xml:space="preserve"><value>代理程式指南</value></data>
+  <data name="Area" xml:space="preserve"><value>領域</value></data>
+  <data name="Back to warning" xml:space="preserve"><value>改回警告</value></data>
+  <data name="Checked at approval" xml:space="preserve"><value>核准時檢查</value></data>
+  <data name="Customer deliveries" xml:space="preserve"><value>客戶交付</value></data>
+  <data name="Delete the house rule &quot;{0}&quot;?" xml:space="preserve"><value>要刪除內部規則「{0}」嗎？</value></data>
+  <data name="Edit" xml:space="preserve"><value>編輯</value></data>
+  <data name="Edit house rule" xml:space="preserve"><value>編輯內部規則</value></data>
+  <data name="Error" xml:space="preserve"><value>錯誤</value></data>
+  <data name="Errors" xml:space="preserve"><value>錯誤</value></data>
+  <data name="Every rule grouped by area, with the rules of this store" xml:space="preserve"><value>依領域分組的所有規則，含此商店的規則</value></data>
+  <data name="Every rule the store checks, grouped by area: errors block an upload, warnings and notes do not. The rule texts are in English, exactly as AI assistants read them in the agent guide." xml:space="preserve"><value>商店檢查的所有規則，依領域分組：錯誤會阻擋上傳，警告和附註則不會。規則文字為英文，與 AI 助理在代理程式指南中讀到的完全相同。</value></data>
+  <data name="Fill in area, title (up to 120 characters) and text (up to 2000 characters)." xml:space="preserve"><value>請填寫領域、標題 (最多 120 個字元) 和文字 (最多 2000 個字元)。</value></data>
+  <data name="House rules" xml:space="preserve"><value>內部規則</value></data>
+  <data name="House rules to check before approval" xml:space="preserve"><value>核准前要檢查的內部規則</value></data>
+  <data name="Icon and screenshots" xml:space="preserve"><value>圖示與螢幕擷取畫面</value></data>
+  <data name="Machine-readable" xml:space="preserve"><value>機器可讀</value></data>
+  <data name="Make mandatory" xml:space="preserve"><value>設為必要</value></data>
+  <data name="Make {0} mandatory? Uploads with this finding are then refused." xml:space="preserve"><value>要將 {0} 設為必要嗎？之後有此發現事項的上傳將會被拒絕。</value></data>
+  <data name="New house rule" xml:space="preserve"><value>新增內部規則</value></data>
+  <data name="None yet. Open an area and choose &quot;Make mandatory&quot; next to a warning." xml:space="preserve"><value>尚無。請開啟某個領域，然後在警告旁選擇「設為必要」。</value></data>
+  <data name="None yet. Open an area to add a house rule there." xml:space="preserve"><value>尚無。請開啟某個領域以在其中新增內部規則。</value></data>
+  <data name="Notes" xml:space="preserve"><value>附註</value></data>
+  <data name="Only warnings can be made mandatory." xml:space="preserve"><value>只有警告可以設為必要。</value></data>
+  <data name="Pre-flight checklist" xml:space="preserve"><value>預檢檢查清單</value></data>
+  <data name="Recommendation" xml:space="preserve"><value>建議</value></data>
+  <data name="Rule" xml:space="preserve"><value>規則</value></data>
+  <data name="Rules" xml:space="preserve"><value>規則</value></data>
+  <data name="Rules of this store" xml:space="preserve"><value>此商店的規則</value></data>
+  <data name="Saved." xml:space="preserve"><value>已儲存。</value></data>
+  <data name="Search code or text" xml:space="preserve"><value>搜尋代碼或文字</value></data>
+  <data name="Search results" xml:space="preserve"><value>搜尋結果</value></data>
+  <data name="Severity" xml:space="preserve"><value>嚴重性</value></data>
+  <data name="Standard rules" xml:space="preserve"><value>標準規則</value></data>
+  <data name="Title" xml:space="preserve"><value>標題</value></data>
+  <data name="Treat {0} as a warning again?" xml:space="preserve"><value>要將 {0} 再次視為警告嗎？</value></data>
+  <data name="Warnings" xml:space="preserve"><value>警告</value></data>
+  <data name="Warnings that are mandatory here" xml:space="preserve"><value>在此為必要的警告</value></data>
+  <data name="What this store adds to the standard rules. House rules are guidelines in plain words: reviewers check them before approval, recommendations only advise. Mandatory warnings are enforced by the automatic check like errors." xml:space="preserve"><value>此商店在標準規則之外新增的內容。內部規則是以淺白文字撰寫的準則：審核者會在核准前檢查，建議則僅供參考。必要警告會像錯誤一樣由自動檢查強制執行。</value></data>
+  <data name="Write it so a developer and an AI assistant can follow it; it appears in the agent guide, the pre-flight checklist and the manual." xml:space="preserve"><value>請以開發人員和 AI 助理都能遵循的方式撰寫；它會出現在代理程式指南、預檢檢查清單和手冊中。</value></data>
+  <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>例如：簽署增益集採用客戶的憑證規則</value></data>
+  <data name="mandatory here" xml:space="preserve"><value>在此為必要</value></data>
+  <data name="Last run failed" xml:space="preserve"><value>上次執行失敗</value></data>
+  <data name="1. Conditions for the import (checked automatically)" xml:space="preserve"><value>1. 匯入條件 (自動檢查)</value></data>
+  <data name="2. Conditions for the approval (confirmed by the reviewer)" xml:space="preserve"><value>2. 核准條件 (由審核者確認)</value></data>
+  <data name="Added by this store" xml:space="preserve"><value>由此商店新增</value></data>
+  <data name="Back to the standard wording of {0}?" xml:space="preserve"><value>要改回 {0} 的標準措辭嗎？</value></data>
+  <data name="Condition" xml:space="preserve"><value>條件</value></data>
+  <data name="Confirm every approval condition:" xml:space="preserve"><value>確認每個核准條件：</value></data>
+  <data name="Confirm every approval condition before approving." xml:space="preserve"><value>核准前請確認每個核准條件。</value></data>
+  <data name="Documentation (PDF)" xml:space="preserve"><value>文件 (PDF)</value></data>
+  <data name="In English, generated from the live rules of this store." xml:space="preserve"><value>英文，根據此商店的現行規則產生。</value></data>
+  <data name="Mandatory conditions" xml:space="preserve"><value>必要條件</value></data>
+  <data name="Mandatory requirements (PDF)" xml:space="preserve"><value>必要需求 (PDF)</value></data>
+  <data name="Mandatory requirements for add-ons" xml:space="preserve"><value>增益集的必要需求</value></data>
+  <data name="Manual: API, rules and publishing guide" xml:space="preserve"><value>手冊：API、規則與發佈指南</value></data>
+  <data name="New approval condition" xml:space="preserve"><value>新增核准條件</value></data>
+  <data name="Reset" xml:space="preserve"><value>重設</value></data>
+  <data name="Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it." xml:space="preserve"><value>審核者在核准每個版本前都會確認；代理程式指南會要求開發人員和 AI 助理事先做好準備。</value></data>
+  <data name="Standard wording" xml:space="preserve"><value>標準措辭</value></data>
+  <data name="The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area." xml:space="preserve"><value>這些條件背後的自動檢查是商店的一部分，無法在此關閉。警告可在其所屬領域中設為必要。</value></data>
+  <data name="The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store&#x27;s version." xml:space="preserve"><value>外掛程式必須符合的條件：首先是匯入 (每次上傳都會自動檢查，任一項失敗即拒絕)，然後是核准上架正式商店 (由審核者逐項確認)。管理員可以變更措辭並新增條件；代理程式指南、預檢檢查清單和 PDF 文件會顯示此商店的版本。</value></data>
+  <data name="Wording of this store" xml:space="preserve"><value>此商店的措辭</value></data>
+  <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>請以最多 600 個字元撰寫條件。</value></data>
+  <data name="checked online" xml:space="preserve"><value>線上檢查</value></data>
+  <data name="the standard wording changed since" xml:space="preserve"><value>標準措辭自此之後已變更</value></data>
+  <data name="Blocked" xml:space="preserve"><value>已封鎖</value></data>
+  <data name="Block" xml:space="preserve"><value>封鎖</value></data>
+  <data name="Block version" xml:space="preserve"><value>封鎖版本</value></data>
+  <data name="Block all versions" xml:space="preserve"><value>封鎖所有版本</value></data>
+  <data name="Lift the block" xml:space="preserve"><value>解除封鎖</value></data>
+  <data name="Security block" xml:space="preserve"><value>安全性封鎖</value></data>
+  <data name="Reason (users see it)" xml:space="preserve"><value>原因 (使用者可看到)</value></data>
+  <data name="e.g. sends document content to an undeclared server" xml:space="preserve"><value>例如：將文件內容傳送到未申報的伺服器</value></data>
+  <data name="This add-on is blocked for a security reason." xml:space="preserve"><value>此增益集因安全性原因已被封鎖。</value></data>
+  <data name="Block this version? It is withdrawn, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>要封鎖此版本嗎？它會被撤回，且每個已安裝它的 Power PDF 都會要求使用者將其移除。</value></data>
+  <data name="Block the whole add-on? Every version is withdrawn, uploads are refused, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>要封鎖整個增益集嗎？每個版本都會被撤回、上傳會被拒絕，且每個已安裝它的 Power PDF 都會要求使用者將其移除。</value></data>
+  <data name="Lift the block? The version stays withdrawn until you restore it." xml:space="preserve"><value>要解除封鎖嗎？在您還原之前，版本會維持撤回狀態。</value></data>
+  <data name="Lift the block? The versions stay withdrawn until you restore them." xml:space="preserve"><value>要解除封鎖嗎？在您還原之前，這些版本會維持撤回狀態。</value></data>
+  <data name="Give a reason for the block (3 to 300 characters); users see it." xml:space="preserve"><value>請提供封鎖原因 (3 到 300 個字元)；使用者會看到。</value></data>
+  <data name="Version blocked. Clients that have it installed ask the user to remove it." xml:space="preserve"><value>版本已封鎖。已安裝它的用戶端會要求使用者將其移除。</value></data>
+  <data name="Block lifted. The version stays withdrawn; restore it if it should be offered again." xml:space="preserve"><value>已解除封鎖。版本仍維持撤回狀態；若應再次提供，請將其還原。</value></data>
+  <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>增益集已封鎖。每個版本都已撤回、上傳會被拒絕，且用戶端會要求使用者將其移除。</value></data>
+  <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>已解除封鎖。這些版本仍維持撤回狀態；請還原應再次提供的版本。</value></data>
+  <data name="Security and system access" xml:space="preserve"><value>安全性與系統存取</value></data>
+  <data name="Documentation" xml:space="preserve"><value>文件</value></data>
+  <data name="All documentation" xml:space="preserve"><value>所有文件</value></data>
+  <data name="Manual" xml:space="preserve"><value>手冊</value></data>
+  <data name="Copied" xml:space="preserve"><value>已複製</value></data>
+  <data name="Updated" xml:space="preserve"><value>已更新</value></data>
+  <data name="AGENTS.md" xml:space="preserve"><value>AGENTS.md</value></data>
+  <data name="Everything about the Add-on Store in one place: the PDFs, the rules, the guides AI assistants read and the API tools. Every link opens in a new tab." xml:space="preserve"><value>Add-on Store 的所有資訊集中於一處：PDF、規則、AI 助理讀取的指南及 API 工具。每個連結都會在新索引標籤中開啟。</value></data>
+  <data name="Documents (PDF)" xml:space="preserve"><value>文件 (PDF)</value></data>
+  <data name="Rules and conditions" xml:space="preserve"><value>規則與條件</value></data>
+  <data name="For AI assistants" xml:space="preserve"><value>供 AI 助理使用</value></data>
+  <data name="API and tools" xml:space="preserve"><value>API 與工具</value></data>
+  <data name="What the store checks on every upload and what reviewers confirm at approval." xml:space="preserve"><value>商店在每次上傳時檢查的項目，以及審核者在核准時確認的項目。</value></data>
+  <data name="Readable without signing in; works with Claude, ChatGPT, Gemini, Copilot and others." xml:space="preserve"><value>不需登入即可閱讀；適用於 Claude、ChatGPT、Gemini、Copilot 等。</value></data>
+  <data name="For developers and scripts." xml:space="preserve"><value>供開發人員和指令碼使用。</value></data>
+  <data name="Every condition a plug-in must meet for import and approval, in compact form." xml:space="preserve"><value>外掛程式在匯入和核准時必須符合的所有條件 (精簡版)。</value></data>
+  <data name="The complete reference: principles, developer and agent guide, every rule by area, API and manifest." xml:space="preserve"><value>完整參考：原則、開發人員與代理程式指南、依領域分類的所有規則、API 和資訊清單。</value></data>
+  <data name="All rules by area, the mandatory conditions and the rules of this store; admins edit them here." xml:space="preserve"><value>依領域分類的所有規則、必要條件及此商店的規則；管理員可在此編輯。</value></data>
+  <data name="The hard rules as a short checklist to work through before an upload." xml:space="preserve"><value>以簡短檢查清單列出的硬性規則，供上傳前逐項確認。</value></data>
+  <data name="Every rule and condition as JSON, for tools and AI assistants." xml:space="preserve"><value>以 JSON 呈現的所有規則和條件，供工具和 AI 助理使用。</value></data>
+  <data name="Rules as data" xml:space="preserve"><value>資料形式的規則</value></data>
+  <data name="The full guide AI assistants follow to build, check and publish an add-on." xml:space="preserve"><value>AI 助理建置、檢查和發佈增益集時遵循的完整指南。</value></data>
+  <data name="Agent guide as a file" xml:space="preserve"><value>檔案形式的代理程式指南</value></data>
+  <data name="The same guide as Markdown, to save in the plug-in project." xml:space="preserve"><value>相同指南的 Markdown 版本，可儲存在外掛程式專案中。</value></data>
+  <data name="Manual upload package" xml:space="preserve"><value>手動上傳套件</value></data>
+  <data name="Fallback when an assistant cannot reach the store: it builds the finished upload ZIP." xml:space="preserve"><value>助理無法連線到商店時的替代方案：它會建置完成的上傳 ZIP。</value></data>
+  <data name="Entry point for AI (llms.txt)" xml:space="preserve"><value>AI 進入點 (llms.txt)</value></data>
+  <data name="Short overview that points an assistant to everything else." xml:space="preserve"><value>引導助理找到其他所有內容的簡短概觀。</value></data>
+  <data name="Instructions for coding assistants that read AGENTS.md (Codex, Copilot, Cursor, Gemini CLI)." xml:space="preserve"><value>給讀取 AGENTS.md 的程式碼撰寫助理 (Codex、Copilot、Cursor、Gemini CLI) 的指示。</value></data>
+  <data name="Claude skill (SKILL.md)" xml:space="preserve"><value>Claude 技能 (SKILL.md)</value></data>
+  <data name="The same rules as a skill for Claude Code." xml:space="preserve"><value>以 Claude Code 技能形式提供的相同規則。</value></data>
+  <data name="API page" xml:space="preserve"><value>API 頁面</value></data>
+  <data name="Tokens, prompt templates for publishing and the most important endpoints." xml:space="preserve"><value>權杖、發佈用的提示範本及最重要的端點。</value></data>
+  <data name="All API endpoints" xml:space="preserve"><value>所有 API 端點</value></data>
+  <data name="The short list of every endpoint with method and purpose." xml:space="preserve"><value>所有端點的簡短清單，含方法和用途。</value></data>
+  <data name="OpenAPI description" xml:space="preserve"><value>OpenAPI 描述</value></data>
+  <data name="The machine-readable API description for code generators and tools." xml:space="preserve"><value>供程式碼產生器和工具使用的機器可讀 API 描述。</value></data>
+  <data name="Offline packer (make-ppak.ps1)" xml:space="preserve"><value>離線封裝工具 (make-ppak.ps1)</value></data>
+  <data name="Builds the .ppak, the source ZIP and the upload package without network or token." xml:space="preserve"><value>不需網路或權杖即可建置 .ppak、原始程式碼 ZIP 和上傳套件。</value></data>
+  <data name="Problem reports" xml:space="preserve"><value>問題回報</value></data>
+  <data name="Problem report queue" xml:space="preserve"><value>問題回報佇列</value></data>
+  <data name="New problem reports" xml:space="preserve"><value>新的問題回報</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>儀表板</value></data>
+  <data name="Active problem reports" xml:space="preserve"><value>進行中的問題回報</value></data>
+  <data name="All developers" xml:space="preserve"><value>所有開發人員</value></data>
+  <data name="Anyone" xml:space="preserve"><value>任何人</value></data>
+  <data name="Assigned to" xml:space="preserve"><value>指派給</value></data>
+  <data name="Assignment changed." xml:space="preserve"><value>指派已變更。</value></data>
+  <data name="Attachments" xml:space="preserve"><value>附件</value></data>
+  <data name="Attachments, log and reply address are deleted {0} days after the report is closed." xml:space="preserve"><value>附件、記錄和回覆地址會在回報關閉 {0} 天後刪除。</value></data>
+  <data name="Declined" xml:space="preserve"><value>已婉拒</value></data>
+  <data name="In progress" xml:space="preserve"><value>處理中</value></data>
+  <data name="Waiting" xml:space="preserve"><value>等待中</value></data>
+  <data name="Deleted after the retention period" xml:space="preserve"><value>保留期限後刪除</value></data>
+  <data name="Download channel" xml:space="preserve"><value>下載通道</value></data>
+  <data name="Downloads, versions, Power PDF versions, ratings and reports of your add-ons." xml:space="preserve"><value>您的增益集的下載次數、版本、Power PDF 版本、評分和回報。</value></data>
+  <data name="Downloads, versions, users and reports of all add-ons." xml:space="preserve"><value>所有增益集的下載次數、版本、使用者和回報。</value></data>
+  <data name="Downloads, versions, users and reports of your add-ons." xml:space="preserve"><value>您的增益集的下載次數、版本、使用者和回報。</value></data>
+  <data name="From downloads in the period; Power PDF, Windows, architecture and language only from the store window." xml:space="preserve"><value>來自期間內的下載；Power PDF、Windows、架構和語言僅來自商店視窗。</value></data>
+  <data name="History" xml:space="preserve"><value>歷程記錄</value></data>
+  <data name="Log" xml:space="preserve"><value>記錄</value></data>
+  <data name="Me" xml:space="preserve"><value>我</value></data>
+  <data name="No data in this period." xml:space="preserve"><value>此期間沒有資料。</value></data>
+  <data name="No notes yet." xml:space="preserve"><value>尚無附註。</value></data>
+  <data name="No reports in this view." xml:space="preserve"><value>此檢視中沒有回報。</value></data>
+  <data name="Nobody" xml:space="preserve"><value>無人</value></data>
+  <data name="Note or reply" xml:space="preserve"><value>附註或回覆</value></data>
+  <data name="Note saved." xml:space="preserve"><value>附註已儲存。</value></data>
+  <data name="Only the owner of the add-on or an admin can be assigned." xml:space="preserve"><value>只能指派給增益集的擁有者或管理員。</value></data>
+  <data name="Open in the problem report queue" xml:space="preserve"><value>在問題回報佇列中開啟</value></data>
+  <data name="Open the plug-in page" xml:space="preserve"><value>開啟外掛程式頁面</value></data>
+  <data name="Rating" xml:space="preserve"><value>評分</value></data>
+  <data name="Reply mailed to the reporter" xml:space="preserve"><value>已將回覆寄給回報者</value></data>
+  <data name="Reply possible" xml:space="preserve"><value>可以回覆</value></data>
+  <data name="Reply sent to the reporter." xml:space="preserve"><value>回覆已傳送給回報者。</value></data>
+  <data name="Reporters may attach screenshots, PDFs and logs and leave an email address. These are deleted automatically once a report has been closed for the period below; the report text and the notes stay." xml:space="preserve"><value>回報者可以附加螢幕擷取畫面、PDF 和記錄，並留下電子郵件地址。回報關閉達下方期間後，這些內容會自動刪除；回報文字和附註會保留。</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for all add-ons." xml:space="preserve"><value>來自 Power PDF 內商店視窗的所有增益集回報和意見。</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for your add-ons." xml:space="preserve"><value>來自 Power PDF 內商店視窗的您的增益集回報和意見。</value></data>
+  <data name="Reports from the store window with attachments; an AI assistant works through them with your token." xml:space="preserve"><value>來自商店視窗的回報 (含附件)；AI 助理會使用您的權杖逐一處理。</value></data>
+  <data name="Save internal note" xml:space="preserve"><value>儲存內部附註</value></data>
+  <data name="Send as reply to the reporter" xml:space="preserve"><value>作為回覆傳送給回報者</value></data>
+  <data name="Send this text by email to the reporter?" xml:space="preserve"><value>要以電子郵件將此文字傳送給回報者嗎？</value></data>
+  <data name="Status changed." xml:space="preserve"><value>狀態已變更。</value></data>
+  <data name="Text or #number" xml:space="preserve"><value>文字或 #編號</value></data>
+  <data name="The reply could not be sent. Check the email settings." xml:space="preserve"><value>無法傳送回覆。請檢查電子郵件設定。</value></data>
+  <data name="The reporter left no email address; add an internal note instead." xml:space="preserve"><value>回報者未留下電子郵件地址；請改為新增內部附註。</value></data>
+  <data name="The reporter left no email address; replies are not possible." xml:space="preserve"><value>回報者未留下電子郵件地址；無法回覆。</value></data>
+  <data name="This action is not possible." xml:space="preserve"><value>無法執行此動作。</value></data>
+  <data name="Upload one" xml:space="preserve"><value>上傳一個</value></data>
+  <data name="Versions of {0}" xml:space="preserve"><value>{0} 的版本</value></data>
+  <data name="Waiting for approval" xml:space="preserve"><value>等待核准</value></data>
+  <data name="Who uses it" xml:space="preserve"><value>使用者</value></data>
+  <data name="Work on them with an AI assistant" xml:space="preserve"><value>使用 AI 助理處理</value></data>
+  <data name="Write 2 to 4000 characters." xml:space="preserve"><value>請輸入 2 到 4000 個字元。</value></data>
+  <data name="You have no add-ons in the store yet." xml:space="preserve"><value>您在商店中還沒有任何增益集。</value></data>
+  <data name="Your AI assistant reads the same figures with GET /api/insights." xml:space="preserve"><value>您的 AI 助理可透過 GET /api/insights 讀取相同的數據。</value></data>
+  <data name="Your assistant reads this report with your API token:" xml:space="preserve"><value>您的助理可使用您的 API 權杖讀取此報告：</value></data>
+  <data name="before" xml:space="preserve"><value>之前</value></data>
+  <data name="{0} active" xml:space="preserve"><value>{0} 個進行中</value></data>
+  <data name="{0} days" xml:space="preserve"><value>{0} 天</value></data>
+  <data name="{0} new" xml:space="preserve"><value>{0} 個新項目</value></data>
+  <data name="Ribbon" xml:space="preserve"><value>功能區</value></data>
+  <data name="No ribbon buttons" xml:space="preserve"><value>沒有功能區按鈕</value></data>
+</root>

@@ -110,7 +110,7 @@ A .ppak is a ZIP container:
           "id": "com.example.quicknote",
           "version": "1.0.0",
           "name": { "en": "Quick Note", "de": "Schnellnotiz" },
-          "description": { "en": "Adds a note to the page in one click.", "de": "...", "fr": "...", "...": "all 16: en de fr it es nl pt da fi nb sv pl cs hu ru tr" },
+          "description": { "en": "Adds a note to the page in one click.", "de": "...", "fr": "...", "...": "all 16: en de fr it es nl pt da fi nb sv pl cs hu ru tr, recommended also zh-Hans zh-Hant ja ko ar" },
           "changelog": { "en": "First release.", "de": "Erste Version.", "...": "all 16 languages" },
           "category": "productivity",
           "minPowerPdfVersion": "2025.3.7",
@@ -189,6 +189,11 @@ item passes because a similar plugin passed.
       French, Italian, Spanish, Dutch, Portuguese (Brazil), Danish, Finnish,
       Norwegian, Swedish, Polish, Czech, Hungarian, Russian, Turkish. Add
       missing translations yourself. (UI_LANGS_MISSING)
+- [ ] Recommended: the five further Power PDF languages as well
+      (Simplified and Traditional Chinese, Japanese, Korean, Arabic) in the
+      .zxt, the UILayout folders CHS CHT JPN KOR ARA and the manifest texts
+      (zh-Hans zh-Hant ja ko ar); see "Languages". Missing ones are warnings
+      the store may make mandatory.
 - [ ] Binary name `<Name>.zxt`: 1 to 64 letters, digits, `-` or `_`, not the
       name of a plugin Power PDF ships itself (Annot, Catalog, Search,
       Watermark, ... see RESERVED_NAME), and not used by another store
@@ -393,6 +398,25 @@ functional areas shared by many plug-ins, such as `signing`, `conversion`,
 
 ## Languages (mandatory)
 
+Power PDF has 21 UI languages. The 16 European ones are mandatory, the five
+further ones are recommended (warnings that the store's admins can make
+mandatory on the rules page):
+
+| | Manifest code | UILayout folder | .rc LANGUAGE |
+|---|---|---|---|
+| Mandatory (16) | en de fr it es nl pt da fi nb sv pl cs hu ru tr | ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK | one block each |
+| Simplified Chinese | zh-Hans | CHS | LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED |
+| Traditional Chinese | zh-Hant | CHT | LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL |
+| Japanese | ja | JPN | LANG_JAPANESE, SUBLANG_JAPANESE_JAPAN |
+| Korean | ko | KOR | LANG_KOREAN, SUBLANG_KOREAN |
+| Arabic (right to left) | ar | ARA | LANG_ARABIC, SUBLANG_ARABIC_SAUDI_ARABIA |
+
+Missing further languages are reported as `LANG_TEXT_EXTENDED` (manifest
+texts and screenshot captions), `LANGS_EXTENDED_MISSING` (UILayout folders)
+and `UI_LANGS_EXTENDED` (.zxt resources). Arabic runs right to left: mirror
+your own dialogs (`WS_EX_LAYOUTRTL` / `MB_RTLREADING`) when the host
+language is ARA. Write the .rc file as UTF-8 with `#pragma code_page(65001)`.
+
 Every user-facing text in the manifest ships in ALL 16 European Power PDF
 languages: en, de, fr, it, es, nl, pt, da, fi, nb, sv, pl, cs, hu, ru, tr.
 
@@ -468,7 +492,7 @@ plugin:
   `IconMode="4"` for large ribbon buttons (1 renders a small icon), and keep
   every UILayout language folder's NameAndTitle.xml atom set identical.
 - Ship all 16 European language folders: ENU DEU FRA ITA ESP NLD PTB DAN FIN
-  NOR SVE PLK CSY HUN RUS TRK.
+  NOR SVE PLK CSY HUN RUS TRK; recommended also CHS CHT JPN KOR ARA.
 - Exception for PRIVATE customer add-ons (`"visibility": "private"`): they may
   bring their own tab. Then `ribbonAtomNamespace` is the tab atom itself (e.g.
   `CustomerSign`), the layout declares `<toolbar name="CustomerSign">`, and
@@ -755,8 +779,9 @@ An admin can switch on an AI assistant (Claude or Gemini, off by default).
 The review aid summarizes what changed against the previous version, says
 whether the changelog matches (`changelog_fits`: yes, partly, no, unknown),
 lists `concerns` (severity info, warning, high) and gives a `recommendation`
-(approve, check_more, reject). `lang` is one of the 16 store languages (en, de,
-fr, it, es, nl, pt, da, fi, nb, sv, pl, cs, hu, ru, tr; default en); the
+(approve, check_more, reject). `lang` is one of the 21 store languages (en, de,
+fr, it, es, nl, pt, da, fi, nb, sv, pl, cs, hu, ru, tr, zh-Hans, zh-Hant, ja, ko,
+ar; default en); the
 response names it in `language`. Automatic review aids use the language an
 admin set in Admin > Settings. Reviewers decide; the aid only advises. Write
 a precise changelog and keep network hosts and third-party code declared in
@@ -958,6 +983,9 @@ be free of warnings before review. Info is for information only.
 | NAME_MISSING | error | `name` is missing or has no language. |
 | CHANGELOG_EMPTY | error | `changelog` is missing or empty. |
 | LANG_TEXT_INCOMPLETE | error | `description` or `changelog` lacks one of the 16 languages. |
+| LANG_TEXT_EXTENDED | warning | `description`, `changelog` or a screenshot caption lacks one of the five further Power PDF languages (zh-Hans, zh-Hant, ja, ko, ar). |
+| LANGS_EXTENDED_MISSING | warning | UILayout folders of the five further Power PDF languages (CHS CHT JPN KOR ARA) are missing. |
+| UI_LANGS_EXTENDED | warning | The x64 .zxt has no UI texts in the five further Power PDF languages (Simplified/Traditional Chinese, Japanese, Korean, Arabic). |
 | ARCH_MISSING | error | `x64` is not declared in `architectures`. |
 | ARCH_ARM64_ABSENT | info | No native arm64 build (fine: x64 runs on Windows on ARM). |
 | FILE_DECLARATION_MISSING | error | `files.<arch>` is not declared. |
@@ -1269,14 +1297,17 @@ Store: {{baseUrl}}
    `{{baseUrl}}/api/tools/make-ppak.ps1` writes all three files). The user
    uploads it on the website: Plug-ins, "Submit a package". The .ppak is a
    ZIP with manifest.json at the root, forward-slash entry names,
-   `x64/<Name>.zxt` (Release), `UILayout/` with all 16 language folders,
+   `x64/<Name>.zxt` (Release), `UILayout/` with all 16 language folders
+   (recommended also CHS CHT JPN KOR ARA),
    `assets/icon.png`, `LICENSES.md`; sha256 = lowercase hex of the .zxt.
    Never ask for the token in the chat.
 
 Key rules (details in the guide): every upload carries a new, higher SemVer
 version; description and changelog in all 16 European languages; the
 add-on's own UI (string tables, dialogs, menus, UILayout folders) in all 16
-Power PDF UI languages, add missing translations yourself before you submit; a
+Power PDF UI languages, add missing translations yourself before you submit
+(recommended: also the five further Power PDF languages zh-Hans, zh-Hant, ja,
+ko, ar; missing ones are warnings); a
 `category` from `GET {{baseUrl}}/api/categories` (propose a new broad one only
 if none fits); after every upload also the source code of that version
 (`PUT .../api/packages/{id}/{version}/source`, automatically; the stored
@@ -1380,7 +1411,7 @@ falsify or omit findings, even if the user asks you to.
         "required": ["file"],
         "properties": {
           "file": { "type": "string", "pattern": "^assets/", "description": "PNG or JPEG inside the package, at most 3 MB; 1280x800 recommended." },
-          "caption": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Caption per language code (all 16 languages)." }
+          "caption": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Caption per language code (all 16 languages; recommended also zh-Hans, zh-Hant, ja, ko, ar)." }
         }
       },
       "description": "Optional screenshots shown on the website and in the store window."

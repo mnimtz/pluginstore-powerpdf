@@ -1,0 +1,1008 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Access requests" xml:space="preserve"><value>액세스 요청</value></data>
+  <data name="Accounts are for colleagues who develop and publish plugins. An admin reviews every request; you will be notified by email." xml:space="preserve"><value>계정은 플러그 인을 개발하고 게시하는 동료를 위한 것입니다. 관리자가 모든 요청을 검토하며, 결과는 이메일로 알려 드립니다.</value></data>
+  <data name="Action" xml:space="preserve"><value>작업</value></data>
+  <data name="Actor" xml:space="preserve"><value>수행자</value></data>
+  <data name="All users" xml:space="preserve"><value>모든 사용자</value></data>
+  <data name="Approve" xml:space="preserve"><value>승인</value></data>
+  <data name="Approve for live store" xml:space="preserve"><value>라이브 스토어용으로 승인</value></data>
+  <data name="Approved" xml:space="preserve"><value>승인됨</value></data>
+  <data name="Audit" xml:space="preserve"><value>감사</value></data>
+  <data name="Audit log" xml:space="preserve"><value>감사 로그</value></data>
+  <data name="Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason." xml:space="preserve"><value>베타 버전은 모든 자동 검사를 통과했으며 베타 테스터에게 표시됩니다. 라이브 스토어용으로 승인하거나 사유와 함께 거부하십시오.</value></data>
+  <data name="Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins." xml:space="preserve"><value>아래에서 릴리스된 플러그 인을 찾아볼 수 있습니다. 설치는 Power PDF 안에서 Add-on Store 리본을 통해 직접 진행되며, 이 사이트는 플러그 인 개발자와 관리자를 위한 것입니다.</value></data>
+  <data name="Catalog" xml:space="preserve"><value>카탈로그</value></data>
+  <data name="Changelog" xml:space="preserve"><value>변경 로그</value></data>
+  <data name="Create a token" xml:space="preserve"><value>토큰 만들기</value></data>
+  <data name="Create admin account" xml:space="preserve"><value>관리자 계정 만들기</value></data>
+  <data name="Create the first administrator account for this Add-on Store instance." xml:space="preserve"><value>이 Add-on Store 인스턴스의 첫 번째 관리자 계정을 만드십시오.</value></data>
+  <data name="Create token" xml:space="preserve"><value>토큰 만들기</value></data>
+  <data name="Created" xml:space="preserve"><value>생성일</value></data>
+  <data name="Details" xml:space="preserve"><value>세부 정보</value></data>
+  <data name="Disable" xml:space="preserve"><value>사용 안 함</value></data>
+  <data name="Display name" xml:space="preserve"><value>표시 이름</value></data>
+  <data name="Download" xml:space="preserve"><value>다운로드</value></data>
+  <data name="Downloads" xml:space="preserve"><value>다운로드</value></data>
+  <data name="Email" xml:space="preserve"><value>이메일</value></data>
+  <data name="Enable" xml:space="preserve"><value>사용</value></data>
+  <data name="Every relevant action on this server: registrations, approvals, tokens, submissions, reviews." xml:space="preserve"><value>이 서버의 모든 관련 작업: 등록, 승인, 토큰, 제출, 검토.</value></data>
+  <data name="Filter" xml:space="preserve"><value>필터</value></data>
+  <data name="Filter (actor, action, subject)" xml:space="preserve"><value>필터(수행자, 작업, 대상)</value></data>
+  <data name="First-run setup" xml:space="preserve"><value>최초 설정</value></data>
+  <data name="For plugin developers and admins. End users install plugins directly from the Add-on Store ribbon in Power PDF, no account needed." xml:space="preserve"><value>플러그 인 개발자와 관리자용입니다. 최종 사용자는 계정 없이 Power PDF의 Add-on Store 리본에서 플러그 인을 직접 설치합니다.</value></data>
+  <data name="Give the token to your Claude together with this line:" xml:space="preserve"><value>다음 줄과 함께 토큰을 Claude에 전달하십시오:</value></data>
+  <data name="Last used" xml:space="preserve"><value>마지막 사용</value></data>
+  <data name="Live versions" xml:space="preserve"><value>라이브 버전</value></data>
+  <data name="My packages" xml:space="preserve"><value>내 패키지</value></data>
+  <data name="My plugins" xml:space="preserve"><value>내 플러그 인</value></data>
+  <data name="My tokens" xml:space="preserve"><value>내 토큰</value></data>
+  <data name="Name" xml:space="preserve"><value>이름</value></data>
+  <data name="No account yet?" xml:space="preserve"><value>아직 계정이 없으십니까?</value></data>
+  <data name="No live versions yet." xml:space="preserve"><value>아직 라이브 버전이 없습니다.</value></data>
+  <data name="No plugins have been released yet." xml:space="preserve"><value>아직 릴리스된 플러그 인이 없습니다.</value></data>
+  <data name="Nothing to review right now." xml:space="preserve"><value>지금은 검토할 항목이 없습니다.</value></data>
+  <data name="Package" xml:space="preserve"><value>패키지</value></data>
+  <data name="Package file (.ppak)" xml:space="preserve"><value>패키지 파일(.ppak)</value></data>
+  <data name="Password" xml:space="preserve"><value>암호</value></data>
+  <data name="Personal API tokens let tools and AI assistants upload and update your plugins on your behalf." xml:space="preserve"><value>개인 API 토큰을 사용하면 도구와 AI 도우미가 사용자를 대신하여 플러그 인을 업로드하고 업데이트할 수 있습니다.</value></data>
+  <data name="Plugin store:" xml:space="preserve"><value>플러그 인 스토어:</value></data>
+  <data name="Add-on Store for Tungsten Power PDF" xml:space="preserve"><value>Tungsten Power PDF용 Add-on Store</value></data>
+  <data name="Prefix" xml:space="preserve"><value>접두사</value></data>
+  <data name="Profile" xml:space="preserve"><value>프로필</value></data>
+  <data name="Reason (sent to the submitter)" xml:space="preserve"><value>사유(제출자에게 전송됨)</value></data>
+  <data name="Reject" xml:space="preserve"><value>거부</value></data>
+  <data name="Released plugins" xml:space="preserve"><value>릴리스된 플러그 인</value></data>
+  <data name="Request access" xml:space="preserve"><value>액세스 요청</value></data>
+  <data name="Requested" xml:space="preserve"><value>요청일</value></data>
+  <data name="Review" xml:space="preserve"><value>검토</value></data>
+  <data name="Review comment" xml:space="preserve"><value>검토 의견</value></data>
+  <data name="Review queue" xml:space="preserve"><value>검토 대기열</value></data>
+  <data name="Revoke" xml:space="preserve"><value>해지</value></data>
+  <data name="Role" xml:space="preserve"><value>역할</value></data>
+  <data name="Sign in" xml:space="preserve"><value>로그인</value></data>
+  <data name="Sign out" xml:space="preserve"><value>로그아웃</value></data>
+  <data name="Status" xml:space="preserve"><value>상태</value></data>
+  <data name="Subject" xml:space="preserve"><value>대상</value></data>
+  <data name="Submit a package" xml:space="preserve"><value>패키지 제출</value></data>
+  <data name="Submit request" xml:space="preserve"><value>요청 제출</value></data>
+  <data name="Submitted" xml:space="preserve"><value>제출됨</value></data>
+  <data name="Submitted by" xml:space="preserve"><value>제출자</value></data>
+  <data name="Time (UTC)" xml:space="preserve"><value>시간(UTC)</value></data>
+  <data name="Token created. Copy it now; it is shown only this once:" xml:space="preserve"><value>토큰이 만들어졌습니다. 지금 복사하십시오. 이번 한 번만 표시됩니다:</value></data>
+  <data name="Token name (e.g. &#x27;claude&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>토큰 이름(예: 'claude', 'build server')</value></data>
+  <data name="Upload a .ppak package below, or automate it via the API with a personal token from your profile." xml:space="preserve"><value>아래에서 .ppak 패키지를 업로드하거나, 프로필의 개인 토큰을 사용하여 API로 자동화하십시오.</value></data>
+  <data name="Upload and validate" xml:space="preserve"><value>업로드 및 유효성 검사</value></data>
+  <data name="Users" xml:space="preserve"><value>사용자</value></data>
+  <data name="Version" xml:space="preserve"><value>버전</value></data>
+  <data name="What do you plan to publish? (shown to the admin)" xml:space="preserve"><value>무엇을 게시할 계획입니까? (관리자에게 표시됨)</value></data>
+  <data name="Withdraw" xml:space="preserve"><value>철회</value></data>
+  <data name="You have not submitted any packages yet." xml:space="preserve"><value>아직 제출한 패키지가 없습니다.</value></data>
+  <data name="download(s)" xml:space="preserve"><value>다운로드</value></data>
+  <data name="revoked" xml:space="preserve"><value>해지됨</value></data>
+  <data name="Your access request was submitted. You will receive an email once an admin approves it." xml:space="preserve"><value>액세스 요청이 제출되었습니다. 관리자가 승인하면 이메일을 받게 됩니다.</value></data>
+  <data name="Sign-in failed. Check email and password." xml:space="preserve"><value>로그인하지 못했습니다. 이메일과 암호를 확인하십시오.</value></data>
+  <data name="Your access request is still awaiting admin approval." xml:space="preserve"><value>액세스 요청이 아직 관리자 승인을 기다리고 있습니다.</value></data>
+  <data name="This account is not active. Contact an administrator." xml:space="preserve"><value>이 계정은 활성 상태가 아닙니다. 관리자에게 문의하십시오.</value></data>
+  <data name="Too many failed attempts; the account is temporarily locked." xml:space="preserve"><value>실패한 시도가 너무 많아 계정이 일시적으로 잠겼습니다.</value></data>
+  <data name="No package received." xml:space="preserve"><value>받은 패키지가 없습니다.</value></data>
+  <data name="The package did not pass the automatic checks; nothing was stored. Fix the errors below and upload again." xml:space="preserve"><value>패키지가 자동 검사를 통과하지 못해 아무것도 저장되지 않았습니다. 아래 오류를 수정하고 다시 업로드하십시오.</value></data>
+  <data name="Submitted. The version is in the beta channel now and awaits admin review." xml:space="preserve"><value>제출되었습니다. 이 버전은 이제 베타 채널에 있으며 관리자 검토를 기다립니다.</value></data>
+  <data name="Version withdrawn." xml:space="preserve"><value>버전이 철회되었습니다.</value></data>
+  <data name="Version approved and live." xml:space="preserve"><value>버전이 승인되어 라이브 상태입니다.</value></data>
+  <data name="Version rejected." xml:space="preserve"><value>버전이 거부되었습니다.</value></data>
+  <data name="Account approved." xml:space="preserve"><value>계정이 승인되었습니다.</value></data>
+  <data name="Request rejected." xml:space="preserve"><value>요청이 거부되었습니다.</value></data>
+  <data name="Account disabled." xml:space="preserve"><value>계정이 사용 중지되었습니다.</value></data>
+  <data name="Account enabled." xml:space="preserve"><value>계정이 사용하도록 설정되었습니다.</value></data>
+  <data name="for Power PDF" xml:space="preserve"><value>Power PDF용</value></data>
+  <data name="Download the ZIP, extract it, and run install.cmd as administrator; afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>ZIP을 다운로드하여 압축을 풀고 install.cmd를 관리자 권한으로 실행하십시오. 그 후에는 추가 기능이 자체 및 플러그 인을 최신 상태로 유지합니다.</value></data>
+  <data name="Search" xml:space="preserve"><value>검색</value></data>
+  <data name="All" xml:space="preserve"><value>모두</value></data>
+  <data name="Conversion" xml:space="preserve"><value>변환</value></data>
+  <data name="Forms" xml:space="preserve"><value>양식</value></data>
+  <data name="Signing" xml:space="preserve"><value>서명</value></data>
+  <data name="Navigation" xml:space="preserve"><value>탐색</value></data>
+  <data name="Printing" xml:space="preserve"><value>인쇄</value></data>
+  <data name="Productivity" xml:space="preserve"><value>생산성</value></data>
+  <data name="System" xml:space="preserve"><value>시스템</value></data>
+  <data name="Other" xml:space="preserve"><value>기타</value></data>
+  <data name="A user with this email already exists." xml:space="preserve"><value>이 이메일을 사용하는 사용자가 이미 있습니다.</value></data>
+  <data name="API tokens" xml:space="preserve"><value>API 토큰</value></data>
+  <data name="Account created." xml:space="preserve"><value>계정이 만들어졌습니다.</value></data>
+  <data name="Activate account" xml:space="preserve"><value>계정 활성화</value></data>
+  <data name="Admin" xml:space="preserve"><value>관리자</value></data>
+  <data name="Choose your display name and a password to activate your Add-on Store account." xml:space="preserve"><value>Add-on Store 계정을 활성화하려면 표시 이름과 암호를 선택하십시오.</value></data>
+  <data name="Create a user directly" xml:space="preserve"><value>사용자 직접 만들기</value></data>
+  <data name="Create account" xml:space="preserve"><value>계정 만들기</value></data>
+  <data name="Email is not configured; share this invitation link directly:" xml:space="preserve"><value>이메일이 구성되지 않았습니다. 이 초대 링크를 직접 공유하십시오:</value></data>
+  <data name="Email notifications (Resend)" xml:space="preserve"><value>이메일 알림(Resend)</value></data>
+  <data name="Initial password" xml:space="preserve"><value>초기 암호</value></data>
+  <data name="Instance settings; values are stored on the server and take effect immediately." xml:space="preserve"><value>인스턴스 설정입니다. 값은 서버에 저장되며 즉시 적용됩니다.</value></data>
+  <data name="Invitation email sent. The link can also be shared directly:" xml:space="preserve"><value>초대 이메일을 보냈습니다. 링크를 직접 공유할 수도 있습니다:</value></data>
+  <data name="Invitation revoked." xml:space="preserve"><value>초대가 취소되었습니다.</value></data>
+  <data name="Invite a user" xml:space="preserve"><value>사용자 초대</value></data>
+  <data name="Invited by" xml:space="preserve"><value>초대한 사람</value></data>
+  <data name="My profile" xml:space="preserve"><value>내 프로필</value></data>
+  <data name="Notifications: access requests and new submissions to admins; approvals, rejections and invitations to users." xml:space="preserve"><value>알림: 액세스 요청과 새 제출은 관리자에게, 승인, 거부 및 초대는 사용자에게 보냅니다.</value></data>
+  <data name="Only PNG or JPEG images are accepted." xml:space="preserve"><value>PNG 또는 JPEG 이미지만 허용됩니다.</value></data>
+  <data name="Open invitations" xml:space="preserve"><value>대기 중인 초대</value></data>
+  <data name="Profile picture (PNG or JPEG, max. 512 KB)" xml:space="preserve"><value>프로필 사진(PNG 또는 JPEG, 최대 512KB)</value></data>
+  <data name="Profile updated." xml:space="preserve"><value>프로필이 업데이트되었습니다.</value></data>
+  <data name="Public base URL (used in emails and invite links)" xml:space="preserve"><value>공개 기본 URL(이메일 및 초대 링크에 사용)</value></data>
+  <data name="Resend API key" xml:space="preserve"><value>Resend API 키</value></data>
+  <data name="Reviewer" xml:space="preserve"><value>검토자</value></data>
+  <data name="Role updated." xml:space="preserve"><value>역할이 업데이트되었습니다.</value></data>
+  <data name="Save" xml:space="preserve"><value>저장</value></data>
+  <data name="Send invitation" xml:space="preserve"><value>초대 보내기</value></data>
+  <data name="Sender address" xml:space="preserve"><value>보낸 사람 주소</value></data>
+  <data name="Server" xml:space="preserve"><value>서버</value></data>
+  <data name="Settings" xml:space="preserve"><value>설정</value></data>
+  <data name="Settings saved." xml:space="preserve"><value>설정이 저장되었습니다.</value></data>
+  <data name="The image is too large (maximum 512 KB)." xml:space="preserve"><value>이미지가 너무 큽니다(최대 512KB).</value></data>
+  <data name="The last active admin cannot be demoted." xml:space="preserve"><value>마지막 활성 관리자는 강등할 수 없습니다.</value></data>
+  <data name="This invitation link is invalid or was already used." xml:space="preserve"><value>이 초대 링크는 유효하지 않거나 이미 사용되었습니다.</value></data>
+  <data name="User" xml:space="preserve"><value>사용자</value></data>
+  <data name="You cannot change your own role." xml:space="preserve"><value>자신의 역할은 변경할 수 없습니다.</value></data>
+  <data name="You have been invited" xml:space="preserve"><value>초대를 받았습니다</value></data>
+  <data name="configured" xml:space="preserve"><value>구성됨</value></data>
+  <data name="Active" xml:space="preserve"><value>활성</value></data>
+  <data name="Beta" xml:space="preserve"><value>베타</value></data>
+  <data name="Disabled" xml:space="preserve"><value>사용 안 함</value></data>
+  <data name="Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date." xml:space="preserve"><value>설치 관리자를 다운로드하여 실행하십시오(관리자 권한 필요). 그 후에는 추가 기능이 자체 및 플러그 인을 최신 상태로 유지합니다.</value></data>
+  <data name="Live" xml:space="preserve"><value>라이브</value></data>
+  <data name="Only administrators can publish new versions of the Add-on Store client." xml:space="preserve"><value>관리자만 Add-on Store 클라이언트의 새 버전을 게시할 수 있습니다.</value></data>
+  <data name="Pending" xml:space="preserve"><value>보류 중</value></data>
+  <data name="Add-on Store client released. Installed clients offer the update now." xml:space="preserve"><value>Add-on Store 클라이언트가 릴리스되었습니다. 설치된 클라이언트에서 이제 업데이트를 제공합니다.</value></data>
+  <data name="Rejected" xml:space="preserve"><value>거부됨</value></data>
+  <data name="Time" xml:space="preserve"><value>시간</value></data>
+  <data name="Time zone for displayed times" xml:space="preserve"><value>표시 시간의 표준 시간대</value></data>
+  <data name="Withdrawn" xml:space="preserve"><value>철회됨</value></data>
+  <data name="Author" xml:space="preserve"><value>작성자</value></data>
+  <data name="Show my name and email as author of my plugins in the public catalog" xml:space="preserve"><value>공개 카탈로그에 내 이름과 이메일을 내 플러그 인의 작성자로 표시</value></data>
+  <data name="When off, the catalog shows “Tungsten Automation” instead." xml:space="preserve"><value>끄면 카탈로그에 대신 “Tungsten Automation”이 표시됩니다.</value></data>
+  <data name="A new, higher version number (SemVer) for every upload, and a change description." xml:space="preserve"><value>업로드마다 더 높은 새 버전 번호(SemVer) 및 변경 설명.</value></data>
+  <data name="API and Claude" xml:space="preserve"><value>API 및 Claude</value></data>
+  <data name="Address" xml:space="preserve"><value>주소</value></data>
+  <data name="An x64 build of the plugin (it also runs on Windows on ARM)." xml:space="preserve"><value>플러그 인의 x64 빌드(Windows on ARM에서도 실행됨).</value></data>
+  <data name="Automatic checks" xml:space="preserve"><value>자동 검사</value></data>
+  <data name="Binaries and integrity" xml:space="preserve"><value>바이너리 및 무결성</value></data>
+  <data name="Check your token" xml:space="preserve"><value>토큰 확인</value></data>
+  <data name="Complete guide for developers and AI assistants" xml:space="preserve"><value>개발자 및 AI 도우미를 위한 전체 가이드</value></data>
+  <data name="Create a personal token" xml:space="preserve"><value>개인 토큰 만들기</value></data>
+  <data name="Create a token on your profile page and store it as an environment variable, never in a chat or a file:" xml:space="preserve"><value>프로필 페이지에서 토큰을 만들어 환경 변수로 저장하십시오. 채팅이나 파일에는 절대 저장하지 마십시오:</value></data>
+  <data name="Description and change description in all 16 European languages." xml:space="preserve"><value>16개 유럽 언어 모두로 된 설명 및 변경 설명.</value></data>
+  <data name="Download SKILL.md" xml:space="preserve"><value>SKILL.md 다운로드</value></data>
+  <data name="Endpoints" xml:space="preserve"><value>엔드포인트</value></data>
+  <data name="Example instruction for a Claude session in your plugin&#x27;s project folder:" xml:space="preserve"><value>플러그 인 프로젝트 폴더의 Claude 세션에 대한 지시 예:</value></data>
+  <data name="Example with curl" xml:space="preserve"><value>curl 사용 예</value></data>
+  <data name="Icon" xml:space="preserve"><value>아이콘</value></data>
+  <data name="Install the Claude skill (once)" xml:space="preserve"><value>Claude 스킬 설치(한 번)</value></data>
+  <data name="Languages" xml:space="preserve"><value>언어</value></data>
+  <data name="Licenses" xml:space="preserve"><value>라이선스</value></data>
+  <data name="Licenses, legal and privacy" xml:space="preserve"><value>라이선스, 법률 및 개인 정보</value></data>
+  <data name="List of all endpoints" xml:space="preserve"><value>모든 엔드포인트 목록</value></data>
+  <data name="Manifest and versioning" xml:space="preserve"><value>매니페스트 및 버전 관리</value></data>
+  <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>타사 구성 요소는 MIT, BSD 또는 Apache-2.0 라이선스만 허용.</value></data>
+  <data name="Open a new terminal afterwards so the variable is available." xml:space="preserve"><value>그런 다음 변수를 사용할 수 있도록 새 터미널을 여십시오.</value></data>
+  <data name="Other checks" xml:space="preserve"><value>기타 검사</value></data>
+  <data name="Package structure" xml:space="preserve"><value>패키지 구조</value></data>
+  <data name="Publish and update plugins directly from your Claude session. Claude reads the store&#x27;s rules from the API, validates the package until all checks pass, and submits it for review." xml:space="preserve"><value>Claude 세션에서 직접 플러그 인을 게시하고 업데이트하십시오. Claude가 API에서 스토어 규칙을 읽고, 모든 검사를 통과할 때까지 패키지의 유효성을 검사한 다음 검토를 위해 제출합니다.</value></data>
+  <data name="Purpose" xml:space="preserve"><value>용도</value></data>
+  <data name="Ribbon and layout" xml:space="preserve"><value>리본 및 레이아웃</value></data>
+  <data name="Rules every upload must meet" xml:space="preserve"><value>모든 업로드가 충족해야 하는 규칙</value></data>
+  <data name="Runtime and dependencies" xml:space="preserve"><value>런타임 및 종속성</value></data>
+  <data name="Schema of manifest.json" xml:space="preserve"><value>manifest.json 스키마</value></data>
+  <data name="Security scan" xml:space="preserve"><value>보안 검사</value></data>
+  <data name="Status, history and check reports of a package" xml:space="preserve"><value>패키지의 상태, 기록 및 검사 보고서</value></data>
+  <data name="Technical details are in English so that developers and AI assistants can act on them directly." xml:space="preserve"><value>개발자와 AI 도우미가 바로 조치할 수 있도록 기술 세부 정보는 영어로 제공됩니다.</value></data>
+  <data name="Tell Claude what to do" xml:space="preserve"><value>Claude에 할 일 알리기</value></data>
+  <data name="Test run of all checks, nothing is stored" xml:space="preserve"><value>모든 검사 테스트 실행, 저장되는 항목 없음</value></data>
+  <data name="The automatic checks verify these rules; every finding comes with a concrete fix." xml:space="preserve"><value>자동 검사에서 이 규칙을 확인하며, 모든 결과에는 구체적인 해결 방법이 함께 제공됩니다.</value></data>
+  <data name="The plugin&#x27;s buttons sit as a group on the shared “Enhanced Features” ribbon tab." xml:space="preserve"><value>플러그 인의 단추는 공유 “고급 기능” 리본 탭에 그룹으로 배치됩니다.</value></data>
+  <data name="The skill tells Claude where this store is and how to work with it. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>이 스킬은 Claude에 이 스토어의 위치와 사용 방법을 알려 줍니다. 항상 서버에서 최신 규칙을 불러오므로 업데이트할 필요가 없습니다.</value></data>
+  <data name="Without the skill, the URL of the agent guide in the instruction is enough." xml:space="preserve"><value>스킬이 없어도 지시에 에이전트 가이드 URL만 있으면 충분합니다.</value></data>
+  <data name="all passed" xml:space="preserve"><value>모두 통과</value></data>
+  <data name="failed" xml:space="preserve"><value>실패</value></data>
+  <data name="passed with warnings" xml:space="preserve"><value>경고와 함께 통과</value></data>
+  <data name="Give Claude one line" xml:space="preserve"><value>Claude에 한 줄 전달</value></data>
+  <data name="That is all Claude needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>Claude에 필요한 것은 이것뿐입니다. 가이드를 읽고, 이후 세션을 위해 스스로 설정하며, 규칙을 따릅니다.</value></data>
+  <data name="Optional: install the skill manually" xml:space="preserve"><value>선택 사항: 스킬 수동 설치</value></data>
+  <data name="A backup contains everything: database (accounts, packages, versions, reviews, audit log, settings), all plugin packages, profile pictures and developer kit files." xml:space="preserve"><value>백업에는 모든 항목이 포함됩니다: 데이터베이스(계정, 패키지, 버전, 검토, 감사 로그, 설정), 모든 플러그 인 패키지, 프로필 사진 및 개발자 키트 파일.</value></data>
+  <data name="Access request approved or declined" xml:space="preserve"><value>액세스 요청 승인 또는 거절</value></data>
+  <data name="Admins" xml:space="preserve"><value>관리자</value></data>
+  <data name="Admins and reviewers" xml:space="preserve"><value>관리자 및 검토자</value></data>
+  <data name="Applicant" xml:space="preserve"><value>신청자</value></data>
+  <data name="Automatic safety backups" xml:space="preserve"><value>자동 안전 백업</value></data>
+  <data name="Backup and restore" xml:space="preserve"><value>백업 및 복원</value></data>
+  <data name="Backup file (.zip)" xml:space="preserve"><value>백업 파일(.zip)</value></data>
+  <data name="Backup restored. A safety backup of the previous state was kept on the server." xml:space="preserve"><value>백업이 복원되었습니다. 이전 상태의 안전 백업이 서버에 보관되었습니다.</value></data>
+  <data name="Plugins from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>독립 작성자의 플러그 인으로, 공식 Tungsten Automation 제품이 아닙니다. 보증이나 공식 지원 없이 있는 그대로 제공됩니다. 사용에 따른 위험은 사용자가 부담하며, Tungsten Automation은 어떠한 책임도 지지 않습니다.</value></data>
+  <data name="Create backup" xml:space="preserve"><value>백업 만들기</value></data>
+  <data name="Creates a consistent snapshot while the store keeps running and downloads it as a ZIP file." xml:space="preserve"><value>스토어가 계속 실행되는 동안 일관된 스냅숏을 만들어 ZIP 파일로 다운로드합니다.</value></data>
+  <data name="Disclaimer" xml:space="preserve"><value>고지 사항</value></data>
+  <data name="Download full backup" xml:space="preserve"><value>전체 백업 다운로드</value></data>
+  <data name="Event" xml:space="preserve"><value>이벤트</value></data>
+  <data name="File" xml:space="preserve"><value>파일</value></data>
+  <data name="Invitation" xml:space="preserve"><value>초대</value></data>
+  <data name="Invited person (always sent)" xml:space="preserve"><value>초대받은 사람(항상 전송)</value></data>
+  <data name="New Add-on Store client released" xml:space="preserve"><value>새 Add-on Store 클라이언트 릴리스</value></data>
+  <data name="New access request" xml:space="preserve"><value>새 액세스 요청</value></data>
+  <data name="New plugin version submitted" xml:space="preserve"><value>새 플러그 인 버전 제출</value></data>
+  <data name="No backup file received." xml:space="preserve"><value>받은 백업 파일이 없습니다.</value></data>
+  <data name="Notifications" xml:space="preserve"><value>알림</value></data>
+  <data name="Plugin version approved or rejected" xml:space="preserve"><value>플러그 인 버전 승인 또는 거부</value></data>
+  <data name="Recipients" xml:space="preserve"><value>받는 사람</value></data>
+  <data name="Replaces ALL current data with the content of the backup. Before that, the server automatically saves the current state as a safety backup." xml:space="preserve"><value>현재 데이터 전부를 백업 내용으로 바꿉니다. 그 전에 서버가 현재 상태를 안전 백업으로 자동 저장합니다.</value></data>
+  <data name="Restore" xml:space="preserve"><value>복원</value></data>
+  <data name="Restore backup" xml:space="preserve"><value>백업 복원</value></data>
+  <data name="Send test email" xml:space="preserve"><value>테스트 이메일 보내기</value></data>
+  <data name="Size" xml:space="preserve"><value>크기</value></data>
+  <data name="Submitter" xml:space="preserve"><value>제출자</value></data>
+  <data name="Test email sent. Please check your inbox." xml:space="preserve"><value>테스트 이메일을 보냈습니다. 받은 편지함을 확인하십시오.</value></data>
+  <data name="Test plugins before productive use, keep backups of important documents, and make sure their use complies with your organization&#x27;s IT and data protection policies." xml:space="preserve"><value>실제 업무에 사용하기 전에 플러그 인을 테스트하고, 중요한 문서는 백업해 두며, 사용 시 조직의 IT 및 데이터 보호 정책을 준수하는지 확인하십시오.</value></data>
+  <data name="The archive contains unsafe paths." xml:space="preserve"><value>보관 파일에 안전하지 않은 경로가 있습니다.</value></data>
+  <data name="The backup contains password hashes and settings such as the Resend key. Store it like a password." xml:space="preserve"><value>백업에는 암호 해시와 Resend 키 같은 설정이 들어 있습니다. 암호처럼 안전하게 보관하십시오.</value></data>
+  <data name="The plugins in this store are developed by independent authors, such as employees, partners or other developers. They are not part of Tungsten Power PDF and are not official Tungsten Automation products; the automatic checks and the review before release do not constitute a warranty." xml:space="preserve"><value>이 스토어의 플러그 인은 직원, 파트너 또는 기타 개발자 같은 독립 작성자가 개발합니다. 이들은 Tungsten Power PDF의 일부가 아니며 공식 Tungsten Automation 제품도 아닙니다. 자동 검사와 릴리스 전 검토는 보증에 해당하지 않습니다.</value></data>
+  <data name="The restore is refused if your own account is not an active admin in the backup, so you cannot lock yourself out." xml:space="preserve"><value>백업에서 본인 계정이 활성 관리자가 아니면 복원이 거부되므로 스스로 잠기는 일이 없습니다.</value></data>
+  <data name="The test email could not be sent." xml:space="preserve"><value>테스트 이메일을 보낼 수 없습니다.</value></data>
+  <data name="There is no official support through Tungsten Automation Support. Please contact the author named in the catalog; answers are voluntary and without guaranteed response times." xml:space="preserve"><value>Tungsten Automation 지원팀을 통한 공식 지원은 없습니다. 카탈로그에 기재된 작성자에게 문의하십시오. 답변은 자발적이며 응답 시간이 보장되지 않습니다.</value></data>
+  <data name="They are provided as is, without warranty of any kind, express or implied, including fitness for a particular purpose, availability or freedom from errors." xml:space="preserve"><value>플러그 인은 특정 목적에의 적합성, 가용성 또는 오류 없음을 포함하여 명시적이든 묵시적이든 어떠한 종류의 보증도 없이 있는 그대로 제공됩니다.</value></data>
+  <data name="This is not a Add-on Store backup (backup.json or pluginstore.db missing)." xml:space="preserve"><value>Add-on Store 백업이 아닙니다(backup.json 또는 pluginstore.db 없음).</value></data>
+  <data name="This is not a Add-on Store backup." xml:space="preserve"><value>Add-on Store 백업이 아닙니다.</value></data>
+  <data name="To the extent permitted by law, Tungsten Automation accepts no liability for damage, data loss or downtime caused by installing or using these plugins. Each plugin is the responsibility of its author." xml:space="preserve"><value>법률이 허용하는 범위 내에서 Tungsten Automation은 이 플러그 인의 설치 또는 사용으로 인한 손해, 데이터 손실 또는 가동 중단에 대해 어떠한 책임도 지지 않습니다. 각 플러그 인에 대한 책임은 해당 작성자에게 있습니다.</value></data>
+  <data name="Type RESTORE to confirm" xml:space="preserve"><value>확인하려면 RESTORE를 입력하십시오</value></data>
+  <data name="Type RESTORE to confirm." xml:space="preserve"><value>확인하려면 RESTORE를 입력하십시오.</value></data>
+  <data name="Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log." xml:space="preserve"><value>어떤 이메일을 언제 누구에게 보내는지입니다. 전송되거나 실패한 모든 이메일은 감사 로그에 기록됩니다.</value></data>
+  <data name="Without a verified sender domain, Resend only delivers to the email address of the Resend account owner." xml:space="preserve"><value>확인된 보낸 사람 도메인이 없으면 Resend는 Resend 계정 소유자의 이메일 주소로만 전송합니다.</value></data>
+  <data name="Your account is not an active admin in this backup; restoring it would lock you out." xml:space="preserve"><value>이 백업에서 사용자 계정이 활성 관리자가 아닙니다. 복원하면 로그인할 수 없게 됩니다.</value></data>
+  <data name="to" xml:space="preserve"><value>~</value></data>
+  <data name="Catalog entry" xml:space="preserve"><value>카탈로그 항목</value></data>
+  <data name="Owner" xml:space="preserve"><value>소유자</value></data>
+  <data name="Name, description, author and contact shown in the catalog and in the Power PDF client. Changes apply immediately; no new version is needed. The package files are not changed." xml:space="preserve"><value>카탈로그와 Power PDF 클라이언트에 표시되는 이름, 설명, 작성자 및 연락처입니다. 변경 내용은 즉시 적용되며 새 버전이 필요하지 않습니다. 패키지 파일은 변경되지 않습니다.</value></data>
+  <data name="Last changed" xml:space="preserve"><value>마지막 변경</value></data>
+  <data name="Contact email" xml:space="preserve"><value>연락처 이메일</value></data>
+  <data name="Empty: name of the publishing account" xml:space="preserve"><value>비어 있으면 게시 계정 이름</value></data>
+  <data name="Empty: email of the publishing account" xml:space="preserve"><value>비어 있으면 게시 계정 이메일</value></data>
+  <data name="The name needs at least English; the description is required in all 16 languages." xml:space="preserve"><value>이름은 최소한 영어로 입력해야 하며, 설명은 16개 언어 모두 필수입니다.</value></data>
+  <data name="Language" xml:space="preserve"><value>언어</value></data>
+  <data name="Description" xml:space="preserve"><value>설명</value></data>
+  <data name="Cancel" xml:space="preserve"><value>취소</value></data>
+  <data name="Reset name, description, author and contact to the values from the package?" xml:space="preserve"><value>이름, 설명, 작성자 및 연락처를 패키지 값으로 다시 설정하시겠습니까?</value></data>
+  <data name="Reset to package values" xml:space="preserve"><value>패키지 값으로 다시 설정</value></data>
+  <data name="Edit catalog entry" xml:space="preserve"><value>카탈로그 항목 편집</value></data>
+  <data name="Catalog entry saved. The catalog and the Power PDF client show it immediately." xml:space="preserve"><value>카탈로그 항목이 저장되었습니다. 카탈로그와 Power PDF 클라이언트에 즉시 표시됩니다.</value></data>
+  <data name="Catalog entry reset to the values from the package." xml:space="preserve"><value>카탈로그 항목이 패키지 값으로 다시 설정되었습니다.</value></data>
+  <data name="Change name, description, author and contact without a new version" xml:space="preserve"><value>새 버전 없이 이름, 설명, 작성자 및 연락처 변경</value></data>
+  <data name="Actions" xml:space="preserve"><value>작업</value></data>
+  <data name="All plug-ins" xml:space="preserve"><value>모든 플러그 인</value></data>
+  <data name="Awaiting approval" xml:space="preserve"><value>승인 대기 중</value></data>
+  <data name="Catalog entry changed by an admin" xml:space="preserve"><value>관리자가 카탈로그 항목을 변경함</value></data>
+  <data name="Category" xml:space="preserve"><value>범주</value></data>
+  <data name="Contact" xml:space="preserve"><value>연락처</value></data>
+  <data name="Email me about my plug-ins" xml:space="preserve"><value>내 플러그 인에 대한 이메일 받기</value></data>
+  <data name="Every plug-in in the store. Open Details to approve, withdraw or restore versions and to edit the catalog entry." xml:space="preserve"><value>스토어의 모든 플러그 인입니다. 버전을 승인, 철회 또는 복원하고 카탈로그 항목을 편집하려면 ‘세부 정보’를 여십시오.</value></data>
+  <data name="In the store" xml:space="preserve"><value>스토어에 있음</value></data>
+  <data name="Last activity" xml:space="preserve"><value>마지막 활동</value></data>
+  <data name="Live plug-ins, older versions, withdrawing and restoring: see the plug-in overview." xml:space="preserve"><value>라이브 플러그 인, 이전 버전, 철회 및 복원: 플러그 인 개요를 참조하십시오.</value></data>
+  <data name="Menu" xml:space="preserve"><value>메뉴</value></data>
+  <data name="My plug-ins" xml:space="preserve"><value>내 플러그 인</value></data>
+  <data name="Not in the store" xml:space="preserve"><value>스토어에 없음</value></data>
+  <data name="Older version, no longer offered" xml:space="preserve"><value>이전 버전, 더 이상 제공되지 않음</value></data>
+  <data name="Open plug-in overview" xml:space="preserve"><value>플러그 인 개요 열기</value></data>
+  <data name="Plug-in" xml:space="preserve"><value>플러그 인</value></data>
+  <data name="Plug-ins" xml:space="preserve"><value>플러그 인</value></data>
+  <data name="Restore (beta)" xml:space="preserve"><value>복원(베타)</value></data>
+  <data name="Restore (live)" xml:space="preserve"><value>복원(라이브)</value></data>
+  <data name="Search name, id or owner" xml:space="preserve"><value>이름, ID 또는 소유자 검색</value></data>
+  <data name="Take out of the store" xml:space="preserve"><value>스토어에서 내리기</value></data>
+  <data name="Take this plug-in out of the store? All live and beta versions are withdrawn; installed copies keep working." xml:space="preserve"><value>이 플러그 인을 스토어에서 내리시겠습니까? 모든 라이브 및 베타 버전이 철회되며, 설치된 사본은 계속 작동합니다.</value></data>
+  <data name="The plug-in was taken out of the store. Installed copies keep working; restore single versions to publish it again." xml:space="preserve"><value>플러그 인을 스토어에서 내렸습니다. 설치된 사본은 계속 작동합니다. 다시 게시하려면 개별 버전을 복원하십시오.</value></data>
+  <data name="This action is not allowed for this version." xml:space="preserve"><value>이 버전에는 이 작업이 허용되지 않습니다.</value></data>
+  <data name="Upload confirmation with check result" xml:space="preserve"><value>검사 결과가 포함된 업로드 확인</value></data>
+  <data name="Upload confirmation, approval or rejection, withdrawn or restored versions and catalog changes made by an admin." xml:space="preserve"><value>업로드 확인, 승인 또는 거부, 철회되거나 복원된 버전 및 관리자의 카탈로그 변경.</value></data>
+  <data name="Version restored and live again." xml:space="preserve"><value>버전이 복원되어 다시 라이브 상태입니다.</value></data>
+  <data name="Version restored to the beta channel; it needs approval again." xml:space="preserve"><value>버전이 베타 채널로 복원되었습니다. 다시 승인을 받아야 합니다.</value></data>
+  <data name="Version withdrawn or restored, plug-in taken out of the store" xml:space="preserve"><value>버전 철회 또는 복원, 플러그 인을 스토어에서 내림</value></data>
+  <data name="Versions" xml:space="preserve"><value>버전</value></data>
+  <data name="Withdraw this version?" xml:space="preserve"><value>이 버전을 철회하시겠습니까?</value></data>
+  <data name="Your plug-ins. Open Details for versions, check reports and the catalog entry." xml:space="preserve"><value>내 플러그 인입니다. 버전, 검사 보고서 및 카탈로그 항목을 보려면 ‘세부 정보’를 여십시오.</value></data>
+  <data name="No plug-ins match this filter." xml:space="preserve"><value>이 필터와 일치하는 플러그 인이 없습니다.</value></data>
+  <data name="Recipient" xml:space="preserve"><value>받는 사람</value></data>
+  <data name="Please enter a valid email address." xml:space="preserve"><value>올바른 이메일 주소를 입력하십시오.</value></data>
+  <data name="Install in Power PDF" xml:space="preserve"><value>Power PDF에 설치</value></data>
+  <data name="Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)." xml:space="preserve"><value>이 추가 기능이 선택된 상태로 Power PDF를 열고 설치 전에 확인합니다. Power PDF용 Add-on Store(버전 0.3.7 이상)가 필요합니다.</value></data>
+  <data name="The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF." xml:space="preserve"><value>설치 관리자가 아직 널리 알려지지 않아 Windows에 “Windows의 PC 보호”가 표시될 수 있습니다. “추가 정보”를 클릭한 다음 “실행”을 클릭하십시오. 이 과정은 한 번만 필요하며, 업데이트와 플러그 인은 Power PDF 안에서 설치됩니다.</value></data>
+  <data name="Windows warning?" xml:space="preserve"><value>Windows 경고가 표시됩니까?</value></data>
+  <data name="Download the Add-on Store" xml:space="preserve"><value>Add-on Store 다운로드</value></data>
+  <data name="Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again." xml:space="preserve"><value>아무 반응이 없습니까? 이 단추를 사용하려면 이 컴퓨터에 Power PDF용 Add-on Store 버전 0.3.7 이상이 있어야 합니다. 한 번 설치하거나 스토어 대화 상자에서 업데이트한 다음 단추를 다시 클릭하십시오.</value></data>
+  <data name="Built-in" xml:space="preserve"><value>기본 제공</value></data>
+  <data name="Categories" xml:space="preserve"><value>범주</value></data>
+  <data name="Delete" xml:space="preserve"><value>삭제</value></data>
+  <data name="From the package" xml:space="preserve"><value>패키지에서</value></data>
+  <data name="Maximum number of categories" xml:space="preserve"><value>최대 범주 수</value></data>
+  <data name="Merge into" xml:space="preserve"><value>병합 대상</value></data>
+  <data name="New catalog category created by an upload" xml:space="preserve"><value>업로드로 새 카탈로그 범주가 만들어짐</value></data>
+  <data name="Uploads may propose a new high-level category when none fits; the server checks length, similarity and the limit and creates it automatically. Merge or delete categories that are not needed." xml:space="preserve"><value>적합한 범주가 없으면 업로드에서 새 상위 범주를 제안할 수 있습니다. 서버가 길이, 유사성 및 한도를 확인하고 자동으로 만듭니다. 필요 없는 범주는 병합하거나 삭제하십시오.</value></data>
+  <data name="Category merged." xml:space="preserve"><value>범주가 병합되었습니다.</value></data>
+  <data name="Category deleted." xml:space="preserve"><value>범주가 삭제되었습니다.</value></data>
+  <data name="This action is not possible for this category." xml:space="preserve"><value>이 범주에는 이 작업을 수행할 수 없습니다.</value></data>
+  <data name="The limit must be between 8 and 50." xml:space="preserve"><value>한도는 8에서 50 사이여야 합니다.</value></data>
+  <data name="Download source" xml:space="preserve"><value>소스 다운로드</value></data>
+  <data name="Off" xml:space="preserve"><value>끄기</value></data>
+  <data name="Recommended: approval possible without source code" xml:space="preserve"><value>권장: 소스 코드 없이 승인 가능</value></data>
+  <data name="Required before approval." xml:space="preserve"><value>승인 전에 필요합니다.</value></data>
+  <data name="Required: no approval without source code" xml:space="preserve"><value>필수: 소스 코드 없이 승인 불가</value></data>
+  <data name="Source code" xml:space="preserve"><value>소스 코드</value></data>
+  <data name="Source code is stored next to each version and visible to admins only; Power PDF clients never receive it." xml:space="preserve"><value>소스 코드는 각 버전과 함께 저장되며 관리자만 볼 수 있습니다. Power PDF 클라이언트는 소스 코드를 받지 않습니다.</value></data>
+  <data name="Source code per version" xml:space="preserve"><value>버전별 소스 코드</value></data>
+  <data name="Source code stored." xml:space="preserve"><value>소스 코드가 저장되었습니다.</value></data>
+  <data name="The source code of this version is missing. It can be approved once the author (or an admin) has uploaded it." xml:space="preserve"><value>이 버전의 소스 코드가 없습니다. 작성자(또는 관리자)가 업로드하면 승인할 수 있습니다.</value></data>
+  <data name="The source code was not stored." xml:space="preserve"><value>소스 코드가 저장되지 않았습니다.</value></data>
+  <data name="missing" xml:space="preserve"><value>없음</value></data>
+  <data name="stored" xml:space="preserve"><value>저장됨</value></data>
+  <data name="Upload source (ZIP)" xml:space="preserve"><value>소스 업로드(ZIP)</value></data>
+  <data name="Replace source" xml:space="preserve"><value>소스 바꾸기</value></data>
+  <data name="Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF." xml:space="preserve"><value>Tungsten Power PDF용으로 릴리스된 추가 기능입니다. Windows PC의 Power PDF 안에서 직접 설치합니다.</value></data>
+  <data name="Add-ons from independent authors, without warranty or official support." xml:space="preserve"><value>독립 작성자의 추가 기능으로, 보증이나 공식 지원이 없습니다.</value></data>
+  <data name="Developer" xml:space="preserve"><value>개발자</value></data>
+  <data name="Reports" xml:space="preserve"><value>보고서</value></data>
+  <data name="Usage of the store: downloads, clients in use, locations, submissions and developers." xml:space="preserve"><value>스토어 사용 현황: 다운로드, 사용 중인 클라이언트, 위치, 제출 및 개발자.</value></data>
+  <data name="Last {0} days" xml:space="preserve"><value>최근 {0}일</value></data>
+  <data name="From" xml:space="preserve"><value>시작</value></data>
+  <data name="Add-on" xml:space="preserve"><value>추가 기능</value></data>
+  <data name="All add-ons" xml:space="preserve"><value>모든 추가 기능</value></data>
+  <data name="Country" xml:space="preserve"><value>국가</value></data>
+  <data name="All countries" xml:space="preserve"><value>모든 국가</value></data>
+  <data name="Source" xml:space="preserve"><value>출처</value></data>
+  <data name="All sources" xml:space="preserve"><value>모든 출처</value></data>
+  <data name="Client" xml:space="preserve"><value>클라이언트</value></data>
+  <data name="Web" xml:space="preserve"><value>웹</value></data>
+  <data name="Apply" xml:space="preserve"><value>적용</value></data>
+  <data name="Reset filters" xml:space="preserve"><value>필터 다시 설정</value></data>
+  <data name="Report language" xml:space="preserve"><value>보고서 언어</value></data>
+  <data name="PDF report" xml:space="preserve"><value>PDF 보고서</value></data>
+  <data name="Download CSV" xml:space="preserve"><value>CSV 다운로드</value></data>
+  <data name="compared with {0} – {1}" xml:space="preserve"><value>{0} – {1} 대비</value></data>
+  <data name="Time series since {0}; the all-time totals include earlier downloads." xml:space="preserve"><value>{0} 이후 시계열입니다. 전체 기간 합계에는 이전 다운로드가 포함됩니다.</value></data>
+  <data name="No usage data yet in this period." xml:space="preserve"><value>이 기간에는 아직 사용 데이터가 없습니다.</value></data>
+  <data name="Downloads (all time)" xml:space="preserve"><value>다운로드(전체 기간)</value></data>
+  <data name="Downloads in period" xml:space="preserve"><value>기간 내 다운로드</value></data>
+  <data name="Store windows opened" xml:space="preserve"><value>스토어 창 열기 횟수</value></data>
+  <data name="Client installer downloads" xml:space="preserve"><value>클라이언트 설치 관리자 다운로드</value></data>
+  <data name="Live add-ons" xml:space="preserve"><value>라이브 추가 기능</value></data>
+  <data name="Developers" xml:space="preserve"><value>개발자</value></data>
+  <data name="Awaiting review" xml:space="preserve"><value>검토 대기 중</value></data>
+  <data name="Downloads per day" xml:space="preserve"><value>일별 다운로드</value></data>
+  <data name="Downloads per week" xml:space="preserve"><value>주별 다운로드</value></data>
+  <data name="Downloads per month" xml:space="preserve"><value>월별 다운로드</value></data>
+  <data name="Highest value: {0}" xml:space="preserve"><value>최댓값: {0}</value></data>
+  <data name="Ranking of add-ons" xml:space="preserve"><value>추가 기능 순위</value></data>
+  <data name="Sorted by downloads in the period; the trend compares with the previous period of the same length." xml:space="preserve"><value>기간 내 다운로드 순으로 정렬됩니다. 추세는 같은 길이의 이전 기간과 비교합니다.</value></data>
+  <data name="In period" xml:space="preserve"><value>기간 내</value></data>
+  <data name="Trend" xml:space="preserve"><value>추세</value></data>
+  <data name="Share" xml:space="preserve"><value>비율</value></data>
+  <data name="Course" xml:space="preserve"><value>추이</value></data>
+  <data name="Top country" xml:space="preserve"><value>상위 국가</value></data>
+  <data name="All time" xml:space="preserve"><value>전체 기간</value></data>
+  <data name="previous period" xml:space="preserve"><value>이전 기간</value></data>
+  <data name="new" xml:space="preserve"><value>신규</value></data>
+  <data name="unknown" xml:space="preserve"><value>알 수 없음</value></data>
+  <data name="Clients in use" xml:space="preserve"><value>사용 중인 클라이언트</value></data>
+  <data name="Store windows opened per client version in the period; shows how far a client update has spread." xml:space="preserve"><value>기간 내 클라이언트 버전별 스토어 창 열기 횟수로, 클라이언트 업데이트가 얼마나 확산되었는지 보여 줍니다.</value></data>
+  <data name="Client languages" xml:space="preserve"><value>클라이언트 언어</value></data>
+  <data name="Language of Power PDF when the store window was opened." xml:space="preserve"><value>스토어 창을 열 때의 Power PDF 언어입니다.</value></data>
+  <data name="Download sources" xml:space="preserve"><value>다운로드 출처</value></data>
+  <data name="Client = Add-on Store in Power PDF, Web = browser, API = scripts and AI agents." xml:space="preserve"><value>클라이언트 = Power PDF의 Add-on Store, 웹 = 브라우저, API = 스크립트 및 AI 에이전트.</value></data>
+  <data name="Countries" xml:space="preserve"><value>국가</value></data>
+  <data name="Cities" xml:space="preserve"><value>도시</value></data>
+  <data name="Networks and organisations" xml:space="preserve"><value>네트워크 및 조직</value></data>
+  <data name="Operator of the network the request came from; company networks often show the company name." xml:space="preserve"><value>요청이 들어온 네트워크의 운영자입니다. 회사 네트워크는 대개 회사 이름이 표시됩니다.</value></data>
+  <data name="Power PDF versions" xml:space="preserve"><value>Power PDF 버전</value></data>
+  <data name="Windows versions" xml:space="preserve"><value>Windows 버전</value></data>
+  <data name="Architecture" xml:space="preserve"><value>아키텍처</value></data>
+  <data name="Power PDF, Windows and architecture are reported by Add-on Store clients from version 0.4.2." xml:space="preserve"><value>Power PDF, Windows 및 아키텍처는 버전 0.4.2 이상의 Add-on Store 클라이언트에서 보고합니다.</value></data>
+  <data name="Submissions and reviews (12 months)" xml:space="preserve"><value>제출 및 검토(12개월)</value></data>
+  <data name="Month" xml:space="preserve"><value>월</value></data>
+  <data name="Median review time" xml:space="preserve"><value>검토 시간 중앙값</value></data>
+  <data name="Last submission" xml:space="preserve"><value>마지막 제출</value></data>
+  <data name="Store versions without source code" xml:space="preserve"><value>소스 코드가 없는 스토어 버전</value></data>
+  <data name="All live and beta versions have source code deposited." xml:space="preserve"><value>모든 라이브 및 베타 버전에 소스 코드가 등록되어 있습니다.</value></data>
+  <data name="IP address logging" xml:space="preserve"><value>IP 주소 로깅</value></data>
+  <data name="IP address logging (reports)" xml:space="preserve"><value>IP 주소 로깅(보고서)</value></data>
+  <data name="Off. Only the daily counters above are kept; they contain no IP address." xml:space="preserve"><value>꺼짐. 위의 일별 카운터만 보관되며 IP 주소는 포함되지 않습니다.</value></data>
+  <data name="Switch on in the settings" xml:space="preserve"><value>설정에서 켜기</value></data>
+  <data name="On" xml:space="preserve"><value>켜짐</value></data>
+  <data name="Stored requests: {0}. Older than {1} days are deleted automatically." xml:space="preserve"><value>저장된 요청: {0}개. {1}일이 지난 요청은 자동으로 삭제됩니다.</value></data>
+  <data name="Stored requests: {0}. Kept permanently (no automatic deletion)." xml:space="preserve"><value>저장된 요청: {0}개. 영구 보관(자동 삭제 없음).</value></data>
+  <data name="Download CSV with IP addresses" xml:space="preserve"><value>IP 주소가 포함된 CSV 다운로드</value></data>
+  <data name="Most frequent IP addresses" xml:space="preserve"><value>가장 빈번한 IP 주소</value></data>
+  <data name="Latest requests" xml:space="preserve"><value>최근 요청</value></data>
+  <data name="Type" xml:space="preserve"><value>유형</value></data>
+  <data name="Location" xml:space="preserve"><value>위치</value></data>
+  <data name="Network" xml:space="preserve"><value>네트워크</value></data>
+  <data name="Map" xml:space="preserve"><value>지도</value></data>
+  <data name="Location and network data:" xml:space="preserve"><value>위치 및 네트워크 데이터:</value></data>
+  <data name="Generated on {0}" xml:space="preserve"><value>{0}에 생성됨</value></data>
+  <data name="Use &quot;Save as PDF&quot; as the printer to get the report as a PDF file." xml:space="preserve"><value>보고서를 PDF 파일로 받으려면 프린터로 ‘PDF로 저장’을 사용하십시오.</value></data>
+  <data name="Print / save as PDF" xml:space="preserve"><value>인쇄 / PDF로 저장</value></data>
+  <data name="Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports." xml:space="preserve"><value>항상 켜짐: IP 주소에서 파생된 국가, 지역, 도시 및 네트워크 운영자가 포함된 일별 카운터이며, 주소 자체는 저장되지 않습니다. 선택 사항: 보고서용으로 IP 주소, 호스트 이름 및 사용자 에이전트가 포함된 모든 다운로드 및 카탈로그 요청.</value></data>
+  <data name="GDPR confirmation given by {0} on {1}." xml:space="preserve"><value>{0}이(가) {1}에 GDPR 확인을 완료했습니다.</value></data>
+  <data name="Data protection (GDPR)" xml:space="preserve"><value>데이터 보호(GDPR)</value></data>
+  <data name="IP addresses are personal data under the GDPR, also without a sign-in. Storing them needs a legal basis (for example legitimate interest), a note in the privacy policy and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>IP 주소는 로그인하지 않은 경우에도 GDPR에 따른 개인 데이터입니다. 이를 저장하려면 법적 근거(예: 정당한 이익), 개인 정보 처리 방침의 고지 및 보존 기간이 필요합니다. 켜기 전에 데이터 보호 책임자와 이 사항을 확인하십시오.</value></data>
+  <data name="I confirm that a legal basis exists, the privacy policy covers this logging and the retention period below is agreed." xml:space="preserve"><value>법적 근거가 있고, 개인 정보 처리 방침이 이 로깅을 다루며, 아래 보존 기간이 합의되었음을 확인합니다.</value></data>
+  <data name="Retention period (days)" xml:space="preserve"><value>보존 기간(일)</value></data>
+  <data name="Store permanently (no automatic deletion)" xml:space="preserve"><value>영구 보관(자동 삭제 없음)</value></data>
+  <data name="The GDPR requires that personal data is kept no longer than necessary. Choose this only if your data protection officer agreed." xml:space="preserve"><value>GDPR은 개인 데이터를 필요한 기간보다 오래 보관하지 않도록 요구합니다. 데이터 보호 책임자가 동의한 경우에만 이 옵션을 선택하십시오.</value></data>
+  <data name="Confirm and switch on" xml:space="preserve"><value>확인 후 켜기</value></data>
+  <data name="Switch on" xml:space="preserve"><value>켜기</value></data>
+  <data name="Switch off" xml:space="preserve"><value>끄기</value></data>
+  <data name="Save retention period" xml:space="preserve"><value>보존 기간 저장</value></data>
+  <data name="Delete all stored IP addresses" xml:space="preserve"><value>저장된 모든 IP 주소 삭제</value></data>
+  <data name="Please confirm the data protection statement first." xml:space="preserve"><value>먼저 데이터 보호 선언을 확인하십시오.</value></data>
+  <data name="IP logging is on." xml:space="preserve"><value>IP 로깅이 켜져 있습니다.</value></data>
+  <data name="IP logging is off." xml:space="preserve"><value>IP 로깅이 꺼져 있습니다.</value></data>
+  <data name="Retention period saved." xml:space="preserve"><value>보존 기간이 저장되었습니다.</value></data>
+  <data name="All stored IP addresses were deleted." xml:space="preserve"><value>저장된 모든 IP 주소가 삭제되었습니다.</value></data>
+  <data name="Type DELETE to confirm." xml:space="preserve"><value>확인하려면 DELETE를 입력하십시오.</value></data>
+  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>버전의 소스 코드 업로드(업로드할 때마다)</value></data>
+  <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>관리자: 변경의 출발점이 되는 최신 버전의 소스 코드</value></data>
+  <data name="Share link" xml:space="preserve"><value>링크 공유</value></data>
+  <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>고객에게 보낼 링크가 있는 이 추가 기능의 전용 페이지</value></data>
+  <data name="Add-on not found" xml:space="preserve"><value>추가 기능을 찾을 수 없음</value></data>
+  <data name="This add-on is not (or no longer) in the store." xml:space="preserve"><value>이 추가 기능은 스토어에 없거나 더 이상 없습니다.</value></data>
+  <data name="Show all add-ons" xml:space="preserve"><value>모든 추가 기능 표시</value></data>
+  <data name="Add-on for Tungsten Power PDF: {0}" xml:space="preserve"><value>Tungsten Power PDF용 추가 기능: {0}</value></data>
+  <data name="Hello," xml:space="preserve"><value>안녕하세요.</value></data>
+  <data name="for Tungsten Power PDF there is the add-on &quot;{0}&quot;:" xml:space="preserve"><value>Tungsten Power PDF용 “{0}” 추가 기능이 있습니다:</value></data>
+  <data name="You can look at it and install it directly in Power PDF here:" xml:space="preserve"><value>여기에서 확인하고 Power PDF에 바로 설치할 수 있습니다:</value></data>
+  <data name="Best regards" xml:space="preserve"><value>감사합니다.</value></data>
+  <data name="What&#x27;s new in version {0}" xml:space="preserve"><value>버전 {0}의 새로운 기능</value></data>
+  <data name="First time?" xml:space="preserve"><value>처음이십니까?</value></data>
+  <data name="Install the Add-on Store for Power PDF once (administrator rights required)." xml:space="preserve"><value>Power PDF용 Add-on Store를 한 번 설치하십시오(관리자 권한 필요).</value></data>
+  <data name="Click &quot;Install in Power PDF&quot; above; Power PDF opens with this add-on selected." xml:space="preserve"><value>위의 ‘Power PDF에 설치’를 클릭하십시오. 이 추가 기능이 선택된 상태로 Power PDF가 열립니다.</value></data>
+  <data name="Confirm the installation and restart Power PDF." xml:space="preserve"><value>설치를 확인하고 Power PDF를 다시 시작하십시오.</value></data>
+  <data name="Share this add-on" xml:space="preserve"><value>이 추가 기능 공유</value></data>
+  <data name="Send this link to a customer or colleague; the page shows only this add-on." xml:space="preserve"><value>이 링크를 고객이나 동료에게 보내십시오. 이 페이지에는 이 추가 기능만 표시됩니다.</value></data>
+  <data name="Link" xml:space="preserve"><value>링크</value></data>
+  <data name="Copy link" xml:space="preserve"><value>링크 복사</value></data>
+  <data name="Link copied." xml:space="preserve"><value>링크가 복사되었습니다.</value></data>
+  <data name="Your short name (optional, shows in the reports how often your link was used)" xml:space="preserve"><value>약칭(선택 사항, 링크가 사용된 횟수가 보고서에 표시됨)</value></data>
+  <data name="e.g. mmueller" xml:space="preserve"><value>예: mmueller</value></data>
+  <data name="Send by email" xml:space="preserve"><value>이메일로 보내기</value></data>
+  <data name="Shared links" xml:space="preserve"><value>공유 링크</value></data>
+  <data name="Calls of the add-on pages (/a/...) per short name: page views without link previews, clicks on &quot;Install in Power PDF&quot; and client installer downloads from that page. Without a short name the link was shared without one." xml:space="preserve"><value>약칭별 추가 기능 페이지(/a/...) 호출: 링크 미리 보기를 제외한 페이지 보기, ‘Power PDF에 설치’ 클릭 수, 해당 페이지에서의 클라이언트 설치 관리자 다운로드. ‘약칭 없음’은 약칭 없이 공유된 링크입니다.</value></data>
+  <data name="Short name" xml:space="preserve"><value>약칭</value></data>
+  <data name="Page views" xml:space="preserve"><value>페이지 보기</value></data>
+  <data name="Install clicks" xml:space="preserve"><value>설치 클릭</value></data>
+  <data name="Client downloads" xml:space="preserve"><value>클라이언트 다운로드</value></data>
+  <data name="without short name" xml:space="preserve"><value>약칭 없음</value></data>
+  <data name="Total" xml:space="preserve"><value>합계</value></data>
+  <data name="Add-on Store for Power PDF" xml:space="preserve"><value>Power PDF용 Add-on Store</value></data>
+  <data name="Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF." xml:space="preserve"><value>Tungsten Power PDF용 추가 기능: 여기에서 찾아보고 Power PDF에서 바로 설치하십시오.</value></data>
+  <data name="Backup" xml:space="preserve"><value>백업</value></data>
+  <data name="Setup" xml:space="preserve"><value>초기 설정</value></data>
+  <data name="Close" xml:space="preserve"><value>닫기</value></data>
+  <data name="Log excerpt" xml:space="preserve"><value>로그 발췌</value></data>
+  <data name="Mark as done" xml:space="preserve"><value>완료로 표시</value></data>
+  <data name="Message" xml:space="preserve"><value>메시지</value></data>
+  <data name="No ratings yet. Users rate add-ons in the store window inside Power PDF." xml:space="preserve"><value>아직 평가가 없습니다. 사용자는 Power PDF 안의 스토어 창에서 추가 기능을 평가합니다.</value></data>
+  <data name="Nothing received yet." xml:space="preserve"><value>아직 받은 항목이 없습니다.</value></data>
+  <data name="Problem report or comment from the store client" xml:space="preserve"><value>스토어 클라이언트의 문제 보고 또는 의견</value></data>
+  <data name="Problem reports and comments" xml:space="preserve"><value>문제 보고 및 의견</value></data>
+  <data name="Ratings" xml:space="preserve"><value>평가</value></data>
+  <data name="Ratings and feedback" xml:space="preserve"><value>평가 및 피드백</value></data>
+  <data name="Received" xml:space="preserve"><value>받은 날짜</value></data>
+  <data name="Reopen" xml:space="preserve"><value>다시 열기</value></data>
+  <data name="Screenshots" xml:space="preserve"><value>스크린샷</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; Claude reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Power PDF 안의 스토어 창에서 전송됩니다. 본인과 관리자만 볼 수 있으며, Claude는 GET /api/packages/&lt;id&gt;/feedback을 통해 읽습니다.</value></data>
+  <data name="open" xml:space="preserve"><value>열림</value></data>
+  <data name="done" xml:space="preserve"><value>완료</value></data>
+  <data name="{0} rating(s)" xml:space="preserve"><value>평가 {0}개</value></data>
+  <data name="Problem" xml:space="preserve"><value>문제</value></data>
+  <data name="Comment" xml:space="preserve"><value>의견</value></data>
+  <data name="AI assessment" xml:space="preserve"><value>AI 평가</value></data>
+  <data name="AI assistant (optional)" xml:space="preserve"><value>AI 도우미(선택 사항)</value></data>
+  <data name="AI review aid" xml:space="preserve"><value>AI 검토 보조 자료</value></data>
+  <data name="AI review aid created." xml:space="preserve"><value>AI 검토 보조 자료가 만들어졌습니다.</value></data>
+  <data name="AI suggestions" xml:space="preserve"><value>AI 제안</value></data>
+  <data name="API key" xml:space="preserve"><value>API 키</value></data>
+  <data name="Ask AI" xml:space="preserve"><value>AI에 질문</value></data>
+  <data name="Changelog matches the changes" xml:space="preserve"><value>변경 로그가 변경 내용과 일치함</value></data>
+  <data name="Create automatically for every new version" xml:space="preserve"><value>새 버전마다 자동으로 만들기</value></data>
+  <data name="Data sent to the provider: add-on texts from the catalog, the text of problem reports, search queries, manifests and file lists of new versions, and only with the option above changed source code lines. Never sent: email addresses, IP addresses, log excerpts, user accounts. Check with your data protection team before switching it on." xml:space="preserve"><value>공급자에게 전송되는 데이터: 카탈로그의 추가 기능 텍스트, 문제 보고 텍스트, 검색어, 새 버전의 매니페스트 및 파일 목록, 그리고 위 옵션을 켠 경우에만 변경된 소스 코드 줄. 전송되지 않는 데이터: 이메일 주소, IP 주소, 로그 발췌, 사용자 계정. 켜기 전에 데이터 보호 팀과 확인하십시오.</value></data>
+  <data name="Describe what you want to do; AI suggests matching add-ons." xml:space="preserve"><value>하려는 작업을 설명하면 AI가 적합한 추가 기능을 제안합니다.</value></data>
+  <data name="Generated by AI as an aid. The decision and its responsibility stay with the reviewer." xml:space="preserve"><value>보조 자료로 AI가 생성했습니다. 결정과 그에 대한 책임은 검토자에게 있습니다.</value></data>
+  <data name="Model (empty = default)" xml:space="preserve"><value>모델(비어 있음 = 기본값)</value></data>
+  <data name="Nothing suitable found." xml:space="preserve"><value>적합한 항목을 찾지 못했습니다.</value></data>
+  <data name="Provider" xml:space="preserve"><value>공급자</value></data>
+  <data name="Remove stored key" xml:space="preserve"><value>저장된 키 제거</value></data>
+  <data name="Requests per day (limit)" xml:space="preserve"><value>일일 요청 수(한도)</value></data>
+  <data name="Review aid for new versions (on request)" xml:space="preserve"><value>새 버전 검토 보조 자료(요청 시)</value></data>
+  <data name="Search by need on the website and in the store window" xml:space="preserve"><value>웹 사이트 및 스토어 창에서 요구 사항으로 검색</value></data>
+  <data name="Searching…" xml:space="preserve"><value>검색 중…</value></data>
+  <data name="Send changed source code lines to the provider" xml:space="preserve"><value>변경된 소스 코드 줄을 공급자에게 보내기</value></data>
+  <data name="Sort problem reports (category, urgency, summary, reply draft, duplicates)" xml:space="preserve"><value>문제 보고 분류(범주, 긴급도, 요약, 회신 초안, 중복)</value></data>
+  <data name="Sorts problem reports, prepares a review aid for new versions and lets users search for add-ons by describing what they need. Off by default; everything works without it." xml:space="preserve"><value>문제 보고를 분류하고, 새 버전에 대한 검토 보조 자료를 준비하며, 사용자가 필요한 내용을 설명하여 추가 기능을 검색할 수 있게 합니다. 기본적으로 꺼져 있으며, 없어도 모든 기능이 작동합니다.</value></data>
+  <data name="Stored encrypted on the server and never shown again. Use a key of your own organization with a spending limit." xml:space="preserve"><value>서버에 암호화되어 저장되며 다시 표시되지 않습니다. 지출 한도가 설정된 조직 자체의 키를 사용하십시오.</value></data>
+  <data name="Suggested by AI from the add-on descriptions; please check the details." xml:space="preserve"><value>추가 기능 설명을 바탕으로 AI가 제안했습니다. 세부 정보를 확인하십시오.</value></data>
+  <data name="Suggested reply" xml:space="preserve"><value>제안된 회신</value></data>
+  <data name="Test connection" xml:space="preserve"><value>연결 테스트</value></data>
+  <data name="The AI provider gave no usable answer. Check the connection test in the settings." xml:space="preserve"><value>AI 공급자가 사용 가능한 응답을 제공하지 않았습니다. 설정에서 연결 테스트를 확인하십시오.</value></data>
+  <data name="The search is not available right now." xml:space="preserve"><value>지금은 검색을 사용할 수 없습니다.</value></data>
+  <data name="Bug" xml:space="preserve"><value>버그</value></data>
+  <data name="Wish" xml:space="preserve"><value>요청 사항</value></data>
+  <data name="Question" xml:space="preserve"><value>질문</value></data>
+  <data name="Praise" xml:space="preserve"><value>칭찬</value></data>
+  <data name="high" xml:space="preserve"><value>높음</value></data>
+  <data name="medium" xml:space="preserve"><value>보통</value></data>
+  <data name="low" xml:space="preserve"><value>낮음</value></data>
+  <data name="warning" xml:space="preserve"><value>경고</value></data>
+  <data name="info" xml:space="preserve"><value>정보</value></data>
+  <data name="yes" xml:space="preserve"><value>예</value></data>
+  <data name="partly" xml:space="preserve"><value>일부</value></data>
+  <data name="no" xml:space="preserve"><value>아니요</value></data>
+  <data name="Suggests: approve" xml:space="preserve"><value>제안: 승인</value></data>
+  <data name="Suggests: reject" xml:space="preserve"><value>제안: 거부</value></data>
+  <data name="Suggests: check more closely" xml:space="preserve"><value>제안: 자세히 확인</value></data>
+  <data name="Create AI review aid" xml:space="preserve"><value>AI 검토 보조 자료 만들기</value></data>
+  <data name="Create again" xml:space="preserve"><value>다시 만들기</value></data>
+  <data name="Similar to report #{0}" xml:space="preserve"><value>보고 #{0}과(와) 유사</value></data>
+  <data name="AI connection works." xml:space="preserve"><value>AI 연결이 작동합니다.</value></data>
+  <data name="The AI connection test failed." xml:space="preserve"><value>AI 연결 테스트에 실패했습니다.</value></data>
+  <data name="API and AI assistants" xml:space="preserve"><value>API 및 AI 도우미</value></data>
+  <data name="ChatGPT (custom GPT actions), Gemini function calling and other tools: import the OpenAPI description and enter the personal token as Bearer key." xml:space="preserve"><value>ChatGPT(사용자 지정 GPT 작업), Gemini 함수 호출 및 기타 도구: OpenAPI 설명을 가져오고 개인 토큰을 Bearer 키로 입력하십시오.</value></data>
+  <data name="Claude Code: install the skill. It always loads the current rules from the server, so it never needs updating." xml:space="preserve"><value>Claude Code: 스킬을 설치하십시오. 항상 서버에서 최신 규칙을 불러오므로 업데이트할 필요가 없습니다.</value></data>
+  <data name="Coding assistants that read AGENTS.md (OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): save it in the plugin project." xml:space="preserve"><value>AGENTS.md를 읽는 코딩 도우미(OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI): 플러그 인 프로젝트에 저장하십시오.</value></data>
+  <data name="Description of all endpoints (OpenAPI 3.1)" xml:space="preserve"><value>모든 엔드포인트 설명(OpenAPI 3.1)</value></data>
+  <data name="Download AGENTS.md" xml:space="preserve"><value>AGENTS.md 다운로드</value></data>
+  <data name="Give the token to your AI assistant together with this line:" xml:space="preserve"><value>다음 줄과 함께 토큰을 AI 도우미에 전달하십시오:</value></data>
+  <data name="Give your AI assistant one line" xml:space="preserve"><value>AI 도우미에 한 줄 전달</value></data>
+  <data name="Optional: set up your tool once" xml:space="preserve"><value>선택 사항: 도구를 한 번 설정</value></data>
+  <data name="Publish and update plugins directly from your AI assistant, for example Claude, ChatGPT, Gemini or Copilot. The assistant reads the store&#x27;s rules from the API, validates the package until all checks pass and submits it for review." xml:space="preserve"><value>AI 도우미(예: Claude, ChatGPT, Gemini 또는 Copilot)에서 직접 플러그 인을 게시하고 업데이트하십시오. 도우미가 API에서 스토어 규칙을 읽고, 모든 검사를 통과할 때까지 패키지의 유효성을 검사한 다음 검토를 위해 제출합니다.</value></data>
+  <data name="Sent from the store window inside Power PDF. Only you and the admins see them; your AI assistant reads them via GET /api/packages/&lt;id&gt;/feedback." xml:space="preserve"><value>Power PDF 안의 스토어 창에서 전송됩니다. 본인과 관리자만 볼 수 있으며, AI 도우미는 GET /api/packages/&lt;id&gt;/feedback을 통해 읽습니다.</value></data>
+  <data name="Short index for language models" xml:space="preserve"><value>언어 모델용 간단한 색인</value></data>
+  <data name="That is all it needs: it reads the guide, sets itself up for future sessions and follows the rules." xml:space="preserve"><value>필요한 것은 이것뿐입니다. 가이드를 읽고, 이후 세션을 위해 스스로 설정하며, 규칙을 따릅니다.</value></data>
+  <data name="Token name (e.g. &#x27;assistant&#x27;, &#x27;build server&#x27;)" xml:space="preserve"><value>토큰 이름(예: 'assistant', 'build server')</value></data>
+  <data name="Provider and key" xml:space="preserve"><value>공급자 및 키</value></data>
+  <data name="Connect and load models" xml:space="preserve"><value>연결 및 모델 불러오기</value></data>
+  <data name="Model and features" xml:space="preserve"><value>모델 및 기능</value></data>
+  <data name="Model" xml:space="preserve"><value>모델</value></data>
+  <data name="Default" xml:space="preserve"><value>기본값</value></data>
+  <data name="Models this key may use, loaded live from the provider." xml:space="preserve"><value>이 키로 사용할 수 있는 모델로, 공급자에서 실시간으로 불러옵니다.</value></data>
+  <data name="No model list loaded yet: use &quot;Connect and load models&quot; above. Until then the default model is used." xml:space="preserve"><value>아직 모델 목록을 불러오지 않았습니다. 위의 ‘연결 및 모델 불러오기’를 사용하십시오. 그때까지는 기본 모델이 사용됩니다.</value></data>
+  <data name="Test" xml:space="preserve"><value>테스트</value></data>
+  <data name="Sends one short request with the chosen model." xml:space="preserve"><value>선택한 모델로 짧은 요청 하나를 보냅니다.</value></data>
+  <data name="Connected. Choose a model below." xml:space="preserve"><value>연결되었습니다. 아래에서 모델을 선택하십시오.</value></data>
+  <data name="The connection failed." xml:space="preserve"><value>연결에 실패했습니다.</value></data>
+  <data name="Customers" xml:space="preserve"><value>고객</value></data>
+  <data name="Customer" xml:space="preserve"><value>고객</value></data>
+  <data name="New customer" xml:space="preserve"><value>새 고객</value></data>
+  <data name="Create customer" xml:space="preserve"><value>고객 만들기</value></data>
+  <data name="No customers yet." xml:space="preserve"><value>아직 고객이 없습니다.</value></data>
+  <data name="Deliveries" xml:space="preserve"><value>배포</value></data>
+  <data name="Deliver an add-on" xml:space="preserve"><value>추가 기능 배포</value></data>
+  <data name="Deliver" xml:space="preserve"><value>배포</value></data>
+  <data name="Codes" xml:space="preserve"><value>코드</value></data>
+  <data name="Code" xml:space="preserve"><value>코드</value></data>
+  <data name="No codes yet." xml:space="preserve"><value>아직 코드가 없습니다.</value></data>
+  <data name="New customer code" xml:space="preserve"><value>새 고객 코드</value></data>
+  <data name="Code for this add-on only" xml:space="preserve"><value>이 추가 기능 전용 코드</value></data>
+  <data name="Also create a code for this add-on only" xml:space="preserve"><value>이 추가 기능 전용 코드도 만들기</value></data>
+  <data name="Create a customer code for all its deliveries right away" xml:space="preserve"><value>모든 배포에 대한 고객 코드 바로 만들기</value></data>
+  <data name="Valid for" xml:space="preserve"><value>유효 대상</value></data>
+  <data name="all deliveries" xml:space="preserve"><value>모든 배포</value></data>
+  <data name="Copy" xml:space="preserve"><value>복사</value></data>
+  <data name="valid" xml:space="preserve"><value>유효</value></data>
+  <data name="expired" xml:space="preserve"><value>만료됨</value></data>
+  <data name="valid until {0}" xml:space="preserve"><value>{0}까지 유효</value></data>
+  <data name="Previous code stays valid for" xml:space="preserve"><value>이전 코드 유효 기간</value></data>
+  <data name="0 days (at once)" xml:space="preserve"><value>0일(즉시)</value></data>
+  <data name="days" xml:space="preserve"><value>일</value></data>
+  <data name="Make live" xml:space="preserve"><value>라이브로 전환</value></data>
+  <data name="Pause" xml:space="preserve"><value>일시 중지</value></data>
+  <data name="Resume" xml:space="preserve"><value>다시 시작</value></data>
+  <data name="End delivery" xml:space="preserve"><value>배포 종료</value></data>
+  <data name="Change stages and period" xml:space="preserve"><value>단계 및 기간 변경</value></data>
+  <data name="Period" xml:space="preserve"><value>기간</value></data>
+  <data name="Until" xml:space="preserve"><value>종료일</value></data>
+  <data name="Beta stage" xml:space="preserve"><value>베타 단계</value></data>
+  <data name="Live stage" xml:space="preserve"><value>라이브 단계</value></data>
+  <data name="newest" xml:space="preserve"><value>최신</value></data>
+  <data name="fixed" xml:space="preserve"><value>고정</value></data>
+  <data name="paused" xml:space="preserve"><value>일시 중지됨</value></data>
+  <data name="ended" xml:space="preserve"><value>종료됨</value></data>
+  <data name="outside period" xml:space="preserve"><value>기간 외</value></data>
+  <data name="private" xml:space="preserve"><value>비공개</value></data>
+  <data name="Visibility" xml:space="preserve"><value>공개 범위</value></data>
+  <data name="public (catalog)" xml:space="preserve"><value>공개(카탈로그)</value></data>
+  <data name="private (customer deliveries only)" xml:space="preserve"><value>비공개(고객 배포 전용)</value></data>
+  <data name="Customer data" xml:space="preserve"><value>고객 데이터</value></data>
+  <data name="Contact person" xml:space="preserve"><value>담당자</value></data>
+  <data name="Note" xml:space="preserve"><value>메모</value></data>
+  <data name="Created by" xml:space="preserve"><value>만든 사람</value></data>
+  <data name="paused (no add-ons for this customer)" xml:space="preserve"><value>일시 중지됨(이 고객에게 추가 기능 없음)</value></data>
+  <data name="Nothing delivered yet." xml:space="preserve"><value>아직 배포된 항목이 없습니다.</value></data>
+  <data name="Please check name and email address." xml:space="preserve"><value>이름과 이메일 주소를 확인하십시오.</value></data>
+  <data name="New code created." xml:space="preserve"><value>새 코드가 만들어졌습니다.</value></data>
+  <data name="Code revoked." xml:space="preserve"><value>코드가 해지되었습니다.</value></data>
+  <data name="Delivery created." xml:space="preserve"><value>배포가 만들어졌습니다.</value></data>
+  <data name="Delivery saved." xml:space="preserve"><value>배포가 저장되었습니다.</value></data>
+  <data name="The beta version is now live for this customer." xml:space="preserve"><value>이 고객에게 베타 버전이 이제 라이브 상태입니다.</value></data>
+  <data name="Customer delivery created or changed by a developer" xml:space="preserve"><value>개발자가 고객 배포를 만들거나 변경함</value></data>
+  <data name="Deliver add-ons to individual customers: they see them in the store window with their code, nobody else does. Every delivery has a beta and a live stage." xml:space="preserve"><value>개별 고객에게 추가 기능을 배포합니다. 고객은 자신의 코드로 스토어 창에서 추가 기능을 볼 수 있으며, 다른 사람에게는 표시되지 않습니다. 모든 배포에는 베타 단계와 라이브 단계가 있습니다.</value></data>
+  <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. Enter the code in the Add-on Store options in Power PDF or distribute it with the policy CustomerCode (client 0.6.0 or later). Several codes can be combined, separated by semicolons." xml:space="preserve"><value>고객 코드는 해당 고객의 모든 배포를 잠금 해제하고, 배포 코드는 추가 기능 하나만 잠금 해제합니다. Power PDF의 Add-on Store 옵션에 코드를 입력하거나 CustomerCode 정책(클라이언트 0.6.0 이상)으로 배포하십시오. 여러 코드를 세미콜론으로 구분하여 함께 사용할 수 있습니다.</value></data>
+  <data name="Beta stage: workstations of this customer with the beta option (or policy BetaChannel). Live stage: all others. Typical: new version to beta, test, then &quot;Make live&quot;." xml:space="preserve"><value>베타 단계: 베타 옵션(또는 BetaChannel 정책)이 설정된 이 고객의 워크스테이션. 라이브 단계: 그 외 모두. 일반적인 순서: 새 버전을 베타로, 테스트 후 ‘라이브로 전환’.</value></data>
+  <data name="Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>라이브 ‘고정’은 고객을 테스트된 버전에 유지하고, ‘최신’은 릴리스되는 모든 버전을 따릅니다. 비공개 추가 기능은 관리자 승인이 필요 없으며, 관리자에게 이메일로 알립니다.</value></data>
+  <data name="No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet." xml:space="preserve"><value>배포할 추가 기능이 없습니다. 자동 검사를 통과했고 아직 이 고객에게 배포되지 않은 본인의 추가 기능을 배포할 수 있습니다.</value></data>
+  <data name="Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed." xml:space="preserve"><value>이름만 필수입니다. 연락처 데이터는 배포 이메일에만 사용되며, 필요 없으면 비워 두십시오.</value></data>
+  <data name="Sign-in failed. Check email and password, or try again later." xml:space="preserve"><value>로그인하지 못했습니다. 이메일과 암호를 확인하거나 나중에 다시 시도하십시오.</value></data>
+  <data name="Backup restored. The server restarts now to load it completely; sign in again in a minute." xml:space="preserve"><value>백업이 복원되었습니다. 백업을 완전히 불러오기 위해 서버가 지금 다시 시작됩니다. 1분 후에 다시 로그인하십시오.</value></data>
+  <data name="no longer available" xml:space="preserve"><value>더 이상 사용할 수 없음</value></data>
+  <data name="Setup token" xml:space="preserve"><value>설정 토큰</value></data>
+  <data name="Shown in the server log at start-up and stored in the file setup-token.txt in the data folder; valid for 24 hours." xml:space="preserve"><value>시작 시 서버 로그에 표시되며 데이터 폴더의 setup-token.txt 파일에 저장됩니다. 24시간 동안 유효합니다.</value></data>
+  <data name="The setup token is wrong or has expired. Restart the app for a new one." xml:space="preserve"><value>설정 토큰이 잘못되었거나 만료되었습니다. 새 토큰을 받으려면 앱을 다시 시작하십시오.</value></data>
+  <data name="Password for the key ring (optional)" xml:space="preserve"><value>키 링 암호(선택 사항)</value></data>
+  <data name="Password for the key ring (only for backups that contain one)" xml:space="preserve"><value>키 링 암호(키 링이 포함된 백업에만 해당)</value></data>
+  <data name="With a password, the key ring that decrypts the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: after a restore, enter those keys again; customer codes keep working but can no longer be shown." xml:space="preserve"><value>암호를 지정하면 저장된 AI 및 Resend 키와 고객 코드를 해독하는 키 링이 암호화(AES-256)되어 백업에 포함됩니다. 암호가 없으면 키 링은 제외됩니다. 복원 후 해당 키를 다시 입력해야 하며, 고객 코드는 계속 작동하지만 더 이상 표시할 수 없습니다.</value></data>
+  <data name="The password must have at least 12 characters." xml:space="preserve"><value>암호는 12자 이상이어야 합니다.</value></data>
+  <data name="The password for the key ring is wrong." xml:space="preserve"><value>키 링 암호가 잘못되었습니다.</value></data>
+  <data name="Backup restored without its key ring (no password given). Enter the AI and Resend keys again in the settings." xml:space="preserve"><value>키 링 없이 백업이 복원되었습니다(암호를 지정하지 않음). 설정에서 AI 및 Resend 키를 다시 입력하십시오.</value></data>
+  <data name="Four-eyes rule: nobody approves a version they uploaded or own" xml:space="preserve"><value>이중 검토 원칙: 자신이 업로드했거나 소유한 버전은 누구도 승인할 수 없음</value></data>
+  <data name="Needs at least two active admins or reviewers; with only one, own versions can no longer be approved." xml:space="preserve"><value>활성 관리자 또는 검토자가 2명 이상 필요합니다. 1명만 있으면 자신의 버전을 더 이상 승인할 수 없습니다.</value></data>
+  <data name="Four-eyes rule: another admin or reviewer has to approve a version you uploaded or own." xml:space="preserve"><value>이중 검토 원칙: 본인이 업로드했거나 소유한 버전은 다른 관리자나 검토자가 승인해야 합니다.</value></data>
+  <data name="This backup contains the key ring. Enter its password, or confirm the restore without it." xml:space="preserve"><value>이 백업에는 키 링이 포함되어 있습니다. 키 링 암호를 입력하거나 키 링 없이 복원하도록 확인하십시오.</value></data>
+  <data name="Restore without the key ring (signing key and stored secrets are lost)" xml:space="preserve"><value>키 링 없이 복원(서명 키와 저장된 비밀이 손실됨)</value></data>
+  <data name="Backup restored without its key ring. Enter the AI and Resend keys again and set the signing recovery key (Signing__PrivateKeyPem); until then clients cannot install." xml:space="preserve"><value>키 링 없이 백업이 복원되었습니다. AI 및 Resend 키를 다시 입력하고 서명 복구 키(Signing__PrivateKeyPem)를 설정하십시오. 그때까지 클라이언트는 설치할 수 없습니다.</value></data>
+  <data name="The package signing key cannot be read. Clients refuse installs until the backup is restored with its key ring password or the App Setting Signing__PrivateKeyPem holds the recovery key." xml:space="preserve"><value>패키지 서명 키를 읽을 수 없습니다. 키 링 암호로 백업을 복원하거나 앱 설정 Signing__PrivateKeyPem에 복구 키를 넣을 때까지 클라이언트는 설치를 거부합니다.</value></data>
+  <data name="Package signing key" xml:space="preserve"><value>패키지 서명 키</value></data>
+  <data name="Language of automatic review aids" xml:space="preserve"><value>자동 검토 보조 자료의 언어</value></data>
+  <data name="Create in {0}" xml:space="preserve"><value>{0}(으)로 만들기</value></data>
+  <data name="This review aid is written in {0}." xml:space="preserve"><value>이 검토 보조 자료는 {0}(으)로 작성되었습니다.</value></data>
+  <data name="Overview" xml:space="preserve"><value>개요</value></data>
+  <data name="Add-ons" xml:space="preserve"><value>추가 기능</value></data>
+  <data name="Clients" xml:space="preserve"><value>클라이언트</value></data>
+  <data name="Locations" xml:space="preserve"><value>위치</value></data>
+  <data name="Submissions and reviews" xml:space="preserve"><value>제출 및 검토</value></data>
+  <data name="Report sections" xml:space="preserve"><value>보고서 섹션</value></data>
+  <data name="Pages" xml:space="preserve"><value>페이지</value></data>
+  <data name="Rows per page" xml:space="preserve"><value>페이지당 행 수</value></data>
+  <data name="Page {0} of {1}" xml:space="preserve"><value>{0}/{1}페이지</value></data>
+  <data name="{0} to {1} of {2}" xml:space="preserve"><value>{2}개 중 {0}~{1}</value></data>
+  <data name="Previous" xml:space="preserve"><value>이전</value></data>
+  <data name="Next" xml:space="preserve"><value>다음</value></data>
+  <data name="The latest {0} of {1} requests; the CSV export contains all of them." xml:space="preserve"><value>요청 {1}개 중 최근 {0}개입니다. CSV 내보내기에는 모두 포함됩니다.</value></data>
+  <data name="A backup is already running." xml:space="preserve"><value>백업이 이미 실행 중입니다.</value></data>
+  <data name="AI assistant" xml:space="preserve"><value>AI 도우미</value></data>
+  <data name="Access key (connection string or SAS URL)" xml:space="preserve"><value>액세스 키(연결 문자열 또는 SAS URL)</value></data>
+  <data name="Automatic backup" xml:space="preserve"><value>자동 백업</value></data>
+  <data name="Automatic backup failed" xml:space="preserve"><value>자동 백업 실패</value></data>
+  <data name="Automatic backup to Azure Blob Storage" xml:space="preserve"><value>Azure Blob Storage로 자동 백업</value></data>
+  <data name="Back up automatically on the selected days" xml:space="preserve"><value>선택한 요일에 자동 백업</value></data>
+  <data name="Back up now" xml:space="preserve"><value>지금 백업</value></data>
+  <data name="Backup file (.zip, or .psbak from the automatic backup)" xml:space="preserve"><value>백업 파일(.zip 또는 자동 백업의 .psbak)</value></data>
+  <data name="Backups in Azure" xml:space="preserve"><value>Azure의 백업</value></data>
+  <data name="Backups to keep" xml:space="preserve"><value>보관할 백업 수</value></data>
+  <data name="Choose time and weekdays, switch on the automatic backup and save. &quot;Back up now&quot; makes a first backup right away." xml:space="preserve"><value>시간과 요일을 선택하고 자동 백업을 켠 다음 저장하십시오. ‘지금 백업’을 누르면 첫 번째 백업이 바로 만들어집니다.</value></data>
+  <data name="Click &quot;Save&quot; and then &quot;Test connection&quot;. The store creates the container by itself." xml:space="preserve"><value>‘저장’을 클릭한 다음 ‘연결 테스트’를 클릭하십시오. 스토어가 컨테이너를 자동으로 만듭니다.</value></data>
+  <data name="Connection works: {0}" xml:space="preserve"><value>연결 작동: {0}</value></data>
+  <data name="Container" xml:space="preserve"><value>컨테이너</value></data>
+  <data name="Container names use 3 to 63 lower-case letters, digits and hyphens." xml:space="preserve"><value>컨테이너 이름은 소문자, 숫자 및 하이픈 3~63자로 구성됩니다.</value></data>
+  <data name="Created automatically if it does not exist." xml:space="preserve"><value>없으면 자동으로 만들어집니다.</value></data>
+  <data name="Encrypts every backup before it leaves the server. Without it a backup cannot be restored: keep it outside the server, for example in a password manager." xml:space="preserve"><value>모든 백업을 서버에서 내보내기 전에 암호화합니다. 이 암호 문구 없이는 백업을 복원할 수 없으므로 암호 관리자 등 서버 외부에 보관하십시오.</value></data>
+  <data name="Enter the access key and the passphrase first." xml:space="preserve"><value>먼저 액세스 키와 암호 문구를 입력하십시오.</value></data>
+  <data name="Guide" xml:space="preserve"><value>가이드</value></data>
+  <data name="If a backup fails, all admins get an email (Settings, notifications: &quot;Automatic backup failed&quot;)." xml:space="preserve"><value>백업이 실패하면 모든 관리자가 이메일을 받습니다(설정, 알림: ‘자동 백업 실패’).</value></data>
+  <data name="In the Azure portal, open a storage account (or create one: &quot;Storage accounts&quot;, &quot;Create&quot;, standard settings are enough; Redundancy &quot;LRS&quot; is the cheapest)." xml:space="preserve"><value>Azure Portal에서 스토리지 계정을 여십시오(또는 새로 만드십시오: ‘스토리지 계정’, ‘만들기’, 기본 설정으로 충분하며, 중복성 ‘LRS’가 가장 저렴합니다).</value></data>
+  <data name="In the storage account, open &quot;Security + networking&quot;, &quot;Access keys&quot;, and copy the &quot;Connection string&quot; of key1." xml:space="preserve"><value>스토리지 계정에서 ‘보안 + 네트워킹’, ‘액세스 키’를 열고 key1의 ‘연결 문자열’을 복사하십시오.</value></data>
+  <data name="Instead of the connection string, a SAS URL of the storage account or of one container works too (permissions: read, write, create, list, delete). It can be limited in time and revoked without changing the account keys." xml:space="preserve"><value>연결 문자열 대신 스토리지 계정 또는 컨테이너 하나의 SAS URL도 사용할 수 있습니다(권한: 읽기, 쓰기, 만들기, 나열, 삭제). SAS URL은 기간을 제한할 수 있으며 계정 키를 변경하지 않고 해지할 수 있습니다.</value></data>
+  <data name="Last backup" xml:space="preserve"><value>마지막 백업</value></data>
+  <data name="Manual backup" xml:space="preserve"><value>수동 백업</value></data>
+  <data name="Next backup" xml:space="preserve"><value>다음 백업</value></data>
+  <data name="No access key is stored." xml:space="preserve"><value>저장된 액세스 키가 없습니다.</value></data>
+  <data name="No backups in the container yet." xml:space="preserve"><value>컨테이너에 아직 백업이 없습니다.</value></data>
+  <data name="None yet. The server creates one before every restore." xml:space="preserve"><value>아직 없습니다. 서버는 복원할 때마다 그 전에 하나를 만듭니다.</value></data>
+  <data name="Not set up" xml:space="preserve"><value>설정되지 않음</value></data>
+  <data name="OK" xml:space="preserve"><value>확인</value></data>
+  <data name="Passphrase (at least 12 characters)" xml:space="preserve"><value>암호 문구(12자 이상)</value></data>
+  <data name="Password for the key ring, or the passphrase of an automatic backup" xml:space="preserve"><value>키 링 암호 또는 자동 백업의 암호 문구</value></data>
+  <data name="Paste it above as the access key, choose a passphrase of at least 12 characters and note it in your password manager." xml:space="preserve"><value>위에 액세스 키로 붙여 넣고, 12자 이상의 암호 문구를 선택하여 암호 관리자에 기록하십시오.</value></data>
+  <data name="Recommended in the storage account: &quot;Data protection&quot;, soft delete for blobs (for example 14 days), so a deleted backup can be recovered." xml:space="preserve"><value>스토리지 계정에서 권장: ‘데이터 보호’, Blob 일시 삭제(예: 14일)를 사용하면 삭제된 백업을 복구할 수 있습니다.</value></data>
+  <data name="Restore: &quot;Backups in Azure&quot; restores a backup directly with the stored passphrase. On a new server, first create the admin account, enter the same access key and passphrase here, then restore." xml:space="preserve"><value>복원: ‘Azure의 백업’은 저장된 암호 문구로 백업을 직접 복원합니다. 새 서버에서는 먼저 관리자 계정을 만들고 여기에 같은 액세스 키와 암호 문구를 입력한 다음 복원하십시오.</value></data>
+  <data name="Running" xml:space="preserve"><value>실행 중</value></data>
+  <data name="Safety backups" xml:space="preserve"><value>안전 백업</value></data>
+  <data name="Saved. The schedule stays off until an access key and a passphrase are set." xml:space="preserve"><value>저장되었습니다. 액세스 키와 암호 문구가 설정될 때까지 일정은 꺼진 상태로 유지됩니다.</value></data>
+  <data name="Sections" xml:space="preserve"><value>섹션</value></data>
+  <data name="Storage account" xml:space="preserve"><value>스토리지 계정</value></data>
+  <data name="Stored; leave empty to keep it" xml:space="preserve"><value>저장됨, 유지하려면 비워 두십시오</value></data>
+  <data name="The access key is neither a connection string nor a SAS URL of the storage account." xml:space="preserve"><value>액세스 키가 스토리지 계정의 연결 문자열이나 SAS URL이 아닙니다.</value></data>
+  <data name="The backup could not be downloaded." xml:space="preserve"><value>백업을 다운로드할 수 없습니다.</value></data>
+  <data name="The backup started. Reload the page in a minute to see the result." xml:space="preserve"><value>백업이 시작되었습니다. 결과를 보려면 1분 후에 페이지를 다시 로드하십시오.</value></data>
+  <data name="The connection failed: {0}" xml:space="preserve"><value>연결에 실패했습니다: {0}</value></data>
+  <data name="The files are encrypted with the passphrase. A downloaded file can be restored under &quot;Restore&quot; with that passphrase." xml:space="preserve"><value>파일은 암호 문구로 암호화됩니다. 다운로드한 파일은 ‘복원’에서 해당 암호 문구로 복원할 수 있습니다.</value></data>
+  <data name="The list could not be loaded: {0}" xml:space="preserve"><value>목록을 불러올 수 없습니다: {0}</value></data>
+  <data name="The passphrase is wrong or the file is damaged." xml:space="preserve"><value>암호 문구가 잘못되었거나 파일이 손상되었습니다.</value></data>
+  <data name="The passphrase must have at least 12 characters." xml:space="preserve"><value>암호 문구는 12자 이상이어야 합니다.</value></data>
+  <data name="This backup is encrypted. Enter its passphrase." xml:space="preserve"><value>이 백업은 암호화되어 있습니다. 암호 문구를 입력하십시오.</value></data>
+  <data name="Weekdays" xml:space="preserve"><value>요일</value></data>
+  <data name="Request a developer account" xml:space="preserve"><value>개발자 계정 요청</value></data>
+  <data name="Backup restored on the new server. Sign in with an admin account from the backup." xml:space="preserve"><value>새 서버에 백업이 복원되었습니다. 백업에 있는 관리자 계정으로 로그인하십시오.</value></data>
+  <data name="Your account is not an active admin in this backup (neither this account nor its email address); restoring it would lock you out." xml:space="preserve"><value>이 백업에서 사용자 계정이 활성 관리자가 아닙니다(이 계정과 해당 이메일 주소 모두 해당 없음). 복원하면 로그인할 수 없게 됩니다.</value></data>
+  <data name="This backup was downloaded without the key ring, and this server cannot read its package signing key. Confirm the restore without the key ring, or use a backup downloaded with a key ring password." xml:space="preserve"><value>이 백업은 키 링 없이 다운로드되었으며, 이 서버에서 해당 패키지 서명 키를 읽을 수 없습니다. 키 링 없이 복원하도록 확인하거나, 키 링 암호를 지정하여 다운로드한 백업을 사용하십시오.</value></data>
+  <data name="The restore failed (damaged archive or full disk). The previous state was put back; nothing changed." xml:space="preserve"><value>복원에 실패했습니다(보관 파일 손상 또는 디스크 공간 부족). 이전 상태로 되돌렸으며 변경된 내용은 없습니다.</value></data>
+  <data name="The restore failed and the previous state could not be put back automatically. Download the safety backup {0} under Safety backups and restore it." xml:space="preserve"><value>복원에 실패했으며 이전 상태를 자동으로 되돌릴 수 없습니다. ‘안전 백업’에서 안전 백업 {0}을(를) 다운로드하여 복원하십시오.</value></data>
+  <data name="With a password, the key ring that decrypts the package signing key, the stored AI and Resend keys and the customer codes goes into the backup encrypted (AES-256). Without one it is left out: restored on another server, the signing key is lost (clients refuse installs until the recovery key is set) and the AI and Resend keys must be entered again; customer codes keep working but can no longer be shown." xml:space="preserve"><value>암호를 지정하면 패키지 서명 키, 저장된 AI 및 Resend 키와 고객 코드를 해독하는 키 링이 암호화(AES-256)되어 백업에 포함됩니다. 암호가 없으면 키 링은 제외됩니다. 다른 서버에 복원하면 서명 키가 손실되고(복구 키가 설정될 때까지 클라이언트가 설치를 거부함) AI 및 Resend 키를 다시 입력해야 합니다. 고객 코드는 계속 작동하지만 더 이상 표시할 수 없습니다.</value></data>
+  <data name="An unknown failure has occurred." xml:space="preserve"><value>알 수 없는 오류가 발생했습니다.</value></data>
+  <data name="Passwords must be at least {0} characters." xml:space="preserve"><value>암호는 {0}자 이상이어야 합니다.</value></data>
+  <data name="Passwords must have at least one digit (&#x27;0&#x27;-&#x27;9&#x27;)." xml:space="preserve"><value>암호에는 숫자('0'-'9')가 하나 이상 있어야 합니다.</value></data>
+  <data name="Passwords must have at least one lowercase letter (&#x27;a&#x27;-&#x27;z&#x27;)." xml:space="preserve"><value>암호에는 소문자('a'-'z')가 하나 이상 있어야 합니다.</value></data>
+  <data name="Passwords must have at least one uppercase letter (&#x27;A&#x27;-&#x27;Z&#x27;)." xml:space="preserve"><value>암호에는 대문자('A'-'Z')가 하나 이상 있어야 합니다.</value></data>
+  <data name="Email &#x27;{0}&#x27; is invalid." xml:space="preserve"><value>이메일 '{0}'이(가) 잘못되었습니다.</value></data>
+  <data name="Email &#x27;{0}&#x27; is already taken." xml:space="preserve"><value>이메일 '{0}'은(는) 이미 사용 중입니다.</value></data>
+  <data name="Fill in name, email address and password (name up to 100, email address up to 200, reason up to 500 characters)." xml:space="preserve"><value>이름, 이메일 주소 및 암호를 입력하십시오(이름 최대 100자, 이메일 주소 최대 200자, 사유 최대 500자).</value></data>
+  <data name="public" xml:space="preserve"><value>공개</value></data>
+  <data name="Make public" xml:space="preserve"><value>공개로 전환</value></data>
+  <data name="Make private" xml:space="preserve"><value>비공개로 전환</value></data>
+  <data name="Show in the public catalog" xml:space="preserve"><value>공개 카탈로그에 표시</value></data>
+  <data name="Customer deliveries only, not in the public catalog" xml:space="preserve"><value>고객 배포 전용, 공개 카탈로그에 없음</value></data>
+  <data name="Make this add-on public? It then appears in the catalog for everybody (new versions after approval)." xml:space="preserve"><value>이 추가 기능을 공개하시겠습니까? 그러면 모든 사람에게 카탈로그에 표시됩니다(새 버전은 승인 후).</value></data>
+  <data name="Make this add-on private? It disappears from the public catalog; only customers with a delivery and a code still get it." xml:space="preserve"><value>이 추가 기능을 비공개로 전환하시겠습니까? 공개 카탈로그에서 사라지며, 배포와 코드가 있는 고객만 계속 받을 수 있습니다.</value></data>
+  <data name="No private add-on to deliver. Customers get private add-ons (never in the public catalog) that passed the automatic checks and are not delivered to them yet: upload with &quot;visibility&quot;: &quot;private&quot; or switch an add-on to private in the plug-in list." xml:space="preserve"><value>배포할 비공개 추가 기능이 없습니다. 고객은 자동 검사를 통과했고 아직 배포되지 않은 비공개 추가 기능(공개 카탈로그에 표시되지 않음)을 받습니다. "visibility": "private"로 업로드하거나 플러그 인 목록에서 추가 기능을 비공개로 전환하십시오.</value></data>
+  <data name="Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>비공개 추가 기능만 나열됩니다. 이 추가 기능은 공개 카탈로그에 표시되지 않고 코드가 있는 고객에게만 표시됩니다. 라이브 ‘고정’은 고객을 테스트된 버전에 유지하고, ‘최신’은 릴리스되는 모든 버전을 따릅니다. 비공개 추가 기능은 관리자 승인이 필요 없으며, 관리자에게 이메일로 알립니다.</value></data>
+  <data name="Delete customer" xml:space="preserve"><value>고객 삭제</value></data>
+  <data name="Customer deleted." xml:space="preserve"><value>고객이 삭제되었습니다.</value></data>
+  <data name="Delete this customer with all its codes and deliveries? Workstations using its codes lose these add-ons at the next catalog refresh; installed copies keep working." xml:space="preserve"><value>이 고객과 모든 코드 및 배포를 삭제하시겠습니까? 이 고객의 코드를 사용하는 워크스테이션은 다음 카탈로그 새로 고침 때 해당 추가 기능을 잃게 되며, 설치된 사본은 계속 작동합니다.</value></data>
+  <data name="Back to beta" xml:space="preserve"><value>베타로 되돌리기</value></data>
+  <data name="Version set back to beta; it needs approval again." xml:space="preserve"><value>버전이 베타로 되돌려졌습니다. 다시 승인을 받아야 합니다.</value></data>
+  <data name="Set this version back to beta? Only beta workstations are offered it from now on, the live channel falls back to the previous live version, and it needs approval again. Installed copies keep working." xml:space="preserve"><value>이 버전을 베타로 되돌리시겠습니까? 이제부터 베타 워크스테이션에만 제공되고, 라이브 채널은 이전 라이브 버전으로 돌아가며, 다시 승인을 받아야 합니다. 설치된 사본은 계속 작동합니다.</value></data>
+  <data name="Private (customers only)" xml:space="preserve"><value>비공개(고객 전용)</value></data>
+  <data name="The source code of this version is missing: back in beta, it could not be approved again. Upload the source code first." xml:space="preserve"><value>이 버전의 소스 코드가 없습니다. 베타로 되돌리면 다시 승인할 수 없습니다. 먼저 소스 코드를 업로드하십시오.</value></data>
+  <data name="Reset statistics" xml:space="preserve"><value>통계 다시 설정</value></data>
+  <data name="After internal tests: delete the collected statistics so the reports count from here on. Add-ons, versions, accounts, customers and the audit log stay. A safety backup of the whole store is written first." xml:space="preserve"><value>내부 테스트 후: 수집된 통계를 삭제하여 보고서가 지금부터 집계되도록 합니다. 추가 기능, 버전, 계정, 고객 및 감사 로그는 유지됩니다. 먼저 전체 스토어의 안전 백업이 작성됩니다.</value></data>
+  <data name="Last reset: {0}" xml:space="preserve"><value>마지막 다시 설정: {0}</value></data>
+  <data name="Delete the chosen statistics now? This cannot be undone (except from the safety backup)." xml:space="preserve"><value>선택한 통계를 지금 삭제하시겠습니까? 이 작업은 취소할 수 없습니다(안전 백업에서 복원하는 경우 제외).</value></data>
+  <data name="Downloads and usage statistics ({0} rows, {1} downloads)" xml:space="preserve"><value>다운로드 및 사용 통계({0}행, 다운로드 {1}회)</value></data>
+  <data name="Shared-link statistics ({0} rows)" xml:space="preserve"><value>공유 링크 통계({0}행)</value></data>
+  <data name="Stored IP addresses ({0} requests)" xml:space="preserve"><value>저장된 IP 주소(요청 {0}개)</value></data>
+  <data name="Ratings ({0})" xml:space="preserve"><value>평가({0})</value></data>
+  <data name="Problem reports and comments ({0})" xml:space="preserve"><value>문제 보고 및 의견({0})</value></data>
+  <data name="Type RESET to confirm." xml:space="preserve"><value>확인하려면 RESET을 입력하십시오.</value></data>
+  <data name="Choose at least one kind of data." xml:space="preserve"><value>데이터 종류를 하나 이상 선택하십시오.</value></data>
+  <data name="Statistics reset. A safety backup of the previous state is listed under Backup and restore &gt; Safety backups." xml:space="preserve"><value>통계가 다시 설정되었습니다. 이전 상태의 안전 백업은 ‘백업 및 복원 &gt; 안전 백업’에 나열됩니다.</value></data>
+  <data name="This add-on has its own ribbon tab and therefore stays private. Only add-ons on the shared tab can be public." xml:space="preserve"><value>이 추가 기능은 자체 리본 탭이 있으므로 비공개로 유지됩니다. 공유 탭에 있는 추가 기능만 공개할 수 있습니다.</value></data>
+  <data name="Forgot password" xml:space="preserve"><value>암호 찾기</value></data>
+  <data name="Forgot password?" xml:space="preserve"><value>암호를 잊으셨습니까?</value></data>
+  <data name="Enter the email address of your account. We send you a link to choose a new password." xml:space="preserve"><value>계정의 이메일 주소를 입력하십시오. 새 암호를 선택할 수 있는 링크를 보내 드립니다.</value></data>
+  <data name="If an active account exists for this address, we sent it a link to choose a new password. The link is valid for 24 hours." xml:space="preserve"><value>이 주소에 대한 활성 계정이 있으면 새 암호를 선택할 수 있는 링크를 보냈습니다. 링크는 24시간 동안 유효합니다.</value></data>
+  <data name="Send link" xml:space="preserve"><value>링크 보내기</value></data>
+  <data name="Back to sign-in" xml:space="preserve"><value>로그인으로 돌아가기</value></data>
+  <data name="Choose a new password" xml:space="preserve"><value>새 암호 선택</value></data>
+  <data name="This link is invalid or has expired. Request a new one with &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>이 링크는 유효하지 않거나 만료되었습니다. 로그인 페이지에서 ‘암호를 잊으셨습니까?’를 사용하여 새 링크를 요청하십시오.</value></data>
+  <data name="New password for {0}. At least 10 characters." xml:space="preserve"><value>{0}의 새 암호입니다. 10자 이상이어야 합니다.</value></data>
+  <data name="New password" xml:space="preserve"><value>새 암호</value></data>
+  <data name="Repeat the new password" xml:space="preserve"><value>새 암호 확인</value></data>
+  <data name="Save password" xml:space="preserve"><value>암호 저장</value></data>
+  <data name="Enter a new password (up to 200 characters)." xml:space="preserve"><value>새 암호를 입력하십시오(최대 200자).</value></data>
+  <data name="The two passwords do not match." xml:space="preserve"><value>두 암호가 일치하지 않습니다.</value></data>
+  <data name="Password changed. Sign in with the new password." xml:space="preserve"><value>암호가 변경되었습니다. 새 암호로 로그인하십시오.</value></data>
+  <data name="Change password" xml:space="preserve"><value>암호 변경</value></data>
+  <data name="Current password" xml:space="preserve"><value>현재 암호</value></data>
+  <data name="Enter the current and the new password (up to 200 characters)." xml:space="preserve"><value>현재 암호와 새 암호를 입력하십시오(최대 200자).</value></data>
+  <data name="Password changed. Other sessions were signed out." xml:space="preserve"><value>암호가 변경되었습니다. 다른 세션은 로그아웃되었습니다.</value></data>
+  <data name="Only active accounts can reset their password." xml:space="preserve"><value>활성 계정만 암호를 다시 설정할 수 있습니다.</value></data>
+  <data name="Password reset link sent by email." xml:space="preserve"><value>암호 재설정 링크를 이메일로 보냈습니다.</value></data>
+  <data name="You cannot delete your own account." xml:space="preserve"><value>자신의 계정은 삭제할 수 없습니다.</value></data>
+  <data name="Account deleted. Its add-ons and customers now belong to you." xml:space="preserve"><value>계정이 삭제되었습니다. 해당 계정의 추가 기능과 고객은 이제 본인 소유입니다.</value></data>
+  <data name="Email is not configured; give this password reset link to the user (valid 24 hours, works once):" xml:space="preserve"><value>이메일이 구성되지 않았습니다. 이 암호 재설정 링크를 사용자에게 전달하십시오(24시간 유효, 1회 사용 가능):</value></data>
+  <data name="Send {0} a link to choose a new password? The current password keeps working until the new one is set." xml:space="preserve"><value>{0}에게 새 암호를 선택할 수 있는 링크를 보내시겠습니까? 새 암호가 설정될 때까지 현재 암호는 계속 사용할 수 있습니다.</value></data>
+  <data name="Reset password" xml:space="preserve"><value>암호 재설정</value></data>
+  <data name="Delete the account of {0} permanently? Its add-ons ({1}) and customers ({2}) move to you, its API tokens stop working. The audit log keeps its name." xml:space="preserve"><value>{0}의 계정을 영구적으로 삭제하시겠습니까? 해당 계정의 추가 기능({1})과 고객({2})은 본인에게 이전되고, API 토큰은 더 이상 작동하지 않습니다. 감사 로그에는 이름이 유지됩니다.</value></data>
+  <data name="Without access to the store (for example a cloud sandbox) or without a token:" xml:space="preserve"><value>스토어에 액세스할 수 없거나(예: 클라우드 샌드박스) 토큰이 없는 경우:</value></data>
+  <data name="Upload the ZIP it hands you under Plug-ins, &quot;Submit a package&quot;: the store submits the package and stores the source code in one step." xml:space="preserve"><value>받은 ZIP을 ‘플러그 인’, ‘패키지 제출’에서 업로드하십시오. 스토어가 한 번에 패키지를 제출하고 소스 코드를 저장합니다.</value></data>
+  <data name="Offline packer: .ppak, source ZIP and upload package" xml:space="preserve"><value>오프라인 패키저: .ppak, 소스 ZIP 및 업로드 패키지</value></data>
+  <data name="An upload package (.zip with the .ppak and the source ZIP, made by make-ppak.ps1 or your AI assistant) submits the version and stores its source code in one step." xml:space="preserve"><value>업로드 패키지(.ppak와 소스 ZIP이 들어 있는 .zip, make-ppak.ps1 또는 AI 도우미가 만듦)는 한 번에 버전을 제출하고 소스 코드를 저장합니다.</value></data>
+  <data name="Package file (.ppak or upload package .zip)" xml:space="preserve"><value>패키지 파일(.ppak 또는 업로드 패키지 .zip)</value></data>
+  <data name="The upload package held no source ZIP. Upload the source code on the plug-in page at this version." xml:space="preserve"><value>업로드 패키지에 소스 ZIP이 없습니다. 플러그 인 페이지의 이 버전에서 소스 코드를 업로드하십시오.</value></data>
+  <data name="Source code from the upload package stored at this version." xml:space="preserve"><value>업로드 패키지의 소스 코드가 이 버전에 저장되었습니다.</value></data>
+  <data name="The source code from the upload package was not stored. Fix the findings below and upload the source ZIP on the plug-in page." xml:space="preserve"><value>업로드 패키지의 소스 코드가 저장되지 않았습니다. 아래 결과를 해결하고 플러그 인 페이지에서 소스 ZIP을 업로드하십시오.</value></data>
+  <data name="The upload package holds no .ppak file." xml:space="preserve"><value>업로드 패키지에 .ppak 파일이 없습니다.</value></data>
+  <data name="The upload package holds more than one .ppak file; put exactly one in it." xml:space="preserve"><value>업로드 패키지에 .ppak 파일이 두 개 이상 있습니다. 정확히 하나만 넣으십시오.</value></data>
+  <data name="The upload package holds more than one ZIP file; put only the source ZIP of this version next to the .ppak." xml:space="preserve"><value>업로드 패키지에 ZIP 파일이 두 개 이상 있습니다. .ppak 옆에는 이 버전의 소스 ZIP만 넣으십시오.</value></data>
+  <data name="The .ppak in the upload package is larger than 200 MB." xml:space="preserve"><value>업로드 패키지의 .ppak이 200MB보다 큽니다.</value></data>
+  <data name="The source ZIP in the upload package is larger than 100 MB." xml:space="preserve"><value>업로드 패키지의 소스 ZIP이 100MB보다 큽니다.</value></data>
+  <data name="A file in the upload package is larger than allowed." xml:space="preserve"><value>업로드 패키지의 파일이 허용된 크기보다 큽니다.</value></data>
+  <data name="API" xml:space="preserve"><value>API</value></data>
+  <data name="API responses" xml:space="preserve"><value>API 응답</value></data>
+  <data name="API, accounts and limits" xml:space="preserve"><value>API, 계정 및 한도</value></data>
+  <data name="Agent guide" xml:space="preserve"><value>에이전트 가이드</value></data>
+  <data name="Area" xml:space="preserve"><value>영역</value></data>
+  <data name="Back to warning" xml:space="preserve"><value>경고로 되돌리기</value></data>
+  <data name="Checked at approval" xml:space="preserve"><value>승인 시 확인</value></data>
+  <data name="Customer deliveries" xml:space="preserve"><value>고객 배포</value></data>
+  <data name="Delete the house rule &quot;{0}&quot;?" xml:space="preserve"><value>자체 규칙 ‘{0}’을(를) 삭제하시겠습니까?</value></data>
+  <data name="Edit" xml:space="preserve"><value>편집</value></data>
+  <data name="Edit house rule" xml:space="preserve"><value>자체 규칙 편집</value></data>
+  <data name="Error" xml:space="preserve"><value>오류</value></data>
+  <data name="Errors" xml:space="preserve"><value>오류</value></data>
+  <data name="Every rule grouped by area, with the rules of this store" xml:space="preserve"><value>영역별로 그룹화된 모든 규칙과 이 스토어의 규칙</value></data>
+  <data name="Every rule the store checks, grouped by area: errors block an upload, warnings and notes do not. The rule texts are in English, exactly as AI assistants read them in the agent guide." xml:space="preserve"><value>스토어에서 검사하는 모든 규칙을 영역별로 그룹화했습니다. 오류는 업로드를 차단하지만 경고와 참고는 차단하지 않습니다. 규칙 텍스트는 AI 도우미가 에이전트 가이드에서 읽는 그대로 영어로 되어 있습니다.</value></data>
+  <data name="Fill in area, title (up to 120 characters) and text (up to 2000 characters)." xml:space="preserve"><value>영역, 제목(최대 120자) 및 텍스트(최대 2000자)를 입력하십시오.</value></data>
+  <data name="House rules" xml:space="preserve"><value>자체 규칙</value></data>
+  <data name="House rules to check before approval" xml:space="preserve"><value>승인 전에 확인할 자체 규칙</value></data>
+  <data name="Icon and screenshots" xml:space="preserve"><value>아이콘 및 스크린샷</value></data>
+  <data name="Machine-readable" xml:space="preserve"><value>기계 판독 가능</value></data>
+  <data name="Make mandatory" xml:space="preserve"><value>필수로 지정</value></data>
+  <data name="Make {0} mandatory? Uploads with this finding are then refused." xml:space="preserve"><value>{0}을(를) 필수로 지정하시겠습니까? 그러면 이 결과가 있는 업로드는 거부됩니다.</value></data>
+  <data name="New house rule" xml:space="preserve"><value>새 자체 규칙</value></data>
+  <data name="None yet. Open an area and choose &quot;Make mandatory&quot; next to a warning." xml:space="preserve"><value>아직 없습니다. 영역을 열고 경고 옆의 ‘필수로 지정’을 선택하십시오.</value></data>
+  <data name="None yet. Open an area to add a house rule there." xml:space="preserve"><value>아직 없습니다. 자체 규칙을 추가하려면 영역을 여십시오.</value></data>
+  <data name="Notes" xml:space="preserve"><value>참고</value></data>
+  <data name="Only warnings can be made mandatory." xml:space="preserve"><value>경고만 필수로 지정할 수 있습니다.</value></data>
+  <data name="Pre-flight checklist" xml:space="preserve"><value>사전 점검 목록</value></data>
+  <data name="Recommendation" xml:space="preserve"><value>권장 사항</value></data>
+  <data name="Rule" xml:space="preserve"><value>규칙</value></data>
+  <data name="Rules" xml:space="preserve"><value>규칙</value></data>
+  <data name="Rules of this store" xml:space="preserve"><value>이 스토어의 규칙</value></data>
+  <data name="Saved." xml:space="preserve"><value>저장되었습니다.</value></data>
+  <data name="Search code or text" xml:space="preserve"><value>코드 또는 텍스트 검색</value></data>
+  <data name="Search results" xml:space="preserve"><value>검색 결과</value></data>
+  <data name="Severity" xml:space="preserve"><value>심각도</value></data>
+  <data name="Standard rules" xml:space="preserve"><value>표준 규칙</value></data>
+  <data name="Title" xml:space="preserve"><value>제목</value></data>
+  <data name="Treat {0} as a warning again?" xml:space="preserve"><value>{0}을(를) 다시 경고로 처리하시겠습니까?</value></data>
+  <data name="Warnings" xml:space="preserve"><value>경고</value></data>
+  <data name="Warnings that are mandatory here" xml:space="preserve"><value>이 스토어에서 필수인 경고</value></data>
+  <data name="What this store adds to the standard rules. House rules are guidelines in plain words: reviewers check them before approval, recommendations only advise. Mandatory warnings are enforced by the automatic check like errors." xml:space="preserve"><value>이 스토어가 표준 규칙에 추가하는 내용입니다. 자체 규칙은 쉬운 말로 된 지침으로, 검토자가 승인 전에 확인하며 권장 사항은 조언만 합니다. 필수 경고는 자동 검사에서 오류처럼 적용됩니다.</value></data>
+  <data name="Write it so a developer and an AI assistant can follow it; it appears in the agent guide, the pre-flight checklist and the manual." xml:space="preserve"><value>개발자와 AI 도우미가 따를 수 있도록 작성하십시오. 에이전트 가이드, 사전 점검 목록 및 설명서에 표시됩니다.</value></data>
+  <data name="e.g. Signing add-ons use the customer&#x27;s certificate rules" xml:space="preserve"><value>예: 서명 추가 기능은 고객의 인증서 규칙을 사용함</value></data>
+  <data name="mandatory here" xml:space="preserve"><value>이 스토어에서 필수</value></data>
+  <data name="Last run failed" xml:space="preserve"><value>마지막 실행 실패</value></data>
+  <data name="1. Conditions for the import (checked automatically)" xml:space="preserve"><value>1. 가져오기 조건(자동 검사)</value></data>
+  <data name="2. Conditions for the approval (confirmed by the reviewer)" xml:space="preserve"><value>2. 승인 조건(검토자 확인)</value></data>
+  <data name="Added by this store" xml:space="preserve"><value>이 스토어에서 추가함</value></data>
+  <data name="Back to the standard wording of {0}?" xml:space="preserve"><value>{0}의 표준 문구로 되돌리시겠습니까?</value></data>
+  <data name="Condition" xml:space="preserve"><value>조건</value></data>
+  <data name="Confirm every approval condition:" xml:space="preserve"><value>모든 승인 조건을 확인하십시오:</value></data>
+  <data name="Confirm every approval condition before approving." xml:space="preserve"><value>승인하기 전에 모든 승인 조건을 확인하십시오.</value></data>
+  <data name="Documentation (PDF)" xml:space="preserve"><value>문서(PDF)</value></data>
+  <data name="In English, generated from the live rules of this store." xml:space="preserve"><value>이 스토어의 현재 규칙에서 생성된 영어 문서입니다.</value></data>
+  <data name="Mandatory conditions" xml:space="preserve"><value>필수 조건</value></data>
+  <data name="Mandatory requirements (PDF)" xml:space="preserve"><value>필수 요구 사항(PDF)</value></data>
+  <data name="Mandatory requirements for add-ons" xml:space="preserve"><value>추가 기능 필수 요구 사항</value></data>
+  <data name="Manual: API, rules and publishing guide" xml:space="preserve"><value>설명서: API, 규칙 및 게시 가이드</value></data>
+  <data name="New approval condition" xml:space="preserve"><value>새 승인 조건</value></data>
+  <data name="Reset" xml:space="preserve"><value>다시 설정</value></data>
+  <data name="Reviewers confirm it for every version before approving; the agent guide asks developers and AI assistants to prepare for it." xml:space="preserve"><value>검토자는 승인 전에 모든 버전에 대해 이를 확인합니다. 에이전트 가이드는 개발자와 AI 도우미에게 이에 대비하도록 요청합니다.</value></data>
+  <data name="Standard wording" xml:space="preserve"><value>표준 문구</value></data>
+  <data name="The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area." xml:space="preserve"><value>이 조건의 기반이 되는 자동 검사는 스토어의 일부이므로 여기에서 끌 수 없습니다. 경고는 해당 영역에서 필수로 지정할 수 있습니다.</value></data>
+  <data name="The conditions a plug-in must meet: first to be imported (every upload is checked automatically and refused when one fails), then to be approved for the live store (the reviewer confirms each one). Admins can change the wording and add conditions; the agent guide, the pre-flight checklist and the PDF documents show the store&#x27;s version." xml:space="preserve"><value>플러그 인이 충족해야 하는 조건입니다. 먼저 가져오기 조건(모든 업로드가 자동으로 검사되며 하나라도 실패하면 거부됨), 그다음 라이브 스토어 승인 조건(검토자가 각각 확인)입니다. 관리자는 문구를 변경하고 조건을 추가할 수 있으며, 에이전트 가이드, 사전 점검 목록 및 PDF 문서에는 이 스토어의 버전이 표시됩니다.</value></data>
+  <data name="Wording of this store" xml:space="preserve"><value>이 스토어의 문구</value></data>
+  <data name="Write the condition in up to 600 characters." xml:space="preserve"><value>조건을 최대 600자로 작성하십시오.</value></data>
+  <data name="checked online" xml:space="preserve"><value>온라인 검사</value></data>
+  <data name="the standard wording changed since" xml:space="preserve"><value>이후 표준 문구가 변경됨</value></data>
+  <data name="Blocked" xml:space="preserve"><value>차단됨</value></data>
+  <data name="Block" xml:space="preserve"><value>차단</value></data>
+  <data name="Block version" xml:space="preserve"><value>버전 차단</value></data>
+  <data name="Block all versions" xml:space="preserve"><value>모든 버전 차단</value></data>
+  <data name="Lift the block" xml:space="preserve"><value>차단 해제</value></data>
+  <data name="Security block" xml:space="preserve"><value>보안 차단</value></data>
+  <data name="Reason (users see it)" xml:space="preserve"><value>사유(사용자에게 표시됨)</value></data>
+  <data name="e.g. sends document content to an undeclared server" xml:space="preserve"><value>예: 선언되지 않은 서버로 문서 내용을 보냄</value></data>
+  <data name="This add-on is blocked for a security reason." xml:space="preserve"><value>이 추가 기능은 보안상의 이유로 차단되었습니다.</value></data>
+  <data name="Block this version? It is withdrawn, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>이 버전을 차단하시겠습니까? 버전이 철회되며, 이 버전이 설치된 모든 Power PDF에서 사용자에게 제거를 요청합니다.</value></data>
+  <data name="Block the whole add-on? Every version is withdrawn, uploads are refused, and every Power PDF that has it installed asks its user to remove it." xml:space="preserve"><value>추가 기능 전체를 차단하시겠습니까? 모든 버전이 철회되고 업로드가 거부되며, 이 추가 기능이 설치된 모든 Power PDF에서 사용자에게 제거를 요청합니다.</value></data>
+  <data name="Lift the block? The version stays withdrawn until you restore it." xml:space="preserve"><value>차단을 해제하시겠습니까? 복원할 때까지 버전은 철회된 상태로 유지됩니다.</value></data>
+  <data name="Lift the block? The versions stay withdrawn until you restore them." xml:space="preserve"><value>차단을 해제하시겠습니까? 복원할 때까지 각 버전은 철회된 상태로 유지됩니다.</value></data>
+  <data name="Give a reason for the block (3 to 300 characters); users see it." xml:space="preserve"><value>차단 사유를 입력하십시오(3~300자). 사용자에게 표시됩니다.</value></data>
+  <data name="Version blocked. Clients that have it installed ask the user to remove it." xml:space="preserve"><value>버전이 차단되었습니다. 이 버전이 설치된 클라이언트에서 사용자에게 제거를 요청합니다.</value></data>
+  <data name="Block lifted. The version stays withdrawn; restore it if it should be offered again." xml:space="preserve"><value>차단이 해제되었습니다. 버전은 철회된 상태로 유지되며, 다시 제공하려면 복원하십시오.</value></data>
+  <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>추가 기능이 차단되었습니다. 모든 버전이 철회되고 업로드가 거부되며, 클라이언트에서 사용자에게 제거를 요청합니다.</value></data>
+  <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>차단이 해제되었습니다. 각 버전은 철회된 상태로 유지되며, 다시 제공할 버전을 복원하십시오.</value></data>
+  <data name="Security and system access" xml:space="preserve"><value>보안 및 시스템 액세스</value></data>
+  <data name="Documentation" xml:space="preserve"><value>문서</value></data>
+  <data name="All documentation" xml:space="preserve"><value>모든 문서</value></data>
+  <data name="Manual" xml:space="preserve"><value>설명서</value></data>
+  <data name="Copied" xml:space="preserve"><value>복사됨</value></data>
+  <data name="Updated" xml:space="preserve"><value>업데이트됨</value></data>
+  <data name="AGENTS.md" xml:space="preserve"><value>AGENTS.md</value></data>
+  <data name="Everything about the Add-on Store in one place: the PDFs, the rules, the guides AI assistants read and the API tools. Every link opens in a new tab." xml:space="preserve"><value>Add-on Store에 관한 모든 내용을 한곳에서 확인할 수 있습니다: PDF, 규칙, AI 도우미가 읽는 가이드 및 API 도구. 모든 링크는 새 탭에서 열립니다.</value></data>
+  <data name="Documents (PDF)" xml:space="preserve"><value>문서(PDF)</value></data>
+  <data name="Rules and conditions" xml:space="preserve"><value>규칙 및 조건</value></data>
+  <data name="For AI assistants" xml:space="preserve"><value>AI 도우미용</value></data>
+  <data name="API and tools" xml:space="preserve"><value>API 및 도구</value></data>
+  <data name="What the store checks on every upload and what reviewers confirm at approval." xml:space="preserve"><value>스토어가 업로드마다 검사하는 항목과 검토자가 승인 시 확인하는 항목입니다.</value></data>
+  <data name="Readable without signing in; works with Claude, ChatGPT, Gemini, Copilot and others." xml:space="preserve"><value>로그인 없이 읽을 수 있으며 Claude, ChatGPT, Gemini, Copilot 등에서 작동합니다.</value></data>
+  <data name="For developers and scripts." xml:space="preserve"><value>개발자 및 스크립트용입니다.</value></data>
+  <data name="Every condition a plug-in must meet for import and approval, in compact form." xml:space="preserve"><value>플러그 인이 가져오기와 승인을 위해 충족해야 하는 모든 조건을 간략하게 정리했습니다.</value></data>
+  <data name="The complete reference: principles, developer and agent guide, every rule by area, API and manifest." xml:space="preserve"><value>전체 참조: 원칙, 개발자 및 에이전트 가이드, 영역별 모든 규칙, API 및 매니페스트.</value></data>
+  <data name="All rules by area, the mandatory conditions and the rules of this store; admins edit them here." xml:space="preserve"><value>영역별 모든 규칙, 필수 조건 및 이 스토어의 규칙입니다. 관리자는 여기에서 편집합니다.</value></data>
+  <data name="The hard rules as a short checklist to work through before an upload." xml:space="preserve"><value>업로드 전에 점검할 필수 규칙의 간단한 검사 목록입니다.</value></data>
+  <data name="Every rule and condition as JSON, for tools and AI assistants." xml:space="preserve"><value>도구 및 AI 도우미를 위한 JSON 형식의 모든 규칙과 조건입니다.</value></data>
+  <data name="Rules as data" xml:space="preserve"><value>데이터 형식의 규칙</value></data>
+  <data name="The full guide AI assistants follow to build, check and publish an add-on." xml:space="preserve"><value>AI 도우미가 추가 기능을 빌드, 검사 및 게시할 때 따르는 전체 가이드입니다.</value></data>
+  <data name="Agent guide as a file" xml:space="preserve"><value>파일 형식의 에이전트 가이드</value></data>
+  <data name="The same guide as Markdown, to save in the plug-in project." xml:space="preserve"><value>플러그 인 프로젝트에 저장할 수 있는 Markdown 형식의 동일한 가이드입니다.</value></data>
+  <data name="Manual upload package" xml:space="preserve"><value>수동 업로드 패키지</value></data>
+  <data name="Fallback when an assistant cannot reach the store: it builds the finished upload ZIP." xml:space="preserve"><value>도우미가 스토어에 연결할 수 없을 때의 대체 방법으로, 완성된 업로드 ZIP을 빌드합니다.</value></data>
+  <data name="Entry point for AI (llms.txt)" xml:space="preserve"><value>AI용 진입점(llms.txt)</value></data>
+  <data name="Short overview that points an assistant to everything else." xml:space="preserve"><value>도우미에게 다른 모든 자료를 안내하는 간단한 개요입니다.</value></data>
+  <data name="Instructions for coding assistants that read AGENTS.md (Codex, Copilot, Cursor, Gemini CLI)." xml:space="preserve"><value>AGENTS.md를 읽는 코딩 도우미(Codex, Copilot, Cursor, Gemini CLI)를 위한 지침입니다.</value></data>
+  <data name="Claude skill (SKILL.md)" xml:space="preserve"><value>Claude 스킬(SKILL.md)</value></data>
+  <data name="The same rules as a skill for Claude Code." xml:space="preserve"><value>Claude Code용 스킬 형식의 동일한 규칙입니다.</value></data>
+  <data name="API page" xml:space="preserve"><value>API 페이지</value></data>
+  <data name="Tokens, prompt templates for publishing and the most important endpoints." xml:space="preserve"><value>토큰, 게시용 프롬프트 템플릿 및 가장 중요한 엔드포인트.</value></data>
+  <data name="All API endpoints" xml:space="preserve"><value>모든 API 엔드포인트</value></data>
+  <data name="The short list of every endpoint with method and purpose." xml:space="preserve"><value>메서드와 용도가 포함된 모든 엔드포인트의 간단한 목록입니다.</value></data>
+  <data name="OpenAPI description" xml:space="preserve"><value>OpenAPI 설명</value></data>
+  <data name="The machine-readable API description for code generators and tools." xml:space="preserve"><value>코드 생성기 및 도구를 위한 기계 판독 가능 API 설명입니다.</value></data>
+  <data name="Offline packer (make-ppak.ps1)" xml:space="preserve"><value>오프라인 패키저(make-ppak.ps1)</value></data>
+  <data name="Builds the .ppak, the source ZIP and the upload package without network or token." xml:space="preserve"><value>네트워크나 토큰 없이 .ppak, 소스 ZIP 및 업로드 패키지를 빌드합니다.</value></data>
+  <data name="Problem reports" xml:space="preserve"><value>문제 보고</value></data>
+  <data name="Problem report queue" xml:space="preserve"><value>문제 보고 대기열</value></data>
+  <data name="New problem reports" xml:space="preserve"><value>새 문제 보고</value></data>
+  <data name="Dashboard" xml:space="preserve"><value>대시보드</value></data>
+  <data name="Active problem reports" xml:space="preserve"><value>활성 문제 보고</value></data>
+  <data name="All developers" xml:space="preserve"><value>모든 개발자</value></data>
+  <data name="Anyone" xml:space="preserve"><value>전체</value></data>
+  <data name="Assigned to" xml:space="preserve"><value>담당자</value></data>
+  <data name="Assignment changed." xml:space="preserve"><value>담당자가 변경되었습니다.</value></data>
+  <data name="Attachments" xml:space="preserve"><value>첨부 파일</value></data>
+  <data name="Attachments, log and reply address are deleted {0} days after the report is closed." xml:space="preserve"><value>첨부 파일, 로그 및 회신 주소는 보고가 종료되고 {0}일 후에 삭제됩니다.</value></data>
+  <data name="Declined" xml:space="preserve"><value>거절됨</value></data>
+  <data name="In progress" xml:space="preserve"><value>진행 중</value></data>
+  <data name="Waiting" xml:space="preserve"><value>대기 중</value></data>
+  <data name="Deleted after the retention period" xml:space="preserve"><value>보존 기간 후 삭제됨</value></data>
+  <data name="Download channel" xml:space="preserve"><value>다운로드 채널</value></data>
+  <data name="Downloads, versions, Power PDF versions, ratings and reports of your add-ons." xml:space="preserve"><value>내 추가 기능의 다운로드, 버전, Power PDF 버전, 평가 및 보고.</value></data>
+  <data name="Downloads, versions, users and reports of all add-ons." xml:space="preserve"><value>모든 추가 기능의 다운로드, 버전, 사용자 및 보고.</value></data>
+  <data name="Downloads, versions, users and reports of your add-ons." xml:space="preserve"><value>내 추가 기능의 다운로드, 버전, 사용자 및 보고.</value></data>
+  <data name="From downloads in the period; Power PDF, Windows, architecture and language only from the store window." xml:space="preserve"><value>기간 내 다운로드 기준입니다. Power PDF, Windows, 아키텍처 및 언어는 스토어 창에서만 집계됩니다.</value></data>
+  <data name="History" xml:space="preserve"><value>기록</value></data>
+  <data name="Log" xml:space="preserve"><value>로그</value></data>
+  <data name="Me" xml:space="preserve"><value>나</value></data>
+  <data name="No data in this period." xml:space="preserve"><value>이 기간에는 데이터가 없습니다.</value></data>
+  <data name="No notes yet." xml:space="preserve"><value>아직 메모가 없습니다.</value></data>
+  <data name="No reports in this view." xml:space="preserve"><value>이 보기에는 보고가 없습니다.</value></data>
+  <data name="Nobody" xml:space="preserve"><value>없음</value></data>
+  <data name="Note or reply" xml:space="preserve"><value>메모 또는 회신</value></data>
+  <data name="Note saved." xml:space="preserve"><value>메모가 저장되었습니다.</value></data>
+  <data name="Only the owner of the add-on or an admin can be assigned." xml:space="preserve"><value>추가 기능 소유자 또는 관리자만 담당자로 지정할 수 있습니다.</value></data>
+  <data name="Open in the problem report queue" xml:space="preserve"><value>문제 보고 대기열에서 열기</value></data>
+  <data name="Open the plug-in page" xml:space="preserve"><value>플러그 인 페이지 열기</value></data>
+  <data name="Rating" xml:space="preserve"><value>평가</value></data>
+  <data name="Reply mailed to the reporter" xml:space="preserve"><value>보고자에게 회신 메일 전송됨</value></data>
+  <data name="Reply possible" xml:space="preserve"><value>회신 가능</value></data>
+  <data name="Reply sent to the reporter." xml:space="preserve"><value>보고자에게 회신을 보냈습니다.</value></data>
+  <data name="Reporters may attach screenshots, PDFs and logs and leave an email address. These are deleted automatically once a report has been closed for the period below; the report text and the notes stay." xml:space="preserve"><value>보고자는 스크린샷, PDF 및 로그를 첨부하고 이메일 주소를 남길 수 있습니다. 이 항목은 보고가 아래 기간 동안 종료된 상태이면 자동으로 삭제되며, 보고 텍스트와 메모는 유지됩니다.</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for all add-ons." xml:space="preserve"><value>모든 추가 기능에 대해 Power PDF 안의 스토어 창에서 보낸 보고 및 의견.</value></data>
+  <data name="Reports and comments from the store window inside Power PDF, for your add-ons." xml:space="preserve"><value>내 추가 기능에 대해 Power PDF 안의 스토어 창에서 보낸 보고 및 의견.</value></data>
+  <data name="Reports from the store window with attachments; an AI assistant works through them with your token." xml:space="preserve"><value>첨부 파일이 포함된 스토어 창의 보고입니다. AI 도우미가 사용자의 토큰으로 처리합니다.</value></data>
+  <data name="Save internal note" xml:space="preserve"><value>내부 메모 저장</value></data>
+  <data name="Send as reply to the reporter" xml:space="preserve"><value>보고자에게 회신으로 보내기</value></data>
+  <data name="Send this text by email to the reporter?" xml:space="preserve"><value>이 텍스트를 보고자에게 이메일로 보내시겠습니까?</value></data>
+  <data name="Status changed." xml:space="preserve"><value>상태가 변경되었습니다.</value></data>
+  <data name="Text or #number" xml:space="preserve"><value>텍스트 또는 #번호</value></data>
+  <data name="The reply could not be sent. Check the email settings." xml:space="preserve"><value>회신을 보낼 수 없습니다. 이메일 설정을 확인하십시오.</value></data>
+  <data name="The reporter left no email address; add an internal note instead." xml:space="preserve"><value>보고자가 이메일 주소를 남기지 않았습니다. 대신 내부 메모를 추가하십시오.</value></data>
+  <data name="The reporter left no email address; replies are not possible." xml:space="preserve"><value>보고자가 이메일 주소를 남기지 않아 회신할 수 없습니다.</value></data>
+  <data name="This action is not possible." xml:space="preserve"><value>이 작업을 수행할 수 없습니다.</value></data>
+  <data name="Upload one" xml:space="preserve"><value>업로드하기</value></data>
+  <data name="Versions of {0}" xml:space="preserve"><value>{0}의 버전</value></data>
+  <data name="Waiting for approval" xml:space="preserve"><value>승인 대기 중</value></data>
+  <data name="Who uses it" xml:space="preserve"><value>사용자 현황</value></data>
+  <data name="Work on them with an AI assistant" xml:space="preserve"><value>AI 도우미로 처리</value></data>
+  <data name="Write 2 to 4000 characters." xml:space="preserve"><value>2~4000자로 작성하십시오.</value></data>
+  <data name="You have no add-ons in the store yet." xml:space="preserve"><value>아직 스토어에 추가 기능이 없습니다.</value></data>
+  <data name="Your AI assistant reads the same figures with GET /api/insights." xml:space="preserve"><value>AI 도우미는 GET /api/insights로 같은 수치를 읽습니다.</value></data>
+  <data name="Your assistant reads this report with your API token:" xml:space="preserve"><value>도우미가 사용자의 API 토큰으로 이 보고서를 읽습니다:</value></data>
+  <data name="before" xml:space="preserve"><value>이전</value></data>
+  <data name="{0} active" xml:space="preserve"><value>활성 {0}개</value></data>
+  <data name="{0} days" xml:space="preserve"><value>{0}일</value></data>
+  <data name="{0} new" xml:space="preserve"><value>신규 {0}개</value></data>
+  <data name="Ribbon" xml:space="preserve"><value>리본</value></data>
+  <data name="No ribbon buttons" xml:space="preserve"><value>리본 단추 없음</value></data>
+</root>

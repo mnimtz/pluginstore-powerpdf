@@ -45,7 +45,7 @@ header.site .bar {
 header.site img.logo { height: 34px; }
 header.site .title { font-weight: 700; font-size: 1.05rem; letter-spacing: .02em; }
 header.site .title small { display: block; font-weight: 400; color: var(--tun-blue-light); font-size: .72rem; }
-header.site nav { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+header.site nav { margin-inline-start: auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 header.site nav a { color: #fff; text-decoration: none; font-weight: 500; font-size: .88rem; }
 header.site nav a:hover { color: var(--tun-blue-light); }
 .accent-line { height: 4px; background: var(--tun-accent-pdf); }
@@ -112,7 +112,7 @@ details.newcust[open] > summary { opacity: .75; }
 .pkg .desc { font-size: .92rem; }
 
 table { width: 100%; border-collapse: collapse; background: #fff; }
-th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--tun-gray-200); font-size: .9rem; vertical-align: top; }
+th, td { text-align: start; padding: 9px 12px; border-bottom: 1px solid var(--tun-gray-200); font-size: .9rem; vertical-align: top; }
 th { color: var(--tun-navy); font-weight: 700; background: var(--tun-gray-blue); }
 tr:hover td { background: var(--tun-gray-100); }
 
@@ -169,7 +169,7 @@ footer.site {
   max-width: 1080px; margin: 0 auto; flex-wrap: wrap;
 }
 footer.site img { height: 20px; opacity: .8; }
-footer.site .spacer { margin-left: auto; }
+footer.site .spacer { margin-inline-start: auto; }
 footer.site .btn { margin-right: 4px; }
 /* bot trap on the access request form: off screen, not display:none (some bots skip hidden fields) */
 .hp-field { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
@@ -205,7 +205,7 @@ pre.code {
   header.site .title { font-size: .95rem; }
   .nav-toggle {
     display: flex; flex-direction: column; justify-content: center; gap: 5px;
-    margin-left: auto; width: 44px; height: 44px; padding: 10px; border: 0; border-radius: 8px;
+    margin-inline-start: auto; width: 44px; height: 44px; padding: 10px; border: 0; border-radius: 8px;
     background: rgba(255,255,255,.12); cursor: pointer;
   }
   .nav-toggle span { display: block; height: 2px; background: #fff; border-radius: 2px; transition: transform .2s, opacity .2s; }
@@ -250,10 +250,10 @@ pre.code {
     color: var(--tun-slate); text-transform: uppercase; letter-spacing: .03em; margin-bottom: 2px;
   }
   table.rtable td[data-label]:not(.rblock) { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; text-align: right; }
-  table.rtable td[data-label]:not(.rblock)::before { margin: 0; flex: 0 0 auto; text-align: left; }
-  table.rtable td.rtitle { font-size: 1rem; text-align: left !important; display: block !important; }
+  table.rtable td[data-label]:not(.rblock)::before { margin: 0; flex: 0 0 auto; text-align: start; }
+  table.rtable td.rtitle { font-size: 1rem; text-align: start !important; display: block !important; }
   table.rtable td.rtitle::before { display: none !important; }
-  table.rtable td.actions { text-align: left !important; display: block !important; padding-top: 10px; }
+  table.rtable td.actions { text-align: start !important; display: block !important; padding-top: 10px; }
   table.rtable td.actions::before { display: none !important; }
   table.rtable td.actions > div { justify-content: flex-start !important; }
   table.rtable tr.rsub { margin-top: -10px; border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
@@ -267,7 +267,7 @@ pre.code {
 .client-hint[hidden] { display: none; }
 .client-hint a { color: var(--tun-navy); font-weight: 700; }
 .source-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin: 6px 0 12px; font-size: .88rem; }
-.source-upload { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-left: auto; }
+.source-upload { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-inline-start: auto; }
 .source-upload input[type=file] { width: auto; max-width: 260px; padding: 5px; font-size: .82rem; }
 
 /* info bubble next to the client download */
@@ -427,7 +427,7 @@ ol.steps { padding-left: 20px; margin: 0 0 14px; line-height: 1.6; }
 .card.pkg .stars { margin-top: -2px; }
 .shot-strip { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x mandatory; }
 .shot { flex: none; width: 280px; border: 1px solid var(--tun-gray-200); border-radius: 8px; background: #fff; padding: 0;
-        cursor: zoom-in; text-align: left; scroll-snap-align: start; overflow: hidden; }
+        cursor: zoom-in; text-align: start; scroll-snap-align: start; overflow: hidden; }
 .shot img { display: block; width: 100%; height: 175px; object-fit: cover; background: var(--tun-gray-150); }
 .shot span { display: block; padding: 8px 10px; font-size: .82rem; color: var(--tun-slate); }
 .shot:hover { border-color: var(--tun-blue); }
@@ -441,7 +441,7 @@ dialog.shot-view form { text-align: right; margin-bottom: 6px; }
 .ai-box { border: 1px solid var(--tun-blue-light); border-left: 4px solid var(--tun-blue); border-radius: 6px; padding: 8px 12px; margin: 8px 0; background: rgba(0, 160, 251, .05); }
 .ai-box p { margin: 6px 0; }
 .ai-head { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.ai-concerns { list-style: none; padding-left: 0; }
+.ai-concerns { list-style: none; padding-inline-start: 0; }
 .ai-concerns li { margin: 4px 0; }
 .ai-search { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 4px; }
 .ai-search input { flex: 1; min-width: 220px; }
@@ -465,3 +465,9 @@ dialog.pp-confirm p { margin: 0 0 18px; line-height: 1.5; }
 /* problem report queue (S1.1.0) */
 .nav-count { display: inline-block; min-width: 18px; padding: 0 5px; margin-left: 5px; border-radius: 999px; background: var(--tun-coral); color: #fff; font-size: .72rem; font-weight: 700; line-height: 18px; text-align: center; vertical-align: 1px; }
 .cap { display: inline-block; } .cap::first-letter { text-transform: uppercase; }
+
+/* right-to-left (Arabic, S1.2.0): logical directions above do most of it */
+[dir=rtl] body { font-family: "Red Hat Display", Tahoma, Arial, sans-serif; }
+[dir=rtl] code, [dir=rtl] pre, [dir=rtl] .code { direction: ltr; unicode-bidi: embed; }
+[dir=rtl] .report-nav a .muted[style*="float:right"] { float: left !important; }
+[dir=rtl] input[type=email], [dir=rtl] input[type=url] { direction: ltr; }

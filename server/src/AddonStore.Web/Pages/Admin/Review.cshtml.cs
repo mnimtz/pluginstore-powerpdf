@@ -50,7 +50,7 @@ public class ReviewModel : PageModel
         await LoadAsync();
         var v = Queue.FirstOrDefault(x => x.Id == versionId);
         if (v is null || !AiReviewOn) { Notice = "This action is not allowed for this version."; return; }
-        var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var lang = AddonStore.Web.Services.Lang.Current;
         Notice = await _assist.ReviewAsync(v, lang, HttpContext.RequestAborted)
             ? "AI review aid created."
             : "The AI provider gave no usable answer. Check the connection test in the settings.";

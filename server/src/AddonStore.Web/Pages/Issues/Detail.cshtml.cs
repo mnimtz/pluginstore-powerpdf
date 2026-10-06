@@ -91,7 +91,7 @@ public class DetailModel : PageModel
         F = await _issues.Scope(user, User.IsInRole("Admin")).AsNoTracking().FirstOrDefaultAsync(f => f.Id == id);
         if (F is null) return false;
         var pkg = await _db.Packages.AsNoTracking().Include(p => p.Versions).FirstOrDefaultAsync(p => p.Id == F.PackageId);
-        var culture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var culture = AddonStore.Web.Services.Lang.Current;
         Name = pkg is null ? F.PackageId : CatalogUi.DisplayName(pkg, pkg.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault(), culture);
         Notes = await _db.FeedbackNotes.AsNoTracking().Where(n => n.FeedbackId == id).OrderBy(n => n.Id).ToListAsync();
         // metadata only; the bytes are served by /api/feedback/{id}/attachments/{aid}

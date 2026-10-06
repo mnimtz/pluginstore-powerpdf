@@ -32,7 +32,7 @@
             </div>
             <div style="flex:1;min-width:200px">
                 <label for="category">@L["Category"]</label>
-                @{ var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName; }
+                @{ var lang = AddonStore.Web.Services.Lang.Current; }
                 <select id="category" name="category">
                     <option value="">@L["From the package"]: @AddonStore.Web.Services.CategoryService.Name(Model.Categories.FirstOrDefault(c => c.Slug == Model.ManifestCategory), Model.ManifestCategory, lang)</option>
                     @foreach (var c in Model.Categories)
@@ -56,7 +56,7 @@
                     <tr>
                         <td><b>@code</b> <span style="color:var(--tun-slate)">@label</span></td>
                         <td><input type="text" name="name_@code" value="@(Model.Name.GetValueOrDefault(code) ?? (code == "nb" ? Model.Name.GetValueOrDefault("no") : null))" maxlength="80" required="@(code == "en")" /></td>
-                        <td><textarea name="desc_@code" rows="3" maxlength="2000" required style="width:100%">@(Model.Description.GetValueOrDefault(code) ?? (code == "nb" ? Model.Description.GetValueOrDefault("no") : null))</textarea></td>
+                        <td><textarea name="desc_@code" rows="3" maxlength="2000" required="@(!AddonStore.Web.Validation.PackageValidator.ExtendedLanguages.Contains(code))" dir="@(code == "ar" ? "rtl" : "auto")" style="width:100%">@(Model.Description.GetValueOrDefault(code) ?? (code == "nb" ? Model.Description.GetValueOrDefault("no") : null))</textarea></td>
                     </tr>
                 }
             </table>

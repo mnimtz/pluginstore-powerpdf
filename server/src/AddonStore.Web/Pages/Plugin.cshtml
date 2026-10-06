@@ -5,7 +5,7 @@
 @{
     var pkg = Model.Pkg!;
     ViewData["Title"] = Model.Name;
-    var lang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var lang = AddonStore.Web.Services.Lang.Current;
     var me = Model.Me!;
     var offeredLive = Model.Versions.FirstOrDefault(x => x.Status == VersionStatus.Live)?.Id;
 }
@@ -295,7 +295,7 @@
                             <div class="small muted">@f.ClientInfo</div>
                             @if (f.AiAt is not null)
                             {
-                                var de = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "de";
+                                var de = AddonStore.Web.Services.Lang.Current == "de";
                                 <div class="ai-box small" style="white-space:normal">
                                     <div class="ai-head">
                                         <b>@L["AI assessment"]</b>

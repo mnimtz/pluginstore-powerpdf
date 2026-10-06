@@ -106,6 +106,9 @@ public class PackageValidator
     private static string Printable(string s) => new(s.Select(c => c < 0x20 || c == 0x7F ? '?' : c).ToArray());
 
     /// <summary>All 16 European Power PDF UI language folder codes.</summary>
+    /// <summary>UILayout folders of the five further Power PDF languages (S1.2.0), recommended.</summary>
+    private static readonly string[] ExtendedLangFolders = { "CHS", "CHT", "JPN", "KOR", "ARA" };
+
     private static readonly string[] EuroLangFolders =
         { "ENU","DEU","FRA","ITA","ESP","NLD","PTB","DAN","FIN","NOR","SVE","PLK","CSY","HUN","RUS","TRK" };
 
@@ -309,6 +312,13 @@ public class PackageValidator
                             $"'{field}' is missing languages: {string.Join(", ", missing)}.",
                             $"Provide '{field}' as an object with all 16 languages: {string.Join(", ", RequiredLanguages)}. " +
                             "Translate the text yourself; the store shows it in the user's language.");
+                    // the five further Power PDF languages (S1.2.0): recommended
+                    var extended = MissingExtended(root, field);
+                    if (extended.Count > 0)
+                        report.Warn("LANG_TEXT_EXTENDED",
+                            $"'{field}' lacks the further Power PDF languages: {string.Join(", ", extended)}.",
+                            "Power PDF also runs in Simplified and Traditional Chinese, Japanese, Korean and Arabic: add " +
+                            "\"zh-Hans\", \"zh-Hant\", \"ja\", \"ko\" and \"ar\" (translate the text yourself). Without them those users read English.");
                 }
 
                 // Add-ons without ribbon buttons (S1.1.1) declare "ui": "none"; the ribbon rules
@@ -688,6 +698,12 @@ public class PackageValidator
                 $"'{file}' has its UI texts in {16 - missing.Count} of the 16 Power PDF languages; missing: {string.Join(", ", missing)}.",
                 "Every add-on follows the Power PDF UI language. Add a STRINGTABLE (and translated dialogs/menus, if any) with a LANGUAGE block for each of: " +
                 "en de fr it es nl pt da fi nb sv pl cs hu ru tr, and pick the block that matches the host language at run time.");
+        var furtherMissing = PeResources.ExtendedLanguages.Where(l => !present.Contains(l.Primary)).Select(l => l.Code).ToList();
+        if (missing.Count == 0 && furtherMissing.Count > 0)
+            report.Warn("UI_LANGS_EXTENDED",
+                $"'{file}' has no UI texts in the further Power PDF languages: {string.Join(", ", furtherMissing)}.",
+                "Power PDF also runs in Simplified and Traditional Chinese, Japanese, Korean and Arabic: add LANGUAGE blocks " +
+                "LANG_CHINESE/SUBLANG_CHINESE_SIMPLIFIED, LANG_CHINESE/SUBLANG_CHINESE_TRADITIONAL, LANG_JAPANESE, LANG_KOREAN and LANG_ARABIC (right to left).");
         if (HasLanguages(strings))
         {
             int Count(int primary) => strings!.TryGetValue(primary, out var set) ? set.Count : 0;
@@ -960,6 +976,10 @@ public class PackageValidator
                 if (missing.Count > 0)
                     report.Error("SCREENSHOT_CAPTION_LANGS", $"The caption of '{file}' lacks: {string.Join(", ", missing)}.",
                         "Give each caption in all 16 languages (en de fr it es nl pt da fi nb sv pl cs hu ru tr).");
+                var extended = MissingExtended(s, "caption");
+                if (extended.Count > 0)
+                    report.Warn("LANG_TEXT_EXTENDED", $"The caption of '{file}' lacks the further Power PDF languages: {string.Join(", ", extended)}.",
+                        "Add the captions in zh-Hans, zh-Hant, ja, ko and ar as well.");
             }
         }
     }
@@ -1462,12 +1482,35 @@ public class PackageValidator
                 report.Error("LANGS_INCOMPLETE",
                     $"UILayout language folders missing: {string.Join(", ", missing)}.",
                     "Ship all 16 European Power PDF languages (ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK); the ribbon follows the host language.");
+            var further = ExtendedLangFolders.Where(l => !langFolders.Contains(l)).ToList();
+            if (further.Count > 0)
+                report.Warn("LANGS_EXTENDED_MISSING",
+                    $"UILayout folders of the further Power PDF languages missing: {string.Join(", ", further)}.",
+                    "Power PDF also runs in CHS (Simplified Chinese), CHT (Traditional Chinese), JPN, KOR and ARA: add a translated NameAndTitle.xml in each, so the ribbon follows these languages too.");
         }
     }
 
-    /// <summary>The 16 European Power PDF UI languages (manifest language codes).</summary>
+    /// <summary>The 16 European Power PDF UI languages (manifest language codes); required.</summary>
     public static readonly string[] RequiredLanguages =
         { "en", "de", "fr", "it", "es", "nl", "pt", "da", "fi", "nb", "sv", "pl", "cs", "hu", "ru", "tr" };
+
+    /// <summary>
+    /// The five further Power PDF UI languages (S1.2.0): Simplified and Traditional Chinese,
+    /// Japanese, Korean, Arabic. Recommended: missing ones are warnings, which admins can
+    /// make mandatory on the rules page.
+    /// </summary>
+    public static readonly string[] ExtendedLanguages = { "zh-Hans", "zh-Hant", "ja", "ko", "ar" };
+
+    /// <summary>All 21 Power PDF UI languages.</summary>
+    public static readonly string[] AllLanguages = RequiredLanguages.Concat(ExtendedLanguages).ToArray();
+
+    private static List<string> MissingExtended(JsonElement root, string field)
+    {
+        if (!root.TryGetProperty(field, out var el) || el.ValueKind != JsonValueKind.Object) return new();
+        bool Has(string lang) =>
+            el.TryGetProperty(lang, out var v) && v.ValueKind == JsonValueKind.String && !string.IsNullOrWhiteSpace(v.GetString());
+        return ExtendedLanguages.Where(l => !Has(l)).ToList();
+    }
 
     private static List<string> MissingLanguages(JsonElement root, string field)
     {
