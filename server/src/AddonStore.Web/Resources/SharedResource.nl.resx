@@ -903,4 +903,42 @@
   <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>Invoegtoepassing geblokkeerd. Alle versies zijn ingetrokken, uploads worden geweigerd en clients vragen de gebruiker haar te verwijderen.</value></data>
   <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>Blokkade opgeheven. De versies blijven ingetrokken; herstel de versies die weer moeten worden aangeboden.</value></data>
   <data name="Security and system access" xml:space="preserve"><value>Beveiliging en systeemtoegang</value></data>
+  <data name="Documentation" xml:space="preserve"><value>Documentatie</value></data>
+  <data name="All documentation" xml:space="preserve"><value>Alle documentatie</value></data>
+  <data name="Manual" xml:space="preserve"><value>Handleiding</value></data>
+  <data name="Copied" xml:space="preserve"><value>Gekopieerd</value></data>
+  <data name="Updated" xml:space="preserve"><value>Bijgewerkt</value></data>
+  <data name="AGENTS.md" xml:space="preserve"><value>AGENTS.md</value></data>
+  <data name="Everything about the Add-on Store in one place: the PDFs, the rules, the guides AI assistants read and the API tools. Every link opens in a new tab." xml:space="preserve"><value>Alles over de Add-on Store op één plek: de pdf's, de regels, de handleidingen voor AI-assistenten en de API-tools. Elke link opent in een nieuw tabblad.</value></data>
+  <data name="Documents (PDF)" xml:space="preserve"><value>Documenten (pdf)</value></data>
+  <data name="Rules and conditions" xml:space="preserve"><value>Regels en voorwaarden</value></data>
+  <data name="For AI assistants" xml:space="preserve"><value>Voor AI-assistenten</value></data>
+  <data name="API and tools" xml:space="preserve"><value>API en tools</value></data>
+  <data name="What the store checks on every upload and what reviewers confirm at approval." xml:space="preserve"><value>Wat de store bij elke upload controleert en wat beoordelaars bij de goedkeuring bevestigen.</value></data>
+  <data name="Readable without signing in; works with Claude, ChatGPT, Gemini, Copilot and others." xml:space="preserve"><value>Leesbaar zonder aanmelden; werkt met Claude, ChatGPT, Gemini, Copilot en andere.</value></data>
+  <data name="For developers and scripts." xml:space="preserve"><value>Voor ontwikkelaars en scripts.</value></data>
+  <data name="Every condition a plug-in must meet for import and approval, in compact form." xml:space="preserve"><value>Elke voorwaarde waaraan een plug-in moet voldoen voor import en goedkeuring, in compacte vorm.</value></data>
+  <data name="The complete reference: principles, developer and agent guide, every rule by area, API and manifest." xml:space="preserve"><value>De volledige referentie: principes, handleiding voor ontwikkelaars en agents, elke regel per gebied, API en manifest.</value></data>
+  <data name="All rules by area, the mandatory conditions and the rules of this store; admins edit them here." xml:space="preserve"><value>Alle regels per gebied, de verplichte voorwaarden en de regels van deze store; beheerders bewerken ze hier.</value></data>
+  <data name="The hard rules as a short checklist to work through before an upload." xml:space="preserve"><value>De harde regels als korte checklist om vóór een upload af te werken.</value></data>
+  <data name="Every rule and condition as JSON, for tools and AI assistants." xml:space="preserve"><value>Elke regel en voorwaarde als JSON, voor tools en AI-assistenten.</value></data>
+  <data name="Rules as data" xml:space="preserve"><value>Regels als gegevens</value></data>
+  <data name="The full guide AI assistants follow to build, check and publish an add-on." xml:space="preserve"><value>De volledige handleiding die AI-assistenten volgen om een invoegtoepassing te bouwen, te controleren en te publiceren.</value></data>
+  <data name="Agent guide as a file" xml:space="preserve"><value>Agent-handleiding als bestand</value></data>
+  <data name="The same guide as Markdown, to save in the plug-in project." xml:space="preserve"><value>Dezelfde handleiding als Markdown, om in het plug-inproject op te slaan.</value></data>
+  <data name="Manual upload package" xml:space="preserve"><value>Handmatig uploadpakket</value></data>
+  <data name="Fallback when an assistant cannot reach the store: it builds the finished upload ZIP." xml:space="preserve"><value>Terugvaloptie als een assistent de store niet kan bereiken: hij maakt de kant-en-klare upload-ZIP.</value></data>
+  <data name="Entry point for AI (llms.txt)" xml:space="preserve"><value>Startpunt voor AI (llms.txt)</value></data>
+  <data name="Short overview that points an assistant to everything else." xml:space="preserve"><value>Kort overzicht dat een assistent naar al het andere verwijst.</value></data>
+  <data name="Instructions for coding assistants that read AGENTS.md (Codex, Copilot, Cursor, Gemini CLI)." xml:space="preserve"><value>Instructies voor programmeerassistenten die AGENTS.md lezen (Codex, Copilot, Cursor, Gemini CLI).</value></data>
+  <data name="Claude skill (SKILL.md)" xml:space="preserve"><value>Claude-skill (SKILL.md)</value></data>
+  <data name="The same rules as a skill for Claude Code." xml:space="preserve"><value>Dezelfde regels als skill voor Claude Code.</value></data>
+  <data name="API page" xml:space="preserve"><value>API-pagina</value></data>
+  <data name="Tokens, prompt templates for publishing and the most important endpoints." xml:space="preserve"><value>Tokens, promptsjablonen voor publicatie en de belangrijkste endpoints.</value></data>
+  <data name="All API endpoints" xml:space="preserve"><value>Alle API-endpoints</value></data>
+  <data name="The short list of every endpoint with method and purpose." xml:space="preserve"><value>De korte lijst van alle endpoints met methode en doel.</value></data>
+  <data name="OpenAPI description" xml:space="preserve"><value>OpenAPI-beschrijving</value></data>
+  <data name="The machine-readable API description for code generators and tools." xml:space="preserve"><value>De machineleesbare API-beschrijving voor codegeneratoren en tools.</value></data>
+  <data name="Offline packer (make-ppak.ps1)" xml:space="preserve"><value>Offline packer (make-ppak.ps1)</value></data>
+  <data name="Builds the .ppak, the source ZIP and the upload package without network or token." xml:space="preserve"><value>Maakt de .ppak, de bron-ZIP en het uploadpakket zonder netwerk of token.</value></data>
 </root>

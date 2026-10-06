@@ -124,6 +124,7 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Admin/Backup", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Categories", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Rules", "PageUser");        // read: everyone signed in; edit: admins (S1.0.9)
+        o.Conventions.AuthorizePage("/Admin/Docs", "PageUser");         // every document in one place (S1.0.12)
         o.Conventions.AuthorizePage("/Admin/Reports", "PageAdmin");
         o.Conventions.AuthorizePage("/Dashboard", "PageUser");
         o.Conventions.AuthorizePage("/CatalogEntry", "PageUser");

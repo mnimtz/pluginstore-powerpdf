@@ -340,6 +340,13 @@ from the live guide, `/api/rules`, the OpenAPI description and the manifest
 schema: introduction and principles, the full developer and agent guide, every
 rule by area, the API reference and the manifest reference.
 
+**Documentation page (S1.0.12):** *Settings, Documentation* (`/Admin/Docs`,
+readable by all signed-in users, also linked from the API and Rules pages)
+lists every document in one place: the two PDFs, the rules and checklist, the
+guides AI assistants read (agent guide, manual upload, llms.txt, AGENTS.md,
+SKILL.md) and the API tools. Every link opens in a new tab; each card shows the
+full address with a copy button.
+
 **Security checks and blocks (S1.0.11):** the validator reads the import
 tables of every binary. Network functions without a declared external service
 (`NETWORK_UNDECLARED`), writing into other processes (`PROCESS_INJECTION`) and

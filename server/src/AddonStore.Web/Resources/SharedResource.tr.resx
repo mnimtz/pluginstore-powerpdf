@@ -903,4 +903,42 @@
   <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>Eklenti engellendi. Tüm sürümler geri çekildi, yüklemeler reddediliyor ve istemciler kullanıcıdan kaldırmasını ister.</value></data>
   <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>Engel kaldırıldı. Sürümler geri çekilmiş kalır; yeniden sunulması gerekenleri geri yükleyin.</value></data>
   <data name="Security and system access" xml:space="preserve"><value>Güvenlik ve sistem erişimi</value></data>
+  <data name="Documentation" xml:space="preserve"><value>Belgeler</value></data>
+  <data name="All documentation" xml:space="preserve"><value>Tüm belgeler</value></data>
+  <data name="Manual" xml:space="preserve"><value>Kılavuz</value></data>
+  <data name="Copied" xml:space="preserve"><value>Kopyalandı</value></data>
+  <data name="Updated" xml:space="preserve"><value>Güncelleme</value></data>
+  <data name="AGENTS.md" xml:space="preserve"><value>AGENTS.md</value></data>
+  <data name="Everything about the Add-on Store in one place: the PDFs, the rules, the guides AI assistants read and the API tools. Every link opens in a new tab." xml:space="preserve"><value>Add-on Store ile ilgili her şey tek yerde: PDF'ler, kurallar, yapay zeka asistanlarının okuduğu kılavuzlar ve API araçları. Her bağlantı yeni bir sekmede açılır.</value></data>
+  <data name="Documents (PDF)" xml:space="preserve"><value>Belgeler (PDF)</value></data>
+  <data name="Rules and conditions" xml:space="preserve"><value>Kurallar ve koşullar</value></data>
+  <data name="For AI assistants" xml:space="preserve"><value>Yapay zeka asistanları için</value></data>
+  <data name="API and tools" xml:space="preserve"><value>API ve araçlar</value></data>
+  <data name="What the store checks on every upload and what reviewers confirm at approval." xml:space="preserve"><value>Mağazanın her yüklemede neyi denetlediği ve inceleyicilerin onayda neyi teyit ettiği.</value></data>
+  <data name="Readable without signing in; works with Claude, ChatGPT, Gemini, Copilot and others." xml:space="preserve"><value>Oturum açmadan okunabilir; Claude, ChatGPT, Gemini, Copilot ve diğerleriyle çalışır.</value></data>
+  <data name="For developers and scripts." xml:space="preserve"><value>Geliştiriciler ve betikler için.</value></data>
+  <data name="Every condition a plug-in must meet for import and approval, in compact form." xml:space="preserve"><value>Bir eklentinin içe aktarma ve onay için karşılaması gereken her koşul, kısa biçimde.</value></data>
+  <data name="The complete reference: principles, developer and agent guide, every rule by area, API and manifest." xml:space="preserve"><value>Eksiksiz başvuru kaynağı: ilkeler, geliştirici ve ajan kılavuzu, alana göre her kural, API ve manifest.</value></data>
+  <data name="All rules by area, the mandatory conditions and the rules of this store; admins edit them here." xml:space="preserve"><value>Alana göre tüm kurallar, zorunlu koşullar ve bu mağazanın kuralları; yöneticiler bunları burada düzenler.</value></data>
+  <data name="The hard rules as a short checklist to work through before an upload." xml:space="preserve"><value>Yüklemeden önce gözden geçirilecek kısa bir kontrol listesi olarak katı kurallar.</value></data>
+  <data name="Every rule and condition as JSON, for tools and AI assistants." xml:space="preserve"><value>Araçlar ve yapay zeka asistanları için JSON olarak her kural ve koşul.</value></data>
+  <data name="Rules as data" xml:space="preserve"><value>Veri olarak kurallar</value></data>
+  <data name="The full guide AI assistants follow to build, check and publish an add-on." xml:space="preserve"><value>Yapay zeka asistanlarının bir eklentiyi oluşturmak, denetlemek ve yayımlamak için izlediği eksiksiz kılavuz.</value></data>
+  <data name="Agent guide as a file" xml:space="preserve"><value>Dosya olarak ajan kılavuzu</value></data>
+  <data name="The same guide as Markdown, to save in the plug-in project." xml:space="preserve"><value>Eklenti projesine kaydetmek için Markdown biçiminde aynı kılavuz.</value></data>
+  <data name="Manual upload package" xml:space="preserve"><value>Elle yükleme paketi</value></data>
+  <data name="Fallback when an assistant cannot reach the store: it builds the finished upload ZIP." xml:space="preserve"><value>Bir asistan mağazaya erişemediğinde yedek yol: hazır yükleme ZIP'ini oluşturur.</value></data>
+  <data name="Entry point for AI (llms.txt)" xml:space="preserve"><value>Yapay zeka için giriş noktası (llms.txt)</value></data>
+  <data name="Short overview that points an assistant to everything else." xml:space="preserve"><value>Bir asistanı diğer her şeye yönlendiren kısa genel bakış.</value></data>
+  <data name="Instructions for coding assistants that read AGENTS.md (Codex, Copilot, Cursor, Gemini CLI)." xml:space="preserve"><value>AGENTS.md okuyan kodlama asistanları için talimatlar (Codex, Copilot, Cursor, Gemini CLI).</value></data>
+  <data name="Claude skill (SKILL.md)" xml:space="preserve"><value>Claude becerisi (SKILL.md)</value></data>
+  <data name="The same rules as a skill for Claude Code." xml:space="preserve"><value>Claude Code için beceri olarak aynı kurallar.</value></data>
+  <data name="API page" xml:space="preserve"><value>API sayfası</value></data>
+  <data name="Tokens, prompt templates for publishing and the most important endpoints." xml:space="preserve"><value>Belirteçler, yayımlama için istem şablonları ve en önemli uç noktalar.</value></data>
+  <data name="All API endpoints" xml:space="preserve"><value>Tüm API uç noktaları</value></data>
+  <data name="The short list of every endpoint with method and purpose." xml:space="preserve"><value>Yöntem ve amaçlarıyla tüm uç noktaların kısa listesi.</value></data>
+  <data name="OpenAPI description" xml:space="preserve"><value>OpenAPI açıklaması</value></data>
+  <data name="The machine-readable API description for code generators and tools." xml:space="preserve"><value>Kod üreticileri ve araçlar için makine tarafından okunabilir API açıklaması.</value></data>
+  <data name="Offline packer (make-ppak.ps1)" xml:space="preserve"><value>Çevrimdışı paketleyici (make-ppak.ps1)</value></data>
+  <data name="Builds the .ppak, the source ZIP and the upload package without network or token." xml:space="preserve"><value>Ağ ve belirteç olmadan .ppak dosyasını, kaynak ZIP'ini ve yükleme paketini oluşturur.</value></data>
 </root>

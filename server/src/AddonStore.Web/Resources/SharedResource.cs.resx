@@ -903,4 +903,42 @@
   <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>Doplněk zablokován. Všechny verze jsou stažené, nahrávání je odmítáno a klienti vyzvou uživatele k jeho odebrání.</value></data>
   <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>Blokace zrušena. Verze zůstávají stažené; obnovte ty, které se mají znovu nabízet.</value></data>
   <data name="Security and system access" xml:space="preserve"><value>Zabezpečení a přístup k systému</value></data>
+  <data name="Documentation" xml:space="preserve"><value>Dokumentace</value></data>
+  <data name="All documentation" xml:space="preserve"><value>Veškerá dokumentace</value></data>
+  <data name="Manual" xml:space="preserve"><value>Příručka</value></data>
+  <data name="Copied" xml:space="preserve"><value>Zkopírováno</value></data>
+  <data name="Updated" xml:space="preserve"><value>Aktualizováno</value></data>
+  <data name="AGENTS.md" xml:space="preserve"><value>AGENTS.md</value></data>
+  <data name="Everything about the Add-on Store in one place: the PDFs, the rules, the guides AI assistants read and the API tools. Every link opens in a new tab." xml:space="preserve"><value>Vše o Add-on Store na jednom místě: soubory PDF, pravidla, návody pro asistenty AI a nástroje API. Každý odkaz se otevře na nové kartě.</value></data>
+  <data name="Documents (PDF)" xml:space="preserve"><value>Dokumenty (PDF)</value></data>
+  <data name="Rules and conditions" xml:space="preserve"><value>Pravidla a podmínky</value></data>
+  <data name="For AI assistants" xml:space="preserve"><value>Pro asistenty AI</value></data>
+  <data name="API and tools" xml:space="preserve"><value>API a nástroje</value></data>
+  <data name="What the store checks on every upload and what reviewers confirm at approval." xml:space="preserve"><value>Co obchod kontroluje při každém nahrání a co recenzenti potvrzují při schválení.</value></data>
+  <data name="Readable without signing in; works with Claude, ChatGPT, Gemini, Copilot and others." xml:space="preserve"><value>Čitelné bez přihlášení; funguje s Claude, ChatGPT, Gemini, Copilot a dalšími.</value></data>
+  <data name="For developers and scripts." xml:space="preserve"><value>Pro vývojáře a skripty.</value></data>
+  <data name="Every condition a plug-in must meet for import and approval, in compact form." xml:space="preserve"><value>Každá podmínka, kterou musí plug-in splnit pro import a schválení, ve stručné podobě.</value></data>
+  <data name="The complete reference: principles, developer and agent guide, every rule by area, API and manifest." xml:space="preserve"><value>Kompletní reference: zásady, průvodce pro vývojáře a agenty, každé pravidlo podle oblasti, API a manifest.</value></data>
+  <data name="All rules by area, the mandatory conditions and the rules of this store; admins edit them here." xml:space="preserve"><value>Všechna pravidla podle oblasti, povinné podmínky a pravidla tohoto obchodu; správci je upravují zde.</value></data>
+  <data name="The hard rules as a short checklist to work through before an upload." xml:space="preserve"><value>Závazná pravidla jako krátký kontrolní seznam před nahráním.</value></data>
+  <data name="Every rule and condition as JSON, for tools and AI assistants." xml:space="preserve"><value>Každé pravidlo a podmínka jako JSON pro nástroje a asistenty AI.</value></data>
+  <data name="Rules as data" xml:space="preserve"><value>Pravidla jako data</value></data>
+  <data name="The full guide AI assistants follow to build, check and publish an add-on." xml:space="preserve"><value>Úplný návod, podle kterého asistenti AI vytvářejí, kontrolují a publikují doplněk.</value></data>
+  <data name="Agent guide as a file" xml:space="preserve"><value>Průvodce agenta jako soubor</value></data>
+  <data name="The same guide as Markdown, to save in the plug-in project." xml:space="preserve"><value>Stejný návod ve formátu Markdown k uložení do projektu plug-inu.</value></data>
+  <data name="Manual upload package" xml:space="preserve"><value>Balíček pro ruční nahrání</value></data>
+  <data name="Fallback when an assistant cannot reach the store: it builds the finished upload ZIP." xml:space="preserve"><value>Záložní cesta, když asistent nemá přístup k obchodu: vytvoří hotový ZIP k nahrání.</value></data>
+  <data name="Entry point for AI (llms.txt)" xml:space="preserve"><value>Vstupní bod pro AI (llms.txt)</value></data>
+  <data name="Short overview that points an assistant to everything else." xml:space="preserve"><value>Krátký přehled, který asistenta navede ke všemu ostatnímu.</value></data>
+  <data name="Instructions for coding assistants that read AGENTS.md (Codex, Copilot, Cursor, Gemini CLI)." xml:space="preserve"><value>Pokyny pro asistenty programování, kteří čtou AGENTS.md (Codex, Copilot, Cursor, Gemini CLI).</value></data>
+  <data name="Claude skill (SKILL.md)" xml:space="preserve"><value>Skill pro Claude (SKILL.md)</value></data>
+  <data name="The same rules as a skill for Claude Code." xml:space="preserve"><value>Stejná pravidla jako skill pro Claude Code.</value></data>
+  <data name="API page" xml:space="preserve"><value>Stránka API</value></data>
+  <data name="Tokens, prompt templates for publishing and the most important endpoints." xml:space="preserve"><value>Tokeny, šablony promptů pro publikování a nejdůležitější koncové body.</value></data>
+  <data name="All API endpoints" xml:space="preserve"><value>Všechny koncové body API</value></data>
+  <data name="The short list of every endpoint with method and purpose." xml:space="preserve"><value>Krátký seznam všech koncových bodů s metodou a účelem.</value></data>
+  <data name="OpenAPI description" xml:space="preserve"><value>Popis OpenAPI</value></data>
+  <data name="The machine-readable API description for code generators and tools." xml:space="preserve"><value>Strojově čitelný popis API pro generátory kódu a nástroje.</value></data>
+  <data name="Offline packer (make-ppak.ps1)" xml:space="preserve"><value>Offline balicí nástroj (make-ppak.ps1)</value></data>
+  <data name="Builds the .ppak, the source ZIP and the upload package without network or token." xml:space="preserve"><value>Vytvoří .ppak, ZIP se zdrojovým kódem a balíček k nahrání bez sítě a tokenu.</value></data>
 </root>

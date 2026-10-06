@@ -903,4 +903,42 @@
   <data name="Add-on blocked. Every version is withdrawn, uploads are refused, and clients ask the user to remove it." xml:space="preserve"><value>Bővítmény letiltva. Minden verzió visszavonva, a feltöltéseket elutasítjuk, és a kliensek felkérik a felhasználót az eltávolítására.</value></data>
   <data name="Block lifted. The versions stay withdrawn; restore the ones that should be offered again." xml:space="preserve"><value>Letiltás feloldva. A verziók visszavonva maradnak; állítsa vissza azokat, amelyeket újra elérhetővé kell tenni.</value></data>
   <data name="Security and system access" xml:space="preserve"><value>Biztonság és rendszerhozzáférés</value></data>
+  <data name="Documentation" xml:space="preserve"><value>Dokumentáció</value></data>
+  <data name="All documentation" xml:space="preserve"><value>Teljes dokumentáció</value></data>
+  <data name="Manual" xml:space="preserve"><value>Kézikönyv</value></data>
+  <data name="Copied" xml:space="preserve"><value>Másolva</value></data>
+  <data name="Updated" xml:space="preserve"><value>Frissítve</value></data>
+  <data name="AGENTS.md" xml:space="preserve"><value>AGENTS.md</value></data>
+  <data name="Everything about the Add-on Store in one place: the PDFs, the rules, the guides AI assistants read and the API tools. Every link opens in a new tab." xml:space="preserve"><value>Minden az Add-on Store-ról egy helyen: a PDF-ek, a szabályok, az MI-asszisztensek útmutatói és az API-eszközök. Minden hivatkozás új lapon nyílik meg.</value></data>
+  <data name="Documents (PDF)" xml:space="preserve"><value>Dokumentumok (PDF)</value></data>
+  <data name="Rules and conditions" xml:space="preserve"><value>Szabályok és feltételek</value></data>
+  <data name="For AI assistants" xml:space="preserve"><value>MI-asszisztenseknek</value></data>
+  <data name="API and tools" xml:space="preserve"><value>API és eszközök</value></data>
+  <data name="What the store checks on every upload and what reviewers confirm at approval." xml:space="preserve"><value>Mit ellenőriz az áruház minden feltöltésnél, és mit erősítenek meg az ellenőrök a jóváhagyáskor.</value></data>
+  <data name="Readable without signing in; works with Claude, ChatGPT, Gemini, Copilot and others." xml:space="preserve"><value>Bejelentkezés nélkül olvasható; működik a Claude, a ChatGPT, a Gemini, a Copilot és mások esetén.</value></data>
+  <data name="For developers and scripts." xml:space="preserve"><value>Fejlesztőknek és szkripteknek.</value></data>
+  <data name="Every condition a plug-in must meet for import and approval, in compact form." xml:space="preserve"><value>Minden feltétel, amelyet egy bővítménynek teljesítenie kell az importáláshoz és a jóváhagyáshoz, tömören.</value></data>
+  <data name="The complete reference: principles, developer and agent guide, every rule by area, API and manifest." xml:space="preserve"><value>A teljes referencia: alapelvek, fejlesztői és ügynöki útmutató, minden szabály területenként, API és manifeszt.</value></data>
+  <data name="All rules by area, the mandatory conditions and the rules of this store; admins edit them here." xml:space="preserve"><value>Minden szabály területenként, a kötelező feltételek és az áruház saját szabályai; a rendszergazdák itt szerkesztik őket.</value></data>
+  <data name="The hard rules as a short checklist to work through before an upload." xml:space="preserve"><value>A kötelező szabályok rövid ellenőrzőlistaként, amelyet feltöltés előtt érdemes végignézni.</value></data>
+  <data name="Every rule and condition as JSON, for tools and AI assistants." xml:space="preserve"><value>Minden szabály és feltétel JSON formátumban, eszközöknek és MI-asszisztenseknek.</value></data>
+  <data name="Rules as data" xml:space="preserve"><value>Szabályok adatként</value></data>
+  <data name="The full guide AI assistants follow to build, check and publish an add-on." xml:space="preserve"><value>A teljes útmutató, amely alapján az MI-asszisztensek elkészítenek, ellenőriznek és közzétesznek egy bővítményt.</value></data>
+  <data name="Agent guide as a file" xml:space="preserve"><value>Ügynöki útmutató fájlként</value></data>
+  <data name="The same guide as Markdown, to save in the plug-in project." xml:space="preserve"><value>Ugyanez az útmutató Markdown formátumban, a bővítményprojektbe mentéshez.</value></data>
+  <data name="Manual upload package" xml:space="preserve"><value>Kézi feltöltési csomag</value></data>
+  <data name="Fallback when an assistant cannot reach the store: it builds the finished upload ZIP." xml:space="preserve"><value>Tartalékmegoldás, ha egy asszisztens nem éri el az áruházat: elkészíti a kész feltöltési ZIP-et.</value></data>
+  <data name="Entry point for AI (llms.txt)" xml:space="preserve"><value>Belépési pont MI számára (llms.txt)</value></data>
+  <data name="Short overview that points an assistant to everything else." xml:space="preserve"><value>Rövid áttekintés, amely minden máshoz elvezeti az asszisztenst.</value></data>
+  <data name="Instructions for coding assistants that read AGENTS.md (Codex, Copilot, Cursor, Gemini CLI)." xml:space="preserve"><value>Utasítások az AGENTS.md fájlt olvasó kódolási asszisztenseknek (Codex, Copilot, Cursor, Gemini CLI).</value></data>
+  <data name="Claude skill (SKILL.md)" xml:space="preserve"><value>Claude-skill (SKILL.md)</value></data>
+  <data name="The same rules as a skill for Claude Code." xml:space="preserve"><value>Ugyanezek a szabályok skillként a Claude Code számára.</value></data>
+  <data name="API page" xml:space="preserve"><value>API-oldal</value></data>
+  <data name="Tokens, prompt templates for publishing and the most important endpoints." xml:space="preserve"><value>Tokenek, közzétételi promptsablonok és a legfontosabb végpontok.</value></data>
+  <data name="All API endpoints" xml:space="preserve"><value>Összes API-végpont</value></data>
+  <data name="The short list of every endpoint with method and purpose." xml:space="preserve"><value>Az összes végpont rövid listája metódussal és céllal.</value></data>
+  <data name="OpenAPI description" xml:space="preserve"><value>OpenAPI-leírás</value></data>
+  <data name="The machine-readable API description for code generators and tools." xml:space="preserve"><value>A géppel olvasható API-leírás kódgenerátorokhoz és eszközökhöz.</value></data>
+  <data name="Offline packer (make-ppak.ps1)" xml:space="preserve"><value>Offline csomagoló (make-ppak.ps1)</value></data>
+  <data name="Builds the .ppak, the source ZIP and the upload package without network or token." xml:space="preserve"><value>Hálózat és token nélkül elkészíti a .ppak fájlt, a forráskód-ZIP-et és a feltöltési csomagot.</value></data>
 </root>

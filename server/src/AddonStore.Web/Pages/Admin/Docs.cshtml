@@ -1,0 +1,123 @@
+@page
+@model AddonStore.Web.Pages.Admin.DocsModel
+@{
+    ViewData["Title"] = "Documentation";
+    var b = $"{Request.Scheme}://{Request.Host}";
+    var ui = System.Globalization.CultureInfo.CurrentUICulture;
+    // small line icons (24x24, stroke = currentColor)
+    string IconPath(string icon) => icon switch
+    {
+        "pdf" => "M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z M14 3v5h5 M8.5 13h7 M8.5 16.5h5",
+        "book" => "M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z M4 21V5 M8 7h7 M8 10.5h5",
+        "shield" => "M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z M8.5 12l2.5 2.5 4.5-5",
+        "check" => "M9 5h10 M9 12h10 M9 19h10 M4 5l1 1 2-2 M4 12l1 1 2-2 M4 19l1 1 2-2",
+        "data" => "M12 3c4.4 0 8 1.3 8 3s-3.6 3-8 3-8-1.3-8-3 3.6-3 8-3z M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6 M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6",
+        "robot" => "M6 8h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2z M12 4v4 M9 13h.01 M15 13h.01 M9.5 16h5",
+        "download" => "M12 4v11 M7 10.5l5 5 5-5 M5 20h14",
+        "package" => "M12 3l8 4.5v9L12 21l-8-4.5v-9z M4 7.5l8 4.5 8-4.5 M12 12v9",
+        "compass" => "M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18z M15.5 8.5l-2 5-5 2 2-5z",
+        "file" => "M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z M14 3v5h5 M9 13l-1.5 2L9 17 M15 13l1.5 2-1.5 2",
+        "spark" => "M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z M18.5 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z",
+        "key" => "M8 14a4 4 0 1 1 3.5-6 M11.5 8H21 M18 8v3 M15 8v2",
+        "list" => "M8 6h12 M8 12h12 M8 18h12 M4 6h.01 M4 12h.01 M4 18h.01",
+        "code" => "M8 7l-5 5 5 5 M16 7l5 5-5 5 M13.5 4l-3 16",
+        _ => "M14.5 6.5a4 4 0 0 0-5.3 5.3L4 17l3 3 5.2-5.2a4 4 0 0 0 5.3-5.3l-2.5 2.5-2.5-.5-.5-2.5z",
+    };
+}
+
+<style>
+    .doc-hero { background: var(--tun-domain-blue); color: #fff; border-radius: 12px; padding: 22px 24px; margin-bottom: 22px; position: relative; overflow: hidden; }
+    .doc-hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--tun-accent-pdf); }
+    .doc-hero h1 { color: #fff; margin: 0 0 6px; }
+    .doc-hero p { margin: 0; color: var(--tun-blue-light); max-width: 720px; }
+    .doc-hero .quick { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .doc-hero .quick a { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; padding: 6px 14px; font-size: .86rem; font-weight: 600; text-decoration: none; }
+    .doc-hero .quick a:hover { background: rgba(255,255,255,.22); }
+    .doc-group { scroll-margin-top: 16px; margin-bottom: 26px; }
+    .doc-group h2 { margin: 0 0 2px; }
+    .doc-group > p { color: var(--tun-slate); margin: 0 0 12px; font-size: .92rem; }
+    .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+    .doc-card { display: flex; flex-direction: column; gap: 8px; background: #fff; border: 1px solid var(--tun-gray-200); border-radius: 10px; padding: 16px; transition: border-color .15s, box-shadow .15s, transform .15s; }
+    .doc-card:hover { border-color: var(--tun-blue); box-shadow: 0 6px 18px rgba(0, 40, 84, .10); transform: translateY(-1px); }
+    .doc-card .head { display: flex; gap: 12px; align-items: flex-start; }
+    .doc-card .ico { flex: none; width: 40px; height: 40px; border-radius: 10px; background: var(--tun-accent-pdf); color: var(--tun-navy); display: grid; place-items: center; }
+    .doc-card .ico svg { width: 22px; height: 22px; }
+    .doc-card h3 { margin: 0; font-size: 1rem; color: var(--tun-navy); line-height: 1.3; }
+    .doc-card h3 a { color: inherit; text-decoration: none; }
+    .doc-card h3 a::after { content: " \2197"; color: var(--tun-blue); font-weight: 400; }
+    .doc-card h3 a:hover { color: var(--tun-blue); }
+    .doc-card .badge { font-size: .7rem; padding: 1px 8px; margin-left: 6px; vertical-align: 2px; }
+    .doc-card p { margin: 0; color: var(--tun-ink); font-size: .88rem; line-height: 1.45; flex: 1; }
+    .doc-card .meta { font-size: .78rem; color: var(--tun-slate); }
+    .doc-card .url { display: flex; gap: 6px; align-items: center; border-top: 1px solid var(--tun-gray-150); padding-top: 10px; }
+    .doc-card .url a { flex: 1; min-width: 0; font-family: Consolas, monospace; font-size: .78rem; color: var(--tun-navy-deep); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .doc-card .url button { flex: none; border: 1px solid var(--tun-gray-200); background: var(--tun-gray-100); color: var(--tun-navy); border-radius: 6px; font: inherit; font-size: .74rem; padding: 3px 8px; cursor: pointer; }
+    .doc-card .url button:hover { border-color: var(--tun-blue); }
+    .doc-card .url button.done { background: #B6FFDE; border-color: #B6FFDE; color: #016839; }
+</style>
+
+<div class="doc-hero">
+    <h1>@L["Documentation"]</h1>
+    <p>@L["Everything about the Add-on Store in one place: the PDFs, the rules, the guides AI assistants read and the API tools. Every link opens in a new tab."]</p>
+    <div class="quick">
+        <a href="/docs/AddonStore-Requirements.pdf" target="_blank" rel="noopener">@L["Mandatory requirements for add-ons"]</a>
+        <a href="/docs/AddonStore-Manual.pdf" target="_blank" rel="noopener">@L["Manual"]</a>
+        <a href="/agent-guide" target="_blank" rel="noopener">@L["Agent guide"]</a>
+    </div>
+</div>
+
+<div class="report-layout">
+<nav class="report-nav" aria-label="@L["Sections"]">
+    @foreach (var g in DocsModel.Groups)
+    {
+        <a href="#@g.Key">@L[g.Title]</a>
+    }
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="/Admin/Settings">← @L["Settings"]</a>
+    }
+</nav>
+<div class="report-main">
+    @foreach (var g in DocsModel.Groups)
+    {
+        <section class="doc-group" id="@g.Key">
+            <h2>@L[g.Title]</h2>
+            <p>@L[g.Intro]</p>
+            <div class="doc-grid">
+                @foreach (var d in g.Links)
+                {
+                    var (kb, date) = Model.FileInfoOf(d.Url);
+                    <article class="doc-card">
+                        <div class="head">
+                            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="@IconPath(d.Icon)" /></svg></span>
+                            <h3><a href="@d.Url" target="_blank" rel="noopener">@L[d.Title]</a>@if (d.Badge is not null) { <span class="badge submitted">@d.Badge</span> }</h3>
+                        </div>
+                        <p>@L[d.Text]</p>
+                        @if (date is not null)
+                        {
+                            <div class="meta">@kb KB · @L["Updated"] @date.Value.ToString("MMM d, yyyy", ui)</div>
+                        }
+                        <div class="url">
+                            <a href="@d.Url" target="_blank" rel="noopener" title="@b@d.Url">@b@d.Url</a>
+                            <button type="button" data-copy="@b@d.Url" data-done="@L["Copied"]">@L["Copy"]</button>
+                        </div>
+                    </article>
+                }
+            </div>
+        </section>
+    }
+</div>
+</div>
+
+<script nonce="@HttpContext.Items["CspNonce"]">
+    document.querySelectorAll("button[data-copy]").forEach(function (btn) {
+        var label = btn.textContent;
+        btn.addEventListener("click", function () {
+            var done = function () {
+                btn.textContent = btn.getAttribute("data-done"); btn.classList.add("done");
+                setTimeout(function () { btn.textContent = label; btn.classList.remove("done"); }, 1600);
+            };
+            if (navigator.clipboard) navigator.clipboard.writeText(btn.getAttribute("data-copy")).then(done, function () {});
+        });
+    });
+</script>
