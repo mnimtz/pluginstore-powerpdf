@@ -75,5 +75,7 @@
       "HKCU\\Software\\Kofax\\PDF\\Tungsten Power PDF\\XfaConverter"
     ],
     "extraPaths": []
-  }
+  },
+  "author": "Tungsten Automation",
+  "contactEmail": "marcus.nimtz@tungstenautomation.com"
 }

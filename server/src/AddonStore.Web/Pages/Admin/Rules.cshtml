@@ -64,7 +64,7 @@
     <p style="font-size:.88rem"><a href="/docs/AddonStore-Requirements.pdf">@L["Mandatory requirements (PDF)"]</a> · <a href="/agent-guide/checklist">@L["Pre-flight checklist"]</a></p>
 
     <h3>@L["1. Conditions for the import (checked automatically)"]</h3>
-    <table>
+    <div class="table-wrap"><table>
         <tr><th>ID</th><th>@L["Condition"]</th><th>@L["Codes"]</th>@if (Model.IsAdmin) { <th></th> }</tr>
         @{ string? group = null; }
         @foreach (var c in Model.ImportConditions)
@@ -109,11 +109,11 @@
                 }
             </tr>
         }
-    </table>
+    </table></div>
     <p style="font-size:.85rem;color:var(--tun-slate)">@L["The automatic checks behind these conditions are part of the store and cannot be switched off here. Warnings can be made mandatory in their area."]</p>
 
     <h3>@L["2. Conditions for the approval (confirmed by the reviewer)"]</h3>
-    <table>
+    <div class="table-wrap"><table>
         <tr><th>ID</th><th>@L["Condition"]</th>@if (Model.IsAdmin) { <th></th> }</tr>
         @foreach (var c in Model.ApprovalConditions)
         {
@@ -162,7 +162,7 @@
                 }
             </tr>
         }
-    </table>
+    </table></div>
     @if (Model.IsAdmin)
     {
         <details class="card newcust">
@@ -191,14 +191,14 @@
     }
     else
     {
-        <table>
+        <div class="table-wrap"><table>
             <tr><th>@L["Code"]</th><th>@L["Rule"]</th><th>@L["Area"]</th></tr>
             @foreach (var c in house.Escalated)
             {
                 var r = rules.FirstOrDefault(x => x.Code == c);
                 <tr><td><code>@c</code></td><td>@Text(r?.Description)</td><td>@L[r?.Area ?? ""]</td></tr>
             }
-        </table>
+        </table></div>
     }
 }
 
@@ -268,7 +268,7 @@
 @if (Model.Shown.Count > 0 || !string.IsNullOrWhiteSpace(Model.Q))
 {
     <h3>@(string.IsNullOrWhiteSpace(Model.Q) ? L["Standard rules"] : L["Search results"]) <span style="color:var(--tun-slate);font-weight:400">(@Model.Shown.Count)</span></h3>
-    <table>
+    <div class="table-wrap"><table>
         <tr><th>@L["Code"]</th><th>@L["Severity"]</th><th>@L["Rule"]</th>@if (!string.IsNullOrWhiteSpace(Model.Q)) { <th>@L["Area"]</th> }@if (Model.IsAdmin) { <th></th> }</tr>
         @foreach (var r in AddonStore.Web.Services.Paging.Items(Model.Shown, ViewContext.HttpContext.Request, "rules"))
         {
@@ -296,7 +296,7 @@
                 }
             </tr>
         }
-    </table>
+    </table></div>
     <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("rules", Model.Shown.Count)' />
 }
 

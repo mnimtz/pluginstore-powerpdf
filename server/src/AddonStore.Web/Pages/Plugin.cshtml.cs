@@ -23,6 +23,8 @@ public class PluginModel : PageModel
     public AppUser? Me { get; private set; }
     public List<PackageVersion> Versions { get; private set; } = new();
     public CatalogItem? InCatalog { get; private set; }
+    /// <summary>Author, contact and category to show: the catalog entry, else the newest checked version (private add-ons, S1.4.1).</summary>
+    public CatalogItem? Shown { get; private set; }
     public string Name { get; private set; } = "";
     public string Description { get; private set; } = "";
     public bool IsAdmin { get; private set; }
@@ -62,6 +64,16 @@ public class PluginModel : PageModel
         Description = CatalogUi.OverrideText(Pkg.DescriptionJson, lang)
                       ?? (shown is null ? "" : CatalogUi.ManifestText(shown, "description", lang));
         InCatalog = (await CatalogUi.GetAsync(_db, lang, includeBeta: true)).FirstOrDefault(c => c.Id == Pkg.Id);
+        Shown = InCatalog;
+        if (Shown is null)
+        {
+            var cmpV = new AddonStore.Web.Validation.SemVerComparer();
+            var newestChecked = Versions.Where(v => v.Status is VersionStatus.Live or VersionStatus.Beta)
+                                        .OrderByDescending(v => v.Version, cmpV).FirstOrDefault();
+            if (newestChecked is not null)
+                Shown = CatalogUi.Item(await CatalogUi.Context.LoadAsync(_db), newestChecked,
+                                       newestChecked.Status == VersionStatus.Live ? "live" : "beta", lang);
+        }
         SourcePolicy = await _sources.PolicyAsync();
         RatingDist = new int[5];
         foreach (var g in await _db.Ratings.AsNoTracking().Where(r => r.PackageId == Pkg.Id).GroupBy(r => r.Stars)

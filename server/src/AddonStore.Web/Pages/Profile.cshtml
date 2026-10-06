@@ -92,7 +92,7 @@
 </div>
 
 <h2>@L["My tokens"]</h2>
-<table>
+<div class="table-wrap"><table>
     <tr><th>@L["Name"]</th><th>@L["Prefix"]</th><th>@L["Created"]</th><th>@L["Last used"]</th><th>@L["Status"]</th><th></th></tr>
     @foreach (var t in Model.Tokens)
     {
@@ -122,4 +122,4 @@
             </td>
         </tr>
     }
-</table>
+</table></div>

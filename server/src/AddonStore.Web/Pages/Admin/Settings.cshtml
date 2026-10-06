@@ -68,7 +68,7 @@ else if (Model.SigningKeyId.Length > 0)
     <h2 style="margin-top:0">@L["Notifications"]</h2>
     <p style="font-size:.88rem;color:var(--tun-slate)">@L["Which emails are sent when, and to whom. Every sent or failed email is recorded in the audit log."]</p>
     <form method="post" asp-page-handler="Notifications">
-        <table>
+        <div class="table-wrap"><table>
             <tr><th>@L["Active"]</th><th>@L["Event"]</th><th>@L["Recipients"]</th></tr>
             @foreach (var (key, label, recipients) in AddonStore.Web.Services.NotificationService.Events)
             {
@@ -83,7 +83,7 @@ else if (Model.SigningKeyId.Length > 0)
                 <td>@L["Invitation"]</td>
                 <td>@L["Invited person (always sent)"]</td>
             </tr>
-        </table>
+        </table></div>
         <button type="submit" class="btn cta" style="margin-top:12px">@L["Save"]</button>
     </form>
 </div>

@@ -19,8 +19,8 @@ The spec is a JSON file:
                                             // delay-load them, see "Additional DLLs (bin/)" in the guide
   "uninstall": { "registryKeys": [ ... ], "extraPaths": [ ... ] },
   "visibility": "private",                  // optional: customer add-on, never in the catalog
-  "author": "Team Signing",                 // shown in the catalog (warning when missing)
-  "contactEmail": "team@example.com"        // shown in the catalog (warning when missing)
+  "author": "Team Signing",                 // mandatory: shown in the catalog
+  "contactEmail": "team@example.com"        // mandatory: support address in the catalog
 }
 
 sha256 values and the architectures list are computed automatically.
@@ -66,6 +66,11 @@ def main():
         text = open(os.path.join(base, vf['file']), encoding='utf-8', errors='ignore').read()
         version = re.search(vf['regex'], text).group(1)
     assert version, 'no version'
+
+    # author and contactEmail are mandatory in the store (S1.4.1)
+    for key in ('author', 'contactEmail'):
+        if not str(spec.get(key, '')).strip():
+            raise SystemExit(f'ABORT: the spec has no "{key}"; the store requires author and contactEmail.')
 
     zxt_name = os.path.basename(spec['zxt']['x64'])
     manifest = {

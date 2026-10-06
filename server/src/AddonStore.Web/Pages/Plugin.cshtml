@@ -40,7 +40,11 @@
             <table style="width:auto">
                 <tr><th style="text-align:left;padding-right:16px">@L["In the store"]</th>
                     <td>
-                        @if (Model.InCatalog is null)
+                        @if (Model.InCatalog is null && pkg.Visibility == "private" && Model.Shown is not null)
+                        {
+                            <span class="badge submitted">@L["Private (customers only)"]</span> <span class="muted small">@Model.Shown.Version</span>
+                        }
+                        else if (Model.InCatalog is null)
                         {
                             <span class="badge withdrawn">@L["Not in the store"]</span>
                         }
@@ -49,10 +53,10 @@
                             <span class="badge @(Model.InCatalog.Channel == "live" ? "live" : "beta")">@(Model.InCatalog.Channel == "live" ? L["Live"] : L["Beta"]) @Model.InCatalog.Version</span>
                         }
                     </td></tr>
-                <tr><th style="text-align:left;padding-right:16px">@L["Author"]</th><td>@(Model.InCatalog?.Author ?? "-")</td></tr>
-                <tr><th style="text-align:left;padding-right:16px">@L["Contact"]</th><td>@(Model.InCatalog?.ContactEmail is { Length: > 0 } c ? c : "-")</td></tr>
-                <tr><th style="text-align:left;padding-right:16px">@L["Category"]</th><td>@(Model.InCatalog?.CategoryName ?? "-")</td></tr>
-                @if (Model.InCatalog?.NoUi == true)
+                <tr><th style="text-align:left;padding-right:16px">@L["Author"]</th><td>@(Model.Shown?.Author is { Length: > 0 } au ? au : "-")</td></tr>
+                <tr><th style="text-align:left;padding-right:16px">@L["Contact"]</th><td class="wrap">@(Model.Shown?.ContactEmail is { Length: > 0 } c ? c : "-")</td></tr>
+                <tr><th style="text-align:left;padding-right:16px">@L["Category"]</th><td>@(Model.Shown?.CategoryName ?? "-")</td></tr>
+                @if (Model.Shown?.NoUi == true)
                 {
                     <tr><th style="text-align:left;padding-right:16px">@L["Ribbon"]</th><td><span class="badge submitted">@L["No ribbon buttons"]</span></td></tr>
                 }

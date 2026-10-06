@@ -67,7 +67,7 @@ $m = [IO.File]::ReadAllText($manifestPath, [Text.Encoding]::UTF8) | ConvertFrom-
 foreach ($f in 'id', 'version', 'name', 'description', 'changelog', 'category', 'ribbonAtomNamespace', 'thirdParty', 'complianceAudit') {
     if ($null -eq $m.$f) { if ($f -in 'id', 'version') { Fail "manifest field '$f' is missing" } else { Warn "manifest field '$f' is missing" } }
 }
-if ($m.version -notmatch '^\d+\.\d+\.\d+([-+][0-9A-Za-z.-]+)?$') { Fail "version '$($m.version)' is not SemVer (e.g. 1.2.3)" }
+if ($m.version -notmatch '^\d+\.\d+\.\d+(\.\d+)?$') { Fail "version '$($m.version)' is not three or four numbers (e.g. 1.2.3 or 2026.4.0.3)" }
 if ($m.id -notmatch '^[a-z][a-z0-9]*(\.[a-z0-9]+)+$') { Fail "id '$($m.id)' is not reverse-DNS lowercase (e.g. com.example.myplugin)" }
 foreach ($f in 'author', 'contactEmail', 'minPowerPdfVersion') { if (-not $m.$f) { Warn "manifest field '$f' is not set" } }
 $langs = 'en', 'de', 'fr', 'it', 'es', 'nl', 'pt', 'da', 'fi', 'nb', 'sv', 'pl', 'cs', 'hu', 'ru', 'tr'

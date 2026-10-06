@@ -57,7 +57,8 @@ public class PackageValidator
     // \z, not $: $ also matches before a trailing newline (audit S1.3.1)
     private static readonly Regex IdPattern = new(@"^[a-z0-9][a-z0-9-]*(\.[a-z0-9][a-z0-9-]*)+\z", RegexOptions.Compiled);
     // [0-9] and \z: no non-ASCII digits, no trailing newline ($ would allow one); 9 digits fit an int
-    private static readonly Regex SemVerPattern = new(@"^[0-9]{1,9}\.[0-9]{1,9}\.[0-9]{1,9}\z", RegexOptions.Compiled);
+    // three numbers, an optional fourth (S1.4.1): e.g. Power PDF's Year.Quarter.Update(.Fix)
+    private static readonly Regex SemVerPattern = new(@"^[0-9]{1,9}\.[0-9]{1,9}\.[0-9]{1,9}(\.[0-9]{1,9})?\z", RegexOptions.Compiled);
     private static readonly Regex HostVersionPattern = new(@"^[0-9]{1,4}(\.[0-9]{1,6}){0,3}\z", RegexOptions.Compiled);
 
     /// <summary>Ribbon tab atoms of Power PDF and the store; a private add-on's own tab must not reuse them.</summary>
@@ -297,8 +298,8 @@ public class PackageValidator
                 // version
                 var version = GetString(root, "version");
                 if (version is null || !SemVerPattern.IsMatch(version))
-                    report.Error("VERSION_INVALID", $"Manifest field 'version' is missing or not SemVer ('{version}').",
-                        "Set 'version' to MAJOR.MINOR.PATCH, e.g. '0.1.0'. Every upload must carry a new, higher version.");
+                    report.Error("VERSION_INVALID", $"Manifest field 'version' is missing or not three or four numbers ('{version}').",
+                        "Set 'version' to three numbers, optionally a fourth, e.g. '1.2.0' or '2026.4.0.3' (Year.Quarter.Update.Fix). Every upload must carry a new, higher version.");
                 else manifest.Version = version;
 
                 // name
@@ -387,13 +388,13 @@ public class PackageValidator
                 // them the catalog falls back to the account, which may not show its contact.
                 var author = GetString(root, "author")?.Trim();
                 if (string.IsNullOrEmpty(author))
-                    report.Warn("AUTHOR_MISSING", "Manifest field 'author' is not set.",
+                    report.Error("AUTHOR_MISSING", "Manifest field 'author' is not set.",
                         "Name the person or team behind the add-on, e.g. \"author\": \"Team Signing\"; it is shown in the catalog and in Power PDF.");
                 else if (author.Length > 100)
                     report.Error("AUTHOR_INVALID", "Manifest field 'author' is longer than 100 characters.", "Use a person's or team's name.");
                 var contact = GetString(root, "contactEmail")?.Trim();
                 if (string.IsNullOrEmpty(contact))
-                    report.Warn("CONTACT_MISSING", "Manifest field 'contactEmail' is not set.",
+                    report.Error("CONTACT_MISSING", "Manifest field 'contactEmail' is not set.",
                         "Give a reachable support address, e.g. \"contactEmail\": \"team@example.com\"; users and customers see it in the catalog.");
                 else if (contact.Length > 200 || !System.Net.Mail.MailAddress.TryCreate(contact, out _))
                     report.Error("CONTACT_INVALID", $"Manifest field 'contactEmail' is not a valid email address.",
@@ -710,9 +711,12 @@ public class PackageValidator
                 "Add a VERSIONINFO resource whose FILEVERSION matches the manifest version; support and the store use it to tell builds apart.");
         else if (manifestVersion.Length > 0)
         {
-            var (a, b, c, _) = fv.Value;
-            if ($"{a}.{b}.{c}" != manifestVersion)
-                report.Warn("VERSIONINFO_MISMATCH", $"'{file}' has FILEVERSION {a}.{b}.{c}, the manifest says {manifestVersion}.",
+            // a four-part version is compared in full; with three parts the binary's fourth field (build) stays free
+            var (a, b, c, d4) = fv.Value;
+            var four = manifestVersion.Count(ch => ch == '.') == 3;
+            var binary = four ? $"{a}.{b}.{c}.{d4}" : $"{a}.{b}.{c}";
+            if (binary != manifestVersion)
+                report.Warn("VERSIONINFO_MISMATCH", $"'{file}' has FILEVERSION {binary}, the manifest says {manifestVersion}.",
                     "Build the binary with the same version as the manifest (FILEVERSION major,minor,patch,0); a mismatch usually means an old build was packaged (fine only for releases without a new binary, e.g. documentation).");
         }
         if (arch == "x64") CheckUiLanguages(report, file, pe);
@@ -1725,21 +1729,29 @@ public class PackageValidator
     }
 }
 
+/// <summary>
+/// Orders store versions number by number: three parts and an optional fourth (S1.4.1),
+/// a missing fourth part counts as 0 (1.2.3 equals 1.2.3.0, 1.2.3.1 is higher).
+/// </summary>
 public class SemVerComparer : IComparer<string>
 {
     public int Compare(string? x, string? y)
     {
         var a = Parse(x); var b = Parse(y);
-        var c = a.Item1.CompareTo(b.Item1); if (c != 0) return c;
-        c = a.Item2.CompareTo(b.Item2); if (c != 0) return c;
-        return a.Item3.CompareTo(b.Item3);
+        for (var i = 0; i < 4; i++)
+        {
+            var c = a[i].CompareTo(b[i]);
+            if (c != 0) return c;
+        }
+        return 0;
     }
 
-    private static (int, int, int) Parse(string? v)
+    private static long[] Parse(string? v)
     {
-        if (v is null) return (0, 0, 0);
+        var r = new long[4];
+        if (v is null) return r;
         var parts = v.Split('.');
-        int P(int i) => parts.Length > i && int.TryParse(parts[i], out var n) ? n : 0;
-        return (P(0), P(1), P(2));
+        for (var i = 0; i < 4 && i < parts.Length; i++) r[i] = long.TryParse(parts[i], out var n) ? n : 0;
+        return r;
     }
 }

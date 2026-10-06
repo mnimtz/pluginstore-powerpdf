@@ -39,7 +39,7 @@ header.site {
   color: #fff;
 }
 header.site .bar {
-  max-width: 1200px; margin: 0 auto; padding: 14px 20px;
+  max-width: 1280px; margin: 0 auto; padding: 14px 20px;
   display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
 }
 header.site img.logo { height: 34px; }
@@ -50,7 +50,8 @@ header.site nav a { color: #fff; text-decoration: none; font-weight: 500; font-s
 header.site nav a:hover { color: var(--tun-blue-light); }
 .accent-line { height: 4px; background: var(--tun-accent-pdf); }
 
-main { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
+/* 1280px (S1.4.1): the management lists have up to eight columns with badges and buttons */
+main { max-width: 1280px; margin: 0 auto; padding: 28px 20px 60px; }
 
 h1 { color: var(--tun-navy); font-weight: 700; font-size: 1.7rem; margin: 0 0 6px; }
 h2 { color: var(--tun-navy); font-weight: 700; font-size: 1.2rem; margin: 26px 0 10px; }
@@ -84,6 +85,9 @@ details.newcust[open] > summary { opacity: .75; }
 .report-error { border-left: 4px solid var(--tun-coral); }
 .report-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; padding: 0 14px 10px; }
 .report-area { background: #fff; border: 1px solid var(--tun-gray-200); border-radius: 6px; padding: 8px 10px; }
+/* long codes, paths and hosts wrap instead of widening the page (S1.4.1); grid items may shrink */
+.report-area, ul.findings li, .card { min-width: 0; overflow-wrap: break-word; }
+ul.findings li, ul.findings .hint { overflow-wrap: anywhere; }
 .report-label { font-weight: 500; color: var(--tun-navy); font-size: .9rem; }
 .report-icon {
   display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px;
@@ -166,7 +170,7 @@ ul.findings .hint { color: var(--tun-slate); display: block; margin-top: 2px; }
 footer.site {
   border-top: 1px solid var(--tun-gray-200); color: var(--tun-slate);
   font-size: .8rem; padding: 18px 20px; display: flex; gap: 14px; align-items: center;
-  max-width: 1080px; margin: 0 auto; flex-wrap: wrap;
+  max-width: 1280px; margin: 0 auto; flex-wrap: wrap;
 }
 footer.site img { height: 20px; opacity: .8; }
 footer.site .spacer { margin-inline-start: auto; }
@@ -194,7 +198,14 @@ pre.code {
   font-family: Consolas, "Cascadia Mono", monospace; font-size: .85rem;
   white-space: pre-wrap; word-break: break-all;
 }
-.table-wrap { overflow-x: auto; }
+.table-wrap { overflow-x: auto; max-width: 100%; }
+/* tables (S1.4.1): badges, buttons and dates never break inside; a cell with several
+   controls wraps them as a group; the last column (actions) stays as narrow as it can */
+td .badge, td .btn, td.nowrap, th.nowrap { white-space: nowrap; }
+td .cell-actions { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; margin: 0; }
+td.actions { width: 1%; white-space: nowrap; text-align: end; }
+td .pid { color: var(--tun-slate); font-size: .8rem; overflow-wrap: anywhere; }
+td.wrap { overflow-wrap: anywhere; }
 
 /* ---- phones and small tablets ------------------------------------------------ */
 .nav-toggle { display: none; }

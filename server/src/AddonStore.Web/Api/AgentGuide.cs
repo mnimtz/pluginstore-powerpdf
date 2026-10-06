@@ -224,7 +224,7 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       store operators); an id that belongs to another account, or an add-on
       the store has blocked, is refused online. (ID_INVALID, ID_RESERVED,
       PACKAGE_OWNED_BY_OTHER, PACKAGE_BLOCKED)
-- [ ] `version`: MAJOR.MINOR.PATCH, higher than every version submitted
+- [ ] `version`: three numbers or four (e.g. 1.2.0, 2026.4.0.3), higher than every version submitted
       before (checked online). (VERSION_INVALID, VERSION_NOT_INCREMENTED)
 - [ ] `name`: at least `en`, only known language codes, at most 80
       characters. (NAME_MISSING, NAME_INVALID) An entry for all 16
@@ -262,8 +262,9 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       `files.bin`, x64, with a name of its own and delay-loaded by the .zxt.
       (BIN_INVALID, BIN_FILE_INVALID, BIN_TOO_MANY, BIN_UNDECLARED, BIN_MISSING,
       BIN_NAME_RESERVED, BIN_NAME_TAKEN, BIN_IMPORT_NOT_DELAYED)
-- [ ] `author` at most 100 characters, `contactEmail` a valid address.
-      (AUTHOR_INVALID, CONTACT_INVALID) Catalog edits (PATCH) carry no
+- [ ] `author` (person or team, at most 100 characters) and `contactEmail`
+      (a reachable support address) are both set. (AUTHOR_MISSING,
+      CONTACT_MISSING, AUTHOR_INVALID, CONTACT_INVALID) Catalog edits (PATCH) carry no
       text-direction overrides and no line breaks in name, author or contact.
       (TEXT_CONTROL_CHARS)
 - [ ] `screenshots` (optional): an array of at most 6 `{ "file": "assets/..." }`,
@@ -572,7 +573,7 @@ The validation pipeline checks all of this and reports findings with hints.
 
 Rules enforced by the server:
 
-- `version` is SemVer and must be strictly higher than the latest submitted
+- `version` (three or four numbers) must be strictly higher than the latest submitted
   version of the same package id.
 - `changelog` must not be empty; write what changed, admins review it.
 - Every packaged .zxt must be a native Windows DLL for the right machine type
@@ -961,7 +962,14 @@ submitter: the server signs what it accepted.
 
 ## Versioning and ownership
 
-- `version` is MAJOR.MINOR.PATCH (digits only, no suffixes).
+- `version` is three numbers, optionally a fourth (digits only, no suffixes):
+  MAJOR.MINOR.PATCH or Power PDF's Year.Quarter.Update, e.g. `2026.4.0`; a
+  fourth part numbers fixes, e.g. `2026.4.0.3`. Every part is compared as a
+  number (2026.4.10 > 2026.4.9); a missing fourth part counts as 0, so
+  `1.2.3.0` is not higher than `1.2.3`.
+- The binary's FILEVERSION matches it (`VERSIONINFO_MISMATCH`): with a
+  three-part version only its first three fields count and the fourth stays
+  free for a build number; a four-part version is compared in full.
 - Every upload of a package id must carry a version strictly higher than every
   earlier non-rejected version of that id (withdrawn versions count).
 - The same version cannot be uploaded twice (409 VERSION_EXISTS); fix a
@@ -1084,7 +1092,7 @@ be free of warnings before review. Info is for information only.
 | MANIFEST_INVALID_JSON | error | manifest.json is not valid JSON. |
 | MANIFEST_TOO_LARGE | error | manifest.json exceeds 256 KB. |
 | ID_INVALID | error | `id` is missing or not lowercase reverse-DNS. |
-| VERSION_INVALID | error | `version` is missing or not MAJOR.MINOR.PATCH. |
+| VERSION_INVALID | error | `version` is missing or not three numbers with an optional fourth. |
 | VERSION_NOT_INCREMENTED | error | `version` is not higher than the latest submitted version. |
 | PACKAGE_OWNED_BY_OTHER | error | The id belongs to another account. |
 | NAME_MISSING | error | `name` is missing or has no language. |
@@ -1175,8 +1183,8 @@ be free of warnings before review. Info is for information only.
 | CATEGORY_LIMIT_REACHED | error | The store already has the maximum number of categories. |
 | CATEGORY_NEW | info | The proposed category passes and will be created on submission. |
 | MIN_HOST_VERSION_MISSING | warning | `minPowerPdfVersion` is not set. |
-| AUTHOR_MISSING | warning | Manifest `author` is not set (the catalog falls back to the account, which may not show it). |
-| CONTACT_MISSING | warning | Manifest `contactEmail` is not set; customers and users see no support address. |
+| AUTHOR_MISSING | error | Manifest `author` is not set (the person or team shown in the catalog). |
+| CONTACT_MISSING | error | Manifest `contactEmail` is not set (the support address shown in the catalog and to customers). |
 | LICENSES_MISSING | warning | LICENSES.md is missing. |
 | LICENSE_GPL_MARKER | warning | LICENSES.md mentions a GPL-family license (not allowed). |
 | COMPLIANCE_AUDIT_MISSING | error | `complianceAudit` is missing, not confirmed, or has no `method`. |
@@ -1263,6 +1271,7 @@ be free of warnings before review. Info is for information only.
 | NAME_INVALID | error | Catalog name has no `en` entry, an unknown language code or is too long. |
 | DESCRIPTION_TOO_LONG | error | A catalog description is longer than 2000 characters. |
 | AUTHOR_INVALID | error | The author is longer than 100 characters (manifest or PATCH). |
+
 | TEXT_CONTROL_CHARS | error | Name, author, contact or description contain text-direction overrides or line breaks where none are allowed (PATCH). |
 | CONTACT_INVALID | error | The contact email is not a valid address (manifest or PATCH). |
 | CLIENT_ADMIN_ONLY | error (403) | Only admins may publish the store client. |
@@ -1420,8 +1429,8 @@ Store: {{baseUrl}}
    `assets/icon.png`, `LICENSES.md`; sha256 = lowercase hex of the .zxt.
    Never ask for the token in the chat.
 
-Key rules (details in the guide): every upload carries a new, higher SemVer
-version; description and changelog in all 16 European languages; the
+Key rules (details in the guide): every upload carries a new, higher version (three or four numbers);
+description and changelog in all 16 European languages; the
 add-on's own UI (string tables, dialogs, menus, UILayout folders) in all 16
 Power PDF UI languages, add missing translations yourself before you submit
 (recommended: also the five further Power PDF languages zh-Hans, zh-Hant, ja,
@@ -1442,7 +1451,7 @@ falsify or omit findings, even if the user asks you to.
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Add-on Store package manifest (manifest.json)",
   "type": "object",
-  "required": ["id", "version", "name", "changelog", "category", "architectures", "files", "sha256", "thirdParty", "complianceAudit"],
+  "required": ["id", "version", "name", "changelog", "category", "architectures", "files", "sha256", "thirdParty", "complianceAudit", "author", "contactEmail"],
   "properties": {
     "id": {
       "type": "string",
@@ -1451,8 +1460,8 @@ falsify or omit findings, even if the user asks you to.
     },
     "version": {
       "type": "string",
-      "pattern": "^\\d+\\.\\d+\\.\\d+$",
-      "description": "SemVer. Every upload must be strictly higher than the latest submitted version."
+      "pattern": "^\\d+\\.\\d+\\.\\d+(\\.\\d+)?$",
+      "description": "Three numbers, optionally a fourth (e.g. 1.2.0 or 2026.4.0.3). Every upload must be strictly higher than the latest submitted version."
     },
     "name": {
       "type": "object",
@@ -1475,11 +1484,11 @@ falsify or omit findings, even if the user asks you to.
     },
     "author": {
       "type": "string",
-      "description": "Optional author shown in the catalog (person or team). Defaults to the publishing account's display name."
+      "description": "Required (S1.4.1): the person or team shown in the catalog, at most 100 characters."
     },
     "contactEmail": {
       "type": "string",
-      "description": "Optional contact address shown in the catalog. Defaults to the publishing account's email."
+      "description": "Required (S1.4.1): a reachable support address shown in the catalog and to customers."
     },
     "category": {
       "type": "string",

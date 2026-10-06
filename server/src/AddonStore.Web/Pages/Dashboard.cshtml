@@ -83,12 +83,12 @@ else
         <tr>
             <th>@L["Plug-in"]</th>
             @if (isAdmin) { <th>@L["Owner"]</th> }
-            <th>@L["Live"]</th><th>@L["Status"]</th><th>@L["Visibility"]</th><th>@L["Downloads"]</th><th>@L["Last activity"]</th><th></th>
+            <th>@L["Live"]</th><th>@L["Status"]</th><th>@L["Visibility"]</th><th>@L["Downloads"]</th><th>@L["Last activity"]</th><th class="actions"></th>
         </tr>
         @foreach (var r in AddonStore.Web.Services.Paging.Items(Model.Visible, ViewContext.HttpContext.Request, "plugins"))
         {
             <tr>
-                <td><b style="color:var(--tun-navy)">@r.Name</b><br /><span style="color:var(--tun-slate);font-size:.8rem">@r.Pkg.Id</span></td>
+                <td><b style="color:var(--tun-navy)">@r.Name</b><br /><span class="pid">@r.Pkg.Id</span></td>
                 @if (isAdmin) { <td>@r.Owner</td> }
                 <td>@(r.Live?.Version ?? "-")</td>
                 <td>
@@ -105,7 +105,7 @@ else
                         <span class="badge @r.Newest.Status.ToString().ToLowerInvariant()">@L[r.Newest.Status.ToString()]</span>
                     }
                 </td>
-                <td style="white-space:nowrap">
+                <td>
                     @if (r.Pkg.Id == "com.tungsten.pluginstore")
                     {
                         <span class="badge live">@L["public"]</span>
@@ -113,7 +113,7 @@ else
                     else
                     {
                         var priv = r.Pkg.Visibility == "private";
-                        <form method="post" action="/Plugin?id=@Uri.EscapeDataString(r.Pkg.Id)&amp;handler=Visibility" style="display:inline-flex;gap:6px;align-items:center;margin:0"
+                        <form method="post" action="/Plugin?id=@Uri.EscapeDataString(r.Pkg.Id)&amp;handler=Visibility" class="cell-actions"
                               data-confirm="@(priv ? L["Make this add-on public? It then appears in the catalog for everybody (new versions after approval)."] : L["Make this add-on private? It disappears from the public catalog; only customers with a delivery and a code still get it."])">
                             <span class="badge @(priv ? "submitted" : "live")">@L[priv ? "private" : "public"]</span>
                             <input type="hidden" name="visibility" value="@(priv ? "public" : "private")" />
@@ -124,8 +124,8 @@ else
                     }
                 </td>
                 <td>@r.Downloads</td>
-                <td>@Time.Fmt(r.LastActivity, false)</td>
-                <td style="text-align:right;white-space:nowrap"><a class="btn small" href="/Plugin?id=@r.Pkg.Id">@L["Details"]</a></td>
+                <td class="nowrap">@Time.Fmt(r.LastActivity, false)</td>
+                <td class="actions"><a class="btn small" href="/Plugin?id=@r.Pkg.Id">@L["Details"]</a></td>
             </tr>
         }
     </table>

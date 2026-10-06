@@ -331,7 +331,7 @@ only their own group `FeaturePack::<YourName>`. The validator checks this.
 Exception: a **private** customer add-on may bring its own tab
 (`ribbonAtomNamespace` = tab atom, e.g. `CustomerSign`); it then stays private
 (switching it to public is refused). Every manifest names `author` and
-`contactEmail` (warning when missing).
+`contactEmail` (mandatory since S1.4.1).
 
 **Manual upload package (S1.0.7):** when an AI assistant cannot reach the store
 (for example a cloud sandbox whose network policy blocks it) or has no token,
@@ -362,6 +362,22 @@ check, the AI review aid, the review decision with the approval conditions in
 the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
+
+**S1.4.1:**
+- `author` and `contactEmail` are mandatory (`AUTHOR_MISSING`,
+  `CONTACT_MISSING`); `make_ppak.py` stops early without them.
+- The plug-in page of a private add-on shows its author, contact and
+  category.
+- The portal is 1280 px wide, every table scrolls in its own frame, and long
+  ids, mail addresses and codes wrap. Checked at 390 to 1440 px: no page
+  overflows any more.
+
+**Four-part versions (S1.4.1):** a version has three numbers and an optional
+fourth, e.g. `1.2.0` or Power PDF's Year.Quarter.Update(.Fix) `2026.4.0.3`.
+Every part is compared as a number, and a missing fourth part counts as 0.
+With three parts the binary's fourth FILEVERSION field stays free for a build
+number; a four-part version must match the whole FILEVERSION. The current
+store clients already compare four parts, so no client update is needed.
 
 **Own DLLs, localized names, English dossier (S1.4.0, client 1.4.0):**
 - Add-ons may bring their own x64 DLLs in `bin/` (listed in `files.bin`).

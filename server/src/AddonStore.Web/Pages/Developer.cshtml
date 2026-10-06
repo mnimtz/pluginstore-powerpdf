@@ -65,7 +65,7 @@ Invoke-WebRequest @(b)/api/skill -OutFile "$env:USERPROFILE\.claude\skills\power
 
 <div class="card">
     <h2 style="margin-top:0">@L["Endpoints"]</h2>
-    <table>
+    <div class="table-wrap"><table>
         <tr><th>@L["Address"]</th><th>@L["Purpose"]</th></tr>
         <tr><td><code>@b/agent-guide</code></td><td>@L["Complete guide for developers and AI assistants"] (HTML)</td></tr>
         <tr><td><code>@b/api/agent-guide</code></td><td>@L["Complete guide for developers and AI assistants"] (Markdown)</td></tr>
@@ -82,7 +82,7 @@ Invoke-WebRequest @(b)/api/skill -OutFile "$env:USERPROFILE\.claude\skills\power
         <tr><td><code>PATCH @b/api/packages/{id}</code></td><td>@L["Change name, description, author and contact without a new version"]</td></tr>
         <tr><td><code>PUT @b/api/packages/{id}/{version}/source</code></td><td>@L["Upload the source code of a version (after every upload)"]</td></tr>
         <tr><td><code>GET @b/api/packages/{id}/source/latest</code></td><td>@L["Admins: source code of the newest version, the starting point for a change"]</td></tr>
-    </table>
+    </table></div>
 </div>
 
 <div class="card">
