@@ -412,6 +412,13 @@ protected:
             s->put_IsStatusBarEnabled(FALSE);
             s->put_IsZoomControlEnabled(FALSE);
             s->put_IsBuiltInErrorPageEnabled(FALSE);
+            s->put_AreHostObjectsAllowed(FALSE);          // C1.3.1: the page talks only through messages
+            ComPtr<ICoreWebView2Settings4> s4;
+            if (SUCCEEDED(s.As(&s4)) && s4)
+            {
+                s4->put_IsPasswordAutosaveEnabled(FALSE);
+                s4->put_IsGeneralAutofillEnabled(FALSE);
+            }
         }
 
         EventRegistrationToken t;
@@ -427,6 +434,14 @@ protected:
             }).Get(), &t);
         m_web->add_NewWindowRequested(Callback<ICoreWebView2NewWindowRequestedEventHandler>(
             [](ICoreWebView2*, ICoreWebView2NewWindowRequestedEventArgs* a) -> HRESULT { a->put_Handled(TRUE); return S_OK; }).Get(), &t);
+        // C1.3.1: no camera, microphone, location, clipboard or notification rights, and no downloads
+        m_web->add_PermissionRequested(Callback<ICoreWebView2PermissionRequestedEventHandler>(
+            [](ICoreWebView2*, ICoreWebView2PermissionRequestedEventArgs* a) -> HRESULT {
+                a->put_State(COREWEBVIEW2_PERMISSION_STATE_DENY); return S_OK; }).Get(), &t);
+        ComPtr<ICoreWebView2_4> web4;
+        if (SUCCEEDED(m_web.As(&web4)) && web4)
+            web4->add_DownloadStarting(Callback<ICoreWebView2DownloadStartingEventHandler>(
+                [](ICoreWebView2*, ICoreWebView2DownloadStartingEventArgs* a) -> HRESULT { a->put_Cancel(TRUE); return S_OK; }).Get(), &t);
         m_web->add_WebMessageReceived(Callback<ICoreWebView2WebMessageReceivedEventHandler>(
             [this](ICoreWebView2*, ICoreWebView2WebMessageReceivedEventArgs* a) -> HRESULT {
                 // Messages count only from our own page (loaded with NavigateToString).
@@ -724,7 +739,8 @@ protected:
     {
         if (m_attach.size() >= 3 || data.empty() || data.size() > 7 * 1024 * 1024) return;
         for (wchar_t c : data)
-            if (!(iswalnum(c) || c == L'+' || c == L'/' || c == L'=')) return;   // base64 only
+            if (!((c >= L'A' && c <= L'Z') || (c >= L'a' && c <= L'z') || (c >= L'0' && c <= L'9') ||
+                  c == L'+' || c == L'/' || c == L'=')) return;   // base64 only, ASCII (C1.3.1)
         m_attach.push_back({ name.substr(0, 200), data });
     }
 
@@ -1049,7 +1065,9 @@ protected:
         {
             std::wstring to = Field(json, L"to");
             bool ok = to.find(L'@') != std::wstring::npos && to.size() < 200;
-            for (wchar_t c : to) if (c <= L' ' || c == L'"' || c == L'<' || c == L'>' || c == L'&' || c == L'?') ok = false;
+            // one plain address: no header fields, encoded characters or further recipients (C1.3.1: also % , ; : \\)
+            for (wchar_t c : to) if (c <= L' ' || c == L'"' || c == L'<' || c == L'>' || c == L'&' || c == L'?' ||
+                                     c == L'%' || c == L',' || c == L';' || c == L':' || c == L'\\' || c > 0x7E) ok = false;
             if (ok) ShellExecuteW(m_hWnd, L"open", (L"mailto:" + to).c_str(), NULL, NULL, SW_SHOWNORMAL);
         }
     }

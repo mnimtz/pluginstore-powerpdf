@@ -8,6 +8,7 @@
 #include "logging.h"
 #include "settings.h"
 #include "signature.h"
+#include "blocklist.h"
 #include "loc.h"
 #include "Resource.h"
 #include <bcrypt.h>
@@ -114,6 +115,21 @@ std::wstring PSInstalledVersion(const std::wstring& zxtName)
     return JsonValue(json, "version");
 }
 
+// Id in the installed store manifest of <zxtName> ("" when there is none).
+static std::wstring InstalledId(const std::wstring& zxtName)
+{
+    std::wstring dir = PluginsDir();
+    if (dir.empty()) return L"";
+    return JsonValue(psold::ReadSmall(dir + L"\\" + zxtName + L"\\manifest.json"), "id");
+}
+
+// Download cap: what the catalog announced, never more than 300 MB (C1.3.1).
+static unsigned long long DownloadCap(unsigned long long announced)
+{
+    const unsigned long long max = 300ull * 1024 * 1024;
+    return announced > 0 && announced < max ? announced + 65536 : max;
+}
+
 // ---------------------------------------------------------------------------
 // PowerShell children: full path, script passed in memory (-EncodedCommand),
 // so no script file exists that another process could change in between.
@@ -155,6 +171,19 @@ static std::wstring SystemPath(const wchar_t* rel)
 }
 
 static std::wstring PowerShellExe() { return SystemPath(L"WindowsPowerShell\\v1.0\\powershell.exe"); }
+
+// Script lines that create $stage with its own protected ACL (C1.3.1): SYSTEM and
+// Administrators only, nothing inherited from a Plug-Ins folder whose rights an
+// installer may have widened. Created in one call, so there is no moment with
+// the inherited rights.
+static std::wstring StageCreate()
+{
+    return std::wstring() +
+        L"  $acl=New-Object System.Security.AccessControl.DirectorySecurity\r\n" +
+        L"  $acl.SetAccessRuleProtection($true,$false)\r\n" +
+        L"  foreach ($sid in @('S-1-5-18','S-1-5-32-544')) { $acl.AddAccessRule((New-Object System.Security.AccessControl.FileSystemAccessRule((New-Object System.Security.Principal.SecurityIdentifier $sid),'FullControl','ContainerInherit,ObjectInherit','None','Allow'))) }\r\n" +
+        L"  [System.IO.Directory]::CreateDirectory($stage,$acl) | Out-Null\r\n";
+}
 
 // "-NoProfile ... -EncodedCommand <base64 of the UTF-16LE script>"
 static std::wstring EncodedArgs(const std::wstring& script)
@@ -204,11 +233,32 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
     std::wstring pluginsDir = PluginsDir();
     if (pluginsDir.empty()) return 5;
 
+    // C1.3.1: the store client updates itself only through its MSI; a block of the
+    // store wins over a stale catalog; no downgrades; never over another add-on
+    if (_wcsicmp(e.zxtName.c_str(), L"PluginStore") == 0) return 12;
+    if (PSIsBlockedVersion(e.id, e.version))
+    {
+        FPLogW(L"[Store] %s %s is blocked by the store, not installed", e.id.c_str(), e.version.c_str());
+        return 10;
+    }
+    std::wstring have = PSInstalledVersion(e.zxtName);
+    if (!have.empty() && have != L"?" && PSCompareVersions(e.version, have) < 0)
+    {
+        FPLogW(L"[Store] %s %s is older than the installed %s, not installed", e.id.c_str(), e.version.c_str(), have.c_str());
+        return 11;
+    }
+    std::wstring ownerId = InstalledId(e.zxtName);
+    if (!ownerId.empty() && _wcsicmp(ownerId.c_str(), e.id.c_str()) != 0)
+    {
+        FPLogW(L"[Store] %s.zxt belongs to %s, not to %s; not installed", e.zxtName.c_str(), ownerId.c_str(), e.id.c_str());
+        return 12;
+    }
+
     std::wstring ppak = TempPackagePath(e);
 
     // 1) download (user context); never more than the catalog announced
     DWORD status = 0;
-    unsigned long long cap = e.sizeBytes > 0 ? e.sizeBytes + 65536 : 300ull * 1024 * 1024;
+    unsigned long long cap = DownloadCap(e.sizeBytes);
     if (!PSHttpGetFile(e.downloadUrl, ppak, &status, cap)) return 1;
 
     // 2) verify (user context): the catalog hash is authoritative
@@ -241,7 +291,7 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
         L"$stage=Join-Path $plugins ('.psstage-'+[guid]::NewGuid().ToString('N'))\r\n" +
         L"try {\r\n" +
         L"  Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
-        L"  New-Item -ItemType Directory -Path $stage | Out-Null\r\n" +
+        StageCreate() +
         L"  $pkg=Join-Path $stage 'package.ppak'\r\n" +
         L"  Copy-Item -LiteralPath $src -Destination $pkg -Force\r\n" +
         L"  if ((Get-FileHash -LiteralPath $pkg -Algorithm SHA256).Hash -ne $sha) { $rc=9 }\r\n" +
@@ -383,7 +433,9 @@ std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& sh
     // The installer shows its dialogs in Power PDF's language: the MSI carries all 16
     // languages as embedded transforms named by their LCID (C0.8.0).
     // Only names that exist: an unknown transform makes msiexec fail (1624).
-    static const unsigned kEmbedded[] = { 1031, 1036, 1040, 3082, 1043, 1046, 1030, 1035, 1044, 1053, 1045, 1029, 1038, 1049, 1055 };
+    // C1.3.1: plus Simplified and Traditional Chinese, Japanese, Korean and Arabic (MSI since C1.3.0)
+    static const unsigned kEmbedded[] = { 1031, 1036, 1040, 3082, 1043, 1046, 1030, 1035, 1044, 1053, 1045, 1029, 1038, 1049, 1055,
+                                          2052, 1028, 1041, 1042, 1025 };
     unsigned lcid = 1033;
     for (unsigned l : kEmbedded) if (l == FPLocLangId()) lcid = l;
     std::wstring sha = sha256;
@@ -403,7 +455,7 @@ std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& sh
         L"$stage=Join-Path $plugins ('.psupdate-'+[guid]::NewGuid().ToString('N'))\r\n" +
         L"try {\r\n" +
         L"  Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
-        L"  New-Item -ItemType Directory -Path $stage | Out-Null\r\n" +
+        StageCreate() +
         L"  $pkg=Join-Path $stage 'package.ppak'\r\n" +
         L"  Copy-Item -LiteralPath $src -Destination $pkg -Force\r\n" +
         L"  if ((Get-FileHash -LiteralPath $pkg -Algorithm SHA256).Hash -ne $sha) { $rc=9 }\r\n" +
@@ -446,8 +498,7 @@ int PSSelfUpdateDownload(const PSCatalogEntry& e, std::wstring& ppak)
     std::wstring path = TempPackagePath(e);
 
     DWORD status = 0;
-    unsigned long long cap = e.sizeBytes > 0 ? e.sizeBytes + 65536 : 300ull * 1024 * 1024;
-    if (!PSHttpGetFile(e.downloadUrl, path, &status, cap)) return 1;
+    if (!PSHttpGetFile(e.downloadUrl, path, &status, DownloadCap(e.sizeBytes))) return 1;
     if (_wcsicmp(Sha256File(path).c_str(), e.sha256.c_str()) != 0)
     {
         DeleteFileW(path.c_str());

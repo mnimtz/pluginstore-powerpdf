@@ -23,6 +23,10 @@ void PSBlockCheckStart(HWND notify, UINT message);
 // Takes the worker's result (UI thread, from the message's LPARAM).
 void PSBlockTakeResult(LPARAM lp);
 
+// True when the last good list blocks this id and version (any thread). The list
+// survives a failed check: an unreachable server never lifts a block (C1.3.1).
+bool PSIsBlockedVersion(const std::wstring& id, const std::wstring& version);
+
 // The blocked add-ons installed here, from the last check (UI thread).
 const std::vector<PSBlocked>& PSBlockedInstalled();
 

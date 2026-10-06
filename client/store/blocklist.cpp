@@ -21,6 +21,10 @@ extern "C" HINSTANCE gHINSTANCE;
 namespace {
 
 std::vector<PSBlocked> g_blocked;          // UI thread only
+// every rule of the last good list: SHA-256 of the lowercase id, version or "*"
+struct Rule { std::wstring hash, version; };
+std::vector<Rule> g_rules;                 // guarded by g_rulesLock
+SRWLOCK g_rulesLock = SRWLOCK_INIT;
 std::set<std::wstring> g_asked;            // "<id>|<version>" asked this session
 volatile LONG g_running = 0;
 
@@ -110,6 +114,7 @@ DWORD WINAPI Worker(LPVOID p)
             } while (FindNextFileW(h, &fd));
             FindClose(h);
         }
+        std::vector<Rule> rules;
         size_t pos = 0;
         while (pos < tsv.size())
         {
@@ -123,15 +128,24 @@ DWORD WINAPI Worker(LPVOID p)
             std::wstring hash = FromUtf8(line.substr(0, t1));
             std::wstring ver = FromUtf8(line.substr(t1 + 1, t2 - t1 - 1));
             std::wstring reason = FromUtf8(line.substr(t2 + 1));
+            rules.push_back({ hash, ver });
             for (const auto& i : installed)
                 if (i.hash == hash && (ver == L"*" || ver == i.version))
                     found->push_back({ i.id, i.name, i.version, i.zxt, reason });
         }
+        AcquireSRWLockExclusive(&g_rulesLock);
+        g_rules.swap(rules);
+        ReleaseSRWLockExclusive(&g_rulesLock);
         FPLogW(L"[Store] blocklist checked: %u blocked add-on(s) installed", (unsigned)found->size());
     }
     else
-        FPLogW(L"[Store] blocklist not reachable (HTTP %lu)", status);
-    if (!job->notify || !PostMessageW(job->notify, job->message, 0, (LPARAM)found)) delete found;
+    {
+        // keep the last good result (C1.3.1): an unreachable server never lifts a block
+        FPLogW(L"[Store] blocklist not reachable (HTTP %lu), keeping the last result", status);
+        delete found;
+        found = nullptr;
+    }
+    if (found && (!job->notify || !PostMessageW(job->notify, job->message, 0, (LPARAM)found))) delete found;
     delete job;
     InterlockedExchange(&g_running, 0);
     FreeLibraryAndExitThread(gHINSTANCE, 0);
@@ -159,6 +173,17 @@ void PSBlockTakeResult(LPARAM lp)
 }
 
 const std::vector<PSBlocked>& PSBlockedInstalled() { return g_blocked; }
+
+bool PSIsBlockedVersion(const std::wstring& id, const std::wstring& version)
+{
+    std::wstring hash = Sha256Hex(Utf8Lower(id));
+    bool blocked = false;
+    AcquireSRWLockShared(&g_rulesLock);
+    for (const auto& r : g_rules)
+        if (r.hash == hash && (r.version == L"*" || r.version == version)) { blocked = true; break; }
+    ReleaseSRWLockShared(&g_rulesLock);
+    return blocked;
+}
 
 static std::wstring FormatW(const std::wstring& fmt, const std::wstring& a, const std::wstring& b, const std::wstring& c)
 {

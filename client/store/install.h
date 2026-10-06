@@ -25,7 +25,10 @@ std::vector<PSOldInstall> PSFindOldInstalls();
 // Full flow: download -> hash check -> elevated copy. Returns 0 on success,
 // 1 = download failed, 2 = hash mismatch, 3 = elevation declined/failed,
 // 4 = install script failed, 5 = Power PDF folder not found,
-// 6 = not signed by a trusted store key (signature.h).
+// 6 = not signed by a trusted store key (signature.h),
+// 10 = blocked by a security block of the store (blocklist.h),
+// 11 = older than the installed version (no downgrades),
+// 12 = the name belongs to another add-on or to the store client itself.
 // The elevated step checks the hash once more in an admin-only staging folder
 // before it extracts anything (2 when it changed in between).
 int PSInstallPackage(const PSCatalogEntry& e, HWND owner);
