@@ -287,7 +287,15 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
     // 1) download (user context); never more than the catalog announced
     DWORD status = 0;
     unsigned long long cap = DownloadCap(e.sizeBytes);
-    if (!PSHttpGetFile(e.downloadUrl, ppak, &status, cap)) return 1;
+    if (!PSHttpGetFile(e.downloadUrl, ppak, &status, cap))
+    {
+        if (status == 403 && !e.customer.empty())
+        {
+            FPLogW(L"[Store] %s: every installation of the delivery is in use", e.id.c_str());
+            return 13;
+        }
+        return 1;
+    }
 
     // 2) verify (user context): the catalog hash is authoritative
     std::wstring actual = Sha256File(ppak);
@@ -566,25 +574,88 @@ int PSSelfUpdateFinish(const PSCatalogEntry& e, const std::wstring& ppak, HWND o
     return result;
 }
 
+std::vector<PSInstalledAddon> PSListInstalledAddons(const std::wstring& lang)
+{
+    std::vector<PSInstalledAddon> out;
+    std::wstring dir = PluginsDir();
+    if (dir.empty()) return out;
+    WIN32_FIND_DATAW fd;
+    HANDLE h = FindFirstFileW((dir + L"\\*").c_str(), &fd);
+    if (h == INVALID_HANDLE_VALUE) return out;
+    do
+    {
+        if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) || fd.cFileName[0] == L'.') continue;
+        std::wstring zxt = fd.cFileName;
+        if (!PSIsValidZxtName(zxt) || _wcsicmp(zxt.c_str(), L"PluginStore") == 0) continue;
+        std::string json = psold::ReadSmall(dir + L"\\" + zxt + L"\\manifest.json");
+        if (json.empty()) continue;
+        PSInstalledAddon a;
+        a.id = JsonValue(json, "id");
+        if (a.id.empty()) continue;
+        a.version = JsonValue(json, "version");
+        a.zxtName = zxt;
+        size_t n = json.find("\"name\"");
+        if (n != std::string::npos)
+        {
+            std::string lc;
+            for (wchar_t ch : lang) if (ch < 0x80) lc += (char)ch;   // ASCII language codes only
+            a.name = psold::Value(json.substr(n), lc.c_str());
+            if (a.name.empty()) a.name = psold::Value(json.substr(n), "en");
+        }
+        if (a.name.empty()) a.name = a.id;
+        out.push_back(a);
+    } while (FindNextFileW(h, &fd));
+    FindClose(h);
+    return out;
+}
+
 int PSUninstallPackage(const std::wstring& zxtName, HWND owner)
+{
+    return PSUninstallPackages({ zxtName }, owner);
+}
+
+void PSReleaseInstallations(const std::vector<std::wstring>& packageIds)
+{
+    if (packageIds.empty() || PSCustomerCode().empty()) return;
+    std::string body = "{\"packages\":[";
+    for (size_t i = 0; i < packageIds.size(); ++i)
+    {
+        std::string id;
+        for (wchar_t c : packageIds[i]) if (c < 0x80 && c != L'"' && c != L'\\') id += (char)c;   // ids are ASCII
+        body += (i ? ",\"" : "\"") + id + "\"";
+    }
+    body += "]}";
+    std::string answer;
+    DWORD status = 0;
+    bool ok = PSHttpPostJson(PSServerUrl() + L"/api/deliveries/release", body, answer, &status);
+    FPLogW(L"[Store] released installations of %u add-on(s): HTTP %lu", (unsigned)packageIds.size(), ok ? status : status);
+}
+
+int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner)
 {
     if (PSPolicyNoInstall())
     {
         FPLogW(L"[Store] install/remove blocked by policy DisableInstall");
         return 7;
     }
-    if (!PSIsValidZxtName(zxtName)) return 4;
+    if (zxtNames.empty()) return 0;
     // Only plug-ins with a store manifest (installed by the store or by one of
     // our MSIs) can be removed here: a catalog entry naming one of Power PDF's
     // own plug-ins must never offer to delete it.
     std::wstring manifestDir = PluginsDir();
-    if (manifestDir.empty() || !cspath::FileExists(manifestDir + L"\\" + zxtName + L"\\manifest.json"))
+    for (const auto& zxtName : zxtNames)
     {
-        FPLogW(L"[Store] %s has no store manifest, not removed", zxtName.c_str());
-        return 4;
+        if (!PSIsValidZxtName(zxtName) || _wcsicmp(zxtName.c_str(), L"PluginStore") == 0) return 4;
+        if (manifestDir.empty() || !cspath::FileExists(manifestDir + L"\\" + zxtName + L"\\manifest.json"))
+        {
+            FPLogW(L"[Store] %s has no store manifest, not removed", zxtName.c_str());
+            return 4;
+        }
     }
     std::wstring pluginsDir = PluginsDir();
     if (pluginsDir.empty()) return 5;
+    std::wstring names;
+    for (const auto& z : zxtNames) names += (names.empty() ? L"" : L",") + PsQuote(z);
 
     // One elevated step removes the Program-Files part; the HKCU settings key
     // is removed afterwards in USER context (elevated processes can resolve the
@@ -592,14 +663,15 @@ int PSUninstallPackage(const std::wstring& zxtName, HWND owner)
     std::wstring script = std::wstring() +
         L"$ErrorActionPreference='Stop'\r\n" +
         L"$plugins=" + PsQuote(pluginsDir) + L"\r\n" +
-        L"$name=" + PsQuote(zxtName) + L"\r\n" +
         BinFunctions() +
         L"Get-ChildItem -LiteralPath $plugins -Filter '*.zxt.old-*' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue\r\n" +
-        L"$zxt=Join-Path $plugins ($name + '.zxt')\r\n" +
-        L"if (Test-Path -LiteralPath $zxt) { try { Remove-Item -LiteralPath $zxt -Force } catch { Rename-Item -LiteralPath $zxt ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
-        L"$data=Join-Path $plugins $name\r\n" +
-        L"Clear-Bin (Join-Path $data 'bin')\r\n" +
-        L"if (Test-Path -LiteralPath $data) { Remove-Item -LiteralPath $data -Recurse -Force }\r\n" +
+        L"foreach ($name in @(" + names + L")) {\r\n" +
+        L"  $zxt=Join-Path $plugins ($name + '.zxt')\r\n" +
+        L"  if (Test-Path -LiteralPath $zxt) { try { Remove-Item -LiteralPath $zxt -Force } catch { Rename-Item -LiteralPath $zxt ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
+        L"  $data=Join-Path $plugins $name\r\n" +
+        L"  Clear-Bin (Join-Path $data 'bin')\r\n" +
+        L"  if (Test-Path -LiteralPath $data) { Remove-Item -LiteralPath $data -Recurse -Force }\r\n" +
+        L"}\r\n" +
         L"exit 0\r\n";
 
     int result;
@@ -610,11 +682,12 @@ int PSUninstallPackage(const std::wstring& zxtName, HWND owner)
         result = code == 0 ? 0 : 4;
 
     if (result == 0)
-    {
-        std::wstring key = L"Software\\Kofax\\PDF\\Tungsten Power PDF\\" + zxtName;
-        RegDeleteTreeW(HKEY_CURRENT_USER, key.c_str());
-    }
+        for (const auto& zxtName : zxtNames)
+        {
+            std::wstring key = L"Software\\Kofax\\PDF\\Tungsten Power PDF\\" + zxtName;
+            RegDeleteTreeW(HKEY_CURRENT_USER, key.c_str());
+        }
 
-    FPLogW(L"[Store] uninstall %s -> %d", zxtName.c_str(), result);
+    FPLogW(L"[Store] uninstall %s -> %d", names.c_str(), result);
     return result;
 }

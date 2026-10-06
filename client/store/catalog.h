@@ -37,11 +37,13 @@ struct PSCatalogEntry
     std::wstring signature;      // "keyId:base64(r||s)" of the server (TSV column 21, see signature.h)
     bool noUi = false;           // "ui": "none": no ribbon buttons (TSV column 22, server 1.1.1+)
     std::wstring installedVersion; // filled by the install module, empty = not installed
+    bool orphan = false;           // installed by the store, no longer in the catalog (C1.4.1): remove only
 };
 
 bool PSFetchCatalog(std::vector<PSCatalogEntry>& out, std::wstring& error);
 // Same without host calls (any thread): lang is the host language code.
-bool PSFetchCatalogFor(const std::wstring& lang, std::vector<PSCatalogEntry>& out, std::wstring& error);
+bool PSFetchCatalogFor(const std::wstring& lang, std::vector<PSCatalogEntry>& out, std::wstring& error,
+                       const std::wstring* codes = nullptr);   // codes: instead of the stored ones (C1.4.1)
 
 // 1 to 64 letters, digits, '-' or '_' (the server enforces the same rule).
 bool PSIsValidZxtName(const std::wstring& name);

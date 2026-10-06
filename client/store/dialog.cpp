@@ -253,6 +253,8 @@ protected:
             Reload();
             OfferRestart(IDS_PSD_ASK_RESTART, name);
         }
+        else if (rc == 13)   // every installation of the delivery in use (C1.4.1)
+            SetDlgItemTextW(IDC_PS_STATUS, FPLoc(IDS_PSD_MSG_SEATS).c_str());
         else if (rc == 2 || rc == 6)
         {
             SetDlgItemTextW(IDC_PS_STATUS, FPLoc(rc == 2 ? IDS_PSD_MSG_HASH : IDS_PSD_MSG_SIG).c_str());

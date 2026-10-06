@@ -76,7 +76,8 @@ bool PSFetchCatalog(std::vector<PSCatalogEntry>& out, std::wstring& error)
     return PSFetchCatalogFor(wcode, out, error);
 }
 
-bool PSFetchCatalogFor(const std::wstring& lang, std::vector<PSCatalogEntry>& out, std::wstring& error)
+bool PSFetchCatalogFor(const std::wstring& lang, std::vector<PSCatalogEntry>& out, std::wstring& error,
+                       const std::wstring* codes)
 {
     out.clear();
     error.clear();
@@ -89,7 +90,8 @@ bool PSFetchCatalogFor(const std::wstring& lang, std::vector<PSCatalogEntry>& ou
 
     std::string body;
     DWORD status = 0;
-    if (!PSHttpGetText(url, body, &status))
+    // "what would the catalog be with these codes" (removing a code, C1.4.1) or the stored ones
+    if (!(codes ? PSHttpCheckCustomerCode(url, *codes, body, &status) : PSHttpGetText(url, body, &status)))
     {
         error = FPLoc(IDS_PSD_MSG_FAIL);
         return false;

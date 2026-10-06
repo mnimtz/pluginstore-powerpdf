@@ -176,7 +176,13 @@ bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& reque
     std::wstring headers;
     // (codeOverride: a code being checked in the store window before it is stored)
     std::wstring customer = codeOverride ? *codeOverride : PSCustomerCode();
-    if (!customer.empty()) headers += L"X-Customer-Code: " + customer + L"\r\n";
+    if (!customer.empty())
+    {
+        headers += L"X-Customer-Code: " + customer + L"\r\n";
+        // C1.4.1: deliveries may allow a number of installations; the random id of this
+        // installation counts one (the server stores only a hash of it per delivery)
+        headers += L"X-Install-Id: " + PSInstallId() + L"\r\n";
+    }
     if (body) headers += L"Content-Type: application/json; charset=utf-8\r\n";
     const wchar_t* h = headers.empty() ? WINHTTP_NO_ADDITIONAL_HEADERS : headers.c_str();
     DWORD hlen = headers.empty() ? 0 : (DWORD)-1L;

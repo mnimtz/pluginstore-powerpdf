@@ -28,10 +28,24 @@ std::vector<PSOldInstall> PSFindOldInstalls();
 // 6 = not signed by a trusted store key (signature.h),
 // 10 = blocked by a security block of the store (blocklist.h),
 // 11 = older than the installed version (no downgrades),
-// 12 = the name belongs to another add-on or to the store client itself.
+// 12 = the name belongs to another add-on or to the store client itself,
+// 13 = every installation the delivery allows is in use (server S1.4.2).
 // The elevated step checks the hash once more in an admin-only staging folder
 // before it extracts anything (2 when it changed in between).
 int PSInstallPackage(const PSCatalogEntry& e, HWND owner);
+
+// Add-ons the store installed into THIS Power PDF (Plug-Ins\<zxt>\manifest.json with an id),
+// the store client itself excluded. Name in the given manifest language code, else English.
+struct PSInstalledAddon { std::wstring id, version, zxtName, name; };
+std::vector<PSInstalledAddon> PSListInstalledAddons(const std::wstring& lang);
+
+// Removes several add-ons with ONE elevated step (C1.4.1, e.g. the add-ons of a removed
+// customer code). Same return codes as PSUninstallPackage.
+int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner);
+
+// Tells the store that these delivered add-ons were removed here, so their installations
+// are free again (C1.4.1). Sent with the stored customer codes; best effort.
+void PSReleaseInstallations(const std::vector<std::wstring>& packageIds);
 
 // Removes <bin>\Plug-Ins\<name>.zxt and the data folder (one elevated step)
 // plus the plugin's HKCU key (user context). Same return codes as install;

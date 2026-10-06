@@ -220,6 +220,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "What's new"
     IDS_PSW_NEWS_OK  "Got it"
     IDS_PSW_NO_UI  "No ribbon buttons: this add-on works inside Power PDF features; the description says where."
+    IDS_PSW_CODE_LIST  "Customer codes on this computer"
+    IDS_PSW_CODE_ADD  "Add code"
+    IDS_PSW_CODE_FULL  "At most 10 customer codes. Remove one first."
+    IDS_PSW_CODE_DUP  "This code has already been added."
+    IDS_PSW_CODE_NONE  "No customer code added yet."
+    IDS_PSW_CODE_ASK  "Remove the customer code of %s?"
+    IDS_PSW_CODE_ASK_ADDONS  "These add-ons came with this code only and will be removed from Power PDF as well (one administrator confirmation): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "The code was removed, and so were these add-ons: %s. Restart Power PDF to finish."
+    IDS_PSW_CODE_KEPT  "The add-ons could not be removed (the administrator confirmation was declined or failed), so the code was kept."
+    IDS_PSW_ORPHAN  "No longer offered by the store, for example because its customer code was removed. You can still remove it here."
+    IDS_PSW_ORPHAN_PILL  "No longer offered"
+    IDS_PSW_SEATS  "Installations: %s"
+    IDS_PSD_MSG_SEATS  "All installations of this add-on for your organization are in use. Remove it on a computer that no longer needs it, or ask your provider for more installations."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -346,6 +359,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Was ist neu"
     IDS_PSW_NEWS_OK  "Verstanden"
     IDS_PSW_NO_UI  "Ohne eigene Schaltfläche: Dieses Add-on arbeitet in Funktionen von Power PDF; wo genau, steht in der Beschreibung."
+    IDS_PSW_CODE_LIST  "Kundencodes auf diesem Computer"
+    IDS_PSW_CODE_ADD  "Code hinzufügen"
+    IDS_PSW_CODE_FULL  "Höchstens 10 Kundencodes. Entfernen Sie zuerst einen."
+    IDS_PSW_CODE_DUP  "Dieser Code wurde bereits hinzugefügt."
+    IDS_PSW_CODE_NONE  "Noch kein Kundencode hinzugefügt."
+    IDS_PSW_CODE_ASK  "Kundencode von %s entfernen?"
+    IDS_PSW_CODE_ASK_ADDONS  "Diese Add-ons kamen nur über diesen Code und werden ebenfalls aus Power PDF entfernt (eine Administrator-Bestätigung): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "Der Code wurde entfernt, ebenso diese Add-ons: %s. Starten Sie Power PDF neu, um den Vorgang abzuschließen."
+    IDS_PSW_CODE_KEPT  "Die Add-ons konnten nicht entfernt werden (die Administrator-Bestätigung wurde abgelehnt oder ist fehlgeschlagen), daher wurde der Code beibehalten."
+    IDS_PSW_ORPHAN  "Wird vom Store nicht mehr angeboten, zum Beispiel weil der zugehörige Kundencode entfernt wurde. Sie können es hier trotzdem entfernen."
+    IDS_PSW_ORPHAN_PILL  "Nicht mehr angeboten"
+    IDS_PSW_SEATS  "Installationen: %s"
+    IDS_PSD_MSG_SEATS  "Alle Installationen dieses Add-ons für Ihre Organisation sind belegt. Entfernen Sie es auf einem Computer, der es nicht mehr benötigt, oder bitten Sie Ihren Anbieter um weitere Installationen."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -472,6 +498,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Nouveautés"
     IDS_PSW_NEWS_OK  "Compris"
     IDS_PSW_NO_UI  "Sans bouton propre : ce module agit dans des fonctions de Power PDF ; la description indique où."
+    IDS_PSW_CODE_LIST  "Codes client sur cet ordinateur"
+    IDS_PSW_CODE_ADD  "Ajouter un code"
+    IDS_PSW_CODE_FULL  "10 codes client au maximum. Supprimez-en d’abord un."
+    IDS_PSW_CODE_DUP  "Ce code a déjà été ajouté."
+    IDS_PSW_CODE_NONE  "Aucun code client n’a encore été ajouté."
+    IDS_PSW_CODE_ASK  "Supprimer le code client de %s ?"
+    IDS_PSW_CODE_ASK_ADDONS  "Ces modules ont été fournis uniquement avec ce code et seront également supprimés de Power PDF (une seule confirmation administrateur) : %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "Le code a été supprimé, ainsi que ces modules : %s. Redémarrez Power PDF pour terminer."
+    IDS_PSW_CODE_KEPT  "Impossible de supprimer les modules (la confirmation administrateur a été refusée ou a échoué) ; le code a donc été conservé."
+    IDS_PSW_ORPHAN  "N’est plus proposé par le store, par exemple parce que son code client a été supprimé. Vous pouvez toujours le supprimer ici."
+    IDS_PSW_ORPHAN_PILL  "Plus proposé"
+    IDS_PSW_SEATS  "Installations : %s"
+    IDS_PSD_MSG_SEATS  "Toutes les installations de ce module pour votre organisation sont utilisées. Supprimez-le d'un ordinateur qui n'en a plus besoin ou demandez des installations supplémentaires à votre fournisseur."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -598,6 +637,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Novità"
     IDS_PSW_NEWS_OK  "Ho capito"
     IDS_PSW_NO_UI  "Senza pulsanti propri: questo componente aggiuntivo agisce nelle funzioni di Power PDF; la descrizione indica dove."
+    IDS_PSW_CODE_LIST  "Codici cliente su questo computer"
+    IDS_PSW_CODE_ADD  "Aggiungi codice"
+    IDS_PSW_CODE_FULL  "Al massimo 10 codici cliente. Rimuovine prima uno."
+    IDS_PSW_CODE_DUP  "Questo codice è già stato aggiunto."
+    IDS_PSW_CODE_NONE  "Nessun codice cliente ancora aggiunto."
+    IDS_PSW_CODE_ASK  "Rimuovere il codice cliente di %s?"
+    IDS_PSW_CODE_ASK_ADDONS  "Questi componenti aggiuntivi sono arrivati solo con questo codice e verranno rimossi anche da Power PDF (una conferma dell’amministratore): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "Il codice è stato rimosso, insieme a questi componenti aggiuntivi: %s. Riavvia Power PDF per completare l’operazione."
+    IDS_PSW_CODE_KEPT  "Non è stato possibile rimuovere i componenti aggiuntivi (la conferma dell’amministratore è stata rifiutata o non è riuscita), quindi il codice è stato mantenuto."
+    IDS_PSW_ORPHAN  "Non più offerto dallo store, ad esempio perché il relativo codice cliente è stato rimosso. Puoi comunque rimuoverlo qui."
+    IDS_PSW_ORPHAN_PILL  "Non più offerto"
+    IDS_PSW_SEATS  "Installazioni: %s"
+    IDS_PSD_MSG_SEATS  "Tutte le installazioni di questo componente aggiuntivo per l'organizzazione sono in uso. Rimuovilo da un computer che non ne ha più bisogno oppure chiedi altre installazioni al fornitore."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -724,6 +776,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Novedades"
     IDS_PSW_NEWS_OK  "Entendido"
     IDS_PSW_NO_UI  "Sin botones propios: este complemento actúa dentro de funciones de Power PDF; la descripción indica dónde."
+    IDS_PSW_CODE_LIST  "Códigos de cliente en este equipo"
+    IDS_PSW_CODE_ADD  "Agregar código"
+    IDS_PSW_CODE_FULL  "Como máximo 10 códigos de cliente. Quite uno primero."
+    IDS_PSW_CODE_DUP  "Este código ya se ha agregado."
+    IDS_PSW_CODE_NONE  "Aún no se ha agregado ningún código de cliente."
+    IDS_PSW_CODE_ASK  "¿Quitar el código de cliente de %s?"
+    IDS_PSW_CODE_ASK_ADDONS  "Estos complementos solo se obtuvieron con este código y también se quitarán de Power PDF (una confirmación de administrador): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "Se ha quitado el código y también estos complementos: %s. Reinicie Power PDF para finalizar."
+    IDS_PSW_CODE_KEPT  "No se pudieron quitar los complementos (la confirmación de administrador se rechazó o falló), por lo que se ha conservado el código."
+    IDS_PSW_ORPHAN  "La tienda ya no lo ofrece, por ejemplo, porque se quitó su código de cliente. Aún puede quitarlo aquí."
+    IDS_PSW_ORPHAN_PILL  "Ya no disponible"
+    IDS_PSW_SEATS  "Instalaciones: %s"
+    IDS_PSD_MSG_SEATS  "Todas las instalaciones de este complemento para su organización están en uso. Quítelo de un equipo que ya no lo necesite o solicite más instalaciones a su proveedor."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -850,6 +915,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Wat is er nieuw"
     IDS_PSW_NEWS_OK  "Begrepen"
     IDS_PSW_NO_UI  "Zonder eigen knoppen: deze invoegtoepassing werkt binnen functies van Power PDF; de beschrijving vermeldt waar."
+    IDS_PSW_CODE_LIST  "Klantcodes op deze computer"
+    IDS_PSW_CODE_ADD  "Code toevoegen"
+    IDS_PSW_CODE_FULL  "Maximaal 10 klantcodes. Verwijder eerst een code."
+    IDS_PSW_CODE_DUP  "Deze code is al toegevoegd."
+    IDS_PSW_CODE_NONE  "Nog geen klantcode toegevoegd."
+    IDS_PSW_CODE_ASK  "Klantcode van %s verwijderen?"
+    IDS_PSW_CODE_ASK_ADDONS  "Deze add-ons zijn alleen via deze code geleverd en worden ook uit Power PDF verwijderd (één bevestiging door een beheerder): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "De code is verwijderd, net als deze add-ons: %s. Start Power PDF opnieuw om te voltooien."
+    IDS_PSW_CODE_KEPT  "De add-ons konden niet worden verwijderd (de bevestiging door een beheerder is geweigerd of mislukt), dus de code is behouden."
+    IDS_PSW_ORPHAN  "Wordt niet meer aangeboden door de store, bijvoorbeeld omdat de bijbehorende klantcode is verwijderd. U kunt het hier nog steeds verwijderen."
+    IDS_PSW_ORPHAN_PILL  "Niet meer aangeboden"
+    IDS_PSW_SEATS  "Installaties: %s"
+    IDS_PSD_MSG_SEATS  "Alle installaties van deze invoegtoepassing voor uw organisatie zijn in gebruik. Verwijder deze van een computer die deze niet meer nodig heeft, of vraag uw leverancier om meer installaties."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -976,6 +1054,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Novidades"
     IDS_PSW_NEWS_OK  "Entendido"
     IDS_PSW_NO_UI  "Sem botões próprios: este suplemento atua em funções do Power PDF; a descrição indica onde."
+    IDS_PSW_CODE_LIST  "Códigos de cliente neste computador"
+    IDS_PSW_CODE_ADD  "Adicionar código"
+    IDS_PSW_CODE_FULL  "No máximo 10 códigos de cliente. Remova um primeiro."
+    IDS_PSW_CODE_DUP  "Este código já foi adicionado."
+    IDS_PSW_CODE_NONE  "Nenhum código de cliente adicionado ainda."
+    IDS_PSW_CODE_ASK  "Remover o código de cliente de %s?"
+    IDS_PSW_CODE_ASK_ADDONS  "Estes suplementos vieram apenas com este código e também serão removidos do Power PDF (uma confirmação de administrador): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "O código foi removido, assim como estes suplementos: %s. Reinicie o Power PDF para concluir."
+    IDS_PSW_CODE_KEPT  "Não foi possível remover os suplementos (a confirmação de administrador foi recusada ou falhou), por isso o código foi mantido."
+    IDS_PSW_ORPHAN  "Não é mais oferecido pela loja, por exemplo, porque o código de cliente foi removido. Você ainda pode removê-lo aqui."
+    IDS_PSW_ORPHAN_PILL  "Não mais oferecido"
+    IDS_PSW_SEATS  "Instalações: %s"
+    IDS_PSD_MSG_SEATS  "Todas as instalações deste suplemento para sua organização estão em uso. Remova-o de um computador que não precisa mais dele ou peça mais instalações ao seu fornecedor."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1102,6 +1193,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Nyheder"
     IDS_PSW_NEWS_OK  "Forstået"
     IDS_PSW_NO_UI  "Uden egne knapper: dette tilføjelsesprogram virker i funktioner i Power PDF; beskrivelsen siger hvor."
+    IDS_PSW_CODE_LIST  "Kundekoder på denne computer"
+    IDS_PSW_CODE_ADD  "Tilføj kode"
+    IDS_PSW_CODE_FULL  "Højst 10 kundekoder. Fjern en først."
+    IDS_PSW_CODE_DUP  "Denne kode er allerede tilføjet."
+    IDS_PSW_CODE_NONE  "Der er endnu ikke tilføjet nogen kundekode."
+    IDS_PSW_CODE_ASK  "Vil du fjerne kundekoden for %s?"
+    IDS_PSW_CODE_ASK_ADDONS  "Disse tilføjelser fulgte kun med denne kode og fjernes også fra Power PDF (én godkendelse fra en administrator): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "Koden er fjernet, og det samme er disse tilføjelser: %s. Genstart Power PDF for at fuldføre."
+    IDS_PSW_CODE_KEPT  "Tilføjelserne kunne ikke fjernes (godkendelsen fra administratoren blev afvist eller mislykkedes), så koden er bevaret."
+    IDS_PSW_ORPHAN  "Tilbydes ikke længere af butikken, f.eks. fordi kundekoden er fjernet. Du kan stadig fjerne den her."
+    IDS_PSW_ORPHAN_PILL  "Ikke længere tilbudt"
+    IDS_PSW_SEATS  "Installationer: %s"
+    IDS_PSD_MSG_SEATS  "Alle installationer af dette tilføjelsesprogram for din organisation er i brug. Fjern det fra en computer, der ikke længere har brug for det, eller bed din udbyder om flere installationer."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1228,6 +1332,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Uutta"
     IDS_PSW_NEWS_OK  "Selvä"
     IDS_PSW_NO_UI  "Ei omia painikkeita: tämä lisäosa toimii Power PDF:n toiminnoissa; kuvaus kertoo missä."
+    IDS_PSW_CODE_LIST  "Tämän tietokoneen asiakaskoodit"
+    IDS_PSW_CODE_ADD  "Lisää koodi"
+    IDS_PSW_CODE_FULL  "Enintään 10 asiakaskoodia. Poista ensin yksi."
+    IDS_PSW_CODE_DUP  "Tämä koodi on jo lisätty."
+    IDS_PSW_CODE_NONE  "Asiakaskoodia ei ole vielä lisätty."
+    IDS_PSW_CODE_ASK  "Poistetaanko asiakkaan %s asiakaskoodi?"
+    IDS_PSW_CODE_ASK_ADDONS  "Nämä lisäosat tulivat vain tämän koodin mukana, ja ne poistetaan myös Power PDF:stä (yksi järjestelmänvalvojan vahvistus): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "Koodi poistettiin, samoin nämä lisäosat: %s. Viimeistele toiminto käynnistämällä Power PDF uudelleen."
+    IDS_PSW_CODE_KEPT  "Lisäosia ei voitu poistaa (järjestelmänvalvojan vahvistus hylättiin tai epäonnistui), joten koodi säilytettiin."
+    IDS_PSW_ORPHAN  "Kauppa ei enää tarjoa tätä, esimerkiksi koska sen asiakaskoodi poistettiin. Voit silti poistaa sen täällä."
+    IDS_PSW_ORPHAN_PILL  "Ei enää tarjolla"
+    IDS_PSW_SEATS  "Asennukset: %s"
+    IDS_PSD_MSG_SEATS  "Kaikki tämän apuohjelman asennukset organisaatiollesi ovat käytössä. Poista se tietokoneesta, joka ei enää tarvitse sitä, tai pyydä toimittajaltasi lisää asennuksia."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1354,6 +1471,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Nyheter"
     IDS_PSW_NEWS_OK  "Skjønner"
     IDS_PSW_NO_UI  "Uten egne knapper: dette tillegget virker i funksjoner i Power PDF; beskrivelsen sier hvor."
+    IDS_PSW_CODE_LIST  "Kundekoder på denne datamaskinen"
+    IDS_PSW_CODE_ADD  "Legg til kode"
+    IDS_PSW_CODE_FULL  "Maksimalt 10 kundekoder. Fjern én først."
+    IDS_PSW_CODE_DUP  "Denne koden er allerede lagt til."
+    IDS_PSW_CODE_NONE  "Ingen kundekode er lagt til ennå."
+    IDS_PSW_CODE_ASK  "Vil du fjerne kundekoden for %s?"
+    IDS_PSW_CODE_ASK_ADDONS  "Disse tilleggene fulgte bare med denne koden og fjernes også fra Power PDF (én godkjenning fra en administrator): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "Koden ble fjernet, og det samme ble disse tilleggene: %s. Start Power PDF på nytt for å fullføre."
+    IDS_PSW_CODE_KEPT  "Tilleggene kunne ikke fjernes (godkjenningen fra administratoren ble avvist eller mislyktes), så koden ble beholdt."
+    IDS_PSW_ORPHAN  "Tilbys ikke lenger av butikken, for eksempel fordi kundekoden ble fjernet. Du kan fortsatt fjerne det her."
+    IDS_PSW_ORPHAN_PILL  "Ikke lenger tilbudt"
+    IDS_PSW_SEATS  "Installasjoner: %s"
+    IDS_PSD_MSG_SEATS  "Alle installasjoner av dette tillegget for organisasjonen din er i bruk. Fjern det fra en datamaskin som ikke lenger trenger det, eller be leverandøren din om flere installasjoner."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1480,6 +1610,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Nyheter"
     IDS_PSW_NEWS_OK  "Uppfattat"
     IDS_PSW_NO_UI  "Utan egna knappar: det här tillägget verkar i funktioner i Power PDF; beskrivningen anger var."
+    IDS_PSW_CODE_LIST  "Kundkoder på den här datorn"
+    IDS_PSW_CODE_ADD  "Lägg till kod"
+    IDS_PSW_CODE_FULL  "Högst 10 kundkoder. Ta bort en först."
+    IDS_PSW_CODE_DUP  "Den här koden har redan lagts till."
+    IDS_PSW_CODE_NONE  "Ingen kundkod har lagts till ännu."
+    IDS_PSW_CODE_ASK  "Vill du ta bort kundkoden för %s?"
+    IDS_PSW_CODE_ASK_ADDONS  "De här tilläggen kom bara med den här koden och tas även bort från Power PDF (en administratörsbekräftelse): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "Koden togs bort, liksom de här tilläggen: %s. Starta om Power PDF för att slutföra."
+    IDS_PSW_CODE_KEPT  "Tilläggen kunde inte tas bort (administratörsbekräftelsen nekades eller misslyckades), så koden behölls."
+    IDS_PSW_ORPHAN  "Erbjuds inte längre av butiken, till exempel för att kundkoden togs bort. Du kan fortfarande ta bort det här."
+    IDS_PSW_ORPHAN_PILL  "Erbjuds inte längre"
+    IDS_PSW_SEATS  "Installationer: %s"
+    IDS_PSD_MSG_SEATS  "Alla installationer av det här tillägget för din organisation används. Ta bort det från en dator som inte längre behöver det, eller be din leverantör om fler installationer."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1606,6 +1749,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Co nowego"
     IDS_PSW_NEWS_OK  "Rozumiem"
     IDS_PSW_NO_UI  "Bez własnych przycisków: ten dodatek działa w funkcjach Power PDF; opis wskazuje, gdzie."
+    IDS_PSW_CODE_LIST  "Kody klienta na tym komputerze"
+    IDS_PSW_CODE_ADD  "Dodaj kod"
+    IDS_PSW_CODE_FULL  "Maksymalnie 10 kodów klienta. Najpierw usuń jeden."
+    IDS_PSW_CODE_DUP  "Ten kod został już dodany."
+    IDS_PSW_CODE_NONE  "Nie dodano jeszcze kodu klienta."
+    IDS_PSW_CODE_ASK  "Usunąć kod klienta %s?"
+    IDS_PSW_CODE_ASK_ADDONS  "Te dodatki były dostępne tylko z tym kodem i zostaną również usunięte z programu Power PDF (jedno potwierdzenie administratora): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "Kod został usunięty, podobnie jak te dodatki: %s. Uruchom ponownie program Power PDF, aby zakończyć."
+    IDS_PSW_CODE_KEPT  "Nie można usunąć dodatków (potwierdzenie administratora zostało odrzucone lub nie powiodło się), dlatego kod został zachowany."
+    IDS_PSW_ORPHAN  "Nie jest już oferowany przez sklep, na przykład dlatego, że usunięto jego kod klienta. Nadal możesz go tutaj usunąć."
+    IDS_PSW_ORPHAN_PILL  "Już niedostępny"
+    IDS_PSW_SEATS  "Instalacje: %s"
+    IDS_PSD_MSG_SEATS  "Wszystkie instalacje tego dodatku dla Twojej organizacji są w użyciu. Usuń go z komputera, który już go nie potrzebuje, lub poproś dostawcę o więcej instalacji."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1732,6 +1888,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Co je nového"
     IDS_PSW_NEWS_OK  "Rozumím"
     IDS_PSW_NO_UI  "Bez vlastních tlačítek: tento doplněk pracuje ve funkcích Power PDF; popis uvádí kde."
+    IDS_PSW_CODE_LIST  "Kódy zákazníka v tomto počítači"
+    IDS_PSW_CODE_ADD  "Přidat kód"
+    IDS_PSW_CODE_FULL  "Nejvýše 10 kódů zákazníka. Nejprve jeden odeberte."
+    IDS_PSW_CODE_DUP  "Tento kód již byl přidán."
+    IDS_PSW_CODE_NONE  "Zatím nebyl přidán žádný kód zákazníka."
+    IDS_PSW_CODE_ASK  "Odebrat kód zákazníka %s?"
+    IDS_PSW_CODE_ASK_ADDONS  "Tyto doplňky byly k dispozici pouze s tímto kódem a budou odebrány také z aplikace Power PDF (jedno potvrzení správce): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "Kód byl odebrán a s ním i tyto doplňky: %s. Dokončete akci restartováním aplikace Power PDF."
+    IDS_PSW_CODE_KEPT  "Doplňky nebylo možné odebrat (potvrzení správce bylo odmítnuto nebo selhalo), proto byl kód zachován."
+    IDS_PSW_ORPHAN  "Obchod jej již nenabízí, například protože byl odebrán jeho kód zákazníka. Zde jej můžete stále odebrat."
+    IDS_PSW_ORPHAN_PILL  "Již nenabízeno"
+    IDS_PSW_SEATS  "Instalace: %s"
+    IDS_PSD_MSG_SEATS  "Všechny instalace tohoto doplňku pro vaši organizaci jsou využité. Odeberte ho z počítače, který ho už nepotřebuje, nebo požádejte poskytovatele o další instalace."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1858,6 +2027,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Újdonságok"
     IDS_PSW_NEWS_OK  "Értem"
     IDS_PSW_NO_UI  "Saját gombok nélkül: ez a bővítmény a Power PDF funkcióiban működik; a leírás megmondja, hol."
+    IDS_PSW_CODE_LIST  "Ügyfélkódok ezen a számítógépen"
+    IDS_PSW_CODE_ADD  "Kód hozzáadása"
+    IDS_PSW_CODE_FULL  "Legfeljebb 10 ügyfélkód lehet. Előbb távolítson el egyet."
+    IDS_PSW_CODE_DUP  "Ez a kód már hozzá van adva."
+    IDS_PSW_CODE_NONE  "Még nincs hozzáadva ügyfélkód."
+    IDS_PSW_CODE_ASK  "Eltávolítja a(z) %s ügyfélkódját?"
+    IDS_PSW_CODE_ASK_ADDONS  "Ezek a bővítmények csak ezzel a kóddal érkeztek, és a Power PDF-ből is el lesznek távolítva (egyszeri rendszergazdai jóváhagyás): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "A kód el lett távolítva, és ezek a bővítmények is: %s. A befejezéshez indítsa újra a Power PDF-et."
+    IDS_PSW_CODE_KEPT  "A bővítményeket nem sikerült eltávolítani (a rendszergazdai jóváhagyást elutasították, vagy az sikertelen volt), ezért a kód megmaradt."
+    IDS_PSW_ORPHAN  "Az áruház már nem kínálja, például mert az ügyfélkódját eltávolították. Itt továbbra is eltávolíthatja."
+    IDS_PSW_ORPHAN_PILL  "Már nem elérhető"
+    IDS_PSW_SEATS  "Telepítések: %s"
+    IDS_PSD_MSG_SEATS  "Ennek a bővítménynek a szervezete számára elérhető összes telepítése használatban van. Távolítsa el egy olyan számítógépről, amelyen már nincs rá szükség, vagy kérjen további telepítéseket a szolgáltatójától."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1984,6 +2166,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Что нового"
     IDS_PSW_NEWS_OK  "Понятно"
     IDS_PSW_NO_UI  "Без собственных кнопок: эта надстройка работает в функциях Power PDF; где именно, указано в описании."
+    IDS_PSW_CODE_LIST  "Коды клиента на этом компьютере"
+    IDS_PSW_CODE_ADD  "Добавить код"
+    IDS_PSW_CODE_FULL  "Не более 10 кодов клиента. Сначала удалите один из них."
+    IDS_PSW_CODE_DUP  "Этот код уже добавлен."
+    IDS_PSW_CODE_NONE  "Код клиента ещё не добавлен."
+    IDS_PSW_CODE_ASK  "Удалить код клиента %s?"
+    IDS_PSW_CODE_ASK_ADDONS  "Эти надстройки были получены только с этим кодом и также будут удалены из Power PDF (одно подтверждение администратора): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "Код удалён вместе с этими надстройками: %s. Перезапустите Power PDF, чтобы завершить операцию."
+    IDS_PSW_CODE_KEPT  "Не удалось удалить надстройки (подтверждение администратора было отклонено или не выполнено), поэтому код сохранён."
+    IDS_PSW_ORPHAN  "Больше не предлагается в магазине, например потому, что её код клиента был удалён. Её по-прежнему можно удалить здесь."
+    IDS_PSW_ORPHAN_PILL  "Больше не предлагается"
+    IDS_PSW_SEATS  "Установки: %s"
+    IDS_PSD_MSG_SEATS  "Все установки этой надстройки для вашей организации уже используются. Удалите ее с компьютера, на котором она больше не нужна, или запросите дополнительные установки у поставщика."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2110,6 +2305,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "Yenilikler"
     IDS_PSW_NEWS_OK  "Anladım"
     IDS_PSW_NO_UI  "Kendi düğmesi yok: bu eklenti Power PDF işlevlerinin içinde çalışır; nerede olduğu açıklamada yazar."
+    IDS_PSW_CODE_LIST  "Bu bilgisayardaki müşteri kodları"
+    IDS_PSW_CODE_ADD  "Kod ekle"
+    IDS_PSW_CODE_FULL  "En fazla 10 müşteri kodu eklenebilir. Önce birini kaldırın."
+    IDS_PSW_CODE_DUP  "Bu kod zaten eklendi."
+    IDS_PSW_CODE_NONE  "Henüz müşteri kodu eklenmedi."
+    IDS_PSW_CODE_ASK  "%s için müşteri kodu kaldırılsın mı?"
+    IDS_PSW_CODE_ASK_ADDONS  "Bu eklentiler yalnızca bu kodla geldi ve Power PDF'ten de kaldırılacak (tek bir yönetici onayı): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "Kod ve şu eklentiler kaldırıldı: %s. İşlemi tamamlamak için Power PDF'i yeniden başlatın."
+    IDS_PSW_CODE_KEPT  "Eklentiler kaldırılamadı (yönetici onayı reddedildi veya başarısız oldu), bu nedenle kod korundu."
+    IDS_PSW_ORPHAN  "Mağaza artık bunu sunmuyor; örneğin müşteri kodu kaldırılmış olabilir. Yine de buradan kaldırabilirsiniz."
+    IDS_PSW_ORPHAN_PILL  "Artık sunulmuyor"
+    IDS_PSW_SEATS  "Kurulumlar: %s"
+    IDS_PSD_MSG_SEATS  "Kuruluşunuz için bu eklentinin tüm kurulumları kullanımda. Eklentiyi artık gerekmeyen bir bilgisayardan kaldırın veya sağlayıcınızdan ek kurulum isteyin."
 END
 
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
@@ -2234,6 +2442,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "新增功能"
     IDS_PSW_NEWS_OK  "知道了"
     IDS_PSW_NO_UI  "无功能区按钮：此加载项在 Power PDF 功能内部运行，具体位置请参阅说明。"
+    IDS_PSW_CODE_LIST  "此计算机上的客户代码"
+    IDS_PSW_CODE_ADD  "添加代码"
+    IDS_PSW_CODE_FULL  "最多 10 个客户代码。请先删除一个。"
+    IDS_PSW_CODE_DUP  "已添加此代码。"
+    IDS_PSW_CODE_NONE  "尚未添加客户代码。"
+    IDS_PSW_CODE_ASK  "要删除 %s 的客户代码吗？"
+    IDS_PSW_CODE_ASK_ADDONS  "这些加载项仅随此代码提供，也将从 Power PDF 中删除（需管理员确认一次）：%s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "代码已删除，以下加载项也已删除：%s。请重新启动 Power PDF 以完成操作。"
+    IDS_PSW_CODE_KEPT  "无法删除这些加载项（管理员确认被拒绝或失败），因此已保留代码。"
+    IDS_PSW_ORPHAN  "商店不再提供此加载项，例如因为其客户代码已被删除。你仍可在此处将其删除。"
+    IDS_PSW_ORPHAN_PILL  "不再提供"
+    IDS_PSW_SEATS  "安装数：%s"
+    IDS_PSD_MSG_SEATS  "您的组织已用完此加载项的所有安装数。请从不再需要它的计算机上删除该加载项，或向您的提供商申请更多安装数。"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2361,6 +2582,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "新功能"
     IDS_PSW_NEWS_OK  "知道了"
     IDS_PSW_NO_UI  "沒有功能區按鈕：此增益集在 Power PDF 功能內部運作；說明中會指出位置。"
+    IDS_PSW_CODE_LIST  "此電腦上的客戶代碼"
+    IDS_PSW_CODE_ADD  "新增代碼"
+    IDS_PSW_CODE_FULL  "最多 10 個客戶代碼。請先移除一個。"
+    IDS_PSW_CODE_DUP  "已新增此代碼。"
+    IDS_PSW_CODE_NONE  "尚未新增客戶代碼。"
+    IDS_PSW_CODE_ASK  "要移除 %s 的客戶代碼嗎？"
+    IDS_PSW_CODE_ASK_ADDONS  "這些增益集僅隨此代碼提供，也將從 Power PDF 中移除（需系統管理員確認一次）：%s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "代碼已移除，以下增益集也已移除：%s。請重新啟動 Power PDF 以完成作業。"
+    IDS_PSW_CODE_KEPT  "無法移除這些增益集（系統管理員確認遭拒或失敗），因此已保留代碼。"
+    IDS_PSW_ORPHAN  "商店不再提供此增益集，例如因為其客戶代碼已被移除。您仍可在此處將其移除。"
+    IDS_PSW_ORPHAN_PILL  "不再提供"
+    IDS_PSW_SEATS  "安裝數：%s"
+    IDS_PSD_MSG_SEATS  "您的組織已用完此增益集的所有安裝數。請從不再需要它的電腦上移除此增益集，或向您的供應商申請更多安裝數。"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2488,6 +2722,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "新機能"
     IDS_PSW_NEWS_OK  "了解"
     IDS_PSW_NO_UI  "リボン ボタンなし：このアドインは Power PDF の機能内で動作します。場所は説明に記載されています。"
+    IDS_PSW_CODE_LIST  "このコンピューターの顧客コード"
+    IDS_PSW_CODE_ADD  "コードを追加"
+    IDS_PSW_CODE_FULL  "顧客コードは最大 10 個です。先に 1 つ削除してください。"
+    IDS_PSW_CODE_DUP  "このコードは既に追加されています。"
+    IDS_PSW_CODE_NONE  "顧客コードはまだ追加されていません。"
+    IDS_PSW_CODE_ASK  "%s の顧客コードを削除しますか？"
+    IDS_PSW_CODE_ASK_ADDONS  "これらのアドインはこのコードでのみ提供されたもので、Power PDF からも削除されます（管理者による確認が 1 回必要です）：%s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "コードを削除し、次のアドインも削除しました：%s。完了するには Power PDF を再起動してください。"
+    IDS_PSW_CODE_KEPT  "アドインを削除できませんでした（管理者による確認が拒否されたか、失敗しました）。そのため、コードは保持されています。"
+    IDS_PSW_ORPHAN  "ストアでの提供は終了しています。たとえば、顧客コードが削除された場合などです。ここから引き続き削除できます。"
+    IDS_PSW_ORPHAN_PILL  "提供終了"
+    IDS_PSW_SEATS  "インストール数: %s"
+    IDS_PSD_MSG_SEATS  "組織で利用できるこのアドインのインストール数はすべて使用中です。不要になったコンピューターからアドインを削除するか、提供元に追加のインストールを依頼してください。"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2615,6 +2862,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "새로운 기능"
     IDS_PSW_NEWS_OK  "확인"
     IDS_PSW_NO_UI  "리본 단추 없음: 이 추가 기능은 Power PDF 기능 안에서 작동합니다. 위치는 설명을 참조하십시오."
+    IDS_PSW_CODE_LIST  "이 컴퓨터의 고객 코드"
+    IDS_PSW_CODE_ADD  "코드 추가"
+    IDS_PSW_CODE_FULL  "고객 코드는 최대 10개입니다. 먼저 하나를 제거하십시오."
+    IDS_PSW_CODE_DUP  "이 코드는 이미 추가되었습니다."
+    IDS_PSW_CODE_NONE  "아직 추가된 고객 코드가 없습니다."
+    IDS_PSW_CODE_ASK  "%s의 고객 코드를 제거하시겠습니까?"
+    IDS_PSW_CODE_ASK_ADDONS  "이러한 추가 기능은 이 코드로만 제공되었으므로 Power PDF에서도 제거됩니다(관리자 확인 1회): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "코드와 함께 다음 추가 기능도 제거되었습니다: %s. 완료하려면 Power PDF를 다시 시작하십시오."
+    IDS_PSW_CODE_KEPT  "추가 기능을 제거할 수 없어(관리자 확인이 거부되었거나 실패함) 코드를 유지했습니다."
+    IDS_PSW_ORPHAN  "고객 코드가 제거된 경우 등의 이유로 스토어에서 더 이상 제공되지 않습니다. 여기에서 계속 제거할 수 있습니다."
+    IDS_PSW_ORPHAN_PILL  "더 이상 제공 안 함"
+    IDS_PSW_SEATS  "설치 수: %s"
+    IDS_PSD_MSG_SEATS  "조직에 할당된 이 추가 기능의 설치 수를 모두 사용하고 있습니다. 더 이상 필요하지 않은 컴퓨터에서 추가 기능을 제거하거나 공급자에게 추가 설치를 요청하십시오."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2742,6 +3002,19 @@ BEGIN
     IDS_PSW_NEWS_TITLE  "ما الجديد"
     IDS_PSW_NEWS_OK  "حسنًا"
     IDS_PSW_NO_UI  "لا توجد أزرار في الشريط: تعمل هذه الوظيفة الإضافية داخل ميزات Power PDF؛ ويوضح الوصف المكان."
+    IDS_PSW_CODE_LIST  "رموز العملاء على هذا الكمبيوتر"
+    IDS_PSW_CODE_ADD  "إضافة رمز"
+    IDS_PSW_CODE_FULL  "الحد الأقصى 10 رموز عملاء. أزل رمزًا أولاً."
+    IDS_PSW_CODE_DUP  "تمت إضافة هذا الرمز بالفعل."
+    IDS_PSW_CODE_NONE  "لم تتم إضافة أي رمز عميل بعد."
+    IDS_PSW_CODE_ASK  "هل تريد إزالة رمز العميل الخاص بـ %s؟"
+    IDS_PSW_CODE_ASK_ADDONS  "وردت هذه الوظائف الإضافية مع هذا الرمز فقط وستتم إزالتها من Power PDF أيضًا (تأكيد واحد من المسؤول): %s"
+    IDS_PSW_CODE_REMOVED_ADDONS  "تمت إزالة الرمز وكذلك هذه الوظائف الإضافية: %s. أعد تشغيل Power PDF لإكمال العملية."
+    IDS_PSW_CODE_KEPT  "تعذرت إزالة الوظائف الإضافية (تم رفض تأكيد المسؤول أو فشل)، لذا تم الاحتفاظ بالرمز."
+    IDS_PSW_ORPHAN  "لم يعد المتجر يوفّر هذه الوظيفة الإضافية، على سبيل المثال بسبب إزالة رمز العميل الخاص بها. لا يزال بإمكانك إزالتها من هنا."
+    IDS_PSW_ORPHAN_PILL  "لم يعد متوفرًا"
+    IDS_PSW_SEATS  "عمليات التثبيت: %s"
+    IDS_PSD_MSG_SEATS  "جميع عمليات التثبيت المتاحة لمؤسستك لهذه الوظيفة الإضافية قيد الاستخدام. قم بإزالتها من جهاز كمبيوتر لم يعد بحاجة إليها، أو اطلب من المورّد المزيد من عمليات التثبيت."
 END
 
 /////////////////////////////////////////////////////////////////////////////

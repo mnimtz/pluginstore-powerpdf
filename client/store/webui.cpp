@@ -270,7 +270,66 @@ std::vector<BYTE> ReadSmallFile(const std::wstring& path, LONGLONG maxBytes)
 // --- worker threads -----------------------------------------------------------
 
 const UINT WM_ASYNC = WM_APP + 64;
-enum AsyncKind { KCatalog = 1, KRated, KFeedback, KSend, KJob, KCustomer };
+enum AsyncKind { KCatalog = 1, KRated, KFeedback, KSend, KJob, KCustomer, KCodeInfo, KCodePreview };
+
+// Manifest language code of the UI language (names of installed add-ons, C1.4.1).
+std::wstring ManifestLang()
+{
+    LANGID l = FPLocLangId();
+    switch (PRIMARYLANGID(l))
+    {
+    case LANG_GERMAN: return L"de";     case LANG_FRENCH: return L"fr";     case LANG_ITALIAN: return L"it";
+    case LANG_SPANISH: return L"es";    case LANG_DUTCH: return L"nl";      case LANG_PORTUGUESE: return L"pt";
+    case LANG_DANISH: return L"da";     case LANG_FINNISH: return L"fi";    case LANG_NORWEGIAN: return L"nb";
+    case LANG_SWEDISH: return L"sv";    case LANG_POLISH: return L"pl";     case LANG_CZECH: return L"cs";
+    case LANG_HUNGARIAN: return L"hu";  case LANG_RUSSIAN: return L"ru";    case LANG_TURKISH: return L"tr";
+    case LANG_CHINESE: return SUBLANGID(l) == SUBLANG_CHINESE_TRADITIONAL ? L"zh-Hant" : L"zh-Hans";
+    case LANG_JAPANESE: return L"ja";   case LANG_KOREAN: return L"ko";     case LANG_ARABIC: return L"ar";
+    default: return L"en";
+    }
+}
+
+// The objects of a JSON array field, e.g. "installs":[{...},{...}] (flat objects only).
+std::vector<std::wstring> JsonObjectArray(const std::wstring& json, const wchar_t* key)
+{
+    std::vector<std::wstring> out;
+    std::wstring k = std::wstring(L"\"") + key + L"\":[";
+    size_t p = json.find(k);
+    if (p == std::wstring::npos) return out;
+    p += k.size();
+    while (out.size() < 200)
+    {
+        size_t a = json.find_first_of(L"{]", p);
+        if (a == std::wstring::npos || json[a] == L']') break;
+        size_t b = json.find(L'}', a);
+        if (b == std::wstring::npos) break;
+        out.push_back(json.substr(a, b - a + 1));
+        p = b + 1;
+    }
+    return out;
+}
+
+// The strings of a JSON array field, e.g. "packages":["a","b"] (ids only, no escapes needed).
+std::vector<std::wstring> JsonStringArray(const std::wstring& json, const wchar_t* key)
+{
+    std::vector<std::wstring> out;
+    std::wstring k = std::wstring(L"\"") + key + L"\":[";
+    size_t p = json.find(k);
+    if (p == std::wstring::npos) return out;
+    p += k.size();
+    size_t end = json.find(L']', p);
+    if (end == std::wstring::npos) return out;
+    while (p < end && out.size() < 200)
+    {
+        size_t a = json.find(L'"', p);
+        if (a == std::wstring::npos || a >= end) break;
+        size_t b = json.find(L'"', a + 1);
+        if (b == std::wstring::npos || b > end) break;
+        out.push_back(json.substr(a + 1, std::min<size_t>(b - a - 1, 200)));
+        p = b + 1;
+    }
+    return out;
+}
 
 // Result of a worker, posted to the window (which deletes it).
 struct AsyncMsg
@@ -340,7 +399,11 @@ public:
 
 protected:
     enum { WM_FAIL = WM_APP + 63 };
-    enum Job { JobInstall = 1, JobUninstall, JobSelfUpdate };
+    enum Job { JobInstall = 1, JobUninstall, JobSelfUpdate, JobCodeRemove };
+    // removal of a customer code (C1.4.1): the add-ons that came with this code only,
+    // found by the preview, removed together with the code
+    std::wstring m_pendingCode;
+    std::vector<PSCatalogEntry> m_pendingRemoval;
 
     ComPtr<ICoreWebView2Environment> m_env;
     ComPtr<ICoreWebView2Controller> m_ctrl;
@@ -513,12 +576,14 @@ protected:
             { L"blockedText", IDS_PSW_BLOCKED_BANNER }, { L"blockedBtn", IDS_PSW_BLOCKED_BTN },
             { L"attach", IDS_PSW_ATTACH }, { L"attachHint", IDS_PSW_ATTACH_HINT }, { L"attachRefused", IDS_PSW_ATTACH_REFUSED },
             { L"reportStore", IDS_PSW_REPORT_STORE }, { L"noUi", IDS_PSW_NO_UI }, { L"newsTitle", IDS_PSW_NEWS_TITLE }, { L"newsOk", IDS_PSW_NEWS_OK },
+            { L"codeList", IDS_PSW_CODE_LIST }, { L"codeAdd", IDS_PSW_CODE_ADD }, { L"codeNone", IDS_PSW_CODE_NONE },
+            { L"codeAsk", IDS_PSW_CODE_ASK }, { L"codeAskAddons", IDS_PSW_CODE_ASK_ADDONS }, { L"codeInvalid", IDS_PSW_CODE_INVALID },
+            { L"orphan", IDS_PSW_ORPHAN }, { L"orphanPill", IDS_PSW_ORPHAN_PILL }, { L"seats", IDS_PSW_SEATS },
         };
         std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) +
                          (FPLocIsRtl() ? L",\"dir\":\"rtl\"" : L"") +
                          L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") +
-                         L",\"code\":{\"has\":" + (PSCustomerCode().empty() ? L"false" : L"true") +
-                         L",\"locked\":" + (PSCustomerCodeLocked() ? L"true" : L"false") + L"},\"strings\":{";
+                         L",\"code\":" + CodesJson() + L",\"strings\":{";
         for (size_t i = 0; i < _countof(strings); ++i)
             j += (i ? L"," : L"") + Json(strings[i].key) + L":" + Json(FPLoc(strings[i].id));
         Send(j + L"}}");
@@ -558,6 +623,20 @@ protected:
             if (_wcsicmp(e.zxtName.c_str(), L"PluginStore") == 0) continue;   // would replace the store client
             m_entries.push_back(e);
         }
+        // Add-ons the store installed here that the catalog no longer offers (C1.4.1: e.g. after
+        // their customer code was removed): listed as installed so they can still be removed.
+        // Only with a complete catalog: offline, everything would look "no longer offered".
+        if (r.error.empty() && !r.entries.empty())
+            for (const auto& a : PSListInstalledAddons(ManifestLang()))
+            {
+                bool known = _wcsicmp(a.id.c_str(), kClientId) == 0;
+                for (const auto& e : m_entries) if (_wcsicmp(e.id.c_str(), a.id.c_str()) == 0 || _wcsicmp(e.zxtName.c_str(), a.zxtName.c_str()) == 0) known = true;
+                if (known) continue;
+                PSCatalogEntry o;
+                o.id = a.id; o.name = a.name; o.version = a.version; o.installedVersion = a.version.empty() ? L"?" : a.version;
+                o.zxtName = a.zxtName; o.orphan = true;
+                m_entries.push_back(o);
+            }
 
         std::wstring j = L"{\"type\":\"catalog\",\"error\":" + Json(r.error) + L",\"items\":[";
         for (size_t i = 0; i < m_entries.size(); ++i)
@@ -573,7 +652,7 @@ protected:
                  L",\"size\":" + size + L",\"author\":" + Json(e.author) + L",\"contact\":" + Json(e.contactEmail) +
                  L",\"rating\":" + Tenths(e.rating) + L",\"ratingCount\":" + std::to_wstring(e.ratingCount) +
                  L",\"shots\":" + std::to_wstring(e.screenshots) + L",\"mine\":" + std::to_wstring(PSMyRating(e.id)) +
-                 L",\"customer\":" + Json(e.customer) + (e.noUi ? L",\"noUi\":true" : L"") +
+                 L",\"customer\":" + Json(e.customer) + (e.noUi ? L",\"noUi\":true" : L"") + (e.orphan ? L",\"orphan\":true" : L"") +
                  // needs a newer Power PDF than this one: shown, but not installable
                  L",\"needsHost\":" + Json(!e.minHost.empty() && !PSHostVersion().empty() &&
                                             PSCompareVersions(PSHostVersion(), e.minHost) < 0 ? e.minHost : std::wstring()) + L"}";
@@ -889,11 +968,153 @@ protected:
             Send(L"{\"type\":\"code\",\"ok\":false,\"message\":" + Json(FPLoc(IDS_PSW_CODE_INVALID)) + L"}");
             return;
         }
-        PSSaveCustomerCode(r.id);
+        int added = PSAddCustomerCode(r.id, r.text);   // C1.4.1: one more code, the others stay
+        if (added != 0)
+        {
+            Send(L"{\"type\":\"code\",\"ok\":false,\"list\":" + CodesJson() + L",\"message\":" +
+                 Json(FPLoc(added == 1 ? IDS_PSW_CODE_DUP : IDS_PSW_CODE_FULL)) + L"}");
+            return;
+        }
         std::wstring msg = r.count > 0 ? Fmt(IDS_PSW_CODE_VALID, r.text, std::to_wstring(r.count))
                                        : Fmt(IDS_PSW_CODE_VALID_NONE, r.text);
-        Send(L"{\"type\":\"code\",\"ok\":true,\"has\":true,\"customer\":" + Json(r.text) + L",\"message\":" + Json(msg) + L"}");
+        Send(L"{\"type\":\"code\",\"ok\":true,\"list\":" + CodesJson() + L",\"customer\":" + Json(r.text) + L",\"message\":" + Json(msg) + L"}");
         LoadCatalog(false);
+        CodeInfo();
+    }
+
+    // {"has","locked","list":[{"code","name"}]} for the page (C1.4.1)
+    static std::wstring CodesJson()
+    {
+        std::wstring l;
+        for (const auto& c : PSCustomerCodes())
+            l += (l.empty() ? L"" : L",") + std::wstring(L"{\"code\":") + Json(c) + L",\"name\":" + Json(PSCustomerCodeName(c)) + L"}";
+        return std::wstring(L"{\"has\":") + (l.empty() ? L"false" : L"true") +
+               L",\"locked\":" + (PSCustomerCodeLocked() ? L"true" : L"false") + L",\"list\":[" + l + L"]}";
+    }
+
+    // Asks the store about every stored code: valid?, customer, which add-ons (C1.4.1).
+    void CodeInfo()
+    {
+        std::vector<std::wstring> codes = PSCustomerCodes();
+        if (codes.empty()) return;
+        std::wstring url = PSServerUrl() + L"/api/customer-code";
+        HWND h = m_hWnd;
+        Spawn([h, url, codes]() {
+            auto* m = new AsyncMsg;
+            m->kind = KCodeInfo;
+            std::wstring items;
+            for (const auto& c : codes)
+            {
+                std::string body;
+                DWORD status = 0;
+                bool answered = false, valid = false;
+                std::wstring customer, pk, seats;
+                try
+                {
+                    if (PSHttpCheckCustomerCode(url, c, body, &status))
+                    {
+                        std::wstring j = W16(body);
+                        answered = true;
+                        valid = RawField(j, L"valid") == L"true";
+                        customer = Field(j, L"customer", 200);
+                        for (const auto& id : JsonStringArray(j, L"packages")) pk += (pk.empty() ? L"" : L",") + Json(id);
+                        // installations per add-on (server S1.4.2): {"package","used","max"}, max null = unlimited
+                        for (const auto& o : JsonObjectArray(j, L"installs"))
+                        {
+                            std::wstring max = RawField(o, L"max");
+                            seats += (seats.empty() ? L"" : L",") + std::wstring(L"{\"package\":") + Json(Field(o, L"package", 200)) +
+                                     L",\"used\":" + std::to_wstring(_wtoi(RawField(o, L"used").c_str())) +
+                                     L",\"max\":" + (max.empty() || max == L"null" ? std::wstring(L"null") : std::to_wstring(_wtoi(max.c_str()))) + L"}";
+                        }
+                    }
+                }
+                catch (...) {}
+                items += (items.empty() ? L"" : L",") + std::wstring(L"{\"code\":") + Json(c) +
+                         L",\"answered\":" + (answered ? L"true" : L"false") + L",\"valid\":" + (valid ? L"true" : L"false") +
+                         L",\"customer\":" + Json(customer) + L",\"packages\":[" + pk + L"],\"installs\":[" + seats + L"]}";
+            }
+            m->text = L"{\"type\":\"codeInfo\",\"items\":[" + items + L"]}";
+            PostAsync(h, m);
+        });
+    }
+
+    // Before a code is removed: which installed add-ons would no longer be offered?
+    // The catalog is fetched with the remaining codes; an installed add-on missing
+    // from it came with this code only (C1.4.1).
+    void CodePreview(const std::wstring& code)
+    {
+        std::wstring rest;
+        for (const auto& c : PSCustomerCodes()) if (c != code) rest += (rest.empty() ? L"" : L";") + c;
+        std::vector<PSCatalogEntry> installed;
+        for (const auto& e : m_entries) if (!e.installedVersion.empty() && !e.orphan) installed.push_back(e);
+        std::wstring lang = HostLang();
+        HWND h = m_hWnd;
+        Spawn([h, code, rest, installed, lang]() {
+            auto* m = new AsyncMsg;
+            m->kind = KCodePreview; m->id = code;
+            std::vector<PSCatalogEntry> after;
+            std::wstring err;
+            try { m->flag = PSFetchCatalogFor(lang, after, err, &rest); }
+            catch (...) { m->flag = false; }
+            if (m->flag)
+                for (const auto& e : installed)
+                    if (std::none_of(after.begin(), after.end(), [&](const PSCatalogEntry& a) { return _wcsicmp(a.id.c_str(), e.id.c_str()) == 0; }))
+                        m->entries.push_back(e);
+            PostAsync(h, m);
+        });
+    }
+
+    void ApplyCodePreview(AsyncMsg& r)
+    {
+        if (!r.flag)
+        {
+            Send(L"{\"type\":\"code\",\"ok\":false,\"list\":" + CodesJson() + L",\"message\":" + Json(FPLoc(IDS_PSD_MSG_FAIL)) + L"}");
+            return;
+        }
+        m_pendingCode = r.id;
+        m_pendingRemoval = r.entries;
+        std::wstring names;
+        for (const auto& e : r.entries) names += (names.empty() ? L"" : L",") + Json(e.name);
+        Send(L"{\"type\":\"codeAsk\",\"code\":" + Json(r.id) + L",\"customer\":" + Json(PSCustomerCodeName(r.id)) +
+             L",\"affected\":[" + names + L"]}");
+    }
+
+    // The confirmed removal: first the add-ons (one administrator confirmation), then the code.
+    void CodeRemove(const std::wstring& code)
+    {
+        if (code.empty() || code != m_pendingCode) return;   // only after the preview of this code
+        std::vector<PSCatalogEntry> remove = m_pendingRemoval;
+        m_pendingCode.clear();
+        m_pendingRemoval.clear();
+        if (remove.empty() || PSPolicyNoInstall())
+        {
+            PSRemoveCustomerCode(code);
+            Send(L"{\"type\":\"code\",\"ok\":true,\"list\":" + CodesJson() + L",\"message\":" + Json(FPLoc(IDS_PSW_CODE_REMOVED)) + L"}");
+            LoadCatalog(false);
+            return;
+        }
+        m_jobRunning = true;
+        HWND h = m_hWnd;
+        Spawn([h, code, remove]() {
+            auto* m = new AsyncMsg;
+            m->kind = KJob; m->number = JobCodeRemove; m->id = code; m->entries = remove;
+            m->count = 4;
+            std::vector<std::wstring> zxts;
+            for (const auto& e : remove) zxts.push_back(e.zxtName);
+            try
+            {
+                m->count = PSUninstallPackages(zxts, h);
+                if (m->count == 0)
+                {
+                    // while the code is still stored: free the installations it took
+                    std::vector<std::wstring> ids;
+                    for (const auto& e : remove) ids.push_back(e.id);
+                    PSReleaseInstallations(ids);
+                }
+            }
+            catch (...) { FPLogW(L"[Store] removing the add-ons of a code failed"); }
+            PostAsync(h, m);
+        });
     }
 
     void NeedSearch(const std::wstring& q)
@@ -1021,12 +1242,9 @@ protected:
             });
         }
         else if (cmd == L"codeCheck" && !PSCustomerCodeLocked()) CheckCustomerCode(Field(json, L"code", 80));
-        else if (cmd == L"codeRemove" && !PSCustomerCodeLocked())
-        {
-            PSSaveCustomerCode(L"");
-            Send(L"{\"type\":\"code\",\"ok\":true,\"has\":false,\"message\":" + Json(FPLoc(IDS_PSW_CODE_REMOVED)) + L"}");
-            LoadCatalog(false);
-        }
+        else if (cmd == L"codeInfo") CodeInfo();
+        else if (cmd == L"codePreview" && !PSCustomerCodeLocked() && !m_jobRunning) CodePreview(Field(json, L"code", 80));
+        else if (cmd == L"codeRemove" && !PSCustomerCodeLocked() && !m_jobRunning) CodeRemove(Field(json, L"code", 80));
         else if (cmd == L"rate")
         {
             size_t idx = 0;
@@ -1082,7 +1300,12 @@ protected:
             auto* m = new AsyncMsg;
             m->kind = KJob; m->number = job; m->entries.push_back(e);
             m->count = 4;   // reported as a failure if the job throws
-            try { m->count = job == JobInstall ? PSInstallPackage(e, h) : PSUninstallPackage(e.zxtName, h); }
+            try
+            {
+                m->count = job == JobInstall ? PSInstallPackage(e, h) : PSUninstallPackage(e.zxtName, h);
+                // a delivered add-on removed: its installation is free again (C1.4.1)
+                if (job == JobUninstall && m->count == 0 && !e.customer.empty()) PSReleaseInstallations({ e.id });
+            }
             catch (...) { FPLogW(L"[Store] install job failed"); }
             PostAsync(h, m);
         });
@@ -1097,6 +1320,24 @@ protected:
             FinishSelfUpdate(rc);
             return;
         }
+        if (r.number == JobCodeRemove)
+        {
+            std::wstring names;
+            for (const auto& x : r.entries) names += (names.empty() ? L"" : L", ") + x.name;
+            if (r.count == 0)
+            {
+                PSRemoveCustomerCode(r.id);
+                LoadCatalog(false);
+                Send(L"{\"type\":\"code\",\"ok\":true,\"list\":" + CodesJson() + L"}");
+                Send(L"{\"type\":\"result\",\"ok\":true,\"restart\":true,\"title\":" + Json(FPLoc(IDS_PSW_CODE_BTN)) +
+                     L",\"message\":" + Json(Fmt(IDS_PSW_CODE_REMOVED_ADDONS, names)) + L"}");
+            }
+            else
+                Send(L"{\"type\":\"result\",\"ok\":false,\"title\":" + Json(FPLoc(IDS_PSW_CODE_BTN)) +
+                     L",\"message\":" + Json(FPLoc(IDS_PSW_CODE_KEPT)) + L"}");
+            FPLogW(L"[Store] code removal with %u add-on(s) -> %d", (unsigned)r.entries.size(), r.count);
+            return;
+        }
         const PSCatalogEntry& e = r.entries.front();
         int rc = r.count;
         if (rc == 0)
@@ -1108,7 +1349,8 @@ protected:
         }
         else
         {
-            std::wstring msg = rc == 2 ? FPLoc(IDS_PSD_MSG_HASH) : rc == 6 ? FPLoc(IDS_PSD_MSG_SIG) : FmtInt(IDS_PSD_MSG_INSTFAIL, rc);
+            std::wstring msg = rc == 2 ? FPLoc(IDS_PSD_MSG_HASH) : rc == 6 ? FPLoc(IDS_PSD_MSG_SIG) : rc == 13 ? FPLoc(IDS_PSD_MSG_SEATS)
+                             : FmtInt(IDS_PSD_MSG_INSTFAIL, rc);
             Send(L"{\"type\":\"result\",\"ok\":false,\"title\":" + Json(e.name) + L",\"message\":" + Json(msg) + L"}");
         }
     }
@@ -1124,6 +1366,8 @@ protected:
         case KFeedback: ApplyFeedback(*r); break;
         case KJob:      ApplyJob(*r); break;
         case KCustomer: ApplyCustomer(*r); break;
+        case KCodeInfo: Send(r->text); break;
+        case KCodePreview: ApplyCodePreview(*r); break;
         case KSend:     if (r->gen == 0 || r->gen == m_catalogGen) Send(r->text); break;
         }
         return 0;

@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "settings.h"
+#include <algorithm>
 #include "policy.h"
 #include "logging.h"
 
@@ -99,20 +100,138 @@ bool PSCustomerCodeLocked()
     return FPPolicyString(L"Store", L"CustomerCode", s) && !s.empty();
 }
 
-std::wstring PSCustomerCode()
+// "A; b,C" -> {"A", "B", "C"}: normalized, valid, no duplicates, at most kPSMaxCustomerCodes
+static std::vector<std::wstring> SplitCodes(const std::wstring& s)
+{
+    std::vector<std::wstring> out;
+    std::wstring cur;
+    auto flush = [&]() {
+        std::wstring c = NormalizeCode(cur);
+        cur.clear();
+        if (c.empty() || !PSIsValidCustomerCode(c) || out.size() >= kPSMaxCustomerCodes) return;
+        for (const auto& x : out) if (x == c) return;
+        out.push_back(c);
+    };
+    for (wchar_t ch : s)
+    {
+        if (ch == L';' || ch == L',' || ch == L'\n' || ch == L'\r') flush();
+        else cur += ch;
+    }
+    flush();
+    return out;
+}
+
+static std::wstring JoinCodes(const std::vector<std::wstring>& codes)
+{
+    std::wstring s;
+    for (const auto& c : codes) s += (s.empty() ? L"" : L";") + c;
+    return s;
+}
+
+bool PSIsValidCustomerCodeList(const std::wstring& codes)
+{
+    std::wstring cur;
+    size_t n = 0;
+    for (size_t i = 0; i <= codes.size(); ++i)
+    {
+        wchar_t ch = i < codes.size() ? codes[i] : L';';
+        if (ch == L';' || ch == L',')
+        {
+            std::wstring c = NormalizeCode(cur);
+            cur.clear();
+            if (c.empty()) continue;
+            if (!PSIsValidCustomerCode(c) || ++n > kPSMaxCustomerCodes) return false;
+        }
+        else cur += ch;
+    }
+    return true;
+}
+
+std::vector<std::wstring> PSCustomerCodes()
 {
     std::wstring s;
     if (!FPPolicyString(L"Store", L"CustomerCode", s) || s.empty()) ReadUserString(L"CustomerCode", s);
-    s = NormalizeCode(s);
-    return PSIsValidCustomerCode(s) ? s : std::wstring();
+    return SplitCodes(s);
 }
 
-void PSSaveCustomerCode(const std::wstring& code)
+std::wstring PSCustomerCode() { return JoinCodes(PSCustomerCodes()); }
+
+// names: "CODE<TAB>name" lines of the REG_MULTI_SZ value CustomerCodeNames
+static std::vector<std::pair<std::wstring, std::wstring>> ReadCodeNames()
+{
+    std::vector<std::pair<std::wstring, std::wstring>> out;
+    DWORD type = 0, size = 0;
+    if (RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, L"CustomerCodeNames", RRF_RT_REG_MULTI_SZ, &type, NULL, &size) != ERROR_SUCCESS ||
+        size == 0 || size > 64 * 1024) return out;
+    std::vector<wchar_t> buf(size / sizeof(wchar_t) + 2, 0);
+    if (RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, L"CustomerCodeNames", RRF_RT_REG_MULTI_SZ, &type, buf.data(), &size) != ERROR_SUCCESS)
+        return out;
+    for (const wchar_t* p = buf.data(); *p; p += wcslen(p) + 1)
+    {
+        std::wstring line = p;
+        size_t tab = line.find(L'\t');
+        if (tab != std::wstring::npos && tab > 0) out.push_back({ line.substr(0, tab), line.substr(tab + 1, 200) });
+    }
+    return out;
+}
+
+static void WriteCodes(const std::vector<std::wstring>& codes, const std::vector<std::pair<std::wstring, std::wstring>>& names)
+{
+    std::wstring joined = JoinCodes(codes);
+    if (joined.empty()) RegDeleteKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"CustomerCode");
+    else RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"CustomerCode", REG_SZ, joined.c_str(), (DWORD)((joined.size() + 1) * sizeof(wchar_t)));
+    std::wstring multi;
+    for (const auto& c : codes)
+        for (const auto& n : names)
+            if (n.first == c && !n.second.empty()) { multi += c + L"\t" + n.second; multi.push_back(0); break; }
+    if (multi.empty()) RegDeleteKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"CustomerCodeNames");
+    else
+    {
+        multi.push_back(0);
+        RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"CustomerCodeNames", REG_MULTI_SZ, multi.data(), (DWORD)(multi.size() * sizeof(wchar_t)));
+    }
+}
+
+int PSAddCustomerCode(const std::wstring& code, const std::wstring& customer)
 {
     std::wstring c = NormalizeCode(code);
-    if (!PSIsValidCustomerCode(c)) return;
-    if (c.empty()) RegDeleteKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"CustomerCode");
-    else RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"CustomerCode", REG_SZ, c.c_str(), (DWORD)((c.size() + 1) * sizeof(wchar_t)));
+    if (c.empty() || !PSIsValidCustomerCode(c)) return 2;
+    std::wstring s;
+    ReadUserString(L"CustomerCode", s);
+    auto codes = SplitCodes(s);
+    auto names = ReadCodeNames();
+    names.erase(std::remove_if(names.begin(), names.end(), [&](const auto& n) { return n.first == c; }), names.end());
+    std::wstring label;   // the server's customer name: no control characters (REG_MULTI_SZ lines, TAB separator)
+    for (wchar_t ch : customer) if (ch >= 0x20 && ch != 0x7F) label += ch;
+    names.push_back({ c, label.substr(0, 200) });
+    for (const auto& x : codes)
+        if (x == c) { WriteCodes(codes, names); return 1; }   // known: the name may have changed
+    if (codes.size() >= kPSMaxCustomerCodes) return 2;
+    codes.push_back(c);
+    WriteCodes(codes, names);
+    return 0;
+}
+
+void PSRemoveCustomerCode(const std::wstring& code)
+{
+    std::wstring c = NormalizeCode(code), s;
+    ReadUserString(L"CustomerCode", s);
+    auto codes = SplitCodes(s);
+    codes.erase(std::remove(codes.begin(), codes.end(), c), codes.end());
+    WriteCodes(codes, ReadCodeNames());
+}
+
+std::wstring PSCustomerCodeName(const std::wstring& code)
+{
+    std::wstring c = NormalizeCode(code);
+    for (const auto& n : ReadCodeNames()) if (n.first == c) return n.second;
+    return L"";
+}
+
+void PSSaveCustomerCode(const std::wstring& codes)
+{
+    if (!PSIsValidCustomerCodeList(codes)) return;
+    WriteCodes(SplitCodes(codes), ReadCodeNames());
 }
 
 bool PSUpdateBadgeEnabled()

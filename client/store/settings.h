@@ -7,6 +7,7 @@
 
 #pragma once
 #include <string>
+#include <vector>
 
 void         PSSettingsLoad();            // resolve once (PluginInit)
 std::wstring PSServerUrl();               // e.g. https://host (no trailing slash)
@@ -15,12 +16,24 @@ bool         PSUrlLocked();               // true when a policy enforces the URL
 void         PSSaveUserSettings(const std::wstring& url, bool beta);
 bool         PSIsAllowedServerUrl(const std::wstring& url); // https://, or http:// for loopback; empty = default
 bool         PSUseClassicUI();
-// Customer code of a delivery (policy Store\CustomerCode beats HKCU CustomerCode);
-// sent as X-Customer-Code with every store request. "" = none.
+// Customer codes of deliveries (C1.4.1: up to 10, before only one). Policy
+// Store\CustomerCode (one code or several, separated by ';') beats HKCU CustomerCode
+// ("CODE;CODE"; a single code of an older client reads as a list of one). The
+// customer name of each code, as the store confirmed it, is kept in HKCU
+// CustomerCodeNames (REG_MULTI_SZ "CODE<TAB>name").
+const size_t kPSMaxCustomerCodes = 10;
+std::vector<std::wstring> PSCustomerCodes();
+// All codes joined with ';', sent as X-Customer-Code with every store request. "" = none.
 std::wstring PSCustomerCode();
-bool         PSCustomerCodeLocked();      // true when a policy sets it
-bool         PSIsValidCustomerCode(const std::wstring& code);  // letters, digits, '-', at most 64; "" is valid
-void         PSSaveCustomerCode(const std::wstring& code);
+bool         PSCustomerCodeLocked();      // true when a policy sets them
+bool         PSIsValidCustomerCode(const std::wstring& code);  // ONE code: letters, digits, '-', at most 64; "" is valid
+bool         PSIsValidCustomerCodeList(const std::wstring& codes);   // codes separated by ';' or ','
+// 0 = added, 1 = already there, 2 = list full (kPSMaxCustomerCodes).
+int          PSAddCustomerCode(const std::wstring& code, const std::wstring& customer);
+void         PSRemoveCustomerCode(const std::wstring& code);
+std::wstring PSCustomerCodeName(const std::wstring& code);   // "" when unknown
+// The codes as typed in the Options page ("A; B"); names of codes that stay are kept.
+void         PSSaveCustomerCode(const std::wstring& codes);
 bool         PSUpdateBadgeEnabled();      // policy Store\UpdateBadge = 0 switches the start-up check off            // ClassicUI = 1 (HKLM policy Store or HKCU): no WebView2 window
 // Company policies (HKLM ...\PluginStore\Policies\Store only, never HKCU):
 bool         PSPolicyNoInstall();         // DisableInstall = 1: browse only, no install/remove

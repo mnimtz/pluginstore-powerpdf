@@ -23,6 +23,14 @@ header .s{font-size:12px;color:#9fd8ff}
 .chip.cust.on{background:var(--blue);border-color:var(--blue)}
 .codemsg{font-size:12.5px;margin-top:10px;line-height:1.5}
 .codemsg.ok{color:#016839}.codemsg.bad{color:#B3261E}
+.modal.mid{width:min(620px,92vw)}
+.codehead{font-size:12px;font-weight:700;color:var(--slate);margin:10px 0 6px}
+.codelist{border:1px solid #e3e8ef;border-radius:8px;margin-bottom:10px}
+.coderow{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 10px;border-top:1px solid #e3e8ef}
+.coderow:first-child{border-top:0}.coderow.muted{color:var(--slate);font-size:12.5px}
+.codewho{min-width:0;overflow-wrap:anywhere}.codewho b{color:var(--navy);margin-inline-end:8px}
+.codeval{font-family:Consolas,monospace;font-size:12px;color:var(--slate);margin-inline-end:8px}
+.codeaddons{font-size:12px;color:var(--ink);margin-top:2px}
 .accent{height:3px;background:var(--blue);flex:none}
 .banner{font-size:12.5px;padding:8px 18px;display:flex;align-items:center;gap:10px;flex:none}
 .banner.upd{background:#fff8e1;color:#634E12}
@@ -152,9 +160,17 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
 "use strict";
 var S = {}, items = [], self = null, sel = null, cat = "", busy = false, locked = false, icons = {}, shots = {}, shotsAsked = {};
 var need = null;   // {q, order: [ids], reasons: {id: text}} while a search by need is shown
-var code = { has: false, locked: false, customer: "", open: false };   // customer code (C0.8.0)
+// customer codes (C0.8.0; a list since C1.4.1): list = [{code, name}], info[code] = {valid, customer, packages}
+var code = { has: false, locked: false, customer: "", open: false, list: [], info: {} };
 var CUST = "customer";   // chip key of the delivered add-ons (no category slug can look like this)
-function customerName() { var x = items.filter(function (i) { return i.customer; })[0]; return x ? x.customer : code.customer; }
+function customerName() {
+  var names = [];
+  items.forEach(function (i) { if (i.customer && names.indexOf(i.customer) < 0) names.push(i.customer); });
+  if (!names.length) code.list.forEach(function (c) { if (c.name && names.indexOf(c.name) < 0) names.push(c.name); });
+  return names.join(", ") || code.customer;
+}
+function maskCode(c) { return c.length > 10 ? c.slice(0, 4) + "\u2026" + c.slice(-4) : c; }
+function setCodes(c) { if (!c) return; code.list = c.list || []; code.has = code.list.length > 0; if (c.locked != null) code.locked = !!c.locked; }
 var host = window.chrome && window.chrome.webview;
 function post(m) { if (host) host.postMessage(m); }
 function $(id) { return document.getElementById(id); }
@@ -181,6 +197,7 @@ function stars(avg, count) {
   return w;
 }
 function pill(x) {
+  if (x.orphan) return el("span", "pill p-upd", S.orphanPill);   // installed, no longer offered (C1.4.1)
   var s = status(x);
   if (s === "inst") return el("span", "pill p-inst", S.stInstalled);
   if (s === "upd") return el("span", "pill p-upd", S.stUpdate);
@@ -265,9 +282,10 @@ function renderDetail() {
   var h = el("div", "dhead"); h.appendChild(tile(x, true));
   var t = el("div"); t.appendChild(el("div", "dname", x.name));
   var dcp = custPill(x); if (dcp) { var dcw = el("div"); dcw.style.marginTop = "3px"; dcw.appendChild(dcp); t.appendChild(dcw); }
-  t.appendChild(el("div", "dmeta", [x.categoryName || x.category, fmt(S.version, x.version), Math.max(1, Math.round(x.size / 1024)) + " KB"].concat(x.installed && x.installed !== x.version ? [S.colInstalled + ": " + x.installed] : []).join("  ·  ")));
+  t.appendChild(el("div", "dmeta", (x.orphan ? [fmt(S.version, x.version)] : [x.categoryName || x.category, fmt(S.version, x.version), Math.max(1, Math.round(x.size / 1024)) + " KB"]).concat(x.installed && x.installed !== x.version && !x.orphan ? [S.colInstalled + ": " + x.installed] : []).join("  ·  ")));
   var ds = stars(x.rating, x.ratingCount); if (ds) { var dw = el("div", "cstars"); dw.appendChild(ds); t.appendChild(dw); }
   h.appendChild(t); d.appendChild(h);
+  if (x.orphan) d.appendChild(el("div", "dnote", S.orphan));   // installed, no longer offered (C1.4.1)
   if (x.noUi) d.appendChild(el("div", "dnote", S.noUi));   // add-on without ribbon buttons (C1.2.1)
   d.appendChild(el("div", "ddesc", x.description));
   if (x.shots > 0 && !shotsAsked[x.id]) { shotsAsked[x.id] = true; post({ cmd: "shots", id: x.id }); }
@@ -289,8 +307,9 @@ function renderDetail() {
     d.appendChild(w);
   }
   var acts = el("div", "acts"); actionButtons(x, false).forEach(function (a) { acts.appendChild(a); });
-  var rep = el("button", "btn sec", S.report); rep.onclick = function () { reportForm(x); }; acts.appendChild(rep);
+  if (!x.orphan) { var rep = el("button", "btn sec", S.report); rep.onclick = function () { reportForm(x); }; acts.appendChild(rep); }
   d.appendChild(acts);
+  if (x.orphan) return;
   var rate = el("div", "rate");
   if (x.installed) {
     rate.appendChild(el("span", "", S.yourRating));
@@ -313,7 +332,7 @@ function renderDetail() {
 }
 function modal(title, text, buttons) {
   code.open = false;
-  var m = $("modal"); m.textContent = "";
+  var m = $("modal"); m.textContent = ""; m.classList.remove("mid");
   if (title) m.appendChild(el("h3", "", title));
   if (text) m.appendChild(el("p", "", text));
   var a = el("div", "acts");
@@ -328,16 +347,48 @@ function codeButton() {
   b.appendChild(document.createTextNode(S.codeBtn || ""));
   b.title = code.has && customerName() ? fmt(S.codeActive, customerName()) : (S.codeIntro || "");
 }
-function codeDialog(message, ok) {
-  var m = $("modal"); m.textContent = ""; m.classList.remove("wide");
+function addonNames(ids) {
+  return (ids || []).map(function (id) { var x = items.filter(function (i) { return i.id === id; })[0]; return x ? x.name : id; });
+}
+function codeDialog(message, ok, keepInput) {
+  var m = $("modal"); var typed = keepInput && $("codeIn") ? $("codeIn").value : "";
+  m.textContent = ""; m.classList.remove("wide"); m.classList.add("mid");
   var f = el("div", "form");
   f.appendChild(el("h3", "", S.codeBtn));
-  if (code.has && customerName()) f.appendChild(el("p", "", fmt(S.codeActive, customerName())));
-  var input = null;
   if (code.locked) f.appendChild(el("p", "", S.codeLocked));
-  else {
+  // every code with its customer and the add-ons it unlocks (C1.4.1)
+  f.appendChild(el("div", "codehead", S.codeList));
+  var lst = el("div", "codelist");
+  if (!code.list.length) lst.appendChild(el("div", "coderow muted", S.codeNone));
+  code.list.forEach(function (c) {
+    var inf = code.info[c.code] || {};
+    var row = el("div", "coderow");
+    var who = el("div", "codewho");
+    who.appendChild(el("b", "", inf.customer || c.name || maskCode(c.code)));
+    who.appendChild(el("span", "codeval", maskCode(c.code)));
+    if (inf.answered && !inf.valid) who.appendChild(el("span", "pill p-upd", S.codeInvalid));
+    var names = addonNames(inf.packages);
+    if (names.length) {
+      var seat = {}; (inf.installs || []).forEach(function (s) { seat[s.package] = s; });
+      who.appendChild(el("div", "codeaddons", (inf.packages || []).map(function (id, i) {
+        var s = seat[id];   // installations of the delivery (C1.4.1): 3/10, or 3/∞ when unlimited
+        return names[i] + (s ? " (" + fmt(S.seats, s.used + "/" + (s.max == null ? "∞" : s.max)) + ")" : "");
+      }).join(", ")));
+    }
+    row.appendChild(who);
+    if (!code.locked) {
+      var rb = el("button", "btn sec sm", S.codeRemove); rb.disabled = busy;
+      rb.onclick = function () { rb.disabled = true; msg.className = "codemsg"; msg.textContent = "\u2026"; post({ cmd: "codePreview", code: c.code }); };
+      row.appendChild(rb);
+    }
+    lst.appendChild(row);
+  });
+  f.appendChild(lst);
+  var input = null;
+  if (!code.locked) {
     f.appendChild(el("p", "", S.codeIntro));
     input = el("input"); input.type = "text"; input.maxLength = 64; input.autocomplete = "off"; input.spellcheck = false;
+    input.id = "codeIn"; input.value = typed;
     input.placeholder = "XXXX-XXXX-XXXX-XXXX-XXXX";
     input.onkeydown = function (e) { if (e.key === "Enter") apply(); };
     f.appendChild(input);
@@ -348,12 +399,11 @@ function codeDialog(message, ok) {
   function apply() {
     var v = input.value.trim();
     if (!v) { input.focus(); return; }
-    msg.className = "codemsg"; msg.textContent = "…";
+    msg.className = "codemsg"; msg.textContent = "\u2026";
     post({ cmd: "codeCheck", code: v });
   }
   if (!code.locked) {
-    if (code.has) { var r = el("button", "btn sec", S.codeRemove); r.onclick = function () { post({ cmd: "codeRemove" }); }; a.appendChild(r); }
-    var ap = el("button", "btn", S.codeApply); ap.onclick = apply; a.appendChild(ap);
+    var ap = el("button", "btn", S.codeAdd || S.codeApply); ap.onclick = apply; a.appendChild(ap);
   }
   var c = el("button", "btn sec", S.close); c.onclick = function () { code.open = false; closeModal(); }; a.appendChild(c);
   f.appendChild(a); m.appendChild(f);
@@ -361,7 +411,16 @@ function codeDialog(message, ok) {
   $("veil").classList.add("on");
   (input || c).focus();
 }
-function closeModal() { code.open = false; $("veil").classList.remove("on"); $("modal").classList.remove("wide"); }
+// the question before a code goes: which add-ons go with it (C1.4.1)
+function codeAsk(m) {
+  var who = m.customer || maskCode(m.code);
+  var text = fmt(S.codeAsk, who) + (m.affected && m.affected.length ? "\n\n" + fmt(S.codeAskAddons, m.affected.join(", ")) : "");
+  modal(S.codeBtn, text, [
+    { label: S.codeRemove, fn: function () { post({ cmd: "codeRemove", code: m.code }); if (m.affected && m.affected.length) busyModal(S.codeRemove); } },
+    { label: S.close, sec: true, fn: function () { codeDialog(); } }
+  ]);
+}
+function closeModal() { code.open = false; $("veil").classList.remove("on"); $("modal").classList.remove("wide"); $("modal").classList.remove("mid"); }
 function showShot(sh) {
   var m = $("modal"); m.textContent = ""; m.classList.add("wide");
   var im = el("img"); im.src = sh.src; im.alt = sh.caption || ""; m.appendChild(im);
@@ -494,8 +553,8 @@ function apply(m) {
     $("updBtn").textContent = S.selfUpdateBtn;
     $("updBtn").onclick = function () { busyModal(S.selfUpdateBtn); post({ cmd: "selfUpdate" }); };
     locked = !!m.installLocked;
-    if (m.code) { code.has = !!m.code.has; code.locked = !!m.code.locked; }
-    $("codeBtn").onclick = function () { codeDialog(); };
+    if (m.code) { code.locked = !!m.code.locked; setCodes(m.code); }
+    $("codeBtn").onclick = function () { codeDialog(); post({ cmd: "codeInfo" }); };
     codeButton();
     $("lock").style.display = locked ? "flex" : "none"; $("lock").textContent = S.installLocked || "";
   } else if (m.type === "catalog") {
@@ -552,10 +611,17 @@ function apply(m) {
   } else if (m.type === "icon") {
     icons[m.id] = m.data; render();
   } else if (m.type === "code") {
-    if (m.ok) { code.has = !!m.has; code.customer = m.customer || ""; if (!m.has) { code.customer = ""; if (cat === CUST) cat = ""; } }
+    if (m.list) setCodes({ list: m.list });
+    if (m.ok && m.customer) code.customer = m.customer;
+    if (!code.has) { code.customer = ""; if (cat === CUST) cat = ""; }
     codeButton();
-    if (code.open) codeDialog(m.message, m.ok);
+    if (code.open) codeDialog(m.message, m.ok, !m.ok);
     else if (m.message) modal(S.codeBtn, m.message, [{ label: S.close }]);
+  } else if (m.type === "codeInfo") {
+    (m.items || []).forEach(function (i) { code.info[i.code] = i; });
+    if (code.open) codeDialog();
+  } else if (m.type === "codeAsk") {
+    codeAsk(m);
   } else if (m.type === "result") {
     onResult(m);
   } else if (m.type === "message") {
