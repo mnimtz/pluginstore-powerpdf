@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>Zapisz przegląd</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Prywatny dodatek: nigdy nie pojawia się w katalogu publicznym. Zatwierdzenie jedynie dokumentuje Twój przegląd; dostawy do klientów i tak udostępniają najnowszą sprawdzoną wersję.</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Prywatny: dostarczany klientom, nie wymaga zatwierdzenia</value></data>
+  <data name="Installations" xml:space="preserve"><value>Instalacje</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>Instalacje w użyciu / dozwolone</value></data>
+  <data name="unlimited" xml:space="preserve"><value>bez ograniczeń</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>Maksymalna liczba instalacji</value></data>
+  <data name="Installation" xml:space="preserve"><value>Instalacja</value></data>
+  <data name="First seen" xml:space="preserve"><value>Pierwsze wykrycie</value></data>
+  <data name="Last seen" xml:space="preserve"><value>Ostatnie wykrycie</value></data>
+  <data name="Free" xml:space="preserve"><value>Zwolnij</value></data>
+  <data name="Installation released." xml:space="preserve"><value>Instalacja została zwolniona.</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>Ta instalacja nie jest już używana.</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Wprowadź liczbę instalacji lub pozostaw pole puste, aby nie ograniczać ich liczby.</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Jeden wpis na każdego użytkownika systemu Windows klienta Store; przechowywany jest tylko anonimowy numer. Usunięcie dodatku zwalnia jego wpis; zwolnij wpis samodzielnie, gdy komputer został zresetowany.</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Zwolnić tę instalację? Dodatek będzie nadal działać na tym komputerze do momentu aktualizacji lub ponownej instalacji; stanowisko może zostać użyte przez inny komputer.</value></data>
 </root>

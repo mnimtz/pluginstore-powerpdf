@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>Registrar a revisão</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Suplemento privado: ele nunca aparece no catálogo público. A aprovação apenas documenta sua revisão; as entregas aos clientes fornecem a versão revisada mais recente de qualquer forma.</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Privado: entregue aos clientes, não requer aprovação</value></data>
+  <data name="Installations" xml:space="preserve"><value>Instalações</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>Instalações em uso / permitidas</value></data>
+  <data name="unlimited" xml:space="preserve"><value>ilimitado</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>Máximo de instalações</value></data>
+  <data name="Installation" xml:space="preserve"><value>Instalação</value></data>
+  <data name="First seen" xml:space="preserve"><value>Visto pela primeira vez</value></data>
+  <data name="Last seen" xml:space="preserve"><value>Visto pela última vez</value></data>
+  <data name="Free" xml:space="preserve"><value>Liberar</value></data>
+  <data name="Installation released." xml:space="preserve"><value>Instalação liberada.</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>Esta instalação não está mais em uso.</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Insira um número de instalações ou deixe o campo vazio para ilimitado.</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Uma entrada por usuário do Windows do cliente do Store; apenas um número anônimo é armazenado. A remoção do suplemento libera sua entrada; libere você mesmo uma entrada quando um computador tiver sido redefinido.</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Liberar esta instalação? O suplemento continua funcionando naquele computador até ser atualizado ou reinstalado; a vaga pode ser usada por outro computador.</value></data>
 </root>

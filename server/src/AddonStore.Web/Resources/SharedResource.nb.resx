@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>Registrer gjennomgangen</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Privat tillegg: Det vises aldri i den offentlige katalogen. Godkjenning dokumenterer bare gjennomgangen din; leveranser til kunder gir uansett ut den nyeste gjennomgåtte versjonen.</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Privat: leveres til kunder, krever ingen godkjenning</value></data>
+  <data name="Installations" xml:space="preserve"><value>Installasjoner</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>Installasjoner i bruk / tillatt</value></data>
+  <data name="unlimited" xml:space="preserve"><value>ubegrenset</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>Maksimalt antall installasjoner</value></data>
+  <data name="Installation" xml:space="preserve"><value>Installasjon</value></data>
+  <data name="First seen" xml:space="preserve"><value>Først sett</value></data>
+  <data name="Last seen" xml:space="preserve"><value>Sist sett</value></data>
+  <data name="Free" xml:space="preserve"><value>Frigi</value></data>
+  <data name="Installation released." xml:space="preserve"><value>Installasjonen er frigitt.</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>Denne installasjonen er ikke lenger i bruk.</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Angi et antall installasjoner, eller la feltet stå tomt for ubegrenset.</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Én oppføring per Windows-bruker av Store-klienten; bare et anonymt nummer lagres. Når tillegget fjernes, frigis oppføringen; frigi en oppføring selv når en datamaskin er tilbakestilt.</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Vil du frigi denne installasjonen? Tillegget fortsetter å fungere på den datamaskinen til det oppdateres eller installeres på nytt; plassen kan brukes av en annen datamaskin.</value></data>
 </root>

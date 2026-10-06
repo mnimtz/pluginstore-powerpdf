@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>İncelemeyi kaydet</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Özel eklenti: Genel katalogda hiçbir zaman görünmez. Onaylama yalnızca incelemenizi belgeler; müşteri teslimatları her durumda en yeni incelenmiş sürümü sağlar.</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Özel: Müşterilere teslim edilir, onay gerektirmez</value></data>
+  <data name="Installations" xml:space="preserve"><value>Yüklemeler</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>Kullanılan / izin verilen yüklemeler</value></data>
+  <data name="unlimited" xml:space="preserve"><value>sınırsız</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>En fazla yükleme sayısı</value></data>
+  <data name="Installation" xml:space="preserve"><value>Yükleme</value></data>
+  <data name="First seen" xml:space="preserve"><value>İlk görülme</value></data>
+  <data name="Last seen" xml:space="preserve"><value>Son görülme</value></data>
+  <data name="Free" xml:space="preserve"><value>Serbest bırak</value></data>
+  <data name="Installation released." xml:space="preserve"><value>Yükleme serbest bırakıldı.</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>Bu yükleme artık kullanılmıyor.</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Bir yükleme sayısı girin veya sınırsız için alanı boş bırakın.</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Store istemcisinin her Windows kullanıcısı için bir giriş; yalnızca anonim bir numara depolanır. Eklentiyi kaldırmak girişini serbest bırakır; bir bilgisayar sıfırlandığında girişi kendiniz serbest bırakın.</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Bu yükleme serbest bırakılsın mı? Eklenti, güncellenene veya yeniden yüklenene kadar o bilgisayarda çalışmaya devam eder; bu yer başka bir bilgisayar tarafından kullanılabilir.</value></data>
 </root>

@@ -168,6 +168,8 @@ public class CustomerService
         var codes = await _db.CustomerCodes.Where(x => x.CustomerId == c.Id).ToListAsync();
         var deliveries = await _db.Deliveries.Where(x => x.CustomerId == c.Id).ToListAsync();
         _db.CustomerCodes.RemoveRange(codes);
+        var deliveryIds = deliveries.Select(d => d.Id).ToList();
+        _db.DeliverySeats.RemoveRange(_db.DeliverySeats.Where(s => deliveryIds.Contains(s.DeliveryId)));   // S1.4.2
         _db.Deliveries.RemoveRange(deliveries);
         _db.Customers.Remove(c);
         await _db.SaveChangesAsync();
@@ -293,6 +295,22 @@ public class CustomerService
         return new Outcome(true, "", "Delivery saved.", d);
     }
 
+    public const int MaxInstallsLimit = 100000;
+
+    /// <summary>Installations allowed for a delivery (S1.4.2): 0 or null = unlimited, else 1 to 100000.
+    /// Lowering it below the seats in use keeps those installations; new ones wait for a free seat.</summary>
+    public async Task<Outcome> SetMaxInstallsAsync(Delivery d, int? max, AppUser actor)
+    {
+        if (max is < 0 or > MaxInstallsLimit) return Outcome.Fail("DELIVERY_INVALID", $"maxInstalls must be 0 (unlimited) to {MaxInstallsLimit}.");
+        var value = max is null or 0 ? (int?)null : max;
+        if (d.MaxInstalls == value) return new Outcome(true, "", "Delivery saved.", d);
+        d.MaxInstalls = value;
+        d.UpdatedAt = DateTime.UtcNow;
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(actor.DisplayName, "delivery.installs", $"delivery {d.Id}", $"{d.PackageId}: max installations {(value?.ToString() ?? "unlimited")}");
+        return new Outcome(true, "", "Delivery saved.", d);
+    }
+
     /// <summary>"Nach Live übernehmen": the live stage gets the version the beta stage hands out now.</summary>
     public async Task<Outcome> PromoteAsync(Delivery d, AppUser actor, bool actorIsAdmin)
     {
@@ -310,6 +328,9 @@ public class CustomerService
         var now = DateTime.UtcNow;
         var codes = await _db.CustomerCodes.AsNoTracking().Where(x => x.CustomerId == c.Id).OrderByDescending(x => x.Id).ToListAsync();
         var deliveries = await _db.Deliveries.AsNoTracking().Where(d => d.CustomerId == c.Id).OrderBy(d => d.PackageId).ToListAsync();
+        var seatIds = deliveries.Select(d => d.Id).ToList();
+        var seatsUsed = await _db.DeliverySeats.AsNoTracking().Where(s => seatIds.Contains(s.DeliveryId) && s.ReleasedAt == null)
+            .GroupBy(s => s.DeliveryId).Select(g => new { g.Key, N = g.Count() }).ToDictionaryAsync(x => x.Key, x => x.N);
         var owner = await _db.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == c.OwnerId);
         var list = new List<object>();
         foreach (var d in deliveries)
@@ -331,6 +352,7 @@ public class CustomerService
                 startsAt = d.StartsAt, endsAt = d.EndsAt, status = d.Status,
                 effective = d.Status == "active" && (d.StartsAt is null || d.StartsAt <= now) && (d.EndsAt is null || d.EndsAt > now),
                 lastSeenAt = d.LastSeenAt, createdBy = d.CreatedBy, createdAt = d.CreatedAt,
+                installs = new { used = seatsUsed.GetValueOrDefault(d.Id), max = d.MaxInstalls },   // S1.4.2: max null = unlimited
             });
         }
         return new
@@ -440,18 +462,38 @@ public class CustomerService
     /// valid, the customer's name and how many add-ons it unlocks now. Unknown codes
     /// count against the same per-address limit as the catalog (no guessing).
     /// </summary>
-    public async Task<(bool Valid, string Customer, int Addons)> CheckAsync(HttpContext ctx)
+    /// <summary>Valid code(s), the customer name(s) and the add-ons they unlock now (ids, S1.4.2).</summary>
+    public record SeatInfo(string Package, int Used, int? Max);
+
+    public async Task<(bool Valid, string Customer, int Addons, List<string> Packages)> CheckAsync(HttpContext ctx)
+    {
+        var (valid, customer, addons, packages, _) = await CheckWithSeatsAsync(ctx);
+        return (valid, customer, addons, packages);
+    }
+
+    /// <summary>The code check with the installations per add-on (S1.4.2): used seats and the limit
+    /// (null = unlimited), summed over the deliveries the codes unlock.</summary>
+    public async Task<(bool Valid, string Customer, int Addons, List<string> Packages, List<SeatInfo> Seats)> CheckWithSeatsAsync(HttpContext ctx)
     {
         var grants = await GrantsAsync(ctx);
         if (grants.Count > 0)
-            return (true, string.Join(", ", grants.Select(g => g.Customer.Name).Distinct()), grants.Select(g => g.Package.Id).Distinct().Count());
+        {
+            var pkgs = grants.Select(g => g.Package.Id).Distinct().OrderBy(x => x, StringComparer.Ordinal).ToList();
+            var deliveryIds = grants.Select(g => g.Delivery.Id).ToList();
+            var used = await _db.DeliverySeats.AsNoTracking().Where(s => deliveryIds.Contains(s.DeliveryId) && s.ReleasedAt == null)
+                .GroupBy(s => s.DeliveryId).Select(g => new { g.Key, N = g.Count() }).ToDictionaryAsync(x => x.Key, x => x.N);
+            var seats = grants.GroupBy(g => g.Package.Id).OrderBy(g => g.Key, StringComparer.Ordinal)
+                .Select(g => new SeatInfo(g.Key, g.Sum(x => used.GetValueOrDefault(x.Delivery.Id)),
+                    g.Any(x => x.Delivery.MaxInstalls is null) ? null : g.Sum(x => x.Delivery.MaxInstalls!.Value))).ToList();
+            return (true, string.Join(", ", grants.Select(g => g.Customer.Name).Distinct()), pkgs.Count, pkgs, seats);
+        }
         // A valid code of an active customer without a current delivery is still valid
         // (same limit: this second look counts nothing new, the codes are known by now).
         var codes = await ValidCodesAsync(ctx);
-        if (codes.Count == 0) return (false, "", 0);
+        if (codes.Count == 0) return (false, "", 0, new(), new());
         var ids = codes.Select(c => c.CustomerId).Distinct().ToList();
         var names = await _db.Customers.Where(c => ids.Contains(c.Id) && c.Status == "active").Select(c => c.Name).ToListAsync();
-        return names.Count == 0 ? (false, "", 0) : (true, string.Join(", ", names.Distinct()), 0);
+        return names.Count == 0 ? (false, "", 0, new(), new()) : (true, string.Join(", ", names.Distinct()), 0, new(), new());
     }
 
     /// <summary>The version a client in the given channel gets from a grant, and the channel label.</summary>

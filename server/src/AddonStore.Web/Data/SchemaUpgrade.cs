@@ -139,7 +139,12 @@ public static class SchemaUpgrade
                 "PackageId TEXT NOT NULL, BetaMode TEXT NOT NULL, BetaVersion TEXT NULL, LiveMode TEXT NOT NULL, LiveVersion TEXT NULL, " +
                 "StartsAt TEXT NULL, EndsAt TEXT NULL, Status TEXT NOT NULL, CreatedBy TEXT NOT NULL, CreatedAt TEXT NOT NULL, " +
                 "UpdatedAt TEXT NULL, LastSeenAt TEXT NULL)",
-            "CREATE UNIQUE INDEX IF NOT EXISTS IX_Deliveries_CustomerId_PackageId ON Deliveries (CustomerId, PackageId)"
+            "CREATE UNIQUE INDEX IF NOT EXISTS IX_Deliveries_CustomerId_PackageId ON Deliveries (CustomerId, PackageId)",
+            // installations per delivery (S1.4.2)
+            "ALTER TABLE Deliveries ADD COLUMN MaxInstalls INTEGER NULL",
+            "CREATE TABLE IF NOT EXISTS DeliverySeats (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, DeliveryId INTEGER NOT NULL, " +
+                "InstallHash TEXT NOT NULL, Version TEXT NOT NULL, FirstAt TEXT NOT NULL, LastSeenAt TEXT NOT NULL, ReleasedAt TEXT NULL, ReleasedBy TEXT NULL)",
+            "CREATE INDEX IF NOT EXISTS IX_DeliverySeats_DeliveryId_InstallHash ON DeliverySeats (DeliveryId, InstallHash)"
         })
         {
             // Only what is missing runs (S0.18.1): on the network share every statement

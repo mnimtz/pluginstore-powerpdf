@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>Registrer gennemgangen</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Privat tilføjelsesprogram: Det vises aldrig i det offentlige katalog. Godkendelse dokumenterer kun din gennemgang; leverancer til kunder udleverer under alle omstændigheder den nyeste gennemgåede version.</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Privat: leveres til kunder, kræver ingen godkendelse</value></data>
+  <data name="Installations" xml:space="preserve"><value>Installationer</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>Installationer i brug / tilladt</value></data>
+  <data name="unlimited" xml:space="preserve"><value>ubegrænset</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>Maksimalt antal installationer</value></data>
+  <data name="Installation" xml:space="preserve"><value>Installation</value></data>
+  <data name="First seen" xml:space="preserve"><value>Først set</value></data>
+  <data name="Last seen" xml:space="preserve"><value>Sidst set</value></data>
+  <data name="Free" xml:space="preserve"><value>Frigiv</value></data>
+  <data name="Installation released." xml:space="preserve"><value>Installationen er frigivet.</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>Denne installation er ikke længere i brug.</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Angiv et antal installationer, eller lad feltet være tomt for ubegrænset.</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Én post pr. Windows-bruger af Store-klienten; der gemmes kun et anonymt nummer. Fjernelse af tilføjelsesprogrammet frigiver dets post; frigiv selv en post, når en computer er blevet nulstillet.</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Vil du frigive denne installation? Tilføjelsesprogrammet fungerer fortsat på den pågældende computer, indtil det opdateres eller geninstalleres; pladsen kan bruges af en anden computer.</value></data>
 </root>

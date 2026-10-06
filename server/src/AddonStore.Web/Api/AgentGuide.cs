@@ -575,7 +575,10 @@ Rules enforced by the server:
 
 - `version` (three or four numbers) must be strictly higher than the latest submitted
   version of the same package id.
-- `changelog` must not be empty; write what changed, admins review it.
+- `changelog` must not be empty; write what changed, admins review it. The
+  store window shows it to end users as "What's new": write it for them, in
+  plain words about what they notice (new functions, fixed problems), not
+  for developers (no class names, codes or internal details).
 - Every packaged .zxt must be a native Windows DLL for the right machine type
   (x64 = 0x8664, arm64 = 0xAA64); x64 is mandatory, arm64 optional.
 - `sha256.<arch>` must match each packaged file (lowercase hex).
@@ -909,7 +912,27 @@ hour (codes that already worked from that address keep working).
 `GET {{baseUrl}}/api/customer-code` (code in the same header) checks a code
 before a client stores it: `data.valid`, `data.customer` (name) and
 `data.addons` (how many add-ons it unlocks now; a valid code may unlock none
-yet); `CODE_MISSING` (400) without the header.
+yet) and `data.packages` (their ids, S1.4.2); `CODE_MISSING` (400) without the
+header. A client may send up to 10 codes at once, separated by `;`; the store
+client (1.4.1+) keeps a list of codes, shows each code with its customer and
+add-ons, and removing a code also removes the add-ons that came with it only.
+
+Installations per delivery (S1.4.2): a delivery of a private add-on may allow
+a number of installations, `maxInstalls` in `POST {{baseUrl}}/api/customers/{cid}/deliveries`
+or `PATCH {{baseUrl}}/api/deliveries/{did}` (0 or leaving it out on creation =
+unlimited; 1 to 100000). The store client (1.4.1+) sends its random
+installation id in `X-Install-Id` together with the codes. A download takes a
+seat for that installation, updates keep it, and removing the add-on in the
+store window frees it (`POST {{baseUrl}}/api/deliveries/release`
+`{"packages": ["id"]}`). When every seat is in use, a new installation gets 403
+`SEATS_EXHAUSTED` (with `used` and `max`); a limited delivery needs the
+installation id (`INSTALL_ID_MISSING`, clients before 1.4.1). Only a hash of
+the id per delivery is stored. The customer page and
+`GET {{baseUrl}}/api/deliveries/{did}/seats` show every installation;
+`DELETE {{baseUrl}}/api/deliveries/{did}/seats/{sid}` frees one (a computer that
+was reset). `data.deliveries[].installs` (`used`, `max`) is in the customer
+API; the code check reports `data.installs` per add-on, which the store
+window shows as "Installations: 3/10".
 Developers manage their own customers and may deliver every add-on (also
 other developers' private ones; the owner gets an email); admins see and
 manage all, reviewers read. Admins get an email when a
@@ -1265,6 +1288,10 @@ be free of warnings before review. Info is for information only.
 | THIRDPARTY_SOURCE_DETECTED | info | Folders with third-party license files (MIT/BSD/Apache). |
 | SOURCE_MISSING | error (404) | No source stored for this version (download). |
 | CODE_MISSING | error (400) | GET /api/customer-code without the X-Customer-Code header. |
+| SEATS_EXHAUSTED | error (403) | Download of a delivered add-on: every installation the delivery allows is in use. |
+| INSTALL_ID_MISSING | error (400/403) | A limited delivery (or the release call) without the X-Install-Id header (store client before 1.4.1). |
+| RELEASE_INVALID | error (400) | POST /api/deliveries/release without packageId or packages. |
+| SEAT_NOT_FOUND | error (404) | DELETE /api/deliveries/{did}/seats/{sid}: no active installation with that id. |
 | ADMIN_ONLY | error (403) | Source downloads are for store admins only. |
 | ADMIN_UPLOAD_FOR_OWNER | info | An admin uploaded a version of someone else's package. |
 | METADATA_INVALID | error (400/422) | PATCH body is not a JSON object, has unknown fields, or a finding with severity error. |

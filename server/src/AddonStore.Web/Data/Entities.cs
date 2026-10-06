@@ -361,4 +361,23 @@ public class Delivery
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
     public DateTime? LastSeenAt { get; set; }
+    /// <summary>Installations allowed for this delivery (S1.4.2); null = unlimited.</summary>
+    public int? MaxInstalls { get; set; }
+}
+
+/// <summary>
+/// One installation of a delivered add-on (S1.4.2): a seat. Only a hash of the store
+/// client's random installation id per delivery is stored (like ratings), never a name,
+/// address or machine. Released when the client removes the add-on or a manager frees it.
+/// </summary>
+public class DeliverySeat
+{
+    public int Id { get; set; }
+    public int DeliveryId { get; set; }
+    public string InstallHash { get; set; } = "";
+    public string Version { get; set; } = "";
+    public DateTime FirstAt { get; set; } = DateTime.UtcNow;
+    public DateTime LastSeenAt { get; set; } = DateTime.UtcNow;
+    public DateTime? ReleasedAt { get; set; }
+    public string? ReleasedBy { get; set; }
 }

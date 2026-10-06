@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>검토 기록</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>비공개 추가 기능: 공개 카탈로그에는 표시되지 않습니다. 승인은 검토 내용을 기록할 뿐이며, 고객 배포에서는 어떤 경우에도 검토된 최신 버전이 제공됩니다.</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>비공개: 고객에게 배포되며 승인이 필요하지 않습니다</value></data>
+  <data name="Installations" xml:space="preserve"><value>설치</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>사용 중 / 허용된 설치 수</value></data>
+  <data name="unlimited" xml:space="preserve"><value>무제한</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>최대 설치 수</value></data>
+  <data name="Installation" xml:space="preserve"><value>설치</value></data>
+  <data name="First seen" xml:space="preserve"><value>처음 확인</value></data>
+  <data name="Last seen" xml:space="preserve"><value>마지막 확인</value></data>
+  <data name="Free" xml:space="preserve"><value>해제</value></data>
+  <data name="Installation released." xml:space="preserve"><value>설치가 해제되었습니다.</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>이 설치는 더 이상 사용되지 않습니다.</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>설치 수를 입력하거나 무제한으로 하려면 필드를 비워 두십시오.</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Store 클라이언트의 Windows 사용자마다 항목이 하나씩 생성되며, 익명 번호만 저장됩니다. 추가 기능을 제거하면 해당 항목이 해제됩니다. 컴퓨터를 초기화한 경우에는 항목을 직접 해제하십시오.</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>이 설치를 해제하시겠습니까? 추가 기능은 업데이트되거나 다시 설치될 때까지 해당 컴퓨터에서 계속 작동합니다. 이 자리는 다른 컴퓨터에서 사용할 수 있습니다.</value></data>
 </root>

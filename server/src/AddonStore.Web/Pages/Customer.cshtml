@@ -96,6 +96,11 @@
                 @if (d.Visibility == "private") { <span class="badge submitted">@L["private"]</span> }
                 <span class="badge @(d.Effective ? "live" : "withdrawn")">@L[del.Status == "active" ? (d.Effective ? "Active" : "outside period") : del.Status == "paused" ? "paused" : "ended"]</span>
                 <span class="muted small">@L["Last activity"]: @(del.LastSeenAt is null ? "–" : Time.Fmt(del.LastSeenAt))</span>
+                @if (d.Visibility == "private")
+                {
+                    var full = del.MaxInstalls is int mx && d.Seats.Count >= mx;
+                    <span class="badge @(full ? "beta" : "submitted")" title="@L["Installations in use / allowed"]">@L["Installations"]: @d.Seats.Count / @(del.MaxInstalls?.ToString() ?? L["unlimited"].Value)</span>
+                }
             </div>
             <p class="small" style="margin:6px 0">
                 <b>@L["Beta"]:</b> @StageText(del.BetaMode, del.BetaVersion, d.BetaResolved) &nbsp;·&nbsp;
@@ -131,6 +136,32 @@
                     <form method="post" asp-page-handler="Code" asp-route-id="@c.Id"><input type="hidden" name="deliveryId" value="@del.Id" /><input type="hidden" name="transitionDays" value="14" />
                         <button type="submit" class="btn small secondary">@L["Code for this add-on only"]</button></form>
                 </div>
+                @if (d.Visibility == "private" && d.Seats.Count > 0)
+                {
+                    <details style="margin-top:8px">
+                        <summary class="small" style="cursor:pointer">@L["Installations"] (@d.Seats.Count)</summary>
+                        <p class="small muted">@L["One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset."]</p>
+                        <div class="table-wrap"><table>
+                            <tr><th>@L["Installation"]</th><th>@L["Version"]</th><th>@L["First seen"]</th><th>@L["Last seen"]</th><th class="actions"></th></tr>
+                            @foreach (var s in d.Seats)
+                            {
+                                <tr>
+                                    <td class="nowrap"><code>@s.InstallHash[..8]</code></td>
+                                    <td>@s.Version</td>
+                                    <td class="nowrap">@Time.Fmt(s.FirstAt, false)</td>
+                                    <td class="nowrap">@Time.Fmt(s.LastSeenAt, false)</td>
+                                    <td class="actions">
+                                        <form method="post" asp-page-handler="ReleaseSeat" asp-route-id="@c.Id" style="margin:0"
+                                              data-confirm="@L["Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer."]">
+                                            <input type="hidden" name="did" value="@del.Id" /><input type="hidden" name="sid" value="@s.Id" />
+                                            <button type="submit" class="btn small secondary">@L["Free"]</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </table></div>
+                    </details>
+                }
                 <details style="margin-top:8px">
                     <summary class="small" style="cursor:pointer">@L["Change stages and period"]</summary>
                     <form method="post" asp-page-handler="Delivery" asp-route-id="@c.Id" class="stage-form">
@@ -139,6 +170,11 @@
                         <partial name="_StageFields" model='("live", del.LiveMode, del.LiveVersion, d.Versions)' />
                         <div><label>@L["From"]</label><input type="date" name="startsAt" value="@del.StartsAt?.ToString("yyyy-MM-dd")" /></div>
                         <div><label>@L["Until"]</label><input type="date" name="endsAt" value="@del.EndsAt?.AddDays(-1).ToString("yyyy-MM-dd")" /></div>
+                        @if (d.Visibility == "private")
+                        {
+                            <div><label>@L["Maximum installations"]</label><input type="number" name="maxInstalls" min="1" max="100000" value="@del.MaxInstalls" placeholder="@L["unlimited"]" style="width:140px" />
+                                <input type="hidden" name="maxInstallsShown" value="true" /></div>
+                        }
                         <input type="hidden" name="status" value="@del.Status" />
                         <button type="submit" class="btn small cta">@L["Save"]</button>
                     </form>

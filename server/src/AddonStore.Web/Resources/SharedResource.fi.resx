@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>Kirjaa tarkistus</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Yksityinen apuohjelma: se ei koskaan näy julkisessa luettelossa. Hyväksyminen vain dokumentoi tarkistuksesi; asiakastoimitukset jakavat joka tapauksessa uusimman tarkistetun version.</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Yksityinen: toimitetaan asiakkaille, ei vaadi hyväksyntää</value></data>
+  <data name="Installations" xml:space="preserve"><value>Asennukset</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>Asennuksia käytössä / sallittu</value></data>
+  <data name="unlimited" xml:space="preserve"><value>rajoittamaton</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>Asennusten enimmäismäärä</value></data>
+  <data name="Installation" xml:space="preserve"><value>Asennus</value></data>
+  <data name="First seen" xml:space="preserve"><value>Nähty ensimmäisen kerran</value></data>
+  <data name="Last seen" xml:space="preserve"><value>Nähty viimeksi</value></data>
+  <data name="Free" xml:space="preserve"><value>Vapauta</value></data>
+  <data name="Installation released." xml:space="preserve"><value>Asennus vapautettu.</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>Tämä asennus ei ole enää käytössä.</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Anna asennusten määrä tai jätä kenttä tyhjäksi, jos määrää ei rajoiteta.</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Yksi merkintä kutakin Store-asiakasohjelman Windows-käyttäjää kohden; vain anonyymi numero tallennetaan. Apuohjelman poistaminen vapauttaa sen merkinnän; vapauta merkintä itse, kun tietokone on nollattu.</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Vapautetaanko tämä asennus? Apuohjelma toimii edelleen kyseisessä tietokoneessa, kunnes se päivitetään tai asennetaan uudelleen; paikkaa voi käyttää toinen tietokone.</value></data>
 </root>

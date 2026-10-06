@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>تسجيل المراجعة</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>وظيفة إضافية خاصة: لا تظهر أبدًا في الكتالوج العام. تقتصر الموافقة على توثيق مراجعتك؛ وفي جميع الأحوال، يُسلَّم للعملاء أحدث إصدار تمت مراجعته.</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>خاصة: تُسلَّم إلى العملاء، ولا تتطلب موافقة</value></data>
+  <data name="Installations" xml:space="preserve"><value>عمليات التثبيت</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>عمليات التثبيت المستخدمة / المسموح بها</value></data>
+  <data name="unlimited" xml:space="preserve"><value>غير محدود</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>الحد الأقصى لعمليات التثبيت</value></data>
+  <data name="Installation" xml:space="preserve"><value>التثبيت</value></data>
+  <data name="First seen" xml:space="preserve"><value>أول ظهور</value></data>
+  <data name="Last seen" xml:space="preserve"><value>آخر ظهور</value></data>
+  <data name="Free" xml:space="preserve"><value>إخلاء</value></data>
+  <data name="Installation released." xml:space="preserve"><value>تم إخلاء التثبيت.</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>لم يعد هذا التثبيت قيد الاستخدام.</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>أدخل عدد عمليات التثبيت، أو اترك الحقل فارغًا لعدد غير محدود.</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>إدخال واحد لكل مستخدم Windows لعميل Store؛ ولا يُخزَّن سوى رقم مجهول الهوية. تؤدي إزالة الوظيفة الإضافية إلى إخلاء إدخالها؛ أخلِ إدخالاً بنفسك عند إعادة تعيين جهاز كمبيوتر.</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>هل تريد إخلاء هذا التثبيت؟ تستمر الوظيفة الإضافية في العمل على ذلك الكمبيوتر حتى يتم تحديثها أو إعادة تثبيتها؛ ويمكن لكمبيوتر آخر استخدام هذا المقعد.</value></data>
 </root>

@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>Controle vastleggen</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Privé-invoegtoepassing: deze verschijnt nooit in de openbare catalogus. Goedkeuren legt alleen uw controle vast; leveringen aan klanten verstrekken in elk geval de nieuwste gecontroleerde versie.</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Privé: geleverd aan klanten, geen goedkeuring nodig</value></data>
+  <data name="Installations" xml:space="preserve"><value>Installaties</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>Installaties in gebruik / toegestaan</value></data>
+  <data name="unlimited" xml:space="preserve"><value>onbeperkt</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>Maximumaantal installaties</value></data>
+  <data name="Installation" xml:space="preserve"><value>Installatie</value></data>
+  <data name="First seen" xml:space="preserve"><value>Eerst gezien</value></data>
+  <data name="Last seen" xml:space="preserve"><value>Laatst gezien</value></data>
+  <data name="Free" xml:space="preserve"><value>Vrijgeven</value></data>
+  <data name="Installation released." xml:space="preserve"><value>Installatie vrijgegeven.</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>Deze installatie is niet meer in gebruik.</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Voer een aantal installaties in of laat het veld leeg voor onbeperkt.</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Eén vermelding per Windows-gebruiker van de Store-client; alleen een anoniem nummer wordt opgeslagen. Als u de invoegtoepassing verwijdert, wordt de vermelding vrijgegeven; geef zelf een vermelding vrij wanneer een computer opnieuw is ingesteld.</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Deze installatie vrijgeven? De invoegtoepassing blijft op die computer werken totdat deze wordt bijgewerkt of opnieuw geïnstalleerd; de plaats kan door een andere computer worden gebruikt.</value></data>
 </root>

@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>レビューを記録</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>プライベート アドイン: 公開カタログには表示されません。承認はレビューを記録するだけです。顧客への配信では、いずれの場合も確認済みの最新バージョンが提供されます。</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>プライベート: 顧客に配信されます。承認は不要です</value></data>
+  <data name="Installations" xml:space="preserve"><value>インストール</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>使用中 / 許可されたインストール数</value></data>
+  <data name="unlimited" xml:space="preserve"><value>無制限</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>最大インストール数</value></data>
+  <data name="Installation" xml:space="preserve"><value>インストール</value></data>
+  <data name="First seen" xml:space="preserve"><value>初回検出</value></data>
+  <data name="Last seen" xml:space="preserve"><value>最終検出</value></data>
+  <data name="Free" xml:space="preserve"><value>解放</value></data>
+  <data name="Installation released." xml:space="preserve"><value>インストールを解放しました。</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>このインストールは現在使用されていません。</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>インストール数を入力するか、無制限にする場合はフィールドを空欄のままにしてください。</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Store クライアントの Windows ユーザーごとに 1 つのエントリが作成されます。保存されるのは匿名の番号のみです。アドインを削除すると、そのエントリは解放されます。コンピューターをリセットした場合は、エントリをご自身で解放してください。</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>このインストールを解放しますか? アドインは、更新または再インストールされるまで、そのコンピューターで引き続き動作します。この枠は別のコンピューターで使用できます。</value></data>
 </root>

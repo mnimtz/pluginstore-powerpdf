@@ -183,7 +183,7 @@ public static class ApiEndpoints
                     "PATCH /api/deliveries/{did}       change stages, dates or status; POST /api/deliveries/{did}/promote = beta version goes live",
                     "DELETE /api/packages/{id}/{version}  withdraw your own beta version (auth)",
                     "GET  /api/packages/{id}/{version}/download",
-                    "GET  /api/customer-code          check the customer code in the X-Customer-Code header (valid, customer, add-ons)",
+                    "GET  /api/customer-code          check the customer code in the X-Customer-Code header (valid, customer, add-ons and their ids)",
                     "GET  /api/packages/{id}/icon[?v=version]  catalog icon (PNG), of the given or the newest released version",
                     "GET  /api/devkit                 SDK documentation and developer kit files",
                     "GET  /api/sdk/pluginstore_bin.h  loader header for the add-on's own DLLs in bin/ (MIT)",
@@ -314,12 +314,13 @@ public static class ApiEndpoints
         });
 
         api.MapGet("/catalog", async (AppDbContext db, HttpContext ctx, UsageService usage, CustomerService customers,
-                                      PackageSigning signing, string? channel, string? format, string? lang) =>
+                                      PackageSigning signing, SeatService seatsSvc, string? channel, string? format, string? lang) =>
         {
             var beta = string.Equals(channel, "beta", StringComparison.OrdinalIgnoreCase);
             await signing.EnsureLoadedAsync();
             // Customer codes in the X-Customer-Code header unlock delivered add-ons (S0.14.0).
             var grants = await customers.GrantsAsync(ctx);
+            if (grants.Count > 0) await seatsSvc.TouchAsync(ctx, grants.Select(g => g.Delivery));   // installations still in use (S1.4.2)
 
             // TSV variant for native clients (the Power PDF ribbon add-on): one
             // line per package, text fields with tabs/newlines flattened.
@@ -598,12 +599,26 @@ public static class ApiEndpoints
 
         // Customer code check for the store window (S0.19.0): code in the X-Customer-Code header,
         // never in the URL. Anonymous like the catalog; unknown codes count against the limit.
-        api.MapGet("/customer-code", async (HttpContext ctx, CustomerService customers) =>
+        api.MapGet("/customer-code", async (HttpContext ctx, CustomerService customers, SeatService seatsSvc) =>
         {
             if (string.IsNullOrWhiteSpace(ctx.Request.Headers[CustomerService.HeaderName].ToString()))
                 return Results.Json(new { ok = false, error = new { code = "CODE_MISSING", message = "Send the customer code in the X-Customer-Code header.", hint = "The code never goes into the URL." } }, statusCode: 400);
-            var (valid, customer, addons) = await customers.CheckAsync(ctx);
-            return Results.Json(new { ok = true, data = new { valid, customer = valid ? customer : null, addons } });
+            var (valid, customer, addons, packages, seats) = await customers.CheckWithSeatsAsync(ctx);
+            return Results.Json(new { ok = true, data = new { valid, customer = valid ? customer : null, addons, packages,
+                installs = seats.Select(s => new { package = s.Package, used = s.Used, max = s.Max }) } });
+        });
+
+        // The store client removed delivered add-ons (S1.4.2): free their installations. Anonymous like the
+        // catalog; it needs the customer code(s) and the installation id that took the seats.
+        api.MapPost("/deliveries/release", async (HttpContext ctx, CustomerService customers, SeatService seatsSvc, ReleaseBody body) =>
+        {
+            var ids = (body.Packages ?? new List<string>()).Concat(body.PackageId is null ? Array.Empty<string>() : new[] { body.PackageId })
+                .Where(p => !string.IsNullOrWhiteSpace(p)).Select(p => p.Trim()).Distinct().Take(50).ToList();
+            if (ids.Count == 0) return Fail("RELEASE_INVALID", "Send packageId or packages.", 400);
+            if (SeatService.InstallIdOf(ctx) is null) return Fail("INSTALL_ID_MISSING", "Send the installation id in the X-Install-Id header.", 400);
+            var grants = (await customers.GrantsAsync(ctx)).Where(g => ids.Contains(g.Package.Id)).Select(g => g.Delivery).ToList();
+            var released = await seatsSvc.ReleaseAsync(ctx, grants);
+            return Results.Json(new { ok = true, data = new { released } });
         });
 
         // Catalog icon (assets/icon.png of the version the catalog shows: ?v=, else the newest
@@ -1100,6 +1115,11 @@ public static class ApiEndpoints
                 new(body.Live?.Mode, body.Live?.Version), AsUtc(body.StartsAt), AsUtc(body.EndsAt), body.OwnCode ?? false, user, ctx.User.IsInRole("Admin"));
             if (!r.Ok) return Fail(r.Code, r.Message, r.Code is "PACKAGE_NOT_FOUND" ? 404 : r.Code is "NOT_OWNER" ? 403 : r.Code is "DELIVERY_EXISTS" ? 409 : 400,
                 "beta/live: {\"mode\": \"latest\"|\"fixed\"|\"off\", \"version\": \"1.2.0\"}; live defaults to the newest version, fixed.");
+            if (body.MaxInstalls is not null && r.Data is Delivery nd)
+            {
+                var m = await cs.SetMaxInstallsAsync(nd, body.MaxInstalls, user);
+                if (!m.Ok) return Fail(m.Code, m.Message, 400);
+            }
             return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, true, UiLang(ctx)) }, statusCode: 201);
         }).RequireAuthorization("ApiOrCookie");
 
@@ -1129,7 +1149,31 @@ public static class ApiEndpoints
                 clear ? null : (AsUtc(body.StartsAt) ?? d!.StartsAt), clear ? null : (AsUtc(body.EndsAt) ?? d!.EndsAt),
                 body.StartsAt is not null || body.EndsAt is not null || clear, body.Status, user!, ctx.User.IsInRole("Admin"));
             if (!r.Ok) return Fail(r.Code, r.Message, 400);
+            if (body.MaxInstalls is not null)
+            {
+                var m = await cs.SetMaxInstallsAsync(d!, body.MaxInstalls, user!);
+                if (!m.Ok) return Fail(m.Code, m.Message, 400);
+            }
             return Results.Json(new { ok = true, data = await cs.DescribeAsync(c!, true, UiLang(ctx)) });
+        }).RequireAuthorization("ApiOrCookie");
+
+        // a manager frees one installation (a computer reset without removing the add-on, S1.4.2)
+        api.MapDelete("/deliveries/{did:int}/seats/{sid:int}", async (int did, int sid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users,
+                                                                     CustomerService cs, SeatService seatsSvc) =>
+        {
+            var (d, c, error, user) = await LoadDelivery(did, ctx, db, users);
+            if (error is not null) return error;
+            if (!await seatsSvc.ReleaseSeatAsync(d!.Id, sid, user!)) return NotFound("SEAT_NOT_FOUND", $"No active installation {sid} in delivery {did}.");
+            return Results.Json(new { ok = true, data = await cs.DescribeAsync(c!, true, UiLang(ctx)) });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapGet("/deliveries/{did:int}/seats", async (int did, HttpContext ctx, AppDbContext db, UserManager<AppUser> users) =>
+        {
+            var (d, c, error, user) = await LoadDelivery(did, ctx, db, users);
+            if (error is not null) return error;
+            var seats = await db.DeliverySeats.AsNoTracking().Where(s => s.DeliveryId == did && s.ReleasedAt == null).OrderBy(s => s.FirstAt)
+                .Select(s => new { id = s.Id, installation = s.InstallHash.Substring(0, 8), version = s.Version, firstAt = s.FirstAt, lastSeenAt = s.LastSeenAt }).ToListAsync();
+            return Results.Json(new { ok = true, data = new { delivery = did, max = d!.MaxInstalls, used = seats.Count, seats } });
         }).RequireAuthorization("ApiOrCookie");
 
         api.MapPost("/deliveries/{did:int}/promote", async (int did, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService cs) =>
@@ -1342,7 +1386,8 @@ public static class ApiEndpoints
         }).RequireAuthorization("BearerOnly");
 
         api.MapGet("/packages/{id}/{version}/download", async (string id, string version,
-            AppDbContext db, SubmissionService svc, UsageService usage, HttpContext ctx, UserManager<AppUser> users, CustomerService customers) =>
+            AppDbContext db, SubmissionService svc, UsageService usage, HttpContext ctx, UserManager<AppUser> users, CustomerService customers,
+            SeatService seatsSvc) =>
         {
             if (!await MayAccessAsync(ctx, id, db, users, customers, version))
                 return NotFound("VERSION_NOT_FOUND", $"No downloadable version {version} of '{id}'.");
@@ -1351,6 +1396,18 @@ public static class ApiEndpoints
             if (v is null) return NotFound("VERSION_NOT_FOUND", $"No downloadable version {version} of '{id}'.");
             var path = Path.Combine(svc.StorageRoot, v.FilePath);
             if (!File.Exists(path)) return NotFound("FILE_MISSING", "The package file is missing on the server; contact an admin.");
+            // a delivered private add-on, downloaded with a customer code: one installation takes a seat (S1.4.2)
+            var pkgRow = await db.Packages.AsNoTracking().FirstAsync(p => p.Id == id);
+            var staff = await TryUserAsync(ctx, users) is { } su && (pkgRow.OwnerId == su.Id || ctx.User.IsInRole("Admin") || ctx.User.IsInRole("Reviewer"));
+            if (pkgRow.Visibility == "private" && !staff)
+            {
+                var dels = (await customers.GrantsAsync(ctx)).Where(g => g.Package.Id == id && (g.Beta?.Version == version || g.Live?.Version == version))
+                    .Select(g => g.Delivery).ToList();
+                var claim = await seatsSvc.ClaimAsync(ctx, dels, version);
+                if (!claim.Ok)
+                    return Results.Json(new { ok = false, error = new { code = claim.Code, message = claim.Message,
+                        hint = "Installations are counted per Windows user of the store client; a removal frees one.", used = claim.Used, max = claim.Max } }, statusCode: 403);
+            }
             // atomic increment: concurrent downloads must not lose counts
             await db.PackageVersions.Where(x => x.Id == v.Id).ExecuteUpdateAsync(s => s.SetProperty(x => x.Downloads, x => x.Downloads + 1));
             var dlLang = Services.Lang.Normalize(ctx.Request.Query["lang"].ToString());
@@ -1713,4 +1770,6 @@ public record CodeBody(int? DeliveryId, int? TransitionDays);
 public record StageBody(string? Mode, string? Version);
 /// <summary>POST /api/customers/{cid}/deliveries and PATCH /api/deliveries/{did}</summary>
 public record DeliveryBody(string? PackageId, StageBody? Beta, StageBody? Live, DateTime? StartsAt, DateTime? EndsAt,
-                           bool? ClearDates, string? Status, bool? OwnCode);
+                           bool? ClearDates, string? Status, bool? OwnCode, int? MaxInstalls = null);   // MaxInstalls: 0 = unlimited (S1.4.2)
+/// <summary>POST /api/deliveries/release (S1.4.2)</summary>
+public record ReleaseBody(string? PackageId, List<string>? Packages);

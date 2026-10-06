@@ -162,6 +162,7 @@ builder.Services.AddScoped<DossierService>();
 builder.Services.AddScoped<AiService>();
 builder.Services.AddScoped<AiAssist>();
 builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<SeatService>();   // installations per delivery (S1.4.2)
 // A failing background service (AI worker, geo refresh, maintenance) must never stop the web app.
 builder.Services.Configure<HostOptions>(o => o.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.Ignore);
 builder.Services.AddHostedService<AiWorker>();

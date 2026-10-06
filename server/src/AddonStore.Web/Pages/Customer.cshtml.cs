@@ -16,7 +16,7 @@ public class CustomerModel : PageModel
 
     public record CodeRow(CustomerCode Code, string? Plain, bool Valid, string Scope);
     public record DeliveryRow(Delivery Delivery, string Name, string Visibility, List<string> Versions,
-                              string? BetaResolved, string? LiveResolved, bool Effective);
+                              string? BetaResolved, string? LiveResolved, bool Effective, List<DeliverySeat> Seats);
     public record PackageOption(string Id, string Name, string Visibility, List<string> Versions);
 
     public Customer? Cust { get; private set; }
@@ -51,11 +51,13 @@ public class CustomerModel : PageModel
             var pkg = await _db.Packages.AsNoTracking().FirstOrDefaultAsync(p => p.Id == d.PackageId);
             var versions = await _customers.DeliverableVersionsAsync(d.PackageId);
             var priv = pkg?.Visibility == "private";
+            var seats = await _db.DeliverySeats.AsNoTracking().Where(s => s.DeliveryId == d.Id && s.ReleasedAt == null)
+                .OrderByDescending(s => s.LastSeenAt).ToListAsync();   // installations (S1.4.2)
             Deliveries.Add(new DeliveryRow(d, pkg is null ? d.PackageId : CatalogUi.DisplayName(pkg, versions.FirstOrDefault(), lang),
                 pkg?.Visibility ?? "public", versions.Select(v => v.Version).ToList(),
                 CustomerService.Resolve(versions, priv, d.BetaMode, d.BetaVersion, false)?.Version,
                 CustomerService.Resolve(versions, priv, d.LiveMode, d.LiveVersion, true)?.Version,
-                d.Status == "active" && (d.StartsAt is null || d.StartsAt <= now) && (d.EndsAt is null || d.EndsAt > now)));
+                d.Status == "active" && (d.StartsAt is null || d.StartsAt <= now) && (d.EndsAt is null || d.EndsAt > now), seats));
         }
 
         var codes = await _db.CustomerCodes.Where(c => c.CustomerId == id).OrderByDescending(c => c.Id).ToListAsync();
@@ -153,14 +155,32 @@ public class CustomerModel : PageModel
     }
 
     public Task<IActionResult> OnPostDeliveryAsync(int id, int did, string betaMode, string? betaVersion, string liveMode, string? liveVersion,
-                                                   string? startsAt, string? endsAt, string? status) =>
+                                                   string? startsAt, string? endsAt, string? status, string? maxInstalls, bool maxInstallsShown) =>
         ActAsync(id, async me =>
         {
             var d = await OwnDeliveryAsync(id, did);
             if (d is null) return (false, "This action is not allowed for this version.");
             var r = await _customers.UpdateDeliveryAsync(d, new(betaMode, betaVersion), new(liveMode, liveVersion),
                 Day(startsAt), Day(endsAt)?.AddDays(1), true, status, me, User.IsInRole("Admin"));
-            return (r.Ok, r.Ok ? "Delivery saved." : r.Message);
+            if (!r.Ok) return (false, r.Message);
+            // installations (S1.4.2): empty = unlimited (an empty field binds as null, hence the marker)
+            if (maxInstallsShown)
+            {
+                var raw = (maxInstalls ?? "").Trim();
+                if (raw.Length > 0 && !int.TryParse(raw, out _)) return (false, "Enter a number of installations, or leave the field empty for unlimited.");
+                var m = await _customers.SetMaxInstallsAsync(d, raw.Length == 0 ? 0 : int.Parse(raw), me);
+                if (!m.Ok) return (false, "Enter a number of installations, or leave the field empty for unlimited.");
+            }
+            return (true, "Delivery saved.");
+        });
+
+    public Task<IActionResult> OnPostReleaseSeatAsync(int id, int did, int sid) =>
+        ActAsync(id, async me =>
+        {
+            var d = await OwnDeliveryAsync(id, did);
+            if (d is null) return (false, "This action is not allowed for this version.");
+            var ok = await HttpContext.RequestServices.GetRequiredService<SeatService>().ReleaseSeatAsync(d.Id, sid, me);
+            return (ok, ok ? "Installation released." : "This installation is no longer in use.");
         });
 
     public Task<IActionResult> OnPostPromoteAsync(int id, int did) =>

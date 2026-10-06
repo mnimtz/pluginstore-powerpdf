@@ -363,6 +363,26 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Customer codes and installations (S1.4.2, client 1.4.1):**
+- The store window keeps up to 10 customer codes. Each code shows its customer
+  and the add-ons it unlocks.
+- Removing a code first names the add-ons that came with that code only, then
+  removes them together with the code (one administrator confirmation).
+- Add-ons the catalog no longer offers stay listed as "No longer offered", so
+  they can still be removed.
+- A delivery of a private add-on may allow a number of installations
+  (`maxInstalls`, default unlimited). The client sends its random installation
+  id with the codes, and the server stores only a hash per delivery.
+- A download takes a seat and an update keeps it. Removing the add-on frees
+  the seat (`POST /api/deliveries/release`).
+- When every seat is in use, a new installation is refused with a clear
+  message (`SEATS_EXHAUSTED`).
+- The customer page shows "Installations: 3 / 10" with every installation and
+  a "Free" button. The store window shows the same count per add-on.
+- `GET /api/customer-code` also returns the add-on ids and installations.
+- Changelogs are read by end users as "What's new"; the guide asks for plain
+  wording.
+
 **S1.4.1:**
 - `author` and `contactEmail` are mandatory (`AUTHOR_MISSING`,
   `CONTACT_MISSING`); `make_ppak.py` stops early without them.

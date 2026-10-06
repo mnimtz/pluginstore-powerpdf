@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>記錄審核</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>私人增益集：絕不會出現在公開目錄中。核准僅會記錄您的審核；無論如何，客戶交付都會提供最新的已審核版本。</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>私人：交付給客戶，不需要核准</value></data>
+  <data name="Installations" xml:space="preserve"><value>安裝</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>已使用 / 允許的安裝數</value></data>
+  <data name="unlimited" xml:space="preserve"><value>無限制</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>安裝數上限</value></data>
+  <data name="Installation" xml:space="preserve"><value>安裝</value></data>
+  <data name="First seen" xml:space="preserve"><value>首次偵測</value></data>
+  <data name="Last seen" xml:space="preserve"><value>最後偵測</value></data>
+  <data name="Free" xml:space="preserve"><value>釋放</value></data>
+  <data name="Installation released." xml:space="preserve"><value>已釋放安裝。</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>此安裝已不再使用。</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>請輸入安裝數，或將此欄位保留空白以表示無限制。</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Store 用戶端的每位 Windows 使用者對應一個項目；僅儲存匿名編號。移除增益集會釋放其項目；若電腦已重設，請自行釋放項目。</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>要釋放此安裝嗎？在更新或重新安裝之前，此增益集會繼續在該電腦上運作；此授權席位可供其他電腦使用。</value></data>
 </root>

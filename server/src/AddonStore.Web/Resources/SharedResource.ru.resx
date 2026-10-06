@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>Зафиксировать проверку</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Частная надстройка: она никогда не отображается в общедоступном каталоге. Утверждение лишь документирует вашу проверку; при поставке клиентам в любом случае выдается последняя проверенная версия.</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Частная: поставляется клиентам, утверждение не требуется</value></data>
+  <data name="Installations" xml:space="preserve"><value>Установки</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>Установок используется / разрешено</value></data>
+  <data name="unlimited" xml:space="preserve"><value>без ограничений</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>Максимальное число установок</value></data>
+  <data name="Installation" xml:space="preserve"><value>Установка</value></data>
+  <data name="First seen" xml:space="preserve"><value>Впервые обнаружено</value></data>
+  <data name="Last seen" xml:space="preserve"><value>Последний раз обнаружено</value></data>
+  <data name="Free" xml:space="preserve"><value>Освободить</value></data>
+  <data name="Installation released." xml:space="preserve"><value>Установка освобождена.</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>Эта установка больше не используется.</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Введите число установок или оставьте поле пустым, чтобы не ограничивать их количество.</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Одна запись на каждого пользователя Windows клиента Store; сохраняется только анонимный номер. При удалении надстройки ее запись освобождается; освободите запись самостоятельно, если компьютер был сброшен.</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Освободить эту установку? Надстройка продолжит работать на этом компьютере, пока не будет обновлена или переустановлена; место сможет использовать другой компьютер.</value></data>
 </root>

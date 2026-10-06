@@ -1057,4 +1057,17 @@
   <data name="Record the review" xml:space="preserve"><value>Zaznamenat kontrolu</value></data>
   <data name="Private add-on: it never appears in the public catalog. Approving only documents your review; customer deliveries hand out the newest checked version either way." xml:space="preserve"><value>Soukromý doplněk: nikdy se nezobrazí ve veřejném katalogu. Schválení pouze dokumentuje vaši kontrolu; dodávky zákazníkům v každém případě poskytují nejnovější zkontrolovanou verzi.</value></data>
   <data name="Private: delivered to customers, needs no approval" xml:space="preserve"><value>Soukromý: doručuje se zákazníkům, nevyžaduje schválení</value></data>
+  <data name="Installations" xml:space="preserve"><value>Instalace</value></data>
+  <data name="Installations in use / allowed" xml:space="preserve"><value>Instalace používané / povolené</value></data>
+  <data name="unlimited" xml:space="preserve"><value>neomezeno</value></data>
+  <data name="Maximum installations" xml:space="preserve"><value>Maximální počet instalací</value></data>
+  <data name="Installation" xml:space="preserve"><value>Instalace</value></data>
+  <data name="First seen" xml:space="preserve"><value>Poprvé zjištěno</value></data>
+  <data name="Last seen" xml:space="preserve"><value>Naposledy zjištěno</value></data>
+  <data name="Free" xml:space="preserve"><value>Uvolnit</value></data>
+  <data name="Installation released." xml:space="preserve"><value>Instalace byla uvolněna.</value></data>
+  <data name="This installation is no longer in use." xml:space="preserve"><value>Tato instalace se již nepoužívá.</value></data>
+  <data name="Enter a number of installations, or leave the field empty for unlimited." xml:space="preserve"><value>Zadejte počet instalací nebo ponechte pole prázdné pro neomezený počet.</value></data>
+  <data name="One entry per Windows user of the store client; only an anonymous number is stored. Removing the add-on frees its entry; free an entry yourself when a computer was reset." xml:space="preserve"><value>Jedna položka na každého uživatele Windows klienta Store; ukládá se pouze anonymní číslo. Odebráním doplňku se jeho položka uvolní; pokud byl počítač resetován, uvolněte položku sami.</value></data>
+  <data name="Free this installation? The add-on keeps working on that computer until it is updated or reinstalled; the seat can be used by another computer." xml:space="preserve"><value>Uvolnit tuto instalaci? Doplněk bude na daném počítači fungovat i nadále, dokud nebude aktualizován nebo přeinstalován; místo může využít jiný počítač.</value></data>
 </root>

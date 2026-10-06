@@ -24,6 +24,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<CustomerCode> CustomerCodes => Set<CustomerCode>();
     public DbSet<Delivery> Deliveries => Set<Delivery>();
+    public DbSet<DeliverySeat> DeliverySeats => Set<DeliverySeat>();
 
     protected override void OnModelCreating(ModelBuilder b)
     {
@@ -40,6 +41,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
         b.Entity<Feedback>().HasIndex(f => f.Status);
         b.Entity<FeedbackNote>().HasIndex(n => n.FeedbackId);
         b.Entity<FeedbackAttachment>().HasIndex(a => a.FeedbackId);
+        b.Entity<DeliverySeat>().HasIndex(s => new { s.DeliveryId, s.InstallHash });
         b.Entity<Invite>().HasIndex(i => i.TokenHash).IsUnique();
         b.Entity<PackageVersion>().HasIndex(v => new { v.PackageId, v.Version }).IsUnique();
         b.Entity<AuditEntry>().HasIndex(a => a.At);
