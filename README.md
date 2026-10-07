@@ -366,7 +366,9 @@ The AI review aid in the dossier is shown to reviewers and admins only.
 **Client 1.4.3:** the store window lists the add-ons installed on this
 computer first, under *Installed (n)* with the number of updates; updates come
 first, then the rest by name, add-ons no longer offered last. *More add-ons*
-follows below. A search by need keeps its own ranking.
+follows below. A search by need keeps its own ranking. Client 1.4.4 orders the
+installed ones by origin: from a customer code first, then installed by hand,
+then no longer offered (updates first in each group).
 
 **New navigation, preview (S1.5.0):**
 - After signing in, everyone can switch to a new navigation: the footer link

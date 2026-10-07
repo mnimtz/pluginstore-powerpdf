@@ -232,8 +232,11 @@ function visible() {
                      .filter(function (x) { return x && (!cat || (cat === CUST ? x.customer : x.category === cat)); });
   }
   var q = $("q").value.trim().toLowerCase();
+  // installed first (C1.4.4): from a customer code, then installed by hand, then no longer offered;
+  // in each group updates first, then by name
+  function rank(x) { return x.orphan ? 2 : x.customer ? 0 : 1; }
   var mine = items.filter(isMine).sort(function (a, b) {
-    return (status(b) === "upd") - (status(a) === "upd") || !!a.orphan - !!b.orphan || a.name.localeCompare(b.name);
+    return rank(a) - rank(b) || (status(b) === "upd") - (status(a) === "upd") || a.name.localeCompare(b.name);
   });
   var rest = items.filter(function (x) { return !isMine(x); });
   var list = mine.concat(rest.filter(function (x) { return x.customer; }), rest.filter(function (x) { return !x.customer; }));
