@@ -363,6 +363,11 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Client 1.4.3:** the store window lists the add-ons installed on this
+computer first, under *Installed (n)* with the number of updates; updates come
+first, then the rest by name, add-ons no longer offered last. *More add-ons*
+follows below. A search by need keeps its own ranking.
+
 **New navigation, preview (S1.5.0):**
 - After signing in, everyone can switch to a new navigation: the footer link
   *Try the new navigation (preview)* turns it on, and *Classic navigation* in

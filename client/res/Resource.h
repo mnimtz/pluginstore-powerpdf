@@ -152,6 +152,9 @@
 #define IDS_PSW_ORPHAN_PILL     347
 #define IDS_PSW_SEATS           348
 #define IDS_PSD_MSG_SEATS       349
+#define IDS_PSW_SEC_INSTALLED   350
+#define IDS_PSW_SEC_UPDATES     351
+#define IDS_PSW_SEC_MORE        352
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261

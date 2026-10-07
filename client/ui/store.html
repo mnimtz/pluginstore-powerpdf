@@ -77,6 +77,9 @@ header .s{font-size:12px;color:#9fd8ff}
 .acts{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
 .hint{font-size:11.5px;color:var(--slate);margin-top:12px;display:flex;gap:6px;align-items:flex-start}
 .empty{padding:28px 12px;color:var(--slate);font-size:13px;text-align:center}
+.sect{display:flex;gap:8px;align-items:center;font-size:11.5px;font-weight:700;color:var(--slate);padding:12px 12px 4px;letter-spacing:.02em}
+.sect:first-child{padding-top:6px}
+.sect .pill{font-weight:600;letter-spacing:0}
 footer{border-top:1px solid var(--line);padding:8px 18px;font-size:11.5px;color:var(--slate);display:flex;gap:10px;align-items:center;flex:none}
 footer .grow{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .veil{position:fixed;inset:0;background:rgba(0,20,45,.45);display:none;align-items:center;justify-content:center;z-index:10}
@@ -229,13 +232,23 @@ function visible() {
                      .filter(function (x) { return x && (!cat || (cat === CUST ? x.customer : x.category === cat)); });
   }
   var q = $("q").value.trim().toLowerCase();
-  var list = items.filter(function (x) { return x.customer; }).concat(items.filter(function (x) { return !x.customer; }));
+  var mine = items.filter(isMine).sort(function (a, b) {
+    return (status(b) === "upd") - (status(a) === "upd") || !!a.orphan - !!b.orphan || a.name.localeCompare(b.name);
+  });
+  var rest = items.filter(function (x) { return !isMine(x); });
+  var list = mine.concat(rest.filter(function (x) { return x.customer; }), rest.filter(function (x) { return !x.customer; }));
   return list.filter(function (x) {
     if (cat === CUST) { if (!x.customer) return false; }
     else if (cat && x.category !== cat) return false;
     if (!q) return true;
     return (x.name + " " + x.description + " " + x.author).toLowerCase().indexOf(q) >= 0;
   });
+}
+function isMine(x) { return !!(x.installed || x.orphan); }   // on this computer, also when no longer offered
+function sectionHead(text, updates) {
+  var h = el("div", "sect"); h.appendChild(el("span", "", text));
+  if (updates) h.appendChild(el("span", "pill p-upd", fmt(S.secUpdates, updates)));
+  return h;
 }
 function renderChips() {
   var c = $("chips"); c.textContent = "";
@@ -258,7 +271,11 @@ function render() {
   var v = visible();
   if (!v.length) { l.appendChild(el("div", "empty", items.length ? S.none : S.empty)); }
   if (v.length && !v.some(function (x) { return x.id === sel; })) sel = v[0].id;
-  v.forEach(function (x) {
+  // two sections (C1.4.3): what is on this computer, then everything else; a search by need keeps its ranking
+  var mineCount = need ? 0 : v.filter(isMine).length;
+  if (mineCount) l.appendChild(sectionHead(fmt(S.secInstalled, mineCount), v.filter(function (x) { return status(x) === "upd" && !x.orphan; }).length));
+  v.forEach(function (x, i) {
+    if (mineCount && i === mineCount) l.appendChild(sectionHead(S.secMore, 0));
     var c = el("div", "card" + (x.id === sel ? " sel" : ""));
     c.appendChild(tile(x));
     var b = el("div", "cbody"), n = el("div", "cname");

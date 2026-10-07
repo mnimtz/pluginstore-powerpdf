@@ -232,6 +232,9 @@ BEGIN
     IDS_PSW_ORPHAN  "No longer offered by the store, for example because its customer code was removed. You can still remove it here."
     IDS_PSW_ORPHAN_PILL  "No longer offered"
     IDS_PSW_SEATS  "Installations: %s"
+    IDS_PSW_SEC_INSTALLED  "Installed (%s)"
+    IDS_PSW_SEC_UPDATES  "Updates: %s"
+    IDS_PSW_SEC_MORE  "More add-ons"
     IDS_PSD_MSG_SEATS  "All installations of this add-on for your organization are in use. Remove it on a computer that no longer needs it, or ask your provider for more installations."
 END
 
@@ -371,6 +374,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Wird vom Store nicht mehr angeboten, zum Beispiel weil der zugehörige Kundencode entfernt wurde. Sie können es hier trotzdem entfernen."
     IDS_PSW_ORPHAN_PILL  "Nicht mehr angeboten"
     IDS_PSW_SEATS  "Installationen: %s"
+    IDS_PSW_SEC_INSTALLED  "Installiert (%s)"
+    IDS_PSW_SEC_UPDATES  "Updates: %s"
+    IDS_PSW_SEC_MORE  "Weitere Add-ons"
     IDS_PSD_MSG_SEATS  "Alle Installationen dieses Add-ons für Ihre Organisation sind belegt. Entfernen Sie es auf einem Computer, der es nicht mehr benötigt, oder bitten Sie Ihren Anbieter um weitere Installationen."
 END
 
@@ -510,6 +516,9 @@ BEGIN
     IDS_PSW_ORPHAN  "N’est plus proposé par le store, par exemple parce que son code client a été supprimé. Vous pouvez toujours le supprimer ici."
     IDS_PSW_ORPHAN_PILL  "Plus proposé"
     IDS_PSW_SEATS  "Installations : %s"
+    IDS_PSW_SEC_INSTALLED  "Installés (%s)"
+    IDS_PSW_SEC_UPDATES  "Mises à jour : %s"
+    IDS_PSW_SEC_MORE  "Autres modules"
     IDS_PSD_MSG_SEATS  "Toutes les installations de ce module pour votre organisation sont utilisées. Supprimez-le d'un ordinateur qui n'en a plus besoin ou demandez des installations supplémentaires à votre fournisseur."
 END
 
@@ -649,6 +658,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Non più offerto dallo store, ad esempio perché il relativo codice cliente è stato rimosso. Puoi comunque rimuoverlo qui."
     IDS_PSW_ORPHAN_PILL  "Non più offerto"
     IDS_PSW_SEATS  "Installazioni: %s"
+    IDS_PSW_SEC_INSTALLED  "Installati (%s)"
+    IDS_PSW_SEC_UPDATES  "Aggiornamenti: %s"
+    IDS_PSW_SEC_MORE  "Altri componenti aggiuntivi"
     IDS_PSD_MSG_SEATS  "Tutte le installazioni di questo componente aggiuntivo per l'organizzazione sono in uso. Rimuovilo da un computer che non ne ha più bisogno oppure chiedi altre installazioni al fornitore."
 END
 
@@ -788,6 +800,9 @@ BEGIN
     IDS_PSW_ORPHAN  "La tienda ya no lo ofrece, por ejemplo, porque se quitó su código de cliente. Aún puede quitarlo aquí."
     IDS_PSW_ORPHAN_PILL  "Ya no disponible"
     IDS_PSW_SEATS  "Instalaciones: %s"
+    IDS_PSW_SEC_INSTALLED  "Instalados (%s)"
+    IDS_PSW_SEC_UPDATES  "Actualizaciones: %s"
+    IDS_PSW_SEC_MORE  "Más complementos"
     IDS_PSD_MSG_SEATS  "Todas las instalaciones de este complemento para su organización están en uso. Quítelo de un equipo que ya no lo necesite o solicite más instalaciones a su proveedor."
 END
 
@@ -927,6 +942,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Wordt niet meer aangeboden door de store, bijvoorbeeld omdat de bijbehorende klantcode is verwijderd. U kunt het hier nog steeds verwijderen."
     IDS_PSW_ORPHAN_PILL  "Niet meer aangeboden"
     IDS_PSW_SEATS  "Installaties: %s"
+    IDS_PSW_SEC_INSTALLED  "Geïnstalleerd (%s)"
+    IDS_PSW_SEC_UPDATES  "Updates: %s"
+    IDS_PSW_SEC_MORE  "Meer add-ons"
     IDS_PSD_MSG_SEATS  "Alle installaties van deze invoegtoepassing voor uw organisatie zijn in gebruik. Verwijder deze van een computer die deze niet meer nodig heeft, of vraag uw leverancier om meer installaties."
 END
 
@@ -1066,6 +1084,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Não é mais oferecido pela loja, por exemplo, porque o código de cliente foi removido. Você ainda pode removê-lo aqui."
     IDS_PSW_ORPHAN_PILL  "Não mais oferecido"
     IDS_PSW_SEATS  "Instalações: %s"
+    IDS_PSW_SEC_INSTALLED  "Instalados (%s)"
+    IDS_PSW_SEC_UPDATES  "Atualizações: %s"
+    IDS_PSW_SEC_MORE  "Mais suplementos"
     IDS_PSD_MSG_SEATS  "Todas as instalações deste suplemento para sua organização estão em uso. Remova-o de um computador que não precisa mais dele ou peça mais instalações ao seu fornecedor."
 END
 
@@ -1205,6 +1226,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Tilbydes ikke længere af butikken, f.eks. fordi kundekoden er fjernet. Du kan stadig fjerne den her."
     IDS_PSW_ORPHAN_PILL  "Ikke længere tilbudt"
     IDS_PSW_SEATS  "Installationer: %s"
+    IDS_PSW_SEC_INSTALLED  "Installeret (%s)"
+    IDS_PSW_SEC_UPDATES  "Opdateringer: %s"
+    IDS_PSW_SEC_MORE  "Flere tilføjelser"
     IDS_PSD_MSG_SEATS  "Alle installationer af dette tilføjelsesprogram for din organisation er i brug. Fjern det fra en computer, der ikke længere har brug for det, eller bed din udbyder om flere installationer."
 END
 
@@ -1344,6 +1368,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Kauppa ei enää tarjoa tätä, esimerkiksi koska sen asiakaskoodi poistettiin. Voit silti poistaa sen täällä."
     IDS_PSW_ORPHAN_PILL  "Ei enää tarjolla"
     IDS_PSW_SEATS  "Asennukset: %s"
+    IDS_PSW_SEC_INSTALLED  "Asennettu (%s)"
+    IDS_PSW_SEC_UPDATES  "Päivitykset: %s"
+    IDS_PSW_SEC_MORE  "Lisää lisäosia"
     IDS_PSD_MSG_SEATS  "Kaikki tämän apuohjelman asennukset organisaatiollesi ovat käytössä. Poista se tietokoneesta, joka ei enää tarvitse sitä, tai pyydä toimittajaltasi lisää asennuksia."
 END
 
@@ -1483,6 +1510,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Tilbys ikke lenger av butikken, for eksempel fordi kundekoden ble fjernet. Du kan fortsatt fjerne det her."
     IDS_PSW_ORPHAN_PILL  "Ikke lenger tilbudt"
     IDS_PSW_SEATS  "Installasjoner: %s"
+    IDS_PSW_SEC_INSTALLED  "Installert (%s)"
+    IDS_PSW_SEC_UPDATES  "Oppdateringer: %s"
+    IDS_PSW_SEC_MORE  "Flere tillegg"
     IDS_PSD_MSG_SEATS  "Alle installasjoner av dette tillegget for organisasjonen din er i bruk. Fjern det fra en datamaskin som ikke lenger trenger det, eller be leverandøren din om flere installasjoner."
 END
 
@@ -1622,6 +1652,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Erbjuds inte längre av butiken, till exempel för att kundkoden togs bort. Du kan fortfarande ta bort det här."
     IDS_PSW_ORPHAN_PILL  "Erbjuds inte längre"
     IDS_PSW_SEATS  "Installationer: %s"
+    IDS_PSW_SEC_INSTALLED  "Installerade (%s)"
+    IDS_PSW_SEC_UPDATES  "Uppdateringar: %s"
+    IDS_PSW_SEC_MORE  "Fler tillägg"
     IDS_PSD_MSG_SEATS  "Alla installationer av det här tillägget för din organisation används. Ta bort det från en dator som inte längre behöver det, eller be din leverantör om fler installationer."
 END
 
@@ -1761,6 +1794,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Nie jest już oferowany przez sklep, na przykład dlatego, że usunięto jego kod klienta. Nadal możesz go tutaj usunąć."
     IDS_PSW_ORPHAN_PILL  "Już niedostępny"
     IDS_PSW_SEATS  "Instalacje: %s"
+    IDS_PSW_SEC_INSTALLED  "Zainstalowane (%s)"
+    IDS_PSW_SEC_UPDATES  "Aktualizacje: %s"
+    IDS_PSW_SEC_MORE  "Więcej dodatków"
     IDS_PSD_MSG_SEATS  "Wszystkie instalacje tego dodatku dla Twojej organizacji są w użyciu. Usuń go z komputera, który już go nie potrzebuje, lub poproś dostawcę o więcej instalacji."
 END
 
@@ -1900,6 +1936,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Obchod jej již nenabízí, například protože byl odebrán jeho kód zákazníka. Zde jej můžete stále odebrat."
     IDS_PSW_ORPHAN_PILL  "Již nenabízeno"
     IDS_PSW_SEATS  "Instalace: %s"
+    IDS_PSW_SEC_INSTALLED  "Nainstalováno (%s)"
+    IDS_PSW_SEC_UPDATES  "Aktualizace: %s"
+    IDS_PSW_SEC_MORE  "Další doplňky"
     IDS_PSD_MSG_SEATS  "Všechny instalace tohoto doplňku pro vaši organizaci jsou využité. Odeberte ho z počítače, který ho už nepotřebuje, nebo požádejte poskytovatele o další instalace."
 END
 
@@ -2039,6 +2078,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Az áruház már nem kínálja, például mert az ügyfélkódját eltávolították. Itt továbbra is eltávolíthatja."
     IDS_PSW_ORPHAN_PILL  "Már nem elérhető"
     IDS_PSW_SEATS  "Telepítések: %s"
+    IDS_PSW_SEC_INSTALLED  "Telepítve (%s)"
+    IDS_PSW_SEC_UPDATES  "Frissítések: %s"
+    IDS_PSW_SEC_MORE  "További bővítmények"
     IDS_PSD_MSG_SEATS  "Ennek a bővítménynek a szervezete számára elérhető összes telepítése használatban van. Távolítsa el egy olyan számítógépről, amelyen már nincs rá szükség, vagy kérjen további telepítéseket a szolgáltatójától."
 END
 
@@ -2178,6 +2220,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Больше не предлагается в магазине, например потому, что её код клиента был удалён. Её по-прежнему можно удалить здесь."
     IDS_PSW_ORPHAN_PILL  "Больше не предлагается"
     IDS_PSW_SEATS  "Установки: %s"
+    IDS_PSW_SEC_INSTALLED  "Установлено (%s)"
+    IDS_PSW_SEC_UPDATES  "Обновления: %s"
+    IDS_PSW_SEC_MORE  "Другие надстройки"
     IDS_PSD_MSG_SEATS  "Все установки этой надстройки для вашей организации уже используются. Удалите ее с компьютера, на котором она больше не нужна, или запросите дополнительные установки у поставщика."
 END
 
@@ -2317,6 +2362,9 @@ BEGIN
     IDS_PSW_ORPHAN  "Mağaza artık bunu sunmuyor; örneğin müşteri kodu kaldırılmış olabilir. Yine de buradan kaldırabilirsiniz."
     IDS_PSW_ORPHAN_PILL  "Artık sunulmuyor"
     IDS_PSW_SEATS  "Kurulumlar: %s"
+    IDS_PSW_SEC_INSTALLED  "Yüklü (%s)"
+    IDS_PSW_SEC_UPDATES  "Güncellemeler: %s"
+    IDS_PSW_SEC_MORE  "Diğer eklentiler"
     IDS_PSD_MSG_SEATS  "Kuruluşunuz için bu eklentinin tüm kurulumları kullanımda. Eklentiyi artık gerekmeyen bir bilgisayardan kaldırın veya sağlayıcınızdan ek kurulum isteyin."
 END
 
@@ -2454,6 +2502,9 @@ BEGIN
     IDS_PSW_ORPHAN  "商店不再提供此加载项，例如因为其客户代码已被删除。你仍可在此处将其删除。"
     IDS_PSW_ORPHAN_PILL  "不再提供"
     IDS_PSW_SEATS  "安装数：%s"
+    IDS_PSW_SEC_INSTALLED  "已安装 (%s)"
+    IDS_PSW_SEC_UPDATES  "更新：%s"
+    IDS_PSW_SEC_MORE  "更多加载项"
     IDS_PSD_MSG_SEATS  "您的组织已用完此加载项的所有安装数。请从不再需要它的计算机上删除该加载项，或向您的提供商申请更多安装数。"
 END
 
@@ -2594,6 +2645,9 @@ BEGIN
     IDS_PSW_ORPHAN  "商店不再提供此增益集，例如因為其客戶代碼已被移除。您仍可在此處將其移除。"
     IDS_PSW_ORPHAN_PILL  "不再提供"
     IDS_PSW_SEATS  "安裝數：%s"
+    IDS_PSW_SEC_INSTALLED  "已安裝 (%s)"
+    IDS_PSW_SEC_UPDATES  "更新：%s"
+    IDS_PSW_SEC_MORE  "更多增益集"
     IDS_PSD_MSG_SEATS  "您的組織已用完此增益集的所有安裝數。請從不再需要它的電腦上移除此增益集，或向您的供應商申請更多安裝數。"
 END
 
@@ -2734,6 +2788,9 @@ BEGIN
     IDS_PSW_ORPHAN  "ストアでの提供は終了しています。たとえば、顧客コードが削除された場合などです。ここから引き続き削除できます。"
     IDS_PSW_ORPHAN_PILL  "提供終了"
     IDS_PSW_SEATS  "インストール数: %s"
+    IDS_PSW_SEC_INSTALLED  "インストール済み (%s)"
+    IDS_PSW_SEC_UPDATES  "更新: %s"
+    IDS_PSW_SEC_MORE  "その他のアドオン"
     IDS_PSD_MSG_SEATS  "組織で利用できるこのアドインのインストール数はすべて使用中です。不要になったコンピューターからアドインを削除するか、提供元に追加のインストールを依頼してください。"
 END
 
@@ -2874,6 +2931,9 @@ BEGIN
     IDS_PSW_ORPHAN  "고객 코드가 제거된 경우 등의 이유로 스토어에서 더 이상 제공되지 않습니다. 여기에서 계속 제거할 수 있습니다."
     IDS_PSW_ORPHAN_PILL  "더 이상 제공 안 함"
     IDS_PSW_SEATS  "설치 수: %s"
+    IDS_PSW_SEC_INSTALLED  "설치됨(%s)"
+    IDS_PSW_SEC_UPDATES  "업데이트: %s"
+    IDS_PSW_SEC_MORE  "기타 추가 기능"
     IDS_PSD_MSG_SEATS  "조직에 할당된 이 추가 기능의 설치 수를 모두 사용하고 있습니다. 더 이상 필요하지 않은 컴퓨터에서 추가 기능을 제거하거나 공급자에게 추가 설치를 요청하십시오."
 END
 
@@ -3014,6 +3074,9 @@ BEGIN
     IDS_PSW_ORPHAN  "لم يعد المتجر يوفّر هذه الوظيفة الإضافية، على سبيل المثال بسبب إزالة رمز العميل الخاص بها. لا يزال بإمكانك إزالتها من هنا."
     IDS_PSW_ORPHAN_PILL  "لم يعد متوفرًا"
     IDS_PSW_SEATS  "عمليات التثبيت: %s"
+    IDS_PSW_SEC_INSTALLED  "المثبتة (%s)"
+    IDS_PSW_SEC_UPDATES  "التحديثات: %s"
+    IDS_PSW_SEC_MORE  "إضافات أخرى"
     IDS_PSD_MSG_SEATS  "جميع عمليات التثبيت المتاحة لمؤسستك لهذه الوظيفة الإضافية قيد الاستخدام. قم بإزالتها من جهاز كمبيوتر لم يعد بحاجة إليها، أو اطلب من المورّد المزيد من عمليات التثبيت."
 END
 
