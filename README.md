@@ -368,7 +368,10 @@ computer first, under *Installed (n)* with the number of updates; updates come
 first, then the rest by name, add-ons no longer offered last. *More add-ons*
 follows below. A search by need keeps its own ranking. Client 1.4.4 orders the
 installed ones by origin: from a customer code first, then installed by hand,
-then no longer offered (updates first in each group).
+then no longer offered (updates first in each group). Client 1.4.5 fixes the
+code dialog after adding or removing a code (it read the host's code object as
+the list and stopped half-drawn); a faulty page message now closes the dialog
+instead of freezing the window.
 
 **New navigation, preview (S1.5.0):**
 - After signing in, everyone can switch to a new navigation: the footer link

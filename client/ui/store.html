@@ -173,7 +173,15 @@ function customerName() {
   return names.join(", ") || code.customer;
 }
 function maskCode(c) { return c.length > 10 ? c.slice(0, 4) + "\u2026" + c.slice(-4) : c; }
-function setCodes(c) { if (!c) return; code.list = c.list || []; code.has = code.list.length > 0; if (c.locked != null) code.locked = !!c.locked; }
+// the host sends {has, locked, list: [...]}; a bare list is accepted too (C1.4.5: the object
+// was taken for the list, so the code dialog broke after adding a code)
+function setCodes(c) {
+  if (!c) return;
+  if (Array.isArray(c)) c = { list: c };
+  code.list = Array.isArray(c.list) ? c.list : [];
+  code.has = code.list.length > 0;
+  if (c.locked != null) code.locked = !!c.locked;
+}
 var host = window.chrome && window.chrome.webview;
 function post(m) { if (host) host.postMessage(m); }
 function $(id) { return document.getElementById(id); }
@@ -574,7 +582,7 @@ function apply(m) {
     $("updBtn").onclick = function () { busyModal(S.selfUpdateBtn); post({ cmd: "selfUpdate" }); };
     locked = !!m.installLocked;
     if (m.code) { code.locked = !!m.code.locked; setCodes(m.code); }
-    $("codeBtn").onclick = function () { codeDialog(); post({ cmd: "codeInfo" }); };
+    $("codeBtn").onclick = function () { code.msg = ""; codeDialog(); post({ cmd: "codeInfo" }); };
     codeButton();
     $("lock").style.display = locked ? "flex" : "none"; $("lock").textContent = S.installLocked || "";
   } else if (m.type === "catalog") {
@@ -631,15 +639,16 @@ function apply(m) {
   } else if (m.type === "icon") {
     icons[m.id] = m.data; render();
   } else if (m.type === "code") {
-    if (m.list) setCodes({ list: m.list });
+    if (m.list) setCodes(m.list);
     if (m.ok && m.customer) code.customer = m.customer;
+    code.msg = m.message || ""; code.msgOk = !!m.ok;   // kept when the code details arrive
     if (!code.has) { code.customer = ""; if (cat === CUST) cat = ""; }
     codeButton();
     if (code.open) codeDialog(m.message, m.ok, !m.ok);
     else if (m.message) modal(S.codeBtn, m.message, [{ label: S.close }]);
   } else if (m.type === "codeInfo") {
     (m.items || []).forEach(function (i) { code.info[i.code] = i; });
-    if (code.open) codeDialog();
+    if (code.open) codeDialog(code.msg, code.msgOk, true);
   } else if (m.type === "codeAsk") {
     codeAsk(m);
   } else if (m.type === "result") {
@@ -653,7 +662,15 @@ function apply(m) {
   }
 }
 function clearNeed() { need = null; $("need").style.display = "none"; render(); }
-if (host) host.addEventListener("message", function (e) { apply(e.data); });
+// a faulty message must never leave a half-drawn dialog without buttons (C1.4.5)
+if (host) host.addEventListener("message", function (e) {
+  try { apply(e.data); }
+  catch (err) {
+    if (!busy) closeModal();
+    try { render(); } catch (e2) { /* keep the window usable */ }
+    if (window.console) console.error(err);
+  }
+});
 $("q").addEventListener("input", function () { if (need) { need = null; $("need").style.display = "none"; } render(); });
 $("q").addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
