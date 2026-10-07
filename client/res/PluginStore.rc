@@ -89,6 +89,7 @@ BEGIN
     EDITTEXT        IDC_PSO_URL, 12, 30, 296, 13, ES_AUTOHSCROLL
     LTEXT           "", IDC_PSO_CODE_LBL, 12, 48, 296, 10
     EDITTEXT        IDC_PSO_CODE, 12, 60, 296, 13, ES_AUTOHSCROLL | ES_UPPERCASE
+    LTEXT           "", IDC_PSO_CODE_INFO, 12, 58, 296, 21, SS_NOPREFIX | NOT WS_VISIBLE
     CONTROL         "", IDC_PSO_BETA, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 12, 80, 296, 10
     LTEXT           "", IDC_PSO_HINT, 12, 94, 296, 26
     GROUPBOX        "", IDC_PSO_GRP_DIAG, 4, 130, 312, 32
@@ -235,6 +236,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Installed (%s)"
     IDS_PSW_SEC_UPDATES  "Updates: %s"
     IDS_PSW_SEC_MORE  "More add-ons"
+    IDS_PSO_CODE_INFO  "Customer codes on this computer: %s. Add or remove them in the store window with ""Customer code""."
     IDS_PSD_MSG_SEATS  "All installations of this add-on for your organization are in use. Remove it on a computer that no longer needs it, or ask your provider for more installations."
 END
 
@@ -377,6 +379,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Installiert (%s)"
     IDS_PSW_SEC_UPDATES  "Updates: %s"
     IDS_PSW_SEC_MORE  "Weitere Add-ons"
+    IDS_PSO_CODE_INFO  "Kundencodes auf diesem Computer: %s. Hinzufügen und entfernen im Store-Fenster über „Kundencode“."
     IDS_PSD_MSG_SEATS  "Alle Installationen dieses Add-ons für Ihre Organisation sind belegt. Entfernen Sie es auf einem Computer, der es nicht mehr benötigt, oder bitten Sie Ihren Anbieter um weitere Installationen."
 END
 
@@ -519,6 +522,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Installés (%s)"
     IDS_PSW_SEC_UPDATES  "Mises à jour : %s"
     IDS_PSW_SEC_MORE  "Autres modules"
+    IDS_PSO_CODE_INFO  "Codes client sur cet ordinateur : %s. Ajoutez-les ou supprimez-les dans la fenêtre du store via « Code client »."
     IDS_PSD_MSG_SEATS  "Toutes les installations de ce module pour votre organisation sont utilisées. Supprimez-le d'un ordinateur qui n'en a plus besoin ou demandez des installations supplémentaires à votre fournisseur."
 END
 
@@ -661,6 +665,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Installati (%s)"
     IDS_PSW_SEC_UPDATES  "Aggiornamenti: %s"
     IDS_PSW_SEC_MORE  "Altri componenti aggiuntivi"
+    IDS_PSO_CODE_INFO  "Codici cliente su questo computer: %s. Aggiungili o rimuovili nella finestra dello store con ""Codice cliente""."
     IDS_PSD_MSG_SEATS  "Tutte le installazioni di questo componente aggiuntivo per l'organizzazione sono in uso. Rimuovilo da un computer che non ne ha più bisogno oppure chiedi altre installazioni al fornitore."
 END
 
@@ -803,6 +808,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Instalados (%s)"
     IDS_PSW_SEC_UPDATES  "Actualizaciones: %s"
     IDS_PSW_SEC_MORE  "Más complementos"
+    IDS_PSO_CODE_INFO  "Códigos de cliente en este equipo: %s. Agréguelos o quítelos en la ventana de la tienda con ""Código de cliente""."
     IDS_PSD_MSG_SEATS  "Todas las instalaciones de este complemento para su organización están en uso. Quítelo de un equipo que ya no lo necesite o solicite más instalaciones a su proveedor."
 END
 
@@ -945,6 +951,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Geïnstalleerd (%s)"
     IDS_PSW_SEC_UPDATES  "Updates: %s"
     IDS_PSW_SEC_MORE  "Meer add-ons"
+    IDS_PSO_CODE_INFO  "Klantcodes op deze computer: %s. Voeg ze toe of verwijder ze in het storevenster via ""Klantcode""."
     IDS_PSD_MSG_SEATS  "Alle installaties van deze invoegtoepassing voor uw organisatie zijn in gebruik. Verwijder deze van een computer die deze niet meer nodig heeft, of vraag uw leverancier om meer installaties."
 END
 
@@ -1087,6 +1094,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Instalados (%s)"
     IDS_PSW_SEC_UPDATES  "Atualizações: %s"
     IDS_PSW_SEC_MORE  "Mais suplementos"
+    IDS_PSO_CODE_INFO  "Códigos de cliente neste computador: %s. Adicione ou remova na janela da loja em ""Código de cliente""."
     IDS_PSD_MSG_SEATS  "Todas as instalações deste suplemento para sua organização estão em uso. Remova-o de um computador que não precisa mais dele ou peça mais instalações ao seu fornecedor."
 END
 
@@ -1229,6 +1237,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Installeret (%s)"
     IDS_PSW_SEC_UPDATES  "Opdateringer: %s"
     IDS_PSW_SEC_MORE  "Flere tilføjelser"
+    IDS_PSO_CODE_INFO  "Kundekoder på denne computer: %s. Tilføj eller fjern dem i butiksvinduet med ""Kundekode""."
     IDS_PSD_MSG_SEATS  "Alle installationer af dette tilføjelsesprogram for din organisation er i brug. Fjern det fra en computer, der ikke længere har brug for det, eller bed din udbyder om flere installationer."
 END
 
@@ -1371,6 +1380,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Asennettu (%s)"
     IDS_PSW_SEC_UPDATES  "Päivitykset: %s"
     IDS_PSW_SEC_MORE  "Lisää lisäosia"
+    IDS_PSO_CODE_INFO  "Tämän tietokoneen asiakaskoodit: %s. Lisää tai poista niitä kauppaikkunassa kohdasta ""Asiakaskoodi""."
     IDS_PSD_MSG_SEATS  "Kaikki tämän apuohjelman asennukset organisaatiollesi ovat käytössä. Poista se tietokoneesta, joka ei enää tarvitse sitä, tai pyydä toimittajaltasi lisää asennuksia."
 END
 
@@ -1513,6 +1523,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Installert (%s)"
     IDS_PSW_SEC_UPDATES  "Oppdateringer: %s"
     IDS_PSW_SEC_MORE  "Flere tillegg"
+    IDS_PSO_CODE_INFO  "Kundekoder på denne datamaskinen: %s. Legg til eller fjern dem i butikkvinduet med ""Kundekode""."
     IDS_PSD_MSG_SEATS  "Alle installasjoner av dette tillegget for organisasjonen din er i bruk. Fjern det fra en datamaskin som ikke lenger trenger det, eller be leverandøren din om flere installasjoner."
 END
 
@@ -1655,6 +1666,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Installerade (%s)"
     IDS_PSW_SEC_UPDATES  "Uppdateringar: %s"
     IDS_PSW_SEC_MORE  "Fler tillägg"
+    IDS_PSO_CODE_INFO  "Kundkoder på den här datorn: %s. Lägg till eller ta bort dem i butiksfönstret med ""Kundkod""."
     IDS_PSD_MSG_SEATS  "Alla installationer av det här tillägget för din organisation används. Ta bort det från en dator som inte längre behöver det, eller be din leverantör om fler installationer."
 END
 
@@ -1797,6 +1809,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Zainstalowane (%s)"
     IDS_PSW_SEC_UPDATES  "Aktualizacje: %s"
     IDS_PSW_SEC_MORE  "Więcej dodatków"
+    IDS_PSO_CODE_INFO  "Kody klienta na tym komputerze: %s. Dodawaj je i usuwaj w oknie sklepu za pomocą przycisku „Kod klienta”."
     IDS_PSD_MSG_SEATS  "Wszystkie instalacje tego dodatku dla Twojej organizacji są w użyciu. Usuń go z komputera, który już go nie potrzebuje, lub poproś dostawcę o więcej instalacji."
 END
 
@@ -1939,6 +1952,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Nainstalováno (%s)"
     IDS_PSW_SEC_UPDATES  "Aktualizace: %s"
     IDS_PSW_SEC_MORE  "Další doplňky"
+    IDS_PSO_CODE_INFO  "Kódy zákazníka v tomto počítači: %s. Přidávejte a odebírejte je v okně obchodu pomocí tlačítka „Kód zákazníka“."
     IDS_PSD_MSG_SEATS  "Všechny instalace tohoto doplňku pro vaši organizaci jsou využité. Odeberte ho z počítače, který ho už nepotřebuje, nebo požádejte poskytovatele o další instalace."
 END
 
@@ -2081,6 +2095,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Telepítve (%s)"
     IDS_PSW_SEC_UPDATES  "Frissítések: %s"
     IDS_PSW_SEC_MORE  "További bővítmények"
+    IDS_PSO_CODE_INFO  "Ügyfélkódok ezen a számítógépen: %s. Az áruház ablakában, az „Ügyfélkód” gombbal adhatja hozzá vagy távolíthatja el őket."
     IDS_PSD_MSG_SEATS  "Ennek a bővítménynek a szervezete számára elérhető összes telepítése használatban van. Távolítsa el egy olyan számítógépről, amelyen már nincs rá szükség, vagy kérjen további telepítéseket a szolgáltatójától."
 END
 
@@ -2223,6 +2238,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Установлено (%s)"
     IDS_PSW_SEC_UPDATES  "Обновления: %s"
     IDS_PSW_SEC_MORE  "Другие надстройки"
+    IDS_PSO_CODE_INFO  "Коды клиента на этом компьютере: %s. Добавлять и удалять их можно в окне магазина кнопкой «Код клиента»."
     IDS_PSD_MSG_SEATS  "Все установки этой надстройки для вашей организации уже используются. Удалите ее с компьютера, на котором она больше не нужна, или запросите дополнительные установки у поставщика."
 END
 
@@ -2365,6 +2381,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "Yüklü (%s)"
     IDS_PSW_SEC_UPDATES  "Güncellemeler: %s"
     IDS_PSW_SEC_MORE  "Diğer eklentiler"
+    IDS_PSO_CODE_INFO  "Bu bilgisayardaki müşteri kodları: %s. Bunları mağaza penceresinde ""Müşteri kodu"" ile ekleyin veya kaldırın."
     IDS_PSD_MSG_SEATS  "Kuruluşunuz için bu eklentinin tüm kurulumları kullanımda. Eklentiyi artık gerekmeyen bir bilgisayardan kaldırın veya sağlayıcınızdan ek kurulum isteyin."
 END
 
@@ -2505,6 +2522,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "已安装 (%s)"
     IDS_PSW_SEC_UPDATES  "更新：%s"
     IDS_PSW_SEC_MORE  "更多加载项"
+    IDS_PSO_CODE_INFO  "此计算机上的客户代码：%s。请在商店窗口中通过“客户代码”添加或删除。"
     IDS_PSD_MSG_SEATS  "您的组织已用完此加载项的所有安装数。请从不再需要它的计算机上删除该加载项，或向您的提供商申请更多安装数。"
 END
 
@@ -2648,6 +2666,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "已安裝 (%s)"
     IDS_PSW_SEC_UPDATES  "更新：%s"
     IDS_PSW_SEC_MORE  "更多增益集"
+    IDS_PSO_CODE_INFO  "此電腦上的客戶代碼：%s。請在商店視窗中透過「客戶代碼」新增或移除。"
     IDS_PSD_MSG_SEATS  "您的組織已用完此增益集的所有安裝數。請從不再需要它的電腦上移除此增益集，或向您的供應商申請更多安裝數。"
 END
 
@@ -2791,6 +2810,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "インストール済み (%s)"
     IDS_PSW_SEC_UPDATES  "更新: %s"
     IDS_PSW_SEC_MORE  "その他のアドオン"
+    IDS_PSO_CODE_INFO  "このコンピューターの顧客コード: %s。追加と削除はストア ウィンドウの [顧客コード] から行います。"
     IDS_PSD_MSG_SEATS  "組織で利用できるこのアドインのインストール数はすべて使用中です。不要になったコンピューターからアドインを削除するか、提供元に追加のインストールを依頼してください。"
 END
 
@@ -2934,6 +2954,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "설치됨(%s)"
     IDS_PSW_SEC_UPDATES  "업데이트: %s"
     IDS_PSW_SEC_MORE  "기타 추가 기능"
+    IDS_PSO_CODE_INFO  "이 컴퓨터의 고객 코드: %s. 스토어 창의 [고객 코드]에서 추가하거나 제거하십시오."
     IDS_PSD_MSG_SEATS  "조직에 할당된 이 추가 기능의 설치 수를 모두 사용하고 있습니다. 더 이상 필요하지 않은 컴퓨터에서 추가 기능을 제거하거나 공급자에게 추가 설치를 요청하십시오."
 END
 
@@ -3077,6 +3098,7 @@ BEGIN
     IDS_PSW_SEC_INSTALLED  "المثبتة (%s)"
     IDS_PSW_SEC_UPDATES  "التحديثات: %s"
     IDS_PSW_SEC_MORE  "إضافات أخرى"
+    IDS_PSO_CODE_INFO  "رموز العملاء على هذا الكمبيوتر: %s. أضفها أو أزلها في نافذة المتجر عبر ""رمز العميل""."
     IDS_PSD_MSG_SEATS  "جميع عمليات التثبيت المتاحة لمؤسستك لهذه الوظيفة الإضافية قيد الاستخدام. قم بإزالتها من جهاز كمبيوتر لم يعد بحاجة إليها، أو اطلب من المورّد المزيد من عمليات التثبيت."
 END
 

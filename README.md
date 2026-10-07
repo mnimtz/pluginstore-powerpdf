@@ -143,7 +143,7 @@ built with the Power PDF Plugin SDK):
   reads the catalog in the background and puts an amber dot on the ribbon
   button when the store client or an installed add-on has a NEWER version
   (an older catalog version is never offered). Enter in the search box asks
-  the server's search by need. A customer code (Options page, or policy
+  the server's search by need. A customer code (store window, button *Customer code*, or policy
   `CustomerCode`) is sent as `X-Customer-Code` and unlocks add-ons delivered
   to that customer; they show a "For <customer>" label.
 - **Hardened installation** (client 0.6.0+): catalog fields are validated
@@ -371,7 +371,11 @@ installed ones by origin: from a customer code first, then installed by hand,
 then no longer offered (updates first in each group). Client 1.4.5 fixes the
 code dialog after adding or removing a code (it read the host's code object as
 the list and stopped half-drawn); a faulty page message now closes the dialog
-instead of freezing the window.
+instead of freezing the window. Client 1.4.6 manages customer codes in the
+store window only; the Options page just shows how many codes are stored
+(policy-set codes count too). Without the WebView2 runtime or with ClassicUI
+the classic dialog opens, which has no code management, so the Options page
+keeps its input field there.
 
 **New navigation, preview (S1.5.0):**
 - After signing in, everyone can switch to a new navigation: the footer link

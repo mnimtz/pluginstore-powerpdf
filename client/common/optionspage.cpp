@@ -13,6 +13,7 @@
 #include "Resource.h"
 #include "RVPanelPagePref.h"
 #include "../store/settings.h"
+#include "../store/webui.h"
 
 extern "C" HINSTANCE gHINSTANCE;
 
@@ -28,6 +29,17 @@ static void WriteVerbose(bool on)
     { DWORD d = on ? 1 : 0; RegSetValueExW(k, L"VerboseLog", 0, REG_DWORD, (const BYTE*)&d, sizeof(d)); RegCloseKey(k); }
 }
 
+// The codes are typed here only where the store window cannot open (no WebView2 runtime
+// or ClassicUI, C1.4.6): the classic dialog has no code management. Otherwise the store
+// window manages them (server check, customer names, question before add-ons go) and
+// this page only says how many are stored.
+static bool CodeEditable(HWND h)
+{
+    HWND e = GetDlgItem(h, IDC_PSO_CODE);
+    // its own style bit: IsWindowVisible would also say "no" while another options page is shown
+    return (GetWindowLongW(e, GWL_STYLE) & WS_VISIBLE) != 0 && IsWindowEnabled(e);
+}
+
 static INT_PTR CALLBACK PsoDlgProc(HWND h, UINT msg, WPARAM /*wp*/, LPARAM /*lp*/)
 {
     if (msg == WM_INITDIALOG)
@@ -38,6 +50,14 @@ static INT_PTR CALLBACK PsoDlgProc(HWND h, UINT msg, WPARAM /*wp*/, LPARAM /*lp*
         SetDlgItemTextW(h, IDC_PSO_CODE_LBL, FPLoc(IDS_PSO_CODE_LBL).c_str());
         SetDlgItemTextW(h, IDC_PSO_CODE,     PSCustomerCode().c_str());
         SendDlgItemMessageW(h, IDC_PSO_CODE, EM_LIMITTEXT, 700, 0);   // up to 10 codes, separated by ';' (C1.4.1)
+        if (PSWebUiAvailable())
+        {
+            wchar_t ci[400]; _snwprintf_s(ci, 400, _TRUNCATE, FPLoc(IDS_PSO_CODE_INFO).c_str(),
+                                           std::to_wstring(PSCustomerCodes().size()).c_str());
+            SetDlgItemTextW(h, IDC_PSO_CODE_INFO, ci);
+            ShowWindow(GetDlgItem(h, IDC_PSO_CODE), SW_HIDE);
+            ShowWindow(GetDlgItem(h, IDC_PSO_CODE_INFO), SW_SHOW);
+        }
         SetDlgItemTextW(h, IDC_PSO_BETA,     FPLoc(IDS_PSO_BETA).c_str());
         SetDlgItemTextW(h, IDC_PSO_HINT,     FPLoc(IDS_PSO_HINT).c_str());
         SetDlgItemTextW(h, IDC_PSO_GRP_DIAG, FPLoc(IDS_PSO_GRP_DIAG).c_str());
@@ -67,7 +87,7 @@ static DUBool PsoCheck(void* hWnd)
 {
     AFX_MANAGE_MODULE_STATE;
     HWND h = (HWND)hWnd;
-    if (IsWindowEnabled(GetDlgItem(h, IDC_PSO_CODE)))
+    if (CodeEditable(h))
     {
         wchar_t code[768] = { 0 };
         GetDlgItemTextW(h, IDC_PSO_CODE, code, 768);
@@ -96,7 +116,7 @@ static DUBool PsoUpdate(void* hWnd)
     // a locked page (LockPage policy) saves nothing it shows read-only
     if (IsWindowEnabled(GetDlgItem(h, IDC_PSO_BETA)))
         PSSaveUserSettings(url, beta);
-    if (IsWindowEnabled(GetDlgItem(h, IDC_PSO_CODE)))
+    if (CodeEditable(h))
     {
         wchar_t code[768] = { 0 };
         GetDlgItemTextW(h, IDC_PSO_CODE, code, 768);
