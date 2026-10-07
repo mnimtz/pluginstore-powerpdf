@@ -1075,4 +1075,26 @@
   <data name="Free installations not seen for 90 days" xml:space="preserve"><value>90 日間確認されていないインストールを解放</value></data>
   <data name="No installation was older than 90 days." xml:space="preserve"><value>90 日を超えたインストールはありませんでした。</value></data>
   <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>90 日間確認されていないインストールを解放しました。</value></data>
+  <data name="Account" xml:space="preserve"><value>アカウント</value></data>
+  <data name="Administration" xml:space="preserve"><value>管理</value></data>
+  <data name="All problem reports" xml:space="preserve"><value>すべての問題レポート</value></data>
+  <data name="Beta versions for the live store" xml:space="preserve"><value>公開ストア向けのベータ版</value></data>
+  <data name="Classic navigation" xml:space="preserve"><value>従来のナビゲーション</value></data>
+  <data name="Deliveries of private add-ons" xml:space="preserve"><value>非公開アドオンの配布</value></data>
+  <data name="Developer accounts to approve" xml:space="preserve"><value>承認待ちの開発者アカウント</value></data>
+  <data name="Downloads (30 days)" xml:space="preserve"><value>ダウンロード数（30 日間）</value></data>
+  <data name="Everything at a glance: your add-ons, problem reports and what waits for you." xml:space="preserve"><value>アドオン、問題レポート、対応待ちの項目をひと目で確認できます。</value></data>
+  <data name="Help" xml:space="preserve"><value>ヘルプ</value></data>
+  <data name="My work" xml:space="preserve"><value>マイワーク</value></data>
+  <data name="No new problem reports." xml:space="preserve"><value>新しい問題レポートはありません。</value></data>
+  <data name="Previous 30 days: {0}" xml:space="preserve"><value>前の 30 日間: {0}</value></data>
+  <data name="Quick actions" xml:space="preserve"><value>クイック操作</value></data>
+  <data name="Start" xml:space="preserve"><value>ホーム</value></data>
+  <data name="Try the new navigation (preview)" xml:space="preserve"><value>新しいナビゲーションを試す（プレビュー）</value></data>
+  <data name="Waiting for review" xml:space="preserve"><value>審査待ち</value></data>
+  <data name="Welcome, {0}" xml:space="preserve"><value>ようこそ、{0} さん</value></data>
+  <data name="{0} awaiting approval" xml:space="preserve"><value>{0} 件が承認待ち</value></data>
+  <data name="{0} in progress" xml:space="preserve"><value>{0} 件が対応中</value></data>
+  <data name="{0} live" xml:space="preserve"><value>{0} 件公開中</value></data>
+  <data name="{0} ratings" xml:space="preserve"><value>評価 {0} 件</value></data>
 </root>

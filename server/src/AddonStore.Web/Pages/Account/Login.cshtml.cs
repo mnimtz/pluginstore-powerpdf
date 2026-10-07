@@ -76,6 +76,7 @@ public class LoginModel : PageModel
                 return Page();
         }
         await _signIn.SignInAsync(user, isPersistent: true);
-        return RedirectToPage("/Dashboard");
+        // the new navigation starts on its tile page (S1.5.0 preview); the classic one on the plug-in list
+        return RedirectToPage(AddonStore.Web.Services.Shell.Sidebar(HttpContext) ? "/Start" : "/Dashboard");
     }
 }

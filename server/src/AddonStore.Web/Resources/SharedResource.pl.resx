@@ -1075,4 +1075,26 @@
   <data name="Free installations not seen for 90 days" xml:space="preserve"><value>Zwolnij instalacje niewidziane od 90 dni</value></data>
   <data name="No installation was older than 90 days." xml:space="preserve"><value>Żadna instalacja nie była starsza niż 90 dni.</value></data>
   <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>Zwolniono instalacje niewidziane od 90 dni.</value></data>
+  <data name="Account" xml:space="preserve"><value>Konto</value></data>
+  <data name="Administration" xml:space="preserve"><value>Administracja</value></data>
+  <data name="All problem reports" xml:space="preserve"><value>Wszystkie zgłoszenia problemów</value></data>
+  <data name="Beta versions for the live store" xml:space="preserve"><value>Wersje beta dla sklepu publicznego</value></data>
+  <data name="Classic navigation" xml:space="preserve"><value>Klasyczna nawigacja</value></data>
+  <data name="Deliveries of private add-ons" xml:space="preserve"><value>Dostawy prywatnych dodatków</value></data>
+  <data name="Developer accounts to approve" xml:space="preserve"><value>Konta deweloperów do zatwierdzenia</value></data>
+  <data name="Downloads (30 days)" xml:space="preserve"><value>Pobrania (30 dni)</value></data>
+  <data name="Everything at a glance: your add-ons, problem reports and what waits for you." xml:space="preserve"><value>Wszystko w jednym miejscu: Twoje dodatki, zgłoszenia problemów i to, co na Ciebie czeka.</value></data>
+  <data name="Help" xml:space="preserve"><value>Pomoc</value></data>
+  <data name="My work" xml:space="preserve"><value>Moja praca</value></data>
+  <data name="No new problem reports." xml:space="preserve"><value>Brak nowych zgłoszeń problemów.</value></data>
+  <data name="Previous 30 days: {0}" xml:space="preserve"><value>Poprzednie 30 dni: {0}</value></data>
+  <data name="Quick actions" xml:space="preserve"><value>Szybkie akcje</value></data>
+  <data name="Start" xml:space="preserve"><value>Start</value></data>
+  <data name="Try the new navigation (preview)" xml:space="preserve"><value>Wypróbuj nową nawigację (wersja zapoznawcza)</value></data>
+  <data name="Waiting for review" xml:space="preserve"><value>Oczekuje na weryfikację</value></data>
+  <data name="Welcome, {0}" xml:space="preserve"><value>Witaj, {0}</value></data>
+  <data name="{0} awaiting approval" xml:space="preserve"><value>{0} oczekuje na zatwierdzenie</value></data>
+  <data name="{0} in progress" xml:space="preserve"><value>{0} w toku</value></data>
+  <data name="{0} live" xml:space="preserve"><value>{0} opublikowanych</value></data>
+  <data name="{0} ratings" xml:space="preserve"><value>Ocen: {0}</value></data>
 </root>

@@ -142,6 +142,7 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Dossier", "PageUser");            // audit dossier: owner, admins, reviewers (S1.3.0)
         o.Conventions.AuthorizePage("/Admin/Reports", "PageAdmin");
         o.Conventions.AuthorizePage("/Dashboard", "PageUser");
+        o.Conventions.AuthorizePage("/Start", "PageUser");              // start page of the new navigation (S1.5.0)
         o.Conventions.AuthorizePage("/CatalogEntry", "PageUser");
         o.Conventions.AuthorizePage("/Plugin", "PageUser");
         o.Conventions.AuthorizePage("/Customers", "PageUser");
@@ -344,6 +345,18 @@ app.MapGet("/set-lang", (string culture, string? returnUrl, HttpContext ctx) =>
         CookieRequestCultureProvider.DefaultCookieName,
         CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
         new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1), IsEssential = true });
+    return Results.Redirect(target);
+});
+
+// New navigation (S1.5.0 preview): each user switches between the classic top bar and the sidebar.
+app.MapGet("/set-shell", (string? mode, string? returnUrl, HttpContext ctx) =>
+{
+    var sidebar = mode == "sidebar";
+    ctx.Response.Cookies.Append(AddonStore.Web.Services.Shell.Cookie, sidebar ? "sidebar" : "classic",
+        new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1), IsEssential = true, HttpOnly = true, SameSite = SameSiteMode.Lax,
+                            Secure = ctx.Request.IsHttps });
+    var target = AddonStore.Web.Services.Shell.SafeTarget(returnUrl);
+    if (!sidebar && target.StartsWith("/Start", StringComparison.OrdinalIgnoreCase)) target = "/Dashboard";
     return Results.Redirect(target);
 });
 

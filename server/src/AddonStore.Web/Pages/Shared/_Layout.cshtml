@@ -1,4 +1,5 @@
 @inject AddonStore.Web.Services.IssueService IssuesNav
+@inject AddonStore.Web.Data.AppDbContext NavDb
 @using Microsoft.EntityFrameworkCore
 @using System.Globalization
 @inject AddonStore.Web.Api.AppVersion AppVer
@@ -14,6 +15,8 @@
     var description = ViewData["Description"] as string
         ?? L["Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF."].Value;
     var host = Context.Request.Host;
+    // the new navigation (S1.5.0 preview): signed in, switched on, and not a public page
+    var shell = SignInManager.IsSignedIn(User) && AddonStore.Web.Services.Shell.Sidebar(Context) && ViewData["PublicPage"] is not true;
     var origin = (host.Host is "localhost" or "127.0.0.1" ? Context.Request.Scheme : "https") + "://" + host;
 }
 <head>
@@ -52,7 +55,121 @@
     </script>
     @await RenderSectionAsync("Head", required: false)
 </head>
-<body>
+<body class="@(shell ? "with-shell" : "")">
+@if (shell)
+{
+    // ---- new navigation (S1.5.0 preview): top bar with the account menu, sidebar with the areas
+    var meS = await UserManager.GetUserAsync(User);
+    var isAdminS = User.IsInRole("Admin");
+    var isReviewerS = isAdminS || User.IsInRole("Reviewer");
+    var openS = meS is null ? 0 : await IssuesNav.Scope(meS, isAdminS).CountAsync(f => f.Status == "open");
+    var reviewS = isReviewerS ? await NavDb.PackageVersions.CountAsync(v => v.Status == AddonStore.Web.Data.VersionStatus.Beta &&
+                                    !NavDb.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private")) : 0;
+    var pendingS = isAdminS ? await NavDb.Users.CountAsync(u => u.Status == AddonStore.Web.Data.UserStatus.Pending) : 0;
+    var pathS = Context.Request.Path.Value ?? "/";
+    var viewS = Context.Request.Query["view"].ToString();
+    bool At(params string[] prefixes) => prefixes.Any(p => pathS.Equals(p, StringComparison.OrdinalIgnoreCase) || pathS.StartsWith(p + "/", StringComparison.OrdinalIgnoreCase));
+    string On(params string[] prefixes) => At(prefixes) ? "active" : "";
+    var backS = Uri.EscapeDataString(Context.Request.Path + Context.Request.QueryString);
+    var settingsArea = At("/Admin/Settings", "/Admin/Backup", "/Admin/Categories", "/Admin/Rules");
+    <header class="site shell-top">
+        <div class="bar">
+            <button type="button" class="nav-toggle shell-toggle" aria-label="@L["Menu"]" aria-expanded="false" aria-controls="side-nav">
+                <span></span><span></span><span></span>
+            </button>
+            <a class="brand" href="/Start">
+                <img class="logo" src="/img/tungsten-logo-white.svg" alt="Tungsten Automation" />
+                <div class="title">Add-on Store<small>Tungsten Power PDF</small></div>
+            </a>
+            <span class="spacer"></span>
+            <a class="top-link" href="/">@L["Catalog"]</a>
+            <details class="user-menu">
+                <summary aria-label="@L["Account"]">
+                    @if (meS?.AvatarFile is not null)
+                    {
+                        <img src="/avatar/@meS.Id" alt="" />
+                    }
+                    else
+                    {
+                        <span class="initial">@((meS?.DisplayName ?? "?").Trim().FirstOrDefault())</span>
+                    }
+                    <span class="who">@meS?.DisplayName</span>
+                </summary>
+                <div class="user-pop">
+                    <a href="/Profile">@L["Profile"]</a>
+                    <label class="small">@L["Language"]
+                        <select id="lang-select" aria-label="Language">
+                            @foreach (var lang in AddonStore.Web.Services.Lang.Ui)
+                            {
+                                <option value="@lang" selected="@(lang == AddonStore.Web.Services.Lang.Current)">@AddonStore.Web.Services.Lang.NativeNames[lang]</option>
+                            }
+                        </select>
+                    </label>
+                    <a href="/set-shell?mode=classic&returnUrl=@backS">@L["Classic navigation"]</a>
+                    <form method="post" action="/Account/Logout">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn small secondary">@L["Sign out"]</button>
+                    </form>
+                </div>
+            </details>
+        </div>
+    </header>
+    <div class="accent-line"></div>
+    <div class="shell">
+        <nav class="side-nav" id="side-nav" aria-label="@L["Navigation"]">
+            <a class="@On("/Start")" href="/Start">@L["Start"]</a>
+            <div class="side-head">@L["My work"]</div>
+            <a class="@On("/Insights")" href="/Insights">@L["Dashboard"]</a>
+            <a class="@On("/Dashboard", "/Plugin", "/CatalogEntry", "/Dossier")" href="/Dashboard">@L["Plug-ins"]</a>
+            <a class="@On("/Issues")" href="/Issues"><span>@L["Problem reports"]</span>@if (openS > 0) { <span class="nav-count" title="@L["New problem reports"]">@openS</span> }</a>
+            <a class="@On("/Customers", "/Customer")" href="/Customers">@L["Customers"]</a>
+            @if (isReviewerS)
+            {
+                <div class="side-head">@L["Review"]</div>
+                <a class="@On("/Admin/Review")" href="/Admin/Review"><span>@L["Review queue"]</span>@if (reviewS > 0) { <span class="nav-count">@reviewS</span> }</a>
+            }
+            @if (isAdminS)
+            {
+                <div class="side-head">@L["Administration"]</div>
+                <a class="@On("/Admin/Users")" href="/Admin/Users"><span>@L["Users"]</span>@if (pendingS > 0) { <span class="nav-count" title="@L["Access requests"]">@pendingS</span> }</a>
+                <a class="@(At("/Admin/Reports") ? "open" : "")" href="/Admin/Reports">@L["Reports"]</a>
+                @if (At("/Admin/Reports"))
+                {
+                    @foreach (var (key, label) in AddonStore.Web.Pages.Admin.ReportsModel.Views)
+                    {
+                        var act = viewS == key || (key == "overview" && viewS.Length == 0);
+                        <a class="sub @(act ? "active" : "")" href="/Admin/Reports@(key == "overview" ? "" : "?view=" + key)">@L[label]</a>
+                    }
+                }
+                <a class="@On("/Admin/Audit")" href="/Admin/Audit">@L["Audit"]</a>
+                <a class="@(settingsArea ? "open" : "")" href="/Admin/Settings">@L["Settings"]</a>
+                @if (settingsArea)
+                {
+                    @foreach (var (key, label) in AddonStore.Web.Pages.Admin.SettingsModel.Views)
+                    {
+                        var act = At("/Admin/Settings") && (viewS == key || (key == "server" && viewS.Length == 0));
+                        <a class="sub @(act ? "active" : "")" href="/Admin/Settings@(key == "server" ? "" : "?view=" + key)">@L[label]</a>
+                    }
+                    <a class="sub @On("/Admin/Backup")" href="/Admin/Backup">@L["Backup and restore"]</a>
+                    <a class="sub @On("/Admin/Categories")" href="/Admin/Categories">@L["Categories"]</a>
+                    <a class="sub @On("/Admin/Rules")" href="/Admin/Rules">@L["Rules"]</a>
+                }
+            }
+            <div class="side-head">@L["Help"]</div>
+            <a class="@On("/Docs", "/Admin/Docs")" href="/Docs">@L["Documentation"]</a>
+            <a class="@On("/Developer")" href="/Developer">API</a>
+            @if (!isAdminS)
+            {
+                <a class="@On("/Admin/Rules")" href="/Admin/Rules">@L["Rules"]</a>
+            }
+        </nav>
+        <main class="shell-main">
+            @RenderBody()
+        </main>
+    </div>
+}
+else
+{
 <header class="site">
     <div class="bar">
         <img class="logo" src="/img/tungsten-logo-white.svg" alt="Tungsten Automation" />
@@ -115,6 +232,7 @@
 <main>
     @RenderBody()
 </main>
+}
 <footer class="site">
     <img src="/img/tungsten-logo-navy.svg" alt="Tungsten Automation" />
     <span>Add-on Store S@(AppVer.Value)</span>
@@ -122,6 +240,10 @@
     @if (!(User.Identity?.IsAuthenticated ?? false))
     {
         <a class="btn small secondary" href="/Account/Register">@L["Request a developer account"]</a>
+    }
+    @if (SignInManager.IsSignedIn(User) && !shell)
+    {
+        <a href="/set-shell?mode=sidebar&returnUrl=/Start" style="color:var(--tun-slate)">@L["Try the new navigation (preview)"]</a>
     }
     <a href="/Disclaimer" style="color:var(--tun-slate)">@L["Disclaimer"]</a>
     <a href="/api/agent-guide" style="color:var(--tun-slate)">API</a>
@@ -131,10 +253,25 @@
 // confirmations (data-confirm), image fallbacks (data-fallback), print buttons.
 (function () {
     var t = document.querySelector('.nav-toggle');
+    var sh = document.querySelector('.shell');
     if (t) t.addEventListener('click', function () {
-        var o = t.closest('header').classList.toggle('open');
+        var o = sh ? sh.classList.toggle('side-open') : t.closest('header').classList.toggle('open');
         t.setAttribute('aria-expanded', o);
     });
+    // the sidebar drawer (small screens) closes on a click beside it or Escape
+    if (sh && t) {
+        var shut = function () { sh.classList.remove('side-open'); t.setAttribute('aria-expanded', false); };
+        document.addEventListener('click', function (e) {
+            if (sh.classList.contains('side-open') && !e.target.closest('.side-nav') && !e.target.closest('.nav-toggle')) shut();
+        });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') shut(); });
+    }
+    // the account menu closes on a click elsewhere or Escape
+    var um = document.querySelector('details.user-menu');
+    if (um) {
+        document.addEventListener('click', function (e) { if (um.open && !um.contains(e.target)) um.open = false; });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') um.open = false; });
+    }
     var ls = document.getElementById('lang-select');
     if (ls) ls.addEventListener('change', function () {
         location = '/set-lang?culture=' + encodeURIComponent(ls.value) + '&returnUrl=' + encodeURIComponent(location.pathname);

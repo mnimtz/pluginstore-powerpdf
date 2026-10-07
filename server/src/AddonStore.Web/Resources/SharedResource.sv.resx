@@ -1075,4 +1075,26 @@
   <data name="Free installations not seen for 90 days" xml:space="preserve"><value>Frigör installationer som inte har setts på 90 dagar</value></data>
   <data name="No installation was older than 90 days." xml:space="preserve"><value>Ingen installation var äldre än 90 dagar.</value></data>
   <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>Installationer som inte har setts på 90 dagar har frigjorts.</value></data>
+  <data name="Account" xml:space="preserve"><value>Konto</value></data>
+  <data name="Administration" xml:space="preserve"><value>Administration</value></data>
+  <data name="All problem reports" xml:space="preserve"><value>Alla problemrapporter</value></data>
+  <data name="Beta versions for the live store" xml:space="preserve"><value>Betaversioner för den publika butiken</value></data>
+  <data name="Classic navigation" xml:space="preserve"><value>Klassisk navigering</value></data>
+  <data name="Deliveries of private add-ons" xml:space="preserve"><value>Leveranser av privata tillägg</value></data>
+  <data name="Developer accounts to approve" xml:space="preserve"><value>Utvecklarkonton att godkänna</value></data>
+  <data name="Downloads (30 days)" xml:space="preserve"><value>Nedladdningar (30 dagar)</value></data>
+  <data name="Everything at a glance: your add-ons, problem reports and what waits for you." xml:space="preserve"><value>Allt i en överblick: dina tillägg, problemrapporter och vad som väntar på dig.</value></data>
+  <data name="Help" xml:space="preserve"><value>Hjälp</value></data>
+  <data name="My work" xml:space="preserve"><value>Mitt arbete</value></data>
+  <data name="No new problem reports." xml:space="preserve"><value>Inga nya problemrapporter.</value></data>
+  <data name="Previous 30 days: {0}" xml:space="preserve"><value>Föregående 30 dagar: {0}</value></data>
+  <data name="Quick actions" xml:space="preserve"><value>Snabbåtgärder</value></data>
+  <data name="Start" xml:space="preserve"><value>Start</value></data>
+  <data name="Try the new navigation (preview)" xml:space="preserve"><value>Prova den nya navigeringen (förhandsversion)</value></data>
+  <data name="Waiting for review" xml:space="preserve"><value>Väntar på granskning</value></data>
+  <data name="Welcome, {0}" xml:space="preserve"><value>Välkommen, {0}</value></data>
+  <data name="{0} awaiting approval" xml:space="preserve"><value>{0} väntar på godkännande</value></data>
+  <data name="{0} in progress" xml:space="preserve"><value>{0} pågår</value></data>
+  <data name="{0} live" xml:space="preserve"><value>{0} publicerade</value></data>
+  <data name="{0} ratings" xml:space="preserve"><value>{0} betyg</value></data>
 </root>

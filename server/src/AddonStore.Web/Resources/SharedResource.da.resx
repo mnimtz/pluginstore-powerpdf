@@ -1075,4 +1075,26 @@
   <data name="Free installations not seen for 90 days" xml:space="preserve"><value>Frigiv installationer, der ikke er set i 90 dage</value></data>
   <data name="No installation was older than 90 days." xml:space="preserve"><value>Ingen installation var ældre end 90 dage.</value></data>
   <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>Installationer, der ikke er set i 90 dage, er frigivet.</value></data>
+  <data name="Account" xml:space="preserve"><value>Konto</value></data>
+  <data name="Administration" xml:space="preserve"><value>Administration</value></data>
+  <data name="All problem reports" xml:space="preserve"><value>Alle problemrapporter</value></data>
+  <data name="Beta versions for the live store" xml:space="preserve"><value>Betaversioner til den offentlige butik</value></data>
+  <data name="Classic navigation" xml:space="preserve"><value>Klassisk navigation</value></data>
+  <data name="Deliveries of private add-ons" xml:space="preserve"><value>Leveringer af private tilføjelser</value></data>
+  <data name="Developer accounts to approve" xml:space="preserve"><value>Udviklerkonti til godkendelse</value></data>
+  <data name="Downloads (30 days)" xml:space="preserve"><value>Downloads (30 dage)</value></data>
+  <data name="Everything at a glance: your add-ons, problem reports and what waits for you." xml:space="preserve"><value>Alt på ét blik: dine tilføjelser, problemrapporter og hvad der venter på dig.</value></data>
+  <data name="Help" xml:space="preserve"><value>Hjælp</value></data>
+  <data name="My work" xml:space="preserve"><value>Mit arbejde</value></data>
+  <data name="No new problem reports." xml:space="preserve"><value>Ingen nye problemrapporter.</value></data>
+  <data name="Previous 30 days: {0}" xml:space="preserve"><value>Forrige 30 dage: {0}</value></data>
+  <data name="Quick actions" xml:space="preserve"><value>Hurtige handlinger</value></data>
+  <data name="Start" xml:space="preserve"><value>Start</value></data>
+  <data name="Try the new navigation (preview)" xml:space="preserve"><value>Prøv den nye navigation (forhåndsvisning)</value></data>
+  <data name="Waiting for review" xml:space="preserve"><value>Venter på gennemgang</value></data>
+  <data name="Welcome, {0}" xml:space="preserve"><value>Velkommen, {0}</value></data>
+  <data name="{0} awaiting approval" xml:space="preserve"><value>{0} venter på godkendelse</value></data>
+  <data name="{0} in progress" xml:space="preserve"><value>{0} under behandling</value></data>
+  <data name="{0} live" xml:space="preserve"><value>{0} live</value></data>
+  <data name="{0} ratings" xml:space="preserve"><value>{0} bedømmelser</value></data>
 </root>

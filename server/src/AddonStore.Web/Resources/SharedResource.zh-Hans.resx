@@ -1075,4 +1075,26 @@
   <data name="Free installations not seen for 90 days" xml:space="preserve"><value>释放 90 天未检测到的安装</value></data>
   <data name="No installation was older than 90 days." xml:space="preserve"><value>没有超过 90 天的安装。</value></data>
   <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>已释放 90 天未检测到的安装。</value></data>
+  <data name="Account" xml:space="preserve"><value>账户</value></data>
+  <data name="Administration" xml:space="preserve"><value>管理</value></data>
+  <data name="All problem reports" xml:space="preserve"><value>所有问题报告</value></data>
+  <data name="Beta versions for the live store" xml:space="preserve"><value>面向正式商店的测试版</value></data>
+  <data name="Classic navigation" xml:space="preserve"><value>经典导航</value></data>
+  <data name="Deliveries of private add-ons" xml:space="preserve"><value>私有加载项的交付</value></data>
+  <data name="Developer accounts to approve" xml:space="preserve"><value>待批准的开发者账户</value></data>
+  <data name="Downloads (30 days)" xml:space="preserve"><value>下载量（30 天）</value></data>
+  <data name="Everything at a glance: your add-ons, problem reports and what waits for you." xml:space="preserve"><value>一目了然：您的加载项、问题报告以及待您处理的事项。</value></data>
+  <data name="Help" xml:space="preserve"><value>帮助</value></data>
+  <data name="My work" xml:space="preserve"><value>我的工作</value></data>
+  <data name="No new problem reports." xml:space="preserve"><value>没有新的问题报告。</value></data>
+  <data name="Previous 30 days: {0}" xml:space="preserve"><value>前 30 天：{0}</value></data>
+  <data name="Quick actions" xml:space="preserve"><value>快速操作</value></data>
+  <data name="Start" xml:space="preserve"><value>首页</value></data>
+  <data name="Try the new navigation (preview)" xml:space="preserve"><value>试用新导航（预览）</value></data>
+  <data name="Waiting for review" xml:space="preserve"><value>等待审核</value></data>
+  <data name="Welcome, {0}" xml:space="preserve"><value>欢迎，{0}</value></data>
+  <data name="{0} awaiting approval" xml:space="preserve"><value>{0} 个待批准</value></data>
+  <data name="{0} in progress" xml:space="preserve"><value>{0} 个处理中</value></data>
+  <data name="{0} live" xml:space="preserve"><value>{0} 个已上线</value></data>
+  <data name="{0} ratings" xml:space="preserve"><value>{0} 条评分</value></data>
 </root>

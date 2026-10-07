@@ -1075,4 +1075,26 @@
   <data name="Free installations not seen for 90 days" xml:space="preserve"><value>Освободить установки, не обнаруживавшиеся 90 дней</value></data>
   <data name="No installation was older than 90 days." xml:space="preserve"><value>Нет установок старше 90 дней.</value></data>
   <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>Установки, не обнаруживавшиеся в течение 90 дней, освобождены.</value></data>
+  <data name="Account" xml:space="preserve"><value>Учетная запись</value></data>
+  <data name="Administration" xml:space="preserve"><value>Администрирование</value></data>
+  <data name="All problem reports" xml:space="preserve"><value>Все сообщения о проблемах</value></data>
+  <data name="Beta versions for the live store" xml:space="preserve"><value>Бета-версии для публичного магазина</value></data>
+  <data name="Classic navigation" xml:space="preserve"><value>Классическая навигация</value></data>
+  <data name="Deliveries of private add-ons" xml:space="preserve"><value>Поставки частных надстроек</value></data>
+  <data name="Developer accounts to approve" xml:space="preserve"><value>Учетные записи разработчиков на одобрение</value></data>
+  <data name="Downloads (30 days)" xml:space="preserve"><value>Загрузки (30 дней)</value></data>
+  <data name="Everything at a glance: your add-ons, problem reports and what waits for you." xml:space="preserve"><value>Всё с первого взгляда: ваши надстройки, сообщения о проблемах и то, что ждет вашего внимания.</value></data>
+  <data name="Help" xml:space="preserve"><value>Справка</value></data>
+  <data name="My work" xml:space="preserve"><value>Моя работа</value></data>
+  <data name="No new problem reports." xml:space="preserve"><value>Новых сообщений о проблемах нет.</value></data>
+  <data name="Previous 30 days: {0}" xml:space="preserve"><value>Предыдущие 30 дней: {0}</value></data>
+  <data name="Quick actions" xml:space="preserve"><value>Быстрые действия</value></data>
+  <data name="Start" xml:space="preserve"><value>Главная</value></data>
+  <data name="Try the new navigation (preview)" xml:space="preserve"><value>Попробовать новую навигацию (предварительная версия)</value></data>
+  <data name="Waiting for review" xml:space="preserve"><value>Ожидает проверки</value></data>
+  <data name="Welcome, {0}" xml:space="preserve"><value>Добро пожаловать, {0}</value></data>
+  <data name="{0} awaiting approval" xml:space="preserve"><value>{0} ожидают одобрения</value></data>
+  <data name="{0} in progress" xml:space="preserve"><value>{0} в работе</value></data>
+  <data name="{0} live" xml:space="preserve"><value>{0} опубликовано</value></data>
+  <data name="{0} ratings" xml:space="preserve"><value>Оценок: {0}</value></data>
 </root>

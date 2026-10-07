@@ -1,0 +1,92 @@
+@page
+@model AddonStore.Web.Pages.StartModel
+@{
+    ViewData["Title"] = "Start";
+    var r = Model.R;
+    string Trend(int now, int before) => before == 0 ? (now > 0 ? "+" + now : "±0") : (now >= before ? "+" : "") + (now - before);
+}
+<h1>@L["Welcome, {0}", Model.Me?.DisplayName ?? ""]</h1>
+<p class="lead">@L["Everything at a glance: your add-ons, problem reports and what waits for you."]</p>
+
+@if (r is not null)
+{
+    <div class="tiles">
+        <a class="tile" href="/Insights">
+            <span class="tile-label">@L["Downloads (30 days)"]</span>
+            <b class="tile-value">@r.Downloads</b>
+            <span class="tile-note">@L["Previous 30 days: {0}", r.DownloadsPrevious] · @Trend(r.Downloads, r.DownloadsPrevious)</span>
+        </a>
+        <a class="tile" href="/Dashboard">
+            <span class="tile-label">@L[Model.IsAdmin ? "Add-ons in the store" : "My add-ons"]</span>
+            <b class="tile-value">@r.Addons.Count</b>
+            <span class="tile-note">@L["{0} live", r.LiveAddons]@if (r.PendingReviews > 0) { <text> · @L["{0} awaiting approval", r.PendingReviews]</text> }</span>
+        </a>
+        <a class="tile @(r.OpenReports > 0 ? "attn" : "")" href="/Issues">
+            <span class="tile-label">@L["New problem reports"]</span>
+            <b class="tile-value">@r.OpenReports</b>
+            <span class="tile-note">@L["{0} in progress", Math.Max(0, r.ActiveReports - r.OpenReports)]</span>
+        </a>
+        @if (Model.IsReviewer)
+        {
+            <a class="tile @(Model.ReviewQueue > 0 ? "attn" : "")" href="/Admin/Review">
+                <span class="tile-label">@L["Waiting for review"]</span>
+                <b class="tile-value">@Model.ReviewQueue</b>
+                <span class="tile-note">@L["Beta versions for the live store"]</span>
+            </a>
+        }
+        <a class="tile" href="/Customers">
+            <span class="tile-label">@L["Customers"]</span>
+            <b class="tile-value">@Model.Customers</b>
+            <span class="tile-note">@L["Deliveries of private add-ons"]</span>
+        </a>
+        @if (r.Ratings > 0)
+        {
+            <a class="tile" href="/Insights">
+                <span class="tile-label">@L["Rating"]</span>
+                <b class="tile-value">@(r.Rating?.ToString("0.0") ?? "–") ★</b>
+                <span class="tile-note">@L["{0} ratings", r.Ratings]</span>
+            </a>
+        }
+        @if (Model.IsAdmin)
+        {
+            <a class="tile @(Model.AccessRequests > 0 ? "attn" : "")" href="/Admin/Users">
+                <span class="tile-label">@L["Access requests"]</span>
+                <b class="tile-value">@Model.AccessRequests</b>
+                <span class="tile-note">@L["Developer accounts to approve"]</span>
+            </a>
+        }
+    </div>
+}
+
+<div class="start-grid">
+    <div class="card">
+        <h2 style="margin-top:0">@L["Quick actions"]</h2>
+        <div class="quick">
+            <a class="btn cta" href="/Dashboard">@L["Submit a package"]</a>
+            <a class="btn secondary" href="/Customers">@L["New customer"]</a>
+            <a class="btn secondary" href="/Profile">@L["API tokens"]</a>
+            <a class="btn secondary" href="/Docs">@L["Documentation"]</a>
+        </div>
+    </div>
+    <div class="card">
+        <h2 style="margin-top:0">@L["New problem reports"]</h2>
+        @if (Model.NewReports.Count == 0)
+        {
+            <p class="muted">@L["No new problem reports."]</p>
+        }
+        else
+        {
+            <ul class="start-list">
+                @foreach (var f in Model.NewReports)
+                {
+                    <li>
+                        <a href="/Issues/@f.Id"><b>@f.PackageId</b> @f.Version</a>
+                        <span class="muted small"> · @Time.Fmt(f.CreatedAt, false)</span>
+                        <div class="small start-snippet">@(f.Message.Length > 140 ? f.Message[..140] + "…" : f.Message)</div>
+                    </li>
+                }
+            </ul>
+            <a class="small" href="/Issues">@L["All problem reports"] →</a>
+        }
+    </div>
+</div>

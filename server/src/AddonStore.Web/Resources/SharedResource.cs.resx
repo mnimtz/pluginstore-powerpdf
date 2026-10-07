@@ -1075,4 +1075,26 @@
   <data name="Free installations not seen for 90 days" xml:space="preserve"><value>Uvolnit instalace neviděné 90 dní</value></data>
   <data name="No installation was older than 90 days." xml:space="preserve"><value>Žádná instalace nebyla starší než 90 dní.</value></data>
   <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>Instalace neviděné 90 dní byly uvolněny.</value></data>
+  <data name="Account" xml:space="preserve"><value>Účet</value></data>
+  <data name="Administration" xml:space="preserve"><value>Správa</value></data>
+  <data name="All problem reports" xml:space="preserve"><value>Všechna hlášení problémů</value></data>
+  <data name="Beta versions for the live store" xml:space="preserve"><value>Beta verze pro veřejný obchod</value></data>
+  <data name="Classic navigation" xml:space="preserve"><value>Klasická navigace</value></data>
+  <data name="Deliveries of private add-ons" xml:space="preserve"><value>Dodávky soukromých doplňků</value></data>
+  <data name="Developer accounts to approve" xml:space="preserve"><value>Vývojářské účty ke schválení</value></data>
+  <data name="Downloads (30 days)" xml:space="preserve"><value>Stažení (30 dní)</value></data>
+  <data name="Everything at a glance: your add-ons, problem reports and what waits for you." xml:space="preserve"><value>Vše na první pohled: vaše doplňky, hlášení problémů a co na vás čeká.</value></data>
+  <data name="Help" xml:space="preserve"><value>Nápověda</value></data>
+  <data name="My work" xml:space="preserve"><value>Moje práce</value></data>
+  <data name="No new problem reports." xml:space="preserve"><value>Žádná nová hlášení problémů.</value></data>
+  <data name="Previous 30 days: {0}" xml:space="preserve"><value>Předchozích 30 dní: {0}</value></data>
+  <data name="Quick actions" xml:space="preserve"><value>Rychlé akce</value></data>
+  <data name="Start" xml:space="preserve"><value>Start</value></data>
+  <data name="Try the new navigation (preview)" xml:space="preserve"><value>Vyzkoušet novou navigaci (náhled)</value></data>
+  <data name="Waiting for review" xml:space="preserve"><value>Čeká na kontrolu</value></data>
+  <data name="Welcome, {0}" xml:space="preserve"><value>Vítejte, {0}</value></data>
+  <data name="{0} awaiting approval" xml:space="preserve"><value>{0} čeká na schválení</value></data>
+  <data name="{0} in progress" xml:space="preserve"><value>{0} v řešení</value></data>
+  <data name="{0} live" xml:space="preserve"><value>{0} zveřejněno</value></data>
+  <data name="{0} ratings" xml:space="preserve"><value>Hodnocení: {0}</value></data>
 </root>

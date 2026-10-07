@@ -363,6 +363,25 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**New navigation, preview (S1.5.0):**
+- After signing in, everyone can switch to a new navigation: the footer link
+  *Try the new navigation (preview)* turns it on, and *Classic navigation* in
+  the account menu turns it off again. The choice is stored per browser
+  (cookie `pp_shell`); the classic top bar stays the default.
+- The new navigation has a sidebar with groups (My work, Review,
+  Administration, Help). Reports and Settings show their sections as
+  sub-items in the sidebar. On small screens the sidebar opens from the menu
+  button.
+- The account menu (avatar) holds the profile, the language, the switch back
+  and *Sign out*.
+- The new start page `/Start` shows tiles: downloads of the last 30 days,
+  add-ons, new problem reports, the review queue, customers, the rating and
+  access requests, each role with its own tiles. Quick actions and the newest
+  problem reports follow. With the new navigation, signing in opens this page.
+- The catalog, the add-on pages and the disclaimer keep their layout in both
+  modes.
+- Long values in table cards wrap on phones (one page overflowed at 390 px).
+
 **Code check of the day (S1.4.3, client 1.4.2):** three independent reviews of
 all changes since S1.3.0, with these fixes:
 - Installation seats are claimed one at a time (6 parallel downloads for 2

@@ -1075,4 +1075,26 @@
   <data name="Free installations not seen for 90 days" xml:space="preserve"><value>90 gündür görülmeyen yüklemeleri serbest bırak</value></data>
   <data name="No installation was older than 90 days." xml:space="preserve"><value>90 günden eski yükleme yoktu.</value></data>
   <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>90 gündür görülmeyen yüklemeler serbest bırakıldı.</value></data>
+  <data name="Account" xml:space="preserve"><value>Hesap</value></data>
+  <data name="Administration" xml:space="preserve"><value>Yönetim</value></data>
+  <data name="All problem reports" xml:space="preserve"><value>Tüm sorun bildirimleri</value></data>
+  <data name="Beta versions for the live store" xml:space="preserve"><value>Canlı mağaza için beta sürümleri</value></data>
+  <data name="Classic navigation" xml:space="preserve"><value>Klasik gezinme</value></data>
+  <data name="Deliveries of private add-ons" xml:space="preserve"><value>Özel eklenti teslimatları</value></data>
+  <data name="Developer accounts to approve" xml:space="preserve"><value>Onay bekleyen geliştirici hesapları</value></data>
+  <data name="Downloads (30 days)" xml:space="preserve"><value>İndirmeler (30 gün)</value></data>
+  <data name="Everything at a glance: your add-ons, problem reports and what waits for you." xml:space="preserve"><value>Her şey tek bakışta: eklentileriniz, sorun bildirimleri ve sizi bekleyenler.</value></data>
+  <data name="Help" xml:space="preserve"><value>Yardım</value></data>
+  <data name="My work" xml:space="preserve"><value>Çalışmalarım</value></data>
+  <data name="No new problem reports." xml:space="preserve"><value>Yeni sorun bildirimi yok.</value></data>
+  <data name="Previous 30 days: {0}" xml:space="preserve"><value>Önceki 30 gün: {0}</value></data>
+  <data name="Quick actions" xml:space="preserve"><value>Hızlı işlemler</value></data>
+  <data name="Start" xml:space="preserve"><value>Başlangıç</value></data>
+  <data name="Try the new navigation (preview)" xml:space="preserve"><value>Yeni gezinmeyi dene (önizleme)</value></data>
+  <data name="Waiting for review" xml:space="preserve"><value>İnceleme bekliyor</value></data>
+  <data name="Welcome, {0}" xml:space="preserve"><value>Hoş geldiniz, {0}</value></data>
+  <data name="{0} awaiting approval" xml:space="preserve"><value>{0} onay bekliyor</value></data>
+  <data name="{0} in progress" xml:space="preserve"><value>{0} işlemde</value></data>
+  <data name="{0} live" xml:space="preserve"><value>{0} yayında</value></data>
+  <data name="{0} ratings" xml:space="preserve"><value>{0} değerlendirme</value></data>
 </root>

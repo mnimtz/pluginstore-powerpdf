@@ -1075,4 +1075,26 @@
   <data name="Free installations not seen for 90 days" xml:space="preserve"><value>Vapauta asennukset, joita ei ole havaittu 90 päivään</value></data>
   <data name="No installation was older than 90 days." xml:space="preserve"><value>Mikään asennus ei ollut yli 90 päivää vanha.</value></data>
   <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>Asennukset, joita ei ole havaittu 90 päivään, vapautettiin.</value></data>
+  <data name="Account" xml:space="preserve"><value>Tili</value></data>
+  <data name="Administration" xml:space="preserve"><value>Hallinta</value></data>
+  <data name="All problem reports" xml:space="preserve"><value>Kaikki ongelmaraportit</value></data>
+  <data name="Beta versions for the live store" xml:space="preserve"><value>Beetaversiot julkiseen kauppaan</value></data>
+  <data name="Classic navigation" xml:space="preserve"><value>Perinteinen navigointi</value></data>
+  <data name="Deliveries of private add-ons" xml:space="preserve"><value>Yksityisten lisäosien toimitukset</value></data>
+  <data name="Developer accounts to approve" xml:space="preserve"><value>Hyväksyttävät kehittäjätilit</value></data>
+  <data name="Downloads (30 days)" xml:space="preserve"><value>Lataukset (30 päivää)</value></data>
+  <data name="Everything at a glance: your add-ons, problem reports and what waits for you." xml:space="preserve"><value>Kaikki yhdellä silmäyksellä: lisäosasi, ongelmaraportit ja mitä sinulle on odottamassa.</value></data>
+  <data name="Help" xml:space="preserve"><value>Ohje</value></data>
+  <data name="My work" xml:space="preserve"><value>Oma työ</value></data>
+  <data name="No new problem reports." xml:space="preserve"><value>Ei uusia ongelmaraportteja.</value></data>
+  <data name="Previous 30 days: {0}" xml:space="preserve"><value>Edelliset 30 päivää: {0}</value></data>
+  <data name="Quick actions" xml:space="preserve"><value>Pikatoiminnot</value></data>
+  <data name="Start" xml:space="preserve"><value>Etusivu</value></data>
+  <data name="Try the new navigation (preview)" xml:space="preserve"><value>Kokeile uutta navigointia (esikatselu)</value></data>
+  <data name="Waiting for review" xml:space="preserve"><value>Odottaa tarkastusta</value></data>
+  <data name="Welcome, {0}" xml:space="preserve"><value>Tervetuloa, {0}</value></data>
+  <data name="{0} awaiting approval" xml:space="preserve"><value>{0} odottaa hyväksyntää</value></data>
+  <data name="{0} in progress" xml:space="preserve"><value>{0} käsittelyssä</value></data>
+  <data name="{0} live" xml:space="preserve"><value>{0} julkaistu</value></data>
+  <data name="{0} ratings" xml:space="preserve"><value>{0} arviota</value></data>
 </root>

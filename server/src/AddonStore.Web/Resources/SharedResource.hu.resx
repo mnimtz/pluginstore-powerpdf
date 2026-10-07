@@ -1075,4 +1075,26 @@
   <data name="Free installations not seen for 90 days" xml:space="preserve"><value>90 napja nem észlelt telepítések felszabadítása</value></data>
   <data name="No installation was older than 90 days." xml:space="preserve"><value>Egyik telepítés sem volt 90 napnál régebbi.</value></data>
   <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>A 90 napja nem észlelt telepítések felszabadítása megtörtént.</value></data>
+  <data name="Account" xml:space="preserve"><value>Fiók</value></data>
+  <data name="Administration" xml:space="preserve"><value>Felügyelet</value></data>
+  <data name="All problem reports" xml:space="preserve"><value>Összes hibajelentés</value></data>
+  <data name="Beta versions for the live store" xml:space="preserve"><value>Bétaverziók a nyilvános áruházba</value></data>
+  <data name="Classic navigation" xml:space="preserve"><value>Klasszikus navigáció</value></data>
+  <data name="Deliveries of private add-ons" xml:space="preserve"><value>Privát bővítmények kiszállításai</value></data>
+  <data name="Developer accounts to approve" xml:space="preserve"><value>Jóváhagyásra váró fejlesztői fiókok</value></data>
+  <data name="Downloads (30 days)" xml:space="preserve"><value>Letöltések (30 nap)</value></data>
+  <data name="Everything at a glance: your add-ons, problem reports and what waits for you." xml:space="preserve"><value>Minden egy pillantással: bővítményei, hibajelentések és ami Önre vár.</value></data>
+  <data name="Help" xml:space="preserve"><value>Súgó</value></data>
+  <data name="My work" xml:space="preserve"><value>Saját munka</value></data>
+  <data name="No new problem reports." xml:space="preserve"><value>Nincs új hibajelentés.</value></data>
+  <data name="Previous 30 days: {0}" xml:space="preserve"><value>Előző 30 nap: {0}</value></data>
+  <data name="Quick actions" xml:space="preserve"><value>Gyorsműveletek</value></data>
+  <data name="Start" xml:space="preserve"><value>Kezdőlap</value></data>
+  <data name="Try the new navigation (preview)" xml:space="preserve"><value>Az új navigáció kipróbálása (előzetes)</value></data>
+  <data name="Waiting for review" xml:space="preserve"><value>Ellenőrzésre vár</value></data>
+  <data name="Welcome, {0}" xml:space="preserve"><value>Üdvözöljük, {0}</value></data>
+  <data name="{0} awaiting approval" xml:space="preserve"><value>{0} jóváhagyásra vár</value></data>
+  <data name="{0} in progress" xml:space="preserve"><value>{0} folyamatban</value></data>
+  <data name="{0} live" xml:space="preserve"><value>{0} élő</value></data>
+  <data name="{0} ratings" xml:space="preserve"><value>{0} értékelés</value></data>
 </root>

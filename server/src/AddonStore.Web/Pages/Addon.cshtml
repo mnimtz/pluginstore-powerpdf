@@ -1,6 +1,7 @@
 @page "/a/{slug}"
 @model AddonStore.Web.Pages.AddonModel
 @{
+    ViewData["PublicPage"] = true;   // public: always the classic layout (S1.5.0)
     ViewData["Title"] = Model.Item?.Name ?? "Add-on";
     ViewData["OgCustom"] = Model.Item is not null;   // the page sets its own preview tags
     if (Model.Item is not null) ViewData["Description"] = Model.Item.Description;

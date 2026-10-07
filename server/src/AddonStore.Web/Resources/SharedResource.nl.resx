@@ -1075,4 +1075,26 @@
   <data name="Free installations not seen for 90 days" xml:space="preserve"><value>Installaties vrijgeven die 90 dagen niet zijn gezien</value></data>
   <data name="No installation was older than 90 days." xml:space="preserve"><value>Geen enkele installatie was ouder dan 90 dagen.</value></data>
   <data name="Installations not seen for 90 days were freed." xml:space="preserve"><value>Installaties die 90 dagen niet zijn gezien, zijn vrijgegeven.</value></data>
+  <data name="Account" xml:space="preserve"><value>Account</value></data>
+  <data name="Administration" xml:space="preserve"><value>Beheer</value></data>
+  <data name="All problem reports" xml:space="preserve"><value>Alle probleemmeldingen</value></data>
+  <data name="Beta versions for the live store" xml:space="preserve"><value>Bètaversies voor de live store</value></data>
+  <data name="Classic navigation" xml:space="preserve"><value>Klassieke navigatie</value></data>
+  <data name="Deliveries of private add-ons" xml:space="preserve"><value>Leveringen van privé-add-ons</value></data>
+  <data name="Developer accounts to approve" xml:space="preserve"><value>Ontwikkelaarsaccounts om goed te keuren</value></data>
+  <data name="Downloads (30 days)" xml:space="preserve"><value>Downloads (30 dagen)</value></data>
+  <data name="Everything at a glance: your add-ons, problem reports and what waits for you." xml:space="preserve"><value>Alles in één oogopslag: uw add-ons, probleemmeldingen en wat op u wacht.</value></data>
+  <data name="Help" xml:space="preserve"><value>Help</value></data>
+  <data name="My work" xml:space="preserve"><value>Mijn werk</value></data>
+  <data name="No new problem reports." xml:space="preserve"><value>Geen nieuwe probleemmeldingen.</value></data>
+  <data name="Previous 30 days: {0}" xml:space="preserve"><value>Vorige 30 dagen: {0}</value></data>
+  <data name="Quick actions" xml:space="preserve"><value>Snelle acties</value></data>
+  <data name="Start" xml:space="preserve"><value>Start</value></data>
+  <data name="Try the new navigation (preview)" xml:space="preserve"><value>Nieuwe navigatie proberen (preview)</value></data>
+  <data name="Waiting for review" xml:space="preserve"><value>Wacht op beoordeling</value></data>
+  <data name="Welcome, {0}" xml:space="preserve"><value>Welkom, {0}</value></data>
+  <data name="{0} awaiting approval" xml:space="preserve"><value>{0} wachten op goedkeuring</value></data>
+  <data name="{0} in progress" xml:space="preserve"><value>{0} in behandeling</value></data>
+  <data name="{0} live" xml:space="preserve"><value>{0} live</value></data>
+  <data name="{0} ratings" xml:space="preserve"><value>{0} beoordelingen</value></data>
 </root>
