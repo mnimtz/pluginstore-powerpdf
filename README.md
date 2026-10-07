@@ -363,6 +363,10 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**S1.5.1:** the customer page tells where the code goes now: the store
+window's *Customer code* button (up to 10 codes per computer) or the policy
+`CustomerCode`.
+
 **Client 1.4.3:** the store window lists the add-ons installed on this
 computer first, under *Installed (n)* with the number of updates; updates come
 first, then the rest by name, add-ons no longer offered last. *More add-ons*

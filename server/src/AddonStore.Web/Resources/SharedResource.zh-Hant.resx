@@ -635,7 +635,6 @@
   <data name="The beta version is now live for this customer." xml:space="preserve"><value>Beta 版本現已對此客戶正式上線。</value></data>
   <data name="Customer delivery created or changed by a developer" xml:space="preserve"><value>開發人員建立或變更了客戶交付</value></data>
   <data name="Deliver add-ons to individual customers: they see them in the store window with their code, nobody else does. Every delivery has a beta and a live stage." xml:space="preserve"><value>將增益集交付給個別客戶：他們可在商店視窗中使用其代碼看到這些增益集，其他人則看不到。每個交付都有 Beta 階段和正式階段。</value></data>
-  <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. Enter the code in the Add-on Store options in Power PDF or distribute it with the policy CustomerCode (client 0.6.0 or later). Several codes can be combined, separated by semicolons." xml:space="preserve"><value>客戶代碼可解鎖此客戶的所有交付；交付代碼只能解鎖一個增益集。請在 Power PDF 的 Add-on Store 選項中輸入代碼，或透過原則 CustomerCode 散發 (用戶端 0.6.0 或更新版本)。可以組合多個代碼，以分號分隔。</value></data>
   <data name="Beta stage: workstations of this customer with the beta option (or policy BetaChannel). Live stage: all others. Typical: new version to beta, test, then &quot;Make live&quot;." xml:space="preserve"><value>Beta 階段：此客戶啟用 Beta 選項 (或原則 BetaChannel) 的工作站。正式階段：其他所有工作站。一般流程：新版本進入 Beta，測試，然後按「設為正式」。</value></data>
   <data name="Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Private add-ons need no admin approval; admins are informed by email." xml:space="preserve"><value>正式「固定」會讓客戶維持在經過測試的版本；「最新」會跟隨每個已發行的版本。私人增益集不需要管理員核准；系統會以電子郵件通知管理員。</value></data>
   <data name="No add-on to deliver: you can deliver your own add-ons that passed the automatic checks and are not delivered to this customer yet." xml:space="preserve"><value>沒有可交付的增益集：您可以交付自己的增益集，前提是已通過自動檢查且尚未交付給此客戶。</value></data>
@@ -1097,4 +1096,5 @@
   <data name="{0} in progress" xml:space="preserve"><value>{0} 個處理中</value></data>
   <data name="{0} live" xml:space="preserve"><value>{0} 個已上線</value></data>
   <data name="{0} ratings" xml:space="preserve"><value>{0} 則評分</value></data>
+  <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. In Power PDF the code is entered in the Add-on Store window with &quot;Customer code&quot; (up to 10 codes per computer), or distributed with the policy CustomerCode (several codes separated by semicolons)." xml:space="preserve"><value>客戶代碼可解鎖該客戶的所有交付，交付代碼僅解鎖一個增益集。在 Power PDF 中，可在 Add-on Store 視窗中透過「客戶代碼」輸入代碼（每台電腦最多 10 個），也可透過原則 CustomerCode 散佈（多個代碼以分號分隔）。</value></data>
 </root>
