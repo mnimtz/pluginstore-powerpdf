@@ -183,6 +183,7 @@ body.upmode #storeBtn{display:flex;margin-inline-start:auto}
 var S = {}, items = [], self = null, sel = null, cat = "", busy = false, locked = false, icons = {}, shots = {}, shotsAsked = {};
 var need = null;   // {q, order: [ids], reasons: {id: text}} while a search by need is shown
 var mode = "store", ppu = null;   // C1.9.0: "updates" = only what waits for an update; ppu = the Power PDF update
+var catalogLoaded = false;          // C1.9.2: the updates view says "nothing to update" only once the catalog is there
 // customer codes (C0.8.0; a list since C1.4.1): list = [{code, name}], info[code] = {valid, customer, packages}
 var code = { has: false, locked: false, customer: "", open: false, list: [], info: {} };
 var CUST = "customer";   // chip key of the delivered add-ons (no category slug can look like this)
@@ -317,8 +318,9 @@ function ucard(tileEl, name, version, text, buttons) {
 }
 // What waits for an update (C1.9.0): Power PDF, the store client, the installed add-ons.
 function renderUpdates() {
-  var u = $("upview"); u.textContent = "";
-  var ups = items.filter(function (x) { return status(x) === "upd" && !x.orphan; });
+  var u = $("upview"), keep = u.scrollTop; u.textContent = "";
+  // installable updates only: one that needs a newer Power PDF is shown in the full store (C1.9.2)
+  var ups = items.filter(function (x) { return status(x) === "upd" && !x.orphan && !x.needsHost && x.installed !== "?"; });
   var head = el("div", "uhead"); head.appendChild(el("h2", "", S.updTitle || ""));
   if (ups.length > 1 && !locked) {
     var all = el("button", "btn sm", S.updAll || "");
@@ -349,7 +351,8 @@ function renderUpdates() {
     u.appendChild(ucard(tile(x), x.name, fmt(S.updFromTo, x.installed, x.version), x.changelog || "",
       locked ? [] : [{ label: S.update, disabled: busy, fn: function () { confirmAct("install", x); } }]));
   });
-  if (!n) u.appendChild(el("div", "empty", S.updNone || ""));
+  if (!n) u.appendChild(el("div", "empty", catalogLoaded ? (S.updNone || "") : "\u2026"));
+  u.scrollTop = keep;
 }
 function render() {
   if (mode === "updates") { renderUpdates(); return; }
@@ -665,7 +668,7 @@ function apply(m) {
     $("storeBtn").onclick = function () { setMode("store"); };
     setMode(m.mode);
   } else if (m.type === "catalog") {
-    items = m.items || []; self = m.self || null;
+    items = m.items || []; self = m.self || null; catalogLoaded = true;
     codeButton();
     $("err").style.display = m.error ? "flex" : "none"; $("err").textContent = m.error || "";
     $("upd").style.display = self ? "flex" : "none";
@@ -737,7 +740,7 @@ function apply(m) {
     $("ppuNews").style.display = m.readme ? "" : "none";
     $("ppuNews").onclick = function () { post({ cmd: "ppReadme", url: m.readme }); };
     $("ppuHide").textContent = S.ppHide || "";
-    $("ppuHide").onclick = function () { $("ppu").style.display = "none"; post({ cmd: "ppHide", version: m.latest }); };
+    $("ppuHide").onclick = function () { $("ppu").style.display = "none"; ppu = null; post({ cmd: "ppHide", version: m.latest }); };
     ppu = m;
     $("ppu").style.display = mode === "updates" ? "none" : "flex";
     if (mode === "updates") render();

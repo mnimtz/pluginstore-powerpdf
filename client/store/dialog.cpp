@@ -325,7 +325,7 @@ void PSShowStoreDialog(const std::wstring& preselectId)
     s_storeOpen = true;
     if (!PSWebUiAvailable() || PSShowWebStore(preselectId) == IDABORT)
     {
-        storedlg::CStoreDialog dlg(preselectId);
+        storedlg::CStoreDialog dlg(preselectId == kPSUpdatesView ? std::wstring() : preselectId);   // C1.9.2
         dlg.DoModal();
     }
     s_storeOpen = false;

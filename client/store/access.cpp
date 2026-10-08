@@ -41,9 +41,11 @@ DWORD WINAPI Worker(LPVOID p)
     {
         // {"ok":true,"data":{"allowed":true|false,...}}
         size_t i = body.find("\"allowed\":");
-        if (i != std::string::npos)
+        size_t v = i == std::string::npos ? i : body.find_first_not_of(" \t\r\n", i + 10);   // C1.9.2: whitespace allowed
+        // only a literal true or false counts; anything else keeps the last answer
+        if (v != std::string::npos && (body.compare(v, 4, "true") == 0 || body.compare(v, 5, "false") == 0))
         {
-            bool allowed = body.compare(i + 10, 4, "true") == 0;
+            bool allowed = body.compare(v, 4, "true") == 0;
             FPLogW(L"[Store] access for license mode %s: %s", PSLicenseMode().c_str(), allowed ? L"allowed" : L"not allowed");
             if (job->notify) PostMessageW(job->notify, job->message, allowed ? 1 : 0, 0);
         }

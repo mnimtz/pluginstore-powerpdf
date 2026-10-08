@@ -77,7 +77,8 @@ DWORD WINAPI UpdateCheckThread(LPVOID p)
                 { r->keys.push_back(e.id + L"@" + e.version); r->names.push_back(L"Add-on Store " + e.version); }
             }
             else if (!PSPolicyNoInstall() && !e.installedVersion.empty() && e.installedVersion != L"?" &&
-                     PSCompareVersions(e.version, e.installedVersion) > 0)
+                     PSCompareVersions(e.version, e.installedVersion) > 0 &&
+                     (e.minHost.empty() || PSHostVersion().empty() || PSCompareVersions(PSHostVersion(), e.minHost) >= 0))
             { r->keys.push_back(e.id + L"@" + e.version); r->names.push_back(e.name + L" " + e.version); }
         }
         // the Power PDF update of this release line (C1.7.0), when the hint is on and the server offers one
@@ -182,6 +183,9 @@ LRESULT CALLBACK LinkWndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp)
     {
         std::unique_ptr<UpdateResult> r(reinterpret_cast<UpdateResult*>(lp));
         if (!r) return 0;
+        // a notice still waiting is out of date now (C1.9.2: it popped up after the update was installed)
+        g_notice.reset();
+        KillTimer(h, kNoticeTimer);
         PSRibbonSetUpdateBadge(r->count);
         PSSetPendingUpdates(r->count);   // the Help ribbon button reads it (also at the next start)
         // one notice per new update (C1.7.0): only what the user was not told about yet

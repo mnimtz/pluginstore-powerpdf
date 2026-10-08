@@ -156,7 +156,8 @@ void PSRegisterHelpUI()
     }
     g_helpBtn = AddHelpButton(group, "AddonStore::HelpTab::Updates", IDS_PS_BTN_UPD_SHORT, IDS_PS_TIP_UPD_NONE, IDB_STORE, IDB_STORE16,
                               OnOpenUpdates, IsStoreVisible);
-    if (int n = PendingNow()) SetBadge(g_helpBtn, n, IDS_PS_TIP_UPD_NONE, IDS_PS_TIP_UPD_SOME);   // right at the start
+    if (PSUpdateBadgeEnabled())   // C1.9.2: without the background check the kept count would never clear
+        if (int n = PendingNow()) SetBadge(g_helpBtn, n, IDS_PS_TIP_UPD_NONE, IDS_PS_TIP_UPD_SOME);   // right at the start
 }
 
 void PSRegisterUI(RVToolBar bar)

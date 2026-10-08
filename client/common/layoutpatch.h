@@ -283,21 +283,16 @@ inline bool EnsureHelpGroup(std::wstring& text)
     bool changed = false;
     // the earlier groups go (their buttons moved into the new one)
     for (const wchar_t* oldName : kOldHelpGroups)
-    {
-        size_t old = text.find(std::wstring(L"<PFFGroup name=\"") + oldName + L"\"");
-        if (old == std::wstring::npos) continue;
-        size_t close = text.find(L"</PFFGroup>", old);
-        if (close == std::wstring::npos) continue;
-        close += 11;
-        while (close < text.size() && (text[close] == L'\r' || text[close] == L'\n')) ++close;
-        text.erase(old, close - old);
-        changed = true;
-    }
+        if (RemoveGroup(text, oldName)) changed = true;   // C1.9.2: every copy, also <PFFGroup .../>
     if (text.find(std::wstring(L"\"") + kHelpGroup + L"\"") != std::wstring::npos) return changed;
     size_t tb = text.find(L"<toolbar name=\"help\"");
     if (tb == std::wstring::npos) return changed;
+    size_t tagEnd = text.find(L'>', tb);
+    if (tagEnd == std::wstring::npos || text[tagEnd - 1] == L'/') return changed;   // <toolbar name="help"/>: leave it
     size_t end = text.find(L"</toolbar>", tb);
     if (end == std::wstring::npos) return changed;
+    size_t nextTb = text.find(L"<toolbar ", tagEnd);
+    if (nextTb != std::wstring::npos && nextTb < end) return changed;               // malformed: never write into another tab
     std::wstring block = std::wstring(L"<PFFGroup name=\"") + kHelpGroup + L"\" GroupType=\"PFFTitleBlock\">\n";
     for (const auto& b : kHelpButtons) block += std::wstring(L"<PFFButton name=\"") + b + L"\" IconMode=\"4\"/>\n";
     text.insert(end, block + L"</PFFGroup>\n");

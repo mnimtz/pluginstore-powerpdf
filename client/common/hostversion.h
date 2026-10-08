@@ -176,13 +176,14 @@ inline int Compare(const std::wstring& a, const std::wstring& b)
 
 inline const Info& Host()
 {
-    static Info cached;
-    static bool done = false;
-    if (done) return cached;
-    done = true;
-    const std::wstring host = HostRoot();
-    if (!FromV1(cached, host) && !FromProgramsList(cached, host))
-        cached.version = FromExe();
+    // a function-local static is initialized once and thread-safely (C1.9.2: worker threads read it too)
+    static const Info cached = [] {
+        Info i;
+        const std::wstring host = HostRoot();
+        if (!FromV1(i, host) && !FromProgramsList(i, host))
+            i.version = FromExe();
+        return i;
+    }();
     return cached;
 }
 

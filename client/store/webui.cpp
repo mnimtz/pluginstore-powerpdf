@@ -555,8 +555,9 @@ protected:
     {
         const std::wstring pre = L"https://";
         if (u.size() < 12 || u.size() > 500 || u.compare(0, pre.size(), pre) != 0) return false;
-        size_t end = u.find(L'/', pre.size());
+        size_t end = u.find_first_of(L"/?#", pre.size());   // C1.9.2: "?" and "#" end the host too
         std::wstring host = u.substr(pre.size(), end == std::wstring::npos ? std::wstring::npos : end - pre.size());
+        if (host.empty() || host.find_first_of(L":%") != std::wstring::npos) return false;
         for (auto& c : host) c = (wchar_t)towlower(c);
         const std::wstring dom = L"tungstenautomation.com";
         for (wchar_t c : u) if (c <= L' ' || c == L'"' || c == L'<' || c == L'>' || c == L'\\' || c == L'@' || c > 0x7E) return false;
@@ -1299,6 +1300,10 @@ protected:
                 refusal = Fmt(IDS_PSW_NEEDS_HOST, e->minHost);   // needs a newer Power PDF
             if (refusal.empty()) RunJob(cmd == L"install" ? JobInstall : JobUninstall, m_entries[idx]);
             else Send(L"{\"type\":\"result\",\"ok\":false,\"title\":" + Json(e ? e->name : std::wstring()) + L",\"message\":" + Json(refusal) + L"}");
+        }
+        else if (cmd == L"selfUpdate" && (!m_hasSelfUpdate || m_jobRunning))
+        {
+            Send(L"{\"type\":\"result\",\"ok\":false}");   // nothing to do now: close the progress dialog (C1.9.2)
         }
         else if (cmd == L"selfUpdate" && m_hasSelfUpdate && !m_jobRunning)
         {

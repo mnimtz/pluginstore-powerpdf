@@ -22,6 +22,15 @@ const wchar_t* kFreeMail[] = {
     L"msn.com", L"yahoo.com", L"yahoo.de", L"icloud.com", L"me.com", L"mac.com", L"aol.com", L"aol.de", L"gmx.de", L"gmx.net",
     L"gmx.at", L"gmx.ch", L"web.de", L"t-online.de", L"freenet.de", L"posteo.de", L"mailbox.org", L"proton.me",
     L"protonmail.com", L"mail.ru", L"yandex.ru", L"yandex.com", L"zoho.com", L"qq.com", L"163.com", L"126.com",
+    // C1.9.2: further providers in the 21 Power PDF languages
+    L"gmx.com", L"ymail.com", L"yahoo.co.uk", L"yahoo.fr", L"yahoo.it", L"yahoo.es", L"yahoo.co.jp", L"hotmail.fr",
+    L"hotmail.it", L"hotmail.es", L"hotmail.co.uk", L"outlook.fr", L"outlook.it", L"outlook.es", L"live.fr", L"live.it",
+    L"orange.fr", L"free.fr", L"laposte.net", L"sfr.fr", L"wanadoo.fr", L"libero.it", L"virgilio.it", L"tiscali.it",
+    L"seznam.cz", L"centrum.cz", L"email.cz", L"wp.pl", L"o2.pl", L"onet.pl", L"interia.pl", L"freemail.hu",
+    L"citromail.hu", L"ziggo.nl", L"kpnmail.nl", L"telenet.be", L"skynet.be", L"bluewin.ch", L"terra.com.br",
+    L"uol.com.br", L"bol.com.br", L"sapo.pt", L"naver.com", L"daum.net", L"hanmail.net", L"yandex.com.tr", L"rambler.ru",
+    L"list.ru", L"bk.ru", L"inbox.ru", L"sina.com", L"sohu.com", L"foxmail.com", L"yeah.net", L"tutanota.com",
+    L"icloud.de", L"arcor.de", L"online.de", L"vodafone.de", L"kabelmail.de", L"emailn.de",
 };
 
 bool IsAscii(const std::wstring& s, const wchar_t* extra)
@@ -68,6 +77,7 @@ void PSInventoryReportIfDue()
 {
     DWORD v = 1;
     if (FPPolicyDword(L"Store", L"Inventory", v) && v == 0) return;
+    if (!PSStoreAllowed()) return;   // C1.9.2: nothing where this license mode may not use the store
     DWORD last = 0, sz = sizeof(last), today = Today();
     if (RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, L"InventorySent", RRF_RT_REG_DWORD, NULL, &last, &sz) == ERROR_SUCCESS && last == today) return;
     std::wstring domain = PSInventoryDomain();

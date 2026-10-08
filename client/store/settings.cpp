@@ -85,7 +85,8 @@ std::wstring PSNotifiedUpdates()
 
 void PSSetNotifiedUpdates(const std::wstring& list)
 {
-    std::wstring v = list.size() > 900 ? list.substr(0, 900) : list;
+    std::wstring v = list;
+    if (v.size() > 900) { v.resize(900); size_t cut = v.rfind(L';'); v.resize(cut == std::wstring::npos ? 0 : cut); }   // whole keys only (C1.9.2)
     RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"NotifiedUpdates", REG_SZ, v.c_str(), (DWORD)((v.size() + 1) * sizeof(wchar_t)));
 }
 
@@ -120,8 +121,11 @@ void PSSetPowerPdfHiddenUpdate(const std::wstring& version)
     RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"PowerPdfHiddenUpdate", REG_SZ, version.c_str(), (DWORD)((version.size() + 1) * sizeof(wchar_t)));
 }
 
+static SRWLOCK g_idLock = SRWLOCK_INIT;
 std::wstring PSInstallId()
 {
+    AcquireSRWLockExclusive(&g_idLock);   // C1.9.2: two workers on the very first start made two ids
+    struct Unlock { ~Unlock() { ReleaseSRWLockExclusive(&g_idLock); } } unlock;
     std::wstring id;
     if (ReadUserString(L"InstallId", id) && id.size() == 36) return id;
     GUID g;
