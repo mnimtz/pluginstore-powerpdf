@@ -132,7 +132,7 @@
                 }
                 @if (pkg.Visibility == "private" && v.Status == VersionStatus.Submitted)
                 {
-                    <br /><small style="color:var(--tun-slate)">@L["Private: delivered to customers, needs no approval"]</small>
+                    <br /><small style="color:var(--tun-slate)">@L["Private: reaches customers after the approval"]</small>
                 }
                 else if (v.Status == VersionStatus.Submitted)
                 {

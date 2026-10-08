@@ -1244,4 +1244,12 @@
   <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>現有客戶分析已關閉，其資料已刪除。</value></data>
   <data name="The existing-customer evaluation is off." xml:space="preserve"><value>現有客戶分析已關閉。</value></data>
   <data name="Data protection" xml:space="preserve"><value>資料保護</value></data>
+  <data name="Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a private version only after its approval." xml:space="preserve"><value>只會列出私人增益集：它們絕不會出現在公開目錄中，只提供給擁有代碼的客戶。正式「固定」會讓客戶維持在經過測試的版本；「最新」會跟隨每個已發行的版本。客戶只有在私人版本核准後才會收到它。</value></data>
+  <data name="Private: reaches customers after the approval" xml:space="preserve"><value>私人：核准後交付給客戶</value></data>
+  <data name="Version approved for customer deliveries." xml:space="preserve"><value>版本已核准，可交付給客戶。</value></data>
+  <data name="Preview" xml:space="preserve"><value>預覽</value></data>
+  <data name="Clients get no hint until the line is maintained." xml:space="preserve"><value>在此版本線設為「維護中」之前，用戶端不會收到提示。</value></data>
+  <data name="Show in this language" xml:space="preserve"><value>以此語言顯示</value></data>
+  <data name="Show the original" xml:space="preserve"><value>顯示原文</value></data>
+  <data name="Translated by the AI assistant (original: {0})." xml:space="preserve"><value>由 AI 助理翻譯（原文：{0}）。</value></data>
 </root>

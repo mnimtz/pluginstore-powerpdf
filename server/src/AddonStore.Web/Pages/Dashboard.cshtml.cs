@@ -18,11 +18,11 @@ public class DashboardModel : PageModel
     public record Row(Package Pkg, string Name, string Owner, PackageVersion? Live, PackageVersion? Beta,
                       PackageVersion? Newest, int Downloads, DateTime LastActivity, PackageVersion? Submitted = null)
     {
-        /// <summary>A public version waits for review (S1.6.0: status Submitted; private add-ons need none).</summary>
-        public bool Pending => Submitted is not null && Pkg.Visibility != "private";
+        /// <summary>A version waits for review (S1.6.0: status Submitted; private add-ons too since S1.11.0).</summary>
+        public bool Pending => Submitted is not null;
         /// <summary>The beta channel offers something newer than live.</summary>
         public bool BetaAhead => Beta is not null && (Live is null || new SemVerComparer().Compare(Beta.Version, Live.Version) > 0);
-        public bool InStore => Live is not null || Beta is not null || (Pkg.Visibility == "private" && Submitted is not null);
+        public bool InStore => Live is not null || Beta is not null;
     }
 
     public List<Package> Packages { get; private set; } = new();

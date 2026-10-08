@@ -1244,4 +1244,12 @@
   <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>L'analyse des clients existants est désactivée et ses données sont supprimées.</value></data>
   <data name="The existing-customer evaluation is off." xml:space="preserve"><value>L'analyse des clients existants est désactivée.</value></data>
   <data name="Data protection" xml:space="preserve"><value>Protection des données</value></data>
+  <data name="Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a private version only after its approval." xml:space="preserve"><value>Seuls les modules privés sont listés : ils n'apparaissent jamais dans le catalogue public, uniquement pour les clients disposant d'un code. Live « fixe » maintient le client sur une version testée ; « la plus récente » suit chaque version publiée. Les clients ne reçoivent une version privée qu'après son approbation.</value></data>
+  <data name="Private: reaches customers after the approval" xml:space="preserve"><value>Privé : parvient aux clients après l'approbation</value></data>
+  <data name="Version approved for customer deliveries." xml:space="preserve"><value>Version approuvée pour les livraisons aux clients.</value></data>
+  <data name="Preview" xml:space="preserve"><value>Aperçu</value></data>
+  <data name="Clients get no hint until the line is maintained." xml:space="preserve"><value>Les clients ne reçoivent aucune indication tant que la ligne n'est pas « Maintenue ».</value></data>
+  <data name="Show in this language" xml:space="preserve"><value>Afficher dans cette langue</value></data>
+  <data name="Show the original" xml:space="preserve"><value>Afficher l'original</value></data>
+  <data name="Translated by the AI assistant (original: {0})." xml:space="preserve"><value>Traduit par l'assistant IA (original : {0}).</value></data>
 </root>

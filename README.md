@@ -366,6 +366,46 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Stricter checks (S1.11.0):**
+- All 21 Power PDF languages are required now. Name, description, changelog
+  and screenshot captions need `zh-Hans`, `zh-Hant`, `ja`, `ko` and `ar` as
+  well, the layout needs the UILayout folders `CHS`, `CHT`, `JPN`, `KOR` and
+  `ARA`, and the .zxt needs string tables in these five languages.
+  `NAME_NOT_LOCALIZED`, `LANG_TEXT_EXTENDED`, `LANGS_EXTENDED_MISSING` and
+  `UI_LANGS_EXTENDED` used to be warnings; they are errors now. The offline
+  packer `make-ppak.ps1` checks all 21 languages too.
+- Every version of a private add-on needs an approval before a customer
+  delivery hands it out. It waits in the review queue like a public one
+  (status `submitted`), and a reviewer approves it in one step. Until then
+  only the developer's personal test code shows it.
+- New security checks on the .zxt. `ELEVATION_UNDECLARED` (error): the
+  binary can start programs with administrator rights (ShellExecute with
+  `runas`), but the manifest has no `"elevation": {"reason": "..."}` (20 to
+  500 characters). `ELEVATION_DECLARED` (warning): the reason is given, and
+  the reviewer checks what runs elevated and why. `COMMAND_SHELL` (warning):
+  the binary can start cmd.exe, PowerShell or another script host.
+  Short words such as `runas` or `cmd.exe` are now searched directly in the
+  binary (ASCII and UTF-16, any position); the string scan before only saw
+  texts of 8 characters or more.
+- Versions already in the store are not checked again. Uploads of the store
+  client need all 21 languages and the elevation reason too (its packaging
+  spec declares the elevated install step; `tools/make_ppak.py` passes
+  `elevation` through).
+- A customer delivery of a private add-on can be set up while its first
+  version still waits for review; it follows "newest" and hands out the
+  version once it is approved. Switching an approved private add-on to public
+  offers its approved versions.
+- AI review aid: written in English by default (setting `Ai.ReviewLanguage`,
+  Settings, AI assistant). Next to it a language list and "Show in this
+  language" translate the stored aid once and keep the translation
+  (`PackageVersion.AiReviewTranslationsJson`); "Show the original" goes back.
+  Creating it again drops the translations.
+- Power PDF updates: "Check now" also reads suggested release lines and shows
+  what it found as a preview in "Detected as current"; clients get no hint
+  and no mail goes out until the line is set to "Maintained". Saving a
+  suggested line as maintained checks it right away (detection mail, client
+  hint). The release line fields use the full width.
+
 **Existing customers (S1.10.0, client 1.8.0):**
 - The navigation entry "Customers" is now "Deliveries" (customer codes and
   private add-ons, unchanged).
@@ -476,7 +516,8 @@ docs/concepts/powerpdf-updates.md):**
   add-ons, also one that waits for review ("For Test: <name>", catalog
   channel `test`). It shares the guessing limit of customer codes.
 - Private add-ons still need no approval: customer deliveries hand out a
-  version that waits for review.
+  version that waits for review. (Changed in S1.11.0: private versions need
+  an approval too.)
 - Existing data: beta versions nobody reviewed become `submitted`; reviewed
   ones stay approved for beta.
 
@@ -593,10 +634,12 @@ store clients already compare four parts, so no client update is needed.
   later, no reboot.
 - `tools/make_ppak.py` takes `"bin": [...]` in the spec.
 - The catalog name should exist in every language (`NAME_NOT_LOCALIZED`, a
-  warning that admins can make mandatory under Settings, Rules).
+  warning that admins can make mandatory under Settings, Rules; an error
+  since S1.11.0).
 - The audit dossier opens in English and offers all 21 languages.
 - Private add-ons show approval as an optional review, since customer
-  deliveries hand out the newest checked version anyway.
+  deliveries hand out the newest checked version anyway. (Changed in
+  S1.11.0: the approval is required.)
 
 **Security hardening (S1.3.1, client 1.3.1):** after a full code audit and
 hardening test:
@@ -632,7 +675,8 @@ Arabic (`ar`, `ARA`, right to left: the portal and the store window mirror
 their layout, message boxes read right to left). For add-ons the 16 stay
 mandatory; the five further ones are recommended and reported as warnings
 (`LANG_TEXT_EXTENDED`, `LANGS_EXTENDED_MISSING`, `UI_LANGS_EXTENDED`), which
-admins can make mandatory under *Settings, Rules*. The translations of the
+admins can make mandatory under *Settings, Rules*. Since S1.11.0 all 21 are
+required and these codes are errors. The translations of the
 five languages were machine-made; a review by native speakers is recommended
 before customers in these markets use the store.
 

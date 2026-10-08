@@ -83,7 +83,16 @@ public class CustomerModel : PageModel
             {
                 if (deliveries.Any(d => d.PackageId == p.Id)) continue;
                 var versions = await _customers.DeliverableVersionsAsync(p.Id);
-                if (versions.Count == 0) continue;
+                if (versions.Count == 0)
+                {
+                    // waits for its first approval (S1.11.0): the delivery can be set up already and follows "newest"
+                    var waiting = (await _db.PackageVersions.AsNoTracking()
+                            .Where(v => v.PackageId == p.Id && v.Status == VersionStatus.Submitted).ToListAsync())
+                        .OrderByDescending(v => v.Version, new AddonStore.Web.Validation.SemVerComparer()).FirstOrDefault();
+                    if (waiting is null) continue;
+                    Packages.Add(new PackageOption(p.Id, CatalogUi.DisplayName(p, waiting, lang), p.Visibility, new List<string>()));
+                    continue;
+                }
                 Packages.Add(new PackageOption(p.Id, CatalogUi.DisplayName(p, versions[0], lang), p.Visibility,
                     versions.Select(v => v.Version).ToList()));
             }

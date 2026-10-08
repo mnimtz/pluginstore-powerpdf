@@ -28,6 +28,7 @@ public static class PackTool
       UILayout\Publish Mode.xml
       UILayout\NameAndTitle.xml and UILayout\<LANG>\NameAndTitle.xml for
                                ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK
+                               CHS CHT JPN KOR ARA (all 21 are required)
       assets\icon.png          recommended
       LICENSES.md              license texts of all third-party code
       docs\...                 optional
@@ -71,11 +72,11 @@ if ($m.version -notmatch '^\d+\.\d+\.\d+(\.\d+)?$') { Fail "version '$($m.versio
 if ($m.id -notmatch '^[a-z][a-z0-9]*(\.[a-z0-9]+)+$') { Fail "id '$($m.id)' is not reverse-DNS lowercase (e.g. com.example.myplugin)" }
 foreach ($f in 'author', 'contactEmail') { if (-not $m.$f) { Fail "manifest field '$f' is not set (mandatory: the catalog shows it)" } }
 if (-not $m.minPowerPdfVersion) { Warn "manifest field 'minPowerPdfVersion' is not set" }
-$langs = 'en', 'de', 'fr', 'it', 'es', 'nl', 'pt', 'da', 'fi', 'nb', 'sv', 'pl', 'cs', 'hu', 'ru', 'tr'
-foreach ($f in 'description', 'changelog') {
+$langs = 'en', 'de', 'fr', 'it', 'es', 'nl', 'pt', 'da', 'fi', 'nb', 'sv', 'pl', 'cs', 'hu', 'ru', 'tr', 'zh-Hans', 'zh-Hant', 'ja', 'ko', 'ar'
+foreach ($f in 'name', 'description', 'changelog') {
     if ($m.$f -is [psobject] -and -not ($m.$f -is [string])) {
         $missing = @($langs | Where-Object { -not $m.$f.$_ })
-        if ($missing.Count -gt 0) { Warn "$f is missing languages: $($missing -join ' ')" }
+        if ($missing.Count -gt 0) { Fail "$f is missing languages: $($missing -join ' ') (all 21 Power PDF languages are required; the store refuses the upload)" }
     }
 }
 
@@ -106,12 +107,12 @@ if ($m.ui -eq 'none') {
 } else {
     if (-not (Test-Path -LiteralPath $layout)) { Fail 'UILayout folder is missing (UILAYOUT_MISSING). If the add-on intentionally has no ribbon buttons, set "ui": "none" in manifest.json.' }
     if (-not (Test-Path -LiteralPath (Join-Path $layout 'Publish Mode.xml'))) { Warn 'UILayout\Publish Mode.xml is missing' }
-    if (-not (Test-Path -LiteralPath (Join-Path $layout 'NameAndTitle.xml'))) { Fail 'UILayout\NameAndTitle.xml is missing (required next to the 16 language folders; LANGS_INCOMPLETE). Add-ons without ribbon buttons set "ui": "none" in manifest.json.' }
+    if (-not (Test-Path -LiteralPath (Join-Path $layout 'NameAndTitle.xml'))) { Fail 'UILayout\NameAndTitle.xml is missing (required next to the 21 language folders; LANGS_INCOMPLETE). Add-ons without ribbon buttons set "ui": "none" in manifest.json.' }
     $noLang = @('ENU', 'DEU', 'FRA', 'ITA', 'ESP', 'NLD', 'PTB', 'DAN', 'FIN', 'NOR', 'SVE', 'PLK', 'CSY', 'HUN', 'RUS', 'TRK' |
         Where-Object { -not (Test-Path -LiteralPath (Join-Path $layout "$_\NameAndTitle.xml")) })
-    if ($noLang.Count -gt 0) { Fail "UILayout language folders without NameAndTitle.xml: $($noLang -join ' ') (all 16 are required; LANGS_INCOMPLETE)" }
+    if ($noLang.Count -gt 0) { Fail "UILayout language folders without NameAndTitle.xml: $($noLang -join ' ') (all 21 are required; LANGS_INCOMPLETE)" }
     $noFurther = @('CHS', 'CHT', 'JPN', 'KOR', 'ARA' | Where-Object { -not (Test-Path -LiteralPath (Join-Path $layout "$_\NameAndTitle.xml")) })
-    if ($noFurther.Count -gt 0) { Warn "recommended UILayout folders of the further Power PDF languages missing: $($noFurther -join ' ') (LANGS_EXTENDED_MISSING)" }
+    if ($noFurther.Count -gt 0) { Fail "UILayout folders of the further Power PDF languages without NameAndTitle.xml: $($noFurther -join ' ') (all 21 are required; LANGS_EXTENDED_MISSING)" }
 }
 if (-not (Test-Path -LiteralPath (Join-Path $Package 'assets\icon.png'))) { Warn 'assets\icon.png is missing (recommended)' }
 if (-not (Test-Path -LiteralPath (Join-Path $Package 'LICENSES.md'))) { Warn 'LICENSES.md is missing' }

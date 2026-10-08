@@ -119,7 +119,7 @@ public class SubmissionService
             PackageId = manifest.Id,
             Version = manifest.Version,
             // waits for review (S1.6.0): no client gets it until a reviewer approves it for beta or live
-            // (private add-ons: customer deliveries hand it out, review optional; the developer's test code shows it)
+            // (private add-ons too since S1.11.0; only the developer's test code shows it before the approval)
             Status = isClient ? VersionStatus.Live : VersionStatus.Submitted,
             ReviewedById = isClient ? user.Id : null,
             ReviewedAt = isClient ? DateTime.UtcNow : null,

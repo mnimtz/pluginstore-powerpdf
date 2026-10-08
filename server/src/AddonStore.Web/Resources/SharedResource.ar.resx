@@ -1244,4 +1244,12 @@
   <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>تم إيقاف تحليل العملاء الحاليين وحذف بياناته.</value></data>
   <data name="The existing-customer evaluation is off." xml:space="preserve"><value>تحليل العملاء الحاليين متوقف.</value></data>
   <data name="Data protection" xml:space="preserve"><value>حماية البيانات</value></data>
+  <data name="Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a private version only after its approval." xml:space="preserve"><value>تُدرج الوظائف الإضافية الخاصة فقط: لا تظهر أبدًا في الكتالوج العام، بل فقط للعملاء الذين لديهم رمز. يُبقي الخيار «ثابت» في المرحلة المباشرة العميل على إصدار مختبَر؛ ويتبع «الأحدث» كل إصدار منشور. لا يحصل العملاء على إصدار خاص إلا بعد اعتماده.</value></data>
+  <data name="Private: reaches customers after the approval" xml:space="preserve"><value>خاص: يصل إلى العملاء بعد الاعتماد</value></data>
+  <data name="Version approved for customer deliveries." xml:space="preserve"><value>تم اعتماد الإصدار لعمليات التسليم إلى العملاء.</value></data>
+  <data name="Preview" xml:space="preserve"><value>معاينة</value></data>
+  <data name="Clients get no hint until the line is maintained." xml:space="preserve"><value>لا يتلقى العملاء أي تنبيه حتى يتم تعيين الخط على "قيد الصيانة".</value></data>
+  <data name="Show in this language" xml:space="preserve"><value>العرض بهذه اللغة</value></data>
+  <data name="Show the original" xml:space="preserve"><value>عرض النص الأصلي</value></data>
+  <data name="Translated by the AI assistant (original: {0})." xml:space="preserve"><value>ترجمها مساعد الذكاء الاصطناعي (الأصل: {0}).</value></data>
 </root>

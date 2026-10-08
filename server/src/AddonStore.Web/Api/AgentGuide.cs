@@ -92,8 +92,8 @@ A .ppak is a ZIP container:
     UILayout/NameAndTitle.xml         required: English titles and tooltips
     UILayout/<LANG>/NameAndTitle.xml  required for each of ENU DEU FRA ITA ESP
                            NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK
-                           (no UILayout at all for "ui": "none", see
-                           "Add-ons without ribbon buttons")
+                           CHS CHT JPN KOR ARA (no UILayout at all for
+                           "ui": "none", see "Add-ons without ribbon buttons")
     bin/<File>.dll         optional: the add-on's own x64 DLLs, listed in
                            files.bin (see "Additional DLLs (bin/)")
     assets/icon.png        recommended, square icon for the catalog
@@ -112,9 +112,9 @@ A .ppak is a ZIP container:
         {
           "id": "com.example.quicknote",
           "version": "1.0.0",
-          "name": { "en": "Quick Note", "de": "Schnellnotiz" },
-          "description": { "en": "Adds a note to the page in one click.", "de": "...", "fr": "...", "...": "all 16: en de fr it es nl pt da fi nb sv pl cs hu ru tr, recommended also zh-Hans zh-Hant ja ko ar" },
-          "changelog": { "en": "First release.", "de": "Erste Version.", "...": "all 16 languages" },
+          "name": { "en": "Quick Note", "de": "Schnellnotiz", "...": "all 21 languages" },
+          "description": { "en": "Adds a note to the page in one click.", "de": "...", "fr": "...", "...": "all 21: en de fr it es nl pt da fi nb sv pl cs hu ru tr zh-Hans zh-Hant ja ko ar" },
+          "changelog": { "en": "First release.", "de": "Erste Version.", "...": "all 21 languages" },
           "category": "productivity",
           "minPowerPdfVersion": "2025.3.7",
           "author": "Team Example",
@@ -188,15 +188,15 @@ item passes because a similar plugin passed.
       statically (MIT/BSD/Apache-2.0 only) or load it yourself with
       LoadLibraryEx and a full path. (FOREIGN_DEPENDENCY)
 - [ ] All UI texts (string tables, dialogs, menus) are in the .zxt in all
-      16 Power PDF languages: one LANGUAGE block each for English, German,
-      French, Italian, Spanish, Dutch, Portuguese (Brazil), Danish, Finnish,
-      Norwegian, Swedish, Polish, Czech, Hungarian, Russian, Turkish. Add
-      missing translations yourself. (UI_LANGS_MISSING)
-- [ ] Recommended: the five further Power PDF languages as well
-      (Simplified and Traditional Chinese, Japanese, Korean, Arabic) in the
-      .zxt, the UILayout folders CHS CHT JPN KOR ARA and the manifest texts
-      (zh-Hans zh-Hant ja ko ar); see "Languages". Missing ones are warnings
-      the store may make mandatory.
+      16 European Power PDF languages: one LANGUAGE block each for English,
+      German, French, Italian, Spanish, Dutch, Portuguese (Brazil), Danish,
+      Finnish, Norwegian, Swedish, Polish, Czech, Hungarian, Russian,
+      Turkish. Add missing translations yourself. (UI_LANGS_MISSING)
+- [ ] The five further Power PDF languages as well, so all 21 are covered:
+      Simplified and Traditional Chinese, Japanese, Korean and Arabic in the
+      .zxt (LANGUAGE blocks LANG_CHINESE/SUBLANG_CHINESE_SIMPLIFIED,
+      LANG_CHINESE/SUBLANG_CHINESE_TRADITIONAL, LANG_JAPANESE, LANG_KOREAN,
+      LANG_ARABIC); see "Languages". (UI_LANGS_EXTENDED)
 - [ ] Binary name `<Name>.zxt`: 1 to 64 letters, digits, `-` or `_`, not the
       name of a plugin Power PDF ships itself (Annot, Catalog, Search,
       Watermark, ... see RESERVED_NAME), and not used by another store
@@ -216,6 +216,13 @@ item passes because a similar plugin passed.
       updates come only through the store. Starting programs and autostart
       entries, services or scheduled tasks are reported to the reviewer.
       (PROCESS_INJECTION, RUNTIME_DOWNLOAD)
+- [ ] No administrator rights without a declaration: code that starts a
+      program elevated (ShellExecute or ShellExecuteEx with the `runas` verb)
+      needs `"elevation": {"reason": "..."}` in manifest.json, 20 to 500
+      characters on what runs elevated, when and why; otherwise remove the
+      code. Start the program you need directly, not through cmd.exe,
+      PowerShell or another script host; the reviewer is told about such
+      code. (ELEVATION_UNDECLARED, COMMAND_SHELL)
 
 **B. manifest.json** (valid JSON, at the ZIP root, at most 256 KB:
 MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
@@ -227,14 +234,13 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
 - [ ] `version`: three numbers or four (e.g. 1.2.0, 2026.4.0.3), higher than every version submitted
       before (checked online). (VERSION_INVALID, VERSION_NOT_INCREMENTED)
 - [ ] `name`: at least `en`, only known language codes, at most 80
-      characters. (NAME_MISSING, NAME_INVALID) An entry for all 16
-      languages (plus the five further ones); a product name may read the
-      same everywhere. (NAME_NOT_LOCALIZED, warning; mandatory where a store
-      escalates it)
-- [ ] `description` and `changelog`: all 16 languages (en de fr it es nl
-      pt da fi nb sv pl cs hu ru tr), description at most 2000 characters,
-      changelog not empty. (LANG_TEXT_INCOMPLETE, CHANGELOG_EMPTY,
-      DESCRIPTION_TOO_LONG)
+      characters. (NAME_MISSING, NAME_INVALID) An entry for all 21
+      languages; a product name may read the same everywhere.
+      (NAME_NOT_LOCALIZED, LANG_TEXT_EXTENDED)
+- [ ] `description` and `changelog`: all 21 languages (en de fr it es nl
+      pt da fi nb sv pl cs hu ru tr zh-Hans zh-Hant ja ko ar), description at
+      most 2000 characters, changelog not empty. (LANG_TEXT_INCOMPLETE,
+      LANG_TEXT_EXTENDED, CHANGELOG_EMPTY, DESCRIPTION_TOO_LONG)
 - [ ] `category`: a slug from `GET {{baseUrl}}/api/categories` (built-in:
       conversion, forms, signing, navigation, printing, productivity,
       system, other), 3 to 24 lowercase letters or hyphens. Propose a new
@@ -268,10 +274,10 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       text-direction overrides and no line breaks in name, author or contact.
       (TEXT_CONTROL_CHARS)
 - [ ] `screenshots` (optional): an array of at most 6 `{ "file": "assets/..." }`,
-      PNG or JPEG, each at most 3 MB and in the package; a caption in all 16
+      PNG or JPEG, each at most 3 MB and in the package; a caption in all 21
       languages or none. (SCREENSHOTS_INVALID, SCREENSHOTS_TOO_MANY,
       SCREENSHOT_MISSING, SCREENSHOT_FORMAT, SCREENSHOT_TOO_LARGE,
-      SCREENSHOT_CAPTION_LANGS)
+      SCREENSHOT_CAPTION_LANGS, LANG_TEXT_EXTENDED)
 
 **C. Ribbon and UILayout**
 - [ ] Add-ons WITHOUT ribbon buttons (an engine or service for a Power PDF
@@ -292,9 +298,10 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       atom in `panel::`; the namespace is not used by another package
       (checked online). (ATOM_OUTSIDE_NAMESPACE, RESERVED_PANEL_NS, ATOM_COLLISION)
 - [ ] `UILayout/Publish Mode.xml`, `UILayout/NameAndTitle.xml` and
-      `UILayout/<LANG>/NameAndTitle.xml` for all 16 folders ENU DEU FRA ITA
-      ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK, with the same atoms in
-      every folder. (LANGS_INCOMPLETE)
+      `UILayout/<LANG>/NameAndTitle.xml` for all 21 folders ENU DEU FRA ITA
+      ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK CHS CHT JPN KOR ARA,
+      with the same atoms in every folder. (LANGS_INCOMPLETE,
+      LANGS_EXTENDED_MISSING)
 
 **D. The ZIP (.ppak)**
 - [ ] A readable ZIP named `<id>-<version>.ppak`, manifest.json at the root,
@@ -413,47 +420,52 @@ functional areas shared by many plug-ins, such as `signing`, `conversion`,
 
 ## Languages (mandatory)
 
-Power PDF has 21 UI languages. The 16 European ones are mandatory, the five
-further ones are recommended (warnings that the store's admins can make
-mandatory on the rules page):
+Power PDF has 21 UI languages, and all 21 are mandatory (since S1.11.0;
+before, the five further ones were recommended):
 
 | | Manifest code | UILayout folder | .rc LANGUAGE |
 |---|---|---|---|
-| Mandatory (16) | en de fr it es nl pt da fi nb sv pl cs hu ru tr | ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK | one block each |
+| European (16) | en de fr it es nl pt da fi nb sv pl cs hu ru tr | ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK | one block each |
 | Simplified Chinese | zh-Hans | CHS | LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED |
 | Traditional Chinese | zh-Hant | CHT | LANG_CHINESE, SUBLANG_CHINESE_TRADITIONAL |
 | Japanese | ja | JPN | LANG_JAPANESE, SUBLANG_JAPANESE_JAPAN |
 | Korean | ko | KOR | LANG_KOREAN, SUBLANG_KOREAN |
 | Arabic (right to left) | ar | ARA | LANG_ARABIC, SUBLANG_ARABIC_SAUDI_ARABIA |
 
-Missing further languages are reported as `LANG_TEXT_EXTENDED` (manifest
-texts and screenshot captions), `LANGS_EXTENDED_MISSING` (UILayout folders)
-and `UI_LANGS_EXTENDED` (.zxt resources). Arabic runs right to left: mirror
+A missing European language is reported as `LANG_TEXT_INCOMPLETE` or
+`NAME_NOT_LOCALIZED` (manifest texts), `SCREENSHOT_CAPTION_LANGS` (captions),
+`LANGS_INCOMPLETE` (UILayout folders) and `UI_LANGS_MISSING` (.zxt
+resources). A missing further language is reported as `LANG_TEXT_EXTENDED`
+(name, description, changelog and screenshot captions),
+`LANGS_EXTENDED_MISSING` (UILayout folders) and `UI_LANGS_EXTENDED` (.zxt
+resources). All of them are errors. Arabic runs right to left: mirror
 your own dialogs (`WS_EX_LAYOUTRTL` / `MB_RTLREADING`) when the host
 language is ARA. Write the .rc file as UTF-8 with `#pragma code_page(65001)`.
 
-Every user-facing text in the manifest ships in ALL 16 European Power PDF
-languages: en, de, fr, it, es, nl, pt, da, fi, nb, sv, pl, cs, hu, ru, tr.
+Every user-facing text in the manifest ships in ALL 21 Power PDF languages:
+en, de, fr, it, es, nl, pt, da, fi, nb, sv, pl, cs, hu, ru, tr, zh-Hans,
+zh-Hant, ja, ko, ar.
 
-- `description` and `changelog` MUST be objects containing all 16 codes; the
-  server rejects the upload otherwise (`LANG_TEXT_INCOMPLETE`). Translate the
-  texts yourself before uploading; the store, the web UI and the Power PDF
-  client show them in each user's language.
-- `name` needs an entry for every language too (`NAME_NOT_LOCALIZED`, a
-  warning that a store can make mandatory; see /api/rules): translate a
+- `description` and `changelog` MUST be objects containing all 21 codes; the
+  server rejects the upload otherwise (`LANG_TEXT_INCOMPLETE`,
+  `LANG_TEXT_EXTENDED`). Translate the texts yourself before uploading; the
+  store, the web UI and the Power PDF client show them in each user's
+  language.
+- `name` needs an entry for every language too (`NAME_NOT_LOCALIZED`,
+  `LANG_TEXT_EXTENDED`; a catalog edit with PATCH only warns): translate a
   descriptive name ("Barcode stamps" -> "Barcode-Stempel"); a product name may
   read the same in every language, but every language needs its entry.
 - The plugin's own UI follows the Power PDF UI language (mandatory, checked):
   - every UILayout language folder ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR
-    SVE PLK CSY HUN RUS TRK with a translated NameAndTitle.xml
-    (`LANGS_INCOMPLETE`, error);
+    SVE PLK CSY HUN RUS TRK CHS CHT JPN KOR ARA with a translated
+    NameAndTitle.xml (`LANGS_INCOMPLETE`, `LANGS_EXTENDED_MISSING`, errors);
   - every visible text of the plug-in (messages, dialogs, menus, options
     pages, tooltips) in the .zxt resources: a STRINGTABLE with one LANGUAGE
-    block per language (en de fr it es nl pt da fi nb sv pl cs hu ru tr) and
+    block per language (the 21 in the table above) and
     run-time selection of the block that matches the host language
     (`DVAppGetLanguage`: ENU, DEU, FRA, ...). The validator reads the
-    resources of the x64 .zxt (`UI_LANGS_MISSING`, error;
-    `UI_STRINGS_PARTIAL` and `UI_LANGS_UNKNOWN`, warnings). Texts hard-coded
+    resources of the x64 .zxt (`UI_LANGS_MISSING` and `UI_LANGS_EXTENDED`,
+    errors; `UI_STRINGS_PARTIAL` and `UI_LANGS_UNKNOWN`, warnings). Texts hard-coded
     in the source cannot follow the language: move them into the string
     table.
 - YOUR job as the submitting AI: when the add-on you were asked to upload
@@ -480,8 +492,8 @@ Then:
 - Every other rule applies unchanged: binaries and hashes, licenses, source
   code, compliance declaration, the capability checks (network only to
   declared `externalServices`, no injection, no runtime download), and all
-  16 languages for every text the user still sees (messages, option pages).
-- The description (all 16 languages) says where the function appears in
+  21 languages for every text the user still sees (messages, option pages).
+- The description (all 21 languages) says where the function appears in
   Power PDF and how to switch it off; a short English description is reported
   (`UI_NONE_DESCRIPTION`). Reviewers confirm this as approval condition R5.
 - An add-on that sends document content to an external service (for example
@@ -567,8 +579,8 @@ plugin:
 - Never use the `panel::` atom namespace (it belongs to Power PDF itself), use
   `IconMode="4"` for large ribbon buttons (1 renders a small icon), and keep
   every UILayout language folder's NameAndTitle.xml atom set identical.
-- Ship all 16 European language folders: ENU DEU FRA ITA ESP NLD PTB DAN FIN
-  NOR SVE PLK CSY HUN RUS TRK; recommended also CHS CHT JPN KOR ARA.
+- Ship all 21 language folders: ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR SVE
+  PLK CSY HUN RUS TRK CHS CHT JPN KOR ARA.
 - Exception for PRIVATE customer add-ons (`"visibility": "private"`): they may
   bring their own tab. Then `ribbonAtomNamespace` is the tab atom itself (e.g.
   `CustomerSign`), the layout declares `<toolbar name="CustomerSign">`, and
@@ -676,8 +688,9 @@ live. Try your own version before that with your **personal test code**
 (profile page, or `GET`/`POST`/`DELETE /api/me/test-code`): entered in the
 store window like a customer code, it shows the newest version of each of your
 add-ons, also one that waits for review, marked "For Test: <your name>"
-(catalog channel `test`). Give the code to the user; never put it in a URL. Private add-ons need no
-approval: customer deliveries hand out the newest checked version either way.
+(catalog channel `test`). Give the code to the user; never put it in a URL. Private add-ons wait
+for review too (since S1.11.0): a reviewer approves them in one step, and only
+then do their customer deliveries hand the version out.
 The package owner gets emails for the upload receipt, approval or
 rejection, versions withdrawn or restored by an admin, the plug-in being taken
 out of the store and catalog changes made by an admin (opt-out in the
@@ -745,7 +758,7 @@ was built. Follow these steps in order, without skipping one:
    stays the original author.
 4. Raise the version (higher than every earlier version of the id, also
    withdrawn ones), in the manifest and in the plug-in's own version
-   resources, and write a changelog for exactly this change in all 16
+   resources, and write a changelog for exactly this change in all 21
    languages.
 5. Redo the compliance audit for the changed code (`thirdParty`,
    `complianceAudit`); it is a new statement under your name.
@@ -776,7 +789,7 @@ it cannot be approved without its source.
 Show what the add-on does: up to 6 screenshots, PNG or JPEG, 1280x800
 recommended, at most 3 MB each, stored under `assets/` in the package and
 listed in the manifest with an optional caption; a caption must come in all
-16 languages, like name, description and changelog:
+21 languages, like name, description and changelog:
 
     "screenshots": [
       { "file": "assets/screenshot-1.png",
@@ -873,8 +886,10 @@ lists `concerns` (severity info, warning, high) and gives a `recommendation`
 (approve, check_more, reject). `lang` is one of the 21 store languages (en, de,
 fr, it, es, nl, pt, da, fi, nb, sv, pl, cs, hu, ru, tr, zh-Hans, zh-Hant, ja, ko,
 ar; default en); the
-response names it in `language`. Automatic review aids use the language an
-admin set in Admin > Settings. Reviewers decide; the aid only advises. Write
+response names it in `language`. Review aids created in the portal or
+automatically use the language an admin set in Admin > Settings (English by
+default); reviewers can show a stored aid in another language there.
+Reviewers decide; the aid only advises. Write
 a precise changelog and keep network hosts and third-party code declared in
 the manifest: the aid compares them with the code.
 
@@ -924,8 +939,12 @@ manifest (or switched with `PATCH {{baseUrl}}/api/packages/{id}
 portal) never appears in the catalog, the website or the
 search; its details answer 404 to everyone but its owner, admins and
 reviewers, and icon, screenshots and downloads also to clients with a code
-for it. Private versions need no admin approval: passing the automatic checks
-is enough.
+for it. Every private version needs an approval before a customer delivery
+hands it out (since S1.11.0). After the automatic checks it waits for review
+like a public one (status `submitted`, listed in the review queue), and a
+reviewer approves it in one step (no separate beta and live approval); from
+then on the customer deliveries hand it out. Until then only the developer's
+own personal test code shows it.
 
     GET   {{baseUrl}}/api/customers                         your customers (admins/reviewers: all)
     POST  {{baseUrl}}/api/customers                         {"name", "contactName"?, "contactEmail"?, "language"?, "note"?, "withCode"?: true}
@@ -946,12 +965,12 @@ customer's creator and admins; treat them like passwords.
 
 Each delivery has two stages. Stage `mode`: `latest` (newest version; a
 public add-on only hands out approved versions, beta stage approved for beta
-or live, live stage approved for live; a private add-on also one that waits
-for review), `fixed`
+or live, live stage approved for live; a private add-on its newest approved
+version in both stages, never one that waits for review), `fixed`
 (with `version`) or `off`. Workstations whose client uses the beta channel get
 the beta stage, all others the live stage. Default when you create a
-delivery: beta `latest`, live `fixed` to the current newest version, so a new
-upload reaches the customer's test group first and goes live with `promote`.
+delivery: beta `latest`, live `fixed` to the current newest version, so a newly
+approved version reaches the customer's test group first and goes live with `promote`.
 
 Clients send codes in the header `X-Customer-Code` (several separated by
 ";"), never in a URL. The catalog then also lists the delivered add-ons
@@ -1060,7 +1079,9 @@ submitter: the server signs what it accepted.
   only the developer's test code shows it), then `beta` when a reviewer
   approves it for beta (clients with the beta option) or `live` when approved
   for the live store, or `rejected` with a reason. A `beta` version can be
-  approved for `live` later. Exception: the store client itself
+  approved for `live` later. Private add-ons take the same path (since
+  S1.11.0) with a single approval, after which their customer deliveries
+  hand the version out. Exception: the store client itself
   (`com.tungsten.pluginstore`) may only be uploaded by admins and goes live
   immediately.
 - Nobody reviews their own work: a reviewer cannot approve a version of an
@@ -1188,12 +1209,12 @@ be free of warnings before review. Info is for information only.
 | BIN_IMPORT_NOT_DELAYED | error | The .zxt imports a DLL of bin/ directly instead of delay-loading it. |
 | BIN_INCLUDED | info | The add-on brings DLLs of its own (bin/). |
 | BIN_NAME_GENERIC | warning | A DLL in bin/ does not start with the plug-in name. |
-| NAME_NOT_LOCALIZED | warning | `name` lacks some of the 16 languages; the catalog shows the English name there (manifest or PATCH). |
+| NAME_NOT_LOCALIZED | error | `name` lacks some of the 16 European languages (manifest; a catalog edit with PATCH only gets a warning, and the catalog shows the English name there). |
 | CHANGELOG_EMPTY | error | `changelog` is missing or empty. |
 | LANG_TEXT_INCOMPLETE | error | `description` or `changelog` lacks one of the 16 languages. |
-| LANG_TEXT_EXTENDED | warning | `description`, `changelog` or a screenshot caption lacks one of the five further Power PDF languages (zh-Hans, zh-Hant, ja, ko, ar). |
-| LANGS_EXTENDED_MISSING | warning | UILayout folders of the five further Power PDF languages (CHS CHT JPN KOR ARA) are missing. |
-| UI_LANGS_EXTENDED | warning | The x64 .zxt has no UI texts in the five further Power PDF languages (Simplified/Traditional Chinese, Japanese, Korean, Arabic). |
+| LANG_TEXT_EXTENDED | error | `name`, `description`, `changelog` or a screenshot caption lacks one of the five further Power PDF languages (zh-Hans, zh-Hant, ja, ko, ar); all 21 languages are required. |
+| LANGS_EXTENDED_MISSING | error | UILayout folders of the five further Power PDF languages (CHS CHT JPN KOR ARA) are missing; all 21 folders are required. |
+| UI_LANGS_EXTENDED | error | The x64 .zxt has no UI texts in the five further Power PDF languages (Simplified/Traditional Chinese, Japanese, Korean, Arabic); add the LANGUAGE blocks before submitting. |
 | ARCH_MISSING | error | `x64` is not declared in `architectures`. |
 | ARCH_ARM64_ABSENT | info | No native arm64 build (fine: x64 runs on Windows on ARM). |
 | FILE_DECLARATION_MISSING | error | `files.<arch>` is not declared. |
@@ -1237,6 +1258,9 @@ be free of warnings before review. Info is for information only.
 | PROCESS_INJECTION | error | The binary can write into or start threads in other processes (WriteProcessMemory, CreateRemoteThread, VirtualAllocEx ...). |
 | RUNTIME_DOWNLOAD | error | The binary downloads files to disk with URLDownloadToFile; add-ons must not fetch and run code at run time. |
 | PROCESS_START | warning | The binary can start programs or open files and links (CreateProcess, ShellExecute, WinExec); the reviewer checks why. |
+| ELEVATION_UNDECLARED | error | The binary can start programs with administrator rights (ShellExecute/ShellExecuteEx with the `runas` verb), but the manifest does not declare it. Add `"elevation": {"reason": "what runs elevated, when and why"}` (20 to 500 characters) or remove the code. |
+| ELEVATION_DECLARED | warning | The binary can start programs with administrator rights and the manifest says why; the reviewer checks what runs elevated and why, and the user always sees the UAC prompt. |
+| COMMAND_SHELL | warning | The binary can start a command interpreter or script host (cmd.exe, powershell.exe, pwsh.exe, wscript.exe, cscript.exe, mshta.exe, rundll32.exe, regsvr32.exe). Start the program you need directly, never pass user or document text into a command line, and explain it in the compliance method text. |
 | PERSISTENCE | warning | The binary may register itself to run outside Power PDF (services, Run keys, scheduled tasks, Winlogon, AppInit_DLLs). |
 | INSECURE_HTTP | warning | The binary contains plain http:// addresses; services are reached over HTTPS only. |
 | TLS_CHECK_DISABLED | error | The source switches off HTTPS certificate validation (ignore flags, curl/OpenSSL verify off, accept-all callbacks). |
@@ -1296,7 +1320,7 @@ be free of warnings before review. Info is for information only.
 | SCREENSHOT_FORMAT | error | A screenshot is not PNG/JPEG or not under assets/. |
 | SCREENSHOT_TOO_LARGE | error | A screenshot is larger than 3 MB. |
 | SCREENSHOT_SIZE | warning | A PNG screenshot is narrower than 640 or wider than 3840 px. |
-| SCREENSHOT_CAPTION_LANGS | error | A caption is given but not in all 16 languages; add the missing ones (or drop the caption). |
+| SCREENSHOT_CAPTION_LANGS | error | A caption is given but not in all 16 European languages; add the missing ones (or drop the caption). The five further ones are reported as LANG_TEXT_EXTENDED. |
 | VERSION_EXISTS | error (409) | This exact version was already uploaded. |
 | PACKAGE_NOT_FOUND | error (404) | No package with this id. |
 | SOURCE_REJECTED | error (422) | The source upload was not stored; see `findings`. |
@@ -1515,17 +1539,18 @@ Store: {{baseUrl}}
    `{{baseUrl}}/api/tools/make-ppak.ps1` writes all three files). The user
    uploads it on the website: Plug-ins, "Submit a package". The .ppak is a
    ZIP with manifest.json at the root, forward-slash entry names,
-   `x64/<Name>.zxt` (Release), `UILayout/` with all 16 language folders
-   (recommended also CHS CHT JPN KOR ARA),
+   `x64/<Name>.zxt` (Release), `UILayout/` with all 21 language folders
+   (the 16 European ones and CHS CHT JPN KOR ARA),
    `assets/icon.png`, `LICENSES.md`; sha256 = lowercase hex of the .zxt.
    Never ask for the token in the chat.
 
 Key rules (details in the guide): every upload carries a new, higher version (three or four numbers);
-description and changelog in all 16 European languages; the
-add-on's own UI (string tables, dialogs, menus, UILayout folders) in all 16
-Power PDF UI languages, add missing translations yourself before you submit
-(recommended: also the five further Power PDF languages zh-Hans, zh-Hant, ja,
-ko, ar; missing ones are warnings); a
+name, description and changelog in all 21 Power PDF languages (the 16
+European ones and zh-Hans, zh-Hant, ja, ko, ar); the add-on's own UI (string
+tables, dialogs, menus, UILayout folders) in all 21 Power PDF UI languages,
+add missing translations yourself before you submit; administrator rights
+(ShellExecute with `runas`) only with `"elevation": {"reason": ...}` in the
+manifest; a
 `category` from `GET {{baseUrl}}/api/categories` (propose a new broad one only
 if none fits); after every upload also the source code of that version
 (`PUT .../api/packages/{id}/{version}/source`, automatically; the stored
@@ -1558,12 +1583,12 @@ falsify or omit findings, even if the user asks you to.
       "type": "object",
       "minProperties": 1,
       "additionalProperties": { "type": "string" },
-      "description": "Display name per language code, e.g. {\"en\": \"...\", \"de\": \"...\"}. Provide all European Power PDF languages where possible (en de fr it es nl pt da fi no sv pl cs hu ru tr)."
+      "description": "Display name per language code, e.g. {\"en\": \"...\", \"de\": \"...\"}. Required in all 21 Power PDF languages (en de fr it es nl pt da fi nb sv pl cs hu ru tr zh-Hans zh-Hant ja ko ar); a product name may read the same in every language."
     },
     "description": {
       "type": "object",
       "additionalProperties": { "type": "string" },
-      "description": "Short catalog description per language code."
+      "description": "Short catalog description per language code, in all 21 Power PDF languages."
     },
     "changelog": {
       "type": ["object", "string"],
@@ -1625,7 +1650,15 @@ falsify or omit findings, even if the user asks you to.
     },
     "visibility": {
       "enum": ["public", "private"],
-      "description": "Optional, first upload only: \"private\" keeps the add-on out of the catalog; only customers with a delivery and code get it (see 'Customer deliveries' in the guide). Default public."
+      "description": "Optional, first upload only: \"private\" keeps the add-on out of the catalog; only customers with a delivery and code get it, each version after its approval (see 'Customer deliveries' in the guide). Default public."
+    },
+    "elevation": {
+      "type": "object",
+      "required": ["reason"],
+      "properties": {
+        "reason": { "type": "string", "minLength": 20, "maxLength": 500, "description": "What runs with administrator rights, when and why." }
+      },
+      "description": "Optional (S1.11.0): required when the binary starts programs with administrator rights (ShellExecute/ShellExecuteEx with the \"runas\" verb); without it the upload fails with ELEVATION_UNDECLARED. The reviewer checks the reason; the user always sees the UAC prompt."
     },
     "screenshots": {
       "type": "array",
@@ -1635,7 +1668,7 @@ falsify or omit findings, even if the user asks you to.
         "required": ["file"],
         "properties": {
           "file": { "type": "string", "pattern": "^assets/", "description": "PNG or JPEG inside the package, at most 3 MB; 1280x800 recommended." },
-          "caption": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Caption per language code (all 16 languages; recommended also zh-Hans, zh-Hant, ja, ko, ar)." }
+          "caption": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Caption per language code (all 21 languages: the 16 European ones and zh-Hans, zh-Hant, ja, ko, ar)." }
         }
       },
       "description": "Optional screenshots shown on the website and in the store window."

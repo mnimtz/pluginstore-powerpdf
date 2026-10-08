@@ -179,10 +179,24 @@ public class PluginModel : PageModel
             Notice = "This action is not allowed for this version."; NoticeKind = "warn";
             return Page();
         }
-        var lang = AddonStore.Web.Services.Lang.Current;
+        // the configured review language (English by default, S1.11.0); other languages on request
+        var lang = (await HttpContext.RequestServices.GetRequiredService<AiService>().ConfigAsync()).ReviewLanguage;
         var ok = await _assist.ReviewAsync(v, lang, HttpContext.RequestAborted);
         Notice = ok ? "AI review aid created." : "The AI provider gave no usable answer. Check the connection test in the settings.";
         NoticeKind = ok ? "ok" : "error";
+        await LoadAsync(id!);
+        return Page();
+    }
+
+    /// <summary>Shows the review aid of a version in another language (translated once, then stored; S1.11.0).</summary>
+    public async Task<IActionResult> OnPostAiTranslateAsync(string id, int versionId, string? lang)
+    {
+        if (!await LoadAsync(id ?? "")) return Forbid();
+        var v = Versions.FirstOrDefault(x => x.Id == versionId);
+        if (v is null || !AiReviewOn) { Notice = "This action is not allowed for this version."; NoticeKind = "warn"; return Page(); }
+        var code = AiAssist.ReviewLanguage(lang);
+        if (await _assist.TranslateReviewAsync(v, code, HttpContext.RequestAborted)) ViewData["AiLang:" + versionId] = code;
+        else { Notice = "The AI provider gave no usable answer. Check the connection test in the settings."; NoticeKind = "error"; }
         await LoadAsync(id!);
         return Page();
     }

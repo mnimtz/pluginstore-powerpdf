@@ -1244,4 +1244,12 @@
   <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>A meglévő ügyfelek kiértékelése ki van kapcsolva, és az adatai törölve lettek.</value></data>
   <data name="The existing-customer evaluation is off." xml:space="preserve"><value>A meglévő ügyfelek kiértékelése ki van kapcsolva.</value></data>
   <data name="Data protection" xml:space="preserve"><value>Adatvédelem</value></data>
+  <data name="Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a private version only after its approval." xml:space="preserve"><value>Csak a privát bővítmények szerepelnek: soha nem jelennek meg a nyilvános katalógusban, csak a kóddal rendelkező ügyfeleknél. Az élő "rögzített" egy tesztelt verzión tartja az ügyfelet; a "legújabb" minden kiadott verziót követ. Az ügyfelek a privát verziót csak jóváhagyás után kapják meg.</value></data>
+  <data name="Private: reaches customers after the approval" xml:space="preserve"><value>Privát: jóváhagyás után jut el az ügyfelekhez</value></data>
+  <data name="Version approved for customer deliveries." xml:space="preserve"><value>A verzió jóváhagyva az ügyfélszállításokhoz.</value></data>
+  <data name="Preview" xml:space="preserve"><value>Előnézet</value></data>
+  <data name="Clients get no hint until the line is maintained." xml:space="preserve"><value>Az ügyfélprogramok csak akkor kapnak értesítést, ha a vonal állapota „Karbantartott”.</value></data>
+  <data name="Show in this language" xml:space="preserve"><value>Megjelenítés ezen a nyelven</value></data>
+  <data name="Show the original" xml:space="preserve"><value>Eredeti megjelenítése</value></data>
+  <data name="Translated by the AI assistant (original: {0})." xml:space="preserve"><value>Az MI-asszisztens fordítása (eredeti: {0}).</value></data>
 </root>

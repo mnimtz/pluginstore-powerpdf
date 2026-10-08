@@ -226,7 +226,45 @@ public class AiAssist
         target.AiReviewAt = DateTime.UtcNow;
         target.AiReviewModel = cfg.Provider + "/" + cfg.Model;
         target.AiReviewLang = language;
+        target.AiReviewTranslationsJson = null;   // translations belonged to the previous text
         await _db.SaveChangesAsync(ct);
+        return true;
+    }
+
+    /// <summary>The stored translations of a review aid (language code to review JSON).</summary>
+    public static Dictionary<string, string> ReviewTranslations(PackageVersion v)
+    {
+        if (string.IsNullOrEmpty(v.AiReviewTranslationsJson)) return new();
+        try { return JsonSerializer.Deserialize<Dictionary<string, string>>(v.AiReviewTranslationsJson) ?? new(); }
+        catch (JsonException) { return new(); }
+    }
+
+    /// <summary>The review aid translated into <paramref name="language"/>, when that translation is stored.</summary>
+    public static ReviewView? ReviewIn(PackageVersion v, string language) =>
+        ReviewTranslations(v).TryGetValue(language, out var j) ? ParseReview(j) : null;
+
+    /// <summary>
+    /// Translates the stored review aid into <paramref name="language"/> and keeps the translation (S1.11.0):
+    /// the review stays in its language (English by default), a reviewer may read it in another one.
+    /// Returns false when there is nothing to translate or the AI gave no usable answer.
+    /// </summary>
+    public async Task<bool> TranslateReviewAsync(PackageVersion v, string language, CancellationToken ct = default)
+    {
+        language = ReviewLanguage(language);
+        if (v.AiReviewJson is null || ParseReview(v.AiReviewJson) is null) return false;
+        if (language == (v.AiReviewLang ?? "en") || ReviewTranslations(v).ContainsKey(language)) return true;
+        var r = await _ai.JsonAsync(
+            $"Translate the text values of this review aid into {ReviewLanguages[language]}. Keep every key, the values of " +
+            "\"recommendation\", \"changelogFits\" and \"severity\", and all code, file names, hosts, versions and product " +
+            "names unchanged. Do not add, drop or soften anything. " + Untrusted,
+            "Review aid:\n<data>\n" + Data(v.AiReviewJson) + "\n</data>\n", ReviewSchema, false, ct);
+        if (r is not { } e || ParseReview(e.GetRawText()) is null) return false;
+        var target = await _db.PackageVersions.FirstAsync(x => x.Id == v.Id, ct);
+        var all = ReviewTranslations(target);
+        all[language] = e.GetRawText();
+        target.AiReviewTranslationsJson = JsonSerializer.Serialize(all);
+        await _db.SaveChangesAsync(ct);
+        v.AiReviewTranslationsJson = target.AiReviewTranslationsJson;
         return true;
     }
 

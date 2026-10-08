@@ -160,14 +160,15 @@ public class PowerPdfUpdateService
             if (newLines > 0) await _db.SaveChangesAsync(ct);
         }
 
-        // 2. the newest update of every watched line
-        var lines = await _db.PowerPdfLines.Where(l => l.Status == "maintained" || l.Status == "security").ToListAsync(ct);
+        // 2. the newest update of every watched line; suggested lines too, as a preview for the admins
+        //    (S1.11.0): clients get no hint from them until an admin sets the line to "maintained"
+        var lines = await _db.PowerPdfLines.Where(l => l.Status == "maintained" || l.Status == "security" || l.Status == "suggested").ToListAsync(ct);
         foreach (var line in lines)
         {
             checkedLines++;
             var r = await CheckLineAsync(line, actor, ct);
             if (r == "new") newUpdates++;
-            else if (r != "ok") problems.Add($"{line.Key}: {r}");
+            else if (r is not ("ok" or "preview")) problems.Add($"{line.Key}: {r}");
         }
         await _settings.SetAsync(LastRunKey, DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture));
         await _settings.SetAsync(LastResultKey, problems.Count == 0 ? "ok" : string.Join("; ", problems));
@@ -230,6 +231,12 @@ public class PowerPdfUpdateService
         line.DetectedAt = DateTime.UtcNow;
         line.SummaryJson = null; line.SummaryDraftJson = null;   // the text belonged to the previous update
         await _db.SaveChangesAsync(ct);
+        if (line.Status == "suggested")
+        {
+            // only a preview: no client sees it, so no mail either
+            await _audit.LogAsync(actor, "powerpdf.update.preview", $"{line.Key} {best}", $"suggested line; {bestUrl}");
+            return "preview";
+        }
         await _audit.LogAsync(actor, "powerpdf.update.detected", $"{line.Key} {best}", $"previous {previous ?? "-"}; {bestUrl}");
         await _notify.NotifyStaffAsync("PowerPdfUpdate", $"[Add-on Store] Power PDF update {best} detected",
             $"<p>Tungsten published <b>{WebUtility.HtmlEncode(title ?? "Power PDF " + best)}</b>" +

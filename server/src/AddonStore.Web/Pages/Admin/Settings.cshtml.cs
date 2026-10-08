@@ -160,6 +160,7 @@ public class SettingsModel : PageModel
         if (problem is null && (id is null || line?.Key != key) && await db.PowerPdfLines.AnyAsync(l => l.Key == key)) problem = "This line exists already.";
         if (problem is not null) { Notice = problem; NoticeKind = "error"; await LoadAsync(); return; }
         if (line is null) { line = new PowerPdfLine(); db.PowerPdfLines.Add(line); }
+        var wasSuggested = line.Id == 0 || line.Status == "suggested";
         if (line.WatchUrl != watchUrl || line.Pattern != pattern || line.Key != key) { line.LastCheckResult = null; }
         line.Key = key; line.Title = title.Length > 0 ? title[..Math.Min(title.Length, 80)] : "Power PDF " + key;
         line.WatchUrl = watchUrl; line.Pattern = pattern; line.Status = status!; line.SupportEnd = supportEnd; line.OfferMajorHint = majorHint;
@@ -167,6 +168,13 @@ public class SettingsModel : PageModel
         line.OwnUpdateManager = ownUpdateManager ?? (Request.Form.ContainsKey("ownUpdateManagerShown") ? false : PowerPdfUpdateService.HasUpdateManager(key));
         await db.SaveChangesAsync();
         await _audit.LogAsync(admin!.DisplayName, "powerpdf.line.saved", key, $"{status}; {watchUrl}; major hint {(majorHint ? "on" : "off")}");
+        if (wasSuggested && status is "maintained" or "security")
+        {
+            // the preview of a suggested line becomes real (S1.11.0): check right away, so the update counts as
+            // detected now (audit, mail to the admins) and the clients of this line get their hint
+            line.LatestVersion = null; line.LatestReadmeUrl = null; line.LatestTitle = null; line.LatestBuildDate = null; line.DetectedAt = null;
+            await ppu.CheckLineAsync(line, admin.DisplayName);
+        }
         Notice = "Settings saved.";
         await LoadAsync();
     }
@@ -475,10 +483,10 @@ public class SettingsModel : PageModel
         await _settings.SetAsync(AiService.ReviewAutoKey, review && reviewAuto ? "1" : "0");
         await _settings.SetAsync(AiService.ReviewSourceKey, review && reviewSource ? "1" : "0");
         await _settings.SetAsync(AiService.SearchKey, search ? "1" : "0");
-        await _settings.SetAsync(AiService.ReviewLanguageKey, AiAssist.ReviewLanguage(reviewLanguage, "de"));
+        await _settings.SetAsync(AiService.ReviewLanguageKey, AiAssist.ReviewLanguage(reviewLanguage, "en"));
         await _settings.SetAsync(AiService.DailyLimitKey, Math.Clamp(dailyLimit, 1, 100000).ToString(System.Globalization.CultureInfo.InvariantCulture));
         await _audit.LogAsync(admin!.DisplayName, "settings.changed", "AI assistant",
-            $"model {(m.Length == 0 ? "default" : m)}, triage {triage}, review {review} (auto {reviewAuto}, source {reviewSource}, language {AiAssist.ReviewLanguage(reviewLanguage, "de")}), search {search}, limit {dailyLimit}");
+            $"model {(m.Length == 0 ? "default" : m)}, triage {triage}, review {review} (auto {reviewAuto}, source {reviewSource}, language {AiAssist.ReviewLanguage(reviewLanguage, "en")}), search {search}, limit {dailyLimit}");
         Notice = "Settings saved.";
         await LoadAsync();
     }

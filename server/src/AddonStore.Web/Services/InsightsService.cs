@@ -77,8 +77,8 @@ public class InsightsService
             var r = ratings.FirstOrDefault(x => x.Key == p.Id);
             var rep = reports.FirstOrDefault(x => x.Key == p.Id);
             addons.Add(new AddonRow(p.Id, CatalogUi.DisplayName(p, live ?? newest, culture), p.Owner?.DisplayName ?? "",
-                // private add-ons need no approval (S1.4.0): they never wait for one
-                live?.Version, beta?.Version, p.Visibility != "private" && waiting,
+                // private add-ons wait for their approval too (S1.11.0)
+                live?.Version, beta?.Version, waiting,
                 now.Where(s => s.PackageId == p.Id).Sum(s => s.Count), prev.Where(s => s.PackageId == p.Id).Sum(s => s.Count),
                 p.Versions.Sum(v => v.Downloads), r is null ? null : Math.Round((double)r.Sum / r.N, 1), r?.N ?? 0,
                 rep?.Active ?? 0, rep?.Open ?? 0,

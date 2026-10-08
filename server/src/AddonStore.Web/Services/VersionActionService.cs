@@ -149,7 +149,7 @@ public class VersionActionService
     /// <summary>
     /// The review decision (S1.6.0: approval for beta or for live). A version waiting for review can be
     /// approved for beta, approved for live or rejected; one approved for beta can go live or be rejected.
-    /// Private add-ons need no approval: approving one records the review (stage live, as before).
+    /// Private add-ons are approved in one step (stage live): from then on their customer deliveries hand it out (S1.11.0).
     /// </summary>
     public async Task<string?> DecideAsync(int versionId, AppUser actor, bool approve, string? comment,
                                            IReadOnlyCollection<string>? confirmed = null, string stage = "live")
@@ -198,11 +198,11 @@ public class VersionActionService
                 $"[Add-on Store] {v.PackageId} {v.Version} {(!approve ? "rejected" : stage == "beta" ? "approved for beta" : "approved")}",
                 (!approve
                     ? $"<p>Your version <b>{v.PackageId} {v.Version}</b> was rejected.</p><p>Reason: {System.Net.WebUtility.HtmlEncode(comment ?? "-")}</p>"
-                    : isPrivate ? $"<p>The review of your private version <b>{v.PackageId} {v.Version}</b> was recorded.</p>"
+                    : isPrivate ? $"<p>Your private version <b>{v.PackageId} {v.Version}</b> was approved: its customer deliveries hand it out now.</p>"
                     : stage == "beta" ? $"<p>Your version <b>{v.PackageId} {v.Version}</b> was approved for beta: workstations with the beta option get it now.</p>"
                     : $"<p>Your version <b>{v.PackageId} {v.Version}</b> was approved and is live for all users.</p>")
                 + await _notify.PluginLinkAsync(v.PackageId));
-        return !approve ? "Version rejected." : isPrivate ? "Review recorded." : stage == "beta" ? "Version approved for beta." : "Version approved and live.";
+        return !approve ? "Version rejected." : isPrivate ? "Version approved for customer deliveries." : stage == "beta" ? "Version approved for beta." : "Version approved and live.";
     }
 
     private async Task<bool> FourEyesAsync() => await _settings.GetAsync("Review.FourEyes") == "on";

@@ -1244,4 +1244,12 @@
   <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>Analiza obecnych klientów jest wyłączona, a jej dane usunięto.</value></data>
   <data name="The existing-customer evaluation is off." xml:space="preserve"><value>Analiza obecnych klientów jest wyłączona.</value></data>
   <data name="Data protection" xml:space="preserve"><value>Ochrona danych</value></data>
+  <data name="Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a private version only after its approval." xml:space="preserve"><value>Wyświetlane są tylko prywatne dodatki: nigdy nie pojawiają się w katalogu publicznym, tylko u klientów z kodem. Live "stała" utrzymuje klienta na przetestowanej wersji; "najnowsza" podąża za każdą wydaną wersją. Klienci otrzymują wersję prywatną dopiero po jej zatwierdzeniu.</value></data>
+  <data name="Private: reaches customers after the approval" xml:space="preserve"><value>Prywatny: trafia do klientów po zatwierdzeniu</value></data>
+  <data name="Version approved for customer deliveries." xml:space="preserve"><value>Wersja zatwierdzona do dostaw dla klientów.</value></data>
+  <data name="Preview" xml:space="preserve"><value>Podgląd</value></data>
+  <data name="Clients get no hint until the line is maintained." xml:space="preserve"><value>Klienci otrzymają powiadomienie dopiero wtedy, gdy linia będzie miała status „Utrzymywana”.</value></data>
+  <data name="Show in this language" xml:space="preserve"><value>Pokaż w tym języku</value></data>
+  <data name="Show the original" xml:space="preserve"><value>Pokaż oryginał</value></data>
+  <data name="Translated by the AI assistant (original: {0})." xml:space="preserve"><value>Przetłumaczone przez asystenta AI (oryginał: {0}).</value></data>
 </root>

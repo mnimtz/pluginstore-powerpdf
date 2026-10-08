@@ -181,23 +181,21 @@ public class CustomerService
     public record StageInput(string? Mode, string? Version);
 
     /// <summary>
-    /// Versions a delivery may hand out: approved for beta or live; for a private add-on also one
-    /// that waits for review (private add-ons need no approval, S1.6.0).
+    /// Versions a delivery may hand out: approved for beta or live. Since S1.11.0 this holds for
+    /// private add-ons too: a version that waits for review reaches no customer (only its developer's test code).
     /// </summary>
     public async Task<List<PackageVersion>> DeliverableVersionsAsync(string packageId)
     {
-        var isPrivate = await _db.Packages.AsNoTracking().AnyAsync(p => p.Id == packageId && p.Visibility == "private");
         return (await _db.PackageVersions.AsNoTracking()
-                .Where(v => v.PackageId == packageId && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta ||
-                                                         (isPrivate && v.Status == VersionStatus.Submitted)))
+                .Where(v => v.PackageId == packageId && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta))
                 .ToListAsync())
             .OrderByDescending(v => v.Version, new SemVerComparer()).ToList();
     }
 
     /// <summary>
     /// The version a stage hands out. "latest": public packages take the newest
-    /// approved version for live and the newest checked one for beta; private
-    /// packages need no approval, so both take the newest checked version.
+    /// approved version for live and the newest approved one for beta; private
+    /// packages are approved in one step, so both take their newest approved version.
     /// </summary>
     public static PackageVersion? Resolve(List<PackageVersion> versions, bool isPrivate, string mode, string? fixedVersion, bool liveStage)
     {
@@ -232,13 +230,15 @@ public class CustomerService
         if (await _db.Deliveries.AnyAsync(d => d.CustomerId == customer.Id && d.PackageId == packageId))
             return Outcome.Fail("DELIVERY_EXISTS", "This add-on is already delivered to this customer; change that delivery instead.");
         var versions = await DeliverableVersionsAsync(packageId);
-        if (versions.Count == 0)
+        // a delivery may be set up while the first version still waits for review (S1.11.0): it then follows
+        // "latest" and the customer gets the version once it is approved
+        if (versions.Count == 0 && !await _db.PackageVersions.AnyAsync(v => v.PackageId == packageId && v.Status == VersionStatus.Submitted))
             return Outcome.Fail("DELIVERY_INVALID", "The add-on has no version that passed the automatic checks yet.");
         // Live default: the newest version now (for a public add-on the newest APPROVED one),
         // so later uploads reach beta workstations first.
         // A public add-on without an approved version has no live default: the live stage then
         // follows "latest", which hands out approved versions only (never an unreviewed beta).
-        var liveDefault = pkg.Visibility == "private" ? versions[0] : versions.FirstOrDefault(v => v.Status == VersionStatus.Live);
+        var liveDefault = pkg.Visibility == "private" ? versions.FirstOrDefault() : versions.FirstOrDefault(v => v.Status == VersionStatus.Live);
         if (live.Mode is null && live.Version is null && liveDefault is null) live = live with { Mode = "latest" };
         else live = live with { Mode = live.Mode ?? "fixed", Version = live.Mode is null or "fixed" ? live.Version ?? liveDefault?.Version : live.Version };
         var err = CheckStage(beta, versions) ?? CheckStage(live, versions);
@@ -661,11 +661,9 @@ public class CustomerService
         (await TestGrantsAsync(ctx)).Any(g => g.Package.Id == packageId && g.Version.Version == version);
 
     /// <summary>
-    /// May this request download a version that waits for review? Only through a customer delivery of a
-    /// private add-on (review optional) or the developer's own test code (S1.6.0); staff is checked by the caller.
+    /// May this request download a version that waits for review? Only through the developer's own test
+    /// code (S1.6.0); customer deliveries hand out approved versions only (S1.11.0). Staff is checked by the caller.
     /// </summary>
     public async Task<bool> MayGetSubmittedAsync(HttpContext ctx, Package pkg, string version) =>
-        (pkg.Visibility == "private" &&
-         (await GrantsAsync(ctx)).Any(g => g.Package.Id == pkg.Id && (g.Beta?.Version == version || g.Live?.Version == version))) ||
         await IsTestVersionAsync(ctx, pkg.Id, version);
 }

@@ -293,6 +293,8 @@ public class PackageVersion
     public string? AiReviewModel { get; set; }
     // Language of the review aid text (S0.17.0; null = created before that).
     public string? AiReviewLang { get; set; }
+    /// <summary>Translations of the review aid shown on request (S1.11.0): {"de": review JSON, ...}.</summary>
+    public string? AiReviewTranslationsJson { get; set; }
     /// <summary>Security block of this version (S1.0.11): withdrawn, and clients that have it installed are told to remove it.</summary>
     public DateTime? BlockedAt { get; set; }
     public string? BlockReason { get; set; }

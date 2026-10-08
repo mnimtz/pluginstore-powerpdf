@@ -62,6 +62,7 @@ else if (Model.SigningKeyId.Length > 0)
 </div>
 }
 
+<style>.ppline input:not([type=checkbox]):not([type=hidden]), .ppline select { width: 100%; box-sizing: border-box; }</style>
 @if (Model.View == "updates")
 {
 <div class="card" style="max-width:900px" id="updates">
@@ -91,7 +92,7 @@ else if (Model.SigningKeyId.Length > 0)
         <h3 style="margin:0">@L["Release lines"]</h3>
         <form method="post" asp-page-handler="PpCheck"><button type="submit" class="btn small">@L["Check now"]</button></form>
     </div>
-    @{ var watched = Model.PpLines.Where(l => l.Status is "maintained" or "security").ToList(); }
+    @{ var watched = Model.PpLines.Where(l => l.Status is "maintained" or "security" or "suggested").ToList(); }
     @if (watched.Count > 0)
     {
         <div class="lead-box" style="margin:10px 0">
@@ -101,7 +102,7 @@ else if (Model.SigningKeyId.Length > 0)
                 @foreach (var w in watched)
                 {
                     <tr>
-                        <td>@w.Title</td>
+                        <td>@w.Title @if (w.Status == "suggested") { <br /><span class="badge beta">@L["Preview"]</span> <span class="small muted">@L["Clients get no hint until the line is maintained."]</span> }</td>
                         <td>@if (w.LatestVersion is null) { <span class="muted">@L["not found yet"]</span> } else { <b>@w.LatestVersion</b><br /><span class="small muted">@w.LatestTitle</span> }</td>
                         <td>@(w.LatestBuildDate ?? "-")</td>
                         <td>@(w.DetectedAt is { } wd ? Time.Fmt(wd) : "-")</td>
@@ -145,7 +146,7 @@ else if (Model.SigningKeyId.Length > 0)
             {
                 <p class="small" style="margin:8px 0"><a href="@ln.LatestReadmeUrl" target="_blank" rel="noopener noreferrer">ReadMe @ln.LatestVersion</a> · @L["Detected"]: @(ln.DetectedAt is { } da ? Time.Fmt(da) : "-")</p>
             }
-            <form method="post" asp-page-handler="PpLine" class="stack" style="max-width:none;margin-top:8px">
+            <form method="post" asp-page-handler="PpLine" class="stack ppline" style="max-width:none;margin-top:8px">
                 <input type="hidden" name="id" value="@ln.Id" />
                 <div style="display:grid;grid-template-columns:minmax(0,140px) minmax(0,1fr);gap:8px">
                     <div><label>@L["Line"]</label><input name="key" value="@ln.Key" required maxlength="10" /></div>
@@ -215,7 +216,7 @@ else if (Model.SigningKeyId.Length > 0)
     }
     <details class="card" style="margin:8px 0;padding:10px 14px">
         <summary style="cursor:pointer"><b>@L["Add a release line"]</b></summary>
-        <form method="post" asp-page-handler="PpLine" class="stack" style="max-width:none;margin-top:8px">
+        <form method="post" asp-page-handler="PpLine" class="stack ppline" style="max-width:none;margin-top:8px">
             <div style="display:grid;grid-template-columns:minmax(0,140px) minmax(0,1fr);gap:8px">
                 <div><label>@L["Line"]</label><input name="key" placeholder="2026.4" required maxlength="10" /></div>
                 <div><label>@L["Name"]</label><input name="title" placeholder="Power PDF 2026.4" maxlength="80" /></div>

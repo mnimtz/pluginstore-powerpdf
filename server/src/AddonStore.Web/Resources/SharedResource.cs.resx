@@ -1244,4 +1244,12 @@
   <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>Vyhodnocení stávajících zákazníků je vypnuto a jeho data jsou odstraněna.</value></data>
   <data name="The existing-customer evaluation is off." xml:space="preserve"><value>Vyhodnocení stávajících zákazníků je vypnuto.</value></data>
   <data name="Data protection" xml:space="preserve"><value>Ochrana dat</value></data>
+  <data name="Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a private version only after its approval." xml:space="preserve"><value>Zobrazeny jsou jen soukromé doplňky: nikdy se neobjeví ve veřejném katalogu, jen u zákazníků s kódem. Live "pevná" ponechá zákazníka na otestované verzi; "nejnovější" sleduje každou vydanou verzi. Zákazníci dostanou soukromou verzi až po jejím schválení.</value></data>
+  <data name="Private: reaches customers after the approval" xml:space="preserve"><value>Soukromé: k zákazníkům se dostane po schválení</value></data>
+  <data name="Version approved for customer deliveries." xml:space="preserve"><value>Verze schválena pro dodávky zákazníkům.</value></data>
+  <data name="Preview" xml:space="preserve"><value>Náhled</value></data>
+  <data name="Clients get no hint until the line is maintained." xml:space="preserve"><value>Klienti dostanou upozornění až tehdy, když má řada stav „Udržovaná“.</value></data>
+  <data name="Show in this language" xml:space="preserve"><value>Zobrazit v tomto jazyce</value></data>
+  <data name="Show the original" xml:space="preserve"><value>Zobrazit originál</value></data>
+  <data name="Translated by the AI assistant (original: {0})." xml:space="preserve"><value>Přeloženo asistentem AI (originál: {0}).</value></data>
 </root>

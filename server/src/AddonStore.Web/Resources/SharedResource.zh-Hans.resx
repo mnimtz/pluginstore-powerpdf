@@ -1244,4 +1244,12 @@
   <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>现有客户分析已关闭，其数据已删除。</value></data>
   <data name="The existing-customer evaluation is off." xml:space="preserve"><value>现有客户分析已关闭。</value></data>
   <data name="Data protection" xml:space="preserve"><value>数据保护</value></data>
+  <data name="Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a private version only after its approval." xml:space="preserve"><value>仅列出私有加载项：它们从不出现在公共目录中，仅对拥有代码的客户显示。正式阶段设为“固定”可使客户保持在经过测试的版本上；“最新”则跟随每个已发布的版本。客户只有在私有版本获批后才会收到它。</value></data>
+  <data name="Private: reaches customers after the approval" xml:space="preserve"><value>私有：获批后交付给客户</value></data>
+  <data name="Version approved for customer deliveries." xml:space="preserve"><value>版本已获批，可交付给客户。</value></data>
+  <data name="Preview" xml:space="preserve"><value>预览</value></data>
+  <data name="Clients get no hint until the line is maintained." xml:space="preserve"><value>在该版本线设为“维护中”之前，客户端不会收到提示。</value></data>
+  <data name="Show in this language" xml:space="preserve"><value>以此语言显示</value></data>
+  <data name="Show the original" xml:space="preserve"><value>显示原文</value></data>
+  <data name="Translated by the AI assistant (original: {0})." xml:space="preserve"><value>由 AI 助手翻译（原文：{0}）。</value></data>
 </root>

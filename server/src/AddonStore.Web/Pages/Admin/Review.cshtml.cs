@@ -52,10 +52,22 @@ public class ReviewModel : PageModel
         await LoadAsync();
         var v = Queue.FirstOrDefault(x => x.Id == versionId);
         if (v is null || !AiReviewOn) { Notice = "This action is not allowed for this version."; return; }
-        var lang = AddonStore.Web.Services.Lang.Current;
+        var lang = (await HttpContext.RequestServices.GetRequiredService<AddonStore.Web.Services.AiService>().ConfigAsync()).ReviewLanguage;
         Notice = await _assist.ReviewAsync(v, lang, HttpContext.RequestAborted)
             ? "AI review aid created."
             : "The AI provider gave no usable answer. Check the connection test in the settings.";
+        await LoadAsync();
+    }
+
+    /// <summary>Shows the review aid in another language (S1.11.0).</summary>
+    public async Task OnPostAiTranslateAsync(int versionId, string? lang)
+    {
+        await LoadAsync();
+        var v = Queue.FirstOrDefault(x => x.Id == versionId);
+        if (v is null || !AiReviewOn) { Notice = "This action is not allowed for this version."; return; }
+        var code = AddonStore.Web.Services.AiAssist.ReviewLanguage(lang);
+        if (await _assist.TranslateReviewAsync(v, code, HttpContext.RequestAborted)) ViewData["AiLang:" + versionId] = code;
+        else Notice = "The AI provider gave no usable answer. Check the connection test in the settings.";
         await LoadAsync();
     }
 
@@ -64,9 +76,8 @@ public class ReviewModel : PageModel
         var ai = await _ai.ConfigAsync();
         AiReviewOn = ai.On && ai.Review;
         _db.ChangeTracker.Clear();
-        // private add-ons need no approval: they reach customers through deliveries
-        Queue = await _db.PackageVersions.Where(v => v.Status == VersionStatus.Submitted && v.PackageId != SubmissionService.ClientPackageId &&
-                                                     !_db.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private"))
+        // private add-ons are reviewed too (S1.11.0): no customer gets a version before its approval
+        Queue = await _db.PackageVersions.Where(v => v.Status == VersionStatus.Submitted && v.PackageId != SubmissionService.ClientPackageId)
             .OrderBy(v => v.SubmittedAt).ToListAsync();
         var cmp = new AddonStore.Web.Validation.SemVerComparer();
         var betas = await _db.PackageVersions.Where(v => v.Status == VersionStatus.Beta &&

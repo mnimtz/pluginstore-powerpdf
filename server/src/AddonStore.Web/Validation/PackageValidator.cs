@@ -319,7 +319,7 @@ public class PackageValidator
                 // mandatory (Settings, Rules); a product name may read the same in every language
                 var nameMissing = MissingLanguages(root, "name");
                 if (nameMissing.Count > 0)
-                    report.Warn("NAME_NOT_LOCALIZED",
+                    report.Error("NAME_NOT_LOCALIZED",
                         $"'name' is missing languages: {string.Join(", ", nameMissing)}; the catalog shows the English name there.",
                         $"Give 'name' an entry for each of {string.Join(", ", RequiredLanguages)} (and zh-Hans, zh-Hant, ja, ko, ar). " +
                         "Translate descriptive names; a product name may read the same in every language, but every language needs its entry.");
@@ -327,7 +327,7 @@ public class PackageValidator
                 {
                     var nameExtended = MissingExtended(root, "name");
                     if (nameExtended.Count > 0)
-                        report.Warn("LANG_TEXT_EXTENDED",
+                        report.Error("LANG_TEXT_EXTENDED",
                             $"'name' lacks the further Power PDF languages: {string.Join(", ", nameExtended)}.",
                             "Add \"zh-Hans\", \"zh-Hant\", \"ja\", \"ko\" and \"ar\" to the name (a product name may stay the same).");
                 }
@@ -342,13 +342,13 @@ public class PackageValidator
                             $"'{field}' is missing languages: {string.Join(", ", missing)}.",
                             $"Provide '{field}' as an object with all 16 languages: {string.Join(", ", RequiredLanguages)}. " +
                             "Translate the text yourself; the store shows it in the user's language.");
-                    // the five further Power PDF languages (S1.2.0): recommended
+                    // the five further Power PDF languages: recommended since S1.2.0, required since S1.11.0
                     var extended = MissingExtended(root, field);
                     if (extended.Count > 0)
-                        report.Warn("LANG_TEXT_EXTENDED",
+                        report.Error("LANG_TEXT_EXTENDED",
                             $"'{field}' lacks the further Power PDF languages: {string.Join(", ", extended)}.",
                             "Power PDF also runs in Simplified and Traditional Chinese, Japanese, Korean and Arabic: add " +
-                            "\"zh-Hans\", \"zh-Hant\", \"ja\", \"ko\" and \"ar\" (translate the text yourself). Without them those users read English.");
+                            "\"zh-Hans\", \"zh-Hant\", \"ja\", \"ko\" and \"ar\" (translate the text yourself). All 21 Power PDF languages are required.");
                 }
 
                 // Add-ons without ribbon buttons (S1.1.1) declare "ui": "none"; the ribbon rules
@@ -757,7 +757,7 @@ public class PackageValidator
                 "en de fr it es nl pt da fi nb sv pl cs hu ru tr, and pick the block that matches the host language at run time.");
         var furtherMissing = PeResources.ExtendedLanguages.Where(l => !present.Contains(l.Primary)).Select(l => l.Code).ToList();
         if (missing.Count == 0 && furtherMissing.Count > 0)
-            report.Warn("UI_LANGS_EXTENDED",
+            report.Error("UI_LANGS_EXTENDED",
                 $"'{file}' has no UI texts in the further Power PDF languages: {string.Join(", ", furtherMissing)}.",
                 "Power PDF also runs in Simplified and Traditional Chinese, Japanese, Korean and Arabic: add LANGUAGE blocks " +
                 "LANG_CHINESE/SUBLANG_CHINESE_SIMPLIFIED, LANG_CHINESE/SUBLANG_CHINESE_TRADITIONAL, LANG_JAPANESE, LANG_KOREAN and LANG_ARABIC (right to left).");
@@ -835,6 +835,25 @@ public class PackageValidator
         if (processes.Count > 0)
             report.Warn("PROCESS_START", $"'{file}' can start programs or open files and links ({string.Join(", ", processes)}).",
                 "Fine for opening a document, a mail or a web page the user asked for. Say in the compliance method text what is started and why; the reviewer checks it. Never start downloaded or temporary programs.");
+
+        // Administrator rights (S1.11.0): ShellExecute with the "runas" verb starts a program elevated after a
+        // UAC prompt. Allowed only when the manifest says why ("elevation": {"reason": ...}); the reviewer checks it.
+        var shellExec = processes.Where(p => p.StartsWith("ShellExecute", StringComparison.Ordinal)).ToList();
+        if (shellExec.Count > 0 && HasToken(bytes, "runas"))
+        {
+            var reason = root.TryGetProperty("elevation", out var el) && el.ValueKind == JsonValueKind.Object ? GetString(el, "reason") : null;
+            if (reason is null || reason.Trim().Length < 20)
+                report.Error("ELEVATION_UNDECLARED", $"'{file}' can start programs with administrator rights (ShellExecute with \"runas\"), but the manifest does not declare it.",
+                    "Add \"elevation\": {\"reason\": \"what runs elevated, when and why\"} (20 to 500 characters) to the manifest, or remove the code. Add-ons normally need no administrator rights.");
+            else
+                report.Warn("ELEVATION_DECLARED", $"'{file}' can start programs with administrator rights: {reason.Trim()[..Math.Min(reason.Trim().Length, 500)]}",
+                    "The reviewer checks what runs elevated and why; the user always sees the UAC prompt.");
+        }
+        var shells = new[] { "cmd.exe", "powershell.exe", "pwsh.exe", "wscript.exe", "cscript.exe", "mshta.exe", "rundll32.exe", "regsvr32.exe" }
+            .Where(sh => HasToken(bytes, sh)).ToList();
+        if (processes.Count > 0 && shells.Count > 0)
+            report.Warn("COMMAND_SHELL", $"'{file}' can start a command interpreter or script host ({string.Join(", ", shells)}).",
+                "Start the program you need directly instead of a shell, never pass user or document text into a command line, and say in the compliance method text what is run and why.");
 
         var persistence = Uses(ServiceFunctions);
         persistence.AddRange(PersistenceStrings.Where(p => lowerStrings.Any(s => s.Contains(p))));
@@ -1154,7 +1173,7 @@ public class PackageValidator
                         "Give each caption in all 16 languages (en de fr it es nl pt da fi nb sv pl cs hu ru tr).");
                 var extended = MissingExtended(s, "caption");
                 if (extended.Count > 0)
-                    report.Warn("LANG_TEXT_EXTENDED", $"The caption of '{file}' lacks the further Power PDF languages: {string.Join(", ", extended)}.",
+                    report.Error("LANG_TEXT_EXTENDED", $"The caption of '{file}' lacks the further Power PDF languages: {string.Join(", ", extended)}.",
                         "Add the captions in zh-Hans, zh-Hant, ja, ko and ar as well.");
             }
         }
@@ -1482,6 +1501,34 @@ public class PackageValidator
         "Adobe", "Acrobat", "Foxit", "Nitro", "ABBYY", "Bluebeam", "PDF-XChange", "Smallpdf", "iLovePDF", "Wondershare", "PDFelement",
     };
 
+    /// <summary>
+    /// Is a short word (shorter than the 8 characters <see cref="ExtractStrings"/> needs, e.g. "runas", "cmd.exe")
+    /// in the binary as ASCII or UTF-16LE, at any offset, ignoring ASCII case? Not preceded or followed by a letter
+    /// or digit, so "runas" does not match inside "rerunasync". (S1.11.0)
+    /// </summary>
+    internal static bool HasToken(byte[] b, string token)
+    {
+        static byte Low(byte c) => c >= (byte)'A' && c <= (byte)'Z' ? (byte)(c + 32) : c;
+        static bool Word(byte c) => (c >= (byte)'a' && c <= (byte)'z') || (c >= (byte)'A' && c <= (byte)'Z') || (c >= (byte)'0' && c <= (byte)'9');
+        var t = System.Text.Encoding.ASCII.GetBytes(token.ToLowerInvariant());
+        for (int step = 1; step <= 2; step++)          // 1 = ASCII, 2 = UTF-16LE (high bytes zero)
+        {
+            int len = t.Length * step;
+            for (int i = 0; i + len <= b.Length; i++)
+            {
+                if (Low(b[i]) != t[0]) continue;
+                bool ok = true;
+                for (int k = 0; k < t.Length && ok; k++)
+                    ok = Low(b[i + k * step]) == t[k] && (step == 1 || b[i + k * step + 1] == 0);
+                if (!ok) continue;
+                bool before = i >= step && Word(b[i - step]) && (step == 1 || b[i - 1] == 0);
+                bool after = i + len + step <= b.Length && Word(b[i + len]) && (step == 1 || b[i + len + 1] == 0);
+                if (!before && !after) return true;
+            }
+        }
+        return false;
+    }
+
     /// <summary>Printable ASCII and UTF-16LE runs of at least 8 characters, like `strings`.</summary>
     internal static IEnumerable<string> ExtractStrings(byte[] b)
     {
@@ -1663,7 +1710,7 @@ public class PackageValidator
                     "Ship all 16 European Power PDF languages (ENU DEU FRA ITA ESP NLD PTB DAN FIN NOR SVE PLK CSY HUN RUS TRK); the ribbon follows the host language.");
             var further = ExtendedLangFolders.Where(l => !langFolders.Contains(l)).ToList();
             if (further.Count > 0)
-                report.Warn("LANGS_EXTENDED_MISSING",
+                report.Error("LANGS_EXTENDED_MISSING",
                     $"UILayout folders of the further Power PDF languages missing: {string.Join(", ", further)}.",
                     "Power PDF also runs in CHS (Simplified Chinese), CHT (Traditional Chinese), JPN, KOR and ARA: add a translated NameAndTitle.xml in each, so the ribbon follows these languages too.");
         }

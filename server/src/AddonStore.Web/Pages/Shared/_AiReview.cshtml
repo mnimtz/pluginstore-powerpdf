@@ -1,14 +1,24 @@
 @model (AddonStore.Web.Data.PackageVersion V, bool CanCreate)
-@* AI review aid of one version (S0.12.0): stored result plus the button to (re)create it. *@
+@* AI review aid of one version (S0.12.0): stored result plus the button to (re)create it. Since S1.11.0 it is
+   written in the configured review language (English by default); a reviewer can show it in another language,
+   translated once and then stored. *@
 @{
     var v = Model.V;
-    var rv = AddonStore.Web.Services.AiAssist.ParseReview(v.AiReviewJson);
-    // The text is written in one language; offer to recreate it in the viewer's.
+    var original = AddonStore.Web.Services.AiAssist.ParseReview(v.AiReviewJson);
+    var written = v.AiReviewLang ?? "en";
+    // the language to show: the one just translated to (POST), ?ailang=, else the original
+    var wanted = ViewData["AiLang:" + v.Id] as string ?? Context.Request.Query["ailang"].ToString();
+    wanted = wanted.Length > 0 ? AddonStore.Web.Services.AiAssist.ReviewLanguage(wanted, written) : written;
+    var translated = wanted != written ? AddonStore.Web.Services.AiAssist.ReviewIn(v, wanted) : null;
+    var rv = translated ?? original;
     var ui = AddonStore.Web.Services.AiAssist.ReviewLanguage(AddonStore.Web.Services.Lang.Current);
     string LangName(string code) { var n = new System.Globalization.CultureInfo(code).NativeName; return char.ToUpper(n[0]) + n[1..]; }
-    var otherLang = rv is not null && v.AiReviewLang is not null && v.AiReviewLang != ui;
+    // the language offered first: the viewer's, unless the text is already in it
+    var offer = translated is not null ? wanted : ui != written ? ui : (written == "en" ? "de" : "en");
+    var pid = Context.Request.Query["id"].ToString();
+    var originalHref = Context.Request.Path + "?" + (pid.Length > 0 ? "id=" + Uri.EscapeDataString(pid) + "&" : "") + "ailang=" + written + "#ai-" + v.Id;
 }
-<div class="ai-box">
+<div class="ai-box" id="ai-@v.Id">
     <div class="ai-head">
         <b>@L["AI review aid"]</b>
         @if (rv is not null)
@@ -20,15 +30,32 @@
         {
             <form method="post" asp-page-handler="AiReview" asp-route-id="@v.PackageId" style="display:inline">
                 <input type="hidden" name="versionId" value="@v.Id" />
-                <button type="submit" class="btn small secondary">@(otherLang ? L["Create in {0}", LangName(ui)] : L[rv is null ? "Create AI review aid" : "Create again"])</button>
+                <button type="submit" class="btn small secondary">@L[original is null ? "Create AI review aid" : "Create again"]</button>
             </form>
+            @if (original is not null)
+            {
+                <form method="post" asp-page-handler="AiTranslate" asp-route-id="@v.PackageId" style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap">
+                    <input type="hidden" name="versionId" value="@v.Id" />
+                    <select name="lang" aria-label="@L["Language"]" style="width:auto">
+                        @foreach (var code in AddonStore.Web.Services.AiAssist.ReviewLanguages.Keys.Where(c => c != written))
+                        {
+                            <option value="@code" selected="@(code == offer)">@LangName(code)</option>
+                        }
+                    </select>
+                    <button type="submit" class="btn small secondary">@L["Show in this language"]</button>
+                </form>
+            }
         }
     </div>
     @if (rv is not null)
     {
-        @if (otherLang)
+        @if (translated is not null)
         {
-            <p class="muted small">@L["This review aid is written in {0}.", LangName(v.AiReviewLang!)]</p>
+            <p class="muted small">@L["Translated by the AI assistant (original: {0}).", LangName(written)] <a href="@originalHref">@L["Show the original"]</a></p>
+        }
+        else if (written != ui)
+        {
+            <p class="muted small">@L["This review aid is written in {0}.", LangName(written)]</p>
         }
         <p>@rv.Summary</p>
         @if (rv.Changes.Count > 0)

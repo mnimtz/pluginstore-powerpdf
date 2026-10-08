@@ -126,6 +126,7 @@ public static class SchemaUpgrade
             "ALTER TABLE PackageVersions ADD COLUMN AiReviewAt TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN AiReviewModel TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN AiReviewLang TEXT NULL",
+            "ALTER TABLE PackageVersions ADD COLUMN AiReviewTranslationsJson TEXT NULL",   // S1.11.0
             // Customer deliveries (S0.14.0)
             "ALTER TABLE Packages ADD COLUMN Visibility TEXT NOT NULL DEFAULT 'public'",
             "CREATE TABLE IF NOT EXISTS Customers (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, " +

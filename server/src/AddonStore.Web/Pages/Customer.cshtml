@@ -214,13 +214,13 @@
                     </select>
                 </div>
                 <partial name="_StageFields" model='("beta", "latest", (string?)null, Model.Packages[0].Versions)' />
-                <partial name="_StageFields" model='("live", "fixed", Model.Packages[0].Versions[0], Model.Packages[0].Versions)' />
+                <partial name="_StageFields" model='("live", Model.Packages[0].Versions.Count > 0 ? "fixed" : "latest", Model.Packages[0].Versions.FirstOrDefault(), Model.Packages[0].Versions)' />
                 <div><label>@L["From"]</label><input type="date" name="startsAt" /></div>
                 <div><label>@L["Until"]</label><input type="date" name="endsAt" /></div>
                 <label style="font-weight:400"><input type="checkbox" name="ownCode" value="true" style="width:auto" /> @L["Also create a code for this add-on only"]</label>
                 <button type="submit" class="btn cta">@L["Deliver"]</button>
             </form>
-            <p class="small muted">@L["Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live \"fixed\" keeps the customer on a tested version; \"newest\" follows every released version. Private add-ons need no admin approval; admins are informed by email."]</p>
+            <p class="small muted">@L["Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live \"fixed\" keeps the customer on a tested version; \"newest\" follows every released version. Customers get a private version only after its approval."]</p>
         }
     </div>
 }

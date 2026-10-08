@@ -1244,4 +1244,12 @@
   <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>既存顧客の分析はオフになり、そのデータは削除されました。</value></data>
   <data name="The existing-customer evaluation is off." xml:space="preserve"><value>既存顧客の分析はオフです。</value></data>
   <data name="Data protection" xml:space="preserve"><value>データ保護</value></data>
+  <data name="Only private add-ons are listed: they never appear in the public catalog, only for customers with a code. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a private version only after its approval." xml:space="preserve"><value>非公開アドインのみが表示されます。公開カタログには表示されず、コードを持つ顧客にのみ表示されます。ライブの「固定」では顧客をテスト済みのバージョンに留め、「最新」ではリリースされるバージョンすべてに追従します。顧客が非公開バージョンを受け取るのは、承認された後だけです。</value></data>
+  <data name="Private: reaches customers after the approval" xml:space="preserve"><value>非公開: 承認後に顧客に届きます</value></data>
+  <data name="Version approved for customer deliveries." xml:space="preserve"><value>バージョンが顧客への配信用に承認されました。</value></data>
+  <data name="Preview" xml:space="preserve"><value>プレビュー</value></data>
+  <data name="Clients get no hint until the line is maintained." xml:space="preserve"><value>ラインが「保守中」になるまで、クライアントには通知されません。</value></data>
+  <data name="Show in this language" xml:space="preserve"><value>この言語で表示</value></data>
+  <data name="Show the original" xml:space="preserve"><value>原文を表示</value></data>
+  <data name="Translated by the AI assistant (original: {0})." xml:space="preserve"><value>AI アシスタントによる翻訳 (原文: {0})。</value></data>
 </root>
