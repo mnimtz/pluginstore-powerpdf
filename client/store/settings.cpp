@@ -46,6 +46,36 @@ bool PSUseClassicUI()
     return ReadUserDword(L"ClassicUI", v) && v != 0;
 }
 
+bool PSPowerPdfHintLocked()
+{
+    DWORD v = 0;
+    return FPPolicyDword(L"Store", L"PowerPdfUpdates", v);
+}
+
+bool PSPowerPdfHint()
+{
+    DWORD v = 0;
+    if (FPPolicyDword(L"Store", L"PowerPdfUpdates", v)) return v != 0;
+    return ReadUserDword(L"PowerPdfUpdateHint", v) && v != 0;
+}
+
+void PSSavePowerPdfHint(bool on)
+{
+    DWORD v = on ? 1 : 0;
+    RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"PowerPdfUpdateHint", REG_DWORD, &v, sizeof(v));
+}
+
+std::wstring PSPowerPdfHiddenUpdate()
+{
+    std::wstring v;
+    return ReadUserString(L"PowerPdfHiddenUpdate", v) && v.size() < 40 ? v : std::wstring();
+}
+
+void PSSetPowerPdfHiddenUpdate(const std::wstring& version)
+{
+    RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"PowerPdfHiddenUpdate", REG_SZ, version.c_str(), (DWORD)((version.size() + 1) * sizeof(wchar_t)));
+}
+
 std::wstring PSInstallId()
 {
     std::wstring id;

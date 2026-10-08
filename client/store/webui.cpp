@@ -548,6 +548,57 @@ protected:
         Send(L"{\"type\":\"message\",\"title\":" + Json(title) + L",\"message\":" + Json(text) + L"}");
     }
 
+    // A Power PDF update for this release line (C1.6.0): only when the hint is switched on;
+    // the server answers only when its admins switched the update hints on.
+    static bool IsTrustedReadme(const std::wstring& u)
+    {
+        const std::wstring pre = L"https://";
+        if (u.size() < 12 || u.size() > 500 || u.compare(0, pre.size(), pre) != 0) return false;
+        size_t end = u.find(L'/', pre.size());
+        std::wstring host = u.substr(pre.size(), end == std::wstring::npos ? std::wstring::npos : end - pre.size());
+        for (auto& c : host) c = (wchar_t)towlower(c);
+        const std::wstring dom = L"tungstenautomation.com";
+        for (wchar_t c : u) if (c <= L' ' || c == L'"' || c == L'<' || c == L'>' || c == L'\\' || c == L'@' || c > 0x7E) return false;
+        return host == dom || (host.size() > dom.size() && host.compare(host.size() - dom.size() - 1, std::wstring::npos, L"." + dom) == 0);
+    }
+
+    void PowerPdfHint()
+    {
+        if (!PSPowerPdfHint()) return;
+        std::wstring host = PSHostVersion();
+        if (host.empty() || host.size() > 30) return;
+        for (wchar_t c : host) if (!iswdigit(c) && c != L'.') return;
+        std::wstring url = PSServerUrl() + L"/api/powerpdf/update?version=" + host + L"&lang=" + HostLang();
+        std::wstring hidden = PSPowerPdfHiddenUpdate();
+        HWND h = m_hWnd;
+        Spawn([h, url, hidden]() {
+            std::string body;
+            DWORD status = 0;
+            std::wstring out;
+            try
+            {
+                if (PSHttpGetText(url, body, &status) && status == 200)
+                {
+                    std::wstring j = W16(body);
+                    auto str = [&j](const wchar_t* k, size_t max) { return RawField(j, k) == L"null" ? std::wstring() : Field(j, k, max); };
+                    std::wstring latest = str(L"latest", 40);
+                    if (RawField(j, L"newer") == L"true" && !latest.empty() && latest != hidden)
+                    {
+                        std::wstring readme = str(L"readmeUrl", 500);
+                        out = L"{\"type\":\"ppupdate\",\"latest\":" + Json(latest) + L",\"title\":" + Json(str(L"title", 200)) +
+                              L",\"buildDate\":" + Json(str(L"buildDate", 40)) + L",\"summary\":" + Json(str(L"summary", 1200)) +
+                              L",\"readme\":" + Json(IsTrustedReadme(readme) ? readme : std::wstring()) + L"}";
+                    }
+                }
+            }
+            catch (...) { out.clear(); }
+            if (out.empty()) return;
+            auto* m = new AsyncMsg;
+            m->kind = KSend; m->gen = 0; m->text = out;
+            PostAsync(h, m);
+        });
+    }
+
     void SendInit()
     {
         struct S { const wchar_t* key; UINT id; };
@@ -580,6 +631,8 @@ protected:
             { L"codeAsk", IDS_PSW_CODE_ASK }, { L"codeAskAddons", IDS_PSW_CODE_ASK_ADDONS }, { L"codeInvalid", IDS_PSW_CODE_INVALID },
             { L"orphan", IDS_PSW_ORPHAN }, { L"orphanPill", IDS_PSW_ORPHAN_PILL }, { L"seats", IDS_PSW_SEATS },
             { L"secInstalled", IDS_PSW_SEC_INSTALLED }, { L"secUpdates", IDS_PSW_SEC_UPDATES }, { L"secMore", IDS_PSW_SEC_MORE },
+            { L"ppUpdate", IDS_PSW_PP_UPDATE }, { L"ppNews", IDS_PSW_PP_NEWS }, { L"ppHide", IDS_PSW_PP_HIDE },
+            { L"ppInstallHint", IDS_PSW_PP_INSTALL_HINT },
         };
         std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) +
                          (FPLocIsRtl() ? L",\"dir\":\"rtl\"" : L"") +
@@ -1206,7 +1259,20 @@ protected:
     void OnPageMessage(const std::wstring& json)
     {
         std::wstring cmd = Field(json, L"cmd");
-        if (cmd == L"ready") { SendInit(); LoadCatalog(true); }
+        if (cmd == L"ready") { SendInit(); LoadCatalog(true); PowerPdfHint(); }
+        else if (cmd == L"ppHide")
+        {
+            std::wstring v = Field(json, L"version", 40);
+            bool ok = !v.empty();
+            for (wchar_t c : v) if (!iswdigit(c) && c != L'.') ok = false;
+            if (ok) PSSetPowerPdfHiddenUpdate(v);
+        }
+        else if (cmd == L"ppReadme")
+        {
+            // only the official documentation, over HTTPS (C1.6.0)
+            std::wstring u = Field(json, L"url", 500);
+            if (IsTrustedReadme(u)) ShellExecuteW(m_hWnd, L"open", u.c_str(), NULL, NULL, SW_SHOWNORMAL);
+        }
         else if (cmd == L"refresh") LoadCatalog(false);
         else if (cmd == L"migrateDismiss") MigrateDismiss();
         else if (cmd == L"removeBlocked" && !m_jobRunning) { PSOfferBlockedRemoval(m_hWnd, true); LoadCatalog(false); }

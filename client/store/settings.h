@@ -16,6 +16,14 @@ bool         PSUrlLocked();               // true when a policy enforces the URL
 void         PSSaveUserSettings(const std::wstring& url, bool beta);
 bool         PSIsAllowedServerUrl(const std::wstring& url); // https://, or http:// for loopback; empty = default
 bool         PSUseClassicUI();
+// Power PDF update hint in the store window (C1.6.0, off by default): HKCU PowerPdfUpdateHint;
+// policy Store\PowerPdfUpdates (0 = off, 1 = hint) beats it and locks the Options checkbox.
+bool         PSPowerPdfHint();
+bool         PSPowerPdfHintLocked();
+void         PSSavePowerPdfHint(bool on);
+// The update the user hid with "Hide" ("" = none); a newer one shows again.
+std::wstring PSPowerPdfHiddenUpdate();
+void         PSSetPowerPdfHiddenUpdate(const std::wstring& version);
 // Customer codes of deliveries (C1.4.1: up to 10, before only one). Policy
 // Store\CustomerCode (one code or several, separated by ';') beats HKCU CustomerCode
 // ("CODE;CODE"; a single code of an older client reads as a list of one). The

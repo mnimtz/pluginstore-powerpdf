@@ -156,6 +156,11 @@
 #define IDS_PSW_SEC_UPDATES     351
 #define IDS_PSW_SEC_MORE        352
 #define IDS_PSO_CODE_INFO       353
+#define IDS_PSO_PPUPD           354
+#define IDS_PSW_PP_UPDATE       355
+#define IDS_PSW_PP_NEWS         356
+#define IDS_PSW_PP_HIDE         357
+#define IDS_PSW_PP_INSTALL_HINT 358
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261
@@ -179,6 +184,7 @@
 #define IDC_PSO_CODE_LBL        1469
 #define IDC_PSO_CODE            1470
 #define IDC_PSO_CODE_INFO       1471
+#define IDC_PSO_PPUPD           1472
 
 // ---- store dialog ----
 #define IDD_PS_DIALOG           1500

@@ -84,17 +84,18 @@ IDD_PS_OPTIONS DIALOGEX 0, 0, 320, 210
 STYLE DS_SETFONT | WS_CHILD
 FONT 9, "Segoe UI", 400, 0, 0x0
 BEGIN
-    GROUPBOX        "", IDC_PSO_GRP, 4, 4, 312, 122
+    GROUPBOX        "", IDC_PSO_GRP, 4, 4, 312, 136
     LTEXT           "", IDC_PSO_URL_LBL, 12, 18, 296, 10
     EDITTEXT        IDC_PSO_URL, 12, 30, 296, 13, ES_AUTOHSCROLL
     LTEXT           "", IDC_PSO_CODE_LBL, 12, 48, 296, 10
     EDITTEXT        IDC_PSO_CODE, 12, 60, 296, 13, ES_AUTOHSCROLL | ES_UPPERCASE
     LTEXT           "", IDC_PSO_CODE_INFO, 12, 58, 296, 21, SS_NOPREFIX | NOT WS_VISIBLE
     CONTROL         "", IDC_PSO_BETA, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 12, 80, 296, 10
-    LTEXT           "", IDC_PSO_HINT, 12, 94, 296, 26
-    GROUPBOX        "", IDC_PSO_GRP_DIAG, 4, 130, 312, 32
-    CONTROL         "", IDC_PSO_VERBOSE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 12, 143, 296, 10
-    LTEXT           "", IDC_PSO_VERSION, 4, 170, 312, 10
+    CONTROL         "", IDC_PSO_PPUPD, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 12, 94, 296, 10
+    LTEXT           "", IDC_PSO_HINT, 12, 108, 296, 26
+    GROUPBOX        "", IDC_PSO_GRP_DIAG, 4, 144, 312, 32
+    CONTROL         "", IDC_PSO_VERBOSE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 12, 157, 296, 10
+    LTEXT           "", IDC_PSO_VERSION, 4, 184, 312, 10
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -237,6 +238,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Updates: %s"
     IDS_PSW_SEC_MORE  "More add-ons"
     IDS_PSO_CODE_INFO  "Customer codes on this computer: %s. Add or remove them in the store window with ""Customer code""."
+    IDS_PSO_PPUPD  "Show a hint when an update for Power PDF is available"
+    IDS_PSW_PP_UPDATE  "An update for Power PDF is available: %s"
+    IDS_PSW_PP_NEWS  "What's new"
+    IDS_PSW_PP_HIDE  "Hide"
+    IDS_PSW_PP_INSTALL_HINT  "Your IT or a person with administrator rights installs the update."
     IDS_PSD_MSG_SEATS  "All installations of this add-on for your organization are in use. Remove it on a computer that no longer needs it, or ask your provider for more installations."
 END
 
@@ -380,6 +386,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Updates: %s"
     IDS_PSW_SEC_MORE  "Weitere Add-ons"
     IDS_PSO_CODE_INFO  "Kundencodes auf diesem Computer: %s. Hinzufügen und entfernen im Store-Fenster über „Kundencode“."
+    IDS_PSO_PPUPD  "Hinweisen, wenn ein Update für Power PDF verfügbar ist"
+    IDS_PSW_PP_UPDATE  "Für Power PDF ist ein Update verfügbar: %s"
+    IDS_PSW_PP_NEWS  "Was ist neu"
+    IDS_PSW_PP_HIDE  "Ausblenden"
+    IDS_PSW_PP_INSTALL_HINT  "Das Update installiert Ihre IT oder eine Person mit Administratorrechten."
     IDS_PSD_MSG_SEATS  "Alle Installationen dieses Add-ons für Ihre Organisation sind belegt. Entfernen Sie es auf einem Computer, der es nicht mehr benötigt, oder bitten Sie Ihren Anbieter um weitere Installationen."
 END
 
@@ -523,6 +534,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Mises à jour : %s"
     IDS_PSW_SEC_MORE  "Autres modules"
     IDS_PSO_CODE_INFO  "Codes client sur cet ordinateur : %s. Ajoutez-les ou supprimez-les dans la fenêtre du store via « Code client »."
+    IDS_PSO_PPUPD  "Signaler la disponibilité d'une mise à jour de Power PDF"
+    IDS_PSW_PP_UPDATE  "Une mise à jour de Power PDF est disponible : %s"
+    IDS_PSW_PP_NEWS  "Nouveautés"
+    IDS_PSW_PP_HIDE  "Masquer"
+    IDS_PSW_PP_INSTALL_HINT  "La mise à jour est installée par votre service informatique ou une personne disposant des droits d'administrateur."
     IDS_PSD_MSG_SEATS  "Toutes les installations de ce module pour votre organisation sont utilisées. Supprimez-le d'un ordinateur qui n'en a plus besoin ou demandez des installations supplémentaires à votre fournisseur."
 END
 
@@ -666,6 +682,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Aggiornamenti: %s"
     IDS_PSW_SEC_MORE  "Altri componenti aggiuntivi"
     IDS_PSO_CODE_INFO  "Codici cliente su questo computer: %s. Aggiungili o rimuovili nella finestra dello store con ""Codice cliente""."
+    IDS_PSO_PPUPD  "Avvisa quando è disponibile un aggiornamento di Power PDF"
+    IDS_PSW_PP_UPDATE  "È disponibile un aggiornamento di Power PDF: %s"
+    IDS_PSW_PP_NEWS  "Novità"
+    IDS_PSW_PP_HIDE  "Nascondi"
+    IDS_PSW_PP_INSTALL_HINT  "L'aggiornamento viene installato dal reparto IT o da una persona con diritti di amministratore."
     IDS_PSD_MSG_SEATS  "Tutte le installazioni di questo componente aggiuntivo per l'organizzazione sono in uso. Rimuovilo da un computer che non ne ha più bisogno oppure chiedi altre installazioni al fornitore."
 END
 
@@ -809,6 +830,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Actualizaciones: %s"
     IDS_PSW_SEC_MORE  "Más complementos"
     IDS_PSO_CODE_INFO  "Códigos de cliente en este equipo: %s. Agréguelos o quítelos en la ventana de la tienda con ""Código de cliente""."
+    IDS_PSO_PPUPD  "Avisar cuando haya una actualización de Power PDF"
+    IDS_PSW_PP_UPDATE  "Hay una actualización de Power PDF disponible: %s"
+    IDS_PSW_PP_NEWS  "Novedades"
+    IDS_PSW_PP_HIDE  "Ocultar"
+    IDS_PSW_PP_INSTALL_HINT  "La actualización la instala su departamento de TI o una persona con derechos de administrador."
     IDS_PSD_MSG_SEATS  "Todas las instalaciones de este complemento para su organización están en uso. Quítelo de un equipo que ya no lo necesite o solicite más instalaciones a su proveedor."
 END
 
@@ -952,6 +978,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Updates: %s"
     IDS_PSW_SEC_MORE  "Meer add-ons"
     IDS_PSO_CODE_INFO  "Klantcodes op deze computer: %s. Voeg ze toe of verwijder ze in het storevenster via ""Klantcode""."
+    IDS_PSO_PPUPD  "Melden wanneer er een update voor Power PDF beschikbaar is"
+    IDS_PSW_PP_UPDATE  "Er is een update voor Power PDF beschikbaar: %s"
+    IDS_PSW_PP_NEWS  "Wat is er nieuw"
+    IDS_PSW_PP_HIDE  "Verbergen"
+    IDS_PSW_PP_INSTALL_HINT  "De update wordt geïnstalleerd door uw IT-afdeling of iemand met beheerdersrechten."
     IDS_PSD_MSG_SEATS  "Alle installaties van deze invoegtoepassing voor uw organisatie zijn in gebruik. Verwijder deze van een computer die deze niet meer nodig heeft, of vraag uw leverancier om meer installaties."
 END
 
@@ -1095,6 +1126,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Atualizações: %s"
     IDS_PSW_SEC_MORE  "Mais suplementos"
     IDS_PSO_CODE_INFO  "Códigos de cliente neste computador: %s. Adicione ou remova na janela da loja em ""Código de cliente""."
+    IDS_PSO_PPUPD  "Avisar quando houver uma atualização do Power PDF"
+    IDS_PSW_PP_UPDATE  "Há uma atualização do Power PDF disponível: %s"
+    IDS_PSW_PP_NEWS  "Novidades"
+    IDS_PSW_PP_HIDE  "Ocultar"
+    IDS_PSW_PP_INSTALL_HINT  "A atualização é instalada pela sua TI ou por uma pessoa com direitos de administrador."
     IDS_PSD_MSG_SEATS  "Todas as instalações deste suplemento para sua organização estão em uso. Remova-o de um computador que não precisa mais dele ou peça mais instalações ao seu fornecedor."
 END
 
@@ -1238,6 +1274,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Opdateringer: %s"
     IDS_PSW_SEC_MORE  "Flere tilføjelser"
     IDS_PSO_CODE_INFO  "Kundekoder på denne computer: %s. Tilføj eller fjern dem i butiksvinduet med ""Kundekode""."
+    IDS_PSO_PPUPD  "Giv besked, når der er en opdatering til Power PDF"
+    IDS_PSW_PP_UPDATE  "Der er en opdatering til Power PDF: %s"
+    IDS_PSW_PP_NEWS  "Nyheder"
+    IDS_PSW_PP_HIDE  "Skjul"
+    IDS_PSW_PP_INSTALL_HINT  "Opdateringen installeres af din it-afdeling eller en person med administratorrettigheder."
     IDS_PSD_MSG_SEATS  "Alle installationer af dette tilføjelsesprogram for din organisation er i brug. Fjern det fra en computer, der ikke længere har brug for det, eller bed din udbyder om flere installationer."
 END
 
@@ -1381,6 +1422,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Päivitykset: %s"
     IDS_PSW_SEC_MORE  "Lisää lisäosia"
     IDS_PSO_CODE_INFO  "Tämän tietokoneen asiakaskoodit: %s. Lisää tai poista niitä kauppaikkunassa kohdasta ""Asiakaskoodi""."
+    IDS_PSO_PPUPD  "Ilmoita, kun Power PDF:ään on saatavilla päivitys"
+    IDS_PSW_PP_UPDATE  "Power PDF:ään on saatavilla päivitys: %s"
+    IDS_PSW_PP_NEWS  "Uutta"
+    IDS_PSW_PP_HIDE  "Piilota"
+    IDS_PSW_PP_INSTALL_HINT  "Päivityksen asentaa IT-tukesi tai henkilö, jolla on järjestelmänvalvojan oikeudet."
     IDS_PSD_MSG_SEATS  "Kaikki tämän apuohjelman asennukset organisaatiollesi ovat käytössä. Poista se tietokoneesta, joka ei enää tarvitse sitä, tai pyydä toimittajaltasi lisää asennuksia."
 END
 
@@ -1524,6 +1570,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Oppdateringer: %s"
     IDS_PSW_SEC_MORE  "Flere tillegg"
     IDS_PSO_CODE_INFO  "Kundekoder på denne datamaskinen: %s. Legg til eller fjern dem i butikkvinduet med ""Kundekode""."
+    IDS_PSO_PPUPD  "Gi beskjed når en oppdatering for Power PDF er tilgjengelig"
+    IDS_PSW_PP_UPDATE  "En oppdatering for Power PDF er tilgjengelig: %s"
+    IDS_PSW_PP_NEWS  "Nyheter"
+    IDS_PSW_PP_HIDE  "Skjul"
+    IDS_PSW_PP_INSTALL_HINT  "Oppdateringen installeres av IT-avdelingen din eller en person med administratorrettigheter."
     IDS_PSD_MSG_SEATS  "Alle installasjoner av dette tillegget for organisasjonen din er i bruk. Fjern det fra en datamaskin som ikke lenger trenger det, eller be leverandøren din om flere installasjoner."
 END
 
@@ -1667,6 +1718,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Uppdateringar: %s"
     IDS_PSW_SEC_MORE  "Fler tillägg"
     IDS_PSO_CODE_INFO  "Kundkoder på den här datorn: %s. Lägg till eller ta bort dem i butiksfönstret med ""Kundkod""."
+    IDS_PSO_PPUPD  "Meddela när en uppdatering för Power PDF finns"
+    IDS_PSW_PP_UPDATE  "Det finns en uppdatering för Power PDF: %s"
+    IDS_PSW_PP_NEWS  "Nyheter"
+    IDS_PSW_PP_HIDE  "Dölj"
+    IDS_PSW_PP_INSTALL_HINT  "Uppdateringen installeras av din IT-avdelning eller en person med administratörsrättigheter."
     IDS_PSD_MSG_SEATS  "Alla installationer av det här tillägget för din organisation används. Ta bort det från en dator som inte längre behöver det, eller be din leverantör om fler installationer."
 END
 
@@ -1810,6 +1866,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Aktualizacje: %s"
     IDS_PSW_SEC_MORE  "Więcej dodatków"
     IDS_PSO_CODE_INFO  "Kody klienta na tym komputerze: %s. Dodawaj je i usuwaj w oknie sklepu za pomocą przycisku „Kod klienta”."
+    IDS_PSO_PPUPD  "Informuj o dostępności aktualizacji Power PDF"
+    IDS_PSW_PP_UPDATE  "Dostępna jest aktualizacja Power PDF: %s"
+    IDS_PSW_PP_NEWS  "Co nowego"
+    IDS_PSW_PP_HIDE  "Ukryj"
+    IDS_PSW_PP_INSTALL_HINT  "Aktualizację instaluje dział IT lub osoba z uprawnieniami administratora."
     IDS_PSD_MSG_SEATS  "Wszystkie instalacje tego dodatku dla Twojej organizacji są w użyciu. Usuń go z komputera, który już go nie potrzebuje, lub poproś dostawcę o więcej instalacji."
 END
 
@@ -1953,6 +2014,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Aktualizace: %s"
     IDS_PSW_SEC_MORE  "Další doplňky"
     IDS_PSO_CODE_INFO  "Kódy zákazníka v tomto počítači: %s. Přidávejte a odebírejte je v okně obchodu pomocí tlačítka „Kód zákazníka“."
+    IDS_PSO_PPUPD  "Upozornit, když je k dispozici aktualizace Power PDF"
+    IDS_PSW_PP_UPDATE  "Je k dispozici aktualizace Power PDF: %s"
+    IDS_PSW_PP_NEWS  "Co je nového"
+    IDS_PSW_PP_HIDE  "Skrýt"
+    IDS_PSW_PP_INSTALL_HINT  "Aktualizaci nainstaluje vaše IT nebo osoba s právy správce."
     IDS_PSD_MSG_SEATS  "Všechny instalace tohoto doplňku pro vaši organizaci jsou využité. Odeberte ho z počítače, který ho už nepotřebuje, nebo požádejte poskytovatele o další instalace."
 END
 
@@ -2096,6 +2162,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Frissítések: %s"
     IDS_PSW_SEC_MORE  "További bővítmények"
     IDS_PSO_CODE_INFO  "Ügyfélkódok ezen a számítógépen: %s. Az áruház ablakában, az „Ügyfélkód” gombbal adhatja hozzá vagy távolíthatja el őket."
+    IDS_PSO_PPUPD  "Jelezze, ha frissítés érhető el a Power PDF-hez"
+    IDS_PSW_PP_UPDATE  "Frissítés érhető el a Power PDF-hez: %s"
+    IDS_PSW_PP_NEWS  "Újdonságok"
+    IDS_PSW_PP_HIDE  "Elrejtés"
+    IDS_PSW_PP_INSTALL_HINT  "A frissítést az informatikai részleg vagy egy rendszergazdai jogosultsággal rendelkező személy telepíti."
     IDS_PSD_MSG_SEATS  "Ennek a bővítménynek a szervezete számára elérhető összes telepítése használatban van. Távolítsa el egy olyan számítógépről, amelyen már nincs rá szükség, vagy kérjen további telepítéseket a szolgáltatójától."
 END
 
@@ -2239,6 +2310,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Обновления: %s"
     IDS_PSW_SEC_MORE  "Другие надстройки"
     IDS_PSO_CODE_INFO  "Коды клиента на этом компьютере: %s. Добавлять и удалять их можно в окне магазина кнопкой «Код клиента»."
+    IDS_PSO_PPUPD  "Сообщать о доступном обновлении Power PDF"
+    IDS_PSW_PP_UPDATE  "Доступно обновление Power PDF: %s"
+    IDS_PSW_PP_NEWS  "Что нового"
+    IDS_PSW_PP_HIDE  "Скрыть"
+    IDS_PSW_PP_INSTALL_HINT  "Обновление устанавливает ваш ИТ-отдел или пользователь с правами администратора."
     IDS_PSD_MSG_SEATS  "Все установки этой надстройки для вашей организации уже используются. Удалите ее с компьютера, на котором она больше не нужна, или запросите дополнительные установки у поставщика."
 END
 
@@ -2382,6 +2458,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "Güncellemeler: %s"
     IDS_PSW_SEC_MORE  "Diğer eklentiler"
     IDS_PSO_CODE_INFO  "Bu bilgisayardaki müşteri kodları: %s. Bunları mağaza penceresinde ""Müşteri kodu"" ile ekleyin veya kaldırın."
+    IDS_PSO_PPUPD  "Power PDF için güncelleme olduğunda bildir"
+    IDS_PSW_PP_UPDATE  "Power PDF için bir güncelleme var: %s"
+    IDS_PSW_PP_NEWS  "Yenilikler"
+    IDS_PSW_PP_HIDE  "Gizle"
+    IDS_PSW_PP_INSTALL_HINT  "Güncellemeyi BT ekibiniz veya yönetici haklarına sahip bir kişi yükler."
     IDS_PSD_MSG_SEATS  "Kuruluşunuz için bu eklentinin tüm kurulumları kullanımda. Eklentiyi artık gerekmeyen bir bilgisayardan kaldırın veya sağlayıcınızdan ek kurulum isteyin."
 END
 
@@ -2523,6 +2604,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "更新：%s"
     IDS_PSW_SEC_MORE  "更多加载项"
     IDS_PSO_CODE_INFO  "此计算机上的客户代码：%s。请在商店窗口中通过“客户代码”添加或删除。"
+    IDS_PSO_PPUPD  "Power PDF 有可用更新时提示"
+    IDS_PSW_PP_UPDATE  "Power PDF 有可用更新：%s"
+    IDS_PSW_PP_NEWS  "新增功能"
+    IDS_PSW_PP_HIDE  "隐藏"
+    IDS_PSW_PP_INSTALL_HINT  "更新由您的 IT 部门或具有管理员权限的人员安装。"
     IDS_PSD_MSG_SEATS  "您的组织已用完此加载项的所有安装数。请从不再需要它的计算机上删除该加载项，或向您的提供商申请更多安装数。"
 END
 
@@ -2667,6 +2753,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "更新：%s"
     IDS_PSW_SEC_MORE  "更多增益集"
     IDS_PSO_CODE_INFO  "此電腦上的客戶代碼：%s。請在商店視窗中透過「客戶代碼」新增或移除。"
+    IDS_PSO_PPUPD  "Power PDF 有可用更新時提示"
+    IDS_PSW_PP_UPDATE  "Power PDF 有可用更新：%s"
+    IDS_PSW_PP_NEWS  "新功能"
+    IDS_PSW_PP_HIDE  "隱藏"
+    IDS_PSW_PP_INSTALL_HINT  "更新由您的 IT 部門或具有系統管理員權限的人員安裝。"
     IDS_PSD_MSG_SEATS  "您的組織已用完此增益集的所有安裝數。請從不再需要它的電腦上移除此增益集，或向您的供應商申請更多安裝數。"
 END
 
@@ -2811,6 +2902,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "更新: %s"
     IDS_PSW_SEC_MORE  "その他のアドオン"
     IDS_PSO_CODE_INFO  "このコンピューターの顧客コード: %s。追加と削除はストア ウィンドウの [顧客コード] から行います。"
+    IDS_PSO_PPUPD  "Power PDF の更新があるときに通知する"
+    IDS_PSW_PP_UPDATE  "Power PDF の更新があります: %s"
+    IDS_PSW_PP_NEWS  "新機能"
+    IDS_PSW_PP_HIDE  "非表示"
+    IDS_PSW_PP_INSTALL_HINT  "更新は IT 部門または管理者権限を持つ担当者がインストールします。"
     IDS_PSD_MSG_SEATS  "組織で利用できるこのアドインのインストール数はすべて使用中です。不要になったコンピューターからアドインを削除するか、提供元に追加のインストールを依頼してください。"
 END
 
@@ -2955,6 +3051,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "업데이트: %s"
     IDS_PSW_SEC_MORE  "기타 추가 기능"
     IDS_PSO_CODE_INFO  "이 컴퓨터의 고객 코드: %s. 스토어 창의 [고객 코드]에서 추가하거나 제거하십시오."
+    IDS_PSO_PPUPD  "Power PDF 업데이트가 있으면 알림"
+    IDS_PSW_PP_UPDATE  "Power PDF 업데이트를 사용할 수 있습니다: %s"
+    IDS_PSW_PP_NEWS  "새로운 기능"
+    IDS_PSW_PP_HIDE  "숨기기"
+    IDS_PSW_PP_INSTALL_HINT  "업데이트는 IT 부서 또는 관리자 권한이 있는 사람이 설치합니다."
     IDS_PSD_MSG_SEATS  "조직에 할당된 이 추가 기능의 설치 수를 모두 사용하고 있습니다. 더 이상 필요하지 않은 컴퓨터에서 추가 기능을 제거하거나 공급자에게 추가 설치를 요청하십시오."
 END
 
@@ -3099,6 +3200,11 @@ BEGIN
     IDS_PSW_SEC_UPDATES  "التحديثات: %s"
     IDS_PSW_SEC_MORE  "إضافات أخرى"
     IDS_PSO_CODE_INFO  "رموز العملاء على هذا الكمبيوتر: %s. أضفها أو أزلها في نافذة المتجر عبر ""رمز العميل""."
+    IDS_PSO_PPUPD  "التنبيه عند توفر تحديث لـ Power PDF"
+    IDS_PSW_PP_UPDATE  "يتوفر تحديث لـ Power PDF: %s"
+    IDS_PSW_PP_NEWS  "الجديد"
+    IDS_PSW_PP_HIDE  "إخفاء"
+    IDS_PSW_PP_INSTALL_HINT  "يقوم قسم تقنية المعلومات أو شخص لديه صلاحيات المسؤول بتثبيت التحديث."
     IDS_PSD_MSG_SEATS  "جميع عمليات التثبيت المتاحة لمؤسستك لهذه الوظيفة الإضافية قيد الاستخدام. قم بإزالتها من جهاز كمبيوتر لم يعد بحاجة إليها، أو اطلب من المورّد المزيد من عمليات التثبيت."
 END
 

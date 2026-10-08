@@ -59,6 +59,9 @@ static INT_PTR CALLBACK PsoDlgProc(HWND h, UINT msg, WPARAM /*wp*/, LPARAM /*lp*
             ShowWindow(GetDlgItem(h, IDC_PSO_CODE_INFO), SW_SHOW);
         }
         SetDlgItemTextW(h, IDC_PSO_BETA,     FPLoc(IDS_PSO_BETA).c_str());
+        SetDlgItemTextW(h, IDC_PSO_PPUPD,    FPLoc(IDS_PSO_PPUPD).c_str());   // C1.6.0
+        CheckDlgButton(h, IDC_PSO_PPUPD, PSPowerPdfHint() ? BST_CHECKED : BST_UNCHECKED);
+        if (PSPowerPdfHintLocked()) EnableWindow(GetDlgItem(h, IDC_PSO_PPUPD), FALSE);
         SetDlgItemTextW(h, IDC_PSO_HINT,     FPLoc(IDS_PSO_HINT).c_str());
         SetDlgItemTextW(h, IDC_PSO_GRP_DIAG, FPLoc(IDS_PSO_GRP_DIAG).c_str());
         SetDlgItemTextW(h, IDC_PSO_VERBOSE,  FPLoc(IDS_PSO_VERBOSE).c_str());
@@ -122,6 +125,8 @@ static DUBool PsoUpdate(void* hWnd)
         GetDlgItemTextW(h, IDC_PSO_CODE, code, 768);
         PSSaveCustomerCode(code);
     }
+    if (IsWindowEnabled(GetDlgItem(h, IDC_PSO_PPUPD)))
+        PSSavePowerPdfHint(IsDlgButtonChecked(h, IDC_PSO_PPUPD) == BST_CHECKED);
     bool verbose = IsDlgButtonChecked(h, IDC_PSO_VERBOSE) == BST_CHECKED;
     WriteVerbose(verbose);
     FPLogSetVerbose(verbose);
