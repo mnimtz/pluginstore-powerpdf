@@ -93,7 +93,30 @@ public static class CatalogUi
         return c.Source != "client" || (Version.TryParse(c.ClientVersion, out var cv) && cv >= BinClient);
     }
 
+    // S1.13.2: the public catalog is kept in memory. On the production share every query reads
+    // the database over the network (about a second for the store window); a write to what the
+    // catalog shows (AppDbContext.SaveChanges) or a restore starts a new generation, and an entry
+    // is at most a minute old (raw updates such as download counters bypass the generation).
+    private static long _generation;
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, (long Gen, DateTime At, List<CatalogItem> Items)> _cache = new();
+    private static readonly TimeSpan CacheAge = TimeSpan.FromMinutes(1);
+
+    /// <summary>Drops the cached catalogs (a write to packages, versions, categories, ratings or accounts).</summary>
+    public static void Invalidate() => Interlocked.Increment(ref _generation);
+
     public static async Task<List<CatalogItem>> GetAsync(AppDbContext db, string culture, bool includeBeta = false, bool binOk = true)
+    {
+        var key = $"{culture}|{includeBeta}|{binOk}";
+        var gen = Interlocked.Read(ref _generation);
+        if (_cache.TryGetValue(key, out var hit) && hit.Gen == gen && DateTime.UtcNow - hit.At < CacheAge)
+            return new List<CatalogItem>(hit.Items);   // callers add and remove entries: a copy each
+        var items = await LoadAsync(db, culture, includeBeta, binOk);
+        if (_cache.Count > 200) _cache.Clear();   // any "lang" value makes a key: keep it small
+        _cache[key] = (gen, DateTime.UtcNow, items);
+        return new List<CatalogItem>(items);
+    }
+
+    private static async Task<List<CatalogItem>> LoadAsync(AppDbContext db, string culture, bool includeBeta, bool binOk)
     {
         var all = (await db.PackageVersions
             .Where(v => v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta))

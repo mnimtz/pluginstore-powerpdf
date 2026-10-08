@@ -139,6 +139,7 @@ public class UsageService
             f = await _db.Feedbacks.ExecuteDeleteAsync();
         }
         await _settings.SetAsync("Stats.ResetAt", DateTime.UtcNow.ToString("O"));
+        CatalogUi.Invalidate();   // ratings and download counts are part of the cached catalog (S1.13.2)
         return new ResetCounts(u, d, s, ip, r, f);
     }
 

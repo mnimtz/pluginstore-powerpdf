@@ -366,6 +366,20 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Faster store window (S1.13.2, client 1.9.3):** the public catalog is kept in
+server memory (on the production share every query reads the database over the
+network: about a second per catalog); a write to packages, versions,
+categories, ratings or accounts, a restore or a statistics reset starts a new
+generation, and an entry is at most a minute old. The client keeps the last
+catalog fetched with its stored codes in memory and in
+`%LOCALAPPDATA%\Tungsten\AddonStore\cache\catalog.tsv` (the server's TSV behind a
+header with the SHA-256 of server, language, channel and codes; the codes
+themselves are not written). The window opens with it, loads a fresh one
+behind it and keeps it when the server cannot be reached; until a first
+catalog is there it shows a loading indicator instead of "no add-ons". The file
+is parsed with the same checks as a server answer and installing still needs
+the server's signature.
+
 **Code check of the day (S1.13.1, client 1.9.2):** four independent reviews
 (security, logic, client, validator) and a hardening run.
 - Customer catalog limit: decided from the customers of the valid codes, so

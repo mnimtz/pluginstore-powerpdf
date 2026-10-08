@@ -359,6 +359,7 @@ public class BackupService
                 if (File.Exists(side)) File.Delete(side);
             File.Copy(stagedDb, dbPath, overwrite: true);
             SqliteConnection.ClearAllPools();
+            CatalogUi.Invalidate();   // S1.13.2: the cached catalog belongs to the old database
 
             foreach (var (_, root) in folders) SwapContents(root + ".restore", root);
         }

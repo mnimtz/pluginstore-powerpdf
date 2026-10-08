@@ -33,6 +33,27 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<DeliveryTemplateItem> DeliveryTemplateItems => Set<DeliveryTemplateItem>();
     public DbSet<CustomerTemplate> CustomerTemplates => Set<CustomerTemplate>();
 
+    // S1.13.2: a write to what the public catalog shows starts a new catalog generation (CatalogUi cache)
+    private bool TouchesCatalog() => ChangeTracker.Entries().Any(e =>
+        e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted &&
+        e.Entity is Package or PackageVersion or Category or Rating or AppUser);
+
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        var touch = TouchesCatalog();
+        var n = base.SaveChanges(acceptAllChangesOnSuccess);
+        if (touch) Services.CatalogUi.Invalidate();
+        return n;
+    }
+
+    public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+    {
+        var touch = TouchesCatalog();
+        var n = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        if (touch) Services.CatalogUi.Invalidate();
+        return n;
+    }
+
     protected override void OnModelCreating(ModelBuilder b)
     {
         base.OnModelCreating(b);
