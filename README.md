@@ -366,6 +366,18 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Available updates (client 1.9.0):**
+- The Help tab group is now `AddonStore::Help` (new atoms; the C1.7.0 group
+  `AddonStore::Updates` is removed from the user layout) and always there
+  with an "Add-on Store" button, so "Updates available" appears in it as soon
+  as updates are found. Before, Power PDF left the group out when it had no
+  visible button at start, and the button came only with the next start.
+- "Updates available" and the one-time notice open the store window in its
+  "Available updates" view: the Power PDF update (title, installed and new
+  version, build date, the end-user text, "What's new" and "Hide"), the store
+  client and every add-on update with its changelog, "Update all" for several
+  add-ons, "All add-ons" switches to the full store.
+
 **Stricter checks (S1.11.0):**
 - All 21 Power PDF languages are required now. Name, description, changelog
   and screenshot captions need `zh-Hans`, `zh-Hant`, `ja`, `ko` and `ar` as

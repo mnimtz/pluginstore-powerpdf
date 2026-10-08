@@ -165,6 +165,11 @@
 #define IDS_PS_BTN_UPDATES      360
 #define IDS_PS_TIP_UPDATES_HELP 361
 #define IDS_PS_NOTICE_TEXT      362
+#define IDS_PSW_UPD_TITLE       363
+#define IDS_PSW_UPD_ALL         364
+#define IDS_PSW_UPD_NONE        365
+#define IDS_PSW_UPD_STORE       366
+#define IDS_PSW_UPD_FROMTO      367
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261

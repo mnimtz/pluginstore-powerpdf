@@ -8,3 +8,6 @@
 /// asked right away whether to install it. Ignored while the dialog is open.
 void PSShowStoreDialog(const std::wstring& preselectId = std::wstring());
 bool PSStoreDialogOpen();
+
+/// Preselect value that opens the store window in its "Available updates" view (C1.9.0).
+static const wchar_t kPSUpdatesView[] = L"::updates";

@@ -273,17 +273,35 @@ inline bool RemoveGroup(std::wstring& text, const wchar_t* name)
 }
 
 // "Updates available" (C1.7.0): our own group at the end of Power PDF's Help tab ("help").
-static const wchar_t kHelpGroup[] = L"AddonStore::Updates";
-static const wchar_t kHelpButton[] = L"AddonStore::Updates::Open";
+// C1.9.0: a new group (new atoms, the host caches a group's button list by name) that is always there,
+// so "Updates available" can appear at run time; the C1.7.0 group AddonStore::Updates is removed.
+static const wchar_t kHelpGroup[] = L"AddonStore::Help";
+static const wchar_t kHelpButtons[2][32] = { L"AddonStore::Help::Store", L"AddonStore::Help::Updates" };
+static const wchar_t kOldHelpGroup[] = L"AddonStore::Updates";
 inline bool EnsureHelpGroup(std::wstring& text)
 {
-    if (text.find(std::wstring(L"\"") + kHelpGroup + L"\"") != std::wstring::npos) return false;
+    bool changed = false;
+    // the group of C1.7.0 goes (its only button moved into the new group)
+    size_t old = text.find(std::wstring(L"<PFFGroup name=\"") + kOldHelpGroup + L"\"");
+    if (old != std::wstring::npos)
+    {
+        size_t close = text.find(L"</PFFGroup>", old);
+        if (close != std::wstring::npos)
+        {
+            close += 11;
+            while (close < text.size() && (text[close] == L'\r' || text[close] == L'\n')) ++close;
+            text.erase(old, close - old);
+            changed = true;
+        }
+    }
+    if (text.find(std::wstring(L"\"") + kHelpGroup + L"\"") != std::wstring::npos) return changed;
     size_t tb = text.find(L"<toolbar name=\"help\"");
-    if (tb == std::wstring::npos) return false;
+    if (tb == std::wstring::npos) return changed;
     size_t end = text.find(L"</toolbar>", tb);
-    if (end == std::wstring::npos) return false;
-    text.insert(end, std::wstring(L"<PFFGroup name=\"") + kHelpGroup + L"\" GroupType=\"PFFTitleBlock\">\n<PFFButton name=\"" +
-                     kHelpButton + L"\" IconMode=\"4\"/>\n</PFFGroup>\n");
+    if (end == std::wstring::npos) return changed;
+    std::wstring block = std::wstring(L"<PFFGroup name=\"") + kHelpGroup + L"\" GroupType=\"PFFTitleBlock\">\n";
+    for (const auto& b : kHelpButtons) block += std::wstring(L"<PFFButton name=\"") + b + L"\" IconMode=\"4\"/>\n";
+    text.insert(end, block + L"</PFFGroup>\n");
     return true;
 }
 

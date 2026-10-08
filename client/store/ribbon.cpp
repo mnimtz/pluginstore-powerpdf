@@ -37,7 +37,7 @@ static DCCB1 DUBool DCCB2 IsUpdatesVisible(void* /*data*/)
     return n > 0 && PSStoreAllowed() ? true : false;
 }
 
-static DCCB1 void DCCB2 OnOpenStore(void* /*data*/)
+static void OpenStoreView(const std::wstring& view)
 {
     AFX_MANAGE_MODULE_STATE;
     if (!PSStoreAllowed()) { FPLogW(L"[Store] not allowed for license mode %s - store not opened", PSLicenseMode().c_str()); return; }
@@ -64,9 +64,13 @@ static DCCB1 void DCCB2 OnOpenStore(void* /*data*/)
         FPMessageBox(NULL, msg, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
         return;
     }
-    DURING PSShowStoreDialog(std::wstring()); HANDLER END_HANDLER
+    DURING PSShowStoreDialog(view); HANDLER END_HANDLER
     PSUpdateCheckSoon();   // an install or update may have cleared the badge
 }
+
+static DCCB1 void DCCB2 OnOpenStore(void* /*data*/) { OpenStoreView(std::wstring()); }
+// "Updates available" (C1.9.0): the store window in its updates view
+static DCCB1 void DCCB2 OnOpenUpdates(void* /*data*/) { OpenStoreView(kPSUpdatesView); }
 
 // Amber dot on the store icon and a tooltip with the number of updates
 // (store client and installed add-ons); count 0 restores the plain button.
@@ -95,8 +99,28 @@ void PSRibbonSetUpdateBadge(int count)
     FPLogW(L"[Store] update badge: %d update(s)", count);
 }
 
-// The same checks as the ribbon button (used by the one-time update notice, C1.7.0).
+// The same checks as the ribbon button (used by the one-time update notice, C1.7.0: since C1.9.0 its updates view).
 void PSRibbonOpenStore() { OnOpenStore(NULL); }
+void PSRibbonOpenUpdates() { OnOpenUpdates(NULL); }
+
+// One button of the Help tab group (C1.9.0); the callback types come from the SDK's own declarations.
+template <class Run, class Visible>
+static void AddHelpButton(RVToolButton group, const char* atom, UINT label, UINT tip, UINT icon, UINT icon16, Run run, Visible visible)
+{
+    RVToolButton b = RVToolButtonNew(DUAtomFromString(atom), kBtnNormal);
+    if (!b) return;
+    DUText l = MakeDUText(FPLoc(label));
+    RVToolButtonSetLabelText(b, l, kLabelBottom); DUTextDestroy(l);
+    DUText h = MakeDUText(FPLoc(tip));
+    RVToolButtonSetHelpText(b, h); DUTextDestroy(h);
+    RVToolButtonSetExecuteProc(b, run, NULL);
+    RVToolButtonSetComputeVisibleProc(b, visible, NULL);
+    DVIcon big = RVToolGetIconFromBitmap(gHINSTANCE, MAKEINTRESOURCEW(icon));
+    if (big) RVToolButtonSetIcon(b, big, true);
+    DVIcon sm = RVToolGetIconFromBitmap(gHINSTANCE, MAKEINTRESOURCEW(icon16));
+    if (sm) RVToolButtonSetIcon(b, sm, false);
+    RVToolGroupButtonAddButton(group, b, false, NULL);
+}
 
 // "Updates available" in Power PDF's own Help tab (C1.7.0): visible only while updates are pending.
 // New atoms (AddonStore::Updates...), so the host's ribbon cache never knew a shorter version of it.
@@ -105,7 +129,9 @@ void PSRegisterHelpUI()
     AFX_MANAGE_MODULE_STATE;
     RVToolBar help = RVFrisbeeGetToolBar(DUAtomFromString("help"));
     if (!help) { FPLogW(L"[Store] Help tab not found - no updates button"); return; }
-    DUAtom groupAtom = DUAtomFromString("AddonStore::Updates");
+    // C1.9.0: the group is always there (Power PDF leaves out a group without a visible button when it builds
+    // the ribbon and never adds it later); "Updates available" appears in it as soon as updates are found.
+    DUAtom groupAtom = DUAtomFromString("AddonStore::Help");
     RVToolButton group = RVToolBarGetButtonByName(help, groupAtom);
     if (!group)
     {
@@ -113,24 +139,14 @@ void PSRegisterHelpUI()
         RVToolBarAddButton(help, group, false, NULL);
     }
     if (!group) return;
-    RVToolButtonSetComputeVisibleProc(group, IsUpdatesVisible, NULL);
+    RVToolButtonSetComputeVisibleProc(group, IsStoreVisible, NULL);
     {
         DUText gl = MakeDUText(FPLoc(IDS_PS_GROUP));
         RVToolButtonSetLabelText(group, gl, kLabelBottom); DUTextDestroy(gl);
     }
-    RVToolButton b = RVToolButtonNew(DUAtomFromString("AddonStore::Updates::Open"), kBtnNormal);
-    if (!b) return;
-    DUText l = MakeDUText(FPLoc(IDS_PS_BTN_UPDATES));
-    RVToolButtonSetLabelText(b, l, kLabelBottom); DUTextDestroy(l);
-    DUText h = MakeDUText(FPLoc(IDS_PS_TIP_UPDATES_HELP));
-    RVToolButtonSetHelpText(b, h); DUTextDestroy(h);
-    RVToolButtonSetExecuteProc(b, OnOpenStore, NULL);
-    RVToolButtonSetComputeVisibleProc(b, IsUpdatesVisible, NULL);
-    DVIcon big = RVToolGetIconFromBitmap(gHINSTANCE, MAKEINTRESOURCEW(IDB_STORE_UPD));
-    if (big) RVToolButtonSetIcon(b, big, true);
-    DVIcon sm = RVToolGetIconFromBitmap(gHINSTANCE, MAKEINTRESOURCEW(IDB_STORE16_UPD));
-    if (sm) RVToolButtonSetIcon(b, sm, false);
-    RVToolGroupButtonAddButton(group, b, false, NULL);
+    AddHelpButton(group, "AddonStore::Help::Store", IDS_PS_BTN_OPEN, IDS_PS_TIP_OPEN, IDB_STORE, IDB_STORE16, OnOpenStore, IsStoreVisible);
+    AddHelpButton(group, "AddonStore::Help::Updates", IDS_PS_BTN_UPDATES, IDS_PS_TIP_UPDATES_HELP, IDB_STORE_UPD, IDB_STORE16_UPD,
+                  OnOpenUpdates, IsUpdatesVisible);
 }
 
 void PSRegisterUI(RVToolBar bar)

@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "webui.h"
+#include "dialog.h"
 #include "catalog.h"
 #include "install.h"
 #include "http.h"
@@ -571,7 +572,10 @@ protected:
         std::wstring url = PSServerUrl() + L"/api/powerpdf/update?version=" + host + L"&lang=" + HostLang();
         std::wstring hidden = PSPowerPdfHiddenUpdate();
         HWND h = m_hWnd;
-        Spawn([h, url, hidden]() {
+        std::wstring installed = host;   // "2025.3.8.0.26414" -> "2025.3.8" (C1.9.0, shown in the updates view)
+        for (int dots = 0, i = 0; i < (int)installed.size(); ++i)
+            if (installed[i] == L'.' && ++dots == 3) { installed.resize(i); break; }
+        Spawn([h, url, hidden, installed]() {
             std::string body;
             DWORD status = 0;
             std::wstring out;
@@ -587,7 +591,8 @@ protected:
                         std::wstring readme = str(L"readmeUrl", 500);
                         out = L"{\"type\":\"ppupdate\",\"latest\":" + Json(latest) + L",\"title\":" + Json(str(L"title", 200)) +
                               L",\"buildDate\":" + Json(str(L"buildDate", 40)) + L",\"summary\":" + Json(str(L"summary", 1200)) +
-                              L",\"readme\":" + Json(IsTrustedReadme(readme) ? readme : std::wstring()) + L"}";
+                              L",\"readme\":" + Json(IsTrustedReadme(readme) ? readme : std::wstring()) +
+                              L",\"installed\":" + Json(installed) + L"}";
                     }
                 }
             }
@@ -633,10 +638,13 @@ protected:
             { L"secInstalled", IDS_PSW_SEC_INSTALLED }, { L"secUpdates", IDS_PSW_SEC_UPDATES }, { L"secMore", IDS_PSW_SEC_MORE },
             { L"ppUpdate", IDS_PSW_PP_UPDATE }, { L"ppNews", IDS_PSW_PP_NEWS }, { L"ppHide", IDS_PSW_PP_HIDE },
             { L"ppInstallHint", IDS_PSW_PP_INSTALL_HINT },
+            { L"updTitle", IDS_PSW_UPD_TITLE }, { L"updAll", IDS_PSW_UPD_ALL }, { L"updNone", IDS_PSW_UPD_NONE },
+            { L"updStore", IDS_PSW_UPD_STORE }, { L"updFromTo", IDS_PSW_UPD_FROMTO },
         };
         std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) +
                          (FPLocIsRtl() ? L",\"dir\":\"rtl\"" : L"") +
                          L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") +
+                         (m_preselect == kPSUpdatesView ? L",\"mode\":\"updates\"" : L"") +
                          L",\"code\":" + CodesJson() + L",\"strings\":{";
         for (size_t i = 0; i < _countof(strings); ++i)
             j += (i ? L"," : L"") + Json(strings[i].key) + L":" + Json(FPLoc(strings[i].id));
@@ -723,8 +731,9 @@ protected:
             if (!b.empty()) j += L",\"blocked\":[" + b + L"]";
         }
         if (m_hasSelfUpdate)
-            j += L",\"self\":{\"version\":" + Json(m_self.version) + L",\"installed\":" + Json(FP_VERSION_W) + L"}";
-        if (r.flag && !m_preselect.empty() && m_preselect != kClientId)
+            j += L",\"self\":{\"version\":" + Json(m_self.version) + L",\"installed\":" + Json(FP_VERSION_W) +
+                 L",\"changelog\":" + Json(m_self.changelog) + L"}";
+        if (r.flag && !m_preselect.empty() && m_preselect != kClientId && m_preselect != kPSUpdatesView)
         {
             j += L",\"select\":" + Json(m_preselect) + L",\"selectMissing\":" + Json(Fmt(IDS_PSD_LINK_NOTFOUND, m_preselect));
             m_preselect.clear();

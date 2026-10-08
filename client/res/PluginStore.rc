@@ -248,6 +248,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Updates available"
     IDS_PS_TIP_UPDATES_HELP  "Updates for the Add-on Store, your add-ons or Power PDF are available. Opens the Add-on Store."
     IDS_PS_NOTICE_TEXT  "Updates are available:\n%s\n\nOpen the Add-on Store now?"
+    IDS_PSW_UPD_TITLE  "Available updates"
+    IDS_PSW_UPD_ALL  "Update all"
+    IDS_PSW_UPD_NONE  "Everything is up to date."
+    IDS_PSW_UPD_STORE  "All add-ons"
+    IDS_PSW_UPD_FROMTO  "Installed: %s  ·  New: %s"
     IDS_PSD_MSG_SEATS  "All installations of this add-on for your organization are in use. Remove it on a computer that no longer needs it, or ask your provider for more installations."
 END
 
@@ -400,6 +405,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Updates verfügbar"
     IDS_PS_TIP_UPDATES_HELP  "Für den Add-on Store, Ihre Add-ons oder Power PDF sind Updates verfügbar. Öffnet den Add-on Store."
     IDS_PS_NOTICE_TEXT  "Es sind Updates verfügbar:\n%s\n\nAdd-on Store jetzt öffnen?"
+    IDS_PSW_UPD_TITLE  "Verfügbare Updates"
+    IDS_PSW_UPD_ALL  "Alle aktualisieren"
+    IDS_PSW_UPD_NONE  "Alles ist aktuell."
+    IDS_PSW_UPD_STORE  "Alle Add-ons"
+    IDS_PSW_UPD_FROMTO  "Installiert: %s  ·  Neu: %s"
     IDS_PSD_MSG_SEATS  "Alle Installationen dieses Add-ons für Ihre Organisation sind belegt. Entfernen Sie es auf einem Computer, der es nicht mehr benötigt, oder bitten Sie Ihren Anbieter um weitere Installationen."
 END
 
@@ -552,6 +562,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Mises à jour disponibles"
     IDS_PS_TIP_UPDATES_HELP  "Des mises à jour sont disponibles pour l'Add-on Store, vos modules ou Power PDF. Ouvre l'Add-on Store."
     IDS_PS_NOTICE_TEXT  "Des mises à jour sont disponibles :\n%s\n\nOuvrir l'Add-on Store maintenant ?"
+    IDS_PSW_UPD_TITLE  "Mises à jour disponibles"
+    IDS_PSW_UPD_ALL  "Tout mettre à jour"
+    IDS_PSW_UPD_NONE  "Tout est à jour."
+    IDS_PSW_UPD_STORE  "Tous les modules"
+    IDS_PSW_UPD_FROMTO  "Installée : %s  ·  Nouvelle : %s"
     IDS_PSD_MSG_SEATS  "Toutes les installations de ce module pour votre organisation sont utilisées. Supprimez-le d'un ordinateur qui n'en a plus besoin ou demandez des installations supplémentaires à votre fournisseur."
 END
 
@@ -704,6 +719,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Aggiornamenti disponibili"
     IDS_PS_TIP_UPDATES_HELP  "Sono disponibili aggiornamenti per l'Add-on Store, i tuoi componenti aggiuntivi o Power PDF. Apre l'Add-on Store."
     IDS_PS_NOTICE_TEXT  "Sono disponibili aggiornamenti:\n%s\n\nAprire ora l'Add-on Store?"
+    IDS_PSW_UPD_TITLE  "Aggiornamenti disponibili"
+    IDS_PSW_UPD_ALL  "Aggiorna tutto"
+    IDS_PSW_UPD_NONE  "È tutto aggiornato."
+    IDS_PSW_UPD_STORE  "Tutti i componenti aggiuntivi"
+    IDS_PSW_UPD_FROMTO  "Installata: %s  ·  Nuova: %s"
     IDS_PSD_MSG_SEATS  "Tutte le installazioni di questo componente aggiuntivo per l'organizzazione sono in uso. Rimuovilo da un computer che non ne ha più bisogno oppure chiedi altre installazioni al fornitore."
 END
 
@@ -856,6 +876,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Actualizaciones disponibles"
     IDS_PS_TIP_UPDATES_HELP  "Hay actualizaciones para Add-on Store, sus complementos o Power PDF. Abre Add-on Store."
     IDS_PS_NOTICE_TEXT  "Hay actualizaciones disponibles:\n%s\n\n¿Abrir Add-on Store ahora?"
+    IDS_PSW_UPD_TITLE  "Actualizaciones disponibles"
+    IDS_PSW_UPD_ALL  "Actualizar todo"
+    IDS_PSW_UPD_NONE  "Todo está actualizado."
+    IDS_PSW_UPD_STORE  "Todos los complementos"
+    IDS_PSW_UPD_FROMTO  "Instalada: %s  ·  Nueva: %s"
     IDS_PSD_MSG_SEATS  "Todas las instalaciones de este complemento para su organización están en uso. Quítelo de un equipo que ya no lo necesite o solicite más instalaciones a su proveedor."
 END
 
@@ -1008,6 +1033,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Updates beschikbaar"
     IDS_PS_TIP_UPDATES_HELP  "Er zijn updates voor de Add-on Store, uw add-ons of Power PDF. Opent de Add-on Store."
     IDS_PS_NOTICE_TEXT  "Er zijn updates beschikbaar:\n%s\n\nDe Add-on Store nu openen?"
+    IDS_PSW_UPD_TITLE  "Beschikbare updates"
+    IDS_PSW_UPD_ALL  "Alles bijwerken"
+    IDS_PSW_UPD_NONE  "Alles is bijgewerkt."
+    IDS_PSW_UPD_STORE  "Alle add-ons"
+    IDS_PSW_UPD_FROMTO  "Geïnstalleerd: %s  ·  Nieuw: %s"
     IDS_PSD_MSG_SEATS  "Alle installaties van deze invoegtoepassing voor uw organisatie zijn in gebruik. Verwijder deze van een computer die deze niet meer nodig heeft, of vraag uw leverancier om meer installaties."
 END
 
@@ -1160,6 +1190,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Atualizações disponíveis"
     IDS_PS_TIP_UPDATES_HELP  "Há atualizações para o Add-on Store, os seus suplementos ou o Power PDF. Abre o Add-on Store."
     IDS_PS_NOTICE_TEXT  "Há atualizações disponíveis:\n%s\n\nAbrir o Add-on Store agora?"
+    IDS_PSW_UPD_TITLE  "Atualizações disponíveis"
+    IDS_PSW_UPD_ALL  "Atualizar tudo"
+    IDS_PSW_UPD_NONE  "Está tudo atualizado."
+    IDS_PSW_UPD_STORE  "Todos os suplementos"
+    IDS_PSW_UPD_FROMTO  "Instalada: %s  ·  Nova: %s"
     IDS_PSD_MSG_SEATS  "Todas as instalações deste suplemento para sua organização estão em uso. Remova-o de um computador que não precisa mais dele ou peça mais instalações ao seu fornecedor."
 END
 
@@ -1312,6 +1347,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Opdateringer tilgængelige"
     IDS_PS_TIP_UPDATES_HELP  "Der er opdateringer til Add-on Store, dine tilføjelser eller Power PDF. Åbner Add-on Store."
     IDS_PS_NOTICE_TEXT  "Der er opdateringer:\n%s\n\nVil du åbne Add-on Store nu?"
+    IDS_PSW_UPD_TITLE  "Tilgængelige opdateringer"
+    IDS_PSW_UPD_ALL  "Opdater alle"
+    IDS_PSW_UPD_NONE  "Alt er opdateret."
+    IDS_PSW_UPD_STORE  "Alle tilføjelser"
+    IDS_PSW_UPD_FROMTO  "Installeret: %s  ·  Ny: %s"
     IDS_PSD_MSG_SEATS  "Alle installationer af dette tilføjelsesprogram for din organisation er i brug. Fjern det fra en computer, der ikke længere har brug for det, eller bed din udbyder om flere installationer."
 END
 
@@ -1464,6 +1504,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Päivityksiä saatavilla"
     IDS_PS_TIP_UPDATES_HELP  "Add-on Storeen, lisäosiisi tai Power PDF:ään on saatavilla päivityksiä. Avaa Add-on Storen."
     IDS_PS_NOTICE_TEXT  "Päivityksiä on saatavilla:\n%s\n\nAvataanko Add-on Store nyt?"
+    IDS_PSW_UPD_TITLE  "Saatavilla olevat päivitykset"
+    IDS_PSW_UPD_ALL  "Päivitä kaikki"
+    IDS_PSW_UPD_NONE  "Kaikki on ajan tasalla."
+    IDS_PSW_UPD_STORE  "Kaikki lisäosat"
+    IDS_PSW_UPD_FROMTO  "Asennettu: %s  ·  Uusi: %s"
     IDS_PSD_MSG_SEATS  "Kaikki tämän apuohjelman asennukset organisaatiollesi ovat käytössä. Poista se tietokoneesta, joka ei enää tarvitse sitä, tai pyydä toimittajaltasi lisää asennuksia."
 END
 
@@ -1616,6 +1661,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Oppdateringer tilgjengelig"
     IDS_PS_TIP_UPDATES_HELP  "Det finnes oppdateringer for Add-on Store, tilleggene dine eller Power PDF. Åpner Add-on Store."
     IDS_PS_NOTICE_TEXT  "Oppdateringer er tilgjengelige:\n%s\n\nVil du åpne Add-on Store nå?"
+    IDS_PSW_UPD_TITLE  "Tilgjengelige oppdateringer"
+    IDS_PSW_UPD_ALL  "Oppdater alle"
+    IDS_PSW_UPD_NONE  "Alt er oppdatert."
+    IDS_PSW_UPD_STORE  "Alle tillegg"
+    IDS_PSW_UPD_FROMTO  "Installert: %s  ·  Ny: %s"
     IDS_PSD_MSG_SEATS  "Alle installasjoner av dette tillegget for organisasjonen din er i bruk. Fjern det fra en datamaskin som ikke lenger trenger det, eller be leverandøren din om flere installasjoner."
 END
 
@@ -1768,6 +1818,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Uppdateringar tillgängliga"
     IDS_PS_TIP_UPDATES_HELP  "Det finns uppdateringar för Add-on Store, dina tillägg eller Power PDF. Öppnar Add-on Store."
     IDS_PS_NOTICE_TEXT  "Uppdateringar finns:\n%s\n\nVill du öppna Add-on Store nu?"
+    IDS_PSW_UPD_TITLE  "Tillgängliga uppdateringar"
+    IDS_PSW_UPD_ALL  "Uppdatera alla"
+    IDS_PSW_UPD_NONE  "Allt är uppdaterat."
+    IDS_PSW_UPD_STORE  "Alla tillägg"
+    IDS_PSW_UPD_FROMTO  "Installerad: %s  ·  Ny: %s"
     IDS_PSD_MSG_SEATS  "Alla installationer av det här tillägget för din organisation används. Ta bort det från en dator som inte längre behöver det, eller be din leverantör om fler installationer."
 END
 
@@ -1920,6 +1975,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Dostępne aktualizacje"
     IDS_PS_TIP_UPDATES_HELP  "Dostępne są aktualizacje Add-on Store, Twoich dodatków lub Power PDF. Otwiera Add-on Store."
     IDS_PS_NOTICE_TEXT  "Dostępne są aktualizacje:\n%s\n\nOtworzyć teraz Add-on Store?"
+    IDS_PSW_UPD_TITLE  "Dostępne aktualizacje"
+    IDS_PSW_UPD_ALL  "Aktualizuj wszystko"
+    IDS_PSW_UPD_NONE  "Wszystko jest aktualne."
+    IDS_PSW_UPD_STORE  "Wszystkie dodatki"
+    IDS_PSW_UPD_FROMTO  "Zainstalowana: %s  ·  Nowa: %s"
     IDS_PSD_MSG_SEATS  "Wszystkie instalacje tego dodatku dla Twojej organizacji są w użyciu. Usuń go z komputera, który już go nie potrzebuje, lub poproś dostawcę o więcej instalacji."
 END
 
@@ -2072,6 +2132,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Dostupné aktualizace"
     IDS_PS_TIP_UPDATES_HELP  "K dispozici jsou aktualizace pro Add-on Store, vaše doplňky nebo Power PDF. Otevře Add-on Store."
     IDS_PS_NOTICE_TEXT  "Jsou k dispozici aktualizace:\n%s\n\nOtevřít nyní Add-on Store?"
+    IDS_PSW_UPD_TITLE  "Dostupné aktualizace"
+    IDS_PSW_UPD_ALL  "Aktualizovat vše"
+    IDS_PSW_UPD_NONE  "Vše je aktuální."
+    IDS_PSW_UPD_STORE  "Všechny doplňky"
+    IDS_PSW_UPD_FROMTO  "Nainstalovaná: %s  ·  Nová: %s"
     IDS_PSD_MSG_SEATS  "Všechny instalace tohoto doplňku pro vaši organizaci jsou využité. Odeberte ho z počítače, který ho už nepotřebuje, nebo požádejte poskytovatele o další instalace."
 END
 
@@ -2224,6 +2289,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Elérhető frissítések"
     IDS_PS_TIP_UPDATES_HELP  "Frissítések érhetők el az Add-on Store-hoz, a bővítményeihez vagy a Power PDF-hez. Megnyitja az Add-on Store-t."
     IDS_PS_NOTICE_TEXT  "Frissítések érhetők el:\n%s\n\nMegnyitja most az Add-on Store-t?"
+    IDS_PSW_UPD_TITLE  "Elérhető frissítések"
+    IDS_PSW_UPD_ALL  "Az összes frissítése"
+    IDS_PSW_UPD_NONE  "Minden naprakész."
+    IDS_PSW_UPD_STORE  "Összes bővítmény"
+    IDS_PSW_UPD_FROMTO  "Telepített: %s  ·  Új: %s"
     IDS_PSD_MSG_SEATS  "Ennek a bővítménynek a szervezete számára elérhető összes telepítése használatban van. Távolítsa el egy olyan számítógépről, amelyen már nincs rá szükség, vagy kérjen további telepítéseket a szolgáltatójától."
 END
 
@@ -2376,6 +2446,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Доступны обновления"
     IDS_PS_TIP_UPDATES_HELP  "Доступны обновления для Add-on Store, ваших надстроек или Power PDF. Открывает Add-on Store."
     IDS_PS_NOTICE_TEXT  "Доступны обновления:\n%s\n\nОткрыть Add-on Store сейчас?"
+    IDS_PSW_UPD_TITLE  "Доступные обновления"
+    IDS_PSW_UPD_ALL  "Обновить все"
+    IDS_PSW_UPD_NONE  "Все обновлено."
+    IDS_PSW_UPD_STORE  "Все надстройки"
+    IDS_PSW_UPD_FROMTO  "Установлена: %s  ·  Новая: %s"
     IDS_PSD_MSG_SEATS  "Все установки этой надстройки для вашей организации уже используются. Удалите ее с компьютера, на котором она больше не нужна, или запросите дополнительные установки у поставщика."
 END
 
@@ -2528,6 +2603,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "Güncellemeler var"
     IDS_PS_TIP_UPDATES_HELP  "Add-on Store, eklentileriniz veya Power PDF için güncellemeler var. Add-on Store'u açar."
     IDS_PS_NOTICE_TEXT  "Güncellemeler var:\n%s\n\nAdd-on Store şimdi açılsın mı?"
+    IDS_PSW_UPD_TITLE  "Kullanılabilir güncellemeler"
+    IDS_PSW_UPD_ALL  "Tümünü güncelle"
+    IDS_PSW_UPD_NONE  "Her şey güncel."
+    IDS_PSW_UPD_STORE  "Tüm eklentiler"
+    IDS_PSW_UPD_FROMTO  "Yüklü: %s  ·  Yeni: %s"
     IDS_PSD_MSG_SEATS  "Kuruluşunuz için bu eklentinin tüm kurulumları kullanımda. Eklentiyi artık gerekmeyen bir bilgisayardan kaldırın veya sağlayıcınızdan ek kurulum isteyin."
 END
 
@@ -2678,6 +2758,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "有可用更新"
     IDS_PS_TIP_UPDATES_HELP  "Add-on Store、您的加载项或 Power PDF 有可用更新。打开 Add-on Store。"
     IDS_PS_NOTICE_TEXT  "有可用更新：\n%s\n\n现在打开 Add-on Store？"
+    IDS_PSW_UPD_TITLE  "可用更新"
+    IDS_PSW_UPD_ALL  "全部更新"
+    IDS_PSW_UPD_NONE  "一切均为最新。"
+    IDS_PSW_UPD_STORE  "所有加载项"
+    IDS_PSW_UPD_FROMTO  "已安装：%s  ·  新版本：%s"
     IDS_PSD_MSG_SEATS  "您的组织已用完此加载项的所有安装数。请从不再需要它的计算机上删除该加载项，或向您的提供商申请更多安装数。"
 END
 
@@ -2831,6 +2916,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "有可用更新"
     IDS_PS_TIP_UPDATES_HELP  "Add-on Store、您的增益集或 Power PDF 有可用更新。開啟 Add-on Store。"
     IDS_PS_NOTICE_TEXT  "有可用更新：\n%s\n\n現在開啟 Add-on Store？"
+    IDS_PSW_UPD_TITLE  "可用的更新"
+    IDS_PSW_UPD_ALL  "全部更新"
+    IDS_PSW_UPD_NONE  "所有項目皆為最新。"
+    IDS_PSW_UPD_STORE  "所有增益集"
+    IDS_PSW_UPD_FROMTO  "已安裝：%s  ·  新版本：%s"
     IDS_PSD_MSG_SEATS  "您的組織已用完此增益集的所有安裝數。請從不再需要它的電腦上移除此增益集，或向您的供應商申請更多安裝數。"
 END
 
@@ -2984,6 +3074,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "更新があります"
     IDS_PS_TIP_UPDATES_HELP  "Add-on Store、アドオン、または Power PDF の更新があります。Add-on Store を開きます。"
     IDS_PS_NOTICE_TEXT  "更新があります:\n%s\n\n今すぐ Add-on Store を開きますか?"
+    IDS_PSW_UPD_TITLE  "利用可能な更新プログラム"
+    IDS_PSW_UPD_ALL  "すべて更新"
+    IDS_PSW_UPD_NONE  "すべて最新の状態です。"
+    IDS_PSW_UPD_STORE  "すべてのアドオン"
+    IDS_PSW_UPD_FROMTO  "インストール済み: %s  ·  新しいバージョン: %s"
     IDS_PSD_MSG_SEATS  "組織で利用できるこのアドインのインストール数はすべて使用中です。不要になったコンピューターからアドインを削除するか、提供元に追加のインストールを依頼してください。"
 END
 
@@ -3137,6 +3232,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "업데이트 있음"
     IDS_PS_TIP_UPDATES_HELP  "Add-on Store, 추가 기능 또는 Power PDF의 업데이트가 있습니다. Add-on Store를 엽니다."
     IDS_PS_NOTICE_TEXT  "업데이트가 있습니다.\n%s\n\n지금 Add-on Store를 여시겠습니까?"
+    IDS_PSW_UPD_TITLE  "사용 가능한 업데이트"
+    IDS_PSW_UPD_ALL  "모두 업데이트"
+    IDS_PSW_UPD_NONE  "모두 최신 상태입니다."
+    IDS_PSW_UPD_STORE  "모든 추가 기능"
+    IDS_PSW_UPD_FROMTO  "설치됨: %s  ·  새 버전: %s"
     IDS_PSD_MSG_SEATS  "조직에 할당된 이 추가 기능의 설치 수를 모두 사용하고 있습니다. 더 이상 필요하지 않은 컴퓨터에서 추가 기능을 제거하거나 공급자에게 추가 설치를 요청하십시오."
 END
 
@@ -3290,6 +3390,11 @@ BEGIN
     IDS_PS_BTN_UPDATES  "تتوفر تحديثات"
     IDS_PS_TIP_UPDATES_HELP  "تتوفر تحديثات لـ Add-on Store أو إضافاتك أو Power PDF. يفتح Add-on Store."
     IDS_PS_NOTICE_TEXT  "تتوفر تحديثات:\n%s\n\nهل تريد فتح Add-on Store الآن؟"
+    IDS_PSW_UPD_TITLE  "التحديثات المتاحة"
+    IDS_PSW_UPD_ALL  "تحديث الكل"
+    IDS_PSW_UPD_NONE  "كل شيء محدّث."
+    IDS_PSW_UPD_STORE  "كل الإضافات"
+    IDS_PSW_UPD_FROMTO  "المثبّت: %s  ·  الجديد: %s"
     IDS_PSD_MSG_SEATS  "جميع عمليات التثبيت المتاحة لمؤسستك لهذه الوظيفة الإضافية قيد الاستخدام. قم بإزالتها من جهاز كمبيوتر لم يعد بحاجة إليها، أو اطلب من المورّد المزيد من عمليات التثبيت."
 END
 

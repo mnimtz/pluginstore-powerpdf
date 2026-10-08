@@ -121,6 +121,22 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
 .form .attlist .x{border:0;background:transparent;color:inherit;cursor:pointer;font-size:14px;line-height:1;padding:0 2px}
 .news-name{font-weight:700;color:var(--navy);margin:12px 0 4px}
 .news-text{white-space:pre-wrap;font-size:13px;line-height:1.5;color:#333;max-height:300px;overflow:auto}
+/* "Available updates" view (C1.9.0): opened from the Help tab and the one-time notice */
+.upview{flex:1;overflow:auto;padding:16px 20px;flex-direction:column;gap:12px;display:none;min-height:0;background:var(--soft)}
+body.upmode .upview{display:flex}
+body.upmode .search,body.upmode #codeBtn,body.upmode #chips,body.upmode .main,body.upmode #ppu,body.upmode #upd{display:none!important}
+#storeBtn{display:none}
+body.upmode #storeBtn{display:flex;margin-inline-start:auto}
+.uhead{display:flex;align-items:center;gap:10px}
+.uhead h2{font-size:16px;color:var(--navy);margin:0}
+.ucard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start}
+.ucard .ub{flex:1;min-width:0}
+.ucard .un{font-weight:700;color:var(--navy);font-size:14px}
+.ucard .uv{font-size:12px;color:var(--slate);margin:2px 0 8px}
+.ucard .ut{white-space:pre-wrap;font-size:13px;line-height:1.5;color:#333;max-height:240px;overflow:auto;user-select:text}
+.ucard .ua{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tile.pp{background:var(--navy);font-size:12px}
+[dir=rtl] .ucard .un,[dir=rtl] .ucard .ut{unicode-bidi:plaintext;text-align:start}
 </style>
 </head>
 <body>
@@ -134,6 +150,7 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
       <input id="q" type="text" autocomplete="off" spellcheck="false">
     </label>
     <button class="hbtn" id="codeBtn" type="button"></button>
+    <button class="hbtn" id="storeBtn" type="button"></button>
   </header>
   <div class="accent"></div>
   <div class="banner upd" id="upd" style="display:none">
@@ -147,6 +164,7 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
   <div class="banner err" id="blk" style="display:none"><span id="blkText"></span><button class="btn sm" style="margin-inline-start:auto" id="blkBtn"></button></div>
   <div class="banner upd" id="ppu" style="display:none"><span id="ppuText"></span><button class="btn sec sm" style="margin-inline-start:auto" id="ppuNews"></button><button class="btn sec sm" id="ppuHide"></button></div>
   <div class="banner need" id="mig" style="display:none"><span id="migText"></span><button class="btn sm" style="margin-inline-start:auto" id="migBtn"></button><button class="btn sec sm" id="migLater"></button></div>
+  <div class="upview" id="upview"></div>
   <div class="chips" id="chips"></div>
   <div class="main">
     <div class="list" id="list"></div>
@@ -164,6 +182,7 @@ svg.i{width:16px;height:16px;flex:none;stroke:currentColor;fill:none;stroke-widt
 "use strict";
 var S = {}, items = [], self = null, sel = null, cat = "", busy = false, locked = false, icons = {}, shots = {}, shotsAsked = {};
 var need = null;   // {q, order: [ids], reasons: {id: text}} while a search by need is shown
+var mode = "store", ppu = null;   // C1.9.0: "updates" = only what waits for an update; ppu = the Power PDF update
 // customer codes (C0.8.0; a list since C1.4.1): list = [{code, name}], info[code] = {valid, customer, packages}
 var code = { has: false, locked: false, customer: "", open: false, list: [], info: {} };
 var CUST = "customer";   // chip key of the delivered add-ons (no category slug can look like this)
@@ -277,7 +296,63 @@ function renderChips() {
     c.appendChild(e);
   });
 }
+function setMode(md) {
+  mode = md === "updates" ? "updates" : "store";
+  document.body.classList.toggle("upmode", mode === "updates");
+  $("title").textContent = mode === "updates" ? (S.updTitle || S.title) : S.title;
+  document.title = $("title").textContent;
+  if (mode === "store" && ppu) $("ppu").style.display = "flex";
+  render();
+}
+function ucard(tileEl, name, version, text, buttons) {
+  var c = el("div", "ucard"); c.appendChild(tileEl);
+  var b = el("div", "ub"); b.appendChild(el("div", "un", name));
+  if (version) b.appendChild(el("div", "uv", version));
+  if (text) b.appendChild(el("div", "ut", text));
+  var a = el("div", "ua");
+  buttons.forEach(function (x) { var e = el("button", "btn sm" + (x.sec ? " sec" : ""), x.label); e.disabled = !!x.disabled; e.onclick = x.fn; a.appendChild(e); });
+  if (buttons.length) b.appendChild(a);
+  c.appendChild(b);
+  return c;
+}
+// What waits for an update (C1.9.0): Power PDF, the store client, the installed add-ons.
+function renderUpdates() {
+  var u = $("upview"); u.textContent = "";
+  var ups = items.filter(function (x) { return status(x) === "upd" && !x.orphan; });
+  var head = el("div", "uhead"); head.appendChild(el("h2", "", S.updTitle || ""));
+  if (ups.length > 1 && !locked) {
+    var all = el("button", "btn sm", S.updAll || "");
+    all.style.marginInlineStart = "auto"; all.disabled = busy;
+    all.onclick = function () { if (busy) return; migQueue = ups.map(function (x) { return { id: x.id, name: x.name }; }); migDone = 0; migNext(); };
+    head.appendChild(all);
+  }
+  u.appendChild(head);
+  var n = 0;
+  if (ppu) {
+    n++;
+    var pt = el("div", "tile pp", "PDF");
+    var ver = ppu.installed ? fmt(S.updFromTo, ppu.installed, ppu.latest) : ppu.latest;
+    if (ppu.buildDate) ver += "  \u00b7  " + ppu.buildDate;
+    var pb = [];
+    if (ppu.readme) pb.push({ label: S.ppNews || "", fn: function () { post({ cmd: "ppReadme", url: ppu.readme }); } });
+    pb.push({ label: S.ppHide || "", sec: true, fn: function () { var v = ppu.latest; ppu = null; $("ppu").style.display = "none"; post({ cmd: "ppHide", version: v }); render(); } });
+    u.appendChild(ucard(pt, ppu.title || ("Power PDF " + ppu.latest), ver, [ppu.summary, S.ppInstallHint].filter(Boolean).join("\n\n"), pb));
+  }
+  if (self) {
+    n++;
+    var st = el("div", "tile pp", "AS"); st.style.background = "var(--blue)";
+    u.appendChild(ucard(st, S.title, fmt(S.updFromTo, self.installed, self.version), self.changelog || "",
+      [{ label: S.selfUpdateBtn, disabled: busy, fn: function () { busyModal(S.selfUpdateBtn); post({ cmd: "selfUpdate" }); } }]));
+  }
+  ups.forEach(function (x) {
+    n++;
+    u.appendChild(ucard(tile(x), x.name, fmt(S.updFromTo, x.installed, x.version), x.changelog || "",
+      locked ? [] : [{ label: S.update, disabled: busy, fn: function () { confirmAct("install", x); } }]));
+  });
+  if (!n) u.appendChild(el("div", "empty", S.updNone || ""));
+}
 function render() {
+  if (mode === "updates") { renderUpdates(); return; }
   renderChips();
   var l = $("list"); l.textContent = "";
   var v = visible();
@@ -586,6 +661,9 @@ function apply(m) {
     $("codeBtn").onclick = function () { code.msg = ""; codeDialog(); post({ cmd: "codeInfo" }); };
     codeButton();
     $("lock").style.display = locked ? "flex" : "none"; $("lock").textContent = S.installLocked || "";
+    $("storeBtn").textContent = S.updStore || "";
+    $("storeBtn").onclick = function () { setMode("store"); };
+    setMode(m.mode);
   } else if (m.type === "catalog") {
     items = m.items || []; self = m.self || null;
     codeButton();
@@ -660,7 +738,9 @@ function apply(m) {
     $("ppuNews").onclick = function () { post({ cmd: "ppReadme", url: m.readme }); };
     $("ppuHide").textContent = S.ppHide || "";
     $("ppuHide").onclick = function () { $("ppu").style.display = "none"; post({ cmd: "ppHide", version: m.latest }); };
-    $("ppu").style.display = "flex";
+    ppu = m;
+    $("ppu").style.display = mode === "updates" ? "none" : "flex";
+    if (mode === "updates") render();
   } else if (m.type === "codeAsk") {
     codeAsk(m);
   } else if (m.type === "result") {

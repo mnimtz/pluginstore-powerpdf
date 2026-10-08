@@ -25,6 +25,7 @@ HWND g_linkWnd = NULL;
 }
 void PSRibbonSetUpdateBadge(int count);   // ribbon.cpp
 void PSRibbonOpenStore();                  // ribbon.cpp: the same checks as the ribbon button
+void PSRibbonOpenUpdates();                // ribbon.cpp: the same, in the "Available updates" view (C1.9.0)
 namespace {
 UINT g_openMsg = 0;
 int  g_startupTries = 0;
@@ -212,7 +213,7 @@ LRESULT CALLBACK LinkWndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp)
         _snwprintf_s(text, _countof(text), _TRUNCATE, FPLoc(IDS_PS_NOTICE_TEXT).c_str(), list.c_str());
         FPLogW(L"[Store] notice about %d new update(s)", r->count);
         if (FPMessageBox(main, text, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONINFORMATION) == IDYES)
-            PSRibbonOpenStore();
+            PSRibbonOpenUpdates();
         return 0;
     }
     if (msg == WM_TIMER && wp == kAccessTimer)
