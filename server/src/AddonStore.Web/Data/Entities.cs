@@ -428,6 +428,39 @@ public class PowerPdfLine
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
 
+/// <summary>
+/// The last state one store client reported (S1.10.0, existing-customer evaluation, off until an admin
+/// confirms the GDPR statement): no history, deleted after the retention period. The installation id
+/// is stored as a hash; the e-mail of the Cloud License Server sign-in arrives as its domain only.
+/// </summary>
+public class ClientInstall
+{
+    public int Id { get; set; }
+    public string InstallHash { get; set; } = "";
+    public string Domain { get; set; } = "";
+    public string LicenseMode { get; set; } = "";
+    public string HostVersion { get; set; } = "";
+    public string ClientVersion { get; set; } = "";
+    /// <summary>[{"id","version"}] of the installed add-ons.</summary>
+    public string AddonsJson { get; set; } = "[]";
+    public DateTime FirstSeen { get; set; } = DateTime.UtcNow;
+    public DateTime LastSeen { get; set; } = DateTime.UtcNow;
+}
+
+/// <summary>The company behind an e-mail domain (S1.10.0): found automatically, corrected by an admin.</summary>
+public class CustomerDomain
+{
+    public int Id { get; set; }
+    public string Domain { get; set; } = "";
+    public string CompanyName { get; set; } = "";
+    /// <summary>customer (from the portal's customers), ai, admin (corrected, never overwritten), unknown, pending.</summary>
+    public string Source { get; set; } = "pending";
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? ResolvedAt { get; set; }
+    public string? ChangedBy { get; set; }
+    public int Attempts { get; set; }
+}
+
 public class DeliverySeat
 {
     public int Id { get; set; }

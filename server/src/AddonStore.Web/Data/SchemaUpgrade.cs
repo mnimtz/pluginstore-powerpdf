@@ -160,6 +160,14 @@ public static class SchemaUpgrade
             "CREATE UNIQUE INDEX IF NOT EXISTS IX_PowerPdfLines_Key ON PowerPdfLines (Key)",
             // Power PDF 2026.4 brings its own Update Manager: no store hint for such lines (S1.9.0)
             "ALTER TABLE PowerPdfLines ADD COLUMN OwnUpdateManager INTEGER NOT NULL DEFAULT 0",
+            // existing-customer evaluation (S1.10.0)
+            "CREATE TABLE IF NOT EXISTS ClientInstalls (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, InstallHash TEXT NOT NULL, Domain TEXT NOT NULL, " +
+                "LicenseMode TEXT NOT NULL, HostVersion TEXT NOT NULL, ClientVersion TEXT NOT NULL, AddonsJson TEXT NOT NULL, FirstSeen TEXT NOT NULL, LastSeen TEXT NOT NULL)",
+            "CREATE UNIQUE INDEX IF NOT EXISTS IX_ClientInstalls_InstallHash ON ClientInstalls (InstallHash)",
+            "CREATE INDEX IF NOT EXISTS IX_ClientInstalls_Domain ON ClientInstalls (Domain)",
+            "CREATE TABLE IF NOT EXISTS CustomerDomains (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Domain TEXT NOT NULL, CompanyName TEXT NOT NULL, " +
+                "Source TEXT NOT NULL, CreatedAt TEXT NOT NULL, ResolvedAt TEXT NULL, ChangedBy TEXT NULL, Attempts INTEGER NOT NULL DEFAULT 0)",
+            "CREATE UNIQUE INDEX IF NOT EXISTS IX_CustomerDomains_Domain ON CustomerDomains (Domain)",
             // approval for beta or live (S1.6.0): a beta version nobody reviewed waits for review now;
             // reviewed beta versions stay approved for beta (idempotent: new uploads land in Submitted)
             "UPDATE PackageVersions SET Status = 0 WHERE Status = 1 AND ReviewedAt IS NULL AND PackageId <> 'com.tungsten.pluginstore'"

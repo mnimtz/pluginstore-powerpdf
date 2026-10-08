@@ -29,7 +29,7 @@ public class SettingsModel : PageModel
     public static readonly (string Key, string Label)[] Views =
     {
         ("server", "Server"), ("store", "Add-on Store"), ("updates", "Power PDF updates"), ("email", "Email"), ("notifications", "Notifications"),
-        ("ai", "AI assistant"), ("privacy", "IP address logging"), ("reset", "Reset statistics"),
+        ("ai", "AI assistant"), ("privacy", "Data protection"), ("reset", "Reset statistics"),
     };
     [BindProperty(SupportsGet = true)] public string? View { get; set; }
     public string? Notice { get; private set; }
@@ -318,6 +318,44 @@ public class SettingsModel : PageModel
         await LoadAsync();
     }
 
+    // Existing-customer evaluation (S1.10.0): GDPR confirmation like IP logging
+    public bool InvOn { get; private set; }
+    public string InvConfirmedBy { get; private set; } = "";
+    public DateTime? InvConfirmedAt { get; private set; }
+    public int InvRetention { get; private set; } = InventoryService.DefaultRetentionDays;
+    public int InvInstalls { get; private set; }
+
+    public async Task OnPostInvEnableAsync(bool confirmInventory, int retentionDays)
+    {
+        var admin = await _users.GetUserAsync(User);
+        View = "privacy";
+        var confirmed = (await _settings.GetAsync(InventoryService.ConfirmedAtKey)).Length > 0;
+        if (!confirmed && !confirmInventory) { Notice = "Please confirm the data protection statement first."; NoticeKind = "error"; await LoadAsync(); return; }
+        var days = Math.Clamp(retentionDays, 7, 730);
+        await _settings.SetAsync(InventoryService.RetentionKey, days.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        if (!confirmed)
+        {
+            await _settings.SetAsync(InventoryService.ConfirmedByKey, admin!.DisplayName + " <" + admin.Email + ">");
+            await _settings.SetAsync(InventoryService.ConfirmedAtKey, DateTime.UtcNow.ToString("o"));
+        }
+        await _settings.SetAsync(InventoryService.EnabledKey, "on");
+        await _audit.LogAsync(admin!.DisplayName, "inventory.enabled", "Existing customers",
+            (confirmed ? "switched on (GDPR confirmation on file)" : "GDPR confirmation given") + $"; retention {days} days");
+        Notice = "The existing-customer evaluation is on.";
+        await LoadAsync();
+    }
+
+    public async Task OnPostInvDisableAsync(bool deleteData, [FromServices] InventoryService inventory)
+    {
+        var admin = await _users.GetUserAsync(User);
+        View = "privacy";
+        await _settings.SetAsync(InventoryService.EnabledKey, "off");
+        var n = deleteData ? await inventory.DeleteAllAsync(admin!.DisplayName) : 0;
+        await _audit.LogAsync(admin!.DisplayName, "inventory.disabled", "Existing customers", deleteData ? $"data deleted ({n} installations)" : "data kept until the retention period ends");
+        Notice = deleteData ? "The existing-customer evaluation is off and its data is deleted." : "The existing-customer evaluation is off.";
+        await LoadAsync();
+    }
+
     public int FeedbackRetentionDays { get; private set; } = IssueService.DefaultRetentionDays;
 
     /// <summary>Attachments, logs and reply addresses of closed problem reports (S1.1.0).</summary>
@@ -462,11 +500,17 @@ public class SettingsModel : PageModel
         if (!Views.Any(v => v.Key == View))
         {
             var h = (string?)Request.Query["handler"] ?? "";
-            View = h.StartsWith("Ip") ? "privacy" : h.StartsWith("Ai") ? "ai" : h is "Email" or "TestMail" ? "email"
+            View = h.StartsWith("Ip") || h.StartsWith("Inv") ? "privacy" : h.StartsWith("Ai") ? "ai" : h is "Email" or "TestMail" ? "email"
                  : h == "Notifications" ? "notifications" : h == "Reset" ? "reset" : h == "StoreAccess" ? "store"
                  : h.StartsWith("Pp") ? "updates" : "server";
         }
         StoreModes = await StoreAccess.AllowedModesAsync(_settings);
+        InvOn = await _settings.GetAsync(InventoryService.EnabledKey) == "on";
+        InvConfirmedBy = await _settings.GetAsync(InventoryService.ConfirmedByKey);
+        InvConfirmedAt = DateTime.TryParse(await _settings.GetAsync(InventoryService.ConfirmedAtKey), System.Globalization.CultureInfo.InvariantCulture,
+                                           System.Globalization.DateTimeStyles.RoundtripKind, out var ica) ? ica : null;
+        InvRetention = int.TryParse(await _settings.GetAsync(InventoryService.RetentionKey), out var ir) && ir is >= 7 and <= 730 ? ir : InventoryService.DefaultRetentionDays;
+        InvInstalls = await HttpContext.RequestServices.GetRequiredService<AppDbContext>().ClientInstalls.CountAsync();
         PpOn = await _settings.GetAsync(PowerPdfUpdateService.EnabledKey) == "1";
         PpOverview = await _settings.GetAsync(PowerPdfUpdateService.OverviewKey);
         PpHosts = await _settings.GetAsync(PowerPdfUpdateService.HostsKey);

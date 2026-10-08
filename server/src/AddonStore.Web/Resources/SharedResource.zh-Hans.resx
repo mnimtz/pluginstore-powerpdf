@@ -1202,4 +1202,46 @@
   <data name="Own Update Manager" xml:space="preserve"><value>自带 Update Manager</value></data>
   <data name="Power PDF updates itself (own Update Manager, from 2026.4): no hint from the store" xml:space="preserve"><value>Power PDF 自行更新（自带 Update Manager，2026.4 起）：商店不提示</value></data>
   <data name="No hint: Power PDF {0} updates itself with its own Update Manager." xml:space="preserve"><value>无提示：Power PDF {0} 通过自带的 Update Manager 自行更新。</value></data>
+  <data name="Also delete all stored data" xml:space="preserve"><value>同时删除所有已存储的数据</value></data>
+  <data name="Companies whose store clients report: installations, Power PDF and store versions and installed add-ons. The company behind an e-mail domain is found automatically; correct the name if it is wrong." xml:space="preserve"><value>其商店客户端会报告信息的公司：安装、Power PDF 和商店版本以及已安装的加载项。电子邮件域名背后的公司会自动识别；如果名称有误，请加以更正。</value></data>
+  <data name="Company" xml:space="preserve"><value>公司</value></data>
+  <data name="Delete everything stored about this domain?" xml:space="preserve"><value>删除与此域名有关的所有已存储数据？</value></data>
+  <data name="Domain" xml:space="preserve"><value>域名</value></data>
+  <data name="Domains" xml:space="preserve"><value>域名</value></data>
+  <data name="Domains and company name" xml:space="preserve"><value>域名和公司名称</value></data>
+  <data name="Existing customers" xml:space="preserve"><value>现有客户</value></data>
+  <data name="Existing customers (evaluation)" xml:space="preserve"><value>现有客户（分析）</value></data>
+  <data name="I confirm that a legal basis exists, the users are informed (privacy policy or terms of the store) and the retention period below is agreed." xml:space="preserve"><value>我确认存在法律依据，用户已获告知（隐私政策或商店使用条款），并且已商定以下保留期限。</value></data>
+  <data name="Installations with an older add-on version" xml:space="preserve"><value>加载项版本较旧的安装</value></data>
+  <data name="Installations: {0}. Not seen for {1} days: deleted automatically." xml:space="preserve"><value>安装：{0}。{1} 天未出现：自动删除。</value></data>
+  <data name="Installed add-ons" xml:space="preserve"><value>已安装的加载项</value></data>
+  <data name="License mode" xml:space="preserve"><value>许可类型</value></data>
+  <data name="Look up again" xml:space="preserve"><value>重新查找</value></data>
+  <data name="Newest in the store" xml:space="preserve"><value>商店中的最新版本</value></data>
+  <data name="No add-ons installed." xml:space="preserve"><value>未安装任何加载项。</value></data>
+  <data name="Outdated" xml:space="preserve"><value>已过时</value></data>
+  <data name="Search company, domain or add-on" xml:space="preserve"><value>搜索公司、域名或加载项</value></data>
+  <data name="Store client" xml:space="preserve"><value>商店客户端</value></data>
+  <data name="Store clients report once a day: the domain of the Cloud License Server sign-in (never the e-mail address), the license mode, the Power PDF and store versions and the installed add-ons. The company behind a domain is found automatically (portal customers, then the AI assistant) and can be corrected under Existing customers. Only the last state per installation is kept. Free-mail domains are not stored." xml:space="preserve"><value>商店客户端每天报告一次：Cloud License Server 登录所用的域名（绝不包括电子邮件地址）、许可类型、Power PDF 和商店版本以及已安装的加载项。域名背后的公司会自动识别（先查门户的客户，再由 AI 助手查找），并可在“现有客户”中更正。每个安装仅保留最新状态。免费邮箱域名不会存储。</value></data>
+  <data name="Switch the existing-customer evaluation off?" xml:space="preserve"><value>关闭现有客户分析？</value></data>
+  <data name="The evaluation links installations to companies. A company domain can point to a person (for example a sole trader), and the domains are sent to the AI provider set up under AI assistant. It needs a legal basis (for example legitimate interest), a note in the privacy policy or the terms of the store and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>该分析会将安装与公司关联。公司域名可能指向个人（例如个体经营者），并且域名会发送到在“AI 助手”下设置的 AI 提供商。这需要法律依据（例如正当利益）、在隐私政策或商店使用条款中加以说明并规定保留期限。开启前请与你的数据保护官澄清。</value></data>
+  <data name="Versions in use" xml:space="preserve"><value>使用中的版本</value></data>
+  <data name="From the portal&#x27;s customers" xml:space="preserve"><value>来自门户的客户</value></data>
+  <data name="Found by the AI assistant" xml:space="preserve"><value>由 AI 助手找到</value></data>
+  <data name="Corrected by an admin" xml:space="preserve"><value>已由管理员更正</value></data>
+  <data name="Being looked up" xml:space="preserve"><value>正在查找</value></data>
+  <data name="Not known" xml:space="preserve"><value>未知</value></data>
+  <data name="{0} active in the last 30 days" xml:space="preserve"><value>过去 30 天内有 {0} 个活动</value></data>
+  <data name="{0} add-ons" xml:space="preserve"><value>{0} 个加载项</value></data>
+  <data name="{0} companies, {1} installations" xml:space="preserve"><value>{0} 家公司，{1} 个安装</value></data>
+  <data name="No store client has reported yet." xml:space="preserve"><value>尚无商店客户端报告。</value></data>
+  <data name="No company matches the search." xml:space="preserve"><value>没有与搜索匹配的公司。</value></data>
+  <data name="Company name saved." xml:space="preserve"><value>公司名称已保存。</value></data>
+  <data name="The company was looked up again." xml:space="preserve"><value>已重新查找公司。</value></data>
+  <data name="The data of this domain was deleted." xml:space="preserve"><value>此域名的数据已删除。</value></data>
+  <data name="Enter a company name of 1 to 120 characters." xml:space="preserve"><value>输入 1 到 120 个字符的公司名称。</value></data>
+  <data name="The existing-customer evaluation is on." xml:space="preserve"><value>现有客户分析已开启。</value></data>
+  <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>现有客户分析已关闭，其数据已删除。</value></data>
+  <data name="The existing-customer evaluation is off." xml:space="preserve"><value>现有客户分析已关闭。</value></data>
+  <data name="Data protection" xml:space="preserve"><value>数据保护</value></data>
 </root>

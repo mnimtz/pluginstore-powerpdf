@@ -1202,4 +1202,46 @@
   <data name="Own Update Manager" xml:space="preserve"><value>Kendi Update Manager'ı</value></data>
   <data name="Power PDF updates itself (own Update Manager, from 2026.4): no hint from the store" xml:space="preserve"><value>Power PDF kendini günceller (kendi Update Manager'ı, 2026.4'ten itibaren): mağazadan bildirim yok</value></data>
   <data name="No hint: Power PDF {0} updates itself with its own Update Manager." xml:space="preserve"><value>Bildirim yok: Power PDF {0} kendi Update Manager'ı ile güncellenir.</value></data>
+  <data name="Also delete all stored data" xml:space="preserve"><value>Kayıtlı tüm verileri de sil</value></data>
+  <data name="Companies whose store clients report: installations, Power PDF and store versions and installed add-ons. The company behind an e-mail domain is found automatically; correct the name if it is wrong." xml:space="preserve"><value>Mağaza istemcileri bildirim gönderen şirketler: yüklemeler, Power PDF ve mağaza sürümleri ile yüklü eklentiler. Bir e-posta etki alanının arkasındaki şirket otomatik olarak bulunur; ad yanlışsa düzeltin.</value></data>
+  <data name="Company" xml:space="preserve"><value>Şirket</value></data>
+  <data name="Delete everything stored about this domain?" xml:space="preserve"><value>Bu etki alanı hakkında kayıtlı her şey silinsin mi?</value></data>
+  <data name="Domain" xml:space="preserve"><value>Etki alanı</value></data>
+  <data name="Domains" xml:space="preserve"><value>Etki alanları</value></data>
+  <data name="Domains and company name" xml:space="preserve"><value>Etki alanları ve şirket adı</value></data>
+  <data name="Existing customers" xml:space="preserve"><value>Mevcut müşteriler</value></data>
+  <data name="Existing customers (evaluation)" xml:space="preserve"><value>Mevcut müşteriler (değerlendirme)</value></data>
+  <data name="I confirm that a legal basis exists, the users are informed (privacy policy or terms of the store) and the retention period below is agreed." xml:space="preserve"><value>Hukuki dayanağın bulunduğunu, kullanıcıların bilgilendirildiğini (gizlilik politikası veya mağazanın kullanım koşulları) ve aşağıdaki saklama süresinin kararlaştırıldığını onaylıyorum.</value></data>
+  <data name="Installations with an older add-on version" xml:space="preserve"><value>Eski eklenti sürümüne sahip yüklemeler</value></data>
+  <data name="Installations: {0}. Not seen for {1} days: deleted automatically." xml:space="preserve"><value>Yüklemeler: {0}. {1} gün görülmezse otomatik olarak silinir.</value></data>
+  <data name="Installed add-ons" xml:space="preserve"><value>Yüklü eklentiler</value></data>
+  <data name="License mode" xml:space="preserve"><value>Lisans türü</value></data>
+  <data name="Look up again" xml:space="preserve"><value>Yeniden ara</value></data>
+  <data name="Newest in the store" xml:space="preserve"><value>Mağazadaki en yeni</value></data>
+  <data name="No add-ons installed." xml:space="preserve"><value>Yüklü eklenti yok.</value></data>
+  <data name="Outdated" xml:space="preserve"><value>Güncel değil</value></data>
+  <data name="Search company, domain or add-on" xml:space="preserve"><value>Şirket, etki alanı veya eklentiye göre ara</value></data>
+  <data name="Store client" xml:space="preserve"><value>Mağaza istemcisi</value></data>
+  <data name="Store clients report once a day: the domain of the Cloud License Server sign-in (never the e-mail address), the license mode, the Power PDF and store versions and the installed add-ons. The company behind a domain is found automatically (portal customers, then the AI assistant) and can be corrected under Existing customers. Only the last state per installation is kept. Free-mail domains are not stored." xml:space="preserve"><value>Mağaza istemcileri günde bir kez şunları bildirir: Cloud License Server oturum açma işleminin etki alanı (asla e-posta adresi değil), lisans türü, Power PDF ve mağaza sürümleri ile yüklü eklentiler. Bir etki alanının arkasındaki şirket otomatik olarak bulunur (portal müşterileri, ardından yapay zeka asistanı) ve Mevcut müşteriler altında düzeltilebilir. Her yükleme için yalnızca son durum saklanır. Ücretsiz e-posta hizmetlerinin etki alanları saklanmaz.</value></data>
+  <data name="Switch the existing-customer evaluation off?" xml:space="preserve"><value>Mevcut müşteri değerlendirmesi kapatılsın mı?</value></data>
+  <data name="The evaluation links installations to companies. A company domain can point to a person (for example a sole trader), and the domains are sent to the AI provider set up under AI assistant. It needs a legal basis (for example legitimate interest), a note in the privacy policy or the terms of the store and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>Değerlendirme, yüklemeleri şirketlerle ilişkilendirir. Bir şirket etki alanı bir kişiyi gösterebilir (örneğin şahıs şirketi) ve etki alanları Yapay zeka asistanı altında ayarlanan yapay zeka sağlayıcısına gönderilir. Bunun için hukuki dayanak (örneğin meşru menfaat), gizlilik politikasında veya mağazanın kullanım koşullarında bir açıklama ve saklama süresi gerekir. Açmadan önce veri koruma sorumlunuzla netleştirin.</value></data>
+  <data name="Versions in use" xml:space="preserve"><value>Kullanılan sürümler</value></data>
+  <data name="From the portal&#x27;s customers" xml:space="preserve"><value>Portalın müşterilerinden</value></data>
+  <data name="Found by the AI assistant" xml:space="preserve"><value>Yapay zeka asistanı buldu</value></data>
+  <data name="Corrected by an admin" xml:space="preserve"><value>Bir yönetici düzeltti</value></data>
+  <data name="Being looked up" xml:space="preserve"><value>Aranıyor</value></data>
+  <data name="Not known" xml:space="preserve"><value>Bilinmiyor</value></data>
+  <data name="{0} active in the last 30 days" xml:space="preserve"><value>Son 30 günde {0} etkin</value></data>
+  <data name="{0} add-ons" xml:space="preserve"><value>{0} eklenti</value></data>
+  <data name="{0} companies, {1} installations" xml:space="preserve"><value>{0} şirket, {1} yükleme</value></data>
+  <data name="No store client has reported yet." xml:space="preserve"><value>Henüz hiçbir mağaza istemcisi bildirimde bulunmadı.</value></data>
+  <data name="No company matches the search." xml:space="preserve"><value>Aramayla eşleşen şirket yok.</value></data>
+  <data name="Company name saved." xml:space="preserve"><value>Şirket adı kaydedildi.</value></data>
+  <data name="The company was looked up again." xml:space="preserve"><value>Şirket yeniden arandı.</value></data>
+  <data name="The data of this domain was deleted." xml:space="preserve"><value>Bu etki alanının verileri silindi.</value></data>
+  <data name="Enter a company name of 1 to 120 characters." xml:space="preserve"><value>1 ile 120 karakter arasında bir şirket adı girin.</value></data>
+  <data name="The existing-customer evaluation is on." xml:space="preserve"><value>Mevcut müşteri değerlendirmesi açık.</value></data>
+  <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>Mevcut müşteri değerlendirmesi kapatıldı ve verileri silindi.</value></data>
+  <data name="The existing-customer evaluation is off." xml:space="preserve"><value>Mevcut müşteri değerlendirmesi kapalı.</value></data>
+  <data name="Data protection" xml:space="preserve"><value>Veri koruma</value></data>
 </root>

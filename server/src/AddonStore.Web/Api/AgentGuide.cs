@@ -907,6 +907,13 @@ ReadMe. Nothing is downloaded or installed through the store. Release lines
 whose Power PDF updates itself (Update Manager, Power PDF Business 2026.4 and
 later) answer `newer: false, ownUpdateManager: true`.
 
+Store clients 1.8.0+ report once a day `POST {{baseUrl}}/api/client/inventory`
+(installId, the domain of the Cloud License Server sign-in, license mode,
+versions, installed add-ons) for the admins' "Existing customers" evaluation.
+It is ignored (`result: "off"`) unless the store admins switched it on after
+the GDPR confirmation; only the store client may call it (403 CLIENT_ONLY).
+Do not call it from assistants or scripts.
+
 ## Customer deliveries (private add-ons)
 
 Add-ons can be delivered to single customers instead of (or in addition to)

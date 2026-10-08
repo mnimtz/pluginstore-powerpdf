@@ -436,6 +436,53 @@ else if (Model.SigningKeyId.Length > 0)
 
 @if (Model.View == "privacy")
 {
+<div class="card" style="max-width:760px" id="inventory">
+    <h2 style="margin-top:0">@L["Existing customers (evaluation)"]</h2>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["Store clients report once a day: the domain of the Cloud License Server sign-in (never the e-mail address), the license mode, the Power PDF and store versions and the installed add-ons. The company behind a domain is found automatically (portal customers, then the AI assistant) and can be corrected under Existing customers. Only the last state per installation is kept. Free-mail domains are not stored."]</p>
+    @if (Model.InvConfirmedAt is { } invAt)
+    {
+        <p style="font-size:.88rem">@L["GDPR confirmation given by {0} on {1}.", Model.InvConfirmedBy, Time.Fmt(invAt)]</p>
+    }
+    @if (!Model.InvOn)
+    {
+        <form method="post" asp-page-handler="InvEnable">
+            @if (Model.InvConfirmedAt is null)
+            {
+                <div class="alert warn">
+                    <p style="margin-top:0"><b>@L["Data protection (GDPR)"]</b></p>
+                    <p>@L["The evaluation links installations to companies. A company domain can point to a person (for example a sole trader), and the domains are sent to the AI provider set up under AI assistant. It needs a legal basis (for example legitimate interest), a note in the privacy policy or the terms of the store and a retention period. Please clarify this with your data protection officer before switching it on."]</p>
+                    <label style="display:flex;gap:8px;align-items:flex-start">
+                        <input type="checkbox" name="confirmInventory" value="true" required style="width:auto;margin-top:3px" />
+                        <span>@L["I confirm that a legal basis exists, the users are informed (privacy policy or terms of the store) and the retention period below is agreed."]</span>
+                    </label>
+                </div>
+            }
+            <div>
+                <label>@L["Retention period (days)"]</label>
+                <input type="number" name="retentionDays" min="7" max="730" value="@Model.InvRetention" style="width:120px" />
+            </div>
+            <button type="submit" class="btn cta" style="margin-top:12px">@(Model.InvConfirmedAt is null ? L["Confirm and switch on"] : L["Switch on"])</button>
+        </form>
+    }
+    else
+    {
+        <p><span class="badge live">@L["On"]</span> @L["Installations: {0}. Not seen for {1} days: deleted automatically.", Model.InvInstalls, Model.InvRetention]
+           · <a href="/Admin/Inventory">@L["Existing customers"] →</a></p>
+        <form method="post" asp-page-handler="InvEnable" style="display:flex;gap:6px;align-items:flex-end;flex-wrap:wrap;margin-bottom:10px">
+            <div><label>@L["Retention period (days)"]</label>
+            <input type="number" name="retentionDays" min="7" max="730" value="@Model.InvRetention" style="width:100px" /></div>
+            <button type="submit" class="btn small secondary">@L["Save retention period"]</button>
+        </form>
+        <form method="post" asp-page-handler="InvDisable" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"
+              data-confirm="@L["Switch the existing-customer evaluation off?"]">
+            <label style="display:flex;gap:6px;align-items:center;font-weight:400;margin:0">
+                <input type="checkbox" name="deleteData" value="true" style="width:auto" /> <span>@L["Also delete all stored data"]</span>
+            </label>
+            <button type="submit" class="btn small danger">@L["Switch off"]</button>
+        </form>
+    }
+</div>
+
 <div class="card" style="max-width:760px" id="privacy">
     <h2 style="margin-top:0">@L["IP address logging (reports)"]</h2>
     <p style="font-size:.88rem;color:var(--tun-slate)">@L["Always on: daily counters with country, region, city and network operator derived from the IP address; the address itself is not stored. Optional: every download and catalog request with IP address, host name and user agent for the reports."]</p>

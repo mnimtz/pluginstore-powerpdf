@@ -141,6 +141,7 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Insights", "PageUser");           // developer dashboard (S1.1.0)
         o.Conventions.AuthorizePage("/Dossier", "PageUser");            // audit dossier: owner, admins, reviewers (S1.3.0)
         o.Conventions.AuthorizePage("/Admin/Reports", "PageAdmin");
+        o.Conventions.AuthorizePage("/Admin/Inventory", "PageAdmin");    // existing customers (S1.10.0)
         o.Conventions.AuthorizePage("/Dashboard", "PageUser");
         o.Conventions.AuthorizePage("/Start", "PageUser");              // start page of the new navigation (S1.5.0)
         o.Conventions.AuthorizePage("/CatalogEntry", "PageUser");
@@ -191,6 +192,8 @@ builder.Services.AddHttpClient(PowerPdfUpdateService.HttpName, c => { c.Timeout 
     .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 builder.Services.AddScoped<PowerPdfUpdateService>();
 builder.Services.AddHostedService<PowerPdfUpdateScheduler>();
+builder.Services.AddScoped<InventoryService>();            // existing customers (S1.10.0)
+builder.Services.AddHostedService<InventoryWorker>();
 builder.Services.AddScoped<PackageMetaService>();
 builder.Services.AddScoped<VersionActionService>();
 builder.Services.AddScoped<CategoryService>();

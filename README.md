@@ -216,7 +216,10 @@ msiexec /i PluginStore-<version>.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"
   deployed as a decimal REG_SZ such as "1" (client 0.6.0+),
   `TrustedSigningKeys` (REG_SZ or REG_MULTI_SZ, `keyId:base64` of the public
   key from `/api/signing-key`, for an own store instance; client 0.7.1+),
-  `AllowUnsigned` (DWORD 1, test servers only; client 0.7.1+). From 32-bit
+  `AllowUnsigned` (DWORD 1, test servers only; client 0.7.1+),
+  `PowerPdfUpdates` and `UpdateNotice` (DWORD 0/1; clients 1.6.0+ and
+  1.7.0+), `Inventory` (DWORD 0: no daily report for the store's
+  existing-customer evaluation; client 1.8.0+). From 32-bit
   deployment agents use `reg add ... /reg:64`.
 - Intune detection rule: the file `<bin>\Plug-Ins\PluginStore.zxt` with a
   minimum version (the ProductCode changes with every version).
@@ -362,6 +365,33 @@ check, the AI review aid, the review decision with the approval conditions in
 the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
+
+**Existing customers (S1.10.0, client 1.8.0):**
+- The navigation entry "Customers" is now "Deliveries" (customer codes and
+  private add-ons, unchanged).
+- New admin area "Existing customers": which companies use the store, with
+  installations (active in the last 30 days), Power PDF and store versions,
+  installed add-ons and how many installations run an older add-on version.
+  Search over company, domain and add-on, pages of 25/50/100, a detail view
+  per company with the installation list (hash only).
+- Off by default. Settings, data protection, card "Existing customers
+  (evaluation)": switched on only after the GDPR confirmation (legal basis,
+  users informed, retention period 7 to 730 days, default 180), recorded with
+  name and time in the audit log. While it is off, the area and its
+  navigation entry do not exist and reports are ignored. Switching off can
+  also delete all data.
+- Client 1.8.0 reports once a day `POST /api/client/inventory` (store client
+  User-Agent only, otherwise 403 `CLIENT_ONLY`): install id (stored as a
+  hash), the **domain** of the Cloud License Server sign-in (HKCU
+  `Identity\email`; never the address), license mode, Power PDF and client
+  version, installed add-ons with versions. Free-mail domains are refused.
+  Only the last state per installation is kept; not seen within the retention
+  period: deleted. Policy `Store\Inventory` 0 switches the report off.
+- The company behind a domain is found every 15 minutes: first the contact
+  e-mails of the portal's customers, then the AI assistant (the domain is
+  passed as data; unknown gives an empty answer, at most 3 tries). Admins
+  correct the name, look it up again or delete a domain's data; a corrected
+  name is never overwritten.
 
 **Store notification instead of own Power PDF updates (S1.9.0, client 1.7.0):**
 - Power PDF Business brings its own Update Manager from 2026.4; the store is

@@ -1202,4 +1202,46 @@
   <data name="Own Update Manager" xml:space="preserve"><value>Update Manager propio</value></data>
   <data name="Power PDF updates itself (own Update Manager, from 2026.4): no hint from the store" xml:space="preserve"><value>Power PDF se actualiza solo (Update Manager propio, desde 2026.4): sin aviso de la tienda</value></data>
   <data name="No hint: Power PDF {0} updates itself with its own Update Manager." xml:space="preserve"><value>Sin aviso: Power PDF {0} se actualiza con su propio Update Manager.</value></data>
+  <data name="Also delete all stored data" xml:space="preserve"><value>Eliminar también todos los datos guardados</value></data>
+  <data name="Companies whose store clients report: installations, Power PDF and store versions and installed add-ons. The company behind an e-mail domain is found automatically; correct the name if it is wrong." xml:space="preserve"><value>Empresas cuyos clientes de la tienda envían informes: instalaciones, versiones de Power PDF y de la tienda y complementos instalados. La empresa que hay detrás de un dominio de correo electrónico se determina automáticamente; corrija el nombre si es incorrecto.</value></data>
+  <data name="Company" xml:space="preserve"><value>Empresa</value></data>
+  <data name="Delete everything stored about this domain?" xml:space="preserve"><value>¿Eliminar todo lo guardado sobre este dominio?</value></data>
+  <data name="Domain" xml:space="preserve"><value>Dominio</value></data>
+  <data name="Domains" xml:space="preserve"><value>Dominios</value></data>
+  <data name="Domains and company name" xml:space="preserve"><value>Dominios y nombre de la empresa</value></data>
+  <data name="Existing customers" xml:space="preserve"><value>Clientes existentes</value></data>
+  <data name="Existing customers (evaluation)" xml:space="preserve"><value>Clientes existentes (análisis)</value></data>
+  <data name="I confirm that a legal basis exists, the users are informed (privacy policy or terms of the store) and the retention period below is agreed." xml:space="preserve"><value>Confirmo que existe una base jurídica, que los usuarios están informados (política de privacidad o condiciones de uso de la tienda) y que el plazo de conservación indicado abajo está acordado.</value></data>
+  <data name="Installations with an older add-on version" xml:space="preserve"><value>Instalaciones con una versión anterior del complemento</value></data>
+  <data name="Installations: {0}. Not seen for {1} days: deleted automatically." xml:space="preserve"><value>Instalaciones: {0}. Sin informes durante {1} días: se elimina automáticamente.</value></data>
+  <data name="Installed add-ons" xml:space="preserve"><value>Complementos instalados</value></data>
+  <data name="License mode" xml:space="preserve"><value>Tipo de licencia</value></data>
+  <data name="Look up again" xml:space="preserve"><value>Volver a buscar</value></data>
+  <data name="Newest in the store" xml:space="preserve"><value>Más reciente en la tienda</value></data>
+  <data name="No add-ons installed." xml:space="preserve"><value>No hay complementos instalados.</value></data>
+  <data name="Outdated" xml:space="preserve"><value>Desactualizado</value></data>
+  <data name="Search company, domain or add-on" xml:space="preserve"><value>Buscar por empresa, dominio o complemento</value></data>
+  <data name="Store client" xml:space="preserve"><value>Cliente de la tienda</value></data>
+  <data name="Store clients report once a day: the domain of the Cloud License Server sign-in (never the e-mail address), the license mode, the Power PDF and store versions and the installed add-ons. The company behind a domain is found automatically (portal customers, then the AI assistant) and can be corrected under Existing customers. Only the last state per installation is kept. Free-mail domains are not stored." xml:space="preserve"><value>Los clientes de la tienda informan una vez al día: el dominio del inicio de sesión en Cloud License Server (nunca la dirección de correo electrónico), el tipo de licencia, las versiones de Power PDF y de la tienda y los complementos instalados. La empresa que hay detrás de un dominio se determina automáticamente (clientes del portal y, después, el asistente de IA) y se puede corregir en Clientes existentes. Solo se conserva el último estado de cada instalación. Los dominios de correo gratuito no se guardan.</value></data>
+  <data name="Switch the existing-customer evaluation off?" xml:space="preserve"><value>¿Desactivar el análisis de clientes existentes?</value></data>
+  <data name="The evaluation links installations to companies. A company domain can point to a person (for example a sole trader), and the domains are sent to the AI provider set up under AI assistant. It needs a legal basis (for example legitimate interest), a note in the privacy policy or the terms of the store and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>El análisis vincula las instalaciones con empresas. Un dominio de empresa puede remitir a una persona (por ejemplo, un empresario individual), y los dominios se envían al proveedor de IA configurado en Asistente de IA. Requiere una base jurídica (por ejemplo, interés legítimo), una mención en la política de privacidad o en las condiciones de uso de la tienda y un plazo de conservación. Aclárelo con su delegado de protección de datos antes de activarlo.</value></data>
+  <data name="Versions in use" xml:space="preserve"><value>Versiones en uso</value></data>
+  <data name="From the portal&#x27;s customers" xml:space="preserve"><value>De los clientes del portal</value></data>
+  <data name="Found by the AI assistant" xml:space="preserve"><value>Encontrado por el asistente de IA</value></data>
+  <data name="Corrected by an admin" xml:space="preserve"><value>Corregido por un administrador</value></data>
+  <data name="Being looked up" xml:space="preserve"><value>Buscando</value></data>
+  <data name="Not known" xml:space="preserve"><value>Desconocido</value></data>
+  <data name="{0} active in the last 30 days" xml:space="preserve"><value>{0} activas en los últimos 30 días</value></data>
+  <data name="{0} add-ons" xml:space="preserve"><value>{0} complementos</value></data>
+  <data name="{0} companies, {1} installations" xml:space="preserve"><value>{0} empresas, {1} instalaciones</value></data>
+  <data name="No store client has reported yet." xml:space="preserve"><value>Ningún cliente de la tienda ha enviado informes todavía.</value></data>
+  <data name="No company matches the search." xml:space="preserve"><value>Ninguna empresa coincide con la búsqueda.</value></data>
+  <data name="Company name saved." xml:space="preserve"><value>Nombre de la empresa guardado.</value></data>
+  <data name="The company was looked up again." xml:space="preserve"><value>La empresa se ha buscado de nuevo.</value></data>
+  <data name="The data of this domain was deleted." xml:space="preserve"><value>Los datos de este dominio se han eliminado.</value></data>
+  <data name="Enter a company name of 1 to 120 characters." xml:space="preserve"><value>Introduzca un nombre de empresa de 1 a 120 caracteres.</value></data>
+  <data name="The existing-customer evaluation is on." xml:space="preserve"><value>El análisis de clientes existentes está activado.</value></data>
+  <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>El análisis de clientes existentes está desactivado y sus datos se han eliminado.</value></data>
+  <data name="The existing-customer evaluation is off." xml:space="preserve"><value>El análisis de clientes existentes está desactivado.</value></data>
+  <data name="Data protection" xml:space="preserve"><value>Protección de datos</value></data>
 </root>

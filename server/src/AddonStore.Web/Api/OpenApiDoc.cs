@@ -29,6 +29,7 @@ public static class OpenApiDoc
         new("get", "/api/skill", "getClaudeSkill", "Claude Code skill (SKILL.md) for this store; optional for Claude Code users.", "none", Array.Empty<string>(), Returns: "markdown"),
         new("get", "/api/agents-md", "getAgentsMd", "Vendor-neutral instructions file (AGENTS.md) for AI coding assistants; save it in the plugin project.", "none", Array.Empty<string>(), Returns: "markdown"),
         new("get", "/api/powerpdf/update", "getPowerPdfUpdate", "Store client: is there a newer Power PDF update for its release line (query version = VersionLong, lang)? Answers enabled:false unless the store admins switched the hints on.", "none", Array.Empty<string>()),
+        new("post", "/api/client/inventory", "postClientInventory", "Store client only: its daily state (installId, domain of the Cloud License Server sign-in, license mode, versions, installed add-ons) for the existing-customer evaluation; ignored unless the store admins switched it on.", "none", Array.Empty<string>()),
         new("get", "/api/client/access", "getClientAccess", "Store client: may it be used with its Power PDF license? Send X-License-Mode (cloud, server, serial, unknown).", "none", Array.Empty<string>()),
         new("get", "/api/me", "getMe", "Verify the token; returns the user, roles and own packages.", "token", Array.Empty<string>()),
         new("get", "/api/me/test-code", "getTestCode", "The personal test code (null when none): entered in the store window, it shows the own versions that wait for review.", "token", Array.Empty<string>()),

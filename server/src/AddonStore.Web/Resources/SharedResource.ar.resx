@@ -1202,4 +1202,46 @@
   <data name="Own Update Manager" xml:space="preserve"><value>Update Manager خاص</value></data>
   <data name="Power PDF updates itself (own Update Manager, from 2026.4): no hint from the store" xml:space="preserve"><value>يحدّث Power PDF نفسه (Update Manager خاص، بدءًا من 2026.4): لا تنبيه من المتجر</value></data>
   <data name="No hint: Power PDF {0} updates itself with its own Update Manager." xml:space="preserve"><value>لا يوجد تنبيه: يحدّث Power PDF {0} نفسه باستخدام Update Manager الخاص به.</value></data>
+  <data name="Also delete all stored data" xml:space="preserve"><value>حذف جميع البيانات المخزنة أيضًا</value></data>
+  <data name="Companies whose store clients report: installations, Power PDF and store versions and installed add-ons. The company behind an e-mail domain is found automatically; correct the name if it is wrong." xml:space="preserve"><value>الشركات التي يُبلغ عملاء المتجر لديها عن: عمليات التثبيت، وإصدارات Power PDF والمتجر، والوظائف الإضافية المثبتة. يتم تحديد الشركة التي تقف وراء مجال البريد الإلكتروني تلقائيًا؛ صحّح الاسم إذا كان خاطئًا.</value></data>
+  <data name="Company" xml:space="preserve"><value>الشركة</value></data>
+  <data name="Delete everything stored about this domain?" xml:space="preserve"><value>هل تريد حذف كل ما هو مخزن عن هذا المجال؟</value></data>
+  <data name="Domain" xml:space="preserve"><value>المجال</value></data>
+  <data name="Domains" xml:space="preserve"><value>المجالات</value></data>
+  <data name="Domains and company name" xml:space="preserve"><value>المجالات واسم الشركة</value></data>
+  <data name="Existing customers" xml:space="preserve"><value>العملاء الحاليون</value></data>
+  <data name="Existing customers (evaluation)" xml:space="preserve"><value>العملاء الحاليون (التحليل)</value></data>
+  <data name="I confirm that a legal basis exists, the users are informed (privacy policy or terms of the store) and the retention period below is agreed." xml:space="preserve"><value>أؤكد وجود أساس قانوني، وأن المستخدمين على علم (سياسة الخصوصية أو شروط استخدام المتجر)، وأن فترة الاحتفاظ أدناه متفق عليها.</value></data>
+  <data name="Installations with an older add-on version" xml:space="preserve"><value>عمليات التثبيت التي تستخدم إصدارًا أقدم من الوظيفة الإضافية</value></data>
+  <data name="Installations: {0}. Not seen for {1} days: deleted automatically." xml:space="preserve"><value>عمليات التثبيت: {0}. ما لم يظهر لمدة {1} يومًا يُحذف تلقائيًا.</value></data>
+  <data name="Installed add-ons" xml:space="preserve"><value>الوظائف الإضافية المثبتة</value></data>
+  <data name="License mode" xml:space="preserve"><value>نوع الترخيص</value></data>
+  <data name="Look up again" xml:space="preserve"><value>البحث مرة أخرى</value></data>
+  <data name="Newest in the store" xml:space="preserve"><value>الأحدث في المتجر</value></data>
+  <data name="No add-ons installed." xml:space="preserve"><value>لا توجد وظائف إضافية مثبتة.</value></data>
+  <data name="Outdated" xml:space="preserve"><value>قديم</value></data>
+  <data name="Search company, domain or add-on" xml:space="preserve"><value>البحث بالشركة أو المجال أو الوظيفة الإضافية</value></data>
+  <data name="Store client" xml:space="preserve"><value>عميل المتجر</value></data>
+  <data name="Store clients report once a day: the domain of the Cloud License Server sign-in (never the e-mail address), the license mode, the Power PDF and store versions and the installed add-ons. The company behind a domain is found automatically (portal customers, then the AI assistant) and can be corrected under Existing customers. Only the last state per installation is kept. Free-mail domains are not stored." xml:space="preserve"><value>يُبلغ عملاء المتجر مرة واحدة يوميًا عن: مجال تسجيل الدخول إلى Cloud License Server (وليس عنوان البريد الإلكتروني أبدًا)، ونوع الترخيص، وإصدارات Power PDF والمتجر، والوظائف الإضافية المثبتة. يتم تحديد الشركة التي تقف وراء المجال تلقائيًا (عملاء البوابة، ثم مساعد الذكاء الاصطناعي) ويمكن تصحيحها ضمن العملاء الحاليون. يُحتفظ بآخر حالة فقط لكل تثبيت. لا يتم تخزين مجالات البريد المجاني.</value></data>
+  <data name="Switch the existing-customer evaluation off?" xml:space="preserve"><value>هل تريد إيقاف تحليل العملاء الحاليين؟</value></data>
+  <data name="The evaluation links installations to companies. A company domain can point to a person (for example a sole trader), and the domains are sent to the AI provider set up under AI assistant. It needs a legal basis (for example legitimate interest), a note in the privacy policy or the terms of the store and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>يربط التحليل عمليات التثبيت بالشركات. قد يشير مجال الشركة إلى شخص (مثل تاجر فردي)، ويتم إرسال المجالات إلى موفر الذكاء الاصطناعي المُعد ضمن مساعد الذكاء الاصطناعي. يتطلب ذلك أساسًا قانونيًا (مثل المصلحة المشروعة)، وإشارة في سياسة الخصوصية أو شروط استخدام المتجر، وفترة احتفاظ. يرجى توضيح ذلك مع مسؤول حماية البيانات قبل تشغيله.</value></data>
+  <data name="Versions in use" xml:space="preserve"><value>الإصدارات قيد الاستخدام</value></data>
+  <data name="From the portal&#x27;s customers" xml:space="preserve"><value>من عملاء البوابة</value></data>
+  <data name="Found by the AI assistant" xml:space="preserve"><value>عثر عليه مساعد الذكاء الاصطناعي</value></data>
+  <data name="Corrected by an admin" xml:space="preserve"><value>صحّحه مسؤول</value></data>
+  <data name="Being looked up" xml:space="preserve"><value>جارٍ البحث</value></data>
+  <data name="Not known" xml:space="preserve"><value>غير معروف</value></data>
+  <data name="{0} active in the last 30 days" xml:space="preserve"><value>{0} نشطة خلال آخر 30 يومًا</value></data>
+  <data name="{0} add-ons" xml:space="preserve"><value>الوظائف الإضافية: {0}</value></data>
+  <data name="{0} companies, {1} installations" xml:space="preserve"><value>الشركات: {0}، عمليات التثبيت: {1}</value></data>
+  <data name="No store client has reported yet." xml:space="preserve"><value>لم يُبلغ أي عميل للمتجر حتى الآن.</value></data>
+  <data name="No company matches the search." xml:space="preserve"><value>لا توجد شركة تطابق البحث.</value></data>
+  <data name="Company name saved." xml:space="preserve"><value>تم حفظ اسم الشركة.</value></data>
+  <data name="The company was looked up again." xml:space="preserve"><value>تم البحث عن الشركة مرة أخرى.</value></data>
+  <data name="The data of this domain was deleted." xml:space="preserve"><value>تم حذف بيانات هذا المجال.</value></data>
+  <data name="Enter a company name of 1 to 120 characters." xml:space="preserve"><value>أدخل اسم شركة من 1 إلى 120 حرفًا.</value></data>
+  <data name="The existing-customer evaluation is on." xml:space="preserve"><value>تحليل العملاء الحاليين قيد التشغيل.</value></data>
+  <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>تم إيقاف تحليل العملاء الحاليين وحذف بياناته.</value></data>
+  <data name="The existing-customer evaluation is off." xml:space="preserve"><value>تحليل العملاء الحاليين متوقف.</value></data>
+  <data name="Data protection" xml:space="preserve"><value>حماية البيانات</value></data>
 </root>

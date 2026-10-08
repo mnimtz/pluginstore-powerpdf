@@ -1202,4 +1202,46 @@
   <data name="Own Update Manager" xml:space="preserve"><value>자체 Update Manager</value></data>
   <data name="Power PDF updates itself (own Update Manager, from 2026.4): no hint from the store" xml:space="preserve"><value>Power PDF가 자체적으로 업데이트됨(자체 Update Manager, 2026.4부터): 스토어 알림 없음</value></data>
   <data name="No hint: Power PDF {0} updates itself with its own Update Manager." xml:space="preserve"><value>알림 없음: Power PDF {0}은(는) 자체 Update Manager로 업데이트됩니다.</value></data>
+  <data name="Also delete all stored data" xml:space="preserve"><value>저장된 모든 데이터도 삭제</value></data>
+  <data name="Companies whose store clients report: installations, Power PDF and store versions and installed add-ons. The company behind an e-mail domain is found automatically; correct the name if it is wrong." xml:space="preserve"><value>스토어 클라이언트가 보고하는 회사입니다. 설치, Power PDF 및 스토어 버전, 설치된 추가 기능이 표시됩니다. 이메일 도메인 뒤의 회사는 자동으로 확인되며, 이름이 잘못된 경우 수정하십시오.</value></data>
+  <data name="Company" xml:space="preserve"><value>회사</value></data>
+  <data name="Delete everything stored about this domain?" xml:space="preserve"><value>이 도메인에 대해 저장된 모든 항목을 삭제하시겠습니까?</value></data>
+  <data name="Domain" xml:space="preserve"><value>도메인</value></data>
+  <data name="Domains" xml:space="preserve"><value>도메인</value></data>
+  <data name="Domains and company name" xml:space="preserve"><value>도메인 및 회사 이름</value></data>
+  <data name="Existing customers" xml:space="preserve"><value>기존 고객</value></data>
+  <data name="Existing customers (evaluation)" xml:space="preserve"><value>기존 고객(분석)</value></data>
+  <data name="I confirm that a legal basis exists, the users are informed (privacy policy or terms of the store) and the retention period below is agreed." xml:space="preserve"><value>법적 근거가 있고, 사용자에게 고지되었으며(개인 정보 처리 방침 또는 스토어 이용 약관), 아래 보존 기간이 합의되었음을 확인합니다.</value></data>
+  <data name="Installations with an older add-on version" xml:space="preserve"><value>이전 버전의 추가 기능이 있는 설치</value></data>
+  <data name="Installations: {0}. Not seen for {1} days: deleted automatically." xml:space="preserve"><value>설치: {0}개. {1}일 동안 확인되지 않으면 자동으로 삭제됩니다.</value></data>
+  <data name="Installed add-ons" xml:space="preserve"><value>설치된 추가 기능</value></data>
+  <data name="License mode" xml:space="preserve"><value>라이선스 유형</value></data>
+  <data name="Look up again" xml:space="preserve"><value>다시 조회</value></data>
+  <data name="Newest in the store" xml:space="preserve"><value>스토어 최신 버전</value></data>
+  <data name="No add-ons installed." xml:space="preserve"><value>설치된 추가 기능이 없습니다.</value></data>
+  <data name="Outdated" xml:space="preserve"><value>이전 버전</value></data>
+  <data name="Search company, domain or add-on" xml:space="preserve"><value>회사, 도메인 또는 추가 기능 검색</value></data>
+  <data name="Store client" xml:space="preserve"><value>스토어 클라이언트</value></data>
+  <data name="Store clients report once a day: the domain of the Cloud License Server sign-in (never the e-mail address), the license mode, the Power PDF and store versions and the installed add-ons. The company behind a domain is found automatically (portal customers, then the AI assistant) and can be corrected under Existing customers. Only the last state per installation is kept. Free-mail domains are not stored." xml:space="preserve"><value>스토어 클라이언트는 하루에 한 번 Cloud License Server 로그인 도메인(이메일 주소는 절대 아님), 라이선스 유형, Power PDF 및 스토어 버전, 설치된 추가 기능을 보고합니다. 도메인 뒤의 회사는 자동으로 확인되며(포털 고객, 그다음 AI 도우미) 기존 고객에서 수정할 수 있습니다. 설치별로 마지막 상태만 보관됩니다. 무료 이메일 도메인은 저장되지 않습니다.</value></data>
+  <data name="Switch the existing-customer evaluation off?" xml:space="preserve"><value>기존 고객 분석을 끄시겠습니까?</value></data>
+  <data name="The evaluation links installations to companies. A company domain can point to a person (for example a sole trader), and the domains are sent to the AI provider set up under AI assistant. It needs a legal basis (for example legitimate interest), a note in the privacy policy or the terms of the store and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>이 분석은 설치를 회사에 연결합니다. 회사 도메인은 개인(예: 개인 사업자)을 가리킬 수 있으며, 도메인은 AI 도우미에서 설정한 AI 공급자에게 전송됩니다. 법적 근거(예: 정당한 이익), 개인 정보 처리 방침 또는 스토어 이용 약관의 고지 및 보존 기간이 필요합니다. 켜기 전에 데이터 보호 책임자와 이 사항을 확인하십시오.</value></data>
+  <data name="Versions in use" xml:space="preserve"><value>사용 중인 버전</value></data>
+  <data name="From the portal&#x27;s customers" xml:space="preserve"><value>포털 고객에서</value></data>
+  <data name="Found by the AI assistant" xml:space="preserve"><value>AI 도우미가 찾음</value></data>
+  <data name="Corrected by an admin" xml:space="preserve"><value>관리자가 수정함</value></data>
+  <data name="Being looked up" xml:space="preserve"><value>조회 중</value></data>
+  <data name="Not known" xml:space="preserve"><value>알 수 없음</value></data>
+  <data name="{0} active in the last 30 days" xml:space="preserve"><value>최근 30일 동안 활성 {0}개</value></data>
+  <data name="{0} add-ons" xml:space="preserve"><value>추가 기능 {0}개</value></data>
+  <data name="{0} companies, {1} installations" xml:space="preserve"><value>회사 {0}곳, 설치 {1}개</value></data>
+  <data name="No store client has reported yet." xml:space="preserve"><value>아직 보고한 스토어 클라이언트가 없습니다.</value></data>
+  <data name="No company matches the search." xml:space="preserve"><value>검색과 일치하는 회사가 없습니다.</value></data>
+  <data name="Company name saved." xml:space="preserve"><value>회사 이름이 저장되었습니다.</value></data>
+  <data name="The company was looked up again." xml:space="preserve"><value>회사를 다시 조회했습니다.</value></data>
+  <data name="The data of this domain was deleted." xml:space="preserve"><value>이 도메인의 데이터가 삭제되었습니다.</value></data>
+  <data name="Enter a company name of 1 to 120 characters." xml:space="preserve"><value>1~120자의 회사 이름을 입력하십시오.</value></data>
+  <data name="The existing-customer evaluation is on." xml:space="preserve"><value>기존 고객 분석이 켜져 있습니다.</value></data>
+  <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>기존 고객 분석이 꺼졌으며 해당 데이터가 삭제되었습니다.</value></data>
+  <data name="The existing-customer evaluation is off." xml:space="preserve"><value>기존 고객 분석이 꺼져 있습니다.</value></data>
+  <data name="Data protection" xml:space="preserve"><value>데이터 보호</value></data>
 </root>

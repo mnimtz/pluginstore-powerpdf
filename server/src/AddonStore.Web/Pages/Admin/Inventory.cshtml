@@ -1,0 +1,116 @@
+@page
+@model AddonStore.Web.Pages.Admin.InventoryModel
+@{
+    ViewData["Title"] = "Existing customers";
+    string SourceLabel(string s) => s switch { "customer" => "From the portal's customers", "ai" => "Found by the AI assistant", "admin" => "Corrected by an admin", "pending" => "Being looked up", _ => "Not known" };
+    string SourceBadge(string s) => s switch { "customer" => "live", "ai" => "beta", "admin" => "live", "pending" => "submitted", _ => "withdrawn" };
+}
+<h1>@L["Existing customers"]</h1>
+<p class="lead">@L["Companies whose store clients report: installations, Power PDF and store versions and installed add-ons. The company behind an e-mail domain is found automatically; correct the name if it is wrong."]</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+}
+
+@if (Model.Detail is { } d)
+{
+    <p style="margin:0 0 6px"><a href="/Admin/Inventory?q=@Model.Q">← @L["Existing customers"]</a></p>
+    <h2 style="margin-top:4px">@d.Company</h2>
+    <div class="tiles">
+        <div class="tile"><span class="tile-label">@L["Installations"]</span><b class="tile-value">@d.Installs</b><span class="tile-note">@L["{0} active in the last 30 days", d.Active30]</span></div>
+        <div class="tile"><span class="tile-label">@L["Installed add-ons"]</span><b class="tile-value">@d.AddonInstalls</b><span class="tile-note">@L["{0} add-ons", d.Addons.Count]</span></div>
+        <div class="tile @(d.Outdated > 0 ? "attn" : "")"><span class="tile-label">@L["Outdated"]</span><b class="tile-value">@d.Outdated</b><span class="tile-note">@L["Installations with an older add-on version"]</span></div>
+        <div class="tile"><span class="tile-label">@L["Last seen"]</span><b class="tile-value" style="font-size:1.2rem">@Time.Fmt(d.LastSeen, false)</b><span class="tile-note">Power PDF @string.Join(", ", d.HostVersions.Take(3))</span></div>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top:0">@L["Domains and company name"]</h3>
+        <div class="table-wrap"><table>
+            <tr><th>@L["Domain"]</th><th>@L["Company"]</th><th>@L["Source"]</th><th class="actions"></th></tr>
+            @foreach (var dm in d.Domains)
+            {
+                <tr>
+                    <td style="white-space:nowrap"><b>@dm.Domain</b></td>
+                    <td>
+                        <form method="post" asp-page-handler="Rename" style="display:flex;gap:6px;flex-wrap:wrap">
+                            <input type="hidden" name="domain" value="@dm.Domain" />
+                            <input name="name" value="@dm.CompanyName" maxlength="120" required style="flex:1;min-width:180px" />
+                            <button type="submit" class="btn small">@L["Save"]</button>
+                        </form>
+                    </td>
+                    <td><span class="badge @SourceBadge(dm.Source)">@L[SourceLabel(dm.Source)]</span>@if (dm.ChangedBy is not null) { <br /><span class="small muted">@dm.ChangedBy</span> }</td>
+                    <td class="actions"><div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+                        <form method="post" asp-page-handler="Resolve" style="display:inline"><input type="hidden" name="domain" value="@dm.Domain" />
+                            <button type="submit" class="btn small secondary">@L["Look up again"]</button></form>
+                        <form method="post" asp-page-handler="Delete" style="display:inline" data-confirm="@L["Delete everything stored about this domain?"]"><input type="hidden" name="domain" value="@dm.Domain" />
+                            <button type="submit" class="btn small danger">@L["Delete"]</button></form>
+                    </div></td>
+                </tr>
+            }
+        </table></div>
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top:0">@L["Add-ons"]</h3>
+        @if (d.Addons.Count == 0) { <p class="muted">@L["No add-ons installed."]</p> }
+        else
+        {
+            <div class="table-wrap"><table>
+                <tr><th>@L["Add-on"]</th><th>@L["Installations"]</th><th>@L["Versions in use"]</th><th>@L["Newest in the store"]</th><th>@L["Outdated"]</th></tr>
+                @foreach (var a in d.Addons)
+                {
+                    <tr><td><b>@a.Name</b>@if (a.Name != a.Id) { <br /><span class="pid">@a.Id</span> }</td><td>@a.Installs</td><td>@string.Join(", ", a.Versions)</td><td>@(a.Newest.Length > 0 ? a.Newest : "-")</td>
+                        <td>@if (a.Outdated > 0) { <span class="badge beta">@a.Outdated</span> } else { <span class="muted">0</span> }</td></tr>
+                }
+            </table></div>
+        }
+    </div>
+
+    <div class="card">
+        <h3 style="margin-top:0">@L["Installations"]</h3>
+        <div class="table-wrap"><table>
+            <tr><th>@L["Installation"]</th><th>@L["Domain"]</th><th>Power PDF</th><th>@L["Store client"]</th><th>@L["License mode"]</th><th>@L["Add-ons"]</th><th>@L["First seen"]</th><th>@L["Last seen"]</th></tr>
+            @foreach (var m in AddonStore.Web.Services.Paging.Items(d.Machines, ViewContext.HttpContext.Request, "machines"))
+            {
+                <tr><td><code>@m.InstallHash[..10]</code></td><td style="white-space:nowrap">@m.Domain</td><td>@m.HostVersion</td><td>@m.ClientVersion</td><td>@m.LicenseMode</td>
+                    <td>@AddonStore.Web.Services.InventoryService.Parse(m.AddonsJson).Count</td><td>@Time.Fmt(m.FirstSeen, false)</td><td>@Time.Fmt(m.LastSeen)</td></tr>
+            }
+        </table></div>
+        <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("machines", d.Machines.Count)' />
+    </div>
+}
+else
+{
+    <form method="get" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:14px 0 12px">
+        <input type="search" name="q" value="@Model.Q" placeholder="@L["Search company, domain or add-on"]" style="flex:1;min-width:200px;max-width:360px" />
+        <button type="submit" class="btn small secondary">@L["Search"]</button>
+        <span class="muted small">@L["{0} companies, {1} installations", Model.Rows.Count, Model.Rows.Sum(r => r.Installs)]</span>
+    </form>
+    @if (Model.Visible.Count == 0)
+    {
+        <div class="card">@L[Model.Rows.Count == 0 ? "No store client has reported yet." : "No company matches the search."]</div>
+    }
+    else
+    {
+        <div class="table-wrap" id="companies"><table>
+            <tr><th>@L["Company"]</th><th>@L["Installations"]</th><th>Power PDF</th><th>@L["Store client"]</th><th>@L["Add-ons"]</th><th>@L["Outdated"]</th><th>@L["Last seen"]</th></tr>
+            @foreach (var r in AddonStore.Web.Services.Paging.Items(Model.Visible, ViewContext.HttpContext.Request, "companies"))
+            {
+                <tr>
+                    <td><a href="/Admin/Inventory?company=@Uri.EscapeDataString(r.Company)&q=@Uri.EscapeDataString(Model.Q ?? "")"><b>@r.Company</b></a>
+                        @{ var doms = r.Domains.Where(x => x.Domain != r.Company).Select(x => x.Domain).ToList(); }
+                        @if (doms.Count > 0) { <br /><span class="small muted" style="white-space:nowrap">@string.Join(", ", doms)</span> }
+                        @if (r.Domains.Any(x => x.Source is "pending" or "unknown")) { <br /><span class="small muted">@L[SourceLabel(r.Domains.First(x => x.Source is "pending" or "unknown").Source)]</span> }</td>
+                    <td>@r.Installs <span class="small muted">(@r.Active30)</span></td>
+                    <td>@string.Join(", ", r.HostVersions.Take(2))</td>
+                    <td>@string.Join(", ", r.ClientVersions.Take(2))</td>
+                    <td>@r.Addons.Count <span class="small muted">(@r.AddonInstalls)</span></td>
+                    <td>@if (r.Outdated > 0) { <span class="badge beta">@r.Outdated</span> } else { <span class="muted">0</span> }</td>
+                    <td>@Time.Fmt(r.LastSeen, false)</td>
+                </tr>
+            }
+        </table></div>
+        <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("companies", Model.Visible.Count)' />
+    }
+}

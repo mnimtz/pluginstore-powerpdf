@@ -1202,4 +1202,46 @@
   <data name="Own Update Manager" xml:space="preserve"><value>Saját Update Manager</value></data>
   <data name="Power PDF updates itself (own Update Manager, from 2026.4): no hint from the store" xml:space="preserve"><value>A Power PDF önmagát frissíti (saját Update Manager, 2026.4-től): nincs értesítés az áruháztól</value></data>
   <data name="No hint: Power PDF {0} updates itself with its own Update Manager." xml:space="preserve"><value>Nincs értesítés: a Power PDF {0} a saját Update Managerével frissül.</value></data>
+  <data name="Also delete all stored data" xml:space="preserve"><value>Az összes tárolt adat törlése is</value></data>
+  <data name="Companies whose store clients report: installations, Power PDF and store versions and installed add-ons. The company behind an e-mail domain is found automatically; correct the name if it is wrong." xml:space="preserve"><value>Cégek, amelyek áruházkliensei jelentést küldenek: telepítések, Power PDF- és áruházverziók, valamint telepített bővítmények. Az e-mail-tartomány mögötti cég meghatározása automatikus; ha a név hibás, javítsa ki.</value></data>
+  <data name="Company" xml:space="preserve"><value>Cég</value></data>
+  <data name="Delete everything stored about this domain?" xml:space="preserve"><value>Törli az erről a tartományról tárolt összes adatot?</value></data>
+  <data name="Domain" xml:space="preserve"><value>Tartomány</value></data>
+  <data name="Domains" xml:space="preserve"><value>Tartományok</value></data>
+  <data name="Domains and company name" xml:space="preserve"><value>Tartományok és cégnév</value></data>
+  <data name="Existing customers" xml:space="preserve"><value>Meglévő ügyfelek</value></data>
+  <data name="Existing customers (evaluation)" xml:space="preserve"><value>Meglévő ügyfelek (kiértékelés)</value></data>
+  <data name="I confirm that a legal basis exists, the users are informed (privacy policy or terms of the store) and the retention period below is agreed." xml:space="preserve"><value>Megerősítem, hogy van jogalap, a felhasználók tájékoztatást kaptak (adatvédelmi tájékoztató vagy az áruház felhasználási feltételei), és az alábbi megőrzési idő egyeztetett.</value></data>
+  <data name="Installations with an older add-on version" xml:space="preserve"><value>Régebbi bővítményverziót használó telepítések</value></data>
+  <data name="Installations: {0}. Not seen for {1} days: deleted automatically." xml:space="preserve"><value>Telepítések: {0}. {1} napig nem jelentkezik: automatikusan törlődik.</value></data>
+  <data name="Installed add-ons" xml:space="preserve"><value>Telepített bővítmények</value></data>
+  <data name="License mode" xml:space="preserve"><value>Licenctípus</value></data>
+  <data name="Look up again" xml:space="preserve"><value>Újbóli keresés</value></data>
+  <data name="Newest in the store" xml:space="preserve"><value>Legújabb az áruházban</value></data>
+  <data name="No add-ons installed." xml:space="preserve"><value>Nincs telepített bővítmény.</value></data>
+  <data name="Outdated" xml:space="preserve"><value>Elavult</value></data>
+  <data name="Search company, domain or add-on" xml:space="preserve"><value>Keresés cég, tartomány vagy bővítmény szerint</value></data>
+  <data name="Store client" xml:space="preserve"><value>Áruházkliens</value></data>
+  <data name="Store clients report once a day: the domain of the Cloud License Server sign-in (never the e-mail address), the license mode, the Power PDF and store versions and the installed add-ons. The company behind a domain is found automatically (portal customers, then the AI assistant) and can be corrected under Existing customers. Only the last state per installation is kept. Free-mail domains are not stored." xml:space="preserve"><value>Az áruházkliensek naponta egyszer jelentik: a Cloud License Server-bejelentkezés tartományát (soha nem az e-mail-címet), a licenctípust, a Power PDF- és áruházverziókat, valamint a telepített bővítményeket. A tartomány mögötti cég meghatározása automatikus (a portál ügyfelei, majd az MI-asszisztens), és a Meglévő ügyfelek alatt javítható. Telepítésenként csak a legutóbbi állapot marad meg. Az ingyenes levelezőszolgáltatások tartományait a rendszer nem tárolja.</value></data>
+  <data name="Switch the existing-customer evaluation off?" xml:space="preserve"><value>Kikapcsolja a meglévő ügyfelek kiértékelését?</value></data>
+  <data name="The evaluation links installations to companies. A company domain can point to a person (for example a sole trader), and the domains are sent to the AI provider set up under AI assistant. It needs a legal basis (for example legitimate interest), a note in the privacy policy or the terms of the store and a retention period. Please clarify this with your data protection officer before switching it on." xml:space="preserve"><value>A kiértékelés a telepítéseket cégekhez rendeli. Egy céges tartomány személyre is utalhat (például egyéni vállalkozóra), és a tartományokat a rendszer elküldi az MI-asszisztens alatt beállított MI-szolgáltatónak. Ehhez jogalap (például jogos érdek), az adatvédelmi tájékoztatóban vagy az áruház felhasználási feltételeiben szereplő tájékoztatás és megőrzési idő szükséges. Bekapcsolás előtt egyeztessen az adatvédelmi tisztviselővel.</value></data>
+  <data name="Versions in use" xml:space="preserve"><value>Használt verziók</value></data>
+  <data name="From the portal&#x27;s customers" xml:space="preserve"><value>A portál ügyfelei közül</value></data>
+  <data name="Found by the AI assistant" xml:space="preserve"><value>Az MI-asszisztens találta</value></data>
+  <data name="Corrected by an admin" xml:space="preserve"><value>Rendszergazda javította</value></data>
+  <data name="Being looked up" xml:space="preserve"><value>Keresés folyamatban</value></data>
+  <data name="Not known" xml:space="preserve"><value>Ismeretlen</value></data>
+  <data name="{0} active in the last 30 days" xml:space="preserve"><value>{0} aktív az elmúlt 30 napban</value></data>
+  <data name="{0} add-ons" xml:space="preserve"><value>{0} bővítmény</value></data>
+  <data name="{0} companies, {1} installations" xml:space="preserve"><value>{0} cég, {1} telepítés</value></data>
+  <data name="No store client has reported yet." xml:space="preserve"><value>Még egyetlen áruházkliens sem jelentett.</value></data>
+  <data name="No company matches the search." xml:space="preserve"><value>Egyetlen cég sem felel meg a keresésnek.</value></data>
+  <data name="Company name saved." xml:space="preserve"><value>Cégnév mentve.</value></data>
+  <data name="The company was looked up again." xml:space="preserve"><value>A cég újbóli keresése megtörtént.</value></data>
+  <data name="The data of this domain was deleted." xml:space="preserve"><value>A tartomány adatai törölve lettek.</value></data>
+  <data name="Enter a company name of 1 to 120 characters." xml:space="preserve"><value>Adjon meg egy 1 és 120 karakter közötti cégnevet.</value></data>
+  <data name="The existing-customer evaluation is on." xml:space="preserve"><value>A meglévő ügyfelek kiértékelése be van kapcsolva.</value></data>
+  <data name="The existing-customer evaluation is off and its data is deleted." xml:space="preserve"><value>A meglévő ügyfelek kiértékelése ki van kapcsolva, és az adatai törölve lettek.</value></data>
+  <data name="The existing-customer evaluation is off." xml:space="preserve"><value>A meglévő ügyfelek kiértékelése ki van kapcsolva.</value></data>
+  <data name="Data protection" xml:space="preserve"><value>Adatvédelem</value></data>
 </root>

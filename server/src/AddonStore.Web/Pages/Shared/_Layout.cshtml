@@ -3,6 +3,7 @@
 @using Microsoft.EntityFrameworkCore
 @using System.Globalization
 @inject AddonStore.Web.Api.AppVersion AppVer
+@inject AddonStore.Web.Services.InventoryService InvNav
 <!DOCTYPE html>
 <html lang="@AddonStore.Web.Services.Lang.Current" dir="@(AddonStore.Web.Services.Lang.CurrentIsRtl ? "rtl" : "ltr")">
 @{
@@ -17,6 +18,8 @@
     var host = Context.Request.Host;
     // the new navigation (S1.5.0 preview): signed in, switched on, and not a public page
     var shell = SignInManager.IsSignedIn(User) && AddonStore.Web.Services.Shell.Sidebar(Context) && ViewData["PublicPage"] is not true;
+    // "Existing customers" only exists while the evaluation is switched on (Settings, data protection; S1.10.0)
+    var invNav = SignInManager.IsSignedIn(User) && User.IsInRole("Admin") && await InvNav.EnabledAsync();
     var origin = (host.Host is "localhost" or "127.0.0.1" ? Context.Request.Scheme : "https") + "://" + host;
 }
 <head>
@@ -122,7 +125,11 @@
             <a class="@On("/Insights")" href="/Insights">@L["Dashboard"]</a>
             <a class="@On("/Dashboard", "/Plugin", "/CatalogEntry", "/Dossier")" href="/Dashboard">@L["Plug-ins"]</a>
             <a class="@On("/Issues")" href="/Issues"><span>@L["Problem reports"]</span>@if (openS > 0) { <span class="nav-count" title="@L["New problem reports"]">@openS</span> }</a>
-            <a class="@On("/Customers", "/Customer")" href="/Customers">@L["Customers"]</a>
+            <a class="@On("/Customers", "/Customer")" href="/Customers">@L["Deliveries"]</a>
+            @if (invNav)
+            {
+                <a class="@On("/Admin/Inventory")" href="/Admin/Inventory">@L["Existing customers"]</a>
+            }
             @if (isReviewerS)
             {
                 <div class="side-head">@L["Review"]</div>
@@ -183,7 +190,11 @@ else
             {
                 <a href="/Dashboard">@L["Plug-ins"]</a>
                 <a href="/Profile">@L["Profile"]</a>
-                <a href="/Customers">@L["Customers"]</a>
+                <a href="/Customers">@L["Deliveries"]</a>
+                @if (invNav)
+                {
+                    <a href="/Admin/Inventory">@L["Existing customers"]</a>
+                }
                 <a href="/Insights">@L["Dashboard"]</a>
                 var meNav = await UserManager.GetUserAsync(User);
                 var openReports = meNav is null ? 0 : await IssuesNav.Scope(meNav, User.IsInRole("Admin")).CountAsync(f => f.Status == "open");

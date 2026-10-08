@@ -152,6 +152,7 @@ public static class ApiEndpoints
                     "GET  /llms.txt                   short index of this site for language models",
                     "GET  /api/me                     verify your token, see your packages (auth)",
                     "GET  /api/client/access          may this store client be used with its Power PDF license (header X-License-Mode)",
+                    "POST /api/client/inventory       store client: daily state for the existing-customer evaluation (if switched on)",
                     "GET  /api/powerpdf/update?version=2025.3.8.0.26414&lang=de   newer Power PDF update of that release line (if switched on)",
                     "GET|POST|DELETE /api/me/test-code your personal test code for the store window (auth)",
                     "GET  /api/catalog?channel=beta   released packages; beta channel includes versions approved for beta",
@@ -422,6 +423,15 @@ public static class ApiEndpoints
             if (!await StoreAccess.AllowedAsync(ctx, settings)) return Results.Json(new { ok = true, data = new { enabled = false } });
             if (version is { Length: > 40 }) return Fail("VERSION_INVALID", "version is a Power PDF VersionLong such as 2025.3.8.0.26414.", 400);
             return Results.Json(new { ok = true, data = await updates.ClientInfoAsync(version, Services.Lang.Normalize(MapHostLang((lang ?? "en").Trim()))) });
+        });
+
+        // Existing-customer evaluation (S1.10.0): the store client's daily state, only while the admins
+        // switched it on (GDPR confirmation). Store clients only; never the e-mail address, only its domain.
+        api.MapPost("/client/inventory", async (HttpContext ctx, InventoryService inventory, InventoryService.Report body) =>
+        {
+            if (UsageService.Classify(ctx).Source != "client") return Fail("CLIENT_ONLY", "Only the Add-on Store client reports its state.", 403);
+            var r = await inventory.RecordAsync(ctx, body);
+            return Results.Json(new { ok = true, data = new { stored = r == "stored", result = r } });
         });
 
         // May this store client be used with its Power PDF license (S1.7.0)? Anonymous like the catalog;
