@@ -388,7 +388,9 @@ docs/concepts/powerpdf-updates.md):**
 - `GET /api/powerpdf/update?version=<VersionLong>&lang=` answers the store
   client; nothing for a license mode the store does not allow.
 - Client 1.6.0: Options, "Show a hint when an update for Power PDF is
-  available" (off by default; policy `Store\PowerPdfUpdates` 0/1 locks it).
+  available" (on by default since client 1.6.1, as the server answers
+  nothing until its admins switch the hints on; policy
+  `Store\PowerPdfUpdates` 0/1 locks it).
   The store window shows a banner with the update, the text, "What's new"
   (opens the official ReadMe, only https on tungstenautomation.com) and "Hide"
   (until a newer update). Nothing is downloaded or installed.

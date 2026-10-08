@@ -56,7 +56,8 @@ bool PSPowerPdfHint()
 {
     DWORD v = 0;
     if (FPPolicyDword(L"Store", L"PowerPdfUpdates", v)) return v != 0;
-    return ReadUserDword(L"PowerPdfUpdateHint", v) && v != 0;
+    // on by default (C1.6.1): the store server is the real switch, it answers nothing until its admins turn the hints on
+    return !ReadUserDword(L"PowerPdfUpdateHint", v) || v != 0;
 }
 
 void PSSavePowerPdfHint(bool on)

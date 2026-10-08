@@ -58,7 +58,10 @@ Die ganze Funktion ist **standardmäßig aus**, an zwei Stellen:
   „Power-PDF-Updates verwalten" (aus/an). Solange er aus ist, ruft der Server
   nichts ab, zeigt keine Aufgaben und meldet den Clients nichts.
 - **Client:** Optionen, Add-on Store, „Auf Power-PDF-Updates hinweisen"
-  (aus/an). Solange er aus ist, fragt der Client nicht nach und zeigt nichts.
+  (aus/an), seit Client 1.6.1 standardmäßig an: Der Server ist der
+  eigentliche Schalter und antwortet nichts, solange er aus ist. Wer den
+  Hinweis nicht will, schaltet ihn im Client aus; Firmen setzen die
+  Richtlinie `PowerPdfUpdates = 0`.
 
 Erst wenn beide an sind, erscheint ein Hinweis. Die Installation über den
 Store (Etappe 2) ist ein eigener, zusätzlicher Schalter an beiden Stellen.
@@ -165,7 +168,7 @@ gültig sein. Ein Rechner bekommt nur Updates seiner eigenen Linie.
 |---|---|---|
 | Server, Einstellungen, Power-PDF-Updates | „Power-PDF-Updates verwalten" (Hauptschalter) | aus |
 | Server, Einstellungen, Power-PDF-Updates | „Installation über den Store anbieten" (Etappe 2) | aus |
-| Optionen, Add-on Store | „Auf Power-PDF-Updates hinweisen" | aus |
+| Optionen, Add-on Store | „Auf Power-PDF-Updates hinweisen" | an (seit Client 1.6.1; der Server ist der eigentliche Schalter) |
 | Optionen, Add-on Store | „Updates über den Store installieren" | aus |
 | HKLM-Richtlinie `PowerPdfUpdates` | 0 = aus, 1 = nur Hinweis, 2 = Hinweis und Installation | nicht gesetzt |
 | HKLM-Richtlinie `PowerPdfUpdateSilent` | 1 = still installieren | nicht gesetzt |

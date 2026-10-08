@@ -16,7 +16,7 @@ bool         PSUrlLocked();               // true when a policy enforces the URL
 void         PSSaveUserSettings(const std::wstring& url, bool beta);
 bool         PSIsAllowedServerUrl(const std::wstring& url); // https://, or http:// for loopback; empty = default
 bool         PSUseClassicUI();
-// Power PDF update hint in the store window (C1.6.0, off by default): HKCU PowerPdfUpdateHint;
+// Power PDF update hint in the store window (C1.6.0; on by default since C1.6.1, the server decides): HKCU PowerPdfUpdateHint;
 // policy Store\PowerPdfUpdates (0 = off, 1 = hint) beats it and locks the Options checkbox.
 bool         PSPowerPdfHint();
 bool         PSPowerPdfHintLocked();
