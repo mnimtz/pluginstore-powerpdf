@@ -1097,4 +1097,32 @@
   <data name="{0} live" xml:space="preserve"><value>{0} live</value></data>
   <data name="{0} ratings" xml:space="preserve"><value>{0} Bewertungen</value></data>
   <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. In Power PDF the code is entered in the Add-on Store window with &quot;Customer code&quot; (up to 10 codes per computer), or distributed with the policy CustomerCode (several codes separated by semicolons)." xml:space="preserve"><value>Ein Kundencode schaltet alle Auslieferungen dieses Kunden frei, ein Auslieferungscode nur ein Add-on. In Power PDF wird der Code im Add-on-Store-Fenster über „Kundencode“ eingegeben (bis zu 10 Codes je Computer) oder mit der Richtlinie CustomerCode verteilt (mehrere Codes durch Semikolon getrennt).</value></data>
+  <data name="Approve for beta" xml:space="preserve"><value>Für Beta genehmigen</value></data>
+  <data name="Approved for beta" xml:space="preserve"><value>Für Beta genehmigt</value></data>
+  <data name="Approved for beta and newer than the live version. Approve them for the live store when the beta testers are done." xml:space="preserve"><value>Für Beta genehmigt und neuer als die Live-Version. Genehmigen Sie sie für den Live-Store, sobald die Beta-Tester fertig sind.</value></data>
+  <data name="Create a new test code? The current one stops working at once." xml:space="preserve"><value>Neuen Testcode erstellen? Der bisherige funktioniert sofort nicht mehr.</value></data>
+  <data name="Create test code" xml:space="preserve"><value>Testcode erstellen</value></data>
+  <data name="Delete the test code? It stops working at once." xml:space="preserve"><value>Testcode löschen? Er funktioniert sofort nicht mehr.</value></data>
+  <data name="Every workstation gets it." xml:space="preserve"><value>Jeder Arbeitsplatz erhält sie.</value></data>
+  <data name="In beta, ready for the live store" xml:space="preserve"><value>In Beta, bereit für den Live-Store</value></data>
+  <data name="New code" xml:space="preserve"><value>Neuer Code</value></data>
+  <data name="New versions wait for review and reach no workstation until a reviewer approves them. With this code you try your own add-ons in Power PDF first: enter it in the store window with &quot;Customer code&quot;. It shows the newest version of each of your add-ons, also one that waits for review. Treat it like a password." xml:space="preserve"><value>Neue Versionen warten auf Prüfung und erreichen keinen Arbeitsplatz, bis ein Prüfer sie genehmigt. Mit diesem Code probieren Sie Ihre eigenen Add-ons zuerst in Power PDF aus: Geben Sie ihn im Store-Fenster über „Kundencode“ ein. Er zeigt die neueste Version jedes Ihrer Add-ons, auch eine, die noch auf Prüfung wartet. Behandeln Sie ihn wie ein Passwort.</value></data>
+  <data name="New versions, not yet offered" xml:space="preserve"><value>Neue Versionen, noch nicht angeboten</value></data>
+  <data name="No workstation gets it yet; you can test it with your personal test code." xml:space="preserve"><value>Noch erhält sie kein Arbeitsplatz; Sie können sie mit Ihrem persönlichen Testcode testen.</value></data>
+  <data name="Personal test code" xml:space="preserve"><value>Persönlicher Testcode</value></data>
+  <data name="Restore (awaiting review)" xml:space="preserve"><value>Wiederherstellen (Warten auf Prüfung)</value></data>
+  <data name="Review recorded." xml:space="preserve"><value>Prüfung gespeichert.</value></data>
+  <data name="Set back to beta by {0}" xml:space="preserve"><value>Von {0} auf Beta zurückgesetzt</value></data>
+  <data name="Set this version back to beta? Only beta workstations are offered it from now on and the live channel falls back to the previous live version. Installed copies keep working." xml:space="preserve"><value>Diese Version auf Beta zurücksetzen? Ab jetzt wird sie nur Beta-Arbeitsplätzen angeboten, und der Live-Kanal fällt auf die vorherige Live-Version zurück. Installierte Kopien laufen weiter.</value></data>
+  <data name="Submitted. The version waits for review; try it with your personal test code (profile page)." xml:space="preserve"><value>Eingereicht. Die Version wartet auf Prüfung; probieren Sie sie mit Ihrem persönlichen Testcode aus (Profilseite).</value></data>
+  <data name="Test code created. Enter it in the store window with &quot;Customer code&quot;." xml:space="preserve"><value>Testcode erstellt. Geben Sie ihn im Store-Fenster über „Kundencode“ ein.</value></data>
+  <data name="Test code deleted; it stops working at once." xml:space="preserve"><value>Testcode gelöscht; er funktioniert ab sofort nicht mehr.</value></data>
+  <data name="These versions passed all automatic checks and wait for review; no workstation gets them yet. Approve each for beta (workstations with the beta option) or for the live store, or reject it with a reason." xml:space="preserve"><value>Diese Versionen haben alle automatischen Prüfungen bestanden und warten auf Prüfung; noch erhält sie kein Arbeitsplatz. Genehmigen Sie jede für Beta (Arbeitsplätze mit der Beta-Option) oder für den Live-Store, oder lehnen Sie sie mit einer Begründung ab.</value></data>
+  <data name="This version is already approved for beta." xml:space="preserve"><value>Diese Version ist bereits für Beta genehmigt.</value></data>
+  <data name="Version approved for beta." xml:space="preserve"><value>Version für Beta genehmigt.</value></data>
+  <data name="Version restored to the beta channel." xml:space="preserve"><value>Version im Beta-Kanal wiederhergestellt.</value></data>
+  <data name="Version restored; it waits for review." xml:space="preserve"><value>Version wiederhergestellt; sie wartet auf Prüfung.</value></data>
+  <data name="Version set back to beta." xml:space="preserve"><value>Version auf Beta zurückgesetzt.</value></data>
+  <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>Arbeitsplätze mit der Beta-Option erhalten sie; der Live-Store behält seine aktuelle Version.</value></data>
+  <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>Ihr persönlicher Testcode: Versionen, die auf Prüfung warten, in Power PDF ausprobieren</value></data>
 </root>

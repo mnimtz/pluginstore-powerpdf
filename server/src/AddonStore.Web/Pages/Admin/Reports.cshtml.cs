@@ -238,12 +238,9 @@ public class ReportsModel : PageModel
             packages.Count(p => p.Id != SubmissionService.ClientPackageId && p.Versions.Any(v => v.Status == VersionStatus.Live)),
             activeUsers.Count(u => userRoles.Any(r => r.UserId == u.Id && r.RoleId == developerRole) ||
                                    packages.Any(p => p.OwnerId == u.Id && p.Id != SubmissionService.ClientPackageId)),
-            packages.Count(p =>
-            {
-                var live = p.Versions.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
-                var beta = p.Versions.Where(v => v.Status == VersionStatus.Beta).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
-                return beta is not null && (live is null || cmp.Compare(beta.Version, live.Version) > 0);
-            }),
+            // waiting for review (S1.6.0): public add-ons with a version in status Submitted
+            packages.Count(p => p.Visibility != "private" && p.Id != SubmissionService.ClientPackageId &&
+                                p.Versions.Any(v => v.Status == VersionStatus.Submitted)),
             dlPrev.Sum(s => s.Count),
             prevStats.Where(s => s.Kind == "catalog").Sum(s => s.Count),
             prevStats.Where(s => s.Kind == "msi").Sum(s => s.Count));
@@ -376,7 +373,7 @@ public class ReportsModel : PageModel
 
         // Live or beta versions without deposited source code
         foreach (var p in packages.Where(p => p.Id != SubmissionService.ClientPackageId))
-            foreach (var v in p.Versions.Where(v => v.Status is VersionStatus.Live or VersionStatus.Beta && v.SourcePath is null))
+            foreach (var v in p.Versions.Where(v => v.Status is VersionStatus.Live or VersionStatus.Beta or VersionStatus.Submitted && v.SourcePath is null))
                 SourceGaps.Add(new SourceGap(p.Id, CatalogUi.DisplayName(p, v, culture), v.Version, v.Status));
     }
 

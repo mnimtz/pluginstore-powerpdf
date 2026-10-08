@@ -363,6 +363,25 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Approval for beta or live, personal test code (S1.6.0):**
+- A new upload waits for review (status `submitted`). No store client gets
+  it yet, also not in the beta channel.
+- Reviewers approve it **for beta** (clients with the beta option) or **for
+  the live store**, or reject it. A version approved for beta can go live
+  later; the review queue lists those under "In beta, ready for the live
+  store".
+- Setting a live version back to beta keeps it approved for beta. A withdrawn
+  version is restored to the stage it was approved for.
+- Every developer can create a **personal test code** (profile page or
+  `GET`/`POST`/`DELETE /api/me/test-code`). Entered in the store window like a
+  customer code, it shows the newest version of each of the developer's
+  add-ons, also one that waits for review ("For Test: <name>", catalog
+  channel `test`). It shares the guessing limit of customer codes.
+- Private add-ons still need no approval: customer deliveries hand out a
+  version that waits for review.
+- Existing data: beta versions nobody reviewed become `submitted`; reviewed
+  ones stay approved for beta.
+
 **S1.5.1:** the customer page tells where the code goes now: the store
 window's *Customer code* button (up to 10 codes per computer) or the policy
 `CustomerCode`.

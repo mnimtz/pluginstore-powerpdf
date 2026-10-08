@@ -1097,4 +1097,32 @@
   <data name="{0} live" xml:space="preserve"><value>{0} live</value></data>
   <data name="{0} ratings" xml:space="preserve"><value>{0} bedømmelser</value></data>
   <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. In Power PDF the code is entered in the Add-on Store window with &quot;Customer code&quot; (up to 10 codes per computer), or distributed with the policy CustomerCode (several codes separated by semicolons)." xml:space="preserve"><value>En kundekode låser op for alle leveringer til denne kunde, en leveringskode kun for én tilføjelse. I Power PDF indtastes koden i Add-on Store-vinduet med "Kundekode" (op til 10 koder pr. computer) eller distribueres med politikken CustomerCode (flere koder adskilt med semikolon).</value></data>
+  <data name="Approve for beta" xml:space="preserve"><value>Godkend til beta</value></data>
+  <data name="Approved for beta" xml:space="preserve"><value>Godkendt til beta</value></data>
+  <data name="Approved for beta and newer than the live version. Approve them for the live store when the beta testers are done." xml:space="preserve"><value>Godkendt til beta og nyere end live-versionen. Godkend dem til live-butikken, når beta-testerne er færdige.</value></data>
+  <data name="Create a new test code? The current one stops working at once." xml:space="preserve"><value>Opret en ny testkode? Den nuværende holder straks op med at virke.</value></data>
+  <data name="Create test code" xml:space="preserve"><value>Opret testkode</value></data>
+  <data name="Delete the test code? It stops working at once." xml:space="preserve"><value>Slet testkoden? Den holder straks op med at virke.</value></data>
+  <data name="Every workstation gets it." xml:space="preserve"><value>Alle arbejdsstationer får den.</value></data>
+  <data name="In beta, ready for the live store" xml:space="preserve"><value>I beta, klar til live-butikken</value></data>
+  <data name="New code" xml:space="preserve"><value>Ny kode</value></data>
+  <data name="New versions wait for review and reach no workstation until a reviewer approves them. With this code you try your own add-ons in Power PDF first: enter it in the store window with &quot;Customer code&quot;. It shows the newest version of each of your add-ons, also one that waits for review. Treat it like a password." xml:space="preserve"><value>Nye versioner afventer gennemgang og når ingen arbejdsstation, før en godkender har godkendt dem. Med denne kode prøver du først dine egne tilføjelser i Power PDF: indtast den i butiksvinduet med "Kundekode". Den viser den nyeste version af hver af dine tilføjelser, også en, der afventer gennemgang. Behandl den som en adgangskode.</value></data>
+  <data name="New versions, not yet offered" xml:space="preserve"><value>Nye versioner, endnu ikke tilbudt</value></data>
+  <data name="No workstation gets it yet; you can test it with your personal test code." xml:space="preserve"><value>Ingen arbejdsstation får den endnu; du kan teste den med din personlige testkode.</value></data>
+  <data name="Personal test code" xml:space="preserve"><value>Personlig testkode</value></data>
+  <data name="Restore (awaiting review)" xml:space="preserve"><value>Gendan (afventer gennemgang)</value></data>
+  <data name="Review recorded." xml:space="preserve"><value>Gennemgang registreret.</value></data>
+  <data name="Set back to beta by {0}" xml:space="preserve"><value>Sat tilbage til beta af {0}</value></data>
+  <data name="Set this version back to beta? Only beta workstations are offered it from now on and the live channel falls back to the previous live version. Installed copies keep working." xml:space="preserve"><value>Sæt denne version tilbage til beta? Fra nu af tilbydes den kun beta-arbejdsstationer, og live-kanalen falder tilbage til den forrige live-version. Installerede kopier fortsætter med at virke.</value></data>
+  <data name="Submitted. The version waits for review; try it with your personal test code (profile page)." xml:space="preserve"><value>Indsendt. Versionen afventer gennemgang; prøv den med din personlige testkode (profilside).</value></data>
+  <data name="Test code created. Enter it in the store window with &quot;Customer code&quot;." xml:space="preserve"><value>Testkode oprettet. Indtast den i butiksvinduet med "Kundekode".</value></data>
+  <data name="Test code deleted; it stops working at once." xml:space="preserve"><value>Testkoden er slettet; den holder straks op med at virke.</value></data>
+  <data name="These versions passed all automatic checks and wait for review; no workstation gets them yet. Approve each for beta (workstations with the beta option) or for the live store, or reject it with a reason." xml:space="preserve"><value>Disse versioner har bestået alle automatiske kontroller og afventer gennemgang; ingen arbejdsstation får dem endnu. Godkend hver enkelt til beta (arbejdsstationer med beta-indstillingen) eller til live-butikken, eller afvis den med en begrundelse.</value></data>
+  <data name="This version is already approved for beta." xml:space="preserve"><value>Denne version er allerede godkendt til beta.</value></data>
+  <data name="Version approved for beta." xml:space="preserve"><value>Version godkendt til beta.</value></data>
+  <data name="Version restored to the beta channel." xml:space="preserve"><value>Version gendannet til beta-kanalen.</value></data>
+  <data name="Version restored; it waits for review." xml:space="preserve"><value>Version gendannet; den afventer gennemgang.</value></data>
+  <data name="Version set back to beta." xml:space="preserve"><value>Versionen er sat tilbage til beta.</value></data>
+  <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>Arbejdsstationer med beta-indstillingen får den; live-butikken beholder sin nuværende version.</value></data>
+  <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>Din personlige testkode: prøv dine versioner, der venter på gennemgang, i Power PDF</value></data>
 </root>

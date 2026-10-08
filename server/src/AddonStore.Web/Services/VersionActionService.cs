@@ -34,10 +34,26 @@ public class VersionActionService
 
     public static bool CanReview(System.Security.Claims.ClaimsPrincipal u) => u.IsInRole("Admin") || u.IsInRole("Reviewer");
 
-    /// <summary>Owner may withdraw beta versions; admins may withdraw any beta or live version.</summary>
+    /// <summary>Owner may withdraw versions waiting for review or in beta; admins may withdraw any of them and live versions.</summary>
     public static bool CanWithdraw(PackageVersion v, AppUser user, bool isAdmin) =>
-        (v.Status == VersionStatus.Beta && (isAdmin || v.Package?.OwnerId == user.Id)) ||
+        (v.Status is VersionStatus.Submitted or VersionStatus.Beta && (isAdmin || v.Package?.OwnerId == user.Id)) ||
         (v.Status == VersionStatus.Live && isAdmin);
+
+    /// <summary>A reviewer decides on it (S1.6.0): waiting for review (beta, live or reject), or approved for beta (live or reject).</summary>
+    public static bool CanDecide(PackageVersion v) =>
+        v.Status is VersionStatus.Submitted or VersionStatus.Beta && v.PackageId != SubmissionService.ClientPackageId;
+
+    /// <summary>"beta" or "live": the stage an approval was for (approvals before S1.6.0 were for live).</summary>
+    public static string ApprovedStage(PackageVersion v)
+    {
+        if (string.IsNullOrEmpty(v.ApprovalJson)) return "live";
+        try
+        {
+            using var d = System.Text.Json.JsonDocument.Parse(v.ApprovalJson);
+            return d.RootElement.TryGetProperty("stage", out var s) && s.GetString() == "beta" ? "beta" : "live";
+        }
+        catch (System.Text.Json.JsonException) { return "live"; }
+    }
 
     /// <summary>Admins can set a live version back to beta (not the store client, which has no beta stage).</summary>
     public static bool CanDemote(PackageVersion v, bool isAdmin) =>
@@ -124,16 +140,26 @@ public class VersionActionService
         await _notify.NotifyStaffAsync("StatusChange", $"[Add-on Store] Security block: {pkg.Id}", html);
     }
 
-    /// <summary>Status a withdrawn version returns to: live when it had been approved (or is the client, which never queues), otherwise beta.</summary>
+    /// <summary>Status a withdrawn version returns to: the stage it was approved for (the client never queues), otherwise waiting for review.</summary>
     public static VersionStatus RestoreTarget(PackageVersion v) =>
-        v.ReviewedAt is not null || v.PackageId == SubmissionService.ClientPackageId ? VersionStatus.Live : VersionStatus.Beta;
+        v.PackageId == SubmissionService.ClientPackageId ? VersionStatus.Live
+        : v.ReviewedAt is null ? VersionStatus.Submitted
+        : ApprovedStage(v) == "beta" ? VersionStatus.Beta : VersionStatus.Live;
 
+    /// <summary>
+    /// The review decision (S1.6.0: approval for beta or for live). A version waiting for review can be
+    /// approved for beta, approved for live or rejected; one approved for beta can go live or be rejected.
+    /// Private add-ons need no approval: approving one records the review (stage live, as before).
+    /// </summary>
     public async Task<string?> DecideAsync(int versionId, AppUser actor, bool approve, string? comment,
-                                           IReadOnlyCollection<string>? confirmed = null)
+                                           IReadOnlyCollection<string>? confirmed = null, string stage = "live")
     {
         var v = await _db.PackageVersions.Include(x => x.Package).ThenInclude(p => p!.Owner)
             .FirstOrDefaultAsync(x => x.Id == versionId);
-        if (v is null || v.Status != VersionStatus.Beta) return null;
+        if (v is null || !CanDecide(v)) return null;
+        var isPrivate = v.Package?.Visibility == "private";
+        stage = isPrivate || stage != "beta" ? "live" : "beta";
+        if (approve && v.Status == VersionStatus.Beta && stage == "beta") return "This version is already approved for beta.";
         // Approval conditions (S1.0.10): the reviewer confirms each one; the ids are recorded.
         var conditions = approve ? Validation.RuleCatalog.ApprovalConditions().Select(c => c.Id).ToList() : new List<string>();
         if (approve && conditions.Any(id => confirmed is null || !confirmed.Contains(id)))
@@ -146,7 +172,7 @@ public class VersionActionService
         var actorIsAdmin = (await _users.GetRolesAsync(actor)).Contains("Admin");
         if (approve && v.PackageId != SubmissionService.ClientPackageId && own && (!actorIsAdmin || await FourEyesAsync()))
             return "Four-eyes rule: another admin or reviewer has to approve a version you uploaded or own.";
-        v.Status = approve ? VersionStatus.Live : VersionStatus.Rejected;
+        v.Status = !approve ? VersionStatus.Rejected : stage == "beta" ? VersionStatus.Beta : VersionStatus.Live;
         v.ReviewedById = actor.Id;
         v.ReviewedAt = DateTime.UtcNow;
         v.ReviewComment = comment;
@@ -155,6 +181,7 @@ public class VersionActionService
         v.ApprovalJson = System.Text.Json.JsonSerializer.Serialize(new
         {
             decision = approve ? "approved" : "rejected",
+            stage = approve ? stage : null,   // S1.6.0
             by = actor.DisplayName,
             byId = actor.Id,
             at = v.ReviewedAt,
@@ -164,16 +191,18 @@ public class VersionActionService
             rules = Validation.RuleCatalog.Snapshot(),
         });
         await _db.SaveChangesAsync();
-        await _audit.LogAsync(actor.DisplayName, approve ? "version.approved" : "version.rejected",
-            $"{v.PackageId} {v.Version}", approve ? "conditions confirmed: " + string.Join(", ", conditions) : comment ?? "");
+        await _audit.LogAsync(actor.DisplayName, !approve ? "version.rejected" : stage == "beta" ? "version.approved.beta" : "version.approved",
+            $"{v.PackageId} {v.Version}", approve ? $"stage {stage}; conditions confirmed: " + string.Join(", ", conditions) : comment ?? "");
         if (v.Package?.Owner is { } owner)
             await _notify.NotifyUserAsync("ReviewResult", owner,
-                $"[Add-on Store] {v.PackageId} {v.Version} {(approve ? "approved" : "rejected")}",
-                (approve
-                    ? $"<p>Your version <b>{v.PackageId} {v.Version}</b> was approved and is live for all users.</p>"
-                    : $"<p>Your version <b>{v.PackageId} {v.Version}</b> was rejected.</p><p>Reason: {System.Net.WebUtility.HtmlEncode(comment ?? "-")}</p>")
+                $"[Add-on Store] {v.PackageId} {v.Version} {(!approve ? "rejected" : stage == "beta" ? "approved for beta" : "approved")}",
+                (!approve
+                    ? $"<p>Your version <b>{v.PackageId} {v.Version}</b> was rejected.</p><p>Reason: {System.Net.WebUtility.HtmlEncode(comment ?? "-")}</p>"
+                    : isPrivate ? $"<p>The review of your private version <b>{v.PackageId} {v.Version}</b> was recorded.</p>"
+                    : stage == "beta" ? $"<p>Your version <b>{v.PackageId} {v.Version}</b> was approved for beta: workstations with the beta option get it now.</p>"
+                    : $"<p>Your version <b>{v.PackageId} {v.Version}</b> was approved and is live for all users.</p>")
                 + await _notify.PluginLinkAsync(v.PackageId));
-        return approve ? "Version approved and live." : "Version rejected.";
+        return !approve ? "Version rejected." : isPrivate ? "Review recorded." : stage == "beta" ? "Version approved for beta." : "Version approved and live.";
     }
 
     private async Task<bool> FourEyesAsync() => await _settings.GetAsync("Review.FourEyes") == "on";
@@ -194,27 +223,31 @@ public class VersionActionService
     }
 
     /// <summary>
-    /// Live back to beta: from now on only beta workstations are offered this version,
-    /// the live channel falls back to the previous live version, and it needs approval
-    /// again (it is back in the review queue). Installed copies stay.
+    /// Live back to beta: from now on only beta workstations are offered this version, and
+    /// the live channel falls back to the previous live version. It stays approved for beta
+    /// (S1.6.0; before, it went back to the review queue). Installed copies stay.
     /// </summary>
     public async Task<string?> DemoteAsync(int versionId, AppUser actor, bool isAdmin)
     {
         var v = await _db.PackageVersions.Include(x => x.Package).ThenInclude(p => p!.Owner).FirstOrDefaultAsync(x => x.Id == versionId);
         if (v is null || !CanDemote(v, isAdmin)) return null;
-        // Approval needs the source code: without it the version would be stuck in beta.
-        if (await _sources.BlocksApprovalAsync(v))
-            return "The source code of this version is missing: back in beta, it could not be approved again. Upload the source code first.";
-        v.Status = VersionStatus.Beta;
-        v.ReviewedAt = null;
-        v.ReviewedById = null;
-        v.ApprovalJson = null;   // the earlier decision stays in the audit log; the dossier shows "not reviewed" (audit S1.3.1)
+        v.Status = VersionStatus.Beta;   // stays approved for beta: no new approval, so a missing source code does not matter here
+        // the approval now covers beta only; the earlier live decision stays in the audit log
+        try
+        {
+            var node = System.Text.Json.Nodes.JsonNode.Parse(v.ApprovalJson ?? "{}") as System.Text.Json.Nodes.JsonObject ?? new();
+            node["stage"] = "beta";
+            node["demotedBy"] = actor.DisplayName;
+            node["demotedAt"] = DateTime.UtcNow;
+            v.ApprovalJson = node.ToJsonString();
+        }
+        catch (System.Text.Json.JsonException) { v.ApprovalJson = System.Text.Json.JsonSerializer.Serialize(new { stage = "beta", demotedBy = actor.DisplayName, demotedAt = DateTime.UtcNow }); }
         await _db.SaveChangesAsync();
-        await _audit.LogAsync(actor.DisplayName, "version.demoted", $"{v.PackageId} {v.Version}", "live -> beta, needs approval again");
+        await _audit.LogAsync(actor.DisplayName, "version.demoted", $"{v.PackageId} {v.Version}", "live -> beta, stays approved for beta");
         await TellOwnerAsync(v.Package?.Owner, actor, v.PackageId, $"[Add-on Store] {v.PackageId} {v.Version} back to beta",
             $"<p><b>{Enc(actor.DisplayName)}</b> set version <b>{v.PackageId} {v.Version}</b> back to beta. " +
-            "Only beta workstations are offered it now; it needs approval again. Installed copies keep working.</p>");
-        return "Version set back to beta; it needs approval again.";
+            "Only beta workstations are offered it now. Installed copies keep working.</p>");
+        return "Version set back to beta.";
     }
 
     public async Task<string?> RestoreAsync(int versionId, AppUser actor, bool isAdmin)
@@ -227,8 +260,9 @@ public class VersionActionService
             $"now {v.Status.ToString().ToLowerInvariant()}");
         await TellOwnerAsync(v.Package?.Owner, actor, v.PackageId, $"[Add-on Store] {v.PackageId} {v.Version} restored",
             $"<p><b>{Enc(actor.DisplayName)}</b> restored version <b>{v.PackageId} {v.Version}</b>. " +
-            (v.Status == VersionStatus.Live ? "It is live again.</p>" : "It is back in the beta channel and needs approval again.</p>"));
-        return v.Status == VersionStatus.Live ? "Version restored and live again." : "Version restored to the beta channel; it needs approval again.";
+            (v.Status == VersionStatus.Live ? "It is live again.</p>" : v.Status == VersionStatus.Beta ? "It is back in the beta channel.</p>" : "It waits for review again.</p>"));
+        return v.Status == VersionStatus.Live ? "Version restored and live again."
+             : v.Status == VersionStatus.Beta ? "Version restored to the beta channel." : "Version restored; it waits for review.";
     }
 
     /// <summary>Takes the whole plug-in out of the store: every live and beta version is withdrawn.</summary>
@@ -236,7 +270,7 @@ public class VersionActionService
     {
         if (!isAdmin) return null;
         var versions = await _db.PackageVersions
-            .Where(x => x.PackageId == packageId && (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta))
+            .Where(x => x.PackageId == packageId && (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta || x.Status == VersionStatus.Submitted))
             .ToListAsync();
         if (versions.Count == 0) return null;
         foreach (var v in versions) v.Status = VersionStatus.Withdrawn;

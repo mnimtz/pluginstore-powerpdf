@@ -15,7 +15,7 @@
     string? Str(JsonElement? e, string name) => e is { ValueKind: JsonValueKind.Object } o && o.TryGetProperty(name, out var v) && v.ValueKind == JsonValueKind.String ? v.GetString() : null;
     JsonElement? Sub(JsonElement? e, string name) => e is { ValueKind: JsonValueKind.Object } o && o.TryGetProperty(name, out var v) && v.ValueKind != JsonValueKind.Null ? v : null;
     string Badge(string sev) => sev switch { "error" => "rejected", "warning" => "beta", "info" => "submitted", _ => "withdrawn" };
-    var statusLabel = d.Status switch { VersionStatus.Live => "Live", VersionStatus.Beta => "Beta", VersionStatus.Rejected => "Rejected", VersionStatus.Withdrawn => "Withdrawn", _ => "Submitted" };
+    var statusLabel = AddonStore.Web.Services.CatalogUi.StatusKey(d.Status);
     var errors = d.Findings.Count(f => f.Severity == "error");
     var warnings = d.Findings.Count(f => f.Severity == "warning");
     var snap = d.RulesSnapshot;
@@ -40,10 +40,10 @@
 
 <div class="lead-box small">
     <b>@L["Summary"]:</b>
-    <span class="badge @(d.Status == VersionStatus.Live ? "live" : d.Status == VersionStatus.Beta ? "beta" : d.Status == VersionStatus.Rejected ? "rejected" : "withdrawn")">@L[statusLabel]</span>
+    <span class="badge @(d.Status == VersionStatus.Live ? "live" : d.Status == VersionStatus.Beta ? "beta" : d.Status == VersionStatus.Rejected ? "rejected" : d.Status == VersionStatus.Submitted ? "submitted" : "withdrawn")">@L[statusLabel]</span>
     · @L["Automatic checks"]: @(d.Passed ? L["passed"] : L["failed"]) (@errors @L["Errors"], @warnings @L["Warnings"])
     · @L["Source code"]: @(d.SourceSha256 is null ? L["not uploaded"] : L["stored"])
-    · @L["Review"]: @(approval is not null ? (Str(approval, "decision") == "approved" ? L["Approved"] : L["Rejected"]) : d.ReviewedAt is not null ? (d.Status == VersionStatus.Rejected ? L["Rejected"] : L["Approved"]) : L["open"])
+    · @L["Review"]: @(approval is not null ? (Str(approval, "decision") == "approved" ? (Str(approval, "stage") == "beta" ? L["Approved for beta"] : L["Approved"]) : L["Rejected"]) : d.ReviewedAt is not null ? (d.Status == VersionStatus.Rejected ? L["Rejected"] : L["Approved"]) : L["open"])
     @if (d.BlockedAt is not null || d.PackageBlockedAt is not null) { <text> · </text><span class="badge rejected">@L["Blocked"]</span> }
 </div>
 
@@ -160,7 +160,8 @@ else
 {
     var conds = Sub(approval, "conditions");
     <table class="kv">
-        <tr><th>@L["Decision"]</th><td><b>@(Str(approval, "decision") == "approved" ? L["Approved"] : L["Rejected"])</b></td></tr>
+        <tr><th>@L["Decision"]</th><td><b>@(Str(approval, "decision") == "approved" ? (Str(approval, "stage") == "beta" ? L["Approved for beta"] : L["Approved"]) : L["Rejected"])</b>
+            @if (Str(approval, "demotedBy") is { } dem) { <br /><span class="small muted">@L["Set back to beta by {0}", dem]</span> }</td></tr>
         <tr><th>@L["Reviewer"]</th><td>@Str(approval, "by")</td></tr>
         <tr><th>@L["Time"]</th><td>@(d.ReviewedAt is { } ra ? Time.Fmt(ra) : "-")</td></tr>
         <tr><th>@L["Four-eyes rule"]</th><td>@(Sub(approval, "fourEyesRule")?.ValueKind == JsonValueKind.True ? L["On"] : L["Off"])</td></tr>

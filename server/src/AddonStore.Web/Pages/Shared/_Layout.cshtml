@@ -63,7 +63,7 @@
     var isAdminS = User.IsInRole("Admin");
     var isReviewerS = isAdminS || User.IsInRole("Reviewer");
     var openS = meS is null ? 0 : await IssuesNav.Scope(meS, isAdminS).CountAsync(f => f.Status == "open");
-    var reviewS = isReviewerS ? await NavDb.PackageVersions.CountAsync(v => v.Status == AddonStore.Web.Data.VersionStatus.Beta &&
+    var reviewS = isReviewerS ? await NavDb.PackageVersions.CountAsync(v => v.Status == AddonStore.Web.Data.VersionStatus.Submitted &&
                                     !NavDb.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private")) : 0;
     var pendingS = isAdminS ? await NavDb.Users.CountAsync(u => u.Status == AddonStore.Web.Data.UserStatus.Pending) : 0;
     var pathS = Context.Request.Path.Value ?? "/";

@@ -40,7 +40,7 @@ public class StartModel : PageModel
         IsReviewer = IsAdmin || User.IsInRole("Reviewer");
         R = await _insights.ComputeAsync(Me, IsAdmin, 30, null, null, Lang.Current);
         if (IsReviewer)
-            ReviewQueue = await _db.PackageVersions.CountAsync(v => v.Status == VersionStatus.Beta &&
+            ReviewQueue = await _db.PackageVersions.CountAsync(v => v.Status == VersionStatus.Submitted && v.PackageId != SubmissionService.ClientPackageId &&
                                                                     !_db.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private"));
         Customers = IsAdmin || User.IsInRole("Reviewer")
             ? await _db.Customers.CountAsync()

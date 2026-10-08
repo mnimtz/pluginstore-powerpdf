@@ -2,8 +2,9 @@
    ticked; the server checks it again and records the confirmed ids. Model: (version id,
    name of the hidden id field, page route id or null, button label key, private add-on).
    A private add-on never enters the public catalog: approving only documents a review
-   (S1.4.0), so the form says so. *@
-@model (int VersionId, string IdField, string? RouteId, string Label, bool Private)
+   (S1.4.0), so the form says so. S1.6.0: a public version is approved for beta or for live;
+   one already approved for beta (Promote) only offers live. *@
+@model (int VersionId, string IdField, string? RouteId, string Label, bool Private, bool Promote)
 @{
     var conditions = AddonStore.Web.Validation.RuleCatalog.ApprovalConditions();
 }
@@ -23,7 +24,20 @@
                 <span><code>@c.Id</code> @c.Text</span>
             </label>
         }
-        <div><button type="submit" class="btn small">@L[Model.Private ? "Record the review" : "Approve for live store"]</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            @if (Model.Private)
+            {
+                <button type="submit" name="stage" value="live" class="btn small">@L["Record the review"]</button>
+            }
+            else
+            {
+                @if (!Model.Promote)
+                {
+                    <button type="submit" name="stage" value="beta" class="btn small secondary"
+                            title="@L["Workstations with the beta option get it; the live store keeps its current version."]">@L["Approve for beta"]</button>
+                }
+                <button type="submit" name="stage" value="live" class="btn small" title="@L["Every workstation gets it."]">@L["Approve for live store"]</button>
+            }
             <a href="/Admin/Rules" style="font-size:.85rem;margin-left:8px">@L["Mandatory conditions"] →</a></div>
     </form>
 </details>

@@ -68,11 +68,11 @@ public class PluginModel : PageModel
         if (Shown is null)
         {
             var cmpV = new AddonStore.Web.Validation.SemVerComparer();
-            var newestChecked = Versions.Where(v => v.Status is VersionStatus.Live or VersionStatus.Beta)
+            var newestChecked = Versions.Where(v => v.Status is VersionStatus.Live or VersionStatus.Beta or VersionStatus.Submitted)
                                         .OrderByDescending(v => v.Version, cmpV).FirstOrDefault();
             if (newestChecked is not null)
                 Shown = CatalogUi.Item(await CatalogUi.Context.LoadAsync(_db), newestChecked,
-                                       newestChecked.Status == VersionStatus.Live ? "live" : "beta", lang);
+                                       newestChecked.Status == VersionStatus.Live ? "live" : newestChecked.Status == VersionStatus.Beta ? "beta" : "submitted", lang);
         }
         SourcePolicy = await _sources.PolicyAsync();
         RatingDist = new int[5];
@@ -99,8 +99,8 @@ public class PluginModel : PageModel
         return Page();
     }
 
-    public Task<IActionResult> OnPostApproveAsync(string id, int versionId, string[]? confirmed) =>
-        ActAsync(id, () => CanReview ? _actions.DecideAsync(versionId, Me!, true, null, confirmed) : Task.FromResult<string?>(null));
+    public Task<IActionResult> OnPostApproveAsync(string id, int versionId, string[]? confirmed, string? stage) =>
+        ActAsync(id, () => CanReview ? _actions.DecideAsync(versionId, Me!, true, null, confirmed, stage ?? "live") : Task.FromResult<string?>(null));
 
     public Task<IActionResult> OnPostRejectAsync(string id, int versionId, string comment) =>
         ActAsync(id, () => CanReview ? _actions.DecideAsync(versionId, Me!, false, comment) : Task.FromResult<string?>(null));

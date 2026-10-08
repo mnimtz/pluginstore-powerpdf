@@ -1097,4 +1097,32 @@
   <data name="{0} live" xml:space="preserve"><value>{0} publicados</value></data>
   <data name="{0} ratings" xml:space="preserve"><value>{0} avaliações</value></data>
   <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. In Power PDF the code is entered in the Add-on Store window with &quot;Customer code&quot; (up to 10 codes per computer), or distributed with the policy CustomerCode (several codes separated by semicolons)." xml:space="preserve"><value>Um código de cliente desbloqueia todas as entregas deste cliente; um código de entrega, apenas um suplemento. No Power PDF, o código é inserido na janela da Add-on Store em "Código de cliente" (até 10 códigos por computador) ou distribuído com a política CustomerCode (vários códigos separados por ponto e vírgula).</value></data>
+  <data name="Approve for beta" xml:space="preserve"><value>Aprovar para beta</value></data>
+  <data name="Approved for beta" xml:space="preserve"><value>Aprovado para beta</value></data>
+  <data name="Approved for beta and newer than the live version. Approve them for the live store when the beta testers are done." xml:space="preserve"><value>Aprovadas para beta e mais recentes que a versão live. Aprove-as para a loja live quando os testadores beta terminarem.</value></data>
+  <data name="Create a new test code? The current one stops working at once." xml:space="preserve"><value>Criar um novo código de teste? O atual deixa de funcionar imediatamente.</value></data>
+  <data name="Create test code" xml:space="preserve"><value>Criar código de teste</value></data>
+  <data name="Delete the test code? It stops working at once." xml:space="preserve"><value>Eliminar o código de teste? Ele deixa de funcionar imediatamente.</value></data>
+  <data name="Every workstation gets it." xml:space="preserve"><value>Todos os postos a recebem.</value></data>
+  <data name="In beta, ready for the live store" xml:space="preserve"><value>Em beta, prontas para a loja live</value></data>
+  <data name="New code" xml:space="preserve"><value>Novo código</value></data>
+  <data name="New versions wait for review and reach no workstation until a reviewer approves them. With this code you try your own add-ons in Power PDF first: enter it in the store window with &quot;Customer code&quot;. It shows the newest version of each of your add-ons, also one that waits for review. Treat it like a password." xml:space="preserve"><value>As novas versões aguardam revisão e não chegam a nenhum posto até que um revisor as aprove. Com este código, você experimenta primeiro seus próprios suplementos no Power PDF: insira-o na janela da loja em “Código de cliente”. Ele mostra a versão mais recente de cada um dos seus suplementos, inclusive uma que aguarda revisão. Trate-o como uma senha.</value></data>
+  <data name="New versions, not yet offered" xml:space="preserve"><value>Novas versões, ainda não oferecidas</value></data>
+  <data name="No workstation gets it yet; you can test it with your personal test code." xml:space="preserve"><value>Nenhum posto a recebe ainda; você pode testá-la com seu código de teste pessoal.</value></data>
+  <data name="Personal test code" xml:space="preserve"><value>Código de teste pessoal</value></data>
+  <data name="Restore (awaiting review)" xml:space="preserve"><value>Restaurar (aguardando revisão)</value></data>
+  <data name="Review recorded." xml:space="preserve"><value>Revisão registrada.</value></data>
+  <data name="Set back to beta by {0}" xml:space="preserve"><value>Devolvida para beta por {0}</value></data>
+  <data name="Set this version back to beta? Only beta workstations are offered it from now on and the live channel falls back to the previous live version. Installed copies keep working." xml:space="preserve"><value>Devolver esta versão para beta? A partir de agora ela só será oferecida aos postos beta e o canal live volta à versão live anterior. As cópias instaladas continuam funcionando.</value></data>
+  <data name="Submitted. The version waits for review; try it with your personal test code (profile page)." xml:space="preserve"><value>Submetido. A versão aguarda revisão; experimente-a com seu código de teste pessoal (página de perfil).</value></data>
+  <data name="Test code created. Enter it in the store window with &quot;Customer code&quot;." xml:space="preserve"><value>Código de teste criado. Insira-o na janela da loja em “Código de cliente”.</value></data>
+  <data name="Test code deleted; it stops working at once." xml:space="preserve"><value>Código de teste eliminado; ele deixa de funcionar imediatamente.</value></data>
+  <data name="These versions passed all automatic checks and wait for review; no workstation gets them yet. Approve each for beta (workstations with the beta option) or for the live store, or reject it with a reason." xml:space="preserve"><value>Estas versões passaram em todas as verificações automáticas e aguardam revisão; nenhum posto as recebe ainda. Aprove cada uma para beta (postos com a opção beta) ou para a loja live, ou rejeite-a com um motivo.</value></data>
+  <data name="This version is already approved for beta." xml:space="preserve"><value>Esta versão já está aprovada para beta.</value></data>
+  <data name="Version approved for beta." xml:space="preserve"><value>Versão aprovada para beta.</value></data>
+  <data name="Version restored to the beta channel." xml:space="preserve"><value>Versão restaurada no canal beta.</value></data>
+  <data name="Version restored; it waits for review." xml:space="preserve"><value>Versão restaurada; ela aguarda revisão.</value></data>
+  <data name="Version set back to beta." xml:space="preserve"><value>Versão devolvida para beta.</value></data>
+  <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>Os postos com a opção beta a recebem; a loja live mantém sua versão atual.</value></data>
+  <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>Seu código de teste pessoal: experimente no Power PDF suas versões aguardando revisão</value></data>
 </root>

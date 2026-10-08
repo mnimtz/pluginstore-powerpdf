@@ -62,7 +62,7 @@
 <form method="get" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:18px 0 12px">
     <div class="chips">
         <a class="@Chip("all")" href="?filter=all&q=@Model.Q">@L["All"] (@all)</a>
-        <a class="@Chip("pending")" href="?filter=pending&q=@Model.Q">@L["Awaiting approval"] (@pending)</a>
+        <a class="@Chip("pending")" href="?filter=pending&q=@Model.Q">@L["Awaiting review"] (@pending)</a>
         <a class="@Chip("live")" href="?filter=live&q=@Model.Q">@L["Live"] (@live)</a>
         <a class="@Chip("beta")" href="?filter=beta&q=@Model.Q">@L["Beta"] (@beta)</a>
         <a class="@Chip("private")" href="?filter=private&q=@Model.Q">@L["Private (customers only)"] (@privCount)</a>
@@ -94,15 +94,19 @@ else
                 <td>
                     @if (r.Pending)
                     {
-                        <span class="badge beta">@L["Awaiting approval"] @r.Beta!.Version</span>
+                        <span class="badge submitted">@L["Awaiting review"] @r.Submitted!.Version</span>
                     }
-                    else if (r.Live is not null)
+                    @if (r.BetaAhead)
+                    {
+                        <span class="badge beta">@L["Beta"] @r.Beta!.Version</span>
+                    }
+                    @if (r.Live is not null && !r.Pending && !r.BetaAhead)
                     {
                         <span class="badge live">@L["Live"]</span>
                     }
-                    else if (r.Newest is not null)
+                    else if (r.Live is null && !r.Pending && !r.BetaAhead && r.Newest is not null)
                     {
-                        <span class="badge @r.Newest.Status.ToString().ToLowerInvariant()">@L[r.Newest.Status.ToString()]</span>
+                        <span class="badge @r.Newest.Status.ToString().ToLowerInvariant()">@L[AddonStore.Web.Services.CatalogUi.StatusKey(r.Newest.Status)]</span>
                     }
                 </td>
                 <td>

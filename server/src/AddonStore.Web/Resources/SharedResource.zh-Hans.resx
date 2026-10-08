@@ -1097,4 +1097,32 @@
   <data name="{0} live" xml:space="preserve"><value>{0} 个已上线</value></data>
   <data name="{0} ratings" xml:space="preserve"><value>{0} 条评分</value></data>
   <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. In Power PDF the code is entered in the Add-on Store window with &quot;Customer code&quot; (up to 10 codes per computer), or distributed with the policy CustomerCode (several codes separated by semicolons)." xml:space="preserve"><value>客户代码可解锁该客户的所有交付，交付代码仅解锁一个加载项。在 Power PDF 中，可在 Add-on Store 窗口中通过“客户代码”输入代码（每台计算机最多 10 个），也可通过策略 CustomerCode 分发（多个代码以分号分隔）。</value></data>
+  <data name="Approve for beta" xml:space="preserve"><value>批准发布到 Beta</value></data>
+  <data name="Approved for beta" xml:space="preserve"><value>已批准发布到 Beta</value></data>
+  <data name="Approved for beta and newer than the live version. Approve them for the live store when the beta testers are done." xml:space="preserve"><value>已批准发布到 Beta，且比正式版本新。Beta 测试人员完成后，请批准将其发布到正式商店。</value></data>
+  <data name="Create a new test code? The current one stops working at once." xml:space="preserve"><value>要创建新的测试代码吗？当前代码将立即失效。</value></data>
+  <data name="Create test code" xml:space="preserve"><value>创建测试代码</value></data>
+  <data name="Delete the test code? It stops working at once." xml:space="preserve"><value>要删除测试代码吗？该代码将立即失效。</value></data>
+  <data name="Every workstation gets it." xml:space="preserve"><value>所有工作站都会收到此版本。</value></data>
+  <data name="In beta, ready for the live store" xml:space="preserve"><value>Beta 中，可发布到正式商店</value></data>
+  <data name="New code" xml:space="preserve"><value>新代码</value></data>
+  <data name="New versions wait for review and reach no workstation until a reviewer approves them. With this code you try your own add-ons in Power PDF first: enter it in the store window with &quot;Customer code&quot;. It shows the newest version of each of your add-ons, also one that waits for review. Treat it like a password." xml:space="preserve"><value>新版本需要等待审核，在审核员批准之前不会提供给任何工作站。使用此代码，你可以先在 Power PDF 中试用自己的加载项：在商店窗口中通过“客户代码”输入此代码。它会显示你每个加载项的最新版本，包括等待审核的版本。请像对待密码一样妥善保管。</value></data>
+  <data name="New versions, not yet offered" xml:space="preserve"><value>新版本，尚未提供</value></data>
+  <data name="No workstation gets it yet; you can test it with your personal test code." xml:space="preserve"><value>目前还没有工作站会收到此版本；你可以使用个人测试代码进行测试。</value></data>
+  <data name="Personal test code" xml:space="preserve"><value>个人测试代码</value></data>
+  <data name="Restore (awaiting review)" xml:space="preserve"><value>恢复（等待审核）</value></data>
+  <data name="Review recorded." xml:space="preserve"><value>审核已记录。</value></data>
+  <data name="Set back to beta by {0}" xml:space="preserve"><value>已由 {0} 退回 Beta</value></data>
+  <data name="Set this version back to beta? Only beta workstations are offered it from now on and the live channel falls back to the previous live version. Installed copies keep working." xml:space="preserve"><value>将此版本退回 Beta？从现在起仅向 Beta 工作站提供此版本，正式通道将回退到上一个正式版本。已安装的副本仍可继续使用。</value></data>
+  <data name="Submitted. The version waits for review; try it with your personal test code (profile page)." xml:space="preserve"><value>已提交。此版本正在等待审核；请使用你的个人测试代码试用（个人资料页面）。</value></data>
+  <data name="Test code created. Enter it in the store window with &quot;Customer code&quot;." xml:space="preserve"><value>测试代码已创建。请在商店窗口中通过“客户代码”输入此代码。</value></data>
+  <data name="Test code deleted; it stops working at once." xml:space="preserve"><value>测试代码已删除；该代码立即失效。</value></data>
+  <data name="These versions passed all automatic checks and wait for review; no workstation gets them yet. Approve each for beta (workstations with the beta option) or for the live store, or reject it with a reason." xml:space="preserve"><value>这些版本已通过所有自动检查，正在等待审核；目前还没有工作站会收到它们。请逐个批准发布到 Beta（启用了 Beta 选项的工作站）或正式商店，或注明原因予以拒绝。</value></data>
+  <data name="This version is already approved for beta." xml:space="preserve"><value>此版本已批准发布到 Beta。</value></data>
+  <data name="Version approved for beta." xml:space="preserve"><value>版本已批准发布到 Beta。</value></data>
+  <data name="Version restored to the beta channel." xml:space="preserve"><value>版本已恢复到 Beta 通道。</value></data>
+  <data name="Version restored; it waits for review." xml:space="preserve"><value>版本已恢复；正在等待审核。</value></data>
+  <data name="Version set back to beta." xml:space="preserve"><value>版本已退回 Beta。</value></data>
+  <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>启用了 Beta 选项的工作站会收到此版本；正式商店保留其当前版本。</value></data>
+  <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>您的个人测试代码：在 Power PDF 中试用等待审核的版本</value></data>
 </root>

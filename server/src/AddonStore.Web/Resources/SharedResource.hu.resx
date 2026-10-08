@@ -1097,4 +1097,32 @@
   <data name="{0} live" xml:space="preserve"><value>{0} élő</value></data>
   <data name="{0} ratings" xml:space="preserve"><value>{0} értékelés</value></data>
   <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. In Power PDF the code is entered in the Add-on Store window with &quot;Customer code&quot; (up to 10 codes per computer), or distributed with the policy CustomerCode (several codes separated by semicolons)." xml:space="preserve"><value>Az ügyfélkód az ügyfél összes kiszállítását feloldja, a kiszállítási kód csak egy bővítményt. A Power PDF-ben a kódot az Add-on Store ablakában, az „Ügyfélkód” gombbal kell megadni (számítógépenként legfeljebb 10 kód), vagy a CustomerCode házirenddel lehet terjeszteni (több kód pontosvesszővel elválasztva).</value></data>
+  <data name="Approve for beta" xml:space="preserve"><value>Jóváhagyás bétába</value></data>
+  <data name="Approved for beta" xml:space="preserve"><value>Jóváhagyva bétába</value></data>
+  <data name="Approved for beta and newer than the live version. Approve them for the live store when the beta testers are done." xml:space="preserve"><value>Bétába jóváhagyva, és újabbak az éles verziónál. Hagyja jóvá őket az éles áruházba, amikor a béta tesztelők végeztek.</value></data>
+  <data name="Create a new test code? The current one stops working at once." xml:space="preserve"><value>Új tesztkódot hoz létre? A jelenlegi azonnal érvényét veszti.</value></data>
+  <data name="Create test code" xml:space="preserve"><value>Tesztkód létrehozása</value></data>
+  <data name="Delete the test code? It stops working at once." xml:space="preserve"><value>Törli a tesztkódot? Azonnal érvényét veszti.</value></data>
+  <data name="Every workstation gets it." xml:space="preserve"><value>Minden munkaállomás megkapja.</value></data>
+  <data name="In beta, ready for the live store" xml:space="preserve"><value>Bétában, készen az éles áruházra</value></data>
+  <data name="New code" xml:space="preserve"><value>Új kód</value></data>
+  <data name="New versions wait for review and reach no workstation until a reviewer approves them. With this code you try your own add-ons in Power PDF first: enter it in the store window with &quot;Customer code&quot;. It shows the newest version of each of your add-ons, also one that waits for review. Treat it like a password." xml:space="preserve"><value>Az új verziók ellenőrzésre várnak, és egyetlen munkaállomásra sem kerülnek, amíg egy véleményező jóvá nem hagyja őket. Ezzel a kóddal először a Power PDF-ben próbálhatja ki saját bővítményeit: adja meg az áruház ablakában az „Ügyfélkód” gombbal. Minden bővítményének a legújabb verzióját mutatja, az ellenőrzésre várót is. Kezelje jelszóként.</value></data>
+  <data name="New versions, not yet offered" xml:space="preserve"><value>Új verziók, még nem elérhetők</value></data>
+  <data name="No workstation gets it yet; you can test it with your personal test code." xml:space="preserve"><value>Még egyetlen munkaállomás sem kapja meg; a személyes tesztkódjával kipróbálhatja.</value></data>
+  <data name="Personal test code" xml:space="preserve"><value>Személyes tesztkód</value></data>
+  <data name="Restore (awaiting review)" xml:space="preserve"><value>Visszaállítás (ellenőrzésre vár)</value></data>
+  <data name="Review recorded." xml:space="preserve"><value>Az ellenőrzés rögzítve.</value></data>
+  <data name="Set back to beta by {0}" xml:space="preserve"><value>{0} visszaállította bétába</value></data>
+  <data name="Set this version back to beta? Only beta workstations are offered it from now on and the live channel falls back to the previous live version. Installed copies keep working." xml:space="preserve"><value>Visszaállítja ezt a verziót bétába? Mostantól csak a béta munkaállomások kapják meg, az élő csatorna pedig visszaáll az előző élő verzióra. A telepített példányok tovább működnek.</value></data>
+  <data name="Submitted. The version waits for review; try it with your personal test code (profile page)." xml:space="preserve"><value>Beküldve. A verzió ellenőrzésre vár; próbálja ki a személyes tesztkódjával (profiloldal).</value></data>
+  <data name="Test code created. Enter it in the store window with &quot;Customer code&quot;." xml:space="preserve"><value>Tesztkód létrehozva. Adja meg az áruház ablakában az „Ügyfélkód” gombbal.</value></data>
+  <data name="Test code deleted; it stops working at once." xml:space="preserve"><value>Tesztkód törölve; azonnal érvényét veszti.</value></data>
+  <data name="These versions passed all automatic checks and wait for review; no workstation gets them yet. Approve each for beta (workstations with the beta option) or for the live store, or reject it with a reason." xml:space="preserve"><value>Ezek a verziók minden automatikus ellenőrzésen megfeleltek, és ellenőrzésre várnak; még egyetlen munkaállomás sem kapja meg őket. Hagyja jóvá mindegyiket bétába (béta beállítású munkaállomások) vagy az éles áruházba, vagy utasítsa el indoklással.</value></data>
+  <data name="This version is already approved for beta." xml:space="preserve"><value>Ez a verzió már jóvá van hagyva bétába.</value></data>
+  <data name="Version approved for beta." xml:space="preserve"><value>A verzió jóváhagyva bétába.</value></data>
+  <data name="Version restored to the beta channel." xml:space="preserve"><value>A verzió visszaállítva a béta csatornába.</value></data>
+  <data name="Version restored; it waits for review." xml:space="preserve"><value>A verzió visszaállítva; ellenőrzésre vár.</value></data>
+  <data name="Version set back to beta." xml:space="preserve"><value>A verzió visszakerült bétába.</value></data>
+  <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>A béta beállítású munkaállomások megkapják; az éles áruház megtartja a jelenlegi verzióját.</value></data>
+  <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>Személyes tesztkódja: próbálja ki a Power PDF-ben az ellenőrzésre váró verzióit</value></data>
 </root>

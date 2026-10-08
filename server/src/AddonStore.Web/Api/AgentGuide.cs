@@ -668,17 +668,26 @@ Responses always use the same envelope:
     { "ok": bool, "error": {"code","message","hint"} | null,
       "findings": [ {"code","severity","message","hint"}, ... ], "data": {...} }
 
-On success (201) the version enters the **beta channel**: visible to Power PDF
-clients that enabled the beta option, while an admin reviews it for the live
-store. The package owner gets emails for the upload receipt, approval or
+On success (201) the version **waits for review** (status `submitted`): no
+Power PDF client gets it yet. A reviewer approves it **for beta** (clients that
+enabled the beta option get it) or **for the live store** (everyone), or
+rejects it with a reason; a version approved for beta can later be approved for
+live. Try your own version before that with your **personal test code**
+(profile page, or `GET`/`POST`/`DELETE /api/me/test-code`): entered in the
+store window like a customer code, it shows the newest version of each of your
+add-ons, also one that waits for review, marked "For Test: <your name>"
+(catalog channel `test`). Give the code to the user; never put it in a URL. Private add-ons need no
+approval: customer deliveries hand out the newest checked version either way.
+The package owner gets emails for the upload receipt, approval or
 rejection, versions withdrawn or restored by an admin, the plug-in being taken
 out of the store and catalog changes made by an admin (opt-out in the
 profile). The rejection comment is also visible via `GET /api/packages/{id}`.
-Withdrawn versions can only be restored by an admin (back to live if they had
-been approved, otherwise to beta).
+Withdrawn versions can only be restored by an admin (back to the stage they were
+approved for, otherwise to `submitted`).
 
 Submitting the same version again returns 409 VERSION_EXISTS. Withdraw one of
-your own beta versions with `DELETE /api/packages/{id}/{version}`.
+your own versions that wait for review or are in beta with
+`DELETE /api/packages/{id}/{version}`.
 
 ## Source code (mandatory)
 
@@ -907,8 +916,10 @@ that add-on. A new code of the same kind replaces the old one after
 `transitionDays` (0 = at once). Codes can be shown again at any time by the
 customer's creator and admins; treat them like passwords.
 
-Each delivery has two stages. Stage `mode`: `latest` (newest version; for a
-public add-on the live stage takes the newest approved version), `fixed`
+Each delivery has two stages. Stage `mode`: `latest` (newest version; a
+public add-on only hands out approved versions, beta stage approved for beta
+or live, live stage approved for live; a private add-on also one that waits
+for review), `fixed`
 (with `version`) or `off`. Workstations whose client uses the beta channel get
 the beta stage, all others the live stage. Default when you create a
 delivery: beta `latest`, live `fixed` to the current newest version, so a new
@@ -1017,15 +1028,17 @@ submitter: the server signs what it accepted.
   mistake by uploading a higher version.
 - The account that first uploads an id owns it; other accounts get
   PACKAGE_OWNED_BY_OTHER. Admins can withdraw any version.
-- Lifecycle: submitted, then `beta` once all hard checks pass (visible to
-  clients with the beta option), then `live` after an admin or reviewer
-  approves it, or `rejected` with a reason. Exception: the store client itself
+- Lifecycle (S1.6.0): `submitted` once all hard checks pass (waits for review;
+  only the developer's test code shows it), then `beta` when a reviewer
+  approves it for beta (clients with the beta option) or `live` when approved
+  for the live store, or `rejected` with a reason. A `beta` version can be
+  approved for `live` later. Exception: the store client itself
   (`com.tungsten.pluginstore`) may only be uploaded by admins and goes live
   immediately.
 - Nobody reviews their own work: a reviewer cannot approve a version of an
   add-on they own or submitted; an admin can only while the four-eyes rule is
-  off. Demoting a live version to beta clears its approval record (the audit
-  log keeps it).
+  off. Setting a live version back to beta keeps it approved for beta (the
+  approval record notes who did it; the audit log keeps the live decision).
 
 ## Changing the catalog entry (no new version)
 
@@ -1447,7 +1460,8 @@ Store: {{baseUrl}}
    `POST {{baseUrl}}/api/packages/validate` until `data.passed` is true,
    fixing every finding with severity "error" using its `hint`.
 5. Submit with `POST {{baseUrl}}/api/packages` and report the resulting
-   status (beta, awaiting admin review) to the user.
+   status (submitted: waits for review; the user can try it with the
+   personal test code from the profile page) to the user.
 5b. Recommended: up to 6 screenshots under assets/ listed in `screenshots`
    (see the guide). Problem reports from users: work through the queue
    `GET {{baseUrl}}/api/feedback?status=open` (owner/admin; section

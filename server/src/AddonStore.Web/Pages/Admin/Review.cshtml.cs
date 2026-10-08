@@ -16,6 +16,8 @@ public class ReviewModel : PageModel
     private readonly AiAssist _assist;
 
     public List<PackageVersion> Queue { get; private set; } = new();
+    /// <summary>Approved for beta, newer than the live version: candidates for the live store (S1.6.0).</summary>
+    public List<PackageVersion> InBeta { get; private set; } = new();
     public Dictionary<string, Package> Packages { get; private set; } = new();
     public string? Notice { get; private set; }
     public bool AiReviewOn { get; private set; }
@@ -27,9 +29,9 @@ public class ReviewModel : PageModel
 
     public async Task OnGetAsync() => await LoadAsync();
 
-    public async Task OnPostApproveAsync(int id, string[]? confirmed)
+    public async Task OnPostApproveAsync(int id, string[]? confirmed, string? stage)
     {
-        Notice = await _actions.DecideAsync(id, (await _users.GetUserAsync(User))!, approve: true, comment: null, confirmed);
+        Notice = await _actions.DecideAsync(id, (await _users.GetUserAsync(User))!, approve: true, comment: null, confirmed, stage ?? "live");
         await LoadAsync();
     }
 
@@ -63,10 +65,18 @@ public class ReviewModel : PageModel
         AiReviewOn = ai.On && ai.Review;
         _db.ChangeTracker.Clear();
         // private add-ons need no approval: they reach customers through deliveries
-        Queue = await _db.PackageVersions.Where(v => v.Status == VersionStatus.Beta &&
+        Queue = await _db.PackageVersions.Where(v => v.Status == VersionStatus.Submitted && v.PackageId != SubmissionService.ClientPackageId &&
                                                      !_db.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private"))
             .OrderBy(v => v.SubmittedAt).ToListAsync();
-        Packages = await _db.Packages.Where(p => Queue.Select(q => q.PackageId).Contains(p.Id))
-            .ToDictionaryAsync(p => p.Id);
+        var cmp = new AddonStore.Web.Validation.SemVerComparer();
+        var betas = await _db.PackageVersions.Where(v => v.Status == VersionStatus.Beta &&
+                                                         !_db.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private")).ToListAsync();
+        var lives = await _db.PackageVersions.Where(v => v.Status == VersionStatus.Live).Select(v => new { v.PackageId, v.Version }).ToListAsync();
+        InBeta = betas.GroupBy(v => v.PackageId)
+            .Select(g => g.OrderByDescending(v => v.Version, cmp).First())
+            .Where(b => !lives.Any(l => l.PackageId == b.PackageId && cmp.Compare(l.Version, b.Version) >= 0))
+            .OrderBy(v => v.PackageId).ToList();
+        var ids = Queue.Concat(InBeta).Select(q => q.PackageId).Distinct().ToList();
+        Packages = await _db.Packages.Where(p => ids.Contains(p.Id)).ToDictionaryAsync(p => p.Id);
     }
 }

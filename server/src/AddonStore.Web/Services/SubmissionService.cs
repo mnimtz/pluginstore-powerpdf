@@ -10,7 +10,7 @@ public record SubmissionResult(ValidationReport Report, PackageVersion? Version,
 
 /// <summary>
 /// Shared submission flow for the web upload and the API: validate, store,
-/// enter the beta channel, audit, notify. Dry-run validation uses the same path
+/// wait for review (S1.6.0), audit, notify. Dry-run validation uses the same path
 /// without persisting anything.
 /// </summary>
 public class SubmissionService
@@ -118,7 +118,9 @@ public class SubmissionService
         {
             PackageId = manifest.Id,
             Version = manifest.Version,
-            Status = isClient ? VersionStatus.Live : VersionStatus.Beta,
+            // waits for review (S1.6.0): no client gets it until a reviewer approves it for beta or live
+            // (private add-ons: customer deliveries hand it out, review optional; the developer's test code shows it)
+            Status = isClient ? VersionStatus.Live : VersionStatus.Submitted,
             ReviewedById = isClient ? user.Id : null,
             ReviewedAt = isClient ? DateTime.UtcNow : null,
             Changelog = manifest.Changelog,
@@ -171,7 +173,7 @@ public class SubmissionService
             $"[Add-on Store] New submission: {manifest.Id} {manifest.Version}",
             $"<p><b>{System.Net.WebUtility.HtmlEncode(user.DisplayName)}</b> submitted <b>{manifest.Id} {manifest.Version}</b> (via {System.Net.WebUtility.HtmlEncode(via)}).</p>" +
             $"<p>Changelog: {System.Net.WebUtility.HtmlEncode(manifest.Changelog)}</p>" +
-            "<p>The version passed all automatic checks and is now in the beta channel, awaiting review.</p>",
+            "<p>The version passed all automatic checks and waits for review: approve it for beta or for the live store.</p>",
             includeReviewers: true);
 
         var warnings = report.Findings.Count(f => f.Severity == "warning");
@@ -179,7 +181,8 @@ public class SubmissionService
             $"[Add-on Store] Received: {manifest.Id} {manifest.Version}",
             $"<p>Your version <b>{manifest.Id} {manifest.Version}</b> was received (via {System.Net.WebUtility.HtmlEncode(via)}) " +
             $"and passed all automatic checks{(warnings > 0 ? $" with {warnings} warning(s)" : "")}.</p>" +
-            "<p>It is now in the beta channel and waits for approval. You get another email when it is approved or rejected.</p>" +
+            "<p>It waits for review now; no workstation gets it yet. Try it in Power PDF with your personal test code (profile page). " +
+            "You get another email when it is approved for beta or the live store, or rejected.</p>" +
             await _notify.PluginLinkAsync(manifest.Id));
 
         return new SubmissionResult(report, version);

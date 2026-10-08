@@ -16,17 +16,35 @@ public class ProfileModel : PageModel
     private readonly IConfiguration _config;
     private readonly IWebHostEnvironment _env;
     private readonly SignInManager<AppUser> _signIn;
+    private readonly CustomerService _customers;
 
     public List<ApiToken> Tokens { get; private set; } = new();
     public string? NewToken { get; private set; }
     public AppUser? Me { get; private set; }
     public string? Notice { get; private set; }
     public string NoticeKind { get; private set; } = "ok";
+    /// <summary>The personal test code (S1.6.0), null when none is active.</summary>
+    public string? TestCode { get; private set; }
 
     public ProfileModel(AppDbContext db, UserManager<AppUser> users, TokenService tokens,
-        AuditService audit, IConfiguration config, IWebHostEnvironment env, SignInManager<AppUser> signIn)
+        AuditService audit, IConfiguration config, IWebHostEnvironment env, SignInManager<AppUser> signIn, CustomerService customers)
     {
-        _db = db; _users = users; _tokens = tokens; _audit = audit; _config = config; _env = env; _signIn = signIn;
+        _db = db; _users = users; _tokens = tokens; _audit = audit; _config = config; _env = env; _signIn = signIn; _customers = customers;
+    }
+
+    // Personal test code (S1.6.0): shows the own versions that wait for review in the store window.
+    public async Task OnPostTestCodeAsync()
+    {
+        var user = await _users.GetUserAsync(User);
+        if (user is not null) { await _customers.NewTestCodeAsync(user); Notice = "Test code created. Enter it in the store window with \"Customer code\"."; }
+        await LoadAsync();
+    }
+
+    public async Task OnPostTestCodeRevokeAsync()
+    {
+        var user = await _users.GetUserAsync(User);
+        if (user is not null && await _customers.RevokeTestCodeAsync(user)) Notice = "Test code deleted; it stops working at once.";
+        await LoadAsync();
     }
 
     // Change the own password (S1.0.6): other sessions are signed out, this one stays.
@@ -165,5 +183,6 @@ public class ProfileModel : PageModel
         var userId = _users.GetUserId(User);
         Tokens = await _db.ApiTokens.Where(t => t.UserId == userId)
             .OrderByDescending(t => t.CreatedAt).ToListAsync();
+        TestCode = userId is null ? null : await _customers.TestCodeOfAsync(userId);
     }
 }

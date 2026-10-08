@@ -119,6 +119,16 @@ public static class CatalogUi
         return items;
     }
 
+    /// <summary>Resource key of a version status (S1.6.0: "Submitted" reads "Awaiting review").</summary>
+    public static string StatusKey(VersionStatus s) => s switch
+    {
+        VersionStatus.Submitted => "Awaiting review",
+        VersionStatus.Beta => "Beta",
+        VersionStatus.Live => "Live",
+        VersionStatus.Rejected => "Rejected",
+        _ => "Withdrawn"
+    };
+
     public const string PlaceholderAuthor = "Tungsten Automation";
 
     /// <summary>The owner's public name, or the placeholder when they opted out.</summary>

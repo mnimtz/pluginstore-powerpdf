@@ -246,9 +246,9 @@ public class Package
 
 public enum VersionStatus
 {
-    Submitted = 0,
-    Beta = 1,      // passed all hard automatic checks, visible to beta clients
-    Live = 2,      // approved by an admin
+    Submitted = 0, // passed all hard automatic checks, waits for review (S1.6.0); only its developer's test code shows it
+    Beta = 1,      // approved for the beta channel by a reviewer (S1.6.0; before: every checked upload)
+    Live = 2,      // approved for the live store
     Rejected = 3,
     Withdrawn = 4
 }
@@ -370,6 +370,24 @@ public class Delivery
 /// client's random installation id per delivery is stored (like ratings), never a name,
 /// address or machine. Released when the client removes the add-on or a manager frees it.
 /// </summary>
+/// <summary>
+/// A developer's personal test code (S1.6.0): entered in the store window like a customer
+/// code, it shows that developer's own versions that still wait for review, so they can be
+/// tried in Power PDF before anybody else gets them. Stored as hash plus a protected copy
+/// (shown again on the profile page), same 20-character format as customer codes.
+/// </summary>
+public class TestCode
+{
+    public int Id { get; set; }
+    public string UserId { get; set; } = "";
+    public string CodeHash { get; set; } = "";
+    public string CodeProtected { get; set; } = "";
+    public string Prefix { get; set; } = "";
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? RevokedAt { get; set; }
+    public DateTime? LastUsedAt { get; set; }
+}
+
 public class DeliverySeat
 {
     public int Id { get; set; }

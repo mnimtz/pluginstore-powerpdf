@@ -65,6 +65,29 @@
     </form>
 </div>
 
+<div class="card" style="max-width:720px" id="testcode">
+    <h2 style="margin-top:0">@L["Personal test code"]</h2>
+    <p class="muted">@L["New versions wait for review and reach no workstation until a reviewer approves them. With this code you try your own add-ons in Power PDF first: enter it in the store window with \"Customer code\". It shows the newest version of each of your add-ons, also one that waits for review. Treat it like a password."]</p>
+    @if (Model.TestCode is not null)
+    {
+        <div class="token-reveal">@Model.TestCode</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <form method="post" asp-page-handler="TestCode" data-confirm="@L["Create a new test code? The current one stops working at once."]">
+                <button type="submit" class="btn small secondary">@L["New code"]</button>
+            </form>
+            <form method="post" asp-page-handler="TestCodeRevoke" data-confirm="@L["Delete the test code? It stops working at once."]">
+                <button type="submit" class="btn small danger">@L["Delete"]</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <form method="post" asp-page-handler="TestCode">
+            <button type="submit" class="btn small">@L["Create test code"]</button>
+        </form>
+    }
+</div>
+
 <h2>@L["API tokens"]</h2>
 <p class="lead">@L["Personal API tokens let tools and AI assistants upload and update your plugins on your behalf."]</p>
 

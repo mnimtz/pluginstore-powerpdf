@@ -1097,4 +1097,32 @@
   <data name="{0} live" xml:space="preserve"><value>{0} منشورة</value></data>
   <data name="{0} ratings" xml:space="preserve"><value>{0} تقييمات</value></data>
   <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. In Power PDF the code is entered in the Add-on Store window with &quot;Customer code&quot; (up to 10 codes per computer), or distributed with the policy CustomerCode (several codes separated by semicolons)." xml:space="preserve"><value>رمز العميل يفتح جميع عمليات التسليم لهذا العميل، أما رمز التسليم فيفتح إضافة واحدة فقط. في Power PDF يُدخل الرمز في نافذة Add-on Store عبر "رمز العميل" (حتى 10 رموز لكل كمبيوتر)، أو يُوزَّع باستخدام النهج CustomerCode (عدة رموز مفصولة بفاصلة منقوطة).</value></data>
+  <data name="Approve for beta" xml:space="preserve"><value>الموافقة للتجريبي</value></data>
+  <data name="Approved for beta" xml:space="preserve"><value>تمت الموافقة للتجريبي</value></data>
+  <data name="Approved for beta and newer than the live version. Approve them for the live store when the beta testers are done." xml:space="preserve"><value>تمت الموافقة عليها للتجريبي وهي أحدث من الإصدار المباشر. وافق عليها للمتجر المباشر عندما ينتهي مختبرو الإصدارات التجريبية.</value></data>
+  <data name="Create a new test code? The current one stops working at once." xml:space="preserve"><value>هل تريد إنشاء رمز اختبار جديد؟ يتوقف الرمز الحالي عن العمل فورًا.</value></data>
+  <data name="Create test code" xml:space="preserve"><value>إنشاء رمز الاختبار</value></data>
+  <data name="Delete the test code? It stops working at once." xml:space="preserve"><value>هل تريد حذف رمز الاختبار؟ يتوقف عن العمل فورًا.</value></data>
+  <data name="Every workstation gets it." xml:space="preserve"><value>تحصل عليه جميع محطات العمل.</value></data>
+  <data name="In beta, ready for the live store" xml:space="preserve"><value>في المرحلة التجريبية، جاهزة للمتجر المباشر</value></data>
+  <data name="New code" xml:space="preserve"><value>رمز جديد</value></data>
+  <data name="New versions wait for review and reach no workstation until a reviewer approves them. With this code you try your own add-ons in Power PDF first: enter it in the store window with &quot;Customer code&quot;. It shows the newest version of each of your add-ons, also one that waits for review. Treat it like a password." xml:space="preserve"><value>تنتظر الإصدارات الجديدة المراجعة ولا تصل إلى أي محطة عمل حتى يوافق عليها المراجع. باستخدام هذا الرمز تجرب وظائفك الإضافية في Power PDF أولاً: أدخله في نافذة المتجر عبر «رمز العميل». يعرض أحدث إصدار من كل وظيفة إضافية لديك، حتى الإصدار الذي ينتظر المراجعة. تعامل معه ككلمة مرور.</value></data>
+  <data name="New versions, not yet offered" xml:space="preserve"><value>إصدارات جديدة، لم تُعرض بعد</value></data>
+  <data name="No workstation gets it yet; you can test it with your personal test code." xml:space="preserve"><value>لا تحصل عليه أي محطة عمل بعد؛ يمكنك اختباره باستخدام رمز الاختبار الشخصي.</value></data>
+  <data name="Personal test code" xml:space="preserve"><value>رمز الاختبار الشخصي</value></data>
+  <data name="Restore (awaiting review)" xml:space="preserve"><value>استعادة (في انتظار المراجعة)</value></data>
+  <data name="Review recorded." xml:space="preserve"><value>تم تسجيل المراجعة.</value></data>
+  <data name="Set back to beta by {0}" xml:space="preserve"><value>أعاده {0} إلى التجريبي</value></data>
+  <data name="Set this version back to beta? Only beta workstations are offered it from now on and the live channel falls back to the previous live version. Installed copies keep working." xml:space="preserve"><value>هل تريد إعادة هذا الإصدار إلى التجريبي؟ من الآن فصاعدًا سيُعرض على محطات العمل التجريبية فقط، وتعود القناة المباشرة إلى الإصدار المباشر السابق. تستمر النسخ المثبتة في العمل.</value></data>
+  <data name="Submitted. The version waits for review; try it with your personal test code (profile page)." xml:space="preserve"><value>تم الإرسال. ينتظر الإصدار المراجعة؛ جرّبه باستخدام رمز الاختبار الشخصي (صفحة الملف الشخصي).</value></data>
+  <data name="Test code created. Enter it in the store window with &quot;Customer code&quot;." xml:space="preserve"><value>تم إنشاء رمز الاختبار. أدخله في نافذة المتجر عبر «رمز العميل».</value></data>
+  <data name="Test code deleted; it stops working at once." xml:space="preserve"><value>تم حذف رمز الاختبار؛ يتوقف عن العمل فورًا.</value></data>
+  <data name="These versions passed all automatic checks and wait for review; no workstation gets them yet. Approve each for beta (workstations with the beta option) or for the live store, or reject it with a reason." xml:space="preserve"><value>اجتازت هذه الإصدارات جميع الفحوصات التلقائية وهي في انتظار المراجعة؛ ولا تحصل عليها أي محطة عمل بعد. وافق على كل منها للتجريبي (محطات العمل التي فُعّل فيها الخيار التجريبي) أو للمتجر المباشر، أو ارفضه مع ذكر السبب.</value></data>
+  <data name="This version is already approved for beta." xml:space="preserve"><value>تمت الموافقة على هذا الإصدار للتجريبي بالفعل.</value></data>
+  <data name="Version approved for beta." xml:space="preserve"><value>تمت الموافقة على الإصدار للتجريبي.</value></data>
+  <data name="Version restored to the beta channel." xml:space="preserve"><value>تمت استعادة الإصدار إلى القناة التجريبية.</value></data>
+  <data name="Version restored; it waits for review." xml:space="preserve"><value>تمت استعادة الإصدار؛ وهو في انتظار المراجعة.</value></data>
+  <data name="Version set back to beta." xml:space="preserve"><value>تمت إعادة الإصدار إلى التجريبي.</value></data>
+  <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>تحصل عليه محطات العمل التي فُعّل فيها الخيار التجريبي؛ ويحتفظ المتجر المباشر بإصداره الحالي.</value></data>
+  <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>رمز الاختبار الشخصي: جرّب إصداراتك التي تنتظر المراجعة في Power PDF</value></data>
 </root>

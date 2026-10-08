@@ -146,7 +146,15 @@ public static class SchemaUpgrade
                 "InstallHash TEXT NOT NULL, Version TEXT NOT NULL, FirstAt TEXT NOT NULL, LastSeenAt TEXT NOT NULL, ReleasedAt TEXT NULL, ReleasedBy TEXT NULL)",
             "CREATE INDEX IF NOT EXISTS IX_DeliverySeats_DeliveryId_InstallHash ON DeliverySeats (DeliveryId, InstallHash)",
             // one active seat per installation and delivery (S1.4.3)
-            "CREATE UNIQUE INDEX IF NOT EXISTS UX_DeliverySeats_Active ON DeliverySeats (DeliveryId, InstallHash) WHERE ReleasedAt IS NULL"
+            "CREATE UNIQUE INDEX IF NOT EXISTS UX_DeliverySeats_Active ON DeliverySeats (DeliveryId, InstallHash) WHERE ReleasedAt IS NULL",
+            // personal test codes of developers (S1.6.0)
+            "CREATE TABLE IF NOT EXISTS TestCodes (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, UserId TEXT NOT NULL, CodeHash TEXT NOT NULL, " +
+                "CodeProtected TEXT NOT NULL, Prefix TEXT NOT NULL, CreatedAt TEXT NOT NULL, RevokedAt TEXT NULL, LastUsedAt TEXT NULL)",
+            "CREATE UNIQUE INDEX IF NOT EXISTS IX_TestCodes_CodeHash ON TestCodes (CodeHash)",
+            "CREATE INDEX IF NOT EXISTS IX_TestCodes_UserId ON TestCodes (UserId)",
+            // approval for beta or live (S1.6.0): a beta version nobody reviewed waits for review now;
+            // reviewed beta versions stay approved for beta (idempotent: new uploads land in Submitted)
+            "UPDATE PackageVersions SET Status = 0 WHERE Status = 1 AND ReviewedAt IS NULL AND PackageId <> 'com.tungsten.pluginstore'"
         })
         {
             // Only what is missing runs (S0.18.1): on the network share every statement

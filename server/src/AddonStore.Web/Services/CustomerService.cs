@@ -180,12 +180,19 @@ public class CustomerService
     // ------------------------------------------------------------ deliveries
     public record StageInput(string? Mode, string? Version);
 
-    /// <summary>Versions a delivery may hand out: passed the automatic checks (beta) or approved (live).</summary>
-    public async Task<List<PackageVersion>> DeliverableVersionsAsync(string packageId) =>
-        (await _db.PackageVersions.AsNoTracking()
-            .Where(v => v.PackageId == packageId && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta))
-            .ToListAsync())
-        .OrderByDescending(v => v.Version, new SemVerComparer()).ToList();
+    /// <summary>
+    /// Versions a delivery may hand out: approved for beta or live; for a private add-on also one
+    /// that waits for review (private add-ons need no approval, S1.6.0).
+    /// </summary>
+    public async Task<List<PackageVersion>> DeliverableVersionsAsync(string packageId)
+    {
+        var isPrivate = await _db.Packages.AsNoTracking().AnyAsync(p => p.Id == packageId && p.Visibility == "private");
+        return (await _db.PackageVersions.AsNoTracking()
+                .Where(v => v.PackageId == packageId && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta ||
+                                                         (isPrivate && v.Status == VersionStatus.Submitted)))
+                .ToListAsync())
+            .OrderByDescending(v => v.Version, new SemVerComparer()).ToList();
+    }
 
     /// <summary>
     /// The version a stage hands out. "latest": public packages take the newest
@@ -393,13 +400,28 @@ public class CustomerService
     }
 
     /// <summary>The valid codes of the X-Customer-Code header, under the per-address guessing limit.</summary>
-    private async Task<List<CustomerCode>> ValidCodesAsync(HttpContext ctx)
+    private async Task<List<CustomerCode>> ValidCodesAsync(HttpContext ctx) => (await LookupAsync(ctx)).Codes;
+
+    /// <summary>
+    /// Customer codes and developer test codes (S1.6.0) of the header, under one per-address
+    /// guessing limit: a code is unknown only when it is neither. Looked up once per request.
+    /// </summary>
+    private async Task<(List<CustomerCode> Codes, List<TestCode> Tests)> LookupAsync(HttpContext ctx)
+    {
+        const string itemKey = "custcode-lookup";
+        if (ctx.Items.TryGetValue(itemKey, out var cached) && cached is ValueTuple<List<CustomerCode>, List<TestCode>> done) return done;
+        var result = await LookupUncachedAsync(ctx);
+        ctx.Items[itemKey] = result;
+        return result;
+    }
+
+    private async Task<(List<CustomerCode> Codes, List<TestCode> Tests)> LookupUncachedAsync(HttpContext ctx)
     {
         var raw = ctx.Request.Headers[HeaderName].ToString();
-        if (string.IsNullOrWhiteSpace(raw)) return new();
+        if (string.IsNullOrWhiteSpace(raw)) return (new(), new());
         var hashes = raw.Split(new[] { ';', ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
             .Select(Normalize).Where(c => c.Length == 20).Distinct().Take(10).Select(Hash).ToList();
-        if (hashes.Count == 0) return new();
+        if (hashes.Count == 0) return (new(), new());
         var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
         var key = "custcode-fail:" + ip + ":" + DateTime.UtcNow.ToString("yyyyMMddHH", System.Globalization.CultureInfo.InvariantCulture);
         var state = _cache.GetOrCreate(key, e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1); return new CodeAttempts(); })!;
@@ -408,24 +430,101 @@ public class CustomerService
             // Blocked: only codes this address already used successfully this hour.
             if (state.Unknown.Count >= MaxFailedPerHour) hashes = hashes.Where(state.Valid.Contains).ToList();
         }
-        if (hashes.Count == 0) return new();
+        if (hashes.Count == 0) return (new(), new());
 
         var now = DateTime.UtcNow;
         var rows = await _db.CustomerCodes.Where(c => hashes.Contains(c.CodeHash)).ToListAsync();
         var codes = rows.Where(c => CodeValid(c, now)).ToList();
+        var testRows = await _db.TestCodes.Where(c => hashes.Contains(c.CodeHash)).ToListAsync();
+        var tests = testRows.Where(c => c.RevokedAt is null).ToList();
         // expired or revoked codes are not guesses (an old code left on a workstation must not lock out the new one)
-        var unknown = hashes.Where(h => !rows.Any(r => r.CodeHash == h)).ToList();
+        var unknown = hashes.Where(h => !rows.Any(r => r.CodeHash == h) && !testRows.Any(r => r.CodeHash == h)).ToList();
         bool blockNow = false;
         lock (state)
         {
             foreach (var c in codes) state.Valid.Add(c.CodeHash);
+            foreach (var c in tests) state.Valid.Add(c.CodeHash);
             var before = state.Unknown.Count;
             foreach (var h in unknown) state.Unknown.Add(h);
             blockNow = before < MaxFailedPerHour && state.Unknown.Count >= MaxFailedPerHour;
         }
         if (blockNow)
             await _audit.LogAsync("system", "customer.code.blocked", ip, $"{MaxFailedPerHour} unknown customer codes within an hour; new codes from this address are ignored for the hour");
-        return codes;
+        return (codes, tests);
+    }
+
+    // ------------------------------------------------------- developer test codes (S1.6.0)
+    /// <summary>A developer's own add-on as their test code shows it: the newest version that is not rejected or withdrawn.</summary>
+    public record TestGrant(AppUser Developer, Package Package, PackageVersion Version)
+    {
+        /// <summary>"test" while it waits for review, else the stage it was approved for.</summary>
+        public string Channel => Version.Status == VersionStatus.Submitted ? "test" : Version.Status == VersionStatus.Beta ? "beta" : "live";
+        /// <summary>Shown like a customer name in the store window ("For Test: Jane Doe").</summary>
+        public string Label => "Test: " + Developer.DisplayName;
+    }
+
+    public async Task<List<TestGrant>> TestGrantsAsync(HttpContext ctx)
+    {
+        var tests = (await LookupAsync(ctx)).Tests;
+        if (tests.Count == 0) return new();
+        var now = DateTime.UtcNow;
+        var userIds = tests.Select(t => t.UserId).Distinct().ToList();
+        var devs = await _db.Users.Where(u => userIds.Contains(u.Id) && u.Status == UserStatus.Active).ToDictionaryAsync(u => u.Id);
+        foreach (var t in tests.Where(t => t.LastUsedAt is null || t.LastUsedAt < now.AddMinutes(-10))) t.LastUsedAt = now;
+        try { await _db.SaveChangesAsync(); }
+        catch (DbUpdateException ex) when (ex.InnerException is Microsoft.Data.Sqlite.SqliteException { SqliteErrorCode: 5 or 6 })
+        {
+            foreach (var e in _db.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified).ToList()) e.State = EntityState.Unchanged;
+        }
+        if (devs.Count == 0) return new();
+        var ids = devs.Keys.ToList();
+        var pkgs = await _db.Packages.AsNoTracking().Where(p => ids.Contains(p.OwnerId) && p.BlockedAt == null && p.Id != SubmissionService.ClientPackageId)
+            .ToListAsync();
+        var pkgIds = pkgs.Select(p => p.Id).ToList();
+        var versions = await _db.PackageVersions.AsNoTracking()
+            .Where(v => pkgIds.Contains(v.PackageId) && v.BlockedAt == null &&
+                        (v.Status == VersionStatus.Submitted || v.Status == VersionStatus.Beta || v.Status == VersionStatus.Live))
+            .ToListAsync();
+        var cmp = new SemVerComparer();
+        var result = new List<TestGrant>();
+        foreach (var p in pkgs)
+        {
+            var newest = versions.Where(v => v.PackageId == p.Id).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
+            if (newest is not null) result.Add(new TestGrant(devs[p.OwnerId], p, newest));
+        }
+        return result;
+    }
+
+    /// <summary>The user's active test code, if any (plain text; only the user sees it on the profile page).</summary>
+    public async Task<string?> TestCodeOfAsync(string userId)
+    {
+        var row = await _db.TestCodes.AsNoTracking().Where(c => c.UserId == userId && c.RevokedAt == null)
+            .OrderByDescending(c => c.CreatedAt).FirstOrDefaultAsync();
+        if (row is null) return null;
+        try { return _protector.Unprotect(row.CodeProtected); }
+        catch (CryptographicException) { return row.Prefix + "…"; }
+    }
+
+    /// <summary>A new test code for the user; the previous one stops working at once.</summary>
+    public async Task<string> NewTestCodeAsync(AppUser user)
+    {
+        var now = DateTime.UtcNow;
+        foreach (var old in await _db.TestCodes.Where(c => c.UserId == user.Id && c.RevokedAt == null).ToListAsync()) old.RevokedAt = now;
+        var plain = NewCode();
+        _db.TestCodes.Add(new TestCode { UserId = user.Id, CodeHash = Hash(plain), CodeProtected = _protector.Protect(plain), Prefix = plain[..4], CreatedAt = now });
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(user.DisplayName, "testcode.created", user.Email ?? user.Id, "personal test code; the previous one stops working");
+        return plain;
+    }
+
+    public async Task<bool> RevokeTestCodeAsync(AppUser user)
+    {
+        var rows = await _db.TestCodes.Where(c => c.UserId == user.Id && c.RevokedAt == null).ToListAsync();
+        if (rows.Count == 0) return false;
+        foreach (var r in rows) r.RevokedAt = DateTime.UtcNow;
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(user.DisplayName, "testcode.revoked", user.Email ?? user.Id);
+        return true;
     }
 
     /// <summary>
@@ -504,16 +603,25 @@ public class CustomerService
     {
         // only what the catalog shows: deliveries that hand out a version now (S1.4.3)
         var grants = (await GrantsAsync(ctx)).Where(g => g.Beta is not null || g.Live is not null).ToList();
+        var testGrants = await TestGrantsAsync(ctx);   // S1.6.0
+        if (grants.Count == 0 && testGrants.Count > 0)
+        {
+            var tp = testGrants.Select(g => g.Package.Id).Distinct().OrderBy(x => x, StringComparer.Ordinal).ToList();
+            return (true, string.Join(", ", testGrants.Select(g => g.Label).Distinct()), tp.Count, tp, new());
+        }
+        if (grants.Count == 0 && (await LookupAsync(ctx)).Tests.Count > 0)
+            return (true, "Test", 0, new(), new());   // a valid test code of a developer without add-ons yet
         if (grants.Count > 0)
         {
-            var pkgs = grants.Select(g => g.Package.Id).Distinct().OrderBy(x => x, StringComparer.Ordinal).ToList();
+            var pkgs = grants.Select(g => g.Package.Id).Concat(testGrants.Select(g => g.Package.Id)).Distinct()
+                .OrderBy(x => x, StringComparer.Ordinal).ToList();
             var deliveryIds = grants.Select(g => g.Delivery.Id).ToList();
             var used = await _db.DeliverySeats.AsNoTracking().Where(s => deliveryIds.Contains(s.DeliveryId) && s.ReleasedAt == null)
                 .GroupBy(s => s.DeliveryId).Select(g => new { g.Key, N = g.Count() }).ToDictionaryAsync(x => x.Key, x => x.N);
             var seats = grants.GroupBy(g => g.Package.Id).OrderBy(g => g.Key, StringComparer.Ordinal)
                 .Select(g => new SeatInfo(g.Key, g.Sum(x => used.GetValueOrDefault(x.Delivery.Id)),
                     g.Any(x => x.Delivery.MaxInstalls is null) ? null : g.Sum(x => x.Delivery.MaxInstalls!.Value))).ToList();
-            return (true, string.Join(", ", grants.Select(g => g.Customer.Name).Distinct()), pkgs.Count, pkgs, seats);
+            return (true, string.Join(", ", grants.Select(g => g.Customer.Name).Concat(testGrants.Select(g => g.Label)).Distinct()), pkgs.Count, pkgs, seats);
         }
         // A valid code of an active customer without a current delivery is still valid
         // (same limit: this second look counts nothing new, the codes are known by now).
@@ -533,17 +641,31 @@ public class CustomerService
         return (g.Live ?? (betaChannel ? g.Beta : null), "live");
     }
 
-    /// <summary>True when the request may see this package (public, or unlocked by a code).</summary>
+    /// <summary>True when the request may see this package (public, or unlocked by a code or its developer's test code).</summary>
     public async Task<bool> MaySeeAsync(HttpContext ctx, Package pkg)
     {
         if (pkg.Visibility != "private") return true;
-        return (await GrantsAsync(ctx)).Any(g => g.Package.Id == pkg.Id);
+        return (await GrantsAsync(ctx)).Any(g => g.Package.Id == pkg.Id) || (await TestGrantsAsync(ctx)).Any(g => g.Package.Id == pkg.Id);
     }
 
     /// <summary>True when the request may download this version of a private package.</summary>
     public async Task<bool> MayDownloadAsync(HttpContext ctx, Package pkg, string version)
     {
         if (pkg.Visibility != "private") return true;
-        return (await GrantsAsync(ctx)).Any(g => g.Package.Id == pkg.Id && (g.Beta?.Version == version || g.Live?.Version == version));
+        return (await GrantsAsync(ctx)).Any(g => g.Package.Id == pkg.Id && (g.Beta?.Version == version || g.Live?.Version == version)) ||
+               await IsTestVersionAsync(ctx, pkg.Id, version);
     }
+
+    /// <summary>The developer's test code of this request shows exactly this version (S1.6.0).</summary>
+    public async Task<bool> IsTestVersionAsync(HttpContext ctx, string packageId, string version) =>
+        (await TestGrantsAsync(ctx)).Any(g => g.Package.Id == packageId && g.Version.Version == version);
+
+    /// <summary>
+    /// May this request download a version that waits for review? Only through a customer delivery of a
+    /// private add-on (review optional) or the developer's own test code (S1.6.0); staff is checked by the caller.
+    /// </summary>
+    public async Task<bool> MayGetSubmittedAsync(HttpContext ctx, Package pkg, string version) =>
+        (pkg.Visibility == "private" &&
+         (await GrantsAsync(ctx)).Any(g => g.Package.Id == pkg.Id && (g.Beta?.Version == version || g.Live?.Version == version))) ||
+        await IsTestVersionAsync(ctx, pkg.Id, version);
 }

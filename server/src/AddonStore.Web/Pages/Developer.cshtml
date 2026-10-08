@@ -76,6 +76,7 @@ Invoke-WebRequest @(b)/api/skill -OutFile "$env:USERPROFILE\.claude\skills\power
         <tr><td><code>@b/api/tools/make-ppak.ps1</code></td><td>@L["Offline packer: .ppak, source ZIP and upload package"]</td></tr>
         <tr><td><code>@b/api</code></td><td>@L["List of all endpoints"]</td></tr>
         <tr><td><code>GET @b/api/me</code></td><td>@L["Check your token"]</td></tr>
+        <tr><td><code>GET | POST @b/api/me/test-code</code></td><td>@L["Your personal test code: try your versions that wait for review in Power PDF"]</td></tr>
         <tr><td><code>POST @b/api/packages/validate</code></td><td>@L["Test run of all checks, nothing is stored"]</td></tr>
         <tr><td><code>POST @b/api/packages</code></td><td>@L["Submit a package"]</td></tr>
         <tr><td><code>GET @b/api/packages/{id}</code></td><td>@L["Status, history and check reports of a package"]</td></tr>

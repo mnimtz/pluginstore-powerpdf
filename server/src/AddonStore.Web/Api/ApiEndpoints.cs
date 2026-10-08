@@ -151,7 +151,8 @@ public static class ApiEndpoints
                     "GET  /api/skill                  Claude Code skill (SKILL.md) for this store",
                     "GET  /llms.txt                   short index of this site for language models",
                     "GET  /api/me                     verify your token, see your packages (auth)",
-                    "GET  /api/catalog?channel=beta   released packages; beta channel includes pre-release versions",
+                    "GET|POST|DELETE /api/me/test-code your personal test code for the store window (auth)",
+                    "GET  /api/catalog?channel=beta   released packages; beta channel includes versions approved for beta",
                     "GET  /api/packages/{id}          status and history of one package",
                     "POST /api/packages/validate      dry-run: full validation, nothing stored (auth)",
                     "POST /api/packages               submit a package (auth)",
@@ -301,6 +302,30 @@ public static class ApiEndpoints
             });
         }).RequireAuthorization("ApiOrCookie");
 
+        // Personal test code (S1.6.0): the developer's own versions that wait for review, in the store window.
+        api.MapGet("/me/test-code", async (HttpContext ctx, UserManager<AppUser> users, CustomerService customers) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var code = await customers.TestCodeOfAsync(user.Id);
+            return Results.Json(new { ok = true, data = new { code, hint = code is null
+                ? "No test code yet: POST /api/me/test-code creates one."
+                : "Enter it in the Power PDF store window with \"Customer code\". It shows the newest version of each of your add-ons, also one that waits for review. Treat it like a password." } });
+        }).RequireAuthorization("BearerOnly");
+        api.MapPost("/me/test-code", async (HttpContext ctx, UserManager<AppUser> users, CustomerService customers) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var code = await customers.NewTestCodeAsync(user);
+            return Results.Json(new { ok = true, data = new { code, hint = "The previous test code stopped working. Enter this one in the Power PDF store window with \"Customer code\"." } }, statusCode: 201);
+        }).RequireAuthorization("BearerOnly");
+        api.MapDelete("/me/test-code", async (HttpContext ctx, UserManager<AppUser> users, CustomerService customers) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            return Results.Json(new { ok = true, data = new { deleted = await customers.RevokeTestCodeAsync(user) } });
+        }).RequireAuthorization("BearerOnly");
+
         // Public key the catalog signatures can be checked with (clients pin it).
         api.MapGet("/signing-key", async (PackageSigning signing) =>
         {
@@ -333,7 +358,8 @@ public static class ApiEndpoints
                 await usage.CountAsync(ctx, "catalog", lang: culture);
                 var binOk = Services.CatalogUi.ClientSupportsBin(ctx);   // S1.4.0
                 var items = await Services.CatalogUi.GetAsync(db, culture, beta, binOk);
-                if (grants.Count > 0)
+                var tests = await customers.TestGrantsAsync(ctx);   // the developer's test code (S1.6.0)
+                if (grants.Count > 0 || tests.Count > 0)
                 {
                     var cctx = await Services.CatalogUi.Context.LoadAsync(db);
                     var deliveredIds = new HashSet<string>();
@@ -343,6 +369,13 @@ public static class ApiEndpoints
                         if (v is null || (!binOk && Services.CatalogUi.HasBin(v)) || !deliveredIds.Add(v.PackageId)) continue;
                         items.RemoveAll(i => i.Id == v.PackageId);   // a delivery overrides the public entry
                         items.Add(Services.CatalogUi.Item(cctx, v, ch, culture, g.Customer.Name));
+                    }
+                    // the developer's newest version of each own add-on overrides public entries and deliveries
+                    foreach (var t in tests)
+                    {
+                        if (!binOk && Services.CatalogUi.HasBin(t.Version)) continue;
+                        items.RemoveAll(i => i.Id == t.Package.Id);
+                        items.Add(Services.CatalogUi.Item(cctx, t.Version, t.Channel, culture, t.Label));
                     }
                 }
                 // one TSV cell: tabs and line breaks become spaces, other control and bidi-override characters go (audit S1.3.1)
@@ -370,7 +403,7 @@ public static class ApiEndpoints
                 return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
             }
 
-            var entries = await CatalogAsync(db, beta, Base(ctx), grants, signing);
+            var entries = await CatalogAsync(db, beta, Base(ctx), grants, signing, await customers.TestGrantsAsync(ctx));
             return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live", packages = entries } });
         });
 
@@ -530,7 +563,7 @@ public static class ApiEndpoints
                         downloadUrl = $"{Base(ctx)}/api/packages/{v.PackageId}/{v.Version}/download",
                         next = v.Status == VersionStatus.Live
                             ? "The Add-on Store client version is live immediately; installed clients offer it as an update."
-                            : "The version is in the beta channel now (visible to clients with the beta option). An admin reviews it for the live store; you will be notified by email. Check GET /api/packages/" + v.PackageId + " for status."
+                            : "The version waits for review (status submitted): no store client gets it yet, except yours with your personal test code (profile page). A reviewer approves it for beta or for the live store; you will be notified by email. Check GET /api/packages/" + v.PackageId + " for status."
                     }
                 }, statusCode: 201);
             }
@@ -630,6 +663,8 @@ public static class ApiEndpoints
             var cmp = new SemVerComparer();
             var versions = await db.PackageVersions
                 .Where(x => x.PackageId == id && (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta)).ToListAsync();
+            if (v is not null && !versions.Any(x => x.Version == v) && await customers.IsTestVersionAsync(ctx, id, v))   // S1.6.0
+                versions.AddRange(await db.PackageVersions.Where(x => x.PackageId == id && x.Version == v).ToListAsync());
             var pick = (v is null ? null : versions.FirstOrDefault(x => x.Version == v))
                        ?? versions.Where(x => x.Status == VersionStatus.Live).OrderByDescending(x => x.Version, cmp).FirstOrDefault()
                        ?? versions.OrderByDescending(x => x.Version, cmp).FirstOrDefault();
@@ -1307,8 +1342,8 @@ public static class ApiEndpoints
                 return Results.Json(new { ok = false, error = new { code = "NOT_OWNER", message = "This package belongs to another user.", hint = "Only the owner or an admin can withdraw a version." } }, statusCode: 403);
             if (v.Status == VersionStatus.Live && !isAdmin)
                 return Results.Json(new { ok = false, error = new { code = "LIVE_VERSION", message = "Live versions can only be withdrawn by an admin.", hint = "Ask an admin, or submit a higher fixed version instead." } }, statusCode: 403);
-            if (v.Status is not (VersionStatus.Beta or VersionStatus.Live))
-                return Results.Json(new { ok = false, error = new { code = "VERSION_NOT_WITHDRAWABLE", message = $"Version {version} is {v.Status.ToString().ToLowerInvariant()} and cannot be withdrawn.", hint = "Only beta versions (and, for admins, live versions) can be withdrawn." } }, statusCode: 409);
+            if (v.Status is not (VersionStatus.Submitted or VersionStatus.Beta or VersionStatus.Live))
+                return Results.Json(new { ok = false, error = new { code = "VERSION_NOT_WITHDRAWABLE", message = $"Version {version} is {v.Status.ToString().ToLowerInvariant()} and cannot be withdrawn.", hint = "Only versions waiting for review or in beta (and, for admins, live versions) can be withdrawn." } }, statusCode: 409);
 
             var pinned = await db.Deliveries.CountAsync(d => d.PackageId == id && (d.LiveVersion == version || d.BetaVersion == version) && d.Status == "active");
             await actions.WithdrawAsync(v.Id, user, isAdmin);
@@ -1397,14 +1432,18 @@ public static class ApiEndpoints
             if (!await MayAccessAsync(ctx, id, db, users, customers, version))
                 return NotFound("VERSION_NOT_FOUND", $"No downloadable version {version} of '{id}'.");
             var v = await db.PackageVersions.FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version &&
-                (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta));
+                (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta || x.Status == VersionStatus.Submitted));
             if (v is null) return NotFound("VERSION_NOT_FOUND", $"No downloadable version {version} of '{id}'.");
-            var path = Path.Combine(svc.StorageRoot, v.FilePath);
-            if (!File.Exists(path)) return NotFound("FILE_MISSING", "The package file is missing on the server; contact an admin.");
-            // a delivered private add-on, downloaded with a customer code: one installation takes a seat (S1.4.2)
             var pkgRow = await db.Packages.AsNoTracking().FirstAsync(p => p.Id == id);
             var staff = await TryUserAsync(ctx, users) is { } su && (pkgRow.OwnerId == su.Id || ctx.User.IsInRole("Admin") || ctx.User.IsInRole("Reviewer"));
-            if (pkgRow.Visibility == "private" && !staff)
+            // waiting for review (S1.6.0): the people who check it, a private delivery or the developer's test code
+            if (v.Status == VersionStatus.Submitted && !staff && !await customers.MayGetSubmittedAsync(ctx, pkgRow, version))
+                return NotFound("VERSION_NOT_FOUND", $"No downloadable version {version} of '{id}'.");
+            var path = Path.Combine(svc.StorageRoot, v.FilePath);
+            if (!File.Exists(path)) return NotFound("FILE_MISSING", "The package file is missing on the server; contact an admin.");
+            // a delivered private add-on, downloaded with a customer code: one installation takes a seat (S1.4.2);
+            // the developer's own test install takes none
+            if (pkgRow.Visibility == "private" && !staff && !await customers.IsTestVersionAsync(ctx, id, version))
             {
                 var dels = (await customers.GrantsAsync(ctx)).Where(g => g.Package.Id == id && (g.Beta?.Version == version || g.Live?.Version == version))
                     .Select(g => g.Delivery).ToList();
@@ -1642,8 +1681,10 @@ public static class ApiEndpoints
     }
 
     public static async Task<List<object>> CatalogAsync(AppDbContext db, bool includeBeta, string baseUrl,
-                                                         List<CustomerService.Granted>? grants = null, PackageSigning? signing = null)
+                                                         List<CustomerService.Granted>? grants = null, PackageSigning? signing = null,
+                                                         List<CustomerService.TestGrant>? tests = null)
     {
+        tests ??= new();
         if (signing is not null) await signing.EnsureLoadedAsync();
         var all = await db.PackageVersions
             .Where(v => v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta))
@@ -1677,14 +1718,16 @@ public static class ApiEndpoints
             if (pick is null) continue;
             if (pkgs.GetValueOrDefault(pick.PackageId)?.Visibility == "private") continue;
             if (grants?.Any(g => g.Package.Id == pick.PackageId && CustomerService.Pick(g, includeBeta).Version is not null) == true) continue;
+            if (tests.Any(t => t.Package.Id == pick.PackageId)) continue;
             result.Add(Entry(pick, channel, null));
         }
-        var delivered = new HashSet<string>();
+        var delivered = new HashSet<string>(tests.Select(t => t.Package.Id));
         foreach (var g in grants ?? new())
         {
             var (v, ch) = CustomerService.Pick(g, includeBeta);
             if (v is not null && delivered.Add(v.PackageId)) result.Add(Entry(v, ch, g.Customer.Name));
         }
+        foreach (var t in tests) result.Add(Entry(t.Version, t.Channel, t.Label));   // developer test code (S1.6.0)
         return result;
 
         object Entry(PackageVersion pick, string channel, string? customer)

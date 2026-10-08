@@ -7,7 +7,7 @@
 }
 
 <h1>@L["Review queue"]</h1>
-<p class="lead">@L["Beta versions passed all automatic checks and are visible to beta testers. Approve them for the live store or reject them with a reason."]</p>
+<p class="lead">@L["These versions passed all automatic checks and wait for review; no workstation gets them yet. Approve each for beta (workstations with the beta option) or for the live store, or reject it with a reason."]</p>
 
 @if (Model.Notice is not null)
 {
@@ -39,7 +39,7 @@
         }
         <strong style="color:var(--tun-navy)"><a href="/Plugin?id=@v.PackageId">@(Model.Packages.TryGetValue(v.PackageId, out var rp) ? AddonStore.Web.Services.CatalogUi.DisplayName(rp, v, lang) : AddonStore.Web.Services.CatalogUi.ManifestText(v, "name", lang, v.PackageId))</a></strong>
         <span style="color:var(--tun-slate)">@v.PackageId</span> v@(v.Version)
-        <span class="badge beta">@L["Beta"]</span>
+        <span class="badge submitted">@L["Awaiting review"]</span>
         <div style="color:var(--tun-slate);font-size:.85rem;margin:4px 0 8px">
             @L["Submitted by"] @v.SubmittedBy · @v.SubmittedVia · @Time.Fmt(v.SubmittedAt) · @(v.SizeBytes / 1024) KB · SHA-256 <code>@v.Sha256[..16]…</code>
         </div>
@@ -52,7 +52,7 @@
         }
         <div style="display:flex;gap:10px;align-items:flex-start;margin-top:10px;flex-wrap:wrap">
             <a class="btn small secondary" href="/api/packages/@v.PackageId/@v.Version/download">@L["Download"]</a>
-            <partial name="_ApprovalForm" model='(v.Id, "id", (string?)null, "Approve for live store", false)' />
+            <partial name="_ApprovalForm" model='(v.Id, "id", (string?)null, "Approve", false, false)' />
             <form method="post" asp-page-handler="Reject" style="display:flex;gap:8px;flex:1;min-width:280px">
                 <input type="hidden" name="id" value="@v.Id" />
                 <input type="text" name="comment" placeholder="@L["Reason (sent to the submitter)"]" required style="flex:1" />
@@ -60,6 +60,25 @@
             </form>
         </div>
     </div>
+}
+
+@if (Model.InBeta.Count > 0)
+{
+    <h2>@L["In beta, ready for the live store"]</h2>
+    <p class="muted">@L["Approved for beta and newer than the live version. Approve them for the live store when the beta testers are done."]</p>
+    @foreach (var v in Model.InBeta)
+    {
+        var lang = AddonStore.Web.Services.Lang.Current;
+        <div class="card">
+            <strong style="color:var(--tun-navy)"><a href="/Plugin?id=@v.PackageId">@(Model.Packages.TryGetValue(v.PackageId, out var bp) ? AddonStore.Web.Services.CatalogUi.DisplayName(bp, v, lang) : v.PackageId)</a></strong>
+            <span style="color:var(--tun-slate)">@v.PackageId</span> v@(v.Version)
+            <span class="badge beta">@L["Beta"]</span>
+            <div style="color:var(--tun-slate);font-size:.85rem;margin:4px 0 8px">
+                @L["Approved for beta"]: @Time.Fmt(v.ReviewedAt ?? v.SubmittedAt) · @L["Downloads"]: @v.Downloads
+            </div>
+            <partial name="_ApprovalForm" model='(v.Id, "id", (string?)null, "Approve for live store", false, true)' />
+        </div>
+    }
 }
 
 <div class="card" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">

@@ -96,7 +96,7 @@ public class DossierService
         return new Dossier(
             v.PackageId, CatalogUi.DisplayName(pkg, v, culture), pkg.Owner?.DisplayName ?? "", pkg.Visibility,
             CatalogUi.EffectiveCategory(pkg, root, known),
-            v.Version, v.Status, v.Status.ToString().ToLowerInvariant(), v.Status == VersionStatus.Live ? "live" : v.Status == VersionStatus.Beta ? "beta" : "-",
+            v.Version, v.Status, v.Status.ToString().ToLowerInvariant(), v.Status == VersionStatus.Live ? "live" : v.Status == VersionStatus.Beta ? "beta" : v.Status == VersionStatus.Submitted ? "test code only" : "-",
             v.SubmittedAt, v.SubmittedBy, v.SubmittedVia, v.Sha256, v.SizeBytes, v.Downloads, v.MinPowerPdfVersion,
             CatalogUi.IsNoUi(root), v.AtomNamespace, files, signature, _signing.KeyId,
             Clone("complianceAudit"), Clone("thirdParty"), services,

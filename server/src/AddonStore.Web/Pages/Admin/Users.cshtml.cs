@@ -89,6 +89,7 @@ public class UsersModel : PageModel
         var customers = await _db.Customers.Where(c => c.OwnerId == user.Id).ToListAsync();
         foreach (var c in customers) c.OwnerId = admin.Id;
         _db.ApiTokens.RemoveRange(_db.ApiTokens.Where(t => t.UserId == user.Id));
+        _db.TestCodes.RemoveRange(_db.TestCodes.Where(t => t.UserId == user.Id));   // personal test codes (S1.6.0)
         await _db.SaveChangesAsync();
         var result = await _users.DeleteAsync(user);
         if (!result.Succeeded)

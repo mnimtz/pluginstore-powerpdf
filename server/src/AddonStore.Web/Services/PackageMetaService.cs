@@ -126,10 +126,11 @@ public class PackageMetaService
         // A private add-on with its own ribbon tab stays private (S1.0.6): public add-ons share one tab.
         if (c.SetVisibility && c.Visibility == "public" && pkg.Visibility != "public")
         {
-            // only what clients get now: the newest live and the newest beta version (older
-            // versions from before the shared-tab rule do not count)
+            // what clients get now or after review: the newest live, beta and waiting version (older
+            // versions from before the shared-tab rule do not count; S1.6.0: waiting versions count too)
             var offered = (await _db.PackageVersions.AsNoTracking()
-                    .Where(v => v.PackageId == pkg.Id && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta))
+                    .Where(v => v.PackageId == pkg.Id && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta ||
+                                                          v.Status == VersionStatus.Submitted))
                     .Select(v => new { v.Version, v.Status, v.AtomNamespace }).ToListAsync())
                 .GroupBy(v => v.Status)
                 .Select(g => g.OrderByDescending(v => v.Version, new SemVerComparer()).First());

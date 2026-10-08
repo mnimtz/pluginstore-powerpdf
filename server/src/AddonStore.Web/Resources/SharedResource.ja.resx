@@ -1097,4 +1097,32 @@
   <data name="{0} live" xml:space="preserve"><value>{0} 件公開中</value></data>
   <data name="{0} ratings" xml:space="preserve"><value>評価 {0} 件</value></data>
   <data name="A customer code unlocks all deliveries of this customer; a delivery code only one add-on. In Power PDF the code is entered in the Add-on Store window with &quot;Customer code&quot; (up to 10 codes per computer), or distributed with the policy CustomerCode (several codes separated by semicolons)." xml:space="preserve"><value>顧客コードはこの顧客へのすべての配布を、配布コードは 1 つのアドオンのみを利用可能にします。Power PDF では、Add-on Store ウィンドウの [顧客コード] からコードを入力するか (コンピューターごとに最大 10 個)、ポリシー CustomerCode で配布します (複数のコードはセミコロンで区切ります)。</value></data>
+  <data name="Approve for beta" xml:space="preserve"><value>ベータへの公開を承認</value></data>
+  <data name="Approved for beta" xml:space="preserve"><value>ベータへの公開を承認済み</value></data>
+  <data name="Approved for beta and newer than the live version. Approve them for the live store when the beta testers are done." xml:space="preserve"><value>ベータへの公開が承認済みで、ライブ バージョンより新しいバージョンです。ベータ テスターの確認が終わったら、ライブ ストアへの公開を承認してください。</value></data>
+  <data name="Create a new test code? The current one stops working at once." xml:space="preserve"><value>新しいテスト コードを作成しますか？現在のコードはすぐに使用できなくなります。</value></data>
+  <data name="Create test code" xml:space="preserve"><value>テスト コードを作成</value></data>
+  <data name="Delete the test code? It stops working at once." xml:space="preserve"><value>テスト コードを削除しますか？すぐに使用できなくなります。</value></data>
+  <data name="Every workstation gets it." xml:space="preserve"><value>すべてのワークステーションに提供されます。</value></data>
+  <data name="In beta, ready for the live store" xml:space="preserve"><value>ベータ中、ライブ ストアへの公開準備完了</value></data>
+  <data name="New code" xml:space="preserve"><value>新しいコード</value></data>
+  <data name="New versions wait for review and reach no workstation until a reviewer approves them. With this code you try your own add-ons in Power PDF first: enter it in the store window with &quot;Customer code&quot;. It shows the newest version of each of your add-ons, also one that waits for review. Treat it like a password." xml:space="preserve"><value>新しいバージョンはレビュー待ちとなり、レビュー担当者が承認するまでどのワークステーションにも提供されません。このコードを使うと、ご自身のアドインをまず Power PDF で試すことができます。ストア ウィンドウの [顧客コード] からこのコードを入力してください。各アドインの最新バージョンが、レビュー待ちのものも含めて表示されます。パスワードと同様に扱ってください。</value></data>
+  <data name="New versions, not yet offered" xml:space="preserve"><value>新しいバージョン (まだ提供されていません)</value></data>
+  <data name="No workstation gets it yet; you can test it with your personal test code." xml:space="preserve"><value>まだどのワークステーションにも提供されません。個人用テスト コードでテストできます。</value></data>
+  <data name="Personal test code" xml:space="preserve"><value>個人用テスト コード</value></data>
+  <data name="Restore (awaiting review)" xml:space="preserve"><value>復元 (レビュー待ち)</value></data>
+  <data name="Review recorded." xml:space="preserve"><value>レビューを記録しました。</value></data>
+  <data name="Set back to beta by {0}" xml:space="preserve"><value>{0} がベータに戻しました</value></data>
+  <data name="Set this version back to beta? Only beta workstations are offered it from now on and the live channel falls back to the previous live version. Installed copies keep working." xml:space="preserve"><value>このバージョンをベータに戻しますか？今後はベータのワークステーションにのみ提供され、ライブ チャネルは以前のライブ バージョンに戻ります。インストール済みのコピーは引き続き動作します。</value></data>
+  <data name="Submitted. The version waits for review; try it with your personal test code (profile page)." xml:space="preserve"><value>提出しました。このバージョンはレビュー待ちです。個人用テスト コードでお試しください (プロファイル ページ)。</value></data>
+  <data name="Test code created. Enter it in the store window with &quot;Customer code&quot;." xml:space="preserve"><value>テスト コードを作成しました。ストア ウィンドウの [顧客コード] から入力してください。</value></data>
+  <data name="Test code deleted; it stops working at once." xml:space="preserve"><value>テスト コードを削除しました。すぐに使用できなくなります。</value></data>
+  <data name="These versions passed all automatic checks and wait for review; no workstation gets them yet. Approve each for beta (workstations with the beta option) or for the live store, or reject it with a reason." xml:space="preserve"><value>これらのバージョンはすべての自動チェックに合格し、レビュー待ちです。まだどのワークステーションにも提供されていません。それぞれについて、ベータ (ベータ オプションが有効なワークステーション) またはライブ ストアへの公開を承認するか、理由を付けて却下してください。</value></data>
+  <data name="This version is already approved for beta." xml:space="preserve"><value>このバージョンはすでにベータへの公開が承認されています。</value></data>
+  <data name="Version approved for beta." xml:space="preserve"><value>バージョンのベータへの公開を承認しました。</value></data>
+  <data name="Version restored to the beta channel." xml:space="preserve"><value>バージョンをベータ チャネルに復元しました。</value></data>
+  <data name="Version restored; it waits for review." xml:space="preserve"><value>バージョンを復元しました。レビュー待ちです。</value></data>
+  <data name="Version set back to beta." xml:space="preserve"><value>バージョンをベータに戻しました。</value></data>
+  <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>ベータ オプションが有効なワークステーションに提供されます。ライブ ストアは現在のバージョンのままです。</value></data>
+  <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>個人用テスト コード: 審査待ちのバージョンを Power PDF で試せます</value></data>
 </root>

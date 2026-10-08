@@ -58,7 +58,8 @@ public class FeedbackService
     }
 
     private async Task<bool> IsPublishedAsync(string packageId) =>
-        await _db.PackageVersions.AnyAsync(v => v.PackageId == packageId && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta));
+        await _db.PackageVersions.AnyAsync(v => v.PackageId == packageId &&
+            (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta || v.Status == VersionStatus.Submitted));   // testers report too (S1.6.0)
 
     public async Task<(Outcome Result, Summary? Summary)> RateAsync(HttpContext ctx, string packageId, string? installId, int stars, string? version)
     {

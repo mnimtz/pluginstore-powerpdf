@@ -125,14 +125,18 @@
         <tr>
             <td><b>@v.Version</b></td>
             <td>
-                <span class="badge @v.Status.ToString().ToLowerInvariant()">@L[v.Status.ToString()]</span>
+                <span class="badge @v.Status.ToString().ToLowerInvariant()">@L[CatalogUi.StatusKey(v.Status)]</span>
                 @if (v.BlockedAt is not null)
                 {
                     <br /><span class="badge rejected">@L["Blocked"]</span> <small style="color:var(--tun-slate)">@v.BlockReason · @v.BlockedBy · @Time.Fmt(v.BlockedAt.Value, false)</small>
                 }
-                @if (pkg.Visibility == "private" && v.Status == VersionStatus.Beta)
+                @if (pkg.Visibility == "private" && v.Status == VersionStatus.Submitted)
                 {
                     <br /><small style="color:var(--tun-slate)">@L["Private: delivered to customers, needs no approval"]</small>
+                }
+                else if (v.Status == VersionStatus.Submitted)
+                {
+                    <br /><small style="color:var(--tun-slate)">@L["No workstation gets it yet; you can test it with your personal test code."]</small>
                 }
                 @if (v.Status == VersionStatus.Live && v.Id != offeredLive)
                 {
@@ -148,20 +152,20 @@
             <td>@v.Downloads</td>
             <td style="text-align:right">
                 <div style="display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap">
-                    @if (v.Status is VersionStatus.Live or VersionStatus.Beta)
+                    @if (v.Status is VersionStatus.Live or VersionStatus.Beta or VersionStatus.Submitted)
                     {
                         <a class="btn small secondary" href="/api/packages/@v.PackageId/@v.Version/download">@L["Download"]</a>
                     }
                     <a class="btn small secondary" href="/Dossier/@Uri.EscapeDataString(v.PackageId)/@Uri.EscapeDataString(v.Version)" target="_blank" rel="noopener"
                        title="@L["Everything about how this version was checked and released; print or save as PDF."]">@L["Audit dossier"]</a>
-                    @if (Model.CanReview && v.Status == VersionStatus.Beta)
+                    @if (Model.CanReview && VersionActionService.CanDecide(v) && !(v.Status == VersionStatus.Beta && pkg.Visibility == "private"))
                     {
-                        <partial name="_ApprovalForm" model='(v.Id, "versionId", (string?)pkg.Id, pkg.Visibility == "private" ? "Review (optional)" : "Approve", pkg.Visibility == "private")' />
+                        <partial name="_ApprovalForm" model='(v.Id, "versionId", (string?)pkg.Id, pkg.Visibility == "private" ? "Review (optional)" : v.Status == VersionStatus.Beta ? "Approve for live store" : "Approve", pkg.Visibility == "private", v.Status == VersionStatus.Beta)' />
                     }
                     @if (VersionActionService.CanDemote(v, Model.IsAdmin))
                     {
                         <form method="post" asp-page-handler="Demote" asp-route-id="@pkg.Id"
-                              data-confirm="@L["Set this version back to beta? Only beta workstations are offered it from now on, the live channel falls back to the previous live version, and it needs approval again. Installed copies keep working."]">
+                              data-confirm="@L["Set this version back to beta? Only beta workstations are offered it from now on and the live channel falls back to the previous live version. Installed copies keep working."]">
                             <input type="hidden" name="versionId" value="@v.Id" />
                             <button type="submit" class="btn small secondary">@L["Back to beta"]</button>
                         </form>
@@ -201,7 +205,7 @@
                     {
                         <form method="post" asp-page-handler="Restore" asp-route-id="@pkg.Id">
                             <input type="hidden" name="versionId" value="@v.Id" />
-                            <button type="submit" class="btn small secondary">@(VersionActionService.RestoreTarget(v) == VersionStatus.Live ? L["Restore (live)"] : L["Restore (beta)"])</button>
+                            <button type="submit" class="btn small secondary">@(VersionActionService.RestoreTarget(v) switch { VersionStatus.Live => L["Restore (live)"], VersionStatus.Beta => L["Restore (beta)"], _ => L["Restore (awaiting review)"] })</button>
                         </form>
                     }
                 </div>
@@ -209,7 +213,7 @@
         </tr>
         <tr>
             <td colspan="6" style="padding-top:0">
-                @if (Model.CanReview && v.Status == VersionStatus.Beta)
+                @if (Model.CanReview && v.Status == VersionStatus.Submitted && v.PackageId != "com.tungsten.pluginstore")
                 {
                     <form method="post" asp-page-handler="Reject" asp-route-id="@pkg.Id" style="display:flex;gap:8px;margin:4px 0 8px;flex-wrap:wrap">
                         <input type="hidden" name="versionId" value="@v.Id" />
@@ -238,7 +242,7 @@
                         else
                         {
                             <span class="badge @(Model.SourcePolicy == "required" && v.PackageId != "com.tungsten.pluginstore" ? "rejected" : "withdrawn")">@L["missing"]</span>
-                            @if (Model.SourcePolicy == "required" && v.Status == VersionStatus.Beta && v.PackageId != "com.tungsten.pluginstore")
+                            @if (Model.SourcePolicy == "required" && v.Status is VersionStatus.Submitted or VersionStatus.Beta && v.PackageId != "com.tungsten.pluginstore")
                             {
                                 <span style="color:var(--tun-slate);font-size:.85rem">@L["Required before approval."]</span>
                             }

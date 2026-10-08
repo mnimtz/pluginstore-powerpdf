@@ -16,10 +16,13 @@ public class DashboardModel : PageModel
     private readonly SourceService _sources;
 
     public record Row(Package Pkg, string Name, string Owner, PackageVersion? Live, PackageVersion? Beta,
-                      PackageVersion? Newest, int Downloads, DateTime LastActivity)
+                      PackageVersion? Newest, int Downloads, DateTime LastActivity, PackageVersion? Submitted = null)
     {
-        public bool Pending => Beta is not null && (Live is null || new SemVerComparer().Compare(Beta.Version, Live.Version) > 0);
-        public bool InStore => Live is not null || Beta is not null;
+        /// <summary>A public version waits for review (S1.6.0: status Submitted; private add-ons need none).</summary>
+        public bool Pending => Submitted is not null && Pkg.Visibility != "private";
+        /// <summary>The beta channel offers something newer than live.</summary>
+        public bool BetaAhead => Beta is not null && (Live is null || new SemVerComparer().Compare(Beta.Version, Live.Version) > 0);
+        public bool InStore => Live is not null || Beta is not null || (Pkg.Visibility == "private" && Submitted is not null);
     }
 
     public List<Package> Packages { get; private set; } = new();
@@ -100,7 +103,7 @@ public class DashboardModel : PageModel
             }
             else
             {
-                Notice = "Submitted. The version is in the beta channel now and awaits admin review.";
+                Notice = "Submitted. The version waits for review; try it with your personal test code (profile page).";
             }
 
             if (result.Version is not null && bundle is not null)
@@ -147,11 +150,12 @@ public class DashboardModel : PageModel
         {
             var live = p.Versions.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
             var beta = p.Versions.Where(v => v.Status == VersionStatus.Beta).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
+            var sub = p.Versions.Where(v => v.Status == VersionStatus.Submitted).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
             var newest = p.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault();
             var last = new[] { newest?.SubmittedAt, p.Versions.Max(v => v.ReviewedAt), p.MetaUpdatedAt }
                 .Where(d => d is not null).Select(d => d!.Value).DefaultIfEmpty(p.CreatedAt).Max();
             return new Row(p, CatalogUi.DisplayName(p, live ?? beta ?? newest, lang), p.Owner?.DisplayName ?? "",
-                           live, beta, newest, p.Versions.Sum(v => v.Downloads), last);
+                           live, beta, newest, p.Versions.Sum(v => v.Downloads), last, sub);
         }).ToList();
 
         IEnumerable<Row> rows = Rows;
