@@ -4,6 +4,7 @@
 #include "http.h"
 #include "hostversion.h"
 #include "logging.h"
+#include "access.h"
 #include "settings.h"
 #include "version.h"
 #include <winhttp.h>
@@ -174,6 +175,8 @@ bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& reque
 
     // Customer deliveries: the code goes to the store host only (Allowed above).
     std::wstring headers;
+    // how this Power PDF is licensed (C1.5.0): the store admins choose which modes may use the store
+    headers += L"X-License-Mode: " + PSLicenseMode() + L"\r\n";
     // (codeOverride: a code being checked in the store window before it is stored)
     std::wstring customer = codeOverride ? *codeOverride : PSCustomerCode();
     if (!customer.empty())

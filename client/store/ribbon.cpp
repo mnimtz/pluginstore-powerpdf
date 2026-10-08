@@ -9,6 +9,7 @@
 #include "link.h"
 #include "install.h"      // PSCompareVersions
 #include "hostversion.h"
+#include "access.h"
 #include "Resource.h"
 
 extern "C" HINSTANCE gHINSTANCE;
@@ -20,9 +21,16 @@ static DUText MakeDUText(const std::wstring& s)
     return DUTextFromUnicode(reinterpret_cast<const DUUTF16Val*>(s.c_str()), kUTF16HostEndian);
 }
 
+// Hidden when the store admins do not allow this Power PDF's license mode (C1.5.0).
+static DCCB1 DUBool DCCB2 IsStoreVisible(void* /*data*/)
+{
+    return PSStoreAllowed() ? true : false;
+}
+
 static DCCB1 void DCCB2 OnOpenStore(void* /*data*/)
 {
     AFX_MANAGE_MODULE_STATE;
+    if (!PSStoreAllowed()) { FPLogW(L"[Store] not allowed for license mode %s - store not opened", PSLicenseMode().c_str()); return; }
     // Older Power PDF than the client is built for (an MSI from another source,
     // or Power PDF downgraded afterwards): explain instead of failing half-way.
     const std::wstring host = PSHostVersion();
@@ -88,6 +96,7 @@ void PSRegisterUI(RVToolBar bar)
         RVToolBarAddButton(bar, group, false, NULL);
     }
     if (!group) return;
+    RVToolButtonSetComputeVisibleProc(group, IsStoreVisible, NULL);
     {
         DUText gl = MakeDUText(FPLoc(IDS_PS_GROUP));
         RVToolButtonSetLabelText(group, gl, kLabelBottom); DUTextDestroy(gl);
@@ -100,6 +109,7 @@ void PSRegisterUI(RVToolBar bar)
     DUText h = MakeDUText(FPLoc(IDS_PS_TIP_OPEN));
     RVToolButtonSetHelpText(b, h); DUTextDestroy(h);
     RVToolButtonSetExecuteProc(b, OnOpenStore, NULL);
+    RVToolButtonSetComputeVisibleProc(b, IsStoreVisible, NULL);
     DVIcon big = RVToolGetIconFromBitmap(gHINSTANCE, MAKEINTRESOURCEW(IDB_STORE));
     if (big) RVToolButtonSetIcon(b, big, true);
     DVIcon sm = RVToolGetIconFromBitmap(gHINSTANCE, MAKEINTRESOURCEW(IDB_STORE16));

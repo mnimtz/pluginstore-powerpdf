@@ -9,6 +9,7 @@
 #include "version.h"
 #include "logging.h"
 #include "blocklist.h"
+#include "access.h"
 
 extern "C" HINSTANCE gHINSTANCE;
 
@@ -26,6 +27,8 @@ const UINT WM_PS_UPDATES = WM_APP + 77;   // wParam = number of updates
 const UINT_PTR kBlockTimer = 3;            // security blocklist (C1.1.5): 20 s after start, then every 4 h
 const UINT WM_PS_BLOCKED = WM_APP + 78;    // lParam = std::vector<PSBlocked>*
 const UINT kBlockEveryMs = 4 * 60 * 60 * 1000;
+const UINT_PTR kAccessTimer = 5;           // allowed license mode (C1.5.0): 3 s after start, then every 4 h
+const UINT WM_PS_ACCESS = WM_APP + 79;     // wParam = 1 allowed, 0 not
 volatile LONG g_checkRunning = 0;
 
 // Worker: fetch the catalog, count newer versions, report to the window.
@@ -103,6 +106,7 @@ void OpenPending()
     if (PSStoreDialogOpen()) return;
     std::wstring id = TakePending();
     if (id.empty()) return;
+    if (!PSStoreAllowed()) { FPLogW(L"[Store] link request ignored: store not allowed for this license"); return; }
     FPLogW(L"[Store] link request for %s", id.c_str());
 
     HWND main = NULL;
@@ -132,6 +136,17 @@ LRESULT CALLBACK LinkWndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp)
     if (msg == WM_PS_UPDATES)
     {
         PSRibbonSetUpdateBadge((int)wp);
+        return 0;
+    }
+    if (msg == WM_TIMER && wp == kAccessTimer)
+    {
+        SetTimer(h, kAccessTimer, kBlockEveryMs, NULL);
+        PSAccessCheckStart(h, WM_PS_ACCESS);
+        return 0;
+    }
+    if (msg == WM_PS_ACCESS)
+    {
+        PSAccessTakeResult(wp != 0);   // the ribbon button asks PSStoreAllowed() whenever Power PDF redraws it
         return 0;
     }
     if (msg == WM_TIMER && wp == kBlockTimer)
@@ -205,6 +220,7 @@ void PSLinkInit()
         SetTimer(g_linkWnd, kUpdateTimer, 15000, NULL);
     // security blocks are checked regardless of the update badge setting
     SetTimer(g_linkWnd, kBlockTimer, 20000, NULL);
+    SetTimer(g_linkWnd, kAccessTimer, 3000, NULL);
 }
 
 void PSUpdateCheckSoon()

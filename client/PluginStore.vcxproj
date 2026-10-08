@@ -124,6 +124,7 @@
     <ClInclude Include="common\layoutpatch.h" />
     <ClInclude Include="store\oldinstalls.h" />
     <ClInclude Include="store\blocklist.h" />
+    <ClInclude Include="store\access.h" />
     <ClInclude Include="common\loc.h" />
     <ClInclude Include="common\logging.h" />
     <ClInclude Include="common\pluginapp.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="store\signature.cpp" />
     <ClCompile Include="store\link.cpp" />
     <ClCompile Include="store\blocklist.cpp" />
+    <ClCompile Include="store\access.cpp" />
     <ClCompile Include="store\webui.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

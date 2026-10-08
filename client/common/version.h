@@ -4,7 +4,7 @@
 #pragma once
 
 #define FP_VERSION_MAJOR 1
-#define FP_VERSION_MINOR 4
-#define FP_VERSION_PATCH 6
-#define FP_VERSION_W  L"1.4.6"
-#define FP_VERSION_A   "1.4.6"
+#define FP_VERSION_MINOR 5
+#define FP_VERSION_PATCH 0
+#define FP_VERSION_W  L"1.5.0"
+#define FP_VERSION_A   "1.5.0"
