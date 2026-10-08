@@ -141,7 +141,7 @@ public class SettingsModel : PageModel
     }
 
     public async Task OnPostPpLineAsync(int? id, string? key, string? title, string? watchUrl, string? pattern, string? status,
-                                        DateTime? supportEnd, bool majorHint, [FromServices] AppDbContext db, [FromServices] PowerPdfUpdateService ppu)
+                                        DateTime? supportEnd, bool majorHint, bool? ownUpdateManager, [FromServices] AppDbContext db, [FromServices] PowerPdfUpdateService ppu)
     {
         var admin = await _users.GetUserAsync(User);
         View = "updates";
@@ -163,6 +163,8 @@ public class SettingsModel : PageModel
         if (line.WatchUrl != watchUrl || line.Pattern != pattern || line.Key != key) { line.LastCheckResult = null; }
         line.Key = key; line.Title = title.Length > 0 ? title[..Math.Min(title.Length, 80)] : "Power PDF " + key;
         line.WatchUrl = watchUrl; line.Pattern = pattern; line.Status = status!; line.SupportEnd = supportEnd; line.OfferMajorHint = majorHint;
+        // the checkbox is sent by the edit form; a new line without it gets the preset (S1.9.0)
+        line.OwnUpdateManager = ownUpdateManager ?? (Request.Form.ContainsKey("ownUpdateManagerShown") ? false : PowerPdfUpdateService.HasUpdateManager(key));
         await db.SaveChangesAsync();
         await _audit.LogAsync(admin!.DisplayName, "powerpdf.line.saved", key, $"{status}; {watchUrl}; major hint {(majorHint ? "on" : "off")}");
         Notice = "Settings saved.";

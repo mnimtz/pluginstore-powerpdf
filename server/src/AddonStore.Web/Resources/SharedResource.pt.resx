@@ -1199,4 +1199,7 @@
   <data name="Hint shown: a client with {0} is told about {1}{2}." xml:space="preserve"><value>Aviso mostrado: um cliente com {0} é informado sobre {1}{2}.</value></data>
   <data name="No hint: the release line {0} is only suggested; set it to &quot;Maintained&quot;." xml:space="preserve"><value>Sem aviso: a linha de versão {0} está apenas sugerida; defina-a como “Mantida”.</value></data>
   <data name="No hint: no update of the line {0} was found yet; run &quot;Check now&quot;." xml:space="preserve"><value>Sem aviso: ainda não foi encontrada nenhuma atualização da linha {0}; execute “Verificar agora”.</value></data>
+  <data name="Own Update Manager" xml:space="preserve"><value>Update Manager próprio</value></data>
+  <data name="Power PDF updates itself (own Update Manager, from 2026.4): no hint from the store" xml:space="preserve"><value>O Power PDF atualiza-se sozinho (Update Manager próprio, a partir da 2026.4): sem aviso da loja</value></data>
+  <data name="No hint: Power PDF {0} updates itself with its own Update Manager." xml:space="preserve"><value>Sem aviso: o Power PDF {0} atualiza-se com o seu próprio Update Manager.</value></data>
 </root>

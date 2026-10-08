@@ -1,6 +1,6 @@
 # Konzept: Power-PDF-Updates über den Add-on Store
 
-Stand: Okt 8, 2026 · Status: Etappe 1 umgesetzt (S1.8.0, Client 1.6.0); Etappe 2 offen
+Stand: Okt 8, 2026 · Status: Etappe 1 umgesetzt (S1.8.0, Client 1.6.0); Etappe 2 und 3 eingestellt (S1.9.0)
 
 ## Ziel
 
@@ -218,3 +218,24 @@ oder `1`. Die Richtlinie schlägt die Benutzereinstellung.
    Einsatz")? Der Server sieht die Host-Version heute schon im User-Agent.
 7. **Test-Paket:** 2025.3 Update 9 Business als ZIP für den Prototyp von
    Etappe 2.
+
+## Änderung Okt 8, 2026: Update Manager ab Power PDF 2026.4
+
+Rückmeldung der Produktentwicklung: Power PDF Business bekommt mit 2026.4
+einen eigenen **Update Manager**. Der Store ist kein Teil von Power PDF und
+wird dort nicht eingebunden; er braucht eine **eigene Benachrichtigung** für
+seine Updates und die der Add-ons. Folgen:
+
+- **Etappe 2 und 3 (Paket-Upload, Installation über den Store) entfallen**:
+  Power PDF übernimmt das selbst, nachbauen bringt keinen Mehrwert.
+- Der Hinweis aus Etappe 1 bleibt für Linien **ohne** Update Manager (2025.3).
+  Jede Linie hat den Schalter „Power PDF hat eigenen Update Manager“, ab 2026.4
+  vorbelegt; solche Linien bekommen keinen Hinweis vom Store (S1.9.0).
+- **Store-Benachrichtigung (Client 1.7.0)**: Knopf „Updates verfügbar“ im
+  Register Hilfe, nur sichtbar, wenn Updates für den Store, installierte
+  Add-ons oder (Linien ohne Update Manager) Power PDF anstehen; dazu ein
+  **einmaliger Hinweis je neuem Update** („Jetzt im Store ansehen?“), unter
+  Optionen standardmäßig an und abschaltbar (Richtlinie `UpdateNotice`).
+  Eine gelbe Leiste über dem Dokument hat im Plug-in-SDK keine Schnittstelle
+  und wurde deshalb nicht gebaut.
+

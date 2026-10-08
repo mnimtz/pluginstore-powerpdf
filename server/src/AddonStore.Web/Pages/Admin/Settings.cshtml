@@ -134,6 +134,7 @@ else if (Model.SigningKeyId.Length > 0)
                 <b>@ln.Title</b>
                 <span class="badge @(ln.Status switch { "suggested" => "beta", "maintained" => "live", "security" => "submitted", _ => "withdrawn" })">@L[ln.Status switch { "suggested" => "Suggested", "maintained" => "Maintained", "security" => "Security updates only", _ => "Line ended" }]</span>
                 @if (ln.LatestVersion is not null) { <span class="small">@L["Newest update"]: <b>@ln.LatestVersion</b>@(ln.LatestBuildDate is null ? "" : " (" + ln.LatestBuildDate + ")")</span> }
+                @if (ln.OwnUpdateManager) { <span class="badge submitted">@L["Own Update Manager"]</span> }
                 @if (ln.LastCheckResult is { } lcr && lcr != "ok") { <span class="small" style="color:var(--tun-coral)">@lcr</span> }
             </summary>
             @if (ln.Status == "suggested")
@@ -162,6 +163,11 @@ else if (Model.SigningKeyId.Length > 0)
                         </select></div>
                     <div><label>@L["Support ends (optional)"]</label><input type="date" name="supportEnd" value="@ln.SupportEnd?.ToString("yyyy-MM-dd")" /></div>
                 </div>
+                <input type="hidden" name="ownUpdateManagerShown" value="1" />
+                <label style="display:flex;gap:8px;align-items:center;font-weight:400">
+                    <input type="checkbox" name="ownUpdateManager" value="true" checked="@ln.OwnUpdateManager" style="width:auto" />
+                    <span>@L["Power PDF updates itself (own Update Manager, from 2026.4): no hint from the store"]</span>
+                </label>
                 <label style="display:flex;gap:8px;align-items:center;font-weight:400">
                     <input type="checkbox" name="majorHint" value="true" checked="@ln.OfferMajorHint" style="width:auto" />
                     <span>@L["Tell clients of this line about a newer major version (link only)"]</span>

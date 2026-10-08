@@ -158,6 +158,8 @@ public static class SchemaUpgrade
                 "LatestVersion TEXT NULL, LatestReadmeUrl TEXT NULL, LatestTitle TEXT NULL, LatestBuildDate TEXT NULL, DetectedAt TEXT NULL, " +
                 "LastCheckAt TEXT NULL, LastCheckResult TEXT NULL, SummaryJson TEXT NULL, SummaryDraftJson TEXT NULL, CreatedAt TEXT NOT NULL)",
             "CREATE UNIQUE INDEX IF NOT EXISTS IX_PowerPdfLines_Key ON PowerPdfLines (Key)",
+            // Power PDF 2026.4 brings its own Update Manager: no store hint for such lines (S1.9.0)
+            "ALTER TABLE PowerPdfLines ADD COLUMN OwnUpdateManager INTEGER NOT NULL DEFAULT 0",
             // approval for beta or live (S1.6.0): a beta version nobody reviewed waits for review now;
             // reviewed beta versions stay approved for beta (idempotent: new uploads land in Submitted)
             "UPDATE PackageVersions SET Status = 0 WHERE Status = 1 AND ReviewedAt IS NULL AND PackageId <> 'com.tungsten.pluginstore'"

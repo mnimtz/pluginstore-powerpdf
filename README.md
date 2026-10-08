@@ -363,6 +363,20 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Store notification instead of own Power PDF updates (S1.9.0, client 1.7.0):**
+- Power PDF Business brings its own Update Manager from 2026.4; the store is
+  not part of it. So the store installs no Power PDF updates (stages 2 and 3
+  of the concept are dropped), and release lines have "Power PDF updates
+  itself" (preset from 2026.4): their clients get no store hint.
+- Client 1.7.0: a button "Updates available" in Power PDF's Help tab
+  (group `AddonStore::Updates`, added to the user layout at start), visible
+  only while updates for the store, installed add-ons or Power PDF (lines
+  without an Update Manager) are pending; the last count is kept in HKCU
+  `PendingUpdates`, so the button shows right at the next start.
+- One notice per new update ("Open the Add-on Store now?"), on by default
+  under Options and switchable off (policy `Store\UpdateNotice` 0/1); the
+  updates already shown are kept in HKCU `NotifiedUpdates`.
+
 **Power PDF update hints, stage 1 (S1.8.0, client 1.6.0; concept
 docs/concepts/powerpdf-updates.md):**
 - Settings, "Power PDF updates": off by default. Once switched on, the server

@@ -903,7 +903,9 @@ Store clients 1.6.0+ with the option "Show a hint when an update for Power
 PDF is available" also ask `GET {{baseUrl}}/api/powerpdf/update?version=<VersionLong>&lang=<lang>`
 (off unless the store admins switched the Power PDF update hints on); the
 answer names a newer update of the client's release line and the official
-ReadMe. Nothing is downloaded or installed through the store.
+ReadMe. Nothing is downloaded or installed through the store. Release lines
+whose Power PDF updates itself (Update Manager, Power PDF Business 2026.4 and
+later) answer `newer: false, ownUpdateManager: true`.
 
 ## Customer deliveries (private add-ons)
 

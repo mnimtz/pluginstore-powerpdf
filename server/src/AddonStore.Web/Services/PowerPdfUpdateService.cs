@@ -60,6 +60,12 @@ public class PowerPdfUpdateService
 
     public static bool ValidKey(string? key) => key is not null && KeyFormat.IsMatch(key);
 
+    /// <summary>The first release line with the Update Manager in Power PDF Business (S1.9.0).</summary>
+    public const string UpdateManagerFrom = "2026.4";
+
+    /// <summary>Preset of a new line: from 2026.4 on Power PDF updates itself.</summary>
+    public static bool HasUpdateManager(string key) => new Validation.SemVerComparer().Compare(key, UpdateManagerFrom) >= 0;
+
     public async Task<string[]> AllowedHostsAsync()
     {
         var v = await _settings.GetAsync(HostsKey);
@@ -143,6 +149,7 @@ public class PowerPdfUpdateService
                 _db.PowerPdfLines.Add(new PowerPdfLine
                 {
                     Key = key, Title = "Power PDF " + key, WatchUrl = url, Pattern = DefaultPattern(key), Status = "suggested",
+                    OwnUpdateManager = HasUpdateManager(key),
                 });
                 newLines++;
                 await _audit.LogAsync(actor, "powerpdf.line.suggested", key, url);
@@ -305,6 +312,7 @@ public class PowerPdfUpdateService
         if (line is null) return ("No hint: no release line covers version {0}.", new[] { installed });
         if (line.Status == "suggested") return ("No hint: the release line {0} is only suggested; set it to \"Maintained\".", new[] { line.Key });
         if (line.Status == "ended") return ("No hint: the release line {0} has ended.", new[] { line.Key });
+        if (line.OwnUpdateManager) return ("No hint: Power PDF {0} updates itself with its own Update Manager.", new[] { line.Key });
         if (line.LatestVersion is null) return ("No hint: no update of the line {0} was found yet; run \"Check now\".", new[] { line.Key });
         if (new Validation.SemVerComparer().Compare(line.LatestVersion, installed) <= 0)
             return ("No hint: {0} is already the newest update of the line ({1}).", new[] { installed, line.LatestVersion });
@@ -320,6 +328,8 @@ public class PowerPdfUpdateService
         var lines = await _db.PowerPdfLines.AsNoTracking().Where(l => l.Status != "suggested").ToListAsync();
         var line = lines.Where(l => v.StartsWith(l.Key + ".", StringComparison.Ordinal)).OrderByDescending(l => l.Key.Length).FirstOrDefault();
         if (line is null || line.Status == "ended") return new { enabled = true, line = line?.Key, newer = false };
+        // Power PDF's own Update Manager informs the user (2026.4 and later): no second notice from the store
+        if (line.OwnUpdateManager) return new { enabled = true, line = line.Key, newer = false, ownUpdateManager = true };
         var cmp = new Validation.SemVerComparer();
         // VersionLong is "2025.3.8.0.26414": its first three parts are the update ("2025.3.8")
         var parts = v.Split('.');

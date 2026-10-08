@@ -408,6 +408,11 @@ public class PowerPdfLine
     public DateTime? SupportEnd { get; set; }
     /// <summary>Tell clients of this line that a newer major version exists (off by default).</summary>
     public bool OfferMajorHint { get; set; }
+    /// <summary>
+    /// Power PDF updates itself (Update Manager, Power PDF Business 2026.4 and later): the store gives no
+    /// hint for this line, so users do not get two notices (S1.9.0). Preset for lines from 2026.4 on.
+    /// </summary>
+    public bool OwnUpdateManager { get; set; }
     public string? LatestVersion { get; set; }
     public string? LatestReadmeUrl { get; set; }
     public string? LatestTitle { get; set; }
