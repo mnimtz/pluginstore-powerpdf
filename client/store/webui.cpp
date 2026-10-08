@@ -661,10 +661,19 @@ protected:
         int gen = ++m_catalogGen;
         std::wstring lang = HostLang();   // host call: UI thread only
         HWND h = m_hWnd;
+        // C1.9.3: the window opens with the catalog of the startup check (up to 30 min old) and the
+        // fresh one replaces it; a selection waits for the fresh one (flag false).
+        if (withPreselect)
+        {
+            AsyncMsg cached;
+            cached.kind = KCatalog; cached.gen = gen; cached.flag = false;
+            if (PSCachedCatalog(lang, 30 * 60 * 1000, cached.entries) && !cached.entries.empty()) ApplyCatalog(cached);
+        }
         Spawn([h, gen, lang, withPreselect]() {
             auto* m = new AsyncMsg;
             m->kind = KCatalog; m->gen = gen; m->flag = withPreselect;
-            try { if (!PSFetchCatalogFor(lang, m->entries, m->error)) m->entries.clear(); }
+            // C1.9.3: offline, the last catalog stays in the window (with the error above it)
+            try { if (!PSFetchCatalogFor(lang, m->entries, m->error)) PSCachedCatalog(lang, MAXDWORD, m->entries); }
             catch (...) { m->entries.clear(); m->error = FPLoc(IDS_PSD_MSG_FAIL); }
             PostAsync(h, m);
         });

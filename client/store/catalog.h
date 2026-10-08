@@ -45,5 +45,11 @@ bool PSFetchCatalog(std::vector<PSCatalogEntry>& out, std::wstring& error);
 bool PSFetchCatalogFor(const std::wstring& lang, std::vector<PSCatalogEntry>& out, std::wstring& error,
                        const std::wstring* codes = nullptr);   // codes: instead of the stored ones (C1.4.1)
 
+// C1.9.3: the last catalog fetched with the stored codes, so the store window can show it at
+// once and load a fresh one behind it: from memory when it is at most maxAgeMs old, else from
+// the local copy of the last run (any age). False when there is none for this language, server,
+// channel and codes. Installed versions are read again. Any thread.
+bool PSCachedCatalog(const std::wstring& lang, unsigned long maxAgeMs, std::vector<PSCatalogEntry>& out);
+
 // 1 to 64 letters, digits, '-' or '_' (the server enforces the same rule).
 bool PSIsValidZxtName(const std::wstring& name);

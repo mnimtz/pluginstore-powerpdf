@@ -10,6 +10,8 @@
 #include "clocale.h"
 #include "link.h"
 #include <vector>
+#include <bcrypt.h>
+#include <shlobj.h>
 
 static std::wstring Utf8ToWide(const std::string& s)
 {
@@ -76,27 +78,106 @@ bool PSFetchCatalog(std::vector<PSCatalogEntry>& out, std::wstring& error)
     return PSFetchCatalogFor(wcode, out, error);
 }
 
-bool PSFetchCatalogFor(const std::wstring& lang, std::vector<PSCatalogEntry>& out, std::wstring& error,
-                       const std::wstring* codes)
+namespace {
+// C1.9.3: the last catalog fetched with the stored codes, in memory and in
+// %LOCALAPPDATA%\Tungsten\AddonStore\cache\catalog.tsv, so the store window shows it at
+// once (also right after a Power PDF start) and a fresh one replaces it. The file holds
+// the server's TSV as it came, behind one line "#addonstore-catalog-v1\t<sha256 of key>"
+// (the key holds the customer codes: only their hash is written). It is parsed with the
+// same checks as an answer of the server, and installing still needs the server's
+// signature (signature.h), so a changed file can show other texts at most.
+SRWLOCK g_cacheLock = SRWLOCK_INIT;
+std::wstring g_cacheKey;
+ULONGLONG g_cacheTick = 0;
+std::vector<PSCatalogEntry> g_cache;
+const char kCacheMagic[] = "#addonstore-catalog-v1\t";
+const size_t kCacheMax = 16 * 1024 * 1024;
+
+std::wstring CatalogUrl(const std::wstring& lang)
 {
-    out.clear();
-    error.clear();
     std::wstring wcode;
     for (wchar_t c : lang)
         if ((c >= L'a' && c <= L'z') || (c >= L'A' && c <= L'Z') || c == L'-' || c == L'_') wcode += c;
-
     std::wstring url = PSServerUrl() + L"/api/catalog?format=tsv&lang=" + wcode;
     if (PSBetaChannel()) url += L"&channel=beta";
+    return url;
+}
 
-    std::string body;
-    DWORD status = 0;
-    // "what would the catalog be with these codes" (removing a code, C1.4.1) or the stored ones
-    if (!(codes ? PSHttpCheckCustomerCode(url, *codes, body, &status, 16 * 1024 * 1024) : PSHttpGetText(url, body, &status)))
+std::string KeyHash(const std::wstring& key)
+{
+    std::string utf8;
+    int n = WideCharToMultiByte(CP_UTF8, 0, key.c_str(), (int)key.size(), NULL, 0, NULL, NULL);
+    if (n > 0) { utf8.resize(n); WideCharToMultiByte(CP_UTF8, 0, key.c_str(), (int)key.size(), &utf8[0], n, NULL, NULL); }
+    BCRYPT_ALG_HANDLE alg = NULL;
+    BCRYPT_HASH_HANDLE h = NULL;
+    UCHAR digest[32] = { 0 };
+    std::string out;
+    if (BCryptOpenAlgorithmProvider(&alg, BCRYPT_SHA256_ALGORITHM, NULL, 0) == 0)
     {
-        error = FPLoc(IDS_PSD_MSG_FAIL);
-        return false;
+        if (BCryptCreateHash(alg, &h, NULL, 0, NULL, 0, 0) == 0 &&
+            BCryptHashData(h, (PUCHAR)utf8.data(), (ULONG)utf8.size(), 0) == 0 &&
+            BCryptFinishHash(h, digest, sizeof(digest), 0) == 0)
+        {
+            static const char hex[] = "0123456789abcdef";
+            for (UCHAR b : digest) { out += hex[b >> 4]; out += hex[b & 15]; }
+        }
+        if (h) BCryptDestroyHash(h);
+        BCryptCloseAlgorithmProvider(alg, 0);
     }
+    return out;
+}
 
+std::wstring CacheFile()
+{
+    PWSTR base = nullptr;
+    std::wstring path;
+    if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &base)))
+    {
+        std::wstring dir = std::wstring(base) + L"\\Tungsten\\AddonStore\\cache";
+        SHCreateDirectoryExW(NULL, dir.c_str(), NULL);
+        path = dir + L"\\catalog.tsv";
+    }
+    if (base) CoTaskMemFree(base);
+    return path;
+}
+
+void WriteCacheFile(const std::wstring& key, const std::string& body)
+{
+    std::wstring path = CacheFile();
+    if (path.empty() || body.size() > kCacheMax) return;
+    std::string data = kCacheMagic + KeyHash(key) + "\n" + body;
+    std::wstring tmp = path + L".tmp";
+    HANDLE f = CreateFileW(tmp.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (f == INVALID_HANDLE_VALUE) return;
+    DWORD w = 0;
+    BOOL ok = WriteFile(f, data.data(), (DWORD)data.size(), &w, NULL) && w == data.size();
+    CloseHandle(f);
+    if (!ok || !MoveFileExW(tmp.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING)) DeleteFileW(tmp.c_str());
+}
+
+// The body of the cache file when it belongs to this key, else empty.
+std::string ReadCacheFile(const std::wstring& key)
+{
+    std::wstring path = CacheFile();
+    if (path.empty()) return std::string();
+    HANDLE f = CreateFileW(path.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (f == INVALID_HANDLE_VALUE) return std::string();
+    LARGE_INTEGER size = { 0 };
+    std::string data;
+    if (GetFileSizeEx(f, &size) && size.QuadPart > 0 && size.QuadPart <= (LONGLONG)(kCacheMax + 200))
+    {
+        data.resize((size_t)size.QuadPart);
+        DWORD r = 0;
+        if (!ReadFile(f, &data[0], (DWORD)data.size(), &r, NULL) || r != data.size()) data.clear();
+    }
+    CloseHandle(f);
+    std::string head = kCacheMagic + KeyHash(key) + "\n";
+    if (data.size() < head.size() || data.compare(0, head.size(), head) != 0) return std::string();
+    return data.substr(head.size());
+}
+
+void Parse(const std::string& body, std::vector<PSCatalogEntry>& out)
+{
     std::wstring text = Utf8ToWide(body);
     size_t pos = 0;
     while (pos < text.size())
@@ -135,6 +216,55 @@ bool PSFetchCatalogFor(const std::wstring& lang, std::vector<PSCatalogEntry>& ou
         e.installedVersion = PSInstalledVersion(e.zxtName);
         out.push_back(std::move(e));
     }
+}
+} // namespace
+
+bool PSCachedCatalog(const std::wstring& lang, unsigned long maxAgeMs, std::vector<PSCatalogEntry>& out)
+{
+    out.clear();
+    std::wstring key = CatalogUrl(lang) + L"|" + PSCustomerCode();
+    AcquireSRWLockShared(&g_cacheLock);
+    bool hit = g_cacheTick && key == g_cacheKey && GetTickCount64() - g_cacheTick <= maxAgeMs;
+    if (hit) out = g_cache;
+    ReleaseSRWLockShared(&g_cacheLock);
+    if (hit)
+    {
+        for (auto& e : out) e.installedVersion = PSInstalledVersion(e.zxtName);   // may have changed since
+        return true;
+    }
+    // nothing in memory yet (first window after a Power PDF start): the file of the last run
+    std::string body = ReadCacheFile(key);
+    if (body.empty()) return false;
+    Parse(body, out);
+    FPLogW(L"[Store] catalog: %u entries from the local copy", (unsigned)out.size());
+    return !out.empty();
+}
+
+bool PSFetchCatalogFor(const std::wstring& lang, std::vector<PSCatalogEntry>& out, std::wstring& error,
+                       const std::wstring* codes)
+{
+    out.clear();
+    error.clear();
+    const std::wstring url = CatalogUrl(lang);
+    const std::wstring key = url + L"|" + PSCustomerCode();
+
+    std::string body;
+    DWORD status = 0;
+    // "what would the catalog be with these codes" (removing a code, C1.4.1) or the stored ones
+    if (!(codes ? PSHttpCheckCustomerCode(url, *codes, body, &status, 16 * 1024 * 1024) : PSHttpGetText(url, body, &status)))
+    {
+        error = FPLoc(IDS_PSD_MSG_FAIL);
+        return false;
+    }
+
+    Parse(body, out);
     FPLogW(L"[Store] catalog: %u entries (%s)", (unsigned)out.size(), url.c_str());
+    if (!codes && status == 200)
+    {
+        AcquireSRWLockExclusive(&g_cacheLock);
+        g_cacheKey = key; g_cache = out; g_cacheTick = GetTickCount64();
+        ReleaseSRWLockExclusive(&g_cacheLock);
+        WriteCacheFile(key, body);
+    }
     return true;
 }

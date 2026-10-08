@@ -207,6 +207,7 @@ var host = window.chrome && window.chrome.webview;
 function post(m) { if (host) host.postMessage(m); }
 function $(id) { return document.getElementById(id); }
 function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function loadingBox() { var w = el("div", "empty"); w.appendChild(el("div", "spin")); return w; }
 function fmt(s) { var a = Array.prototype.slice.call(arguments, 1), i = 0; return String(s || "").replace(/%[sd]/g, function () { return a[i++] != null ? String(a[i - 1]) : ""; }).replace(/\\n/g, "\n"); }
 function status(x) { return !x.installed ? "none" : x.update ? "upd" : "inst"; }
 var palette = ["#002854", "#0F6E56", "#534AB7", "#993C1D", "#185FA5", "#3B6D11"];
@@ -351,7 +352,7 @@ function renderUpdates() {
     u.appendChild(ucard(tile(x), x.name, fmt(S.updFromTo, x.installed, x.version), x.changelog || "",
       locked ? [] : [{ label: S.update, disabled: busy, fn: function () { confirmAct("install", x); } }]));
   });
-  if (!n) u.appendChild(el("div", "empty", catalogLoaded ? (S.updNone || "") : "\u2026"));
+  if (!n) u.appendChild(catalogLoaded ? el("div", "empty", S.updNone || "") : loadingBox());
   u.scrollTop = keep;
 }
 function render() {
@@ -359,7 +360,8 @@ function render() {
   renderChips();
   var l = $("list"); l.textContent = "";
   var v = visible();
-  if (!v.length) { l.appendChild(el("div", "empty", items.length ? S.none : S.empty)); }
+  // C1.9.3: until the first catalog is there a spinner, not "no add-ons on the server"
+  if (!v.length) l.appendChild(catalogLoaded ? el("div", "empty", items.length ? S.none : S.empty) : loadingBox());
   if (v.length && !v.some(function (x) { return x.id === sel; })) sel = v[0].id;
   // two sections (C1.4.3): what is on this computer, then everything else; a search by need keeps its ranking
   var mineCount = need ? 0 : v.filter(isMine).length;
