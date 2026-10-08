@@ -1,0 +1,144 @@
+@page
+@model AddonStore.Web.Pages.TemplatesModel
+@{
+    ViewData["Title"] = "Delivery templates";
+}
+@if (Model.Edit is null)
+{
+    <p style="margin:0 0 6px"><a href="/Customers">← @L["Deliveries"]</a></p>
+}
+<h1>@L["Delivery templates"]</h1>
+<p class="lead">@L["A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it."]</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+}
+
+@if (Model.Edit is { } v)
+{
+    <p style="margin:0 0 6px"><a href="/Templates">← @L["Delivery templates"]</a></p>
+    <h2 style="margin-top:4px">@v.Template.Name</h2>
+    @if (Model.CanEdit)
+    {
+        <div class="card">
+            <form method="post" asp-page-handler="Save" asp-route-id="@v.Template.Id" class="stack" style="max-width:560px">
+                <div><label>@L["Name"]</label><input type="text" name="name" value="@v.Template.Name" required maxlength="80" /></div>
+                <div><label>@L["Description"]</label><textarea name="description" rows="2" maxlength="1000">@v.Template.Description</textarea></div>
+                <label style="font-weight:400"><input type="checkbox" name="restrictCatalog" value="true" checked="@v.Template.RestrictCatalog" style="width:auto" /> @L["Limit the catalog of its customers to their deliveries"]</label>
+                <button type="submit" class="btn small cta">@L["Save"]</button>
+            </form>
+        </div>
+    }
+    <div class="card">
+        <h3 style="margin-top:0">@L["Add-ons"] (@v.Items.Count)</h3>
+        @if (v.Items.Count == 0) { <p class="muted">@L["No add-on in this template yet."]</p> }
+        else
+        {
+            <div class="table-wrap"><table>
+                <tr><th>@L["Add-on"]</th><th>@L["Version"]</th><th class="actions"></th></tr>
+                @foreach (var i in v.Items)
+                {
+                    <tr>
+                        <td><b>@Model.PackageNames.GetValueOrDefault(i.PackageId, i.PackageId)</b><br /><span class="pid">@i.PackageId</span></td>
+                        <td>@(i.Version is null ? L["newest approved version"].Value : i.Version)</td>
+                        <td class="actions">
+                            @if (Model.CanEdit)
+                            {
+                                <form method="post" asp-page-handler="Remove" asp-route-id="@v.Template.Id" style="margin:0"
+                                      data-confirm="@L["Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)."]">
+                                    <input type="hidden" name="itemId" value="@i.Id" />
+                                    <button type="submit" class="btn small danger">@L["Remove"]</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table></div>
+        }
+        @if (Model.CanEdit && Model.Packages.Count > 0)
+        {
+            <form method="post" asp-page-handler="Add" asp-route-id="@v.Template.Id" style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-top:12px">
+                <div style="flex:1;min-width:240px"><label>@L["Add-on"]</label>
+                    <select name="packageId" id="tpl-pkg" style="width:100%">
+                        @foreach (var p in Model.Packages)
+                        {
+                            <option value="@p.Id" data-versions="@string.Join(",", p.Versions)">@p.Name (@p.Id) · @L[p.Visibility == "private" ? "private" : "public"]</option>
+                        }
+                    </select></div>
+                <div><label>@L["Version"]</label>
+                    <select name="version" id="tpl-ver">
+                        <option value="">@L["newest approved version"]</option>
+                        @foreach (var ver in Model.Packages[0].Versions) { <option value="@ver">@ver</option> }
+                    </select></div>
+                <button type="submit" class="btn small cta">@L["Add"]</button>
+            </form>
+            <p class="small muted">@L["Adding an add-on that is in the template already changes its version."]</p>
+            <script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
+                (function () {
+                    var p = document.getElementById('tpl-pkg'), v = document.getElementById('tpl-ver');
+                    if (!p || !v) return;
+                    var newest = v.options[0].text;
+                    p.addEventListener('change', function () {
+                        var list = (p.options[p.selectedIndex].getAttribute('data-versions') || '').split(',').filter(Boolean);
+                        v.textContent = '';
+                        var o = document.createElement('option'); o.value = ''; o.textContent = newest; v.appendChild(o);
+                        list.forEach(function (x) { var e = document.createElement('option'); e.value = x; e.textContent = x; v.appendChild(e); });
+                    });
+                })();
+            </script>
+        }
+    </div>
+    <div class="card">
+        <h3 style="margin-top:0">@L["Customers with this template"] (@v.Customers)</h3>
+        @if (Model.UsedBy.Count == 0) { <p class="muted">@L["No customer has this template yet. Assign it on the customer page."]</p> }
+        else
+        {
+            <ul>@foreach (var c in Model.UsedBy) { <li><a href="/Customer?id=@c.Id">@c.Name</a></li> }</ul>
+        }
+    </div>
+    @if (Model.CanEdit)
+    {
+        <form method="post" asp-page-handler="Delete" asp-route-id="@v.Template.Id"
+              data-confirm="@L["Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay."]">
+            <button type="submit" class="btn small danger">@L["Delete template"]</button>
+        </form>
+    }
+}
+else
+{
+    @if (Model.CanCreate)
+    {
+        <details class="card" style="max-width:560px">
+            <summary style="cursor:pointer;font-weight:700;color:var(--tun-navy)">+ @L["New template"]</summary>
+            <form method="post" asp-page-handler="Create" class="stack" style="max-width:none;margin-top:10px">
+                <div><label>@L["Name"]</label><input type="text" name="name" required maxlength="80" placeholder="@L["e.g. Bank package"]" /></div>
+                <div><label>@L["Description"]</label><textarea name="description" rows="2" maxlength="1000"></textarea></div>
+                <label style="font-weight:400"><input type="checkbox" name="restrictCatalog" value="true" style="width:auto" /> @L["Limit the catalog of its customers to their deliveries"]</label>
+                <button type="submit" class="btn cta">@L["Create template"]</button>
+            </form>
+        </details>
+    }
+    @if (Model.List.Count == 0)
+    {
+        <div class="card muted">@L["No template yet."]</div>
+    }
+    else
+    {
+        <div class="table-wrap"><table>
+            <tr><th>@L["Template"]</th><th>@L["Add-ons"]</th><th>@L["Customers"]</th><th>@L["Created by"]</th></tr>
+            @foreach (var t in AddonStore.Web.Services.Paging.Items(Model.List, ViewContext.HttpContext.Request, "templates"))
+            {
+                <tr>
+                    <td><a href="/Templates?id=@t.Template.Id"><b>@t.Template.Name</b></a>
+                        @if (t.Template.RestrictCatalog) { <span class="badge submitted">@L["catalog limited"]</span> }
+                        @if (!string.IsNullOrEmpty(t.Template.Description)) { <br /><span class="small muted">@t.Template.Description</span> }</td>
+                    <td>@t.Items.Count</td>
+                    <td>@t.Customers</td>
+                    <td>@t.Owner</td>
+                </tr>
+            }
+        </table></div>
+        <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("templates", Model.List.Count)' />
+    }
+}

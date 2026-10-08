@@ -366,6 +366,23 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Delivery templates (S1.13.0):**
+- New page "Delivery templates" (next to Deliveries): a template is a named
+  set of add-ons, public and private mixed, each with "newest approved
+  version" or a fixed approved version, optionally "Limit the catalog of its
+  customers to their deliveries".
+- Templates are linked: on the customer page one or more are assigned, their
+  add-ons are delivered at once, and every later change of a template
+  reaches all customers that have it. Manual deliveries stay possible next to
+  them; for the same add-on the manual one wins. Changing a template delivery
+  by hand (stages, pause, make live) or "Detach from the template" makes it
+  manual. Add-ons that leave every template end; deleting a template ends its
+  deliveries.
+- Tables DeliveryTemplates, DeliveryTemplateItems, CustomerTemplates and
+  Deliveries.TemplateId (all in the database, so in every backup). API:
+  `/api/templates` (GET, POST, PATCH, DELETE) and
+  `/api/customers/{cid}/templates` (POST, DELETE).
+
 **Deliveries of any add-on, catalog limited to them (S1.12.0):**
 - The customer page offers every add-on for a delivery, public and private
   (marked), not only private ones. A delivery of a public add-on fixes its

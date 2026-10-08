@@ -76,6 +76,12 @@ public static class OpenApiDoc
             new[] { "cid:path:customer id" }, Body: "code"),
         new("delete", "/api/customers/{cid}/codes/{codeId}", "revokeCustomerCode", "Revoke a code.", "token", new[] { "cid:path:customer id", "codeId:path:code id" }),
         new("post", "/api/customers/{cid}/deliveries", "createDelivery", "Deliver an add-on to the customer with a beta and a live stage.", "token", new[] { "cid:path:customer id" }, Body: "delivery"),
+        new("get", "/api/templates", "listTemplates", "Delivery templates (S1.13.0): named sets of add-ons with their version rule, the number of customers using each.", "token", Array.Empty<string>()),
+        new("post", "/api/templates", "createTemplate", "Create a delivery template: name, description, restrictCatalog and items (packageId, version empty = newest approved).", "token", Array.Empty<string>(), Body: "template"),
+        new("patch", "/api/templates/{tid}", "updateTemplate", "Change a template (creator or admin); items replaces the whole list. Every customer that has the template follows at once.", "token", new[] { "tid:path:template id" }, Body: "template"),
+        new("delete", "/api/templates/{tid}", "deleteTemplate", "Delete a template; the deliveries made from it end (manual deliveries stay).", "token", new[] { "tid:path:template id" }),
+        new("post", "/api/customers/{cid}/templates", "assignTemplate", "Assign a template to a customer: its add-ons are delivered at once and follow later changes of the template.", "token", new[] { "cid:path:customer id" }, Body: "assign"),
+        new("delete", "/api/customers/{cid}/templates/{tid}", "unassignTemplate", "Remove a template from a customer; its deliveries end unless another template or a manual delivery covers the add-on.", "token", new[] { "cid:path:customer id", "tid:path:template id" }),
         new("patch", "/api/deliveries/{did}", "updateDelivery", "Change stages, period, status (active, paused, ended) or maxInstalls (installations allowed, 0 = unlimited) of a delivery.", "token", new[] { "did:path:delivery id" }, Body: "delivery"),
         new("get", "/api/deliveries/{did}/seats", "listDeliverySeats", "Installations of a delivery (S1.4.2): used, max (null = unlimited) and the installations (anonymous short id, version, first and last seen), newest first; limit (max 500) and offset.", "token", new[] { "did:path:delivery id" }),
         new("delete", "/api/deliveries/{did}/seats/{sid}", "releaseDeliverySeat", "Free one installation of a delivery, e.g. of a computer that was reset without removing the add-on.", "token", new[] { "did:path:delivery id", "sid:path:installation id from the list" }),
@@ -234,6 +240,8 @@ public static class OpenApiDoc
                 "customer" => "Customer",
                 "code" => "CustomerCode",
                 "delivery" => "Delivery",
+                "template" => "DeliveryTemplate",
+                "assign" => "TemplateAssign",
                 "feedback" => "Feedback",
                 _ => "FeedbackStatus",
             }) } },
@@ -329,6 +337,29 @@ public static class OpenApiDoc
                 ["status"] = new JsonObject { ["type"] = "string", ["enum"] = new JsonArray("active", "paused") },
                 ["withCode"] = new JsonObject { ["type"] = "boolean", ["description"] = "Create a customer code at once (default true)" },
             },
+        },
+        ["DeliveryTemplate"] = new JsonObject
+        {
+            ["type"] = "object",
+            ["properties"] = new JsonObject
+            {
+                ["name"] = Str("1 to 80 characters"), ["description"] = Str("Optional, at most 1000 characters"),
+                ["restrictCatalog"] = new JsonObject { ["type"] = "boolean", ["description"] = "Customers with this template see only their deliveries" },
+                ["items"] = new JsonObject
+                {
+                    ["type"] = "array",
+                    ["items"] = new JsonObject
+                    {
+                        ["type"] = "object",
+                        ["properties"] = new JsonObject { ["packageId"] = Str("Add-on id"), ["version"] = Str("Fixed approved version; empty = the newest approved one") },
+                    },
+                },
+            },
+        },
+        ["TemplateAssign"] = new JsonObject
+        {
+            ["type"] = "object",
+            ["properties"] = new JsonObject { ["templateId"] = new JsonObject { ["type"] = "integer" } },
         },
         ["CustomerCode"] = new JsonObject
         {

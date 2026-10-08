@@ -126,6 +126,7 @@
             <a class="@On("/Dashboard", "/Plugin", "/CatalogEntry", "/Dossier")" href="/Dashboard">@L["Plug-ins"]</a>
             <a class="@On("/Issues")" href="/Issues"><span>@L["Problem reports"]</span>@if (openS > 0) { <span class="nav-count" title="@L["New problem reports"]">@openS</span> }</a>
             <a class="@On("/Customers", "/Customer")" href="/Customers">@L["Deliveries"]</a>
+            <a class="@On("/Templates") sub" href="/Templates">@L["Delivery templates"]</a>
             @if (invNav)
             {
                 <a class="@On("/Admin/Inventory")" href="/Admin/Inventory">@L["Existing customers"]</a>
@@ -191,6 +192,7 @@ else
                 <a href="/Dashboard">@L["Plug-ins"]</a>
                 <a href="/Profile">@L["Profile"]</a>
                 <a href="/Customers">@L["Deliveries"]</a>
+                <a href="/Templates">@L["Delivery templates"]</a>
                 @if (invNav)
                 {
                     <a href="/Admin/Inventory">@L["Existing customers"]</a>

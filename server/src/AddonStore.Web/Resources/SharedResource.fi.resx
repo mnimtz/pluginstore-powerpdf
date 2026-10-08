@@ -1256,4 +1256,38 @@
   <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>Tällä asetuksella kauppa näyttää tälle asiakkaalle vain sille toimitetut lisäosat (julkiset ja yksityiset) ja kaupan päivitykset, ei mitään muuta julkisesta luettelosta.</value></data>
   <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>Ei toimitettavaa lisäosaa: jokainen automaattiset tarkistukset läpäissyt lisäosa on jo toimitettu tälle asiakkaalle.</value></data>
   <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>Yksityiset lisäosat näkyvät vain asiakkaille, joilla on koodi; julkiset ovat joka tapauksessa luettelossa kaikille, ja toimitus lukitsee niiden version tai asetuksella "Rajoita luettelo asiakkaan toimituksiin" määrittää, mitä asiakas saa käyttää. Live "kiinteä" pitää asiakkaan testatussa versiossa; "uusin" seuraa jokaista julkaistua versiota. Asiakkaat saavat version vasta sen hyväksynnän jälkeen.</value></data>
+  <data name="A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it." xml:space="preserve"><value>Malli on joukko lisäosia, jotka asiakkaat saavat yhdessä, julkisia ja yksityisiä sekaisin. Määritä se asiakassivulla; kun muutat mallia, jokainen asiakas, jolla se on, seuraa muutosta. Manuaaliset toimitukset ovat edelleen mahdollisia sen rinnalla.</value></data>
+  <data name="A template limits this customer&#x27;s catalog to its deliveries." xml:space="preserve"><value>Malli rajoittaa tämän asiakkaan luettelon asiakkaan toimituksiin.</value></data>
+  <data name="Adding an add-on that is in the template already changes its version." xml:space="preserve"><value>Jos lisäät lisäosan, joka on jo mallissa, sen versio muuttuu.</value></data>
+  <data name="Assign" xml:space="preserve"><value>Määritä</value></data>
+  <data name="Create template" xml:space="preserve"><value>Luo malli</value></data>
+  <data name="Customers with this template" xml:space="preserve"><value>Asiakkaat, joilla on tämä malli</value></data>
+  <data name="Delete template" xml:space="preserve"><value>Poista malli</value></data>
+  <data name="Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay." xml:space="preserve"><value>Poistetaanko tämä malli? Siitä luodut toimitukset päättyvät jokaiselta asiakkaalta, jolla malli on; manuaaliset toimitukset säilyvät.</value></data>
+  <data name="Delivery templates" xml:space="preserve"><value>Toimitusmallit</value></data>
+  <data name="Detach from the template" xml:space="preserve"><value>Irrota mallista</value></data>
+  <data name="Kept in step with the template; changing it here makes it a manual delivery." xml:space="preserve"><value>Pidetään mallin mukaisena; muutos tässä tekee siitä manuaalisen toimituksen.</value></data>
+  <data name="Limit the catalog of its customers to their deliveries" xml:space="preserve"><value>Rajoita asiakkaiden luettelo heidän toimituksiinsa</value></data>
+  <data name="Manage templates" xml:space="preserve"><value>Hallitse malleja</value></data>
+  <data name="New template" xml:space="preserve"><value>Uusi malli</value></data>
+  <data name="No add-on in this template yet." xml:space="preserve"><value>Tässä mallissa ei ole vielä lisäosia.</value></data>
+  <data name="No customer has this template yet. Assign it on the customer page." xml:space="preserve"><value>Yhdelläkään asiakkaalla ei ole vielä tätä mallia. Määritä se asiakassivulla.</value></data>
+  <data name="No template assigned." xml:space="preserve"><value>Mallia ei ole määritetty.</value></data>
+  <data name="No template yet." xml:space="preserve"><value>Ei vielä mallia.</value></data>
+  <data name="Remove" xml:space="preserve"><value>Poista</value></data>
+  <data name="Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)." xml:space="preserve"><value>Poistetaanko tämä lisäosa mallista? Asiakkaat, joilla malli on, eivät enää saa sitä (ellei sitä toimiteta heille erikseen).</value></data>
+  <data name="Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on." xml:space="preserve"><value>Poistetaanko tämä malli asiakkaalta? Sen toimitukset päättyvät, ellei toinen malli tai manuaalinen toimitus kata lisäosaa.</value></data>
+  <data name="Template" xml:space="preserve"><value>Malli</value></data>
+  <data name="The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts." xml:space="preserve"><value>Määritetyn mallin lisäosat toimitetaan tälle asiakkaalle, ja ne seuraavat jokaista mallin muutosta. Alla olevat manuaaliset toimitukset ovat edelleen mahdollisia; saman lisäosan kohdalla manuaalinen toimitus on voimassa.</value></data>
+  <data name="catalog limited" xml:space="preserve"><value>luettelo rajoitettu</value></data>
+  <data name="e.g. Bank package" xml:space="preserve"><value>esim. Pankkipaketti</value></data>
+  <data name="newest approved version" xml:space="preserve"><value>uusin hyväksytty versio</value></data>
+  <data name="Add-on added. Every customer with this template gets it." xml:space="preserve"><value>Lisäosa lisätty. Jokainen asiakas, jolla on tämä malli, saa sen.</value></data>
+  <data name="Add-on removed from the template." xml:space="preserve"><value>Lisäosa poistettu mallista.</value></data>
+  <data name="Enter a name of 1 to 80 characters." xml:space="preserve"><value>Anna nimi, jonka pituus on 1–80 merkkiä.</value></data>
+  <data name="Template assigned. Its add-ons are delivered now." xml:space="preserve"><value>Malli määritetty. Sen lisäosat toimitetaan nyt.</value></data>
+  <data name="Template deleted. The deliveries made from it ended." xml:space="preserve"><value>Malli poistettu. Siitä luodut toimitukset päättyivät.</value></data>
+  <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Malli poistettu asiakkaalta. Sen toimitukset päättyivät.</value></data>
+  <data name="Template saved." xml:space="preserve"><value>Malli tallennettu.</value></data>
+  <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>Toimitus on nyt manuaalinen; malli ei enää muuta sitä.</value></data>
 </root>

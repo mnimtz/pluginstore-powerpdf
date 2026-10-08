@@ -143,6 +143,16 @@ public static class SchemaUpgrade
                 "StartsAt TEXT NULL, EndsAt TEXT NULL, Status TEXT NOT NULL, CreatedBy TEXT NOT NULL, CreatedAt TEXT NOT NULL, " +
                 "UpdatedAt TEXT NULL, LastSeenAt TEXT NULL)",
             "CREATE UNIQUE INDEX IF NOT EXISTS IX_Deliveries_CustomerId_PackageId ON Deliveries (CustomerId, PackageId)",
+            // delivery templates (S1.13.0)
+            "ALTER TABLE Deliveries ADD COLUMN TemplateId INTEGER NULL",
+            "CREATE TABLE IF NOT EXISTS DeliveryTemplates (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Name TEXT NOT NULL, Description TEXT NULL, " +
+                "RestrictCatalog INTEGER NOT NULL DEFAULT 0, OwnerId TEXT NOT NULL, CreatedAt TEXT NOT NULL, UpdatedAt TEXT NULL)",
+            "CREATE TABLE IF NOT EXISTS DeliveryTemplateItems (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, TemplateId INTEGER NOT NULL, " +
+                "PackageId TEXT NOT NULL, Version TEXT NULL)",
+            "CREATE UNIQUE INDEX IF NOT EXISTS IX_DeliveryTemplateItems_TemplateId_PackageId ON DeliveryTemplateItems (TemplateId, PackageId)",
+            "CREATE TABLE IF NOT EXISTS CustomerTemplates (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, CustomerId INTEGER NOT NULL, " +
+                "TemplateId INTEGER NOT NULL, AssignedBy TEXT NOT NULL, AssignedAt TEXT NOT NULL)",
+            "CREATE UNIQUE INDEX IF NOT EXISTS IX_CustomerTemplates_CustomerId_TemplateId ON CustomerTemplates (CustomerId, TemplateId)",
             // installations per delivery (S1.4.2)
             "ALTER TABLE Deliveries ADD COLUMN MaxInstalls INTEGER NULL",
             "CREATE TABLE IF NOT EXISTS DeliverySeats (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, DeliveryId INTEGER NOT NULL, " +

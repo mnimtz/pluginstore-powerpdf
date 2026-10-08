@@ -1256,4 +1256,38 @@
   <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>Mit dieser Option zeigt der Store diesem Kunden nur die an ihn ausgelieferten Add-ons (öffentliche und private) und Store-Updates, sonst nichts aus dem öffentlichen Katalog.</value></data>
   <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>Kein Add-on zum Ausliefern: Jedes Add-on, das die automatische Prüfung bestanden hat, ist an diesen Kunden bereits ausgeliefert.</value></data>
   <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>Private Add-ons erscheinen nur bei Kunden mit Code; öffentliche stehen ohnehin für alle im Katalog, eine Auslieferung legt ihre Version fest oder ist mit „Katalog auf seine Auslieferungen beschränken“ das, was der Kunde nutzen darf. Live „fest“ hält den Kunden auf einer getesteten Version; „neueste“ folgt jeder freigegebenen Version. Kunden erhalten eine Version erst nach ihrer Freigabe.</value></data>
+  <data name="A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it." xml:space="preserve"><value>Eine Vorlage ist eine Zusammenstellung von Add-ons, die Kunden gemeinsam erhalten, öffentliche und private gemischt. Weisen Sie sie auf der Kundenseite zu; wenn Sie die Vorlage ändern, folgt jeder Kunde, der sie hat. Manuelle Auslieferungen bleiben daneben möglich.</value></data>
+  <data name="A template limits this customer&#x27;s catalog to its deliveries." xml:space="preserve"><value>Eine Vorlage beschränkt den Katalog dieses Kunden auf seine Auslieferungen.</value></data>
+  <data name="Adding an add-on that is in the template already changes its version." xml:space="preserve"><value>Wenn Sie ein Add-on hinzufügen, das schon in der Vorlage ist, ändern Sie damit seine Version.</value></data>
+  <data name="Assign" xml:space="preserve"><value>Zuweisen</value></data>
+  <data name="Create template" xml:space="preserve"><value>Vorlage anlegen</value></data>
+  <data name="Customers with this template" xml:space="preserve"><value>Kunden mit dieser Vorlage</value></data>
+  <data name="Delete template" xml:space="preserve"><value>Vorlage löschen</value></data>
+  <data name="Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay." xml:space="preserve"><value>Diese Vorlage löschen? Die daraus entstandenen Auslieferungen enden bei jedem Kunden, der sie hat; manuelle Auslieferungen bleiben.</value></data>
+  <data name="Delivery templates" xml:space="preserve"><value>Auslieferungs-Vorlagen</value></data>
+  <data name="Detach from the template" xml:space="preserve"><value>Von der Vorlage lösen</value></data>
+  <data name="Kept in step with the template; changing it here makes it a manual delivery." xml:space="preserve"><value>Wird mit der Vorlage gleich gehalten; eine Änderung hier macht daraus eine manuelle Auslieferung.</value></data>
+  <data name="Limit the catalog of its customers to their deliveries" xml:space="preserve"><value>Katalog ihrer Kunden auf deren Auslieferungen beschränken</value></data>
+  <data name="Manage templates" xml:space="preserve"><value>Vorlagen verwalten</value></data>
+  <data name="New template" xml:space="preserve"><value>Neue Vorlage</value></data>
+  <data name="No add-on in this template yet." xml:space="preserve"><value>Noch kein Add-on in dieser Vorlage.</value></data>
+  <data name="No customer has this template yet. Assign it on the customer page." xml:space="preserve"><value>Noch kein Kunde hat diese Vorlage. Weisen Sie sie auf der Kundenseite zu.</value></data>
+  <data name="No template assigned." xml:space="preserve"><value>Keine Vorlage zugewiesen.</value></data>
+  <data name="No template yet." xml:space="preserve"><value>Noch keine Vorlage.</value></data>
+  <data name="Remove" xml:space="preserve"><value>Entfernen</value></data>
+  <data name="Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)." xml:space="preserve"><value>Dieses Add-on aus der Vorlage entfernen? Kunden mit der Vorlage erhalten es dann nicht mehr (außer es ist ihnen separat ausgeliefert).</value></data>
+  <data name="Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on." xml:space="preserve"><value>Diese Vorlage vom Kunden entfernen? Ihre Auslieferungen enden, sofern nicht eine andere Vorlage oder eine manuelle Auslieferung das Add-on abdeckt.</value></data>
+  <data name="Template" xml:space="preserve"><value>Vorlage</value></data>
+  <data name="The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts." xml:space="preserve"><value>Die Add-ons einer zugewiesenen Vorlage werden an diesen Kunden ausgeliefert und folgen jeder Änderung der Vorlage. Manuelle Auslieferungen weiter unten bleiben möglich; für dasselbe Add-on gilt die manuelle.</value></data>
+  <data name="catalog limited" xml:space="preserve"><value>Katalog beschränkt</value></data>
+  <data name="e.g. Bank package" xml:space="preserve"><value>z. B. Bankpaket</value></data>
+  <data name="newest approved version" xml:space="preserve"><value>neueste freigegebene Version</value></data>
+  <data name="Add-on added. Every customer with this template gets it." xml:space="preserve"><value>Add-on hinzugefügt. Jeder Kunde mit dieser Vorlage erhält es.</value></data>
+  <data name="Add-on removed from the template." xml:space="preserve"><value>Add-on aus der Vorlage entfernt.</value></data>
+  <data name="Enter a name of 1 to 80 characters." xml:space="preserve"><value>Geben Sie einen Namen mit 1 bis 80 Zeichen ein.</value></data>
+  <data name="Template assigned. Its add-ons are delivered now." xml:space="preserve"><value>Vorlage zugewiesen. Ihre Add-ons werden jetzt ausgeliefert.</value></data>
+  <data name="Template deleted. The deliveries made from it ended." xml:space="preserve"><value>Vorlage gelöscht. Die daraus entstandenen Auslieferungen wurden beendet.</value></data>
+  <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Vorlage entfernt. Ihre Auslieferungen wurden beendet.</value></data>
+  <data name="Template saved." xml:space="preserve"><value>Vorlage gespeichert.</value></data>
+  <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>Die Auslieferung ist jetzt manuell; die Vorlage ändert sie nicht mehr.</value></data>
 </root>

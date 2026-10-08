@@ -1256,4 +1256,38 @@
   <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>Ezzel a beállítással az áruház ennek az ügyfélnek csak a neki kiszállított bővítményeket (nyilvánosakat és privátokat) és az áruház frissítéseit mutatja, semmi mást a nyilvános katalógusból.</value></data>
   <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>Nincs kiszállítható bővítmény: minden bővítmény, amely átment az automatikus ellenőrzésen, már ki van szállítva ennek az ügyfélnek.</value></data>
   <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>A privát bővítmények csak a kóddal rendelkező ügyfeleknél jelennek meg; a nyilvánosak amúgy is mindenki számára a katalógusban vannak, a kiszállítás rögzíti a verziójukat, vagy a „Katalógus korlátozása az ügyfél kiszállításaira” beállítással azt határozza meg, mit használhat az ügyfél. Az élő „rögzített” egy tesztelt verzión tartja az ügyfelet; a „legújabb” minden kiadott verziót követ. Az ügyfelek egy verziót csak jóváhagyás után kapnak meg.</value></data>
+  <data name="A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it." xml:space="preserve"><value>A sablon bővítmények olyan készlete, amelyet az ügyfelek együtt kapnak meg, nyilvánosakat és privátokat vegyesen. Az ügyféloldalon rendelje hozzá; ha módosítja a sablont, minden ügyfél, akinél megvan, követi a változást. Mellette továbbra is lehetségesek a manuális kiszállítások.</value></data>
+  <data name="A template limits this customer&#x27;s catalog to its deliveries." xml:space="preserve"><value>A sablon ennek az ügyfélnek a katalógusát a kiszállításaira korlátozza.</value></data>
+  <data name="Adding an add-on that is in the template already changes its version." xml:space="preserve"><value>Ha olyan bővítményt ad hozzá, amely már szerepel a sablonban, azzal módosítja a verzióját.</value></data>
+  <data name="Assign" xml:space="preserve"><value>Hozzárendelés</value></data>
+  <data name="Create template" xml:space="preserve"><value>Sablon létrehozása</value></data>
+  <data name="Customers with this template" xml:space="preserve"><value>Ügyfelek ezzel a sablonnal</value></data>
+  <data name="Delete template" xml:space="preserve"><value>Sablon törlése</value></data>
+  <data name="Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay." xml:space="preserve"><value>Törli ezt a sablont? A belőle létrejött kiszállítások minden olyan ügyfélnél megszűnnek, akinél megvan; a manuális kiszállítások megmaradnak.</value></data>
+  <data name="Delivery templates" xml:space="preserve"><value>Kiszállítási sablonok</value></data>
+  <data name="Detach from the template" xml:space="preserve"><value>Leválasztás a sablonról</value></data>
+  <data name="Kept in step with the template; changing it here makes it a manual delivery." xml:space="preserve"><value>A sablonnal összhangban tartva; ha itt módosítja, manuális kiszállítás lesz belőle.</value></data>
+  <data name="Limit the catalog of its customers to their deliveries" xml:space="preserve"><value>Ügyfelei katalógusának korlátozása a kiszállításaikra</value></data>
+  <data name="Manage templates" xml:space="preserve"><value>Sablonok kezelése</value></data>
+  <data name="New template" xml:space="preserve"><value>Új sablon</value></data>
+  <data name="No add-on in this template yet." xml:space="preserve"><value>Ebben a sablonban még nincs bővítmény.</value></data>
+  <data name="No customer has this template yet. Assign it on the customer page." xml:space="preserve"><value>Ez a sablon még egyetlen ügyfélhez sincs hozzárendelve. Az ügyféloldalon rendelje hozzá.</value></data>
+  <data name="No template assigned." xml:space="preserve"><value>Nincs hozzárendelt sablon.</value></data>
+  <data name="No template yet." xml:space="preserve"><value>Még nincs sablon.</value></data>
+  <data name="Remove" xml:space="preserve"><value>Eltávolítás</value></data>
+  <data name="Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)." xml:space="preserve"><value>Eltávolítja ezt a bővítményt a sablonból? A sablonnal rendelkező ügyfelek többé nem kapják meg (hacsak nem szállították ki nekik külön).</value></data>
+  <data name="Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on." xml:space="preserve"><value>Eltávolítja ezt a sablont az ügyféltől? A kiszállításai véget érnek, hacsak egy másik sablon vagy egy manuális kiszállítás nem fedi le a bővítményt.</value></data>
+  <data name="Template" xml:space="preserve"><value>Sablon</value></data>
+  <data name="The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts." xml:space="preserve"><value>A hozzárendelt sablon bővítményei ki lesznek szállítva ennek az ügyfélnek, és követik a sablon minden módosítását. Az alábbi manuális kiszállítások továbbra is lehetségesek; ugyanarra a bővítményre a manuális érvényes.</value></data>
+  <data name="catalog limited" xml:space="preserve"><value>katalógus korlátozva</value></data>
+  <data name="e.g. Bank package" xml:space="preserve"><value>pl. Banki csomag</value></data>
+  <data name="newest approved version" xml:space="preserve"><value>legújabb jóváhagyott verzió</value></data>
+  <data name="Add-on added. Every customer with this template gets it." xml:space="preserve"><value>Bővítmény hozzáadva. Minden ügyfél megkapja, akinek ez a sablon van.</value></data>
+  <data name="Add-on removed from the template." xml:space="preserve"><value>Bővítmény eltávolítva a sablonból.</value></data>
+  <data name="Enter a name of 1 to 80 characters." xml:space="preserve"><value>Adjon meg egy 1–80 karakter hosszú nevet.</value></data>
+  <data name="Template assigned. Its add-ons are delivered now." xml:space="preserve"><value>Sablon hozzárendelve. A bővítményei kiszállítása elindult.</value></data>
+  <data name="Template deleted. The deliveries made from it ended." xml:space="preserve"><value>Sablon törölve. A belőle létrehozott kiszállítások véget értek.</value></data>
+  <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Sablon eltávolítva. A kiszállításai véget értek.</value></data>
+  <data name="Template saved." xml:space="preserve"><value>Sablon mentve.</value></data>
+  <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>A kiszállítás most már manuális; a sablon többé nem módosítja.</value></data>
 </root>

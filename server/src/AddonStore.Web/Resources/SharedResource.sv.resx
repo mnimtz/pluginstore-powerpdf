@@ -1256,4 +1256,38 @@
   <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>Med det här alternativet visar butiken den här kunden bara de tillägg som levererats till kunden (offentliga och privata) och butiksuppdateringar, inget annat från den offentliga katalogen.</value></data>
   <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>Inget tillägg att leverera: alla tillägg som klarat de automatiska kontrollerna har redan levererats till den här kunden.</value></data>
   <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>Privata tillägg visas bara för kunder med en kod; offentliga finns ändå i katalogen för alla, en leverans låser deras version eller är, med "Begränsa katalogen till kundens leveranser", det som kunden får använda. Live "fast" håller kunden på en testad version; "senaste" följer varje släppt version. Kunder får en version först när den har godkänts.</value></data>
+  <data name="A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it." xml:space="preserve"><value>En mall är en uppsättning tillägg som kunder får tillsammans, offentliga och privata blandat. Tilldela den på kundsidan; när du ändrar mallen följer alla kunder som har den med. Manuella leveranser är fortfarande möjliga vid sidan av.</value></data>
+  <data name="A template limits this customer&#x27;s catalog to its deliveries." xml:space="preserve"><value>En mall begränsar den här kundens katalog till kundens leveranser.</value></data>
+  <data name="Adding an add-on that is in the template already changes its version." xml:space="preserve"><value>Om du lägger till ett tillägg som redan finns i mallen ändras dess version.</value></data>
+  <data name="Assign" xml:space="preserve"><value>Tilldela</value></data>
+  <data name="Create template" xml:space="preserve"><value>Skapa mall</value></data>
+  <data name="Customers with this template" xml:space="preserve"><value>Kunder med den här mallen</value></data>
+  <data name="Delete template" xml:space="preserve"><value>Ta bort mall</value></data>
+  <data name="Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay." xml:space="preserve"><value>Vill du ta bort den här mallen? Leveranserna från den upphör för alla kunder som har den; manuella leveranser finns kvar.</value></data>
+  <data name="Delivery templates" xml:space="preserve"><value>Leveransmallar</value></data>
+  <data name="Detach from the template" xml:space="preserve"><value>Koppla bort från mallen</value></data>
+  <data name="Kept in step with the template; changing it here makes it a manual delivery." xml:space="preserve"><value>Hålls i takt med mallen; om du ändrar den här blir den en manuell leverans.</value></data>
+  <data name="Limit the catalog of its customers to their deliveries" xml:space="preserve"><value>Begränsa kundernas katalog till deras leveranser</value></data>
+  <data name="Manage templates" xml:space="preserve"><value>Hantera mallar</value></data>
+  <data name="New template" xml:space="preserve"><value>Ny mall</value></data>
+  <data name="No add-on in this template yet." xml:space="preserve"><value>Inga tillägg i den här mallen ännu.</value></data>
+  <data name="No customer has this template yet. Assign it on the customer page." xml:space="preserve"><value>Ingen kund har den här mallen ännu. Tilldela den på kundsidan.</value></data>
+  <data name="No template assigned." xml:space="preserve"><value>Ingen mall tilldelad.</value></data>
+  <data name="No template yet." xml:space="preserve"><value>Ingen mall ännu.</value></data>
+  <data name="Remove" xml:space="preserve"><value>Ta bort</value></data>
+  <data name="Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)." xml:space="preserve"><value>Ta bort detta tillägg från mallen? Kunder med mallen får det inte längre (om det inte levereras separat till dem).</value></data>
+  <data name="Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on." xml:space="preserve"><value>Ta bort den här mallen från kunden? Dess leveranser upphör, om inte en annan mall eller en manuell leverans täcker tillägget.</value></data>
+  <data name="Template" xml:space="preserve"><value>Mall</value></data>
+  <data name="The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts." xml:space="preserve"><value>Tilläggen i en tilldelad mall levereras till den här kunden och följer varje ändring av mallen. Manuella leveranser nedan är fortfarande möjliga; för samma tillägg gäller den manuella.</value></data>
+  <data name="catalog limited" xml:space="preserve"><value>katalog begränsad</value></data>
+  <data name="e.g. Bank package" xml:space="preserve"><value>t.ex. Bankpaket</value></data>
+  <data name="newest approved version" xml:space="preserve"><value>senaste godkända version</value></data>
+  <data name="Add-on added. Every customer with this template gets it." xml:space="preserve"><value>Tillägg tillagt. Alla kunder med den här mallen får det.</value></data>
+  <data name="Add-on removed from the template." xml:space="preserve"><value>Tillägg borttaget från mallen.</value></data>
+  <data name="Enter a name of 1 to 80 characters." xml:space="preserve"><value>Ange ett namn på 1 till 80 tecken.</value></data>
+  <data name="Template assigned. Its add-ons are delivered now." xml:space="preserve"><value>Mall tilldelad. Dess tillägg levereras nu.</value></data>
+  <data name="Template deleted. The deliveries made from it ended." xml:space="preserve"><value>Mall borttagen. Leveranserna som skapades från den har avslutats.</value></data>
+  <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Mallen har tagits bort från kunden. Dess leveranser har avslutats.</value></data>
+  <data name="Template saved." xml:space="preserve"><value>Mall sparad.</value></data>
+  <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>Leveransen är nu manuell; mallen ändrar den inte längre.</value></data>
 </root>

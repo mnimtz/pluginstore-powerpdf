@@ -174,6 +174,7 @@ public class CustomerService
         var deliveryIds = deliveries.Select(d => d.Id).ToList();
         _db.DeliverySeats.RemoveRange(_db.DeliverySeats.Where(s => deliveryIds.Contains(s.DeliveryId)));   // S1.4.2
         _db.Deliveries.RemoveRange(deliveries);
+        _db.CustomerTemplates.RemoveRange(_db.CustomerTemplates.Where(a => a.CustomerId == c.Id));   // S1.13.0
         _db.Customers.Remove(c);
         await _db.SaveChangesAsync();
         await _audit.LogAsync(actor, "customer.deleted", $"customer {c.Id}",
@@ -295,6 +296,7 @@ public class CustomerService
             d.StartsAt = startsAt; d.EndsAt = endsAt;
         }
         if (status is not null) d.Status = status;
+        d.TemplateId = null;   // changed by hand: a manual delivery from now on (S1.13.0)
         d.UpdatedAt = DateTime.UtcNow;
         await _db.SaveChangesAsync();
         await _audit.LogAsync(actor.DisplayName, "delivery.updated", $"delivery {d.Id}",
@@ -369,7 +371,7 @@ public class CustomerService
                 beta = new { mode = d.BetaMode, version = d.BetaVersion, resolved = beta?.Version },
                 live = new { mode = d.LiveMode, version = d.LiveVersion, resolved = live?.Version },
                 versions = versions.Select(v => v.Version).ToList(),
-                startsAt = d.StartsAt, endsAt = d.EndsAt, status = d.Status,
+                startsAt = d.StartsAt, endsAt = d.EndsAt, status = d.Status, templateId = d.TemplateId,
                 effective = d.Status == "active" && (d.StartsAt is null || d.StartsAt <= now) && (d.EndsAt is null || d.EndsAt > now),
                 lastSeenAt = d.LastSeenAt, createdBy = d.CreatedBy, createdAt = d.CreatedAt,
                 installs = new { used = seatsUsed.GetValueOrDefault(d.Id), max = d.MaxInstalls },   // S1.4.2: max null = unlimited
@@ -380,6 +382,9 @@ public class CustomerService
             id = c.Id, name = c.Name, contactName = c.ContactName, contactEmail = c.ContactEmail, language = c.Language,
             note = c.Note, status = c.Status, owner = owner?.DisplayName, createdAt = c.CreatedAt, lastSeenAt = c.LastSeenAt,
             restrictCatalog = c.RestrictCatalog,
+            templates = await _db.CustomerTemplates.AsNoTracking().Where(a => a.CustomerId == c.Id).OrderBy(a => a.Id)
+                .Join(_db.DeliveryTemplates.AsNoTracking(), a => a.TemplateId, t => t.Id, (a, t) => new { id = t.Id, name = t.Name, restrictCatalog = t.RestrictCatalog })
+                .ToListAsync(),
             codes = codes.Select(x => new
             {
                 id = x.Id, scope = x.DeliveryId is null ? "customer" : "delivery", deliveryId = x.DeliveryId,
@@ -392,7 +397,8 @@ public class CustomerService
     }
 
     // --------------------------------------------------- client side (codes)
-    public record Granted(Delivery Delivery, Customer Customer, Package Package, PackageVersion? Beta, PackageVersion? Live);
+    /// <summary>Restricted: the customer's catalog is limited to its deliveries (its own option or a template's, S1.12.0/S1.13.0).</summary>
+    public record Granted(Delivery Delivery, Customer Customer, Package Package, PackageVersion? Beta, PackageVersion? Live, bool Restricted = false);
 
     // Per address and hour: the distinct unknown codes seen (the limit counts these, so
     // a typo sent with every catalog call counts once) and the codes found valid (still
@@ -562,6 +568,7 @@ public class CustomerService
 
         var pkgIds = allowed.Select(d => d.PackageId).Distinct().ToList();
         var pkgs = await _db.Packages.Where(p => pkgIds.Contains(p.Id)).ToDictionaryAsync(p => p.Id);
+        var byTemplate = await TemplateService.RestrictedByTemplateAsync(_db, customers.Keys.ToList());
         var result = new List<Granted>();
         foreach (var d in allowed)
         {
@@ -570,7 +577,8 @@ public class CustomerService
             var isPrivate = pkg.Visibility == "private";
             result.Add(new Granted(d, customers[d.CustomerId], pkg,
                 Resolve(versions, isPrivate, d.BetaMode, d.BetaVersion, false),
-                Resolve(versions, isPrivate, d.LiveMode, d.LiveVersion, true)));
+                Resolve(versions, isPrivate, d.LiveMode, d.LiveVersion, true),
+                customers[d.CustomerId].RestrictCatalog || byTemplate.Contains(d.CustomerId)));
         }
         return result;
     }

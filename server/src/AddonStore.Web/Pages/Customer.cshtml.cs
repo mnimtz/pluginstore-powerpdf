@@ -30,10 +30,33 @@ public class CustomerModel : PageModel
     public string? Notice { get; private set; }
     public string NoticeKind { get; private set; } = "ok";
 
-    public CustomerModel(AppDbContext db, UserManager<AppUser> users, CustomerService customers)
+    public CustomerModel(AppDbContext db, UserManager<AppUser> users, CustomerService customers, TemplateService templates)
     {
-        _db = db; _users = users; _customers = customers;
+        _db = db; _users = users; _customers = customers; _templates = templates;
     }
+    private readonly TemplateService _templates;
+    /// <summary>Delivery templates (S1.13.0): assigned ones in order, the others to choose from, names by id.</summary>
+    public List<DeliveryTemplate> AssignedTemplates { get; private set; } = new();
+    public List<DeliveryTemplate> OtherTemplates { get; private set; } = new();
+    public Dictionary<int, string> TemplateNames { get; private set; } = new();
+    public bool RestrictedByTemplate { get; private set; }
+
+    public Task<IActionResult> OnPostAssignTemplateAsync(int id, int templateId) =>
+        ActAsync(id, async me => await _templates.AssignAsync(Cust!, templateId, me) is null
+            ? (true, "Template assigned. Its add-ons are delivered now.") : (false, "This action is not allowed for this version."));
+
+    public Task<IActionResult> OnPostUnassignTemplateAsync(int id, int templateId) =>
+        ActAsync(id, async me => { await _templates.UnassignAsync(Cust!, templateId, me); return (true, "Template removed. Its deliveries ended."); });
+
+    public Task<IActionResult> OnPostDetachAsync(int id, int did) =>
+        ActAsync(id, async me =>
+        {
+            var d = await _db.Deliveries.FirstOrDefaultAsync(x => x.Id == did && x.CustomerId == id);
+            if (d is null) return (false, "This action is not allowed for this version.");
+            d.TemplateId = null; d.UpdatedAt = DateTime.UtcNow;
+            await _db.SaveChangesAsync();
+            return (true, "The delivery is manual now; the template no longer changes it.");
+        });
 
     private async Task<bool> LoadAsync(int id)
     {
@@ -62,6 +85,13 @@ public class CustomerModel : PageModel
                 CustomerService.Resolve(versions, priv, d.LiveMode, d.LiveVersion, true)?.Version,
                 d.Status == "active" && (d.StartsAt is null || d.StartsAt <= now) && (d.EndsAt is null || d.EndsAt > now), seats, seatCount));
         }
+
+        var allTemplates = await _db.DeliveryTemplates.AsNoTracking().OrderBy(t => t.Name).ToListAsync();
+        TemplateNames = allTemplates.ToDictionary(t => t.Id, t => t.Name);
+        var assignedIds = await _db.CustomerTemplates.AsNoTracking().Where(a => a.CustomerId == id).OrderBy(a => a.Id).Select(a => a.TemplateId).ToListAsync();
+        AssignedTemplates = assignedIds.Select(i => allTemplates.FirstOrDefault(t => t.Id == i)).Where(t => t is not null).Select(t => t!).ToList();
+        OtherTemplates = allTemplates.Where(t => !assignedIds.Contains(t.Id)).ToList();
+        RestrictedByTemplate = AssignedTemplates.Any(t => t.RestrictCatalog);
 
         var codes = await _db.CustomerCodes.Where(c => c.CustomerId == id).OrderByDescending(c => c.Id).ToListAsync();
         Codes = codes.Select(c =>

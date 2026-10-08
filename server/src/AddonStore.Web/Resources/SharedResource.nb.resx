@@ -1256,4 +1256,38 @@
   <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>Med dette alternativet viser butikken denne kunden bare tilleggene som er levert til kunden (offentlige og private), og butikkoppdateringer, ikke noe annet fra den offentlige katalogen.</value></data>
   <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>Ingen tillegg å levere: alle tillegg som har bestått de automatiske kontrollene, er allerede levert til denne kunden.</value></data>
   <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>Private tillegg vises bare for kunder med en kode; offentlige ligger uansett i katalogen for alle, en leveranse låser versjonen deres eller er, med "Begrens katalogen til kundens leveranser", det kunden kan bruke. Live "fast" holder kunden på en testet versjon; "nyeste" følger hver frigitte versjon. Kunder får en versjon først etter at den er godkjent.</value></data>
+  <data name="A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it." xml:space="preserve"><value>En mal er et sett med tillegg som kunder får samlet, offentlige og private om hverandre. Tildel den på kundesiden; når du endrer malen, følger alle kunder som har den, med. Manuelle leveranser er fortsatt mulige ved siden av.</value></data>
+  <data name="A template limits this customer&#x27;s catalog to its deliveries." xml:space="preserve"><value>En mal begrenser denne kundens katalog til kundens leveranser.</value></data>
+  <data name="Adding an add-on that is in the template already changes its version." xml:space="preserve"><value>Hvis du legger til et tillegg som allerede er i malen, endres versjonen av det.</value></data>
+  <data name="Assign" xml:space="preserve"><value>Tildel</value></data>
+  <data name="Create template" xml:space="preserve"><value>Opprett mal</value></data>
+  <data name="Customers with this template" xml:space="preserve"><value>Kunder med denne malen</value></data>
+  <data name="Delete template" xml:space="preserve"><value>Slett mal</value></data>
+  <data name="Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay." xml:space="preserve"><value>Vil du slette denne malen? Leveransene fra den avsluttes for alle kunder som har den; manuelle leveranser beholdes.</value></data>
+  <data name="Delivery templates" xml:space="preserve"><value>Leveransemaler</value></data>
+  <data name="Detach from the template" xml:space="preserve"><value>Koble fra malen</value></data>
+  <data name="Kept in step with the template; changing it here makes it a manual delivery." xml:space="preserve"><value>Holdes i takt med malen; endrer du den her, blir den en manuell leveranse.</value></data>
+  <data name="Limit the catalog of its customers to their deliveries" xml:space="preserve"><value>Begrens kundenes katalog til deres leveranser</value></data>
+  <data name="Manage templates" xml:space="preserve"><value>Administrer maler</value></data>
+  <data name="New template" xml:space="preserve"><value>Ny mal</value></data>
+  <data name="No add-on in this template yet." xml:space="preserve"><value>Ingen tillegg i denne malen ennå.</value></data>
+  <data name="No customer has this template yet. Assign it on the customer page." xml:space="preserve"><value>Ingen kunder har denne malen ennå. Tildel den på kundesiden.</value></data>
+  <data name="No template assigned." xml:space="preserve"><value>Ingen mal tildelt.</value></data>
+  <data name="No template yet." xml:space="preserve"><value>Ingen mal ennå.</value></data>
+  <data name="Remove" xml:space="preserve"><value>Fjern</value></data>
+  <data name="Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)." xml:space="preserve"><value>Fjerne dette tillegget fra malen? Kunder med malen får det ikke lenger (med mindre det leveres separat til dem).</value></data>
+  <data name="Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on." xml:space="preserve"><value>Fjerne denne malen fra kunden? Leveransene fra den avsluttes, med mindre en annen mal eller en manuell leveranse dekker tillegget.</value></data>
+  <data name="Template" xml:space="preserve"><value>Mal</value></data>
+  <data name="The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts." xml:space="preserve"><value>Tilleggene i en tildelt mal leveres til denne kunden og følger hver endring av malen. Manuelle leveranser nedenfor er fortsatt mulige; for samme tillegg gjelder den manuelle.</value></data>
+  <data name="catalog limited" xml:space="preserve"><value>katalog begrenset</value></data>
+  <data name="e.g. Bank package" xml:space="preserve"><value>f.eks. Bankpakke</value></data>
+  <data name="newest approved version" xml:space="preserve"><value>nyeste godkjente versjon</value></data>
+  <data name="Add-on added. Every customer with this template gets it." xml:space="preserve"><value>Tillegg lagt til. Alle kunder med denne malen får det.</value></data>
+  <data name="Add-on removed from the template." xml:space="preserve"><value>Tillegg fjernet fra malen.</value></data>
+  <data name="Enter a name of 1 to 80 characters." xml:space="preserve"><value>Skriv inn et navn på 1 til 80 tegn.</value></data>
+  <data name="Template assigned. Its add-ons are delivered now." xml:space="preserve"><value>Mal tildelt. Tilleggene i den leveres nå.</value></data>
+  <data name="Template deleted. The deliveries made from it ended." xml:space="preserve"><value>Mal slettet. Leveransene som ble opprettet fra den, er avsluttet.</value></data>
+  <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Mal fjernet. Leveransene fra den er avsluttet.</value></data>
+  <data name="Template saved." xml:space="preserve"><value>Mal lagret.</value></data>
+  <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>Leveransen er nå manuell; malen endrer den ikke lenger.</value></data>
 </root>

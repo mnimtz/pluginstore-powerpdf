@@ -1256,4 +1256,38 @@
   <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>이 옵션을 사용하면 스토어는 이 고객에게 배포된 추가 기능(공개 및 비공개)과 스토어 업데이트만 표시하고, 공개 카탈로그의 다른 항목은 표시하지 않습니다.</value></data>
   <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>배포할 추가 기능이 없습니다. 자동 검사를 통과한 모든 추가 기능이 이미 이 고객에게 배포되었습니다.</value></data>
   <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>비공개 추가 기능은 코드가 있는 고객에게만 표시됩니다. 공개 추가 기능은 어차피 모든 사람에게 카탈로그에 표시되며, 배포는 해당 버전을 고정하거나 ‘카탈로그를 이 고객의 배포로 제한’을 사용하는 경우 고객이 사용할 수 있는 항목을 정합니다. 라이브 ‘고정’은 고객을 테스트된 버전에 유지하고, ‘최신’은 릴리스되는 모든 버전을 따릅니다. 고객은 버전을 승인된 후에만 받습니다.</value></data>
+  <data name="A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it." xml:space="preserve"><value>템플릿은 고객이 함께 받는 추가 기능 세트이며, 공개 및 비공개 추가 기능을 섞을 수 있습니다. 고객 페이지에서 할당하십시오. 템플릿을 변경하면 해당 템플릿이 있는 모든 고객에게 반영됩니다. 수동 배포도 함께 사용할 수 있습니다.</value></data>
+  <data name="A template limits this customer&#x27;s catalog to its deliveries." xml:space="preserve"><value>템플릿이 이 고객의 카탈로그를 해당 배포로 제한합니다.</value></data>
+  <data name="Adding an add-on that is in the template already changes its version." xml:space="preserve"><value>템플릿에 이미 있는 추가 기능을 추가하면 해당 버전이 변경됩니다.</value></data>
+  <data name="Assign" xml:space="preserve"><value>할당</value></data>
+  <data name="Create template" xml:space="preserve"><value>템플릿 만들기</value></data>
+  <data name="Customers with this template" xml:space="preserve"><value>이 템플릿이 있는 고객</value></data>
+  <data name="Delete template" xml:space="preserve"><value>템플릿 삭제</value></data>
+  <data name="Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay." xml:space="preserve"><value>이 템플릿을 삭제하시겠습니까? 이 템플릿에서 생성된 배포는 템플릿이 있는 모든 고객에게서 종료됩니다. 수동 배포는 유지됩니다.</value></data>
+  <data name="Delivery templates" xml:space="preserve"><value>배포 템플릿</value></data>
+  <data name="Detach from the template" xml:space="preserve"><value>템플릿에서 분리</value></data>
+  <data name="Kept in step with the template; changing it here makes it a manual delivery." xml:space="preserve"><value>템플릿과 동기화됩니다. 여기에서 변경하면 수동 배포가 됩니다.</value></data>
+  <data name="Limit the catalog of its customers to their deliveries" xml:space="preserve"><value>고객의 카탈로그를 각 고객의 배포로 제한</value></data>
+  <data name="Manage templates" xml:space="preserve"><value>템플릿 관리</value></data>
+  <data name="New template" xml:space="preserve"><value>새 템플릿</value></data>
+  <data name="No add-on in this template yet." xml:space="preserve"><value>이 템플릿에 아직 추가 기능이 없습니다.</value></data>
+  <data name="No customer has this template yet. Assign it on the customer page." xml:space="preserve"><value>아직 이 템플릿이 있는 고객이 없습니다. 고객 페이지에서 할당하십시오.</value></data>
+  <data name="No template assigned." xml:space="preserve"><value>할당된 템플릿이 없습니다.</value></data>
+  <data name="No template yet." xml:space="preserve"><value>아직 템플릿이 없습니다.</value></data>
+  <data name="Remove" xml:space="preserve"><value>제거</value></data>
+  <data name="Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)." xml:space="preserve"><value>이 추가 기능을 템플릿에서 제거하시겠습니까? 이 템플릿이 있는 고객은 더 이상 받지 못합니다(별도로 배포된 경우 제외).</value></data>
+  <data name="Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on." xml:space="preserve"><value>이 고객에서 이 템플릿을 제거하시겠습니까? 다른 템플릿이나 수동 배포가 해당 추가 기능을 포함하지 않으면 이 템플릿의 배포가 종료됩니다.</value></data>
+  <data name="Template" xml:space="preserve"><value>템플릿</value></data>
+  <data name="The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts." xml:space="preserve"><value>할당된 템플릿의 추가 기능은 이 고객에게 배포되며 템플릿의 모든 변경 사항을 따릅니다. 아래의 수동 배포도 계속 사용할 수 있으며, 같은 추가 기능에 대해서는 수동 배포가 적용됩니다.</value></data>
+  <data name="catalog limited" xml:space="preserve"><value>카탈로그 제한됨</value></data>
+  <data name="e.g. Bank package" xml:space="preserve"><value>예: 은행 패키지</value></data>
+  <data name="newest approved version" xml:space="preserve"><value>승인된 최신 버전</value></data>
+  <data name="Add-on added. Every customer with this template gets it." xml:space="preserve"><value>추가 기능이 추가되었습니다. 이 템플릿이 있는 모든 고객이 받게 됩니다.</value></data>
+  <data name="Add-on removed from the template." xml:space="preserve"><value>추가 기능이 템플릿에서 제거되었습니다.</value></data>
+  <data name="Enter a name of 1 to 80 characters." xml:space="preserve"><value>1~80자의 이름을 입력하십시오.</value></data>
+  <data name="Template assigned. Its add-ons are delivered now." xml:space="preserve"><value>템플릿이 할당되었습니다. 이제 해당 추가 기능이 배포됩니다.</value></data>
+  <data name="Template deleted. The deliveries made from it ended." xml:space="preserve"><value>템플릿이 삭제되었습니다. 이 템플릿으로 만들어진 배포가 종료되었습니다.</value></data>
+  <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>템플릿이 제거되었습니다. 해당 배포가 종료되었습니다.</value></data>
+  <data name="Template saved." xml:space="preserve"><value>템플릿이 저장되었습니다.</value></data>
+  <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>이제 이 배포는 수동 배포입니다. 템플릿이 더 이상 변경하지 않습니다.</value></data>
 </root>

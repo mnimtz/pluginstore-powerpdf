@@ -29,6 +29,9 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<PowerPdfLine> PowerPdfLines => Set<PowerPdfLine>();
     public DbSet<ClientInstall> ClientInstalls => Set<ClientInstall>();
     public DbSet<CustomerDomain> CustomerDomains => Set<CustomerDomain>();
+    public DbSet<DeliveryTemplate> DeliveryTemplates => Set<DeliveryTemplate>();
+    public DbSet<DeliveryTemplateItem> DeliveryTemplateItems => Set<DeliveryTemplateItem>();
+    public DbSet<CustomerTemplate> CustomerTemplates => Set<CustomerTemplate>();
 
     protected override void OnModelCreating(ModelBuilder b)
     {
@@ -56,6 +59,8 @@ public class AppDbContext : IdentityDbContext<AppUser>
         b.Entity<ClientInstall>().HasIndex(c => c.InstallHash).IsUnique();
         b.Entity<ClientInstall>().HasIndex(c => c.Domain);
         b.Entity<CustomerDomain>().HasIndex(d => d.Domain).IsUnique();
+        b.Entity<DeliveryTemplateItem>().HasIndex(i => new { i.TemplateId, i.PackageId }).IsUnique();
+        b.Entity<CustomerTemplate>().HasIndex(a => new { a.CustomerId, a.TemplateId }).IsUnique();
         b.Entity<Delivery>().HasIndex(d => new { d.CustomerId, d.PackageId }).IsUnique();
     }
 }

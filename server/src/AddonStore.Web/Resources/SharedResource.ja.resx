@@ -1256,4 +1256,38 @@
   <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>このオプションを有効にすると、ストアはこの顧客に、配信されたアドイン (公開および非公開) とストアの更新のみを表示し、公開カタログのそれ以外のものは表示しません。</value></data>
   <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>配信できるアドインがありません。自動チェックに合格したアドインはすべて、すでにこの顧客に配信されています。</value></data>
   <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>非公開アドインは、コードを持つ顧客にのみ表示されます。公開アドインはもともとすべての人のカタログに表示されており、配信によってそのバージョンが固定されるか、「カタログをこの顧客の配信に限定する」を有効にした場合は、顧客が使用できるものが決まります。ライブの「固定」では顧客をテスト済みのバージョンに留め、「最新」ではリリースされるバージョンすべてに追従します。顧客がバージョンを受け取るのは、承認された後だけです。</value></data>
+  <data name="A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it." xml:space="preserve"><value>テンプレートは、顧客にまとめて提供するアドインのセットで、公開と非公開のアドインを混在できます。顧客ページで割り当ててください。テンプレートを変更すると、そのテンプレートを持つすべての顧客に反映されます。手動の配信も併用できます。</value></data>
+  <data name="A template limits this customer&#x27;s catalog to its deliveries." xml:space="preserve"><value>テンプレートにより、この顧客のカタログはその配信に限定されます。</value></data>
+  <data name="Adding an add-on that is in the template already changes its version." xml:space="preserve"><value>テンプレートに既に含まれているアドインを追加すると、そのバージョンが変更されます。</value></data>
+  <data name="Assign" xml:space="preserve"><value>割り当て</value></data>
+  <data name="Create template" xml:space="preserve"><value>テンプレートを作成</value></data>
+  <data name="Customers with this template" xml:space="preserve"><value>このテンプレートを持つ顧客</value></data>
+  <data name="Delete template" xml:space="preserve"><value>テンプレートを削除</value></data>
+  <data name="Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay." xml:space="preserve"><value>このテンプレートを削除しますか？このテンプレートから作成された配信は、それを持つすべての顧客で終了します。手動の配信は残ります。</value></data>
+  <data name="Delivery templates" xml:space="preserve"><value>配信テンプレート</value></data>
+  <data name="Detach from the template" xml:space="preserve"><value>テンプレートから切り離す</value></data>
+  <data name="Kept in step with the template; changing it here makes it a manual delivery." xml:space="preserve"><value>テンプレートと同期されます。ここで変更すると手動の配信になります。</value></data>
+  <data name="Limit the catalog of its customers to their deliveries" xml:space="preserve"><value>顧客のカタログをそれぞれの配信に限定する</value></data>
+  <data name="Manage templates" xml:space="preserve"><value>テンプレートを管理</value></data>
+  <data name="New template" xml:space="preserve"><value>新しいテンプレート</value></data>
+  <data name="No add-on in this template yet." xml:space="preserve"><value>このテンプレートにはまだアドインがありません。</value></data>
+  <data name="No customer has this template yet. Assign it on the customer page." xml:space="preserve"><value>このテンプレートを持つ顧客はまだいません。顧客ページで割り当ててください。</value></data>
+  <data name="No template assigned." xml:space="preserve"><value>テンプレートが割り当てられていません。</value></data>
+  <data name="No template yet." xml:space="preserve"><value>テンプレートはまだありません。</value></data>
+  <data name="Remove" xml:space="preserve"><value>削除</value></data>
+  <data name="Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)." xml:space="preserve"><value>このアドインをテンプレートから削除しますか？このテンプレートを持つ顧客には配信されなくなります (個別に配信されている場合を除く)。</value></data>
+  <data name="Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on." xml:space="preserve"><value>このテンプレートを顧客から削除しますか？別のテンプレートまたは手動の配信でアドインがカバーされていない限り、その配信は終了します。</value></data>
+  <data name="Template" xml:space="preserve"><value>テンプレート</value></data>
+  <data name="The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts." xml:space="preserve"><value>割り当てられたテンプレートのアドインはこの顧客に配信され、テンプレートの変更がすべて反映されます。下の手動配信も引き続き利用できます。同じアドインについては手動配信が優先されます。</value></data>
+  <data name="catalog limited" xml:space="preserve"><value>カタログ限定</value></data>
+  <data name="e.g. Bank package" xml:space="preserve"><value>例：銀行パッケージ</value></data>
+  <data name="newest approved version" xml:space="preserve"><value>承認済みの最新バージョン</value></data>
+  <data name="Add-on added. Every customer with this template gets it." xml:space="preserve"><value>アドインを追加しました。このテンプレートを持つすべての顧客に配信されます。</value></data>
+  <data name="Add-on removed from the template." xml:space="preserve"><value>アドインをテンプレートから削除しました。</value></data>
+  <data name="Enter a name of 1 to 80 characters." xml:space="preserve"><value>1 ～ 80 文字の名前を入力してください。</value></data>
+  <data name="Template assigned. Its add-ons are delivered now." xml:space="preserve"><value>テンプレートを割り当てました。そのアドインの配信が始まります。</value></data>
+  <data name="Template deleted. The deliveries made from it ended." xml:space="preserve"><value>テンプレートを削除しました。このテンプレートによる配信は終了しました。</value></data>
+  <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>テンプレートを顧客から削除しました。その配信は終了しました。</value></data>
+  <data name="Template saved." xml:space="preserve"><value>テンプレートを保存しました。</value></data>
+  <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>この配信は手動になりました。テンプレートによって変更されることはありません。</value></data>
 </root>

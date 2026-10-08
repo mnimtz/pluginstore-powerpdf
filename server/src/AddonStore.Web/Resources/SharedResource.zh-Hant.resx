@@ -1256,4 +1256,38 @@
   <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>啟用此選項後，商店只會向此客戶顯示已交付給它的增益集 (公開和私人) 以及商店更新，不會顯示公開目錄中的其他任何內容。</value></data>
   <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>沒有可交付的增益集：所有已通過自動檢查的增益集都已交付給此客戶。</value></data>
   <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>私人增益集只提供給擁有代碼的客戶；公開增益集原本就會出現在所有人都看得到的目錄中，交付會固定其版本，或在啟用「將目錄限制為該客戶的交付」時決定客戶可以使用的內容。正式「固定」會讓客戶維持在經過測試的版本；「最新」會跟隨每個已發行的版本。客戶只有在版本核准後才會收到它。</value></data>
+  <data name="A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it." xml:space="preserve"><value>範本是客戶一併取得的一組增益集，可同時包含公開與私人增益集。請在客戶頁面上指派範本；變更範本後，所有使用該範本的客戶都會隨之更新。此外仍可進行手動交付。</value></data>
+  <data name="A template limits this customer&#x27;s catalog to its deliveries." xml:space="preserve"><value>範本會將此客戶的目錄限制為其交付。</value></data>
+  <data name="Adding an add-on that is in the template already changes its version." xml:space="preserve"><value>新增已在範本中的增益集會變更其版本。</value></data>
+  <data name="Assign" xml:space="preserve"><value>指派</value></data>
+  <data name="Create template" xml:space="preserve"><value>建立範本</value></data>
+  <data name="Customers with this template" xml:space="preserve"><value>使用此範本的客戶</value></data>
+  <data name="Delete template" xml:space="preserve"><value>刪除範本</value></data>
+  <data name="Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay." xml:space="preserve"><value>要刪除此範本嗎？對於所有使用該範本的客戶，由其產生的交付都將結束；手動交付會保留。</value></data>
+  <data name="Delivery templates" xml:space="preserve"><value>交付範本</value></data>
+  <data name="Detach from the template" xml:space="preserve"><value>與範本分離</value></data>
+  <data name="Kept in step with the template; changing it here makes it a manual delivery." xml:space="preserve"><value>與範本保持同步；在此變更會使其成為手動交付。</value></data>
+  <data name="Limit the catalog of its customers to their deliveries" xml:space="preserve"><value>將其客戶的目錄限制為各自的交付</value></data>
+  <data name="Manage templates" xml:space="preserve"><value>管理範本</value></data>
+  <data name="New template" xml:space="preserve"><value>新增範本</value></data>
+  <data name="No add-on in this template yet." xml:space="preserve"><value>此範本中尚無增益集。</value></data>
+  <data name="No customer has this template yet. Assign it on the customer page." xml:space="preserve"><value>尚無客戶使用此範本。請在客戶頁面上指派。</value></data>
+  <data name="No template assigned." xml:space="preserve"><value>未指派範本。</value></data>
+  <data name="No template yet." xml:space="preserve"><value>尚無範本。</value></data>
+  <data name="Remove" xml:space="preserve"><value>移除</value></data>
+  <data name="Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)." xml:space="preserve"><value>要從範本中移除此增益集嗎？擁有此範本的客戶將不再取得它 (除非已另外交付給他們)。</value></data>
+  <data name="Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on." xml:space="preserve"><value>要從此客戶移除此範本嗎？除非有其他範本或手動交付涵蓋該增益集，否則其交付將會結束。</value></data>
+  <data name="Template" xml:space="preserve"><value>範本</value></data>
+  <data name="The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts." xml:space="preserve"><value>已指派範本中的增益集會交付給此客戶，並隨範本的每次變更而更新。仍可在下方進行手動交付；對於同一個增益集，以手動交付為準。</value></data>
+  <data name="catalog limited" xml:space="preserve"><value>目錄受限</value></data>
+  <data name="e.g. Bank package" xml:space="preserve"><value>例如 銀行套件</value></data>
+  <data name="newest approved version" xml:space="preserve"><value>最新的已核准版本</value></data>
+  <data name="Add-on added. Every customer with this template gets it." xml:space="preserve"><value>已新增增益集。擁有此範本的每個客戶都會取得它。</value></data>
+  <data name="Add-on removed from the template." xml:space="preserve"><value>已從範本中移除增益集。</value></data>
+  <data name="Enter a name of 1 to 80 characters." xml:space="preserve"><value>請輸入 1 到 80 個字元的名稱。</value></data>
+  <data name="Template assigned. Its add-ons are delivered now." xml:space="preserve"><value>已指派範本。現在會交付其中的增益集。</value></data>
+  <data name="Template deleted. The deliveries made from it ended." xml:space="preserve"><value>已刪除範本。由其產生的交付已結束。</value></data>
+  <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>已移除範本。其交付已結束。</value></data>
+  <data name="Template saved." xml:space="preserve"><value>範本已儲存。</value></data>
+  <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>此交付現為手動交付；範本不再變更它。</value></data>
 </root>

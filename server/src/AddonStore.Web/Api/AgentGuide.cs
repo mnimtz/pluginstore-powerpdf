@@ -956,6 +956,27 @@ own personal test code shows it.
     POST  {{baseUrl}}/api/customers/{cid}/deliveries        {"packageId", "beta": {"mode", "version"}, "live": {...}, "startsAt"?, "endsAt"?, "ownCode"?}
     PATCH {{baseUrl}}/api/deliveries/{did}                  stages, "startsAt"/"endsAt" (or "clearDates": true), "status": "active"|"paused"|"ended"
     POST  {{baseUrl}}/api/deliveries/{did}/promote          the version of the beta stage becomes the live version
+    GET   {{baseUrl}}/api/templates                         delivery templates (S1.13.0) with their add-ons and customer count
+    POST  {{baseUrl}}/api/templates                         {"name", "description"?, "restrictCatalog"?, "items": [{"packageId", "version"?}]}
+    PATCH {{baseUrl}}/api/templates/{tid}                   same fields; "items" replaces the whole list (creator or admin)
+    DELETE {{baseUrl}}/api/templates/{tid}                  delete; the deliveries made from it end
+    POST  {{baseUrl}}/api/customers/{cid}/templates         {"templateId"}: assign a template to the customer
+    DELETE {{baseUrl}}/api/customers/{cid}/templates/{tid}  remove it again
+
+Delivery templates (S1.13.0) are named sets of add-ons, public and private
+mixed; per add-on `version` empty = the newest approved version, else that
+fixed approved version. They are linked: assigning one delivers its add-ons
+to the customer, and every later change of the template (an add-on added or
+removed, another version, `restrictCatalog`) reaches all customers that have
+it. Deliveries made from a template carry `templateId`. A manual delivery of
+the same add-on wins and is left alone; changing a template delivery by hand
+(PATCH, promote) makes it a manual one. When an add-on leaves every template
+of a customer, or the template is removed or deleted, its delivery ends.
+With two templates sharing an add-on the one assigned first decides.
+Templates are shared by all developers and admins; the creator and admins
+edit them. Errors: `TEMPLATE_INVALID` (name 1 to 80 characters, description
+at most 1000), `TEMPLATE_ITEM_INVALID` (unknown or repeated add-on, version
+not approved, more than 50 add-ons), `TEMPLATE_NOT_FOUND`.
 
 Codes look like `K7QM-4XRT-9WPL-2HDN-6CVB`. A customer code (no
 `deliveryId`) unlocks every delivery of the customer; a delivery code only
@@ -1382,6 +1403,9 @@ be free of warnings before review. Info is for information only.
 | SOURCE_MISSING | error (404) | No source stored for this version (download). |
 | CODE_MISSING | error (400) | GET /api/customer-code without the X-Customer-Code header. |
 | SEATS_EXHAUSTED | error (403) | Download of a delivered add-on: every installation the delivery allows is in use. |
+| TEMPLATE_INVALID | error (400) | Delivery template: name missing or longer than 80 characters, or description longer than 1000. |
+| TEMPLATE_ITEM_INVALID | error (400) | Delivery template: an add-on is unknown or listed twice, its version is not approved, or more than 50 add-ons. |
+| TEMPLATE_NOT_FOUND | error (404) | No delivery template with this id. |
 | NOT_DELIVERED | error (403) | Download with the code of a customer whose catalog is limited to its deliveries (`restrictCatalog`): this add-on or version is not delivered to it. |
 | SEATS_RATE_LIMITED | error (429) | More than 200 new installations from one network address within an hour. |
 | SEATS_BUSY | error (503) | The store could not record the installation right now (database busy); try again. |

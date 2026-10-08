@@ -81,6 +81,40 @@
 </div>
 
 <div class="card">
+    <h2 style="margin-top:0">@L["Delivery templates"]</h2>
+    <p class="small muted">@L["The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts."] <a href="/Templates">@L["Manage templates"] →</a></p>
+    @if (Model.AssignedTemplates.Count == 0) { <p class="muted">@L["No template assigned."]</p> }
+    else
+    {
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+            @foreach (var t in Model.AssignedTemplates)
+            {
+                <span class="badge live" style="display:inline-flex;gap:6px;align-items:center">
+                    <a href="/Templates?id=@t.Id" style="color:inherit">@t.Name</a>
+                    @if (Model.CanManage)
+                    {
+                        <form method="post" asp-page-handler="UnassignTemplate" asp-route-id="@c.Id" style="display:inline;margin:0"
+                              data-confirm="@L["Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on."]">
+                            <input type="hidden" name="templateId" value="@t.Id" />
+                            <button type="submit" class="linkbtn" title="@L["Remove"]" style="background:none;border:0;cursor:pointer;color:inherit;padding:0">×</button>
+                        </form>
+                    }
+                </span>
+            }
+        </div>
+    }
+    @if (Model.RestrictedByTemplate && !c.RestrictCatalog) { <p class="small">@L["A template limits this customer's catalog to its deliveries."]</p> }
+    @if (Model.CanManage && Model.OtherTemplates.Count > 0)
+    {
+        <form method="post" asp-page-handler="AssignTemplate" asp-route-id="@c.Id" style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">
+            <div><label>@L["Template"]</label>
+                <select name="templateId">@foreach (var t in Model.OtherTemplates) { <option value="@t.Id">@t.Name</option> }</select></div>
+            <button type="submit" class="btn small cta">@L["Assign"]</button>
+        </form>
+    }
+</div>
+
+<div class="card">
     <h2 style="margin-top:0">@L["Deliveries"]</h2>
     <p class="small muted">@L["Beta stage: workstations of this customer with the beta option (or policy BetaChannel). Live stage: all others. Typical: new version to beta, test, then \"Make live\"."]</p>
     @if (Model.Deliveries.Count == 0)
@@ -93,6 +127,7 @@
         <div class="delivery">
             <div class="ai-head">
                 <b>@d.Name</b> <span class="muted small">@del.PackageId</span>
+                @if (del.TemplateId is int tpl) { <span class="badge live" title="@L["Kept in step with the template; changing it here makes it a manual delivery."]">@L["Template"]: @Model.TemplateNames.GetValueOrDefault(tpl, "#" + tpl)</span> }
                 @if (d.Visibility == "private") { <span class="badge submitted">@L["private"]</span> }
                 <span class="badge @(d.Effective ? "live" : "withdrawn")">@L[del.Status == "active" ? (d.Effective ? "Active" : "outside period") : del.Status == "paused" ? "paused" : "ended"]</span>
                 <span class="muted small">@L["Last activity"]: @(del.LastSeenAt is null ? "–" : Time.Fmt(del.LastSeenAt))</span>
@@ -135,6 +170,11 @@
                     }
                     <form method="post" asp-page-handler="Code" asp-route-id="@c.Id"><input type="hidden" name="deliveryId" value="@del.Id" /><input type="hidden" name="transitionDays" value="14" />
                         <button type="submit" class="btn small secondary">@L["Code for this add-on only"]</button></form>
+                    @if (del.TemplateId is not null)
+                    {
+                        <form method="post" asp-page-handler="Detach" asp-route-id="@c.Id"><input type="hidden" name="did" value="@del.Id" />
+                            <button type="submit" class="btn small secondary">@L["Detach from the template"]</button></form>
+                    }
                 </div>
                 @if (d.Visibility == "private" && d.SeatCount > 0)
                 {

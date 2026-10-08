@@ -185,6 +185,9 @@ public static class ApiEndpoints
                     "POST /api/customers/{cid}/codes  new code for the customer or one delivery {deliveryId?, transitionDays?}; DELETE .../codes/{codeId} revokes",
                     "POST /api/customers/{cid}/deliveries  deliver an add-on {packageId, beta{mode,version}, live{mode,version}, startsAt?, endsAt?, ownCode?}",
                     "PATCH /api/deliveries/{did}       change stages, dates or status; POST /api/deliveries/{did}/promote = beta version goes live",
+                    "GET|POST /api/templates          delivery templates: list or create {name, description?, restrictCatalog?, items[{packageId, version?}]}",
+                    "PATCH|DELETE /api/templates/{tid}  change (items replaces the list; every customer with it follows) or delete a template",
+                    "POST /api/customers/{cid}/templates  assign a template {templateId}; DELETE .../templates/{tid} removes it",
                     "DELETE /api/packages/{id}/{version}  withdraw your own beta version (auth)",
                     "GET  /api/packages/{id}/{version}/download",
                     "GET  /api/customer-code          check the customer code in the X-Customer-Code header (valid, customer, add-ons and their ids)",
@@ -367,7 +370,7 @@ public static class ApiEndpoints
                 if (!storeAllowed) items.RemoveAll(i => i.Id != SubmissionService.ClientPackageId);
                 var tests = storeAllowed ? await customers.TestGrantsAsync(ctx) : new();   // the developer's test code (S1.6.0)
                 // a customer whose catalog is limited to its deliveries (S1.12.0): only the store client stays public
-                if (grants.Any(g => g.Customer.RestrictCatalog)) items.RemoveAll(i => i.Id != SubmissionService.ClientPackageId);
+                if (grants.Any(g => g.Restricted)) items.RemoveAll(i => i.Id != SubmissionService.ClientPackageId);
                 if (grants.Count > 0 || tests.Count > 0)
                 {
                     var cctx = await Services.CatalogUi.Context.LoadAsync(db);
@@ -676,7 +679,7 @@ public static class ApiEndpoints
             if (string.IsNullOrWhiteSpace(ctx.Request.Headers[CustomerService.HeaderName].ToString()))
                 return Results.Json(new { ok = false, error = new { code = "CODE_MISSING", message = "Send the customer code in the X-Customer-Code header.", hint = "The code never goes into the URL." } }, statusCode: 400);
             var (valid, customer, addons, packages, seats) = await customers.CheckWithSeatsAsync(ctx);
-            var restricted = valid && (await customers.GrantsAsync(ctx)).Any(g => g.Customer.RestrictCatalog);
+            var restricted = valid && (await customers.GrantsAsync(ctx)).Any(g => g.Restricted);
             return Results.Json(new { ok = true, data = new { valid, customer = valid ? customer : null, addons, packages,
                 installs = seats.Select(s => new { package = s.Package, used = s.Used, max = s.Max }), restricted } });
         });
@@ -1140,6 +1143,82 @@ public static class ApiEndpoints
             return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, true, UiLang(ctx)) });
         }).RequireAuthorization("ApiOrCookie");
 
+        // ---- delivery templates (S1.13.0): shared by all developers and admins, edited by the creator or an admin
+        api.MapGet("/templates", async (HttpContext ctx, UserManager<AppUser> users, TemplateService ts) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var list = await ts.ListAsync();
+            return Results.Json(new { ok = true, data = list.Select(v => TemplateJson(v, ctx.User, user.Id)) });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapPost("/templates", async (HttpContext ctx, UserManager<AppUser> users, TemplateService ts, TemplateBody body) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            if (ctx.User.IsInRole("Reviewer") && !ctx.User.IsInRole("Admin"))
+                return Fail("NOT_OWNER", "Reviewers read templates; creating them is for developers and admins.", 403);
+            if (TemplateService.CheckName(body.Name, body.Description) is { } e)
+                return Fail(e, "name (1 to 80 characters) is required; description at most 1000 characters.", 400,
+                    "Example: {\"name\": \"Bank package\", \"items\": [{\"packageId\": \"com.example.sign\"}, {\"packageId\": \"com.example.stamps\", \"version\": \"1.2.0\"}]}");
+            var items = (body.Items ?? new()).Select(i => new TemplateService.ItemInput(i.PackageId, i.Version)).ToList();
+            if (await ts.CheckItemsAsync(items) is { } ie) return Fail("TEMPLATE_ITEM_INVALID", ie, 400);
+            var t = await ts.CreateAsync(body.Name!, body.Description, body.RestrictCatalog ?? false, items, user);
+            var v = (await ts.ListAsync()).First(x => x.Template.Id == t.Id);
+            return Results.Json(new { ok = true, data = TemplateJson(v, ctx.User, user.Id) }, statusCode: 201);
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapMethods("/templates/{tid:int}", new[] { "PATCH" }, async (int tid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users,
+                                                                         TemplateService ts, TemplateBody body) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var t = await db.DeliveryTemplates.FirstOrDefaultAsync(x => x.Id == tid);
+            if (t is null) return NotFound("TEMPLATE_NOT_FOUND", $"No template {tid}.");
+            if (!TemplateService.CanEdit(ctx.User, t, user.Id)) return Fail("NOT_OWNER", "Only the creator of the template or an admin can change it.", 403);
+            if (TemplateService.CheckName(body.Name ?? t.Name, body.Description) is { } e) return Fail(e, "name 1 to 80 characters; description at most 1000.", 400);
+            List<TemplateService.ItemInput>? items = body.Items?.Select(i => new TemplateService.ItemInput(i.PackageId, i.Version)).ToList();
+            if (items is not null && await ts.CheckItemsAsync(items) is { } ie) return Fail("TEMPLATE_ITEM_INVALID", ie, 400);
+            await ts.UpdateAsync(t, body.Name, body.Description, body.RestrictCatalog, items, user);
+            var v = (await ts.ListAsync()).First(x => x.Template.Id == t.Id);
+            return Results.Json(new { ok = true, data = TemplateJson(v, ctx.User, user.Id) });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapDelete("/templates/{tid:int}", async (int tid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, TemplateService ts) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var t = await db.DeliveryTemplates.FirstOrDefaultAsync(x => x.Id == tid);
+            if (t is null) return NotFound("TEMPLATE_NOT_FOUND", $"No template {tid}.");
+            if (!TemplateService.CanEdit(ctx.User, t, user.Id)) return Fail("NOT_OWNER", "Only the creator of the template or an admin can delete it.", 403);
+            await ts.DeleteAsync(t, user);
+            return Results.Json(new { ok = true, data = new { deleted = tid } });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapPost("/customers/{cid:int}/templates", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users,
+                                                             TemplateService ts, CustomerService cs, AssignBody body) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+            if (c is null || !CustomerService.CanSee(ctx.User, c, user.Id)) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+            if (!CustomerService.CanManage(ctx.User, c, user.Id)) return Fail("NOT_OWNER", "Only the creator of the customer or an admin can change it.", 403);
+            if (await ts.AssignAsync(c, body.TemplateId ?? 0, user) is { } err) return NotFound(err, $"No template {body.TemplateId}.");
+            return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, true, UiLang(ctx)) });
+        }).RequireAuthorization("ApiOrCookie");
+
+        api.MapDelete("/customers/{cid:int}/templates/{tid:int}", async (int cid, int tid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users,
+                                                                         TemplateService ts, CustomerService cs) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+            if (c is null || !CustomerService.CanSee(ctx.User, c, user.Id)) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+            if (!CustomerService.CanManage(ctx.User, c, user.Id)) return Fail("NOT_OWNER", "Only the creator of the customer or an admin can change it.", 403);
+            await ts.UnassignAsync(c, tid, user);
+            return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, true, UiLang(ctx)) });
+        }).RequireAuthorization("ApiOrCookie");
+
         api.MapDelete("/customers/{cid:int}", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService cs) =>
         {
             var user = await RequireUserAsync(ctx, users);
@@ -1487,7 +1566,7 @@ public static class ApiEndpoints
             if (!staff && id != SubmissionService.ClientPackageId && !await customers.IsTestVersionAsync(ctx, id, version))
             {
                 var held = await customers.GrantsAsync(ctx);
-                if (held.Any(g => g.Customer.RestrictCatalog) &&
+                if (held.Any(g => g.Restricted) &&
                     !held.Any(g => g.Package.Id == id && (g.Beta?.Version == version || g.Live?.Version == version)))
                     return Results.Json(new { ok = false, error = new { code = "NOT_DELIVERED",
                         message = $"{id} {version} is not delivered to this customer.",
@@ -1734,6 +1813,15 @@ public static class ApiEndpoints
         try { File.Delete(path); } catch { /* temp cleanup is best effort */ }
     }
 
+    /// <summary>A delivery template as the API shows it (S1.13.0).</summary>
+    private static object TemplateJson(TemplateService.View v, System.Security.Claims.ClaimsPrincipal user, string userId) => new
+    {
+        id = v.Template.Id, name = v.Template.Name, description = v.Template.Description, restrictCatalog = v.Template.RestrictCatalog,
+        owner = v.Owner, canEdit = TemplateService.CanEdit(user, v.Template, userId), customers = v.Customers,
+        createdAt = v.Template.CreatedAt, updatedAt = v.Template.UpdatedAt,
+        items = v.Items.Select(i => new { id = i.Id, packageId = i.PackageId, version = i.Version, mode = i.Version is null ? "latest" : "fixed" }),
+    };
+
     public static async Task<List<object>> CatalogAsync(AppDbContext db, bool includeBeta, string baseUrl,
                                                          List<CustomerService.Granted>? grants = null, PackageSigning? signing = null,
                                                          List<CustomerService.TestGrant>? tests = null, bool clientOnly = false)
@@ -1756,7 +1844,7 @@ public static class ApiEndpoints
             .Where(v => db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private"))
             .Select(v => v.PackageId).Distinct().ToListAsync()).Where(i => i != SubmissionService.ClientPackageId).ToList();
         // a customer whose catalog is limited to its deliveries (S1.12.0): its codes hide the public catalog
-        var restricted = grants?.Any(g => g.Customer.RestrictCatalog) == true;
+        var restricted = grants?.Any(g => g.Restricted) == true;
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live)
@@ -1873,6 +1961,9 @@ public record FeedbackNoteBody(string? Text, bool? Reply);
 /// <summary>POST/PATCH /api/customers[/{cid}] (S0.14.0)</summary>
 public record CustomerBody(string? Name, string? ContactName, string? ContactEmail, string? Language, string? Note, string? Status, bool? WithCode,
                            bool? RestrictCatalog = null);
+public record TemplateItemBody(string? PackageId, string? Version);
+public record TemplateBody(string? Name, string? Description, bool? RestrictCatalog, List<TemplateItemBody>? Items);
+public record AssignBody(int? TemplateId);
 /// <summary>POST /api/customers/{cid}/codes: deliveryId null = code for all deliveries of the customer</summary>
 public record CodeBody(int? DeliveryId, int? TransitionDays);
 public record StageBody(string? Mode, string? Version);

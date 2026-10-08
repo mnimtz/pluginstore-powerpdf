@@ -1256,4 +1256,38 @@
   <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>Met deze optie toont de store deze klant alleen de aan hem geleverde invoegtoepassingen (openbaar en privé) en store-updates, verder niets uit de openbare catalogus.</value></data>
   <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>Geen invoegtoepassing om te leveren: elke invoegtoepassing die de automatische controles heeft doorstaan, is al aan deze klant geleverd.</value></data>
   <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>Privé-invoegtoepassingen verschijnen alleen voor klanten met een code; openbare staan sowieso voor iedereen in de catalogus, een levering legt hun versie vast of bepaalt met "Catalogus beperken tot de eigen leveringen" wat de klant mag gebruiken. Live "vast" houdt de klant op een geteste versie; "nieuwste" volgt elke vrijgegeven versie. Klanten krijgen een versie pas na de goedkeuring.</value></data>
+  <data name="A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it." xml:space="preserve"><value>Een sjabloon is een set invoegtoepassingen die klanten samen krijgen, openbare en privé gemengd. Wijs het toe op de klantpagina; wanneer u het sjabloon wijzigt, volgt elke klant die het heeft. Handmatige leveringen blijven daarnaast mogelijk.</value></data>
+  <data name="A template limits this customer&#x27;s catalog to its deliveries." xml:space="preserve"><value>Een sjabloon beperkt de catalogus van deze klant tot de eigen leveringen.</value></data>
+  <data name="Adding an add-on that is in the template already changes its version." xml:space="preserve"><value>Een invoegtoepassing toevoegen die al in het sjabloon zit, wijzigt de versie ervan.</value></data>
+  <data name="Assign" xml:space="preserve"><value>Toewijzen</value></data>
+  <data name="Create template" xml:space="preserve"><value>Sjabloon aanmaken</value></data>
+  <data name="Customers with this template" xml:space="preserve"><value>Klanten met dit sjabloon</value></data>
+  <data name="Delete template" xml:space="preserve"><value>Sjabloon verwijderen</value></data>
+  <data name="Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay." xml:space="preserve"><value>Dit sjabloon verwijderen? De leveringen die eruit zijn ontstaan, eindigen voor elke klant die het heeft; handmatige leveringen blijven.</value></data>
+  <data name="Delivery templates" xml:space="preserve"><value>Leveringssjablonen</value></data>
+  <data name="Detach from the template" xml:space="preserve"><value>Loskoppelen van het sjabloon</value></data>
+  <data name="Kept in step with the template; changing it here makes it a manual delivery." xml:space="preserve"><value>Wordt gelijk gehouden met het sjabloon; als u het hier wijzigt, wordt het een handmatige levering.</value></data>
+  <data name="Limit the catalog of its customers to their deliveries" xml:space="preserve"><value>Catalogus van de klanten beperken tot hun leveringen</value></data>
+  <data name="Manage templates" xml:space="preserve"><value>Sjablonen beheren</value></data>
+  <data name="New template" xml:space="preserve"><value>Nieuw sjabloon</value></data>
+  <data name="No add-on in this template yet." xml:space="preserve"><value>Nog geen invoegtoepassing in dit sjabloon.</value></data>
+  <data name="No customer has this template yet. Assign it on the customer page." xml:space="preserve"><value>Nog geen enkele klant heeft dit sjabloon. Wijs het toe op de klantpagina.</value></data>
+  <data name="No template assigned." xml:space="preserve"><value>Geen sjabloon toegewezen.</value></data>
+  <data name="No template yet." xml:space="preserve"><value>Nog geen sjabloon.</value></data>
+  <data name="Remove" xml:space="preserve"><value>Verwijderen</value></data>
+  <data name="Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)." xml:space="preserve"><value>Deze invoegtoepassing uit het sjabloon verwijderen? Klanten met het sjabloon krijgen haar dan niet meer (tenzij ze apart aan hen is geleverd).</value></data>
+  <data name="Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on." xml:space="preserve"><value>Dit sjabloon bij de klant verwijderen? De leveringen ervan eindigen, tenzij een ander sjabloon of een handmatige levering de invoegtoepassing dekt.</value></data>
+  <data name="Template" xml:space="preserve"><value>Sjabloon</value></data>
+  <data name="The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts." xml:space="preserve"><value>De invoegtoepassingen van een toegewezen sjabloon worden aan deze klant geleverd en volgen elke wijziging van het sjabloon. Handmatige leveringen hieronder blijven mogelijk; voor dezelfde invoegtoepassing telt de handmatige.</value></data>
+  <data name="catalog limited" xml:space="preserve"><value>catalogus beperkt</value></data>
+  <data name="e.g. Bank package" xml:space="preserve"><value>bijv. Bankpakket</value></data>
+  <data name="newest approved version" xml:space="preserve"><value>nieuwste goedgekeurde versie</value></data>
+  <data name="Add-on added. Every customer with this template gets it." xml:space="preserve"><value>Invoegtoepassing toegevoegd. Elke klant met dit sjabloon krijgt haar.</value></data>
+  <data name="Add-on removed from the template." xml:space="preserve"><value>Invoegtoepassing uit het sjabloon verwijderd.</value></data>
+  <data name="Enter a name of 1 to 80 characters." xml:space="preserve"><value>Voer een naam van 1 tot 80 tekens in.</value></data>
+  <data name="Template assigned. Its add-ons are delivered now." xml:space="preserve"><value>Sjabloon toegewezen. De invoegtoepassingen ervan worden nu geleverd.</value></data>
+  <data name="Template deleted. The deliveries made from it ended." xml:space="preserve"><value>Sjabloon verwijderd. De leveringen die eruit voortkwamen, zijn beëindigd.</value></data>
+  <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Sjabloon bij de klant verwijderd. De leveringen ervan zijn beëindigd.</value></data>
+  <data name="Template saved." xml:space="preserve"><value>Sjabloon opgeslagen.</value></data>
+  <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>De levering is nu handmatig; het sjabloon wijzigt haar niet meer.</value></data>
 </root>

@@ -4,7 +4,10 @@
     ViewData["Title"] = "Customers";
 }
 
+<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between">
 <h1>@L["Deliveries"]</h1>
+<a class="btn small secondary" href="/Templates">@L["Delivery templates"] →</a>
+</div>
 <p class="lead">@L["Deliver add-ons to individual customers: they see them in the store window with their code, nobody else does. Every delivery has a beta and a live stage."]</p>
 
 @if (Model.Notice is not null)

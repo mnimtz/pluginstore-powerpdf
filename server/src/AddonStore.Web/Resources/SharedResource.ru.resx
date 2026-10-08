@@ -1256,4 +1256,38 @@
   <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>С этим параметром магазин показывает этому клиенту только поставленные ему надстройки (общедоступные и частные) и обновления магазина, больше ничего из общедоступного каталога.</value></data>
   <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>Нечего поставлять: все надстройки, прошедшие автоматические проверки, уже поставлены этому клиенту.</value></data>
   <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>Частные надстройки видны только клиентам с кодом; общедоступные и так есть в каталоге для всех, поставка фиксирует их версию или, при параметре «Ограничить каталог поставками клиента», определяет, чем клиент может пользоваться. Live «фиксированная» оставляет клиента на проверенной версии; «новейшая» следует за каждой выпущенной версией. Клиенты получают версию только после её утверждения.</value></data>
+  <data name="A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it." xml:space="preserve"><value>Шаблон представляет собой набор надстроек, которые клиенты получают вместе, общедоступных и частных вперемешку. Назначьте его на странице клиента; при изменении шаблона все клиенты, у которых он есть, получают эти изменения. Ручные поставки по-прежнему возможны наряду с ним.</value></data>
+  <data name="A template limits this customer&#x27;s catalog to its deliveries." xml:space="preserve"><value>Шаблон ограничивает каталог этого клиента его поставками.</value></data>
+  <data name="Adding an add-on that is in the template already changes its version." xml:space="preserve"><value>Добавление надстройки, которая уже есть в шаблоне, изменяет её версию.</value></data>
+  <data name="Assign" xml:space="preserve"><value>Назначить</value></data>
+  <data name="Create template" xml:space="preserve"><value>Создать шаблон</value></data>
+  <data name="Customers with this template" xml:space="preserve"><value>Клиенты с этим шаблоном</value></data>
+  <data name="Delete template" xml:space="preserve"><value>Удалить шаблон</value></data>
+  <data name="Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay." xml:space="preserve"><value>Удалить этот шаблон? Созданные из него поставки завершаются у всех клиентов, у которых он есть; ручные поставки сохраняются.</value></data>
+  <data name="Delivery templates" xml:space="preserve"><value>Шаблоны поставок</value></data>
+  <data name="Detach from the template" xml:space="preserve"><value>Отвязать от шаблона</value></data>
+  <data name="Kept in step with the template; changing it here makes it a manual delivery." xml:space="preserve"><value>Синхронизируется с шаблоном; изменение здесь превращает её в ручную поставку.</value></data>
+  <data name="Limit the catalog of its customers to their deliveries" xml:space="preserve"><value>Ограничить каталог его клиентов их поставками</value></data>
+  <data name="Manage templates" xml:space="preserve"><value>Управление шаблонами</value></data>
+  <data name="New template" xml:space="preserve"><value>Новый шаблон</value></data>
+  <data name="No add-on in this template yet." xml:space="preserve"><value>В этом шаблоне пока нет надстроек.</value></data>
+  <data name="No customer has this template yet. Assign it on the customer page." xml:space="preserve"><value>Пока ни у одного клиента нет этого шаблона. Назначьте его на странице клиента.</value></data>
+  <data name="No template assigned." xml:space="preserve"><value>Шаблон не назначен.</value></data>
+  <data name="No template yet." xml:space="preserve"><value>Шаблонов пока нет.</value></data>
+  <data name="Remove" xml:space="preserve"><value>Удалить</value></data>
+  <data name="Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)." xml:space="preserve"><value>Удалить эту надстройку из шаблона? Клиенты с этим шаблоном больше не будут её получать (если она не поставлена им отдельно).</value></data>
+  <data name="Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on." xml:space="preserve"><value>Удалить этот шаблон у клиента? Его поставки завершатся, если надстройку не охватывает другой шаблон или ручная поставка.</value></data>
+  <data name="Template" xml:space="preserve"><value>Шаблон</value></data>
+  <data name="The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts." xml:space="preserve"><value>Надстройки назначенного шаблона поставляются этому клиенту и следуют каждому изменению шаблона. Ручные поставки ниже по-прежнему возможны; для одной и той же надстройки действует ручная поставка.</value></data>
+  <data name="catalog limited" xml:space="preserve"><value>каталог ограничен</value></data>
+  <data name="e.g. Bank package" xml:space="preserve"><value>напр. Банковский пакет</value></data>
+  <data name="newest approved version" xml:space="preserve"><value>последняя утверждённая версия</value></data>
+  <data name="Add-on added. Every customer with this template gets it." xml:space="preserve"><value>Надстройка добавлена. Её получит каждый клиент с этим шаблоном.</value></data>
+  <data name="Add-on removed from the template." xml:space="preserve"><value>Надстройка удалена из шаблона.</value></data>
+  <data name="Enter a name of 1 to 80 characters." xml:space="preserve"><value>Введите название длиной от 1 до 80 символов.</value></data>
+  <data name="Template assigned. Its add-ons are delivered now." xml:space="preserve"><value>Шаблон назначен. Его надстройки теперь поставляются.</value></data>
+  <data name="Template deleted. The deliveries made from it ended." xml:space="preserve"><value>Шаблон удалён. Созданные на его основе поставки завершены.</value></data>
+  <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Шаблон удалён у клиента. Его поставки завершены.</value></data>
+  <data name="Template saved." xml:space="preserve"><value>Шаблон сохранён.</value></data>
+  <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>Теперь поставка ручная; шаблон её больше не изменяет.</value></data>
 </root>

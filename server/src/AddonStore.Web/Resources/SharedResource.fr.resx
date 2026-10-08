@@ -1256,4 +1256,38 @@
   <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>Avec cette option, le store ne montre à ce client que les modules qui lui sont livrés (publics et privés) et les mises à jour du store, rien d'autre du catalogue public.</value></data>
   <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>Aucun module à livrer : chaque module ayant réussi les contrôles automatiques est déjà livré à ce client.</value></data>
   <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>Les modules privés n'apparaissent que pour les clients disposant d'un code ; les modules publics figurent de toute façon dans le catalogue pour tout le monde, une livraison fixe leur version ou, avec « Limiter le catalogue à ses livraisons », définit ce que le client peut utiliser. Live « fixe » maintient le client sur une version testée ; « la plus récente » suit chaque version publiée. Les clients ne reçoivent une version qu'après son approbation.</value></data>
+  <data name="A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it." xml:space="preserve"><value>Un modèle est un ensemble de modules que des clients reçoivent ensemble, publics et privés confondus. Attribuez-le sur la page du client ; lorsque vous modifiez le modèle, chaque client qui l'a suit la modification. Les livraisons manuelles restent possibles en parallèle.</value></data>
+  <data name="A template limits this customer&#x27;s catalog to its deliveries." xml:space="preserve"><value>Un modèle limite le catalogue de ce client à ses livraisons.</value></data>
+  <data name="Adding an add-on that is in the template already changes its version." xml:space="preserve"><value>Ajouter un module qui figure déjà dans le modèle modifie sa version.</value></data>
+  <data name="Assign" xml:space="preserve"><value>Attribuer</value></data>
+  <data name="Create template" xml:space="preserve"><value>Créer le modèle</value></data>
+  <data name="Customers with this template" xml:space="preserve"><value>Clients avec ce modèle</value></data>
+  <data name="Delete template" xml:space="preserve"><value>Supprimer le modèle</value></data>
+  <data name="Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay." xml:space="preserve"><value>Supprimer ce modèle ? Les livraisons qui en découlent prennent fin pour chaque client qui l'a ; les livraisons manuelles restent.</value></data>
+  <data name="Delivery templates" xml:space="preserve"><value>Modèles de livraison</value></data>
+  <data name="Detach from the template" xml:space="preserve"><value>Détacher du modèle</value></data>
+  <data name="Kept in step with the template; changing it here makes it a manual delivery." xml:space="preserve"><value>Synchronisée avec le modèle ; la modifier ici en fait une livraison manuelle.</value></data>
+  <data name="Limit the catalog of its customers to their deliveries" xml:space="preserve"><value>Limiter le catalogue de ses clients à leurs livraisons</value></data>
+  <data name="Manage templates" xml:space="preserve"><value>Gérer les modèles</value></data>
+  <data name="New template" xml:space="preserve"><value>Nouveau modèle</value></data>
+  <data name="No add-on in this template yet." xml:space="preserve"><value>Aucun module dans ce modèle pour l'instant.</value></data>
+  <data name="No customer has this template yet. Assign it on the customer page." xml:space="preserve"><value>Aucun client n'a encore ce modèle. Attribuez-le sur la page du client.</value></data>
+  <data name="No template assigned." xml:space="preserve"><value>Aucun modèle attribué.</value></data>
+  <data name="No template yet." xml:space="preserve"><value>Aucun modèle pour l'instant.</value></data>
+  <data name="Remove" xml:space="preserve"><value>Retirer</value></data>
+  <data name="Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)." xml:space="preserve"><value>Retirer ce module du modèle ? Les clients ayant ce modèle ne le reçoivent plus (sauf s'il leur est livré séparément).</value></data>
+  <data name="Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on." xml:space="preserve"><value>Retirer ce modèle du client ? Ses livraisons prennent fin, sauf si un autre modèle ou une livraison manuelle couvre le module.</value></data>
+  <data name="Template" xml:space="preserve"><value>Modèle</value></data>
+  <data name="The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts." xml:space="preserve"><value>Les modules d'un modèle attribué sont livrés à ce client et suivent chaque modification du modèle. Les livraisons manuelles ci-dessous restent possibles ; pour un même module, c'est la livraison manuelle qui prévaut.</value></data>
+  <data name="catalog limited" xml:space="preserve"><value>catalogue limité</value></data>
+  <data name="e.g. Bank package" xml:space="preserve"><value>p. ex. Pack banque</value></data>
+  <data name="newest approved version" xml:space="preserve"><value>version approuvée la plus récente</value></data>
+  <data name="Add-on added. Every customer with this template gets it." xml:space="preserve"><value>Module ajouté. Chaque client ayant ce modèle le reçoit.</value></data>
+  <data name="Add-on removed from the template." xml:space="preserve"><value>Module retiré du modèle.</value></data>
+  <data name="Enter a name of 1 to 80 characters." xml:space="preserve"><value>Saisissez un nom de 1 à 80 caractères.</value></data>
+  <data name="Template assigned. Its add-ons are delivered now." xml:space="preserve"><value>Modèle attribué. Ses modules sont désormais livrés.</value></data>
+  <data name="Template deleted. The deliveries made from it ended." xml:space="preserve"><value>Modèle supprimé. Les livraisons qui en étaient issues ont pris fin.</value></data>
+  <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Modèle retiré. Ses livraisons ont pris fin.</value></data>
+  <data name="Template saved." xml:space="preserve"><value>Modèle enregistré.</value></data>
+  <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>La livraison est désormais manuelle ; le modèle ne la modifie plus.</value></data>
 </root>

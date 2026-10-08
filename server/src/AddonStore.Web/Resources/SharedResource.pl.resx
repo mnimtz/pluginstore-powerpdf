@@ -1256,4 +1256,38 @@
   <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>Przy tej opcji sklep pokazuje temu klientowi tylko dostarczone mu dodatki (publiczne i prywatne) oraz aktualizacje sklepu, nic więcej z katalogu publicznego.</value></data>
   <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>Brak dodatku do dostarczenia: każdy dodatek, który przeszedł automatyczne kontrole, został już dostarczony temu klientowi.</value></data>
   <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>Prywatne dodatki pojawiają się tylko u klientów z kodem; publiczne i tak są w katalogu dla wszystkich, a dostawa ustala ich wersję lub, przy opcji „Ogranicz katalog do dostaw klienta”, określa, z czego klient może korzystać. Live „stała” utrzymuje klienta na przetestowanej wersji; „najnowsza” podąża za każdą wydaną wersją. Klienci otrzymują wersję dopiero po jej zatwierdzeniu.</value></data>
+  <data name="A template is a set of add-ons that customers get together, public and private mixed. Assign it on the customer page; when you change the template, every customer that has it follows. Manual deliveries stay possible next to it." xml:space="preserve"><value>Szablon to zestaw dodatków, które klienci otrzymują razem, publicznych i prywatnych łącznie. Przypisz go na stronie klienta; gdy zmienisz szablon, zmiana obejmie każdego klienta, który go ma. Obok szablonu nadal możliwe są dostawy ręczne.</value></data>
+  <data name="A template limits this customer&#x27;s catalog to its deliveries." xml:space="preserve"><value>Szablon ogranicza katalog tego klienta do jego dostaw.</value></data>
+  <data name="Adding an add-on that is in the template already changes its version." xml:space="preserve"><value>Dodanie dodatku, który jest już w szablonie, zmienia jego wersję.</value></data>
+  <data name="Assign" xml:space="preserve"><value>Przypisz</value></data>
+  <data name="Create template" xml:space="preserve"><value>Utwórz szablon</value></data>
+  <data name="Customers with this template" xml:space="preserve"><value>Klienci z tym szablonem</value></data>
+  <data name="Delete template" xml:space="preserve"><value>Usuń szablon</value></data>
+  <data name="Delete this template? The deliveries made from it end for every customer that has it; manual deliveries stay." xml:space="preserve"><value>Usunąć ten szablon? Utworzone z niego dostawy kończą się u każdego klienta, który go ma; dostawy ręczne pozostają.</value></data>
+  <data name="Delivery templates" xml:space="preserve"><value>Szablony dostaw</value></data>
+  <data name="Detach from the template" xml:space="preserve"><value>Odłącz od szablonu</value></data>
+  <data name="Kept in step with the template; changing it here makes it a manual delivery." xml:space="preserve"><value>Synchronizowana z szablonem; zmiana tutaj czyni z niej dostawę ręczną.</value></data>
+  <data name="Limit the catalog of its customers to their deliveries" xml:space="preserve"><value>Ogranicz katalog klientów do ich dostaw</value></data>
+  <data name="Manage templates" xml:space="preserve"><value>Zarządzaj szablonami</value></data>
+  <data name="New template" xml:space="preserve"><value>Nowy szablon</value></data>
+  <data name="No add-on in this template yet." xml:space="preserve"><value>W tym szablonie nie ma jeszcze dodatków.</value></data>
+  <data name="No customer has this template yet. Assign it on the customer page." xml:space="preserve"><value>Żaden klient nie ma jeszcze tego szablonu. Przypisz go na stronie klienta.</value></data>
+  <data name="No template assigned." xml:space="preserve"><value>Nie przypisano szablonu.</value></data>
+  <data name="No template yet." xml:space="preserve"><value>Nie ma jeszcze szablonu.</value></data>
+  <data name="Remove" xml:space="preserve"><value>Usuń</value></data>
+  <data name="Remove this add-on from the template? Customers with the template no longer get it (unless delivered to them separately)." xml:space="preserve"><value>Usunąć ten dodatek z szablonu? Klienci z tym szablonem przestaną go otrzymywać (chyba że zostanie im dostarczony osobno).</value></data>
+  <data name="Remove this template from the customer? Its deliveries end unless another template or a manual delivery covers the add-on." xml:space="preserve"><value>Usunąć ten szablon u klienta? Jego dostawy się zakończą, chyba że dodatek jest objęty innym szablonem lub dostawą ręczną.</value></data>
+  <data name="Template" xml:space="preserve"><value>Szablon</value></data>
+  <data name="The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts." xml:space="preserve"><value>Dodatki z przypisanego szablonu są dostarczane temu klientowi i podążają za każdą zmianą szablonu. Ręczne dostawy poniżej nadal są możliwe; dla tego samego dodatku obowiązuje dostawa ręczna.</value></data>
+  <data name="catalog limited" xml:space="preserve"><value>katalog ograniczony</value></data>
+  <data name="e.g. Bank package" xml:space="preserve"><value>np. Pakiet bankowy</value></data>
+  <data name="newest approved version" xml:space="preserve"><value>najnowsza zatwierdzona wersja</value></data>
+  <data name="Add-on added. Every customer with this template gets it." xml:space="preserve"><value>Dodano dodatek. Otrzyma go każdy klient z tym szablonem.</value></data>
+  <data name="Add-on removed from the template." xml:space="preserve"><value>Usunięto dodatek z szablonu.</value></data>
+  <data name="Enter a name of 1 to 80 characters." xml:space="preserve"><value>Wpisz nazwę o długości od 1 do 80 znaków.</value></data>
+  <data name="Template assigned. Its add-ons are delivered now." xml:space="preserve"><value>Przypisano szablon. Jego dodatki są teraz dostarczane.</value></data>
+  <data name="Template deleted. The deliveries made from it ended." xml:space="preserve"><value>Usunięto szablon. Dostawy utworzone na jego podstawie zostały zakończone.</value></data>
+  <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Szablon odłączony od klienta. Jego dostawy zostały zakończone.</value></data>
+  <data name="Template saved." xml:space="preserve"><value>Zapisano szablon.</value></data>
+  <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>Dostawa jest teraz ręczna; szablon już jej nie zmienia.</value></data>
 </root>

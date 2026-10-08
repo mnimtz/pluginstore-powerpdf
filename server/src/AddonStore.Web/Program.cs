@@ -148,6 +148,7 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Plugin", "PageUser");
         o.Conventions.AuthorizePage("/Customers", "PageUser");
         o.Conventions.AuthorizePage("/Customer", "PageUser");
+        o.Conventions.AuthorizePage("/Templates", "PageUser");   // delivery templates (S1.13.0)
         o.Conventions.AuthorizePage("/Profile", "PageUser");
         o.Conventions.AuthorizePage("/Developer", "PageUser");
     })
@@ -193,6 +194,7 @@ builder.Services.AddHttpClient(PowerPdfUpdateService.HttpName, c => { c.Timeout 
 builder.Services.AddScoped<PowerPdfUpdateService>();
 builder.Services.AddHostedService<PowerPdfUpdateScheduler>();
 builder.Services.AddScoped<InventoryService>();            // existing customers (S1.10.0)
+builder.Services.AddScoped<TemplateService>();             // delivery templates (S1.13.0)
 builder.Services.AddHostedService<InventoryWorker>();
 builder.Services.AddScoped<PackageMetaService>();
 builder.Services.AddScoped<VersionActionService>();

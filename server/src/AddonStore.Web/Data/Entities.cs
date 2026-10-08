@@ -367,6 +367,40 @@ public class Delivery
     public DateTime? LastSeenAt { get; set; }
     /// <summary>Installations allowed for this delivery (S1.4.2); null = unlimited.</summary>
     public int? MaxInstalls { get; set; }
+    /// <summary>S1.13.0: made from this delivery template and kept in step with it; null = a manual delivery.</summary>
+    public int? TemplateId { get; set; }
+}
+
+/// <summary>A delivery template (S1.13.0): a named set of add-ons that customers get together; linked, see TemplateService.</summary>
+public class DeliveryTemplate
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = "";
+    public string? Description { get; set; }
+    /// <summary>Customers with this template see only their deliveries (like Customer.RestrictCatalog).</summary>
+    public bool RestrictCatalog { get; set; }
+    public string OwnerId { get; set; } = "";
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime? UpdatedAt { get; set; }
+}
+
+/// <summary>One add-on of a template: Version null = the newest approved version, else that fixed version.</summary>
+public class DeliveryTemplateItem
+{
+    public int Id { get; set; }
+    public int TemplateId { get; set; }
+    public string PackageId { get; set; } = "";
+    public string? Version { get; set; }
+}
+
+/// <summary>A template assigned to a customer (S1.13.0); the order of assignment decides when two templates share an add-on.</summary>
+public class CustomerTemplate
+{
+    public int Id { get; set; }
+    public int CustomerId { get; set; }
+    public int TemplateId { get; set; }
+    public string AssignedBy { get; set; } = "";
+    public DateTime AssignedAt { get; set; } = DateTime.UtcNow;
 }
 
 /// <summary>
