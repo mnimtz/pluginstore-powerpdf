@@ -940,7 +940,9 @@ portal) never appears in the catalog, the website or the
 search; its details answer 404 to everyone but its owner, admins and
 reviewers, and icon, screenshots and downloads also to clients with a code
 for it. Every private version needs an approval before a customer delivery
-hands it out (since S1.11.0). After the automatic checks it waits for review
+hands it out (since S1.11.0). Switching a private add-on to public sends its
+approved versions back to review (S1.13.1): the private approval covered
+customer deliveries only. After the automatic checks it waits for review
 like a public one (status `submitted`, listed in the review queue), and a
 reviewer approves it in one step (no separate beta and live approval); from
 then on the customer deliveries hand it out. Until then only the developer's
@@ -969,9 +971,13 @@ fixed approved version. They are linked: assigning one delivers its add-ons
 to the customer, and every later change of the template (an add-on added or
 removed, another version, `restrictCatalog`) reaches all customers that have
 it. Deliveries made from a template carry `templateId`. A manual delivery of
-the same add-on wins and is left alone; changing a template delivery by hand
-(PATCH, promote) makes it a manual one. When an add-on leaves every template
-of a customer, or the template is removed or deleted, its delivery ends.
+the same add-on wins and is left alone; an ended or expired manual delivery
+is taken over only when the one who assigns or changes the template is an
+admin or the add-on's owner. Changing a template delivery by hand (stages,
+period, status, promote) makes it a manual one; a seat limit alone keeps it
+linked. When an add-on leaves every template of a customer, or the template
+is removed or deleted, its delivery ends. The people who manage customers
+with a template are told by email when someone else changes or deletes it.
 With two templates sharing an add-on the one assigned first decides.
 Templates are shared by all developers and admins; the creator and admins
 edit them. Errors: `TEMPLATE_INVALID` (name 1 to 80 characters, description
@@ -1270,7 +1276,7 @@ be free of warnings before review. Info is for information only.
 | ICONMODE_SMALL | warning | A ribbon button uses IconMode="1" (small icon); use 4. |
 | LANG_ATOMS_INCONSISTENT | warning | A UILayout language folder declares different atoms than the base file. |
 | LANGS_INCOMPLETE | error | UILayout language folders are missing (all 16 Power PDF languages are required). |
-| UI_LANGS_MISSING | error | The x64 .zxt has its UI texts (string tables; without them dialogs/menus) not in all 16 Power PDF languages. Add the missing LANGUAGE blocks before submitting. |
+| UI_LANGS_MISSING | error | The x64 .zxt has its UI texts (string tables; without them dialogs/menus) not in all 16 Power PDF languages, or only as language-neutral resources (they show the same text in every language). Add the missing LANGUAGE blocks before submitting. |
 | UI_STRINGS_PARTIAL | warning | Some languages have fewer string blocks than English; those texts appear in English. |
 | ZIP_TOO_MANY_ENTRIES | error | The package has more than 5000 entries. |
 | ZIP_RESERVED_NAME | error | An entry uses a reserved Windows name (CON, PRN, AUX, NUL, COM1-9, LPT1-9). |
@@ -1287,8 +1293,10 @@ be free of warnings before review. Info is for information only.
 | PROCESS_INJECTION | error | The binary can write into or start threads in other processes (WriteProcessMemory, CreateRemoteThread, VirtualAllocEx ...). |
 | RUNTIME_DOWNLOAD | error | The binary downloads files to disk with URLDownloadToFile; add-ons must not fetch and run code at run time. |
 | PROCESS_START | warning | The binary can start programs or open files and links (CreateProcess, ShellExecute, WinExec); the reviewer checks why. |
-| ELEVATION_UNDECLARED | error | The binary can start programs with administrator rights (ShellExecute/ShellExecuteEx with the `runas` verb), but the manifest does not declare it. Add `"elevation": {"reason": "what runs elevated, when and why"}` (20 to 500 characters) or remove the code. |
+| ELEVATION_UNDECLARED | error | The binary can start programs with administrator rights (the `runas` verb or runas.exe with a process start, CreateProcessWithLogonW/WithTokenW, or the COM elevation moniker `Elevation:Administrator!new:`), but the manifest does not declare it, or the reason is longer than 500 characters. Add `"elevation": {"reason": "what runs elevated, when and why"}` (20 to 500 characters) or remove the code. |
 | ELEVATION_DECLARED | warning | The binary can start programs with administrator rights and the manifest says why; the reviewer checks what runs elevated and why, and the user always sees the UAC prompt. |
+| IMPORT_BY_ORDINAL | warning | The binary imports functions of kernel32, ntdll, advapi32 or shell32 by number instead of by name, which hides them from the automatic checks; the reviewer checks them by hand. Link by name (the default of the Windows SDK import libraries). |
+| REPORT_UNREADABLE | warning | The stored check report of a version could not be read (shown on the review and plug-in pages); upload the version again if it matters. |
 | COMMAND_SHELL | warning | The binary can start a command interpreter or script host (cmd.exe, powershell.exe, pwsh.exe, wscript.exe, cscript.exe, mshta.exe, rundll32.exe, regsvr32.exe). Start the program you need directly, never pass user or document text into a command line, and explain it in the compliance method text. |
 | PERSISTENCE | warning | The binary may register itself to run outside Power PDF (services, Run keys, scheduled tasks, Winlogon, AppInit_DLLs). |
 | INSECURE_HTTP | warning | The binary contains plain http:// addresses; services are reached over HTTPS only. |
@@ -1343,7 +1351,7 @@ be free of warnings before review. Info is for information only.
 | ICON_NOT_SQUARE | warning | The icon is not square. |
 | ICON_TOO_LARGE | warning | The icon is too large. |
 | SCREENSHOTS_NONE | info | The package has no screenshots (optional, recommended). |
-| SCREENSHOTS_INVALID | error | `screenshots` is not an array, or an entry has no `file`. |
+| SCREENSHOTS_INVALID | error | `screenshots` is not an array, an entry has no `file`, or a `caption` is not an object with one text per language. |
 | SCREENSHOTS_TOO_MANY | error | More than 6 screenshots are listed. |
 | SCREENSHOT_MISSING | error | A listed screenshot file is not in the package. |
 | SCREENSHOT_FORMAT | error | A screenshot is not PNG/JPEG or not under assets/. |
@@ -1415,7 +1423,7 @@ be free of warnings before review. Info is for information only.
 | ADMIN_ONLY | error (403) | Source downloads are for store admins only. |
 | ADMIN_UPLOAD_FOR_OWNER | info | An admin uploaded a version of someone else's package. |
 | METADATA_INVALID | error (400/422) | PATCH body is not a JSON object, has unknown fields, or a finding with severity error. |
-| NAME_INVALID | error | Catalog name has no `en` entry, an unknown language code or is too long. |
+| NAME_INVALID | error | Catalog name has no `en` entry, an unknown language code or is too long (upload and PATCH: every entry 1 to 80 characters). |
 | DESCRIPTION_TOO_LONG | error | A catalog description is longer than 2000 characters. |
 | AUTHOR_INVALID | error | The author is longer than 100 characters (manifest or PATCH). |
 

@@ -201,7 +201,9 @@ public class PowerPdfUpdateService
             if (best is not null && cmp.Compare(v, best) <= 0) continue;
             var href = hrefs.FirstOrDefault(x => x.EndsWith(m.Value, StringComparison.OrdinalIgnoreCase) && !x.Contains('+'));
             best = v;
-            bestUrl = href is not null ? new Uri(new Uri(line.WatchUrl), href).ToString() : ReadmeUrlFor(line.WatchUrl, m.Value);
+            var linked = href is not null && Uri.TryCreate(new Uri(line.WatchUrl), href, out var hu) ? hu.ToString() : null;
+            // a link to another host (or another scheme) never becomes the ReadMe address (audit S1.13.1)
+            bestUrl = linked is not null && await CheckUrlAsync(linked) is null ? linked : ReadmeUrlFor(line.WatchUrl, m.Value);
         }
         if (best is null)
         {
@@ -290,7 +292,7 @@ public class PowerPdfUpdateService
                      "Write two or three short sentences in plain words, no IDs, no technical jargon, no em dashes. " +
                      "Start with the most useful improvements; if security issues are fixed, say so in the first sentence. " +
                      "Answer with one text per language code: " + string.Join(", ", Lang.Ui) + ". German uses \"Sie\".";
-        var json = await _ai.JsonAsync(system, $"Release notes of {line.LatestTitle ?? "Power PDF " + line.LatestVersion}:\n\n{text}", schema, deep: false, ct);
+        var json = await _ai.JsonAsync(system, $"Release notes of {AiAssist.Data(line.LatestTitle ?? "Power PDF " + line.LatestVersion)}:\n<data>\n{AiAssist.Data(text)}\n</data>", schema, deep: false, ct);
         if (json is null) return "The AI gave no usable answer. Check the connection test under Settings, AI assistant.";
         var clean = new Dictionary<string, string>();
         foreach (var l in Lang.Ui)

@@ -366,6 +366,46 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Code check of the day (S1.13.1, client 1.9.2):** four independent reviews
+(security, logic, client, validator) and a hardening run.
+- Customer catalog limit: decided from the customers of the valid codes, so
+  it also holds for a paused customer or one without a current delivery
+  (before, such a code saw the full catalog).
+- Templates: a manual delivery ended by hand is never revived by someone
+  else's template (only an admin or the add-on's owner may take over an ended
+  or expired one); template deliveries notify the add-on's owner and staff
+  like manual ones; changes and deletion notify the owners of affected
+  customers; a seat limit alone no longer detaches; adding an add-on is not
+  blocked by a withdrawn fixed version elsewhere; items replaced in one
+  transaction; all template writes serialized; names without control or
+  text-direction characters.
+- Validator: language-neutral resources no longer pass the 21-language rule;
+  elevation also via runas with any process start, CreateProcessWithLogon or
+  Token and the COM elevation moniker; reason at most 500 characters; network
+  through COM (WinHttpRequest, MSXML2) and processes through WMI count;
+  `IMPORT_BY_ORDINAL` (warning) for numbered imports from system DLLs; name
+  entries at most 80 characters on upload; a caption must be an object.
+- A private add-on switched to public is reviewed again; AI review and
+  translation buttons only for reviewers and admins; a ReadMe link must pass
+  the host check; release notes go to the AI as data.
+- Existing customers: retention also applies while switched off; 2000
+  reports per address and hour, then 429 (the client tries again later); at
+  most 20 new domains per address and day; an admin correction made while the
+  AI answers is kept; unknown domains are matched again against portal
+  customers; the audit log no longer lists domains.
+- API tokens: the last-used stamp is written at most once a minute and a
+  locked database no longer fails the request (20 parallel calls answered 500
+  before); audit entries retry briefly when SQLite is locked; the S1.6.0
+  status migration runs once.
+- Client 1.9.2: the ReadMe host check ends at `?` and `#`; a waiting notice is
+  dropped when a newer check result arrives; updates that need a newer Power
+  PDF are not counted or offered in the updates view; old Help groups removed
+  safely (also self-closing); no dot from a kept count when the background
+  check is off; the classic dialog opens normally from "Updates"; the access
+  answer tolerates whitespace; thread-safe host version and install id; more
+  free-mail providers and no daily report where the license mode may not use
+  the store; updates view keeps its scroll position and waits for the catalog.
+
 **Delivery templates (S1.13.0):**
 - New page "Delivery templates" (next to Deliveries): a template is a named
   set of add-ons, public and private mixed, each with "newest approved

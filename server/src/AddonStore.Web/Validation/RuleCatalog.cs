@@ -132,10 +132,10 @@ public static class RuleCatalog
     {
         bool Any(params string[] prefixes) => prefixes.Any(p => code.StartsWith(p, StringComparison.Ordinal));
         if (code is "NETWORK_UNDECLARED" or "PROCESS_INJECTION" or "RUNTIME_DOWNLOAD" or "PROCESS_START" or "PERSISTENCE"
-            or "ELEVATION_UNDECLARED" or "ELEVATION_DECLARED" or "COMMAND_SHELL"
+            or "ELEVATION_UNDECLARED" or "ELEVATION_DECLARED" or "COMMAND_SHELL" or "IMPORT_BY_ORDINAL"
             or "INSECURE_HTTP" or "TLS_CHECK_DISABLED" or "PACKAGE_BLOCKED") return "Security and system access";
         if (Any("SOURCE_") || code is "LICENSE_COPYLEFT_SOURCE" or "LICENSE_WEAK_COPYLEFT_SOURCE" or "THIRDPARTY_SOURCE_DETECTED") return "Source code";
-        if (Any("CUSTOMER_", "DELIVERY_") || code is "PROMOTE_NOTHING" or "CODE_NOT_FOUND" or "CODE_MISSING") return "Customer deliveries";
+        if (Any("CUSTOMER_", "DELIVERY_", "TEMPLATE_") || code is "PROMOTE_NOTHING" or "CODE_NOT_FOUND" or "CODE_MISSING" or "NOT_DELIVERED") return "Customer deliveries";
         if (Any("CATEGORY_")) return "Categories";
         if (Any("ICON_", "SCREENSHOT")) return "Icon and screenshots";
         if (Any("LANG", "UI_LANGS", "UI_STRINGS") || code is "NAME_NOT_LOCALIZED") return "Languages";
@@ -145,7 +145,7 @@ public static class RuleCatalog
             return "Binaries and integrity";
         if (Any("LICENSE", "COMPLIANCE_", "EXTERNAL_SERVICE", "THIRDPARTY_") || code is "SECRET_DETECTED") return "Licenses, legal and privacy";
         if (Any("ZIP_", "MANIFEST_", "ENTRY_") || code is "SIZE_LIMIT" or "NESTED_ARCHIVE" or "UNEXPECTED_ENTRY" or "INFLATE_LIMIT"
-            or "DOCS_ACTIVE_CONTENT" or "BUNDLE_INVALID" or "NO_PACKAGE" or "VALIDATION_FAILED") return "Package structure";
+            or "DOCS_ACTIVE_CONTENT" or "BUNDLE_INVALID" or "NO_PACKAGE" or "VALIDATION_FAILED" or "REPORT_UNREADABLE") return "Package structure";
         if (Any("ID_", "NAME_", "MIN_HOST_VERSION_", "AUTHOR_", "CONTACT_", "VISIBILITY_", "TEXT_CONTROL_") || code is "VERSION_INVALID" or "VERSION_NOT_INCREMENTED"
             or "VERSION_EXISTS" or "PACKAGE_OWNED_BY_OTHER" or "CHANGELOG_EMPTY" or "DESCRIPTION_TOO_LONG" or "METADATA_INVALID"
             or "ADMIN_UPLOAD_FOR_OWNER" or "CLIENT_ADMIN_ONLY") return "Manifest and versioning";

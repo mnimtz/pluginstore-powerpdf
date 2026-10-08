@@ -127,7 +127,7 @@
         <div class="delivery">
             <div class="ai-head">
                 <b>@d.Name</b> <span class="muted small">@del.PackageId</span>
-                @if (del.TemplateId is int tpl) { <span class="badge live" title="@L["Kept in step with the template; changing it here makes it a manual delivery."]">@L["Template"]: @Model.TemplateNames.GetValueOrDefault(tpl, "#" + tpl)</span> }
+                @if (del.TemplateId is int tpl && del.Status != "ended") { <span class="badge live" title="@L["Kept in step with the template; changing it here makes it a manual delivery."]">@L["Template"]: @Model.TemplateNames.GetValueOrDefault(tpl, "#" + tpl)</span> }
                 @if (d.Visibility == "private") { <span class="badge submitted">@L["private"]</span> }
                 <span class="badge @(d.Effective ? "live" : "withdrawn")">@L[del.Status == "active" ? (d.Effective ? "Active" : "outside period") : del.Status == "paused" ? "paused" : "ended"]</span>
                 <span class="muted small">@L["Last activity"]: @(del.LastSeenAt is null ? "–" : Time.Fmt(del.LastSeenAt))</span>
@@ -170,7 +170,7 @@
                     }
                     <form method="post" asp-page-handler="Code" asp-route-id="@c.Id"><input type="hidden" name="deliveryId" value="@del.Id" /><input type="hidden" name="transitionDays" value="14" />
                         <button type="submit" class="btn small secondary">@L["Code for this add-on only"]</button></form>
-                    @if (del.TemplateId is not null)
+                    @if (del.TemplateId is not null && del.Status != "ended")
                     {
                         <form method="post" asp-page-handler="Detach" asp-route-id="@c.Id"><input type="hidden" name="did" value="@del.Id" />
                             <button type="submit" class="btn small secondary">@L["Detach from the template"]</button></form>

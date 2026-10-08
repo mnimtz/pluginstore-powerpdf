@@ -83,7 +83,8 @@ public class InventoryService
         var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
         var key = "inv:" + ip + ":" + DateTime.UtcNow.ToString("yyyyMMddHH", System.Globalization.CultureInfo.InvariantCulture);
         var n = _cache.GetOrCreate(key, e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1); return new int[1]; })!;
-        lock (n) { if (n[0] >= 120) return "rate limited"; n[0]++; }
+        // S1.13.1: large customers send many reports through one proxy; the answer is 429, so a client tries again later
+        lock (n) { if (n[0] >= 2000) return "rate limited"; n[0]++; }
 
         var hash = HashOf(gid.ToString("D"));
         var now = DateTime.UtcNow;
@@ -92,7 +93,13 @@ public class InventoryService
         row.Domain = domain; row.LicenseMode = mode; row.HostVersion = host; row.ClientVersion = client;
         row.AddonsJson = JsonSerializer.Serialize(addons); row.LastSeen = now;
         if (!await _db.CustomerDomains.AnyAsync(d => d.Domain == domain))
+        {
+            // at most 20 new domains per address and day: invented domains cannot flood the list and the AI (S1.13.1)
+            var dk = "invd:" + ip + ":" + DateTime.UtcNow.ToString("yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
+            var dn = _cache.GetOrCreate(dk, e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(1); return new int[1]; })!;
+            lock (dn) { if (dn[0] >= 20) return "rate limited"; dn[0]++; }
             _db.CustomerDomains.Add(new CustomerDomain { Domain = domain, CompanyName = domain, Source = "pending" });
+        }
         try { await _db.SaveChangesAsync(); }
         catch (DbUpdateException) { return "busy"; }   // a parallel report of the same installation or domain: the next one counts
         return "stored";
@@ -101,10 +108,19 @@ public class InventoryService
     /// <summary>Finds the company of domains still pending (portal customers first, then the AI). Returns how many were resolved.</summary>
     public async Task<int> ResolvePendingAsync(int max = 20, CancellationToken ct = default, string? only = null)
     {
+        var customers = await _db.Customers.AsNoTracking().Where(c => c.ContactEmail != null).Select(c => new { c.Name, c.ContactEmail }).ToListAsync(ct);
+        if (only is null)
+        {
+            // domains nobody knew: a portal customer with that domain may exist now (S1.13.1)
+            var unknown = await _db.CustomerDomains.Where(d => d.Source == "unknown").Take(500).ToListAsync(ct);
+            foreach (var u in unknown)
+                if (customers.FirstOrDefault(c => c.ContactEmail!.EndsWith("@" + u.Domain, StringComparison.OrdinalIgnoreCase)) is { } match)
+                { u.CompanyName = match.Name; u.Source = "customer"; u.ResolvedAt = DateTime.UtcNow; }
+            await _db.SaveChangesAsync(ct);
+        }
         var pending = await _db.CustomerDomains.Where(d => d.Source == "pending" && d.Attempts < 3 && (only == null || d.Domain == only))
                                                .OrderBy(d => d.CreatedAt).Take(max).ToListAsync(ct);
         if (pending.Count == 0) return 0;
-        var customers = await _db.Customers.AsNoTracking().Where(c => c.ContactEmail != null).Select(c => new { c.Name, c.ContactEmail }).ToListAsync(ct);
         var aiOn = (await _ai.ConfigAsync()).On;
         int done = 0;
         foreach (var d in pending)
@@ -114,6 +130,9 @@ public class InventoryService
             if (own is not null) { d.CompanyName = own.Name; d.Source = "customer"; d.ResolvedAt = DateTime.UtcNow; done++; continue; }
             if (!aiOn) { if (d.Attempts >= 3) d.Source = "unknown"; continue; }
             var name = await AskAiAsync(d.Domain, ct);
+            await _db.Entry(d).ReloadAsync(ct);   // an admin may have corrected it meanwhile (S1.13.1)
+            if (d.Source != "pending") continue;
+            d.Attempts++;
             if (name is null) { if (d.Attempts >= 3) d.Source = "unknown"; continue; }
             d.CompanyName = name.Length > 0 ? name : d.Domain;
             d.Source = name.Length > 0 ? "ai" : "unknown";
@@ -121,7 +140,8 @@ public class InventoryService
             done++;
         }
         await _db.SaveChangesAsync(ct);
-        if (done > 0) await _audit.LogAsync("system", "inventory.domains.resolved", $"{done} domain(s)", string.Join(", ", pending.Where(p => p.ResolvedAt is not null).Select(p => p.Domain)));
+        // counts only: the audit log outlives the inventory data (S1.13.1)
+        if (done > 0) await _audit.LogAsync("system", "inventory.domains.resolved", $"{done} domain(s)", "");
         return done;
     }
 
@@ -176,7 +196,8 @@ public class InventoryService
     {
         var n = await _db.ClientInstalls.Where(c => c.Domain == domain).ExecuteDeleteAsync();
         await _db.CustomerDomains.Where(d => d.Domain == domain).ExecuteDeleteAsync();
-        await _audit.LogAsync(actor, "inventory.domain.deleted", domain, $"{n} installation(s)");
+        // the audit names a short hash, not the domain: it outlives the deleted data (S1.13.1)
+        await _audit.LogAsync(actor, "inventory.domain.deleted", "domain " + HashOf(domain)[..12], $"{n} installation(s)");
         return n;
     }
 
@@ -270,11 +291,9 @@ public sealed class InventoryWorker : BackgroundService
             {
                 using var scope = _scopes.CreateScope();
                 var svc = scope.ServiceProvider.GetRequiredService<InventoryService>();
-                if (await svc.EnabledAsync())
-                {
-                    await svc.ResolvePendingAsync(20, stop);
-                    if (DateTime.UtcNow - _lastPurge > TimeSpan.FromHours(23)) { await svc.PurgeAsync(); _lastPurge = DateTime.UtcNow; }
-                }
+                if (await svc.EnabledAsync()) await svc.ResolvePendingAsync(20, stop);
+                // the retention period applies also while the evaluation is switched off (S1.13.1)
+                if (DateTime.UtcNow - _lastPurge > TimeSpan.FromHours(23)) { await svc.PurgeAsync(); _lastPurge = DateTime.UtcNow; }
             }
             catch (Exception ex) when (ex is not OperationCanceledException || !stop.IsCancellationRequested)
             {

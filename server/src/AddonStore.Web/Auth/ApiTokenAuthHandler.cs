@@ -23,6 +23,15 @@ public class ApiTokenAuthHandler : AuthenticationHandler<AuthenticationSchemeOpt
         ILoggerFactory logger, UrlEncoder encoder, AppDbContext db)
         : base(options, logger, encoder) => _db = db;
 
+    // one writer per token and minute across all parallel requests (S1.13.1)
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<int, long> Stamped = new();
+    private static bool ClaimStamp(int tokenId)
+    {
+        var now = DateTime.UtcNow.Ticks;
+        var last = Stamped.GetOrAdd(tokenId, 0);
+        return now - last > TimeSpan.TicksPerMinute && Stamped.TryUpdate(tokenId, now, last);
+    }
+
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         var header = Request.Headers.Authorization.ToString();
@@ -51,8 +60,17 @@ public class ApiTokenAuthHandler : AuthenticationHandler<AuthenticationSchemeOpt
             return AuthenticateResult.Fail("USER_NOT_ACTIVE");
         }
 
-        token.LastUsedAt = DateTime.UtcNow;
-        await _db.SaveChangesAsync();
+        // an activity stamp (at most once a minute): a database briefly locked by parallel requests must not fail
+        // the request (hardening S1.13.1: 20 parallel calls with one token answered 500 "database is locked")
+        if ((token.LastUsedAt is null || token.LastUsedAt < DateTime.UtcNow.AddMinutes(-1)) && ClaimStamp(token.Id))
+        {
+            token.LastUsedAt = DateTime.UtcNow;
+            try { await _db.SaveChangesAsync(); }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex) when (ex.InnerException is Microsoft.Data.Sqlite.SqliteException { SqliteErrorCode: 5 or 6 })
+            {
+                _db.Entry(token).State = Microsoft.EntityFrameworkCore.EntityState.Unchanged;
+            }
+        }
 
         var claims = new List<Claim>
         {

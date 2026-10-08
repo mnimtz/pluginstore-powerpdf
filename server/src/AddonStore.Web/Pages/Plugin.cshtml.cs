@@ -172,7 +172,7 @@ public class PluginModel : PageModel
 
     public async Task<IActionResult> OnPostAiReviewAsync(string id, int versionId)
     {
-        if (!await LoadAsync(id ?? "")) return Forbid();
+        if (!await LoadAsync(id ?? "") || !CanReview) return Forbid();
         var v = Versions.FirstOrDefault(x => x.Id == versionId);
         if (v is null || !AiReviewOn)
         {
@@ -191,7 +191,7 @@ public class PluginModel : PageModel
     /// <summary>Shows the review aid of a version in another language (translated once, then stored; S1.11.0).</summary>
     public async Task<IActionResult> OnPostAiTranslateAsync(string id, int versionId, string? lang)
     {
-        if (!await LoadAsync(id ?? "")) return Forbid();
+        if (!await LoadAsync(id ?? "") || !CanReview) return Forbid();
         var v = Versions.FirstOrDefault(x => x.Id == versionId);
         if (v is null || !AiReviewOn) { Notice = "This action is not allowed for this version."; NoticeKind = "warn"; return Page(); }
         var code = AiAssist.ReviewLanguage(lang);

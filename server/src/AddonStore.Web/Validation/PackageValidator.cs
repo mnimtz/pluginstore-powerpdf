@@ -307,6 +307,9 @@ public class PackageValidator
                     !nameEl.EnumerateObject().Any())
                     report.Error("NAME_MISSING", "Manifest field 'name' must be an object with at least one language.",
                         "Provide 'name' as an object keyed by language code, e.g. {\"en\": \"My Plugin\", \"de\": \"Mein Plug-in\"}.");
+                else if (nameEl.EnumerateObject().Any(p => p.Value.ValueKind != JsonValueKind.String || (p.Value.GetString() ?? "").Length is 0 or > 80))
+                    report.Error("NAME_INVALID", "Every entry of 'name' must be a text of 1 to 80 characters.",
+                        "Shorten the name; the catalog shows at most 80 characters.");
 
                 // changelog (mandatory, per team rule: every version documents its changes)
                 var changelog = ReadTextOrFirstLanguage(root, "changelog");
@@ -743,6 +746,12 @@ public class PackageValidator
         var basis = HasLanguages(strings) ? strings!
             : res.Values.SelectMany(d => d).GroupBy(kv => kv.Key).ToDictionary(g => g.Key, g => g.SelectMany(kv => kv.Value).ToHashSet());
         var present = basis.Keys.Where(l => l != 0).ToHashSet();
+        if (present.Count == 0 && basis.ContainsKey(0))
+        {
+            report.Error("UI_LANGS_MISSING", $"'{file}' has its UI texts only as language-neutral resources, in none of the 21 Power PDF languages.",
+                "Neutral resources show the same text in every Power PDF language. Put the texts into one LANGUAGE block per Power PDF language (21) and pick the block that matches the host language at run time.");
+            return;
+        }
         if (present.Count == 0)
         {
             report.Warn("UI_LANGS_UNKNOWN", $"'{file}' has no localized string tables, dialogs or menus.",
@@ -813,6 +822,8 @@ public class PackageValidator
 
         var net = NetworkDlls.Where(d => imp.Dlls.Contains(d) || lowerStrings.Any(s => s == d || s.EndsWith("\\" + d))).ToList();
         net.AddRange(Uses(NetworkFunctions));
+        // HTTP through COM objects needs no network DLL import (audit S1.13.1)
+        net.AddRange(new[] { "WinHttpRequest", "MSXML2.ServerXMLHTTP", "MSXML2.XMLHTTP" }.Where(t => HasToken(bytes, t)));
         int declaredServices = root.TryGetProperty("complianceAudit", out var audit) && audit.ValueKind == JsonValueKind.Object
                                && audit.TryGetProperty("externalServices", out var svc) && svc.ValueKind == JsonValueKind.Array
             ? svc.GetArrayLength() : 0;
@@ -832,28 +843,44 @@ public class PackageValidator
                 "Add-ons must not fetch and run code at run time: updates come only through the store, where they are checked. Fetch data from a declared service with WinHTTP and never execute or load what you download.");
 
         var processes = Uses(ProcessFunctions);
+        if (HasToken(bytes, "Win32_Process")) processes.Add("WMI Win32_Process");   // process creation through WMI (S1.13.1)
         if (processes.Count > 0)
             report.Warn("PROCESS_START", $"'{file}' can start programs or open files and links ({string.Join(", ", processes)}).",
                 "Fine for opening a document, a mail or a web page the user asked for. Say in the compliance method text what is started and why; the reviewer checks it. Never start downloaded or temporary programs.");
 
         // Administrator rights (S1.11.0): ShellExecute with the "runas" verb starts a program elevated after a
         // UAC prompt. Allowed only when the manifest says why ("elevation": {"reason": ...}); the reviewer checks it.
-        var shellExec = processes.Where(p => p.StartsWith("ShellExecute", StringComparison.Ordinal)).ToList();
-        if (shellExec.Count > 0 && HasToken(bytes, "runas"))
+        // S1.13.1 (audit): also runas(.exe) with any process start, CreateProcessWithLogon/Token and the COM elevation moniker
+        var elevation = new List<string>();
+        if (processes.Count > 0 && HasToken(bytes, "runas")) elevation.Add("\"runas\"");
+        elevation.AddRange(processes.Where(p => p is "CreateProcessWithLogonW" or "CreateProcessWithTokenW"));
+        if (HasToken(bytes, "Elevation:Administrator!new:")) elevation.Add("COM elevation moniker");
+        if (elevation.Count > 0)
         {
             var reason = root.TryGetProperty("elevation", out var el) && el.ValueKind == JsonValueKind.Object ? GetString(el, "reason") : null;
-            if (reason is null || reason.Trim().Length < 20)
-                report.Error("ELEVATION_UNDECLARED", $"'{file}' can start programs with administrator rights (ShellExecute with \"runas\"), but the manifest does not declare it.",
+            if (reason is not null && reason.Trim().Length > 500)
+                report.Error("ELEVATION_UNDECLARED", $"'{file}': the elevation reason has {reason.Trim().Length} characters, at most 500 are allowed.",
+                    "Say briefly what runs elevated, when and why.");
+            else if (reason is null || reason.Trim().Length < 20)
+                report.Error("ELEVATION_UNDECLARED", $"'{file}' can start programs with administrator rights ({string.Join(", ", elevation)}), but the manifest does not declare it.",
                     "Add \"elevation\": {\"reason\": \"what runs elevated, when and why\"} (20 to 500 characters) to the manifest, or remove the code. Add-ons normally need no administrator rights.");
             else
                 report.Warn("ELEVATION_DECLARED", $"'{file}' can start programs with administrator rights: {reason.Trim()[..Math.Min(reason.Trim().Length, 500)]}",
                     "The reviewer checks what runs elevated and why; the user always sees the UAC prompt.");
         }
-        var shells = new[] { "cmd.exe", "powershell.exe", "pwsh.exe", "wscript.exe", "cscript.exe", "mshta.exe", "rundll32.exe", "regsvr32.exe" }
-            .Where(sh => HasToken(bytes, sh)).ToList();
-        if (processes.Count > 0 && shells.Count > 0)
+        // only when the binary can start programs at all (each token is a scan over the whole file)
+        var shells = processes.Count == 0 ? new List<string>()
+            : new[] { "cmd.exe", "powershell.exe", "pwsh.exe", "wscript.exe", "cscript.exe", "mshta.exe", "rundll32.exe", "regsvr32.exe" }
+                .Where(sh => HasToken(bytes, sh)).ToList();
+        if (shells.Count > 0)
             report.Warn("COMMAND_SHELL", $"'{file}' can start a command interpreter or script host ({string.Join(", ", shells)}).",
                 "Start the program you need directly instead of a shell, never pass user or document text into a command line, and say in the compliance method text what is run and why.");
+
+        // functions imported by number from system DLLs hide their names from these checks (S1.13.1): the reviewer looks
+        var byOrdinal = (imp.OrdinalDlls ?? new()).Where(d => d.ToLowerInvariant() is "kernel32.dll" or "ntdll.dll" or "advapi32.dll" or "shell32.dll").ToList();
+        if (byOrdinal.Count > 0)
+            report.Warn("IMPORT_BY_ORDINAL", $"'{file}' imports functions of {string.Join(", ", byOrdinal)} by number instead of by name.",
+                "Link these imports by name (the default of the Windows SDK import libraries); numbered imports hide which functions are used, so the reviewer has to check them by hand.");
 
         var persistence = Uses(ServiceFunctions);
         persistence.AddRange(PersistenceStrings.Where(p => lowerStrings.Any(s => s.Contains(p))));
@@ -1165,6 +1192,9 @@ public class PackageValidator
                 if (w < 640 || w > 3840)
                     report.Warn("SCREENSHOT_SIZE", $"Screenshot '{file}' is {w}px wide.", "Use 640 to 3840 px width; 1280x800 is recommended.");
             }
+            if (s.TryGetProperty("caption", out var capAny) && capAny.ValueKind is not (JsonValueKind.Object or JsonValueKind.Null))
+                report.Error("SCREENSHOTS_INVALID", $"The caption of '{file}' must be an object with one text per language.",
+                    "Write \"caption\": {\"en\": \"...\", \"de\": \"...\", ...} with all 21 languages, or leave the caption out.");
             if (s.TryGetProperty("caption", out var cap) && cap.ValueKind == JsonValueKind.Object)
             {
                 var missing = MissingLanguages(s, "caption");

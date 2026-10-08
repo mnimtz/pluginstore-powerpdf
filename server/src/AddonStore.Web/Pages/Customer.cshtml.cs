@@ -51,10 +51,11 @@ public class CustomerModel : PageModel
     public Task<IActionResult> OnPostDetachAsync(int id, int did) =>
         ActAsync(id, async me =>
         {
-            var d = await _db.Deliveries.FirstOrDefaultAsync(x => x.Id == did && x.CustomerId == id);
+            var d = await OwnDeliveryAsync(id, did);   // the same rule as every other change of a delivery
             if (d is null) return (false, "This action is not allowed for this version.");
             d.TemplateId = null; d.UpdatedAt = DateTime.UtcNow;
             await _db.SaveChangesAsync();
+            await HttpContext.RequestServices.GetRequiredService<AuditService>().LogAsync(me.DisplayName, "delivery.detached", $"delivery {d.Id}", d.PackageId);
             return (true, "The delivery is manual now; the template no longer changes it.");
         });
 

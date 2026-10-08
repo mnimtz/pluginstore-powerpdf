@@ -7,12 +7,14 @@ namespace AddonStore.Web.Validation;
 /// </summary>
 public static class PeImports
 {
-    public record Result(HashSet<string> Dlls, HashSet<string> Functions);
+    /// <summary>OrdinalDlls (S1.13.1): DLLs from which functions are imported by number instead of by name.</summary>
+    public record Result(HashSet<string> Dlls, HashSet<string> Functions, HashSet<string>? OrdinalDlls = null);
 
     public static Result Read(byte[] bytes)
     {
         var dlls = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var funcs = new HashSet<string>(StringComparer.Ordinal);
+        var ordinals = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         try
         {
             if (bytes.Length < 0x40 || bytes[0] != 'M' || bytes[1] != 'Z') return new(dlls, funcs);
@@ -48,7 +50,7 @@ public static class PeImports
                 int end = Array.IndexOf(bytes, (byte)0, (int)o, (int)Math.Min(max, bytes.Length - o));
                 return end < 0 ? null : System.Text.Encoding.ASCII.GetString(bytes, (int)o, end - (int)o);
             }
-            void Thunks(uint rva)
+            void Thunks(uint rva, string? dll)
             {
                 if (!seen.Add(rva)) return;
                 long o = Off(rva);
@@ -56,7 +58,7 @@ public static class PeImports
                 {
                     ulong t = BitConverter.ToUInt64(bytes, (int)o);
                     if (t == 0) break;
-                    if ((t & 0x8000000000000000UL) != 0) continue;      // by ordinal
+                    if ((t & 0x8000000000000000UL) != 0) { if (dll is not null) ordinals.Add(dll); continue; }   // by ordinal
                     var name = Str((uint)(t & 0x7FFFFFFF) + 2, 512);     // skip the 2-byte hint
                     if (!string.IsNullOrEmpty(name)) funcs.Add(name);
                 }
@@ -74,8 +76,9 @@ public static class PeImports
                     uint ilt = BitConverter.ToUInt32(bytes, (int)d), nameRva = BitConverter.ToUInt32(bytes, (int)d + 12),
                          iat = BitConverter.ToUInt32(bytes, (int)d + 16);
                     if (nameRva == 0) break;
-                    if (Str(nameRva) is { } dll) dlls.Add(dll);
-                    Thunks(ilt != 0 ? ilt : iat);
+                    var dll = Str(nameRva);
+                    if (dll is not null) dlls.Add(dll);
+                    Thunks(ilt != 0 ? ilt : iat, dll);
                 }
 
             // delay-load import directory (data directory 13): 32-byte descriptors
@@ -89,14 +92,15 @@ public static class PeImports
                     if (d + 32 > bytes.Length) break;
                     uint nameRva = BitConverter.ToUInt32(bytes, (int)d + 4), intRva = BitConverter.ToUInt32(bytes, (int)d + 16);
                     if (nameRva == 0) break;
-                    if (Str(nameRva) is { } dll) dlls.Add(dll);
-                    if (intRva != 0) Thunks(intRva);
+                    var dll = Str(nameRva);
+                    if (dll is not null) dlls.Add(dll);
+                    if (intRva != 0) Thunks(intRva, dll);
                 }
         }
         catch
         {
             // best effort
         }
-        return new(dlls, funcs);
+        return new(dlls, funcs, ordinals);
     }
 }

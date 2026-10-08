@@ -143,7 +143,18 @@ public class PackageMetaService
         if (issues.Any(i => i.Severity == "error")) return issues;
 
         var changed = new List<string>();
-        if (c.SetVisibility && pkg.Visibility != c.Visibility) { pkg.Visibility = c.Visibility!; changed.Add($"visibility {pkg.Visibility}"); }
+        if (c.SetVisibility && pkg.Visibility != c.Visibility)
+        {
+            // private approvals were for customer deliveries only: public versions are reviewed again (S1.13.1)
+            if (pkg.Visibility == "private" && c.Visibility == "public" && pkg.Id != SubmissionService.ClientPackageId)
+            {
+                var approved = await _db.PackageVersions.Where(v => v.PackageId == pkg.Id && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)).ToListAsync();
+                foreach (var v in approved) { v.Status = VersionStatus.Submitted; v.ReviewedAt = null; v.ReviewedById = null; }
+                if (approved.Count > 0) changed.Add($"{approved.Count} privately approved version(s) wait for a public review");
+            }
+            pkg.Visibility = c.Visibility!;
+            changed.Add($"visibility {pkg.Visibility}");
+        }
         if (c.SetName) { pkg.NameJson = c.Name is null ? null : JsonSerializer.Serialize(c.Name); changed.Add(c.Name is null ? "name reset" : "name"); }
         if (c.SetDescription) { pkg.DescriptionJson = c.Description is null ? null : JsonSerializer.Serialize(c.Description); changed.Add(c.Description is null ? "description reset" : "description"); }
         if (c.SetAuthor) { pkg.Author = string.IsNullOrWhiteSpace(c.Author) ? null : c.Author; changed.Add(pkg.Author is null ? "author reset" : $"author '{pkg.Author}'"); }

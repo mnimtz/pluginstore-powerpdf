@@ -296,7 +296,12 @@ public class CustomerService
             d.StartsAt = startsAt; d.EndsAt = endsAt;
         }
         if (status is not null) d.Status = status;
-        d.TemplateId = null;   // changed by hand: a manual delivery from now on (S1.13.0)
+        // changed by hand: a manual delivery from now on (S1.13.0); only a real change of stages, period or status
+        // detaches it (S1.13.1: a seat limit alone keeps it with its template)
+        if (d.TemplateId is not null && _db.Entry(d).Properties.Any(p => p.IsModified && p.Metadata.Name is
+                nameof(Delivery.BetaMode) or nameof(Delivery.BetaVersion) or nameof(Delivery.LiveMode) or nameof(Delivery.LiveVersion)
+                or nameof(Delivery.StartsAt) or nameof(Delivery.EndsAt) or nameof(Delivery.Status)))
+            d.TemplateId = null;
         d.UpdatedAt = DateTime.UtcNow;
         await _db.SaveChangesAsync();
         await _audit.LogAsync(actor.DisplayName, "delivery.updated", $"delivery {d.Id}",
@@ -411,6 +416,21 @@ public class CustomerService
 
     /// <summary>The valid codes of the X-Customer-Code header, under the per-address guessing limit.</summary>
     private async Task<List<CustomerCode>> ValidCodesAsync(HttpContext ctx) => (await LookupAsync(ctx)).Codes;
+
+    /// <summary>
+    /// Is the catalog of this request limited to deliveries (S1.12.0/S1.13.0)? From the customers of its valid codes,
+    /// whatever their deliveries look like: a paused customer or one without a current delivery stays limited.
+    /// </summary>
+    public async Task<bool> IsRestrictedAsync(HttpContext ctx)
+    {
+        const string key = "PSRestricted";
+        if (ctx.Items.TryGetValue(key, out var cached) && cached is bool b) return b;
+        var ids = (await ValidCodesAsync(ctx)).Select(c => c.CustomerId).Distinct().ToList();
+        var r = ids.Count > 0 && (await _db.Customers.AsNoTracking().AnyAsync(c => ids.Contains(c.Id) && c.RestrictCatalog) ||
+                                  (await TemplateService.RestrictedByTemplateAsync(_db, ids)).Count > 0);
+        ctx.Items[key] = r;
+        return r;
+    }
 
     /// <summary>
     /// Customer codes and developer test codes (S1.6.0) of the header, under one per-address
@@ -543,6 +563,14 @@ public class CustomerService
     /// limit; above it, codes from that address are ignored for an hour.
     /// </summary>
     public async Task<List<Granted>> GrantsAsync(HttpContext ctx)
+    {
+        if (ctx.Items.TryGetValue("PSGrants", out var cached) && cached is List<Granted> known) return known;
+        var result0 = await GrantsCoreAsync(ctx);
+        ctx.Items["PSGrants"] = result0;
+        return result0;
+    }
+
+    private async Task<List<Granted>> GrantsCoreAsync(HttpContext ctx)
     {
         var codes = await ValidCodesAsync(ctx);
         if (codes.Count == 0) return new();

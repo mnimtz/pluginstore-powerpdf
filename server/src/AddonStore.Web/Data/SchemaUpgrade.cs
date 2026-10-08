@@ -183,7 +183,10 @@ public static class SchemaUpgrade
             "CREATE UNIQUE INDEX IF NOT EXISTS IX_CustomerDomains_Domain ON CustomerDomains (Domain)",
             // approval for beta or live (S1.6.0): a beta version nobody reviewed waits for review now;
             // reviewed beta versions stay approved for beta (idempotent: new uploads land in Submitted)
-            "UPDATE PackageVersions SET Status = 0 WHERE Status = 1 AND ReviewedAt IS NULL AND PackageId <> 'com.tungsten.pluginstore'"
+            "UPDATE PackageVersions SET Status = 0 WHERE Status = 1 AND ReviewedAt IS NULL AND PackageId <> 'com.tungsten.pluginstore' " +
+                "AND NOT EXISTS (SELECT 1 FROM AppSettings WHERE \"Key\" = 'Migration.S160')",
+            // S1.13.1: from now on the migration above is done
+            "INSERT INTO AppSettings (\"Key\", \"Value\") SELECT 'Migration.S160', 'done' WHERE NOT EXISTS (SELECT 1 FROM AppSettings WHERE \"Key\" = 'Migration.S160')"
         })
         {
             // Only what is missing runs (S0.18.1): on the network share every statement

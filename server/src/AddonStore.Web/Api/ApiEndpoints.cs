@@ -370,7 +370,7 @@ public static class ApiEndpoints
                 if (!storeAllowed) items.RemoveAll(i => i.Id != SubmissionService.ClientPackageId);
                 var tests = storeAllowed ? await customers.TestGrantsAsync(ctx) : new();   // the developer's test code (S1.6.0)
                 // a customer whose catalog is limited to its deliveries (S1.12.0): only the store client stays public
-                if (grants.Any(g => g.Restricted)) items.RemoveAll(i => i.Id != SubmissionService.ClientPackageId);
+                if (storeAllowed && await customers.IsRestrictedAsync(ctx)) items.RemoveAll(i => i.Id != SubmissionService.ClientPackageId);
                 if (grants.Count > 0 || tests.Count > 0)
                 {
                     var cctx = await Services.CatalogUi.Context.LoadAsync(db);
@@ -416,7 +416,7 @@ public static class ApiEndpoints
             }
 
             var entries = await CatalogAsync(db, beta, Base(ctx), grants, signing, storeAllowed ? await customers.TestGrantsAsync(ctx) : new(),
-                                             clientOnly: !storeAllowed);
+                                             clientOnly: !storeAllowed, restricted: storeAllowed && await customers.IsRestrictedAsync(ctx));
             return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live", packages = entries } });
         });
 
@@ -436,6 +436,8 @@ public static class ApiEndpoints
         {
             if (UsageService.Classify(ctx).Source != "client") return Fail("CLIENT_ONLY", "Only the Add-on Store client reports its state.", 403);
             var r = await inventory.RecordAsync(ctx, body);
+            // 429 lets a store client try again at its next check instead of taking the day as done (S1.13.1)
+            if (r == "rate limited") return Fail("RATE_LIMITED", "Too many reports from this address; try again later.", 429);
             return Results.Json(new { ok = true, data = new { stored = r == "stored", result = r } });
         });
 
@@ -679,7 +681,7 @@ public static class ApiEndpoints
             if (string.IsNullOrWhiteSpace(ctx.Request.Headers[CustomerService.HeaderName].ToString()))
                 return Results.Json(new { ok = false, error = new { code = "CODE_MISSING", message = "Send the customer code in the X-Customer-Code header.", hint = "The code never goes into the URL." } }, statusCode: 400);
             var (valid, customer, addons, packages, seats) = await customers.CheckWithSeatsAsync(ctx);
-            var restricted = valid && (await customers.GrantsAsync(ctx)).Any(g => g.Restricted);
+            var restricted = await customers.IsRestrictedAsync(ctx);   // also for a paused customer (S1.13.1)
             return Results.Json(new { ok = true, data = new { valid, customer = valid ? customer : null, addons, packages,
                 installs = seats.Select(s => new { package = s.Package, used = s.Used, max = s.Max }), restricted } });
         });
@@ -1566,7 +1568,7 @@ public static class ApiEndpoints
             if (!staff && id != SubmissionService.ClientPackageId && !await customers.IsTestVersionAsync(ctx, id, version))
             {
                 var held = await customers.GrantsAsync(ctx);
-                if (held.Any(g => g.Restricted) &&
+                if (await customers.IsRestrictedAsync(ctx) &&
                     !held.Any(g => g.Package.Id == id && (g.Beta?.Version == version || g.Live?.Version == version)))
                     return Results.Json(new { ok = false, error = new { code = "NOT_DELIVERED",
                         message = $"{id} {version} is not delivered to this customer.",
@@ -1824,7 +1826,7 @@ public static class ApiEndpoints
 
     public static async Task<List<object>> CatalogAsync(AppDbContext db, bool includeBeta, string baseUrl,
                                                          List<CustomerService.Granted>? grants = null, PackageSigning? signing = null,
-                                                         List<CustomerService.TestGrant>? tests = null, bool clientOnly = false)
+                                                         List<CustomerService.TestGrant>? tests = null, bool clientOnly = false, bool restricted = false)
     {
         tests ??= new();
         if (signing is not null) await signing.EnsureLoadedAsync();
@@ -1844,7 +1846,6 @@ public static class ApiEndpoints
             .Where(v => db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private"))
             .Select(v => v.PackageId).Distinct().ToListAsync()).Where(i => i != SubmissionService.ClientPackageId).ToList();
         // a customer whose catalog is limited to its deliveries (S1.12.0): its codes hide the public catalog
-        var restricted = grants?.Any(g => g.Restricted) == true;
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live)
