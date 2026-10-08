@@ -170,6 +170,9 @@
 #define IDS_PSW_UPD_NONE        365
 #define IDS_PSW_UPD_STORE       366
 #define IDS_PSW_UPD_FROMTO      367
+#define IDS_PS_BTN_UPD_SHORT    368
+#define IDS_PS_TIP_UPD_NONE     369
+#define IDS_PS_TIP_UPD_SOME     370
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261

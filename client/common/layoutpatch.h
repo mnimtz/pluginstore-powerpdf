@@ -273,26 +273,25 @@ inline bool RemoveGroup(std::wstring& text, const wchar_t* name)
 }
 
 // "Updates available" (C1.7.0): our own group at the end of Power PDF's Help tab ("help").
-// C1.9.0: a new group (new atoms, the host caches a group's button list by name) that is always there,
-// so "Updates available" can appear at run time; the C1.7.0 group AddonStore::Updates is removed.
-static const wchar_t kHelpGroup[] = L"AddonStore::Help";
-static const wchar_t kHelpButtons[2][32] = { L"AddonStore::Help::Store", L"AddonStore::Help::Updates" };
-static const wchar_t kOldHelpGroup[] = L"AddonStore::Updates";
+// C1.9.1: one "Updates" button that is always there (new atoms again: the host caches a group's button
+// list by name); the groups of C1.7.0 (AddonStore::Updates) and C1.9.0 (AddonStore::Help) are removed.
+static const wchar_t kHelpGroup[] = L"AddonStore::HelpTab";
+static const wchar_t kHelpButtons[1][36] = { L"AddonStore::HelpTab::Updates" };
+static const wchar_t* const kOldHelpGroups[] = { L"AddonStore::Updates", L"AddonStore::Help" };
 inline bool EnsureHelpGroup(std::wstring& text)
 {
     bool changed = false;
-    // the group of C1.7.0 goes (its only button moved into the new group)
-    size_t old = text.find(std::wstring(L"<PFFGroup name=\"") + kOldHelpGroup + L"\"");
-    if (old != std::wstring::npos)
+    // the earlier groups go (their buttons moved into the new one)
+    for (const wchar_t* oldName : kOldHelpGroups)
     {
+        size_t old = text.find(std::wstring(L"<PFFGroup name=\"") + oldName + L"\"");
+        if (old == std::wstring::npos) continue;
         size_t close = text.find(L"</PFFGroup>", old);
-        if (close != std::wstring::npos)
-        {
-            close += 11;
-            while (close < text.size() && (text[close] == L'\r' || text[close] == L'\n')) ++close;
-            text.erase(old, close - old);
-            changed = true;
-        }
+        if (close == std::wstring::npos) continue;
+        close += 11;
+        while (close < text.size() && (text[close] == L'\r' || text[close] == L'\n')) ++close;
+        text.erase(old, close - old);
+        changed = true;
     }
     if (text.find(std::wstring(L"\"") + kHelpGroup + L"\"") != std::wstring::npos) return changed;
     size_t tb = text.find(L"<toolbar name=\"help\"");

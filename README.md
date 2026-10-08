@@ -366,6 +366,13 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**One "Updates" button in the Help tab (client 1.9.1):** the Help tab group
+is `AddonStore::HelpTab` with a single button `AddonStore::HelpTab::Updates`,
+always there; it opens the "Available updates" view, and while updates are
+pending its icon gets the amber dot and its tooltip the number. The groups of
+1.7.0 and 1.9.0 (`AddonStore::Updates`, `AddonStore::Help` with its extra
+"Add-on Store" button) are removed from the user layout.
+
 **Available updates (client 1.9.0):**
 - The Help tab group is now `AddonStore::Help` (new atoms; the C1.7.0 group
   `AddonStore::Updates` is removed from the user layout) and always there

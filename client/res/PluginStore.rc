@@ -253,6 +253,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Everything is up to date."
     IDS_PSW_UPD_STORE  "All add-ons"
     IDS_PSW_UPD_FROMTO  "Installed: %s  ·  New: %s"
+    IDS_PS_BTN_UPD_SHORT  "Updates"
+    IDS_PS_TIP_UPD_NONE  "Shows the available updates for Power PDF, the Add-on Store and your add-ons, with their description."
+    IDS_PS_TIP_UPD_SOME  "%d update(s) available for Power PDF, the Add-on Store or your add-ons. Click to see them with their description."
     IDS_PSD_MSG_SEATS  "All installations of this add-on for your organization are in use. Remove it on a computer that no longer needs it, or ask your provider for more installations."
 END
 
@@ -410,6 +413,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Alles ist aktuell."
     IDS_PSW_UPD_STORE  "Alle Add-ons"
     IDS_PSW_UPD_FROMTO  "Installiert: %s  ·  Neu: %s"
+    IDS_PS_BTN_UPD_SHORT  "Updates"
+    IDS_PS_TIP_UPD_NONE  "Zeigt verfügbare Updates für Power PDF, den Add-on Store und Ihre Add-ons mit ihrer Beschreibung."
+    IDS_PS_TIP_UPD_SOME  "%d Update(s) verfügbar für Power PDF, den Add-on Store oder Ihre Add-ons. Klicken Sie, um sie mit Beschreibung zu sehen."
     IDS_PSD_MSG_SEATS  "Alle Installationen dieses Add-ons für Ihre Organisation sind belegt. Entfernen Sie es auf einem Computer, der es nicht mehr benötigt, oder bitten Sie Ihren Anbieter um weitere Installationen."
 END
 
@@ -567,6 +573,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Tout est à jour."
     IDS_PSW_UPD_STORE  "Tous les modules"
     IDS_PSW_UPD_FROMTO  "Installée : %s  ·  Nouvelle : %s"
+    IDS_PS_BTN_UPD_SHORT  "Mises à jour"
+    IDS_PS_TIP_UPD_NONE  "Affiche les mises à jour disponibles pour Power PDF, l'Add-on Store et vos modules, avec leur description."
+    IDS_PS_TIP_UPD_SOME  "%d mise(s) à jour disponible(s) pour Power PDF, l'Add-on Store ou vos modules. Cliquez pour les voir avec leur description."
     IDS_PSD_MSG_SEATS  "Toutes les installations de ce module pour votre organisation sont utilisées. Supprimez-le d'un ordinateur qui n'en a plus besoin ou demandez des installations supplémentaires à votre fournisseur."
 END
 
@@ -724,6 +733,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "È tutto aggiornato."
     IDS_PSW_UPD_STORE  "Tutti i componenti aggiuntivi"
     IDS_PSW_UPD_FROMTO  "Installata: %s  ·  Nuova: %s"
+    IDS_PS_BTN_UPD_SHORT  "Aggiornamenti"
+    IDS_PS_TIP_UPD_NONE  "Mostra gli aggiornamenti disponibili per Power PDF, l'Add-on Store e i tuoi componenti aggiuntivi, con la loro descrizione."
+    IDS_PS_TIP_UPD_SOME  "%d aggiornamento/i disponibile/i per Power PDF, l'Add-on Store o i tuoi componenti aggiuntivi. Fai clic per vederli con la descrizione."
     IDS_PSD_MSG_SEATS  "Tutte le installazioni di questo componente aggiuntivo per l'organizzazione sono in uso. Rimuovilo da un computer che non ne ha più bisogno oppure chiedi altre installazioni al fornitore."
 END
 
@@ -881,6 +893,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Todo está actualizado."
     IDS_PSW_UPD_STORE  "Todos los complementos"
     IDS_PSW_UPD_FROMTO  "Instalada: %s  ·  Nueva: %s"
+    IDS_PS_BTN_UPD_SHORT  "Actualizaciones"
+    IDS_PS_TIP_UPD_NONE  "Muestra las actualizaciones disponibles para Power PDF, el Add-on Store y sus complementos, con su descripción."
+    IDS_PS_TIP_UPD_SOME  "%d actualización(es) disponible(s) para Power PDF, el Add-on Store o sus complementos. Haga clic para verlas con su descripción."
     IDS_PSD_MSG_SEATS  "Todas las instalaciones de este complemento para su organización están en uso. Quítelo de un equipo que ya no lo necesite o solicite más instalaciones a su proveedor."
 END
 
@@ -1038,6 +1053,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Alles is bijgewerkt."
     IDS_PSW_UPD_STORE  "Alle add-ons"
     IDS_PSW_UPD_FROMTO  "Geïnstalleerd: %s  ·  Nieuw: %s"
+    IDS_PS_BTN_UPD_SHORT  "Updates"
+    IDS_PS_TIP_UPD_NONE  "Toont de beschikbare updates voor Power PDF, de Add-on Store en uw add-ons, met hun beschrijving."
+    IDS_PS_TIP_UPD_SOME  "%d update(s) beschikbaar voor Power PDF, de Add-on Store of uw add-ons. Klik om ze met beschrijving te zien."
     IDS_PSD_MSG_SEATS  "Alle installaties van deze invoegtoepassing voor uw organisatie zijn in gebruik. Verwijder deze van een computer die deze niet meer nodig heeft, of vraag uw leverancier om meer installaties."
 END
 
@@ -1195,6 +1213,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Está tudo atualizado."
     IDS_PSW_UPD_STORE  "Todos os suplementos"
     IDS_PSW_UPD_FROMTO  "Instalada: %s  ·  Nova: %s"
+    IDS_PS_BTN_UPD_SHORT  "Atualizações"
+    IDS_PS_TIP_UPD_NONE  "Mostra as atualizações disponíveis para o Power PDF, a Add-on Store e os seus suplementos, com a respetiva descrição."
+    IDS_PS_TIP_UPD_SOME  "%d atualização(ões) disponível(is) para o Power PDF, a Add-on Store ou os seus suplementos. Clique para as ver com a descrição."
     IDS_PSD_MSG_SEATS  "Todas as instalações deste suplemento para sua organização estão em uso. Remova-o de um computador que não precisa mais dele ou peça mais instalações ao seu fornecedor."
 END
 
@@ -1352,6 +1373,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Alt er opdateret."
     IDS_PSW_UPD_STORE  "Alle tilføjelser"
     IDS_PSW_UPD_FROMTO  "Installeret: %s  ·  Ny: %s"
+    IDS_PS_BTN_UPD_SHORT  "Opdateringer"
+    IDS_PS_TIP_UPD_NONE  "Viser tilgængelige opdateringer til Power PDF, Add-on Store og dine tilføjelser med deres beskrivelse."
+    IDS_PS_TIP_UPD_SOME  "%d opdatering(er) tilgængelig(e) til Power PDF, Add-on Store eller dine tilføjelser. Klik for at se dem med beskrivelse."
     IDS_PSD_MSG_SEATS  "Alle installationer af dette tilføjelsesprogram for din organisation er i brug. Fjern det fra en computer, der ikke længere har brug for det, eller bed din udbyder om flere installationer."
 END
 
@@ -1509,6 +1533,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Kaikki on ajan tasalla."
     IDS_PSW_UPD_STORE  "Kaikki lisäosat"
     IDS_PSW_UPD_FROMTO  "Asennettu: %s  ·  Uusi: %s"
+    IDS_PS_BTN_UPD_SHORT  "Päivitykset"
+    IDS_PS_TIP_UPD_NONE  "Näyttää Power PDF:n, Add-on Storen ja lisäosiesi saatavilla olevat päivitykset kuvauksineen."
+    IDS_PS_TIP_UPD_SOME  "%d päivitys(tä) saatavilla Power PDF:lle, Add-on Storelle tai lisäosillesi. Napsauta nähdäksesi ne kuvauksineen."
     IDS_PSD_MSG_SEATS  "Kaikki tämän apuohjelman asennukset organisaatiollesi ovat käytössä. Poista se tietokoneesta, joka ei enää tarvitse sitä, tai pyydä toimittajaltasi lisää asennuksia."
 END
 
@@ -1666,6 +1693,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Alt er oppdatert."
     IDS_PSW_UPD_STORE  "Alle tillegg"
     IDS_PSW_UPD_FROMTO  "Installert: %s  ·  Ny: %s"
+    IDS_PS_BTN_UPD_SHORT  "Oppdateringer"
+    IDS_PS_TIP_UPD_NONE  "Viser tilgjengelige oppdateringer for Power PDF, Add-on Store og tilleggene dine, med beskrivelse."
+    IDS_PS_TIP_UPD_SOME  "%d oppdatering(er) tilgjengelig for Power PDF, Add-on Store eller tilleggene dine. Klikk for å se dem med beskrivelse."
     IDS_PSD_MSG_SEATS  "Alle installasjoner av dette tillegget for organisasjonen din er i bruk. Fjern det fra en datamaskin som ikke lenger trenger det, eller be leverandøren din om flere installasjoner."
 END
 
@@ -1823,6 +1853,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Allt är uppdaterat."
     IDS_PSW_UPD_STORE  "Alla tillägg"
     IDS_PSW_UPD_FROMTO  "Installerad: %s  ·  Ny: %s"
+    IDS_PS_BTN_UPD_SHORT  "Uppdateringar"
+    IDS_PS_TIP_UPD_NONE  "Visar tillgängliga uppdateringar för Power PDF, Add-on Store och dina tillägg, med beskrivning."
+    IDS_PS_TIP_UPD_SOME  "%d uppdatering(ar) tillgänglig(a) för Power PDF, Add-on Store eller dina tillägg. Klicka för att se dem med beskrivning."
     IDS_PSD_MSG_SEATS  "Alla installationer av det här tillägget för din organisation används. Ta bort det från en dator som inte längre behöver det, eller be din leverantör om fler installationer."
 END
 
@@ -1980,6 +2013,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Wszystko jest aktualne."
     IDS_PSW_UPD_STORE  "Wszystkie dodatki"
     IDS_PSW_UPD_FROMTO  "Zainstalowana: %s  ·  Nowa: %s"
+    IDS_PS_BTN_UPD_SHORT  "Aktualizacje"
+    IDS_PS_TIP_UPD_NONE  "Pokazuje dostępne aktualizacje programu Power PDF, sklepu Add-on Store i Twoich dodatków wraz z opisem."
+    IDS_PS_TIP_UPD_SOME  "Dostępne aktualizacje (%d) programu Power PDF, sklepu Add-on Store lub Twoich dodatków. Kliknij, aby zobaczyć je z opisem."
     IDS_PSD_MSG_SEATS  "Wszystkie instalacje tego dodatku dla Twojej organizacji są w użyciu. Usuń go z komputera, który już go nie potrzebuje, lub poproś dostawcę o więcej instalacji."
 END
 
@@ -2137,6 +2173,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Vše je aktuální."
     IDS_PSW_UPD_STORE  "Všechny doplňky"
     IDS_PSW_UPD_FROMTO  "Nainstalovaná: %s  ·  Nová: %s"
+    IDS_PS_BTN_UPD_SHORT  "Aktualizace"
+    IDS_PS_TIP_UPD_NONE  "Zobrazí dostupné aktualizace pro Power PDF, Add-on Store a vaše doplňky s jejich popisem."
+    IDS_PS_TIP_UPD_SOME  "Dostupné aktualizace (%d) pro Power PDF, Add-on Store nebo vaše doplňky. Kliknutím je zobrazíte s popisem."
     IDS_PSD_MSG_SEATS  "Všechny instalace tohoto doplňku pro vaši organizaci jsou využité. Odeberte ho z počítače, který ho už nepotřebuje, nebo požádejte poskytovatele o další instalace."
 END
 
@@ -2294,6 +2333,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Minden naprakész."
     IDS_PSW_UPD_STORE  "Összes bővítmény"
     IDS_PSW_UPD_FROMTO  "Telepített: %s  ·  Új: %s"
+    IDS_PS_BTN_UPD_SHORT  "Frissítések"
+    IDS_PS_TIP_UPD_NONE  "Megjeleníti a Power PDF, az Add-on Store és a bővítményei elérhető frissítéseit a leírásukkal."
+    IDS_PS_TIP_UPD_SOME  "%d frissítés érhető el a Power PDF-hez, az Add-on Store-hoz vagy a bővítményeihez. Kattintson, hogy leírással együtt lássa őket."
     IDS_PSD_MSG_SEATS  "Ennek a bővítménynek a szervezete számára elérhető összes telepítése használatban van. Távolítsa el egy olyan számítógépről, amelyen már nincs rá szükség, vagy kérjen további telepítéseket a szolgáltatójától."
 END
 
@@ -2451,6 +2493,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Все обновлено."
     IDS_PSW_UPD_STORE  "Все надстройки"
     IDS_PSW_UPD_FROMTO  "Установлена: %s  ·  Новая: %s"
+    IDS_PS_BTN_UPD_SHORT  "Обновления"
+    IDS_PS_TIP_UPD_NONE  "Показывает доступные обновления для Power PDF, Add-on Store и ваших надстроек с их описанием."
+    IDS_PS_TIP_UPD_SOME  "Доступно обновлений: %d (Power PDF, Add-on Store или ваши надстройки). Щелкните, чтобы увидеть их с описанием."
     IDS_PSD_MSG_SEATS  "Все установки этой надстройки для вашей организации уже используются. Удалите ее с компьютера, на котором она больше не нужна, или запросите дополнительные установки у поставщика."
 END
 
@@ -2608,6 +2653,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "Her şey güncel."
     IDS_PSW_UPD_STORE  "Tüm eklentiler"
     IDS_PSW_UPD_FROMTO  "Yüklü: %s  ·  Yeni: %s"
+    IDS_PS_BTN_UPD_SHORT  "Güncellemeler"
+    IDS_PS_TIP_UPD_NONE  "Power PDF, Add-on Store ve eklentileriniz için kullanılabilir güncellemeleri açıklamalarıyla birlikte gösterir."
+    IDS_PS_TIP_UPD_SOME  "Power PDF, Add-on Store veya eklentileriniz için %d güncelleme var. Açıklamalarıyla görmek için tıklayın."
     IDS_PSD_MSG_SEATS  "Kuruluşunuz için bu eklentinin tüm kurulumları kullanımda. Eklentiyi artık gerekmeyen bir bilgisayardan kaldırın veya sağlayıcınızdan ek kurulum isteyin."
 END
 
@@ -2763,6 +2811,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "一切均为最新。"
     IDS_PSW_UPD_STORE  "所有加载项"
     IDS_PSW_UPD_FROMTO  "已安装：%s  ·  新版本：%s"
+    IDS_PS_BTN_UPD_SHORT  "更新"
+    IDS_PS_TIP_UPD_NONE  "显示 Power PDF、Add-on Store 和您的加载项的可用更新及其说明。"
+    IDS_PS_TIP_UPD_SOME  "Power PDF、Add-on Store 或您的加载项有 %d 个可用更新。单击可查看更新及其说明。"
     IDS_PSD_MSG_SEATS  "您的组织已用完此加载项的所有安装数。请从不再需要它的计算机上删除该加载项，或向您的提供商申请更多安装数。"
 END
 
@@ -2921,6 +2972,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "所有項目皆為最新。"
     IDS_PSW_UPD_STORE  "所有增益集"
     IDS_PSW_UPD_FROMTO  "已安裝：%s  ·  新版本：%s"
+    IDS_PS_BTN_UPD_SHORT  "更新"
+    IDS_PS_TIP_UPD_NONE  "顯示 Power PDF、Add-on Store 和您的增益集的可用更新及其說明。"
+    IDS_PS_TIP_UPD_SOME  "Power PDF、Add-on Store 或您的增益集有 %d 個可用的更新。按一下即可檢視更新及其說明。"
     IDS_PSD_MSG_SEATS  "您的組織已用完此增益集的所有安裝數。請從不再需要它的電腦上移除此增益集，或向您的供應商申請更多安裝數。"
 END
 
@@ -3079,6 +3133,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "すべて最新の状態です。"
     IDS_PSW_UPD_STORE  "すべてのアドオン"
     IDS_PSW_UPD_FROMTO  "インストール済み: %s  ·  新しいバージョン: %s"
+    IDS_PS_BTN_UPD_SHORT  "更新プログラム"
+    IDS_PS_TIP_UPD_NONE  "Power PDF、Add-on Store、アドオンの利用可能な更新プログラムを説明付きで表示します。"
+    IDS_PS_TIP_UPD_SOME  "Power PDF、Add-on Store、またはアドオンに %d 件の更新プログラムがあります。クリックすると説明付きで表示されます。"
     IDS_PSD_MSG_SEATS  "組織で利用できるこのアドインのインストール数はすべて使用中です。不要になったコンピューターからアドインを削除するか、提供元に追加のインストールを依頼してください。"
 END
 
@@ -3237,6 +3294,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "모두 최신 상태입니다."
     IDS_PSW_UPD_STORE  "모든 추가 기능"
     IDS_PSW_UPD_FROMTO  "설치됨: %s  ·  새 버전: %s"
+    IDS_PS_BTN_UPD_SHORT  "업데이트"
+    IDS_PS_TIP_UPD_NONE  "Power PDF, Add-on Store 및 추가 기능의 사용 가능한 업데이트를 설명과 함께 표시합니다."
+    IDS_PS_TIP_UPD_SOME  "Power PDF, Add-on Store 또는 추가 기능에 사용 가능한 업데이트가 %d개 있습니다. 클릭하면 설명과 함께 표시됩니다."
     IDS_PSD_MSG_SEATS  "조직에 할당된 이 추가 기능의 설치 수를 모두 사용하고 있습니다. 더 이상 필요하지 않은 컴퓨터에서 추가 기능을 제거하거나 공급자에게 추가 설치를 요청하십시오."
 END
 
@@ -3395,6 +3455,9 @@ BEGIN
     IDS_PSW_UPD_NONE  "كل شيء محدّث."
     IDS_PSW_UPD_STORE  "كل الإضافات"
     IDS_PSW_UPD_FROMTO  "المثبّت: %s  ·  الجديد: %s"
+    IDS_PS_BTN_UPD_SHORT  "التحديثات"
+    IDS_PS_TIP_UPD_NONE  "يعرض التحديثات المتاحة لـ Power PDF وAdd-on Store والإضافات الخاصة بك مع وصفها."
+    IDS_PS_TIP_UPD_SOME  "تتوفر %d من التحديثات لـ Power PDF أو Add-on Store أو الإضافات الخاصة بك. انقر لعرضها مع وصفها."
     IDS_PSD_MSG_SEATS  "جميع عمليات التثبيت المتاحة لمؤسستك لهذه الوظيفة الإضافية قيد الاستخدام. قم بإزالتها من جهاز كمبيوتر لم يعد بحاجة إليها، أو اطلب من المورّد المزيد من عمليات التثبيت."
 END
 
