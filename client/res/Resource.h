@@ -161,6 +161,10 @@
 #define IDS_PSW_PP_NEWS         356
 #define IDS_PSW_PP_HIDE         357
 #define IDS_PSW_PP_INSTALL_HINT 358
+#define IDS_PSO_NOTICE          359
+#define IDS_PS_BTN_UPDATES      360
+#define IDS_PS_TIP_UPDATES_HELP 361
+#define IDS_PS_NOTICE_TEXT      362
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261
@@ -185,6 +189,7 @@
 #define IDC_PSO_CODE            1470
 #define IDC_PSO_CODE_INFO       1471
 #define IDC_PSO_PPUPD           1472
+#define IDC_PSO_NOTICE          1473
 
 // ---- store dialog ----
 #define IDD_PS_DIALOG           1500

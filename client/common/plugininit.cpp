@@ -17,6 +17,7 @@
 #include "logging.h"
 
 void PSRegisterUI(RVToolBar bar);           // store/ribbon.cpp
+void PSRegisterHelpUI();                     // store/ribbon.cpp: "Updates available" on the Help tab (C1.7.0)
 void PSSettingsLoad();                      // store/settings.cpp
 void PSRegisterOptionsPage(const char*);    // common/optionspage.cpp
 extern ExtensionID gExtensionID;            // common/pimain.cpp
@@ -61,6 +62,7 @@ DCCB1 DUBool DCCB2 PluginInit()
     if (!bar) return false;
 
     DURING PSRegisterUI(bar); HANDLER END_HANDLER
+    DURING PSRegisterHelpUI(); HANDLER END_HANDLER
 
     // ---- Options category + page -------------------------------------------
     // A prefs TYPE with ZERO pages CRASHES Power PDF when the category opens,

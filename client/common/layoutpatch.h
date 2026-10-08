@@ -272,6 +272,21 @@ inline bool RemoveGroup(std::wstring& text, const wchar_t* name)
     return changed;
 }
 
+// "Updates available" (C1.7.0): our own group at the end of Power PDF's Help tab ("help").
+static const wchar_t kHelpGroup[] = L"AddonStore::Updates";
+static const wchar_t kHelpButton[] = L"AddonStore::Updates::Open";
+inline bool EnsureHelpGroup(std::wstring& text)
+{
+    if (text.find(std::wstring(L"\"") + kHelpGroup + L"\"") != std::wstring::npos) return false;
+    size_t tb = text.find(L"<toolbar name=\"help\"");
+    if (tb == std::wstring::npos) return false;
+    size_t end = text.find(L"</toolbar>", tb);
+    if (end == std::wstring::npos) return false;
+    text.insert(end, std::wstring(L"<PFFGroup name=\"") + kHelpGroup + L"\" GroupType=\"PFFTitleBlock\">\n<PFFButton name=\"" +
+                     kHelpButton + L"\" IconMode=\"4\"/>\n</PFFGroup>\n");
+    return true;
+}
+
 inline bool EnsureGroup(std::wstring& text, const GroupDef& g)
 {
     std::wstring tag = std::wstring(L"\"") + g.name + L"\"";
@@ -567,6 +582,7 @@ inline int ApplyButtons()
             if (EnforceButtonOrder(text, kGroups[gi])) changed = true;
         }
         if (PatchButtons(text)) changed = true;
+        if (EnsureHelpGroup(text)) changed = true;   // C1.7.0
         if (CleanLeftPanel(text)) changed = true;   // never touch the native <Left> bar; strip old entries
         if (!changed) continue;
 

@@ -10,6 +10,12 @@
 #include "logging.h"
 #include "blocklist.h"
 #include "access.h"
+#include "http.h"
+#include "hostversion.h"
+#include "loc.h"
+#include "Resource.h"
+#include <algorithm>
+#include <memory>
 
 extern "C" HINSTANCE gHINSTANCE;
 
@@ -18,18 +24,37 @@ namespace {
 HWND g_linkWnd = NULL;
 }
 void PSRibbonSetUpdateBadge(int count);   // ribbon.cpp
+void PSRibbonOpenStore();                  // ribbon.cpp: the same checks as the ribbon button
 namespace {
 UINT g_openMsg = 0;
 int  g_startupTries = 0;
 const UINT_PTR kStartupTimer = 1;
 const UINT_PTR kUpdateTimer = 2;
-const UINT WM_PS_UPDATES = WM_APP + 77;   // wParam = number of updates
+const UINT WM_PS_UPDATES = WM_APP + 77;   // lParam = UpdateResult*
+const UINT_PTR kNoticeTimer = 6;           // one-time notice (C1.7.0): retried while Power PDF is busy
 const UINT_PTR kBlockTimer = 3;            // security blocklist (C1.1.5): 20 s after start, then every 4 h
 const UINT WM_PS_BLOCKED = WM_APP + 78;    // lParam = std::vector<PSBlocked>*
 const UINT kBlockEveryMs = 4 * 60 * 60 * 1000;
 const UINT_PTR kAccessTimer = 5;           // allowed license mode (C1.5.0): 3 s after start, then every 4 h
 const UINT WM_PS_ACCESS = WM_APP + 79;     // wParam = 1 allowed, 0 not
 volatile LONG g_checkRunning = 0;
+
+// What the update check found (C1.7.0): every pending update as "id@version" and its display name.
+struct UpdateResult { int count = 0; std::vector<std::wstring> keys, names; };
+std::unique_ptr<UpdateResult> g_notice;    // a notice waiting for Power PDF to be idle (UI thread only)
+
+// Tiny JSON helper for the flat Power PDF update answer: a string field, "" when missing or null.
+std::wstring JsonStr(const std::wstring& j, const wchar_t* key)
+{
+    std::wstring k = std::wstring(L"\"") + key + L"\":";
+    size_t p = j.find(k);
+    if (p == std::wstring::npos) return std::wstring();
+    p += k.size();
+    while (p < j.size() && j[p] == L' ') ++p;
+    if (p >= j.size() || j[p] != L'"') return std::wstring();
+    size_t e = j.find(L'"', p + 1);
+    return e == std::wstring::npos || e - p > 200 ? std::wstring() : j.substr(p + 1, e - p - 1);
+}
 
 // Worker: fetch the catalog, count newer versions, report to the window.
 // It holds its own reference on this DLL, so an unload while it waits for
@@ -39,22 +64,41 @@ DWORD WINAPI UpdateCheckThread(LPVOID p)
     std::wstring* lang = static_cast<std::wstring*>(p);
     std::vector<PSCatalogEntry> all;
     std::wstring err;
-    int count = -1;
+    UpdateResult* r = nullptr;
     if (PSFetchCatalogFor(*lang, all, err))
     {
-        count = 0;
+        r = new UpdateResult();
         for (const auto& e : all)
         {
             if (e.id == L"com.tungsten.pluginstore")
             {
-                if (!PSPolicyNoSelfUpdate() && PSCompareVersions(e.version, FP_VERSION_W) > 0) ++count;
+                if (!PSPolicyNoSelfUpdate() && PSCompareVersions(e.version, FP_VERSION_W) > 0)
+                { r->keys.push_back(e.id + L"@" + e.version); r->names.push_back(L"Add-on Store " + e.version); }
             }
             else if (!PSPolicyNoInstall() && !e.installedVersion.empty() && e.installedVersion != L"?" &&
-                     PSCompareVersions(e.version, e.installedVersion) > 0) ++count;
+                     PSCompareVersions(e.version, e.installedVersion) > 0)
+            { r->keys.push_back(e.id + L"@" + e.version); r->names.push_back(e.name + L" " + e.version); }
         }
+        // the Power PDF update of this release line (C1.7.0), when the hint is on and the server offers one
+        std::wstring host = PSHostVersion();
+        bool plain = !host.empty() && host.size() < 30 && std::all_of(host.begin(), host.end(), [](wchar_t c) { return iswdigit(c) || c == L'.'; });
+        if (PSPowerPdfHint() && plain)
+        {
+            std::string body;
+            DWORD status = 0;
+            if (PSHttpGetText(PSServerUrl() + L"/api/powerpdf/update?version=" + host + L"&lang=" + *lang, body, &status) && status == 200)
+            {
+                std::wstring j(body.begin(), body.end());   // the fields used here are ASCII
+                std::wstring latest = JsonStr(j, L"latest");
+                if (j.find(L"\"newer\":true") != std::wstring::npos && !latest.empty() && latest != PSPowerPdfHiddenUpdate() &&
+                    std::all_of(latest.begin(), latest.end(), [](wchar_t c) { return iswdigit(c) || c == L'.'; }))
+                { r->keys.push_back(L"powerpdf@" + latest); r->names.push_back(L"Power PDF " + latest); }
+            }
+        }
+        r->count = (int)r->keys.size();
     }
     delete lang;
-    if (g_linkWnd && count >= 0) PostMessageW(g_linkWnd, WM_PS_UPDATES, (WPARAM)count, 0);
+    if (!r || !g_linkWnd || !PostMessageW(g_linkWnd, WM_PS_UPDATES, 0, (LPARAM)r)) delete r;
     InterlockedExchange(&g_checkRunning, 0);
     FreeLibraryAndExitThread(gHINSTANCE, 0);
 }
@@ -135,7 +179,40 @@ LRESULT CALLBACK LinkWndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp)
     }
     if (msg == WM_PS_UPDATES)
     {
-        PSRibbonSetUpdateBadge((int)wp);
+        std::unique_ptr<UpdateResult> r(reinterpret_cast<UpdateResult*>(lp));
+        if (!r) return 0;
+        PSRibbonSetUpdateBadge(r->count);
+        PSSetPendingUpdates(r->count);   // the Help ribbon button reads it (also at the next start)
+        // one notice per new update (C1.7.0): only what the user was not told about yet
+        std::wstring told = L";" + PSNotifiedUpdates() + L";";
+        bool fresh = false;
+        for (const auto& k : r->keys) if (told.find(L";" + k + L";") == std::wstring::npos) fresh = true;
+        if (fresh && PSUpdateNotice() && PSStoreAllowed())
+        {
+            g_notice = std::move(r);
+            SetTimer(h, kNoticeTimer, 500, NULL);
+        }
+        return 0;
+    }
+    if (msg == WM_TIMER && wp == kNoticeTimer)
+    {
+        KillTimer(h, kNoticeTimer);
+        if (!g_notice) return 0;
+        // ask over the Power PDF main window, never over a modal dialog of Power PDF or the store window
+        HWND main = NULL;
+        EnumWindows(FindMain, (LPARAM)&main);
+        if (!main || !IsWindowEnabled(main) || PSStoreDialogOpen()) { SetTimer(h, kNoticeTimer, 60 * 1000, NULL); return 0; }
+        std::unique_ptr<UpdateResult> r = std::move(g_notice);
+        std::wstring list, keys;
+        for (size_t i = 0; i < r->names.size() && i < 8; ++i) list += L"\n- " + r->names[i];
+        if (r->names.size() > 8) list += L"\n- ...";
+        for (const auto& k : r->keys) keys += (keys.empty() ? L"" : L";") + k;
+        PSSetNotifiedUpdates(keys);   // told once, whatever the answer
+        wchar_t text[2400];
+        _snwprintf_s(text, _countof(text), _TRUNCATE, FPLoc(IDS_PS_NOTICE_TEXT).c_str(), list.c_str());
+        FPLogW(L"[Store] notice about %d new update(s)", r->count);
+        if (FPMessageBox(main, text, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONINFORMATION) == IDYES)
+            PSRibbonOpenStore();
         return 0;
     }
     if (msg == WM_TIMER && wp == kAccessTimer)

@@ -21,6 +21,17 @@ bool         PSUseClassicUI();
 bool         PSPowerPdfHint();
 bool         PSPowerPdfHintLocked();
 void         PSSavePowerPdfHint(bool on);
+// One notice per new update (C1.7.0, on by default): HKCU UpdateNotice; policy Store\UpdateNotice
+// (0 = off, 1 = on) beats it and locks the Options checkbox.
+bool         PSUpdateNotice();
+bool         PSUpdateNoticeLocked();
+void         PSSaveUpdateNotice(bool on);
+// Updates found by the last check (HKCU PendingUpdates): the Help ribbon button shows at the next
+// start right away. And the updates the user was already told about ("id@version;..." HKCU NotifiedUpdates).
+int          PSPendingUpdates();
+void         PSSetPendingUpdates(int count);
+std::wstring PSNotifiedUpdates();
+void         PSSetNotifiedUpdates(const std::wstring& list);
 // The update the user hid with "Hide" ("" = none); a newer one shows again.
 std::wstring PSPowerPdfHiddenUpdate();
 void         PSSetPowerPdfHiddenUpdate(const std::wstring& version);

@@ -46,6 +46,49 @@ bool PSUseClassicUI()
     return ReadUserDword(L"ClassicUI", v) && v != 0;
 }
 
+bool PSUpdateNoticeLocked()
+{
+    DWORD v = 0;
+    return FPPolicyDword(L"Store", L"UpdateNotice", v);
+}
+
+bool PSUpdateNotice()
+{
+    DWORD v = 0;
+    if (FPPolicyDword(L"Store", L"UpdateNotice", v)) return v != 0;
+    return !ReadUserDword(L"UpdateNotice", v) || v != 0;   // on by default
+}
+
+void PSSaveUpdateNotice(bool on)
+{
+    DWORD v = on ? 1 : 0;
+    RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"UpdateNotice", REG_DWORD, &v, sizeof(v));
+}
+
+int PSPendingUpdates()
+{
+    DWORD v = 0;
+    return ReadUserDword(L"PendingUpdates", v) && v < 1000 ? (int)v : 0;
+}
+
+void PSSetPendingUpdates(int count)
+{
+    DWORD v = count < 0 ? 0 : (DWORD)count;
+    RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"PendingUpdates", REG_DWORD, &v, sizeof(v));
+}
+
+std::wstring PSNotifiedUpdates()
+{
+    std::wstring v;
+    return ReadUserString(L"NotifiedUpdates", v) ? v : std::wstring();
+}
+
+void PSSetNotifiedUpdates(const std::wstring& list)
+{
+    std::wstring v = list.size() > 900 ? list.substr(0, 900) : list;
+    RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"NotifiedUpdates", REG_SZ, v.c_str(), (DWORD)((v.size() + 1) * sizeof(wchar_t)));
+}
+
 bool PSPowerPdfHintLocked()
 {
     DWORD v = 0;
