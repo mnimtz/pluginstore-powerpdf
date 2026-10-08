@@ -1133,4 +1133,57 @@
   <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>未知，或 1.5.0 之前的商店用戶端</value></data>
   <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>未允許任何授權類型：商店在所有 Power PDF 中均已隱藏。</value></data>
   <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>哪些 Power PDF 安裝可以使用商店。對於已關閉的類型，商店按鈕不會出現在 Power PDF 中，也不提供增益集；商店用戶端仍可自行更新。已安裝的增益集會繼續運作。商店用戶端會自行回報授權類型（用戶端 1.5.0 起），因此這是使用規則，而非複製保護。</value></data>
+  <data name="Accept the text" xml:space="preserve"><value>接受文字</value></data>
+  <data name="Add" xml:space="preserve"><value>新增</value></data>
+  <data name="Add a release line" xml:space="preserve"><value>新增版本系列</value></data>
+  <data name="Allowed hosts (comma separated)" xml:space="preserve"><value>允許的主機 (以逗號分隔)</value></data>
+  <data name="Check now" xml:space="preserve"><value>立即檢查</value></data>
+  <data name="Check the watched pages" xml:space="preserve"><value>檢查監看的頁面</value></data>
+  <data name="Confirm it as a release line" xml:space="preserve"><value>確認為版本系列</value></data>
+  <data name="Delete this release line? Its clients get no hints any more." xml:space="preserve"><value>要刪除此版本系列嗎？其用戶端將不再收到提示。</value></data>
+  <data name="Detected" xml:space="preserve"><value>偵測到</value></data>
+  <data name="Discard" xml:space="preserve"><value>捨棄</value></data>
+  <data name="Found on the overview page. Check the address and set the status to &quot;Maintained&quot; to watch its updates." xml:space="preserve"><value>在概觀頁面上找到。請檢查地址，並將狀態設為「維護中」以監看其更新。</value></data>
+  <data name="Last check" xml:space="preserve"><value>上次檢查</value></data>
+  <data name="Line" xml:space="preserve"><value>系列</value></data>
+  <data name="Manage Power PDF updates" xml:space="preserve"><value>管理 Power PDF 更新</value></data>
+  <data name="New Power PDF version found" xml:space="preserve"><value>發現新的 Power PDF 版本</value></data>
+  <data name="Newest update" xml:space="preserve"><value>最新更新</value></data>
+  <data name="No release line yet. &quot;Check now&quot; proposes the current version from the overview page, or add one below." xml:space="preserve"><value>尚無版本系列。「立即檢查」會從概觀頁面建議目前版本，您也可以在下方新增。</value></data>
+  <data name="Overview page (finds new major versions)" xml:space="preserve"><value>概觀頁面 (尋找新的主要版本)</value></data>
+  <data name="Pattern (group 1 = update version)" xml:space="preserve"><value>模式 (group 1 = 更新版本)</value></data>
+  <data name="Power PDF update detected" xml:space="preserve"><value>偵測到 Power PDF 更新</value></data>
+  <data name="Power PDF updates" xml:space="preserve"><value>Power PDF 更新</value></data>
+  <data name="Proposal" xml:space="preserve"><value>建議</value></data>
+  <data name="Propose a text (AI, 21 languages)" xml:space="preserve"><value>建議文字 (AI，21 種語言)</value></data>
+  <data name="Release lines" xml:space="preserve"><value>版本系列</value></data>
+  <data name="Remove the text" xml:space="preserve"><value>移除文字</value></data>
+  <data name="Shown with the hint in the store window. Without a text the hint shows the update and the ReadMe link only." xml:space="preserve"><value>在商店視窗中與提示一起顯示。沒有文字時，提示只會顯示更新和 ReadMe 連結。</value></data>
+  <data name="Support ends (optional)" xml:space="preserve"><value>支援結束 (選用)</value></data>
+  <data name="Tell clients of this line about a newer major version (link only)" xml:space="preserve"><value>告知此系列的用戶端有較新的主要版本 (僅連結)</value></data>
+  <data name="Text for end users" xml:space="preserve"><value>給終端使用者的文字</value></data>
+  <data name="The AI assistant is switched off (Settings, AI assistant)." xml:space="preserve"><value>AI 助理已關閉 (設定，AI 助理)。</value></data>
+  <data name="The server reads the Power PDF documentation once a day. When Tungsten publishes a newer update for a release line, the admins get an email, and store clients of that line show a hint with a link to the official ReadMe (only where the hint is switched on in the client options). Nothing is downloaded or installed in this stage." xml:space="preserve"><value>伺服器每天讀取一次 Power PDF 文件。當 Tungsten 為某個版本系列發行較新的更新時，管理員會收到電子郵件，該系列的商店用戶端會顯示提示，其中附有官方 ReadMe 的連結 (僅限在用戶端選項中開啟此提示的情況)。此階段不會下載或安裝任何內容。</value></data>
+  <data name="Update check failed" xml:space="preserve"><value>更新檢查失敗</value></data>
+  <data name="Watched page" xml:space="preserve"><value>監看的頁面</value></data>
+  <data name="empty = ReadMe link of this line" xml:space="preserve"><value>留空 = 此系列的 ReadMe 連結</value></data>
+  <data name="Suggested" xml:space="preserve"><value>已建議</value></data>
+  <data name="Maintained" xml:space="preserve"><value>維護中</value></data>
+  <data name="Security updates only" xml:space="preserve"><value>僅安全性更新</value></data>
+  <data name="Line ended" xml:space="preserve"><value>已結束</value></data>
+  <data name="Release line deleted." xml:space="preserve"><value>版本系列已刪除。</value></data>
+  <data name="Switch the Power PDF update hints on first." xml:space="preserve"><value>請先開啟 Power PDF 更新提示。</value></data>
+  <data name="Text accepted. Store clients show it with the hint." xml:space="preserve"><value>已接受文字。商店用戶端會將其與提示一起顯示。</value></data>
+  <data name="Text discarded." xml:space="preserve"><value>已捨棄文字。</value></data>
+  <data name="Check done." xml:space="preserve"><value>檢查完成。</value></data>
+  <data name="Check done with problems; see the lines below." xml:space="preserve"><value>檢查完成，但有問題；請查看下方的版本系列。</value></data>
+  <data name="Text proposed. Check it and accept it." xml:space="preserve"><value>已建議文字。請檢查後接受。</value></data>
+  <data name="No update detected yet." xml:space="preserve"><value>尚未偵測到更新。</value></data>
+  <data name="The line is the start of the Power PDF version, for example 2025.3." xml:space="preserve"><value>系列是 Power PDF 版本號的開頭部分，例如 2025.3。</value></data>
+  <data name="Unknown status." xml:space="preserve"><value>未知狀態。</value></data>
+  <data name="The pattern is too long." xml:space="preserve"><value>模式太長。</value></data>
+  <data name="The pattern is not a valid regular expression." xml:space="preserve"><value>模式不是有效的規則運算式。</value></data>
+  <data name="This line exists already." xml:space="preserve"><value>此系列已存在。</value></data>
+  <data name="The AI gave no usable answer." xml:space="preserve"><value>AI 未提供可用的回答。</value></data>
+  <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>AI 未提供可用的回答。請檢查「設定，AI 助理」中的連線測試。</value></data>
 </root>

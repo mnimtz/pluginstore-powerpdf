@@ -1133,4 +1133,57 @@
   <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>不明、または 1.5.0 より前のストア クライアント</value></data>
   <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>許可されたライセンスの種類がありません。すべての Power PDF でストアが非表示になります。</value></data>
   <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>ストアを使用できる Power PDF のインストールを選択します。オフにした種類では、Power PDF にストアのボタンが表示されず、アドオンも提供されません。ストア クライアント自体は引き続き更新できます。インストール済みのアドオンはそのまま動作します。ライセンスの種類はストア クライアントが自ら報告するため (クライアント 1.5.0 以降)、これはコピー防止ではなく利用ルールです。</value></data>
+  <data name="Accept the text" xml:space="preserve"><value>テキストを採用</value></data>
+  <data name="Add" xml:space="preserve"><value>追加</value></data>
+  <data name="Add a release line" xml:space="preserve"><value>リリース ラインを追加</value></data>
+  <data name="Allowed hosts (comma separated)" xml:space="preserve"><value>許可するホスト (コンマ区切り)</value></data>
+  <data name="Check now" xml:space="preserve"><value>今すぐ確認</value></data>
+  <data name="Check the watched pages" xml:space="preserve"><value>監視対象のページを確認</value></data>
+  <data name="Confirm it as a release line" xml:space="preserve"><value>リリース ラインとして確定</value></data>
+  <data name="Delete this release line? Its clients get no hints any more." xml:space="preserve"><value>このリリース ラインを削除しますか? そのクライアントには通知が表示されなくなります。</value></data>
+  <data name="Detected" xml:space="preserve"><value>検出</value></data>
+  <data name="Discard" xml:space="preserve"><value>破棄</value></data>
+  <data name="Found on the overview page. Check the address and set the status to &quot;Maintained&quot; to watch its updates." xml:space="preserve"><value>概要ページで見つかりました。アドレスを確認し、状態を「保守中」に設定すると、その更新を監視します。</value></data>
+  <data name="Last check" xml:space="preserve"><value>前回の確認</value></data>
+  <data name="Line" xml:space="preserve"><value>ライン</value></data>
+  <data name="Manage Power PDF updates" xml:space="preserve"><value>Power PDF の更新を管理</value></data>
+  <data name="New Power PDF version found" xml:space="preserve"><value>Power PDF の新しいバージョンが見つかりました</value></data>
+  <data name="Newest update" xml:space="preserve"><value>最新の更新</value></data>
+  <data name="No release line yet. &quot;Check now&quot; proposes the current version from the overview page, or add one below." xml:space="preserve"><value>リリース ラインはまだありません。「今すぐ確認」で概要ページから現在のバージョンが提案されます。または下で追加してください。</value></data>
+  <data name="Overview page (finds new major versions)" xml:space="preserve"><value>概要ページ (新しいメジャー バージョンを検出)</value></data>
+  <data name="Pattern (group 1 = update version)" xml:space="preserve"><value>パターン (group 1 = 更新のバージョン)</value></data>
+  <data name="Power PDF update detected" xml:space="preserve"><value>Power PDF の更新を検出しました</value></data>
+  <data name="Power PDF updates" xml:space="preserve"><value>Power PDF の更新</value></data>
+  <data name="Proposal" xml:space="preserve"><value>提案</value></data>
+  <data name="Propose a text (AI, 21 languages)" xml:space="preserve"><value>テキストを提案 (AI、21 言語)</value></data>
+  <data name="Release lines" xml:space="preserve"><value>リリース ライン</value></data>
+  <data name="Remove the text" xml:space="preserve"><value>テキストを削除</value></data>
+  <data name="Shown with the hint in the store window. Without a text the hint shows the update and the ReadMe link only." xml:space="preserve"><value>ストア ウィンドウで通知と一緒に表示されます。テキストがない場合、通知には更新と ReadMe のリンクのみが表示されます。</value></data>
+  <data name="Support ends (optional)" xml:space="preserve"><value>サポート終了 (オプション)</value></data>
+  <data name="Tell clients of this line about a newer major version (link only)" xml:space="preserve"><value>このラインのクライアントに新しいメジャー バージョンを知らせる (リンクのみ)</value></data>
+  <data name="Text for end users" xml:space="preserve"><value>エンド ユーザー向けのテキスト</value></data>
+  <data name="The AI assistant is switched off (Settings, AI assistant)." xml:space="preserve"><value>AI アシスタントはオフになっています (設定、AI アシスタント)。</value></data>
+  <data name="The server reads the Power PDF documentation once a day. When Tungsten publishes a newer update for a release line, the admins get an email, and store clients of that line show a hint with a link to the official ReadMe (only where the hint is switched on in the client options). Nothing is downloaded or installed in this stage." xml:space="preserve"><value>サーバーは 1 日に 1 回 Power PDF のドキュメントを読み取ります。Tungsten がリリース ラインの新しい更新を公開すると、管理者にメールが送信され、そのラインのストア クライアントには公式 ReadMe へのリンク付きの通知が表示されます (クライアントのオプションで通知がオンになっている場合のみ)。この段階では、何もダウンロードもインストールもされません。</value></data>
+  <data name="Update check failed" xml:space="preserve"><value>更新の確認に失敗しました</value></data>
+  <data name="Watched page" xml:space="preserve"><value>監視対象のページ</value></data>
+  <data name="empty = ReadMe link of this line" xml:space="preserve"><value>空欄 = このラインの ReadMe リンク</value></data>
+  <data name="Suggested" xml:space="preserve"><value>候補</value></data>
+  <data name="Maintained" xml:space="preserve"><value>保守中</value></data>
+  <data name="Security updates only" xml:space="preserve"><value>セキュリティ更新のみ</value></data>
+  <data name="Line ended" xml:space="preserve"><value>終了</value></data>
+  <data name="Release line deleted." xml:space="preserve"><value>リリース ラインを削除しました。</value></data>
+  <data name="Switch the Power PDF update hints on first." xml:space="preserve"><value>先に Power PDF の更新通知をオンにしてください。</value></data>
+  <data name="Text accepted. Store clients show it with the hint." xml:space="preserve"><value>テキストを採用しました。ストア クライアントで通知と一緒に表示されます。</value></data>
+  <data name="Text discarded." xml:space="preserve"><value>テキストを破棄しました。</value></data>
+  <data name="Check done." xml:space="preserve"><value>確認が完了しました。</value></data>
+  <data name="Check done with problems; see the lines below." xml:space="preserve"><value>確認が完了しましたが、問題があります。下のラインを確認してください。</value></data>
+  <data name="Text proposed. Check it and accept it." xml:space="preserve"><value>テキストを提案しました。確認して採用してください。</value></data>
+  <data name="No update detected yet." xml:space="preserve"><value>まだ更新は検出されていません。</value></data>
+  <data name="The line is the start of the Power PDF version, for example 2025.3." xml:space="preserve"><value>ラインは Power PDF のバージョンの先頭部分です (例: 2025.3)。</value></data>
+  <data name="Unknown status." xml:space="preserve"><value>不明な状態です。</value></data>
+  <data name="The pattern is too long." xml:space="preserve"><value>パターンが長すぎます。</value></data>
+  <data name="The pattern is not a valid regular expression." xml:space="preserve"><value>パターンが有効な正規表現ではありません。</value></data>
+  <data name="This line exists already." xml:space="preserve"><value>このラインは既に存在します。</value></data>
+  <data name="The AI gave no usable answer." xml:space="preserve"><value>AI から使用可能な回答がありませんでした。</value></data>
+  <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>AI から使用可能な回答がありませんでした。「設定、AI アシスタント」で接続テストを確認してください。</value></data>
 </root>

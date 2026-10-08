@@ -28,7 +28,7 @@ public class SettingsModel : PageModel
     /// <summary>Sections of the left navigation (S0.18.0); one is shown at a time.</summary>
     public static readonly (string Key, string Label)[] Views =
     {
-        ("server", "Server"), ("store", "Add-on Store"), ("email", "Email"), ("notifications", "Notifications"),
+        ("server", "Server"), ("store", "Add-on Store"), ("updates", "Power PDF updates"), ("email", "Email"), ("notifications", "Notifications"),
         ("ai", "AI assistant"), ("privacy", "IP address logging"), ("reset", "Reset statistics"),
     };
     [BindProperty(SupportsGet = true)] public string? View { get; set; }
@@ -39,6 +39,13 @@ public class SettingsModel : PageModel
     public string? MyEmail { get; private set; }
     /// <summary>License modes of Power PDF that may use the store (S1.7.0).</summary>
     public HashSet<string> StoreModes { get; private set; } = new();
+    // Power PDF update hints (S1.8.0)
+    public bool PpOn { get; private set; }
+    public string PpOverview { get; private set; } = "";
+    public string PpHosts { get; private set; } = "";
+    public string PpLastRun { get; private set; } = "";
+    public string PpLastResult { get; private set; } = "";
+    public List<PowerPdfLine> PpLines { get; private set; } = new();
 
     // IP logging for the reports (GDPR confirmation once, then switchable)
     public bool IpOn { get; private set; }
@@ -109,6 +116,111 @@ public class SettingsModel : PageModel
     }
 
     public async Task OnGetAsync() => await LoadAsync();
+
+    public async Task OnPostPpSettingsAsync(bool enabled, string? overviewUrl, string? hosts, [FromServices] PowerPdfUpdateService ppu)
+    {
+        var admin = await _users.GetUserAsync(User);
+        hosts = string.Join(",", (hosts ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Where(h => System.Text.RegularExpressions.Regex.IsMatch(h, @"^[a-z0-9.-]{3,100}$", System.Text.RegularExpressions.RegexOptions.IgnoreCase)));
+        await _settings.SetAsync(PowerPdfUpdateService.HostsKey, hosts);
+        overviewUrl = (overviewUrl ?? "").Trim();
+        if (overviewUrl.Length > 0 && await ppu.CheckUrlAsync(overviewUrl) is { } bad)
+        { Notice = "The overview address cannot be used: " + bad; NoticeKind = "error"; }
+        else
+        {
+            await _settings.SetAsync(PowerPdfUpdateService.OverviewKey, overviewUrl);
+            await _settings.SetAsync(PowerPdfUpdateService.EnabledKey, enabled ? "1" : "0");
+            await _audit.LogAsync(admin!.DisplayName, "settings.changed", "Power PDF updates", $"{(enabled ? "on" : "off")}; overview {(overviewUrl.Length > 0 ? overviewUrl : "default")}; hosts {(hosts.Length > 0 ? hosts : "default")}");
+            Notice = "Settings saved.";
+        }
+        View = "updates";
+        await LoadAsync();
+    }
+
+    public async Task OnPostPpLineAsync(int? id, string? key, string? title, string? watchUrl, string? pattern, string? status,
+                                        DateTime? supportEnd, bool majorHint, [FromServices] AppDbContext db, [FromServices] PowerPdfUpdateService ppu)
+    {
+        var admin = await _users.GetUserAsync(User);
+        View = "updates";
+        key = (key ?? "").Trim(); title = (title ?? "").Trim(); watchUrl = (watchUrl ?? "").Trim(); pattern = (pattern ?? "").Trim();
+        if (pattern.Length == 0) pattern = PowerPdfUpdateService.DefaultPattern(key);
+        string? problem = !PowerPdfUpdateService.ValidKey(key) ? "The line is the start of the Power PDF version, for example 2025.3."
+            : await ppu.CheckUrlAsync(watchUrl) is { } bad ? "The watched address cannot be used: " + bad
+            : !PowerPdfUpdateService.Statuses.Contains(status) ? "Unknown status."
+            : pattern.Length > 300 ? "The pattern is too long." : null;
+        if (problem is null)
+        {
+            try { _ = new System.Text.RegularExpressions.Regex(pattern); }
+            catch (ArgumentException) { problem = "The pattern is not a valid regular expression."; }
+        }
+        var line = id is null ? null : await db.PowerPdfLines.FirstOrDefaultAsync(l => l.Id == id);
+        if (problem is null && (id is null || line?.Key != key) && await db.PowerPdfLines.AnyAsync(l => l.Key == key)) problem = "This line exists already.";
+        if (problem is not null) { Notice = problem; NoticeKind = "error"; await LoadAsync(); return; }
+        if (line is null) { line = new PowerPdfLine(); db.PowerPdfLines.Add(line); }
+        if (line.WatchUrl != watchUrl || line.Pattern != pattern || line.Key != key) { line.LastCheckResult = null; }
+        line.Key = key; line.Title = title.Length > 0 ? title[..Math.Min(title.Length, 80)] : "Power PDF " + key;
+        line.WatchUrl = watchUrl; line.Pattern = pattern; line.Status = status!; line.SupportEnd = supportEnd; line.OfferMajorHint = majorHint;
+        await db.SaveChangesAsync();
+        await _audit.LogAsync(admin!.DisplayName, "powerpdf.line.saved", key, $"{status}; {watchUrl}; major hint {(majorHint ? "on" : "off")}");
+        Notice = "Settings saved.";
+        await LoadAsync();
+    }
+
+    public async Task OnPostPpLineDeleteAsync(int id, [FromServices] AppDbContext db)
+    {
+        var admin = await _users.GetUserAsync(User);
+        View = "updates";
+        var line = await db.PowerPdfLines.FirstOrDefaultAsync(l => l.Id == id);
+        if (line is not null)
+        {
+            db.PowerPdfLines.Remove(line);
+            await db.SaveChangesAsync();
+            await _audit.LogAsync(admin!.DisplayName, "powerpdf.line.deleted", line.Key);
+            Notice = "Release line deleted.";
+        }
+        await LoadAsync();
+    }
+
+    public async Task OnPostPpCheckAsync([FromServices] PowerPdfUpdateService ppu)
+    {
+        var admin = await _users.GetUserAsync(User);
+        View = "updates";
+        if (!await ppu.EnabledAsync()) { Notice = "Switch the Power PDF update hints on first."; NoticeKind = "error"; await LoadAsync(); return; }
+        var r = await ppu.RunAsync(admin!.DisplayName, HttpContext.RequestAborted);
+        Notice = r.Problems.Count == 0 ? "Check done." : "Check done with problems; see the lines below.";
+        NoticeKind = r.Problems.Count == 0 ? "ok" : "error";
+        await LoadAsync();
+    }
+
+    public async Task OnPostPpSummaryAsync(int id, string? act, [FromServices] AppDbContext db, [FromServices] PowerPdfUpdateService ppu)
+    {
+        var admin = await _users.GetUserAsync(User);
+        View = "updates";
+        var line = await db.PowerPdfLines.FirstOrDefaultAsync(l => l.Id == id);
+        if (line is not null)
+        {
+            if (act == "accept" && line.SummaryDraftJson is not null)
+            {
+                line.SummaryJson = line.SummaryDraftJson; line.SummaryDraftJson = null;
+                await db.SaveChangesAsync();
+                await _audit.LogAsync(admin!.DisplayName, "powerpdf.summary.accepted", $"{line.Key} {line.LatestVersion}");
+                Notice = "Text accepted. Store clients show it with the hint.";
+            }
+            else if (act == "discard")
+            {
+                line.SummaryDraftJson = null; if (Request.Form["all"] == "1") line.SummaryJson = null;
+                await db.SaveChangesAsync();
+                Notice = "Text discarded.";
+            }
+            else
+            {
+                var err = await ppu.ProposeSummaryAsync(line, admin!.DisplayName, HttpContext.RequestAborted);
+                Notice = err ?? "Text proposed. Check it and accept it.";
+                NoticeKind = err is null ? "ok" : "error";
+            }
+        }
+        await LoadAsync();
+    }
 
     public async Task OnPostStoreAccessAsync(string[]? modes)
     {
@@ -337,9 +449,17 @@ public class SettingsModel : PageModel
         {
             var h = (string?)Request.Query["handler"] ?? "";
             View = h.StartsWith("Ip") ? "privacy" : h.StartsWith("Ai") ? "ai" : h is "Email" or "TestMail" ? "email"
-                 : h == "Notifications" ? "notifications" : h == "Reset" ? "reset" : h == "StoreAccess" ? "store" : "server";
+                 : h == "Notifications" ? "notifications" : h == "Reset" ? "reset" : h == "StoreAccess" ? "store"
+                 : h.StartsWith("Pp") ? "updates" : "server";
         }
         StoreModes = await StoreAccess.AllowedModesAsync(_settings);
+        PpOn = await _settings.GetAsync(PowerPdfUpdateService.EnabledKey) == "1";
+        PpOverview = await _settings.GetAsync(PowerPdfUpdateService.OverviewKey);
+        PpHosts = await _settings.GetAsync(PowerPdfUpdateService.HostsKey);
+        PpLastRun = await _settings.GetAsync(PowerPdfUpdateService.LastRunKey);
+        PpLastResult = await _settings.GetAsync(PowerPdfUpdateService.LastResultKey);
+        PpLines = await HttpContext.RequestServices.GetRequiredService<AppDbContext>().PowerPdfLines.AsNoTracking()
+            .OrderBy(l => l.Status == "suggested" ? 0 : 1).ThenByDescending(l => l.Key).ToListAsync();
         Ai = await _ai.ConfigAsync();
         OfferFake = _env.IsDevelopment();
         AiModels = await _ai.StoredModelsAsync(Ai.Provider);

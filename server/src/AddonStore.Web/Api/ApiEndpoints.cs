@@ -152,6 +152,7 @@ public static class ApiEndpoints
                     "GET  /llms.txt                   short index of this site for language models",
                     "GET  /api/me                     verify your token, see your packages (auth)",
                     "GET  /api/client/access          may this store client be used with its Power PDF license (header X-License-Mode)",
+                    "GET  /api/powerpdf/update?version=2025.3.8.0.26414&lang=de   newer Power PDF update of that release line (if switched on)",
                     "GET|POST|DELETE /api/me/test-code your personal test code for the store window (auth)",
                     "GET  /api/catalog?channel=beta   released packages; beta channel includes versions approved for beta",
                     "GET  /api/packages/{id}          status and history of one package",
@@ -411,6 +412,16 @@ public static class ApiEndpoints
             var entries = await CatalogAsync(db, beta, Base(ctx), grants, signing, storeAllowed ? await customers.TestGrantsAsync(ctx) : new(),
                                              clientOnly: !storeAllowed);
             return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live", packages = entries } });
+        });
+
+        // Power PDF update hint for the store client (S1.8.0): is there a newer update for its release line?
+        // Off unless the admins switched it on; nothing for a license mode the store does not allow.
+        api.MapGet("/powerpdf/update", async (string? version, string? lang, HttpContext ctx, SettingsService settings,
+                                              PowerPdfUpdateService updates) =>
+        {
+            if (!await StoreAccess.AllowedAsync(ctx, settings)) return Results.Json(new { ok = true, data = new { enabled = false } });
+            if (version is { Length: > 40 }) return Fail("VERSION_INVALID", "version is a Power PDF VersionLong such as 2025.3.8.0.26414.", 400);
+            return Results.Json(new { ok = true, data = await updates.ClientInfoAsync(version, Services.Lang.Normalize(MapHostLang((lang ?? "en").Trim()))) });
         });
 
         // May this store client be used with its Power PDF license (S1.7.0)? Anonymous like the catalog;

@@ -1133,4 +1133,57 @@
   <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>Ukjent, eller butikklienter før 1.5.0</value></data>
   <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>Ingen lisenstype er tillatt: Butikken er skjult i alle Power PDF.</value></data>
   <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>Hvilke Power PDF-installasjoner som kan bruke butikken. For en lisenstype som er slått av, vises ikke butikkknappen i Power PDF, og ingen tillegg tilbys; butikklienten kan fortsatt oppdatere seg selv. Installerte tillegg fortsetter å virke. Butikklienten oppgir lisenstypen selv (fra klient 1.5.0), så dette er en bruksregel, ikke kopibeskyttelse.</value></data>
+  <data name="Accept the text" xml:space="preserve"><value>Godta teksten</value></data>
+  <data name="Add" xml:space="preserve"><value>Legg til</value></data>
+  <data name="Add a release line" xml:space="preserve"><value>Legg til en versjonslinje</value></data>
+  <data name="Allowed hosts (comma separated)" xml:space="preserve"><value>Tillatte verter (kommaseparert)</value></data>
+  <data name="Check now" xml:space="preserve"><value>Kontroller nå</value></data>
+  <data name="Check the watched pages" xml:space="preserve"><value>Kontroller de overvåkede sidene</value></data>
+  <data name="Confirm it as a release line" xml:space="preserve"><value>Bekreft som versjonslinje</value></data>
+  <data name="Delete this release line? Its clients get no hints any more." xml:space="preserve"><value>Slette denne versjonslinjen? Klientene i linjen får ikke lenger meldinger.</value></data>
+  <data name="Detected" xml:space="preserve"><value>Oppdaget</value></data>
+  <data name="Discard" xml:space="preserve"><value>Forkast</value></data>
+  <data name="Found on the overview page. Check the address and set the status to &quot;Maintained&quot; to watch its updates." xml:space="preserve"><value>Funnet på oversiktssiden. Kontroller adressen og sett statusen til "Vedlikeholdt" for å overvåke oppdateringene.</value></data>
+  <data name="Last check" xml:space="preserve"><value>Siste kontroll</value></data>
+  <data name="Line" xml:space="preserve"><value>Linje</value></data>
+  <data name="Manage Power PDF updates" xml:space="preserve"><value>Administrer Power PDF-oppdateringer</value></data>
+  <data name="New Power PDF version found" xml:space="preserve"><value>Ny Power PDF-versjon funnet</value></data>
+  <data name="Newest update" xml:space="preserve"><value>Nyeste oppdatering</value></data>
+  <data name="No release line yet. &quot;Check now&quot; proposes the current version from the overview page, or add one below." xml:space="preserve"><value>Ingen versjonslinje ennå. "Kontroller nå" foreslår gjeldende versjon fra oversiktssiden, eller legg til en nedenfor.</value></data>
+  <data name="Overview page (finds new major versions)" xml:space="preserve"><value>Oversiktsside (finner nye hovedversjoner)</value></data>
+  <data name="Pattern (group 1 = update version)" xml:space="preserve"><value>Mønster (group 1 = oppdateringsversjon)</value></data>
+  <data name="Power PDF update detected" xml:space="preserve"><value>Power PDF-oppdatering oppdaget</value></data>
+  <data name="Power PDF updates" xml:space="preserve"><value>Power PDF-oppdateringer</value></data>
+  <data name="Proposal" xml:space="preserve"><value>Forslag</value></data>
+  <data name="Propose a text (AI, 21 languages)" xml:space="preserve"><value>Foreslå en tekst (KI, 21 språk)</value></data>
+  <data name="Release lines" xml:space="preserve"><value>Versjonslinjer</value></data>
+  <data name="Remove the text" xml:space="preserve"><value>Fjern teksten</value></data>
+  <data name="Shown with the hint in the store window. Without a text the hint shows the update and the ReadMe link only." xml:space="preserve"><value>Vises sammen med meldingen i butikkvinduet. Uten tekst viser meldingen bare oppdateringen og ReadMe-lenken.</value></data>
+  <data name="Support ends (optional)" xml:space="preserve"><value>Støtte avsluttes (valgfritt)</value></data>
+  <data name="Tell clients of this line about a newer major version (link only)" xml:space="preserve"><value>Varsle klienter i denne linjen om en nyere hovedversjon (bare lenke)</value></data>
+  <data name="Text for end users" xml:space="preserve"><value>Tekst for sluttbrukere</value></data>
+  <data name="The AI assistant is switched off (Settings, AI assistant)." xml:space="preserve"><value>KI-assistenten er slått av (Innstillinger, KI-assistent).</value></data>
+  <data name="The server reads the Power PDF documentation once a day. When Tungsten publishes a newer update for a release line, the admins get an email, and store clients of that line show a hint with a link to the official ReadMe (only where the hint is switched on in the client options). Nothing is downloaded or installed in this stage." xml:space="preserve"><value>Serveren leser Power PDF-dokumentasjonen én gang om dagen. Når Tungsten publiserer en nyere oppdatering for en versjonslinje, får administratorene en e-post, og butikklienter i den linjen viser en melding med en lenke til den offisielle ReadMe-filen (bare der meldingen er slått på i klientalternativene). I dette trinnet lastes ingenting ned eller installeres.</value></data>
+  <data name="Update check failed" xml:space="preserve"><value>Oppdateringskontrollen mislyktes</value></data>
+  <data name="Watched page" xml:space="preserve"><value>Overvåket side</value></data>
+  <data name="empty = ReadMe link of this line" xml:space="preserve"><value>tom = ReadMe-lenke for denne linjen</value></data>
+  <data name="Suggested" xml:space="preserve"><value>Foreslått</value></data>
+  <data name="Maintained" xml:space="preserve"><value>Vedlikeholdt</value></data>
+  <data name="Security updates only" xml:space="preserve"><value>Bare sikkerhetsoppdateringer</value></data>
+  <data name="Line ended" xml:space="preserve"><value>Avsluttet</value></data>
+  <data name="Release line deleted." xml:space="preserve"><value>Versjonslinje slettet.</value></data>
+  <data name="Switch the Power PDF update hints on first." xml:space="preserve"><value>Slå på Power PDF-oppdateringsmeldingene først.</value></data>
+  <data name="Text accepted. Store clients show it with the hint." xml:space="preserve"><value>Teksten er godtatt. Butikklienter viser den sammen med meldingen.</value></data>
+  <data name="Text discarded." xml:space="preserve"><value>Teksten er forkastet.</value></data>
+  <data name="Check done." xml:space="preserve"><value>Kontrollen er fullført.</value></data>
+  <data name="Check done with problems; see the lines below." xml:space="preserve"><value>Kontrollen er fullført med problemer; se linjene nedenfor.</value></data>
+  <data name="Text proposed. Check it and accept it." xml:space="preserve"><value>Tekst foreslått. Kontroller og godta den.</value></data>
+  <data name="No update detected yet." xml:space="preserve"><value>Ingen oppdatering oppdaget ennå.</value></data>
+  <data name="The line is the start of the Power PDF version, for example 2025.3." xml:space="preserve"><value>Linjen er starten på Power PDF-versjonen, for eksempel 2025.3.</value></data>
+  <data name="Unknown status." xml:space="preserve"><value>Ukjent status.</value></data>
+  <data name="The pattern is too long." xml:space="preserve"><value>Mønsteret er for langt.</value></data>
+  <data name="The pattern is not a valid regular expression." xml:space="preserve"><value>Mønsteret er ikke et gyldig regulært uttrykk.</value></data>
+  <data name="This line exists already." xml:space="preserve"><value>Denne linjen finnes allerede.</value></data>
+  <data name="The AI gave no usable answer." xml:space="preserve"><value>KI-en ga ikke noe brukbart svar.</value></data>
+  <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>KI-en ga ikke noe brukbart svar. Kontroller tilkoblingstesten under Innstillinger, KI-assistent.</value></data>
 </root>

@@ -62,6 +62,138 @@ else if (Model.SigningKeyId.Length > 0)
 </div>
 }
 
+@if (Model.View == "updates")
+{
+<div class="card" style="max-width:900px" id="updates">
+    <h2 style="margin-top:0">@L["Power PDF updates"]</h2>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["The server reads the Power PDF documentation once a day. When Tungsten publishes a newer update for a release line, the admins get an email, and store clients of that line show a hint with a link to the official ReadMe (only where the hint is switched on in the client options). Nothing is downloaded or installed in this stage."]</p>
+    <form method="post" asp-page-handler="PpSettings" class="stack" style="max-width:none">
+        <label style="display:flex;gap:8px;align-items:center;font-weight:600">
+            <input type="checkbox" name="enabled" value="true" checked="@Model.PpOn" style="width:auto" />
+            <span>@L["Manage Power PDF updates"]</span>
+        </label>
+        <div>
+            <label for="ppov">@L["Overview page (finds new major versions)"]</label>
+            <input id="ppov" name="overviewUrl" value="@Model.PpOverview" placeholder="@AddonStore.Web.Services.PowerPdfUpdateService.DefaultOverview" maxlength="500" style="width:100%" />
+        </div>
+        <div>
+            <label for="pphosts">@L["Allowed hosts (comma separated)"]</label>
+            <input id="pphosts" name="hosts" value="@Model.PpHosts" placeholder="@AddonStore.Web.Services.PowerPdfUpdateService.DefaultHosts" maxlength="500" style="width:100%" />
+        </div>
+        <div><button type="submit" class="btn cta">@L["Save"]</button></div>
+    </form>
+</div>
+
+@if (Model.PpOn)
+{
+<div class="card" style="max-width:900px">
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between">
+        <h3 style="margin:0">@L["Release lines"]</h3>
+        <form method="post" asp-page-handler="PpCheck"><button type="submit" class="btn small">@L["Check now"]</button></form>
+    </div>
+    <p class="small muted" style="margin:6px 0 10px">@L["Last check"]: @(DateTime.TryParse(Model.PpLastRun, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind, out var plr) ? Time.Fmt(plr) : "-")
+        @if (Model.PpLastResult.Length > 0 && Model.PpLastResult != "ok") { <span> · </span><span style="color:var(--tun-coral)">@Model.PpLastResult</span> }</p>
+    @if (Model.PpLines.Count == 0)
+    {
+        <p class="muted">@L["No release line yet. \"Check now\" proposes the current version from the overview page, or add one below."]</p>
+    }
+    @foreach (var ln in Model.PpLines)
+    {
+        <details class="card" style="margin:8px 0;padding:10px 14px" open="@(ln.Status == "suggested")">
+            <summary style="cursor:pointer;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                <b>@ln.Title</b>
+                <span class="badge @(ln.Status switch { "suggested" => "beta", "maintained" => "live", "security" => "submitted", _ => "withdrawn" })">@L[ln.Status switch { "suggested" => "Suggested", "maintained" => "Maintained", "security" => "Security updates only", _ => "Line ended" }]</span>
+                @if (ln.LatestVersion is not null) { <span class="small">@L["Newest update"]: <b>@ln.LatestVersion</b>@(ln.LatestBuildDate is null ? "" : " (" + ln.LatestBuildDate + ")")</span> }
+                @if (ln.LastCheckResult is { } lcr && lcr != "ok") { <span class="small" style="color:var(--tun-coral)">@lcr</span> }
+            </summary>
+            @if (ln.Status == "suggested")
+            {
+                <p class="small" style="margin:8px 0">@L["Found on the overview page. Check the address and set the status to \"Maintained\" to watch its updates."]</p>
+            }
+            @if (ln.LatestReadmeUrl is not null)
+            {
+                <p class="small" style="margin:8px 0"><a href="@ln.LatestReadmeUrl" target="_blank" rel="noopener noreferrer">ReadMe @ln.LatestVersion</a> · @L["Detected"]: @(ln.DetectedAt is { } da ? Time.Fmt(da) : "-")</p>
+            }
+            <form method="post" asp-page-handler="PpLine" class="stack" style="max-width:none;margin-top:8px">
+                <input type="hidden" name="id" value="@ln.Id" />
+                <div style="display:grid;grid-template-columns:minmax(0,140px) minmax(0,1fr);gap:8px">
+                    <div><label>@L["Line"]</label><input name="key" value="@ln.Key" required maxlength="10" /></div>
+                    <div><label>@L["Name"]</label><input name="title" value="@ln.Title" maxlength="80" /></div>
+                </div>
+                <div><label>@L["Watched page"]</label><input name="watchUrl" value="@ln.WatchUrl" required maxlength="500" /></div>
+                <div><label>@L["Pattern (group 1 = update version)"]</label><input name="pattern" value="@ln.Pattern" maxlength="300" style="font-family:Consolas,monospace" /></div>
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px">
+                    <div><label>@L["Status"]</label>
+                        <select name="status">
+                            @foreach (var s in AddonStore.Web.Services.PowerPdfUpdateService.Statuses)
+                            {
+                                <option value="@s" selected="@(s == ln.Status)">@L[s switch { "suggested" => "Suggested", "maintained" => "Maintained", "security" => "Security updates only", _ => "Line ended" }]</option>
+                            }
+                        </select></div>
+                    <div><label>@L["Support ends (optional)"]</label><input type="date" name="supportEnd" value="@ln.SupportEnd?.ToString("yyyy-MM-dd")" /></div>
+                </div>
+                <label style="display:flex;gap:8px;align-items:center;font-weight:400">
+                    <input type="checkbox" name="majorHint" value="true" checked="@ln.OfferMajorHint" style="width:auto" />
+                    <span>@L["Tell clients of this line about a newer major version (link only)"]</span>
+                </label>
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <button type="submit" class="btn small">@L["Save"]</button>
+                </div>
+            </form>
+            <form method="post" asp-page-handler="PpLineDelete" data-confirm="@L["Delete this release line? Its clients get no hints any more."]" style="margin-top:6px">
+                <input type="hidden" name="id" value="@ln.Id" />
+                <button type="submit" class="btn small danger">@L["Delete"]</button>
+            </form>
+            @if (ln.LatestVersion is not null)
+            {
+                <div style="margin-top:12px;border-top:1px solid var(--tun-gray-200);padding-top:10px">
+                    <b>@L["Text for end users"]</b>
+                    <p class="small muted" style="margin:4px 0">@L["Shown with the hint in the store window. Without a text the hint shows the update and the ReadMe link only."]</p>
+                    @{
+                        var lang = AddonStore.Web.Services.Lang.Current;
+                        string? Pick(string? json) { if (json is null) return null; try { var d = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(json); return d?.GetValueOrDefault(lang) ?? d?.GetValueOrDefault("en"); } catch (System.Text.Json.JsonException) { return null; } }
+                        var current = Pick(ln.SummaryJson); var draft = Pick(ln.SummaryDraftJson);
+                    }
+                    @if (current is not null) { <p style="margin:6px 0"><span class="badge live">@L["Active"]</span> @current</p> }
+                    @if (draft is not null)
+                    {
+                        <p style="margin:6px 0"><span class="badge beta">@L["Proposal"]</span> @draft</p>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap">
+                            <form method="post" asp-page-handler="PpSummary"><input type="hidden" name="id" value="@ln.Id" /><input type="hidden" name="act" value="accept" /><button type="submit" class="btn small">@L["Accept the text"]</button></form>
+                            <form method="post" asp-page-handler="PpSummary"><input type="hidden" name="id" value="@ln.Id" /><input type="hidden" name="act" value="discard" /><button type="submit" class="btn small secondary">@L["Discard"]</button></form>
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+                            <form method="post" asp-page-handler="PpSummary"><input type="hidden" name="id" value="@ln.Id" /><button type="submit" class="btn small secondary" disabled="@(!Model.Ai.On)" title="@(Model.Ai.On ? "" : L["The AI assistant is switched off (Settings, AI assistant)."].Value)">@L["Propose a text (AI, 21 languages)"]</button></form>
+                            @if (current is not null)
+                            {
+                                <form method="post" asp-page-handler="PpSummary"><input type="hidden" name="id" value="@ln.Id" /><input type="hidden" name="act" value="discard" /><input type="hidden" name="all" value="1" /><button type="submit" class="btn small secondary">@L["Remove the text"]</button></form>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </details>
+    }
+    <details class="card" style="margin:8px 0;padding:10px 14px">
+        <summary style="cursor:pointer"><b>@L["Add a release line"]</b></summary>
+        <form method="post" asp-page-handler="PpLine" class="stack" style="max-width:none;margin-top:8px">
+            <div style="display:grid;grid-template-columns:minmax(0,140px) minmax(0,1fr);gap:8px">
+                <div><label>@L["Line"]</label><input name="key" placeholder="2026.4" required maxlength="10" /></div>
+                <div><label>@L["Name"]</label><input name="title" placeholder="Power PDF 2026.4" maxlength="80" /></div>
+            </div>
+            <div><label>@L["Watched page"]</label><input name="watchUrl" required maxlength="500" placeholder="https://docshield.tungstenautomation.com/Portal/Products/en_US/PowerPDF/…/PowerPDF.htm" /></div>
+            <div><label>@L["Pattern (group 1 = update version)"]</label><input name="pattern" maxlength="300" placeholder="@L["empty = ReadMe link of this line"]" style="font-family:Consolas,monospace" /></div>
+            <input type="hidden" name="status" value="maintained" />
+            <div><button type="submit" class="btn small">@L["Add"]</button></div>
+        </form>
+    </details>
+</div>
+}
+}
+
 @if (Model.View == "store")
 {
 <div class="card" style="max-width:760px" id="store">

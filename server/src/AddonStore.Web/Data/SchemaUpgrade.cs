@@ -152,6 +152,12 @@ public static class SchemaUpgrade
                 "CodeProtected TEXT NOT NULL, Prefix TEXT NOT NULL, CreatedAt TEXT NOT NULL, RevokedAt TEXT NULL, LastUsedAt TEXT NULL)",
             "CREATE UNIQUE INDEX IF NOT EXISTS IX_TestCodes_CodeHash ON TestCodes (CodeHash)",
             "CREATE INDEX IF NOT EXISTS IX_TestCodes_UserId ON TestCodes (UserId)",
+            // release lines of Power PDF for the update hints (S1.8.0)
+            "CREATE TABLE IF NOT EXISTS PowerPdfLines (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Key TEXT NOT NULL, Title TEXT NOT NULL, " +
+                "WatchUrl TEXT NOT NULL, Pattern TEXT NOT NULL, Status TEXT NOT NULL, SupportEnd TEXT NULL, OfferMajorHint INTEGER NOT NULL DEFAULT 0, " +
+                "LatestVersion TEXT NULL, LatestReadmeUrl TEXT NULL, LatestTitle TEXT NULL, LatestBuildDate TEXT NULL, DetectedAt TEXT NULL, " +
+                "LastCheckAt TEXT NULL, LastCheckResult TEXT NULL, SummaryJson TEXT NULL, SummaryDraftJson TEXT NULL, CreatedAt TEXT NOT NULL)",
+            "CREATE UNIQUE INDEX IF NOT EXISTS IX_PowerPdfLines_Key ON PowerPdfLines (Key)",
             // approval for beta or live (S1.6.0): a beta version nobody reviewed waits for review now;
             // reviewed beta versions stay approved for beta (idempotent: new uploads land in Submitted)
             "UPDATE PackageVersions SET Status = 0 WHERE Status = 1 AND ReviewedAt IS NULL AND PackageId <> 'com.tungsten.pluginstore'"

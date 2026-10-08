@@ -1133,4 +1133,57 @@
   <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>Tuntematon tai kauppaohjelmat ennen versiota 1.5.0</value></data>
   <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>Mitään lisenssityyppiä ei sallita: kauppa on piilotettu jokaisessa Power PDF:ssä.</value></data>
   <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>Mitkä Power PDF -asennukset saavat käyttää kauppaa. Jos tyyppi on pois päältä, kauppapainike ei näy Power PDF:ssä eikä lisäosia tarjota; kauppaohjelma voi silti päivittää itsensä. Asennetut lisäosat toimivat edelleen. Kauppaohjelma ilmoittaa tyypin itse (versiosta 1.5.0 alkaen), joten kyse on käyttösäännöstä, ei kopiosuojauksesta.</value></data>
+  <data name="Accept the text" xml:space="preserve"><value>Hyväksy teksti</value></data>
+  <data name="Add" xml:space="preserve"><value>Lisää</value></data>
+  <data name="Add a release line" xml:space="preserve"><value>Lisää versiosarja</value></data>
+  <data name="Allowed hosts (comma separated)" xml:space="preserve"><value>Sallitut palvelimet (pilkuin erotettuina)</value></data>
+  <data name="Check now" xml:space="preserve"><value>Tarkista nyt</value></data>
+  <data name="Check the watched pages" xml:space="preserve"><value>Tarkista seuratut sivut</value></data>
+  <data name="Confirm it as a release line" xml:space="preserve"><value>Vahvista versiosarjaksi</value></data>
+  <data name="Delete this release line? Its clients get no hints any more." xml:space="preserve"><value>Poistetaanko tämä versiosarja? Sen asiakasohjelmat eivät enää saa ilmoituksia.</value></data>
+  <data name="Detected" xml:space="preserve"><value>Havaittu</value></data>
+  <data name="Discard" xml:space="preserve"><value>Hylkää</value></data>
+  <data name="Found on the overview page. Check the address and set the status to &quot;Maintained&quot; to watch its updates." xml:space="preserve"><value>Löytyi yleiskatsaussivulta. Tarkista osoite ja aseta tilaksi "Ylläpidetty", jotta sarjan päivityksiä seurataan.</value></data>
+  <data name="Last check" xml:space="preserve"><value>Viimeisin tarkistus</value></data>
+  <data name="Line" xml:space="preserve"><value>Sarja</value></data>
+  <data name="Manage Power PDF updates" xml:space="preserve"><value>Hallitse Power PDF -päivityksiä</value></data>
+  <data name="New Power PDF version found" xml:space="preserve"><value>Uusi Power PDF -versio löytyi</value></data>
+  <data name="Newest update" xml:space="preserve"><value>Uusin päivitys</value></data>
+  <data name="No release line yet. &quot;Check now&quot; proposes the current version from the overview page, or add one below." xml:space="preserve"><value>Ei vielä versiosarjaa. "Tarkista nyt" ehdottaa nykyistä versiota yleiskatsaussivulta, tai lisää sarja alla.</value></data>
+  <data name="Overview page (finds new major versions)" xml:space="preserve"><value>Yleiskatsaussivu (löytää uudet pääversiot)</value></data>
+  <data name="Pattern (group 1 = update version)" xml:space="preserve"><value>Malli (group 1 = päivityksen versio)</value></data>
+  <data name="Power PDF update detected" xml:space="preserve"><value>Power PDF -päivitys havaittu</value></data>
+  <data name="Power PDF updates" xml:space="preserve"><value>Power PDF -päivitykset</value></data>
+  <data name="Proposal" xml:space="preserve"><value>Ehdotus</value></data>
+  <data name="Propose a text (AI, 21 languages)" xml:space="preserve"><value>Ehdota tekstiä (tekoäly, 21 kieltä)</value></data>
+  <data name="Release lines" xml:space="preserve"><value>Versiosarjat</value></data>
+  <data name="Remove the text" xml:space="preserve"><value>Poista teksti</value></data>
+  <data name="Shown with the hint in the store window. Without a text the hint shows the update and the ReadMe link only." xml:space="preserve"><value>Näytetään ilmoituksen kanssa kauppaikkunassa. Ilman tekstiä ilmoitus näyttää vain päivityksen ja ReadMe-linkin.</value></data>
+  <data name="Support ends (optional)" xml:space="preserve"><value>Tuki päättyy (valinnainen)</value></data>
+  <data name="Tell clients of this line about a newer major version (link only)" xml:space="preserve"><value>Kerro tämän sarjan asiakasohjelmille uudemmasta pääversiosta (vain linkki)</value></data>
+  <data name="Text for end users" xml:space="preserve"><value>Teksti loppukäyttäjille</value></data>
+  <data name="The AI assistant is switched off (Settings, AI assistant)." xml:space="preserve"><value>Tekoälyavustaja on poistettu käytöstä (Asetukset, Tekoälyavustaja).</value></data>
+  <data name="The server reads the Power PDF documentation once a day. When Tungsten publishes a newer update for a release line, the admins get an email, and store clients of that line show a hint with a link to the official ReadMe (only where the hint is switched on in the client options). Nothing is downloaded or installed in this stage." xml:space="preserve"><value>Palvelin lukee Power PDF -dokumentaation kerran päivässä. Kun Tungsten julkaisee versiosarjaan uudemman päivityksen, ylläpitäjät saavat sähköpostin, ja sarjan kauppaohjelmat näyttävät ilmoituksen, jossa on linkki viralliseen ReadMe-tiedostoon (vain jos ilmoitus on otettu käyttöön asiakasohjelman asetuksissa). Tässä vaiheessa mitään ei ladata eikä asenneta.</value></data>
+  <data name="Update check failed" xml:space="preserve"><value>Päivitysten tarkistus epäonnistui</value></data>
+  <data name="Watched page" xml:space="preserve"><value>Seurattu sivu</value></data>
+  <data name="empty = ReadMe link of this line" xml:space="preserve"><value>tyhjä = tämän sarjan ReadMe-linkki</value></data>
+  <data name="Suggested" xml:space="preserve"><value>Ehdotettu</value></data>
+  <data name="Maintained" xml:space="preserve"><value>Ylläpidetty</value></data>
+  <data name="Security updates only" xml:space="preserve"><value>Vain tietoturvapäivitykset</value></data>
+  <data name="Line ended" xml:space="preserve"><value>Päättynyt</value></data>
+  <data name="Release line deleted." xml:space="preserve"><value>Versiosarja poistettu.</value></data>
+  <data name="Switch the Power PDF update hints on first." xml:space="preserve"><value>Ota ensin Power PDF -päivitysilmoitukset käyttöön.</value></data>
+  <data name="Text accepted. Store clients show it with the hint." xml:space="preserve"><value>Teksti hyväksytty. Kauppaohjelmat näyttävät sen ilmoituksen kanssa.</value></data>
+  <data name="Text discarded." xml:space="preserve"><value>Teksti hylätty.</value></data>
+  <data name="Check done." xml:space="preserve"><value>Tarkistus valmis.</value></data>
+  <data name="Check done with problems; see the lines below." xml:space="preserve"><value>Tarkistus valmis, mutta siinä oli ongelmia; katso sarjat alla.</value></data>
+  <data name="Text proposed. Check it and accept it." xml:space="preserve"><value>Teksti ehdotettu. Tarkista ja hyväksy se.</value></data>
+  <data name="No update detected yet." xml:space="preserve"><value>Päivityksiä ei ole vielä havaittu.</value></data>
+  <data name="The line is the start of the Power PDF version, for example 2025.3." xml:space="preserve"><value>Sarja on Power PDF -version alkuosa, esimerkiksi 2025.3.</value></data>
+  <data name="Unknown status." xml:space="preserve"><value>Tuntematon tila.</value></data>
+  <data name="The pattern is too long." xml:space="preserve"><value>Malli on liian pitkä.</value></data>
+  <data name="The pattern is not a valid regular expression." xml:space="preserve"><value>Malli ei ole kelvollinen säännöllinen lauseke.</value></data>
+  <data name="This line exists already." xml:space="preserve"><value>Tämä sarja on jo olemassa.</value></data>
+  <data name="The AI gave no usable answer." xml:space="preserve"><value>Tekoäly ei antanut käyttökelpoista vastausta.</value></data>
+  <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>Tekoäly ei antanut käyttökelpoista vastausta. Tarkista yhteystesti kohdassa Asetukset, Tekoälyavustaja.</value></data>
 </root>

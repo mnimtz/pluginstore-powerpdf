@@ -1,6 +1,6 @@
 # Konzept: Power-PDF-Updates über den Add-on Store
 
-Stand: Okt 8, 2026 · Status: abgestimmt, Etappe 1 in Arbeit
+Stand: Okt 8, 2026 · Status: Etappe 1 umgesetzt (S1.8.0, Client 1.6.0); Etappe 2 offen
 
 ## Ziel
 

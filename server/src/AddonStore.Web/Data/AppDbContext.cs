@@ -26,6 +26,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<Delivery> Deliveries => Set<Delivery>();
     public DbSet<DeliverySeat> DeliverySeats => Set<DeliverySeat>();
     public DbSet<TestCode> TestCodes => Set<TestCode>();
+    public DbSet<PowerPdfLine> PowerPdfLines => Set<PowerPdfLine>();
 
     protected override void OnModelCreating(ModelBuilder b)
     {
@@ -49,6 +50,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
         b.Entity<CustomerCode>().HasIndex(c => c.CodeHash).IsUnique();
         b.Entity<TestCode>().HasIndex(c => c.CodeHash).IsUnique();
         b.Entity<TestCode>().HasIndex(c => c.UserId);
+        b.Entity<PowerPdfLine>().HasIndex(l => l.Key).IsUnique();
         b.Entity<Delivery>().HasIndex(d => new { d.CustomerId, d.PackageId }).IsUnique();
     }
 }

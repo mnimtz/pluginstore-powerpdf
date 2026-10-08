@@ -1133,4 +1133,57 @@
   <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>Neznámé nebo klienti obchodu starší než 1.5.0</value></data>
   <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>Žádný typ licence není povolen: obchod je skrytý v každém Power PDF.</value></data>
   <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>Které instalace Power PDF smějí obchod používat. U vypnutého typu se tlačítko obchodu v Power PDF nezobrazí a nenabízejí se žádné doplňky; klient obchodu se může dál sám aktualizovat. Nainstalované doplňky fungují dál. Klient obchodu hlásí typ licence sám (od klienta 1.5.0), jde tedy o pravidlo používání, nikoli o ochranu proti kopírování.</value></data>
+  <data name="Accept the text" xml:space="preserve"><value>Přijmout text</value></data>
+  <data name="Add" xml:space="preserve"><value>Přidat</value></data>
+  <data name="Add a release line" xml:space="preserve"><value>Přidat verzní řadu</value></data>
+  <data name="Allowed hosts (comma separated)" xml:space="preserve"><value>Povolení hostitelé (oddělení čárkou)</value></data>
+  <data name="Check now" xml:space="preserve"><value>Zkontrolovat nyní</value></data>
+  <data name="Check the watched pages" xml:space="preserve"><value>Zkontrolovat sledované stránky</value></data>
+  <data name="Confirm it as a release line" xml:space="preserve"><value>Potvrdit jako verzní řadu</value></data>
+  <data name="Delete this release line? Its clients get no hints any more." xml:space="preserve"><value>Odstranit tuto verzní řadu? Její klienti už nebudou dostávat upozornění.</value></data>
+  <data name="Detected" xml:space="preserve"><value>Zjištěno</value></data>
+  <data name="Discard" xml:space="preserve"><value>Zahodit</value></data>
+  <data name="Found on the overview page. Check the address and set the status to &quot;Maintained&quot; to watch its updates." xml:space="preserve"><value>Nalezeno na stránce přehledu. Zkontrolujte adresu a nastavte stav na „Udržovaná“, aby se sledovaly její aktualizace.</value></data>
+  <data name="Last check" xml:space="preserve"><value>Poslední kontrola</value></data>
+  <data name="Line" xml:space="preserve"><value>Řada</value></data>
+  <data name="Manage Power PDF updates" xml:space="preserve"><value>Spravovat aktualizace Power PDF</value></data>
+  <data name="New Power PDF version found" xml:space="preserve"><value>Nalezena nová verze Power PDF</value></data>
+  <data name="Newest update" xml:space="preserve"><value>Nejnovější aktualizace</value></data>
+  <data name="No release line yet. &quot;Check now&quot; proposes the current version from the overview page, or add one below." xml:space="preserve"><value>Zatím žádná verzní řada. „Zkontrolovat nyní“ navrhne aktuální verzi ze stránky přehledu, nebo řadu přidejte níže.</value></data>
+  <data name="Overview page (finds new major versions)" xml:space="preserve"><value>Stránka přehledu (najde nové hlavní verze)</value></data>
+  <data name="Pattern (group 1 = update version)" xml:space="preserve"><value>Vzor (group 1 = verze aktualizace)</value></data>
+  <data name="Power PDF update detected" xml:space="preserve"><value>Zjištěna aktualizace Power PDF</value></data>
+  <data name="Power PDF updates" xml:space="preserve"><value>Aktualizace Power PDF</value></data>
+  <data name="Proposal" xml:space="preserve"><value>Návrh</value></data>
+  <data name="Propose a text (AI, 21 languages)" xml:space="preserve"><value>Navrhnout text (AI, 21 jazyků)</value></data>
+  <data name="Release lines" xml:space="preserve"><value>Verzní řady</value></data>
+  <data name="Remove the text" xml:space="preserve"><value>Odebrat text</value></data>
+  <data name="Shown with the hint in the store window. Without a text the hint shows the update and the ReadMe link only." xml:space="preserve"><value>Zobrazí se s upozorněním v okně obchodu. Bez textu upozornění ukazuje jen aktualizaci a odkaz na ReadMe.</value></data>
+  <data name="Support ends (optional)" xml:space="preserve"><value>Konec podpory (volitelné)</value></data>
+  <data name="Tell clients of this line about a newer major version (link only)" xml:space="preserve"><value>Upozornit klienty této řady na novější hlavní verzi (jen odkaz)</value></data>
+  <data name="Text for end users" xml:space="preserve"><value>Text pro koncové uživatele</value></data>
+  <data name="The AI assistant is switched off (Settings, AI assistant)." xml:space="preserve"><value>Asistent AI je vypnutý (Nastavení, Asistent AI).</value></data>
+  <data name="The server reads the Power PDF documentation once a day. When Tungsten publishes a newer update for a release line, the admins get an email, and store clients of that line show a hint with a link to the official ReadMe (only where the hint is switched on in the client options). Nothing is downloaded or installed in this stage." xml:space="preserve"><value>Server jednou denně načte dokumentaci Power PDF. Když Tungsten zveřejní novější aktualizaci pro verzní řadu, správci dostanou e-mail a klienti obchodu této řady zobrazí upozornění s odkazem na oficiální ReadMe (jen tam, kde je upozornění zapnuté v možnostech klienta). V této fázi se nic nestahuje ani neinstaluje.</value></data>
+  <data name="Update check failed" xml:space="preserve"><value>Kontrola aktualizací selhala</value></data>
+  <data name="Watched page" xml:space="preserve"><value>Sledovaná stránka</value></data>
+  <data name="empty = ReadMe link of this line" xml:space="preserve"><value>prázdné = odkaz na ReadMe této řady</value></data>
+  <data name="Suggested" xml:space="preserve"><value>Navržená</value></data>
+  <data name="Maintained" xml:space="preserve"><value>Udržovaná</value></data>
+  <data name="Security updates only" xml:space="preserve"><value>Pouze bezpečnostní aktualizace</value></data>
+  <data name="Line ended" xml:space="preserve"><value>Ukončena</value></data>
+  <data name="Release line deleted." xml:space="preserve"><value>Verzní řada odstraněna.</value></data>
+  <data name="Switch the Power PDF update hints on first." xml:space="preserve"><value>Nejprve zapněte upozornění na aktualizace Power PDF.</value></data>
+  <data name="Text accepted. Store clients show it with the hint." xml:space="preserve"><value>Text přijat. Klienti obchodu ho zobrazí s upozorněním.</value></data>
+  <data name="Text discarded." xml:space="preserve"><value>Text zahozen.</value></data>
+  <data name="Check done." xml:space="preserve"><value>Kontrola dokončena.</value></data>
+  <data name="Check done with problems; see the lines below." xml:space="preserve"><value>Kontrola dokončena s problémy; viz řady níže.</value></data>
+  <data name="Text proposed. Check it and accept it." xml:space="preserve"><value>Text navržen. Zkontrolujte ho a přijměte.</value></data>
+  <data name="No update detected yet." xml:space="preserve"><value>Zatím nebyla zjištěna žádná aktualizace.</value></data>
+  <data name="The line is the start of the Power PDF version, for example 2025.3." xml:space="preserve"><value>Řada je začátek verze Power PDF, například 2025.3.</value></data>
+  <data name="Unknown status." xml:space="preserve"><value>Neznámý stav.</value></data>
+  <data name="The pattern is too long." xml:space="preserve"><value>Vzor je příliš dlouhý.</value></data>
+  <data name="The pattern is not a valid regular expression." xml:space="preserve"><value>Vzor není platný regulární výraz.</value></data>
+  <data name="This line exists already." xml:space="preserve"><value>Tato řada již existuje.</value></data>
+  <data name="The AI gave no usable answer." xml:space="preserve"><value>AI nevrátila použitelnou odpověď.</value></data>
+  <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>AI nevrátila použitelnou odpověď. Zkontrolujte test připojení v části Nastavení, Asistent AI.</value></data>
 </root>

@@ -388,6 +388,41 @@ public class TestCode
     public DateTime? LastUsedAt { get; set; }
 }
 
+/// <summary>
+/// A release line of Power PDF Business (S1.8.0), e.g. 2025.3 with its updates 2025.3.n. The server
+/// watches the line's documentation page once a day and remembers the newest update it finds; store
+/// clients whose Power PDF belongs to the line get a hint with a link to the official ReadMe.
+/// </summary>
+public class PowerPdfLine
+{
+    public int Id { get; set; }
+    /// <summary>Start of VersionLong, e.g. "2025.3".</summary>
+    public string Key { get; set; } = "";
+    public string Title { get; set; } = "";
+    /// <summary>The page that links the newest ReadMe (the DocShield portal page of the version).</summary>
+    public string WatchUrl { get; set; } = "";
+    /// <summary>Regular expression applied to every link of the page; group 1 is the update version.</summary>
+    public string Pattern { get; set; } = "";
+    /// <summary>suggested (found on the overview, not confirmed), maintained, security, ended.</summary>
+    public string Status { get; set; } = "suggested";
+    public DateTime? SupportEnd { get; set; }
+    /// <summary>Tell clients of this line that a newer major version exists (off by default).</summary>
+    public bool OfferMajorHint { get; set; }
+    public string? LatestVersion { get; set; }
+    public string? LatestReadmeUrl { get; set; }
+    public string? LatestTitle { get; set; }
+    public string? LatestBuildDate { get; set; }
+    public DateTime? DetectedAt { get; set; }
+    public DateTime? LastCheckAt { get; set; }
+    /// <summary>"ok" or why the check failed (page not reachable, pattern not found).</summary>
+    public string? LastCheckResult { get; set; }
+    /// <summary>End-user text per language (JSON object), shown with the hint; admin-approved.</summary>
+    public string? SummaryJson { get; set; }
+    /// <summary>The AI's proposal, until an admin accepts or discards it.</summary>
+    public string? SummaryDraftJson { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+}
+
 public class DeliverySeat
 {
     public int Id { get; set; }

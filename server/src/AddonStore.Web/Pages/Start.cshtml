@@ -47,6 +47,30 @@
                 <span class="tile-note">@L["{0} ratings", r.Ratings]</span>
             </a>
         }
+        @foreach (var pl in Model.PpRecent)
+        {
+            <a class="tile attn" href="/Admin/Settings?view=updates">
+                <span class="tile-label">@L["Power PDF update detected"]</span>
+                <b class="tile-value" style="font-size:1.4rem">@pl.LatestVersion</b>
+                <span class="tile-note">@(pl.LatestBuildDate is null ? pl.Title : pl.Title + " · " + pl.LatestBuildDate)</span>
+            </a>
+        }
+        @if (Model.PpSuggested > 0)
+        {
+            <a class="tile attn" href="/Admin/Settings?view=updates">
+                <span class="tile-label">@L["New Power PDF version found"]</span>
+                <b class="tile-value">@Model.PpSuggested</b>
+                <span class="tile-note">@L["Confirm it as a release line"]</span>
+            </a>
+        }
+        @if (Model.PpProblems > 0)
+        {
+            <a class="tile attn" href="/Admin/Settings?view=updates">
+                <span class="tile-label">@L["Update check failed"]</span>
+                <b class="tile-value">@Model.PpProblems</b>
+                <span class="tile-note">@L["Check the watched pages"]</span>
+            </a>
+        }
         @if (Model.IsAdmin)
         {
             <a class="tile @(Model.AccessRequests > 0 ? "attn" : "")" href="/Admin/Users">

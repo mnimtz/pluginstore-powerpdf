@@ -31,6 +31,10 @@ public class StartModel : PageModel
     public int Customers { get; private set; }
     public int AccessRequests { get; private set; }
     public List<Feedback> NewReports { get; private set; } = new();
+    /// <summary>Power PDF update hints (S1.8.0, admins): updates detected in the last 14 days, proposed lines, failing checks.</summary>
+    public List<PowerPdfLine> PpRecent { get; private set; } = new();
+    public int PpSuggested { get; private set; }
+    public int PpProblems { get; private set; }
 
     public async Task OnGetAsync()
     {
@@ -46,6 +50,14 @@ public class StartModel : PageModel
             ? await _db.Customers.CountAsync()
             : await _db.Customers.CountAsync(c => c.OwnerId == Me.Id);
         if (IsAdmin) AccessRequests = await _db.Users.CountAsync(u => u.Status == UserStatus.Pending);
+        if (IsAdmin && await HttpContext.RequestServices.GetRequiredService<SettingsService>().GetAsync(PowerPdfUpdateService.EnabledKey) == "1")
+        {
+            var since = DateTime.UtcNow.AddDays(-14);
+            var lines = await _db.PowerPdfLines.AsNoTracking().ToListAsync();
+            PpRecent = lines.Where(l => l.DetectedAt > since && l.Status is "maintained" or "security").OrderByDescending(l => l.DetectedAt).ToList();
+            PpSuggested = lines.Count(l => l.Status == "suggested");
+            PpProblems = lines.Count(l => l.Status is "maintained" or "security" && l.LastCheckResult is { } r && r != "ok");
+        }
         NewReports = await _issues.Scope(Me, IsAdmin).Where(f => f.Status == "open")
             .OrderByDescending(f => f.Id).Take(5).AsNoTracking().ToListAsync();
     }

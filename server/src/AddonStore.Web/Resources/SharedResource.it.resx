@@ -1133,4 +1133,57 @@
   <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>Sconosciuto, o client dello store precedenti alla 1.5.0</value></data>
   <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>Nessun tipo di licenza è consentito: lo store è nascosto in ogni Power PDF.</value></data>
   <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>Quali installazioni di Power PDF possono usare lo store. Per un tipo disattivato, il pulsante dello store non compare in Power PDF e non vengono offerti componenti aggiuntivi; il client dello store può comunque aggiornarsi. I componenti aggiuntivi installati continuano a funzionare. Il client dello store comunica da sé il tipo (dal client 1.5.0), quindi si tratta di una regola d'uso, non di una protezione dalla copia.</value></data>
+  <data name="Accept the text" xml:space="preserve"><value>Accetta il testo</value></data>
+  <data name="Add" xml:space="preserve"><value>Aggiungi</value></data>
+  <data name="Add a release line" xml:space="preserve"><value>Aggiungi una linea di versione</value></data>
+  <data name="Allowed hosts (comma separated)" xml:space="preserve"><value>Host consentiti (separati da virgola)</value></data>
+  <data name="Check now" xml:space="preserve"><value>Verifica ora</value></data>
+  <data name="Check the watched pages" xml:space="preserve"><value>Verifica le pagine monitorate</value></data>
+  <data name="Confirm it as a release line" xml:space="preserve"><value>Confermala come linea di versione</value></data>
+  <data name="Delete this release line? Its clients get no hints any more." xml:space="preserve"><value>Eliminare questa linea di versione? I suoi client non riceveranno più avvisi.</value></data>
+  <data name="Detected" xml:space="preserve"><value>Rilevato</value></data>
+  <data name="Discard" xml:space="preserve"><value>Scarta</value></data>
+  <data name="Found on the overview page. Check the address and set the status to &quot;Maintained&quot; to watch its updates." xml:space="preserve"><value>Trovata nella pagina panoramica. Controlla l'indirizzo e imposta lo stato su "Mantenuta" per monitorarne gli aggiornamenti.</value></data>
+  <data name="Last check" xml:space="preserve"><value>Ultima verifica</value></data>
+  <data name="Line" xml:space="preserve"><value>Linea</value></data>
+  <data name="Manage Power PDF updates" xml:space="preserve"><value>Gestisci gli aggiornamenti di Power PDF</value></data>
+  <data name="New Power PDF version found" xml:space="preserve"><value>Trovata una nuova versione di Power PDF</value></data>
+  <data name="Newest update" xml:space="preserve"><value>Aggiornamento più recente</value></data>
+  <data name="No release line yet. &quot;Check now&quot; proposes the current version from the overview page, or add one below." xml:space="preserve"><value>Ancora nessuna linea di versione. "Verifica ora" propone la versione attuale dalla pagina panoramica, oppure aggiungine una qui sotto.</value></data>
+  <data name="Overview page (finds new major versions)" xml:space="preserve"><value>Pagina panoramica (trova nuove versioni principali)</value></data>
+  <data name="Pattern (group 1 = update version)" xml:space="preserve"><value>Modello (group 1 = versione dell'aggiornamento)</value></data>
+  <data name="Power PDF update detected" xml:space="preserve"><value>Rilevato un aggiornamento di Power PDF</value></data>
+  <data name="Power PDF updates" xml:space="preserve"><value>Aggiornamenti di Power PDF</value></data>
+  <data name="Proposal" xml:space="preserve"><value>Proposta</value></data>
+  <data name="Propose a text (AI, 21 languages)" xml:space="preserve"><value>Proponi un testo (IA, 21 lingue)</value></data>
+  <data name="Release lines" xml:space="preserve"><value>Linee di versione</value></data>
+  <data name="Remove the text" xml:space="preserve"><value>Rimuovi il testo</value></data>
+  <data name="Shown with the hint in the store window. Without a text the hint shows the update and the ReadMe link only." xml:space="preserve"><value>Mostrato con l'avviso nella finestra dello store. Senza testo l'avviso mostra solo l'aggiornamento e il link al ReadMe.</value></data>
+  <data name="Support ends (optional)" xml:space="preserve"><value>Fine del supporto (facoltativo)</value></data>
+  <data name="Tell clients of this line about a newer major version (link only)" xml:space="preserve"><value>Informa i client di questa linea di una versione principale più recente (solo link)</value></data>
+  <data name="Text for end users" xml:space="preserve"><value>Testo per gli utenti finali</value></data>
+  <data name="The AI assistant is switched off (Settings, AI assistant)." xml:space="preserve"><value>L'assistente IA è disattivato (Impostazioni, Assistente IA).</value></data>
+  <data name="The server reads the Power PDF documentation once a day. When Tungsten publishes a newer update for a release line, the admins get an email, and store clients of that line show a hint with a link to the official ReadMe (only where the hint is switched on in the client options). Nothing is downloaded or installed in this stage." xml:space="preserve"><value>Il server legge la documentazione di Power PDF una volta al giorno. Quando Tungsten pubblica un aggiornamento più recente per una linea di versione, gli amministratori ricevono un'e-mail e i client dello store di quella linea mostrano un avviso con un link al ReadMe ufficiale (solo dove l'avviso è attivato nelle opzioni del client). In questa fase non viene scaricato né installato nulla.</value></data>
+  <data name="Update check failed" xml:space="preserve"><value>Verifica degli aggiornamenti non riuscita</value></data>
+  <data name="Watched page" xml:space="preserve"><value>Pagina monitorata</value></data>
+  <data name="empty = ReadMe link of this line" xml:space="preserve"><value>vuoto = link al ReadMe di questa linea</value></data>
+  <data name="Suggested" xml:space="preserve"><value>Suggerita</value></data>
+  <data name="Maintained" xml:space="preserve"><value>Mantenuta</value></data>
+  <data name="Security updates only" xml:space="preserve"><value>Solo aggiornamenti di sicurezza</value></data>
+  <data name="Line ended" xml:space="preserve"><value>Terminata</value></data>
+  <data name="Release line deleted." xml:space="preserve"><value>Linea di versione eliminata.</value></data>
+  <data name="Switch the Power PDF update hints on first." xml:space="preserve"><value>Attiva prima gli avvisi di aggiornamento di Power PDF.</value></data>
+  <data name="Text accepted. Store clients show it with the hint." xml:space="preserve"><value>Testo accettato. I client dello store lo mostrano con l'avviso.</value></data>
+  <data name="Text discarded." xml:space="preserve"><value>Testo scartato.</value></data>
+  <data name="Check done." xml:space="preserve"><value>Verifica completata.</value></data>
+  <data name="Check done with problems; see the lines below." xml:space="preserve"><value>Verifica completata con problemi; vedi le linee qui sotto.</value></data>
+  <data name="Text proposed. Check it and accept it." xml:space="preserve"><value>Testo proposto. Controllalo e accettalo.</value></data>
+  <data name="No update detected yet." xml:space="preserve"><value>Nessun aggiornamento rilevato finora.</value></data>
+  <data name="The line is the start of the Power PDF version, for example 2025.3." xml:space="preserve"><value>La linea è la parte iniziale della versione di Power PDF, ad esempio 2025.3.</value></data>
+  <data name="Unknown status." xml:space="preserve"><value>Stato sconosciuto.</value></data>
+  <data name="The pattern is too long." xml:space="preserve"><value>Il modello è troppo lungo.</value></data>
+  <data name="The pattern is not a valid regular expression." xml:space="preserve"><value>Il modello non è un'espressione regolare valida.</value></data>
+  <data name="This line exists already." xml:space="preserve"><value>Questa linea esiste già.</value></data>
+  <data name="The AI gave no usable answer." xml:space="preserve"><value>L'IA non ha dato una risposta utilizzabile.</value></data>
+  <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>L'IA non ha dato una risposta utilizzabile. Controlla la verifica della connessione in Impostazioni, Assistente IA.</value></data>
 </root>

@@ -363,6 +363,36 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Power PDF update hints, stage 1 (S1.8.0, client 1.6.0; concept
+docs/concepts/powerpdf-updates.md):**
+- Settings, "Power PDF updates": off by default. Once switched on, the server
+  reads the documentation overview and the watched page of every release line
+  once a day (also "Check now"). A new major version on the overview becomes a
+  proposed release line (status "Suggested") that an admin confirms; lines run
+  in parallel (e.g. 2025.3 and 2026.4).
+- Each line has its watched page (DocShield portal page), a pattern (group 1 =
+  update version, default `ReadMe-TungstenPowerPDFBusiness-(2025\.3\.\d+)\.htm`),
+  a status (maintained, security updates only, ended), an optional end of
+  support and an optional hint about a newer major version.
+- The portal page builds its ReadMe link in JavaScript, so the pattern is
+  searched in the whole page and the ReadMe address follows the DocShield
+  scheme `/PowerPDF/<lang>/<folder>/print/<file>`; title and build date come
+  from the ReadMe. A page that no longer matches is reported, not ignored.
+- New update or new major version: email to the admins (event
+  "PowerPdfUpdate") and a tile on their start page. Optional AI text for end
+  users in 21 languages, accepted or discarded by an admin; the ReadMe is
+  passed to the AI as data.
+- Fetching: HTTPS on the allowed hosts only (default
+  `docshield.tungstenautomation.com`), no redirects to other hosts, 2 MB and
+  20 s limits; http://localhost only on a development server (tests).
+- `GET /api/powerpdf/update?version=<VersionLong>&lang=` answers the store
+  client; nothing for a license mode the store does not allow.
+- Client 1.6.0: Options, "Show a hint when an update for Power PDF is
+  available" (off by default; policy `Store\PowerPdfUpdates` 0/1 locks it).
+  The store window shows a banner with the update, the text, "What's new"
+  (opens the official ReadMe, only https on tungstenautomation.com) and "Hide"
+  (until a newer update). Nothing is downloaded or installed.
+
 **Allowed license modes (S1.7.0, client 1.5.0):**
 - Settings has a new category "Add-on Store": the admins choose which Power
   PDF installations may use the store, by license mode: Cloud License Server

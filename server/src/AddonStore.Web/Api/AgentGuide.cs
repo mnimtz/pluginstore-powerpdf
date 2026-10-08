@@ -899,6 +899,12 @@ test workstation shows no store, check its license mode against these
 settings. Requests without the store client's User-Agent (website, API,
 assistants) are not affected.
 
+Store clients 1.6.0+ with the option "Show a hint when an update for Power
+PDF is available" also ask `GET {{baseUrl}}/api/powerpdf/update?version=<VersionLong>&lang=<lang>`
+(off unless the store admins switched the Power PDF update hints on); the
+answer names a newer update of the client's release line and the official
+ReadMe. Nothing is downloaded or installed through the store.
+
 ## Customer deliveries (private add-ons)
 
 Add-ons can be delivered to single customers instead of (or in addition to)

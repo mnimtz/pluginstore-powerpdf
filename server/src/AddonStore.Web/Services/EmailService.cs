@@ -97,6 +97,7 @@ public class NotificationService
         ("Feedback",        "Problem report or comment from the store client", "Owner"),
         ("CustomerDelivery", "Customer delivery created or changed by a developer", "Admins"),
         ("BackupFailed",    "Automatic backup failed",          "Admins"),
+        ("PowerPdfUpdate",  "New Power PDF update or major version detected", "Admins"),
     };
 
     private readonly IAppEmailSender _mail;

@@ -1133,4 +1133,57 @@
   <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>Ismeretlen, vagy 1.5.0 előtti áruházkliensek</value></data>
   <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>Egyetlen licenctípus sincs engedélyezve: az áruház minden Power PDF-ben rejtve van.</value></data>
   <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>Mely Power PDF-telepítések használhatják az áruházat. Kikapcsolt típusnál az áruház gombja nem jelenik meg a Power PDF-ben, és nem kínálunk bővítményeket; az áruházkliens továbbra is frissítheti önmagát. A telepített bővítmények tovább működnek. Az áruházkliens maga jelenti a licenctípust (az 1.5.0-s klienstől), így ez használati szabály, nem másolásvédelem.</value></data>
+  <data name="Accept the text" xml:space="preserve"><value>Szöveg elfogadása</value></data>
+  <data name="Add" xml:space="preserve"><value>Hozzáadás</value></data>
+  <data name="Add a release line" xml:space="preserve"><value>Verziósorozat hozzáadása</value></data>
+  <data name="Allowed hosts (comma separated)" xml:space="preserve"><value>Engedélyezett gépnevek (vesszővel elválasztva)</value></data>
+  <data name="Check now" xml:space="preserve"><value>Ellenőrzés most</value></data>
+  <data name="Check the watched pages" xml:space="preserve"><value>A figyelt oldalak ellenőrzése</value></data>
+  <data name="Confirm it as a release line" xml:space="preserve"><value>Megerősítés verziósorozatként</value></data>
+  <data name="Delete this release line? Its clients get no hints any more." xml:space="preserve"><value>Törli ezt a verziósorozatot? A kliensei nem kapnak több értesítést.</value></data>
+  <data name="Detected" xml:space="preserve"><value>Észlelve</value></data>
+  <data name="Discard" xml:space="preserve"><value>Elvetés</value></data>
+  <data name="Found on the overview page. Check the address and set the status to &quot;Maintained&quot; to watch its updates." xml:space="preserve"><value>Az áttekintő oldalon található. Ellenőrizze a címet, és állítsa az állapotot „Karbantartott” értékre a frissítések figyeléséhez.</value></data>
+  <data name="Last check" xml:space="preserve"><value>Utolsó ellenőrzés</value></data>
+  <data name="Line" xml:space="preserve"><value>Sorozat</value></data>
+  <data name="Manage Power PDF updates" xml:space="preserve"><value>Power PDF-frissítések kezelése</value></data>
+  <data name="New Power PDF version found" xml:space="preserve"><value>Új Power PDF-verzió található</value></data>
+  <data name="Newest update" xml:space="preserve"><value>Legújabb frissítés</value></data>
+  <data name="No release line yet. &quot;Check now&quot; proposes the current version from the overview page, or add one below." xml:space="preserve"><value>Még nincs verziósorozat. Az „Ellenőrzés most” javasolja az áttekintő oldal aktuális verzióját, vagy adjon hozzá egyet lent.</value></data>
+  <data name="Overview page (finds new major versions)" xml:space="preserve"><value>Áttekintő oldal (új főverziókat talál)</value></data>
+  <data name="Pattern (group 1 = update version)" xml:space="preserve"><value>Minta (group 1 = a frissítés verziója)</value></data>
+  <data name="Power PDF update detected" xml:space="preserve"><value>Power PDF-frissítés észlelve</value></data>
+  <data name="Power PDF updates" xml:space="preserve"><value>Power PDF-frissítések</value></data>
+  <data name="Proposal" xml:space="preserve"><value>Javaslat</value></data>
+  <data name="Propose a text (AI, 21 languages)" xml:space="preserve"><value>Szöveg javaslása (MI, 21 nyelv)</value></data>
+  <data name="Release lines" xml:space="preserve"><value>Verziósorozatok</value></data>
+  <data name="Remove the text" xml:space="preserve"><value>Szöveg eltávolítása</value></data>
+  <data name="Shown with the hint in the store window. Without a text the hint shows the update and the ReadMe link only." xml:space="preserve"><value>Az értesítéssel együtt jelenik meg az áruházablakban. Szöveg nélkül az értesítés csak a frissítést és a ReadMe-linket mutatja.</value></data>
+  <data name="Support ends (optional)" xml:space="preserve"><value>Támogatás vége (opcionális)</value></data>
+  <data name="Tell clients of this line about a newer major version (link only)" xml:space="preserve"><value>A sorozat klienseinek értesítése újabb főverzióról (csak link)</value></data>
+  <data name="Text for end users" xml:space="preserve"><value>Szöveg a végfelhasználóknak</value></data>
+  <data name="The AI assistant is switched off (Settings, AI assistant)." xml:space="preserve"><value>Az MI-asszisztens ki van kapcsolva (Beállítások, MI-asszisztens).</value></data>
+  <data name="The server reads the Power PDF documentation once a day. When Tungsten publishes a newer update for a release line, the admins get an email, and store clients of that line show a hint with a link to the official ReadMe (only where the hint is switched on in the client options). Nothing is downloaded or installed in this stage." xml:space="preserve"><value>A szerver naponta egyszer beolvassa a Power PDF dokumentációját. Ha a Tungsten újabb frissítést tesz közzé egy verziósorozathoz, a rendszergazdák e-mailt kapnak, és a sorozat áruházkliensei értesítést jelenítenek meg a hivatalos ReadMe linkjével (csak ott, ahol az értesítés be van kapcsolva a kliens beállításaiban). Ebben a szakaszban semmi sem töltődik le és nem települ.</value></data>
+  <data name="Update check failed" xml:space="preserve"><value>A frissítések ellenőrzése sikertelen</value></data>
+  <data name="Watched page" xml:space="preserve"><value>Figyelt oldal</value></data>
+  <data name="empty = ReadMe link of this line" xml:space="preserve"><value>üres = a sorozat ReadMe-linkje</value></data>
+  <data name="Suggested" xml:space="preserve"><value>Javasolt</value></data>
+  <data name="Maintained" xml:space="preserve"><value>Karbantartott</value></data>
+  <data name="Security updates only" xml:space="preserve"><value>Csak biztonsági frissítések</value></data>
+  <data name="Line ended" xml:space="preserve"><value>Befejezve</value></data>
+  <data name="Release line deleted." xml:space="preserve"><value>Verziósorozat törölve.</value></data>
+  <data name="Switch the Power PDF update hints on first." xml:space="preserve"><value>Először kapcsolja be a Power PDF-frissítési értesítéseket.</value></data>
+  <data name="Text accepted. Store clients show it with the hint." xml:space="preserve"><value>Szöveg elfogadva. Az áruházkliensek az értesítéssel együtt jelenítik meg.</value></data>
+  <data name="Text discarded." xml:space="preserve"><value>Szöveg elvetve.</value></data>
+  <data name="Check done." xml:space="preserve"><value>Ellenőrzés kész.</value></data>
+  <data name="Check done with problems; see the lines below." xml:space="preserve"><value>Az ellenőrzés problémákkal zárult; lásd a lenti sorozatokat.</value></data>
+  <data name="Text proposed. Check it and accept it." xml:space="preserve"><value>Szöveg javasolva. Ellenőrizze, majd fogadja el.</value></data>
+  <data name="No update detected yet." xml:space="preserve"><value>Még nem észleltünk frissítést.</value></data>
+  <data name="The line is the start of the Power PDF version, for example 2025.3." xml:space="preserve"><value>A sorozat a Power PDF-verzió eleje, például 2025.3.</value></data>
+  <data name="Unknown status." xml:space="preserve"><value>Ismeretlen állapot.</value></data>
+  <data name="The pattern is too long." xml:space="preserve"><value>A minta túl hosszú.</value></data>
+  <data name="The pattern is not a valid regular expression." xml:space="preserve"><value>A minta nem érvényes reguláris kifejezés.</value></data>
+  <data name="This line exists already." xml:space="preserve"><value>Ez a sorozat már létezik.</value></data>
+  <data name="The AI gave no usable answer." xml:space="preserve"><value>Az MI nem adott használható választ.</value></data>
+  <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>Az MI nem adott használható választ. Ellenőrizze a kapcsolattesztet itt: Beállítások, MI-asszisztens.</value></data>
 </root>

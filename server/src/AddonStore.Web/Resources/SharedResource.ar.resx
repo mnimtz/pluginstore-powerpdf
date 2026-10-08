@@ -1133,4 +1133,57 @@
   <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>غير معروف، أو عملاء المتجر الأقدم من 1.5.0</value></data>
   <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>لا يُسمح بأي نوع ترخيص: المتجر مخفي في كل Power PDF.</value></data>
   <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>تحديد تثبيتات Power PDF التي يمكنها استخدام المتجر. عند إيقاف نوع ما لا يظهر زر المتجر في Power PDF ولا تُعرض أي إضافات، ويظل بإمكان عميل المتجر تحديث نفسه. تستمر الإضافات المثبتة في العمل. يبلّغ عميل المتجر عن نوع الترخيص بنفسه (بدءًا من العميل 1.5.0)، لذا فهذه قاعدة استخدام وليست حماية من النسخ.</value></data>
+  <data name="Accept the text" xml:space="preserve"><value>قبول النص</value></data>
+  <data name="Add" xml:space="preserve"><value>إضافة</value></data>
+  <data name="Add a release line" xml:space="preserve"><value>إضافة خط إصدار</value></data>
+  <data name="Allowed hosts (comma separated)" xml:space="preserve"><value>المضيفون المسموح بهم (مفصولون بفواصل)</value></data>
+  <data name="Check now" xml:space="preserve"><value>تحقق الآن</value></data>
+  <data name="Check the watched pages" xml:space="preserve"><value>التحقق من الصفحات المراقَبة</value></data>
+  <data name="Confirm it as a release line" xml:space="preserve"><value>تأكيده كخط إصدار</value></data>
+  <data name="Delete this release line? Its clients get no hints any more." xml:space="preserve"><value>هل تريد حذف خط الإصدار هذا؟ لن يتلقى عملاؤه أي تنبيهات بعد الآن.</value></data>
+  <data name="Detected" xml:space="preserve"><value>تم الاكتشاف</value></data>
+  <data name="Discard" xml:space="preserve"><value>تجاهل</value></data>
+  <data name="Found on the overview page. Check the address and set the status to &quot;Maintained&quot; to watch its updates." xml:space="preserve"><value>عُثر عليه في صفحة النظرة العامة. تحقق من العنوان واضبط الحالة على «قيد الصيانة» لمراقبة تحديثاته.</value></data>
+  <data name="Last check" xml:space="preserve"><value>آخر تحقق</value></data>
+  <data name="Line" xml:space="preserve"><value>الخط</value></data>
+  <data name="Manage Power PDF updates" xml:space="preserve"><value>إدارة تحديثات Power PDF</value></data>
+  <data name="New Power PDF version found" xml:space="preserve"><value>تم العثور على إصدار جديد من Power PDF</value></data>
+  <data name="Newest update" xml:space="preserve"><value>أحدث تحديث</value></data>
+  <data name="No release line yet. &quot;Check now&quot; proposes the current version from the overview page, or add one below." xml:space="preserve"><value>لا يوجد خط إصدار بعد. يقترح «تحقق الآن» الإصدار الحالي من صفحة النظرة العامة، أو أضف خطًا أدناه.</value></data>
+  <data name="Overview page (finds new major versions)" xml:space="preserve"><value>صفحة النظرة العامة (تعثر على الإصدارات الرئيسية الجديدة)</value></data>
+  <data name="Pattern (group 1 = update version)" xml:space="preserve"><value>النمط (group 1 = إصدار التحديث)</value></data>
+  <data name="Power PDF update detected" xml:space="preserve"><value>تم اكتشاف تحديث لـ Power PDF</value></data>
+  <data name="Power PDF updates" xml:space="preserve"><value>تحديثات Power PDF</value></data>
+  <data name="Proposal" xml:space="preserve"><value>الاقتراح</value></data>
+  <data name="Propose a text (AI, 21 languages)" xml:space="preserve"><value>اقتراح نص (الذكاء الاصطناعي، 21 لغة)</value></data>
+  <data name="Release lines" xml:space="preserve"><value>خطوط الإصدار</value></data>
+  <data name="Remove the text" xml:space="preserve"><value>إزالة النص</value></data>
+  <data name="Shown with the hint in the store window. Without a text the hint shows the update and the ReadMe link only." xml:space="preserve"><value>يُعرض مع التنبيه في نافذة المتجر. بدون نص، يعرض التنبيه التحديث ورابط ReadMe فقط.</value></data>
+  <data name="Support ends (optional)" xml:space="preserve"><value>انتهاء الدعم (اختياري)</value></data>
+  <data name="Tell clients of this line about a newer major version (link only)" xml:space="preserve"><value>إعلام عملاء هذا الخط بإصدار رئيسي أحدث (رابط فقط)</value></data>
+  <data name="Text for end users" xml:space="preserve"><value>نص للمستخدمين النهائيين</value></data>
+  <data name="The AI assistant is switched off (Settings, AI assistant)." xml:space="preserve"><value>مساعد الذكاء الاصطناعي متوقف (الإعدادات، مساعد الذكاء الاصطناعي).</value></data>
+  <data name="The server reads the Power PDF documentation once a day. When Tungsten publishes a newer update for a release line, the admins get an email, and store clients of that line show a hint with a link to the official ReadMe (only where the hint is switched on in the client options). Nothing is downloaded or installed in this stage." xml:space="preserve"><value>يقرأ الخادم وثائق Power PDF مرة واحدة يوميًا. عندما تنشر Tungsten تحديثًا أحدث لخط إصدار، يتلقى المسؤولون رسالة بريد إلكتروني، وتعرض عملاء المتجر لهذا الخط تنبيهًا مع رابط إلى ملف ReadMe الرسمي (فقط حيث يكون التنبيه مفعّلًا في خيارات العميل). لا يتم تنزيل أي شيء أو تثبيته في هذه المرحلة.</value></data>
+  <data name="Update check failed" xml:space="preserve"><value>فشل التحقق من التحديثات</value></data>
+  <data name="Watched page" xml:space="preserve"><value>الصفحة المراقَبة</value></data>
+  <data name="empty = ReadMe link of this line" xml:space="preserve"><value>فارغ = رابط ReadMe لهذا الخط</value></data>
+  <data name="Suggested" xml:space="preserve"><value>مقترح</value></data>
+  <data name="Maintained" xml:space="preserve"><value>قيد الصيانة</value></data>
+  <data name="Security updates only" xml:space="preserve"><value>تحديثات الأمان فقط</value></data>
+  <data name="Line ended" xml:space="preserve"><value>منتهٍ</value></data>
+  <data name="Release line deleted." xml:space="preserve"><value>تم حذف خط الإصدار.</value></data>
+  <data name="Switch the Power PDF update hints on first." xml:space="preserve"><value>شغّل تنبيهات تحديث Power PDF أولًا.</value></data>
+  <data name="Text accepted. Store clients show it with the hint." xml:space="preserve"><value>تم قبول النص. تعرضه عملاء المتجر مع التنبيه.</value></data>
+  <data name="Text discarded." xml:space="preserve"><value>تم تجاهل النص.</value></data>
+  <data name="Check done." xml:space="preserve"><value>اكتمل التحقق.</value></data>
+  <data name="Check done with problems; see the lines below." xml:space="preserve"><value>اكتمل التحقق مع وجود مشكلات؛ راجع الخطوط أدناه.</value></data>
+  <data name="Text proposed. Check it and accept it." xml:space="preserve"><value>تم اقتراح نص. راجعه ثم اقبله.</value></data>
+  <data name="No update detected yet." xml:space="preserve"><value>لم يُكتشف أي تحديث بعد.</value></data>
+  <data name="The line is the start of the Power PDF version, for example 2025.3." xml:space="preserve"><value>الخط هو بداية إصدار Power PDF، على سبيل المثال 2025.3.</value></data>
+  <data name="Unknown status." xml:space="preserve"><value>حالة غير معروفة.</value></data>
+  <data name="The pattern is too long." xml:space="preserve"><value>النمط طويل جدًا.</value></data>
+  <data name="The pattern is not a valid regular expression." xml:space="preserve"><value>النمط ليس تعبيرًا نمطيًا صالحًا.</value></data>
+  <data name="This line exists already." xml:space="preserve"><value>هذا الخط موجود بالفعل.</value></data>
+  <data name="The AI gave no usable answer." xml:space="preserve"><value>لم يقدم الذكاء الاصطناعي إجابة قابلة للاستخدام.</value></data>
+  <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>لم يقدم الذكاء الاصطناعي إجابة قابلة للاستخدام. تحقق من اختبار الاتصال ضمن الإعدادات، مساعد الذكاء الاصطناعي.</value></data>
 </root>

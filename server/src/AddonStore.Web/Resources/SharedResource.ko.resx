@@ -1133,4 +1133,57 @@
   <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>알 수 없음 또는 1.5.0 이전 스토어 클라이언트</value></data>
   <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>허용된 라이선스 유형이 없습니다. 모든 Power PDF에서 스토어가 숨겨집니다.</value></data>
   <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>스토어를 사용할 수 있는 Power PDF 설치를 지정합니다. 꺼진 유형에서는 Power PDF에 스토어 단추가 표시되지 않고 추가 기능도 제공되지 않습니다. 스토어 클라이언트는 계속 스스로 업데이트할 수 있습니다. 설치된 추가 기능은 계속 작동합니다. 라이선스 유형은 스토어 클라이언트가 직접 보고하므로(클라이언트 1.5.0부터) 이는 복사 방지가 아니라 사용 규칙입니다.</value></data>
+  <data name="Accept the text" xml:space="preserve"><value>텍스트 수락</value></data>
+  <data name="Add" xml:space="preserve"><value>추가</value></data>
+  <data name="Add a release line" xml:space="preserve"><value>릴리스 라인 추가</value></data>
+  <data name="Allowed hosts (comma separated)" xml:space="preserve"><value>허용된 호스트(쉼표로 구분)</value></data>
+  <data name="Check now" xml:space="preserve"><value>지금 확인</value></data>
+  <data name="Check the watched pages" xml:space="preserve"><value>감시 중인 페이지 확인</value></data>
+  <data name="Confirm it as a release line" xml:space="preserve"><value>릴리스 라인으로 확인</value></data>
+  <data name="Delete this release line? Its clients get no hints any more." xml:space="preserve"><value>이 릴리스 라인을 삭제하시겠습니까? 해당 클라이언트는 더 이상 알림을 받지 않습니다.</value></data>
+  <data name="Detected" xml:space="preserve"><value>감지됨</value></data>
+  <data name="Discard" xml:space="preserve"><value>폐기</value></data>
+  <data name="Found on the overview page. Check the address and set the status to &quot;Maintained&quot; to watch its updates." xml:space="preserve"><value>개요 페이지에서 찾았습니다. 주소를 확인하고 상태를 ‘유지 관리 중’으로 설정하면 업데이트를 감시합니다.</value></data>
+  <data name="Last check" xml:space="preserve"><value>마지막 확인</value></data>
+  <data name="Line" xml:space="preserve"><value>라인</value></data>
+  <data name="Manage Power PDF updates" xml:space="preserve"><value>Power PDF 업데이트 관리</value></data>
+  <data name="New Power PDF version found" xml:space="preserve"><value>새 Power PDF 버전 발견</value></data>
+  <data name="Newest update" xml:space="preserve"><value>최신 업데이트</value></data>
+  <data name="No release line yet. &quot;Check now&quot; proposes the current version from the overview page, or add one below." xml:space="preserve"><value>아직 릴리스 라인이 없습니다. ‘지금 확인’을 누르면 개요 페이지에서 현재 버전을 제안합니다. 또는 아래에서 추가하십시오.</value></data>
+  <data name="Overview page (finds new major versions)" xml:space="preserve"><value>개요 페이지(새 주 버전 찾기)</value></data>
+  <data name="Pattern (group 1 = update version)" xml:space="preserve"><value>패턴(group 1 = 업데이트 버전)</value></data>
+  <data name="Power PDF update detected" xml:space="preserve"><value>Power PDF 업데이트 감지됨</value></data>
+  <data name="Power PDF updates" xml:space="preserve"><value>Power PDF 업데이트</value></data>
+  <data name="Proposal" xml:space="preserve"><value>제안</value></data>
+  <data name="Propose a text (AI, 21 languages)" xml:space="preserve"><value>텍스트 제안(AI, 21개 언어)</value></data>
+  <data name="Release lines" xml:space="preserve"><value>릴리스 라인</value></data>
+  <data name="Remove the text" xml:space="preserve"><value>텍스트 제거</value></data>
+  <data name="Shown with the hint in the store window. Without a text the hint shows the update and the ReadMe link only." xml:space="preserve"><value>스토어 창에서 알림과 함께 표시됩니다. 텍스트가 없으면 알림에 업데이트와 ReadMe 링크만 표시됩니다.</value></data>
+  <data name="Support ends (optional)" xml:space="preserve"><value>지원 종료(선택 사항)</value></data>
+  <data name="Tell clients of this line about a newer major version (link only)" xml:space="preserve"><value>이 라인의 클라이언트에 최신 주 버전 알림(링크만)</value></data>
+  <data name="Text for end users" xml:space="preserve"><value>최종 사용자용 텍스트</value></data>
+  <data name="The AI assistant is switched off (Settings, AI assistant)." xml:space="preserve"><value>AI 도우미가 꺼져 있습니다(설정, AI 도우미).</value></data>
+  <data name="The server reads the Power PDF documentation once a day. When Tungsten publishes a newer update for a release line, the admins get an email, and store clients of that line show a hint with a link to the official ReadMe (only where the hint is switched on in the client options). Nothing is downloaded or installed in this stage." xml:space="preserve"><value>서버는 하루에 한 번 Power PDF 설명서를 읽습니다. Tungsten이 릴리스 라인에 대한 최신 업데이트를 게시하면 관리자가 이메일을 받고, 해당 라인의 스토어 클라이언트에 공식 ReadMe 링크가 포함된 알림이 표시됩니다(클라이언트 옵션에서 알림이 켜져 있는 경우에만). 이 단계에서는 아무것도 다운로드하거나 설치하지 않습니다.</value></data>
+  <data name="Update check failed" xml:space="preserve"><value>업데이트 확인 실패</value></data>
+  <data name="Watched page" xml:space="preserve"><value>감시 중인 페이지</value></data>
+  <data name="empty = ReadMe link of this line" xml:space="preserve"><value>비어 있음 = 이 라인의 ReadMe 링크</value></data>
+  <data name="Suggested" xml:space="preserve"><value>제안됨</value></data>
+  <data name="Maintained" xml:space="preserve"><value>유지 관리 중</value></data>
+  <data name="Security updates only" xml:space="preserve"><value>보안 업데이트만</value></data>
+  <data name="Line ended" xml:space="preserve"><value>종료됨</value></data>
+  <data name="Release line deleted." xml:space="preserve"><value>릴리스 라인이 삭제되었습니다.</value></data>
+  <data name="Switch the Power PDF update hints on first." xml:space="preserve"><value>먼저 Power PDF 업데이트 알림을 켜십시오.</value></data>
+  <data name="Text accepted. Store clients show it with the hint." xml:space="preserve"><value>텍스트를 수락했습니다. 스토어 클라이언트에서 알림과 함께 표시됩니다.</value></data>
+  <data name="Text discarded." xml:space="preserve"><value>텍스트를 폐기했습니다.</value></data>
+  <data name="Check done." xml:space="preserve"><value>확인이 완료되었습니다.</value></data>
+  <data name="Check done with problems; see the lines below." xml:space="preserve"><value>확인이 완료되었으나 문제가 있습니다. 아래 라인을 확인하십시오.</value></data>
+  <data name="Text proposed. Check it and accept it." xml:space="preserve"><value>텍스트가 제안되었습니다. 확인 후 수락하십시오.</value></data>
+  <data name="No update detected yet." xml:space="preserve"><value>아직 감지된 업데이트가 없습니다.</value></data>
+  <data name="The line is the start of the Power PDF version, for example 2025.3." xml:space="preserve"><value>라인은 Power PDF 버전의 앞부분입니다(예: 2025.3).</value></data>
+  <data name="Unknown status." xml:space="preserve"><value>알 수 없는 상태입니다.</value></data>
+  <data name="The pattern is too long." xml:space="preserve"><value>패턴이 너무 깁니다.</value></data>
+  <data name="The pattern is not a valid regular expression." xml:space="preserve"><value>패턴이 올바른 정규식이 아닙니다.</value></data>
+  <data name="This line exists already." xml:space="preserve"><value>이 라인은 이미 있습니다.</value></data>
+  <data name="The AI gave no usable answer." xml:space="preserve"><value>AI가 사용 가능한 응답을 제공하지 않았습니다.</value></data>
+  <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>AI가 사용 가능한 응답을 제공하지 않았습니다. 설정, AI 도우미에서 연결 테스트를 확인하십시오.</value></data>
 </root>

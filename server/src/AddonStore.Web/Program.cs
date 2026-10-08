@@ -186,6 +186,11 @@ builder.Services.AddScoped<TimeDisplay>();
 builder.Services.AddScoped<BackupService>();
 builder.Services.AddScoped<CloudBackupService>();
 builder.Services.AddHostedService<CloudBackupScheduler>();
+// Power PDF update hints (S1.8.0): no automatic redirects, the service checks every target itself
+builder.Services.AddHttpClient(PowerPdfUpdateService.HttpName, c => { c.Timeout = TimeSpan.FromSeconds(20); c.DefaultRequestHeaders.UserAgent.ParseAdd("AddonStore-Server/1.8 (update watch)"); })
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
+builder.Services.AddScoped<PowerPdfUpdateService>();
+builder.Services.AddHostedService<PowerPdfUpdateScheduler>();
 builder.Services.AddScoped<PackageMetaService>();
 builder.Services.AddScoped<VersionActionService>();
 builder.Services.AddScoped<CategoryService>();
