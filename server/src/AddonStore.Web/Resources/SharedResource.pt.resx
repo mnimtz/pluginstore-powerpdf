@@ -1125,4 +1125,12 @@
   <data name="Version set back to beta." xml:space="preserve"><value>Versão devolvida para beta.</value></data>
   <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>Os postos com a opção beta a recebem; a loja live mantém sua versão atual.</value></data>
   <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>Seu código de teste pessoal: experimente no Power PDF suas versões aguardando revisão</value></data>
+  <data name="Add-on Store" xml:space="preserve"><value>Add-on Store</value></data>
+  <data name="Allowed license modes" xml:space="preserve"><value>Tipos de licença permitidos</value></data>
+  <data name="Cloud License Server (SaaS)" xml:space="preserve"><value>Cloud License Server (SaaS)</value></data>
+  <data name="License Server on premises" xml:space="preserve"><value>Servidor de licenças local</value></data>
+  <data name="Serial number" xml:space="preserve"><value>Número de série</value></data>
+  <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>Desconhecido, ou clientes da loja anteriores à 1.5.0</value></data>
+  <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>Nenhum tipo de licença é permitido: a loja fica oculta em todos os Power PDF.</value></data>
+  <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>Quais instalações do Power PDF podem usar a loja. Para um tipo desativado, o botão da loja não aparece no Power PDF e nenhum suplemento é oferecido; o cliente da loja ainda pode se atualizar. Os suplementos instalados continuam funcionando. O próprio cliente da loja informa o tipo (a partir do cliente 1.5.0), portanto é uma regra de uso, não uma proteção contra cópia.</value></data>
 </root>

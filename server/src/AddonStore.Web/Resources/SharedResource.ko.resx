@@ -1125,4 +1125,12 @@
   <data name="Version set back to beta." xml:space="preserve"><value>버전이 베타로 되돌려졌습니다.</value></data>
   <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>베타 옵션이 설정된 워크스테이션에 제공되며, 라이브 스토어는 현재 버전을 유지합니다.</value></data>
   <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>개인 테스트 코드: 검토 대기 중인 버전을 Power PDF에서 사용해 보십시오</value></data>
+  <data name="Add-on Store" xml:space="preserve"><value>Add-on Store</value></data>
+  <data name="Allowed license modes" xml:space="preserve"><value>허용되는 라이선스 유형</value></data>
+  <data name="Cloud License Server (SaaS)" xml:space="preserve"><value>Cloud License Server(SaaS)</value></data>
+  <data name="License Server on premises" xml:space="preserve"><value>온-프레미스 라이선스 서버</value></data>
+  <data name="Serial number" xml:space="preserve"><value>일련 번호</value></data>
+  <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>알 수 없음 또는 1.5.0 이전 스토어 클라이언트</value></data>
+  <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>허용된 라이선스 유형이 없습니다. 모든 Power PDF에서 스토어가 숨겨집니다.</value></data>
+  <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>스토어를 사용할 수 있는 Power PDF 설치를 지정합니다. 꺼진 유형에서는 Power PDF에 스토어 단추가 표시되지 않고 추가 기능도 제공되지 않습니다. 스토어 클라이언트는 계속 스스로 업데이트할 수 있습니다. 설치된 추가 기능은 계속 작동합니다. 라이선스 유형은 스토어 클라이언트가 직접 보고하므로(클라이언트 1.5.0부터) 이는 복사 방지가 아니라 사용 규칙입니다.</value></data>
 </root>

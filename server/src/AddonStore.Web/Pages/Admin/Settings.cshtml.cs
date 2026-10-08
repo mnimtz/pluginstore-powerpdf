@@ -28,7 +28,7 @@ public class SettingsModel : PageModel
     /// <summary>Sections of the left navigation (S0.18.0); one is shown at a time.</summary>
     public static readonly (string Key, string Label)[] Views =
     {
-        ("server", "Server"), ("email", "Email"), ("notifications", "Notifications"),
+        ("server", "Server"), ("store", "Add-on Store"), ("email", "Email"), ("notifications", "Notifications"),
         ("ai", "AI assistant"), ("privacy", "IP address logging"), ("reset", "Reset statistics"),
     };
     [BindProperty(SupportsGet = true)] public string? View { get; set; }
@@ -37,6 +37,8 @@ public class SettingsModel : PageModel
     public string? TestDetail { get; private set; }
     public Dictionary<string, bool> EventEnabled { get; } = new();
     public string? MyEmail { get; private set; }
+    /// <summary>License modes of Power PDF that may use the store (S1.7.0).</summary>
+    public HashSet<string> StoreModes { get; private set; } = new();
 
     // IP logging for the reports (GDPR confirmation once, then switchable)
     public bool IpOn { get; private set; }
@@ -107,6 +109,18 @@ public class SettingsModel : PageModel
     }
 
     public async Task OnGetAsync() => await LoadAsync();
+
+    public async Task OnPostStoreAccessAsync(string[]? modes)
+    {
+        var admin = await _users.GetUserAsync(User);
+        var on = (modes ?? Array.Empty<string>()).ToHashSet();
+        await StoreAccess.SaveAsync(_settings, on);
+        var now = await StoreAccess.AllowedModesAsync(_settings);
+        await _audit.LogAsync(admin!.DisplayName, "settings.changed", "Store license modes", now.Count == 0 ? "none" : string.Join(",", now));
+        Notice = "Settings saved.";
+        View = "store";
+        await LoadAsync();
+    }
 
     public async Task OnPostEmailAsync(string? resendKey, string? from)
     {
@@ -323,8 +337,9 @@ public class SettingsModel : PageModel
         {
             var h = (string?)Request.Query["handler"] ?? "";
             View = h.StartsWith("Ip") ? "privacy" : h.StartsWith("Ai") ? "ai" : h is "Email" or "TestMail" ? "email"
-                 : h == "Notifications" ? "notifications" : h == "Reset" ? "reset" : "server";
+                 : h == "Notifications" ? "notifications" : h == "Reset" ? "reset" : h == "StoreAccess" ? "store" : "server";
         }
+        StoreModes = await StoreAccess.AllowedModesAsync(_settings);
         Ai = await _ai.ConfigAsync();
         OfferFake = _env.IsDevelopment();
         AiModels = await _ai.StoredModelsAsync(Ai.Provider);

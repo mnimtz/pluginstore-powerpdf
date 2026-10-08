@@ -1125,4 +1125,12 @@
   <data name="Version set back to beta." xml:space="preserve"><value>Versionen er sat tilbage til beta.</value></data>
   <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>Arbejdsstationer med beta-indstillingen får den; live-butikken beholder sin nuværende version.</value></data>
   <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>Din personlige testkode: prøv dine versioner, der venter på gennemgang, i Power PDF</value></data>
+  <data name="Add-on Store" xml:space="preserve"><value>Add-on Store</value></data>
+  <data name="Allowed license modes" xml:space="preserve"><value>Tilladte licenstyper</value></data>
+  <data name="Cloud License Server (SaaS)" xml:space="preserve"><value>Cloud License Server (SaaS)</value></data>
+  <data name="License Server on premises" xml:space="preserve"><value>Lokal licensserver</value></data>
+  <data name="Serial number" xml:space="preserve"><value>Serienummer</value></data>
+  <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>Ukendt, eller butiksklienter før 1.5.0</value></data>
+  <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>Ingen licenstype er tilladt: Butikken er skjult i alle Power PDF.</value></data>
+  <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>Hvilke Power PDF-installationer der må bruge butikken. Ved en slået fra licenstype vises butiksknappen ikke i Power PDF, og der tilbydes ingen tilføjelser; butiksklienten kan stadig opdatere sig selv. Installerede tilføjelser virker fortsat. Butiksklienten oplyser selv licenstypen (fra klient 1.5.0), så det er en brugsregel, ikke en kopibeskyttelse.</value></data>
 </root>

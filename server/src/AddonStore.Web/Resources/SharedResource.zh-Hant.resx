@@ -1125,4 +1125,12 @@
   <data name="Version set back to beta." xml:space="preserve"><value>版本已退回 Beta。</value></data>
   <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>啟用 Beta 選項的工作站會收到此版本；正式商店保留目前的版本。</value></data>
   <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>您的個人測試代碼：在 Power PDF 中試用等待審核的版本</value></data>
+  <data name="Add-on Store" xml:space="preserve"><value>Add-on Store</value></data>
+  <data name="Allowed license modes" xml:space="preserve"><value>允許的授權類型</value></data>
+  <data name="Cloud License Server (SaaS)" xml:space="preserve"><value>Cloud License Server (SaaS)</value></data>
+  <data name="License Server on premises" xml:space="preserve"><value>本機授權伺服器</value></data>
+  <data name="Serial number" xml:space="preserve"><value>序號</value></data>
+  <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>未知，或 1.5.0 之前的商店用戶端</value></data>
+  <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>未允許任何授權類型：商店在所有 Power PDF 中均已隱藏。</value></data>
+  <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>哪些 Power PDF 安裝可以使用商店。對於已關閉的類型，商店按鈕不會出現在 Power PDF 中，也不提供增益集；商店用戶端仍可自行更新。已安裝的增益集會繼續運作。商店用戶端會自行回報授權類型（用戶端 1.5.0 起），因此這是使用規則，而非複製保護。</value></data>
 </root>

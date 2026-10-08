@@ -1125,4 +1125,12 @@
   <data name="Version set back to beta." xml:space="preserve"><value>Versionen har satts tillbaka till beta.</value></data>
   <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>Arbetsplatser med betaalternativet får den; live-butiken behåller sin nuvarande version.</value></data>
   <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>Din personliga testkod: prova dina versioner som väntar på granskning i Power PDF</value></data>
+  <data name="Add-on Store" xml:space="preserve"><value>Add-on Store</value></data>
+  <data name="Allowed license modes" xml:space="preserve"><value>Tillåtna licenstyper</value></data>
+  <data name="Cloud License Server (SaaS)" xml:space="preserve"><value>Cloud License Server (SaaS)</value></data>
+  <data name="License Server on premises" xml:space="preserve"><value>Lokal licensserver</value></data>
+  <data name="Serial number" xml:space="preserve"><value>Serienummer</value></data>
+  <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>Okänd, eller butiksklienter före 1.5.0</value></data>
+  <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>Ingen licenstyp är tillåten: butiken är dold i alla Power PDF.</value></data>
+  <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>Vilka Power PDF-installationer som får använda butiken. För en licenstyp som är avstängd visas inte butiksknappen i Power PDF och inga tillägg erbjuds; butiksklienten kan fortfarande uppdatera sig själv. Installerade tillägg fortsätter att fungera. Butiksklienten anger licenstypen själv (från klient 1.5.0), så detta är en användningsregel, inte ett kopieringsskydd.</value></data>
 </root>

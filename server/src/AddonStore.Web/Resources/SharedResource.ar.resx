@@ -1125,4 +1125,12 @@
   <data name="Version set back to beta." xml:space="preserve"><value>تمت إعادة الإصدار إلى التجريبي.</value></data>
   <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>تحصل عليه محطات العمل التي فُعّل فيها الخيار التجريبي؛ ويحتفظ المتجر المباشر بإصداره الحالي.</value></data>
   <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>رمز الاختبار الشخصي: جرّب إصداراتك التي تنتظر المراجعة في Power PDF</value></data>
+  <data name="Add-on Store" xml:space="preserve"><value>Add-on Store</value></data>
+  <data name="Allowed license modes" xml:space="preserve"><value>أنواع الترخيص المسموح بها</value></data>
+  <data name="Cloud License Server (SaaS)" xml:space="preserve"><value>Cloud License Server (SaaS)</value></data>
+  <data name="License Server on premises" xml:space="preserve"><value>خادم ترخيص محلي</value></data>
+  <data name="Serial number" xml:space="preserve"><value>الرقم التسلسلي</value></data>
+  <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>غير معروف، أو عملاء المتجر الأقدم من 1.5.0</value></data>
+  <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>لا يُسمح بأي نوع ترخيص: المتجر مخفي في كل Power PDF.</value></data>
+  <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>تحديد تثبيتات Power PDF التي يمكنها استخدام المتجر. عند إيقاف نوع ما لا يظهر زر المتجر في Power PDF ولا تُعرض أي إضافات، ويظل بإمكان عميل المتجر تحديث نفسه. تستمر الإضافات المثبتة في العمل. يبلّغ عميل المتجر عن نوع الترخيص بنفسه (بدءًا من العميل 1.5.0)، لذا فهذه قاعدة استخدام وليست حماية من النسخ.</value></data>
 </root>

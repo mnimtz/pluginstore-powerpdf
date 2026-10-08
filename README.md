@@ -363,6 +363,24 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Allowed license modes (S1.7.0, client 1.5.0):**
+- Settings has a new category "Add-on Store": the admins choose which Power
+  PDF installations may use the store, by license mode: Cloud License Server
+  (SaaS), License Server on premises, serial number, unknown (also store
+  clients before 1.5.0). All are allowed by default.
+- Client 1.5.0 reads the mode from `HKLM\SOFTWARE\Kofax\PDF\V1` (subkey
+  `CLS` with `LicenseURL` = cloud, `SerialNumber` filled = serial, otherwise
+  unknown; on-premise License Server is not told apart yet) and sends it as
+  `X-License-Mode` with every request.
+- At start and every 4 hours it asks `GET /api/client/access`. For a mode
+  that is off it hides its ribbon button (the decision is kept in HKCU
+  `StoreAccess`, so the button stays hidden offline); installed add-ons keep
+  working.
+- For a mode that is off, the catalog lists only the store client itself
+  (so every client can still update) and add-on downloads answer 403
+  `LICENSE_MODE_NOT_ALLOWED`. The website and API callers are not affected.
+  The mode is reported by the client: a usage rule, not copy protection.
+
 **Approval for beta or live, personal test code (S1.6.0):**
 - A new upload waits for review (status `submitted`). No store client gets
   it yet, also not in the beta channel.

@@ -886,6 +886,19 @@ Verify the download against the catalog's `sha256` before installing. The
 store client shows each package's `assets/icon.png` (square PNG, 128 px
 recommended) and the localized category name, so ship a clear icon.
 
+## Which Power PDF installations may use the store
+
+The store admins choose the allowed license modes of Power PDF (Settings,
+"Add-on Store"): Cloud License Server (SaaS), License Server on premises,
+serial number, unknown. Store clients 1.5.0+ send the mode in the header
+`X-License-Mode` (`cloud`, `server`, `serial`, `unknown`; older clients count
+as `unknown`) and hide their ribbon button when `GET {{baseUrl}}/api/client/access`
+answers `allowed: false`. For such a client the catalog lists only the store
+client itself and add-on downloads answer 403 LICENSE_MODE_NOT_ALLOWED. If a
+test workstation shows no store, check its license mode against these
+settings. Requests without the store client's User-Agent (website, API,
+assistants) are not affected.
+
 ## Customer deliveries (private add-ons)
 
 Add-ons can be delivered to single customers instead of (or in addition to)
@@ -1186,6 +1199,7 @@ be free of warnings before review. Info is for information only.
 | OWN_TAB_NAME | error | The layout's own tab atom differs from the tab atom in `ribbonAtomNamespace`. |
 | OWN_TAB_RESERVED | error | The own tab atom belongs to Power PDF or the store (e.g. `help`, `tool`, `FeaturePack`, `AddonStore`). |
 | VISIBILITY_OWN_TAB | error | A private add-on with its own ribbon tab cannot be switched to public. |
+| LICENSE_MODE_NOT_ALLOWED | error (403) | The store client's Power PDF license mode (X-License-Mode) is switched off on this store; only the store client itself is offered. |
 | ATOM_COLLISION | error | Another package already uses this ribbon atom namespace. |
 | RESERVED_PANEL_NS | error | The layout uses the host-owned `panel::` atom namespace. |
 | ICONMODE_SMALL | warning | A ribbon button uses IconMode="1" (small icon); use 4. |

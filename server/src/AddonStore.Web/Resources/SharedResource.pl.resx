@@ -1125,4 +1125,12 @@
   <data name="Version set back to beta." xml:space="preserve"><value>Wersja została przywrócona do bety.</value></data>
   <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>Otrzymują ją stanowiska z opcją beta; sklep live zachowuje bieżącą wersję.</value></data>
   <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>Twój osobisty kod testowy: wypróbuj w Power PDF wersje oczekujące na weryfikację</value></data>
+  <data name="Add-on Store" xml:space="preserve"><value>Add-on Store</value></data>
+  <data name="Allowed license modes" xml:space="preserve"><value>Dozwolone typy licencji</value></data>
+  <data name="Cloud License Server (SaaS)" xml:space="preserve"><value>Cloud License Server (SaaS)</value></data>
+  <data name="License Server on premises" xml:space="preserve"><value>Lokalny serwer licencji</value></data>
+  <data name="Serial number" xml:space="preserve"><value>Numer seryjny</value></data>
+  <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>Nieznany lub klienci sklepu starsi niż 1.5.0</value></data>
+  <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>Żaden typ licencji nie jest dozwolony: sklep jest ukryty w każdym Power PDF.</value></data>
+  <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>Które instalacje Power PDF mogą korzystać ze sklepu. Dla wyłączonego typu przycisk sklepu nie pojawia się w Power PDF i nie są oferowane żadne dodatki; klient sklepu nadal może się aktualizować. Zainstalowane dodatki działają dalej. Klient sklepu sam zgłasza typ licencji (od wersji 1.5.0), więc jest to zasada korzystania, a nie zabezpieczenie przed kopiowaniem.</value></data>
 </root>

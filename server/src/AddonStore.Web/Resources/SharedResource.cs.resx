@@ -1125,4 +1125,12 @@
   <data name="Version set back to beta." xml:space="preserve"><value>Verze byla vrácena do bety.</value></data>
   <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>Dostanou ji pracoviště s volbou beta; live obchod si ponechá svou aktuální verzi.</value></data>
   <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>Váš osobní testovací kód: vyzkoušejte v Power PDF své verze čekající na kontrolu</value></data>
+  <data name="Add-on Store" xml:space="preserve"><value>Add-on Store</value></data>
+  <data name="Allowed license modes" xml:space="preserve"><value>Povolené typy licencí</value></data>
+  <data name="Cloud License Server (SaaS)" xml:space="preserve"><value>Cloud License Server (SaaS)</value></data>
+  <data name="License Server on premises" xml:space="preserve"><value>Místní licenční server</value></data>
+  <data name="Serial number" xml:space="preserve"><value>Sériové číslo</value></data>
+  <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>Neznámé nebo klienti obchodu starší než 1.5.0</value></data>
+  <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>Žádný typ licence není povolen: obchod je skrytý v každém Power PDF.</value></data>
+  <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>Které instalace Power PDF smějí obchod používat. U vypnutého typu se tlačítko obchodu v Power PDF nezobrazí a nenabízejí se žádné doplňky; klient obchodu se může dál sám aktualizovat. Nainstalované doplňky fungují dál. Klient obchodu hlásí typ licence sám (od klienta 1.5.0), jde tedy o pravidlo používání, nikoli o ochranu proti kopírování.</value></data>
 </root>

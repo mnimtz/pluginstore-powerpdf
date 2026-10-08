@@ -28,6 +28,7 @@ public static class OpenApiDoc
         new("get", "/api/schema/manifest", "getManifestSchema", "JSON Schema of manifest.json inside a .ppak.", "none", Array.Empty<string>(), Returns: "json"),
         new("get", "/api/skill", "getClaudeSkill", "Claude Code skill (SKILL.md) for this store; optional for Claude Code users.", "none", Array.Empty<string>(), Returns: "markdown"),
         new("get", "/api/agents-md", "getAgentsMd", "Vendor-neutral instructions file (AGENTS.md) for AI coding assistants; save it in the plugin project.", "none", Array.Empty<string>(), Returns: "markdown"),
+        new("get", "/api/client/access", "getClientAccess", "Store client: may it be used with its Power PDF license? Send X-License-Mode (cloud, server, serial, unknown).", "none", Array.Empty<string>()),
         new("get", "/api/me", "getMe", "Verify the token; returns the user, roles and own packages.", "token", Array.Empty<string>()),
         new("get", "/api/me/test-code", "getTestCode", "The personal test code (null when none): entered in the store window, it shows the own versions that wait for review.", "token", Array.Empty<string>()),
         new("post", "/api/me/test-code", "createTestCode", "Create a new personal test code; the previous one stops working at once.", "token", Array.Empty<string>()),

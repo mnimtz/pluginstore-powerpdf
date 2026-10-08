@@ -151,6 +151,7 @@ public static class ApiEndpoints
                     "GET  /api/skill                  Claude Code skill (SKILL.md) for this store",
                     "GET  /llms.txt                   short index of this site for language models",
                     "GET  /api/me                     verify your token, see your packages (auth)",
+                    "GET  /api/client/access          may this store client be used with its Power PDF license (header X-License-Mode)",
                     "GET|POST|DELETE /api/me/test-code your personal test code for the store window (auth)",
                     "GET  /api/catalog?channel=beta   released packages; beta channel includes versions approved for beta",
                     "GET  /api/packages/{id}          status and history of one package",
@@ -339,12 +340,15 @@ public static class ApiEndpoints
         });
 
         api.MapGet("/catalog", async (AppDbContext db, HttpContext ctx, UsageService usage, CustomerService customers,
-                                      PackageSigning signing, SeatService seatsSvc, string? channel, string? format, string? lang) =>
+                                      PackageSigning signing, SeatService seatsSvc, SettingsService settings,
+                                      string? channel, string? format, string? lang) =>
         {
             var beta = string.Equals(channel, "beta", StringComparison.OrdinalIgnoreCase);
             await signing.EnsureLoadedAsync();
+            // allowed license modes (S1.7.0): otherwise only the store client itself, so it can still update
+            var storeAllowed = await StoreAccess.AllowedAsync(ctx, settings);
             // Customer codes in the X-Customer-Code header unlock delivered add-ons (S0.14.0).
-            var grants = await customers.GrantsAsync(ctx);
+            var grants = storeAllowed ? await customers.GrantsAsync(ctx) : new();
             if (grants.Count > 0) await seatsSvc.TouchAsync(ctx, grants.Select(g => g.Delivery));   // installations still in use (S1.4.2)
 
             // TSV variant for native clients (the Power PDF ribbon add-on): one
@@ -358,7 +362,8 @@ public static class ApiEndpoints
                 await usage.CountAsync(ctx, "catalog", lang: culture);
                 var binOk = Services.CatalogUi.ClientSupportsBin(ctx);   // S1.4.0
                 var items = await Services.CatalogUi.GetAsync(db, culture, beta, binOk);
-                var tests = await customers.TestGrantsAsync(ctx);   // the developer's test code (S1.6.0)
+                if (!storeAllowed) items.RemoveAll(i => i.Id != SubmissionService.ClientPackageId);
+                var tests = storeAllowed ? await customers.TestGrantsAsync(ctx) : new();   // the developer's test code (S1.6.0)
                 if (grants.Count > 0 || tests.Count > 0)
                 {
                     var cctx = await Services.CatalogUi.Context.LoadAsync(db);
@@ -403,8 +408,19 @@ public static class ApiEndpoints
                 return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
             }
 
-            var entries = await CatalogAsync(db, beta, Base(ctx), grants, signing, await customers.TestGrantsAsync(ctx));
+            var entries = await CatalogAsync(db, beta, Base(ctx), grants, signing, storeAllowed ? await customers.TestGrantsAsync(ctx) : new(),
+                                             clientOnly: !storeAllowed);
             return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live", packages = entries } });
+        });
+
+        // May this store client be used with its Power PDF license (S1.7.0)? Anonymous like the catalog;
+        // the client asks at start and hides its ribbon button when not.
+        api.MapGet("/client/access", async (HttpContext ctx, SettingsService settings) =>
+        {
+            var allowedModes = await StoreAccess.AllowedModesAsync(settings);
+            var mode = StoreAccess.ModeOf(ctx);
+            return Results.Json(new { ok = true, data = new { allowed = allowedModes.Contains(mode), mode,
+                allowedModes = StoreAccess.Modes.Select(m => m.Key).Where(allowedModes.Contains) } });
         });
 
         api.MapGet("/packages/{id}", async (string id, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService customers) =>
@@ -1427,8 +1443,12 @@ public static class ApiEndpoints
 
         api.MapGet("/packages/{id}/{version}/download", async (string id, string version,
             AppDbContext db, SubmissionService svc, UsageService usage, HttpContext ctx, UserManager<AppUser> users, CustomerService customers,
-            SeatService seatsSvc) =>
+            SeatService seatsSvc, SettingsService settings) =>
         {
+            if (id != SubmissionService.ClientPackageId && !await StoreAccess.AllowedAsync(ctx, settings))
+                return Results.Json(new { ok = false, error = new { code = "LICENSE_MODE_NOT_ALLOWED",
+                    message = "This store does not serve Power PDF installations with this kind of license.",
+                    hint = "The store admins choose the allowed license modes under Settings, Add-on Store." } }, statusCode: 403);
             if (!await MayAccessAsync(ctx, id, db, users, customers, version))
                 return NotFound("VERSION_NOT_FOUND", $"No downloadable version {version} of '{id}'.");
             var v = await db.PackageVersions.FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version &&
@@ -1682,7 +1702,7 @@ public static class ApiEndpoints
 
     public static async Task<List<object>> CatalogAsync(AppDbContext db, bool includeBeta, string baseUrl,
                                                          List<CustomerService.Granted>? grants = null, PackageSigning? signing = null,
-                                                         List<CustomerService.TestGrant>? tests = null)
+                                                         List<CustomerService.TestGrant>? tests = null, bool clientOnly = false)
     {
         tests ??= new();
         if (signing is not null) await signing.EnsureLoadedAsync();
@@ -1716,6 +1736,7 @@ public static class ApiEndpoints
                 channel = "beta";
             }
             if (pick is null) continue;
+            if (clientOnly && pick.PackageId != SubmissionService.ClientPackageId) continue;   // license mode switched off (S1.7.0)
             if (pkgs.GetValueOrDefault(pick.PackageId)?.Visibility == "private") continue;
             if (grants?.Any(g => g.Package.Id == pick.PackageId && CustomerService.Pick(g, includeBeta).Version is not null) == true) continue;
             if (tests.Any(t => t.Package.Id == pick.PackageId)) continue;

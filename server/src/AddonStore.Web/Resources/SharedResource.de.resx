@@ -1125,4 +1125,12 @@
   <data name="Version set back to beta." xml:space="preserve"><value>Version auf Beta zurückgesetzt.</value></data>
   <data name="Workstations with the beta option get it; the live store keeps its current version." xml:space="preserve"><value>Arbeitsplätze mit der Beta-Option erhalten sie; der Live-Store behält seine aktuelle Version.</value></data>
   <data name="Your personal test code: try your versions that wait for review in Power PDF" xml:space="preserve"><value>Ihr persönlicher Testcode: Versionen, die auf Prüfung warten, in Power PDF ausprobieren</value></data>
+  <data name="Add-on Store" xml:space="preserve"><value>Add-on Store</value></data>
+  <data name="Allowed license modes" xml:space="preserve"><value>Erlaubte Lizenzarten</value></data>
+  <data name="Cloud License Server (SaaS)" xml:space="preserve"><value>Cloud License Server (SaaS)</value></data>
+  <data name="License Server on premises" xml:space="preserve"><value>Lizenzserver vor Ort</value></data>
+  <data name="Serial number" xml:space="preserve"><value>Seriennummer</value></data>
+  <data name="Unknown, or store clients before 1.5.0" xml:space="preserve"><value>Unbekannt oder Store-Clients vor 1.5.0</value></data>
+  <data name="No license mode is allowed: the store is hidden in every Power PDF." xml:space="preserve"><value>Keine Lizenzart ist erlaubt: Der Store ist in jedem Power PDF ausgeblendet.</value></data>
+  <data name="Which Power PDF installations may use the store. For a mode that is off, the store button does not appear in Power PDF and no add-ons are offered; the store client can still update itself. Installed add-ons keep working. The store client reports the mode itself (from client 1.5.0), so this is a usage rule, not copy protection." xml:space="preserve"><value>Welche Power-PDF-Installationen den Store nutzen dürfen. Bei einer ausgeschalteten Lizenzart erscheint der Store-Knopf nicht in Power PDF, und es werden keine Add-ons angeboten; der Store-Client kann sich weiterhin selbst aktualisieren. Installierte Add-ons funktionieren weiter. Der Store-Client meldet die Lizenzart selbst (ab Client 1.5.0), daher ist das eine Nutzungsregel, kein Kopierschutz.</value></data>
 </root>
