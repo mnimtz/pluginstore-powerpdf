@@ -5,6 +5,7 @@
 #include "http.h"
 #include "settings.h"
 #include "logging.h"
+#include "inventory.h"
 
 extern "C" HINSTANCE gHINSTANCE;
 
@@ -51,6 +52,7 @@ DWORD WINAPI Worker(LPVOID p)
     {
         FPLogW(L"[Store] access check not reachable (HTTP %lu), keeping the last answer", status);
     }
+    PSInventoryReportIfDue();   // C1.8.0: once a day, on this worker (at start, then every 4 h)
     delete job;
     InterlockedExchange(&g_running, 0);
     FreeLibraryAndExitThread(gHINSTANCE, 0);
