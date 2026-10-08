@@ -1186,4 +1186,17 @@
   <data name="This line exists already." xml:space="preserve"><value>このラインは既に存在します。</value></data>
   <data name="The AI gave no usable answer." xml:space="preserve"><value>AI から使用可能な回答がありませんでした。</value></data>
   <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>AI から使用可能な回答がありませんでした。「設定、AI アシスタント」で接続テストを確認してください。</value></data>
+  <data name="Detected as current" xml:space="preserve"><value>現在の最新として検出</value></data>
+  <data name="Build date" xml:space="preserve"><value>ビルド日</value></data>
+  <data name="not found yet" xml:space="preserve"><value>まだ見つかりません</value></data>
+  <data name="How a client sees it: Power PDF version" xml:space="preserve"><value>クライアントでの表示: Power PDF のバージョン</value></data>
+  <data name="Check" xml:space="preserve"><value>確認</value></data>
+  <data name="Enter a Power PDF version such as 2025.3.8.0.26414." xml:space="preserve"><value>Power PDF のバージョンを入力してください (例: 2025.3.8.0.26414)。</value></data>
+  <data name="No hint: the Power PDF update hints are switched off." xml:space="preserve"><value>通知なし: Power PDF の更新通知がオフです。</value></data>
+  <data name="No hint: no release line covers version {0}." xml:space="preserve"><value>通知なし: バージョン {0} を含むリリース ラインがありません。</value></data>
+  <data name="No hint: the release line {0} has ended." xml:space="preserve"><value>通知なし: リリース ライン {0} は終了しています。</value></data>
+  <data name="No hint: {0} is already the newest update of the line ({1})." xml:space="preserve"><value>通知なし: {0} は既にこのラインの最新の更新です ({1})。</value></data>
+  <data name="Hint shown: a client with {0} is told about {1}{2}." xml:space="preserve"><value>通知を表示: {0} のクライアントに {1}{2} が通知されます。</value></data>
+  <data name="No hint: the release line {0} is only suggested; set it to &quot;Maintained&quot;." xml:space="preserve"><value>通知なし: リリース ライン {0} は候補のままです。「保守中」に設定してください。</value></data>
+  <data name="No hint: no update of the line {0} was found yet; run &quot;Check now&quot;." xml:space="preserve"><value>通知なし: ライン {0} の更新はまだ見つかっていません。「今すぐ確認」を実行してください。</value></data>
 </root>

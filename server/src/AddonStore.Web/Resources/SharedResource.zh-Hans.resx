@@ -1186,4 +1186,17 @@
   <data name="This line exists already." xml:space="preserve"><value>此系列已存在。</value></data>
   <data name="The AI gave no usable answer." xml:space="preserve"><value>AI 未给出可用的回答。</value></data>
   <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>AI 未给出可用的回答。请在“设置，AI 助手”中检查连接测试。</value></data>
+  <data name="Detected as current" xml:space="preserve"><value>识别为当前版本</value></data>
+  <data name="Build date" xml:space="preserve"><value>构建日期</value></data>
+  <data name="not found yet" xml:space="preserve"><value>尚未找到</value></data>
+  <data name="How a client sees it: Power PDF version" xml:space="preserve"><value>客户端看到的内容：Power PDF 版本</value></data>
+  <data name="Check" xml:space="preserve"><value>检查</value></data>
+  <data name="Enter a Power PDF version such as 2025.3.8.0.26414." xml:space="preserve"><value>请输入 Power PDF 版本，例如 2025.3.8.0.26414。</value></data>
+  <data name="No hint: the Power PDF update hints are switched off." xml:space="preserve"><value>无提示：Power PDF 更新提示已关闭。</value></data>
+  <data name="No hint: no release line covers version {0}." xml:space="preserve"><value>无提示：没有版本系列包含版本 {0}。</value></data>
+  <data name="No hint: the release line {0} has ended." xml:space="preserve"><value>无提示：版本系列 {0} 已结束。</value></data>
+  <data name="No hint: {0} is already the newest update of the line ({1})." xml:space="preserve"><value>无提示：{0} 已是该系列的最新更新（{1}）。</value></data>
+  <data name="Hint shown: a client with {0} is told about {1}{2}." xml:space="preserve"><value>显示提示：版本为 {0} 的客户端会收到关于 {1}{2} 的提示。</value></data>
+  <data name="No hint: the release line {0} is only suggested; set it to &quot;Maintained&quot;." xml:space="preserve"><value>无提示：版本系列 {0} 仅为建议；请将其设为“维护中”。</value></data>
+  <data name="No hint: no update of the line {0} was found yet; run &quot;Check now&quot;." xml:space="preserve"><value>无提示：尚未找到系列 {0} 的更新；请执行“立即检查”。</value></data>
 </root>

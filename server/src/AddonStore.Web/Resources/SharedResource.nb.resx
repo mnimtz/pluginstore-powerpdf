@@ -1186,4 +1186,17 @@
   <data name="This line exists already." xml:space="preserve"><value>Denne linjen finnes allerede.</value></data>
   <data name="The AI gave no usable answer." xml:space="preserve"><value>KI-en ga ikke noe brukbart svar.</value></data>
   <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>KI-en ga ikke noe brukbart svar. Kontroller tilkoblingstesten under Innstillinger, KI-assistent.</value></data>
+  <data name="Detected as current" xml:space="preserve"><value>Registrert som gjeldende</value></data>
+  <data name="Build date" xml:space="preserve"><value>Byggedato</value></data>
+  <data name="not found yet" xml:space="preserve"><value>ikke funnet ennå</value></data>
+  <data name="How a client sees it: Power PDF version" xml:space="preserve"><value>Slik ser en klient det: Power PDF-versjon</value></data>
+  <data name="Check" xml:space="preserve"><value>Kontroller</value></data>
+  <data name="Enter a Power PDF version such as 2025.3.8.0.26414." xml:space="preserve"><value>Angi en Power PDF-versjon, for eksempel 2025.3.8.0.26414.</value></data>
+  <data name="No hint: the Power PDF update hints are switched off." xml:space="preserve"><value>Ingen melding: Meldingene om Power PDF-oppdateringer er slått av.</value></data>
+  <data name="No hint: no release line covers version {0}." xml:space="preserve"><value>Ingen melding: Ingen versjonslinje omfatter versjon {0}.</value></data>
+  <data name="No hint: the release line {0} has ended." xml:space="preserve"><value>Ingen melding: Versjonslinjen {0} er avsluttet.</value></data>
+  <data name="No hint: {0} is already the newest update of the line ({1})." xml:space="preserve"><value>Ingen melding: {0} er allerede den nyeste oppdateringen i linjen ({1}).</value></data>
+  <data name="Hint shown: a client with {0} is told about {1}{2}." xml:space="preserve"><value>Melding vises: En klient med {0} får beskjed om {1}{2}.</value></data>
+  <data name="No hint: the release line {0} is only suggested; set it to &quot;Maintained&quot;." xml:space="preserve"><value>Ingen melding: Versjonslinjen {0} er bare foreslått; sett den til «Vedlikeholdt».</value></data>
+  <data name="No hint: no update of the line {0} was found yet; run &quot;Check now&quot;." xml:space="preserve"><value>Ingen melding: Det er ennå ikke funnet noen oppdatering for linjen {0}; kjør «Kontroller nå».</value></data>
 </root>

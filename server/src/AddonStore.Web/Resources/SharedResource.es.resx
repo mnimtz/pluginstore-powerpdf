@@ -1186,4 +1186,17 @@
   <data name="This line exists already." xml:space="preserve"><value>Esta línea ya existe.</value></data>
   <data name="The AI gave no usable answer." xml:space="preserve"><value>La IA no dio una respuesta utilizable.</value></data>
   <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>La IA no dio una respuesta utilizable. Compruebe la prueba de conexión en Configuración, Asistente de IA.</value></data>
+  <data name="Detected as current" xml:space="preserve"><value>Detectado como actual</value></data>
+  <data name="Build date" xml:space="preserve"><value>Fecha de compilación</value></data>
+  <data name="not found yet" xml:space="preserve"><value>aún no encontrado</value></data>
+  <data name="How a client sees it: Power PDF version" xml:space="preserve"><value>Cómo lo ve un cliente: versión de Power PDF</value></data>
+  <data name="Check" xml:space="preserve"><value>Comprobar</value></data>
+  <data name="Enter a Power PDF version such as 2025.3.8.0.26414." xml:space="preserve"><value>Introduzca una versión de Power PDF, por ejemplo 2025.3.8.0.26414.</value></data>
+  <data name="No hint: the Power PDF update hints are switched off." xml:space="preserve"><value>Sin aviso: los avisos de actualización de Power PDF están desactivados.</value></data>
+  <data name="No hint: no release line covers version {0}." xml:space="preserve"><value>Sin aviso: ninguna línea de versión incluye la versión {0}.</value></data>
+  <data name="No hint: the release line {0} has ended." xml:space="preserve"><value>Sin aviso: la línea de versión {0} ha finalizado.</value></data>
+  <data name="No hint: {0} is already the newest update of the line ({1})." xml:space="preserve"><value>Sin aviso: {0} ya es la actualización más reciente de la línea ({1}).</value></data>
+  <data name="Hint shown: a client with {0} is told about {1}{2}." xml:space="preserve"><value>Aviso mostrado: un cliente con {0} recibe el aviso de {1}{2}.</value></data>
+  <data name="No hint: the release line {0} is only suggested; set it to &quot;Maintained&quot;." xml:space="preserve"><value>Sin aviso: la línea de versión {0} solo está sugerida; cámbiela a «Mantenida».</value></data>
+  <data name="No hint: no update of the line {0} was found yet; run &quot;Check now&quot;." xml:space="preserve"><value>Sin aviso: todavía no se ha encontrado ninguna actualización de la línea {0}; ejecute «Comprobar ahora».</value></data>
 </root>

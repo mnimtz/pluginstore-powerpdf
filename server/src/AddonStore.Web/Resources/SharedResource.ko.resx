@@ -1186,4 +1186,17 @@
   <data name="This line exists already." xml:space="preserve"><value>이 라인은 이미 있습니다.</value></data>
   <data name="The AI gave no usable answer." xml:space="preserve"><value>AI가 사용 가능한 응답을 제공하지 않았습니다.</value></data>
   <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>AI가 사용 가능한 응답을 제공하지 않았습니다. 설정, AI 도우미에서 연결 테스트를 확인하십시오.</value></data>
+  <data name="Detected as current" xml:space="preserve"><value>현재 버전으로 감지됨</value></data>
+  <data name="Build date" xml:space="preserve"><value>빌드 날짜</value></data>
+  <data name="not found yet" xml:space="preserve"><value>아직 찾지 못함</value></data>
+  <data name="How a client sees it: Power PDF version" xml:space="preserve"><value>클라이언트에 표시되는 내용: Power PDF 버전</value></data>
+  <data name="Check" xml:space="preserve"><value>확인</value></data>
+  <data name="Enter a Power PDF version such as 2025.3.8.0.26414." xml:space="preserve"><value>Power PDF 버전을 입력하십시오(예: 2025.3.8.0.26414).</value></data>
+  <data name="No hint: the Power PDF update hints are switched off." xml:space="preserve"><value>알림 없음: Power PDF 업데이트 알림이 꺼져 있습니다.</value></data>
+  <data name="No hint: no release line covers version {0}." xml:space="preserve"><value>알림 없음: 버전 {0}을(를) 포함하는 릴리스 라인이 없습니다.</value></data>
+  <data name="No hint: the release line {0} has ended." xml:space="preserve"><value>알림 없음: 릴리스 라인 {0}이(가) 종료되었습니다.</value></data>
+  <data name="No hint: {0} is already the newest update of the line ({1})." xml:space="preserve"><value>알림 없음: {0}은(는) 이미 이 라인의 최신 업데이트입니다({1}).</value></data>
+  <data name="Hint shown: a client with {0} is told about {1}{2}." xml:space="preserve"><value>알림 표시됨: {0} 버전의 클라이언트에 {1}{2} 알림이 표시됩니다.</value></data>
+  <data name="No hint: the release line {0} is only suggested; set it to &quot;Maintained&quot;." xml:space="preserve"><value>알림 없음: 릴리스 라인 {0}은(는) 제안 상태입니다. ‘유지 관리 중’(으)로 설정하십시오.</value></data>
+  <data name="No hint: no update of the line {0} was found yet; run &quot;Check now&quot;." xml:space="preserve"><value>알림 없음: 라인 {0}의 업데이트를 아직 찾지 못했습니다. ‘지금 확인’을(를) 실행하십시오.</value></data>
 </root>

@@ -46,6 +46,9 @@ public class SettingsModel : PageModel
     public string PpLastRun { get; private set; } = "";
     public string PpLastResult { get; private set; } = "";
     public List<PowerPdfLine> PpLines { get; private set; } = new();
+    public string? PpProbeVersion { get; private set; }
+    public string? PpProbeKey { get; private set; }
+    public string[] PpProbeArgs { get; private set; } = Array.Empty<string>();
 
     // IP logging for the reports (GDPR confirmation once, then switchable)
     public bool IpOn { get; private set; }
@@ -178,6 +181,15 @@ public class SettingsModel : PageModel
             await _audit.LogAsync(admin!.DisplayName, "powerpdf.line.deleted", line.Key);
             Notice = "Release line deleted.";
         }
+        await LoadAsync();
+    }
+
+    // "How a client sees it" (S1.8.1): the answer for one version, with the reason when there is no hint
+    public async Task OnPostPpProbeAsync(string? version, [FromServices] PowerPdfUpdateService ppu)
+    {
+        View = "updates";
+        PpProbeVersion = version?.Trim();
+        (PpProbeKey, PpProbeArgs) = await ppu.ProbeAsync(PpProbeVersion);
         await LoadAsync();
     }
 

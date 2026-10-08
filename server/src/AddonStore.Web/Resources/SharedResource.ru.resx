@@ -1186,4 +1186,17 @@
   <data name="This line exists already." xml:space="preserve"><value>Эта линейка уже существует.</value></data>
   <data name="The AI gave no usable answer." xml:space="preserve"><value>ИИ не дал пригодного ответа.</value></data>
   <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>ИИ не дал пригодного ответа. Проверьте тест подключения в разделе «Настройки, ИИ-ассистент».</value></data>
+  <data name="Detected as current" xml:space="preserve"><value>Определено как актуальное</value></data>
+  <data name="Build date" xml:space="preserve"><value>Дата сборки</value></data>
+  <data name="not found yet" xml:space="preserve"><value>пока не найдено</value></data>
+  <data name="How a client sees it: Power PDF version" xml:space="preserve"><value>Как это видит клиент: версия Power PDF</value></data>
+  <data name="Check" xml:space="preserve"><value>Проверить</value></data>
+  <data name="Enter a Power PDF version such as 2025.3.8.0.26414." xml:space="preserve"><value>Введите версию Power PDF, например 2025.3.8.0.26414.</value></data>
+  <data name="No hint: the Power PDF update hints are switched off." xml:space="preserve"><value>Уведомления нет: уведомления об обновлениях Power PDF отключены.</value></data>
+  <data name="No hint: no release line covers version {0}." xml:space="preserve"><value>Уведомления нет: ни одна линейка версий не охватывает версию {0}.</value></data>
+  <data name="No hint: the release line {0} has ended." xml:space="preserve"><value>Уведомления нет: линейка версий {0} завершена.</value></data>
+  <data name="No hint: {0} is already the newest update of the line ({1})." xml:space="preserve"><value>Уведомления нет: {0} уже является последним обновлением линейки ({1}).</value></data>
+  <data name="Hint shown: a client with {0} is told about {1}{2}." xml:space="preserve"><value>Уведомление показывается: клиент с версией {0} узнает о {1}{2}.</value></data>
+  <data name="No hint: the release line {0} is only suggested; set it to &quot;Maintained&quot;." xml:space="preserve"><value>Уведомления нет: линейка версий {0} только предложена; установите для нее «Поддерживается».</value></data>
+  <data name="No hint: no update of the line {0} was found yet; run &quot;Check now&quot;." xml:space="preserve"><value>Уведомления нет: для линейки {0} пока не найдено обновлений; выполните «Проверить сейчас».</value></data>
 </root>

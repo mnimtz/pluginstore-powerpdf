@@ -289,6 +289,29 @@ public class PowerPdfUpdateService
         return null;
     }
 
+    /// <summary>
+    /// For the admins' check "How a client sees it" (S1.8.1): what a store client with this version is told,
+    /// as a resource key with arguments, so the reason for "no hint" is visible.
+    /// </summary>
+    public async Task<(string Key, string[] Args)> ProbeAsync(string? versionLong)
+    {
+        var v = (versionLong ?? "").Trim();
+        if (v.Length is 0 or > 40 || !v.All(c => char.IsDigit(c) || c == '.')) return ("Enter a Power PDF version such as 2025.3.8.0.26414.", Array.Empty<string>());
+        if (!await EnabledAsync()) return ("No hint: the Power PDF update hints are switched off.", Array.Empty<string>());
+        var lines = await _db.PowerPdfLines.AsNoTracking().ToListAsync();
+        var line = lines.Where(l => v.StartsWith(l.Key + ".", StringComparison.Ordinal)).OrderByDescending(l => l.Key.Length).FirstOrDefault();
+        var parts = v.Split('.');
+        var installed = parts.Length >= 3 ? string.Join('.', parts.Take(3)) : v;
+        if (line is null) return ("No hint: no release line covers version {0}.", new[] { installed });
+        if (line.Status == "suggested") return ("No hint: the release line {0} is only suggested; set it to \"Maintained\".", new[] { line.Key });
+        if (line.Status == "ended") return ("No hint: the release line {0} has ended.", new[] { line.Key });
+        if (line.LatestVersion is null) return ("No hint: no update of the line {0} was found yet; run \"Check now\".", new[] { line.Key });
+        if (new Validation.SemVerComparer().Compare(line.LatestVersion, installed) <= 0)
+            return ("No hint: {0} is already the newest update of the line ({1}).", new[] { installed, line.LatestVersion });
+        return ("Hint shown: a client with {0} is told about {1}{2}.", new[] { installed, line.LatestTitle ?? "Power PDF " + line.LatestVersion,
+                                                                                 line.LatestBuildDate is null ? "" : " (" + line.LatestBuildDate + ")" });
+    }
+
     /// <summary>What a store client of this Power PDF version is told (null fields when there is nothing to say).</summary>
     public async Task<object> ClientInfoAsync(string? versionLong, string? lang)
     {

@@ -1186,4 +1186,17 @@
   <data name="This line exists already." xml:space="preserve"><value>Tämä sarja on jo olemassa.</value></data>
   <data name="The AI gave no usable answer." xml:space="preserve"><value>Tekoäly ei antanut käyttökelpoista vastausta.</value></data>
   <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>Tekoäly ei antanut käyttökelpoista vastausta. Tarkista yhteystesti kohdassa Asetukset, Tekoälyavustaja.</value></data>
+  <data name="Detected as current" xml:space="preserve"><value>Tunnistettu ajantasaiseksi</value></data>
+  <data name="Build date" xml:space="preserve"><value>Koontipäivä</value></data>
+  <data name="not found yet" xml:space="preserve"><value>ei vielä löytynyt</value></data>
+  <data name="How a client sees it: Power PDF version" xml:space="preserve"><value>Näin asiakasohjelma näkee sen: Power PDF -versio</value></data>
+  <data name="Check" xml:space="preserve"><value>Tarkista</value></data>
+  <data name="Enter a Power PDF version such as 2025.3.8.0.26414." xml:space="preserve"><value>Anna Power PDF -versio, esimerkiksi 2025.3.8.0.26414.</value></data>
+  <data name="No hint: the Power PDF update hints are switched off." xml:space="preserve"><value>Ei ilmoitusta: Power PDF -päivitysilmoitukset ovat pois käytöstä.</value></data>
+  <data name="No hint: no release line covers version {0}." xml:space="preserve"><value>Ei ilmoitusta: mikään versiosarja ei kata versiota {0}.</value></data>
+  <data name="No hint: the release line {0} has ended." xml:space="preserve"><value>Ei ilmoitusta: versiosarja {0} on päättynyt.</value></data>
+  <data name="No hint: {0} is already the newest update of the line ({1})." xml:space="preserve"><value>Ei ilmoitusta: {0} on jo sarjan uusin päivitys ({1}).</value></data>
+  <data name="Hint shown: a client with {0} is told about {1}{2}." xml:space="preserve"><value>Ilmoitus näytetään: asiakasohjelma, jossa on {0}, saa tiedon päivityksestä {1}{2}.</value></data>
+  <data name="No hint: the release line {0} is only suggested; set it to &quot;Maintained&quot;." xml:space="preserve"><value>Ei ilmoitusta: versiosarja {0} on vain ehdotettu; aseta tilaksi ”Ylläpidetty”.</value></data>
+  <data name="No hint: no update of the line {0} was found yet; run &quot;Check now&quot;." xml:space="preserve"><value>Ei ilmoitusta: sarjalle {0} ei ole vielä löytynyt päivitystä; suorita ”Tarkista nyt”.</value></data>
 </root>

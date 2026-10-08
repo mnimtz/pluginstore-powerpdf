@@ -1186,4 +1186,17 @@
   <data name="This line exists already." xml:space="preserve"><value>Deze lijn bestaat al.</value></data>
   <data name="The AI gave no usable answer." xml:space="preserve"><value>De AI gaf geen bruikbaar antwoord.</value></data>
   <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>De AI gaf geen bruikbaar antwoord. Controleer de verbindingstest onder Instellingen, AI-assistent.</value></data>
+  <data name="Detected as current" xml:space="preserve"><value>Herkend als actueel</value></data>
+  <data name="Build date" xml:space="preserve"><value>Builddatum</value></data>
+  <data name="not found yet" xml:space="preserve"><value>nog niet gevonden</value></data>
+  <data name="How a client sees it: Power PDF version" xml:space="preserve"><value>Zo ziet een client het: versie van Power PDF</value></data>
+  <data name="Check" xml:space="preserve"><value>Controleren</value></data>
+  <data name="Enter a Power PDF version such as 2025.3.8.0.26414." xml:space="preserve"><value>Voer een versie van Power PDF in, bijvoorbeeld 2025.3.8.0.26414.</value></data>
+  <data name="No hint: the Power PDF update hints are switched off." xml:space="preserve"><value>Geen melding: de updatemeldingen voor Power PDF zijn uitgeschakeld.</value></data>
+  <data name="No hint: no release line covers version {0}." xml:space="preserve"><value>Geen melding: geen releaselijn omvat versie {0}.</value></data>
+  <data name="No hint: the release line {0} has ended." xml:space="preserve"><value>Geen melding: de releaselijn {0} is beëindigd.</value></data>
+  <data name="No hint: {0} is already the newest update of the line ({1})." xml:space="preserve"><value>Geen melding: {0} is al de nieuwste update van de lijn ({1}).</value></data>
+  <data name="Hint shown: a client with {0} is told about {1}{2}." xml:space="preserve"><value>Melding getoond: een client met {0} krijgt bericht over {1}{2}.</value></data>
+  <data name="No hint: the release line {0} is only suggested; set it to &quot;Maintained&quot;." xml:space="preserve"><value>Geen melding: de releaselijn {0} is alleen voorgesteld; zet hem op "Onderhouden".</value></data>
+  <data name="No hint: no update of the line {0} was found yet; run &quot;Check now&quot;." xml:space="preserve"><value>Geen melding: voor de lijn {0} is nog geen update gevonden; voer "Nu controleren" uit.</value></data>
 </root>

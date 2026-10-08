@@ -1186,4 +1186,17 @@
   <data name="This line exists already." xml:space="preserve"><value>Tato řada již existuje.</value></data>
   <data name="The AI gave no usable answer." xml:space="preserve"><value>AI nevrátila použitelnou odpověď.</value></data>
   <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>AI nevrátila použitelnou odpověď. Zkontrolujte test připojení v části Nastavení, Asistent AI.</value></data>
+  <data name="Detected as current" xml:space="preserve"><value>Rozpoznáno jako aktuální</value></data>
+  <data name="Build date" xml:space="preserve"><value>Datum sestavení</value></data>
+  <data name="not found yet" xml:space="preserve"><value>zatím nenalezeno</value></data>
+  <data name="How a client sees it: Power PDF version" xml:space="preserve"><value>Jak to vidí klient: verze Power PDF</value></data>
+  <data name="Check" xml:space="preserve"><value>Zkontrolovat</value></data>
+  <data name="Enter a Power PDF version such as 2025.3.8.0.26414." xml:space="preserve"><value>Zadejte verzi Power PDF, například 2025.3.8.0.26414.</value></data>
+  <data name="No hint: the Power PDF update hints are switched off." xml:space="preserve"><value>Bez upozornění: upozornění na aktualizace Power PDF jsou vypnutá.</value></data>
+  <data name="No hint: no release line covers version {0}." xml:space="preserve"><value>Bez upozornění: žádná verzní řada nezahrnuje verzi {0}.</value></data>
+  <data name="No hint: the release line {0} has ended." xml:space="preserve"><value>Bez upozornění: verzní řada {0} byla ukončena.</value></data>
+  <data name="No hint: {0} is already the newest update of the line ({1})." xml:space="preserve"><value>Bez upozornění: {0} je již nejnovější aktualizace řady ({1}).</value></data>
+  <data name="Hint shown: a client with {0} is told about {1}{2}." xml:space="preserve"><value>Upozornění se zobrazí: klient s verzí {0} se dozví o {1}{2}.</value></data>
+  <data name="No hint: the release line {0} is only suggested; set it to &quot;Maintained&quot;." xml:space="preserve"><value>Bez upozornění: verzní řada {0} je pouze navržená; nastavte ji na „Udržovaná“.</value></data>
+  <data name="No hint: no update of the line {0} was found yet; run &quot;Check now&quot;." xml:space="preserve"><value>Bez upozornění: pro řadu {0} zatím nebyla nalezena žádná aktualizace; spusťte „Zkontrolovat nyní“.</value></data>
 </root>

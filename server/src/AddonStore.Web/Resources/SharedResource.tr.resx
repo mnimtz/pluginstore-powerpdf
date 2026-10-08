@@ -1186,4 +1186,17 @@
   <data name="This line exists already." xml:space="preserve"><value>Bu seri zaten var.</value></data>
   <data name="The AI gave no usable answer." xml:space="preserve"><value>YZ kullanılabilir bir yanıt vermedi.</value></data>
   <data name="The AI gave no usable answer. Check the connection test under Settings, AI assistant." xml:space="preserve"><value>YZ kullanılabilir bir yanıt vermedi. Ayarlar, Yapay zeka asistanı altındaki bağlantı testini kontrol edin.</value></data>
+  <data name="Detected as current" xml:space="preserve"><value>Güncel olarak algılanan</value></data>
+  <data name="Build date" xml:space="preserve"><value>Derleme tarihi</value></data>
+  <data name="not found yet" xml:space="preserve"><value>henüz bulunamadı</value></data>
+  <data name="How a client sees it: Power PDF version" xml:space="preserve"><value>Bir istemci nasıl görür: Power PDF sürümü</value></data>
+  <data name="Check" xml:space="preserve"><value>Denetle</value></data>
+  <data name="Enter a Power PDF version such as 2025.3.8.0.26414." xml:space="preserve"><value>Bir Power PDF sürümü girin, örneğin 2025.3.8.0.26414.</value></data>
+  <data name="No hint: the Power PDF update hints are switched off." xml:space="preserve"><value>Bildirim yok: Power PDF güncelleme bildirimleri kapalı.</value></data>
+  <data name="No hint: no release line covers version {0}." xml:space="preserve"><value>Bildirim yok: {0} sürümünü kapsayan bir sürüm serisi yok.</value></data>
+  <data name="No hint: the release line {0} has ended." xml:space="preserve"><value>Bildirim yok: {0} sürüm serisi sona erdi.</value></data>
+  <data name="No hint: {0} is already the newest update of the line ({1})." xml:space="preserve"><value>Bildirim yok: {0} zaten serinin en yeni güncellemesi ({1}).</value></data>
+  <data name="Hint shown: a client with {0} is told about {1}{2}." xml:space="preserve"><value>Bildirim gösterilir: {0} sürümlü bir istemci {1}{2} hakkında bilgilendirilir.</value></data>
+  <data name="No hint: the release line {0} is only suggested; set it to &quot;Maintained&quot;." xml:space="preserve"><value>Bildirim yok: {0} sürüm serisi yalnızca önerildi; "Bakımı sürüyor" olarak ayarlayın.</value></data>
+  <data name="No hint: no update of the line {0} was found yet; run &quot;Check now&quot;." xml:space="preserve"><value>Bildirim yok: {0} serisi için henüz güncelleme bulunamadı; "Şimdi kontrol et" çalıştırın.</value></data>
 </root>

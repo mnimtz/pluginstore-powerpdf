@@ -91,6 +91,36 @@ else if (Model.SigningKeyId.Length > 0)
         <h3 style="margin:0">@L["Release lines"]</h3>
         <form method="post" asp-page-handler="PpCheck"><button type="submit" class="btn small">@L["Check now"]</button></form>
     </div>
+    @{ var watched = Model.PpLines.Where(l => l.Status is "maintained" or "security").ToList(); }
+    @if (watched.Count > 0)
+    {
+        <div class="lead-box" style="margin:10px 0">
+            <b>@L["Detected as current"]</b>
+            <div class="table-wrap"><table style="margin-top:6px">
+                <tr><th>@L["Line"]</th><th>@L["Newest update"]</th><th>@L["Build date"]</th><th>@L["Detected"]</th><th>@L["Last check"]</th><th></th></tr>
+                @foreach (var w in watched)
+                {
+                    <tr>
+                        <td>@w.Title</td>
+                        <td>@if (w.LatestVersion is null) { <span class="muted">@L["not found yet"]</span> } else { <b>@w.LatestVersion</b><br /><span class="small muted">@w.LatestTitle</span> }</td>
+                        <td>@(w.LatestBuildDate ?? "-")</td>
+                        <td>@(w.DetectedAt is { } wd ? Time.Fmt(wd) : "-")</td>
+                        <td>@(w.LastCheckAt is { } wc ? Time.Fmt(wc) : "-") @if (w.LastCheckResult is { } wr && wr != "ok") { <br /><span class="small" style="color:var(--tun-coral)">@wr</span> }</td>
+                        <td>@if (w.LatestReadmeUrl is not null) { <a href="@w.LatestReadmeUrl" target="_blank" rel="noopener noreferrer">ReadMe</a> }</td>
+                    </tr>
+                }
+            </table></div>
+            <form method="post" asp-page-handler="PpProbe" style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap;margin-top:10px">
+                <div style="flex:1;min-width:220px"><label for="ppprobe">@L["How a client sees it: Power PDF version"]</label>
+                    <input id="ppprobe" name="version" value="@Model.PpProbeVersion" placeholder="2025.3.8.0.26414" maxlength="40" style="width:100%" /></div>
+                <button type="submit" class="btn small secondary">@L["Check"]</button>
+            </form>
+            @if (Model.PpProbeKey is not null)
+            {
+                <p style="margin:8px 0 0"><b>@L[Model.PpProbeKey, Model.PpProbeArgs]</b></p>
+            }
+        </div>
+    }
     <p class="small muted" style="margin:6px 0 10px">@L["Last check"]: @(DateTime.TryParse(Model.PpLastRun, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind, out var plr) ? Time.Fmt(plr) : "-")
         @if (Model.PpLastResult.Length > 0 && Model.PpLastResult != "ok") { <span> · </span><span style="color:var(--tun-coral)">@Model.PpLastResult</span> }</p>
     @if (Model.PpLines.Count == 0)

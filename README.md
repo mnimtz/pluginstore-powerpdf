@@ -385,6 +385,10 @@ docs/concepts/powerpdf-updates.md):**
 - Fetching: HTTPS on the allowed hosts only (default
   `docshield.tungstenautomation.com`), no redirects to other hosts, 2 MB and
   20 s limits; http://localhost only on a development server (tests).
+- S1.8.1: the section shows "Detected as current" (newest update, build
+  date, detection and last check per line, ReadMe link) and "How a client
+  sees it": enter a version and see whether a client gets the hint, and why
+  not.
 - `GET /api/powerpdf/update?version=<VersionLong>&lang=` answers the store
   client; nothing for a license mode the store does not allow.
 - Client 1.6.0: Options, "Show a hint when an update for Power PDF is
