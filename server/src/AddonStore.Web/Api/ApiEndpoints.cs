@@ -366,6 +366,8 @@ public static class ApiEndpoints
                 var items = await Services.CatalogUi.GetAsync(db, culture, beta, binOk);
                 if (!storeAllowed) items.RemoveAll(i => i.Id != SubmissionService.ClientPackageId);
                 var tests = storeAllowed ? await customers.TestGrantsAsync(ctx) : new();   // the developer's test code (S1.6.0)
+                // a customer whose catalog is limited to its deliveries (S1.12.0): only the store client stays public
+                if (grants.Any(g => g.Customer.RestrictCatalog)) items.RemoveAll(i => i.Id != SubmissionService.ClientPackageId);
                 if (grants.Count > 0 || tests.Count > 0)
                 {
                     var cctx = await Services.CatalogUi.Context.LoadAsync(db);
@@ -674,8 +676,9 @@ public static class ApiEndpoints
             if (string.IsNullOrWhiteSpace(ctx.Request.Headers[CustomerService.HeaderName].ToString()))
                 return Results.Json(new { ok = false, error = new { code = "CODE_MISSING", message = "Send the customer code in the X-Customer-Code header.", hint = "The code never goes into the URL." } }, statusCode: 400);
             var (valid, customer, addons, packages, seats) = await customers.CheckWithSeatsAsync(ctx);
+            var restricted = valid && (await customers.GrantsAsync(ctx)).Any(g => g.Customer.RestrictCatalog);
             return Results.Json(new { ok = true, data = new { valid, customer = valid ? customer : null, addons, packages,
-                installs = seats.Select(s => new { package = s.Package, used = s.Used, max = s.Max }) } });
+                installs = seats.Select(s => new { package = s.Package, used = s.Used, max = s.Max }), restricted } });
         });
 
         // The store client removed delivered add-ons (S1.4.2): free their installations. Anonymous like the
@@ -1094,7 +1097,7 @@ public static class ApiEndpoints
             {
                 id = c.Id, name = c.Name, status = c.Status, contactName = c.ContactName, language = c.Language,
                 deliveries = counts.GetValueOrDefault(c.Id), lastSeenAt = c.LastSeenAt, createdAt = c.CreatedAt,
-                mine = c.OwnerId == user.Id,
+                mine = c.OwnerId == user.Id, restrictCatalog = c.RestrictCatalog,
             }) });
         }).RequireAuthorization("ApiOrCookie");
 
@@ -1107,7 +1110,8 @@ public static class ApiEndpoints
             if (CustomerService.CheckCustomer(body.Name, body.ContactEmail, body.Language) is { } err)
                 return Fail(err, "name (1 to 120 characters) is required; contactEmail must be an address; language a two-letter code.", 400,
                     "Example: {\"name\": \"Muster AG\", \"contactName\": \"Erika Muster\", \"contactEmail\": \"it@muster.example\", \"language\": \"de\"}");
-            var c = await cs.CreateCustomerAsync(body.Name!, body.ContactName, body.ContactEmail, body.Language, body.Note, user, body.WithCode ?? true);
+            var c = await cs.CreateCustomerAsync(body.Name!, body.ContactName, body.ContactEmail, body.Language, body.Note, user, body.WithCode ?? true,
+                                                 body.RestrictCatalog ?? false);
             return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, true, UiLang(ctx)) }, statusCode: 201);
         }).RequireAuthorization("ApiOrCookie");
 
@@ -1132,7 +1136,7 @@ public static class ApiEndpoints
                 body.Status is not (null or "active" or "paused"))
                 return Fail("CUSTOMER_INVALID", "Check name, contactEmail, language and status (active or paused).", 400);
             await cs.UpdateCustomerAsync(c, body.Name, body.ContactName ?? c.ContactName, body.ContactEmail ?? c.ContactEmail,
-                body.Language, body.Note ?? c.Note, body.Status, user.DisplayName);
+                body.Language, body.Note ?? c.Note, body.Status, user.DisplayName, body.RestrictCatalog);
             return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, true, UiLang(ctx)) });
         }).RequireAuthorization("ApiOrCookie");
 
@@ -1480,6 +1484,15 @@ public static class ApiEndpoints
             // waiting for review (S1.6.0): the people who check it, a private delivery or the developer's test code
             if (v.Status == VersionStatus.Submitted && !staff && !await customers.MayGetSubmittedAsync(ctx, pkgRow, version))
                 return NotFound("VERSION_NOT_FOUND", $"No downloadable version {version} of '{id}'.");
+            if (!staff && id != SubmissionService.ClientPackageId && !await customers.IsTestVersionAsync(ctx, id, version))
+            {
+                var held = await customers.GrantsAsync(ctx);
+                if (held.Any(g => g.Customer.RestrictCatalog) &&
+                    !held.Any(g => g.Package.Id == id && (g.Beta?.Version == version || g.Live?.Version == version)))
+                    return Results.Json(new { ok = false, error = new { code = "NOT_DELIVERED",
+                        message = $"{id} {version} is not delivered to this customer.",
+                        hint = "The customer's catalog is limited to its deliveries; add a delivery of this add-on on the customer page." } }, statusCode: 403);
+            }
             var path = Path.Combine(svc.StorageRoot, v.FilePath);
             if (!File.Exists(path)) return NotFound("FILE_MISSING", "The package file is missing on the server; contact an admin.");
             // a delivered private add-on, downloaded with a customer code: one installation takes a seat (S1.4.2);
@@ -1742,6 +1755,8 @@ public static class ApiEndpoints
         var slugIds = (await db.PackageVersions.Where(v => v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)
             .Where(v => db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private"))
             .Select(v => v.PackageId).Distinct().ToListAsync()).Where(i => i != SubmissionService.ClientPackageId).ToList();
+        // a customer whose catalog is limited to its deliveries (S1.12.0): its codes hide the public catalog
+        var restricted = grants?.Any(g => g.Customer.RestrictCatalog) == true;
         foreach (var group in all.GroupBy(v => v.PackageId).OrderBy(g => g.Key))
         {
             var live = group.Where(v => v.Status == VersionStatus.Live)
@@ -1758,6 +1773,7 @@ public static class ApiEndpoints
             }
             if (pick is null) continue;
             if (clientOnly && pick.PackageId != SubmissionService.ClientPackageId) continue;   // license mode switched off (S1.7.0)
+            if (restricted && pick.PackageId != SubmissionService.ClientPackageId) continue;
             if (pkgs.GetValueOrDefault(pick.PackageId)?.Visibility == "private") continue;
             if (grants?.Any(g => g.Package.Id == pick.PackageId && CustomerService.Pick(g, includeBeta).Version is not null) == true) continue;
             if (tests.Any(t => t.Package.Id == pick.PackageId)) continue;
@@ -1855,7 +1871,8 @@ public record FeedbackPatchBody(string? Status, string? AssignedTo);
 public record FeedbackNoteBody(string? Text, bool? Reply);
 
 /// <summary>POST/PATCH /api/customers[/{cid}] (S0.14.0)</summary>
-public record CustomerBody(string? Name, string? ContactName, string? ContactEmail, string? Language, string? Note, string? Status, bool? WithCode);
+public record CustomerBody(string? Name, string? ContactName, string? ContactEmail, string? Language, string? Note, string? Status, bool? WithCode,
+                           bool? RestrictCatalog = null);
 /// <summary>POST /api/customers/{cid}/codes: deliveryId null = code for all deliveries of the customer</summary>
 public record CodeBody(int? DeliveryId, int? TransitionDays);
 public record StageBody(string? Mode, string? Version);

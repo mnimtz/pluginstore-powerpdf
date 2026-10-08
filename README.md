@@ -366,6 +366,20 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Deliveries of any add-on, catalog limited to them (S1.12.0):**
+- The customer page offers every add-on for a delivery, public and private
+  (marked), not only private ones. A delivery of a public add-on fixes its
+  version for the customer or, with the option below, is what it may use.
+- New customer option "Limit the catalog to its deliveries" (off by
+  default; on the new-customer form, under customer data and as
+  `restrictCatalog` in `POST`/`PATCH /api/customers`). With one of its codes
+  the store client lists only the delivered add-ons and the store client
+  itself; other downloads answer 403 `NOT_DELIVERED`. With several codes the
+  limit applies as soon as one belongs to such a customer; everything the
+  codes deliver together is allowed. `GET /api/customer-code` reports
+  `restricted`. Together with the policy `Store\CustomerCode` users cannot
+  leave the limit; it is a usage rule, not copy protection. No client change.
+
 **One "Updates" button in the Help tab (client 1.9.1):** the Help tab group
 is `AddonStore::HelpTab` with a single button `AddonStore::HelpTab::Updates`,
 always there; it opens the "Available updates" view, and while updates are

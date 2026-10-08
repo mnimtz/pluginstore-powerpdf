@@ -49,7 +49,7 @@ public class CustomersModel : PageModel
     }
 
     public async Task<IActionResult> OnPostCreateAsync(string? name, string? contactName, string? contactEmail, string? language,
-                                                       string? note, bool withCode)
+                                                       string? note, bool withCode, bool restrictCatalog)
     {
         var me = await _users.GetUserAsync(User);
         if (me is null || (User.IsInRole("Reviewer") && !User.IsInRole("Admin"))) return Forbid();
@@ -60,7 +60,7 @@ public class CustomersModel : PageModel
             await LoadAsync();
             return Page();
         }
-        var c = await _customers.CreateCustomerAsync(name!, contactName, contactEmail, language, note, me, withCode);
+        var c = await _customers.CreateCustomerAsync(name!, contactName, contactEmail, language, note, me, withCode, restrictCatalog);
         return RedirectToPage("/Customer", new { id = c.Id });
     }
 }

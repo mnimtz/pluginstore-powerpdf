@@ -947,9 +947,9 @@ then on the customer deliveries hand it out. Until then only the developer's
 own personal test code shows it.
 
     GET   {{baseUrl}}/api/customers                         your customers (admins/reviewers: all)
-    POST  {{baseUrl}}/api/customers                         {"name", "contactName"?, "contactEmail"?, "language"?, "note"?, "withCode"?: true}
+    POST  {{baseUrl}}/api/customers                         {"name", "contactName"?, "contactEmail"?, "language"?, "note"?, "withCode"?: true, "restrictCatalog"?: false}
     GET   {{baseUrl}}/api/customers/{cid}                   customer with codes (shown to creator/admin) and deliveries
-    PATCH {{baseUrl}}/api/customers/{cid}                   same fields, "status": "active"|"paused"
+    PATCH {{baseUrl}}/api/customers/{cid}                   same fields, "status": "active"|"paused", "restrictCatalog": true|false
     DELETE {{baseUrl}}/api/customers/{cid}                  delete with all codes and deliveries (creator/admin)
     POST  {{baseUrl}}/api/customers/{cid}/codes             {"deliveryId"?: 12, "transitionDays"?: 14}
     DELETE {{baseUrl}}/api/customers/{cid}/codes/{codeId}   revoke a code
@@ -975,7 +975,15 @@ approved version reaches the customer's test group first and goes live with `pro
 Clients send codes in the header `X-Customer-Code` (several separated by
 ";"), never in a URL. The catalog then also lists the delivered add-ons
 (TSV column 20 and JSON field `customer` carry the customer name); a delivery
-replaces the public entry of the same add-on. 30 different unknown codes from
+replaces the public entry of the same add-on. Any add-on can be delivered,
+public or private. A customer with `"restrictCatalog": true` (S1.12.0, off by
+default) gets only its deliveries: with one of its codes the catalog lists
+just the delivered add-ons and the store client, and downloading anything
+else answers 403 `NOT_DELIVERED` (store client updates stay allowed). With
+several codes the limit applies as soon as one belongs to such a customer,
+and everything the codes deliver together is allowed;
+`GET {{baseUrl}}/api/customer-code` reports it as `data.restricted`. It is a
+usage rule, not copy protection. 30 different unknown codes from
 one address within an hour make the server ignore new codes from it for the
 hour (codes that already worked from that address keep working).
 `GET {{baseUrl}}/api/customer-code` (code in the same header) checks a code
@@ -1374,6 +1382,7 @@ be free of warnings before review. Info is for information only.
 | SOURCE_MISSING | error (404) | No source stored for this version (download). |
 | CODE_MISSING | error (400) | GET /api/customer-code without the X-Customer-Code header. |
 | SEATS_EXHAUSTED | error (403) | Download of a delivered add-on: every installation the delivery allows is in use. |
+| NOT_DELIVERED | error (403) | Download with the code of a customer whose catalog is limited to its deliveries (`restrictCatalog`): this add-on or version is not delivered to it. |
 | SEATS_RATE_LIMITED | error (429) | More than 200 new installations from one network address within an hour. |
 | SEATS_BUSY | error (503) | The store could not record the installation right now (database busy); try again. |
 | INSTALL_ID_MISSING | error (400/403) | A limited delivery (or the release call) without the X-Install-Id header (store client before 1.4.1). |

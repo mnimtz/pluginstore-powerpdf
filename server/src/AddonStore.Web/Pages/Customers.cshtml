@@ -39,6 +39,8 @@
                 </div>
                 <div><label>@L["Note"]</label><textarea name="note" rows="2" maxlength="2000"></textarea></div>
                 <label style="font-weight:400"><input type="checkbox" name="withCode" value="true" checked style="width:auto" /> @L["Create a customer code for all its deliveries right away"]</label>
+                <label style="font-weight:400"><input type="checkbox" name="restrictCatalog" value="true" style="width:auto" /> @L["Limit the catalog to its deliveries"]</label>
+                <p class="muted small" style="margin:-4px 0 0">@L["With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog."]</p>
                 <button type="submit" class="btn cta">@L["Create customer"]</button>
             </form>
             <p class="muted small">@L["Only the name is required. Contact data are used for the delivery email only; leave them empty if not needed."]</p>

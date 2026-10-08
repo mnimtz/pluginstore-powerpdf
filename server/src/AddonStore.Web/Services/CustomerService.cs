@@ -125,16 +125,17 @@ public class CustomerService
     }
 
     public async Task<Customer> CreateCustomerAsync(string name, string? contactName, string? email, string? language, string? note,
-                                                    AppUser owner, bool withCode)
+                                                    AppUser owner, bool withCode, bool restrictCatalog = false)
     {
         var c = new Customer
         {
             Name = name.Trim(), ContactName = Clean(contactName, 120), ContactEmail = Clean(email, 200),
             Language = string.IsNullOrWhiteSpace(language) ? "de" : language.Trim(), Note = Clean(note, 2000), OwnerId = owner.Id,
+            RestrictCatalog = restrictCatalog,
         };
         _db.Customers.Add(c);
         await _db.SaveChangesAsync();
-        await _audit.LogAsync(owner.DisplayName, "customer.created", $"customer {c.Id}", c.Name);
+        await _audit.LogAsync(owner.DisplayName, "customer.created", $"customer {c.Id}", c.Name + (restrictCatalog ? "; catalog limited to its deliveries" : ""));
         if (withCode) await CreateCodeAsync(c.Id, null, owner.DisplayName, 0);
         return c;
     }
@@ -147,8 +148,9 @@ public class CustomerService
     }
 
     public async Task UpdateCustomerAsync(Customer c, string? name, string? contactName, string? email, string? language, string? note,
-                                          string? status, string actor)
+                                          string? status, string actor, bool? restrictCatalog = null)
     {
+        if (restrictCatalog is { } rc) c.RestrictCatalog = rc;
         if (!string.IsNullOrWhiteSpace(name)) c.Name = name.Trim();
         c.ContactName = Clean(contactName, 120);
         c.ContactEmail = Clean(email, 200);
@@ -156,7 +158,8 @@ public class CustomerService
         c.Note = Clean(note, 2000);
         if (status is "active" or "paused") c.Status = status;
         await _db.SaveChangesAsync();
-        await _audit.LogAsync(actor, "customer.updated", $"customer {c.Id}", $"{c.Name}, status {c.Status}");
+        await _audit.LogAsync(actor, "customer.updated", $"customer {c.Id}", $"{c.Name}, status {c.Status}" +
+            (c.RestrictCatalog ? ", catalog limited to its deliveries" : ""));
     }
 
     /// <summary>
@@ -376,6 +379,7 @@ public class CustomerService
         {
             id = c.Id, name = c.Name, contactName = c.ContactName, contactEmail = c.ContactEmail, language = c.Language,
             note = c.Note, status = c.Status, owner = owner?.DisplayName, createdAt = c.CreatedAt, lastSeenAt = c.LastSeenAt,
+            restrictCatalog = c.RestrictCatalog,
             codes = codes.Select(x => new
             {
                 id = x.Id, scope = x.DeliveryId is null ? "customer" : "delivery", deliveryId = x.DeliveryId,

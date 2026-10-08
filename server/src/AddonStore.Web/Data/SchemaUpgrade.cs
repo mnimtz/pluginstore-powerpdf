@@ -136,6 +136,8 @@ public static class SchemaUpgrade
                 "DeliveryId INTEGER NULL, CodeHash TEXT NOT NULL, CodeProtected TEXT NOT NULL, Prefix TEXT NOT NULL, " +
                 "CreatedAt TEXT NOT NULL, CreatedBy TEXT NOT NULL, ExpiresAt TEXT NULL, RevokedAt TEXT NULL, LastUsedAt TEXT NULL)",
             "CREATE UNIQUE INDEX IF NOT EXISTS IX_CustomerCodes_CodeHash ON CustomerCodes (CodeHash)",
+            // limit a customer's catalog to its deliveries (S1.12.0); after CREATE TABLE Customers
+            "ALTER TABLE Customers ADD COLUMN RestrictCatalog INTEGER NOT NULL DEFAULT 0",  // S1.12.0
             "CREATE TABLE IF NOT EXISTS Deliveries (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, CustomerId INTEGER NOT NULL, " +
                 "PackageId TEXT NOT NULL, BetaMode TEXT NOT NULL, BetaVersion TEXT NULL, LiveMode TEXT NOT NULL, LiveVersion TEXT NULL, " +
                 "StartsAt TEXT NULL, EndsAt TEXT NULL, Status TEXT NOT NULL, CreatedBy TEXT NOT NULL, CreatedAt TEXT NOT NULL, " +

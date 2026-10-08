@@ -1252,4 +1252,8 @@
   <data name="Show in this language" xml:space="preserve"><value>以此语言显示</value></data>
   <data name="Show the original" xml:space="preserve"><value>显示原文</value></data>
   <data name="Translated by the AI assistant (original: {0})." xml:space="preserve"><value>由 AI 助手翻译（原文：{0}）。</value></data>
+  <data name="Limit the catalog to its deliveries" xml:space="preserve"><value>将目录限制为该客户的交付</value></data>
+  <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>启用此选项后，商店仅向此客户显示已交付给它的加载项（公开和私有）以及商店更新，不显示公共目录中的其他任何内容。</value></data>
+  <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>没有可交付的加载项：所有已通过自动检查的加载项均已交付给此客户。</value></data>
+  <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>私有加载项仅对拥有代码的客户显示；公开加载项本来就在目录中对所有人显示，交付会固定其版本，或在启用“将目录限制为该客户的交付”时决定客户可以使用的内容。正式阶段设为“固定”可使客户保持在经过测试的版本上；“最新”则跟随每个已发布的版本。客户只有在版本获批后才会收到它。</value></data>
 </root>

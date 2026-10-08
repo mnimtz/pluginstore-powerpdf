@@ -71,15 +71,13 @@ public class CustomerModel : PageModel
             return new CodeRow(c, CanManage && valid ? _customers.Reveal(c) : null, valid, scope);
         }).ToList();
 
-        // add-ons this user may deliver: own ones (admins: all) with a checked version
+        // add-ons to deliver (S1.12.0: public ones too, e.g. for a customer whose catalog is limited to its deliveries)
         Packages.Clear();
         if (CanManage)
         {
             var pkgs = await _db.Packages.AsNoTracking()
-                .Where(p => p.Id != SubmissionService.ClientPackageId && p.Visibility == "private").ToListAsync();   // any developer's add-on
-            // Only private add-ons: public ones are in the catalog for everybody anyway
-            // (a customer-specific version of a public add-on stays possible through the API).
-            foreach (var p in pkgs.OrderBy(p => p.Id))
+                .Where(p => p.Id != SubmissionService.ClientPackageId).ToListAsync();   // any developer's add-on
+            foreach (var p in pkgs.OrderBy(p => p.Visibility == "private" ? 0 : 1).ThenBy(p => p.Id))
             {
                 if (deliveries.Any(d => d.PackageId == p.Id)) continue;
                 var versions = await _customers.DeliverableVersionsAsync(p.Id);
@@ -114,11 +112,11 @@ public class CustomerModel : PageModel
     }
 
     public Task<IActionResult> OnPostSaveAsync(int id, string? name, string? contactName, string? contactEmail, string? language,
-                                               string? note, string? status) =>
+                                               string? note, string? status, bool restrictCatalog) =>
         ActAsync(id, async me =>
         {
             if (CustomerService.CheckCustomer(name, contactEmail, language) is not null) return (false, "Please check name and email address.");
-            await _customers.UpdateCustomerAsync(Cust!, name, contactName, contactEmail, language, note, status, me.DisplayName);
+            await _customers.UpdateCustomerAsync(Cust!, name, contactName, contactEmail, language, note, status, me.DisplayName, restrictCatalog);
             return (true, "Settings saved.");
         });
 

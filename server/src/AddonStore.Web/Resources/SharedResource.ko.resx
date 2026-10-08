@@ -1252,4 +1252,8 @@
   <data name="Show in this language" xml:space="preserve"><value>이 언어로 표시</value></data>
   <data name="Show the original" xml:space="preserve"><value>원문 표시</value></data>
   <data name="Translated by the AI assistant (original: {0})." xml:space="preserve"><value>AI 도우미가 번역함(원문: {0}).</value></data>
+  <data name="Limit the catalog to its deliveries" xml:space="preserve"><value>카탈로그를 이 고객의 배포로 제한</value></data>
+  <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>이 옵션을 사용하면 스토어는 이 고객에게 배포된 추가 기능(공개 및 비공개)과 스토어 업데이트만 표시하고, 공개 카탈로그의 다른 항목은 표시하지 않습니다.</value></data>
+  <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>배포할 추가 기능이 없습니다. 자동 검사를 통과한 모든 추가 기능이 이미 이 고객에게 배포되었습니다.</value></data>
+  <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>비공개 추가 기능은 코드가 있는 고객에게만 표시됩니다. 공개 추가 기능은 어차피 모든 사람에게 카탈로그에 표시되며, 배포는 해당 버전을 고정하거나 ‘카탈로그를 이 고객의 배포로 제한’을 사용하는 경우 고객이 사용할 수 있는 항목을 정합니다. 라이브 ‘고정’은 고객을 테스트된 버전에 유지하고, ‘최신’은 릴리스되는 모든 버전을 따릅니다. 고객은 버전을 승인된 후에만 받습니다.</value></data>
 </root>

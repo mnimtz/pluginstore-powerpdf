@@ -324,6 +324,8 @@ public class Customer
     public string OwnerId { get; set; } = "";             // user who created it (sees and edits it)
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? LastSeenAt { get; set; }             // last catalog request with one of its codes
+    /// <summary>S1.12.0: its codes show only its deliveries (and store client updates), not the public catalog.</summary>
+    public bool RestrictCatalog { get; set; }
 }
 
 /// <summary>

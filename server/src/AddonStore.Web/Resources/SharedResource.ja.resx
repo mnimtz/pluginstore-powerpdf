@@ -1252,4 +1252,8 @@
   <data name="Show in this language" xml:space="preserve"><value>この言語で表示</value></data>
   <data name="Show the original" xml:space="preserve"><value>原文を表示</value></data>
   <data name="Translated by the AI assistant (original: {0})." xml:space="preserve"><value>AI アシスタントによる翻訳 (原文: {0})。</value></data>
+  <data name="Limit the catalog to its deliveries" xml:space="preserve"><value>カタログをこの顧客の配信に限定する</value></data>
+  <data name="With this option the store shows this customer only the add-ons delivered to it (public and private) and store updates, nothing else from the public catalog." xml:space="preserve"><value>このオプションを有効にすると、ストアはこの顧客に、配信されたアドイン (公開および非公開) とストアの更新のみを表示し、公開カタログのそれ以外のものは表示しません。</value></data>
+  <data name="No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already." xml:space="preserve"><value>配信できるアドインがありません。自動チェックに合格したアドインはすべて、すでにこの顧客に配信されています。</value></data>
+  <data name="Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with &quot;Limit the catalog to its deliveries&quot;, is what the customer may use. Live &quot;fixed&quot; keeps the customer on a tested version; &quot;newest&quot; follows every released version. Customers get a version only after its approval." xml:space="preserve"><value>非公開アドインは、コードを持つ顧客にのみ表示されます。公開アドインはもともとすべての人のカタログに表示されており、配信によってそのバージョンが固定されるか、「カタログをこの顧客の配信に限定する」を有効にした場合は、顧客が使用できるものが決まります。ライブの「固定」では顧客をテスト済みのバージョンに留め、「最新」ではリリースされるバージョンすべてに追従します。顧客がバージョンを受け取るのは、承認された後だけです。</value></data>
 </root>
