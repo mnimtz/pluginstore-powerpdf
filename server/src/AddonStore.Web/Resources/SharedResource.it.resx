@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -1315,4 +1315,208 @@
   <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>Al massimo 9 componenti aggiuntivi possono essere in evidenza.</value></data>
   <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Solo i componenti aggiuntivi pubblici possono essere in evidenza.</value></data>
   <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>In evidenza: {0} di {1}. I componenti in evidenza compaiono per primi, nella prima pagina, e risaltano. Aggiungili o toglili con il pulsante a stella di una scheda.</value></data>
+  <data name="1 hour to 30 days. Documents are deleted at once after acceptance; this is the limit for documents nobody collects." xml:space="preserve">
+    <value>Da 1 ora a 30 giorni. I documenti vengono eliminati subito dopo l’accettazione; questo è il limite per i documenti che nessuno ritira.</value>
+  </data>
+  <data name="Block this user? Their waiting documents are deleted." xml:space="preserve">
+    <value>Bloccare questo utente? I suoi documenti in attesa verranno eliminati.</value>
+  </data>
+  <data name="Block user" xml:space="preserve">
+    <value>Blocca utente</value>
+  </data>
+  <data name="Blocked users. Search to block someone." xml:space="preserve">
+    <value>Utenti bloccati. Cerca qualcuno per bloccarlo.</value>
+  </data>
+  <data name="Blocks" xml:space="preserve">
+    <value>Blocchi</value>
+  </data>
+  <data name="Connection string or SAS URL" xml:space="preserve">
+    <value>Stringa di connessione o URL SAS</value>
+  </data>
+  <data name="Connection test passed." xml:space="preserve">
+    <value>Test di connessione superato.</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Contatti</value>
+  </data>
+  <data name="Container names are 3 to 63 lowercase letters, digits and hyphens." xml:space="preserve">
+    <value>I nomi dei container contengono da 3 a 63 lettere minuscole, cifre e trattini.</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>Attuale</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>Dispositivi</value>
+  </data>
+  <data name="Document storage" xml:space="preserve">
+    <value>Archivio documenti</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF (add-on Send to). Off: the menu, all hints and the add-on disappear, waiting documents are deleted. Needs a document storage (Send to → Settings)." xml:space="preserve">
+    <value>Documenti tra contatti confermati in Power PDF (add-on Invia a). Disattivato: il menu, tutte le indicazioni e l’add-on scompaiono, i documenti in attesa vengono eliminati. Richiede un archivio documenti (Invia a → Impostazioni).</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF, end-to-end encrypted on the PCs. The server sees who is connected with whom, never content, file names or notes." xml:space="preserve">
+    <value>Documenti tra contatti confermati in Power PDF, crittografati end-to-end sui PC. Il server vede chi è collegato con chi, mai contenuti, nomi di file o note.</value>
+  </data>
+  <data name="E-mail" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>Funzioni</value>
+  </data>
+  <data name="Invitation valid (days)" xml:space="preserve">
+    <value>Invito valido (giorni)</value>
+  </data>
+  <data name="Local folder (development only), no Blob Storage." xml:space="preserve">
+    <value>Cartella locale (solo sviluppo), nessun Blob Storage.</value>
+  </data>
+  <data name="Maximum file size (MB)" xml:space="preserve">
+    <value>Dimensione massima del file (MB)</value>
+  </data>
+  <data name="New invitations per person and day" xml:space="preserve">
+    <value>Nuovi inviti per persona al giorno</value>
+  </data>
+  <data name="No document storage configured." xml:space="preserve">
+    <value>Nessun archivio documenti configurato.</value>
+  </data>
+  <data name="No document storage set: Send to stays hidden in Power PDF." xml:space="preserve">
+    <value>Nessun archivio documenti impostato: Invia a resta nascosto in Power PDF.</value>
+  </data>
+  <data name="No public access." xml:space="preserve">
+    <value>Nessun accesso pubblico.</value>
+  </data>
+  <data name="No reports." xml:space="preserve">
+    <value>Nessuna segnalazione.</value>
+  </data>
+  <data name="Open invitations per person" xml:space="preserve">
+    <value>Inviti aperti per persona</value>
+  </data>
+  <data name="Open reports" xml:space="preserve">
+    <value>Segnalazioni aperte</value>
+  </data>
+  <data name="Own Blob container only for the documents, separate from the data share. Soft delete and versioning for blobs must be off, a lifecycle rule should delete blobs after 31 days." xml:space="preserve">
+    <value>Container Blob dedicato solo ai documenti, separato dalla condivisione dati. L’eliminazione temporanea e il controllo delle versioni dei blob devono essere disattivati; una regola del ciclo di vita dovrebbe eliminare i blob dopo 31 giorni.</value>
+  </data>
+  <data name="Public access could not be checked with this access." xml:space="preserve">
+    <value>Non è stato possibile verificare l’accesso pubblico con questo accesso.</value>
+  </data>
+  <data name="Quick send allowed" xml:space="preserve">
+    <value>Invio rapido consentito</value>
+  </data>
+  <data name="Read back failed." xml:space="preserve">
+    <value>Rilettura non riuscita.</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Motivo</value>
+  </data>
+  <data name="Remove document storage" xml:space="preserve">
+    <value>Rimuovi archivio documenti</value>
+  </data>
+  <data name="Remove the document storage? Send to stops working until a new one is set." xml:space="preserve">
+    <value>Rimuovere l’archivio documenti? Invia a non funzionerà finché non ne viene impostato uno nuovo.</value>
+  </data>
+  <data name="Reported by" xml:space="preserve">
+    <value>Segnalato da</value>
+  </data>
+  <data name="Reported user" xml:space="preserve">
+    <value>Utente segnalato</value>
+  </data>
+  <data name="Retention until automatic deletion" xml:space="preserve">
+    <value>Conservazione fino all’eliminazione automatica</value>
+  </data>
+  <data name="Save and test" xml:space="preserve">
+    <value>Salva e verifica</value>
+  </data>
+  <data name="Saved, but the connection test found problems." xml:space="preserve">
+    <value>Salvato, ma il test di connessione ha rilevato problemi.</value>
+  </data>
+  <data name="Search by name or e-mail" xml:space="preserve">
+    <value>Cerca per nome o e-mail</value>
+  </data>
+  <data name="Send to" xml:space="preserve">
+    <value>Invia a</value>
+  </data>
+  <data name="Send to is on. Set the document storage now (Send to → Settings); until then the add-on stays hidden." xml:space="preserve">
+    <value>Invia a è attivo. Imposta ora l’archivio documenti (Invia a → Impostazioni); fino ad allora l’add-on resta nascosto.</value>
+  </data>
+  <data name="Send to: settings" xml:space="preserve">
+    <value>Invia a: impostazioni</value>
+  </data>
+  <data name="Set document storage" xml:space="preserve">
+    <value>Imposta archivio documenti</value>
+  </data>
+  <data name="Since" xml:space="preserve">
+    <value>Dal</value>
+  </data>
+  <data name="Soft delete could not be checked with this access (needs account-level rights); check it in the Azure portal." xml:space="preserve">
+    <value>Non è stato possibile verificare l’eliminazione temporanea con questo accesso (servono diritti a livello di account); verificala nel portale di Azure.</value>
+  </data>
+  <data name="Soft delete for blobs is off." xml:space="preserve">
+    <value>L’eliminazione temporanea dei blob è disattivata.</value>
+  </data>
+  <data name="Soft delete for blobs is on: deleted documents would stay recoverable. Switch it off for this account." xml:space="preserve">
+    <value>L’eliminazione temporanea dei blob è attiva: i documenti eliminati resterebbero recuperabili. Disattivala per questo account.</value>
+  </data>
+  <data name="Stored encrypted, never shown again." xml:space="preserve">
+    <value>Memorizzato crittografato, non più visualizzato.</value>
+  </data>
+  <data name="The connection test found problems." xml:space="preserve">
+    <value>Il test di connessione ha rilevato problemi.</value>
+  </data>
+  <data name="The container allows public access." xml:space="preserve">
+    <value>Il container consente l’accesso pubblico.</value>
+  </data>
+  <data name="The local folder is only allowed on a development server." xml:space="preserve">
+    <value>La cartella locale è consentita solo su un server di sviluppo.</value>
+  </data>
+  <data name="The retention time must be between 1 hour and 30 days." xml:space="preserve">
+    <value>La conservazione deve essere compresa tra 1 ora e 30 giorni.</value>
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>Sblocca</value>
+  </data>
+  <data name="Unblock this user?" xml:space="preserve">
+    <value>Sbloccare questo utente?</value>
+  </data>
+  <data name="Undo window (seconds)" xml:space="preserve">
+    <value>Finestra di annullamento (secondi)</value>
+  </data>
+  <data name="User blocked." xml:space="preserve">
+    <value>Utente bloccato.</value>
+  </data>
+  <data name="User not found." xml:space="preserve">
+    <value>Utente non trovato.</value>
+  </data>
+  <data name="User unblocked." xml:space="preserve">
+    <value>Utente sbloccato.</value>
+  </data>
+  <data name="Versioning and the lifecycle rule (delete after 31 days) cannot be read through the data API; check them in the Azure portal." xml:space="preserve">
+    <value>Il controllo delle versioni e la regola del ciclo di vita (eliminazione dopo 31 giorni) non possono essere letti tramite l’API dati; verificali nel portale di Azure.</value>
+  </data>
+  <data name="Waiting per user at most (MB)" xml:space="preserve">
+    <value>In attesa per utente al massimo (MB)</value>
+  </data>
+  <data name="Waiting transfers" xml:space="preserve">
+    <value>Trasferimenti in attesa</value>
+  </data>
+  <data name="Who" xml:space="preserve">
+    <value>Chi</value>
+  </data>
+  <data name="Write, read and delete work." xml:space="preserve">
+    <value>Scrittura, lettura ed eliminazione funzionano.</value>
+  </data>
+  <data name="blocks stored" xml:space="preserve">
+    <value>blocchi archiviati</value>
+  </data>
+  <data name="hours" xml:space="preserve">
+    <value>ore</value>
+  </data>
+  <data name="unchanged" xml:space="preserve">
+    <value>invariato</value>
+  </data>
+  <data name="Contact reports" xml:space="preserve">
+    <value>Segnalazioni</value>
+  </data>
 </root>

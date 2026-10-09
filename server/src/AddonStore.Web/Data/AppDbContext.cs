@@ -32,6 +32,17 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<DeliveryTemplate> DeliveryTemplates => Set<DeliveryTemplate>();
     public DbSet<DeliveryTemplateItem> DeliveryTemplateItems => Set<DeliveryTemplateItem>();
     public DbSet<CustomerTemplate> CustomerTemplates => Set<CustomerTemplate>();
+    // "Senden an" (Data/SendToEntities.cs)
+    public DbSet<SendToUser> SendToUsers => Set<SendToUser>();
+    public DbSet<SendToDevice> SendToDevices => Set<SendToDevice>();
+    public DbSet<SendToInvitation> SendToInvitations => Set<SendToInvitation>();
+    public DbSet<SendToContact> SendToContacts => Set<SendToContact>();
+    public DbSet<SendToBlock> SendToBlocks => Set<SendToBlock>();
+    public DbSet<SendToReport> SendToReports => Set<SendToReport>();
+    public DbSet<SendToList> SendToLists => Set<SendToList>();
+    public DbSet<SendToQuick> SendToQuicks => Set<SendToQuick>();
+    public DbSet<SendToTransfer> SendToTransfers => Set<SendToTransfer>();
+    public DbSet<SendToEnvelope> SendToEnvelopes => Set<SendToEnvelope>();
 
     // S1.13.2: a write to what the public catalog shows starts a new catalog generation (CatalogUi cache)
     private bool TouchesCatalog() => ChangeTracker.Entries().Any(e =>
@@ -83,5 +94,14 @@ public class AppDbContext : IdentityDbContext<AppUser>
         b.Entity<DeliveryTemplateItem>().HasIndex(i => new { i.TemplateId, i.PackageId }).IsUnique();
         b.Entity<CustomerTemplate>().HasIndex(a => new { a.CustomerId, a.TemplateId }).IsUnique();
         b.Entity<Delivery>().HasIndex(d => new { d.CustomerId, d.PackageId }).IsUnique();
+        b.Entity<SendToUser>().HasIndex(u => u.Email).IsUnique();
+        b.Entity<SendToDevice>().HasIndex(d => d.TokenHash).IsUnique();
+        b.Entity<SendToDevice>().HasIndex(d => d.UserId);
+        b.Entity<SendToInvitation>().HasIndex(i => i.TokenHash).IsUnique();
+        b.Entity<SendToInvitation>().HasIndex(i => i.ToEmail);
+        b.Entity<SendToContact>().HasIndex(c => new { c.UserA, c.UserB }).IsUnique();
+        b.Entity<SendToBlock>().HasIndex(x => new { x.BlockerId, x.BlockedId }).IsUnique();
+        b.Entity<SendToEnvelope>().HasIndex(e => e.RecipientDeviceId);
+        b.Entity<SendToEnvelope>().HasIndex(e => e.TransferId);
     }
 }

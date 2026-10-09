@@ -231,6 +231,25 @@ else if (Model.SigningKeyId.Length > 0)
 }
 }
 
+@if (Model.View == "features")
+{
+<div class="card" style="max-width:760px" id="features">
+    <h2 style="margin-top:0">@L["Features"]</h2>
+    <form method="post" asp-page-handler="Features">
+        <label style="display:flex;gap:8px;align-items:center;font-weight:600">
+            <input type="checkbox" name="sendTo" value="true" checked="@Model.SendToEnabled" style="width:auto" />
+            <span>@L["Send to"]</span>
+        </label>
+        <p style="font-size:.88rem;color:var(--tun-slate)">@L["Documents between confirmed contacts in Power PDF (add-on Send to). Off: the menu, all hints and the add-on disappear, waiting documents are deleted. Needs a document storage (Send to → Settings)."]</p>
+        @if (Model.SendToEnabled && !Model.SendToStorageReady)
+        {
+            <p class="alert error">@L["No document storage set: Send to stays hidden in Power PDF."] <a href="/Admin/SendTo?view=settings">@L["Set document storage"]</a></p>
+        }
+        <button type="submit" class="btn cta" style="margin-top:8px">@L["Save"]</button>
+    </form>
+</div>
+}
+
 @if (Model.View == "store")
 {
 <div class="card" style="max-width:760px" id="store">

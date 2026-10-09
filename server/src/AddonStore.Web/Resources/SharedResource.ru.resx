@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -1315,4 +1315,208 @@
   <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>Рекомендуемыми могут быть не более 9 надстроек.</value></data>
   <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Рекомендуемыми могут быть только общедоступные надстройки.</value></data>
   <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>Рекомендуемые: {0} из {1}. Рекомендуемые надстройки показываются первыми, на первой странице, с подсветкой. Отмечайте или убирайте их кнопкой со звездой на плитке.</value></data>
+  <data name="1 hour to 30 days. Documents are deleted at once after acceptance; this is the limit for documents nobody collects." xml:space="preserve">
+    <value>От 1 часа до 30 дней. Документы удаляются сразу после принятия; это предел для документов, которые никто не забирает.</value>
+  </data>
+  <data name="Block this user? Their waiting documents are deleted." xml:space="preserve">
+    <value>Заблокировать этого пользователя? Его ожидающие документы будут удалены.</value>
+  </data>
+  <data name="Block user" xml:space="preserve">
+    <value>Заблокировать пользователя</value>
+  </data>
+  <data name="Blocked users. Search to block someone." xml:space="preserve">
+    <value>Заблокированные пользователи. Найдите пользователя, чтобы заблокировать его.</value>
+  </data>
+  <data name="Blocks" xml:space="preserve">
+    <value>Блокировки</value>
+  </data>
+  <data name="Connection string or SAS URL" xml:space="preserve">
+    <value>Строка подключения или URL-адрес SAS</value>
+  </data>
+  <data name="Connection test passed." xml:space="preserve">
+    <value>Проверка подключения пройдена.</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Контакты</value>
+  </data>
+  <data name="Container names are 3 to 63 lowercase letters, digits and hyphens." xml:space="preserve">
+    <value>Имена контейнеров содержат от 3 до 63 строчных букв, цифр и дефисов.</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>Текущее</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>Устройства</value>
+  </data>
+  <data name="Document storage" xml:space="preserve">
+    <value>Хранилище документов</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF (add-on Send to). Off: the menu, all hints and the add-on disappear, waiting documents are deleted. Needs a document storage (Send to → Settings)." xml:space="preserve">
+    <value>Документы между подтверждёнными контактами в Power PDF (надстройка «Отправить»). Выключено: меню, все подсказки и надстройка исчезают, ожидающие документы удаляются. Требуется хранилище документов («Отправить» → «Настройки»).</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF, end-to-end encrypted on the PCs. The server sees who is connected with whom, never content, file names or notes." xml:space="preserve">
+    <value>Документы между подтверждёнными контактами в Power PDF, со сквозным шифрованием на компьютерах. Сервер видит, кто с кем связан, но никогда не видит содержимое, имена файлов и заметки.</value>
+  </data>
+  <data name="E-mail" xml:space="preserve">
+    <value>Эл. почта</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>Функции</value>
+  </data>
+  <data name="Invitation valid (days)" xml:space="preserve">
+    <value>Срок действия приглашения (дни)</value>
+  </data>
+  <data name="Local folder (development only), no Blob Storage." xml:space="preserve">
+    <value>Локальная папка (только для разработки), без Blob Storage.</value>
+  </data>
+  <data name="Maximum file size (MB)" xml:space="preserve">
+    <value>Максимальный размер файла (МБ)</value>
+  </data>
+  <data name="New invitations per person and day" xml:space="preserve">
+    <value>Новых приглашений на человека в день</value>
+  </data>
+  <data name="No document storage configured." xml:space="preserve">
+    <value>Хранилище документов не настроено.</value>
+  </data>
+  <data name="No document storage set: Send to stays hidden in Power PDF." xml:space="preserve">
+    <value>Хранилище документов не задано: «Отправить» остаётся скрытой в Power PDF.</value>
+  </data>
+  <data name="No public access." xml:space="preserve">
+    <value>Нет общего доступа.</value>
+  </data>
+  <data name="No reports." xml:space="preserve">
+    <value>Нет жалоб.</value>
+  </data>
+  <data name="Open invitations per person" xml:space="preserve">
+    <value>Открытых приглашений на человека</value>
+  </data>
+  <data name="Open reports" xml:space="preserve">
+    <value>Открытые жалобы</value>
+  </data>
+  <data name="Own Blob container only for the documents, separate from the data share. Soft delete and versioning for blobs must be off, a lifecycle rule should delete blobs after 31 days." xml:space="preserve">
+    <value>Отдельный контейнер Blob только для документов, отдельно от общей папки данных. Обратимое удаление и управление версиями BLOB-объектов должны быть отключены; правило жизненного цикла должно удалять BLOB-объекты через 31 день.</value>
+  </data>
+  <data name="Public access could not be checked with this access." xml:space="preserve">
+    <value>Не удалось проверить общий доступ с этим доступом.</value>
+  </data>
+  <data name="Quick send allowed" xml:space="preserve">
+    <value>Быстрая отправка разрешена</value>
+  </data>
+  <data name="Read back failed." xml:space="preserve">
+    <value>Не удалось прочитать обратно.</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Причина</value>
+  </data>
+  <data name="Remove document storage" xml:space="preserve">
+    <value>Удалить хранилище документов</value>
+  </data>
+  <data name="Remove the document storage? Send to stops working until a new one is set." xml:space="preserve">
+    <value>Удалить хранилище документов? «Отправить» перестанет работать, пока не будет задано новое.</value>
+  </data>
+  <data name="Reported by" xml:space="preserve">
+    <value>Кто пожаловался</value>
+  </data>
+  <data name="Reported user" xml:space="preserve">
+    <value>Пользователь, на которого пожаловались</value>
+  </data>
+  <data name="Retention until automatic deletion" xml:space="preserve">
+    <value>Хранение до автоматического удаления</value>
+  </data>
+  <data name="Save and test" xml:space="preserve">
+    <value>Сохранить и проверить</value>
+  </data>
+  <data name="Saved, but the connection test found problems." xml:space="preserve">
+    <value>Сохранено, но проверка подключения выявила проблемы.</value>
+  </data>
+  <data name="Search by name or e-mail" xml:space="preserve">
+    <value>Поиск по имени или адресу эл. почты</value>
+  </data>
+  <data name="Send to" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="Send to is on. Set the document storage now (Send to → Settings); until then the add-on stays hidden." xml:space="preserve">
+    <value>«Отправить» включена. Задайте хранилище документов («Отправить» → «Настройки»); до этого надстройка остаётся скрытой.</value>
+  </data>
+  <data name="Send to: settings" xml:space="preserve">
+    <value>«Отправить»: настройки</value>
+  </data>
+  <data name="Set document storage" xml:space="preserve">
+    <value>Задать хранилище документов</value>
+  </data>
+  <data name="Since" xml:space="preserve">
+    <value>С</value>
+  </data>
+  <data name="Soft delete could not be checked with this access (needs account-level rights); check it in the Azure portal." xml:space="preserve">
+    <value>Не удалось проверить обратимое удаление с этим доступом (нужны права на уровне учётной записи); проверьте его на портале Azure.</value>
+  </data>
+  <data name="Soft delete for blobs is off." xml:space="preserve">
+    <value>Обратимое удаление BLOB-объектов отключено.</value>
+  </data>
+  <data name="Soft delete for blobs is on: deleted documents would stay recoverable. Switch it off for this account." xml:space="preserve">
+    <value>Обратимое удаление BLOB-объектов включено: удалённые документы можно было бы восстановить. Отключите его для этой учётной записи.</value>
+  </data>
+  <data name="Stored encrypted, never shown again." xml:space="preserve">
+    <value>Хранится в зашифрованном виде и больше не отображается.</value>
+  </data>
+  <data name="The connection test found problems." xml:space="preserve">
+    <value>Проверка подключения выявила проблемы.</value>
+  </data>
+  <data name="The container allows public access." xml:space="preserve">
+    <value>Контейнер разрешает общий доступ.</value>
+  </data>
+  <data name="The local folder is only allowed on a development server." xml:space="preserve">
+    <value>Локальная папка разрешена только на сервере разработки.</value>
+  </data>
+  <data name="The retention time must be between 1 hour and 30 days." xml:space="preserve">
+    <value>Срок хранения должен быть от 1 часа до 30 дней.</value>
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>Разблокировать</value>
+  </data>
+  <data name="Unblock this user?" xml:space="preserve">
+    <value>Разблокировать этого пользователя?</value>
+  </data>
+  <data name="Undo window (seconds)" xml:space="preserve">
+    <value>Время на отмену (секунды)</value>
+  </data>
+  <data name="User blocked." xml:space="preserve">
+    <value>Пользователь заблокирован.</value>
+  </data>
+  <data name="User not found." xml:space="preserve">
+    <value>Пользователь не найден.</value>
+  </data>
+  <data name="User unblocked." xml:space="preserve">
+    <value>Пользователь разблокирован.</value>
+  </data>
+  <data name="Versioning and the lifecycle rule (delete after 31 days) cannot be read through the data API; check them in the Azure portal." xml:space="preserve">
+    <value>Управление версиями и правило жизненного цикла (удаление через 31 день) нельзя прочитать через API данных; проверьте их на портале Azure.</value>
+  </data>
+  <data name="Waiting per user at most (MB)" xml:space="preserve">
+    <value>Ожидающих на пользователя не более (МБ)</value>
+  </data>
+  <data name="Waiting transfers" xml:space="preserve">
+    <value>Ожидающие передачи</value>
+  </data>
+  <data name="Who" xml:space="preserve">
+    <value>Кто</value>
+  </data>
+  <data name="Write, read and delete work." xml:space="preserve">
+    <value>Запись, чтение и удаление работают.</value>
+  </data>
+  <data name="blocks stored" xml:space="preserve">
+    <value>сохранённых блоков</value>
+  </data>
+  <data name="hours" xml:space="preserve">
+    <value>часы</value>
+  </data>
+  <data name="unchanged" xml:space="preserve">
+    <value>без изменений</value>
+  </data>
+  <data name="Contact reports" xml:space="preserve">
+    <value>Жалобы</value>
+  </data>
 </root>

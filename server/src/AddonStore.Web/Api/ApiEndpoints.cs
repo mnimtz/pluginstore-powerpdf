@@ -201,7 +201,9 @@ public static class ApiEndpoints
                     "POST|DELETE /api/packages/{id}/{version}/block  block a version for a security reason {reason} (admins)",
                     "POST|DELETE /api/packages/{id}/block  block the whole add-on {reason} (admins)",
                     "GET  /api/tools/make-ppak.ps1    offline packer: .ppak and the upload package (.ppak + source ZIP) for a manual upload on the website"
-                }
+                }.Concat(SendToService.DocsVisible
+                    ? new[] { "*    /api/sendto/*                Send to: device API of the Send to add-on (see the agent guide, section Send to)" }
+                    : Array.Empty<string>()).ToArray()
             }
         }));
 

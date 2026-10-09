@@ -13,7 +13,8 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'server', 
 SOURCES = ['Validation/PackageValidator.cs', 'Validation/ReportView.cs', 'Services/SubmissionService.cs',
            'Api/ApiEndpoints.cs', 'Auth/ApiTokenAuthHandler.cs',
            'Services/PackageMetaService.cs', 'Services/CategoryService.cs', 'Services/SourceService.cs',
-           'Services/CustomerService.cs', 'Services/TemplateService.cs', 'Program.cs']
+           'Services/CustomerService.cs', 'Services/TemplateService.cs', 'Program.cs',
+           'Services/SendToService.cs', 'Api/SendToEndpoints.cs']
 EXTRA_CODES = {'CLIENT_ADMIN_ONLY', 'VERSION_EXISTS', 'VALIDATION_FAILED', 'NOT_OWNER', 'LIVE_VERSION',
                'TOKEN_INVALID', 'TOKEN_REVOKED', 'USER_NOT_ACTIVE', 'NO_PACKAGE',
                'METADATA_INVALID', 'PACKAGE_NOT_FOUND', 'SOURCE_REJECTED', 'SOURCE_MISSING', 'ADMIN_ONLY',
@@ -29,6 +30,12 @@ for rel in SOURCES:
 codes = set(re.findall(r'\.(?:Error|Warn|Info)\("([A-Z0-9_]+)"', code))
 codes |= set(re.findall(r'new\("([A-Z0-9_]+)", "(?:error|warning)"', code))
 codes |= {c for c in EXTRA_CODES if f'"{c}"' in code}
+# "Send to" (S1.17.0 draft): errors of the device API and per-address invitation results
+codes |= set(re.findall(r'new SendToError\("([A-Z0-9_]+)"', code))
+codes |= set(re.findall(r'Err\("([A-Z0-9_]+)"', code))
+codes |= set(re.findall(r'R\("error", "([A-Z0-9_]+)"\)', code))
+with open(os.path.join(ROOT, 'Api', 'SendToEndpoints.cs'), encoding='utf-8') as f:
+    codes |= set(re.findall(r'code = "([A-Z0-9_]+)"', f.read()))
 
 with open(os.path.join(ROOT, 'Api', 'AgentGuide.cs'), encoding='utf-8') as f:
     guide = f.read()
@@ -82,6 +89,11 @@ def norm(path):
 
 routes = {(m.upper(), norm('/api' + p)) for m, p in re.findall(r'api\.Map(Get|Post|Put|Patch|Delete)\("([^"]*)"', endpoints)}
 routes |= {(m.upper(), norm('/api' + p)) for p, m in re.findall(r'api\.MapMethods\("([^"]*)", new\[\] \{ "(\w+)" \}', endpoints)}
+# "Send to" routes (group g = /api/sendto in Api/SendToEndpoints.cs)
+with open(os.path.join(ROOT, 'Api', 'SendToEndpoints.cs'), encoding='utf-8') as f:
+    sendto = f.read()
+routes |= {(m.upper(), norm('/api/sendto' + p)) for m, p in re.findall(r'g\.Map(Get|Post|Put|Patch|Delete)\("([^"]*)"', sendto)}
+routes |= {(m.upper(), norm('/api/sendto' + p)) for p, m in re.findall(r'g\.MapMethods\("([^"]*)", new\[\] \{ "(\w+)" \}', sendto)}
 described = {(m.upper(), norm(p)) for m, p in re.findall(r'new\("(get|post|put|patch|delete)", "([^"]+)"', openapi)}
 undocumented = sorted(f'{m} {p}' for m, p in routes - described)
 if undocumented:

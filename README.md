@@ -366,6 +366,12 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Send to (S1.17.0, off by default):** server side of the "Send to" add-on:
+Power PDF users exchange documents with contacts they confirmed by e-mail,
+end-to-end encrypted, relayed through the store's own Blob container. Nothing
+changes until an admin switches it on under *Settings, Features*; see the
+section *Send to* below.
+
 **Start page highlights (S1.16.0):** admins mark public add-ons as highlights
 with the star button on a catalog tile (or `PATCH /api/packages/{id}
 {"featured": true}`). Highlights come first, in the order they were marked, so
@@ -910,6 +916,37 @@ the source ZIP and the upload package:
 ```powershell
 powershell -ExecutionPolicy Bypass -File make-ppak.ps1 -Package .\ppak -Source . -Out .\dist
 ```
+
+## Send to (S1.17.0)
+
+"Send to" lets Power PDF users exchange documents with confirmed contacts
+(invitation by e-mail, mutual confirmation). Documents are encrypted on the
+sending PC; the server keeps only ciphertext until the recipient collects it.
+Concept: `docs/concepts/senden-an.md`. Add-on and test tools: separate
+repository `C:\Claude\SendTo` (spike).
+
+- Switch: *Settings → Features → Send to* (off by default). While it is off,
+  the menu, the agent guide section, the OpenAPI paths and the add-on
+  disappear, and waiting documents are deleted.
+- Admin menu *Send to*: overview, reports, blocks, settings (retention 1 hour
+  to 30 days, limits, undo window) and the document storage (own Blob
+  container; connection string or SAS URL, stored encrypted; "Test
+  connection" checks write/read/delete, public access and soft delete).
+- Device API `/api/sendto/*` (token `Bearer stdev_...`), invitation page
+  `/sendto/invite/{token}` (the button accepts, opening the link does not).
+- Data: tables `SendTo*` in the database. The backup keeps users, devices,
+  contacts, blocks, reports, lists and quick targets; transfers and their
+  envelopes are removed from the backup copy (VACUUM included), and the
+  document blocks live only in the document storage. After a restore the
+  maintenance job deletes blocks no open transfer knows (older than 1 hour).
+- Network: no new port. Add-ons talk HTTPS 443 to the store address (system
+  proxy honoured), outbound only; clients never reach the Blob storage, the
+  server relays 1 MiB blocks. If the storage account has a network firewall,
+  allow the web app (VNet integration or its outbound IPs). A later switch to
+  server-sent events needs a heartbeat below the 230 s idle limit of Azure
+  App Service.
+- Development: `SendTo__Storage=local` uses `data/sendto-dev` instead of Blob;
+  `/sendto/dev/mails` and `/sendto/dev/config` exist only in Development.
 
 ## Local development
 

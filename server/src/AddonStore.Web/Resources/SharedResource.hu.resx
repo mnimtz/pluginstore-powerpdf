@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -1315,4 +1315,208 @@
   <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>Legfeljebb 9 bővítmény lehet kiemelt.</value></data>
   <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Csak nyilvános bővítmények lehetnek kiemeltek.</value></data>
   <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>Kiemeltek: {0} / {1}. A kiemelt bővítmények elsőként, az első oldalon, kiemelten jelennek meg. Jelölje be vagy szüntesse meg őket egy csempe csillag gombjával.</value></data>
+  <data name="1 hour to 30 days. Documents are deleted at once after acceptance; this is the limit for documents nobody collects." xml:space="preserve">
+    <value>1 órától 30 napig. A dokumentumok az elfogadás után azonnal törlődnek; ez a határ azokra a dokumentumokra, amelyeket senki sem tölt le.</value>
+  </data>
+  <data name="Block this user? Their waiting documents are deleted." xml:space="preserve">
+    <value>Letiltja ezt a felhasználót? A várakozó dokumentumai törlődnek.</value>
+  </data>
+  <data name="Block user" xml:space="preserve">
+    <value>Felhasználó letiltása</value>
+  </data>
+  <data name="Blocked users. Search to block someone." xml:space="preserve">
+    <value>Letiltott felhasználók. Keressen valakit a letiltáshoz.</value>
+  </data>
+  <data name="Blocks" xml:space="preserve">
+    <value>Letiltások</value>
+  </data>
+  <data name="Connection string or SAS URL" xml:space="preserve">
+    <value>Kapcsolati karakterlánc vagy SAS URL</value>
+  </data>
+  <data name="Connection test passed." xml:space="preserve">
+    <value>A kapcsolatteszt sikeres.</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Kapcsolatok</value>
+  </data>
+  <data name="Container names are 3 to 63 lowercase letters, digits and hyphens." xml:space="preserve">
+    <value>A tárolónevek 3–63 kisbetűből, számjegyből és kötőjelből állnak.</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>Jelenlegi</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Dátum</value>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>Eszközök</value>
+  </data>
+  <data name="Document storage" xml:space="preserve">
+    <value>Dokumentumtár</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF (add-on Send to). Off: the menu, all hints and the add-on disappear, waiting documents are deleted. Needs a document storage (Send to → Settings)." xml:space="preserve">
+    <value>Dokumentumok megerősített kapcsolatok között a Power PDF-ben (Küldés bővítmény). Kikapcsolva: a menü, minden tipp és a bővítmény eltűnik, a várakozó dokumentumok törlődnek. Dokumentumtár szükséges (Küldés → Beállítások).</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF, end-to-end encrypted on the PCs. The server sees who is connected with whom, never content, file names or notes." xml:space="preserve">
+    <value>Dokumentumok megerősített kapcsolatok között a Power PDF-ben, végponttól végpontig titkosítva a számítógépeken. A szerver azt látja, ki kivel van kapcsolatban, a tartalmat, a fájlneveket és a megjegyzéseket soha.</value>
+  </data>
+  <data name="E-mail" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>Funkciók</value>
+  </data>
+  <data name="Invitation valid (days)" xml:space="preserve">
+    <value>Meghívó érvényessége (nap)</value>
+  </data>
+  <data name="Local folder (development only), no Blob Storage." xml:space="preserve">
+    <value>Helyi mappa (csak fejlesztés), nincs Blob Storage.</value>
+  </data>
+  <data name="Maximum file size (MB)" xml:space="preserve">
+    <value>Maximális fájlméret (MB)</value>
+  </data>
+  <data name="New invitations per person and day" xml:space="preserve">
+    <value>Új meghívók személyenként naponta</value>
+  </data>
+  <data name="No document storage configured." xml:space="preserve">
+    <value>Nincs dokumentumtár beállítva.</value>
+  </data>
+  <data name="No document storage set: Send to stays hidden in Power PDF." xml:space="preserve">
+    <value>Nincs dokumentumtár beállítva: a Küldés rejtve marad a Power PDF-ben.</value>
+  </data>
+  <data name="No public access." xml:space="preserve">
+    <value>Nincs nyilvános hozzáférés.</value>
+  </data>
+  <data name="No reports." xml:space="preserve">
+    <value>Nincsenek bejelentések.</value>
+  </data>
+  <data name="Open invitations per person" xml:space="preserve">
+    <value>Nyitott meghívók személyenként</value>
+  </data>
+  <data name="Open reports" xml:space="preserve">
+    <value>Nyitott bejelentések</value>
+  </data>
+  <data name="Own Blob container only for the documents, separate from the data share. Soft delete and versioning for blobs must be off, a lifecycle rule should delete blobs after 31 days." xml:space="preserve">
+    <value>Saját Blob-tároló csak a dokumentumoknak, az adatmegosztástól elkülönítve. A blobok helyreállítható törlésének és verziókezelésének kikapcsolva kell lennie; egy életciklus-szabálynak 31 nap után törölnie kell a blobokat.</value>
+  </data>
+  <data name="Public access could not be checked with this access." xml:space="preserve">
+    <value>A nyilvános hozzáférést ezzel a hozzáféréssel nem lehetett ellenőrizni.</value>
+  </data>
+  <data name="Quick send allowed" xml:space="preserve">
+    <value>Gyorsküldés engedélyezve</value>
+  </data>
+  <data name="Read back failed." xml:space="preserve">
+    <value>A visszaolvasás sikertelen.</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Remove document storage" xml:space="preserve">
+    <value>Dokumentumtár eltávolítása</value>
+  </data>
+  <data name="Remove the document storage? Send to stops working until a new one is set." xml:space="preserve">
+    <value>Eltávolítja a dokumentumtárat? A Küldés nem működik, amíg új nincs beállítva.</value>
+  </data>
+  <data name="Reported by" xml:space="preserve">
+    <value>Bejelentette</value>
+  </data>
+  <data name="Reported user" xml:space="preserve">
+    <value>Bejelentett felhasználó</value>
+  </data>
+  <data name="Retention until automatic deletion" xml:space="preserve">
+    <value>Megőrzés az automatikus törlésig</value>
+  </data>
+  <data name="Save and test" xml:space="preserve">
+    <value>Mentés és teszt</value>
+  </data>
+  <data name="Saved, but the connection test found problems." xml:space="preserve">
+    <value>Mentve, de a kapcsolatteszt problémákat talált.</value>
+  </data>
+  <data name="Search by name or e-mail" xml:space="preserve">
+    <value>Keresés név vagy e-mail alapján</value>
+  </data>
+  <data name="Send to" xml:space="preserve">
+    <value>Küldés</value>
+  </data>
+  <data name="Send to is on. Set the document storage now (Send to → Settings); until then the add-on stays hidden." xml:space="preserve">
+    <value>A Küldés be van kapcsolva. Állítsa be most a dokumentumtárat (Küldés → Beállítások); addig a bővítmény rejtve marad.</value>
+  </data>
+  <data name="Send to: settings" xml:space="preserve">
+    <value>Küldés: beállítások</value>
+  </data>
+  <data name="Set document storage" xml:space="preserve">
+    <value>Dokumentumtár beállítása</value>
+  </data>
+  <data name="Since" xml:space="preserve">
+    <value>Ekkortól</value>
+  </data>
+  <data name="Soft delete could not be checked with this access (needs account-level rights); check it in the Azure portal." xml:space="preserve">
+    <value>A helyreállítható törlést ezzel a hozzáféréssel nem lehetett ellenőrizni (fiókszintű jogosultság szükséges); ellenőrizze az Azure portálon.</value>
+  </data>
+  <data name="Soft delete for blobs is off." xml:space="preserve">
+    <value>A blobok helyreállítható törlése ki van kapcsolva.</value>
+  </data>
+  <data name="Soft delete for blobs is on: deleted documents would stay recoverable. Switch it off for this account." xml:space="preserve">
+    <value>A blobok helyreállítható törlése be van kapcsolva: a törölt dokumentumok visszaállíthatók maradnának. Kapcsolja ki ennél a fióknál.</value>
+  </data>
+  <data name="Stored encrypted, never shown again." xml:space="preserve">
+    <value>Titkosítva tárolva, többé nem jelenik meg.</value>
+  </data>
+  <data name="The connection test found problems." xml:space="preserve">
+    <value>A kapcsolatteszt problémákat talált.</value>
+  </data>
+  <data name="The container allows public access." xml:space="preserve">
+    <value>A tároló engedélyezi a nyilvános hozzáférést.</value>
+  </data>
+  <data name="The local folder is only allowed on a development server." xml:space="preserve">
+    <value>A helyi mappa csak fejlesztői szerveren engedélyezett.</value>
+  </data>
+  <data name="The retention time must be between 1 hour and 30 days." xml:space="preserve">
+    <value>A megőrzési időnek 1 óra és 30 nap között kell lennie.</value>
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>Letiltás feloldása</value>
+  </data>
+  <data name="Unblock this user?" xml:space="preserve">
+    <value>Feloldja a felhasználó letiltását?</value>
+  </data>
+  <data name="Undo window (seconds)" xml:space="preserve">
+    <value>Visszavonási idő (másodperc)</value>
+  </data>
+  <data name="User blocked." xml:space="preserve">
+    <value>Felhasználó letiltva.</value>
+  </data>
+  <data name="User not found." xml:space="preserve">
+    <value>A felhasználó nem található.</value>
+  </data>
+  <data name="User unblocked." xml:space="preserve">
+    <value>Felhasználó letiltása feloldva.</value>
+  </data>
+  <data name="Versioning and the lifecycle rule (delete after 31 days) cannot be read through the data API; check them in the Azure portal." xml:space="preserve">
+    <value>A verziókezelés és az életciklus-szabály (törlés 31 nap után) nem olvasható az adat API-n keresztül; ellenőrizze őket az Azure portálon.</value>
+  </data>
+  <data name="Waiting per user at most (MB)" xml:space="preserve">
+    <value>Várakozó felhasználónként legfeljebb (MB)</value>
+  </data>
+  <data name="Waiting transfers" xml:space="preserve">
+    <value>Várakozó átvitelek</value>
+  </data>
+  <data name="Who" xml:space="preserve">
+    <value>Ki</value>
+  </data>
+  <data name="Write, read and delete work." xml:space="preserve">
+    <value>Az írás, olvasás és törlés működik.</value>
+  </data>
+  <data name="blocks stored" xml:space="preserve">
+    <value>tárolt blokk</value>
+  </data>
+  <data name="hours" xml:space="preserve">
+    <value>óra</value>
+  </data>
+  <data name="unchanged" xml:space="preserve">
+    <value>változatlan</value>
+  </data>
+  <data name="Contact reports" xml:space="preserve">
+    <value>Bejelentések</value>
+  </data>
 </root>

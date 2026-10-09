@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -1315,4 +1315,208 @@
   <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>Enintään 9 lisäosaa voi olla nostoja.</value></data>
   <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Vain julkiset lisäosat voivat olla nostoja.</value></data>
   <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>Nostot: {0}/{1}. Nostetut lisäosat näkyvät ensimmäisinä ensimmäisellä sivulla korostettuina. Merkitse tai poista ne ruudun tähtipainikkeella.</value></data>
+  <data name="1 hour to 30 days. Documents are deleted at once after acceptance; this is the limit for documents nobody collects." xml:space="preserve">
+    <value>1 tunnista 30 päivään. Asiakirjat poistetaan heti hyväksymisen jälkeen; tämä on raja asiakirjoille, joita kukaan ei nouda.</value>
+  </data>
+  <data name="Block this user? Their waiting documents are deleted." xml:space="preserve">
+    <value>Estetäänkö tämä käyttäjä? Hänen odottavat asiakirjansa poistetaan.</value>
+  </data>
+  <data name="Block user" xml:space="preserve">
+    <value>Estä käyttäjä</value>
+  </data>
+  <data name="Blocked users. Search to block someone." xml:space="preserve">
+    <value>Estetyt käyttäjät. Hae henkilöä estääksesi hänet.</value>
+  </data>
+  <data name="Blocks" xml:space="preserve">
+    <value>Estot</value>
+  </data>
+  <data name="Connection string or SAS URL" xml:space="preserve">
+    <value>Yhteysmerkkijono tai SAS-URL</value>
+  </data>
+  <data name="Connection test passed." xml:space="preserve">
+    <value>Yhteystesti onnistui.</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Yhteystiedot</value>
+  </data>
+  <data name="Container names are 3 to 63 lowercase letters, digits and hyphens." xml:space="preserve">
+    <value>Säilön nimissä on 3–63 pientä kirjainta, numeroa ja yhdysmerkkiä.</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>Nykyinen</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Päivämäärä</value>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>Laitteet</value>
+  </data>
+  <data name="Document storage" xml:space="preserve">
+    <value>Asiakirjasäilö</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF (add-on Send to). Off: the menu, all hints and the add-on disappear, waiting documents are deleted. Needs a document storage (Send to → Settings)." xml:space="preserve">
+    <value>Asiakirjat vahvistettujen yhteyshenkilöiden välillä Power PDF:ssä (Lähetä-lisäosa). Pois: valikko, kaikki vihjeet ja lisäosa katoavat, odottavat asiakirjat poistetaan. Vaatii asiakirjasäilön (Lähetä → Asetukset).</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF, end-to-end encrypted on the PCs. The server sees who is connected with whom, never content, file names or notes." xml:space="preserve">
+    <value>Asiakirjat vahvistettujen yhteyshenkilöiden välillä Power PDF:ssä, päästä päähän salattuina tietokoneilla. Palvelin näkee, kuka on yhteydessä kehen, ei koskaan sisältöä, tiedostonimiä tai muistiinpanoja.</value>
+  </data>
+  <data name="E-mail" xml:space="preserve">
+    <value>Sähköposti</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>Toiminnot</value>
+  </data>
+  <data name="Invitation valid (days)" xml:space="preserve">
+    <value>Kutsu voimassa (päivää)</value>
+  </data>
+  <data name="Local folder (development only), no Blob Storage." xml:space="preserve">
+    <value>Paikallinen kansio (vain kehitys), ei Blob Storagea.</value>
+  </data>
+  <data name="Maximum file size (MB)" xml:space="preserve">
+    <value>Tiedoston enimmäiskoko (Mt)</value>
+  </data>
+  <data name="New invitations per person and day" xml:space="preserve">
+    <value>Uusia kutsuja henkilöä ja päivää kohden</value>
+  </data>
+  <data name="No document storage configured." xml:space="preserve">
+    <value>Asiakirjasäilöä ei ole määritetty.</value>
+  </data>
+  <data name="No document storage set: Send to stays hidden in Power PDF." xml:space="preserve">
+    <value>Asiakirjasäilöä ei ole määritetty: Lähetä pysyy piilossa Power PDF:ssä.</value>
+  </data>
+  <data name="No public access." xml:space="preserve">
+    <value>Ei julkista käyttöä.</value>
+  </data>
+  <data name="No reports." xml:space="preserve">
+    <value>Ei ilmoituksia.</value>
+  </data>
+  <data name="Open invitations per person" xml:space="preserve">
+    <value>Avoimet kutsut henkilöä kohden</value>
+  </data>
+  <data name="Open reports" xml:space="preserve">
+    <value>Avoimet ilmoitukset</value>
+  </data>
+  <data name="Own Blob container only for the documents, separate from the data share. Soft delete and versioning for blobs must be off, a lifecycle rule should delete blobs after 31 days." xml:space="preserve">
+    <value>Oma Blob-säilö vain asiakirjoille, erillään datajaosta. Blobien pehmeän poiston ja versioinnin on oltava pois päältä; elinkaarisäännön pitäisi poistaa blobit 31 päivän kuluttua.</value>
+  </data>
+  <data name="Public access could not be checked with this access." xml:space="preserve">
+    <value>Julkista käyttöä ei voitu tarkistaa tällä käyttöoikeudella.</value>
+  </data>
+  <data name="Quick send allowed" xml:space="preserve">
+    <value>Pikalähetys sallittu</value>
+  </data>
+  <data name="Read back failed." xml:space="preserve">
+    <value>Takaisinluku epäonnistui.</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Syy</value>
+  </data>
+  <data name="Remove document storage" xml:space="preserve">
+    <value>Poista asiakirjasäilö</value>
+  </data>
+  <data name="Remove the document storage? Send to stops working until a new one is set." xml:space="preserve">
+    <value>Poistetaanko asiakirjasäilö? Lähetä lakkaa toimimasta, kunnes uusi on määritetty.</value>
+  </data>
+  <data name="Reported by" xml:space="preserve">
+    <value>Ilmoittaja</value>
+  </data>
+  <data name="Reported user" xml:space="preserve">
+    <value>Ilmoitettu käyttäjä</value>
+  </data>
+  <data name="Retention until automatic deletion" xml:space="preserve">
+    <value>Säilytys automaattiseen poistoon asti</value>
+  </data>
+  <data name="Save and test" xml:space="preserve">
+    <value>Tallenna ja testaa</value>
+  </data>
+  <data name="Saved, but the connection test found problems." xml:space="preserve">
+    <value>Tallennettu, mutta yhteystesti löysi ongelmia.</value>
+  </data>
+  <data name="Search by name or e-mail" xml:space="preserve">
+    <value>Hae nimellä tai sähköpostilla</value>
+  </data>
+  <data name="Send to" xml:space="preserve">
+    <value>Lähetä</value>
+  </data>
+  <data name="Send to is on. Set the document storage now (Send to → Settings); until then the add-on stays hidden." xml:space="preserve">
+    <value>Lähetä on käytössä. Määritä nyt asiakirjasäilö (Lähetä → Asetukset); siihen asti lisäosa pysyy piilossa.</value>
+  </data>
+  <data name="Send to: settings" xml:space="preserve">
+    <value>Lähetä: asetukset</value>
+  </data>
+  <data name="Set document storage" xml:space="preserve">
+    <value>Määritä asiakirjasäilö</value>
+  </data>
+  <data name="Since" xml:space="preserve">
+    <value>Alkaen</value>
+  </data>
+  <data name="Soft delete could not be checked with this access (needs account-level rights); check it in the Azure portal." xml:space="preserve">
+    <value>Pehmeää poistoa ei voitu tarkistaa tällä käyttöoikeudella (vaatii tilitason oikeudet); tarkista se Azure-portaalissa.</value>
+  </data>
+  <data name="Soft delete for blobs is off." xml:space="preserve">
+    <value>Blobien pehmeä poisto on pois päältä.</value>
+  </data>
+  <data name="Soft delete for blobs is on: deleted documents would stay recoverable. Switch it off for this account." xml:space="preserve">
+    <value>Blobien pehmeä poisto on päällä: poistetut asiakirjat olisivat palautettavissa. Poista se käytöstä tältä tililtä.</value>
+  </data>
+  <data name="Stored encrypted, never shown again." xml:space="preserve">
+    <value>Tallennetaan salattuna, ei näytetä enää koskaan.</value>
+  </data>
+  <data name="The connection test found problems." xml:space="preserve">
+    <value>Yhteystesti löysi ongelmia.</value>
+  </data>
+  <data name="The container allows public access." xml:space="preserve">
+    <value>Säilö sallii julkisen käytön.</value>
+  </data>
+  <data name="The local folder is only allowed on a development server." xml:space="preserve">
+    <value>Paikallinen kansio on sallittu vain kehityspalvelimella.</value>
+  </data>
+  <data name="The retention time must be between 1 hour and 30 days." xml:space="preserve">
+    <value>Säilytysajan on oltava 1 tunnin ja 30 päivän välillä.</value>
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>Poista esto</value>
+  </data>
+  <data name="Unblock this user?" xml:space="preserve">
+    <value>Poistetaanko tämän käyttäjän esto?</value>
+  </data>
+  <data name="Undo window (seconds)" xml:space="preserve">
+    <value>Peruutusaika (sekuntia)</value>
+  </data>
+  <data name="User blocked." xml:space="preserve">
+    <value>Käyttäjä estetty.</value>
+  </data>
+  <data name="User not found." xml:space="preserve">
+    <value>Käyttäjää ei löytynyt.</value>
+  </data>
+  <data name="User unblocked." xml:space="preserve">
+    <value>Käyttäjän esto poistettu.</value>
+  </data>
+  <data name="Versioning and the lifecycle rule (delete after 31 days) cannot be read through the data API; check them in the Azure portal." xml:space="preserve">
+    <value>Versiointia ja elinkaarisääntöä (poisto 31 päivän jälkeen) ei voi lukea data-API:n kautta; tarkista ne Azure-portaalissa.</value>
+  </data>
+  <data name="Waiting per user at most (MB)" xml:space="preserve">
+    <value>Odottavat käyttäjää kohden enintään (Mt)</value>
+  </data>
+  <data name="Waiting transfers" xml:space="preserve">
+    <value>Odottavat siirrot</value>
+  </data>
+  <data name="Who" xml:space="preserve">
+    <value>Kuka</value>
+  </data>
+  <data name="Write, read and delete work." xml:space="preserve">
+    <value>Kirjoitus, luku ja poisto toimivat.</value>
+  </data>
+  <data name="blocks stored" xml:space="preserve">
+    <value>tallennettua lohkoa</value>
+  </data>
+  <data name="hours" xml:space="preserve">
+    <value>tuntia</value>
+  </data>
+  <data name="unchanged" xml:space="preserve">
+    <value>ei muutettu</value>
+  </data>
+  <data name="Contact reports" xml:space="preserve">
+    <value>Ilmoitukset</value>
+  </data>
 </root>

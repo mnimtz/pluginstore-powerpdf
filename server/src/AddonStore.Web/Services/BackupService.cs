@@ -72,6 +72,17 @@ public class BackupService
             {
                 src.Open(); dst.Open();
                 src.BackupDatabase(dst);
+                // Send to: transfers are not backed up on purpose (concept, Okt 9, 2026). Their
+                // rows hold the wrapped document keys; VACUUM so no free page keeps them. Contacts,
+                // devices, lists and quick targets stay in the backup.
+                using var strip = dst.CreateCommand();
+                strip.CommandText =
+                    "DELETE FROM SendToEnvelopes WHERE EXISTS (SELECT 1 FROM sqlite_master WHERE name = 'SendToEnvelopes');" +
+                    "DELETE FROM SendToTransfers WHERE EXISTS (SELECT 1 FROM sqlite_master WHERE name = 'SendToTransfers');";
+                try { strip.ExecuteNonQuery(); } catch (SqliteException) { }   // older schema without the tables
+                using var vacuum = dst.CreateCommand();
+                vacuum.CommandText = "VACUUM;";
+                vacuum.ExecuteNonQuery();
             }
             SqliteConnection.ClearAllPools();
 
@@ -93,7 +104,8 @@ public class BackupService
                 // Everything the server keeps lives in pluginstore.db (users, roles, tokens, settings,
                 // categories, catalog entries, audit) and these folders: packages (incl. *.source.zip),
                 // avatars, devkit, keys. New data must land in one of them, or be added here.
-                // Not backed up on purpose: data/geo (DB-IP databases, downloaded again by GeoService).
+                // Not backed up on purpose: data/geo (DB-IP databases, downloaded again by GeoService);
+                // Send to transfers (rows and the encrypted blocks in their own blob container).
                 contents = new[] { "pluginstore.db", "packages/ (packages and source code)", "avatars/", "devkit/",
                                    "keys/ (data protection key ring for encrypted settings such as the AI key)" }
             };

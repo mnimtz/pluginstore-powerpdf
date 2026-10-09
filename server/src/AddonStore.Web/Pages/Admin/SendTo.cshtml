@@ -1,0 +1,176 @@
+@page
+@model AddonStore.Web.Pages.Admin.SendToModel
+@{
+    ViewData["Title"] = "Send to";
+    var v = Model.CurrentView;
+    var cfg = Model.Config;
+    var retDays = cfg.RetentionHours % 24 == 0;
+}
+
+<h1>@L["Send to"]</h1>
+<p class="lead">@L["Documents between confirmed contacts in Power PDF, end-to-end encrypted on the PCs. The server sees who is connected with whom, never content, file names or notes."]</p>
+
+<nav class="tabs" style="display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px">
+    @foreach (var (key, label) in AddonStore.Web.Pages.Admin.SendToModel.Views)
+    {
+        <a class="btn small @(v == key ? "" : "secondary")" href="/Admin/SendTo@(key == "overview" ? "" : "?view=" + key)">@L[label]</a>
+    }
+</nav>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+}
+
+@if (v == "overview" && Model.Overview is not null)
+{
+    var o = Model.Overview;
+    <div class="table-wrap" style="max-width:640px">
+    <table class="no-rtable">
+        <tr><th>@L["Users"]</th><td>@o.users</td></tr>
+        <tr><th>@L["Devices"]</th><td>@o.devices</td></tr>
+        <tr><th>@L["Contacts"]</th><td>@o.contacts</td></tr>
+        <tr><th>@L["Open invitations"]</th><td>@o.openInvitations</td></tr>
+        <tr><th>@L["Waiting transfers"]</th><td>@o.waitingTransfers</td></tr>
+        <tr><th>@L["Open reports"]</th><td>@o.openReports</td></tr>
+        <tr><th>@L["Document storage"]</th><td>@(((long)o.storageBytes / 1048576.0).ToString("0.0")) MB · @o.storageBlobs @L["blocks stored"] · @Model.StorageKind</td></tr>
+    </table>
+    </div>
+}
+
+@if (v == "reports")
+{
+    @if (Model.Reports.Count == 0)
+    {
+        <p>@L["No reports."]</p>
+    }
+    else
+    {
+        <div class="table-wrap">
+        <table>
+            <tr><th>@L["Date"]</th><th>@L["Reported by"]</th><th>@L["Reported user"]</th><th>@L["Reason"]</th><th>@L["Status"]</th><th>@L["Actions"]</th></tr>
+            @foreach (var r in Model.Reports)
+            {
+                <tr>
+                    <td>@Time.Fmt(r.Report.CreatedAt)</td>
+                    <td>@r.Reporter</td>
+                    <td>@r.Reported</td>
+                    <td>@r.Report.Reason</td>
+                    <td>@(r.Report.Status == "open" ? L["open"] : L["done"])</td>
+                    <td style="display:flex;gap:6px;flex-wrap:wrap">
+                        @if (r.Report.Status == "open")
+                        {
+                            <form method="post" asp-page-handler="ReportDone"><input type="hidden" name="id" value="@r.Report.Id" /><button type="submit" class="btn small secondary">@L["Mark as done"]</button></form>
+                        }
+                        <form method="post" asp-page-handler="Block" data-confirm="@L[r.ReportedBlocked ? "Unblock this user?" : "Block this user? Their waiting documents are deleted."]">
+                            <input type="hidden" name="userId" value="@r.ReportedId" /><input type="hidden" name="block" value="@(r.ReportedBlocked ? "false" : "true")" />
+                            <input type="hidden" name="returnView" value="reports" />
+                            <button type="submit" class="btn small @(r.ReportedBlocked ? "secondary" : "danger")">@L[r.ReportedBlocked ? "Unblock" : "Block user"]</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
+        </div>
+    }
+}
+
+@if (v == "blocks")
+{
+    <form method="get" style="display:flex;gap:8px;max-width:560px;margin-bottom:10px">
+        <input type="hidden" name="view" value="blocks" />
+        <input type="search" name="q" value="@Model.Q" placeholder="@L["Search by name or e-mail"]" />
+        <button type="submit" class="btn small">@L["Search"]</button>
+    </form>
+    <p class="small">@(string.IsNullOrWhiteSpace(Model.Q) ? L["Blocked users. Search to block someone."] : L["Search results"])</p>
+    <div class="table-wrap">
+    <table>
+        <tr><th>@L["Name"]</th><th>@L["E-mail"]</th><th>@L["Since"]</th><th>@L["Status"]</th><th>@L["Actions"]</th></tr>
+        @foreach (var u in Model.Users)
+        {
+            <tr>
+                <td>@u.Name</td><td>@u.Email</td><td>@Time.Fmt(u.CreatedAt, false)</td>
+                <td>@(u.BlockedAt is null ? L["Active"] : L["Blocked"])</td>
+                <td>
+                    <form method="post" asp-page-handler="Block" data-confirm="@L[u.BlockedAt is null ? "Block this user? Their waiting documents are deleted." : "Unblock this user?"]">
+                        <input type="hidden" name="userId" value="@u.Id" /><input type="hidden" name="block" value="@(u.BlockedAt is null ? "true" : "false")" />
+                        <button type="submit" class="btn small @(u.BlockedAt is null ? "danger" : "secondary")">@L[u.BlockedAt is null ? "Block user" : "Unblock"]</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+    </div>
+    <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("users", Model.UserTotal)' />
+}
+
+@if (v == "settings")
+{
+    <div class="card" style="max-width:640px">
+        <h2 style="margin-top:0">@L["Send to: settings"]</h2>
+        <form method="post" asp-page-handler="Settings" style="display:grid;gap:10px">
+            <label>@L["Retention until automatic deletion"]
+                <span style="display:flex;gap:8px">
+                    <input type="number" name="retentionValue" min="1" max="720" value="@(retDays ? cfg.RetentionHours / 24 : cfg.RetentionHours)" style="width:110px" />
+                    <select name="retentionUnit" style="width:auto">
+                        <option value="hours" selected="@(!retDays)">@L["hours"]</option>
+                        <option value="days" selected="@retDays">@L["days"]</option>
+                    </select>
+                </span>
+                <small>@L["1 hour to 30 days. Documents are deleted at once after acceptance; this is the limit for documents nobody collects."]</small>
+            </label>
+            <label>@L["Maximum file size (MB)"] <input type="number" name="maxFileMB" min="1" max="1024" value="@cfg.MaxFileMB" style="width:110px" /></label>
+            <label>@L["Waiting per user at most (MB)"] <input type="number" name="maxPendingMB" min="1" max="10240" value="@cfg.MaxPendingMB" style="width:110px" /></label>
+            <label>@L["Undo window (seconds)"] <input type="number" name="undoSeconds" min="0" max="60" value="@cfg.UndoSeconds" style="width:110px" /></label>
+            <label>@L["Invitation valid (days)"] <input type="number" name="inviteExpiryDays" min="1" max="60" value="@cfg.InviteExpiryDays" style="width:110px" /></label>
+            <label>@L["Open invitations per person"] <input type="number" name="maxOpenInvites" min="1" max="200" value="@cfg.MaxOpenInvites" style="width:110px" /></label>
+            <label>@L["New invitations per person and day"] <input type="number" name="maxInvitesPerDay" min="1" max="500" value="@cfg.MaxInvitesPerDay" style="width:110px" /></label>
+            <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" name="quickSend" value="true" checked="@cfg.QuickSend" style="width:auto" /> @L["Quick send allowed"]</label>
+            <div><button type="submit" class="btn">@L["Save"]</button></div>
+        </form>
+    </div>
+
+    <div class="card" style="max-width:640px;margin-top:16px">
+        <h2 style="margin-top:0">@L["Document storage"]</h2>
+        <p class="small">@L["Own Blob container only for the documents, separate from the data share. Soft delete and versioning for blobs must be off, a lifecycle rule should delete blobs after 31 days."]</p>
+        <p>@L["Current"]: <b>@Model.StorageKind</b> · @L["Container"]: <code>@Model.Container</code></p>
+        <form method="post" asp-page-handler="Storage" style="display:grid;gap:10px">
+            <label>@L["Connection string or SAS URL"]
+                <input type="password" name="access" autocomplete="off" placeholder="@L["unchanged"]" />
+                <small>@L["Stored encrypted, never shown again."]</small>
+            </label>
+            <label>@L["Container"] <input type="text" name="container" value="@Model.Container" style="max-width:260px" /></label>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button type="submit" class="btn">@L["Save and test"]</button>
+                <button type="submit" formaction="?handler=Test" class="btn secondary">@L["Test connection"]</button>
+            </div>
+        </form>
+        <form method="post" asp-page-handler="Storage" style="margin-top:8px" data-confirm="@L["Remove the document storage? Send to stops working until a new one is set."]">
+            <input type="hidden" name="clear" value="true" />
+            <button type="submit" class="btn small danger">@L["Remove document storage"]</button>
+        </form>
+        @if (Model.TestFindings.Count > 0)
+        {
+            <ul style="margin-top:10px">
+                @foreach (var (level, text) in Model.TestFindings)
+                {
+                    <li style="color:@(level == "error" ? "#9b2c28" : level == "warn" ? "#8a5a00" : "#0b6b43")">@L[text]</li>
+                }
+            </ul>
+        }
+    </div>
+}
+
+@if (v == "log")
+{
+    <div class="table-wrap">
+    <table>
+        <tr><th>@L["Time"]</th><th>@L["Who"]</th><th>@L["Action"]</th><th>@L["Subject"]</th><th>@L["Details"]</th></tr>
+        @foreach (var a in Model.Log)
+        {
+            <tr><td>@Time.Fmt(a.At)</td><td>@a.Actor</td><td><code>@a.Action</code></td><td>@a.Subject</td><td>@a.Details</td></tr>
+        }
+    </table>
+    </div>
+    <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("log", Model.LogTotal)' />
+}

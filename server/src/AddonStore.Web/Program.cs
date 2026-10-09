@@ -134,6 +134,7 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Admin/Settings", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Backup", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Categories", "PageAdmin");
+        o.Conventions.AuthorizePage("/Admin/SendTo", "PageAdmin");   // "Send to" (S1.17.0 draft)
         o.Conventions.AuthorizePage("/Admin/Rules", "PageUser");        // read: everyone signed in; edit: admins (S1.0.9)
         o.Conventions.AuthorizePage("/Admin/Docs", "PageUser");         // every document in one place (S1.0.12)
         o.Conventions.AddPageRoute("/Admin/Docs", "Docs");               // short address for developers (S1.0.13)
@@ -202,6 +203,10 @@ builder.Services.AddScoped<VersionActionService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<SourceService>();
 builder.Services.AddScoped<IAppEmailSender, ResendEmailSender>();
+// "Senden an" (docs/concepts/senden-an.md)
+builder.Services.AddScoped<SendToStorage>();
+builder.Services.AddScoped<SendToService>();
+builder.Services.AddHostedService<SendToMaintenance>();
 
 var versionFile = Path.Combine(AppContext.BaseDirectory, "VERSION");
 var appVersion = File.Exists(versionFile) ? File.ReadAllText(versionFile).Trim() : "0.0.0-dev";
@@ -228,6 +233,8 @@ using (var scope = app.Services.CreateScope())
     await AddonStore.Web.Data.SchemaUpgrade.RunAsync(scope.ServiceProvider);
     await app.Services.GetRequiredService<SetupGate>().InitAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>());
     await AddonStore.Web.Validation.RuleCatalog.LoadAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>());
+    // "Send to": the public documents describe it only while the master switch is on
+    await scope.ServiceProvider.GetRequiredService<SendToService>().ConfigAsync();
     startLog.LogInformation("Startup: database ready after {Ms} ms", clock.ElapsedMilliseconds);
 }
 
@@ -326,6 +333,7 @@ app.Use(async (ctx, next) =>
 {
     if (!setupDone && !ctx.Request.Path.StartsWithSegments("/Setup")
                    && !ctx.Request.Path.StartsWithSegments("/api")
+                   && !ctx.Request.Path.StartsWithSegments("/sendto")
                    && !ctx.Request.Path.StartsWithSegments("/css")
                    && !ctx.Request.Path.StartsWithSegments("/img"))
     {
@@ -389,5 +397,6 @@ app.MapGet("/avatar/{id}", (string id, IConfiguration config, IWebHostEnvironmen
 
 app.MapRazorPages();
 app.MapApi();
+app.MapSendTo();
 
 app.Run();

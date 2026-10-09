@@ -28,7 +28,7 @@ public class SettingsModel : PageModel
     /// <summary>Sections of the left navigation (S0.18.0); one is shown at a time.</summary>
     public static readonly (string Key, string Label)[] Views =
     {
-        ("server", "Server"), ("store", "Add-on Store"), ("updates", "Power PDF updates"), ("email", "Email"), ("notifications", "Notifications"),
+        ("server", "Server"), ("features", "Features"), ("store", "Add-on Store"), ("updates", "Power PDF updates"), ("email", "Email"), ("notifications", "Notifications"),
         ("ai", "AI assistant"), ("privacy", "Data protection"), ("reset", "Reset statistics"),
     };
     [BindProperty(SupportsGet = true)] public string? View { get; set; }
@@ -241,6 +241,29 @@ public class SettingsModel : PageModel
                 NoticeKind = err is null ? "ok" : "error";
             }
         }
+        await LoadAsync();
+    }
+
+    /// <summary>"Send to" master switch (S1.17.0 draft): the only "Send to" control left while it is off.</summary>
+    public bool SendToEnabled { get; private set; }
+    public bool SendToStorageReady { get; private set; }
+
+    public async Task OnPostFeaturesAsync(bool sendTo, [FromServices] SendToService sendToSvc, [FromServices] SendToStorage storage)
+    {
+        var admin = await _users.GetUserAsync(User);
+        if (sendTo && !await storage.IsConfiguredAsync())
+        {
+            // Without document storage it cannot run: the storage is set on the
+            // Send to page, which is only reachable while switched on, so the
+            // switch turns on and the page asks for the storage first.
+            Notice = "Send to is on. Set the document storage now (Send to → Settings); until then the add-on stays hidden.";
+            NoticeKind = "error";
+        }
+        else Notice = "Settings saved.";
+        await _settings.SetAsync(SendToService.EnabledKey, sendTo ? "true" : "false");
+        if (!sendTo) await sendToSvc.DropAllWaitingAsync();   // waiting documents are deleted when switched off
+        await _audit.LogAsync(admin!.DisplayName, "settings.changed", SendToService.EnabledKey, sendTo ? "on" : "off");
+        View = "features";
         await LoadAsync();
     }
 
@@ -509,10 +532,13 @@ public class SettingsModel : PageModel
         {
             var h = (string?)Request.Query["handler"] ?? "";
             View = h.StartsWith("Ip") || h.StartsWith("Inv") ? "privacy" : h.StartsWith("Ai") ? "ai" : h is "Email" or "TestMail" ? "email"
-                 : h == "Notifications" ? "notifications" : h == "Reset" ? "reset" : h == "StoreAccess" ? "store"
+                 : h == "Notifications" ? "notifications" : h == "Reset" ? "reset" : h == "StoreAccess" ? "store" : h == "Features" ? "features"
                  : h.StartsWith("Pp") ? "updates" : "server";
         }
         StoreModes = await StoreAccess.AllowedModesAsync(_settings);
+        var sendCfg = HttpContext.RequestServices.GetRequiredService<SendToService>();
+        SendToEnabled = (await sendCfg.ConfigAsync()).Enabled;
+        SendToStorageReady = await HttpContext.RequestServices.GetRequiredService<SendToStorage>().IsConfiguredAsync();
         InvOn = await _settings.GetAsync(InventoryService.EnabledKey) == "on";
         InvConfirmedBy = await _settings.GetAsync(InventoryService.ConfirmedByKey);
         InvConfirmedAt = DateTime.TryParse(await _settings.GetAsync(InventoryService.ConfirmedAtKey), System.Globalization.CultureInfo.InvariantCulture,

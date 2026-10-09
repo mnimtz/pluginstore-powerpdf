@@ -4,6 +4,7 @@
 @using System.Globalization
 @inject AddonStore.Web.Api.AppVersion AppVer
 @inject AddonStore.Web.Services.InventoryService InvNav
+@inject AddonStore.Web.Services.SendToService SendToNav
 <!DOCTYPE html>
 <html lang="@AddonStore.Web.Services.Lang.Current" dir="@(AddonStore.Web.Services.Lang.CurrentIsRtl ? "rtl" : "ltr")">
 @{
@@ -20,6 +21,8 @@
     var shell = SignInManager.IsSignedIn(User) && AddonStore.Web.Services.Shell.Sidebar(Context) && ViewData["PublicPage"] is not true;
     // "Existing customers" only exists while the evaluation is switched on (Settings, data protection; S1.10.0)
     var invNav = SignInManager.IsSignedIn(User) && User.IsInRole("Admin") && await InvNav.EnabledAsync();
+    // "Send to": menu only while the master switch is on (off = every hint disappears)
+    var sendNav = SignInManager.IsSignedIn(User) && User.IsInRole("Admin") && (await SendToNav.ConfigAsync()).Enabled;
     var origin = (host.Host is "localhost" or "127.0.0.1" ? Context.Request.Scheme : "https") + "://" + host;
 }
 <head>
@@ -149,6 +152,10 @@
                         <a class="sub @(act ? "active" : "")" href="/Admin/Reports@(key == "overview" ? "" : "?view=" + key)">@L[label]</a>
                     }
                 }
+                @if (sendNav)
+                {
+                    <a class="@On("/Admin/SendTo")" href="/Admin/SendTo">@L["Send to"]</a>
+                }
                 <a class="@On("/Admin/Audit")" href="/Admin/Audit">@L["Audit"]</a>
                 <a class="@(settingsArea ? "open" : "")" href="/Admin/Settings">@L["Settings"]</a>
                 @if (settingsArea)
@@ -211,6 +218,10 @@ else
                 {
                     <a href="/Admin/Users">@L["Users"]</a>
                     <a href="/Admin/Reports">@L["Reports"]</a>
+                    @if (sendNav)
+                    {
+                        <a href="/Admin/SendTo">@L["Send to"]</a>
+                    }
                     <a href="/Admin/Audit">@L["Audit"]</a>
                     <a href="/Admin/Settings">@L["Settings"]</a>
                 }

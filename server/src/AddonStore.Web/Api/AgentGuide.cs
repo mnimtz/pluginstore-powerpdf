@@ -8,8 +8,85 @@ namespace AddonStore.Web.Api;
 public static class AgentGuide
 {
     /// <summary>The guide with the store's own wording of the import conditions (S1.0.10).</summary>
-    public static string Markdown(string baseUrl, string version) =>
-        AddonStore.Web.Validation.RuleCatalog.ApplyTextOverrides(MarkdownCore(baseUrl, version));
+    public static string Markdown(string baseUrl, string version)
+    {
+        var md = AddonStore.Web.Validation.RuleCatalog.ApplyTextOverrides(MarkdownCore(baseUrl, version));
+        // "Send to" is described only while its master switch is on (off = every hint disappears).
+        // The heading is assembled so tools/check_docs.py still finds the real section first.
+        var anchor = "## Good " + "citizenship";
+        return AddonStore.Web.Services.SendToService.DocsVisible
+            ? md.Replace(anchor, SendToMarkdown(baseUrl) + "\n" + anchor)
+            : md;
+    }
+
+    /// <summary>
+    /// The device API of the "Send to" add-on (docs/concepts/senden-an.md). Only the
+    /// add-on itself calls it; it is listed so that the API stays self-describing.
+    /// </summary>
+    public static string SendToMarkdown(string baseUrl) => $$$"""
+## Send to (device API of the add-on)
+
+The add-on "Send to" exchanges documents between confirmed contacts. Documents
+are encrypted on the sending PC (HPKE RFC 9180, X25519 / HKDF-SHA256 /
+AES-128-GCM envelope per recipient device, AES-256-GCM blocks of 1 MB, ECDSA
+P-256 sender signature). The server stores only ciphertext and never sees
+content, file names or notes. Only the add-on calls these endpoints; plugin
+developers do not need them.
+
+- Authentication: `POST {{{baseUrl}}}/api/sendto/devices` registers a device
+  ({email, name, nameSource, kemPub (32 bytes, base64), sigPub (65 bytes, base64)})
+  and returns a device token; every other call sends
+  `Authorization: Bearer stdev_...`.
+- Contacts come from invitations with mutual confirmation; the inviter has
+  agreed by inviting. The invitee accepts in the add-on or on the page from
+  the invitation mail (`/sendto/invite/{token}`, the button posts; opening the
+  link changes nothing). Removing a contact ends it in both directions.
+- Transfers: `POST /api/sendto/transfers` with the envelopes of every
+  recipient device, then the encrypted blocks with
+  `PUT /api/sendto/transfers/{id}/chunks/{n}`. Delivery after the undo window;
+  the blocks are deleted after acceptance, decline or the retention time.
+- Answers use the envelope `{ok, data}` or `{ok:false, error{code, message}}`.
+
+| Code | HTTP | Meaning |
+|---|---|---|
+| SENDTO_DISABLED | 503 | Send to is switched off on this server, or no document storage is set. |
+| UNAUTHORIZED | 401 | Missing or unknown device token: register the device again. |
+| USER_BLOCKED | 403 | The store admins blocked this user. |
+| EMAIL_INVALID | 400 | The e-mail address is not valid. |
+| NAME_INVALID | 400 | Display name or list name not allowed (2 to 64 characters, no links, no control characters). |
+| KEY_INVALID | 400 | kemPub must be 32 bytes, sigPub 65 bytes (base64). |
+| DEVICE_NOT_FOUND | 404 | Unknown device. |
+| CONTACT_NOT_FOUND | 404 | Not a contact. |
+| NOT_A_CONTACT | 403 | Keys and transfers only between confirmed contacts. |
+| EMAILS_MISSING | 400 | emails[] is required. |
+| TOO_MANY | 400 | Too many addresses, lists or quick targets. |
+| INVITE_SELF | 400 | You cannot invite yourself (per address, in data[]). |
+| ALREADY_CONTACT | 400 | Already a contact (per address). |
+| ALREADY_INVITED | 400 | An invitation to this address is still open (per address). |
+| INVITE_COOLDOWN | 400 | Declined less than 30 days ago (per address). |
+| TOO_MANY_OPEN_INVITES | 400 | Limit of open invitations reached (per address). |
+| TOO_MANY_INVITES_TODAY | 400 | Limit of invitations per day reached (per address). |
+| MAIL_NOT_SENT | 400 | The invitation exists but its mail could not be sent (per address). |
+| INVITATION_NOT_FOUND | 404 | Unknown invitation. |
+| INVITATION_NOT_OPEN | 400 | The invitation is no longer open. |
+| MEMBER_NOT_A_CONTACT | 400 | Lists hold confirmed contacts only. |
+| LIST_NOT_FOUND | 404 | Unknown list. |
+| QUICK_NOT_FOUND | 404 | Unknown quick target. |
+| LABEL_INVALID | 400 | Quick target label 1 to 32 characters. |
+| NOTE_TOO_LONG | 400 | Fixed note at most 500 characters. |
+| TARGET_INVALID | 400 | Quick target must be a contact or an own list. |
+| TRANSFER_INVALID | 400 | size, chunkCount and envelopes[] are required. |
+| FILE_TOO_LARGE | 400 | Above the maximum file size. |
+| PENDING_QUOTA | 400 | Too much data still waiting for collection. |
+| ENVELOPE_INVALID | 400 | Envelope or signature has an invalid size. |
+| TRANSFER_NOT_FOUND | 404 | Unknown transfer. |
+| CHUNK_INDEX | 400 | Block index out of range. |
+| CHUNK_SIZE | 400 | Block empty or larger than 2 MB. |
+| CHUNK_NOT_FOUND | 404 | Unknown transfer or block, or not (yet) deliverable. |
+| ALREADY_DELIVERED | 400 | The undo window has passed. |
+| USER_NOT_FOUND | 404 | Unknown user (store admins blocking or unblocking). |
+
+"""; 
 
     /// <summary>The guide as written here (standard wording).</summary>
     public static string MarkdownCore(string baseUrl, string version) => $$"""

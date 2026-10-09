@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -1315,4 +1315,208 @@
   <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>Maximaal 9 add-ons kunnen uitgelicht zijn.</value></data>
   <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Alleen openbare add-ons kunnen uitgelicht zijn.</value></data>
   <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>Uitgelicht: {0} van {1}. Uitgelichte add-ons staan vooraan op de eerste pagina en springen eruit. Markeer of verwijder ze met de sterknop op een tegel.</value></data>
+  <data name="1 hour to 30 days. Documents are deleted at once after acceptance; this is the limit for documents nobody collects." xml:space="preserve">
+    <value>1 uur tot 30 dagen. Documenten worden direct na acceptatie verwijderd; dit is de grens voor documenten die niemand ophaalt.</value>
+  </data>
+  <data name="Block this user? Their waiting documents are deleted." xml:space="preserve">
+    <value>Deze gebruiker blokkeren? Zijn of haar wachtende documenten worden verwijderd.</value>
+  </data>
+  <data name="Block user" xml:space="preserve">
+    <value>Gebruiker blokkeren</value>
+  </data>
+  <data name="Blocked users. Search to block someone." xml:space="preserve">
+    <value>Geblokkeerde gebruikers. Zoek iemand om te blokkeren.</value>
+  </data>
+  <data name="Blocks" xml:space="preserve">
+    <value>Blokkeringen</value>
+  </data>
+  <data name="Connection string or SAS URL" xml:space="preserve">
+    <value>Verbindingsreeks of SAS-URL</value>
+  </data>
+  <data name="Connection test passed." xml:space="preserve">
+    <value>Verbindingstest geslaagd.</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Contacten</value>
+  </data>
+  <data name="Container names are 3 to 63 lowercase letters, digits and hyphens." xml:space="preserve">
+    <value>Containernamen bestaan uit 3 tot 63 kleine letters, cijfers en koppeltekens.</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>Huidig</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>Apparaten</value>
+  </data>
+  <data name="Document storage" xml:space="preserve">
+    <value>Documentopslag</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF (add-on Send to). Off: the menu, all hints and the add-on disappear, waiting documents are deleted. Needs a document storage (Send to → Settings)." xml:space="preserve">
+    <value>Documenten tussen bevestigde contacten in Power PDF (add-on Verzenden naar). Uit: het menu, alle aanwijzingen en de add-on verdwijnen, wachtende documenten worden verwijderd. Vereist een documentopslag (Verzenden naar → Instellingen).</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF, end-to-end encrypted on the PCs. The server sees who is connected with whom, never content, file names or notes." xml:space="preserve">
+    <value>Documenten tussen bevestigde contacten in Power PDF, end-to-end versleuteld op de pc’s. De server ziet wie met wie verbonden is, nooit inhoud, bestandsnamen of notities.</value>
+  </data>
+  <data name="E-mail" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>Functies</value>
+  </data>
+  <data name="Invitation valid (days)" xml:space="preserve">
+    <value>Uitnodiging geldig (dagen)</value>
+  </data>
+  <data name="Local folder (development only), no Blob Storage." xml:space="preserve">
+    <value>Lokale map (alleen ontwikkeling), geen Blob Storage.</value>
+  </data>
+  <data name="Maximum file size (MB)" xml:space="preserve">
+    <value>Maximale bestandsgrootte (MB)</value>
+  </data>
+  <data name="New invitations per person and day" xml:space="preserve">
+    <value>Nieuwe uitnodigingen per persoon per dag</value>
+  </data>
+  <data name="No document storage configured." xml:space="preserve">
+    <value>Geen documentopslag ingesteld.</value>
+  </data>
+  <data name="No document storage set: Send to stays hidden in Power PDF." xml:space="preserve">
+    <value>Geen documentopslag ingesteld: Verzenden naar blijft verborgen in Power PDF.</value>
+  </data>
+  <data name="No public access." xml:space="preserve">
+    <value>Geen openbare toegang.</value>
+  </data>
+  <data name="No reports." xml:space="preserve">
+    <value>Geen meldingen.</value>
+  </data>
+  <data name="Open invitations per person" xml:space="preserve">
+    <value>Open uitnodigingen per persoon</value>
+  </data>
+  <data name="Open reports" xml:space="preserve">
+    <value>Open meldingen</value>
+  </data>
+  <data name="Own Blob container only for the documents, separate from the data share. Soft delete and versioning for blobs must be off, a lifecycle rule should delete blobs after 31 days." xml:space="preserve">
+    <value>Eigen Blob-container alleen voor de documenten, gescheiden van de gegevensshare. Voorlopig verwijderen en versiebeheer voor blobs moeten uit staan; een levenscyclusregel moet blobs na 31 dagen verwijderen.</value>
+  </data>
+  <data name="Public access could not be checked with this access." xml:space="preserve">
+    <value>Openbare toegang kon met deze toegang niet worden gecontroleerd.</value>
+  </data>
+  <data name="Quick send allowed" xml:space="preserve">
+    <value>Snel verzenden toegestaan</value>
+  </data>
+  <data name="Read back failed." xml:space="preserve">
+    <value>Teruglezen mislukt.</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Reden</value>
+  </data>
+  <data name="Remove document storage" xml:space="preserve">
+    <value>Documentopslag verwijderen</value>
+  </data>
+  <data name="Remove the document storage? Send to stops working until a new one is set." xml:space="preserve">
+    <value>Documentopslag verwijderen? Verzenden naar werkt pas weer als er een nieuwe is ingesteld.</value>
+  </data>
+  <data name="Reported by" xml:space="preserve">
+    <value>Gemeld door</value>
+  </data>
+  <data name="Reported user" xml:space="preserve">
+    <value>Gemelde gebruiker</value>
+  </data>
+  <data name="Retention until automatic deletion" xml:space="preserve">
+    <value>Bewaartijd tot automatische verwijdering</value>
+  </data>
+  <data name="Save and test" xml:space="preserve">
+    <value>Opslaan en testen</value>
+  </data>
+  <data name="Saved, but the connection test found problems." xml:space="preserve">
+    <value>Opgeslagen, maar de verbindingstest heeft problemen gevonden.</value>
+  </data>
+  <data name="Search by name or e-mail" xml:space="preserve">
+    <value>Zoeken op naam of e-mail</value>
+  </data>
+  <data name="Send to" xml:space="preserve">
+    <value>Verzenden naar</value>
+  </data>
+  <data name="Send to is on. Set the document storage now (Send to → Settings); until then the add-on stays hidden." xml:space="preserve">
+    <value>Verzenden naar staat aan. Stel nu de documentopslag in (Verzenden naar → Instellingen); tot dan blijft de add-on verborgen.</value>
+  </data>
+  <data name="Send to: settings" xml:space="preserve">
+    <value>Verzenden naar: instellingen</value>
+  </data>
+  <data name="Set document storage" xml:space="preserve">
+    <value>Documentopslag instellen</value>
+  </data>
+  <data name="Since" xml:space="preserve">
+    <value>Sinds</value>
+  </data>
+  <data name="Soft delete could not be checked with this access (needs account-level rights); check it in the Azure portal." xml:space="preserve">
+    <value>Voorlopig verwijderen kon met deze toegang niet worden gecontroleerd (rechten op accountniveau nodig); controleer het in de Azure-portal.</value>
+  </data>
+  <data name="Soft delete for blobs is off." xml:space="preserve">
+    <value>Voorlopig verwijderen voor blobs staat uit.</value>
+  </data>
+  <data name="Soft delete for blobs is on: deleted documents would stay recoverable. Switch it off for this account." xml:space="preserve">
+    <value>Voorlopig verwijderen voor blobs staat aan: verwijderde documenten blijven herstelbaar. Zet het uit voor dit account.</value>
+  </data>
+  <data name="Stored encrypted, never shown again." xml:space="preserve">
+    <value>Versleuteld opgeslagen en nooit meer weergegeven.</value>
+  </data>
+  <data name="The connection test found problems." xml:space="preserve">
+    <value>De verbindingstest heeft problemen gevonden.</value>
+  </data>
+  <data name="The container allows public access." xml:space="preserve">
+    <value>De container staat openbare toegang toe.</value>
+  </data>
+  <data name="The local folder is only allowed on a development server." xml:space="preserve">
+    <value>De lokale map is alleen toegestaan op een ontwikkelserver.</value>
+  </data>
+  <data name="The retention time must be between 1 hour and 30 days." xml:space="preserve">
+    <value>De bewaartijd moet tussen 1 uur en 30 dagen liggen.</value>
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>Deblokkeren</value>
+  </data>
+  <data name="Unblock this user?" xml:space="preserve">
+    <value>Deze gebruiker deblokkeren?</value>
+  </data>
+  <data name="Undo window (seconds)" xml:space="preserve">
+    <value>Ongedaan-maakvenster (seconden)</value>
+  </data>
+  <data name="User blocked." xml:space="preserve">
+    <value>Gebruiker geblokkeerd.</value>
+  </data>
+  <data name="User not found." xml:space="preserve">
+    <value>Gebruiker niet gevonden.</value>
+  </data>
+  <data name="User unblocked." xml:space="preserve">
+    <value>Gebruiker gedeblokkeerd.</value>
+  </data>
+  <data name="Versioning and the lifecycle rule (delete after 31 days) cannot be read through the data API; check them in the Azure portal." xml:space="preserve">
+    <value>Versiebeheer en de levenscyclusregel (verwijderen na 31 dagen) zijn niet via de gegevens-API leesbaar; controleer ze in de Azure-portal.</value>
+  </data>
+  <data name="Waiting per user at most (MB)" xml:space="preserve">
+    <value>Wachtend per gebruiker maximaal (MB)</value>
+  </data>
+  <data name="Waiting transfers" xml:space="preserve">
+    <value>Wachtende overdrachten</value>
+  </data>
+  <data name="Who" xml:space="preserve">
+    <value>Wie</value>
+  </data>
+  <data name="Write, read and delete work." xml:space="preserve">
+    <value>Schrijven, lezen en verwijderen werken.</value>
+  </data>
+  <data name="blocks stored" xml:space="preserve">
+    <value>opgeslagen blokken</value>
+  </data>
+  <data name="hours" xml:space="preserve">
+    <value>uur</value>
+  </data>
+  <data name="unchanged" xml:space="preserve">
+    <value>ongewijzigd</value>
+  </data>
+  <data name="Contact reports" xml:space="preserve">
+    <value>Meldingen</value>
+  </data>
 </root>

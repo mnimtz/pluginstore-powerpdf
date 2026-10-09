@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -1315,4 +1315,208 @@
   <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>おすすめにできるアドオンは最大 9 個です。</value></data>
   <data name="Only public add-ons can be highlights." xml:space="preserve"><value>おすすめにできるのは公開アドオンだけです。</value></data>
   <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>おすすめ: {0} / {1}。おすすめのアドオンは最初のページの先頭に目立つ表示で並びます。タイルの星ボタンで設定または解除します。</value></data>
+  <data name="1 hour to 30 days. Documents are deleted at once after acceptance; this is the limit for documents nobody collects." xml:space="preserve">
+    <value>1 時間から 30 日。文書は承諾後すぐに削除されます。これは誰も受け取らない文書の上限です。</value>
+  </data>
+  <data name="Block this user? Their waiting documents are deleted." xml:space="preserve">
+    <value>このユーザーをブロックしますか？待機中の文書は削除されます。</value>
+  </data>
+  <data name="Block user" xml:space="preserve">
+    <value>ユーザーをブロック</value>
+  </data>
+  <data name="Blocked users. Search to block someone." xml:space="preserve">
+    <value>ブロック中のユーザー。ブロックする相手を検索してください。</value>
+  </data>
+  <data name="Blocks" xml:space="preserve">
+    <value>ブロック</value>
+  </data>
+  <data name="Connection string or SAS URL" xml:space="preserve">
+    <value>接続文字列または SAS URL</value>
+  </data>
+  <data name="Connection test passed." xml:space="preserve">
+    <value>接続テストに合格しました。</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>連絡先</value>
+  </data>
+  <data name="Container names are 3 to 63 lowercase letters, digits and hyphens." xml:space="preserve">
+    <value>コンテナー名は 3～63 文字の小文字、数字、ハイフンで構成します。</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>現在</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>日付</value>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>デバイス</value>
+  </data>
+  <data name="Document storage" xml:space="preserve">
+    <value>文書ストレージ</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF (add-on Send to). Off: the menu, all hints and the add-on disappear, waiting documents are deleted. Needs a document storage (Send to → Settings)." xml:space="preserve">
+    <value>Power PDF で確認済みの連絡先間の文書（アドイン「送信」）。オフ: メニュー、すべての案内、アドインが非表示になり、待機中の文書は削除されます。文書ストレージが必要です（「送信」→「設定」）。</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF, end-to-end encrypted on the PCs. The server sees who is connected with whom, never content, file names or notes." xml:space="preserve">
+    <value>Power PDF で確認済みの連絡先間の文書。PC 上でエンドツーエンド暗号化されます。サーバーには誰と誰がつながっているかだけが分かり、内容、ファイル名、メモは一切分かりません。</value>
+  </data>
+  <data name="E-mail" xml:space="preserve">
+    <value>メール</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>機能</value>
+  </data>
+  <data name="Invitation valid (days)" xml:space="preserve">
+    <value>招待の有効期間（日）</value>
+  </data>
+  <data name="Local folder (development only), no Blob Storage." xml:space="preserve">
+    <value>ローカル フォルダー（開発専用）、Blob Storage なし。</value>
+  </data>
+  <data name="Maximum file size (MB)" xml:space="preserve">
+    <value>最大ファイル サイズ (MB)</value>
+  </data>
+  <data name="New invitations per person and day" xml:space="preserve">
+    <value>1 人あたりの 1 日の新規招待数</value>
+  </data>
+  <data name="No document storage configured." xml:space="preserve">
+    <value>文書ストレージが構成されていません。</value>
+  </data>
+  <data name="No document storage set: Send to stays hidden in Power PDF." xml:space="preserve">
+    <value>文書ストレージが設定されていません。「送信」は Power PDF で非表示のままです。</value>
+  </data>
+  <data name="No public access." xml:space="preserve">
+    <value>パブリック アクセスはありません。</value>
+  </data>
+  <data name="No reports." xml:space="preserve">
+    <value>報告はありません。</value>
+  </data>
+  <data name="Open invitations per person" xml:space="preserve">
+    <value>1 人あたりの未処理の招待数</value>
+  </data>
+  <data name="Open reports" xml:space="preserve">
+    <value>未処理の報告</value>
+  </data>
+  <data name="Own Blob container only for the documents, separate from the data share. Soft delete and versioning for blobs must be off, a lifecycle rule should delete blobs after 31 days." xml:space="preserve">
+    <value>文書専用の独自の Blob コンテナー。データ共有とは別です。Blob の論理的な削除とバージョン管理はオフにする必要があります。ライフサイクル ルールで 31 日後に Blob を削除してください。</value>
+  </data>
+  <data name="Public access could not be checked with this access." xml:space="preserve">
+    <value>このアクセス権ではパブリック アクセスを確認できませんでした。</value>
+  </data>
+  <data name="Quick send allowed" xml:space="preserve">
+    <value>クイック送信を許可</value>
+  </data>
+  <data name="Read back failed." xml:space="preserve">
+    <value>読み戻しに失敗しました。</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>理由</value>
+  </data>
+  <data name="Remove document storage" xml:space="preserve">
+    <value>文書ストレージを削除</value>
+  </data>
+  <data name="Remove the document storage? Send to stops working until a new one is set." xml:space="preserve">
+    <value>文書ストレージを削除しますか？新しいストレージを設定するまで「送信」は動作しません。</value>
+  </data>
+  <data name="Reported by" xml:space="preserve">
+    <value>報告者</value>
+  </data>
+  <data name="Reported user" xml:space="preserve">
+    <value>報告されたユーザー</value>
+  </data>
+  <data name="Retention until automatic deletion" xml:space="preserve">
+    <value>自動削除までの保持期間</value>
+  </data>
+  <data name="Save and test" xml:space="preserve">
+    <value>保存してテスト</value>
+  </data>
+  <data name="Saved, but the connection test found problems." xml:space="preserve">
+    <value>保存しましたが、接続テストで問題が見つかりました。</value>
+  </data>
+  <data name="Search by name or e-mail" xml:space="preserve">
+    <value>名前またはメールで検索</value>
+  </data>
+  <data name="Send to" xml:space="preserve">
+    <value>送信</value>
+  </data>
+  <data name="Send to is on. Set the document storage now (Send to → Settings); until then the add-on stays hidden." xml:space="preserve">
+    <value>「送信」はオンです。今すぐ文書ストレージを設定してください（「送信」→「設定」）。それまでアドインは非表示のままです。</value>
+  </data>
+  <data name="Send to: settings" xml:space="preserve">
+    <value>送信: 設定</value>
+  </data>
+  <data name="Set document storage" xml:space="preserve">
+    <value>文書ストレージを設定</value>
+  </data>
+  <data name="Since" xml:space="preserve">
+    <value>開始日</value>
+  </data>
+  <data name="Soft delete could not be checked with this access (needs account-level rights); check it in the Azure portal." xml:space="preserve">
+    <value>このアクセス権では論理的な削除を確認できませんでした（アカウント レベルの権限が必要）。Azure ポータルで確認してください。</value>
+  </data>
+  <data name="Soft delete for blobs is off." xml:space="preserve">
+    <value>Blob の論理的な削除はオフです。</value>
+  </data>
+  <data name="Soft delete for blobs is on: deleted documents would stay recoverable. Switch it off for this account." xml:space="preserve">
+    <value>Blob の論理的な削除がオンです。削除した文書が復元可能なままになります。このアカウントでオフにしてください。</value>
+  </data>
+  <data name="Stored encrypted, never shown again." xml:space="preserve">
+    <value>暗号化して保存され、再表示されません。</value>
+  </data>
+  <data name="The connection test found problems." xml:space="preserve">
+    <value>接続テストで問題が見つかりました。</value>
+  </data>
+  <data name="The container allows public access." xml:space="preserve">
+    <value>コンテナーがパブリック アクセスを許可しています。</value>
+  </data>
+  <data name="The local folder is only allowed on a development server." xml:space="preserve">
+    <value>ローカル フォルダーは開発サーバーでのみ使用できます。</value>
+  </data>
+  <data name="The retention time must be between 1 hour and 30 days." xml:space="preserve">
+    <value>保持期間は 1 時間から 30 日の間で指定してください。</value>
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>ブロック解除</value>
+  </data>
+  <data name="Unblock this user?" xml:space="preserve">
+    <value>このユーザーのブロックを解除しますか？</value>
+  </data>
+  <data name="Undo window (seconds)" xml:space="preserve">
+    <value>取り消し可能時間（秒）</value>
+  </data>
+  <data name="User blocked." xml:space="preserve">
+    <value>ユーザーをブロックしました。</value>
+  </data>
+  <data name="User not found." xml:space="preserve">
+    <value>ユーザーが見つかりません。</value>
+  </data>
+  <data name="User unblocked." xml:space="preserve">
+    <value>ユーザーのブロックを解除しました。</value>
+  </data>
+  <data name="Versioning and the lifecycle rule (delete after 31 days) cannot be read through the data API; check them in the Azure portal." xml:space="preserve">
+    <value>バージョン管理とライフサイクル ルール（31 日後に削除）はデータ API では読み取れません。Azure ポータルで確認してください。</value>
+  </data>
+  <data name="Waiting per user at most (MB)" xml:space="preserve">
+    <value>ユーザーあたりの待機上限 (MB)</value>
+  </data>
+  <data name="Waiting transfers" xml:space="preserve">
+    <value>待機中の転送</value>
+  </data>
+  <data name="Who" xml:space="preserve">
+    <value>実行者</value>
+  </data>
+  <data name="Write, read and delete work." xml:space="preserve">
+    <value>書き込み、読み取り、削除は正常です。</value>
+  </data>
+  <data name="blocks stored" xml:space="preserve">
+    <value>件の保存済みブロック</value>
+  </data>
+  <data name="hours" xml:space="preserve">
+    <value>時間</value>
+  </data>
+  <data name="unchanged" xml:space="preserve">
+    <value>変更なし</value>
+  </data>
+  <data name="Contact reports" xml:space="preserve">
+    <value>報告</value>
+  </data>
 </root>

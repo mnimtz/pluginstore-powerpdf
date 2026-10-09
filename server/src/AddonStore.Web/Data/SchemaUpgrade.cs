@@ -190,7 +190,7 @@ public static class SchemaUpgrade
                 "AND NOT EXISTS (SELECT 1 FROM AppSettings WHERE \"Key\" = 'Migration.S160')",
             // S1.13.1: from now on the migration above is done
             "INSERT INTO AppSettings (\"Key\", \"Value\") SELECT 'Migration.S160', 'done' WHERE NOT EXISTS (SELECT 1 FROM AppSettings WHERE \"Key\" = 'Migration.S160')"
-        })
+        }.Concat(SendToSchema.Statements))
         {
             // Only what is missing runs (S0.18.1): on the network share every statement
             // costs a round trip and every write a lock and a journal file, and a failing

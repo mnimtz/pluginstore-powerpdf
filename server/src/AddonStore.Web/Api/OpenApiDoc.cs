@@ -108,13 +108,53 @@ public static class OpenApiDoc
         new("get", "/api/devkit/{path}", "getDevkitFile", "One developer kit file.", "none", new[] { "path:path:file path from the list" }, Returns: "file"),
     };
 
+    // "Send to" device API (auth "device" = Authorization: Bearer stdev_...); listed
+    // only while the master switch is on.
+    private static readonly Op[] SendToOps =
+    {
+        new("get", "/api/sendto/config", "sendToConfig", "Send to: effective settings (retention, limits, undo window).", "device", Array.Empty<string>()),
+        new("post", "/api/sendto/devices", "sendToRegister", "Send to: register a device {email, name, nameSource, kemPub, sigPub}; returns the device token.", "none", Array.Empty<string>()),
+        new("delete", "/api/sendto/devices/{id}", "sendToRemoveDevice", "Send to: remove an own device.", "device", new[] { "id:path:device id" }),
+        new("get", "/api/sendto/me", "sendToMe", "Send to: own name, e-mail and devices.", "device", Array.Empty<string>()),
+        new("patch", "/api/sendto/me", "sendToSetName", "Send to: change the display name {name} or reset it {reset:true}.", "device", Array.Empty<string>()),
+        new("get", "/api/sendto/contacts", "sendToContacts", "Send to: confirmed contacts (and accepted invitations not set up yet).", "device", Array.Empty<string>()),
+        new("delete", "/api/sendto/contacts/{userId}", "sendToRemoveContact", "Send to: remove a contact (both directions).", "device", new[] { "userId:path:contact" }),
+        new("post", "/api/sendto/contacts/{userId}/block", "sendToBlock", "Send to: block a contact.", "device", new[] { "userId:path:contact" }),
+        new("post", "/api/sendto/contacts/{userId}/report", "sendToReport", "Send to: block and report a contact {reason}.", "device", new[] { "userId:path:contact" }),
+        new("get", "/api/sendto/contacts/{userId}/devices", "sendToContactDevices", "Send to: public keys of a contact's devices.", "device", new[] { "userId:path:contact" }),
+        new("post", "/api/sendto/invitations", "sendToInvite", "Send to: invite {emails[], lang}; result per address.", "device", Array.Empty<string>()),
+        new("get", "/api/sendto/invitations", "sendToInvitations", "Send to: sent and received invitations.", "device", Array.Empty<string>()),
+        new("post", "/api/sendto/invitations/{id}/accept", "sendToAccept", "Send to: accept a received invitation.", "device", new[] { "id:path:invitation id" }),
+        new("post", "/api/sendto/invitations/{id}/decline", "sendToDecline", "Send to: decline a received invitation.", "device", new[] { "id:path:invitation id" }),
+        new("delete", "/api/sendto/invitations/{id}", "sendToWithdraw", "Send to: withdraw a sent invitation.", "device", new[] { "id:path:invitation id" }),
+        new("get", "/api/sendto/lists", "sendToLists", "Send to: own distribution lists.", "device", Array.Empty<string>()),
+        new("post", "/api/sendto/lists", "sendToCreateList", "Send to: create a list {name, members[], favorite}.", "device", Array.Empty<string>()),
+        new("put", "/api/sendto/lists/{id}", "sendToUpdateList", "Send to: change a list.", "device", new[] { "id:path:list id" }),
+        new("delete", "/api/sendto/lists/{id}", "sendToDeleteList", "Send to: delete a list.", "device", new[] { "id:path:list id" }),
+        new("get", "/api/sendto/quick", "sendToQuick", "Send to: quick send targets.", "device", Array.Empty<string>()),
+        new("post", "/api/sendto/quick", "sendToCreateQuick", "Send to: create a quick target {targetType, targetId, label, note, shortcut, inRibbon, order}.", "device", Array.Empty<string>()),
+        new("put", "/api/sendto/quick/{id}", "sendToUpdateQuick", "Send to: change a quick target.", "device", new[] { "id:path:quick target id" }),
+        new("delete", "/api/sendto/quick/{id}", "sendToDeleteQuick", "Send to: delete a quick target.", "device", new[] { "id:path:quick target id" }),
+        new("post", "/api/sendto/transfers", "sendToCreateTransfer", "Send to: create a transfer {size, chunkCount, envelopes[{deviceId, envelope, signature}]}.", "device", Array.Empty<string>()),
+        new("put", "/api/sendto/transfers/{id}/chunks/{n}", "sendToPutChunk", "Send to: upload one encrypted block (raw body, at most 2 MB).", "device", new[] { "id:path:transfer id", "n:path:block index" }),
+        new("post", "/api/sendto/transfers/{id}/cancel", "sendToCancel", "Send to: undo within the undo window.", "device", new[] { "id:path:transfer id" }),
+        new("get", "/api/sendto/inbox", "sendToInbox", "Send to: documents waiting for this device.", "device", Array.Empty<string>()),
+        new("get", "/api/sendto/sent", "sendToSent", "Send to: own transfers with the status per recipient.", "device", Array.Empty<string>()),
+        new("get", "/api/sendto/transfers/{id}/chunks/{n}", "sendToGetChunk", "Send to: download one encrypted block (recipient device only).", "device", new[] { "id:path:transfer id", "n:path:block index" }, Returns: "file"),
+        new("post", "/api/sendto/transfers/{id}/accept", "sendToAcceptTransfer", "Send to: confirm receipt; the blocks are deleted when every recipient answered.", "device", new[] { "id:path:transfer id" }),
+        new("post", "/api/sendto/transfers/{id}/decline", "sendToDeclineTransfer", "Send to: decline a document.", "device", new[] { "id:path:transfer id" }),
+        new("get", "/api/sendto/events", "sendToEvents", "Send to: counters of new documents and requests (polling).", "device", Array.Empty<string>()),
+    };
+
+    private static IEnumerable<Op> Visible => AddonStore.Web.Services.SendToService.DocsVisible ? Ops.Concat(SendToOps) : Ops;
+
     /// <summary>Paths documented here, for tools/check_docs.py and tests.</summary>
-    public static IEnumerable<string> Paths => Ops.Select(o => o.Method.ToUpperInvariant() + " " + o.Path);
+    public static IEnumerable<string> Paths => Visible.Select(o => o.Method.ToUpperInvariant() + " " + o.Path);
 
     public static string Json(string baseUrl, string version)
     {
         var paths = new JsonObject();
-        foreach (var group in Ops.GroupBy(o => o.Path))
+        foreach (var group in Visible.GroupBy(o => o.Path))
         {
             var item = new JsonObject();
             foreach (var op in group) item[op.Method] = Operation(op);
@@ -158,6 +198,7 @@ public static class OpenApiDoc
                 "reviewer" => " Requires a token of a reviewer or admin.",
                 "admin" => " Requires an admin token.",
                 "token" => " Requires a personal token.",
+                "device" => " Requires the device token of the Send to add-on (Bearer stdev_...), not a personal token.",
                 _ => "",
             },
         };

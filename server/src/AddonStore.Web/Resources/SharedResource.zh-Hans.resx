@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -1315,4 +1315,208 @@
   <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>最多只能有 9 个精选加载项。</value></data>
   <data name="Only public add-ons can be highlights." xml:space="preserve"><value>只有公开的加载项才能设为精选。</value></data>
   <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>精选：{0}/{1}。精选加载项显示在第一页最前面并带有高亮效果。使用磁贴上的星形按钮设置或取消。</value></data>
+  <data name="1 hour to 30 days. Documents are deleted at once after acceptance; this is the limit for documents nobody collects." xml:space="preserve">
+    <value>1 小时至 30 天。文档被接受后立即删除；这是无人领取的文档的保留上限。</value>
+  </data>
+  <data name="Block this user? Their waiting documents are deleted." xml:space="preserve">
+    <value>要阻止此用户吗？其等待中的文档将被删除。</value>
+  </data>
+  <data name="Block user" xml:space="preserve">
+    <value>阻止用户</value>
+  </data>
+  <data name="Blocked users. Search to block someone." xml:space="preserve">
+    <value>已阻止的用户。搜索某人以将其阻止。</value>
+  </data>
+  <data name="Blocks" xml:space="preserve">
+    <value>阻止</value>
+  </data>
+  <data name="Connection string or SAS URL" xml:space="preserve">
+    <value>连接字符串或 SAS URL</value>
+  </data>
+  <data name="Connection test passed." xml:space="preserve">
+    <value>连接测试通过。</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>联系人</value>
+  </data>
+  <data name="Container names are 3 to 63 lowercase letters, digits and hyphens." xml:space="preserve">
+    <value>容器名称由 3 到 63 个小写字母、数字和连字符组成。</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>当前</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>日期</value>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>设备</value>
+  </data>
+  <data name="Document storage" xml:space="preserve">
+    <value>文档存储</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF (add-on Send to). Off: the menu, all hints and the add-on disappear, waiting documents are deleted. Needs a document storage (Send to → Settings)." xml:space="preserve">
+    <value>Power PDF 中已确认联系人之间的文档（“发送到”加载项）。关闭：菜单、所有提示和加载项都会消失，等待中的文档将被删除。需要文档存储（“发送到”→“设置”）。</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF, end-to-end encrypted on the PCs. The server sees who is connected with whom, never content, file names or notes." xml:space="preserve">
+    <value>Power PDF 中已确认联系人之间的文档，在电脑上端到端加密。服务器只能看到谁与谁相连，从不会看到内容、文件名或备注。</value>
+  </data>
+  <data name="E-mail" xml:space="preserve">
+    <value>电子邮件</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>功能</value>
+  </data>
+  <data name="Invitation valid (days)" xml:space="preserve">
+    <value>邀请有效期（天）</value>
+  </data>
+  <data name="Local folder (development only), no Blob Storage." xml:space="preserve">
+    <value>本地文件夹（仅限开发），不使用 Blob Storage。</value>
+  </data>
+  <data name="Maximum file size (MB)" xml:space="preserve">
+    <value>最大文件大小 (MB)</value>
+  </data>
+  <data name="New invitations per person and day" xml:space="preserve">
+    <value>每人每天新邀请数</value>
+  </data>
+  <data name="No document storage configured." xml:space="preserve">
+    <value>未配置文档存储。</value>
+  </data>
+  <data name="No document storage set: Send to stays hidden in Power PDF." xml:space="preserve">
+    <value>未设置文档存储：“发送到”在 Power PDF 中保持隐藏。</value>
+  </data>
+  <data name="No public access." xml:space="preserve">
+    <value>无公共访问。</value>
+  </data>
+  <data name="No reports." xml:space="preserve">
+    <value>没有举报。</value>
+  </data>
+  <data name="Open invitations per person" xml:space="preserve">
+    <value>每人未处理的邀请数</value>
+  </data>
+  <data name="Open reports" xml:space="preserve">
+    <value>未处理的举报</value>
+  </data>
+  <data name="Own Blob container only for the documents, separate from the data share. Soft delete and versioning for blobs must be off, a lifecycle rule should delete blobs after 31 days." xml:space="preserve">
+    <value>仅用于文档的独立 Blob 容器，与数据共享分开。必须关闭 Blob 的软删除和版本控制；生命周期规则应在 31 天后删除 Blob。</value>
+  </data>
+  <data name="Public access could not be checked with this access." xml:space="preserve">
+    <value>无法使用此访问权限检查公共访问。</value>
+  </data>
+  <data name="Quick send allowed" xml:space="preserve">
+    <value>允许快速发送</value>
+  </data>
+  <data name="Read back failed." xml:space="preserve">
+    <value>回读失败。</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>原因</value>
+  </data>
+  <data name="Remove document storage" xml:space="preserve">
+    <value>删除文档存储</value>
+  </data>
+  <data name="Remove the document storage? Send to stops working until a new one is set." xml:space="preserve">
+    <value>要删除文档存储吗？在设置新的存储之前，“发送到”将无法工作。</value>
+  </data>
+  <data name="Reported by" xml:space="preserve">
+    <value>举报人</value>
+  </data>
+  <data name="Reported user" xml:space="preserve">
+    <value>被举报用户</value>
+  </data>
+  <data name="Retention until automatic deletion" xml:space="preserve">
+    <value>自动删除前的保留时间</value>
+  </data>
+  <data name="Save and test" xml:space="preserve">
+    <value>保存并测试</value>
+  </data>
+  <data name="Saved, but the connection test found problems." xml:space="preserve">
+    <value>已保存，但连接测试发现问题。</value>
+  </data>
+  <data name="Search by name or e-mail" xml:space="preserve">
+    <value>按姓名或电子邮件搜索</value>
+  </data>
+  <data name="Send to" xml:space="preserve">
+    <value>发送到</value>
+  </data>
+  <data name="Send to is on. Set the document storage now (Send to → Settings); until then the add-on stays hidden." xml:space="preserve">
+    <value>“发送到”已开启。请立即设置文档存储（“发送到”→“设置”）；在此之前加载项保持隐藏。</value>
+  </data>
+  <data name="Send to: settings" xml:space="preserve">
+    <value>发送到：设置</value>
+  </data>
+  <data name="Set document storage" xml:space="preserve">
+    <value>设置文档存储</value>
+  </data>
+  <data name="Since" xml:space="preserve">
+    <value>自</value>
+  </data>
+  <data name="Soft delete could not be checked with this access (needs account-level rights); check it in the Azure portal." xml:space="preserve">
+    <value>无法使用此访问权限检查软删除（需要帐户级权限）；请在 Azure 门户中检查。</value>
+  </data>
+  <data name="Soft delete for blobs is off." xml:space="preserve">
+    <value>Blob 的软删除已关闭。</value>
+  </data>
+  <data name="Soft delete for blobs is on: deleted documents would stay recoverable. Switch it off for this account." xml:space="preserve">
+    <value>Blob 的软删除已开启：已删除的文档仍可恢复。请为此帐户关闭该功能。</value>
+  </data>
+  <data name="Stored encrypted, never shown again." xml:space="preserve">
+    <value>加密存储，不再显示。</value>
+  </data>
+  <data name="The connection test found problems." xml:space="preserve">
+    <value>连接测试发现问题。</value>
+  </data>
+  <data name="The container allows public access." xml:space="preserve">
+    <value>该容器允许公共访问。</value>
+  </data>
+  <data name="The local folder is only allowed on a development server." xml:space="preserve">
+    <value>本地文件夹仅允许在开发服务器上使用。</value>
+  </data>
+  <data name="The retention time must be between 1 hour and 30 days." xml:space="preserve">
+    <value>保留时间必须介于 1 小时和 30 天之间。</value>
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>取消阻止</value>
+  </data>
+  <data name="Unblock this user?" xml:space="preserve">
+    <value>要取消阻止此用户吗？</value>
+  </data>
+  <data name="Undo window (seconds)" xml:space="preserve">
+    <value>撤销时间窗口（秒）</value>
+  </data>
+  <data name="User blocked." xml:space="preserve">
+    <value>已阻止用户。</value>
+  </data>
+  <data name="User not found." xml:space="preserve">
+    <value>未找到用户。</value>
+  </data>
+  <data name="User unblocked." xml:space="preserve">
+    <value>已取消阻止用户。</value>
+  </data>
+  <data name="Versioning and the lifecycle rule (delete after 31 days) cannot be read through the data API; check them in the Azure portal." xml:space="preserve">
+    <value>无法通过数据 API 读取版本控制和生命周期规则（31 天后删除）；请在 Azure 门户中检查。</value>
+  </data>
+  <data name="Waiting per user at most (MB)" xml:space="preserve">
+    <value>每个用户最多等待 (MB)</value>
+  </data>
+  <data name="Waiting transfers" xml:space="preserve">
+    <value>等待中的传输</value>
+  </data>
+  <data name="Who" xml:space="preserve">
+    <value>操作人</value>
+  </data>
+  <data name="Write, read and delete work." xml:space="preserve">
+    <value>写入、读取和删除均正常。</value>
+  </data>
+  <data name="blocks stored" xml:space="preserve">
+    <value>个已存储的块</value>
+  </data>
+  <data name="hours" xml:space="preserve">
+    <value>小时</value>
+  </data>
+  <data name="unchanged" xml:space="preserve">
+    <value>未更改</value>
+  </data>
+  <data name="Contact reports" xml:space="preserve">
+    <value>举报</value>
+  </data>
 </root>

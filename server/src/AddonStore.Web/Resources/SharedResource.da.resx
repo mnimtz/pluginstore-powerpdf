@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -1315,4 +1315,208 @@
   <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>Højst 9 tilføjelsesprogrammer kan være fremhævet.</value></data>
   <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Kun offentlige tilføjelsesprogrammer kan fremhæves.</value></data>
   <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>Fremhævede: {0} af {1}. Fremhævede tilføjelsesprogrammer vises først på første side og lyser op. Marker eller fjern dem med stjerneknappen på et felt.</value></data>
+  <data name="1 hour to 30 days. Documents are deleted at once after acceptance; this is the limit for documents nobody collects." xml:space="preserve">
+    <value>1 time til 30 dage. Dokumenter slettes straks efter accept; dette er grænsen for dokumenter, som ingen henter.</value>
+  </data>
+  <data name="Block this user? Their waiting documents are deleted." xml:space="preserve">
+    <value>Bloker denne bruger? Brugerens ventende dokumenter slettes.</value>
+  </data>
+  <data name="Block user" xml:space="preserve">
+    <value>Bloker bruger</value>
+  </data>
+  <data name="Blocked users. Search to block someone." xml:space="preserve">
+    <value>Blokerede brugere. Søg for at blokere nogen.</value>
+  </data>
+  <data name="Blocks" xml:space="preserve">
+    <value>Blokeringer</value>
+  </data>
+  <data name="Connection string or SAS URL" xml:space="preserve">
+    <value>Forbindelsesstreng eller SAS-URL</value>
+  </data>
+  <data name="Connection test passed." xml:space="preserve">
+    <value>Forbindelsestest bestået.</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Kontakter</value>
+  </data>
+  <data name="Container names are 3 to 63 lowercase letters, digits and hyphens." xml:space="preserve">
+    <value>Containernavne består af 3 til 63 små bogstaver, cifre og bindestreger.</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>Aktuel</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Dato</value>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>Enheder</value>
+  </data>
+  <data name="Document storage" xml:space="preserve">
+    <value>Dokumentlager</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF (add-on Send to). Off: the menu, all hints and the add-on disappear, waiting documents are deleted. Needs a document storage (Send to → Settings)." xml:space="preserve">
+    <value>Dokumenter mellem bekræftede kontakter i Power PDF (tilføjelsen Send til). Fra: menuen, alle henvisninger og tilføjelsen forsvinder, ventende dokumenter slettes. Kræver et dokumentlager (Send til → Indstillinger).</value>
+  </data>
+  <data name="Documents between confirmed contacts in Power PDF, end-to-end encrypted on the PCs. The server sees who is connected with whom, never content, file names or notes." xml:space="preserve">
+    <value>Dokumenter mellem bekræftede kontakter i Power PDF, end-to-end-krypteret på pc’erne. Serveren ser, hvem der er forbundet med hvem, aldrig indhold, filnavne eller noter.</value>
+  </data>
+  <data name="E-mail" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>Funktioner</value>
+  </data>
+  <data name="Invitation valid (days)" xml:space="preserve">
+    <value>Invitation gyldig (dage)</value>
+  </data>
+  <data name="Local folder (development only), no Blob Storage." xml:space="preserve">
+    <value>Lokal mappe (kun udvikling), ingen Blob Storage.</value>
+  </data>
+  <data name="Maximum file size (MB)" xml:space="preserve">
+    <value>Maksimal filstørrelse (MB)</value>
+  </data>
+  <data name="New invitations per person and day" xml:space="preserve">
+    <value>Nye invitationer pr. person og dag</value>
+  </data>
+  <data name="No document storage configured." xml:space="preserve">
+    <value>Intet dokumentlager konfigureret.</value>
+  </data>
+  <data name="No document storage set: Send to stays hidden in Power PDF." xml:space="preserve">
+    <value>Intet dokumentlager angivet: Send til forbliver skjult i Power PDF.</value>
+  </data>
+  <data name="No public access." xml:space="preserve">
+    <value>Ingen offentlig adgang.</value>
+  </data>
+  <data name="No reports." xml:space="preserve">
+    <value>Ingen anmeldelser.</value>
+  </data>
+  <data name="Open invitations per person" xml:space="preserve">
+    <value>Åbne invitationer pr. person</value>
+  </data>
+  <data name="Open reports" xml:space="preserve">
+    <value>Åbne anmeldelser</value>
+  </data>
+  <data name="Own Blob container only for the documents, separate from the data share. Soft delete and versioning for blobs must be off, a lifecycle rule should delete blobs after 31 days." xml:space="preserve">
+    <value>Egen Blob-container kun til dokumenterne, adskilt fra datadelingen. Blød sletning og versionsstyring for blobs skal være slået fra; en livscyklusregel bør slette blobs efter 31 dage.</value>
+  </data>
+  <data name="Public access could not be checked with this access." xml:space="preserve">
+    <value>Offentlig adgang kunne ikke kontrolleres med denne adgang.</value>
+  </data>
+  <data name="Quick send allowed" xml:space="preserve">
+    <value>Hurtig afsendelse tilladt</value>
+  </data>
+  <data name="Read back failed." xml:space="preserve">
+    <value>Tilbagelæsning mislykkedes.</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Årsag</value>
+  </data>
+  <data name="Remove document storage" xml:space="preserve">
+    <value>Fjern dokumentlager</value>
+  </data>
+  <data name="Remove the document storage? Send to stops working until a new one is set." xml:space="preserve">
+    <value>Fjern dokumentlageret? Send til virker ikke, før et nyt er angivet.</value>
+  </data>
+  <data name="Reported by" xml:space="preserve">
+    <value>Anmeldt af</value>
+  </data>
+  <data name="Reported user" xml:space="preserve">
+    <value>Anmeldt bruger</value>
+  </data>
+  <data name="Retention until automatic deletion" xml:space="preserve">
+    <value>Opbevaring indtil automatisk sletning</value>
+  </data>
+  <data name="Save and test" xml:space="preserve">
+    <value>Gem og test</value>
+  </data>
+  <data name="Saved, but the connection test found problems." xml:space="preserve">
+    <value>Gemt, men forbindelsestesten fandt problemer.</value>
+  </data>
+  <data name="Search by name or e-mail" xml:space="preserve">
+    <value>Søg efter navn eller e-mail</value>
+  </data>
+  <data name="Send to" xml:space="preserve">
+    <value>Send til</value>
+  </data>
+  <data name="Send to is on. Set the document storage now (Send to → Settings); until then the add-on stays hidden." xml:space="preserve">
+    <value>Send til er slået til. Angiv nu dokumentlageret (Send til → Indstillinger); indtil da forbliver tilføjelsen skjult.</value>
+  </data>
+  <data name="Send to: settings" xml:space="preserve">
+    <value>Send til: indstillinger</value>
+  </data>
+  <data name="Set document storage" xml:space="preserve">
+    <value>Angiv dokumentlager</value>
+  </data>
+  <data name="Since" xml:space="preserve">
+    <value>Siden</value>
+  </data>
+  <data name="Soft delete could not be checked with this access (needs account-level rights); check it in the Azure portal." xml:space="preserve">
+    <value>Blød sletning kunne ikke kontrolleres med denne adgang (kræver rettigheder på kontoniveau); kontrollér det i Azure-portalen.</value>
+  </data>
+  <data name="Soft delete for blobs is off." xml:space="preserve">
+    <value>Blød sletning for blobs er slået fra.</value>
+  </data>
+  <data name="Soft delete for blobs is on: deleted documents would stay recoverable. Switch it off for this account." xml:space="preserve">
+    <value>Blød sletning for blobs er slået til: slettede dokumenter ville kunne gendannes. Slå det fra for denne konto.</value>
+  </data>
+  <data name="Stored encrypted, never shown again." xml:space="preserve">
+    <value>Gemmes krypteret og vises aldrig igen.</value>
+  </data>
+  <data name="The connection test found problems." xml:space="preserve">
+    <value>Forbindelsestesten fandt problemer.</value>
+  </data>
+  <data name="The container allows public access." xml:space="preserve">
+    <value>Containeren tillader offentlig adgang.</value>
+  </data>
+  <data name="The local folder is only allowed on a development server." xml:space="preserve">
+    <value>Den lokale mappe er kun tilladt på en udviklingsserver.</value>
+  </data>
+  <data name="The retention time must be between 1 hour and 30 days." xml:space="preserve">
+    <value>Opbevaringstiden skal være mellem 1 time og 30 dage.</value>
+  </data>
+  <data name="Unblock" xml:space="preserve">
+    <value>Fjern blokering</value>
+  </data>
+  <data name="Unblock this user?" xml:space="preserve">
+    <value>Fjern blokeringen af denne bruger?</value>
+  </data>
+  <data name="Undo window (seconds)" xml:space="preserve">
+    <value>Fortrydelsesvindue (sekunder)</value>
+  </data>
+  <data name="User blocked." xml:space="preserve">
+    <value>Bruger blokeret.</value>
+  </data>
+  <data name="User not found." xml:space="preserve">
+    <value>Bruger ikke fundet.</value>
+  </data>
+  <data name="User unblocked." xml:space="preserve">
+    <value>Blokering af bruger fjernet.</value>
+  </data>
+  <data name="Versioning and the lifecycle rule (delete after 31 days) cannot be read through the data API; check them in the Azure portal." xml:space="preserve">
+    <value>Versionsstyring og livscyklusreglen (slet efter 31 dage) kan ikke læses via data-API’en; kontrollér dem i Azure-portalen.</value>
+  </data>
+  <data name="Waiting per user at most (MB)" xml:space="preserve">
+    <value>Ventende pr. bruger højst (MB)</value>
+  </data>
+  <data name="Waiting transfers" xml:space="preserve">
+    <value>Ventende overførsler</value>
+  </data>
+  <data name="Who" xml:space="preserve">
+    <value>Hvem</value>
+  </data>
+  <data name="Write, read and delete work." xml:space="preserve">
+    <value>Skrivning, læsning og sletning virker.</value>
+  </data>
+  <data name="blocks stored" xml:space="preserve">
+    <value>gemte blokke</value>
+  </data>
+  <data name="hours" xml:space="preserve">
+    <value>timer</value>
+  </data>
+  <data name="unchanged" xml:space="preserve">
+    <value>uændret</value>
+  </data>
+  <data name="Contact reports" xml:space="preserve">
+    <value>Anmeldelser</value>
+  </data>
 </root>
