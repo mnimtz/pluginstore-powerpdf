@@ -5,6 +5,7 @@
   <String Id="NoPowerPdf">A Tungsten Power PDF nem található ezen a számítógépen. Először telepítse a Power PDF-et.</String>
   <String Id="PowerPdfTooOld">Az Add-on Store a Tungsten Power PDF 2025.3.7 vagy újabb verzióját igényli. Először frissítse a Power PDF-et.</String>
   <String Id="PowerPdfEdition">A bővítményekhez Tungsten Power PDF Business 2025.3.7 vagy újabb, illetve 2026.4 verziótól bármely kiadás (Standard, Advanced, Business) szükséges. Először frissítse a Power PDF-et.</String>
+  <String Id="PowerPdfSaasOnly">Az Add-on Store csak bejelentkezéses (SaaS) Tungsten Power PDF-hez érhető el. Ez a Power PDF sorozatszámmal van licencelve.</String>
   <String Id="ClosePowerPdf">Zárja be a Tungsten Power PDF-et, majd folytassa.</String>
   <String Id="Downgrade">Az Add-on Store egy újabb verziója már telepítve van.</String>
 </WixLocalization>

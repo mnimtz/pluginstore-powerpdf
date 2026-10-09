@@ -4,6 +4,7 @@
 #include "webui.h"
 #include "dialog.h"
 #include "catalog.h"
+#include "access.h"
 #include "install.h"
 #include "http.h"
 #include "settings.h"
@@ -689,7 +690,7 @@ protected:
             if (e.id == kClientId)
             {
                 m_self = e;
-                m_hasSelfUpdate = !PSPolicyNoSelfUpdate() && PSCompareVersions(e.version, FP_VERSION_W) > 0;
+                m_hasSelfUpdate = !PSPolicyNoSelfUpdate() && !PSSelfUpdateBlockedBySerial() && PSCompareVersions(e.version, FP_VERSION_W) > 0;
                 continue;
             }
             if (_wcsicmp(e.zxtName.c_str(), L"PluginStore") == 0) continue;   // would replace the store client

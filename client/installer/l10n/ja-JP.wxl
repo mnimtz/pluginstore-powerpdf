@@ -5,6 +5,7 @@
   <String Id="NoPowerPdf">このコンピューターで Tungsten Power PDF が見つかりませんでした。先に Power PDF をインストールしてください。</String>
   <String Id="PowerPdfTooOld">Add-on Store には Tungsten Power PDF 2025.3.7 以降が必要です。先に Power PDF を更新してください。</String>
   <String Id="PowerPdfEdition">アドインには Tungsten Power PDF Business 2025.3.7 以降、または 2026.4 以降の任意のエディション (Standard、Advanced、Business) が必要です。先に Power PDF を更新してください。</String>
+  <String Id="PowerPdfSaasOnly">Add-on Store は、サインインして使用する Tungsten Power PDF (SaaS) でのみ利用できます。この Power PDF はシリアル番号でライセンスされています。</String>
   <String Id="ClosePowerPdf">Tungsten Power PDF を閉じてから続行してください。</String>
   <String Id="Downgrade">Add-on Store の新しいバージョンが既にインストールされています。</String>
 </WixLocalization>

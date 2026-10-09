@@ -4,6 +4,7 @@
 #include "dialog.h"
 #include "link.h"
 #include "catalog.h"
+#include "access.h"
 #include "install.h"
 #include "settings.h"
 #include "loc.h"
@@ -106,7 +107,7 @@ protected:
             if (it->id == L"com.tungsten.pluginstore")
             {
                 m_self = *it;
-                m_selfUpdate = !PSPolicyNoSelfUpdate() && PSCompareVersions(it->version, FP_VERSION_W) > 0;
+                m_selfUpdate = !PSPolicyNoSelfUpdate() && !PSSelfUpdateBlockedBySerial() && PSCompareVersions(it->version, FP_VERSION_W) > 0;
                 m_entries.erase(it);
                 break;
             }

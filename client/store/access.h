@@ -16,6 +16,9 @@
 // (on-premise License Server is not told apart yet). Read from
 // HKLM\SOFTWARE\Kofax\PDF\V1: SerialNumber, and the CLS subkey with LicenseURL.
 std::wstring PSLicenseMode();
+// C1.9.6: setup refuses Power PDF licensed with a serial number (store for SaaS only), so no
+// store update is offered there: it could not be installed.
+bool PSSelfUpdateBlockedBySerial();
 
 // The last answer of the server; true when it never answered (first start).
 bool PSStoreAllowed();

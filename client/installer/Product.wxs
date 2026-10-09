@@ -133,6 +133,20 @@
       <![CDATA[Installed OR NOT PPDFVERLONG OR NOT (PPDFVERLONG < "2025.3" OR PPDFVERLONG << "2025.3.0." OR PPDFVERLONG << "2025.3.1." OR PPDFVERLONG << "2025.3.2." OR PPDFVERLONG << "2025.3.3." OR PPDFVERLONG << "2025.3.4." OR PPDFVERLONG << "2025.3.5." OR PPDFVERLONG << "2025.3.6.")]]>
     </Condition>
 
+    <!-- License (C1.9.6): the store is for Power PDF with sign-in (SaaS). A serial
+         number in V1 "SerialNumber" means a key-licensed Power PDF: its users have no
+         sign-in, so the store and add-ons such as Send to do not work for them; the
+         store client reads the same value (access.cpp PSLicenseMode). A missing or
+         empty value is not blocked: a fresh SaaS setup may write its license data
+         only at the first sign-in. ALLOWNONSAAS=1 lets administrators install anyway. -->
+    <Property Id="PPDFSERIAL">
+      <RegistrySearch Id="KofaxV1Serial" Root="HKLM" Key="SOFTWARE\Kofax\PDF\V1"
+                      Name="SerialNumber" Type="raw" Win64="yes" />
+    </Property>
+    <Condition Message="!(loc.PowerPdfSaasOnly)">
+      <![CDATA[Installed OR NOT PPDFSERIAL OR ALLOWNONSAAS = "1"]]>
+    </Condition>
+
     <!-- Edition (C1.1.3): in Power PDF 2025 only Business loads plug-ins; from
          2026.4 on every edition. V1 "Version" is the short form ("25.3", "26.4");
          releases have single-digit minors, so the text comparison is safe, and

@@ -211,6 +211,28 @@ EDITION_X = {
     'ko-KR': '추가 기능에는 Tungsten Power PDF Business {v} 이상 또는 {e}부터의 모든 에디션(Standard, Advanced, Business)이 필요합니다. 먼저 Power PDF를 업데이트하십시오.',
     'ar-SA': 'تحتاج الوظائف الإضافية إلى Tungsten Power PDF Business {v} أو أحدث، أو أي إصدار (Standard و Advanced و Business) بدءًا من {e}. يرجى تحديث Power PDF أولاً.',
 }
+# PowerPdfSaasOnly (C1.9.6): the store is for Power PDF with sign-in (SaaS); a serial number is refused
+SAAS_ONLY = {
+    'en-US': 'The Add-on Store is available only for Tungsten Power PDF with sign-in (SaaS). This Power PDF is licensed with a serial number.',
+    'de-DE': 'Der Add-on Store ist nur für Tungsten Power PDF mit Anmeldung (SaaS) verfügbar. Dieses Power PDF ist mit einer Seriennummer lizenziert.',
+    'fr-FR': "L'Add-on Store est disponible uniquement pour Tungsten Power PDF avec connexion (SaaS). Ce Power PDF est sous licence avec un numéro de série.", 'it-IT': "L'Add-on Store è disponibile solo per Tungsten Power PDF con accesso (SaaS). Questo Power PDF è concesso in licenza con un numero di serie.", 'es-ES': 'Add-on Store solo está disponible para Tungsten Power PDF con inicio de sesión (SaaS). Este Power PDF tiene licencia con un número de serie.',
+    'nl-NL': 'De Add-on Store is alleen beschikbaar voor Tungsten Power PDF met aanmelding (SaaS). Deze Power PDF is gelicentieerd met een serienummer.',
+    'pt-BR': 'A Add-on Store está disponível apenas para o Tungsten Power PDF com entrada (SaaS). Este Power PDF está licenciado com um número de série.',
+    'da-DK': 'Add-on Store er kun tilgængelig for Tungsten Power PDF med logon (SaaS). Denne Power PDF er licenseret med et serienummer.',
+    'fi-FI': 'Add-on Store on käytettävissä vain Tungsten Power PDF:lle, johon kirjaudutaan (SaaS). Tämä Power PDF on lisensoitu sarjanumerolla.',
+    'nb-NO': 'Add-on Store er bare tilgjengelig for Tungsten Power PDF med pålogging (SaaS). Denne Power PDF er lisensiert med et serienummer.',
+    'sv-SE': 'Add-on Store är bara tillgänglig för Tungsten Power PDF med inloggning (SaaS). Den här Power PDF är licensierad med ett serienummer.',
+    'pl-PL': 'Add-on Store jest dostępny tylko dla programu Tungsten Power PDF z logowaniem (SaaS). Ten Power PDF jest licencjonowany numerem seryjnym.',
+    'cs-CZ': 'Add-on Store je k dispozici pouze pro Tungsten Power PDF s přihlášením (SaaS). Tento Power PDF je licencován sériovým číslem.',
+    'hu-HU': 'Az Add-on Store csak bejelentkezéses (SaaS) Tungsten Power PDF-hez érhető el. Ez a Power PDF sorozatszámmal van licencelve.',
+    'ru-RU': 'Add-on Store доступен только для Tungsten Power PDF со входом в учетную запись (SaaS). Этот Power PDF лицензирован серийным номером.',
+    'tr-TR': 'Add-on Store yalnızca oturum açmalı (SaaS) Tungsten Power PDF için kullanılabilir. Bu Power PDF bir seri numarasıyla lisanslanmıştır.',
+    'zh-CN': 'Add-on Store 仅适用于需要登录的 Tungsten Power PDF (SaaS)。此 Power PDF 使用序列号授权。',
+    'zh-TW': 'Add-on Store 僅適用於需要登入的 Tungsten Power PDF (SaaS)。此 Power PDF 使用序號授權。',
+    'ja-JP': 'Add-on Store は、サインインして使用する Tungsten Power PDF (SaaS) でのみ利用できます。この Power PDF はシリアル番号でライセンスされています。',
+    'ko-KR': 'Add-on Store는 로그인하여 사용하는 Tungsten Power PDF(SaaS)에서만 사용할 수 있습니다. 이 Power PDF는 일련 번호로 라이선스가 부여되어 있습니다.',
+    'ar-SA': 'يتوفر Add-on Store فقط لـ Tungsten Power PDF مع تسجيل الدخول (SaaS). هذا الإصدار من Power PDF مرخّص برقم تسلسلي.',
+}
 TOO_OLD.update(TOO_OLD_X)
 EDITION.update(EDITION_X)
 
@@ -230,6 +252,7 @@ def main():
                f'  <String Id="NoPowerPdf">{xml(no_ppdf)}</String>\n'
                f'  <String Id="PowerPdfTooOld">{xml(too_old)}</String>\n'
                f'  <String Id="PowerPdfEdition">{xml(edition)}</String>\n'
+               f'  <String Id="PowerPdfSaasOnly">{xml(SAAS_ONLY[culture])}</String>\n'
                f'  <String Id="ClosePowerPdf">{xml(close)}</String>\n'
                f'  <String Id="Downgrade">{xml(downgrade)}</String>\n'
                f'</WixLocalization>\n')

@@ -5,6 +5,7 @@
   <String Id="NoPowerPdf">لم يتم العثور على Tungsten Power PDF على هذا الكمبيوتر. يرجى تثبيت Power PDF أولاً.</String>
   <String Id="PowerPdfTooOld">يحتاج Add-on Store إلى Tungsten Power PDF 2025.3.7 أو أحدث. يرجى تحديث Power PDF أولاً.</String>
   <String Id="PowerPdfEdition">تحتاج الوظائف الإضافية إلى Tungsten Power PDF Business 2025.3.7 أو أحدث، أو أي إصدار (Standard و Advanced و Business) بدءًا من 2026.4. يرجى تحديث Power PDF أولاً.</String>
+  <String Id="PowerPdfSaasOnly">يتوفر Add-on Store فقط لـ Tungsten Power PDF مع تسجيل الدخول (SaaS). هذا الإصدار من Power PDF مرخّص برقم تسلسلي.</String>
   <String Id="ClosePowerPdf">يرجى إغلاق Tungsten Power PDF والمتابعة.</String>
   <String Id="Downgrade">إصدار أحدث من Add-on Store مثبت بالفعل.</String>
 </WixLocalization>

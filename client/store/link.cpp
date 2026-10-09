@@ -73,7 +73,7 @@ DWORD WINAPI UpdateCheckThread(LPVOID p)
         {
             if (e.id == L"com.tungsten.pluginstore")
             {
-                if (!PSPolicyNoSelfUpdate() && PSCompareVersions(e.version, FP_VERSION_W) > 0)
+                if (!PSPolicyNoSelfUpdate() && !PSSelfUpdateBlockedBySerial() && PSCompareVersions(e.version, FP_VERSION_W) > 0)
                 { r->keys.push_back(e.id + L"@" + e.version); r->names.push_back(L"Add-on Store " + e.version); }
             }
             else if (!PSPolicyNoInstall() && !e.installedVersion.empty() && e.installedVersion != L"?" &&

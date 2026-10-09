@@ -70,6 +70,11 @@ std::wstring PSLicenseMode()
     return L"unknown";
 }
 
+bool PSSelfUpdateBlockedBySerial()
+{
+    return PSLicenseMode() == L"serial";
+}
+
 bool PSStoreAllowed()
 {
     LONG a = g_allowed;
