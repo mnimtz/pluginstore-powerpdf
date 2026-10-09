@@ -144,8 +144,9 @@ std::wstring CacheFile()
 void WriteCacheFile(const std::wstring& key, const std::string& body)
 {
     std::wstring path = CacheFile();
-    if (path.empty() || body.size() > kCacheMax) return;
-    std::string data = kCacheMagic + KeyHash(key) + "\n" + body;
+    const std::string hash = KeyHash(key);
+    if (path.empty() || body.size() > kCacheMax || hash.size() != 64) return;   // C1.9.7: no hash, no cache (every key matched)
+    std::string data = kCacheMagic + hash + "\n" + body;
     std::wstring tmp = path + L".tmp";
     HANDLE f = CreateFileW(tmp.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if (f == INVALID_HANDLE_VALUE) return;
@@ -171,7 +172,9 @@ std::string ReadCacheFile(const std::wstring& key)
         if (!ReadFile(f, &data[0], (DWORD)data.size(), &r, NULL) || r != data.size()) data.clear();
     }
     CloseHandle(f);
-    std::string head = kCacheMagic + KeyHash(key) + "\n";
+    const std::string hash = KeyHash(key);
+    if (hash.size() != 64) return std::string();
+    std::string head = kCacheMagic + hash + "\n";
     if (data.size() < head.size() || data.compare(0, head.size(), head) != 0) return std::string();
     return data.substr(head.size());
 }

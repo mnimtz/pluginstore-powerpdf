@@ -374,7 +374,7 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
     // the host merges it only into a profile that does not know the shared tab yet
     if (result == 0)
     {
-        int fixed = fplayout::ApplyButtons(pluginsDir);
+        int fixed = fplayout::ApplyButtons(pluginsDir, kPSRegKey, e.zxtName);   // its group even if removed before (C1.9.7)
         if (fixed > 0) FPLogW(L"[Store] ribbon layout: group of %s added (%d file(s))", e.zxtName.c_str(), fixed);
     }
     FPLogW(L"[Store] install %s %s -> %d", e.id.c_str(), e.version.c_str(), result);

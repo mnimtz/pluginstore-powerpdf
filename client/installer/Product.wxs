@@ -139,6 +139,8 @@
          store client reads the same value (access.cpp PSLicenseMode). A missing or
          empty value is not blocked: a fresh SaaS setup may write its license data
          only at the first sign-in. ALLOWNONSAAS=1 lets administrators install anyway. -->
+    <!-- Secure: the value reaches the elevated part of an interactive install too (C1.9.7) -->
+    <Property Id="ALLOWNONSAAS" Secure="yes" />
     <Property Id="PPDFSERIAL">
       <RegistrySearch Id="KofaxV1Serial" Root="HKLM" Key="SOFTWARE\Kofax\PDF\V1"
                       Name="SerialNumber" Type="raw" Win64="yes" />

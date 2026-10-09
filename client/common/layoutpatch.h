@@ -25,6 +25,7 @@
 #include <windows.h>
 #include <string>
 #include <vector>
+#include <string_view>
 
 namespace fplayout {
 
@@ -109,14 +110,22 @@ inline bool WriteTextFile(const std::wstring& path, const std::wstring& text,
                                 (char*)&raw[0], need, NULL, NULL);
     }
 
-    HANDLE h = CreateFileW(path.c_str(), GENERIC_WRITE, 0, NULL,
+    // C1.9.7: write a copy and swap it in, so a crash in the middle never leaves a cut-off ribbon layout
+    const std::wstring tmp = path + L".addonstore-tmp";
+    HANDLE h = CreateFileW(tmp.c_str(), GENERIC_WRITE, 0, NULL,
                            CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     if (h == INVALID_HANDLE_VALUE) { if (err) *err = GetLastError(); return false; }
 
     DWORD written = 0;
     BOOL ok = raw.empty() ? TRUE : WriteFile(h, &raw[0], (DWORD)raw.size(), &written, NULL);
-    if (!ok || written != raw.size()) { if (err) *err = GetLastError(); CloseHandle(h); return false; }
+    if (ok) ok = FlushFileBuffers(h);
     CloseHandle(h);
+    if (!ok || written != raw.size() || !MoveFileExW(tmp.c_str(), path.c_str(), MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH))
+    {
+        if (err) *err = GetLastError();
+        DeleteFileW(tmp.c_str());
+        return false;
+    }
     return true;
 }
 
@@ -578,7 +587,7 @@ inline int ResetSharedTabOnFreshInstall(const wchar_t* regKey)
 // hidden. So the store adds each installed add-on's group itself.
 // The group is rebuilt from checked atom names, never copied as text, so a
 // layout file cannot place anything else into the user's ribbon.
-struct AddonGroup { std::wstring name; std::vector<std::wstring> buttons; std::vector<std::wstring> modes; };
+struct AddonGroup { std::wstring name; std::vector<std::wstring> buttons; std::vector<std::wstring> modes; std::wstring addon; };
 
 inline bool IsAtomName(const std::wstring& s)
 {
@@ -593,12 +602,15 @@ inline bool IsAtomName(const std::wstring& s)
 inline std::wstring AttrIn(const std::wstring& text, size_t from, size_t to, const wchar_t* attr)
 {
     std::wstring key = std::wstring(L" ") + attr + L"=\"";
-    size_t p = text.find(key, from);
-    if (p == std::wstring::npos || p >= to) return std::wstring();
+    if (to > text.size() || from >= to) return std::wstring();
+    // C1.9.7: search only the tag, not the rest of a large file
+    const std::wstring_view tag(text.data() + from, to - from);
+    size_t p = tag.find(key);
+    if (p == std::wstring_view::npos) return std::wstring();
     p += key.size();
-    size_t e = text.find(L'"', p);
-    if (e == std::wstring::npos || e > to) return std::wstring();
-    return text.substr(p, e - p);
+    size_t e = tag.find(L'"', p);
+    if (e == std::wstring_view::npos) return std::wstring();
+    return std::wstring(tag.substr(p, e - p));
 }
 
 // Value of name="..." of the root <GaaihoLayout> ("Publish" for the viewer layout).
@@ -631,7 +643,8 @@ inline void AddonGroupsFrom(const std::wstring& text, std::vector<AddonGroup>& o
             size_t bt = text.find(L'>', b);
             if (bt == std::wstring::npos || bt > gEnd) break;
             std::wstring n = AttrIn(text, b, bt, L"name"), m = AttrIn(text, b, bt, L"IconMode");
-            if (!IsAtomName(n) || ag.buttons.size() >= 40) continue;
+            if (ag.buttons.size() >= 40) break;
+            if (!IsAtomName(n)) continue;
             if (m.size() != 1 || m[0] < L'1' || m[0] > L'9') m = L"4";
             ag.buttons.push_back(n);
             ag.modes.push_back(m);
@@ -657,7 +670,9 @@ inline std::vector<AddonGroup> InstalledAddonGroups(const std::wstring& pluginsD
         if (GetFileAttributesW((pluginsDir + L"\\" + name + L".zxt").c_str()) == INVALID_FILE_ATTRIBUTES ||
             GetFileAttributesW((dir + L"\\manifest.json").c_str()) == INVALID_FILE_ATTRIBUTES) continue;
         std::wstring text; bool utf16 = false;
+        size_t before = out.size();
         if (ReadTextFile(dir + L"\\UILayout\\Publish Mode.xml", text, utf16)) AddonGroupsFrom(text, out);
+        for (size_t i = before; i < out.size(); ++i) out[i].addon = name;
     } while (FindNextFileW(h, &fd));
     FindClose(h);
     return out;
@@ -728,13 +743,44 @@ inline bool EnsureAddonGroups(std::wstring& text, const std::vector<AddonGroup>&
 // Runs at every start: makes sure our group exists in the merged toolbar and
 // that the buttons carry IconMode="4" — so an installation whose layout was
 // merged before this pack existed repairs itself. Returns files written.
+// C1.9.7: the add-on groups this profile has seen in its layout (HKCU <regKey>\LayoutGroups, ";name;name;").
+// A known group that is missing from the layout was removed by the user (ribbon customization): it is not added
+// again, except for the add-on just installed (forceAddon).
+inline std::wstring KnownGroups(const wchar_t* regKey)
+{
+    wchar_t buf[8192] = { 0 };
+    DWORD cb = sizeof(buf);
+    if (!regKey || RegGetValueW(HKEY_CURRENT_USER, regKey, L"LayoutGroups", RRF_RT_REG_SZ, NULL, buf, &cb) != ERROR_SUCCESS) return L";";
+    std::wstring s = buf;
+    return s.empty() || s[0] != L';' ? L";" + s : s;
+}
+
 // pluginsDir (C1.9.4): Power PDF's Plug-Ins folder, for the groups of installed add-ons.
-inline int ApplyButtons(const std::wstring& pluginsDir = std::wstring())
+// regKey/forceAddon (C1.9.7): see KnownGroups.
+inline int ApplyButtons(const std::wstring& pluginsDir = std::wstring(), const wchar_t* regKey = nullptr,
+                        const std::wstring& forceAddon = std::wstring())
 {
     int written = 0;
     std::vector<std::wstring> files;
     CollectLayoutFiles(UserLayoutDir(), files);
-    const std::vector<AddonGroup> addons = InstalledAddonGroups(pluginsDir);
+    std::vector<AddonGroup> addons = InstalledAddonGroups(pluginsDir);
+    std::wstring known = KnownGroups(regKey);
+    const std::wstring knownBefore = known;
+    {
+        std::wstring all;
+        for (size_t i = 0; i < files.size(); ++i) { std::wstring t; bool u = false; if (ReadTextFile(files[i], t, u)) all += t; }
+        std::vector<AddonGroup> keep;
+        for (const auto& g : addons)
+        {
+            const bool inLayout = all.find(L"<PFFGroup name=\"" + g.name + L"\"") != std::wstring::npos;
+            const bool forced = !forceAddon.empty() && _wcsicmp(g.addon.c_str(), forceAddon.c_str()) == 0;
+            if (inLayout || forced || known.find(L";" + g.name + L";") == std::wstring::npos) keep.push_back(g);
+            if (known.find(L";" + g.name + L";") == std::wstring::npos && known.size() < 7000) known += g.name + L";";
+        }
+        addons.swap(keep);
+    }
+    if (regKey && known != knownBefore)
+        RegSetKeyValueW(HKEY_CURRENT_USER, regKey, L"LayoutGroups", REG_SZ, known.c_str(), (DWORD)((known.size() + 1) * sizeof(wchar_t)));
 
     for (size_t i = 0; i < files.size(); ++i)
     {

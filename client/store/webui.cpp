@@ -343,6 +343,7 @@ struct AsyncMsg
     double rating = 0;
     std::wstring id, text, error;
     std::vector<PSCatalogEntry> entries;
+    bool cached = false;                  // C1.9.7: entries from the stored catalog, not from the server
 };
 
 // The store window that accepts results. Posting happens under the lock, so
@@ -667,14 +668,15 @@ protected:
         if (withPreselect)
         {
             AsyncMsg cached;
-            cached.kind = KCatalog; cached.gen = gen; cached.flag = false;
+            cached.kind = KCatalog; cached.gen = gen; cached.flag = false; cached.cached = true;
             if (PSCachedCatalog(lang, 30 * 60 * 1000, cached.entries) && !cached.entries.empty()) ApplyCatalog(cached);
         }
         Spawn([h, gen, lang, withPreselect]() {
             auto* m = new AsyncMsg;
             m->kind = KCatalog; m->gen = gen; m->flag = withPreselect;
             // C1.9.3: offline, the last catalog stays in the window (with the error above it)
-            try { if (!PSFetchCatalogFor(lang, m->entries, m->error)) PSCachedCatalog(lang, MAXDWORD, m->entries); }
+            // a deep link waits for the server's catalog: against the stored one it could say "not found" (C1.9.7)
+            try { if (!PSFetchCatalogFor(lang, m->entries, m->error) && PSCachedCatalog(lang, MAXDWORD, m->entries)) { m->cached = true; m->flag = false; } }
             catch (...) { m->entries.clear(); m->error = FPLoc(IDS_PSD_MSG_FAIL); }
             PostAsync(h, m);
         });
@@ -699,7 +701,8 @@ protected:
         // Add-ons the store installed here that the catalog no longer offers (C1.4.1: e.g. after
         // their customer code was removed): listed as installed so they can still be removed.
         // Only with a complete catalog: offline, everything would look "no longer offered".
-        if (r.error.empty() && !r.entries.empty())
+        // (not from the stored catalog: an add-on installed since then would look "no longer offered", C1.9.7)
+        if (r.error.empty() && !r.entries.empty() && !r.cached)
             for (const auto& a : PSListInstalledAddons(ManifestLang()))
             {
                 bool known = _wcsicmp(a.id.c_str(), kClientId) == 0;
