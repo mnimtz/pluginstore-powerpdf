@@ -108,12 +108,11 @@ else
             </div>
         }
     </div>
-    <nav class="pager" id="pkg-pager" aria-label="@L["Pages"]" hidden>
+    <nav class="pager pkg-pager" id="pkg-pager" aria-label="@L["Pages"]" hidden>
         <span class="muted small" id="pkg-range"></span>
-        <span class="pager-sizes small">@L["Rows per page"]: <span id="pkg-sizes"></span></span>
         <span class="pager-pages">
             <button type="button" class="btn small secondary" id="pkg-prev">‹ @L["Previous"]</button>
-            <span class="small" id="pkg-page"></span>
+            <span class="page-nums" id="pkg-nums"></span>
             <button type="button" class="btn small secondary" id="pkg-next">@L["Next"] ›</button>
         </span>
     </nav>
@@ -141,10 +140,39 @@ else
                 });
             });
             // Paging over the cards that match search and category (S0.17.3): the
-            // filter runs in the browser, so the paging does too.
-            var sizes = [25, 50, 100], size = 25, page = 1;
+            // filter runs in the browser, so the paging does too. S1.14.1: 9 tiles a
+            // page (3 x 3), numbered pages; the page is kept in the address (?page=),
+            // so "back" from an add-on returns to it.
+            var size = 9, page = Math.max(1, parseInt(new URLSearchParams(location.search).get('page'), 10) || 1);
             var pager = document.getElementById('pkg-pager');
             var T = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(new { range = L["{0} to {1} of {2}"].Value, page = L["Page {0} of {1}"].Value }));
+            function remember() {
+                try {
+                    var u = new URL(location.href);
+                    if (page > 1) u.searchParams.set('page', page); else u.searchParams.delete('page');
+                    history.replaceState(history.state, '', u.pathname + u.search + u.hash);
+                } catch (e) { }
+            }
+            function go(n) { page = n; apply(true); document.getElementById('pkg-grid').scrollIntoView({ block: 'start' }); }
+            // 1 2 3 ... with a window around the current page on long lists: 1 ... 4 5 6 ... 12
+            function numbers(pages) {
+                var box = document.getElementById('pkg-nums'); box.textContent = '';
+                var shown = [];
+                for (var n = 1; n <= pages; n++)
+                    if (pages <= 7 || n === 1 || n === pages || Math.abs(n - page) <= 1) shown.push(n);
+                var last = 0;
+                shown.forEach(function (n) {
+                    if (n - last > 1) { var gap = document.createElement('span'); gap.className = 'page-gap'; gap.textContent = '…'; box.appendChild(gap); }
+                    var b = document.createElement('button');
+                    b.type = 'button'; b.className = 'page-num' + (n === page ? ' active' : '');
+                    b.textContent = String(n);
+                    b.setAttribute('aria-label', fmt(T.page, n, pages));
+                    if (n === page) b.setAttribute('aria-current', 'page');
+                    else b.addEventListener('click', function () { go(n); });
+                    box.appendChild(b);
+                    last = n;
+                });
+            }
             function fmt(t) { var a = arguments; return t.replace(/\{(\d)\}/g, function (m, i) { return a[+i + 1]; }); }
             function apply(keepPage) {
                 var q = search.value.toLowerCase();
@@ -159,24 +187,17 @@ else
                 if (!keepPage) page = 1;
                 page = Math.min(Math.max(page, 1), pages);
                 hits.slice((page - 1) * size, page * size).forEach(function (c) { c.style.display = ''; });
-                pager.hidden = hits.length <= sizes[0];
+                remember();
+                pager.hidden = hits.length <= size;
                 if (pager.hidden) return;
                 document.getElementById('pkg-range').textContent = fmt(T.range, (page - 1) * size + 1, Math.min(hits.length, page * size), hits.length);
-                document.getElementById('pkg-page').textContent = fmt(T.page, page, pages);
                 // style, not the hidden attribute: .btn sets display and would override it
                 document.getElementById('pkg-prev').style.display = page <= 1 ? 'none' : '';
                 document.getElementById('pkg-next').style.display = page >= pages ? 'none' : '';
-                var box = document.getElementById('pkg-sizes');
-                box.textContent = '';
-                sizes.forEach(function (n) {
-                    var el = document.createElement(n === size ? 'b' : 'a');
-                    el.textContent = String(n);
-                    if (n !== size) { el.href = '#pkg-grid'; el.addEventListener('click', function (e) { e.preventDefault(); size = n; apply(); }); }
-                    box.appendChild(el);
-                });
+                numbers(pages);
             }
-            document.getElementById('pkg-prev').addEventListener('click', function () { page--; apply(true); document.getElementById('pkg-grid').scrollIntoView(); });
-            document.getElementById('pkg-next').addEventListener('click', function () { page++; apply(true); document.getElementById('pkg-grid').scrollIntoView(); });
+            document.getElementById('pkg-prev').addEventListener('click', function () { go(page - 1); });
+            document.getElementById('pkg-next').addEventListener('click', function () { go(page + 1); });
             search.addEventListener('input', function () { apply(); });
             var ask = document.getElementById('ai-ask');
             if (ask) {
@@ -214,7 +235,7 @@ else
                     apply();
                 });
             });
-            apply();
+            apply(true);   // keeps the page from the address
         })();
     </script>
 }

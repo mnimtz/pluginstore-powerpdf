@@ -400,6 +400,15 @@ svg.spark polyline { fill: none; stroke: var(--tun-blue); stroke-width: 1.6; vec
 .pager[hidden] { display: none; }
 .pager-sizes b { color: var(--tun-navy); }
 .pager-pages { display: flex; gap: 10px; align-items: center; }
+/* numbered catalog pages on the start page (S1.14.1) */
+.pkg-pager { justify-content: center; flex-direction: column; gap: 8px; }
+.pkg-pager .pager-pages { flex-wrap: wrap; justify-content: center; }
+.page-nums { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; justify-content: center; }
+.page-num { min-width: 34px; height: 34px; padding: 0 8px; border-radius: 8px; border: 1px solid var(--tun-gray-200);
+  background: #fff; color: var(--tun-navy); font: inherit; font-weight: 600; cursor: pointer; }
+.page-num:hover { border-color: var(--tun-blue); }
+.page-num.active { background: var(--tun-navy); border-color: var(--tun-navy); color: #fff; cursor: default; }
+.page-gap { padding: 0 4px; color: var(--tun-slate); }
 @media (max-width: 900px) {
   .report-layout { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .report-nav { position: static; flex-direction: row; overflow-x: auto; white-space: nowrap; }

@@ -366,6 +366,12 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
+wide screen) with numbered pages under the grid (1 2 3, on long lists
+1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again
+on page 1, and the page is kept in the address (`?page=3`), so going back from
+an add-on returns to it.
+
 **Add-on choice (S1.14.0):** deliveries and delivery templates no longer list
 every add-on in one drop-down. "Choose add-ons" opens an in-page dialog: search
 by name, ID or author, filters public / private / only mine and category, 25,
