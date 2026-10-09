@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>{0} toimitusta luotu.</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>Ei toimitettu: {0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Lisäosat lisätty. Jokainen asiakas, jolla on tämä malli, saa ne.</value></data>
+  <data name="Highlight" xml:space="preserve"><value>Nosto</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>Merkitse nostoksi</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>Poista nosto</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>Merkitty nostoksi. Se näkyy nyt ensimmäisenä ja korostettuna.</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>Nosto poistettu.</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>Enintään 9 lisäosaa voi olla nostoja.</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Vain julkiset lisäosat voivat olla nostoja.</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>Nostot: {0}/{1}. Nostetut lisäosat näkyvät ensimmäisinä ensimmäisellä sivulla korostettuina. Merkitse tai poista ne ruudun tähtipainikkeella.</value></data>
 </root>

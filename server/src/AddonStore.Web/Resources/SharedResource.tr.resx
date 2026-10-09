@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>{0} teslimat oluşturuldu.</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>Teslim edilmedi: {0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Eklentiler eklendi. Bu şablona sahip her müşteri bunları alır.</value></data>
+  <data name="Highlight" xml:space="preserve"><value>Öne çıkan</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>Öne çıkar</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>Öne çıkarmayı kaldır</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>Öne çıkarıldı. Artık ilk sırada ve parlak şekilde gösteriliyor.</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>Öne çıkarma kaldırıldı.</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>En fazla 9 eklenti öne çıkarılabilir.</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Yalnızca herkese açık eklentiler öne çıkarılabilir.</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>Öne çıkanlar: {0} / {1}. Öne çıkan eklentiler ilk sayfada en başta ve parlak şekilde gösterilir. Bir kutucuktaki yıldız düğmesiyle işaretleyin veya kaldırın.</value></data>
 </root>

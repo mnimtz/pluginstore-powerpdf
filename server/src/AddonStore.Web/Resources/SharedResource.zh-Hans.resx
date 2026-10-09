@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>已创建 {0} 项交付。</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>未交付：{0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>已添加加载项。拥有此模板的每个客户都会收到它们。</value></data>
+  <data name="Highlight" xml:space="preserve"><value>精选</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>设为精选</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>取消精选</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>已设为精选。它现在显示在最前面并带有高亮效果。</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>已取消精选。</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>最多只能有 9 个精选加载项。</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>只有公开的加载项才能设为精选。</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>精选：{0}/{1}。精选加载项显示在第一页最前面并带有高亮效果。使用磁贴上的星形按钮设置或取消。</value></data>
 </root>

@@ -400,6 +400,21 @@ svg.spark polyline { fill: none; stroke: var(--tun-blue); stroke-width: 1.6; vec
 .pager[hidden] { display: none; }
 .pager-sizes b { color: var(--tun-navy); }
 .pager-pages { display: flex; gap: 10px; align-items: center; }
+/* start page highlights (S1.16.0): frame in the PDF gradient of the brand book, a soft glow, a light sweep */
+.pkg.featured { position: relative; overflow: hidden; border: 2px solid transparent;
+  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(135deg, #00EB86, #00A0FB) border-box;
+  box-shadow: 0 8px 26px rgba(0, 160, 251, .22), 0 0 0 4px rgba(0, 235, 134, .08); }
+.pkg.featured::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, .55) 50%, transparent 65%);
+  transform: translateX(-120%); animation: pp-sweep 7s ease-in-out 1.5s infinite; }
+@keyframes pp-sweep { 0% { transform: translateX(-120%); } 18%, 100% { transform: translateX(120%); } }
+@media (prefers-reduced-motion: reduce) { .pkg.featured::after { animation: none; display: none; } }
+.badge.highlight { align-self: flex-start; background: linear-gradient(90deg, #00EB86, #00A0FB); color: var(--tun-navy);
+  font-weight: 700; letter-spacing: .02em; }
+.hl-form { display: inline; margin: 0; }
+.hl-toggle.on { color: var(--tun-navy); border-color: #00A0FB; }
+.hl-toggle span { color: #00A0FB; }
+
 /* numbered catalog pages on the start page (S1.14.1) */
 .pkg-pager { justify-content: center; flex-direction: column; gap: 8px; }
 .pkg-pager .pager-pages { flex-wrap: wrap; justify-content: center; }

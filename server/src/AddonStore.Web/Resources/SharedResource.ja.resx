@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>{0} 件の配信を作成しました。</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>配信されなかったもの: {0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>アドオンを追加しました。このテンプレートを持つすべての顧客が受け取ります。</value></data>
+  <data name="Highlight" xml:space="preserve"><value>おすすめ</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>おすすめにする</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>おすすめから外す</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>おすすめにしました。先頭に目立つ表示で並びます。</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>おすすめから外しました。</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>おすすめにできるアドオンは最大 9 個です。</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>おすすめにできるのは公開アドオンだけです。</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>おすすめ: {0} / {1}。おすすめのアドオンは最初のページの先頭に目立つ表示で並びます。タイルの星ボタンで設定または解除します。</value></data>
 </root>

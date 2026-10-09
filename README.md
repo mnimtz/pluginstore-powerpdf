@@ -366,6 +366,14 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Start page highlights (S1.16.0):** admins mark public add-ons as highlights
+with the star button on a catalog tile (or `PATCH /api/packages/{id}
+{"featured": true}`). Highlights come first, in the order they were marked, so
+on the first page, with a frame in the PDF gradient of the brand book, a soft
+glow, a slow light sweep (off with reduced motion) and a "Highlight" badge. At
+most 9 (one page); private add-ons and the store client cannot be highlights;
+the JSON catalog reports `featured`; every change is in the audit log.
+
 **Store client comes with the server (S1.15.0):** every client release puts its
 package and source ZIP into `packaging/client-bundle/` (`python
 tools/bundle_client.py <version>`, committed with the `C1.x.y:` commit), and the

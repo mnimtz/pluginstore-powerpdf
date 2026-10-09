@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>已建立 {0} 項交付。</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>未交付：{0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>已新增增益集。擁有此範本的每個客戶都會收到它們。</value></data>
+  <data name="Highlight" xml:space="preserve"><value>精選</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>設為精選</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>取消精選</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>已設為精選。它現在顯示在最前面並帶有醒目效果。</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>已取消精選。</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>最多只能有 9 個精選增益集。</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>只有公開的增益集才能設為精選。</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>精選：{0}/{1}。精選增益集顯示在第一頁最前面並帶有醒目效果。使用圖格上的星形按鈕設定或取消。</value></data>
 </root>

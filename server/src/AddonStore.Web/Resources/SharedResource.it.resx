@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>{0} distribuzioni create.</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>Non distribuiti: {0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Componenti aggiuntivi aggiunti. Ogni cliente con questo modello li riceve.</value></data>
+  <data name="Highlight" xml:space="preserve"><value>In evidenza</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>Metti in evidenza</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>Togli dall'evidenza</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>Messo in evidenza. Ora compare per primo e risalta.</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>Tolto dall'evidenza.</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>Al massimo 9 componenti aggiuntivi possono essere in evidenza.</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Solo i componenti aggiuntivi pubblici possono essere in evidenza.</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>In evidenza: {0} di {1}. I componenti in evidenza compaiono per primi, nella prima pagina, e risaltano. Aggiungili o toglili con il pulsante a stella di una scheda.</value></data>
 </root>

@@ -242,6 +242,9 @@ public class Package
     public DateTime? BlockedAt { get; set; }
     public string? BlockReason { get; set; }
     public string? BlockedBy { get; set; }
+    /// <summary>Highlight of the start page (S1.16.0), set by an admin: highlights come first, on the first page, and glow.</summary>
+    public DateTime? FeaturedAt { get; set; }
+    public string? FeaturedBy { get; set; }
 }
 
 public enum VersionStatus

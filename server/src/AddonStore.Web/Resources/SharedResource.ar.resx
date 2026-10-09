@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>تم إنشاء {0} من عمليات التسليم.</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>لم يتم التسليم: {0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>تمت إضافة الوظائف الإضافية. يحصل عليها كل عميل لديه هذا القالب.</value></data>
+  <data name="Highlight" xml:space="preserve"><value>مميّز</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>تمييز</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>إلغاء التمييز</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>تم التمييز. يظهر الآن أولًا مع إبراز.</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>تم إلغاء التمييز.</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>يمكن تمييز 9 وظائف إضافية على الأكثر.</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>يمكن تمييز الوظائف الإضافية العامة فقط.</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>المميّزة: {0} من {1}. تظهر الوظائف الإضافية المميّزة أولًا في الصفحة الأولى مع إبراز. ميّزها أو ألغِ تمييزها بزر النجمة على أي بطاقة.</value></data>
 </root>

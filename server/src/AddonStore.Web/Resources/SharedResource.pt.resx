@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>{0} entregas criadas.</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>Não entregues: {0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Suplementos adicionados. Cada cliente com este modelo recebe-os.</value></data>
+  <data name="Highlight" xml:space="preserve"><value>Destaque</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>Marcar como destaque</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>Remover destaque</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>Marcado como destaque. Aparece agora em primeiro lugar, realçado.</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>Destaque removido.</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>No máximo 9 suplementos podem ser destaque.</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Só os suplementos públicos podem ser destaque.</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>Destaques: {0} de {1}. Os suplementos em destaque aparecem primeiro, na primeira página, realçados. Marque-os ou remova-os com o botão de estrela de um mosaico.</value></data>
 </root>

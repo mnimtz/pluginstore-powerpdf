@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>{0} leveringen aangemaakt.</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>Niet geleverd: {0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Add-ons toegevoegd. Elke klant met deze sjabloon krijgt ze.</value></data>
+  <data name="Highlight" xml:space="preserve"><value>Uitgelicht</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>Uitlichten</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>Niet meer uitlichten</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>Uitgelicht. Het staat nu vooraan en springt eruit.</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>Niet meer uitgelicht.</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>Maximaal 9 add-ons kunnen uitgelicht zijn.</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Alleen openbare add-ons kunnen uitgelicht zijn.</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>Uitgelicht: {0} van {1}. Uitgelichte add-ons staan vooraan op de eerste pagina en springen eruit. Markeer of verwijder ze met de sterknop op een tegel.</value></data>
 </root>

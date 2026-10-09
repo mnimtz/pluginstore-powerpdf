@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>{0} livraisons créées.</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>Non livré : {0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Modules ajoutés. Chaque client ayant ce modèle les reçoit.</value></data>
+  <data name="Highlight" xml:space="preserve"><value>À la une</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>Mettre à la une</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>Retirer de la une</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>Mis à la une. Il apparaît maintenant en premier, en surbrillance.</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>Retiré de la une.</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>9 modules au maximum peuvent être à la une.</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Seuls les modules publics peuvent être à la une.</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>À la une : {0} sur {1}. Les modules à la une apparaissent en premier, sur la première page, en surbrillance. Ajoutez-les ou retirez-les avec le bouton étoile d'une vignette.</value></data>
 </root>

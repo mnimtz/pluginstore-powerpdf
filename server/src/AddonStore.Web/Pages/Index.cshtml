@@ -74,11 +74,23 @@ else
             <p class="muted small">@L["Suggested by AI from the add-on descriptions; please check the details."]</p>
         </div>
     }
+    @if (Model.Notice is not null)
+    {
+        <div class="alert @(Model.NoticeError ? "error" : "ok")" role="status">@L[Model.Notice]</div>
+    }
+    @if (Model.IsAdmin)
+    {
+        <p class="muted small" style="margin:0 0 10px">@L["Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile.", Model.HighlightCount, AddonStore.Web.Services.Highlights.Max]</p>
+    }
     <div class="grid" id="pkg-grid">
         @foreach (var item in Model.Items)
         {
-            <div class="card pkg" data-cat="@item.Category" data-id="@item.Id"
+            <div class="card pkg@(item.Featured ? " featured" : "")" data-cat="@item.Category" data-id="@item.Id"
                  data-text="@(item.Name.ToLowerInvariant()) @(item.Id) @(item.Description.ToLowerInvariant()) @(item.Author.ToLowerInvariant())">
+                @if (item.Featured)
+                {
+                    <span class="badge highlight"><span aria-hidden="true">★</span> @L["Highlight"]</span>
+                }
                 <span class="name">@item.Name</span>
                 <partial name="_Stars" model="(item.Rating, item.RatingCount)" />
                 <span class="meta">
@@ -97,6 +109,15 @@ else
                        title="@L["Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)."]">@L["Install in Power PDF"]</a>
                     <a class="btn small secondary share-link" href="/a/@Model.Slugs[item.Id]"
                        title="@L["Own page of this add-on with a link to send to customers"]">@L["Share link"]</a>
+                    @if (Model.IsAdmin)
+                    {
+                        <form method="post" asp-page-handler="Highlight" class="hl-form">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="hidden" name="on" value="@(item.Featured ? "false" : "true")" />
+                            <button type="submit" class="btn small secondary hl-toggle@(item.Featured ? " on" : "")" aria-pressed="@(item.Featured ? "true" : "false")"
+                                    title="@L[item.Featured ? "Remove highlight" : "Mark as highlight"]"><span aria-hidden="true">★</span> @L[item.Featured ? "Remove highlight" : "Mark as highlight"]</button>
+                        </form>
+                    }
                     <span class="client-hint" hidden>
                         @L["Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again."]
                         @if (Model.ClientDownloadUrl is not null)

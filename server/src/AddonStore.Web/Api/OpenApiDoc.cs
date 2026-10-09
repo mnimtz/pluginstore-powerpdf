@@ -300,6 +300,8 @@ public static class OpenApiDoc
                 ["author"] = new JsonObject { ["type"] = new JsonArray("string", "null") },
                 ["contactEmail"] = new JsonObject { ["type"] = new JsonArray("string", "null") },
                 ["category"] = new JsonObject { ["type"] = new JsonArray("string", "null"), ["description"] = "Slug from GET /api/categories" },
+                ["visibility"] = new JsonObject { ["enum"] = new JsonArray("public", "private"), ["description"] = "public (catalog) or private (customer deliveries only)" },
+                ["featured"] = new JsonObject { ["type"] = "boolean", ["description"] = "Admins only (S1.16.0): start page highlight, public add-ons, at most 9" },
             },
         },
         ["Rating"] = new JsonObject

@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>Vytvořená doručení: {0}.</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>Nedoručeno: {0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Doplňky přidány. Každý zákazník s touto šablonou je dostane.</value></data>
+  <data name="Highlight" xml:space="preserve"><value>Zvýrazněno</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>Zvýraznit</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>Zrušit zvýraznění</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>Zvýrazněno. Nyní se zobrazuje jako první a vyniká.</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>Zvýraznění zrušeno.</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>Zvýrazněno může být nejvýše 9 doplňků.</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Zvýraznit lze jen veřejné doplňky.</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>Zvýrazněné: {0} z {1}. Zvýrazněné doplňky jsou první na první stránce a vynikají. Označte je nebo zrušte tlačítkem s hvězdou na dlaždici.</value></data>
 </root>

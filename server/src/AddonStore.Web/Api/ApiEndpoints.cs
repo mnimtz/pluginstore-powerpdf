@@ -1371,7 +1371,7 @@ public static class ApiEndpoints
         });
 
         api.MapPatch("/packages/{id}", async (string id, HttpContext ctx, UserManager<AppUser> users,
-            AppDbContext db, PackageMetaService meta) =>
+            AppDbContext db, PackageMetaService meta, AuditService audit) =>
         {
             var user = await RequireUserAsync(ctx, users);
             if (user is null) return Unauthorized();
@@ -1395,6 +1395,7 @@ public static class ApiEndpoints
             }
 
             var change = new MetaChange();
+            bool? featured = null;   // start page highlight (S1.16.0): admins only
             Dictionary<string, string>? Map(JsonElement el) => el.ValueKind == JsonValueKind.Object
                 ? el.EnumerateObject().Where(p => p.Value.ValueKind == JsonValueKind.String)
                     .GroupBy(p => p.Name).ToDictionary(g => g.Key, g => g.Last().Value.GetString() ?? "")
@@ -1425,13 +1426,23 @@ public static class ApiEndpoints
                     case "visibility":
                         change.SetVisibility = true; change.Visibility = v.ValueKind == JsonValueKind.String ? v.GetString() : null;
                         break;
+                    case "featured":
+                        if (v.ValueKind is not (JsonValueKind.True or JsonValueKind.False))
+                            typeErrors.Add(new("METADATA_INVALID", "error", "'featured' must be true or false.", "Example: {\"featured\": true}."));
+                        else if (!ctx.User.IsInRole("Admin"))
+                            typeErrors.Add(new("METADATA_INVALID", "error", "Only administrators set start page highlights.", "Leave 'featured' out of the request."));
+                        else featured = v.GetBoolean();
+                        break;
                     default:
-                        typeErrors.Add(new("METADATA_INVALID", "error", $"Unknown field '{prop.Name}'.", "Allowed fields: name, description, author, contactEmail, category, visibility."));
+                        typeErrors.Add(new("METADATA_INVALID", "error", $"Unknown field '{prop.Name}'.", "Allowed fields: name, description, author, contactEmail, category, visibility, featured (admins)."));
                         break;
                 }
             }
 
+            if (typeErrors.Count == 0 && featured is { } on && await Highlights.CheckAsync(db, pkg, on) is { } hlErr)
+                typeErrors.Add(new("METADATA_INVALID", "error", hlErr, on ? "Remove another highlight first, or keep the add-on public." : ""));
             var issues = typeErrors.Count > 0 ? typeErrors : await meta.ApplyAsync(pkg, user, change);
+            if (featured is { } f && !issues.Any(i => i.Severity == "error")) await Highlights.SetAsync(db, audit, pkg, f, user);
             var findings = issues.Select(i => new { code = i.Code, severity = i.Severity, message = i.Message, hint = i.Hint });
             if (issues.Any(i => i.Severity == "error"))
                 return Results.Json(new { ok = false, error = new { code = "METADATA_INVALID", message = "The catalog entry was not changed.", hint = "Fix every finding with severity 'error' and send the request again." }, findings }, statusCode: 422);
@@ -1444,6 +1455,7 @@ public static class ApiEndpoints
                     id = pkg.Id,
                     name = ParseOrNull(pkg.NameJson), description = ParseOrNull(pkg.DescriptionJson),
                     author = pkg.Author, contactEmail = pkg.ContactEmail, category = pkg.CategoryOverride,
+                    featured = pkg.FeaturedAt is not null,
                     updatedAt = pkg.MetaUpdatedAt, updatedBy = pkg.MetaUpdatedBy,
                     next = "The catalog, the web UI and the Power PDF client show the new values immediately; no new version is needed."
                 }
@@ -1908,6 +1920,7 @@ public static class ApiEndpoints
                 ui = Services.CatalogUi.IsNoUi(root) ? "none" : "ribbon",
                 customer,
                 signature = signing?.Sign(pick.PackageId, pick.Version, pick.Sha256, ZxtNameOf(root)),
+                featured = !isPrivate && pkg?.FeaturedAt is not null,   // start page highlight (S1.16.0)
             };
         }
     }

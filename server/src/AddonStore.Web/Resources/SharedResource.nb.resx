@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>{0} leveranser opprettet.</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>Ikke levert: {0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Tillegg lagt til. Alle kunder med denne malen får dem.</value></data>
+  <data name="Highlight" xml:space="preserve"><value>Fremhevet</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>Fremhev</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>Fjern fremheving</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>Fremhevet. Det vises nå først og lyser opp.</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>Fremheving fjernet.</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>Maks. 9 tillegg kan være fremhevet.</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Bare offentlige tillegg kan fremheves.</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>Fremhevede: {0} av {1}. Fremhevede tillegg vises først på første side og lyser opp. Merk eller fjern dem med stjerneknappen på en flis.</value></data>
 </root>

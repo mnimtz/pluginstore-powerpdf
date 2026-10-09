@@ -1158,6 +1158,12 @@ change them.
   names give the warning `THIRDPARTY_TRADEMARK`.
 - `GET /api/packages/{id}` shows the current `catalogEntry` (null fields come
   from the manifest). Every change is in the audit log.
+- `"featured": true` (admins only, S1.16.0) makes a public add-on a start
+  page highlight: it comes first, so on the first catalog page, with a
+  glowing frame and a "Highlight" badge; `false` removes it. At most 9
+  highlights; private add-ons and the store client cannot be highlights.
+  The JSON catalog reports `featured` per entry. Admins also set it with the
+  star button on a tile of the start page.
 - In the web UI: Plug-ins, then Details, then "Edit catalog entry".
 - Versions you upload later keep the edited catalog entry. To let a new
   manifest's texts show again, reset the fields with `null`.

@@ -19,6 +19,9 @@ public record CatalogItem(string Id, string Name, string Description, string Ver
     public string Customer { get; init; } = "";
     /// <summary>"ui": "none" in the manifest (S1.1.1): no ribbon buttons.</summary>
     public bool NoUi { get; init; }
+    /// <summary>Start page highlight (S1.16.0): when an admin marked it; null = no highlight.</summary>
+    public DateTime? FeaturedAt { get; init; }
+    public bool Featured => FeaturedAt is not null;
 }
 
 public static class CatalogUi
@@ -76,6 +79,7 @@ public static class CatalogUi
             Screenshots = ScreenshotService.Count(pick.ManifestJson),
             Customer = customer,
             NoUi = IsNoUi(doc.RootElement),
+            FeaturedAt = pkg?.Visibility == "private" ? null : pkg?.FeaturedAt,
         };
     }
 

@@ -1307,4 +1307,12 @@
   <data name="{0} deliveries created." xml:space="preserve"><value>{0} leveranser skapade.</value></data>
   <data name="Not delivered: {0}" xml:space="preserve"><value>Inte levererade: {0}</value></data>
   <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Tillägg tillagda. Varje kund med den här mallen får dem.</value></data>
+  <data name="Highlight" xml:space="preserve"><value>Framhävd</value></data>
+  <data name="Mark as highlight" xml:space="preserve"><value>Framhäv</value></data>
+  <data name="Remove highlight" xml:space="preserve"><value>Ta bort framhävning</value></data>
+  <data name="Marked as highlight. It is shown first now, with a glow." xml:space="preserve"><value>Framhävd. Den visas nu först och lyser upp.</value></data>
+  <data name="Highlight removed." xml:space="preserve"><value>Framhävning borttagen.</value></data>
+  <data name="At most 9 add-ons can be highlights." xml:space="preserve"><value>Högst 9 tillägg kan vara framhävda.</value></data>
+  <data name="Only public add-ons can be highlights." xml:space="preserve"><value>Bara offentliga tillägg kan framhävas.</value></data>
+  <data name="Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile." xml:space="preserve"><value>Framhävda: {0} av {1}. Framhävda tillägg visas först på första sidan och lyser upp. Markera eller ta bort dem med stjärnknappen på en ruta.</value></data>
 </root>

@@ -62,6 +62,9 @@ public static class SchemaUpgrade
             "ALTER TABLE Packages ADD COLUMN BlockedAt TEXT NULL",
             "ALTER TABLE Packages ADD COLUMN BlockReason TEXT NULL",
             "ALTER TABLE Packages ADD COLUMN BlockedBy TEXT NULL",
+            // start page highlights (S1.16.0)
+            "ALTER TABLE Packages ADD COLUMN FeaturedAt TEXT NULL",
+            "ALTER TABLE Packages ADD COLUMN FeaturedBy TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN SourceUploadedAt TEXT NULL",
             // audit dossier (S1.3.0)
             "ALTER TABLE PackageVersions ADD COLUMN RulesSnapshotJson TEXT NULL",
