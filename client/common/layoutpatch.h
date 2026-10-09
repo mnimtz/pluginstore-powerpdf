@@ -569,14 +569,172 @@ inline int ResetSharedTabOnFreshInstall(const wchar_t* regKey)
     return written;
 }
 
+// --- groups of the add-ons the store installed (C1.9.4) ----------------------
+// The host merges a plug-in's own "UILayout\Publish Mode.xml" into the user file
+// only when it does not know the toolbar yet. Every profile that ever carried
+// the shared "FeaturePack" tab therefore never receives the group of an add-on
+// installed later: the add-on loads, but its buttons and (when no other group
+// on the tab has a loaded plug-in) the whole "Enhanced Features" tab stay
+// hidden. So the store adds each installed add-on's group itself.
+// The group is rebuilt from checked atom names, never copied as text, so a
+// layout file cannot place anything else into the user's ribbon.
+struct AddonGroup { std::wstring name; std::vector<std::wstring> buttons; std::vector<std::wstring> modes; };
+
+inline bool IsAtomName(const std::wstring& s)
+{
+    if (s.size() < 14 || s.size() > 200 || s.compare(0, 13, L"FeaturePack::") != 0) return false;
+    for (wchar_t c : s)
+        if (!((c >= L'a' && c <= L'z') || (c >= L'A' && c <= L'Z') || (c >= L'0' && c <= L'9') ||
+              c == L':' || c == L'_' || c == L'-' || c == L'.')) return false;
+    return true;
+}
+
+// Value of attr="..." inside the tag text [from, to); empty when absent.
+inline std::wstring AttrIn(const std::wstring& text, size_t from, size_t to, const wchar_t* attr)
+{
+    std::wstring key = std::wstring(L" ") + attr + L"=\"";
+    size_t p = text.find(key, from);
+    if (p == std::wstring::npos || p >= to) return std::wstring();
+    p += key.size();
+    size_t e = text.find(L'"', p);
+    if (e == std::wstring::npos || e > to) return std::wstring();
+    return text.substr(p, e - p);
+}
+
+// Value of name="..." of the root <GaaihoLayout> ("Publish" for the viewer layout).
+inline std::wstring LayoutName(const std::wstring& text)
+{
+    size_t p = text.find(L"<GaaihoLayout");
+    if (p == std::wstring::npos) return std::wstring();
+    size_t gt = text.find(L'>', p);
+    return gt == std::wstring::npos ? std::wstring() : AttrIn(text, p, gt, L"name");
+}
+
+// The groups an add-on's own layout puts on the shared tab.
+inline void AddonGroupsFrom(const std::wstring& text, std::vector<AddonGroup>& out)
+{
+    size_t tb = text.find(L"<toolbar name=\"FeaturePack\"");
+    if (tb == std::wstring::npos) return;
+    size_t tbEnd = text.find(L"</toolbar>", tb);
+    if (tbEnd == std::wstring::npos) return;
+    for (size_t g = text.find(L"<PFFGroup", tb); g != std::wstring::npos && g < tbEnd; g = text.find(L"<PFFGroup", g + 1))
+    {
+        size_t gt = text.find(L'>', g);
+        if (gt == std::wstring::npos || gt > tbEnd || text[gt - 1] == L'/') continue;
+        size_t gEnd = text.find(L"</PFFGroup>", gt);
+        if (gEnd == std::wstring::npos || gEnd > tbEnd) break;
+        AddonGroup ag;
+        ag.name = AttrIn(text, g, gt, L"name");
+        if (!IsAtomName(ag.name)) continue;
+        for (size_t b = text.find(L"<PFFButton", gt); b != std::wstring::npos && b < gEnd; b = text.find(L"<PFFButton", b + 1))
+        {
+            size_t bt = text.find(L'>', b);
+            if (bt == std::wstring::npos || bt > gEnd) break;
+            std::wstring n = AttrIn(text, b, bt, L"name"), m = AttrIn(text, b, bt, L"IconMode");
+            if (!IsAtomName(n) || ag.buttons.size() >= 40) continue;
+            if (m.size() != 1 || m[0] < L'1' || m[0] > L'9') m = L"4";
+            ag.buttons.push_back(n);
+            ag.modes.push_back(m);
+        }
+        if (!ag.buttons.empty() && out.size() < 200) out.push_back(ag);
+    }
+}
+
+// Every add-on in Plug-Ins that the store installed: <Name>.zxt next to a folder
+// <Name> with manifest.json and UILayout\Publish Mode.xml.
+inline std::vector<AddonGroup> InstalledAddonGroups(const std::wstring& pluginsDir)
+{
+    std::vector<AddonGroup> out;
+    if (pluginsDir.empty()) return out;
+    WIN32_FIND_DATAW fd;
+    HANDLE h = FindFirstFileW((pluginsDir + L"\\*").c_str(), &fd);
+    if (h == INVALID_HANDLE_VALUE) return out;
+    do
+    {
+        std::wstring name = fd.cFileName;
+        if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) || name.empty() || name[0] == L'.') continue;
+        std::wstring dir = pluginsDir + L"\\" + name;
+        if (GetFileAttributesW((pluginsDir + L"\\" + name + L".zxt").c_str()) == INVALID_FILE_ATTRIBUTES ||
+            GetFileAttributesW((dir + L"\\manifest.json").c_str()) == INVALID_FILE_ATTRIBUTES) continue;
+        std::wstring text; bool utf16 = false;
+        if (ReadTextFile(dir + L"\\UILayout\\Publish Mode.xml", text, utf16)) AddonGroupsFrom(text, out);
+    } while (FindNextFileW(h, &fd));
+    FindClose(h);
+    return out;
+}
+
+// Adds the groups (and buttons missing from a group) to the shared tab of the
+// viewer layout. Returns true when text changed.
+inline bool EnsureAddonGroups(std::wstring& text, const std::vector<AddonGroup>& groups)
+{
+    if (groups.empty() || LayoutName(text) != L"Publish") return false;
+    bool changed = false;
+    if (text.find(L"<toolbar name=\"FeaturePack\"") == std::wstring::npos)
+    {
+        size_t at = text.find(std::wstring(L"<toolbar name=\"") + kStoreToolbar + L"\"");
+        if (at == std::wstring::npos)
+        {
+            size_t top = text.find(L"<Top");
+            at = top == std::wstring::npos ? std::wstring::npos : text.find(L"</Top>", top);
+        }
+        if (at == std::wstring::npos) return false;
+        text.insert(at, L"<toolbar name=\"FeaturePack\" shortKey=\"U\">\n</toolbar>\n");
+        changed = true;
+    }
+    size_t tb = text.find(L"<toolbar name=\"FeaturePack\"");
+    size_t gt = text.find(L'>', tb);
+    if (gt == std::wstring::npos) return changed;
+    if (text[gt - 1] == L'/')   // <toolbar name="FeaturePack" .../>
+    {
+        size_t slash = gt - 1;
+        while (slash > tb && text[slash - 1] == L' ') --slash;
+        text.replace(slash, gt + 1 - slash, L">\n</toolbar>");
+        changed = true;
+    }
+    for (const auto& g : groups)
+    {
+        size_t tbEnd = text.find(L"</toolbar>", tb);
+        if (tbEnd == std::wstring::npos) break;
+        std::wstring grpTag = std::wstring(L"<PFFGroup name=\"") + g.name + L"\"";
+        size_t grp = text.find(grpTag);
+        if (grp == std::wstring::npos)
+        {
+            std::wstring block = grpTag + L" GroupType=\"PFFTitleBlock\">\n";
+            for (size_t i = 0; i < g.buttons.size(); ++i)
+                block += L"<PFFButton name=\"" + g.buttons[i] + L"\" IconMode=\"" + g.modes[i] + L"\"/>\n";
+            block += L"</PFFGroup>\n";
+            text.insert(tbEnd, block);
+            changed = true;
+            continue;
+        }
+        size_t open = text.find(L'>', grp);
+        if (open == std::wstring::npos || text[open - 1] == L'/') continue;   // a self-closing group is left alone
+        size_t grpEnd = text.find(L"</PFFGroup>", open);
+        if (grpEnd == std::wstring::npos) continue;
+        for (size_t i = 0; i < g.buttons.size(); ++i)
+        {
+            std::wstring needle = L"<PFFButton name=\"" + g.buttons[i] + L"\"";
+            size_t f = text.find(needle, open);
+            if (f != std::wstring::npos && f < grpEnd) continue;
+            std::wstring ins = needle + L" IconMode=\"" + g.modes[i] + L"\"/>\n";
+            text.insert(grpEnd, ins);
+            grpEnd += ins.size();
+            changed = true;
+        }
+    }
+    return changed;
+}
+
 // Runs at every start: makes sure our group exists in the merged toolbar and
 // that the buttons carry IconMode="4" — so an installation whose layout was
 // merged before this pack existed repairs itself. Returns files written.
-inline int ApplyButtons()
+// pluginsDir (C1.9.4): Power PDF's Plug-Ins folder, for the groups of installed add-ons.
+inline int ApplyButtons(const std::wstring& pluginsDir = std::wstring())
 {
     int written = 0;
     std::vector<std::wstring> files;
     CollectLayoutFiles(UserLayoutDir(), files);
+    const std::vector<AddonGroup> addons = InstalledAddonGroups(pluginsDir);
 
     for (size_t i = 0; i < files.size(); ++i)
     {
@@ -596,6 +754,7 @@ inline int ApplyButtons()
         if (PatchButtons(text)) changed = true;
         if (EnsureHelpGroup(text)) changed = true;   // C1.7.0
         if (CleanLeftPanel(text)) changed = true;   // never touch the native <Left> bar; strip old entries
+        if (EnsureAddonGroups(text, addons)) changed = true;   // C1.9.4: groups the host never merged
         if (!changed) continue;
 
         // One pristine copy from before we ever touched it.

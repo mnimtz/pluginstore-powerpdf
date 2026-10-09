@@ -12,6 +12,7 @@
 #include "loc.h"
 #include "version.h"
 #include "layoutpatch.h"
+#include "powerpdfpath.h"
 #include "../store/settings.h"
 #include "../store/link.h"
 #include "logging.h"
@@ -40,6 +41,13 @@ static DUText MakeDUText(const wchar_t* s)
 // The tab title IS localized and IDENTICAL to the Feature Pack's, so all
 // store plug-ins land on ONE shared "Enhanced Features" tab.
 static std::wstring TabTitle() { return FPLoc(IDS_PS_TAB_STORE); }
+
+// Power PDF's Plug-Ins folder (C1.9.4: the layout repair adds the groups of installed add-ons)
+static std::wstring PluginsFolder()
+{
+    std::wstring bin = cspath::FindBin((HMODULE)gHINSTANCE);
+    return bin.empty() ? std::wstring() : bin + L"\\Plug-Ins";
+}
 
 DCCB1 DUBool DCCB2 PluginInit()
 {
@@ -79,7 +87,7 @@ DCCB1 DUBool DCCB2 PluginInit()
 
     DURING PSLinkInit(); HANDLER END_HANDLER
 
-    int fixed = fplayout::ApplyButtons();
+    int fixed = fplayout::ApplyButtons(PluginsFolder());
     FPLogW(L"[Store] v%s ready, layout repaired: %d file(s)", FP_VERSION_W, fixed);
     return true;
 }
@@ -88,7 +96,7 @@ DCCB1 DUBool DCCB2 PluginInit()
 // re-applying at shutdown keeps the Add-on Store group last for the next start.
 DCCB1 DUBool DCCB2 PluginUnload()
 {
-    DURING fplayout::ApplyButtons(); HANDLER END_HANDLER
+    DURING fplayout::ApplyButtons(PluginsFolder()); HANDLER END_HANDLER
     DURING PSLinkShutdown(); HANDLER END_HANDLER
     return true;
 }

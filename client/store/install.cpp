@@ -5,6 +5,7 @@
 #include "catalog.h"
 #include "http.h"
 #include "powerpdfpath.h"
+#include "layoutpatch.h"
 #include "logging.h"
 #include "settings.h"
 #include "signature.h"
@@ -369,6 +370,13 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
     if (code == 8) FPLogW(L"[Store] package %s has no x64\\%s.zxt", e.id.c_str(), e.zxtName.c_str());
 
     DeleteFileW(ppak.c_str());
+    // C1.9.4: the add-on's group into the user's ribbon layout right away (user context, no admin):
+    // the host merges it only into a profile that does not know the shared tab yet
+    if (result == 0)
+    {
+        int fixed = fplayout::ApplyButtons(pluginsDir);
+        if (fixed > 0) FPLogW(L"[Store] ribbon layout: group of %s added (%d file(s))", e.zxtName.c_str(), fixed);
+    }
     FPLogW(L"[Store] install %s %s -> %d", e.id.c_str(), e.version.c_str(), result);
     return result;
 }
