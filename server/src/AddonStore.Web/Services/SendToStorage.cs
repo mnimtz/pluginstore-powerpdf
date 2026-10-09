@@ -214,7 +214,10 @@ public sealed class SendToStorage
         try
         {
             var c = (await ContainerAsync())!;
-            await c.CreateIfNotExistsAsync(PublicAccessType.None, cancellationToken: ct);
+            // A SAS for the container alone may not create containers (403): then the
+            // container has to exist already, which the write below proves.
+            try { await c.CreateIfNotExistsAsync(PublicAccessType.None, cancellationToken: ct); }
+            catch (RequestFailedException e) when (e.Status == 403) { }
             var probe = c.GetBlobClient("probe/" + Guid.NewGuid().ToString("N"));
             await probe.UploadAsync(new BinaryData(new byte[] { 1, 2, 3 }), overwrite: true, ct);
             var back = await probe.DownloadContentAsync(ct);

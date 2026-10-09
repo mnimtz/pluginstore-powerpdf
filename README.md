@@ -366,6 +366,10 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Send to storage test (S1.17.1):** "Test connection" no longer stops when a
+SAS for the container alone may not create the container (HTTP 403); the
+container must then exist, which the write test proves.
+
 **Send to (S1.17.0, off by default):** server side of the "Send to" add-on:
 Power PDF users exchange documents with contacts they confirmed by e-mail,
 end-to-end encrypted, relayed through the store's own Blob container. Nothing
