@@ -196,6 +196,7 @@ builder.Services.AddHostedService<PowerPdfUpdateScheduler>();
 builder.Services.AddScoped<InventoryService>();            // existing customers (S1.10.0)
 builder.Services.AddScoped<TemplateService>();             // delivery templates (S1.13.0)
 builder.Services.AddHostedService<InventoryWorker>();
+builder.Services.AddHostedService<ClientBundleWorker>();   // S1.15.0: the store client comes with the server
 builder.Services.AddScoped<PackageMetaService>();
 builder.Services.AddScoped<VersionActionService>();
 builder.Services.AddScoped<CategoryService>();

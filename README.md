@@ -366,6 +366,19 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Store client comes with the server (S1.15.0):** every client release puts its
+package and source ZIP into `packaging/client-bundle/` (`python
+tools/bundle_client.py <version>`, committed with the `C1.x.y:` commit), and the
+container image carries the folder (`ClientBundle__Path=/app/client-bundle`). A
+server that knows no client yet, or only older ones, releases the bundled one
+about 20 seconds after its start through the normal upload path (same checks,
+client lane, source stored, audit `client.bundle.imported`, staff email), and
+looks again every 10 minutes (every minute while no administrator exists yet).
+A version that exists in any status, also one withdrawn on purpose, is never
+taken again; a bundle that fails the checks is logged (`client.bundle.failed`)
+and not tried again until the next start. An empty `ClientBundle__Path` switches
+the import off (local development and tests).
+
 **Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
 wide screen) with numbered pages under the grid (1 2 3, on long lists
 1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again
