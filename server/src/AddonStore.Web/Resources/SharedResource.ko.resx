@@ -1519,4 +1519,6 @@
   <data name="Contact reports" xml:space="preserve">
     <value>신고</value>
   </data>
+  <data name="Add-on Store for Tungsten Power PDF SaaS" xml:space="preserve"><value>Tungsten Power PDF SaaS용 Add-on Store</value></data>
+  <data name="For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)." xml:space="preserve"><value>Tungsten Power PDF Business SaaS 에디션(로그인하여 사용하는 Power PDF) 전용입니다.</value></data>
 </root>

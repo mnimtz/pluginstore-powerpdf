@@ -126,7 +126,7 @@ public static class OpenApiDoc
         new("get", "/api/sendto/invitations", "sendToInvitations", "Send to: sent and received invitations.", "device", Array.Empty<string>()),
         new("post", "/api/sendto/invitations/{id}/accept", "sendToAccept", "Send to: accept a received invitation.", "device", new[] { "id:path:invitation id" }),
         new("post", "/api/sendto/invitations/{id}/decline", "sendToDecline", "Send to: decline a received invitation.", "device", new[] { "id:path:invitation id" }),
-        new("delete", "/api/sendto/invitations/{id}", "sendToWithdraw", "Send to: withdraw a sent invitation.", "device", new[] { "id:path:invitation id" }),
+        new("delete", "/api/sendto/invitations/{id}", "sendToWithdraw", "Send to: withdraw a sent invitation, also an accepted one whose contact never set up Send to (contacts list status pending_setup, field invitationId).", "device", new[] { "id:path:invitation id" }),
         new("get", "/api/sendto/lists", "sendToLists", "Send to: own distribution lists.", "device", Array.Empty<string>()),
         new("post", "/api/sendto/lists", "sendToCreateList", "Send to: create a list {name, members[], favorite}.", "device", Array.Empty<string>()),
         new("put", "/api/sendto/lists/{id}", "sendToUpdateList", "Send to: change a list.", "device", new[] { "id:path:list id" }),

@@ -240,7 +240,8 @@ public sealed class SendToService
             list.Add(new { userId = id, email = o.Email, name = o.Name, status, since = c.Since });
         }
         foreach (var inv in await _db.SendToInvitations.Where(i => i.FromUserId == userId && i.Status == "accepted" && i.ToUserId == null).ToListAsync())
-            list.Add(new { userId = (string?)null, email = inv.ToEmail, name = inv.ToEmail, status = "pending_setup", since = inv.AnsweredAt });
+            list.Add(new { userId = (string?)null, email = inv.ToEmail, name = inv.ToEmail, status = "pending_setup", since = inv.AnsweredAt,
+                           invitationId = inv.Id });   // S1.17.2: withdrawable (DELETE /api/sendto/invitations/{id})
         return list;
     }
 
@@ -403,7 +404,10 @@ public sealed class SendToService
     {
         var inv = await _db.SendToInvitations.FirstOrDefaultAsync(i => i.Id == id && i.FromUserId == userId)
                   ?? throw new SendToError("INVITATION_NOT_FOUND", "Unknown invitation.", 404);
-        if (inv.Status != "open") throw new SendToError("INVITATION_NOT_OPEN", "The invitation is not open.");
+        // S1.17.2: also one accepted by link whose invitee never set up a device (shown as "pending_setup"):
+        // it would otherwise stay on the inviter's list for good
+        var pendingSetup = inv.Status == "accepted" && inv.ToUserId is null;
+        if (inv.Status != "open" && !pendingSetup) throw new SendToError("INVITATION_NOT_OPEN", "The invitation is not open.");
         inv.Status = "withdrawn";
         await _db.SaveChangesAsync();
     }

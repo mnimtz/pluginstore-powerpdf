@@ -40,7 +40,12 @@ developers do not need them.
 - Contacts come from invitations with mutual confirmation; the inviter has
   agreed by inviting. The invitee accepts in the add-on or on the page from
   the invitation mail (`/sendto/invite/{token}`, the button posts; opening the
-  link changes nothing). Removing a contact ends it in both directions.
+  link changes nothing). Removing a contact ends it in both directions. An
+  invitation accepted on the page by someone who has not set up a device yet
+  shows in the inviter's contacts as `pending_setup` (Send to needs Power PDF
+  with sign-in); it becomes a contact when that address registers a device,
+  and the inviter can withdraw it (`DELETE /api/sendto/invitations/{id}` with
+  its `invitationId`).
 - Transfers: `POST /api/sendto/transfers` with the envelopes of every
   recipient device, then the encrypted blocks with
   `PUT /api/sendto/transfers/{id}/chunks/{n}`. Delivery after the undo window;

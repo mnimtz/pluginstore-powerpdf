@@ -1519,4 +1519,6 @@
   <data name="Contact reports" xml:space="preserve">
     <value>举报</value>
   </data>
+  <data name="Add-on Store for Tungsten Power PDF SaaS" xml:space="preserve"><value>适用于 Tungsten Power PDF SaaS 的 Add-on Store</value></data>
+  <data name="For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)." xml:space="preserve"><value>仅适用于 Tungsten Power PDF Business SaaS 版本（需要登录的 Power PDF）。</value></data>
 </root>

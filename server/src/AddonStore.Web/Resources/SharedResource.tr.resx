@@ -1519,4 +1519,6 @@
   <data name="Contact reports" xml:space="preserve">
     <value>Bildirimler</value>
   </data>
+  <data name="Add-on Store for Tungsten Power PDF SaaS" xml:space="preserve"><value>Tungsten Power PDF SaaS için Add-on Store</value></data>
+  <data name="For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)." xml:space="preserve"><value>Yalnızca Tungsten Power PDF Business SaaS sürümü için (oturum açmalı Power PDF).</value></data>
 </root>

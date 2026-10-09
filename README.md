@@ -376,6 +376,14 @@ end-to-end encrypted, relayed through the store's own Blob container. Nothing
 changes until an admin switches it on under *Settings, Features*; see the
 section *Send to* below.
 
+**SaaS edition on the start page, Send to invitations (S1.17.2):** the start
+page title reads "Add-on Store for Tungsten Power PDF SaaS", with a line that
+the store is for the Business SaaS edition only (21 languages). Send to: an
+invitation accepted on the page by someone who has no device yet
+(`pending_setup` in the inviter's contacts, Power PDF without sign-in) carries
+its `invitationId` and can be withdrawn with `DELETE
+/api/sendto/invitations/{id}`; it no longer stays on the inviter's list for good.
+
 **Start page highlights (S1.16.0):** admins mark public add-ons as highlights
 with the star button on a catalog tile (or `PATCH /api/packages/{id}
 {"featured": true}`). Highlights come first, in the order they were marked, so

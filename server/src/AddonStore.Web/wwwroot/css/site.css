@@ -400,6 +400,9 @@ svg.spark polyline { fill: none; stroke: var(--tun-blue); stroke-width: 1.6; vec
 .pager[hidden] { display: none; }
 .pager-sizes b { color: var(--tun-navy); }
 .pager-pages { display: flex; gap: 10px; align-items: center; }
+/* the edition note under the start page title (S1.17.2) */
+.hero-edition { margin: -4px 0 10px; font-weight: 600; color: #00EB86; }
+
 /* start page highlights (S1.16.0): frame in the PDF gradient of the brand book, a soft glow, a light sweep */
 .pkg.featured { position: relative; overflow: hidden; border: 2px solid transparent;
   background: linear-gradient(#fff, #fff) padding-box, linear-gradient(135deg, #00EB86, #00A0FB) border-box;
