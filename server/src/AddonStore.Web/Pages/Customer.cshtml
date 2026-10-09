@@ -236,29 +236,33 @@
 @if (Model.CanManage)
 {
     <div class="card">
-        <h2 style="margin-top:0">@L["Deliver an add-on"]</h2>
-        @if (Model.Packages.Count == 0)
+        <h2 style="margin-top:0">@L["Deliver add-ons"]</h2>
+        @if (!Model.PickItems.Any(i => !i.Present))
         {
             <p class="muted">@L["No add-on to deliver: every add-on that passed the automatic checks is delivered to this customer already."]</p>
         }
         else
         {
-            <form method="post" asp-page-handler="Deliver" asp-route-id="@c.Id" class="stage-form" id="deliver-form">
-                <div>
-                    <label>@L["Add-on"]</label>
-                    <select name="packageId" id="deliver-pkg">
-                        @foreach (var p in Model.Packages)
-                        {
-                            <option value="@p.Id" data-versions="@string.Join(",", p.Versions)">@p.Name (@p.Id) · @L[p.Visibility == "private" ? "private" : "public"]</option>
-                        }
-                    </select>
+            <form method="post" asp-page-handler="Deliver" asp-route-id="@c.Id" id="deliver-form">
+                <partial name="_AddonPicker" model='new AddonStore.Web.Services.AddonPicker.Model("deliver-pick", "deliver-form", false, "already delivered to this customer", Model.PickItems)' />
+                <div class="stage-form">
+                    @foreach (var (stage, mode) in new[] { ("beta", "latest"), ("live", "fixed") })
+                    {
+                        <div class="stage">
+                            <label>@L[stage == "beta" ? "Beta stage" : "Live stage"]</label>
+                            <select name="@(stage)Mode" style="width:auto">
+                                <option value="latest" selected="@(mode == "latest")">@L["newest"]</option>
+                                <option value="fixed" selected="@(mode == "fixed")">@L["fixed"]</option>
+                                <option value="off">@L["Off"]</option>
+                            </select>
+                        </div>
+                    }
+                    <div><label>@L["From"]</label><input type="date" name="startsAt" /></div>
+                    <div><label>@L["Until"]</label><input type="date" name="endsAt" /></div>
+                    <label style="font-weight:400"><input type="checkbox" name="ownCode" value="true" style="width:auto" /> @L["Also create a code for this add-on only"]</label>
+                    <button type="submit" class="btn cta">@L["Deliver"]</button>
                 </div>
-                <partial name="_StageFields" model='("beta", "latest", (string?)null, Model.Packages[0].Versions)' />
-                <partial name="_StageFields" model='("live", Model.Packages[0].Versions.Count > 0 ? "fixed" : "latest", Model.Packages[0].Versions.FirstOrDefault(), Model.Packages[0].Versions)' />
-                <div><label>@L["From"]</label><input type="date" name="startsAt" /></div>
-                <div><label>@L["Until"]</label><input type="date" name="endsAt" /></div>
-                <label style="font-weight:400"><input type="checkbox" name="ownCode" value="true" style="width:auto" /> @L["Also create a code for this add-on only"]</label>
-                <button type="submit" class="btn cta">@L["Deliver"]</button>
+                <p class="small muted" style="margin:6px 0 0">@L["The stages and the period apply to every chosen add-on; \"fixed\" uses the version chosen per add-on. Each delivery can be changed afterwards."]</p>
             </form>
             <p class="small muted">@L["Private add-ons appear only for customers with a code; public ones are in the catalog for everybody anyway, a delivery fixes their version or, with \"Limit the catalog to its deliveries\", is what the customer may use. Live \"fixed\" keeps the customer on a tested version; \"newest\" follows every released version. Customers get a version only after its approval."]</p>
         }
@@ -307,14 +311,6 @@
             b.addEventListener('click', function () {
                 navigator.clipboard && navigator.clipboard.writeText(b.dataset.code);
                 b.textContent = '✓';
-            });
-        });
-        var sel = document.getElementById('deliver-pkg');
-        if (sel) sel.addEventListener('change', function () {
-            var vs = (sel.selectedOptions[0].dataset.versions || '').split(',');
-            document.querySelectorAll('#deliver-form select.stage-version').forEach(function (s) {
-                s.innerHTML = '';
-                vs.forEach(function (v) { var o = document.createElement('option'); o.value = v; o.textContent = v; s.appendChild(o); });
             });
         });
     })();

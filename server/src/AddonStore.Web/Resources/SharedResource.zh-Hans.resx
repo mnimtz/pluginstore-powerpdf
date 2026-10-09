@@ -1290,4 +1290,21 @@
   <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>已移除模板。其交付已结束。</value></data>
   <data name="Template saved." xml:space="preserve"><value>模板已保存。</value></data>
   <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>此交付现为手动交付；模板不再更改它。</value></data>
+  <data name="Deliver add-ons" xml:space="preserve"><value>交付加载项</value></data>
+  <data name="Choose add-ons" xml:space="preserve"><value>选择加载项</value></data>
+  <data name="Search by name, ID or author" xml:space="preserve"><value>按名称、ID 或作者搜索</value></data>
+  <data name="Only mine" xml:space="preserve"><value>仅我的</value></data>
+  <data name="All categories" xml:space="preserve"><value>所有类别</value></data>
+  <data name="already delivered to this customer" xml:space="preserve"><value>已交付给此客户</value></data>
+  <data name="in this template already; choosing it again changes its version" xml:space="preserve"><value>已在此模板中；再次选择会更改其版本</value></data>
+  <data name="waits for its first approval" xml:space="preserve"><value>正在等待首次批准</value></data>
+  <data name="{0} selected" xml:space="preserve"><value>已选择 {0} 个</value></data>
+  <data name="No add-on matches the search." xml:space="preserve"><value>没有与搜索匹配的加载项。</value></data>
+  <data name="Choose at least one add-on." xml:space="preserve"><value>请至少选择一个加载项。</value></data>
+  <data name="No add-on selected yet." xml:space="preserve"><value>尚未选择加载项。</value></data>
+  <data name="Add the selected add-ons" xml:space="preserve"><value>添加所选加载项</value></data>
+  <data name="The stages and the period apply to every chosen add-on; &quot;fixed&quot; uses the version chosen per add-on. Each delivery can be changed afterwards." xml:space="preserve"><value>阶段和期限适用于每个所选加载项；“固定”使用为每个加载项选择的版本。之后可以单独更改每项交付。</value></data>
+  <data name="{0} deliveries created." xml:space="preserve"><value>已创建 {0} 项交付。</value></data>
+  <data name="Not delivered: {0}" xml:space="preserve"><value>未交付：{0}</value></data>
+  <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>已添加加载项。拥有此模板的每个客户都会收到它们。</value></data>
 </root>

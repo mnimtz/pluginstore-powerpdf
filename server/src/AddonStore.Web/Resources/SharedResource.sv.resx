@@ -1290,4 +1290,21 @@
   <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Mallen har tagits bort från kunden. Dess leveranser har avslutats.</value></data>
   <data name="Template saved." xml:space="preserve"><value>Mall sparad.</value></data>
   <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>Leveransen är nu manuell; mallen ändrar den inte längre.</value></data>
+  <data name="Deliver add-ons" xml:space="preserve"><value>Leverera tillägg</value></data>
+  <data name="Choose add-ons" xml:space="preserve"><value>Välj tillägg</value></data>
+  <data name="Search by name, ID or author" xml:space="preserve"><value>Sök på namn, ID eller författare</value></data>
+  <data name="Only mine" xml:space="preserve"><value>Bara mina</value></data>
+  <data name="All categories" xml:space="preserve"><value>Alla kategorier</value></data>
+  <data name="already delivered to this customer" xml:space="preserve"><value>redan levererat till den här kunden</value></data>
+  <data name="in this template already; choosing it again changes its version" xml:space="preserve"><value>redan i den här mallen; väljs den igen ändras versionen</value></data>
+  <data name="waits for its first approval" xml:space="preserve"><value>väntar på första godkännandet</value></data>
+  <data name="{0} selected" xml:space="preserve"><value>{0} valda</value></data>
+  <data name="No add-on matches the search." xml:space="preserve"><value>Inget tillägg matchar sökningen.</value></data>
+  <data name="Choose at least one add-on." xml:space="preserve"><value>Välj minst ett tillägg.</value></data>
+  <data name="No add-on selected yet." xml:space="preserve"><value>Inget tillägg valt ännu.</value></data>
+  <data name="Add the selected add-ons" xml:space="preserve"><value>Lägg till de valda tilläggen</value></data>
+  <data name="The stages and the period apply to every chosen add-on; &quot;fixed&quot; uses the version chosen per add-on. Each delivery can be changed afterwards." xml:space="preserve"><value>Stegen och perioden gäller för varje valt tillägg; ”fast” använder den version som valts för varje tillägg. Varje leverans kan ändras efteråt.</value></data>
+  <data name="{0} deliveries created." xml:space="preserve"><value>{0} leveranser skapade.</value></data>
+  <data name="Not delivered: {0}" xml:space="preserve"><value>Inte levererade: {0}</value></data>
+  <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Tillägg tillagda. Varje kund med den här mallen får dem.</value></data>
 </root>

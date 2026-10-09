@@ -1290,4 +1290,21 @@
   <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Szablon odłączony od klienta. Jego dostawy zostały zakończone.</value></data>
   <data name="Template saved." xml:space="preserve"><value>Zapisano szablon.</value></data>
   <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>Dostawa jest teraz ręczna; szablon już jej nie zmienia.</value></data>
+  <data name="Deliver add-ons" xml:space="preserve"><value>Dostarcz dodatki</value></data>
+  <data name="Choose add-ons" xml:space="preserve"><value>Wybierz dodatki</value></data>
+  <data name="Search by name, ID or author" xml:space="preserve"><value>Szukaj według nazwy, identyfikatora lub autora</value></data>
+  <data name="Only mine" xml:space="preserve"><value>Tylko moje</value></data>
+  <data name="All categories" xml:space="preserve"><value>Wszystkie kategorie</value></data>
+  <data name="already delivered to this customer" xml:space="preserve"><value>już dostarczony temu klientowi</value></data>
+  <data name="in this template already; choosing it again changes its version" xml:space="preserve"><value>już w tym szablonie; ponowny wybór zmienia wersję</value></data>
+  <data name="waits for its first approval" xml:space="preserve"><value>czeka na pierwsze zatwierdzenie</value></data>
+  <data name="{0} selected" xml:space="preserve"><value>Wybrano: {0}</value></data>
+  <data name="No add-on matches the search." xml:space="preserve"><value>Żaden dodatek nie pasuje do wyszukiwania.</value></data>
+  <data name="Choose at least one add-on." xml:space="preserve"><value>Wybierz co najmniej jeden dodatek.</value></data>
+  <data name="No add-on selected yet." xml:space="preserve"><value>Nie wybrano jeszcze żadnego dodatku.</value></data>
+  <data name="Add the selected add-ons" xml:space="preserve"><value>Dodaj wybrane dodatki</value></data>
+  <data name="The stages and the period apply to every chosen add-on; &quot;fixed&quot; uses the version chosen per add-on. Each delivery can be changed afterwards." xml:space="preserve"><value>Etapy i okres obowiązują dla każdego wybranego dodatku; „stała” używa wersji wybranej dla danego dodatku. Każdą dostawę można później zmienić.</value></data>
+  <data name="{0} deliveries created." xml:space="preserve"><value>Utworzono dostawy: {0}.</value></data>
+  <data name="Not delivered: {0}" xml:space="preserve"><value>Nie dostarczono: {0}</value></data>
+  <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Dodano dodatki. Każdy klient z tym szablonem je otrzyma.</value></data>
 </root>

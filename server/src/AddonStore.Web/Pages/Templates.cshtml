@@ -56,37 +56,12 @@
                 }
             </table></div>
         }
-        @if (Model.CanEdit && Model.Packages.Count > 0)
+        @if (Model.CanEdit && Model.PickItems.Count > 0)
         {
-            <form method="post" asp-page-handler="Add" asp-route-id="@v.Template.Id" style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-top:12px">
-                <div style="flex:1;min-width:240px"><label>@L["Add-on"]</label>
-                    <select name="packageId" id="tpl-pkg" style="width:100%">
-                        @foreach (var p in Model.Packages)
-                        {
-                            <option value="@p.Id" data-versions="@string.Join(",", p.Versions)">@p.Name (@p.Id) · @L[p.Visibility == "private" ? "private" : "public"]</option>
-                        }
-                    </select></div>
-                <div><label>@L["Version"]</label>
-                    <select name="version" id="tpl-ver">
-                        <option value="">@L["newest approved version"]</option>
-                        @foreach (var ver in Model.Packages[0].Versions) { <option value="@ver">@ver</option> }
-                    </select></div>
-                <button type="submit" class="btn small cta">@L["Add"]</button>
+            <form method="post" asp-page-handler="Add" asp-route-id="@v.Template.Id" id="tpl-add-form" style="margin-top:12px">
+                <partial name="_AddonPicker" model='new AddonStore.Web.Services.AddonPicker.Model("tpl-pick", "tpl-add-form", true, "in this template already; choosing it again changes its version", Model.PickItems, true)' />
             </form>
             <p class="small muted">@L["Adding an add-on that is in the template already changes its version."]</p>
-            <script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
-                (function () {
-                    var p = document.getElementById('tpl-pkg'), v = document.getElementById('tpl-ver');
-                    if (!p || !v) return;
-                    var newest = v.options[0].text;
-                    p.addEventListener('change', function () {
-                        var list = (p.options[p.selectedIndex].getAttribute('data-versions') || '').split(',').filter(Boolean);
-                        v.textContent = '';
-                        var o = document.createElement('option'); o.value = ''; o.textContent = newest; v.appendChild(o);
-                        list.forEach(function (x) { var e = document.createElement('option'); e.value = x; e.textContent = x; v.appendChild(e); });
-                    });
-                })();
-            </script>
         }
     </div>
     <div class="card">

@@ -1290,4 +1290,21 @@
   <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Modelo removido. As suas entregas terminaram.</value></data>
   <data name="Template saved." xml:space="preserve"><value>Modelo guardado.</value></data>
   <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>A entrega é agora manual; o modelo já não a altera.</value></data>
+  <data name="Deliver add-ons" xml:space="preserve"><value>Entregar suplementos</value></data>
+  <data name="Choose add-ons" xml:space="preserve"><value>Escolher suplementos</value></data>
+  <data name="Search by name, ID or author" xml:space="preserve"><value>Pesquisar por nome, ID ou autor</value></data>
+  <data name="Only mine" xml:space="preserve"><value>Apenas os meus</value></data>
+  <data name="All categories" xml:space="preserve"><value>Todas as categorias</value></data>
+  <data name="already delivered to this customer" xml:space="preserve"><value>já entregue a este cliente</value></data>
+  <data name="in this template already; choosing it again changes its version" xml:space="preserve"><value>já está neste modelo; escolhê-lo de novo muda a versão</value></data>
+  <data name="waits for its first approval" xml:space="preserve"><value>aguarda a primeira aprovação</value></data>
+  <data name="{0} selected" xml:space="preserve"><value>{0} selecionados</value></data>
+  <data name="No add-on matches the search." xml:space="preserve"><value>Nenhum suplemento corresponde à pesquisa.</value></data>
+  <data name="Choose at least one add-on." xml:space="preserve"><value>Escolha pelo menos um suplemento.</value></data>
+  <data name="No add-on selected yet." xml:space="preserve"><value>Ainda não há suplementos selecionados.</value></data>
+  <data name="Add the selected add-ons" xml:space="preserve"><value>Adicionar os suplementos selecionados</value></data>
+  <data name="The stages and the period apply to every chosen add-on; &quot;fixed&quot; uses the version chosen per add-on. Each delivery can be changed afterwards." xml:space="preserve"><value>As fases e o período aplicam-se a cada suplemento escolhido; «fixa» usa a versão escolhida para cada suplemento. Cada entrega pode ser alterada depois.</value></data>
+  <data name="{0} deliveries created." xml:space="preserve"><value>{0} entregas criadas.</value></data>
+  <data name="Not delivered: {0}" xml:space="preserve"><value>Não entregues: {0}</value></data>
+  <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Suplementos adicionados. Cada cliente com este modelo recebe-os.</value></data>
 </root>

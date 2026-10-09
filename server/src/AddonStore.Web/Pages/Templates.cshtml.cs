@@ -23,12 +23,12 @@ public class TemplatesModel : PageModel
         _db = db; _users = users; _templates = templates; _customers = customers;
     }
 
-    public record PackageOption(string Id, string Name, string Visibility, List<string> Versions);
     public List<TemplateService.View> List { get; private set; } = new();
     public TemplateService.View? Edit { get; private set; }
     public bool CanEdit { get; private set; }
     public bool CanCreate { get; private set; }
-    public List<PackageOption> Packages { get; private set; } = new();
+    /// <summary>Add-ons for the add-on choice (S1.14.0); Present = in the shown template already.</summary>
+    public List<AddonPicker.Item> PickItems { get; private set; } = new();
     public Dictionary<string, string> PackageNames { get; private set; } = new();
     public List<Customer> UsedBy { get; private set; } = new();
     [BindProperty(SupportsGet = true)] public int? Id { get; set; }
@@ -54,8 +54,15 @@ public class TemplatesModel : PageModel
             return null;
         }, "Template saved.");
 
-    public Task<IActionResult> OnPostAddAsync(string? packageId, string? version) =>
-        ActAsync(async (t, me) => await _templates.AddItemAsync(t, packageId, version, me), "Add-on added. Every customer with this template gets it.");
+    public Task<IActionResult> OnPostAddAsync(string? packageId, string? version)
+    {
+        // S1.14.0: several from the add-on choice; packageId + version: one (the form before, scripts)
+        var picked = AddonPicker.Selection(Request.Form);
+        if (picked.Count == 0)
+            return ActAsync(async (t, me) => await _templates.AddItemAsync(t, packageId, version, me), "Add-on added. Every customer with this template gets it.");
+        return ActAsync(async (t, me) => await _templates.AddItemsAsync(t, picked.Select(p => new TemplateService.ItemInput(p.Id, p.Version)).ToList(), me),
+            picked.Count == 1 ? "Add-on added. Every customer with this template gets it." : "Add-ons added. Every customer with this template gets them.");
+    }
 
     public Task<IActionResult> OnPostRemoveAsync(int itemId) =>
         ActAsync(async (t, me) => { await _templates.RemoveItemAsync(t, itemId, me); return null; }, "Add-on removed from the template.");
@@ -92,18 +99,13 @@ public class TemplatesModel : PageModel
         CanCreate = me is not null && !(User.IsInRole("Reviewer") && !User.IsInRole("Admin"));
         List = await _templates.ListAsync();
         var lang = Lang.Current;
-        var pkgs = await _db.Packages.AsNoTracking().Where(p => p.Id != SubmissionService.ClientPackageId).ToListAsync();
-        Packages.Clear();
-        foreach (var p in pkgs.OrderBy(p => p.Visibility == "private" ? 0 : 1).ThenBy(p => p.Id))
-        {
-            var versions = await _customers.DeliverableVersionsAsync(p.Id);
-            if (versions.Count == 0) continue;   // only approved versions can be delivered
-            var name = CatalogUi.DisplayName(p, versions[0], lang);
-            PackageNames[p.Id] = name;
-            Packages.Add(new PackageOption(p.Id, name, p.Visibility, versions.Select(v => v.Version).ToList()));
-        }
-        foreach (var p in pkgs.Where(p => !PackageNames.ContainsKey(p.Id))) PackageNames[p.Id] = p.Id;
         Edit = Id is null ? null : List.FirstOrDefault(v => v.Template.Id == Id);
+        // only approved versions can be delivered by a template
+        var inTemplate = (Edit?.Items.Select(i => i.PackageId) ?? Enumerable.Empty<string>()).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        PickItems = await AddonPicker.BuildAsync(_db, lang, me?.Id, inTemplate, withWaiting: false);
+        PackageNames = PickItems.ToDictionary(i => i.Id, i => i.Name, StringComparer.OrdinalIgnoreCase);
+        foreach (var pid in await _db.Packages.AsNoTracking().Select(p => p.Id).ToListAsync())
+            PackageNames.TryAdd(pid, pid);
         CanEdit = Edit is not null && me is not null && TemplateService.CanEdit(User, Edit.Template, me.Id);
         if (Edit is not null)
         {

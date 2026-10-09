@@ -1290,4 +1290,21 @@
   <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Sjabloon bij de klant verwijderd. De leveringen ervan zijn beëindigd.</value></data>
   <data name="Template saved." xml:space="preserve"><value>Sjabloon opgeslagen.</value></data>
   <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>De levering is nu handmatig; het sjabloon wijzigt haar niet meer.</value></data>
+  <data name="Deliver add-ons" xml:space="preserve"><value>Add-ons leveren</value></data>
+  <data name="Choose add-ons" xml:space="preserve"><value>Add-ons kiezen</value></data>
+  <data name="Search by name, ID or author" xml:space="preserve"><value>Zoeken op naam, ID of auteur</value></data>
+  <data name="Only mine" xml:space="preserve"><value>Alleen mijn</value></data>
+  <data name="All categories" xml:space="preserve"><value>Alle categorieën</value></data>
+  <data name="already delivered to this customer" xml:space="preserve"><value>al aan deze klant geleverd</value></data>
+  <data name="in this template already; choosing it again changes its version" xml:space="preserve"><value>al in deze sjabloon; opnieuw kiezen wijzigt de versie</value></data>
+  <data name="waits for its first approval" xml:space="preserve"><value>wacht op de eerste goedkeuring</value></data>
+  <data name="{0} selected" xml:space="preserve"><value>{0} geselecteerd</value></data>
+  <data name="No add-on matches the search." xml:space="preserve"><value>Geen add-on komt overeen met de zoekopdracht.</value></data>
+  <data name="Choose at least one add-on." xml:space="preserve"><value>Kies ten minste één add-on.</value></data>
+  <data name="No add-on selected yet." xml:space="preserve"><value>Nog geen add-on geselecteerd.</value></data>
+  <data name="Add the selected add-ons" xml:space="preserve"><value>Geselecteerde add-ons toevoegen</value></data>
+  <data name="The stages and the period apply to every chosen add-on; &quot;fixed&quot; uses the version chosen per add-on. Each delivery can be changed afterwards." xml:space="preserve"><value>De fasen en de periode gelden voor elke gekozen add-on; ‘vast’ gebruikt de per add-on gekozen versie. Elke levering kan daarna worden gewijzigd.</value></data>
+  <data name="{0} deliveries created." xml:space="preserve"><value>{0} leveringen aangemaakt.</value></data>
+  <data name="Not delivered: {0}" xml:space="preserve"><value>Niet geleverd: {0}</value></data>
+  <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Add-ons toegevoegd. Elke klant met deze sjabloon krijgt ze.</value></data>
 </root>

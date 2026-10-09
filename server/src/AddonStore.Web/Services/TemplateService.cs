@@ -85,6 +85,10 @@ public class TemplateService
     /// <summary>Checks the items (every add-on once, an existing one, the version approved); null when fine.
     /// <paramref name="onlyVersionOf"/>: check the version of that add-on only (adding one item).</summary>
     public async Task<string?> CheckItemsAsync(IReadOnlyList<ItemInput> items, string? onlyVersionOf = null)
+        => await CheckItemsAsync(items, onlyVersionOf is null ? null : new[] { onlyVersionOf });
+
+    /// <summary>Same, checking the versions of the given add-ons only (adding several, S1.14.0).</summary>
+    public async Task<string?> CheckItemsAsync(IReadOnlyList<ItemInput> items, IReadOnlyCollection<string>? onlyVersionsOf)
     {
         if (items.Count > MaxItems) return $"at most {MaxItems} add-ons per template";
         var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -94,7 +98,7 @@ public class TemplateService
             if (pid.Length == 0 || pid == SubmissionService.ClientPackageId || !seen.Add(pid)) return $"invalid or repeated add-on '{pid}'";
             if (!await _db.Packages.AnyAsync(p => p.Id == pid)) return $"no add-on '{pid}'";
             var v = string.IsNullOrWhiteSpace(i.Version) ? null : i.Version.Trim();
-            if (onlyVersionOf is not null && !string.Equals(pid, onlyVersionOf, StringComparison.OrdinalIgnoreCase)) continue;
+            if (onlyVersionsOf is not null && !onlyVersionsOf.Contains(pid, StringComparer.OrdinalIgnoreCase)) continue;
             if (v is not null && !(await _customers.DeliverableVersionsAsync(pid)).Any(x => x.Version == v))
                 return $"version {v} of '{pid}' is not approved (leave the version empty for the newest approved one)";
         }
@@ -129,13 +133,18 @@ public class TemplateService
             await SyncCoreAsync(cid, actor);   // under the lock already
     }
 
-    public async Task<string?> AddItemAsync(DeliveryTemplate t, string? packageId, string? version, AppUser actor)
+    public Task<string?> AddItemAsync(DeliveryTemplate t, string? packageId, string? version, AppUser actor) =>
+        AddItemsAsync(t, new[] { new ItemInput((packageId ?? "").Trim(), version) }, actor);
+
+    /// <summary>Adds several add-ons in one change (S1.14.0: one update of the customers, one email);
+    /// an add-on in the template already gets the new version.</summary>
+    public async Task<string?> AddItemsAsync(DeliveryTemplate t, IReadOnlyList<ItemInput> add, AppUser actor)
     {
         var current = await _db.DeliveryTemplateItems.Where(i => i.TemplateId == t.Id).Select(i => new ItemInput(i.PackageId, i.Version)).ToListAsync();
-        var pid = (packageId ?? "").Trim();
-        current.RemoveAll(i => string.Equals(i.PackageId, pid, StringComparison.OrdinalIgnoreCase));   // adding again changes its version
-        current.Add(new ItemInput(pid, version));
-        if (await CheckItemsAsync(current, pid) is { } err) return err;
+        var ids = add.Select(a => (a.PackageId ?? "").Trim()).ToList();
+        current.RemoveAll(i => ids.Contains(i.PackageId, StringComparer.OrdinalIgnoreCase));   // adding again changes its version
+        current.AddRange(add.Select(a => new ItemInput((a.PackageId ?? "").Trim(), a.Version)));
+        if (await CheckItemsAsync(current, ids) is { } err) return err;
         await UpdateAsync(t, null, null, null, current, actor);
         return null;
     }

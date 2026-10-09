@@ -1290,4 +1290,21 @@
   <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Šablona odebrána. Její dodávky byly ukončeny.</value></data>
   <data name="Template saved." xml:space="preserve"><value>Šablona uložena.</value></data>
   <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>Dodávka je nyní ruční; šablona ji už nemění.</value></data>
+  <data name="Deliver add-ons" xml:space="preserve"><value>Doručit doplňky</value></data>
+  <data name="Choose add-ons" xml:space="preserve"><value>Vybrat doplňky</value></data>
+  <data name="Search by name, ID or author" xml:space="preserve"><value>Hledat podle názvu, ID nebo autora</value></data>
+  <data name="Only mine" xml:space="preserve"><value>Jen moje</value></data>
+  <data name="All categories" xml:space="preserve"><value>Všechny kategorie</value></data>
+  <data name="already delivered to this customer" xml:space="preserve"><value>tomuto zákazníkovi už doručeno</value></data>
+  <data name="in this template already; choosing it again changes its version" xml:space="preserve"><value>už v této šabloně; opětovným výběrem se změní verze</value></data>
+  <data name="waits for its first approval" xml:space="preserve"><value>čeká na první schválení</value></data>
+  <data name="{0} selected" xml:space="preserve"><value>Vybráno: {0}</value></data>
+  <data name="No add-on matches the search." xml:space="preserve"><value>Hledání neodpovídá žádný doplněk.</value></data>
+  <data name="Choose at least one add-on." xml:space="preserve"><value>Vyberte alespoň jeden doplněk.</value></data>
+  <data name="No add-on selected yet." xml:space="preserve"><value>Zatím není vybrán žádný doplněk.</value></data>
+  <data name="Add the selected add-ons" xml:space="preserve"><value>Přidat vybrané doplňky</value></data>
+  <data name="The stages and the period apply to every chosen add-on; &quot;fixed&quot; uses the version chosen per add-on. Each delivery can be changed afterwards." xml:space="preserve"><value>Fáze a období platí pro každý vybraný doplněk; „pevná“ použije verzi vybranou u každého doplňku. Každé doručení lze později změnit.</value></data>
+  <data name="{0} deliveries created." xml:space="preserve"><value>Vytvořená doručení: {0}.</value></data>
+  <data name="Not delivered: {0}" xml:space="preserve"><value>Nedoručeno: {0}</value></data>
+  <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Doplňky přidány. Každý zákazník s touto šablonou je dostane.</value></data>
 </root>

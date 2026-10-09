@@ -1290,4 +1290,21 @@
   <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>Sablon eltávolítva. A kiszállításai véget értek.</value></data>
   <data name="Template saved." xml:space="preserve"><value>Sablon mentve.</value></data>
   <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>A kiszállítás most már manuális; a sablon többé nem módosítja.</value></data>
+  <data name="Deliver add-ons" xml:space="preserve"><value>Bővítmények kiszállítása</value></data>
+  <data name="Choose add-ons" xml:space="preserve"><value>Bővítmények kiválasztása</value></data>
+  <data name="Search by name, ID or author" xml:space="preserve"><value>Keresés név, azonosító vagy szerző szerint</value></data>
+  <data name="Only mine" xml:space="preserve"><value>Csak a sajátjaim</value></data>
+  <data name="All categories" xml:space="preserve"><value>Minden kategória</value></data>
+  <data name="already delivered to this customer" xml:space="preserve"><value>már kiszállítva ennek az ügyfélnek</value></data>
+  <data name="in this template already; choosing it again changes its version" xml:space="preserve"><value>már ebben a sablonban; újra kiválasztva a verzió módosul</value></data>
+  <data name="waits for its first approval" xml:space="preserve"><value>az első jóváhagyásra vár</value></data>
+  <data name="{0} selected" xml:space="preserve"><value>{0} kiválasztva</value></data>
+  <data name="No add-on matches the search." xml:space="preserve"><value>Egy bővítmény sem felel meg a keresésnek.</value></data>
+  <data name="Choose at least one add-on." xml:space="preserve"><value>Válasszon legalább egy bővítményt.</value></data>
+  <data name="No add-on selected yet." xml:space="preserve"><value>Még nincs kiválasztott bővítmény.</value></data>
+  <data name="Add the selected add-ons" xml:space="preserve"><value>A kiválasztott bővítmények hozzáadása</value></data>
+  <data name="The stages and the period apply to every chosen add-on; &quot;fixed&quot; uses the version chosen per add-on. Each delivery can be changed afterwards." xml:space="preserve"><value>A szakaszok és az időszak minden kiválasztott bővítményre érvényesek; a „rögzített” a bővítményenként választott verziót használja. Minden kiszállítás utólag módosítható.</value></data>
+  <data name="{0} deliveries created." xml:space="preserve"><value>{0} kiszállítás létrehozva.</value></data>
+  <data name="Not delivered: {0}" xml:space="preserve"><value>Nincs kiszállítva: {0}</value></data>
+  <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>Bővítmények hozzáadva. A sablonnal rendelkező minden ügyfél megkapja őket.</value></data>
 </root>

@@ -1,0 +1,200 @@
+@model AddonStore.Web.Services.AddonPicker.Model
+@* Add-on choice (S1.14.0): searchable, paged, several at a time, in an in-page dialog. The chosen add-ons go into
+   the form Model.FormId as packageIds plus a "ver:{id}" version each (empty = newest approved). *@
+@{
+    var k = Model.Key;
+    var cats = Model.Items.GroupBy(i => i.Category).Select(g => (Slug: g.Key, Name: g.First().CategoryName))
+        .OrderBy(c => c.Name, StringComparer.CurrentCultureIgnoreCase).ToList();
+    var data = Model.Items.Select(i => new
+    {
+        id = i.Id, name = i.Name, priv = i.Visibility == "private", mine = i.Mine, author = i.Author, cat = i.Category,
+        catName = i.CategoryName, versions = i.Versions, waiting = i.Waiting, present = i.Present,
+    });
+    var strings = new
+    {
+        pub = L["public"].Value, priv = L["private"].Value, newest = L["newest approved version"].Value,
+        present = L[Model.PresentLabel].Value, waiting = L["waits for its first approval"].Value,
+        selected = L["{0} selected"].Value, none = L["No add-on matches the search."].Value,
+        range = L["{0} to {1} of {2}"].Value, page = L["Page {0} of {1}"].Value, remove = L["Remove"].Value,
+        pick = L["Choose at least one add-on."].Value, version = L["Version"].Value,
+    };
+}
+<div class="picker" id="@k">
+    <div class="picker-sel" id="@k-sel" aria-live="polite"></div>
+    @if (!Model.SubmitOnApply)
+    {
+        <p class="muted small" id="@k-empty" style="margin:0 0 6px">@L["No add-on selected yet."]</p>
+    }
+    <p class="small" id="@k-err" role="alert" style="color:var(--tun-coral);margin:0 0 6px" hidden></p>
+    <button type="button" class="btn secondary" id="@k-open">@L["Choose add-ons"]</button>
+    <dialog class="pp-picker" id="@k-dlg" aria-labelledby="@k-title">
+        <h3 id="@k-title" style="margin:0 0 12px">@L["Choose add-ons"]</h3>
+        <input type="search" id="@k-q" placeholder="@L["Search by name, ID or author"]" aria-label="@L["Search by name, ID or author"]" autocomplete="off" />
+        <div class="picker-filters">
+            <div class="chips" id="@k-chips" role="group">
+                <button type="button" class="chip active" data-f="">@L["All"]</button>
+                <button type="button" class="chip cap" data-f="public">@L["public"]</button>
+                <button type="button" class="chip cap" data-f="private">@L["private"]</button>
+                <button type="button" class="chip" data-f="mine">@L["Only mine"]</button>
+            </div>
+            @if (cats.Count > 1)
+            {
+                <select id="@k-cat" aria-label="@L["Category"]" style="width:auto">
+                    <option value="">@L["All categories"]</option>
+                    @foreach (var c in cats) { <option value="@c.Slug">@c.Name</option> }
+                </select>
+            }
+        </div>
+        <div class="picker-list" id="@k-list" role="list"></div>
+        <nav class="pager" aria-label="@L["Pages"]">
+            <span class="muted small" id="@k-range"></span>
+            <span class="pager-sizes small">@L["Rows per page"]: <span id="@k-sizes"></span></span>
+            <span class="pager-pages">
+                <button type="button" class="btn small secondary" id="@k-prev">‹ @L["Previous"]</button>
+                <span class="small" id="@k-page"></span>
+                <button type="button" class="btn small secondary" id="@k-next">@L["Next"] ›</button>
+            </span>
+        </nav>
+        <div class="picker-foot">
+            <span class="small" id="@k-count"></span>
+            <span class="pp-confirm-actions">
+                <button type="button" class="btn secondary" id="@k-cancel">@L["Cancel"]</button>
+                <button type="button" class="btn cta" id="@k-apply">@L[Model.SubmitOnApply ? "Add the selected add-ons" : "Apply"]</button>
+            </span>
+        </div>
+    </dialog>
+    <script type="application/json" id="@k-data">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(data))</script>
+</div>
+<script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
+(function () {
+    var K = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(k)), FORM = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.FormId));
+    var SUBMIT = @(Model.SubmitOnApply ? "true" : "false"), AGAIN = @(Model.PresentSelectable ? "true" : "false");
+    var T = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(strings));
+    function $(s) { return document.getElementById(K + '-' + s); }
+    function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+    function fmt(s) { var a = arguments; return s.replace(/\{(\d)\}/g, function (m, i) { return a[+i + 1]; }); }
+    var items = JSON.parse($('data').textContent), byId = {};
+    items.forEach(function (x) { byId[x.id] = x; });
+    var form = document.getElementById(FORM), dlg = $('dlg');
+    var chosen = [];          // [{id, ver}] in the form
+    var draft = {};           // id -> ver while the dialog is open
+    var filter = '', cat = '', q = '', page = 1, SIZES = [25, 50, 100], size = 25;
+    try { size = +localStorage.getItem('pp-picker-size') || 25; if (SIZES.indexOf(size) < 0) size = 25; } catch (e) { }
+
+    function versionSelect(x, ver, name) {
+        var s = el('select', 'picker-ver'); s.style.width = 'auto';
+        if (name) s.name = name;
+        s.setAttribute('aria-label', T.version + ' ' + x.name);
+        var o = el('option', '', T.newest); o.value = ''; s.appendChild(o);
+        x.versions.forEach(function (v) { var e = el('option', '', v); e.value = v; if (v === ver) e.selected = true; s.appendChild(e); });
+        return s;
+    }
+    // the selection in the form: one row per add-on with its version and a remove button
+    function renderSelection() {
+        var box = $('sel'); box.textContent = '';
+        chosen.forEach(function (c, i) {
+            var x = byId[c.id]; if (!x) return;
+            var row = el('div', 'picker-row');
+            var h = el('input'); h.type = 'hidden'; h.name = 'packageIds'; h.value = x.id; row.appendChild(h);
+            var t = el('div', 'picker-name'); t.appendChild(el('b', '', x.name)); t.appendChild(el('span', 'muted small', ' ' + x.id));
+            row.appendChild(t);
+            row.appendChild(el('span', 'badge cap', x.priv ? T.priv : T.pub));
+            if (x.waiting) row.appendChild(el('span', 'muted small', T.waiting));
+            else { var s = versionSelect(x, c.ver, 'ver:' + x.id); s.addEventListener('change', function () { c.ver = s.value; }); row.appendChild(s); }
+            var rm = el('button', 'btn small secondary', T.remove); rm.type = 'button';
+            rm.addEventListener('click', function () { chosen.splice(i, 1); renderSelection(); });
+            row.appendChild(rm);
+            box.appendChild(row);
+        });
+        if ($('empty')) $('empty').hidden = chosen.length > 0;
+        $('err').hidden = true;
+    }
+    function visible() {
+        var words = q.toLowerCase().split(/\s+/).filter(Boolean);
+        return items.filter(function (x) {
+            if (filter === 'public' && x.priv) return false;
+            if (filter === 'private' && !x.priv) return false;
+            if (filter === 'mine' && !x.mine) return false;
+            if (cat && x.cat !== cat) return false;
+            var hay = (x.name + ' ' + x.id + ' ' + x.author).toLowerCase();
+            return words.every(function (w) { return hay.indexOf(w) >= 0; });
+        });
+    }
+    function count() { return Object.keys(draft).length; }
+    function renderList() {
+        var v = visible(), pages = Math.max(1, Math.ceil(v.length / size));
+        if (page > pages) page = pages;
+        var list = $('list'); list.textContent = '';
+        if (!v.length) list.appendChild(el('p', 'muted', T.none));
+        v.slice((page - 1) * size, page * size).forEach(function (x) {
+            var locked = x.present && !AGAIN;
+            var row = el('label', 'picker-row' + (locked ? ' is-present' : '')); row.setAttribute('role', 'listitem');
+            var cb = el('input'); cb.type = 'checkbox'; cb.style.width = 'auto';
+            cb.checked = locked || draft.hasOwnProperty(x.id); cb.disabled = locked;
+            row.appendChild(cb);
+            var t = el('div', 'picker-name'); t.appendChild(el('b', '', x.name));
+            t.appendChild(el('span', 'muted small', x.id + (x.author ? ' · ' + x.author : '') + (x.catName ? ' · ' + x.catName : '')));
+            if (x.present) t.appendChild(el('span', 'muted small', T.present));
+            else if (x.waiting) t.appendChild(el('span', 'muted small', T.waiting));
+            row.appendChild(t);
+            row.appendChild(el('span', 'badge cap', x.priv ? T.priv : T.pub));
+            var slot = el('span', 'picker-slot'); row.appendChild(slot);
+            function verUi() {
+                slot.textContent = '';
+                if (!cb.checked || locked || x.waiting) return;
+                var s = versionSelect(x, draft[x.id] || '');
+                s.addEventListener('change', function () { draft[x.id] = s.value; });
+                slot.appendChild(s);
+            }
+            cb.addEventListener('change', function () {
+                if (cb.checked) draft[x.id] = draft[x.id] || ''; else delete draft[x.id];
+                verUi(); $('count').textContent = fmt(T.selected, count());
+            });
+            verUi();
+            list.appendChild(row);
+        });
+        var first = v.length ? (page - 1) * size + 1 : 0, last = Math.min(v.length, page * size);
+        $('range').textContent = fmt(T.range, first, last, v.length);
+        $('page').textContent = fmt(T.page, page, pages);
+        $('prev').disabled = page <= 1; $('next').disabled = page >= pages;
+        var sz = $('sizes'); sz.textContent = '';
+        SIZES.forEach(function (n) {
+            if (n === size) { sz.appendChild(el('b', '', String(n))); return; }
+            var a = el('a', '', String(n)); a.href = '#';
+            a.addEventListener('click', function (e) { e.preventDefault(); size = n; page = 1; try { localStorage.setItem('pp-picker-size', n); } catch (x) { } renderList(); });
+            sz.appendChild(a);
+        });
+        $('count').textContent = fmt(T.selected, count());
+    }
+    $('open').addEventListener('click', function () {
+        draft = {}; chosen.forEach(function (c) { draft[c.id] = c.ver || ''; });
+        page = 1; renderList(); dlg.showModal(); $('q').focus();
+    });
+    $('q').addEventListener('input', function () { q = $('q').value; page = 1; renderList(); });
+    $('chips').querySelectorAll('.chip').forEach(function (b) {
+        b.addEventListener('click', function () {
+            $('chips').querySelectorAll('.chip').forEach(function (o) { o.classList.toggle('active', o === b); });
+            filter = b.dataset.f; page = 1; renderList();
+        });
+    });
+    if ($('cat')) $('cat').addEventListener('change', function () { cat = $('cat').value; page = 1; renderList(); });
+    $('prev').addEventListener('click', function () { page--; renderList(); });
+    $('next').addEventListener('click', function () { page++; renderList(); });
+    $('cancel').addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });   // click on the backdrop
+    $('apply').addEventListener('click', function () {
+        // keep the order of the list; versions from the dialog
+        chosen = items.filter(function (x) { return draft.hasOwnProperty(x.id) && (!x.present || AGAIN); })
+                      .map(function (x) { return { id: x.id, ver: draft[x.id] || '' }; });
+        renderSelection();
+        if (SUBMIT && !chosen.length) { $('count').textContent = T.pick; return; }
+        dlg.close();
+        if (SUBMIT && form) { if (form.requestSubmit) form.requestSubmit(); else form.submit(); }
+    });
+    if (form) form.addEventListener('submit', function (e) {
+        if (chosen.length) return;
+        e.preventDefault(); $('err').textContent = T.pick; $('err').hidden = false;
+    });
+    renderSelection();
+})();
+</script>

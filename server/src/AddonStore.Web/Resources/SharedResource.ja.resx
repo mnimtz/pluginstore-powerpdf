@@ -1290,4 +1290,21 @@
   <data name="Template removed. Its deliveries ended." xml:space="preserve"><value>テンプレートを顧客から削除しました。その配信は終了しました。</value></data>
   <data name="Template saved." xml:space="preserve"><value>テンプレートを保存しました。</value></data>
   <data name="The delivery is manual now; the template no longer changes it." xml:space="preserve"><value>この配信は手動になりました。テンプレートによって変更されることはありません。</value></data>
+  <data name="Deliver add-ons" xml:space="preserve"><value>アドオンを配信</value></data>
+  <data name="Choose add-ons" xml:space="preserve"><value>アドオンを選択</value></data>
+  <data name="Search by name, ID or author" xml:space="preserve"><value>名前、ID、作成者で検索</value></data>
+  <data name="Only mine" xml:space="preserve"><value>自分のもののみ</value></data>
+  <data name="All categories" xml:space="preserve"><value>すべてのカテゴリ</value></data>
+  <data name="already delivered to this customer" xml:space="preserve"><value>この顧客に配信済み</value></data>
+  <data name="in this template already; choosing it again changes its version" xml:space="preserve"><value>このテンプレートに含まれています。もう一度選ぶとバージョンが変わります</value></data>
+  <data name="waits for its first approval" xml:space="preserve"><value>最初の承認を待っています</value></data>
+  <data name="{0} selected" xml:space="preserve"><value>{0} 件選択</value></data>
+  <data name="No add-on matches the search." xml:space="preserve"><value>検索に一致するアドオンはありません。</value></data>
+  <data name="Choose at least one add-on." xml:space="preserve"><value>アドオンを 1 つ以上選択してください。</value></data>
+  <data name="No add-on selected yet." xml:space="preserve"><value>アドオンはまだ選択されていません。</value></data>
+  <data name="Add the selected add-ons" xml:space="preserve"><value>選択したアドオンを追加</value></data>
+  <data name="The stages and the period apply to every chosen add-on; &quot;fixed&quot; uses the version chosen per add-on. Each delivery can be changed afterwards." xml:space="preserve"><value>段階と期間は選択したすべてのアドオンに適用されます。「固定」ではアドオンごとに選んだバージョンを使います。各配信は後から個別に変更できます。</value></data>
+  <data name="{0} deliveries created." xml:space="preserve"><value>{0} 件の配信を作成しました。</value></data>
+  <data name="Not delivered: {0}" xml:space="preserve"><value>配信されなかったもの: {0}</value></data>
+  <data name="Add-ons added. Every customer with this template gets them." xml:space="preserve"><value>アドオンを追加しました。このテンプレートを持つすべての顧客が受け取ります。</value></data>
 </root>

@@ -366,6 +366,20 @@ the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
 
+**Add-on choice (S1.14.0):** deliveries and delivery templates no longer list
+every add-on in one drop-down. "Choose add-ons" opens an in-page dialog: search
+by name, ID or author, filters public / private / only mine and category, 25,
+50 or 100 rows per page, several add-ons at a time with a version each (empty =
+newest approved). Add-ons delivered to the customer already are shown but cannot
+be chosen; in a template choosing one again changes its version. On the customer
+page the stages, the period and the own code apply to every chosen add-on
+(a "fixed" stage takes the version chosen per add-on, else the newest approved
+one; an add-on waiting for its first approval follows "newest"); the page
+reports which add-ons could not be delivered. A template takes all chosen
+add-ons in one change (one update of its customers, one email). The forms still
+accept the single `packageId` field of before. The page builds the list with
+three queries instead of one per add-on.
+
 **Faster store window (S1.13.2, client 1.9.3):** the public catalog is kept in
 server memory (on the production share every query reads the database over the
 network: about a second per catalog); a write to packages, versions,
