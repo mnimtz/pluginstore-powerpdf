@@ -37,6 +37,8 @@ public sealed class SendToService
     public const string EnabledKey = "SendTo.Enabled";
     public const int DeclineCooldownDays = 30;
     public const int MaxChunkBytes = 2 * 1024 * 1024;
+    /// <summary>Invitation mails to one address per day, from all senders together (S1.17.3).</summary>
+    public const int MaxInvitesPerRecipientPerDay = 5;
     public const int MaxQuickPerUser = 20;
     public const int MaxRetentionHours = 720;
 
@@ -132,8 +134,20 @@ public sealed class SendToService
     {
         if (x == y || await AreContactsAsync(x, y)) return;
         var (a, b) = Pair(x, y);
+        // S1.17.3: two accepted invitations for the same pair (or a second call before SaveChanges) must not add the
+        // pair twice: the unique index failed and registration answered 500 for good
+        if (_db.SendToContacts.Local.Any(c => c.UserA == a && c.UserB == b)) return;
+        // and never between two people where one blocked the other
+        if (await IsBlockedAsync(x, y) || await IsBlockedAsync(y, x)) return;
         _db.SendToContacts.Add(new SendToContact { UserA = a, UserB = b });
     }
+
+    /// <summary>The bytes of chunk n that a transfer of this size may have (1 MiB blocks plus the AES-GCM tag).</summary>
+    public const int ClientChunk = 1024 * 1024, GcmTag = 16;
+    private static int ExpectedChunks(long size) => size == 0 ? 1 : (int)((size + ClientChunk - 1) / ClientChunk);
+    private static long MaxChunkLength(long size, int n) =>
+        (size == 0 ? 0 : Math.Min(ClientChunk, size - (long)n * ClientChunk)) + GcmTag;
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, SemaphoreSlim> ChunkLocks = new();
 
     // ------------------------------------------------------------ devices
 
@@ -275,6 +289,9 @@ public sealed class SendToService
 
     public async Task BlockAsync(string me, string other, string? reportReason)
     {
+        // S1.17.3: only about users that exist (before, any id filled the blocks and reports tables)
+        if (me == other || !await _db.SendToUsers.AnyAsync(u => u.Id == other))
+            throw new SendToError("CONTACT_NOT_FOUND", "Unknown user.", 404);
         var (a, b) = Pair(me, other);
         var row = await _db.SendToContacts.FirstOrDefaultAsync(c => c.UserA == a && c.UserB == b);
         if (row is not null) _db.SendToContacts.Remove(row);
@@ -282,6 +299,11 @@ public sealed class SendToService
         if (!await IsBlockedAsync(me, other)) _db.SendToBlocks.Add(new SendToBlock { BlockerId = me, BlockedId = other });
         foreach (var i in await _db.SendToInvitations.Where(i => i.Status == "open" && i.FromUserId == other && i.ToUserId == me).ToListAsync())
         { i.Status = "declined"; i.AnsweredAt = DateTime.UtcNow; }
+        // S1.17.3: also the blocker's own open invitation to the blocked user: accepting it made them contacts again
+        var otherUser = await _db.SendToUsers.FirstOrDefaultAsync(u => u.Id == other);
+        foreach (var i in await _db.SendToInvitations.Where(i => i.Status == "open" && i.FromUserId == me
+                     && (i.ToUserId == other || (otherUser != null && i.ToEmail == otherUser.Email))).ToListAsync())
+            i.Status = "withdrawn";
         if (reportReason is not null)
             _db.SendToReports.Add(new SendToReport { ReporterId = me, ReportedId = other, Reason = reportReason.Length > 500 ? reportReason[..500] : reportReason });
         await _db.SaveChangesAsync();
@@ -312,8 +334,9 @@ public sealed class SendToService
         // Mutual: the other side already invited me, so this is the answer.
         if (target is not null)
         {
-            var reverse = await _db.SendToInvitations.FirstOrDefaultAsync(i => i.Status == "open" && i.FromUserId == target.Id && i.ToEmail == me.Email);
-            if (reverse is not null && !await IsBlockedAsync(me.Id, target.Id))
+            var now = DateTime.UtcNow;
+            var reverse = await _db.SendToInvitations.FirstOrDefaultAsync(i => i.Status == "open" && i.FromUserId == target.Id && i.ToEmail == me.Email && i.ExpiresAt > now);
+            if (reverse is not null && !await IsBlockedAsync(me.Id, target.Id) && !await IsBlockedAsync(target.Id, me.Id))
             {
                 reverse.Status = "accepted"; reverse.AnsweredAt = DateTime.UtcNow; reverse.ToUserId = me.Id;
                 await AddContactAsync(target.Id, me.Id);
@@ -322,8 +345,13 @@ public sealed class SendToService
             }
         }
 
-        if (await _db.SendToInvitations.AnyAsync(i => i.Status == "open" && i.FromUserId == me.Id && i.ToEmail == email))
+        if (await _db.SendToInvitations.AnyAsync(i => (i.Status == "open" || (i.Status == "accepted" && i.ToUserId == null))
+                                                       && i.FromUserId == me.Id && i.ToEmail == email))
             return (R("error", "ALREADY_INVITED"), null);
+        // S1.17.3: at most a few invitation mails per recipient and day, whoever sends them
+        var dayBefore = DateTime.UtcNow.AddDays(-1);
+        if (await _db.SendToInvitations.CountAsync(i => i.ToEmail == email && i.CreatedAt > dayBefore) >= MaxInvitesPerRecipientPerDay)
+            return (R("error", "TOO_MANY_INVITES_TODAY"), null);
         var cooldown = DateTime.UtcNow.AddDays(-DeclineCooldownDays);
         if (await _db.SendToInvitations.AnyAsync(i => i.Status == "declined" && i.FromUserId == me.Id && i.ToEmail == email && i.AnsweredAt > cooldown))
             return (R("error", "INVITE_COOLDOWN"), null);
@@ -370,7 +398,7 @@ public sealed class SendToService
         var me = await _db.SendToUsers.FirstAsync(u => u.Id == userId);
         var inv = await _db.SendToInvitations.FirstOrDefaultAsync(i => i.Id == id && (i.ToUserId == userId || i.ToEmail == me.Email))
                   ?? throw new SendToError("INVITATION_NOT_FOUND", "Unknown invitation.", 404);
-        if (inv.Status != "open") throw new SendToError("INVITATION_NOT_OPEN", "The invitation is not open.");
+        if (inv.Status != "open" || inv.ExpiresAt < DateTime.UtcNow) throw new SendToError("INVITATION_NOT_OPEN", "The invitation is not open.");
         inv.ToUserId = userId;
         await SettleAsync(inv, accept);
     }
@@ -505,6 +533,10 @@ public sealed class SendToService
         var cfg = await ConfigAsync();
         if (size < 0 || chunks < 1 || chunks > 2000 || envs is null || envs.Count == 0 || envs.Count > 500)
             throw new SendToError("TRANSFER_INVALID", "size, chunkCount and envelopes[] are required.");
+        // S1.17.3: the quota counts the declared size, so it must match the blocks (1 MiB each): before, size 0 with
+        // 2000 blocks of 2 MB stored about 4 GB outside every limit
+        if (chunks != ExpectedChunks(size))
+            throw new SendToError("TRANSFER_INVALID", $"chunkCount must be ceil(size / {ClientChunk}) (1 for an empty file).");
         if (size > (long)cfg.MaxFileMB * 1024 * 1024) throw new SendToError("FILE_TOO_LARGE", $"Maximum is {cfg.MaxFileMB} MB.");
         var pending = await _db.SendToTransfers.Where(t => t.SenderUserId == dev.UserId && t.PurgedAt == null).SumAsync(t => (long?)t.Size) ?? 0;
         if (pending + size > (long)cfg.MaxPendingMB * 1024 * 1024) throw new SendToError("PENDING_QUOTA", $"Maximum {cfg.MaxPendingMB} MB waiting.");
@@ -539,10 +571,30 @@ public sealed class SendToService
         var t = await _db.SendToTransfers.FirstOrDefaultAsync(x => x.Id == id && x.SenderDeviceId == dev.Id);
         if (t is null || t.PurgedAt is not null || t.Cancelled) throw new SendToError("TRANSFER_NOT_FOUND", "Unknown transfer.", 404);
         if (n < 0 || n >= t.ChunkCount) throw new SendToError("CHUNK_INDEX", "Chunk index out of range.");
-        if (data.Length == 0 || data.Length > MaxChunkBytes) throw new SendToError("CHUNK_SIZE", "Chunk size invalid.");
-        await _storage.PutAsync(id, n, data);
-        var up = Uploaded(t);
-        if (up.Add(n)) { t.Uploaded = string.Join(',', up.OrderBy(x => x)); await _db.SaveChangesAsync(); }
+        if (data.Length == 0 || data.Length > MaxChunkBytes || data.Length > MaxChunkLength(t.Size, n))
+            throw new SendToError("CHUNK_SIZE", "Chunk size invalid.");
+        // S1.17.3: one upload at a time per transfer (parallel ones lost an index), and no block changes once all are in
+        var gate = ChunkLocks.GetOrAdd(id, _ => new SemaphoreSlim(1, 1));
+        await gate.WaitAsync();
+        try
+        {
+            await _db.Entry(t).ReloadAsync();
+            var up = Uploaded(t);
+            if (up.Count == t.ChunkCount) return;   // complete: a repeated block (lost answer) changes nothing
+            await _storage.PutAsync(id, n, data);
+            if (up.Add(n))
+            {
+                t.Uploaded = string.Join(',', up.OrderBy(x => x));
+                // the undo window starts when the last block is in (it started at creation, so a slow upload had none)
+                if (up.Count == t.ChunkCount) t.DeliverAfter = DateTime.UtcNow.AddSeconds((await ConfigAsync()).UndoSeconds);
+                await _db.SaveChangesAsync();
+            }
+        }
+        finally
+        {
+            gate.Release();
+            if (ChunkLocks.Count > 1000) ChunkLocks.TryRemove(id, out _);
+        }
     }
 
     public async Task CancelAsync(SendToDevice dev, string id)
@@ -642,7 +694,10 @@ public sealed class SendToService
         { e.Status = "expired"; e.ResolvedAt = now; }
         // Invitations of non-users are kept only until they expire (+1 day for the answer page).
         var gone = now.AddDays(-1);
-        _db.SendToInvitations.RemoveRange(await _db.SendToInvitations.Where(i => i.ToUserId == null && i.Status != "open" && i.Status != "accepted" && i.ExpiresAt < gone).ToListAsync());
+        // S1.17.3: declined ones stay through the 30-day cooldown, or the inviter could invite again after 15 days
+        var cooled = now.AddDays(-DeclineCooldownDays);
+        _db.SendToInvitations.RemoveRange(await _db.SendToInvitations.Where(i => i.ToUserId == null && i.Status != "open" && i.Status != "accepted"
+            && i.ExpiresAt < gone && (i.Status != "declined" || i.AnsweredAt == null || i.AnsweredAt < cooled)).ToListAsync());
         await _db.SaveChangesAsync();
         var purged = await PurgeFinishedAsync();
         try

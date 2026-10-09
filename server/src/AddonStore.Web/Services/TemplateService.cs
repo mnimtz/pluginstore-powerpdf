@@ -120,6 +120,11 @@ public class TemplateService
     public async Task UpdateAsync(DeliveryTemplate t, string? name, string? description, bool? restrict, IReadOnlyList<ItemInput>? items, AppUser actor)
     {
         using var gate = await LockAsync(0);
+        await UpdateCoreAsync(t, name, description, restrict, items, actor);
+    }
+
+    private async Task UpdateCoreAsync(DeliveryTemplate t, string? name, string? description, bool? restrict, IReadOnlyList<ItemInput>? items, AppUser actor)
+    {
         if (!string.IsNullOrWhiteSpace(name)) t.Name = name.Trim();
         if (description is not null) t.Description = Clean(description);
         if (restrict is { } r) t.RestrictCatalog = r;
@@ -140,12 +145,13 @@ public class TemplateService
     /// an add-on in the template already gets the new version.</summary>
     public async Task<string?> AddItemsAsync(DeliveryTemplate t, IReadOnlyList<ItemInput> add, AppUser actor)
     {
+        using var gate = await LockAsync(0);   // S1.17.3: read and write in one step, two additions at once kept only one
         var current = await _db.DeliveryTemplateItems.Where(i => i.TemplateId == t.Id).Select(i => new ItemInput(i.PackageId, i.Version)).ToListAsync();
         var ids = add.Select(a => (a.PackageId ?? "").Trim()).ToList();
         current.RemoveAll(i => ids.Contains(i.PackageId, StringComparer.OrdinalIgnoreCase));   // adding again changes its version
         current.AddRange(add.Select(a => new ItemInput((a.PackageId ?? "").Trim(), a.Version)));
         if (await CheckItemsAsync(current, ids) is { } err) return err;
-        await UpdateAsync(t, null, null, null, current, actor);
+        await UpdateCoreAsync(t, null, null, null, current, actor);
         return null;
     }
 

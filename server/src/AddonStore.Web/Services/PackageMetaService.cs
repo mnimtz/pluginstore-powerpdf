@@ -154,6 +154,8 @@ public class PackageMetaService
             }
             pkg.Visibility = c.Visibility!;
             changed.Add($"visibility {pkg.Visibility}");
+            if (pkg.Visibility == "private" && pkg.FeaturedAt is not null)   // private add-ons are no highlights (S1.17.3)
+            { pkg.FeaturedAt = null; pkg.FeaturedBy = null; changed.Add("highlight removed"); }
         }
         if (c.SetName) { pkg.NameJson = c.Name is null ? null : JsonSerializer.Serialize(c.Name); changed.Add(c.Name is null ? "name reset" : "name"); }
         if (c.SetDescription) { pkg.DescriptionJson = c.Description is null ? null : JsonSerializer.Serialize(c.Description); changed.Add(c.Description is null ? "description reset" : "description"); }

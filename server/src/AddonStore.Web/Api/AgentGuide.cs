@@ -48,7 +48,13 @@ developers do not need them.
   its `invitationId`).
 - Transfers: `POST /api/sendto/transfers` with the envelopes of every
   recipient device, then the encrypted blocks with
-  `PUT /api/sendto/transfers/{id}/chunks/{n}`. Delivery after the undo window;
+  `PUT /api/sendto/transfers/{id}/chunks/{n}`: `chunkCount` must be
+  ceil(size / 1 MiB) (1 for an empty file), each block at most its share of
+  `size` plus the 16-byte AES-GCM tag, and the blocks of a complete transfer
+  cannot be replaced (S1.17.3). The undo window starts when the last block is
+  in. Registration, invitations and reports are limited per client address
+  (429 `RATE_LIMITED`), and one address gets at most 5 invitation mails a day
+  from all senders together. Delivery after the undo window;
   the blocks are deleted after acceptance, decline or the retention time.
 - Answers use the envelope `{ok, data}` or `{ok:false, error{code, message}}`.
 

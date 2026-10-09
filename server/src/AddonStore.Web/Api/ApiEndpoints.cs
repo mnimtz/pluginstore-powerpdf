@@ -370,6 +370,10 @@ public static class ApiEndpoints
                 var binOk = Services.CatalogUi.ClientSupportsBin(ctx);   // S1.4.0
                 var items = await Services.CatalogUi.GetAsync(db, culture, beta, binOk);
                 if (!storeAllowed) items.RemoveAll(i => i.Id != SubmissionService.ClientPackageId);
+                // S1.17.3: setup refuses Power PDF with a serial number (C1.9.6); offering the update there made clients
+                // up to 1.9.5 ask for it at every start and fail every time
+                if (StoreAccess.ModeOf(ctx) == "serial" && Services.UsageService.Classify(ctx).Source == "client")
+                    items.RemoveAll(i => i.Id == SubmissionService.ClientPackageId && new Validation.SemVerComparer().Compare(i.Version, "1.9.6") >= 0);
                 var tests = storeAllowed ? await customers.TestGrantsAsync(ctx) : new();   // the developer's test code (S1.6.0)
                 // a customer whose catalog is limited to its deliveries (S1.12.0): only the store client stays public
                 if (storeAllowed && await customers.IsRestrictedAsync(ctx)) items.RemoveAll(i => i.Id != SubmissionService.ClientPackageId);
@@ -1441,7 +1445,8 @@ public static class ApiEndpoints
                 }
             }
 
-            if (typeErrors.Count == 0 && featured is { } on && await Highlights.CheckAsync(db, pkg, on) is { } hlErr)
+            if (typeErrors.Count == 0 && featured is { } on
+                && await Highlights.CheckAsync(db, pkg, on, change.SetVisibility ? change.Visibility : null) is { } hlErr)
                 typeErrors.Add(new("METADATA_INVALID", "error", hlErr, on ? "Remove another highlight first, or keep the add-on public." : ""));
             var issues = typeErrors.Count > 0 ? typeErrors : await meta.ApplyAsync(pkg, user, change);
             if (featured is { } f && !issues.Any(i => i.Severity == "error")) await Highlights.SetAsync(db, audit, pkg, f, user);

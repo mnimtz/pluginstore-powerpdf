@@ -376,6 +376,31 @@ end-to-end encrypted, relayed through the store's own Blob container. Nothing
 changes until an admin switches it on under *Settings, Features*; see the
 section *Send to* below.
 
+**Code check of the day (S1.17.3, client 1.9.7):** four independent reviews
+(server security, server logic, client and installer, Send to add-on).
+- Send to server: limits per client address on registration (200/h),
+  invitations (300/h) and reports (30/h), at most 5 invitation mails per
+  recipient and day from all senders; the declared size must match the block
+  count (1 MiB blocks) and each block its share of the size (before, a transfer
+  declared as 0 bytes could store about 4 GB outside the quota); blocks of a
+  complete transfer cannot be replaced, one upload at a time per transfer; the
+  undo window starts with the last block; a block also withdraws the blocker's
+  own open invitation and no contact is made where one side blocked the other;
+  two accepted invitations for the same pair no longer break the registration
+  (500); an accepted invitation waiting for the invitee's device counts as
+  invited; expired invitations can no longer be accepted in the add-on;
+  declined invitations of non-users are kept through the 30-day cooldown;
+  reports only about existing users.
+- Highlights: the limit counts the highlights the start page shows; a private
+  add-on loses its highlight; PATCH checks the visibility it ends with.
+- Store client for serial-number clients: not offered (setup refuses them),
+  so clients up to 1.9.5 no longer try to update at every start.
+- Client bundle: a manual upload of the same version counts as current; the
+  audit tells whether the source check accepted the source.
+- Templates: adding add-ons reads and writes in one locked step; deliveries
+  take the single-field path only when the add-on choice sent nothing; the
+  catalog cache also starts a new generation when a transaction commits.
+
 **SaaS edition on the start page, Send to invitations (S1.17.2):** the start
 page title reads "Add-on Store for Tungsten Power PDF SaaS", with a line that
 the store is for the Business SaaS edition only (21 languages). Send to: an

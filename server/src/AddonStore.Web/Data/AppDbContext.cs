@@ -44,6 +44,29 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<SendToTransfer> SendToTransfers => Set<SendToTransfer>();
     public DbSet<SendToEnvelope> SendToEnvelopes => Set<SendToEnvelope>();
 
+    // S1.17.3: inside an explicit transaction SaveChanges returns before the commit, so a catalog loaded in between
+    // still read the old rows under the new generation; the commit of such a transaction starts one more generation
+    private bool _catalogTouchedInTransaction;
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        optionsBuilder.AddInterceptors(CatalogCommitInterceptor.Instance);
+
+    private sealed class CatalogCommitInterceptor : Microsoft.EntityFrameworkCore.Diagnostics.DbTransactionInterceptor
+    {
+        public static readonly CatalogCommitInterceptor Instance = new();
+        public override void TransactionCommitted(System.Data.Common.DbTransaction transaction,
+            Microsoft.EntityFrameworkCore.Diagnostics.TransactionEndEventData eventData) => Done(eventData.Context);
+        public override Task TransactionCommittedAsync(System.Data.Common.DbTransaction transaction,
+            Microsoft.EntityFrameworkCore.Diagnostics.TransactionEndEventData eventData, CancellationToken cancellationToken = default)
+        {
+            Done(eventData.Context);
+            return Task.CompletedTask;
+        }
+        private static void Done(DbContext? c)
+        {
+            if (c is AppDbContext db && db._catalogTouchedInTransaction) { db._catalogTouchedInTransaction = false; Services.CatalogUi.Invalidate(); }
+        }
+    }
+
     // S1.13.2: a write to what the public catalog shows starts a new catalog generation (CatalogUi cache)
     private bool TouchesCatalog() => ChangeTracker.Entries().Any(e =>
         e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted &&
@@ -52,6 +75,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
         var touch = TouchesCatalog();
+        if (touch && Database.CurrentTransaction is not null) _catalogTouchedInTransaction = true;
         var n = base.SaveChanges(acceptAllChangesOnSuccess);
         if (touch) Services.CatalogUi.Invalidate();
         return n;
@@ -60,6 +84,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
         var touch = TouchesCatalog();
+        if (touch && Database.CurrentTransaction is not null) _catalogTouchedInTransaction = true;
         var n = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         if (touch) Services.CatalogUi.Invalidate();
         return n;

@@ -20,6 +20,20 @@ public static class SendToEndpoints
     // Development only: the last invitation mails with their links (tests).
     private static readonly ConcurrentQueue<object> DevOutbox = new();
 
+    // S1.17.3: limits per client address on the calls a script could repeat cheaply. Generous enough for a company
+    // behind one NAT address that installs on many PCs at once.
+    private static readonly ConcurrentDictionary<string, (DateTime Start, int Count)> Hits = new();
+    private static bool Limited(HttpContext ctx, string kind, int max, TimeSpan window)
+    {
+        var now = DateTime.UtcNow;
+        var key = kind + "|" + (GeoService.ClientIp(ctx)?.ToString() ?? "?");
+        var v = Hits.AddOrUpdate(key, _ => (now, 1), (_, o) => now - o.Start > window ? (now, 1) : (o.Start, o.Count + 1));
+        if (Hits.Count > 20000)
+            foreach (var k in Hits.Where(x => now - x.Value.Start > TimeSpan.FromDays(1)).Select(x => x.Key).ToList()) Hits.TryRemove(k, out _);
+        return v.Count > max;
+    }
+    private static IResult TooMany() => Err("RATE_LIMITED", "Too many requests from this address; try again later.", 429);
+
     private static IResult Ok(object? data = null) => Results.Json(new { ok = true, data });
     private static IResult Err(string code, string message, int status = 400) =>
         Results.Json(new { ok = false, error = new { code, message } }, statusCode: status);
@@ -77,6 +91,7 @@ public static class SendToEndpoints
         g.MapPost("/devices", async (HttpContext ctx, SendToService svc) =>
         {
             if (!await svc.EnabledAsync()) return Err("SENDTO_DISABLED", "Send to is switched off.", 503);
+            if (Limited(ctx, "register", 200, TimeSpan.FromHours(1))) return TooMany();
             var b = await BodyAsync(ctx);
             try
             {
@@ -104,6 +119,7 @@ public static class SendToEndpoints
             Device(ctx, svc, async dev => { await svc.BlockAsync(dev.UserId, userId, null); return Ok(); }));
         g.MapPost("/contacts/{userId}/report", (string userId, HttpContext ctx, SendToService svc) => Device(ctx, svc, async dev =>
         {
+            if (Limited(ctx, "report", 30, TimeSpan.FromHours(1))) return TooMany();
             var b = await BodyAsync(ctx);
             await svc.BlockAsync(dev.UserId, userId, S(b, "reason"));
             return Ok();
@@ -113,6 +129,7 @@ public static class SendToEndpoints
 
         g.MapPost("/invitations", (HttpContext ctx, SendToService svc, NotificationService notify, IWebHostEnvironment env) => Device(ctx, svc, async dev =>
         {
+            if (Limited(ctx, "invite", 300, TimeSpan.FromHours(1))) return TooMany();
             var b = await BodyAsync(ctx);
             var emails = Strings(b, "emails");
             if (emails.Count == 0) return Err("EMAILS_MISSING", "emails[] is required.");

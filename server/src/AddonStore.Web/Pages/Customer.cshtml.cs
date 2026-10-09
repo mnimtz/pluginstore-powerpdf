@@ -165,10 +165,10 @@ public class CustomerModel : PageModel
             // S1.14.0: several add-ons from the add-on choice, the stages and the period for all of them,
             // the version of a "fixed" stage per add-on (empty = the newest approved one)
             var picked = AddonPicker.Selection(Request.Form);
-            if (picked.Count == 0 && !string.IsNullOrWhiteSpace(packageId)) picked.Add((packageId.Trim(), null));
+            var legacy = picked.Count == 0 && !string.IsNullOrWhiteSpace(packageId);   // the single-field form of before
+            if (legacy) picked.Add((packageId!.Trim(), null));
             else if (picked.Count == 0) return (false, "Choose at least one add-on.");
-            else { betaVersion = null; liveVersion = null; }
-            if (picked.Count == 1 && !string.IsNullOrWhiteSpace(packageId))
+            if (legacy)
             {
                 var one = await _customers.CreateDeliveryAsync(Cust!, picked[0].Id, new(betaMode, betaVersion), new(liveMode, liveVersion),
                     Day(startsAt), Day(endsAt)?.AddDays(1), ownCode, me, User.IsInRole("Admin"));

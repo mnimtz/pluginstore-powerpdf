@@ -102,6 +102,7 @@ public sealed class ClientBundleWorker : BackgroundService
 
         var result = await scope.ServiceProvider.GetRequiredService<SubmissionService>().SubmitAsync(ppak, admin, "bundle");
         var audit = scope.ServiceProvider.GetRequiredService<AuditService>();
+        if (result.ErrorCode == "VERSION_EXISTS") return "current";   // a manual upload of the same version came first (S1.17.3)
         if (result.Version is null)
         {
             _failed = version;
@@ -110,10 +111,10 @@ public sealed class ClientBundleWorker : BackgroundService
             await audit.LogAsync("system", "client.bundle.failed", version, $"{result.ErrorCode} {errors}".Trim());
             return "failed";
         }
-        if (source is not null)
-            await scope.ServiceProvider.GetRequiredService<SourceService>().UploadAsync(result.Version, source, admin, true);
+        var stored = source is not null
+            && (await scope.ServiceProvider.GetRequiredService<SourceService>().UploadAsync(result.Version, source, admin, true)).Passed;
         await audit.LogAsync("system", "client.bundle.imported", version,
-            $"from the server image, released under {admin.DisplayName}; source {(source is null ? "missing" : "stored")}");
+            $"from the server image, released under {admin.DisplayName}; source {(source is null ? "missing" : stored ? "stored" : "refused by the source check")}");
         _log.LogInformation("client bundle {Version} released", version);
         return "imported";
     }

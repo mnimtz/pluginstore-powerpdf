@@ -12,13 +12,15 @@ public static class Highlights
     public const int Max = 9;
 
     /// <summary>Why the change is not possible, or null.</summary>
-    public static async Task<string?> CheckAsync(AppDbContext db, Package pkg, bool on)
+    /// <param name="visibility">the visibility the add-on ends up with (a PATCH may change both at once)</param>
+    public static async Task<string?> CheckAsync(AppDbContext db, Package pkg, bool on, string? visibility = null)
     {
-        if (!on || pkg.FeaturedAt is not null) return null;
-        if (pkg.Visibility == "private" || pkg.Id == SubmissionService.ClientPackageId) return "Only public add-ons can be highlights.";
-        if (await db.Packages.CountAsync(p => p.FeaturedAt != null && p.Visibility != "private") >= Max)
-            return "At most 9 add-ons can be highlights.";
-        return null;
+        if (!on) return null;
+        if ((visibility ?? pkg.Visibility) == "private" || pkg.Id == SubmissionService.ClientPackageId) return "Only public add-ons can be highlights.";
+        if (pkg.FeaturedAt is not null) return null;
+        // S1.17.3: count the highlights the start page shows; a blocked or withdrawn one has no tile (and no star to remove it)
+        var shown = (await CatalogUi.GetAsync(db, "en", includeBeta: false)).Count(i => i.Featured && i.Id != pkg.Id);
+        return shown >= Max ? "At most 9 add-ons can be highlights." : null;
     }
 
     /// <summary>Sets or removes the highlight (after <see cref="CheckAsync"/>); unchanged state does nothing.</summary>
