@@ -469,12 +469,13 @@ function connectsTo(x) {
   var box = el("div", "conn"); box.appendChild(el("b", "ct", S.connects));
   if (prov.length) {
     var pl = el("div", "cprov"); pl.appendChild(document.createTextNode(S.connProvider + ": "));
-    prov.forEach(function (p, i) {
+    var shown = 0;
+    prov.forEach(function (p) {
       if (!p || typeof p.n !== "string") return;
-      if (i) pl.appendChild(document.createTextNode(", "));
+      if (shown++) pl.appendChild(document.createTextNode(", "));
       if (typeof p.w === "string" && /^https:\/\/[^\s"<>\\@]+$/.test(p.w)) {
         var a = el("a", "link", p.n); a.title = p.w; a.href = "#";
-        a.onclick = function (ev) { ev.preventDefault(); post({ cmd: "site", url: p.w }); };
+        a.onclick = function (ev) { ev.preventDefault(); post({ cmd: "site", id: x.id, url: p.w }); };
         pl.appendChild(a);
       } else pl.appendChild(document.createTextNode(p.n));
     });

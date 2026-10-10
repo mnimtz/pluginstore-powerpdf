@@ -1389,16 +1389,22 @@ protected:
         else if (cmd == L"site")
         {
             // C1.9.9: a provider's website from "connects to": only an https address that the server's
-            // catalog names for an add-on, never what the page makes up
+            // catalog names for the add-on shown, never what the page makes up
             std::wstring u = Field(json, L"url", 300);
-            bool ok = u.size() > 12 && u.compare(0, 8, L"https://") == 0;
+            const std::wstring id = Field(json, L"id", 200);
+            bool ok = !id.empty() && u.size() > 8 && u.compare(0, 8, L"https://") == 0;
             for (wchar_t c : u) if (c <= L' ' || c == L'"' || c == L'<' || c == L'>' || c == L'\\' || c == L'@' || c > 0x7E) ok = false;
             bool listed = false;
             if (ok)
-            {
-                const std::wstring needle = L"\"w\":\"" + u + L"\"";
-                for (const auto& e : m_entries) if (e.connections.find(needle) != std::wstring::npos) { listed = true; break; }
-            }
+                for (const auto& e : m_entries)
+                {
+                    if (e.id != id) continue;   // C1.9.12: only the providers of the add-on whose card was clicked
+                    // C1.9.12: compare decoded values, the server writes & + and non-ASCII as \uXXXX
+                    for (size_t p = e.connections.find(L"\"w\":"); p != std::wstring::npos && !listed;
+                         p = e.connections.find(L"\"w\":", p + 4))
+                        listed = Field(e.connections.substr(p), L"w", 300) == u;
+                    if (listed) break;
+                }
             if (ok && listed) ShellExecuteW(m_hWnd, L"open", u.c_str(), NULL, NULL, SW_SHOWNORMAL);
         }
     }
