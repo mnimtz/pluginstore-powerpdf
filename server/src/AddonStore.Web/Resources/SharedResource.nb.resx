@@ -449,7 +449,7 @@
   <data name="Retention period saved." xml:space="preserve"><value>Lagringsperiode lagret.</value></data>
   <data name="All stored IP addresses were deleted." xml:space="preserve"><value>Alle lagrede IP-adresser er slettet.</value></data>
   <data name="Type DELETE to confirm." xml:space="preserve"><value>Skriv DELETE for å bekrefte.</value></data>
-  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Last opp kildekoden for en versjon (etter hver opplasting)</value></data>
+  <data name="Replace the source code of a version that is not reviewed yet" xml:space="preserve"><value>Erstatt kildekoden for en versjon som ikke er gjennomgått ennå</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Administratorer: kildekoden til nyeste versjon, utgangspunkt for en endring</value></data>
   <data name="Share link" xml:space="preserve"><value>Del lenke</value></data>
   <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>Egen side for dette tillegget med en lenke som kan sendes til kunder</value></data>

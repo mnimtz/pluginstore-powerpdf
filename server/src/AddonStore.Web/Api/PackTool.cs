@@ -33,9 +33,11 @@ public static class PackTool
       LICENSES.md              license texts of all third-party code
       docs\...                 optional
 
-  -Source <folder> (optional) also writes <id>-<version>-source.zip of the
-  source tree, without build output and without key or credential files, and
-  the upload package <id>-<version>-upload.zip (.ppak + source ZIP).
+  -Source <folder> also writes <id>-<version>-source.zip of the source tree,
+  without build output and without key or credential files, and the upload
+  package <id>-<version>-upload.zip (.ppak + source ZIP). Under the store's
+  default source policy a submission without source is refused
+  (SOURCE_REQUIRED), so always pass -Source.
 
   Then upload on the website: Plug-ins > "Submit a package". The upload
   package submits the .ppak and stores the source code in one step. The
@@ -186,8 +188,8 @@ if ($Source) {
     Write-Host "  $upload"
     Write-Host "The store submits the .ppak and stores the source code at version $($m.version) in one step."
 } else {
-    Write-Host "Next: sign in on the Add-on Store website, Plug-ins > 'Submit a package', upload the .ppak."
-    Write-Host "Then upload the source ZIP on the plug-in page (or run again with -Source for one upload package)."
+    Write-Host "No source ZIP: the store refuses a submission without source code (SOURCE_REQUIRED)."
+    Write-Host "Run again with -Source <folder> and upload the upload package it writes."
 }
 if ($warnings.Count -gt 0) { Write-Host "$($warnings.Count) warning(s) above; the store reports every finding with a hint." }
 """";

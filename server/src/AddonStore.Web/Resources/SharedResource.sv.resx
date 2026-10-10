@@ -449,7 +449,7 @@
   <data name="Retention period saved." xml:space="preserve"><value>Lagringstid sparad.</value></data>
   <data name="All stored IP addresses were deleted." xml:space="preserve"><value>Alla sparade IP-adresser har raderats.</value></data>
   <data name="Type DELETE to confirm." xml:space="preserve"><value>Skriv DELETE för att bekräfta.</value></data>
-  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Ladda upp källkoden för en version (efter varje uppladdning)</value></data>
+  <data name="Replace the source code of a version that is not reviewed yet" xml:space="preserve"><value>Ersätt källkoden för en version som inte har granskats än</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Administratörer: källkoden för den senaste versionen, utgångspunkt för en ändring</value></data>
   <data name="Share link" xml:space="preserve"><value>Dela länk</value></data>
   <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>Egen sida för tillägget med en länk att skicka till kunder</value></data>

@@ -449,7 +449,7 @@
   <data name="Retention period saved." xml:space="preserve"><value>Saklama süresi kaydedildi.</value></data>
   <data name="All stored IP addresses were deleted." xml:space="preserve"><value>Kayıtlı tüm IP adresleri silindi.</value></data>
   <data name="Type DELETE to confirm." xml:space="preserve"><value>Onaylamak için DELETE yazın.</value></data>
-  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Bir sürümün kaynak kodunu yükle (her yüklemeden sonra)</value></data>
+  <data name="Replace the source code of a version that is not reviewed yet" xml:space="preserve"><value>Henüz incelenmemiş bir sürümün kaynak kodunu değiştir</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Yöneticiler: en yeni sürümün kaynak kodu, bir değişikliğin başlangıç noktası</value></data>
   <data name="Share link" xml:space="preserve"><value>Bağlantıyı paylaş</value></data>
   <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>Müşterilere gönderilecek bağlantıyla bu eklentinin kendi sayfası</value></data>

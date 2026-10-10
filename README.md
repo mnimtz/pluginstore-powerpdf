@@ -52,7 +52,7 @@ directly inside Power PDF.
 | 🏪 **End users never see this server** | The catalog is read anonymously by the Add-on Store ribbon add-on. Accounts exist only for plugin developers and admins; registration is an access *request* that an admin approves. Roles: **Developer** (uploads and maintains own add-ons; called "User" before S0.9.0), **Reviewer**, **Admin**. |
 | 🔍 **Every upload is validated** | Manifest schema, SemVer monotonicity, x64 + ARM64 PE checks, debug-runtime detection, import-table scan, SHA-256 verification, ribbon governance, reserved names, layout and localization pitfalls. Every finding carries a stable `code` and a concrete `hint`. |
 | 🗄️ **Source code escrow** | After every upload the agent also sends the source code of that version. It is checked (credentials, GPL/AGPL, build output), stored next to the version, visible to admins only and part of every backup; by default a version cannot be approved without it. |
-| 🔁 **Source round trip for admins** | An admin (or their AI assistant) fetches an add-on's stored source (`GET /api/packages/{id}/source/latest`), changes it, publishes a higher version for the original owner and uploads the changed source for that new version, so the store holds matching source for every version. Steps in the agent guide and SKILL.md. |
+| 🔁 **Source round trip for admins** | An admin (or their AI assistant) fetches an add-on's stored source (`GET /api/packages/{id}/source/latest`), changes it, publishes a higher version for the original owner together with the changed source (one upload package), so the store holds matching source for every version. Steps in the agent guide and SKILL.md. |
 | 🔗 **Share links for sales** | Every add-on has its own public page `/a/<short name>` (e.g. `/a/smartbookmarks`; the full id works too) with icon, description, what's new, the "Install in Power PDF" button, the client download and a share box: copy the link or open a prepared email in the page's language. Link previews in Teams/Outlook show name, description and icon (Open Graph). An optional `?ref=<short name>` attributes page views, install clicks and client downloads to the person who shared the link (reports, "Shared links"); link-preview bots are not counted. Catalog cards have a "Share link" button; the JSON catalog carries `pageUrl`. |
 | ⭐ **Ratings, problem reports, screenshots** | Users rate add-ons (1 to 5 stars, one rating per installation, anonymous install id) and send problem reports or comments from the store window inside Power PDF, optionally with a reply address and a log excerpt. The average shows on catalog cards, add-on pages and in the client; reports reach the owner by email and are listed on the plug-in page and via `GET /api/packages/{id}/feedback` (owner/admin, so an AI assistant can work through them). Packages may carry up to 6 screenshots with captions (manifest `screenshots`), shown as a gallery on the website and in the client. |
 | 🤖 **AI assistant (optional)** | Off by default; an admin picks Claude (official Anthropic SDK) or Gemini, enters the key (encrypted with the server's data protection keys), clicks "Connect and load models" and then chooses the model from the list the provider offers for that key (loaded live), switches each part on and runs a test request: problem reports are sorted in the background (category, urgency, summary in English and German, reply draft, duplicate hint); reviewers get a review aid per version (what changed against the previous version, does the changelog match, concerns such as new hosts or third-party code, a recommendation), on request or automatically, in any of the 16 store languages (automatic ones in the language set by the admin; a viewer whose UI language differs can recreate it in theirs); visitors and the store window search by need ("split scanned invoices by barcode") with a reason per hit. Never sent: email or IP addresses, log excerpts, accounts; changed source lines only with an extra option. Daily request limit, connection test, every change audited. Without AI the plain word search answers. |
@@ -365,6 +365,19 @@ check, the AI review aid, the review decision with the approval conditions in
 the wording confirmed, blocks, problem reports and the audit trail. Admins also
 get *Audit log of this add-on* on the plug-in page. JSON exports are audited.
 The AI review aid in the dossier is shown to reviewers and admins only.
+
+**Source code with every submission (S1.20.0):** under the source policy
+`required` (the default) a version can no longer be submitted without its
+source code.
+- `POST /api/packages` and the upload under *Plug-ins* take the upload
+  package (one ZIP with the .ppak and the source ZIP of that version). A bare
+  .ppak is refused with `SOURCE_REQUIRED`, a source that fails its checks with
+  `SOURCE_REJECTED`; in both cases nothing is stored. Before, the version was
+  stored and only its approval waited for the source.
+- The dry run (`POST /api/packages/validate`) checks the source in an upload
+  package too and warns with `SOURCE_NOT_INCLUDED` when it gets a bare .ppak.
+- `PUT /api/packages/{id}/{version}/source` stays for replacing the source of
+  a version that is not reviewed yet. The Add-on Store client is exempt.
 
 **Send to storage test (S1.17.1):** "Test connection" no longer stops when a
 SAS for the container alone may not create the container (HTTP 403); the

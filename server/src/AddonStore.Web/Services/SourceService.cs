@@ -59,6 +59,31 @@ public class SourceService
         return p is "off" or "recommended" or "required" ? p : "required";
     }
 
+    /// <summary>
+    /// Policy "required" (S1.20.0): the source must come WITH the submission, in the
+    /// upload package (.ppak + source ZIP); a bare .ppak is refused (SOURCE_REQUIRED)
+    /// and nothing is stored, so no version waits for review without its source.
+    /// The Add-on Store client is exempt, as for the approval rule below.
+    /// </summary>
+    public async Task<bool> RequiredAtSubmitAsync(string ppakPath) =>
+        await PolicyAsync() == "required" && PeekPackageId(ppakPath) != SubmissionService.ClientPackageId;
+
+    /// <summary>The id in manifest.json of a .ppak; null when it cannot be read (the validator then says why).</summary>
+    public static string? PeekPackageId(string ppakPath)
+    {
+        try
+        {
+            using var zip = ZipFile.OpenRead(ppakPath);
+            var entry = zip.GetEntry("manifest.json");
+            if (entry is null || entry.Length > 256 * 1024) return null;
+            using var s = entry.Open();
+            using var doc = System.Text.Json.JsonDocument.Parse(s);
+            return doc.RootElement.TryGetProperty("id", out var id) && id.ValueKind == System.Text.Json.JsonValueKind.String
+                ? id.GetString() : null;
+        }
+        catch (Exception) { return null; }
+    }
+
     /// <summary>True when the version may not be approved yet because its source is missing.</summary>
     public async Task<bool> BlocksApprovalAsync(PackageVersion v) =>
         v.SourcePath is null && v.PackageId != SubmissionService.ClientPackageId && await PolicyAsync() == "required";

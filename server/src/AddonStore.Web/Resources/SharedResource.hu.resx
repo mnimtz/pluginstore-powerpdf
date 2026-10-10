@@ -449,7 +449,7 @@
   <data name="Retention period saved." xml:space="preserve"><value>Megőrzési idő mentve.</value></data>
   <data name="All stored IP addresses were deleted." xml:space="preserve"><value>Minden tárolt IP-cím törölve.</value></data>
   <data name="Type DELETE to confirm." xml:space="preserve"><value>A megerősítéshez írja be: DELETE.</value></data>
-  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Egy verzió forráskódjának feltöltése (minden feltöltés után)</value></data>
+  <data name="Replace the source code of a version that is not reviewed yet" xml:space="preserve"><value>Egy még nem ellenőrzött verzió forráskódjának cseréje</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Rendszergazdák: a legújabb verzió forráskódja, a módosítás kiindulópontja</value></data>
   <data name="Share link" xml:space="preserve"><value>Link megosztása</value></data>
   <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>A bővítmény saját oldala, ügyfeleknek küldhető linkkel</value></data>

@@ -449,7 +449,7 @@
   <data name="Retention period saved." xml:space="preserve"><value>保留期限已保存。</value></data>
   <data name="All stored IP addresses were deleted." xml:space="preserve"><value>所有已存储的 IP 地址均已删除。</value></data>
   <data name="Type DELETE to confirm." xml:space="preserve"><value>键入 DELETE 以确认。</value></data>
-  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>上传某个版本的源代码（每次上传后）</value></data>
+  <data name="Replace the source code of a version that is not reviewed yet" xml:space="preserve"><value>替换尚未审核的版本的源代码</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>管理员：最新版本的源代码，作为更改的起点</value></data>
   <data name="Share link" xml:space="preserve"><value>分享链接</value></data>
   <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>此加载项的专属页面，附带可发送给客户的链接</value></data>

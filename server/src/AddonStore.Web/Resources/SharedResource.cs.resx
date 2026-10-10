@@ -449,7 +449,7 @@
   <data name="Retention period saved." xml:space="preserve"><value>Doba uchovávání uložena.</value></data>
   <data name="All stored IP addresses were deleted." xml:space="preserve"><value>Všechny uložené IP adresy byly smazány.</value></data>
   <data name="Type DELETE to confirm." xml:space="preserve"><value>Pro potvrzení zadejte DELETE.</value></data>
-  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Nahrát zdrojový kód verze (po každém nahrání)</value></data>
+  <data name="Replace the source code of a version that is not reviewed yet" xml:space="preserve"><value>Nahradit zdrojový kód verze, která ještě nebyla zkontrolována</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Správci: zdrojový kód nejnovější verze, výchozí bod pro změnu</value></data>
   <data name="Share link" xml:space="preserve"><value>Sdílet odkaz</value></data>
   <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>Vlastní stránka doplňku s odkazem k odeslání zákazníkům</value></data>

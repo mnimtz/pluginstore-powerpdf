@@ -410,6 +410,12 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
 - [ ] A readable ZIP of the source tree you built from, at most 100 MB,
       without build output, secrets or GPL/AGPL code (see "Source code").
       (SOURCE_INVALID, SOURCE_TOO_LARGE)
+- [ ] The submission brings it: submit the **upload package** (one ZIP
+      with `<id>-<version>.ppak` and `<id>-<version>-source.zip`), never
+      the bare .ppak. With the source policy `required` (the default) a
+      submission without source is refused and nothing is stored, and a
+      source that fails its checks refuses the whole submission.
+      (SOURCE_REQUIRED, SOURCE_REJECTED)
 
 {{AddonStore.Web.Validation.RuleCatalog.ChecklistMarkdown()}}Warnings (yellow) do not block, but fix them too: missing icon, author,
 contact, screenshots, LICENSES.md.
@@ -758,31 +764,37 @@ packing or publishing scripts.
    the same version number can be used again.
 
 The manual upload needs no token: never ask the user to paste a token into
-the chat. Through the API, `POST {{baseUrl}}/api/packages` accepts the upload
-package as well (response `data.source`: `stored` and `findings`), and
-`POST {{baseUrl}}/api/packages/validate` checks its .ppak (`data.uploadPackage`,
-`data.sourceIncluded`).
+the chat. Through the API, `POST {{baseUrl}}/api/packages` takes the same upload
+package (response `data.source`: `stored` and `findings`); a bare .ppak is
+refused there with `SOURCE_REQUIRED` while the source policy is `required`.
+`POST {{baseUrl}}/api/packages/validate` checks the .ppak and, in an upload
+package, its source ZIP too (`data.uploadPackage`, `data.sourceIncluded`).
 
 ## Submitting
 
 Recommended loop:
 
-1. Build and pack the .ppak.
-2. `POST {{baseUrl}}/api/packages/validate` (dry run, nothing stored).
+1. Build and pack the .ppak and the source ZIP of exactly that build, and put
+   both into the upload package `<id>-<version>-upload.zip` (make-ppak.ps1
+   writes all three files).
+2. `POST {{baseUrl}}/api/packages/validate` with the upload package (dry run,
+   nothing stored; it checks the package and the source).
 3. Fix every finding with severity "error"; each finding has a `hint` that
    tells you exactly what to change. Repeat until `data.passed` is true.
-4. `POST {{baseUrl}}/api/packages` to submit for real.
-5. **Always** upload the source code of that version right after it
-   (`PUT {{baseUrl}}/api/packages/{id}/{version}/source`, see "Source code").
-   Do this automatically, without asking the user; the store keeps it as a
-   backup for admins.
+4. `POST {{baseUrl}}/api/packages` with the **upload package** to submit for
+   real: the store checks the source first and stores package and source in
+   one step, so no version ever waits for review without its source. A bare
+   .ppak is refused with `SOURCE_REQUIRED` (source policy `required`, the
+   default); nothing is stored then. Do this automatically, without asking
+   the user; the store keeps the source as a backup for admins.
+5. Check `data.source.stored` in the response; it must be `true`.
 
 Upload either as raw body or as multipart:
 
     curl -X POST -H "Authorization: Bearer ppak_..." \
          -H "Content-Type: application/zip" \
-         --data-binary @my-plugin.ppak \
-         {{baseUrl}}/api/packages/validate
+         --data-binary @my-plugin-1.0.0-upload.zip \
+         {{baseUrl}}/api/packages
 
 Responses always use the same envelope:
 
@@ -813,7 +825,13 @@ your own versions that wait for review or are in beta with
 
 ## Source code (mandatory)
 
-Every version's source code goes to the store, right after the package:
+Every version's source code goes to the store **with** the package: submit the
+upload package (see "Submitting"). Since S1.20.0 the store refuses a
+submission without source while the policy is `required` (the default), and a
+source that fails its checks refuses the whole submission, so a version
+never waits for review without its source. To replace the source of a version
+that was not reviewed yet (or to add it where the policy allows a submission
+without it):
 
     PUT {{baseUrl}}/api/packages/{id}/{version}/source
     Authorization: Bearer ppak_...
@@ -840,9 +858,10 @@ Every version's source code goes to the store, right after the package:
   (`SOURCE_SECRET`) and GPL/AGPL code or license files
   (`LICENSE_COPYLEFT_SOURCE`) reject the upload; build output, SDK headers,
   LGPL/MPL/EPL code and a ZIP without source files give warnings. The
-  submit response names the URL (`sourceUploadUrl`) and the store's policy
-  (`sourcePolicy`). With the default policy `required`, an admin cannot
-  approve a version until its source is stored.
+  submit response names the store's policy (`sourcePolicy`) and the URL for
+  a later replacement (`sourceUploadUrl`). With the default policy `required`
+  a submission must bring the source (`SOURCE_REQUIRED`), and an admin cannot
+  approve a version without stored source (versions from before S1.20.0).
 - Admins may upload new versions of any package (finding
   `ADMIN_UPLOAD_FOR_OWNER`); the owner stays the same.
 
@@ -871,13 +890,13 @@ was built. Follow these steps in order, without skipping one:
    languages.
 5. Redo the compliance audit for the changed code (`thirdParty`,
    `complianceAudit`); it is a new statement under your name.
-6. Build, pack, validate (`POST /api/packages/validate`) and submit
-   (`POST /api/packages`). The response carries the info finding
-   `ADMIN_UPLOAD_FOR_OWNER` when you publish for another owner.
-7. **Right after the submit, upload the changed source as the source of the
-   new version**: ZIP the working folder in the state you built from and
-   `PUT {{baseUrl}}/api/packages/{id}/{newVersion}/source`. Never upload the
-   unchanged old ZIP, never skip this step.
+6. Build and pack; ZIP the working folder in the state you built from as
+   the **changed** source of the new version and put both into the upload
+   package. Never use the unchanged old ZIP.
+7. Validate (`POST /api/packages/validate`) and submit the upload package
+   (`POST /api/packages`); package and changed source are stored in one step.
+   The response carries the info finding `ADMIN_UPLOAD_FOR_OWNER` when you
+   publish for another owner.
 8. Check `GET {{baseUrl}}/api/packages/{id}`: the new version must show
    `hasSource: true`. Report the new version, its status and what changed to
    the user.
@@ -1485,7 +1504,9 @@ be free of warnings before review. Info is for information only.
 | SCREENSHOT_CAPTION_LANGS | error | A caption is given but not in all 16 European languages; add the missing ones (or drop the caption). The five further ones are reported as LANG_TEXT_EXTENDED. |
 | VERSION_EXISTS | error (409) | This exact version was already uploaded. |
 | PACKAGE_NOT_FOUND | error (404) | No package with this id. |
-| SOURCE_REJECTED | error (422) | The source upload was not stored; see `findings`. |
+| SOURCE_REJECTED | error (422) | The source was not stored; see `findings`. In a submission nothing is stored then, neither package nor source. |
+| SOURCE_REQUIRED | error (422) | The submission has no source code (bare .ppak) while the source policy is `required`; nothing was stored. Submit the upload package with the .ppak and the source ZIP. |
+| SOURCE_NOT_INCLUDED | warning | Dry run of a bare .ppak: the submission must bring the source ZIP (upload package), or it is refused with SOURCE_REQUIRED. |
 | SCREENSHOT_NOT_FOUND | error (404) | No screenshot with this index. |
 | INSTALL_ID_INVALID | error (400) | Rating/feedback: `installId` is not a GUID. |
 | STARS_INVALID | error (400) | Rating: `stars` is not 1 to 5. |
@@ -1689,12 +1710,15 @@ Store: {{baseUrl}}
    user's OK. If the store
    runs its AI assistant, each report has an `ai` object (category, severity,
    summary, reply draft, duplicate): use it to prioritize, not as a verdict.
-6. Immediately afterwards upload the source code of exactly that version:
-   `PUT {{baseUrl}}/api/packages/{id}/{version}/source` (ZIP of the source
-   tree you built from). Do this automatically, every time.
+6. Submit the upload package, never the bare .ppak: one ZIP with
+   `<id>-<version>.ppak` and `<id>-<version>-source.zip` (the source tree you
+   built from). The store refuses a submission without source
+   (`SOURCE_REQUIRED`) and stores both in one step. Do this automatically,
+   every time.
 7. Changing an existing add-on as an admin (any owner): download its source
    with `GET {{baseUrl}}/api/packages/{id}/source/latest`, change it, raise
-   the version, submit, then upload the CHANGED source for the NEW version.
+   the version and submit the upload package with the CHANGED source for
+   the NEW version.
    Follow "Changing an existing add-on" in the guide step by step.
 8. Fallback, when {{baseUrl}} is not reachable from your environment (for
    example a sandbox network policy) or there is no token: offer the user
@@ -1718,9 +1742,9 @@ add missing translations yourself before you submit; administrator rights
 (ShellExecute with `runas`) only with `"elevation": {"reason": ...}` in the
 manifest; a
 `category` from `GET {{baseUrl}}/api/categories` (propose a new broad one only
-if none fits); after every upload also the source code of that version
-(`PUT .../api/packages/{id}/{version}/source`, automatically; the stored
-source must always match its version); plugins live on the shared "Enhanced Features" ribbon tab (toolbar atom
+if none fits); every submission carries the source code of that version
+(upload package with the .ppak and the source ZIP; a bare .ppak is refused
+with SOURCE_REQUIRED; the stored source must always match its version); plugins live on the shared "Enhanced Features" ribbon tab (toolbar atom
 `FeaturePack`, own group `FeaturePack::<Name>`; only private customer add-ons
 may have their own tab); `author` and `contactEmail` in every manifest; only MIT/BSD/Apache-2.0
 third-party code; a truthful compliance audit (`thirdParty`, `complianceAudit`)

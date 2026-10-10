@@ -520,7 +520,7 @@ public static class ApiEndpoints
             });
         });
 
-        api.MapPost("/packages/validate", async (HttpContext ctx, UserManager<AppUser> users, SubmissionService svc, IMemoryCache cache) =>
+        api.MapPost("/packages/validate", async (HttpContext ctx, UserManager<AppUser> users, SubmissionService svc, SourceService sources, IMemoryCache cache) =>
         {
             if (TooManyUploads(ctx, cache)) return Results.Json(new { ok = false, error = new { code = "RATE_LIMITED",
                 message = "Too many package checks from this account in the last hour.", hint = "Wait a while; at most 60 checks and submissions per account and hour." } }, statusCode: 429);
@@ -534,6 +534,12 @@ public static class ApiEndpoints
                 try { bundle = UploadBundle.TryUnpack(tmp); }
                 catch (InvalidDataException ex) { return BundleInvalid(ex.Message); }
                 var report = await svc.ValidateOnlyAsync(bundle?.PpakPath ?? tmp, user);
+                if (bundle?.SourcePath is null && await sources.RequiredAtSubmitAsync(bundle?.PpakPath ?? tmp))
+                    report.Warn("SOURCE_NOT_INCLUDED", "This check had no source ZIP; the submission must bring it.",
+                        "Submit the upload package (one ZIP with <id>-<version>.ppak and <id>-<version>-source.zip, as make-ppak.ps1 writes it); a bare .ppak is refused with SOURCE_REQUIRED.");
+                else if (bundle?.SourcePath is { } checkedSource)
+                    foreach (var f in SourceService.Check(checkedSource).Findings.Where(f => f.Severity != "info"))
+                        report.Findings.Add(f);       // the source is checked in the dry run too
                 return Results.Json(new { ok = true, findings = report.Findings, data = new
                 {
                     passed = report.Passed,
@@ -559,6 +565,28 @@ public static class ApiEndpoints
                 try { bundle = UploadBundle.TryUnpack(tmp); }
                 catch (InvalidDataException ex) { return BundleInvalid(ex.Message); }
                 var via = ctx.User.FindFirstValue("token_name") is { } t ? $"api:{t}" : "web";
+                if (await sources.RequiredAtSubmitAsync(bundle?.PpakPath ?? tmp))
+                {
+                    if (bundle?.SourcePath is null)
+                        return Results.Json(new
+                        {
+                            ok = false,
+                            error = new
+                            {
+                                code = "SOURCE_REQUIRED",
+                                message = "The source code must come with the submission; nothing was stored.",
+                                hint = "Send the upload package instead of the bare .ppak: one ZIP with <id>-<version>.ppak and <id>-<version>-source.zip (make-ppak.ps1 writes it as <id>-<version>-upload.zip). The store checks and stores both in one step."
+                            }
+                        }, statusCode: 422);
+                    var pre = SourceService.Check(bundle.SourcePath);
+                    if (!pre.Passed)
+                        return Results.Json(new
+                        {
+                            ok = false,
+                            error = new { code = "SOURCE_REJECTED", message = "The source code did not pass its checks; nothing was stored.", hint = "Fix every finding with severity 'error' in the source ZIP and send the upload package again." },
+                            findings = pre.Findings
+                        }, statusCode: 422);
+                }
                 var result = await svc.SubmitAsync(bundle?.PpakPath ?? tmp, user, via);
 
                 if (result.ErrorCode == "CLIENT_ADMIN_ONLY")

@@ -449,7 +449,7 @@
   <data name="Retention period saved." xml:space="preserve"><value>Bewaartermijn opgeslagen.</value></data>
   <data name="All stored IP addresses were deleted." xml:space="preserve"><value>Alle opgeslagen IP-adressen zijn verwijderd.</value></data>
   <data name="Type DELETE to confirm." xml:space="preserve"><value>Typ DELETE om te bevestigen.</value></data>
-  <data name="Upload the source code of a version (after every upload)" xml:space="preserve"><value>Broncode van een versie uploaden (na elke upload)</value></data>
+  <data name="Replace the source code of a version that is not reviewed yet" xml:space="preserve"><value>De broncode vervangen van een versie die nog niet is beoordeeld</value></data>
   <data name="Admins: source code of the newest version, the starting point for a change" xml:space="preserve"><value>Beheerders: broncode van de nieuwste versie, startpunt voor een wijziging</value></data>
   <data name="Share link" xml:space="preserve"><value>Link delen</value></data>
   <data name="Own page of this add-on with a link to send to customers" xml:space="preserve"><value>Eigen pagina van deze invoegtoepassing met een link om naar klanten te sturen</value></data>

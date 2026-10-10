@@ -80,6 +80,21 @@ public class DashboardModel : PageModel
                 return;
             }
 
+            // policy "required" (S1.20.0): no version without its source, checked before anything is stored
+            if (await _sources.RequiredAtSubmitAsync(bundle?.PpakPath ?? tmp))
+            {
+                var pre = bundle?.SourcePath is { } src ? SourceService.Check(src) : null;
+                if (pre is null || !pre.Passed)
+                {
+                    if (pre is not null) SourceFindings = pre.Findings.ToList();
+                    Notice = pre is null
+                        ? "The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. <id>-<version>-upload.zip). Nothing was stored."
+                        : "The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again.";
+                    NoticeKind = "error";
+                    await LoadAsync();
+                    return;
+                }
+            }
             var result = await _svc.SubmitAsync(bundle?.PpakPath ?? tmp, user, "web");
             Findings = result.Report.Findings;
             if (result.ErrorCode == "CLIENT_ADMIN_ONLY")
