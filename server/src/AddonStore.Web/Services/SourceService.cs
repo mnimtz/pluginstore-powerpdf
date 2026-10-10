@@ -73,6 +73,8 @@ public class SourceService
     {
         try
         {
+            // the central directory is only loaded when its declared size is sane (review S1.20.2)
+            if (UploadLimits.DeclaredEntries(ppakPath) > MaxEntries) return null;
             using var zip = ZipFile.OpenRead(ppakPath);
             var entry = zip.GetEntry("manifest.json");
             if (entry is null || entry.Length > 256 * 1024) return null;
@@ -82,6 +84,20 @@ public class SourceService
                 ? id.GetString() : null;
         }
         catch (Exception) { return null; }
+    }
+
+    /// <summary>
+    /// The source check of a submission under the policy "required" (S1.20.2): as <see cref="Check"/>,
+    /// but a ZIP without any C, C++ or C# file (SOURCE_NO_CODE) is an error, so a readme or the built
+    /// package alone does not satisfy SOURCE_REQUIRED.
+    /// </summary>
+    public static ValidationReport CheckForSubmit(string zipPath)
+    {
+        var r = Check(zipPath);
+        var strict = new ValidationReport();
+        foreach (var f in r.Findings)
+            strict.Findings.Add(f.Code == "SOURCE_NO_CODE" && f.Severity == "warning" ? f with { Severity = "error" } : f);
+        return strict;
     }
 
     /// <summary>True when the version may not be approved yet because its source is missing.</summary>

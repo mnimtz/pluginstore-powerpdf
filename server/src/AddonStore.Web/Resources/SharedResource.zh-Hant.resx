@@ -1529,4 +1529,6 @@
   <data name="Connects to" xml:space="preserve"><value>連線至</value></data>
   <data name="Transfers" xml:space="preserve"><value>傳輸</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>依據開發者的宣告，並於審核時檢查。</value></data>
+  <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>原始碼必須隨上傳一起提供：請選擇上傳套件（一個 ZIP，包含此版本的 .ppak 和原始碼 ZIP，例如 &lt;id&gt;-&lt;version&gt;-upload.zip）。未儲存任何內容。</value></data>
+  <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>上傳套件中的原始碼未通過檢查；未儲存任何內容。請修正下列問題後重新上傳。</value></data>
 </root>

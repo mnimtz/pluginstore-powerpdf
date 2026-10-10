@@ -39,7 +39,7 @@ public static class OpenApiDoc
             new[] { "channel:query:'beta' includes pre-release versions", "format:query:'tsv' for the Power PDF client", "lang:query:UI language for TSV texts" }),
         new("get", "/api/categories", "getCategories", "Catalog categories (slug, names, usage, limit). Every upload names one.", "none", Array.Empty<string>()),
         new("get", "/api/packages/{id}", "getPackage", "Status, history and check reports of one package, and its visibility (public or private).", "none", new[] { "id:path:package id" }),
-        new("patch", "/api/packages/{id}", "updateCatalogEntry", "Change name, description, author, contactEmail or category without a new version; a field set to null resets it to the manifest value.", "owner",
+        new("patch", "/api/packages/{id}", "updateCatalogEntry", "Change name, description, author, contactEmail, category or providers without a new version; a field set to null resets it to the manifest value.", "owner",
             new[] { "id:path:package id" }, Body: "catalogPatch"),
         new("post", "/api/packages/validate", "validatePackage", "Dry run: all checks on a .ppak or upload package (then the source too), nothing is stored. Repeat until data.passed is true, fixing each error with its hint.", "token", Array.Empty<string>(), Body: "ppak"),
         new("post", "/api/packages", "submitPackage", "Submit the upload package (.ppak plus source ZIP of that version). Under the source policy required (default) a bare .ppak is refused with SOURCE_REQUIRED and a failing source with SOURCE_REJECTED; nothing is stored then. Passing versions wait for review (status submitted) until a reviewer approves them for beta or live.", "token", Array.Empty<string>(), Body: "ppak"),

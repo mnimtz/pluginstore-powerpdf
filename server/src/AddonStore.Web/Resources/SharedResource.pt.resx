@@ -1529,4 +1529,6 @@
   <data name="Connects to" xml:space="preserve"><value>Liga-se a</value></data>
   <data name="Transfers" xml:space="preserve"><value>Transmite</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Conforme declarado pelo programador e verificado na revisão.</value></data>
+  <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>O código-fonte tem de acompanhar o envio: escolha o pacote de envio (um ZIP com o .ppak e o ZIP do código-fonte desta versão, p. ex. &lt;id&gt;-&lt;version&gt;-upload.zip). Nada foi guardado.</value></data>
+  <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>O código-fonte no pacote de envio não passou nas verificações; nada foi guardado. Corrija as constatações abaixo e envie novamente.</value></data>
 </root>

@@ -1529,4 +1529,6 @@
   <data name="Connects to" xml:space="preserve"><value>연결 대상</value></data>
   <data name="Transfers" xml:space="preserve"><value>전송 내용</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>개발자가 신고하고 검토에서 확인한 내용입니다.</value></data>
+  <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>소스 코드는 업로드와 함께 제공되어야 합니다. 업로드 패키지(이 버전의 .ppak과 소스 코드 ZIP이 들어 있는 ZIP 하나, 예: &lt;id&gt;-&lt;version&gt;-upload.zip)를 선택하세요. 아무것도 저장되지 않았습니다.</value></data>
+  <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>업로드 패키지의 소스 코드가 검사를 통과하지 못해 아무것도 저장되지 않았습니다. 아래 결과를 수정한 후 다시 업로드하세요.</value></data>
 </root>

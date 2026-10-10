@@ -534,11 +534,14 @@ public static class ApiEndpoints
                 try { bundle = UploadBundle.TryUnpack(tmp); }
                 catch (InvalidDataException ex) { return BundleInvalid(ex.Message); }
                 var report = await svc.ValidateOnlyAsync(bundle?.PpakPath ?? tmp, user);
-                if (bundle?.SourcePath is null && await sources.RequiredAtSubmitAsync(bundle?.PpakPath ?? tmp))
-                    report.Warn("SOURCE_NOT_INCLUDED", "This check had no source ZIP; the submission must bring it.",
+                var required = await sources.RequiredAtSubmitAsync(bundle?.PpakPath ?? tmp);
+                // S1.20.2: under "required" the dry run passes only when the submission would (same rules)
+                if (bundle?.SourcePath is null && required)
+                    report.Error("SOURCE_NOT_INCLUDED", "This check had no source ZIP; the submission must bring it.",
                         "Submit the upload package (one ZIP with <id>-<version>.ppak and <id>-<version>-source.zip, as make-ppak.ps1 writes it); a bare .ppak is refused with SOURCE_REQUIRED.");
                 else if (bundle?.SourcePath is { } checkedSource)
-                    foreach (var f in SourceService.Check(checkedSource).Findings.Where(f => f.Severity != "info"))
+                    foreach (var f in (required ? SourceService.CheckForSubmit(checkedSource) : SourceService.Check(checkedSource))
+                                 .Findings.Where(f => f.Severity != "info"))
                         report.Findings.Add(f);       // the source is checked in the dry run too
                 return Results.Json(new { ok = true, findings = report.Findings, data = new
                 {
@@ -578,7 +581,7 @@ public static class ApiEndpoints
                                 hint = "Send the upload package instead of the bare .ppak: one ZIP with <id>-<version>.ppak and <id>-<version>-source.zip (make-ppak.ps1 writes it as <id>-<version>-upload.zip). The store checks and stores both in one step."
                             }
                         }, statusCode: 422);
-                    var pre = SourceService.Check(bundle.SourcePath);
+                    var pre = SourceService.CheckForSubmit(bundle.SourcePath);
                     if (!pre.Passed)
                         return Results.Json(new
                         {
@@ -1427,7 +1430,7 @@ public static class ApiEndpoints
             catch (JsonException)
             {
                 return Results.Json(new { ok = false, error = new { code = "METADATA_INVALID", message = "The body must be a JSON object (max. 256 KB).",
-                    hint = "Example: {\"author\": \"Team Signing\", \"contactEmail\": \"team@example.com\", \"name\": {\"en\": \"...\"}, \"description\": {\"en\": \"...\", ...all 16 languages}}. Omit a field to keep it, send null to reset it to the manifest value." } }, statusCode: 400);
+                    hint = "Example: {\"author\": \"Team Signing\", \"contactEmail\": \"team@example.com\", \"name\": {\"en\": \"...\"}, \"description\": {\"en\": \"...\", ...all 16 languages}}. Omit a field to keep it, send null to reset it to the manifest value; providers: [{\"name\": \"Example\", \"website\": \"https://example.com\"}]." } }, statusCode: 400);
             }
 
             var change = new MetaChange();

@@ -375,7 +375,11 @@ source code.
   `SOURCE_REJECTED`; in both cases nothing is stored. Before, the version was
   stored and only its approval waited for the source.
 - The dry run (`POST /api/packages/validate`) checks the source in an upload
-  package too and warns with `SOURCE_NOT_INCLUDED` when it gets a bare .ppak.
+  package too; under the policy `required` a bare .ppak fails it with the error
+  `SOURCE_NOT_INCLUDED` (S1.20.2: the dry run passes exactly when the
+  submission would). A source ZIP without any C, C++ or C# file
+  (`SOURCE_NO_CODE`) is an error at submission, so a readme or the built
+  package alone is no source.
 - `PUT /api/packages/{id}/{version}/source` stays for replacing the source of
   a version that is not reviewed yet. The Add-on Store client is exempt.
 
@@ -400,13 +404,18 @@ that connects to online services says so.
   unless an admin entered a provider.
 - New manifest field `providers` (`[{"name", "website"}]`, at most 5, https
   websites only). **Rule:** a plugin whose `externalServices` contain a fixed
-  public https address must name its providers, or the upload is refused
-  (`PROVIDERS_MISSING`; invalid entries `PROVIDERS_INVALID`). Servers the user
-  or IT configures and local endpoints need none.
+  public address must name its providers, or the upload is refused
+  (`PROVIDERS_MISSING`; invalid entries `PROVIDERS_INVALID`). Since S1.20.2
+  any scheme counts (https, http, wss ...), also an address without scheme or
+  a public IP address. Servers the user or IT configures, local and private
+  endpoints need none.
 - Owners and admins set the providers without a new upload: *Edit catalog
   entry*, section *Service providers*, or `PATCH /api/packages/{id}` with
-  `providers` (`[]` none, `null` back to the manifest). The edit form shows
-  the declared connections of the newest version.
+  `providers` (`[]` none, `null` back to the manifest). `[]` is refused with
+  `PROVIDERS_MISSING` for an add-on that connects to a fixed public service
+  (S1.20.2). The edit form shows the declared connections of the newest
+  version; the add-on page shows the provider's host in its ASCII (Punycode)
+  form, so a look-alike domain is visible.
 - JSON catalog: `connections` per entry; client catalog: TSV column 23 (ASCII
   JSON, older clients ignore it). The store window opens a provider's website
   only when the catalog names exactly that https address.

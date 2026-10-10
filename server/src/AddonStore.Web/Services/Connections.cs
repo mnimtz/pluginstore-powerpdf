@@ -76,6 +76,43 @@ public record Connections(List<AddonProvider> Providers, List<ServiceLink> Servi
         string.IsNullOrEmpty(u.UserInfo) && u.Host.Contains('.') && u.HostNameType == UriHostNameType.Dns &&
         u.Host is not ("localhost") && !u.Host.EndsWith(".localhost", StringComparison.OrdinalIgnoreCase);
 
+    /// <summary>
+    /// S1.20.2: a declared address of a fixed public host, whatever the scheme (https, http, wss, ftp ...)
+    /// or none ("api.example.com/v1"), also a public IP address; not a description such as "configured by
+    /// the admin", and not localhost, *.localhost, private, loopback or link-local addresses.
+    /// </summary>
+    public static bool IsFixedPublicHost(string? url)
+    {
+        if (string.IsNullOrWhiteSpace(url) || url.Length > MaxWebsite || url.Trim().Any(char.IsWhiteSpace)) return false;
+        var u = url.Trim();
+        if (!u.Contains("://")) u = "https://" + u;
+        if (!Uri.TryCreate(u, UriKind.Absolute, out var uri) || string.IsNullOrEmpty(uri.Host)) return false;
+        var host = uri.Host.Trim('[', ']');
+        if (host.Equals("localhost", StringComparison.OrdinalIgnoreCase) || host.EndsWith(".localhost", StringComparison.OrdinalIgnoreCase))
+            return false;
+        if (System.Net.IPAddress.TryParse(host, out var ip))
+        {
+            if (System.Net.IPAddress.IsLoopback(ip) || ip.IsIPv6LinkLocal || ip.IsIPv6SiteLocal || ip.IsIPv6UniqueLocal) return false;
+            var b = ip.MapToIPv4().GetAddressBytes();
+            if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork || ip.IsIPv4MappedToIPv6)
+                return !(b[0] == 10 || b[0] == 127 || b[0] == 0 || (b[0] == 172 && b[1] >= 16 && b[1] <= 31) ||
+                         (b[0] == 192 && b[1] == 168) || (b[0] == 169 && b[1] == 254) || (b[0] == 100 && b[1] >= 64 && b[1] <= 127));
+            return true;
+        }
+        return uri.HostNameType == UriHostNameType.Dns && host.Contains('.');
+    }
+
+    /// <summary>True when the manifest declares a fixed public service (then it must name its providers).</summary>
+    public static bool NeedsProvider(JsonElement root)
+    {
+        JsonElement svc = default;
+        var declared = (root.TryGetProperty("complianceAudit", out var ca) && ca.ValueKind == JsonValueKind.Object &&
+                        ca.TryGetProperty("externalServices", out svc) && svc.ValueKind == JsonValueKind.Array) ||
+                       (root.TryGetProperty("externalServices", out svc) && svc.ValueKind == JsonValueKind.Array);
+        return declared && svc.EnumerateArray().Any(s => s.ValueKind == JsonValueKind.Object &&
+            s.TryGetProperty("url", out var v) && v.ValueKind == JsonValueKind.String && IsFixedPublicHost(v.GetString()));
+    }
+
     /// <summary>The host of a declared address, shown as text only ("api.example.com", "*.example.com").</summary>
     public static string HostOf(string url)
     {

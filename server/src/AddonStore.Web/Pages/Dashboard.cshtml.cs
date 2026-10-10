@@ -83,7 +83,7 @@ public class DashboardModel : PageModel
             // policy "required" (S1.20.0): no version without its source, checked before anything is stored
             if (await _sources.RequiredAtSubmitAsync(bundle?.PpakPath ?? tmp))
             {
-                var pre = bundle?.SourcePath is { } src ? SourceService.Check(src) : null;
+                var pre = bundle?.SourcePath is { } src ? SourceService.CheckForSubmit(src) : null;
                 if (pre is null || !pre.Passed)
                 {
                     if (pre is not null) SourceFindings = pre.Findings.ToList();

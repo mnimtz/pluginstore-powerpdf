@@ -134,6 +134,20 @@ public class PackageMetaService
     {
         Normalize(c);
         var issues = Validate(c);
+        // S1.20.2: an add-on with a fixed public service keeps at least one provider ("none" would undo the
+        // upload rule PROVIDERS_MISSING after the review); null = back to the manifest stays allowed
+        if (c.SetProviders && c.Providers is { Count: 0 })
+        {
+            var newestManifest = await _db.PackageVersions.AsNoTracking().Where(v => v.PackageId == pkg.Id)
+                .OrderByDescending(v => v.Id).Select(v => v.ManifestJson).FirstOrDefaultAsync();
+            var needs = false;
+            if (newestManifest is not null)
+                try { using var d = JsonDocument.Parse(newestManifest); needs = Connections.NeedsProvider(d.RootElement); }
+                catch (JsonException) { }
+            if (needs)
+                issues.Add(new("PROVIDERS_MISSING", "error", "The add-on connects to a fixed public service, so the catalog must name its provider.",
+                    "Name at least one company, e.g. {\"providers\": [{\"name\": \"Example Analytics\", \"website\": \"https://example.com\"}]}, or send null to use the providers of the manifest."));
+        }
         if (c.SetCategory && !string.IsNullOrWhiteSpace(c.Category) && !await _db.Categories.AnyAsync(x => x.Slug == c.Category))
             issues.Add(new("CATEGORY_UNKNOWN", "error", $"Category '{c.Category}' does not exist.",
                 "Use a slug from GET /api/categories. New categories are only created through a package upload with categoryProposal."));

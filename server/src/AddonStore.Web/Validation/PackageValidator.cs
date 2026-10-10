@@ -1314,7 +1314,7 @@ public class PackageValidator
         // required only for fixed public services: a server the user or IT configures, or a local one, has no fixed provider
         var connects = audit.ValueKind == JsonValueKind.Object && audit.TryGetProperty("externalServices", out var es2) &&
                        es2.ValueKind == JsonValueKind.Array &&
-                       es2.EnumerateArray().Any(s => s.ValueKind == JsonValueKind.Object && Services.Connections.IsWebsite(GetString(s, "url")));
+                       es2.EnumerateArray().Any(s => s.ValueKind == JsonValueKind.Object && Services.Connections.IsFixedPublicHost(GetString(s, "url")));
         if (root.TryGetProperty("providers", out var prov) && prov.ValueKind != JsonValueKind.Null)
         {
             var ok = prov.ValueKind == JsonValueKind.Array && prov.GetArrayLength() <= Services.Connections.MaxProviders &&

@@ -1529,4 +1529,6 @@
   <data name="Connects to" xml:space="preserve"><value>接続先</value></data>
   <data name="Transfers" xml:space="preserve"><value>送信内容</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>開発者の申告に基づき、審査で確認済みです。</value></data>
+  <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>ソース コードはアップロードと一緒に必要です: アップロード パッケージ (このバージョンの .ppak とソース コード ZIP を含む 1 つの ZIP、例: &lt;id&gt;-&lt;version&gt;-upload.zip) を選択してください。何も保存されていません。</value></data>
+  <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>アップロード パッケージのソース コードがチェックに合格しなかったため、何も保存されていません。下の指摘を修正してから、もう一度アップロードしてください。</value></data>
 </root>

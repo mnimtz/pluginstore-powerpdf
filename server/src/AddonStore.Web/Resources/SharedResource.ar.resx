@@ -1529,4 +1529,6 @@
   <data name="Connects to" xml:space="preserve"><value>تتصل بـ</value></data>
   <data name="Transfers" xml:space="preserve"><value>تنقل</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>وفق تصريح المطوّر، وتم التحقق منه في المراجعة.</value></data>
+  <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>يجب أن يرفق الكود المصدري مع التحميل: اختر حزمة التحميل (ملف ZIP واحد يضم ملف .ppak وملف ZIP للكود المصدري لهذا الإصدار، مثل &lt;id&gt;-&lt;version&gt;-upload.zip). لم يُحفظ أي شيء.</value></data>
+  <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>لم يجتز الكود المصدري في حزمة التحميل الفحوصات؛ لم يُحفظ أي شيء. أصلح النتائج أدناه ثم أعد التحميل.</value></data>
 </root>

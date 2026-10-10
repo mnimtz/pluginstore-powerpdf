@@ -1529,4 +1529,6 @@
   <data name="Connects to" xml:space="preserve"><value>Подключается к</value></data>
   <data name="Transfers" xml:space="preserve"><value>Передает</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>По данным разработчика, проверено при рецензировании.</value></data>
+  <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>Исходный код должен прилагаться к загрузке: выберите пакет для загрузки (один ZIP с файлом .ppak и ZIP исходного кода этой версии, например &lt;id&gt;-&lt;version&gt;-upload.zip). Ничего не сохранено.</value></data>
+  <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>Исходный код в пакете для загрузки не прошёл проверки; ничего не сохранено. Устраните замечания ниже и загрузите снова.</value></data>
 </root>

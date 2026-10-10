@@ -107,7 +107,7 @@ else
                                 @(n > 0 ? ", " : "")@p.Name
                                 @if (p.Website.Length > 0)
                                 {
-                                    <text> (</text><a href="@p.Website" target="_blank" rel="noopener noreferrer nofollow">@(new Uri(p.Website).Host) ↗</a><text>)</text>
+                                    <text> (</text><a href="@p.Website" target="_blank" rel="noopener noreferrer nofollow">@(new Uri(p.Website).IdnHost) ↗</a><text>)</text>
                                 }
                             }
                         </p>

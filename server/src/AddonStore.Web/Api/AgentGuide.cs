@@ -414,8 +414,10 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       with `<id>-<version>.ppak` and `<id>-<version>-source.zip`), never
       the bare .ppak. With the source policy `required` (the default) a
       submission without source is refused and nothing is stored, and a
-      source that fails its checks refuses the whole submission.
-      (SOURCE_REQUIRED, SOURCE_REJECTED)
+      source that fails its checks refuses the whole submission; the dry
+      run of a bare .ppak fails the same way, and a source without any C,
+      C++ or C# file does not count. (SOURCE_REQUIRED, SOURCE_REJECTED,
+      SOURCE_NOT_INCLUDED, SOURCE_NO_CODE)
 
 {{AddonStore.Web.Validation.RuleCatalog.ChecklistMarkdown()}}Warnings (yellow) do not block, but fix them too: missing icon, author,
 contact, screenshots, LICENSES.md.
@@ -465,9 +467,11 @@ below) and does not rely on the statement alone.
 
    When the plugin connects to services, also name the company behind them
    (required since S1.19.0 as soon as one entry of `externalServices` has a
-   fixed public https `url`; servers the user or IT configures and local
-   endpoints need none; without it the upload is refused with
-   `PROVIDERS_MISSING`):
+   fixed public `url`, whatever the scheme (https, http, wss ...), also
+   without scheme or as a public IP address; servers the user or IT
+   configures, local and private endpoints need none; without it the upload
+   is refused with `PROVIDERS_MISSING`, and the catalog entry cannot be set to
+   `"providers": []` later):
 
         "providers": [ { "name": "Printix", "website": "https://printix.net" } ]
 
@@ -1488,7 +1492,7 @@ be free of warnings before review. Info is for information only.
 | SECRET_DETECTED | error | Credentials or a key container were found in the package. |
 | EXTERNAL_SERVICE_UNDECLARED | warning | A binary references hosts that are not in `externalServices`. |
 | PROVIDERS_INVALID | error | `providers` is not a list of at most 5 entries with a name (1 to 80 characters) and an optional public https `website`. |
-| PROVIDERS_MISSING | error | An entry of `externalServices` has a fixed public https `url`, but the manifest names no `providers`. |
+| PROVIDERS_MISSING | error | An entry of `externalServices` has a fixed public `url` (any scheme, no scheme or a public IP), but the manifest names no `providers`; also for `PATCH ... {"providers": []}` on such an add-on. |
 | THIRDPARTY_TRADEMARK | warning | Name or description mentions another company's brand. |
 | ICON_MISSING | warning | assets/icon.png is missing. |
 | ICON_INVALID | warning | assets/icon.png is not a readable PNG. |
@@ -1506,7 +1510,7 @@ be free of warnings before review. Info is for information only.
 | PACKAGE_NOT_FOUND | error (404) | No package with this id. |
 | SOURCE_REJECTED | error (422) | The source was not stored; see `findings`. In a submission nothing is stored then, neither package nor source. |
 | SOURCE_REQUIRED | error (422) | The submission has no source code (bare .ppak) while the source policy is `required`; nothing was stored. Submit the upload package with the .ppak and the source ZIP. |
-| SOURCE_NOT_INCLUDED | warning | Dry run of a bare .ppak: the submission must bring the source ZIP (upload package), or it is refused with SOURCE_REQUIRED. |
+| SOURCE_NOT_INCLUDED | error | Dry run of a bare .ppak under the source policy "required": the submission must bring the source ZIP (upload package), or it is refused with SOURCE_REQUIRED. |
 | SCREENSHOT_NOT_FOUND | error (404) | No screenshot with this index. |
 | INSTALL_ID_INVALID | error (400) | Rating/feedback: `installId` is not a GUID. |
 | STARS_INVALID | error (400) | Rating: `stars` is not 1 to 5. |
@@ -1552,7 +1556,7 @@ be free of warnings before review. Info is for information only.
 | LICENSE_WEAK_COPYLEFT_SOURCE | warning | LGPL/MPL/EPL code in the source. |
 | SOURCE_BUILD_OUTPUT | warning | Build output or binaries in the source ZIP. |
 | SOURCE_SDK_INCLUDED | warning | Power PDF Plugin SDK headers in the source ZIP. |
-| SOURCE_NO_CODE | warning | No C, C++ or C# files in the source ZIP. |
+| SOURCE_NO_CODE | warning (error at submission under the policy "required") | No C, C++ or C# files in the source ZIP. |
 | THIRDPARTY_SOURCE_DETECTED | info | Folders with third-party license files (MIT/BSD/Apache). |
 | SOURCE_MISSING | error (404) | No source stored for this version (download). |
 | CODE_MISSING | error (400) | GET /api/customer-code without the X-Customer-Code header. |

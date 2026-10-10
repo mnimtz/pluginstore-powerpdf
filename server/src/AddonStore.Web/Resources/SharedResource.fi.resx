@@ -1529,4 +1529,6 @@
   <data name="Connects to" xml:space="preserve"><value>Muodostaa yhteyden</value></data>
   <data name="Transfers" xml:space="preserve"><value>Siirtää</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Kehittäjän ilmoituksen mukaan, tarkistettu katselmoinnissa.</value></data>
+  <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>Lähdekoodin on tultava latauksen mukana: valitse latauspaketti (yksi ZIP, jossa on tämän version .ppak ja lähdekoodin ZIP, esim. &lt;id&gt;-&lt;version&gt;-upload.zip). Mitään ei tallennettu.</value></data>
+  <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>Latauspaketin lähdekoodi ei läpäissyt tarkistuksia; mitään ei tallennettu. Korjaa alla olevat havainnot ja lataa uudelleen.</value></data>
 </root>

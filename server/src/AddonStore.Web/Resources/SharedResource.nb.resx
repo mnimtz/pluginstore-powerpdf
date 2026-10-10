@@ -1529,4 +1529,6 @@
   <data name="Connects to" xml:space="preserve"><value>Kobler til</value></data>
   <data name="Transfers" xml:space="preserve"><value>Overfører</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Som oppgitt av utvikleren og kontrollert ved gjennomgangen.</value></data>
+  <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>Kildekoden må følge med opplastingen: velg opplastingspakken (én ZIP med .ppak-filen og kildekode-ZIP-en for denne versjonen, f.eks. &lt;id&gt;-&lt;version&gt;-upload.zip). Ingenting ble lagret.</value></data>
+  <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>Kildekoden i opplastingspakken besto ikke kontrollene; ingenting ble lagret. Rett funnene nedenfor, og last opp på nytt.</value></data>
 </root>
