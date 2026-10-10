@@ -64,7 +64,7 @@ developers do not need them.
 | UNAUTHORIZED | 401 | Missing or unknown device token: register the device again. |
 | USER_BLOCKED | 403 | The store admins blocked this user. |
 | EMAIL_INVALID | 400 | The e-mail address is not valid. |
-| NAME_INVALID | 400 | Display name or list name not allowed (2 to 64 characters, no links, no control characters). |
+| NAME_INVALID | 400 | Display name or list name not allowed (2 to 64 characters, no links, no control characters; display names also no invisible format characters such as bidi marks or zero-width spaces, S1.20.3). |
 | KEY_INVALID | 400 | kemPub must be 32 bytes, sigPub 65 bytes (base64). |
 | DEVICE_NOT_FOUND | 404 | Unknown device. |
 | CONTACT_NOT_FOUND | 404 | Not a contact. |

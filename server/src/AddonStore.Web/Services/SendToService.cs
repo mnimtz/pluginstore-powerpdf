@@ -111,7 +111,11 @@ public sealed class SendToService
     public static bool ValidName(string n) =>
         n.Length is >= 2 and <= 64 && n == n.Trim() && !n.Any(char.IsControl) && !n.Contains('@') &&
         !n.Contains("://", StringComparison.Ordinal) && !n.StartsWith("www.", StringComparison.OrdinalIgnoreCase) &&
-        !n.Any(c => c is '‪' or '‫' or '‬' or '‭' or '‮' or '⁦' or '⁧' or '⁨' or '⁩');
+        // S1.20.3: no invisible format characters at all (bidi overrides and isolates, zero-width space,
+        // LRM/RLM, Arabic letter mark, BOM, soft hyphen ...): names of other people must not be spoofed.
+        // ZWNJ and ZWJ stay allowed: Persian names and emoji sequences need them, they reorder nothing.
+        !n.Any(c => System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.Format &&
+                    c is not ('‌' or '‍'));
 
     private static bool ValidB64(string? s, int len)
     {
