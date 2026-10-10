@@ -29,7 +29,7 @@ FP1_MODULES = {
     'SmartBookmarks': ['sign', 'bookmarks', 'third_party/tpui', 'third_party/webview2'],   # 1.5.0: panel page on the Tungsten Plug-in UI
     'BarcodeStamps': ['sign', 'stamps', 'third_party/zxing-cpp'],
     'EInvoice': ['sign', 'invoice'],
-    'ComplianceCheck': ['sign', 'invoice', 'compliance'],
+    'ComplianceCheck': ['sign', 'invoice', 'compliance', 'third_party/tpui', 'third_party/webview2', 'bookmarks/json.hpp'],   # 1.2.0: report window on the Plug-in UI
     'MailMerge': ['sign', 'mailmerge'],
     'CommerzbankSign': ['sign'],   # private customer edition of OneClickSign
 }

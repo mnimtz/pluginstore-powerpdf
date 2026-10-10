@@ -1,13 +1,13 @@
 {
   "id": "com.tungsten.compliancecheck",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": {
     "en": "DORA PDF Check",
     "de": "DORA-PDF-Prüfung",
     "fr": "Contrôle PDF DORA",
     "it": "Verifica PDF DORA",
     "es": "Comprobación PDF DORA",
-    "nl": "DORA PDF-controle",
+    "nl": "DORA-PDF-controle",
     "pt": "Verificação de PDF DORA",
     "da": "DORA PDF-kontrol",
     "fi": "DORA PDF -tarkistus",
@@ -40,25 +40,35 @@
     "cs": "Kontroluje požadavky na dokument, které jsou důležité v kontextu DORA (EU 2022/2554): identifikaci PDF/A, šifrování, podpisy a změny po podpisu, slabou kryptografii, JavaScript, rizikové akce, přílohy, XFA, písma a metadata; zobrazí semaforovou zprávu a uloží opravenou kopii tam, kde stačí jedno kliknutí.",
     "hu": "Ellenőrzi a DORA összefüggésében (EU 2022/2554) fontos, dokumentumra vonatkozó követelményeket: PDF/A-azonosítás, titkosítás, aláírások és az aláírás utáni módosítások, gyenge titkosítás, JavaScript, kockázatos műveletek, mellékletek, XFA, betűtípusok és metaadatok; közlekedési lámpa jellegű jelentést mutat, és javított másolatot ment, ahol egy kattintás elég.",
     "ru": "Проверяет требования к документу, важные в контексте DORA (ЕС 2022/2554): идентификацию PDF/A, шифрование, подписи и изменения после подписания, слабую криптографию, JavaScript, рискованные действия, вложения, XFA, шрифты и метаданные; показывает отчёт в виде светофора и сохраняет исправленную копию там, где достаточно одного щелчка.",
-    "tr": "DORA bağlamında (AB 2022/2554) önemli olan belge gereksinimlerini denetler: PDF/A tanımlaması, şifreleme, imzalar ve imza sonrası değişiklikler, zayıf kriptografi, JavaScript, riskli eylemler, ekler, XFA, yazı tipleri ve meta veriler; trafik ışığı biçiminde bir rapor gösterir ve tek tıkla düzeltilebilen durumlarda düzeltilmiş bir kopya kaydeder."
+    "tr": "DORA bağlamında (AB 2022/2554) önemli olan belge gereksinimlerini denetler: PDF/A tanımlaması, şifreleme, imzalar ve imza sonrası değişiklikler, zayıf kriptografi, JavaScript, riskli eylemler, ekler, XFA, yazı tipleri ve meta veriler; trafik ışığı biçiminde bir rapor gösterir ve tek tıkla düzeltilebilen durumlarda düzeltilmiş bir kopya kaydeder.",
+    "zh-Hans": "检查在 DORA（欧盟 2022/2554）背景下重要的文档要求：PDF/A 标识、加密、签名及签名后的更改、弱加密算法、JavaScript、有风险的操作、附件、XFA、字体和元数据；以红绿灯方式显示报告，并在一次单击即可修复时保存修复后的副本。",
+    "zh-Hant": "檢查在 DORA（歐盟 2022/2554）脈絡下重要的文件要求：PDF/A 標識、加密、簽章及簽章後的變更、弱加密演算法、JavaScript、有風險的動作、附件、XFA、字型和中繼資料；以紅綠燈方式顯示報告，並在按一下即可修正時儲存修正後的副本。",
+    "ja": "DORA（EU 2022/2554）の観点で重要な文書側の要件をチェックします。PDF/A の識別、暗号化、署名と署名後の変更、弱い暗号、JavaScript、危険なアクション、添付ファイル、XFA、フォント、メタデータを確認し、信号機形式のレポートを表示します。ワンクリックで直せる項目は修正済みのコピーとして保存します。",
+    "ko": "DORA(EU 2022/2554) 관점에서 중요한 문서 측 요구 사항을 검사합니다. PDF/A 식별, 암호화, 서명 및 서명 후 변경, 취약한 암호화, JavaScript, 위험한 동작, 첨부 파일, XFA, 글꼴, 메타데이터를 확인하고 신호등 형식의 보고서를 표시하며, 한 번의 클릭으로 고칠 수 있는 항목은 수정된 사본으로 저장합니다.",
+    "ar": "يفحص متطلبات المستند المهمة في سياق DORA (الاتحاد الأوروبي 2022/2554): تعريف PDF/A والتشفير والتوقيعات والتغييرات بعد التوقيع والتشفير الضعيف وJavaScript والإجراءات الخطرة والمرفقات وXFA والخطوط وبيانات التعريف؛ ويعرض تقريرًا بنظام إشارات المرور ويحفظ نسخة مصححة حيث تكفي نقرة واحدة."
   },
   "changelog": {
-    "en": "The user interface is now available in all 16 Power PDF languages: Dutch, Portuguese, Danish, Finnish, Norwegian, Swedish, Polish, Czech, Hungarian, Russian and Turkish were added; the German, French, Italian and Spanish texts were reviewed and corrected.",
-    "de": "Die Benutzeroberfläche ist jetzt in allen 16 Power-PDF-Sprachen verfügbar: Niederländisch, Portugiesisch, Dänisch, Finnisch, Norwegisch, Schwedisch, Polnisch, Tschechisch, Ungarisch, Russisch und Türkisch kamen hinzu; die deutschen, französischen, italienischen und spanischen Texte wurden überarbeitet und korrigiert.",
-    "fr": "L'interface est désormais disponible dans les 16 langues de Power PDF : néerlandais, portugais, danois, finnois, norvégien, suédois, polonais, tchèque, hongrois, russe et turc ont été ajoutés ; les textes allemands, français, italiens et espagnols ont été revus et corrigés.",
-    "it": "L'interfaccia è ora disponibile in tutte le 16 lingue di Power PDF: aggiunti olandese, portoghese, danese, finlandese, norvegese, svedese, polacco, ceco, ungherese, russo e turco; i testi in tedesco, francese, italiano e spagnolo sono stati rivisti e corretti.",
-    "es": "La interfaz ya está disponible en los 16 idiomas de Power PDF: se han añadido neerlandés, portugués, danés, finés, noruego, sueco, polaco, checo, húngaro, ruso y turco; los textos en alemán, francés, italiano y español se han revisado y corregido.",
-    "nl": "De gebruikersinterface is nu beschikbaar in alle 16 talen van Power PDF: Nederlands, Portugees, Deens, Fins, Noors, Zweeds, Pools, Tsjechisch, Hongaars, Russisch en Turks zijn toegevoegd; de Duitse, Franse, Italiaanse en Spaanse teksten zijn nagekeken en verbeterd.",
-    "pt": "A interface agora está disponível nos 16 idiomas do Power PDF: foram adicionados holandês, português, dinamarquês, finlandês, norueguês, sueco, polonês, tcheco, húngaro, russo e turco; os textos em alemão, francês, italiano e espanhol foram revisados e corrigidos.",
-    "da": "Brugerfladen findes nu på alle 16 Power PDF-sprog: nederlandsk, portugisisk, dansk, finsk, norsk, svensk, polsk, tjekkisk, ungarsk, russisk og tyrkisk er tilføjet; de tyske, franske, italienske og spanske tekster er gennemgået og rettet.",
-    "fi": "Käyttöliittymä on nyt saatavilla kaikilla 16 Power PDF -kielellä: hollanti, portugali, tanska, suomi, norja, ruotsi, puola, tšekki, unkari, venäjä ja turkki lisättiin; saksan-, ranskan-, italian- ja espanjankieliset tekstit tarkistettiin ja korjattiin.",
-    "nb": "Brukergrensesnittet er nå tilgjengelig på alle 16 Power PDF-språk: nederlandsk, portugisisk, dansk, finsk, norsk, svensk, polsk, tsjekkisk, ungarsk, russisk og tyrkisk er lagt til; de tyske, franske, italienske og spanske tekstene er gjennomgått og rettet.",
-    "sv": "Användargränssnittet finns nu på alla 16 Power PDF-språk: nederländska, portugisiska, danska, finska, norska, svenska, polska, tjeckiska, ungerska, ryska och turkiska har lagts till; de tyska, franska, italienska och spanska texterna har granskats och rättats.",
-    "pl": "Interfejs jest teraz dostępny we wszystkich 16 językach Power PDF: dodano niderlandzki, portugalski, duński, fiński, norweski, szwedzki, polski, czeski, węgierski, rosyjski i turecki; teksty niemieckie, francuskie, włoskie i hiszpańskie zostały sprawdzone i poprawione.",
-    "cs": "Uživatelské rozhraní je nyní k dispozici ve všech 16 jazycích Power PDF: přibyla nizozemština, portugalština, dánština, finština, norština, švédština, polština, čeština, maďarština, ruština a turečtina; německé, francouzské, italské a španělské texty byly zkontrolovány a opraveny.",
-    "hu": "A felhasználói felület mostantól a Power PDF mind a 16 nyelvén elérhető: bekerült a holland, portugál, dán, finn, norvég, svéd, lengyel, cseh, magyar, orosz és török; a német, francia, olasz és spanyol szövegeket átnéztük és javítottuk.",
-    "ru": "Интерфейс теперь доступен на всех 16 языках Power PDF: добавлены нидерландский, португальский, датский, финский, норвежский, шведский, польский, чешский, венгерский, русский и турецкий; тексты на немецком, французском, итальянском и испанском проверены и исправлены.",
-    "tr": "Kullanıcı arayüzü artık Power PDF'in 16 dilinin tamamında kullanılabilir: Felemenkçe, Portekizce, Danca, Fince, Norveççe, İsveççe, Lehçe, Çekçe, Macarca, Rusça ve Türkçe eklendi; Almanca, Fransızca, İtalyanca ve İspanyolca metinler gözden geçirilip düzeltildi."
+    "en": "Fresh look: the windows now have the common design of the Tungsten add-ons for Power PDF, with the Tungsten colours and font.",
+    "de": "Neues Aussehen: Die Fenster haben jetzt das einheitliche Design der Tungsten-Add-ons für Power PDF, mit den Tungsten-Farben und der Tungsten-Schrift.",
+    "fr": "Nouveau look : les fenêtres adoptent le design commun des modules Tungsten pour Power PDF, avec les couleurs et la police Tungsten.",
+    "it": "Nuovo aspetto: le finestre hanno ora il design comune dei componenti aggiuntivi Tungsten per Power PDF, con i colori e il carattere Tungsten.",
+    "es": "Nuevo aspecto: las ventanas tienen ahora el diseño común de los complementos de Tungsten para Power PDF, con los colores y la fuente de Tungsten.",
+    "nl": "Nieuwe uitstraling: de vensters hebben nu het gemeenschappelijke ontwerp van de Tungsten-add-ons voor Power PDF, met de kleuren en het lettertype van Tungsten.",
+    "pt": "Novo visual: as janelas têm agora o design comum dos suplementos Tungsten para o Power PDF, com as cores e o tipo de letra da Tungsten.",
+    "da": "Nyt udseende: vinduerne har nu det fælles design for Tungsten-tilføjelsesprogrammer til Power PDF med Tungstens farver og skrifttype.",
+    "fi": "Uusi ulkoasu: ikkunoissa on nyt Tungstenin Power PDF -lisäosien yhteinen ulkoasu Tungstenin väreillä ja fontilla.",
+    "nb": "Nytt utseende: vinduene har nå det felles designet for Tungsten-tilleggene til Power PDF, med Tungstens farger og skrift.",
+    "sv": "Nytt utseende: fönstren har nu den gemensamma designen för Tungstens tillägg till Power PDF, med Tungstens färger och typsnitt.",
+    "pl": "Nowy wygląd: okna mają teraz wspólny wygląd dodatków Tungsten do Power PDF, z kolorami i czcionką Tungsten.",
+    "cs": "Nový vzhled: okna mají nyní společný design doplňků Tungsten pro Power PDF s barvami a písmem Tungsten.",
+    "hu": "Új megjelenés: az ablakok mostantól a Tungsten Power PDF-bővítmények közös kialakítását kapták, a Tungsten színeivel és betűtípusával.",
+    "ru": "Новый вид: окна теперь выполнены в едином стиле надстроек Tungsten для Power PDF, с фирменными цветами и шрифтом Tungsten.",
+    "tr": "Yeni görünüm: pencereler artık Power PDF için Tungsten eklentilerinin ortak tasarımına, Tungsten renklerine ve yazı tipine sahip.",
+    "zh-Hans": "全新外观：窗口现在采用 Tungsten Power PDF 加载项的统一设计，使用 Tungsten 的颜色和字体。",
+    "zh-Hant": "全新外觀：視窗現在採用 Tungsten Power PDF 增益集的統一設計，使用 Tungsten 的色彩與字型。",
+    "ja": "新しい外観: ウィンドウは Power PDF 向け Tungsten アドオン共通のデザインになり、Tungsten の色とフォントを使用します。",
+    "ko": "새로운 모습: 창에 이제 Power PDF용 Tungsten 추가 기능의 공통 디자인과 Tungsten의 색상 및 글꼴이 적용됩니다.",
+    "ar": "مظهر جديد: أصبحت النوافذ الآن بالتصميم الموحد لوظائف Tungsten الإضافية لـ Power PDF، بألوان Tungsten وخطها."
   },
   "minPowerPdfVersion": "2025.3.7",
   "author": "Tungsten Automation",
@@ -88,10 +98,23 @@
     "extraPaths": []
   },
   "category": "productivity",
-  "thirdParty": [],
+  "thirdParty": [
+    {
+      "name": "nlohmann/json",
+      "version": "3.12.0",
+      "license": "MIT",
+      "source": "https://github.com/nlohmann/json"
+    },
+    {
+      "name": "Microsoft WebView2 SDK (headers and static loader)",
+      "version": "1.0.4258.31",
+      "license": "BSD-3-Clause",
+      "source": "https://www.nuget.org/packages/Microsoft.Web.WebView2"
+    }
+  ],
   "complianceAudit": {
     "confirmed": true,
-    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; the only contact data is the support address in the manifest fields author/contactEmail, shown in the catalog on purpose), and all network code. No third-party code. Works offline.",
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; the only contact data is the support address in the manifest fields author/contactEmail, shown in the catalog on purpose), and all network code. Works offline. Since 1.2.0 the report window is a local page of the Tungsten Plug-in UI (own code, MIT) in WebView2 (Microsoft WebView2 SDK, BSD-3-Clause; the Edge WebView2 Runtime is part of Windows); the page is inlined into the plug-in, may not navigate, open windows, download or ask for permissions, and talks to the plug-in only through JSON messages (nlohmann/json 3.12.0, MIT, header-only); without WebView2 the classic dialog is shown.",
     "externalServices": []
   }
 }
