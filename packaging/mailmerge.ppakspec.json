@@ -1,18 +1,18 @@
 {
   "id": "com.tungsten.mailmerge",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": {
     "en": "Mail Merge",
     "de": "Serienbrief",
     "fr": "Publipostage",
     "it": "Stampa unione",
-    "es": "Combinación de correspondencia",
+    "es": "Combinar correspondencia",
     "nl": "Afdruk samenvoegen",
     "pt": "Mala direta",
     "da": "Brevfletning",
     "fi": "Joukkokirje",
     "nb": "Utskriftsfletting",
-    "sv": "Koppla dokument",
+    "sv": "Dokumentkoppling",
     "pl": "Korespondencja seryjna",
     "cs": "Hromadná korespondence",
     "hu": "Körlevél",
@@ -40,25 +40,35 @@
     "cs": "Vytvoří jedno PDF na záznam ze šablony formuláře PDF a tabulky CSV: automatické nebo ruční přiřazení sloupců k polím formuláře, názvy souborů podle vzoru, například {Name}_{ROW}, a volitelné sloučení vyplněných hodnot.",
     "hu": "Rekordonként egy PDF-et hoz létre egy PDF-űrlapsablonból és egy CSV-táblázatból: az oszlopok automatikus vagy kézi hozzárendelése az űrlapmezőkhöz, fájlnevek minta alapján (pl. {Name}_{ROW}), a kitöltött értékek opcionális egybeolvasztása.",
     "ru": "Создаёт по одному PDF на запись из шаблона PDF-формы и таблицы CSV: автоматическое или ручное сопоставление столбцов с полями формы, имена файлов по шаблону, например {Name}_{ROW}, необязательное сведение заполненных значений.",
-    "tr": "Bir PDF form şablonundan ve bir CSV tablosundan her kayıt için bir PDF oluşturur: sütunların form alanlarına otomatik veya elle eşlenmesi, {Name}_{ROW} gibi bir desene göre dosya adları ve doldurulan değerlerin isteğe bağlı olarak düzleştirilmesi."
+    "tr": "Bir PDF form şablonundan ve bir CSV tablosundan her kayıt için bir PDF oluşturur: sütunların form alanlarına otomatik veya elle eşlenmesi, {Name}_{ROW} gibi bir desene göre dosya adları ve doldurulan değerlerin isteğe bağlı olarak düzleştirilmesi.",
+    "zh-Hans": "根据 PDF 表单模板和 CSV 表格为每条记录创建一个 PDF：自动或手动将列映射到表单字段，按 {Name}_{ROW} 等模式生成文件名，并可选择拼合已填写的值。",
+    "zh-Hant": "根據 PDF 表單範本和 CSV 表格為每筆記錄建立一個 PDF：自動或手動將欄對應到表單欄位，依 {Name}_{ROW} 等模式產生檔名，並可選擇平面化已填寫的值。",
+    "ja": "PDF フォームのテンプレートと CSV 表から、レコードごとに 1 つの PDF を作成します。列とフォーム フィールドの自動または手動の対応付け、{Name}_{ROW} などのパターンによるファイル名、入力値のフラット化 (任意) に対応しています。",
+    "ko": "PDF 양식 템플릿과 CSV 표에서 레코드마다 PDF를 하나씩 만듭니다. 열과 양식 필드의 자동 또는 수동 매핑, {Name}_{ROW} 같은 패턴의 파일 이름, 입력된 값의 병합(선택)을 지원합니다.",
+    "ar": "ينشئ ملف PDF واحدًا لكل سجل من قالب نموذج PDF وجدول CSV: ربط الأعمدة بحقول النموذج تلقائيًا أو يدويًا، وأسماء ملفات من نمط مثل {Name}_{ROW}، وتسطيح القيم المعبأة اختياريًا."
   },
   "changelog": {
-    "en": "The user interface is now available in all 16 Power PDF languages: Dutch, Portuguese, Danish, Finnish, Norwegian, Swedish, Polish, Czech, Hungarian, Russian and Turkish were added; the German, French, Italian and Spanish texts were reviewed and corrected.",
-    "de": "Die Benutzeroberfläche ist jetzt in allen 16 Power-PDF-Sprachen verfügbar: Niederländisch, Portugiesisch, Dänisch, Finnisch, Norwegisch, Schwedisch, Polnisch, Tschechisch, Ungarisch, Russisch und Türkisch kamen hinzu; die deutschen, französischen, italienischen und spanischen Texte wurden überarbeitet und korrigiert.",
-    "fr": "L'interface est désormais disponible dans les 16 langues de Power PDF : néerlandais, portugais, danois, finnois, norvégien, suédois, polonais, tchèque, hongrois, russe et turc ont été ajoutés ; les textes allemands, français, italiens et espagnols ont été revus et corrigés.",
-    "it": "L'interfaccia è ora disponibile in tutte le 16 lingue di Power PDF: aggiunti olandese, portoghese, danese, finlandese, norvegese, svedese, polacco, ceco, ungherese, russo e turco; i testi in tedesco, francese, italiano e spagnolo sono stati rivisti e corretti.",
-    "es": "La interfaz ya está disponible en los 16 idiomas de Power PDF: se han añadido neerlandés, portugués, danés, finés, noruego, sueco, polaco, checo, húngaro, ruso y turco; los textos en alemán, francés, italiano y español se han revisado y corregido.",
-    "nl": "De gebruikersinterface is nu beschikbaar in alle 16 talen van Power PDF: Nederlands, Portugees, Deens, Fins, Noors, Zweeds, Pools, Tsjechisch, Hongaars, Russisch en Turks zijn toegevoegd; de Duitse, Franse, Italiaanse en Spaanse teksten zijn nagekeken en verbeterd.",
-    "pt": "A interface agora está disponível nos 16 idiomas do Power PDF: foram adicionados holandês, português, dinamarquês, finlandês, norueguês, sueco, polonês, tcheco, húngaro, russo e turco; os textos em alemão, francês, italiano e espanhol foram revisados e corrigidos.",
-    "da": "Brugerfladen findes nu på alle 16 Power PDF-sprog: nederlandsk, portugisisk, dansk, finsk, norsk, svensk, polsk, tjekkisk, ungarsk, russisk og tyrkisk er tilføjet; de tyske, franske, italienske og spanske tekster er gennemgået og rettet.",
-    "fi": "Käyttöliittymä on nyt saatavilla kaikilla 16 Power PDF -kielellä: hollanti, portugali, tanska, suomi, norja, ruotsi, puola, tšekki, unkari, venäjä ja turkki lisättiin; saksan-, ranskan-, italian- ja espanjankieliset tekstit tarkistettiin ja korjattiin.",
-    "nb": "Brukergrensesnittet er nå tilgjengelig på alle 16 Power PDF-språk: nederlandsk, portugisisk, dansk, finsk, norsk, svensk, polsk, tsjekkisk, ungarsk, russisk og tyrkisk er lagt til; de tyske, franske, italienske og spanske tekstene er gjennomgått og rettet.",
-    "sv": "Användargränssnittet finns nu på alla 16 Power PDF-språk: nederländska, portugisiska, danska, finska, norska, svenska, polska, tjeckiska, ungerska, ryska och turkiska har lagts till; de tyska, franska, italienska och spanska texterna har granskats och rättats.",
-    "pl": "Interfejs jest teraz dostępny we wszystkich 16 językach Power PDF: dodano niderlandzki, portugalski, duński, fiński, norweski, szwedzki, polski, czeski, węgierski, rosyjski i turecki; teksty niemieckie, francuskie, włoskie i hiszpańskie zostały sprawdzone i poprawione.",
-    "cs": "Uživatelské rozhraní je nyní k dispozici ve všech 16 jazycích Power PDF: přibyla nizozemština, portugalština, dánština, finština, norština, švédština, polština, čeština, maďarština, ruština a turečtina; německé, francouzské, italské a španělské texty byly zkontrolovány a opraveny.",
-    "hu": "A felhasználói felület mostantól a Power PDF mind a 16 nyelvén elérhető: bekerült a holland, portugál, dán, finn, norvég, svéd, lengyel, cseh, magyar, orosz és török; a német, francia, olasz és spanyol szövegeket átnéztük és javítottuk.",
-    "ru": "Интерфейс теперь доступен на всех 16 языках Power PDF: добавлены нидерландский, португальский, датский, финский, норвежский, шведский, польский, чешский, венгерский, русский и турецкий; тексты на немецком, французском, итальянском и испанском проверены и исправлены.",
-    "tr": "Kullanıcı arayüzü artık Power PDF'in 16 dilinin tamamında kullanılabilir: Felemenkçe, Portekizce, Danca, Fince, Norveççe, İsveççe, Lehçe, Çekçe, Macarca, Rusça ve Türkçe eklendi; Almanca, Fransızca, İtalyanca ve İspanyolca metinler gözden geçirilip düzeltildi."
+    "en": "Fresh look: the Mail Merge window now has the common design of the Tungsten add-ons for Power PDF, and the field mapping is shown right in the same window.",
+    "de": "Neues Aussehen: Das Serienbrief-Fenster hat jetzt das einheitliche Design der Tungsten-Add-ons für Power PDF, und die Feldzuordnung steht direkt im selben Fenster.",
+    "fr": "Nouveau look : la fenêtre de publipostage adopte le design commun des modules Tungsten pour Power PDF, et l'association des champs s'affiche directement dans la même fenêtre.",
+    "it": "Nuovo aspetto: la finestra di stampa unione ha ora il design comune dei componenti aggiuntivi Tungsten per Power PDF e l'associazione dei campi è nella stessa finestra.",
+    "es": "Nuevo aspecto: la ventana de combinación de correspondencia tiene ahora el diseño común de los complementos de Tungsten para Power PDF, y la asignación de campos aparece en la misma ventana.",
+    "nl": "Nieuwe uitstraling: het venster Afdruk samenvoegen heeft nu het gemeenschappelijke ontwerp van de Tungsten-add-ons voor Power PDF, en de veldtoewijzing staat direct in hetzelfde venster.",
+    "pt": "Novo visual: a janela de mala direta tem agora o design comum dos suplementos Tungsten para o Power PDF, e o mapeamento de campos aparece na mesma janela.",
+    "da": "Nyt udseende: vinduet til brevfletning har nu det fælles design for Tungsten-tilføjelsesprogrammer til Power PDF, og felttilknytningen vises direkte i samme vindue.",
+    "fi": "Uusi ulkoasu: joukkokirjeikkunassa on nyt Tungstenin Power PDF -lisäosien yhteinen ulkoasu, ja kenttien yhdistäminen näkyy samassa ikkunassa.",
+    "nb": "Nytt utseende: vinduet for utskriftsfletting har nå det felles designet for Tungsten-tilleggene til Power PDF, og felttilordningen vises rett i samme vindu.",
+    "sv": "Nytt utseende: fönstret för dokumentkoppling har nu den gemensamma designen för Tungstens tillägg till Power PDF, och fältmappningen visas direkt i samma fönster.",
+    "pl": "Nowy wygląd: okno korespondencji seryjnej ma teraz wspólny wygląd dodatków Tungsten do Power PDF, a przypisanie pól jest widoczne w tym samym oknie.",
+    "cs": "Nový vzhled: okno hromadné korespondence má nyní společný design doplňků Tungsten pro Power PDF a přiřazení polí je přímo ve stejném okně.",
+    "hu": "Új megjelenés: a körlevél ablaka mostantól a Tungsten Power PDF-bővítmények közös kialakítását kapta, és a mezők hozzárendelése ugyanabban az ablakban látható.",
+    "ru": "Новый вид: окно слияния теперь выполнено в едином стиле надстроек Tungsten для Power PDF, а сопоставление полей показано прямо в том же окне.",
+    "tr": "Yeni görünüm: adres mektup birleştirme penceresi artık Power PDF için Tungsten eklentilerinin ortak tasarımına sahip ve alan eşleme aynı pencerede gösteriliyor.",
+    "zh-Hans": "全新外观：邮件合并窗口现在采用 Tungsten Power PDF 加载项的统一设计，字段映射直接显示在同一窗口中。",
+    "zh-Hant": "全新外觀：合併列印視窗現在採用 Tungsten Power PDF 增益集的統一設計，欄位對應直接顯示在同一個視窗中。",
+    "ja": "新しい外観: 差し込み印刷のウィンドウは Power PDF 向け Tungsten アドオン共通のデザインになり、フィールドの対応付けも同じウィンドウに表示されます。",
+    "ko": "새로운 모습: 편지 병합 창에 Power PDF용 Tungsten 추가 기능의 공통 디자인이 적용되었으며, 필드 매핑이 같은 창에 바로 표시됩니다.",
+    "ar": "مظهر جديد: أصبحت نافذة دمج المراسلات بالتصميم الموحد لوظائف Tungsten الإضافية لـ Power PDF، ويظهر ربط الحقول مباشرة في النافذة نفسها."
   },
   "minPowerPdfVersion": "2025.3.7",
   "author": "Tungsten Automation",
@@ -88,10 +98,23 @@
     "extraPaths": []
   },
   "category": "forms",
-  "thirdParty": [],
+  "thirdParty": [
+    {
+      "name": "nlohmann/json",
+      "version": "3.12.0",
+      "license": "MIT",
+      "source": "https://github.com/nlohmann/json"
+    },
+    {
+      "name": "Microsoft WebView2 SDK (headers and static loader)",
+      "version": "1.0.4258.31",
+      "license": "BSD-3-Clause",
+      "source": "https://www.nuget.org/packages/Microsoft.Web.WebView2"
+    }
+  ],
   "complianceAudit": {
     "confirmed": true,
-    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; the only contact data is the support address in the manifest fields author/contactEmail, shown in the catalog on purpose), and all network code. No third-party code. Works offline; it creates documents only and sends no mail.",
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; the only contact data is the support address in the manifest fields author/contactEmail, shown in the catalog on purpose), and all network code. Works offline; it creates documents only and sends no mail. Since 1.2.0 the run window is a local page of the Tungsten Plug-in UI (own code, MIT) in WebView2 (Microsoft WebView2 SDK, BSD-3-Clause; the Edge WebView2 Runtime is part of Windows); the page is inlined into the plug-in, may not navigate, open windows, download or ask for permissions, and talks to the plug-in only through JSON messages (nlohmann/json 3.12.0, MIT, header-only); without WebView2 the classic dialog is shown.",
     "externalServices": []
   }
 }

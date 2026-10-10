@@ -30,7 +30,7 @@ FP1_MODULES = {
     'BarcodeStamps': ['sign', 'stamps', 'third_party/zxing-cpp'],
     'EInvoice': ['sign', 'invoice', 'third_party/tpui', 'third_party/webview2', 'bookmarks/json.hpp'],   # 1.2.0: invoice window on the Plug-in UI
     'ComplianceCheck': ['sign', 'invoice', 'compliance', 'third_party/tpui', 'third_party/webview2', 'bookmarks/json.hpp'],   # 1.2.0: report window on the Plug-in UI
-    'MailMerge': ['sign', 'mailmerge'],
+    'MailMerge': ['sign', 'mailmerge', 'third_party/tpui', 'third_party/webview2', 'bookmarks/json.hpp'],   # 1.2.0: run window on the Plug-in UI
     'CommerzbankSign': ['sign'],   # private customer edition of OneClickSign
 }
 # FP2's common folder also holds code other modules use (OCR, conversion); each
