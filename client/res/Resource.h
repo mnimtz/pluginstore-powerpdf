@@ -175,7 +175,6 @@
 #define IDS_PS_TIP_UPD_SOME     370
 #define IDS_PSW_CONNECTS        371
 #define IDS_PSW_CONN_PROVIDER   372
-#define IDS_PSW_CONN_OFFLINE    373
 #define IDS_PSW_CONN_NOTE       374
 #define IDS_PSW_CONN_DATA       375
 #define IDD_PS_WEB              1480

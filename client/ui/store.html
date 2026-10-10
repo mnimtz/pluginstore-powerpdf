@@ -224,7 +224,7 @@ function connectsTo(x) {
   var c; try { c = JSON.parse(x.connections); } catch (e) { return null; }
   if (!c || typeof c !== "object") return null;
   var prov = Array.isArray(c.p) ? c.p.slice(0, 5) : [], svc = Array.isArray(c.s) ? c.s.slice(0, 12) : [];
-  if (!prov.length && !svc.length && !c.o) return null;
+  if (!prov.length && !svc.length) return null;   // C1.9.10: nothing for an add-on that connects nowhere
   var box = el("div", "conn"); box.appendChild(el("b", "ct", S.connects));
   if (prov.length) {
     var pl = el("div", "cprov"); pl.appendChild(document.createTextNode(S.connProvider + ": "));
@@ -239,8 +239,7 @@ function connectsTo(x) {
     });
     box.appendChild(pl);
   }
-  if (c.o === true) box.appendChild(el("div", "", S.connOffline));
-  else if (svc.length) {
+  if (svc.length) {
     var ul = el("ul");
     svc.forEach(function (s) {
       if (!s) return;
@@ -252,7 +251,7 @@ function connectsTo(x) {
     });
     box.appendChild(ul);
   }
-  if (svc.length || c.o === true) box.appendChild(el("div", "cnote", S.connNote));   // only what the package declares
+  if (svc.length) box.appendChild(el("div", "cnote", S.connNote));   // only what the package declares
   return box;
 }
 function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }

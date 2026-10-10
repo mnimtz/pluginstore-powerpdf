@@ -635,7 +635,7 @@ protected:
             { L"blockedText", IDS_PSW_BLOCKED_BANNER }, { L"blockedBtn", IDS_PSW_BLOCKED_BTN },
             { L"attach", IDS_PSW_ATTACH }, { L"attachHint", IDS_PSW_ATTACH_HINT }, { L"attachRefused", IDS_PSW_ATTACH_REFUSED },
             { L"reportStore", IDS_PSW_REPORT_STORE }, { L"noUi", IDS_PSW_NO_UI },
-              { L"connects", IDS_PSW_CONNECTS }, { L"connProvider", IDS_PSW_CONN_PROVIDER }, { L"connOffline", IDS_PSW_CONN_OFFLINE },
+              { L"connects", IDS_PSW_CONNECTS }, { L"connProvider", IDS_PSW_CONN_PROVIDER },
               { L"connNote", IDS_PSW_CONN_NOTE }, { L"connData", IDS_PSW_CONN_DATA }, { L"newsTitle", IDS_PSW_NEWS_TITLE }, { L"newsOk", IDS_PSW_NEWS_OK },
             { L"codeList", IDS_PSW_CODE_LIST }, { L"codeAdd", IDS_PSW_CODE_ADD }, { L"codeNone", IDS_PSW_CODE_NONE },
             { L"codeAsk", IDS_PSW_CODE_ASK }, { L"codeAskAddons", IDS_PSW_CODE_ASK_ADDONS }, { L"codeInvalid", IDS_PSW_CODE_INVALID },
