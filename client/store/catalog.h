@@ -36,6 +36,7 @@ struct PSCatalogEntry
     std::wstring customer;       // customer name when delivered by a customer code (TSV column 20)
     std::wstring signature;      // "keyId:base64(r||s)" of the server (TSV column 21, see signature.h)
     bool noUi = false;           // "ui": "none": no ribbon buttons (TSV column 22, server 1.1.1+)
+    std::wstring connections;    // "connects to" as ASCII JSON (TSV column 23, server 1.19.0+), empty = not declared
     std::wstring installedVersion; // filled by the install module, empty = not installed
     bool orphan = false;           // installed by the store, no longer in the catalog (C1.4.1): remove only
 };

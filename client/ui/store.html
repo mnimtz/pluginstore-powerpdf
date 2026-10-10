@@ -72,6 +72,17 @@ header .s{font-size:12px;color:#9fd8ff}
 .news{background:var(--soft);border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.5;user-select:text}
 .news b{display:block;color:var(--navy);margin-bottom:3px}
 .who{display:flex;gap:8px;align-items:center;margin:14px 0 4px;font-size:12px;color:var(--slate);flex-wrap:wrap}
+/* C1.9.9: "connects to" from the declaration checked in the review */
+.conn{margin-top:12px;border:1px solid var(--line,#E1E6EC);border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.5}
+.conn b.ct{display:block;color:var(--navy);margin-bottom:4px}
+.conn .cprov{margin-bottom:6px}
+.conn ul{list-style:none;margin:0;padding:0}
+.conn li{padding:4px 0;border-top:1px solid var(--line,#E1E6EC)}
+.conn li:first-child{border-top:0}
+.conn .cn{font-weight:600;color:var(--navy)}
+.conn code{font-size:11.5px;margin-inline-start:6px;overflow-wrap:anywhere}
+.conn .cd{display:block;color:var(--slate);overflow-wrap:anywhere}
+.conn .cnote{margin-top:6px;color:var(--slate);font-size:11.5px}
 .link{color:var(--blue);text-decoration:none;cursor:pointer}
 .link:hover{text-decoration:underline}
 .acts{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
@@ -206,6 +217,44 @@ function setCodes(c) {
 var host = window.chrome && window.chrome.webview;
 function post(m) { if (host) host.postMessage(m); }
 function $(id) { return document.getElementById(id); }
+// C1.9.9: "Connects to" of an add-on: providers (website opens through the host, which only accepts
+// addresses the catalog names) and the declared services; null when the version declares nothing
+function connectsTo(x) {
+  if (!x.connections || !S.connects) return null;
+  var c; try { c = JSON.parse(x.connections); } catch (e) { return null; }
+  if (!c || typeof c !== "object") return null;
+  var prov = Array.isArray(c.p) ? c.p.slice(0, 5) : [], svc = Array.isArray(c.s) ? c.s.slice(0, 12) : [];
+  if (!prov.length && !svc.length && !c.o) return null;
+  var box = el("div", "conn"); box.appendChild(el("b", "ct", S.connects));
+  if (prov.length) {
+    var pl = el("div", "cprov"); pl.appendChild(document.createTextNode(S.connProvider + ": "));
+    prov.forEach(function (p, i) {
+      if (!p || typeof p.n !== "string") return;
+      if (i) pl.appendChild(document.createTextNode(", "));
+      if (typeof p.w === "string" && /^https:\/\/[^\s"<>\\@]+$/.test(p.w)) {
+        var a = el("a", "link", p.n); a.title = p.w; a.href = "#";
+        a.onclick = function (ev) { ev.preventDefault(); post({ cmd: "site", url: p.w }); };
+        pl.appendChild(a);
+      } else pl.appendChild(document.createTextNode(p.n));
+    });
+    box.appendChild(pl);
+  }
+  if (c.o === true) box.appendChild(el("div", "", S.connOffline));
+  else if (svc.length) {
+    var ul = el("ul");
+    svc.forEach(function (s) {
+      if (!s) return;
+      var li = el("li");
+      if (typeof s.n === "string" && s.n) li.appendChild(el("span", "cn", s.n));
+      if (typeof s.h === "string" && s.h) li.appendChild(el("code", "", s.h));
+      if (typeof s.d === "string" && s.d) li.appendChild(el("span", "cd", (S.connData ? S.connData + ": " : "") + s.d));
+      ul.appendChild(li);
+    });
+    box.appendChild(ul);
+  }
+  if (svc.length || c.o === true) box.appendChild(el("div", "cnote", S.connNote));   // only what the package declares
+  return box;
+}
 function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 function loadingBox() { var w = el("div", "empty"); w.appendChild(el("div", "spin")); return w; }
 function fmt(s) { var a = Array.prototype.slice.call(arguments, 1), i = 0; return String(s || "").replace(/%[sd]/g, function () { return a[i++] != null ? String(a[i - 1]) : ""; }).replace(/\\n/g, "\n"); }
@@ -409,6 +458,7 @@ function renderDetail() {
     d.appendChild(strip);
   }
   if (x.changelog) { var n = el("div", "news"); n.appendChild(el("b", "", fmt(S.whatsNew, x.version))); n.appendChild(document.createTextNode(x.changelog)); d.appendChild(n); }
+  var cn = connectsTo(x); if (cn) d.appendChild(cn);
   if (x.author || x.contact) {
     var w = el("div", "who");
     if (x.author) w.appendChild(el("span", "", S.author + ": " + x.author));

@@ -634,7 +634,9 @@ protected:
             { L"migrateText", IDS_PSW_MIGRATE_TEXT }, { L"migrateBtn", IDS_PSW_MIGRATE_BTN }, { L"migrateDone", IDS_PSW_MIGRATE_DONE },
             { L"blockedText", IDS_PSW_BLOCKED_BANNER }, { L"blockedBtn", IDS_PSW_BLOCKED_BTN },
             { L"attach", IDS_PSW_ATTACH }, { L"attachHint", IDS_PSW_ATTACH_HINT }, { L"attachRefused", IDS_PSW_ATTACH_REFUSED },
-            { L"reportStore", IDS_PSW_REPORT_STORE }, { L"noUi", IDS_PSW_NO_UI }, { L"newsTitle", IDS_PSW_NEWS_TITLE }, { L"newsOk", IDS_PSW_NEWS_OK },
+            { L"reportStore", IDS_PSW_REPORT_STORE }, { L"noUi", IDS_PSW_NO_UI },
+              { L"connects", IDS_PSW_CONNECTS }, { L"connProvider", IDS_PSW_CONN_PROVIDER }, { L"connOffline", IDS_PSW_CONN_OFFLINE },
+              { L"connNote", IDS_PSW_CONN_NOTE }, { L"connData", IDS_PSW_CONN_DATA }, { L"newsTitle", IDS_PSW_NEWS_TITLE }, { L"newsOk", IDS_PSW_NEWS_OK },
             { L"codeList", IDS_PSW_CODE_LIST }, { L"codeAdd", IDS_PSW_CODE_ADD }, { L"codeNone", IDS_PSW_CODE_NONE },
             { L"codeAsk", IDS_PSW_CODE_ASK }, { L"codeAskAddons", IDS_PSW_CODE_ASK_ADDONS }, { L"codeInvalid", IDS_PSW_CODE_INVALID },
             { L"orphan", IDS_PSW_ORPHAN }, { L"orphanPill", IDS_PSW_ORPHAN_PILL }, { L"seats", IDS_PSW_SEATS },
@@ -728,7 +730,7 @@ protected:
                  L",\"size\":" + size + L",\"author\":" + Json(e.author) + L",\"contact\":" + Json(e.contactEmail) +
                  L",\"rating\":" + Tenths(e.rating) + L",\"ratingCount\":" + std::to_wstring(e.ratingCount) +
                  L",\"shots\":" + std::to_wstring(e.screenshots) + L",\"mine\":" + std::to_wstring(PSMyRating(e.id)) +
-                 L",\"customer\":" + Json(e.customer) + (e.noUi ? L",\"noUi\":true" : L"") + (e.orphan ? L",\"orphan\":true" : L"") +
+                 L",\"customer\":" + Json(e.customer) + L",\"connections\":" + Json(e.connections) + (e.noUi ? L",\"noUi\":true" : L"") + (e.orphan ? L",\"orphan\":true" : L"") +
                  // needs a newer Power PDF than this one: shown, but not installable
                  L",\"needsHost\":" + Json(!e.minHost.empty() && !PSHostVersion().empty() &&
                                             PSCompareVersions(PSHostVersion(), e.minHost) < 0 ? e.minHost : std::wstring()) + L"}";
@@ -1379,6 +1381,21 @@ protected:
             for (wchar_t c : to) if (c <= L' ' || c == L'"' || c == L'<' || c == L'>' || c == L'&' || c == L'?' ||
                                      c == L'%' || c == L',' || c == L';' || c == L':' || c == L'\\' || c > 0x7E) ok = false;
             if (ok) ShellExecuteW(m_hWnd, L"open", (L"mailto:" + to).c_str(), NULL, NULL, SW_SHOWNORMAL);
+        }
+        else if (cmd == L"site")
+        {
+            // C1.9.9: a provider's website from "connects to": only an https address that the server's
+            // catalog names for an add-on, never what the page makes up
+            std::wstring u = Field(json, L"url", 300);
+            bool ok = u.size() > 12 && u.compare(0, 8, L"https://") == 0;
+            for (wchar_t c : u) if (c <= L' ' || c == L'"' || c == L'<' || c == L'>' || c == L'\\' || c == L'@' || c > 0x7E) ok = false;
+            bool listed = false;
+            if (ok)
+            {
+                const std::wstring needle = L"\"w\":\"" + u + L"\"";
+                for (const auto& e : m_entries) if (e.connections.find(needle) != std::wstring::npos) { listed = true; break; }
+            }
+            if (ok && listed) ShellExecuteW(m_hWnd, L"open", u.c_str(), NULL, NULL, SW_SHOWNORMAL);
         }
     }
 

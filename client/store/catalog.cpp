@@ -210,6 +210,9 @@ void Parse(const std::string& body, std::vector<PSCatalogEntry>& out)
         if (f.size() > 19) e.customer = f[19];
         if (f.size() > 20) e.signature = f[20];
         if (f.size() > 21) e.noUi = f[21] == L"none";
+        // C1.9.9: kept as text and handed to the page, which parses it; only a plausible JSON object
+        if (f.size() > 22 && f[22].size() >= 2 && f[22].size() <= 16384 && f[22].front() == L'{' && f[22].back() == L'}')
+            e.connections = f[22];
         if (!PSLinkIsValidId(e.id) || !IsVersion(e.version) || !IsSha256(e.sha256) ||
             !PSIsValidZxtName(e.zxtName) || !IsHttpUrl(e.downloadUrl) || (!e.iconUrl.empty() && !IsHttpUrl(e.iconUrl)))
         {

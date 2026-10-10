@@ -51,27 +51,27 @@
     "ar": "شريط Add-on Store لـ Power PDF: تصفح المكونات الإضافية من كتالوج الفريق وثبّتها وحدّثها وأزلها."
   },
   "changelog": {
-    "en": "If Power PDF is licensed with a serial number, setup now explains that the Add-on Store needs Power PDF Business SaaS and offers a button to request a quote from Tungsten Automation.",
-    "de": "Ist Power PDF mit einer Seriennummer lizenziert, erklärt das Setup jetzt, dass der Add-on Store Power PDF Business SaaS benötigt, und bietet eine Schaltfläche, um ein Angebot bei Tungsten Automation anzufordern.",
-    "fr": "Si Power PDF est sous licence avec un numéro de série, le programme d'installation explique désormais que l'Add-on Store nécessite Power PDF Business SaaS et propose un bouton pour demander un devis à Tungsten Automation.",
-    "it": "Se Power PDF è concesso in licenza con un numero di serie, il programma di installazione ora spiega che l'Add-on Store richiede Power PDF Business SaaS e offre un pulsante per richiedere un preventivo a Tungsten Automation.",
-    "es": "Si Power PDF tiene licencia con un número de serie, el programa de instalación ahora explica que Add-on Store necesita Power PDF Business SaaS y ofrece un botón para solicitar un presupuesto a Tungsten Automation.",
-    "nl": "Als Power PDF met een serienummer is gelicentieerd, legt de installatie nu uit dat de Add-on Store Power PDF Business SaaS nodig heeft en biedt een knop om een offerte bij Tungsten Automation aan te vragen.",
-    "pt": "Se o Power PDF estiver licenciado com um número de série, a instalação agora explica que a Add-on Store precisa do Power PDF Business SaaS e oferece um botão para solicitar uma cotação à Tungsten Automation.",
-    "da": "Hvis Power PDF er licenseret med et serienummer, forklarer installationen nu, at Add-on Store kræver Power PDF Business SaaS, og tilbyder en knap til at anmode Tungsten Automation om et tilbud.",
-    "fi": "Jos Power PDF on lisensoitu sarjanumerolla, asennus kertoo nyt, että Add-on Store edellyttää Power PDF Business SaaS -versiota, ja tarjoaa painikkeen tarjouspyyntöön Tungsten Automationille.",
-    "nb": "Hvis Power PDF er lisensiert med et serienummer, forklarer installasjonen nå at Add-on Store krever Power PDF Business SaaS, og tilbyr en knapp for å be Tungsten Automation om et tilbud.",
-    "sv": "Om Power PDF är licensierad med ett serienummer förklarar installationen nu att Add-on Store kräver Power PDF Business SaaS och erbjuder en knapp för att begära en offert från Tungsten Automation.",
-    "pl": "Jeśli Power PDF jest licencjonowany numerem seryjnym, instalator wyjaśnia teraz, że Add-on Store wymaga Power PDF Business SaaS, i oferuje przycisk, aby poprosić Tungsten Automation o ofertę.",
-    "cs": "Pokud je Power PDF licencován sériovým číslem, instalace nyní vysvětlí, že Add-on Store vyžaduje Power PDF Business SaaS, a nabídne tlačítko pro vyžádání nabídky od společnosti Tungsten Automation.",
-    "hu": "Ha a Power PDF sorozatszámmal van licencelve, a telepítő most elmagyarázza, hogy az Add-on Store-hoz Power PDF Business SaaS szükséges, és gombot kínál árajánlat kéréséhez a Tungsten Automationtől.",
-    "ru": "Если Power PDF лицензирован серийным номером, программа установки теперь поясняет, что для Add-on Store нужен Power PDF Business SaaS, и предлагает кнопку для запроса предложения у Tungsten Automation.",
-    "tr": "Power PDF bir seri numarasıyla lisanslanmışsa kurulum artık Add-on Store'un Power PDF Business SaaS gerektirdiğini açıklıyor ve Tungsten Automation'dan teklif istemek için bir düğme sunuyor.",
-    "zh-Hans": "如果 Power PDF 使用序列号授权，安装程序现在会说明 Add-on Store 需要 Power PDF Business SaaS，并提供一个按钮，用于向 Tungsten Automation 申请报价。",
-    "zh-Hant": "如果 Power PDF 使用序號授權，安裝程式現在會說明 Add-on Store 需要 Power PDF Business SaaS，並提供一個按鈕，用於向 Tungsten Automation 索取報價。",
-    "ja": "Power PDF がシリアル番号でライセンスされている場合、セットアップで Add-on Store には Power PDF Business SaaS が必要であることが説明され、Tungsten Automation に見積もりを依頼するボタンが表示されるようになりました。",
-    "ko": "Power PDF가 일련 번호로 라이선스된 경우, 이제 설치 프로그램에서 Add-on Store에 Power PDF Business SaaS가 필요하다고 안내하고 Tungsten Automation에 견적을 요청하는 버튼을 제공합니다.",
-    "ar": "إذا كان Power PDF مرخّصًا برقم تسلسلي، يوضح برنامج الإعداد الآن أن Add-on Store يتطلب Power PDF Business SaaS، ويعرض زرًا لطلب عرض سعر من Tungsten Automation."
+    "en": "New: the details of an add-on show what it connects to: the provider with a link to its website, the online services and what is sent to them, or that it works offline.",
+    "de": "Neu: Die Details eines Add-ons zeigen, womit es sich verbindet: den Anbieter mit Link zu seiner Website, die Online-Dienste und was an sie übertragen wird, oder dass es offline arbeitet.",
+    "fr": "Nouveau : les détails d'un module indiquent à quoi il se connecte : le fournisseur avec un lien vers son site web, les services en ligne et ce qui leur est transmis, ou qu'il fonctionne hors ligne.",
+    "it": "Novità: i dettagli di un componente aggiuntivo mostrano a cosa si connette: il fornitore con un link al suo sito web, i servizi online e cosa viene loro trasmesso, oppure che funziona offline.",
+    "es": "Novedad: los detalles de un complemento muestran a qué se conecta: el proveedor con un enlace a su sitio web, los servicios en línea y lo que se les transmite, o que funciona sin conexión.",
+    "nl": "Nieuw: de details van een add-on tonen waarmee deze verbinding maakt: de aanbieder met een link naar zijn website, de onlinediensten en wat ernaar wordt verstuurd, of dat de add-on offline werkt.",
+    "pt": "Novidade: os detalhes de um suplemento mostram a que se liga: o fornecedor com uma ligação para o seu site, os serviços online e o que lhes é transmitido, ou que funciona offline.",
+    "da": "Nyt: Detaljerne for et tilføjelsesprogram viser, hvad det forbinder til: udbyderen med et link til dens websted, onlinetjenesterne og hvad der sendes til dem, eller at det fungerer offline.",
+    "fi": "Uutta: lisäosan tiedot kertovat, mihin se muodostaa yhteyden: tarjoaja ja linkki sen verkkosivustolle, verkkopalvelut ja mitä niille lähetetään, tai että lisäosa toimii offline-tilassa.",
+    "nb": "Nytt: Detaljene for et tillegg viser hva det kobler til: leverandøren med lenke til nettstedet, nettjenestene og hva som sendes til dem, eller at det fungerer frakoblet.",
+    "sv": "Nytt: Detaljerna för ett tillägg visar vad det ansluter till: leverantören med en länk till webbplatsen, onlinetjänsterna och vad som skickas till dem, eller att det fungerar offline.",
+    "pl": "Nowość: szczegóły dodatku pokazują, z czym się łączy: dostawcę z linkiem do jego witryny, usługi online i to, co jest do nich przesyłane, albo że działa offline.",
+    "cs": "Novinka: podrobnosti doplňku ukazují, k čemu se připojuje: poskytovatele s odkazem na jeho web, online služby a co se jim předává, nebo že funguje offline.",
+    "hu": "Újdonság: a bővítmény részletei megmutatják, mihez csatlakozik: a szolgáltatót a webhelyére mutató hivatkozással, az online szolgáltatásokat és azt, hogy mi kerül hozzájuk, vagy hogy offline működik.",
+    "ru": "Новое: в сведениях о надстройке показано, к чему она подключается: поставщик со ссылкой на его веб-сайт, онлайн-службы и то, что им передается, или что она работает автономно.",
+    "tr": "Yeni: Bir eklentinin ayrıntıları neye bağlandığını gösterir: web sitesi bağlantısıyla sağlayıcı, çevrimiçi hizmetler ve onlara ne gönderildiği ya da çevrimdışı çalıştığı.",
+    "zh-Hans": "新增：加载项详细信息会显示它连接到哪里：提供商及其网站链接、在线服务以及发送给它们的内容，或者说明它离线工作。",
+    "zh-Hant": "新增：增益集詳細資訊會顯示它連線到哪裡：提供者及其網站連結、線上服務以及傳送給它們的內容，或說明它離線運作。",
+    "ja": "新機能: アドオンの詳細に接続先が表示されるようになりました。提供者とその Web サイトへのリンク、オンライン サービスと送信される内容、またはオフラインで動作することが分かります。",
+    "ko": "새로운 기능: 추가 기능 세부 정보에 연결 대상이 표시됩니다. 제공업체와 웹사이트 링크, 온라인 서비스와 전송되는 내용 또는 오프라인으로 작동한다는 사실을 확인할 수 있습니다.",
+    "ar": "جديد: تعرض تفاصيل الوظيفة الإضافية ما تتصل به: المزوّد مع رابط إلى موقعه، والخدمات عبر الإنترنت وما يُرسل إليها، أو أنها تعمل دون اتصال."
   },
   "minPowerPdfVersion": "2025.3.7",
   "ribbonAtomNamespace": "AddonStore::Store",
@@ -127,6 +127,12 @@
       }
     ]
   },
+  "providers": [
+    {
+      "name": "Tungsten Automation",
+      "website": "https://www.tungstenautomation.com"
+    }
+  ],
   "author": "Tungsten Automation",
   "contactEmail": "marcus.nimtz@tungstenautomation.com",
   "elevation": {
