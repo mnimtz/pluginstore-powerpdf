@@ -65,6 +65,8 @@ public static class SchemaUpgrade
             // start page highlights (S1.16.0)
             "ALTER TABLE Packages ADD COLUMN FeaturedAt TEXT NULL",
             "ALTER TABLE Packages ADD COLUMN FeaturedBy TEXT NULL",
+            // service providers of the catalog entry (S1.19.0)
+            "ALTER TABLE Packages ADD COLUMN ProvidersJson TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN SourceUploadedAt TEXT NULL",
             // audit dossier (S1.3.0)
             "ALTER TABLE PackageVersions ADD COLUMN RulesSnapshotJson TEXT NULL",

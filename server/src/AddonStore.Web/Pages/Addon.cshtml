@@ -92,6 +92,49 @@ else
                     <p style="white-space:pre-line">@item.Changelog</p>
                 </div>
             }
+            @{ var conn = item.Connections; }
+            @if (conn.Declared || conn.Providers.Count > 0)
+            {
+                @* S1.19.0: what the add-on connects to, from the compliance declaration checked in the review *@
+                <div class="card connections" id="connections">
+                    <h2>@L["Connects to"]</h2>
+                    @if (conn.Providers.Count > 0)
+                    {
+                        <p class="conn-providers"><b>@L["Provider"]:</b>
+                            @for (var n = 0; n < conn.Providers.Count; n++)
+                            {
+                                var p = conn.Providers[n];
+                                @(n > 0 ? ", " : "")@p.Name
+                                @if (p.Website.Length > 0)
+                                {
+                                    <text> (</text><a href="@p.Website" target="_blank" rel="noopener noreferrer nofollow">@(new Uri(p.Website).Host) ↗</a><text>)</text>
+                                }
+                            }
+                        </p>
+                    }
+                    @if (conn.Offline)
+                    {
+                        <p>@L["Works offline: this add-on connects to no online service."]</p>
+                    }
+                    else if (conn.Services.Count > 0)
+                    {
+                        <ul class="conn-list">
+                            @foreach (var s in conn.Services)
+                            {
+                                <li>
+                                    <span class="conn-name">@s.Name</span>
+                                    @if (s.Host.Length > 0) { <code>@s.Host</code> }
+                                    @if (s.Data.Length > 0) { <span class="conn-data">@L["Transfers"]: @s.Data</span> }
+                                </li>
+                            }
+                        </ul>
+                    }
+                    @if (conn.Declared)
+                    {
+                        <p class="muted small" style="margin-bottom:0">@L["As declared by the developer and checked in the review."]</p>
+                    }
+                </div>
+            }
             <div class="card desktop-only">
                 <h2>@L["First time?"]</h2>
                 <ol class="steps">

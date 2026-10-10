@@ -1521,4 +1521,13 @@
   </data>
   <data name="Add-on Store for Tungsten Power PDF SaaS" xml:space="preserve"><value>Add-on Store for Tungsten Power PDF SaaS</value></data>
   <data name="For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)." xml:space="preserve"><value>Tungsten Power PDF Business SaaS エディション (サインインして使用する Power PDF) 専用です。</value></data>
+  <data name="Service providers" xml:space="preserve"><value>サービス提供者</value></data>
+  <data name="The company behind the services this add-on connects to, with its website. Shown under &quot;Connects to&quot; on the add-on page and in the store window." xml:space="preserve"><value>このアドオンが接続するサービスの提供企業とその Web サイトです。アドオンのページとストア ウィンドウの「接続先」に表示されます。</value></data>
+  <data name="Declared connections of version {0}" xml:space="preserve"><value>バージョン {0} で申告された接続</value></data>
+  <data name="none (works offline)" xml:space="preserve"><value>なし (オフラインで動作)</value></data>
+  <data name="Website (https)" xml:space="preserve"><value>Web サイト (https)</value></data>
+  <data name="Connects to" xml:space="preserve"><value>接続先</value></data>
+  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>オフラインで動作: このアドオンはオンライン サービスに接続しません。</value></data>
+  <data name="Transfers" xml:space="preserve"><value>送信内容</value></data>
+  <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>開発者の申告に基づき、審査で確認済みです。</value></data>
 </root>

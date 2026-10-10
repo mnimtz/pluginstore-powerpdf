@@ -15,7 +15,9 @@ public record MetaIssue(string Code, string Severity, string Message, string Hin
 /// </summary>
 public class MetaChange
 {
-    public bool SetName, SetDescription, SetAuthor, SetContact, SetCategory, SetVisibility;
+    public bool SetName, SetDescription, SetAuthor, SetContact, SetCategory, SetVisibility, SetProviders;
+    /// <summary>Service providers (S1.19.0): null with SetProviders = back to the manifest, empty = none.</summary>
+    public List<AddonProvider>? Providers;
     public string? Category;
     public string? Visibility;
     public Dictionary<string, string>? Name;
@@ -101,6 +103,22 @@ public class PackageMetaService
             issues.Add(new("TEXT_CONTROL_CHARS", "error", "Name, author, contact or description contain control or text-direction characters.",
                 "Remove tabs, control characters and bidi overrides; the description may contain line breaks."));
 
+        if (c.SetProviders && c.Providers is not null)
+        {
+            if (c.Providers.Count > Connections.MaxProviders)
+                issues.Add(new("PROVIDERS_INVALID", "error", $"At most {Connections.MaxProviders} providers.",
+                    "Name the companies whose services the add-on connects to, not every endpoint; the endpoints come from complianceAudit.externalServices."));
+            foreach (var p in c.Providers)
+            {
+                if (string.IsNullOrWhiteSpace(p.Name) || p.Name.Length > Connections.MaxName || Bad(p.Name, false))
+                    issues.Add(new("PROVIDERS_INVALID", "error", $"Every provider needs a name of 1 to {Connections.MaxName} characters without control characters.",
+                        "Use the company or service name, e.g. {\"name\": \"Example Analytics\", \"website\": \"https://example.com\"}."));
+                else if (p.Website.Length > 0 && !Connections.IsWebsite(p.Website))
+                    issues.Add(new("PROVIDERS_INVALID", "error", $"The website of '{p.Name}' is not a public https address.",
+                        "Give the provider's public website as https://..., without user name, password or spaces; leave it empty when there is none."));
+            }
+        }
+
         var texts = new List<string>();
         if (c.SetName && c.Name is not null) texts.AddRange(c.Name.Values);
         if (c.SetDescription && c.Description is not null) texts.AddRange(c.Description.Values);
@@ -162,6 +180,13 @@ public class PackageMetaService
         if (c.SetAuthor) { pkg.Author = string.IsNullOrWhiteSpace(c.Author) ? null : c.Author; changed.Add(pkg.Author is null ? "author reset" : $"author '{pkg.Author}'"); }
         if (c.SetContact) { pkg.ContactEmail = string.IsNullOrWhiteSpace(c.ContactEmail) ? null : c.ContactEmail; changed.Add(pkg.ContactEmail is null ? "contact reset" : $"contact '{pkg.ContactEmail}'"); }
         if (c.SetCategory) { pkg.CategoryOverride = string.IsNullOrWhiteSpace(c.Category) ? null : c.Category!.Trim(); changed.Add(pkg.CategoryOverride is null ? "category reset" : $"category '{pkg.CategoryOverride}'"); }
+        if (c.SetProviders)
+        {
+            pkg.ProvidersJson = c.Providers is null ? null
+                : JsonSerializer.Serialize(c.Providers.Select(p => new { name = p.Name, website = p.Website }));
+            changed.Add(c.Providers is null ? "providers reset" : c.Providers.Count == 0 ? "providers: none"
+                : "providers " + string.Join(", ", c.Providers.Select(p => p.Name)));
+        }
         if (changed.Count == 0) return issues;
 
         pkg.MetaUpdatedAt = DateTime.UtcNow;
@@ -185,6 +210,21 @@ public class PackageMetaService
         c.Description = CleanMap(c.Description);
         if (c.Author is not null) c.Author = Clean(c.Author).Replace('\n', ' ');
         if (c.ContactEmail is not null) c.ContactEmail = c.ContactEmail.Trim();
+        // providers: trimmed, empty rows dropped, the same name only once
+        if (c.Providers is not null)
+            c.Providers = c.Providers
+                .Select(p => new AddonProvider(Clean(p.Name ?? "").Replace('\n', ' '), (p.Website ?? "").Trim()))
+                .Where(p => p.Name.Length > 0 || p.Website.Length > 0)
+                .GroupBy(p => p.Name.ToLowerInvariant()).Select(g => g.First()).ToList();
+    }
+
+    /// <summary>Providers for an edit form (S1.19.0): the catalog entry's, else the newest manifest's.</summary>
+    public static List<AddonProvider> CurrentProviders(Package pkg, PackageVersion? newest)
+    {
+        if (pkg.ProvidersJson is not null) return Connections.ParseProviders(pkg.ProvidersJson);
+        if (newest is null) return new();
+        try { using var d = JsonDocument.Parse(newest.ManifestJson); return Connections.From(null, d.RootElement).Providers; }
+        catch (JsonException) { return new(); }
     }
 
     /// <summary>Current values for an edit form: catalog entry first, then the newest manifest.</summary>

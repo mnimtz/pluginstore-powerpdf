@@ -126,5 +126,15 @@
         "data": "page text and page images, sent to the endpoint the user configures"
       }
     ]
-  }
+  },
+  "providers": [
+    {
+      "name": "OpenAI",
+      "website": "https://openai.com"
+    },
+    {
+      "name": "Google (Gemini API)",
+      "website": "https://ai.google.dev"
+    }
+  ]
 }

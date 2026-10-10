@@ -1521,4 +1521,13 @@
   </data>
   <data name="Add-on Store for Tungsten Power PDF SaaS" xml:space="preserve"><value>Add-on Store til Tungsten Power PDF SaaS</value></data>
   <data name="For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)." xml:space="preserve"><value>Kun til udgaven Tungsten Power PDF Business SaaS (Power PDF med logon).</value></data>
+  <data name="Service providers" xml:space="preserve"><value>Tjenesteudbydere</value></data>
+  <data name="The company behind the services this add-on connects to, with its website. Shown under &quot;Connects to&quot; on the add-on page and in the store window." xml:space="preserve"><value>Virksomheden bag de tjenester, som dette tilføjelsesprogram forbinder til, med dens websted. Vises under »Forbinder til« på tilføjelsesprogrammets side og i butiksvinduet.</value></data>
+  <data name="Declared connections of version {0}" xml:space="preserve"><value>Angivne forbindelser i version {0}</value></data>
+  <data name="none (works offline)" xml:space="preserve"><value>ingen (fungerer offline)</value></data>
+  <data name="Website (https)" xml:space="preserve"><value>Websted (https)</value></data>
+  <data name="Connects to" xml:space="preserve"><value>Forbinder til</value></data>
+  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Fungerer offline: Dette tilføjelsesprogram forbinder ikke til nogen onlinetjeneste.</value></data>
+  <data name="Transfers" xml:space="preserve"><value>Overfører</value></data>
+  <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Som angivet af udvikleren og kontrolleret ved gennemgangen.</value></data>
 </root>

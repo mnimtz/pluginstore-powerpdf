@@ -1521,4 +1521,13 @@
   </data>
   <data name="Add-on Store for Tungsten Power PDF SaaS" xml:space="preserve"><value>Tungsten Power PDF SaaS용 Add-on Store</value></data>
   <data name="For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)." xml:space="preserve"><value>Tungsten Power PDF Business SaaS 에디션(로그인하여 사용하는 Power PDF) 전용입니다.</value></data>
+  <data name="Service providers" xml:space="preserve"><value>서비스 제공업체</value></data>
+  <data name="The company behind the services this add-on connects to, with its website. Shown under &quot;Connects to&quot; on the add-on page and in the store window." xml:space="preserve"><value>이 추가 기능이 연결하는 서비스를 제공하는 회사와 해당 웹사이트입니다. 추가 기능 페이지와 스토어 창의 '연결 대상'에 표시됩니다.</value></data>
+  <data name="Declared connections of version {0}" xml:space="preserve"><value>버전 {0}의 신고된 연결</value></data>
+  <data name="none (works offline)" xml:space="preserve"><value>없음(오프라인으로 작동)</value></data>
+  <data name="Website (https)" xml:space="preserve"><value>웹사이트(https)</value></data>
+  <data name="Connects to" xml:space="preserve"><value>연결 대상</value></data>
+  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>오프라인으로 작동: 이 추가 기능은 온라인 서비스에 연결하지 않습니다.</value></data>
+  <data name="Transfers" xml:space="preserve"><value>전송 내용</value></data>
+  <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>개발자가 신고하고 검토에서 확인한 내용입니다.</value></data>
 </root>

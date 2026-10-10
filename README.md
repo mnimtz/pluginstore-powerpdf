@@ -376,6 +376,24 @@ end-to-end encrypted, relayed through the store's own Blob container. Nothing
 changes until an admin switches it on under *Settings, Features*; see the
 section *Send to* below.
 
+**Connects to (S1.19.0, client 1.9.9):** every add-on shows what it connects to.
+- The add-on page and the details in the store window have a section
+  *Connects to*: the provider with a link to its website, the online services
+  from the compliance declaration (name, host, what is sent) or "works
+  offline". Versions from before the declaration show nothing.
+- New manifest field `providers` (`[{"name", "website"}]`, at most 5, https
+  websites only). **Rule:** a plugin whose `externalServices` contain a fixed
+  public https address must name its providers, or the upload is refused
+  (`PROVIDERS_MISSING`; invalid entries `PROVIDERS_INVALID`). Servers the user
+  or IT configures and local endpoints need none.
+- Owners and admins set the providers without a new upload: *Edit catalog
+  entry*, section *Service providers*, or `PATCH /api/packages/{id}` with
+  `providers` (`[]` none, `null` back to the manifest). The edit form shows
+  the declared connections of the newest version.
+- JSON catalog: `connections` per entry; client catalog: TSV column 23 (ASCII
+  JSON, older clients ignore it). The store window opens a provider's website
+  only when the catalog names exactly that https address.
+
 **Setup on serial-number Power PDF (client 1.9.8):** an interactive setup on a
 Power PDF licensed with a serial number shows a dialog before it stops: the
 store needs Power PDF Business SaaS, and *Request a quote* opens Tungsten

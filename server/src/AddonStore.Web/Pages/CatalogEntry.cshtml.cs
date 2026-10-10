@@ -33,6 +33,11 @@ public class CatalogEntryModel : PageModel
     public string? CategoryOverride { get; private set; }
     public string ManifestCategory { get; private set; } = "";
     public List<MetaIssue> Issues { get; private set; } = new();
+    /// <summary>Service providers (S1.19.0): the shown ones, the newest manifest's, and its declared services.</summary>
+    public List<AddonProvider> Providers { get; private set; } = new();
+    public List<AddonProvider> ManifestProviders { get; private set; } = new();
+    public Connections Declared { get; private set; } = Connections.None;
+    public string DeclaredVersion { get; private set; } = "";
     public string? Notice { get; private set; }
 
     public CatalogEntryModel(AppDbContext db, UserManager<AppUser> users, PackageMetaService meta)
@@ -52,12 +57,30 @@ public class CatalogEntryModel : PageModel
         return (pkg, user);
     }
 
+    private PackageVersion? Newest() =>
+        Pkg!.Versions.Where(v => v.Status != VersionStatus.Withdrawn && v.Status != VersionStatus.Rejected)
+            .OrderByDescending(v => v.Version, new SemVerComparer()).FirstOrDefault()
+        ?? Pkg.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault();
+
+    private void FillConnections(PackageVersion? newest)
+    {
+        Providers = PackageMetaService.CurrentProviders(Pkg!, newest);
+        if (newest is null) return;
+        try
+        {
+            using var d = System.Text.Json.JsonDocument.Parse(newest.ManifestJson);
+            Declared = Connections.From(null, d.RootElement);
+            ManifestProviders = Declared.Providers;
+            DeclaredVersion = newest.Version;
+        }
+        catch (System.Text.Json.JsonException) { }
+    }
+
     private void Fill()
     {
-        var newest = Pkg!.Versions.Where(v => v.Status != VersionStatus.Withdrawn && v.Status != VersionStatus.Rejected)
-            .OrderByDescending(v => v.Version, new SemVerComparer()).FirstOrDefault()
-            ?? Pkg.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault();
-        (Name, Description, Author, Contact) = PackageMetaService.Current(Pkg, newest);
+        var newest = Newest();
+        (Name, Description, Author, Contact) = PackageMetaService.Current(Pkg!, newest);
+        FillConnections(newest);
         Categories = _db.Categories.OrderBy(c => c.Slug).ToList();
         CategoryOverride = Pkg.CategoryOverride;
         var tmp = new Package { Versions = Pkg.Versions };
@@ -82,8 +105,16 @@ public class CatalogEntryModel : PageModel
             .Where(x => !string.IsNullOrWhiteSpace(x.Value))
             .ToDictionary(x => x.Code, x => x.Value!);
 
+        // providers (S1.19.0): rows prov_name_N / prov_web_N; unchanged manifest values stay "from the package"
+        FillConnections(Newest());
+        var posted = Enumerable.Range(0, Connections.MaxProviders + 1)
+            .Select(n => new AddonProvider(((string?)Request.Form[$"prov_name_{n}"] ?? "").Trim(), ((string?)Request.Form[$"prov_web_{n}"] ?? "").Trim()))
+            .Where(p => p.Name.Length > 0 || p.Website.Length > 0).ToList();
+        var keepManifest = posted.SequenceEqual(Providers);   // nothing changed: the value stays where it comes from
+
         var change = new MetaChange
         {
+            SetProviders = !keepManifest, Providers = posted,
             SetName = true, Name = Read("name_"),
             SetDescription = true, Description = Read("desc_"),
             SetAuthor = true, Author = author,
@@ -98,6 +129,7 @@ public class CatalogEntryModel : PageModel
             Categories = _db.Categories.OrderBy(c => c.Slug).ToList();
             CategoryOverride = category;
             ManifestCategory = CategoryService.EffectiveSlug(new Package { Versions = pkg.Versions });
+            Providers = posted;
             return Page();
         }
         Notice = "Catalog entry saved. The catalog and the Power PDF client show it immediately.";
@@ -109,7 +141,7 @@ public class CatalogEntryModel : PageModel
     {
         var (pkg, user) = await LoadAsync(id ?? "");
         if (pkg is null || user is null) return Forbid();
-        await _meta.ApplyAsync(pkg, user, new MetaChange { SetName = true, SetDescription = true, SetAuthor = true, SetContact = true, SetCategory = true });
+        await _meta.ApplyAsync(pkg, user, new MetaChange { SetName = true, SetDescription = true, SetAuthor = true, SetContact = true, SetCategory = true, SetProviders = true });
         Notice = "Catalog entry reset to the values from the package.";
         Fill();
         return Page();

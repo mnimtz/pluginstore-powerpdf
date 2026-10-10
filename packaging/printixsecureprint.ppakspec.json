@@ -110,6 +110,12 @@
       }
     ]
   },
+  "providers": [
+    {
+      "name": "Printix",
+      "website": "https://printix.net"
+    }
+  ],
   "author": "Tungsten Automation",
   "contactEmail": "marcus.nimtz@tungstenautomation.com"
 }

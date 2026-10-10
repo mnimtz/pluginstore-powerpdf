@@ -1521,4 +1521,13 @@
   </data>
   <data name="Add-on Store for Tungsten Power PDF SaaS" xml:space="preserve"><value>Add-on Store Tungsten Power PDF SaaS:lle</value></data>
   <data name="For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)." xml:space="preserve"><value>Vain Tungsten Power PDF Business SaaS -versiolle (Power PDF, johon kirjaudutaan).</value></data>
+  <data name="Service providers" xml:space="preserve"><value>Palveluntarjoajat</value></data>
+  <data name="The company behind the services this add-on connects to, with its website. Shown under &quot;Connects to&quot; on the add-on page and in the store window." xml:space="preserve"><value>Yritys, jonka palveluihin tämä lisäosa muodostaa yhteyden, ja sen verkkosivusto. Näytetään kohdassa ”Muodostaa yhteyden” lisäosan sivulla ja kaupan ikkunassa.</value></data>
+  <data name="Declared connections of version {0}" xml:space="preserve"><value>Version {0} ilmoitetut yhteydet</value></data>
+  <data name="none (works offline)" xml:space="preserve"><value>ei yhtään (toimii offline-tilassa)</value></data>
+  <data name="Website (https)" xml:space="preserve"><value>Verkkosivusto (https)</value></data>
+  <data name="Connects to" xml:space="preserve"><value>Muodostaa yhteyden</value></data>
+  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Toimii offline-tilassa: tämä lisäosa ei muodosta yhteyttä mihinkään verkkopalveluun.</value></data>
+  <data name="Transfers" xml:space="preserve"><value>Siirtää</value></data>
+  <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Kehittäjän ilmoituksen mukaan, tarkistettu katselmoinnissa.</value></data>
 </root>

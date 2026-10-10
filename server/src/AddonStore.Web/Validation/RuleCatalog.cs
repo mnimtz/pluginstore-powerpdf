@@ -143,7 +143,7 @@ public static class RuleCatalog
         if (Any("BIN_") || code is "PE_DEBUG_RUNTIME" or "FOREIGN_DEPENDENCY") return "Runtime and dependencies";   // bin/: S1.4.0
         if (Any("ARCH_", "HASH_", "PE_", "VERSIONINFO_", "ZXT_NAME_") || code is "FILE_DECLARATION_MISSING" or "FILE_MISSING" or "FILENAME_MISMATCH" or "RESERVED_NAME")
             return "Binaries and integrity";
-        if (Any("LICENSE", "COMPLIANCE_", "EXTERNAL_SERVICE", "THIRDPARTY_") || code is "SECRET_DETECTED") return "Licenses, legal and privacy";
+        if (Any("LICENSE", "COMPLIANCE_", "EXTERNAL_SERVICE", "THIRDPARTY_", "PROVIDERS_") || code is "SECRET_DETECTED") return "Licenses, legal and privacy";
         if (Any("ZIP_", "MANIFEST_", "ENTRY_") || code is "SIZE_LIMIT" or "NESTED_ARCHIVE" or "UNEXPECTED_ENTRY" or "INFLATE_LIMIT"
             or "DOCS_ACTIVE_CONTENT" or "BUNDLE_INVALID" or "NO_PACKAGE" or "VALIDATION_FAILED" or "REPORT_UNREADABLE") return "Package structure";
         if (Any("ID_", "NAME_", "MIN_HOST_VERSION_", "AUTHOR_", "CONTACT_", "VISIBILITY_", "TEXT_CONTROL_") || code is "VERSION_INVALID" or "VERSION_NOT_INCREMENTED"

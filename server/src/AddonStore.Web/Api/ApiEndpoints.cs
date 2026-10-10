@@ -416,7 +416,8 @@ public static class ApiEndpoints
                       .Append(i.RatingCount).Append('\t').Append(i.Screenshots).Append('\t')
                       .Append(Flat(i.Customer)).Append('\t')
                       .Append(signing.Sign(i.Id, i.Version, i.Sha256, i.ZxtName)).Append('\t')
-                      .Append(i.NoUi ? "none" : "ribbon").Append('\n');   // column 22 (S1.1.1)
+                      .Append(i.NoUi ? "none" : "ribbon").Append('\t')   // column 22 (S1.1.1)
+                      .Append(Flat(i.Connections.ToClientJson())).Append('\n');   // column 23 (S1.19.0): "connects to", ASCII JSON
                 }
                 return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
             }
@@ -495,6 +496,7 @@ public static class ApiEndpoints
                         author = package.Author,
                         contactEmail = package.ContactEmail,
                         category = package.CategoryOverride,
+                        providers = package.ProvidersJson is null ? null : Connections.ParseProviders(package.ProvidersJson).Select(p => new { name = p.Name, website = p.Website }),
                         updatedAt = package.MetaUpdatedAt,
                         updatedBy = package.MetaUpdatedBy,
                         note = "null fields come from the newest manifest; change them with PATCH /api/packages/" + package.Id
@@ -1439,8 +1441,18 @@ public static class ApiEndpoints
                             typeErrors.Add(new("METADATA_INVALID", "error", "Only administrators set start page highlights.", "Leave 'featured' out of the request."));
                         else featured = v.GetBoolean();
                         break;
+                    case "providers":   // S1.19.0: the companies behind the declared services
+                        change.SetProviders = true;
+                        if (v.ValueKind == JsonValueKind.Null) change.Providers = null;
+                        else if (v.ValueKind != JsonValueKind.Array || v.EnumerateArray().Any(p => p.ValueKind != JsonValueKind.Object))
+                            typeErrors.Add(new("PROVIDERS_INVALID", "error", "'providers' must be an array of objects, or null.",
+                                "Example: {\"providers\": [{\"name\": \"Example Analytics\", \"website\": \"https://example.com\"}]}; [] = none, null = back to the manifest."));
+                        else change.Providers = v.EnumerateArray().Select(p => new AddonProvider(
+                            p.TryGetProperty("name", out var n) && n.ValueKind == JsonValueKind.String ? n.GetString() ?? "" : "",
+                            p.TryGetProperty("website", out var w) && w.ValueKind == JsonValueKind.String ? w.GetString() ?? "" : "")).ToList();
+                        break;
                     default:
-                        typeErrors.Add(new("METADATA_INVALID", "error", $"Unknown field '{prop.Name}'.", "Allowed fields: name, description, author, contactEmail, category, visibility, featured (admins)."));
+                        typeErrors.Add(new("METADATA_INVALID", "error", $"Unknown field '{prop.Name}'.", "Allowed fields: name, description, author, contactEmail, category, visibility, providers, featured (admins)."));
                         break;
                 }
             }
@@ -1463,6 +1475,7 @@ public static class ApiEndpoints
                     name = ParseOrNull(pkg.NameJson), description = ParseOrNull(pkg.DescriptionJson),
                     author = pkg.Author, contactEmail = pkg.ContactEmail, category = pkg.CategoryOverride,
                     featured = pkg.FeaturedAt is not null,
+                    providers = pkg.ProvidersJson is null ? null : Connections.ParseProviders(pkg.ProvidersJson).Select(p => new { name = p.Name, website = p.Website }),
                     updatedAt = pkg.MetaUpdatedAt, updatedBy = pkg.MetaUpdatedBy,
                     next = "The catalog, the web UI and the Power PDF client show the new values immediately; no new version is needed."
                 }
@@ -1928,6 +1941,7 @@ public static class ApiEndpoints
                 customer,
                 signature = signing?.Sign(pick.PackageId, pick.Version, pick.Sha256, ZxtNameOf(root)),
                 featured = !isPrivate && pkg?.FeaturedAt is not null,   // start page highlight (S1.16.0)
+                connections = ConnectionsJson(Connections.From(pkg?.ProvidersJson, root)),   // "connects to" (S1.19.0)
             };
         }
     }
@@ -1947,6 +1961,14 @@ public static class ApiEndpoints
         if (u is not null && (pkg.OwnerId == u.Id || ctx.User.IsInRole("Admin") || ctx.User.IsInRole("Reviewer"))) return true;
         return version is null ? await customers.MaySeeAsync(ctx, pkg) : await customers.MayDownloadAsync(ctx, pkg, version);
     }
+
+    /// <summary>"connects to" in the JSON catalog (S1.19.0); null when the version declares nothing and no provider is set.</summary>
+    private static object? ConnectionsJson(Connections c) => !c.Declared && c.Providers.Count == 0 ? null : new
+    {
+        providers = c.Providers.Select(p => new { name = p.Name, website = p.Website.Length > 0 ? p.Website : null }),
+        services = c.Services.Select(s => new { name = s.Name, host = s.Host, data = s.Data }),
+        offline = c.Offline,
+    };
 
     /// <summary>Base name of the x64 binary ("SmartBookmarks" for x64/SmartBookmarks.zxt).</summary>
     public static string ZxtNameOf(JsonElement manifest) =>

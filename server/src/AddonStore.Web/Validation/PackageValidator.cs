@@ -1309,6 +1309,26 @@ public class PackageValidator
                 }
         }
 
+        // providers (S1.19.0, optional): the companies behind the declared services; the catalog and the
+        // store window show them with their website next to "Connects to"
+        // required only for fixed public services: a server the user or IT configures, or a local one, has no fixed provider
+        var connects = audit.ValueKind == JsonValueKind.Object && audit.TryGetProperty("externalServices", out var es2) &&
+                       es2.ValueKind == JsonValueKind.Array &&
+                       es2.EnumerateArray().Any(s => s.ValueKind == JsonValueKind.Object && Services.Connections.IsWebsite(GetString(s, "url")));
+        if (root.TryGetProperty("providers", out var prov) && prov.ValueKind != JsonValueKind.Null)
+        {
+            var ok = prov.ValueKind == JsonValueKind.Array && prov.GetArrayLength() <= Services.Connections.MaxProviders &&
+                     prov.EnumerateArray().All(p => p.ValueKind == JsonValueKind.Object &&
+                         GetString(p, "name") is { } n && n.Trim().Length is > 0 and <= Services.Connections.MaxName && !n.Any(char.IsControl) &&
+                         (GetString(p, "website") is not { Length: > 0 } w || Services.Connections.IsWebsite(w)));
+            if (!ok)
+                report.Error("PROVIDERS_INVALID", "'providers' is not a list of at most 5 providers with a name and an optional https website.",
+                    "Example: \"providers\": [{\"name\": \"Example Analytics\", \"website\": \"https://example.com\"}]. Names 1 to 80 characters; the website a public https address without user name or password.");
+        }
+        else if (connects)
+            report.Error("PROVIDERS_MISSING", "The add-on connects to fixed online services, but the manifest names no provider.",
+                "Add \"providers\": [{\"name\": \"<company or service>\", \"website\": \"https://...\"}] so users see who is behind the services; the catalog shows it with a link next to the declared connections.");
+
         if (!root.TryGetProperty("thirdParty", out var tp))
         {
             report.Error("THIRDPARTY_DECLARATION_MISSING", "The manifest has no 'thirdParty' list.",

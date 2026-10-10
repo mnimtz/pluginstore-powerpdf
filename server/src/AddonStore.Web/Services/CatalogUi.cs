@@ -22,6 +22,8 @@ public record CatalogItem(string Id, string Name, string Description, string Ver
     /// <summary>Start page highlight (S1.16.0): when an admin marked it; null = no highlight.</summary>
     public DateTime? FeaturedAt { get; init; }
     public bool Featured => FeaturedAt is not null;
+    /// <summary>"Connects to" (S1.19.0): providers and the declared services of the shown version.</summary>
+    public Connections Connections { get; init; } = Connections.None;
 }
 
 public static class CatalogUi
@@ -80,6 +82,7 @@ public static class CatalogUi
             Customer = customer,
             NoUi = IsNoUi(doc.RootElement),
             FeaturedAt = pkg?.Visibility == "private" ? null : pkg?.FeaturedAt,
+            Connections = Connections.From(pkg?.ProvidersJson, doc.RootElement),
         };
     }
 

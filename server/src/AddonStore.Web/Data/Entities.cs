@@ -245,6 +245,8 @@ public class Package
     /// <summary>Highlight of the start page (S1.16.0), set by an admin: highlights come first, on the first page, and glow.</summary>
     public DateTime? FeaturedAt { get; set; }
     public string? FeaturedBy { get; set; }
+    /// <summary>Service providers set on the server (S1.19.0), JSON [{"name","website"}]; null = from the newest manifest, "[]" = none.</summary>
+    public string? ProvidersJson { get; set; }
 }
 
 public enum VersionStatus

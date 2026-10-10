@@ -1521,4 +1521,13 @@
   </data>
   <data name="Add-on Store for Tungsten Power PDF SaaS" xml:space="preserve"><value>Tungsten Power PDF SaaS için Add-on Store</value></data>
   <data name="For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)." xml:space="preserve"><value>Yalnızca Tungsten Power PDF Business SaaS sürümü için (oturum açmalı Power PDF).</value></data>
+  <data name="Service providers" xml:space="preserve"><value>Hizmet sağlayıcılar</value></data>
+  <data name="The company behind the services this add-on connects to, with its website. Shown under &quot;Connects to&quot; on the add-on page and in the store window." xml:space="preserve"><value>Bu eklentinin bağlandığı hizmetlerin arkasındaki şirket ve web sitesi. Eklenti sayfasında ve mağaza penceresinde "Bağlandığı yerler" altında gösterilir.</value></data>
+  <data name="Declared connections of version {0}" xml:space="preserve"><value>{0} sürümünün bildirilen bağlantıları</value></data>
+  <data name="none (works offline)" xml:space="preserve"><value>yok (çevrimdışı çalışır)</value></data>
+  <data name="Website (https)" xml:space="preserve"><value>Web sitesi (https)</value></data>
+  <data name="Connects to" xml:space="preserve"><value>Bağlandığı yerler</value></data>
+  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Çevrimdışı çalışır: Bu eklenti hiçbir çevrimiçi hizmete bağlanmaz.</value></data>
+  <data name="Transfers" xml:space="preserve"><value>Aktarır</value></data>
+  <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Geliştiricinin beyanına göre, incelemede kontrol edildi.</value></data>
 </root>

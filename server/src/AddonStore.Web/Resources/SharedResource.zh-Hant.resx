@@ -1521,4 +1521,13 @@
   </data>
   <data name="Add-on Store for Tungsten Power PDF SaaS" xml:space="preserve"><value>Add-on Store for Tungsten Power PDF SaaS</value></data>
   <data name="For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)." xml:space="preserve"><value>僅適用於 Tungsten Power PDF Business SaaS 版本（需要登入的 Power PDF）。</value></data>
+  <data name="Service providers" xml:space="preserve"><value>服務提供者</value></data>
+  <data name="The company behind the services this add-on connects to, with its website. Shown under &quot;Connects to&quot; on the add-on page and in the store window." xml:space="preserve"><value>此增益集所連線服務背後的公司及其網站。顯示在增益集頁面和商店視窗的「連線至」下。</value></data>
+  <data name="Declared connections of version {0}" xml:space="preserve"><value>版本 {0} 宣告的連線</value></data>
+  <data name="none (works offline)" xml:space="preserve"><value>無（離線運作）</value></data>
+  <data name="Website (https)" xml:space="preserve"><value>網站 (https)</value></data>
+  <data name="Connects to" xml:space="preserve"><value>連線至</value></data>
+  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>離線運作：此增益集不連線任何線上服務。</value></data>
+  <data name="Transfers" xml:space="preserve"><value>傳輸</value></data>
+  <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>依據開發者的宣告，並於審核時檢查。</value></data>
 </root>

@@ -1521,4 +1521,13 @@
   </data>
   <data name="Add-on Store for Tungsten Power PDF SaaS" xml:space="preserve"><value>Add-on Store pro Tungsten Power PDF SaaS</value></data>
   <data name="For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)." xml:space="preserve"><value>Pouze pro edici Tungsten Power PDF Business SaaS (Power PDF s přihlášením).</value></data>
+  <data name="Service providers" xml:space="preserve"><value>Poskytovatelé služeb</value></data>
+  <data name="The company behind the services this add-on connects to, with its website. Shown under &quot;Connects to&quot; on the add-on page and in the store window." xml:space="preserve"><value>Společnost, která stojí za službami, ke kterým se tento doplněk připojuje, s jejím webem. Zobrazuje se v části „Připojuje se k“ na stránce doplňku a v okně obchodu.</value></data>
+  <data name="Declared connections of version {0}" xml:space="preserve"><value>Deklarovaná připojení verze {0}</value></data>
+  <data name="none (works offline)" xml:space="preserve"><value>žádná (funguje offline)</value></data>
+  <data name="Website (https)" xml:space="preserve"><value>Web (https)</value></data>
+  <data name="Connects to" xml:space="preserve"><value>Připojuje se k</value></data>
+  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Funguje offline: tento doplněk se nepřipojuje k žádné online službě.</value></data>
+  <data name="Transfers" xml:space="preserve"><value>Přenáší</value></data>
+  <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Podle údajů vývojáře, zkontrolováno při posouzení.</value></data>
 </root>

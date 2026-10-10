@@ -61,6 +61,42 @@
                 }
             </table>
         </div>
+        @* S1.19.0: who is behind the services the add-on connects to *@
+        <h2 style="margin:18px 0 4px">@L["Service providers"]</h2>
+        <p style="margin:0 0 8px;color:var(--tun-slate);font-size:.9rem">@L["The company behind the services this add-on connects to, with its website. Shown under \"Connects to\" on the add-on page and in the store window."]</p>
+        @if (Model.Declared.Declared)
+        {
+            <div class="conn-declared">
+                <b>@L["Declared connections of version {0}", Model.DeclaredVersion]:</b>
+                @if (Model.Declared.Offline)
+                {
+                    <span>@L["none (works offline)"]</span>
+                }
+                else
+                {
+                    <ul>
+                        @foreach (var s in Model.Declared.Services)
+                        {
+                            <li>@s.Name @if (s.Host.Length > 0) { <code>@s.Host</code> }</li>
+                        }
+                    </ul>
+                }
+            </div>
+        }
+        <div class="table-wrap">
+            <table class="no-rtable">
+                <tr><th style="width:40%">@L["Name"]</th><th>@L["Website (https)"]</th></tr>
+                @{ var rows = Math.Min(AddonStore.Web.Services.Connections.MaxProviders, Model.Providers.Count + 1); }
+                @for (var n = 0; n < rows; n++)
+                {
+                    var p = n < Model.Providers.Count ? Model.Providers[n] : null;
+                    <tr>
+                        <td><input type="text" name="prov_name_@n" value="@p?.Name" maxlength="80" aria-label="@L["Name"]" /></td>
+                        <td><input type="url" name="prov_web_@n" value="@p?.Website" maxlength="300" placeholder="https://" aria-label="@L["Website (https)"]" /></td>
+                    </tr>
+                }
+            </table>
+        </div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
             <button type="submit" class="btn">@L["Save"]</button>
             <a class="btn secondary" href="/Plugin?id=@pkg.Id">@L["Cancel"]</a>

@@ -1521,4 +1521,13 @@
   </data>
   <data name="Add-on Store for Tungsten Power PDF SaaS" xml:space="preserve"><value>Add-on Store a Tungsten Power PDF SaaS-hez</value></data>
   <data name="For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)." xml:space="preserve"><value>Csak a Tungsten Power PDF Business SaaS kiadáshoz (bejelentkezéses Power PDF).</value></data>
+  <data name="Service providers" xml:space="preserve"><value>Szolgáltatók</value></data>
+  <data name="The company behind the services this add-on connects to, with its website. Shown under &quot;Connects to&quot; on the add-on page and in the store window." xml:space="preserve"><value>A vállalat, amelynek szolgáltatásaihoz ez a bővítmény csatlakozik, a webhelyével együtt. A bővítmény oldalán és az áruház ablakában a „Csatlakozik ehhez” részben jelenik meg.</value></data>
+  <data name="Declared connections of version {0}" xml:space="preserve"><value>A(z) {0} verzió bejelentett kapcsolatai</value></data>
+  <data name="none (works offline)" xml:space="preserve"><value>nincs (offline működik)</value></data>
+  <data name="Website (https)" xml:space="preserve"><value>Webhely (https)</value></data>
+  <data name="Connects to" xml:space="preserve"><value>Csatlakozik ehhez</value></data>
+  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Offline működik: ez a bővítmény nem csatlakozik online szolgáltatáshoz.</value></data>
+  <data name="Transfers" xml:space="preserve"><value>Továbbít</value></data>
+  <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>A fejlesztő bejelentése szerint, az ellenőrzés során vizsgálva.</value></data>
 </root>

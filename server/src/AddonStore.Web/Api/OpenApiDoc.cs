@@ -343,6 +343,20 @@ public static class OpenApiDoc
                 ["category"] = new JsonObject { ["type"] = new JsonArray("string", "null"), ["description"] = "Slug from GET /api/categories" },
                 ["visibility"] = new JsonObject { ["enum"] = new JsonArray("public", "private"), ["description"] = "public (catalog) or private (customer deliveries only)" },
                 ["featured"] = new JsonObject { ["type"] = "boolean", ["description"] = "Admins only (S1.16.0): start page highlight, public add-ons, at most 9" },
+                ["providers"] = new JsonObject
+                {
+                    ["type"] = new JsonArray("array", "null"), ["maxItems"] = 5,
+                    ["description"] = "S1.19.0: companies behind the declared services, shown under \"Connects to\"; [] = none, null = from the newest manifest",
+                    ["items"] = new JsonObject
+                    {
+                        ["type"] = "object", ["required"] = new JsonArray("name"),
+                        ["properties"] = new JsonObject
+                        {
+                            ["name"] = new JsonObject { ["type"] = "string", ["maxLength"] = 80 },
+                            ["website"] = new JsonObject { ["type"] = "string", ["maxLength"] = 300, ["description"] = "Public https address" },
+                        },
+                    },
+                },
             },
         },
         ["Rating"] = new JsonObject

@@ -1521,4 +1521,13 @@
   </data>
   <data name="Add-on Store for Tungsten Power PDF SaaS" xml:space="preserve"><value>Add-on Store per Tungsten Power PDF SaaS</value></data>
   <data name="For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)." xml:space="preserve"><value>Solo per l'edizione Tungsten Power PDF Business SaaS (Power PDF con accesso).</value></data>
+  <data name="Service providers" xml:space="preserve"><value>Fornitori di servizi</value></data>
+  <data name="The company behind the services this add-on connects to, with its website. Shown under &quot;Connects to&quot; on the add-on page and in the store window." xml:space="preserve"><value>L'azienda dietro i servizi a cui si connette questo componente aggiuntivo, con il suo sito web. Mostrata in «Si connette a» nella pagina del componente e nella finestra dello store.</value></data>
+  <data name="Declared connections of version {0}" xml:space="preserve"><value>Connessioni dichiarate della versione {0}</value></data>
+  <data name="none (works offline)" xml:space="preserve"><value>nessuna (funziona offline)</value></data>
+  <data name="Website (https)" xml:space="preserve"><value>Sito web (https)</value></data>
+  <data name="Connects to" xml:space="preserve"><value>Si connette a</value></data>
+  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Funziona offline: questo componente aggiuntivo non si connette ad alcun servizio online.</value></data>
+  <data name="Transfers" xml:space="preserve"><value>Trasmette</value></data>
+  <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Come dichiarato dallo sviluppatore e verificato nella revisione.</value></data>
 </root>

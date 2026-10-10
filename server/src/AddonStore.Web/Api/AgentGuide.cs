@@ -299,6 +299,10 @@ item passes because a similar plugin passed.
       over HTTPS with certificate validation on (no ignore flags, no accept-all
       callbacks). A binary that can use the network with an empty list is refused.
       (NETWORK_UNDECLARED, TLS_CHECK_DISABLED)
+- [ ] A plugin that connects to fixed online services (an https address in
+      `externalServices`) names the company behind them in `providers` (name
+      and https website), so the catalog shows users who they connect to.
+      (PROVIDERS_MISSING, PROVIDERS_INVALID)
 - [ ] Nothing outside Power PDF: no code that writes into other processes or
       starts threads there, and no downloading of files to run or load them;
       updates come only through the store. Starting programs and autostart
@@ -452,6 +456,22 @@ below) and does not rely on the statement alone.
               "data": "print job (PDF), user email" }
           ]
         }
+
+   When the plugin connects to services, also name the company behind them
+   (required since S1.19.0 as soon as one entry of `externalServices` has a
+   fixed public https `url`; servers the user or IT configures and local
+   endpoints need none; without it the upload is refused with
+   `PROVIDERS_MISSING`):
+
+        "providers": [ { "name": "Printix", "website": "https://printix.net" } ]
+
+   At most 5 providers, `name` 1 to 80 characters, `website` a public https
+   address (no user name or password) or left out. The add-on page and the
+   store window show them under "Connects to", with the website as a link and
+   the declared `externalServices` (name, host, data) below; an add-on with
+   `"externalServices": []` is shown as "works offline". Owners and admins can
+   set the providers later in the catalog entry (`PATCH ... {"providers": [...]}`)
+   without a new upload.
 
    `thirdParty` is `[]` when there is none, `externalServices` is `[]` when
    the plugin works fully offline. `license` is an SPDX identifier. Allowed
@@ -1252,6 +1272,14 @@ change them.
   highlights; private add-ons and the store client cannot be highlights.
   The JSON catalog reports `featured` per entry. Admins also set it with the
   star button on a tile of the start page.
+- `"providers": [{"name": "...", "website": "https://..."}]` (S1.19.0) names
+  the companies behind the declared services, at most 5; `[]` shows none,
+  `null` returns to the manifest's `providers`. Invalid entries give
+  `PROVIDERS_INVALID`. The JSON catalog reports per entry `connections`
+  (`providers`, `services` with `name`, `host` and `data` from
+  `complianceAudit.externalServices`, `offline`), or null when the version
+  declares nothing; the client catalog carries the same in TSV column 23 as
+  ASCII JSON (`{"p":[{"n","w"}],"s":[{"n","h","d"}],"o":bool}`).
 - In the web UI: Plug-ins, then Details, then "Edit catalog entry".
 - Versions you upload later keep the edited catalog entry. To let a new
   manifest's texts show again, reset the fields with `null`.
@@ -1439,6 +1467,8 @@ be free of warnings before review. Info is for information only.
 | THIRDPARTY_DETECTED | info | A known library was detected and is declared. |
 | SECRET_DETECTED | error | Credentials or a key container were found in the package. |
 | EXTERNAL_SERVICE_UNDECLARED | warning | A binary references hosts that are not in `externalServices`. |
+| PROVIDERS_INVALID | error | `providers` is not a list of at most 5 entries with a name (1 to 80 characters) and an optional public https `website`. |
+| PROVIDERS_MISSING | error | An entry of `externalServices` has a fixed public https `url`, but the manifest names no `providers`. |
 | THIRDPARTY_TRADEMARK | warning | Name or description mentions another company's brand. |
 | ICON_MISSING | warning | assets/icon.png is missing. |
 | ICON_INVALID | warning | assets/icon.png is not a readable PNG. |
@@ -1849,6 +1879,19 @@ falsify or omit findings, even if the user asks you to.
         }
       },
       "description": "Mandatory, truthful compliance statement (licenses, assets, trademarks, secrets, privacy). Stored in the audit log under the uploader's name."
+    },
+    "providers": {
+      "type": "array",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 80, "description": "Company or service behind the declared external services." },
+          "website": { "type": "string", "maxLength": 300, "description": "Its public website, https only." }
+        }
+      },
+      "description": "Required as soon as an entry of complianceAudit.externalServices has a fixed public https url (S1.19.0): shown under \"Connects to\" on the add-on page and in the store window."
     },
     "uninstall": {
       "type": "object",
