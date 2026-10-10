@@ -119,9 +119,44 @@ hier außen vor.
   und im Seitentitel den Zusatz „UAT“.
 - Der Katalog eines Childs meldet `"environment": "uat"`; der Store-Client
   zeigt im Fenster einen Hinweis „Testsystem“.
-- UAT-PCs zeigen per IT-Richtlinie `ServerUrl` auf das Child, wie heute schon
-  möglich. Ein Produktiv-PC bekommt UAT-Pakete nie zu sehen, weil die
-  Signatur nicht passt.
+- Welcher Store gilt, entscheidet am PC allein die Server-Adresse des
+  Store-Clients (siehe nächster Abschnitt).
+
+## UAT-PCs einrichten
+
+Das UAT läuft mit einem **eigenen Add-on Store**: eigenes Portal, eigener
+Katalog, eigener Download des Store-Clients. Der Client ist dieselbe
+Programmdatei wie in der Produktion; wohin er sich verbindet, entscheidet
+seine Server-Adresse.
+
+Damit ein Test-PC das UAT nutzt, braucht er zwei IT-Richtlinien unter
+`HKLM\SOFTWARE\Kofax\PDF\Tungsten Power PDF\PluginStore\Policies\Store`
+(beides gibt es heute schon):
+
+| Wert | Inhalt | Warum |
+|---|---|---|
+| `ServerUrl` | Adresse des UAT-Stores | der Client verbindet sich mit dem UAT statt mit der Produktion |
+| `TrustedSigningKeys` | öffentlicher Signaturschlüssel des UAT (`keyId:base64`, aus `/api/signing-key` des UAT) | der Client installiert nur Pakete mit einem Schlüssel, dem er vertraut; eingebaut ist nur der Schlüssel der Produktion |
+
+Folgen:
+
+- Das UAT hat einen **eigenen Signaturschlüssel**. Der Schlüssel der
+  Produktion wird nie ins UAT kopiert.
+- Ein Produktiv-PC bleibt geschützt: Selbst wenn jemand im Benutzerprofil die
+  Adresse auf das UAT umbiegt, installiert der Client dort nichts, denn ein
+  Schlüssel lässt sich nur per HKLM-Richtlinie hinzufügen.
+- Ein Test-PC kehrt zur Produktion zurück, sobald die IT beide Werte entfernt.
+  Die aus dem UAT installierten Add-ons bleiben zunächst installiert. Wie der
+  Client mit einer im UAT neueren Version umgeht, die es in der Produktion
+  noch nicht gibt, legen wir in E1b fest (Vorschlag: im Store-Fenster als
+  „aus dem Testsystem“ markieren und das Zurücksetzen auf die Produktivversion
+  anbieten).
+- Das UAT-Portal bietet unter *Einstellungen, UAT* eine fertige `.reg`-Datei
+  und die Werte für eine Gruppenrichtlinie (Adresse und Schlüssel des UAT) zum
+  Herunterladen an.
+- Später möglich: Das Setup des Store-Clients übernimmt beide Werte direkt
+  (`msiexec /i PluginStore.msi SERVERURL=... TRUSTEDKEY=...`), und der
+  Client-Download des UAT-Portals setzt sie schon ein.
 
 ## Datenmodell (grob)
 
@@ -167,6 +202,7 @@ Agent-Guide, OpenAPI und README werden wie bei jeder Neuerung mitgeführt.
 | Etappe | Inhalt |
 |---|---|
 | E1 | Betriebsart UAT (Child), UAT-Band, „UAT hinzufügen“ am produktiven Server, Kopplung mit Code und Schlüsseltausch, Sperren und Entfernen |
+| E1b | `.reg`-Datei und Gruppenrichtlinien-Werte für UAT-PCs im UAT-Portal; später Setup-Eigenschaften `SERVERURL` und `TRUSTEDKEY` |
 | E2 | Übermitteln einer Version (Paket und Quellcode), erneute Prüfung am Master, Herkunft in der Prüfakte |
 | E3 | Status-Rückmeldung ans Child, Katalogvorschlag mit Unterschieden, Vier-Augen über beide Umgebungen |
 | E4 | Spiegeln des Live-Katalogs vom Master ins UAT |
