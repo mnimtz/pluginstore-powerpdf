@@ -1,5 +1,6 @@
 @page
 @model AddonStore.Web.Pages.Admin.SettingsModel
+@inject AddonStore.Web.Services.SendToService SendToSettings
 @{
     ViewData["Title"] = "Settings";
 }
@@ -15,12 +16,18 @@ else if (Model.SigningKeyId.Length > 0)
 }
 <p class="lead">@L["Instance settings; values are stored on the server and take effect immediately."]</p>
 
-<div class="report-layout">
+<div class="report-layout side-carried">
 <nav class="report-nav" aria-label="@L["Sections"]">
     @foreach (var (key, label) in AddonStore.Web.Pages.Admin.SettingsModel.Views)
     {
         <a href="@Url.Page("/Admin/Settings", new { view = key == "server" ? null : key })" class="@(Model.View == key ? "active" : "")" aria-current="@(Model.View == key ? "page" : null)">@L[label]</a>
     }
+    <a href="/Issues">@L["Problem reports"] →</a>
+    @if ((await SendToSettings.ConfigAsync()).Enabled)
+    {
+        <a href="/Admin/SendTo">@L["Send to"] →</a>
+    }
+    <a href="/Admin/Audit">@L["Audit"] →</a>
     <a href="/Admin/Backup">@L["Backup and restore"] →</a>
     <a href="/Admin/Categories">@L["Categories"] →</a>
     <a href="/Admin/Rules">@L["Rules"] →</a>

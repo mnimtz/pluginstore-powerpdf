@@ -24,6 +24,24 @@
     // "Send to": menu only while the master switch is on (off = every hint disappears)
     var sendNav = SignInManager.IsSignedIn(User) && User.IsInRole("Admin") && (await SendToNav.ConfigAsync()).Enabled;
     var origin = (host.Host is "localhost" or "127.0.0.1" ? Context.Request.Scheme : "https") + "://" + host;
+    // shared by both navigations (S1.18.0): who is signed in, the counters, where we are
+    var signedIn = SignInManager.IsSignedIn(User);
+    var meS = signedIn ? await UserManager.GetUserAsync(User) : null;
+    var isAdminS = signedIn && User.IsInRole("Admin");
+    var isReviewerS = isAdminS || (signedIn && User.IsInRole("Reviewer"));
+    var openS = meS is null ? 0 : await IssuesNav.Scope(meS, isAdminS).CountAsync(f => f.Status == "open");
+    var reviewS = isReviewerS ? await NavDb.PackageVersions.CountAsync(v => v.Status == AddonStore.Web.Data.VersionStatus.Submitted &&
+                                    !NavDb.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private")) : 0;
+    var pendingS = isAdminS ? await NavDb.Users.CountAsync(u => u.Status == AddonStore.Web.Data.UserStatus.Pending) : 0;
+    var pathS = Context.Request.Path.Value ?? "/";
+    var viewS = Context.Request.Query["view"].ToString();
+    bool At(params string[] prefixes) => prefixes.Any(p => pathS.Equals(p, StringComparison.OrdinalIgnoreCase) || pathS.StartsWith(p + "/", StringComparison.OrdinalIgnoreCase));
+    string On(params string[] prefixes) => At(prefixes) ? "active" : "";
+    var backS = Uri.EscapeDataString(Context.Request.Path + Context.Request.QueryString);
+    // S1.18.0: problem reports, Send to and the audit log live under Settings for admins
+    var settingsArea = isAdminS && At("/Admin/Settings", "/Admin/Backup", "/Admin/Categories", "/Admin/Rules", "/Issues", "/Admin/SendTo", "/Admin/Audit");
+    var deliveryArea = At("/Customers", "/Customer", "/Templates", "/Admin/Inventory");
+    var helpArea = At("/Docs", "/Admin/Docs", "/Developer") || (!isAdminS && At("/Admin/Rules"));
 }
 <head>
     <meta charset="utf-8" />
@@ -65,19 +83,6 @@
 @if (shell)
 {
     // ---- new navigation (S1.5.0 preview): top bar with the account menu, sidebar with the areas
-    var meS = await UserManager.GetUserAsync(User);
-    var isAdminS = User.IsInRole("Admin");
-    var isReviewerS = isAdminS || User.IsInRole("Reviewer");
-    var openS = meS is null ? 0 : await IssuesNav.Scope(meS, isAdminS).CountAsync(f => f.Status == "open");
-    var reviewS = isReviewerS ? await NavDb.PackageVersions.CountAsync(v => v.Status == AddonStore.Web.Data.VersionStatus.Submitted &&
-                                    !NavDb.Packages.Any(p => p.Id == v.PackageId && p.Visibility == "private")) : 0;
-    var pendingS = isAdminS ? await NavDb.Users.CountAsync(u => u.Status == AddonStore.Web.Data.UserStatus.Pending) : 0;
-    var pathS = Context.Request.Path.Value ?? "/";
-    var viewS = Context.Request.Query["view"].ToString();
-    bool At(params string[] prefixes) => prefixes.Any(p => pathS.Equals(p, StringComparison.OrdinalIgnoreCase) || pathS.StartsWith(p + "/", StringComparison.OrdinalIgnoreCase));
-    string On(params string[] prefixes) => At(prefixes) ? "active" : "";
-    var backS = Uri.EscapeDataString(Context.Request.Path + Context.Request.QueryString);
-    var settingsArea = At("/Admin/Settings", "/Admin/Backup", "/Admin/Categories", "/Admin/Rules");
     <header class="site shell-top">
         <div class="bar">
             <button type="button" class="nav-toggle shell-toggle" aria-label="@L["Menu"]" aria-expanded="false" aria-controls="side-nav">
@@ -127,12 +132,15 @@
             <div class="side-head">@L["My work"]</div>
             <a class="@On("/Insights")" href="/Insights">@L["Dashboard"]</a>
             <a class="@On("/Dashboard", "/Plugin", "/CatalogEntry", "/Dossier")" href="/Dashboard">@L["Plug-ins"]</a>
-            <a class="@On("/Issues")" href="/Issues"><span>@L["Problem reports"]</span>@if (openS > 0) { <span class="nav-count" title="@L["New problem reports"]">@openS</span> }</a>
+            @if (!isAdminS)
+            {
+                <a class="@On("/Issues")" href="/Issues"><span>@L["Problem reports"]</span>@if (openS > 0) { <span class="nav-count" title="@L["New problem reports"]">@openS</span> }</a>
+            }
             <a class="@On("/Customers", "/Customer")" href="/Customers">@L["Deliveries"]</a>
             <a class="@On("/Templates") sub" href="/Templates">@L["Delivery templates"]</a>
             @if (invNav)
             {
-                <a class="@On("/Admin/Inventory")" href="/Admin/Inventory">@L["Existing customers"]</a>
+                <a class="@On("/Admin/Inventory") sub" href="/Admin/Inventory">@L["Existing customers"]</a>
             }
             @if (isReviewerS)
             {
@@ -152,14 +160,15 @@
                         <a class="sub @(act ? "active" : "")" href="/Admin/Reports@(key == "overview" ? "" : "?view=" + key)">@L[label]</a>
                     }
                 }
-                @if (sendNav)
-                {
-                    <a class="@On("/Admin/SendTo")" href="/Admin/SendTo">@L["Send to"]</a>
-                }
-                <a class="@On("/Admin/Audit")" href="/Admin/Audit">@L["Audit"]</a>
-                <a class="@(settingsArea ? "open" : "")" href="/Admin/Settings">@L["Settings"]</a>
+                <a class="@(settingsArea ? "open" : "")" href="/Admin/Settings"><span>@L["Settings"]</span>@if (openS > 0 && !settingsArea) { <span class="nav-count" title="@L["New problem reports"]">@openS</span> }</a>
                 @if (settingsArea)
                 {
+                    <a class="sub @On("/Issues")" href="/Issues"><span>@L["Problem reports"]</span>@if (openS > 0) { <span class="nav-count" title="@L["New problem reports"]">@openS</span> }</a>
+                    @if (sendNav)
+                    {
+                        <a class="sub @On("/Admin/SendTo")" href="/Admin/SendTo">@L["Send to"]</a>
+                    }
+                    <a class="sub @On("/Admin/Audit")" href="/Admin/Audit">@L["Audit"]</a>
                     @foreach (var (key, label) in AddonStore.Web.Pages.Admin.SettingsModel.Views)
                     {
                         var act = At("/Admin/Settings") && (viewS == key || (key == "server" && viewS.Length == 0));
@@ -193,62 +202,106 @@ else
             <span></span><span></span><span></span>
         </button>
         <nav id="site-nav">
-            <a href="/">@L["Catalog"]</a>
-            @if (SignInManager.IsSignedIn(User))
+            @* S1.18.0: fewer tabs; related pages sit in a menu under their area *@
+            <a class="@(pathS == "/" ? "here" : "")" href="/">@L["Catalog"]</a>
+            @if (signedIn)
             {
-                <a href="/Dashboard">@L["Plug-ins"]</a>
-                <a href="/Profile">@L["Profile"]</a>
-                <a href="/Customers">@L["Deliveries"]</a>
-                <a href="/Templates">@L["Delivery templates"]</a>
-                @if (invNav)
+                <a class="@(At("/Insights") ? "here" : "")" href="/Insights">@L["Dashboard"]</a>
+                <a class="@(At("/Dashboard", "/Plugin", "/CatalogEntry", "/Dossier") ? "here" : "")" href="/Dashboard">@L["Plug-ins"]</a>
+                <details class="nav-drop @(deliveryArea ? "here" : "")">
+                    <summary>@L["Deliveries"]</summary>
+                    <div class="user-pop drop-pop">
+                        <a class="@On("/Customers", "/Customer")" href="/Customers">@L["Deliveries"]</a>
+                        <a class="@On("/Templates")" href="/Templates">@L["Delivery templates"]</a>
+                        @if (invNav)
+                        {
+                            <a class="@On("/Admin/Inventory")" href="/Admin/Inventory">@L["Existing customers"]</a>
+                        }
+                    </div>
+                </details>
+                @if (!isAdminS)
                 {
-                    <a href="/Admin/Inventory">@L["Existing customers"]</a>
+                    <a class="@(At("/Issues") ? "here" : "")" href="/Issues">@L["Problem reports"]@if (openS > 0) { <span class="nav-count" title="@L["New problem reports"]">@openS</span> }</a>
                 }
-                <a href="/Insights">@L["Dashboard"]</a>
-                var meNav = await UserManager.GetUserAsync(User);
-                var openReports = meNav is null ? 0 : await IssuesNav.Scope(meNav, User.IsInRole("Admin")).CountAsync(f => f.Status == "open");
-                <a href="/Issues">@L["Problem reports"]@if (openReports > 0) { <span class="nav-count" title="@L["New problem reports"]">@openReports</span> }</a>
-                <a href="/Developer">API</a>
-                <a href="/Docs">@L["Documentation"]</a>
-                @if (User.IsInRole("Admin") || User.IsInRole("Reviewer"))
+                @if (isReviewerS)
                 {
-                    <a href="/Admin/Review">@L["Review"]</a>
+                    <a class="@(At("/Admin/Review") ? "here" : "")" href="/Admin/Review">@L["Review"]@if (reviewS > 0) { <span class="nav-count">@reviewS</span> }</a>
                 }
-                @if (User.IsInRole("Admin"))
+                @if (isAdminS)
                 {
-                    <a href="/Admin/Users">@L["Users"]</a>
-                    <a href="/Admin/Reports">@L["Reports"]</a>
-                    @if (sendNav)
-                    {
-                        <a href="/Admin/SendTo">@L["Send to"]</a>
-                    }
-                    <a href="/Admin/Audit">@L["Audit"]</a>
-                    <a href="/Admin/Settings">@L["Settings"]</a>
+                    <a class="@(At("/Admin/Users") ? "here" : "")" href="/Admin/Users">@L["Users"]@if (pendingS > 0) { <span class="nav-count" title="@L["Access requests"]">@pendingS</span> }</a>
+                    <a class="@(At("/Admin/Reports") ? "here" : "")" href="/Admin/Reports">@L["Reports"]</a>
+                    <details class="nav-drop @(settingsArea ? "here" : "")">
+                        <summary>@L["Settings"]@if (openS > 0) { <span class="nav-count" title="@L["New problem reports"]">@openS</span> }</summary>
+                        <div class="user-pop drop-pop">
+                            <a class="@On("/Admin/Settings")" href="/Admin/Settings">@L["Settings"]</a>
+                            <a class="@On("/Issues")" href="/Issues"><span>@L["Problem reports"]</span>@if (openS > 0) { <span class="nav-count" title="@L["New problem reports"]">@openS</span> }</a>
+                            @if (sendNav)
+                            {
+                                <a class="@On("/Admin/SendTo")" href="/Admin/SendTo">@L["Send to"]</a>
+                            }
+                            <a class="@On("/Admin/Audit")" href="/Admin/Audit">@L["Audit"]</a>
+                            <hr />
+                            <a class="@On("/Admin/Backup")" href="/Admin/Backup">@L["Backup and restore"]</a>
+                            <a class="@On("/Admin/Categories")" href="/Admin/Categories">@L["Categories"]</a>
+                            <a class="@On("/Admin/Rules")" href="/Admin/Rules">@L["Rules"]</a>
+                        </div>
+                    </details>
                 }
-                var me = await UserManager.GetUserAsync(User);
-                @if (me?.AvatarFile is not null)
-                {
-                    <img src="/avatar/@me.Id" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid rgba(255,255,255,.4)" />
-                }
-                <form method="post" action="/Account/Logout" style="display:inline">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn small secondary">@L["Sign out"]</button>
-                </form>
+                <details class="nav-drop end @(helpArea ? "here" : "")">
+                    <summary>@L["Help"]</summary>
+                    <div class="user-pop drop-pop">
+                        <a class="@On("/Docs", "/Admin/Docs")" href="/Docs">@L["Documentation"]</a>
+                        <a class="@On("/Developer")" href="/Developer">API</a>
+                        @if (!isAdminS)
+                        {
+                            <a class="@On("/Admin/Rules")" href="/Admin/Rules">@L["Rules"]</a>
+                        }
+                    </div>
+                </details>
+                <details class="user-menu">
+                    <summary aria-label="@L["Account"]">
+                        @if (meS?.AvatarFile is not null)
+                        {
+                            <img src="/avatar/@meS.Id" alt="" />
+                        }
+                        else
+                        {
+                            <span class="initial">@((meS?.DisplayName ?? "?").Trim().FirstOrDefault())</span>
+                        }
+                        <span class="who">@meS?.DisplayName</span>
+                    </summary>
+                    <div class="user-pop">
+                        <a class="@On("/Profile")" href="/Profile">@L["Profile"]</a>
+                        <label class="small">@L["Language"]
+                            <select id="lang-select" aria-label="Language">
+                                @foreach (var lang in AddonStore.Web.Services.Lang.Ui)
+                                {
+                                    <option value="@lang" selected="@(lang == AddonStore.Web.Services.Lang.Current)">@AddonStore.Web.Services.Lang.NativeNames[lang]</option>
+                                }
+                            </select>
+                        </label>
+                        <form method="post" action="/Account/Logout">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn small secondary">@L["Sign out"]</button>
+                        </form>
+                    </div>
+                </details>
             }
             else
             {
                 <a href="/Account/Login">@L["Sign in"]</a>
+                <select id="lang-select" aria-label="Language"
+                        style="width:auto;padding:4px 6px;font-size:.82rem">
+                    @{
+                        var current = AddonStore.Web.Services.Lang.Current;
+                    }
+                    @foreach (var lang in AddonStore.Web.Services.Lang.Ui)
+                    {
+                        <option value="@lang" selected="@(lang == current)" title="@AddonStore.Web.Services.Lang.NativeNames[lang]">@AddonStore.Web.Services.Lang.ShortLabel(lang)</option>
+                    }
+                </select>
             }
-            <select id="lang-select" aria-label="Language"
-                    style="width:auto;padding:4px 6px;font-size:.82rem">
-                @{
-                    var current = AddonStore.Web.Services.Lang.Current;
-                }
-                @foreach (var lang in AddonStore.Web.Services.Lang.Ui)
-                {
-                    <option value="@lang" selected="@(lang == current)" title="@AddonStore.Web.Services.Lang.NativeNames[lang]">@AddonStore.Web.Services.Lang.ShortLabel(lang)</option>
-                }
-            </select>
         </nav>
     </div>
 </header>
@@ -290,11 +343,18 @@ else
         });
         document.addEventListener('keydown', function (e) { if (e.key === 'Escape') shut(); });
     }
-    // the account menu closes on a click elsewhere or Escape
-    var um = document.querySelector('details.user-menu');
-    if (um) {
-        document.addEventListener('click', function (e) { if (um.open && !um.contains(e.target)) um.open = false; });
-        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') um.open = false; });
+    // the menus in the top bar (account, S1.18.0 also the area menus): one open at a
+    // time, they close on a click elsewhere or Escape
+    var menus = Array.prototype.slice.call(document.querySelectorAll('header details.user-menu, header details.nav-drop'));
+    if (menus.length) {
+        menus.forEach(function (m) {
+            m.addEventListener('toggle', function () { if (m.open) menus.forEach(function (o) { if (o !== m) o.open = false; }); });
+        });
+        document.addEventListener('click', function (e) { menus.forEach(function (m) { if (m.open && !m.contains(e.target)) m.open = false; }); });
+        document.addEventListener('keydown', function (e) {
+            if (e.key !== 'Escape') return;
+            menus.forEach(function (m) { if (m.open) { m.open = false; var s = m.querySelector('summary'); if (s) s.focus(); } });
+        });
     }
     var ls = document.getElementById('lang-select');
     if (ls) ls.addEventListener('change', function () {

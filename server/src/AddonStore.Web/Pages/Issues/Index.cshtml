@@ -5,6 +5,10 @@
     ViewData["Title"] = "Problem reports";
 }
 
+@if (Model.IsAdmin)
+{
+    <p style="margin:0 0 6px"><a href="/Admin/Settings">← @L["Settings"]</a></p>
+}
 <h1>@L["Problem reports"]</h1>
 <p class="lead">@(Model.IsAdmin
     ? L["Reports and comments from the store window inside Power PDF, for all add-ons."]

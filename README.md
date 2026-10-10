@@ -376,6 +376,26 @@ end-to-end encrypted, relayed through the store's own Blob container. Nothing
 changes until an admin switches it on under *Settings, Features*; see the
 section *Send to* below.
 
+**Tidier navigation (S1.18.0):** the classic top bar has fewer tabs.
+- *Deliveries* is a menu with deliveries, delivery templates and (while the
+  evaluation is on) existing customers.
+- For admins, *Settings* is a menu with the settings, problem reports, Send to
+  (while switched on), the audit log, backup, categories and rules; it shows the
+  number of new problem reports. Developers and reviewers keep *Problem reports*
+  as a tab.
+- *Help* holds the documentation and the API (for non-admins also the rules).
+- Profile, language and *Sign out* sit in the account menu (avatar), as in the
+  new navigation. The current area is underlined; the menus close on a click
+  elsewhere or Escape and open inline on phones.
+- *Review* and *Users* show their counters (submissions waiting, access
+  requests) in the top bar too.
+- Problem reports, Send to and the audit log link back to *Settings*; the
+  section list of the settings page links them.
+- New navigation (sidebar): the same grouping; problem reports, Send to and the
+  audit log are sub-items of *Settings* for admins. The section lists of problem
+  reports, backup, rules and documentation are visible there again (they were
+  hidden in the sidebar mode).
+
 **Code check of the day (S1.17.3, client 1.9.7):** four independent reviews
 (server security, server logic, client and installer, Send to add-on).
 - Send to server: limits per client address on registration (200/h),
@@ -734,7 +754,8 @@ keeps its input field there.
   (cookie `pp_shell`); the classic top bar stays the default.
 - The new navigation has a sidebar with groups (My work, Review,
   Administration, Help). Reports and Settings show their sections as
-  sub-items in the sidebar. On small screens the sidebar opens from the menu
+  sub-items in the sidebar; since S1.18.0 Settings also holds problem reports,
+  Send to and the audit log for admins. On small screens the sidebar opens from the menu
   button.
 - The account menu (avatar) holds the profile, the language, the switch back
   and *Sign out*.

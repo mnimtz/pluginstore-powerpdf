@@ -235,6 +235,19 @@ td.wrap { overflow-wrap: anywhere; }
   header.site.open nav form .btn { width: 100%; padding: 12px; }
   header.site.open nav select { width: 100% !important; padding: 10px !important; font-size: 1rem !important; }
   header.site.open nav img { display: none; }
+  header.site.open nav .nav-drop > summary, header.site.open nav .user-menu > summary {
+    display: flex; justify-content: space-between; padding: 12px 4px; font-size: 1rem; border-radius: 0; border-bottom: 1px solid rgba(255,255,255,.12);
+  }
+  header.site.open nav .user-menu summary:hover, header.site.open nav .user-menu[open] summary { background: none; }
+  header.site.open nav .user-menu .who { display: inline; max-width: none; }
+  header.site.open nav .user-menu .initial { display: none; }
+  header.site.open nav .user-pop { position: static; min-width: 0; margin: 4px 0 8px; padding: 4px 0 4px 12px; border: 0; border-radius: 0; box-shadow: none; background: none; }
+  [dir=rtl] header.site.open nav .user-pop { padding: 4px 12px 4px 0; }
+  header.site.open nav .user-pop a { color: #fff; padding: 10px 4px; border-bottom: 0; }
+  header.site.open nav .user-pop a.active { background: rgba(255,255,255,.12); }
+  header.site.open nav .user-pop label { color: rgba(255,255,255,.8); padding: 6px 4px; }
+  header.site.open nav .user-pop form { padding: 6px 4px; }
+  header.site.open nav .user-pop hr { border-top-color: rgba(255,255,255,.15); }
 
   main { padding: 18px 14px 48px; }
   h1 { font-size: 1.4rem; }
@@ -549,6 +562,23 @@ header.shell-top .shell-toggle { display: none; }
 .user-pop select { width: 100%; }
 .user-pop form { padding: 6px 10px 4px; margin: 0; }
 .user-pop form .btn { width: 100%; }
+/* S1.18.0: area menus in the classic top bar (Deliveries, Settings, Help) and the account menu there */
+.nav-drop { position: relative; }
+.nav-drop > summary { list-style: none; display: inline-flex; align-items: center; gap: 2px; cursor: pointer; color: #fff; font-weight: 500; font-size: .88rem; }
+.nav-drop > summary::-webkit-details-marker { display: none; }
+.nav-drop > summary::after { content: ""; width: 6px; height: 6px; margin-inline-start: 6px; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: translateY(-2px) rotate(45deg); }
+.nav-drop > summary:hover, .nav-drop[open] > summary { color: var(--tun-blue-light); }
+.nav-drop .drop-pop { inset-inline-end: auto; inset-inline-start: -10px; top: calc(100% + 12px); min-width: 230px; }
+.nav-drop.end .drop-pop { inset-inline-start: auto; inset-inline-end: -10px; }
+.user-pop hr { border: 0; border-top: 1px solid var(--tun-gray-200); margin: 4px 6px; }
+header.site nav .user-pop a { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--tun-navy); font-size: .92rem; }
+header.site nav .user-pop a:hover { color: var(--tun-navy); }
+header.site nav .user-pop a.active { background: var(--tun-gray-150); font-weight: 600; box-shadow: inset 3px 0 0 var(--tun-blue); }
+[dir=rtl] header.site nav .user-pop a.active { box-shadow: inset -3px 0 0 var(--tun-blue); }
+header.site nav .user-pop .nav-count { margin: 0; }
+header.site nav > a.here, header.site nav .nav-drop.here > summary { text-decoration: underline; text-decoration-color: var(--tun-blue); text-decoration-thickness: 2px; text-underline-offset: 7px; }
+header.site:not(.shell-top) .user-menu .who { display: none; }
+header.site:not(.shell-top) .user-menu summary { padding: 2px; }
 .shell { display: grid; grid-template-columns: 236px minmax(0, 1fr); min-height: calc(100vh - 120px); }
 .side-nav { position: sticky; top: 0; align-self: start; max-height: 100vh; overflow-y: auto; padding: 18px 10px 28px;
             border-inline-end: 1px solid var(--tun-gray-200); background: #fff; display: flex; flex-direction: column; gap: 2px; }
@@ -564,8 +594,8 @@ header.shell-top .shell-toggle { display: none; }
 .side-head { margin: 16px 12px 4px; font-size: .7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--tun-slate); }
 .shell > main.shell-main { max-width: 1280px; width: 100%; margin: 0 auto; padding: 28px 28px 60px; min-width: 0; }
 /* pages with their own section list: the sidebar carries it */
-.with-shell .report-layout { display: block; }
-.with-shell .report-nav { display: none; }
+.with-shell .report-layout.side-carried { display: block; }
+.with-shell .report-layout.side-carried > .report-nav { display: none; }
 /* start page */
 .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; margin: 18px 0 22px; }
 .tile { display: flex; flex-direction: column; gap: 4px; background: #fff; border: 1px solid var(--tun-gray-200); border-radius: 10px;
