@@ -29,7 +29,7 @@
         <div class="table-wrap">
         <table>
             <tr><th>@L["Valid for"]</th><th>@L["Code"]</th><th>@L["Created"]</th><th>@L["Last used"]</th><th>@L["Status"]</th><th></th></tr>
-            @foreach (var r in Model.Codes)
+            @foreach (var r in AddonStore.Web.Services.Paging.Items(Model.Codes, ViewContext.HttpContext.Request, "codes"))
             {
                 <tr>
                     <td>@(r.Code.DeliveryId is null ? L["all deliveries"].Value : r.Scope)</td>
@@ -65,6 +65,7 @@
             }
         </table>
         </div>
+        <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("codes", Model.Codes.Count)' />
     }
     @if (Model.CanManage)
     {
@@ -121,7 +122,7 @@
     {
         <p class="muted">@L["Nothing delivered yet."]</p>
     }
-    @foreach (var d in Model.Deliveries)
+    @foreach (var d in AddonStore.Web.Services.Paging.Items(Model.Deliveries, ViewContext.HttpContext.Request, "deliveries"))
     {
         var del = d.Delivery;
         <div class="delivery">
@@ -231,6 +232,7 @@
             }
         </div>
     }
+    <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("deliveries", Model.Deliveries.Count)' />
 </div>
 
 @if (Model.CanManage)

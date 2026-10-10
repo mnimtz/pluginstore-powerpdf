@@ -117,7 +117,7 @@
 <h2>@L["My tokens"]</h2>
 <div class="table-wrap"><table>
     <tr><th>@L["Name"]</th><th>@L["Prefix"]</th><th>@L["Created"]</th><th>@L["Last used"]</th><th>@L["Status"]</th><th></th></tr>
-    @foreach (var t in Model.Tokens)
+    @foreach (var t in AddonStore.Web.Services.Paging.Items(Model.Tokens, ViewContext.HttpContext.Request, "tokens"))
     {
         <tr>
             <td>@t.Name</td>
@@ -146,3 +146,4 @@
         </tr>
     }
 </table></div>
+<partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("tokens", Model.Tokens.Count)' />

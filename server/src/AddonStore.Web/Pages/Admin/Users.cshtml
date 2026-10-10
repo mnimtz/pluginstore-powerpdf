@@ -79,7 +79,7 @@
     <h2>@L["Open invitations"]</h2>
     <div class="table-wrap"><table>
         <tr><th>@L["Email"]</th><th>@L["Role"]</th><th>@L["Invited by"]</th><th>@L["Created"]</th><th></th></tr>
-        @foreach (var i in Model.OpenInvites)
+        @foreach (var i in AddonStore.Web.Services.Paging.Items(Model.OpenInvites, ViewContext.HttpContext.Request, "invites"))
         {
             <tr>
                 <td>@i.Email</td>
@@ -95,6 +95,7 @@
             </tr>
         }
     </table></div>
+    <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("invites", Model.OpenInvites.Count)' />
 }
 
 @if (Model.Pending.Count > 0)
@@ -102,7 +103,7 @@
     <h2>@L["Access requests"]</h2>
     <div class="table-wrap"><table>
         <tr><th>@L["Name"]</th><th>@L["Email"]</th><th>@L["Requested"]</th><th></th></tr>
-        @foreach (var u in Model.Pending)
+        @foreach (var u in AddonStore.Web.Services.Paging.Items(Model.Pending, ViewContext.HttpContext.Request, "pending"))
         {
             <tr>
                 <td>@u.DisplayName</td>
@@ -121,6 +122,7 @@
             </tr>
         }
     </table></div>
+    <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("pending", Model.Pending.Count)' />
 }
 
 <h2 id="users">@L["All users"]</h2>

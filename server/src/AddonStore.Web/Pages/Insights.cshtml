@@ -89,7 +89,7 @@ else
 <div class="table-wrap">
 <table>
     <tr><th>@L["Add-on"]</th><th>@L["Versions"]</th><th style="text-align:right">@L["Downloads in period"]</th><th style="text-align:right">@L["All time"]</th><th>@L["Rating"]</th><th>@L["Reports"]</th></tr>
-    @foreach (var a in r.Addons)
+    @foreach (var a in AddonStore.Web.Services.Paging.Items(r.Addons, ViewContext.HttpContext.Request, "addons"))
     {
         <tr>
             <td><a href="@Model.Link(pkg: a.Id)"><b>@a.Name</b></a>@if (Model.IsAdmin) { <div class="small muted">@a.Owner</div> }</td>
@@ -107,6 +107,7 @@ else
     }
 </table>
 </div>
+<partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("addons", r.Addons.Count)' />
 
 @if (selected is not null)
 {

@@ -57,18 +57,21 @@
     int all = Model.Rows.Count, pending = Model.Rows.Count(r => r.Pending),
         live = Model.Rows.Count(r => r.Live is not null), offline = Model.Rows.Count(r => !r.InStore),
         beta = Model.Rows.Count(r => r.Beta is not null), privCount = Model.Rows.Count(r => r.Pkg.Visibility == "private");
+    var rowsPer = AddonStore.Web.Services.Paging.Size(ViewContext.HttpContext.Request);
+    var sizeQ = rowsPer != AddonStore.Web.Services.Paging.Sizes[0] ? "&size=" + rowsPer : "";   // chips and search keep the rows per page
     string Chip(string f) => Model.Filter == f || (f == "all" && Model.Filter is not ("pending" or "live" or "beta" or "private" or "offline")) ? "chip active" : "chip";
 }
 <form method="get" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:18px 0 12px">
     <div class="chips">
-        <a class="@Chip("all")" href="?filter=all&q=@Model.Q">@L["All"] (@all)</a>
-        <a class="@Chip("pending")" href="?filter=pending&q=@Model.Q">@L["Awaiting review"] (@pending)</a>
-        <a class="@Chip("live")" href="?filter=live&q=@Model.Q">@L["Live"] (@live)</a>
-        <a class="@Chip("beta")" href="?filter=beta&q=@Model.Q">@L["Beta"] (@beta)</a>
-        <a class="@Chip("private")" href="?filter=private&q=@Model.Q">@L["Private (customers only)"] (@privCount)</a>
-        <a class="@Chip("offline")" href="?filter=offline&q=@Model.Q">@L["Not in the store"] (@offline)</a>
+        <a class="@Chip("all")" href="?filter=all&q=@Model.Q@sizeQ">@L["All"] (@all)</a>
+        <a class="@Chip("pending")" href="?filter=pending&q=@Model.Q@sizeQ">@L["Awaiting review"] (@pending)</a>
+        <a class="@Chip("live")" href="?filter=live&q=@Model.Q@sizeQ">@L["Live"] (@live)</a>
+        <a class="@Chip("beta")" href="?filter=beta&q=@Model.Q@sizeQ">@L["Beta"] (@beta)</a>
+        <a class="@Chip("private")" href="?filter=private&q=@Model.Q@sizeQ">@L["Private (customers only)"] (@privCount)</a>
+        <a class="@Chip("offline")" href="?filter=offline&q=@Model.Q@sizeQ">@L["Not in the store"] (@offline)</a>
     </div>
     <input type="hidden" name="filter" value="@Model.Filter" />
+    @if (sizeQ.Length > 0) { <input type="hidden" name="size" value="@rowsPer" /> }
     <input type="search" name="q" value="@Model.Q" placeholder="@L["Search name, id or owner"]" style="flex:1;min-width:200px;max-width:320px" />
 </form>
 

@@ -50,7 +50,7 @@
         <div class="table-wrap">
         <table>
             <tr><th>@L["Date"]</th><th>@L["Reported by"]</th><th>@L["Reported user"]</th><th>@L["Reason"]</th><th>@L["Status"]</th><th>@L["Actions"]</th></tr>
-            @foreach (var r in Model.Reports)
+            @foreach (var r in AddonStore.Web.Services.Paging.Items(Model.Reports, ViewContext.HttpContext.Request, "reports"))
             {
                 <tr>
                     <td>@Time.Fmt(r.Report.CreatedAt)</td>
@@ -72,6 +72,7 @@
                 </tr>
             }
         </table>
+        <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("reports", Model.Reports.Count)' />
         </div>
     }
 }

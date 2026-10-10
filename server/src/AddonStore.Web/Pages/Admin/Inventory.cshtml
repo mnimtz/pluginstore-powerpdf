@@ -28,7 +28,7 @@
         <h3 style="margin-top:0">@L["Domains and company name"]</h3>
         <div class="table-wrap"><table>
             <tr><th>@L["Domain"]</th><th>@L["Company"]</th><th>@L["Source"]</th><th class="actions"></th></tr>
-            @foreach (var dm in d.Domains)
+            @foreach (var dm in AddonStore.Web.Services.Paging.Items(d.Domains, ViewContext.HttpContext.Request, "domains"))
             {
                 <tr>
                     <td style="white-space:nowrap"><b>@dm.Domain</b></td>
@@ -49,6 +49,7 @@
                 </tr>
             }
         </table></div>
+        <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("domains", d.Domains.Count)' />
     </div>
 
     <div class="card">
