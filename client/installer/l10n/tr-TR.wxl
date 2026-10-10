@@ -6,6 +6,9 @@
   <String Id="PowerPdfTooOld">Add-on Store, Tungsten Power PDF 2025.3.7 veya üstünü gerektirir. Lütfen önce Power PDF'i güncelleyin.</String>
   <String Id="PowerPdfEdition">Eklentiler için Tungsten Power PDF Business 2025.3.7 veya üstü ya da 2026.4 sürümünden itibaren herhangi bir sürüm (Standard, Advanced, Business) gerekir. Lütfen önce Power PDF'i güncelleyin.</String>
   <String Id="PowerPdfSaasOnly">Add-on Store yalnızca oturum açmalı (SaaS) Tungsten Power PDF için kullanılabilir. Bu Power PDF bir seri numarasıyla lisanslanmıştır.</String>
+  <String Id="SaasHint">Add-on Store'u kullanmak için Power PDF Business SaaS gerekir. Tungsten Automation'dan teklif isteyin; sayfa tarayıcınızda açılır.</String>
+  <String Id="SaasQuote">Teklif isteyin</String>
+  <String Id="SaasQuoteUrl">https://www.tungstenautomation.com/products/power-pdf/business-request-a-quote</String>
   <String Id="ClosePowerPdf">Lütfen Tungsten Power PDF'i kapatın ve devam edin.</String>
   <String Id="Downgrade">Add-on Store'un daha yeni bir sürümü zaten yüklü.</String>
 </WixLocalization>

@@ -376,6 +376,14 @@ end-to-end encrypted, relayed through the store's own Blob container. Nothing
 changes until an admin switches it on under *Settings, Features*; see the
 section *Send to* below.
 
+**Setup on serial-number Power PDF (client 1.9.8):** an interactive setup on a
+Power PDF licensed with a serial number shows a dialog before it stops: the
+store needs Power PDF Business SaaS, and *Request a quote* opens Tungsten
+Automation's quote page in the browser (tungstenautomation.de in German,
+.fr in French, .com in every other language; the page exists in these three
+only). Nothing opens without that click; silent installs (`/qn`) stop with
+the message as before, and `ALLOWNONSAAS=1` still installs anyway.
+
 **Tidier navigation (S1.18.0):** the classic top bar has fewer tabs.
 - *Deliveries* is a menu with deliveries, delivery templates and (while the
   evaluation is on) existing customers.

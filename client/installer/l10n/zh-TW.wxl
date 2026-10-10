@@ -6,6 +6,9 @@
   <String Id="PowerPdfTooOld">Add-on Store 需要 Tungsten Power PDF 2025.3.7 或更新版本。請先更新 Power PDF。</String>
   <String Id="PowerPdfEdition">增益集需要 Tungsten Power PDF Business 2025.3.7 或更新版本，或 2026.4 起的任何版本 (Standard、Advanced、Business)。請先更新 Power PDF。</String>
   <String Id="PowerPdfSaasOnly">Add-on Store 僅適用於需要登入的 Tungsten Power PDF (SaaS)。此 Power PDF 使用序號授權。</String>
+  <String Id="SaasHint">使用 Add-on Store 需要 Power PDF Business SaaS。請向 Tungsten Automation 索取報價；頁面會在瀏覽器中開啟。</String>
+  <String Id="SaasQuote">索取報價</String>
+  <String Id="SaasQuoteUrl">https://www.tungstenautomation.com/products/power-pdf/business-request-a-quote</String>
   <String Id="ClosePowerPdf">請關閉 Tungsten Power PDF，然後繼續。</String>
   <String Id="Downgrade">已安裝較新版本的 Add-on Store。</String>
 </WixLocalization>

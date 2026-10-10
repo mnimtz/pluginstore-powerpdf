@@ -51,27 +51,27 @@
     "ar": "شريط Add-on Store لـ Power PDF: تصفح المكونات الإضافية من كتالوج الفريق وثبّتها وحدّثها وأزلها."
   },
   "changelog": {
-    "en": "A group you removed from the ribbon yourself now stays removed; it comes back only when you install that add-on again. Small fixes for more reliability when the store opens without a connection.",
-    "de": "Eine Gruppe, die Sie selbst aus dem Menüband entfernt haben, bleibt jetzt entfernt; sie kommt erst wieder, wenn Sie dieses Add-on erneut installieren. Dazu kleine Korrekturen für mehr Zuverlässigkeit, wenn der Store ohne Verbindung öffnet.",
-    "fr": "Un groupe que vous avez retiré vous-même du ruban reste désormais retiré ; il ne revient que si vous réinstallez ce module. Ainsi que de petites corrections pour plus de fiabilité lorsque le store s'ouvre sans connexion.",
-    "it": "Un gruppo che hai rimosso tu stesso dalla barra multifunzione ora resta rimosso; ricompare solo se reinstalli quel componente aggiuntivo. Inoltre piccole correzioni per una maggiore affidabilità quando lo store si apre senza connessione.",
-    "es": "Un grupo que usted mismo quitó de la cinta de opciones ahora permanece quitado; solo vuelve si instala de nuevo ese complemento. Además, pequeñas correcciones para más fiabilidad cuando la tienda se abre sin conexión.",
-    "nl": "Een groep die u zelf van het lint hebt verwijderd, blijft nu weg; hij komt pas terug als u die add-on opnieuw installeert. Plus kleine correcties voor meer betrouwbaarheid wanneer de store zonder verbinding opent.",
-    "pt": "Um grupo que você mesmo removeu do friso agora permanece removido; só volta se reinstalar esse suplemento. Além de pequenas correções para maior fiabilidade quando a loja abre sem ligação.",
-    "da": "En gruppe, som du selv har fjernet fra båndet, forbliver nu fjernet; den kommer kun tilbage, hvis du installerer tilføjelsesprogrammet igen. Desuden små rettelser for mere pålidelighed, når butikken åbner uden forbindelse.",
-    "fi": "Itse valintanauhasta poistamasi ryhmä pysyy nyt poistettuna; se palaa vain, jos asennat kyseisen lisäosan uudelleen. Lisäksi pieniä korjauksia luotettavuuden parantamiseksi, kun kauppa avautuu ilman yhteyttä.",
-    "nb": "En gruppe du selv har fjernet fra båndet, forblir nå fjernet; den kommer bare tilbake hvis du installerer tillegget på nytt. I tillegg små rettelser for mer pålitelighet når butikken åpnes uten tilkobling.",
-    "sv": "En grupp som du själv har tagit bort från menyfliksområdet förblir nu borttagen; den kommer bara tillbaka om du installerar tillägget igen. Dessutom små korrigeringar för mer tillförlitlighet när butiken öppnas utan anslutning.",
-    "pl": "Grupa, którą samodzielnie usunięto ze wstążki, pozostaje teraz usunięta; wraca tylko po ponownej instalacji tego dodatku. Do tego drobne poprawki zwiększające niezawodność, gdy sklep otwiera się bez połączenia.",
-    "cs": "Skupina, kterou jste sami odebrali z pásu karet, nyní zůstane odebraná; vrátí se jen tehdy, když doplněk znovu nainstalujete. K tomu drobné opravy pro vyšší spolehlivost, když se obchod otevře bez připojení.",
-    "hu": "A menüszalagról saját maga által eltávolított csoport mostantól eltávolítva marad; csak akkor jelenik meg újra, ha újratelepíti a bővítményt. Emellett kisebb javítások a nagyobb megbízhatóságért, ha az áruház kapcsolat nélkül nyílik meg.",
-    "ru": "Группа, которую вы сами удалили с ленты, теперь остается удаленной; она возвращается, только если вы снова установите эту надстройку. А также небольшие исправления для большей надежности, когда магазин открывается без подключения.",
-    "tr": "Şeritten kendiniz kaldırdığınız bir grup artık kaldırılmış olarak kalır; yalnızca o eklentiyi yeniden yüklediğinizde geri gelir. Ayrıca mağaza bağlantı olmadan açıldığında daha fazla güvenilirlik için küçük düzeltmeler.",
-    "zh-Hans": "您自己从功能区删除的组现在会保持删除状态；只有重新安装该加载项时才会再次出现。此外还有一些小修正，让商店在无连接时打开更可靠。",
-    "zh-Hant": "您自行從功能區移除的群組現在會維持移除狀態；只有重新安裝該增益集時才會再次出現。此外還有一些小修正，讓商店在沒有連線時開啟更可靠。",
-    "ja": "リボンからご自身で削除したグループは、削除されたままになりました。そのアドオンを再インストールしたときにだけ元に戻ります。接続がない状態でストアを開いたときの信頼性を高める小さな修正も含まれています。",
-    "ko": "리본에서 직접 제거한 그룹은 이제 제거된 상태로 유지되며, 해당 추가 기능을 다시 설치할 때만 다시 나타납니다. 연결 없이 스토어를 열 때의 안정성을 높이는 작은 수정도 포함되어 있습니다.",
-    "ar": "تبقى المجموعة التي أزلتها بنفسك من الشريط مُزالة الآن، ولا تعود إلا عند تثبيت تلك الوظيفة الإضافية من جديد. بالإضافة إلى إصلاحات صغيرة لمزيد من الموثوقية عند فتح المتجر دون اتصال."
+    "en": "If Power PDF is licensed with a serial number, setup now explains that the Add-on Store needs Power PDF Business SaaS and offers a button to request a quote from Tungsten Automation.",
+    "de": "Ist Power PDF mit einer Seriennummer lizenziert, erklärt das Setup jetzt, dass der Add-on Store Power PDF Business SaaS benötigt, und bietet eine Schaltfläche, um ein Angebot bei Tungsten Automation anzufordern.",
+    "fr": "Si Power PDF est sous licence avec un numéro de série, le programme d'installation explique désormais que l'Add-on Store nécessite Power PDF Business SaaS et propose un bouton pour demander un devis à Tungsten Automation.",
+    "it": "Se Power PDF è concesso in licenza con un numero di serie, il programma di installazione ora spiega che l'Add-on Store richiede Power PDF Business SaaS e offre un pulsante per richiedere un preventivo a Tungsten Automation.",
+    "es": "Si Power PDF tiene licencia con un número de serie, el programa de instalación ahora explica que Add-on Store necesita Power PDF Business SaaS y ofrece un botón para solicitar un presupuesto a Tungsten Automation.",
+    "nl": "Als Power PDF met een serienummer is gelicentieerd, legt de installatie nu uit dat de Add-on Store Power PDF Business SaaS nodig heeft en biedt een knop om een offerte bij Tungsten Automation aan te vragen.",
+    "pt": "Se o Power PDF estiver licenciado com um número de série, a instalação agora explica que a Add-on Store precisa do Power PDF Business SaaS e oferece um botão para solicitar uma cotação à Tungsten Automation.",
+    "da": "Hvis Power PDF er licenseret med et serienummer, forklarer installationen nu, at Add-on Store kræver Power PDF Business SaaS, og tilbyder en knap til at anmode Tungsten Automation om et tilbud.",
+    "fi": "Jos Power PDF on lisensoitu sarjanumerolla, asennus kertoo nyt, että Add-on Store edellyttää Power PDF Business SaaS -versiota, ja tarjoaa painikkeen tarjouspyyntöön Tungsten Automationille.",
+    "nb": "Hvis Power PDF er lisensiert med et serienummer, forklarer installasjonen nå at Add-on Store krever Power PDF Business SaaS, og tilbyr en knapp for å be Tungsten Automation om et tilbud.",
+    "sv": "Om Power PDF är licensierad med ett serienummer förklarar installationen nu att Add-on Store kräver Power PDF Business SaaS och erbjuder en knapp för att begära en offert från Tungsten Automation.",
+    "pl": "Jeśli Power PDF jest licencjonowany numerem seryjnym, instalator wyjaśnia teraz, że Add-on Store wymaga Power PDF Business SaaS, i oferuje przycisk, aby poprosić Tungsten Automation o ofertę.",
+    "cs": "Pokud je Power PDF licencován sériovým číslem, instalace nyní vysvětlí, že Add-on Store vyžaduje Power PDF Business SaaS, a nabídne tlačítko pro vyžádání nabídky od společnosti Tungsten Automation.",
+    "hu": "Ha a Power PDF sorozatszámmal van licencelve, a telepítő most elmagyarázza, hogy az Add-on Store-hoz Power PDF Business SaaS szükséges, és gombot kínál árajánlat kéréséhez a Tungsten Automationtől.",
+    "ru": "Если Power PDF лицензирован серийным номером, программа установки теперь поясняет, что для Add-on Store нужен Power PDF Business SaaS, и предлагает кнопку для запроса предложения у Tungsten Automation.",
+    "tr": "Power PDF bir seri numarasıyla lisanslanmışsa kurulum artık Add-on Store'un Power PDF Business SaaS gerektirdiğini açıklıyor ve Tungsten Automation'dan teklif istemek için bir düğme sunuyor.",
+    "zh-Hans": "如果 Power PDF 使用序列号授权，安装程序现在会说明 Add-on Store 需要 Power PDF Business SaaS，并提供一个按钮，用于向 Tungsten Automation 申请报价。",
+    "zh-Hant": "如果 Power PDF 使用序號授權，安裝程式現在會說明 Add-on Store 需要 Power PDF Business SaaS，並提供一個按鈕，用於向 Tungsten Automation 索取報價。",
+    "ja": "Power PDF がシリアル番号でライセンスされている場合、セットアップで Add-on Store には Power PDF Business SaaS が必要であることが説明され、Tungsten Automation に見積もりを依頼するボタンが表示されるようになりました。",
+    "ko": "Power PDF가 일련 번호로 라이선스된 경우, 이제 설치 프로그램에서 Add-on Store에 Power PDF Business SaaS가 필요하다고 안내하고 Tungsten Automation에 견적을 요청하는 버튼을 제공합니다.",
+    "ar": "إذا كان Power PDF مرخّصًا برقم تسلسلي، يوضح برنامج الإعداد الآن أن Add-on Store يتطلب Power PDF Business SaaS، ويعرض زرًا لطلب عرض سعر من Tungsten Automation."
   },
   "minPowerPdfVersion": "2025.3.7",
   "ribbonAtomNamespace": "AddonStore::Store",
@@ -113,12 +113,17 @@
   ],
   "complianceAudit": {
     "confirmed": true,
-    "method": "Checked all #include directives and linker inputs of PluginStore.vcxproj (Windows SDK incl. BCrypt/Crypt32 for SHA-256 and the ECDSA signature check, MFC/ATL, Tungsten Power PDF Plugin SDK only), the bundled UILayout and icon files (own work, icons drawn by client/res/make_icons.py) and the package contents. One third-party component: the Microsoft WebView2 SDK static loader (BSD-3-Clause), linked into PluginStore.zxt; its NOTICE lists only BSD-licensed .NET tooling that is not used. The bundled MSI is built with the WiX Toolset v3 (build tool; its standard WixUI dialog resources are part of the installer). No credentials, personal data or third-party trademarks in the package. The only network service is the configured Add-on Store server (HTTPS). The MSI also installs AddonStoreLink.exe (own code, no network access), which handles addonstore:// links by passing a validated package id to the client.",
+    "method": "Checked all #include directives and linker inputs of PluginStore.vcxproj (Windows SDK incl. BCrypt/Crypt32 for SHA-256 and the ECDSA signature check, MFC/ATL, Tungsten Power PDF Plugin SDK only), the bundled UILayout and icon files (own work, icons drawn by client/res/make_icons.py) and the package contents. One third-party component: the Microsoft WebView2 SDK static loader (BSD-3-Clause), linked into PluginStore.zxt; its NOTICE lists only BSD-licensed .NET tooling that is not used. The bundled MSI is built with the WiX Toolset v3 (build tool; its standard WixUI dialog resources are part of the installer). No credentials, personal data or third-party trademarks in the package. The only network service is the configured Add-on Store server (HTTPS). Since 1.9.8 the setup shows, on a Power PDF licensed with a serial number, a dialog whose button \"Request a quote\" opens Tungsten Automation's public quote page in the default browser (only on that click, never in silent installs); the setup itself sends nothing. The MSI also installs AddonStoreLink.exe (own code, no network access), which handles addonstore:// links by passing a validated package id to the client.",
     "externalServices": [
       {
         "name": "Add-on Store server (configurable; default addon.power-pdf.de, Azure address ppdf-store.azurewebsites.net)",
         "url": "https://addon.power-pdf.de",
         "data": "Catalog, search and package downloads; sends the Power PDF UI language, the beta channel flag and, only when the user or IT entered one, the customer code of a delivery (X-Customer-Code header). The catalog is also read once in the background about 15 seconds after Power PDF starts and after the store window closes, to show the update badge (IT can switch this off with the policy UpdateBadge = 0). No personal data, no documents."
+      },
+      {
+        "name": "Tungsten Automation quote page (setup only, serial-number Power PDF)",
+        "url": "https://www.tungstenautomation.com/products/power-pdf/business-request-a-quote",
+        "data": "None from the setup: the button opens the public page in the default browser (tungstenautomation.de for German, .fr for French, .com otherwise); the browser then talks to that website as with any link."
       }
     ]
   },

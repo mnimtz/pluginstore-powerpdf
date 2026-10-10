@@ -233,6 +233,46 @@ SAAS_ONLY = {
     'ko-KR': 'Add-on Store는 로그인하여 사용하는 Tungsten Power PDF(SaaS)에서만 사용할 수 있습니다. 이 Power PDF는 일련 번호로 라이선스가 부여되어 있습니다.',
     'ar-SA': 'يتوفر Add-on Store فقط لـ Tungsten Power PDF مع تسجيل الدخول (SaaS). هذا الإصدار من Power PDF مرخّص برقم تسلسلي.',
 }
+# SaasOnlyDlg (C1.9.8): what a serial-number user can do, the button text and the quote page.
+# Tungsten's quote page exists in English, German and French only (hreflang of the page, Oct 10, 2026).
+SAAS_HINT = {
+    'en-US': 'To use the Add-on Store, you need Power PDF Business SaaS. Request a quote from Tungsten Automation; the page opens in your web browser.',
+    'de-DE': 'Für den Add-on Store benötigen Sie Power PDF Business SaaS. Fordern Sie ein Angebot bei Tungsten Automation an; die Seite öffnet sich in Ihrem Browser.',
+    'fr-FR': "Pour utiliser l'Add-on Store, vous avez besoin de Power PDF Business SaaS. Demandez un devis à Tungsten Automation ; la page s'ouvre dans votre navigateur.",
+    'it-IT': "Per usare l'Add-on Store è necessario Power PDF Business SaaS. Richiedi un preventivo a Tungsten Automation; la pagina si apre nel browser.",
+    'es-ES': 'Para usar Add-on Store necesita Power PDF Business SaaS. Solicite un presupuesto a Tungsten Automation; la página se abre en su navegador.',
+    'nl-NL': 'Voor de Add-on Store hebt u Power PDF Business SaaS nodig. Vraag een offerte aan bij Tungsten Automation; de pagina wordt in uw browser geopend.',
+    'pt-BR': 'Para usar a Add-on Store, você precisa do Power PDF Business SaaS. Solicite uma cotação à Tungsten Automation; a página será aberta no seu navegador.',
+    'da-DK': 'For at bruge Add-on Store skal du have Power PDF Business SaaS. Anmod Tungsten Automation om et tilbud; siden åbnes i din browser.',
+    'fi-FI': 'Add-on Storen käyttö edellyttää Power PDF Business SaaS -versiota. Pyydä tarjous Tungsten Automationilta; sivu avautuu selaimeesi.',
+    'nb-NO': 'For å bruke Add-on Store trenger du Power PDF Business SaaS. Be Tungsten Automation om et tilbud; siden åpnes i nettleseren.',
+    'sv-SE': 'För att använda Add-on Store behöver du Power PDF Business SaaS. Begär en offert från Tungsten Automation; sidan öppnas i webbläsaren.',
+    'pl-PL': 'Do korzystania z Add-on Store potrzebny jest Power PDF Business SaaS. Poproś Tungsten Automation o ofertę; strona otworzy się w przeglądarce.',
+    'cs-CZ': 'Pro Add-on Store potřebujete Power PDF Business SaaS. Vyžádejte si nabídku od společnosti Tungsten Automation; stránka se otevře v prohlížeči.',
+    'hu-HU': 'Az Add-on Store használatához Power PDF Business SaaS szükséges. Kérjen árajánlatot a Tungsten Automationtől; az oldal a böngészőben nyílik meg.',
+    'ru-RU': 'Для работы с Add-on Store нужен Power PDF Business SaaS. Запросите предложение у Tungsten Automation; страница откроется в браузере.',
+    'tr-TR': "Add-on Store'u kullanmak için Power PDF Business SaaS gerekir. Tungsten Automation'dan teklif isteyin; sayfa tarayıcınızda açılır.",
+    'zh-CN': '使用 Add-on Store 需要 Power PDF Business SaaS。请向 Tungsten Automation 申请报价；页面将在浏览器中打开。',
+    'zh-TW': '使用 Add-on Store 需要 Power PDF Business SaaS。請向 Tungsten Automation 索取報價；頁面會在瀏覽器中開啟。',
+    'ja-JP': 'Add-on Store を使用するには Power PDF Business SaaS が必要です。Tungsten Automation に見積もりを依頼してください。ページはブラウザーで開きます。',
+    'ko-KR': 'Add-on Store를 사용하려면 Power PDF Business SaaS가 필요합니다. Tungsten Automation에 견적을 요청하세요. 페이지가 브라우저에서 열립니다.',
+    'ar-SA': 'لاستخدام Add-on Store تحتاج إلى Power PDF Business SaaS. اطلب عرض سعر من Tungsten Automation؛ تُفتح الصفحة في المتصفح.',
+}
+SAAS_QUOTE = {
+    'en-US': 'Request a quote', 'de-DE': 'Angebot anfordern', 'fr-FR': 'Demander un devis', 'it-IT': 'Richiedi un preventivo',
+    'es-ES': 'Solicitar presupuesto', 'nl-NL': 'Offerte aanvragen', 'pt-BR': 'Solicitar cotação', 'da-DK': 'Anmod om tilbud',
+    'fi-FI': 'Pyydä tarjous', 'nb-NO': 'Be om tilbud', 'sv-SE': 'Begär offert', 'pl-PL': 'Poproś o ofertę',
+    'cs-CZ': 'Vyžádat nabídku', 'hu-HU': 'Árajánlat kérése', 'ru-RU': 'Запросить предложение', 'tr-TR': 'Teklif isteyin',
+    'zh-CN': '申请报价', 'zh-TW': '索取報價', 'ja-JP': '見積もりを依頼', 'ko-KR': '견적 요청', 'ar-SA': 'طلب عرض سعر',
+}
+QUOTE_PATH = '/products/power-pdf/business-request-a-quote'
+QUOTE_HOST = {'de-DE': 'https://www.tungstenautomation.de', 'fr-FR': 'https://www.tungstenautomation.fr'}
+
+
+def quote_url(culture):
+    return QUOTE_HOST.get(culture, 'https://www.tungstenautomation.com') + QUOTE_PATH
+
+
 TOO_OLD.update(TOO_OLD_X)
 EDITION.update(EDITION_X)
 
@@ -243,7 +283,7 @@ def main():
         no_ppdf, close, downgrade, note = TEXT[culture]
         too_old = TOO_OLD[culture].format(v=MIN_PPDF)
         edition = EDITION[culture].format(v=MIN_PPDF, e=ALL_EDITIONS_FROM)
-        for t in (no_ppdf, close, downgrade, note):
+        for t in (no_ppdf, close, downgrade, note, SAAS_HINT[culture], SAAS_QUOTE[culture]):
             assert '\u2014' not in t, culture
         wxl = (f'<?xml version="1.0" encoding="utf-8"?>\n'
                f'<!-- generated by make_l10n.py; edit there -->\n'
@@ -253,6 +293,9 @@ def main():
                f'  <String Id="PowerPdfTooOld">{xml(too_old)}</String>\n'
                f'  <String Id="PowerPdfEdition">{xml(edition)}</String>\n'
                f'  <String Id="PowerPdfSaasOnly">{xml(SAAS_ONLY[culture])}</String>\n'
+               f'  <String Id="SaasHint">{xml(SAAS_HINT[culture])}</String>\n'
+               f'  <String Id="SaasQuote">{xml(SAAS_QUOTE[culture])}</String>\n'
+               f'  <String Id="SaasQuoteUrl">{xml(quote_url(culture))}</String>\n'
                f'  <String Id="ClosePowerPdf">{xml(close)}</String>\n'
                f'  <String Id="Downgrade">{xml(downgrade)}</String>\n'
                f'</WixLocalization>\n')

@@ -6,6 +6,9 @@
   <String Id="PowerPdfTooOld">Der Add-on Store benötigt Tungsten Power PDF 2025.3.7 oder neuer. Bitte aktualisieren Sie zuerst Power PDF.</String>
   <String Id="PowerPdfEdition">Add-ons benötigen Tungsten Power PDF Business ab 2025.3.7 oder eine beliebige Edition (Standard, Advanced, Business) ab 2026.4. Bitte aktualisieren Sie zuerst Power PDF.</String>
   <String Id="PowerPdfSaasOnly">Der Add-on Store ist nur für Tungsten Power PDF mit Anmeldung (SaaS) verfügbar. Dieses Power PDF ist mit einer Seriennummer lizenziert.</String>
+  <String Id="SaasHint">Für den Add-on Store benötigen Sie Power PDF Business SaaS. Fordern Sie ein Angebot bei Tungsten Automation an; die Seite öffnet sich in Ihrem Browser.</String>
+  <String Id="SaasQuote">Angebot anfordern</String>
+  <String Id="SaasQuoteUrl">https://www.tungstenautomation.de/products/power-pdf/business-request-a-quote</String>
   <String Id="ClosePowerPdf">Bitte schließen Sie Tungsten Power PDF und fahren Sie fort.</String>
   <String Id="Downgrade">Eine neuere Version des Add-on Store ist bereits installiert.</String>
 </WixLocalization>
