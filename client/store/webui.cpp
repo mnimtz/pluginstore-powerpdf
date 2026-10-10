@@ -646,7 +646,11 @@ protected:
             { L"updTitle", IDS_PSW_UPD_TITLE }, { L"updAll", IDS_PSW_UPD_ALL }, { L"updNone", IDS_PSW_UPD_NONE },
             { L"updStore", IDS_PSW_UPD_STORE }, { L"updFromTo", IDS_PSW_UPD_FROMTO },
         };
+        // C1.9.11: the page's language tag (de-DE, zh-CN, ar-SA ...), for the fonts of the UI kit
+        wchar_t locName[LOCALE_NAME_MAX_LENGTH] = {};
+        if (!LCIDToLocaleName(MAKELCID(FPLocLangId(), SORT_DEFAULT), locName, LOCALE_NAME_MAX_LENGTH, 0)) locName[0] = 0;
         std::wstring j = L"{\"type\":\"init\",\"version\":" + Json(FP_VERSION_W) +
+                         L",\"lang\":" + Json(locName) +
                          (FPLocIsRtl() ? L",\"dir\":\"rtl\"" : L"") +
                          L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") +
                          (m_preselect == kPSUpdatesView ? L",\"mode\":\"updates\"" : L"") +
