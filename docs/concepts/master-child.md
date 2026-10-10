@@ -146,11 +146,12 @@ Folgen:
   Adresse auf das UAT umbiegt, installiert der Client dort nichts, denn ein
   Schlüssel lässt sich nur per HKLM-Richtlinie hinzufügen.
 - Ein Test-PC kehrt zur Produktion zurück, sobald die IT beide Werte entfernt.
-  Die aus dem UAT installierten Add-ons bleiben zunächst installiert. Wie der
-  Client mit einer im UAT neueren Version umgeht, die es in der Produktion
-  noch nicht gibt, legen wir in E1b fest (Vorschlag: im Store-Fenster als
-  „aus dem Testsystem“ markieren und das Zurücksetzen auf die Produktivversion
-  anbieten).
+  Die aus dem UAT installierten Add-ons bleiben zunächst installiert.
+  **Entschieden (Okt 10, 2026):** Ist eine installierte Version neuer als die
+  der Produktion oder gibt es das Add-on dort nicht, markiert das Store-Fenster
+  sie als **„aus dem Testsystem“** und bietet das Zurücksetzen auf die
+  Produktivversion an (bzw. das Entfernen, wenn es keine gibt). Umgesetzt in
+  Etappe E1b.
 - Das UAT-Portal bietet unter *Einstellungen, UAT* eine fertige `.reg`-Datei
   und die Werte für eine Gruppenrichtlinie (Adresse und Schlüssel des UAT) zum
   Herunterladen an.
@@ -202,7 +203,7 @@ Agent-Guide, OpenAPI und README werden wie bei jeder Neuerung mitgeführt.
 | Etappe | Inhalt |
 |---|---|
 | E1 | Betriebsart UAT (Child), UAT-Band, „UAT hinzufügen“ am produktiven Server, Kopplung mit Code und Schlüsseltausch, Sperren und Entfernen |
-| E1b | `.reg`-Datei und Gruppenrichtlinien-Werte für UAT-PCs im UAT-Portal; später Setup-Eigenschaften `SERVERURL` und `TRUSTEDKEY` |
+| E1b | `.reg`-Datei und Gruppenrichtlinien-Werte für UAT-PCs im UAT-Portal; Kennzeichnung „aus dem Testsystem“ mit Zurücksetzen im Store-Fenster; später Setup-Eigenschaften `SERVERURL` und `TRUSTEDKEY` |
 | E2 | Übermitteln einer Version (Paket und Quellcode), erneute Prüfung am Master, Herkunft in der Prüfakte |
 | E3 | Status-Rückmeldung ans Child, Katalogvorschlag mit Unterschieden, Vier-Augen über beide Umgebungen |
 | E4 | Spiegeln des Live-Katalogs vom Master ins UAT |
