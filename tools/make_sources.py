@@ -26,7 +26,7 @@ FP1_COMMON = ['common', 'res', 'store/common', 'store/tools', 'store/build_store
 FP1_MODULES = {
     'OneClickSign': ['sign'],
     'QesSign': ['sign', 'qes'],
-    'SmartBookmarks': ['sign', 'bookmarks'],
+    'SmartBookmarks': ['sign', 'bookmarks', 'third_party/tpui', 'third_party/webview2'],   # 1.5.0: panel page on the Tungsten Plug-in UI
     'BarcodeStamps': ['sign', 'stamps', 'third_party/zxing-cpp'],
     'EInvoice': ['sign', 'invoice'],
     'ComplianceCheck': ['sign', 'invoice', 'compliance'],
