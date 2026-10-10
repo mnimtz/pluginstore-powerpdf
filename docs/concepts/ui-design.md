@@ -1,6 +1,6 @@
 # Konzept: Einheitliches UI-Design für unsere Plug-ins
 
-Stand: Okt 10, 2026 · Status: Etappe E1 gebaut (Vorlage 1.0.0 in `C:\Claude\PluginUiKit`), E2 bis E6 offen
+Stand: Okt 10, 2026 · Status: E1 bis E5 umgesetzt, alle Versionen zur Prüfung eingereicht; in Power PDF noch nicht getestet
 
 ## Ziel
 
@@ -246,3 +246,31 @@ Texte unverändert, dunkles Design nur vorbereitet.
   Warnstufe 4 ohne Warnung
 - Ausgangslage für E2/E3 laut Prüfskript (eigene Farbwerte): Smart Compare 55,
   Store-Fenster 37, Senden an 19, KI-Dienste 19
+
+**E2 bis E5 umgesetzt (Okt 10, 2026)**, jede Version mit Quellcode zur Prüfung
+eingereicht, in Power PDF selbst noch nicht getestet:
+
+| Plug-in | Version | Was umgestellt ist |
+|---|---|---|
+| Smart Compare | 1.1.0 | Vergleichsfenster |
+| Add-on Store (Client) | C1.9.11 | Store-Fenster |
+| Smart Bookmarks | 1.5.0, 1.5.1 | Seitenleiste (1.5.1: Optionen unter Add-on Store, KI-Knopf) |
+| Senden an | 0.2.5 | Seitenleiste |
+| KI-Plugin | 0.2.2 | Einstellungen und Zustimmung |
+| DORA PDF Check | 1.2.0 | Prüfbericht |
+| E-Rechnung | 1.2.0 | ein Fenster statt drei (Übersicht, Positionen, alle Daten) |
+| Serienbrief | 1.2.0 | Lauf mit Feldzuordnung in einem Fenster |
+| Barcode-Stempel | 1.2.0 | Stempel-Assistent |
+| QES Sign | 1.2.0 | Zertifikatsauswahl, Signaturübersicht |
+| Stempel-Assistent (FP2) | 1.2.0 | Baukasten und Eingabe beim Stempeln, dazu alle 21 Sprachen |
+
+Ohne eigene Fenster und deshalb unverändert: OneClick Sign, Commerzbank Sign
+(nur Systemmeldungen), Printix SecurePrint (nur Optionsseite). Optionsseiten
+zeichnet Power PDF; sie bleiben klassisch. Offen und nicht begonnen: die
+Kachel-Seitenleiste des Stempel-Assistenten (natives Panel).
+
+Technik für Feature Pack 1 und 2: `common/fpweb.*` (modales Fenster auf
+`tpui::WebWindow`, Texte aus den Ressourcen), Code unter `FP_WEBUI`, der
+klassische Dialog bleibt als Ersatz, wenn WebView2 fehlt. Seiten unter
+`<modul>/ui/*.src.html`, beim Build geprüft (`check_ui.py`) und eingebettet
+(`inline.py`).
