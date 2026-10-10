@@ -6,17 +6,28 @@ Stand: Okt 10, 2026 · Status: Entwurf zur Besprechung (noch nichts umgesetzt)
 
 Neue Add-ons und Versionen sollen erst in einer Testumgebung (UAT) laufen:
 hochladen, prüfen, an Testkunden ausliefern, in echtem Power PDF ausprobieren.
-Erst nach der Testphase gehen sie in die Produktion. Dafür bekommt derselbe
-Server eine Einstellung **Betriebsart**:
+Erst nach der Testphase gehen sie in die Produktion.
 
-| Betriebsart | Rolle |
-|---|---|
-| **Einzeln** (Standard, wie heute) | Ein Server, keine Kopplung |
-| **Master** | Der produktive Store; nimmt Übermittlungen gekoppelter Childs an |
-| **Child** | Ein UAT-Store; arbeitet vollständig wie heute und kann geprüfte Stände an seinen Master übermitteln |
+**Der Master ist kein eigener Modus.** Jeder Server läuft wie heute allein und
+bleibt so, solange niemand ein UAT koppelt. Erst wenn ein Admin ein UAT
+hinzufügt, nimmt derselbe Server zusätzlich Übermittlungen von diesem UAT an
+und ist damit dessen Master. Wird die letzte Kopplung entfernt, ist er wieder
+ein ganz normaler Einzelserver. Für die Produktion ändert sich also nichts,
+bis man sich bewusst für ein UAT entscheidet.
+
+Einstellen muss man nur auf der UAT-Seite etwas:
+
+| Server | Einstellung | Rolle |
+|---|---|---|
+| Produktion | keine (wie heute) | läuft allein; mit gekoppeltem UAT nimmt sie zusätzlich dessen Übermittlungen an |
+| UAT | Betriebsart **UAT (Child)** mit Master-Adresse | arbeitet vollständig wie heute und kann geprüfte Stände an seinen Master übermitteln |
 
 Ein Child bleibt ein vollwertiger Server: eigene Konten, eigene Prüfung, eigene
 Auslieferungen, eigener Store-Client. Neu ist nur der Weg nach oben.
+
+Ohne Kopplung sind die Empfangsadressen am Master gar nicht aktiv (Antwort
+404); erst ein angelegtes UAT oder ein offener Kopplungscode schaltet sie frei.
+So vergrößert die Funktion die Angriffsfläche eines Einzelservers nicht.
 
 ## Grundsätze
 
@@ -38,11 +49,13 @@ Auslieferungen, eigener Store-Client. Neu ist nur der Weg nach oben.
 
 ## Kopplung
 
-1. Ein Admin am Master legt unter *Einstellungen, Kopplung* ein Child an
-   (Name, zum Beispiel „UAT“) und erhält einen **Kopplungscode** (einmalig,
-   15 Minuten gültig, nur als Hash gespeichert).
-2. Ein Admin am Child stellt die Betriebsart auf *Child* und trägt Master-Adresse
-   (nur https) und Code ein.
+1. Ein Admin am produktiven Server klickt unter *Einstellungen, UAT-Umgebungen*
+   auf **UAT hinzufügen** (Name, zum Beispiel „UAT“) und erhält einen
+   **Kopplungscode** (einmalig, 15 Minuten gültig, nur als Hash gespeichert).
+   Erst damit wird der Server zum Master dieses UAT; vorher und ohne UAT läuft
+   er unverändert allein.
+2. Ein Admin am UAT-Server stellt die Betriebsart auf *UAT (Child)* und trägt
+   Master-Adresse (nur https) und Code ein.
 3. Das Child erzeugt ein eigenes Schlüsselpaar (ECDSA P-256, wie die
    Paketsignatur) und schickt den öffentlichen Schlüssel mit dem Code an den
    Master. Der Master antwortet mit seinem öffentlichen Schlüssel und der
@@ -51,8 +64,10 @@ Auslieferungen, eigener Store-Client. Neu ist nur der Weg nach oben.
    Zeitstempel, Einmalwert und SHA-256 des Inhalts. Der Master lehnt ab, was
    älter als 5 Minuten ist, einen Einmalwert wiederholt oder falsch signiert
    ist. Darüber liegt TLS wie bei jedem Aufruf.
-5. Der Master-Admin kann eine Kopplung jederzeit **sperren**; danach nimmt der
-   Master von diesem Child nichts mehr an. Neu koppeln geht nur mit neuem Code.
+5. Der Master-Admin kann eine Kopplung jederzeit **sperren** oder **entfernen**;
+   danach nimmt der Master von diesem Child nichts mehr an. Neu koppeln geht nur
+   mit neuem Code. Ist kein UAT mehr gekoppelt, ist der Server wieder ein
+   normaler Einzelserver; bereits übernommene Versionen bleiben, wie sie sind.
 
 Der private Schlüssel des Childs liegt geschützt wie der Paketsignaturschlüssel
 heute (Schlüsselring mit Passwort) und ist Teil von Sicherung und
@@ -110,8 +125,9 @@ hier außen vor.
 
 ## Datenmodell (grob)
 
-- `AppSettings`: `Federation.Mode` (standalone, master, child),
-  `Federation.MasterUrl`, eigene Kopplungs-ID.
+- `AppSettings` (nur am UAT): `Federation.Mode` = child, `Federation.MasterUrl`,
+  eigene Kopplungs-ID. Am produktiven Server gibt es keine Einstellung: er ist
+  Master, sobald die Tabelle `FederationChildren` einen aktiven Eintrag hat.
 - Master: Tabelle `FederationChildren` (Id, Name, öffentlicher Schlüssel,
   angelegt, gesperrt, zuletzt gesehen); an `PackageVersions` die Herkunft
   (Child-ID, UAT-Versionsreferenz, UAT-Prüfauszug).
@@ -150,7 +166,7 @@ Agent-Guide, OpenAPI und README werden wie bei jeder Neuerung mitgeführt.
 
 | Etappe | Inhalt |
 |---|---|
-| E1 | Betriebsart, UAT-Band, Kopplung mit Code und Schlüsseltausch, Sperren |
+| E1 | Betriebsart UAT (Child), UAT-Band, „UAT hinzufügen“ am produktiven Server, Kopplung mit Code und Schlüsseltausch, Sperren und Entfernen |
 | E2 | Übermitteln einer Version (Paket und Quellcode), erneute Prüfung am Master, Herkunft in der Prüfakte |
 | E3 | Status-Rückmeldung ans Child, Katalogvorschlag mit Unterschieden, Vier-Augen über beide Umgebungen |
 | E4 | Spiegeln des Live-Katalogs vom Master ins UAT |
