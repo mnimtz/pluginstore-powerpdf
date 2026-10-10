@@ -1,6 +1,6 @@
 # Konzept: Einheitliches UI-Design für unsere Plug-ins
 
-Stand: Okt 10, 2026 · Status: Entwurf zur Besprechung (noch nichts umgesetzt)
+Stand: Okt 10, 2026 · Status: Etappe E1 gebaut (Vorlage 1.0.0 in `C:\Claude\PluginUiKit`), E2 bis E6 offen
 
 ## Ziel
 
@@ -33,7 +33,6 @@ Aktive Plug-ins im Store mit Marcus als Besitzer (Stand Okt 10, 2026):
 | Barcode-Stempel | Feature Pack 1 | Stempelpalette von Power PDF, eigene Dialoge | eigene Dialoge umziehen |
 | Stempel-Assistent | Feature Pack 2 | klassische Dialoge | umziehen |
 | Printix SecurePrint | Feature Pack 2 | klassische Dialoge | umziehen |
-| Spool View | gehört Marcus im Store, Autor Marco Jansen | offen | klären (siehe offene Fragen) |
 
 Nicht dabei: XFA-Konverter (zurückgezogen) und Office Konverter (nicht im
 Store). Die Quellen von Feature Pack 1 und 2 enthalten zusammen rund 32
@@ -197,7 +196,7 @@ Anwender und Test in Power PDF.
 
 | Etappe | Inhalt |
 |---|---|
-| E1 | Vorlage v1: Farben, Schrift, Größen, Bausteine, Fensterhülle, Ersatzdialog, Vorschau, Prüfskript, Musterseite |
+| E1 | Vorlage v1: Farben, Schrift, Größen, Bausteine, Fensterhülle, Ersatzdialog, Vorschau, Prüfskript, Musterseite. **Gebaut Okt 10, 2026 (1.0.0)** |
 | E2 | Smart Compare auf die Vorlage (vor seiner ersten Veröffentlichung), danach der Store-Client |
 | E3 | Senden an und KI-Dienste |
 | E4 | Feature Pack 1: OneClick Sign, QES Sign, Commerzbank Sign, Smart Bookmarks, Serienbrief, E-Rechnung, Compliance Check, Barcode-Stempel (Bestandsaufnahme der Dialoge, dann Umzug je Plug-in) |
@@ -225,5 +224,25 @@ und Arabisch.
    capped“ (S. 27), also jedes Wort groß. Für alle englischen Texte
    übernehmen oder bei Satzschreibung bleiben?
 5. **Dunkles Design:** jetzt mit vorsehen oder später?
-6. **Spool View:** gehört dir im Store, Autor ist Marco Jansen. Gehört es in
-   die Vereinheitlichung?
+6. ~~Spool View~~ **entschieden:** gehört nicht dazu (nur für einen Kollegen
+   hochgeladen).
+
+## Stand der Umsetzung
+
+**E1 gebaut (Okt 10, 2026), Vorlage 1.0.0** in `C:\Claude\PluginUiKit` (eigenes
+Repo, lokal; Sicherung `C:\Claude\Backup\pluginuikit-2026-10-10.bundle`).
+Für die noch offenen Fragen 1 bis 5 gelten bis zur Entscheidung die Vorschläge:
+Schrift nur über den Namen, eigenes Repo, alle Schaltflächen fett, englische
+Texte unverändert, dunkles Design nur vorbereitet.
+
+- `web/tpui.css`, `web/tpui.js`, `web/tpui-icons.js` (41 Icons im Brand-Stil),
+  Kompatibilitäts-Variablen, damit bestehende Seiten sofort die Brand-Farben
+  bekommen
+- `native/`: WebView2-Hülle für Fenster und Panel, modales Fenster (aus AiCore
+  gelöst), klassische Zeichenhilfen
+- `tools/inline.py`, `tools/check_ui.py`; Musterseite `demo/muster.html`
+- Tests: nativer Test mit echtem WebView2 (Nachrichten in beide Richtungen,
+  Unicode, Hintergrund-Thread) grün; 13 Werkzeugtests grün; kompiliert mit
+  Warnstufe 4 ohne Warnung
+- Ausgangslage für E2/E3 laut Prüfskript (eigene Farbwerte): Smart Compare 55,
+  Store-Fenster 37, Senden an 19, KI-Dienste 19
