@@ -28,7 +28,7 @@ FP1_MODULES = {
     'QesSign': ['sign', 'qes'],
     'SmartBookmarks': ['sign', 'bookmarks', 'third_party/tpui', 'third_party/webview2'],   # 1.5.0: panel page on the Tungsten Plug-in UI
     'BarcodeStamps': ['sign', 'stamps', 'third_party/zxing-cpp'],
-    'EInvoice': ['sign', 'invoice'],
+    'EInvoice': ['sign', 'invoice', 'third_party/tpui', 'third_party/webview2', 'bookmarks/json.hpp'],   # 1.2.0: invoice window on the Plug-in UI
     'ComplianceCheck': ['sign', 'invoice', 'compliance', 'third_party/tpui', 'third_party/webview2', 'bookmarks/json.hpp'],   # 1.2.0: report window on the Plug-in UI
     'MailMerge': ['sign', 'mailmerge'],
     'CommerzbankSign': ['sign'],   # private customer edition of OneClickSign
