@@ -1,6 +1,6 @@
 {
   "id": "com.tungsten.qessign",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": {
     "en": "QES Sign",
     "de": "QES Sign",
@@ -40,25 +40,35 @@
     "cs": "Kvalifikované elektronické podpisy přímo z podpisové karty: výběr certifikátu karty, důvodu a časového razítka v jednom dialogu, přírůstkové podepisování již podepsaných dokumentů (princip čtyř očí), hromadné podepisování více souborů PDF a doplnění dat pro dlouhodobé ověření (PAdES LTV).",
     "hu": "Minősített elektronikus aláírások közvetlenül az aláíró kártyáról: a kártya tanúsítványa, az ok és az időbélyeg kiválasztása egyetlen párbeszédpanelen, már aláírt dokumentumok növekményes aláírása (négy szem elve), több PDF kötegelt aláírása és hosszú távú hitelesítési adatok hozzáadása (PAdES LTV).",
     "ru": "Квалифицированные электронные подписи непосредственно с карты подписи: выбор сертификата карты, причины и метки времени в одном диалоге, инкрементальная подпись уже подписанных документов (принцип четырёх глаз), пакетная подпись нескольких PDF и добавление данных для долгосрочной проверки (PAdES LTV).",
-    "tr": "Doğrudan imza kartından nitelikli elektronik imzalar: kart sertifikasını, nedeni ve zaman damgasını tek bir iletişim kutusunda seçin, zaten imzalanmış belgeleri artımlı olarak imzalayın (dört göz ilkesi), birden çok PDF'yi toplu imzalayın ve uzun vadeli doğrulama verileri ekleyin (PAdES LTV)."
+    "tr": "Doğrudan imza kartından nitelikli elektronik imzalar: kart sertifikasını, nedeni ve zaman damgasını tek bir iletişim kutusunda seçin, zaten imzalanmış belgeleri artımlı olarak imzalayın (dört göz ilkesi), birden çok PDF'yi toplu imzalayın ve uzun vadeli doğrulama verileri ekleyin (PAdES LTV).",
+    "zh-Hans": "直接使用签名卡进行合格电子签名：在一个对话框中选择卡证书、签名原因和时间戳，以增量方式签署已签名的文档（四眼原则），批量签署多个 PDF，并添加长期验证数据（PAdES LTV）。",
+    "zh-Hant": "直接使用簽章卡進行合格電子簽章：在一個對話方塊中選擇卡片憑證、簽章原因和時間戳記，以增量方式簽署已簽章的文件（四眼原則），批次簽署多個 PDF，並加入長期驗證資料（PAdES LTV）。",
+    "ja": "署名カードから直接、適格電子署名を行います。カードの証明書、署名理由、タイムスタンプを 1 つのダイアログで選び、署名済みの文書にも増分方式で署名し (4 つの目の原則)、複数の PDF に一括署名し、長期検証データ (PAdES LTV) を追加できます。",
+    "ko": "서명 카드에서 바로 적격 전자 서명을 만듭니다. 카드 인증서, 사유, 타임스탬프를 하나의 대화 상자에서 선택하고, 이미 서명된 문서에 증분 방식으로 서명하며(4-eyes 원칙), 여러 PDF에 일괄 서명하고 장기 검증 데이터(PAdES LTV)를 추가합니다.",
+    "ar": "توقيعات إلكترونية مؤهلة مباشرة من بطاقة التوقيع: اختر شهادة البطاقة والسبب والطابع الزمني في نافذة واحدة، ووقّع المستندات الموقّعة مسبقًا بشكل تزايدي (مبدأ العيون الأربع)، ووقّع عدة ملفات PDF دفعة واحدة، وأضف بيانات التحقق طويل الأمد (PAdES LTV)."
   },
   "changelog": {
-    "en": "The user interface is now available in all 16 Power PDF languages: Dutch, Portuguese, Danish, Finnish, Norwegian, Swedish, Polish, Czech, Hungarian, Russian and Turkish were added; the German, French, Italian and Spanish texts were reviewed and corrected.",
-    "de": "Die Benutzeroberfläche ist jetzt in allen 16 Power-PDF-Sprachen verfügbar: Niederländisch, Portugiesisch, Dänisch, Finnisch, Norwegisch, Schwedisch, Polnisch, Tschechisch, Ungarisch, Russisch und Türkisch kamen hinzu; die deutschen, französischen, italienischen und spanischen Texte wurden überarbeitet und korrigiert.",
-    "fr": "L'interface est désormais disponible dans les 16 langues de Power PDF : néerlandais, portugais, danois, finnois, norvégien, suédois, polonais, tchèque, hongrois, russe et turc ont été ajoutés ; les textes allemands, français, italiens et espagnols ont été revus et corrigés.",
-    "it": "L'interfaccia è ora disponibile in tutte le 16 lingue di Power PDF: aggiunti olandese, portoghese, danese, finlandese, norvegese, svedese, polacco, ceco, ungherese, russo e turco; i testi in tedesco, francese, italiano e spagnolo sono stati rivisti e corretti.",
-    "es": "La interfaz ya está disponible en los 16 idiomas de Power PDF: se han añadido neerlandés, portugués, danés, finés, noruego, sueco, polaco, checo, húngaro, ruso y turco; los textos en alemán, francés, italiano y español se han revisado y corregido.",
-    "nl": "De gebruikersinterface is nu beschikbaar in alle 16 talen van Power PDF: Nederlands, Portugees, Deens, Fins, Noors, Zweeds, Pools, Tsjechisch, Hongaars, Russisch en Turks zijn toegevoegd; de Duitse, Franse, Italiaanse en Spaanse teksten zijn nagekeken en verbeterd.",
-    "pt": "A interface agora está disponível nos 16 idiomas do Power PDF: foram adicionados holandês, português, dinamarquês, finlandês, norueguês, sueco, polonês, tcheco, húngaro, russo e turco; os textos em alemão, francês, italiano e espanhol foram revisados e corrigidos.",
-    "da": "Brugerfladen findes nu på alle 16 Power PDF-sprog: nederlandsk, portugisisk, dansk, finsk, norsk, svensk, polsk, tjekkisk, ungarsk, russisk og tyrkisk er tilføjet; de tyske, franske, italienske og spanske tekster er gennemgået og rettet.",
-    "fi": "Käyttöliittymä on nyt saatavilla kaikilla 16 Power PDF -kielellä: hollanti, portugali, tanska, suomi, norja, ruotsi, puola, tšekki, unkari, venäjä ja turkki lisättiin; saksan-, ranskan-, italian- ja espanjankieliset tekstit tarkistettiin ja korjattiin.",
-    "nb": "Brukergrensesnittet er nå tilgjengelig på alle 16 Power PDF-språk: nederlandsk, portugisisk, dansk, finsk, norsk, svensk, polsk, tsjekkisk, ungarsk, russisk og tyrkisk er lagt til; de tyske, franske, italienske og spanske tekstene er gjennomgått og rettet.",
-    "sv": "Användargränssnittet finns nu på alla 16 Power PDF-språk: nederländska, portugisiska, danska, finska, norska, svenska, polska, tjeckiska, ungerska, ryska och turkiska har lagts till; de tyska, franska, italienska och spanska texterna har granskats och rättats.",
-    "pl": "Interfejs jest teraz dostępny we wszystkich 16 językach Power PDF: dodano niderlandzki, portugalski, duński, fiński, norweski, szwedzki, polski, czeski, węgierski, rosyjski i turecki; teksty niemieckie, francuskie, włoskie i hiszpańskie zostały sprawdzone i poprawione.",
-    "cs": "Uživatelské rozhraní je nyní k dispozici ve všech 16 jazycích Power PDF: přibyla nizozemština, portugalština, dánština, finština, norština, švédština, polština, čeština, maďarština, ruština a turečtina; německé, francouzské, italské a španělské texty byly zkontrolovány a opraveny.",
-    "hu": "A felhasználói felület mostantól a Power PDF mind a 16 nyelvén elérhető: bekerült a holland, portugál, dán, finn, norvég, svéd, lengyel, cseh, magyar, orosz és török; a német, francia, olasz és spanyol szövegeket átnéztük és javítottuk.",
-    "ru": "Интерфейс теперь доступен на всех 16 языках Power PDF: добавлены нидерландский, португальский, датский, финский, норвежский, шведский, польский, чешский, венгерский, русский и турецкий; тексты на немецком, французском, итальянском и испанском проверены и исправлены.",
-    "tr": "Kullanıcı arayüzü artık Power PDF'in 16 dilinin tamamında kullanılabilir: Felemenkçe, Portekizce, Danca, Fince, Norveççe, İsveççe, Lehçe, Çekçe, Macarca, Rusça ve Türkçe eklendi; Almanca, Fransızca, İtalyanca ve İspanyolca metinler gözden geçirilip düzeltildi."
+    "en": "Fresh look: the certificate choice and the signature overview now have the common design of the Tungsten add-ons for Power PDF, with the Tungsten colours and font.",
+    "de": "Neues Aussehen: Zertifikatsauswahl und Signaturübersicht haben jetzt das einheitliche Design der Tungsten-Add-ons für Power PDF, mit den Tungsten-Farben und der Tungsten-Schrift.",
+    "fr": "Nouveau look : le choix du certificat et la vue d'ensemble des signatures adoptent le design commun des modules Tungsten pour Power PDF, avec les couleurs et la police Tungsten.",
+    "it": "Nuovo aspetto: la scelta del certificato e la panoramica delle firme hanno ora il design comune dei componenti aggiuntivi Tungsten per Power PDF, con i colori e il carattere Tungsten.",
+    "es": "Nuevo aspecto: la selección del certificado y el resumen de firmas tienen ahora el diseño común de los complementos de Tungsten para Power PDF, con los colores y la fuente de Tungsten.",
+    "nl": "Nieuwe uitstraling: de certificaatkeuze en het handtekeningenoverzicht hebben nu het gemeenschappelijke ontwerp van de Tungsten-add-ons voor Power PDF, met de kleuren en het lettertype van Tungsten.",
+    "pt": "Novo visual: a escolha do certificado e a visão geral das assinaturas têm agora o design comum dos suplementos Tungsten para o Power PDF, com as cores e o tipo de letra da Tungsten.",
+    "da": "Nyt udseende: valg af certifikat og oversigten over signaturer har nu det fælles design for Tungsten-tilføjelsesprogrammer til Power PDF med Tungstens farver og skrifttype.",
+    "fi": "Uusi ulkoasu: varmenteen valinnassa ja allekirjoitusten yleiskuvassa on nyt Tungstenin Power PDF -lisäosien yhteinen ulkoasu Tungstenin väreillä ja fontilla.",
+    "nb": "Nytt utseende: valg av sertifikat og signaturoversikten har nå det felles designet for Tungsten-tilleggene til Power PDF, med Tungstens farger og skrift.",
+    "sv": "Nytt utseende: val av certifikat och översikten över underskrifter har nu den gemensamma designen för Tungstens tillägg till Power PDF, med Tungstens färger och typsnitt.",
+    "pl": "Nowy wygląd: wybór certyfikatu i przegląd podpisów mają teraz wspólny wygląd dodatków Tungsten do Power PDF, z kolorami i czcionką Tungsten.",
+    "cs": "Nový vzhled: výběr certifikátu a přehled podpisů mají nyní společný design doplňků Tungsten pro Power PDF s barvami a písmem Tungsten.",
+    "hu": "Új megjelenés: a tanúsítvány kiválasztása és az aláírások áttekintése mostantól a Tungsten Power PDF-bővítmények közös kialakítását kapta, a Tungsten színeivel és betűtípusával.",
+    "ru": "Новый вид: выбор сертификата и обзор подписей теперь выполнены в едином стиле надстроек Tungsten для Power PDF, с фирменными цветами и шрифтом Tungsten.",
+    "tr": "Yeni görünüm: sertifika seçimi ve imza genel görünümü artık Power PDF için Tungsten eklentilerinin ortak tasarımına, Tungsten renklerine ve yazı tipine sahip.",
+    "zh-Hans": "全新外观：证书选择和签名概览现在采用 Tungsten Power PDF 加载项的统一设计，使用 Tungsten 的颜色和字体。",
+    "zh-Hant": "全新外觀：憑證選擇和簽章總覽現在採用 Tungsten Power PDF 增益集的統一設計，使用 Tungsten 的色彩與字型。",
+    "ja": "新しい外観: 証明書の選択と署名の一覧は Power PDF 向け Tungsten アドオン共通のデザインになり、Tungsten の色とフォントを使用します。",
+    "ko": "새로운 모습: 인증서 선택과 서명 개요에 이제 Power PDF용 Tungsten 추가 기능의 공통 디자인과 Tungsten의 색상 및 글꼴이 적용됩니다.",
+    "ar": "مظهر جديد: أصبح اختيار الشهادة ونظرة عامة على التوقيعات بالتصميم الموحد لوظائف Tungsten الإضافية لـ Power PDF، بألوان Tungsten وخطها."
   },
   "minPowerPdfVersion": "2025.3.7",
   "author": "Tungsten Automation",
@@ -88,10 +98,23 @@
     "extraPaths": []
   },
   "category": "signing",
-  "thirdParty": [],
+  "thirdParty": [
+    {
+      "name": "nlohmann/json",
+      "version": "3.12.0",
+      "license": "MIT",
+      "source": "https://github.com/nlohmann/json"
+    },
+    {
+      "name": "Microsoft WebView2 SDK (headers and static loader)",
+      "version": "1.0.4258.31",
+      "license": "BSD-3-Clause",
+      "source": "https://www.nuget.org/packages/Microsoft.Web.WebView2"
+    }
+  ],
   "complianceAudit": {
     "confirmed": true,
-    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; the only contact data is the support address in the manifest fields author/contactEmail, shown in the catalog on purpose), and all network code. No third-party code. Network only for the optional timestamp and for CRL downloads from the distribution points named in the signer's certificate chain (long-term validation).",
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, GDI+, CryptoAPI/CNG and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and docs (icons generated by gen_store.py, logo.png is Tungsten's own Power PDF logo), copied code, secrets and personal data (none; the only contact data is the support address in the manifest fields author/contactEmail, shown in the catalog on purpose), and all network code. Network only for the optional timestamp and for CRL downloads from the distribution points named in the signer's certificate chain (long-term validation). Since 1.2.0 the certificate choice and the signature overview are a local page of the Tungsten Plug-in UI (own code, MIT) in WebView2 (Microsoft WebView2 SDK, BSD-3-Clause; the Edge WebView2 Runtime is part of Windows); the page is inlined into the plug-in, may not navigate, open windows, download or ask for permissions, and talks to the plug-in only through JSON messages (nlohmann/json 3.12.0, MIT, header-only); without WebView2 the classic dialog is shown.",
     "externalServices": [
       {
         "name": "Timestamp server (RFC 3161), optional",

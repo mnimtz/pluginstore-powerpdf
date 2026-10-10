@@ -25,7 +25,7 @@ SKIP_EXT = {'.pdb', '.obj', '.zxt', '.exe', '.dll', '.lib', '.exp', '.ilk', '.ap
 FP1_COMMON = ['common', 'res', 'store/common', 'store/tools', 'store/build_store.cmd']
 FP1_MODULES = {
     'OneClickSign': ['sign'],
-    'QesSign': ['sign', 'qes'],
+    'QesSign': ['sign', 'qes', 'third_party/tpui', 'third_party/webview2', 'bookmarks/json.hpp'],   # 1.2.0: pick and verify windows on the Plug-in UI
     'SmartBookmarks': ['sign', 'bookmarks', 'third_party/tpui', 'third_party/webview2'],   # 1.5.0: panel page on the Tungsten Plug-in UI
     'BarcodeStamps': ['sign', 'stamps', 'third_party/zxing-cpp', 'third_party/tpui', 'third_party/webview2', 'bookmarks/json.hpp'],   # 1.2.0: assistant on the Plug-in UI
     'EInvoice': ['sign', 'invoice', 'third_party/tpui', 'third_party/webview2', 'bookmarks/json.hpp'],   # 1.2.0: invoice window on the Plug-in UI
