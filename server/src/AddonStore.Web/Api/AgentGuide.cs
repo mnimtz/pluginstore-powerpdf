@@ -469,7 +469,8 @@ below) and does not rely on the statement alone.
    address (no user name or password) or left out. The add-on page and the
    store window show them under "Connects to", with the website as a link and
    the declared `externalServices` (name, host, data) below; an add-on with
-   `"externalServices": []` is shown as "works offline". Owners and admins can
+   `"externalServices": []` shows no such section (S1.19.1), the JSON catalog
+   still reports `"offline": true`. Owners and admins can
    set the providers later in the catalog entry (`PATCH ... {"providers": [...]}`)
    without a new upload.
 

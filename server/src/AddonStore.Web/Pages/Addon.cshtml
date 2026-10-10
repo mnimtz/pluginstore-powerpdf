@@ -93,7 +93,7 @@ else
                 </div>
             }
             @{ var conn = item.Connections; }
-            @if (conn.Declared || conn.Providers.Count > 0)
+            @if (conn.Shown)
             {
                 @* S1.19.0: what the add-on connects to, from the compliance declaration checked in the review *@
                 <div class="card connections" id="connections">
@@ -112,11 +112,7 @@ else
                             }
                         </p>
                     }
-                    @if (conn.Offline)
-                    {
-                        <p>@L["Works offline: this add-on connects to no online service."]</p>
-                    }
-                    else if (conn.Services.Count > 0)
+                    @if (conn.Services.Count > 0)
                     {
                         <ul class="conn-list">
                             @foreach (var s in conn.Services)

@@ -1527,7 +1527,6 @@
   <data name="none (works offline)" xml:space="preserve"><value>ingen (fungerer offline)</value></data>
   <data name="Website (https)" xml:space="preserve"><value>Websted (https)</value></data>
   <data name="Connects to" xml:space="preserve"><value>Forbinder til</value></data>
-  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Fungerer offline: Dette tilføjelsesprogram forbinder ikke til nogen onlinetjeneste.</value></data>
   <data name="Transfers" xml:space="preserve"><value>Overfører</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Som angivet af udvikleren og kontrolleret ved gennemgangen.</value></data>
 </root>

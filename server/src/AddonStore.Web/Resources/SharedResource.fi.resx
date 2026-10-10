@@ -1527,7 +1527,6 @@
   <data name="none (works offline)" xml:space="preserve"><value>ei yhtään (toimii offline-tilassa)</value></data>
   <data name="Website (https)" xml:space="preserve"><value>Verkkosivusto (https)</value></data>
   <data name="Connects to" xml:space="preserve"><value>Muodostaa yhteyden</value></data>
-  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Toimii offline-tilassa: tämä lisäosa ei muodosta yhteyttä mihinkään verkkopalveluun.</value></data>
   <data name="Transfers" xml:space="preserve"><value>Siirtää</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Kehittäjän ilmoituksen mukaan, tarkistettu katselmoinnissa.</value></data>
 </root>

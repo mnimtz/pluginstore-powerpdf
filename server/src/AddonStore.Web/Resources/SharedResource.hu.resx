@@ -1527,7 +1527,6 @@
   <data name="none (works offline)" xml:space="preserve"><value>nincs (offline működik)</value></data>
   <data name="Website (https)" xml:space="preserve"><value>Webhely (https)</value></data>
   <data name="Connects to" xml:space="preserve"><value>Csatlakozik ehhez</value></data>
-  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Offline működik: ez a bővítmény nem csatlakozik online szolgáltatáshoz.</value></data>
   <data name="Transfers" xml:space="preserve"><value>Továbbít</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>A fejlesztő bejelentése szerint, az ellenőrzés során vizsgálva.</value></data>
 </root>

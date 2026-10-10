@@ -1527,7 +1527,6 @@
   <data name="none (works offline)" xml:space="preserve"><value>geen (werkt offline)</value></data>
   <data name="Website (https)" xml:space="preserve"><value>Website (https)</value></data>
   <data name="Connects to" xml:space="preserve"><value>Maakt verbinding met</value></data>
-  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Werkt offline: deze add-on maakt geen verbinding met een onlinedienst.</value></data>
   <data name="Transfers" xml:space="preserve"><value>Verstuurt</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Zoals opgegeven door de ontwikkelaar en gecontroleerd bij de beoordeling.</value></data>
 </root>

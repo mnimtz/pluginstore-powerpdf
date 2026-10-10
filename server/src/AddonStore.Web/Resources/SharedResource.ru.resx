@@ -1527,7 +1527,6 @@
   <data name="none (works offline)" xml:space="preserve"><value>нет (работает автономно)</value></data>
   <data name="Website (https)" xml:space="preserve"><value>Веб-сайт (https)</value></data>
   <data name="Connects to" xml:space="preserve"><value>Подключается к</value></data>
-  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Работает автономно: эта надстройка не подключается ни к каким онлайн-службам.</value></data>
   <data name="Transfers" xml:space="preserve"><value>Передает</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>По данным разработчика, проверено при рецензировании.</value></data>
 </root>

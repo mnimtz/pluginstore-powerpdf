@@ -1527,7 +1527,6 @@
   <data name="none (works offline)" xml:space="preserve"><value>brak (działa offline)</value></data>
   <data name="Website (https)" xml:space="preserve"><value>Witryna (https)</value></data>
   <data name="Connects to" xml:space="preserve"><value>Łączy się z</value></data>
-  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Działa offline: ten dodatek nie łączy się z żadną usługą online.</value></data>
   <data name="Transfers" xml:space="preserve"><value>Przesyła</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Według deklaracji dewelopera, sprawdzone podczas przeglądu.</value></data>
 </root>

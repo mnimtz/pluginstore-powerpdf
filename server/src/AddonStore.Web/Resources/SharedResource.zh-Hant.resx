@@ -1527,7 +1527,6 @@
   <data name="none (works offline)" xml:space="preserve"><value>無（離線運作）</value></data>
   <data name="Website (https)" xml:space="preserve"><value>網站 (https)</value></data>
   <data name="Connects to" xml:space="preserve"><value>連線至</value></data>
-  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>離線運作：此增益集不連線任何線上服務。</value></data>
   <data name="Transfers" xml:space="preserve"><value>傳輸</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>依據開發者的宣告，並於審核時檢查。</value></data>
 </root>

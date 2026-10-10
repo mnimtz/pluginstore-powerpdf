@@ -19,6 +19,9 @@ public record Connections(List<AddonProvider> Providers, List<ServiceLink> Servi
 {
     public static readonly Connections None = new(new(), new(), false);
     public bool Offline => Declared && Services.Count == 0;
+    /// <summary>S1.19.1: shown to users only when the add-on really connects somewhere (declared services), or for a
+    /// version from before the declaration whose provider an admin entered; an offline add-on shows nothing.</summary>
+    public bool Shown => Services.Count > 0 || (!Declared && Providers.Count > 0);
 
     public const int MaxProviders = 5, MaxName = 80, MaxWebsite = 300, MaxServices = 12, MaxData = 400;
 
@@ -92,7 +95,7 @@ public record Connections(List<AddonProvider> Providers, List<ServiceLink> Servi
     }
 
     /// <summary>Compact form for the client catalog (TSV column 23): ASCII JSON, empty when nothing was declared.</summary>
-    public string ToClientJson() => !Declared && Providers.Count == 0 ? "" : JsonSerializer.Serialize(new
+    public string ToClientJson() => !Shown ? "" : JsonSerializer.Serialize(new
     {
         p = Providers.Select(p => new { n = p.Name, w = p.Website }),
         s = Services.Select(s => new { n = s.Name, h = s.Host, d = s.Data }),

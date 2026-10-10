@@ -1527,7 +1527,6 @@
   <data name="none (works offline)" xml:space="preserve"><value>なし (オフラインで動作)</value></data>
   <data name="Website (https)" xml:space="preserve"><value>Web サイト (https)</value></data>
   <data name="Connects to" xml:space="preserve"><value>接続先</value></data>
-  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>オフラインで動作: このアドオンはオンライン サービスに接続しません。</value></data>
   <data name="Transfers" xml:space="preserve"><value>送信内容</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>開発者の申告に基づき、審査で確認済みです。</value></data>
 </root>

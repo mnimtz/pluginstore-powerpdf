@@ -1527,7 +1527,6 @@
   <data name="none (works offline)" xml:space="preserve"><value>无（离线工作）</value></data>
   <data name="Website (https)" xml:space="preserve"><value>网站 (https)</value></data>
   <data name="Connects to" xml:space="preserve"><value>连接到</value></data>
-  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>离线工作：此加载项不连接任何在线服务。</value></data>
   <data name="Transfers" xml:space="preserve"><value>传输</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>依据开发者的声明，并在审核中检查。</value></data>
 </root>

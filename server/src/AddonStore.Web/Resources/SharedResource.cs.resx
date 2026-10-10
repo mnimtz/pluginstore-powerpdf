@@ -1527,7 +1527,6 @@
   <data name="none (works offline)" xml:space="preserve"><value>žádná (funguje offline)</value></data>
   <data name="Website (https)" xml:space="preserve"><value>Web (https)</value></data>
   <data name="Connects to" xml:space="preserve"><value>Připojuje se k</value></data>
-  <data name="Works offline: this add-on connects to no online service." xml:space="preserve"><value>Funguje offline: tento doplněk se nepřipojuje k žádné online službě.</value></data>
   <data name="Transfers" xml:space="preserve"><value>Přenáší</value></data>
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Podle údajů vývojáře, zkontrolováno při posouzení.</value></data>
 </root>
