@@ -1,6 +1,6 @@
 {
   "id": "com.tungsten.stampassistant",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "name": {
     "en": "Stamp Assistant",
     "de": "Stempel-Assistent",
@@ -40,25 +40,35 @@
     "cs": "Dynamická razítka bez JavaScriptu: sestavte text razítka z prvků, jako je datum, čas, uživatel, stránka, název souboru, dotaz na vstup, vyhledání v CSV, průběžné počítadlo a datum splatnosti, a kliknutím na stránku razítko umístěte. Boční panel nabízí razítka na jedno kliknutí a vaše uložené oblíbené položky.",
     "hu": "Dinamikus bélyegzők JavaScript nélkül: állítsa össze a bélyegző szövegét olyan elemekből, mint a dátum, az idő, a felhasználó, az oldal, a fájlnév, egy bekérés, egy CSV-keresés, egy folyamatos számláló és egy határidő, majd kattintson az oldalra az elhelyezéshez. Az oldalpanel egykattintásos bélyegzőket és a mentett kedvenceit kínálja.",
     "ru": "Динамические штампы без JavaScript: составьте текст штампа из элементов, таких как дата, время, пользователь, страница, имя файла, запрос ввода, поиск в CSV, сквозной счётчик и срок исполнения, затем щёлкните по странице, чтобы разместить его. Боковая панель предлагает штампы в один щелчок и ваши сохранённые избранные.",
-    "tr": "JavaScript gerektirmeyen dinamik damgalar: damga metnini tarih, saat, kullanıcı, sayfa, dosya adı, giriş sorgusu, CSV araması, sıralı sayaç ve son tarih gibi yapı taşlarından oluşturun, ardından yerleştirmek için sayfaya tıklayın. Yan panel tek tıkla damgalar ve kaydettiğiniz favorileri sunar."
+    "tr": "JavaScript gerektirmeyen dinamik damgalar: damga metnini tarih, saat, kullanıcı, sayfa, dosya adı, giriş sorgusu, CSV araması, sıralı sayaç ve son tarih gibi yapı taşlarından oluşturun, ardından yerleştirmek için sayfaya tıklayın. Yan panel tek tıkla damgalar ve kaydettiğiniz favorileri sunar.",
+    "zh-Hans": "无需 JavaScript 的动态图章：用日期、时间、用户、页码、文件名、输入提示、CSV 查找、连续编号和到期日等构建块组成图章文本，然后在页面上单击放置。侧面板提供一键图章和您保存的常用图章。",
+    "zh-Hant": "無需 JavaScript 的動態圖章：用日期、時間、使用者、頁碼、檔名、輸入提示、CSV 查詢、連續編號和到期日等建構區塊組成圖章文字，然後在頁面上按一下放置。側邊面板提供一鍵圖章和您儲存的常用圖章。",
+    "ja": "JavaScript を使わない動的スタンプ: 日付、時刻、ユーザー、ページ、ファイル名、入力プロンプト、CSV 検索、連番、期日などのパーツでスタンプのテキストを組み立て、ページをクリックして配置します。サイド パネルからワンクリックのスタンプや保存したお気に入りを使えます。",
+    "ko": "JavaScript 없는 동적 스탬프: 날짜, 시간, 사용자, 페이지, 파일 이름, 입력 요청, CSV 조회, 일련번호, 기한 같은 구성 요소로 스탬프 텍스트를 만들고 페이지를 클릭하여 배치합니다. 측면 패널에서 원클릭 스탬프와 저장한 즐겨찾기를 사용할 수 있습니다.",
+    "ar": "أختام ديناميكية بدون JavaScript: كوّن نص الختم من عناصر مثل التاريخ والوقت والمستخدم والصفحة واسم الملف وطلب إدخال والبحث في CSV وعداد متسلسل وتاريخ استحقاق، ثم انقر على الصفحة لوضعه. توفر اللوحة الجانبية أختامًا بنقرة واحدة ومفضلاتك المحفوظة."
   },
   "changelog": {
-    "en": "The user interface is now available in all 16 Power PDF languages: Dutch, Portuguese, Danish, Finnish, Norwegian, Swedish, Polish, Czech, Hungarian, Russian and Turkish were added; the German, French, Italian and Spanish texts were reviewed and corrected.",
-    "de": "Die Benutzeroberfläche ist jetzt in allen 16 Power-PDF-Sprachen verfügbar: Niederländisch, Portugiesisch, Dänisch, Finnisch, Norwegisch, Schwedisch, Polnisch, Tschechisch, Ungarisch, Russisch und Türkisch kamen hinzu; die deutschen, französischen, italienischen und spanischen Texte wurden überarbeitet und korrigiert.",
-    "fr": "L'interface est désormais disponible dans les 16 langues de Power PDF : néerlandais, portugais, danois, finnois, norvégien, suédois, polonais, tchèque, hongrois, russe et turc ont été ajoutés ; les textes allemands, français, italiens et espagnols ont été revus et corrigés.",
-    "it": "L'interfaccia è ora disponibile in tutte le 16 lingue di Power PDF: aggiunti olandese, portoghese, danese, finlandese, norvegese, svedese, polacco, ceco, ungherese, russo e turco; i testi in tedesco, francese, italiano e spagnolo sono stati rivisti e corretti.",
-    "es": "La interfaz ya está disponible en los 16 idiomas de Power PDF: se han añadido neerlandés, portugués, danés, finés, noruego, sueco, polaco, checo, húngaro, ruso y turco; los textos en alemán, francés, italiano y español se han revisado y corregido.",
-    "nl": "De gebruikersinterface is nu beschikbaar in alle 16 talen van Power PDF: Nederlands, Portugees, Deens, Fins, Noors, Zweeds, Pools, Tsjechisch, Hongaars, Russisch en Turks zijn toegevoegd; de Duitse, Franse, Italiaanse en Spaanse teksten zijn nagekeken en verbeterd.",
-    "pt": "A interface agora está disponível nos 16 idiomas do Power PDF: foram adicionados holandês, português, dinamarquês, finlandês, norueguês, sueco, polonês, tcheco, húngaro, russo e turco; os textos em alemão, francês, italiano e espanhol foram revisados e corrigidos.",
-    "da": "Brugerfladen findes nu på alle 16 Power PDF-sprog: nederlandsk, portugisisk, dansk, finsk, norsk, svensk, polsk, tjekkisk, ungarsk, russisk og tyrkisk er tilføjet; de tyske, franske, italienske og spanske tekster er gennemgået og rettet.",
-    "fi": "Käyttöliittymä on nyt saatavilla kaikilla 16 Power PDF -kielellä: hollanti, portugali, tanska, suomi, norja, ruotsi, puola, tšekki, unkari, venäjä ja turkki lisättiin; saksan-, ranskan-, italian- ja espanjankieliset tekstit tarkistettiin ja korjattiin.",
-    "nb": "Brukergrensesnittet er nå tilgjengelig på alle 16 Power PDF-språk: nederlandsk, portugisisk, dansk, finsk, norsk, svensk, polsk, tsjekkisk, ungarsk, russisk og tyrkisk er lagt til; de tyske, franske, italienske og spanske tekstene er gjennomgått og rettet.",
-    "sv": "Användargränssnittet finns nu på alla 16 Power PDF-språk: nederländska, portugisiska, danska, finska, norska, svenska, polska, tjeckiska, ungerska, ryska och turkiska har lagts till; de tyska, franska, italienska och spanska texterna har granskats och rättats.",
-    "pl": "Interfejs jest teraz dostępny we wszystkich 16 językach Power PDF: dodano niderlandzki, portugalski, duński, fiński, norweski, szwedzki, polski, czeski, węgierski, rosyjski i turecki; teksty niemieckie, francuskie, włoskie i hiszpańskie zostały sprawdzone i poprawione.",
-    "cs": "Uživatelské rozhraní je nyní k dispozici ve všech 16 jazycích Power PDF: přibyla nizozemština, portugalština, dánština, finština, norština, švédština, polština, čeština, maďarština, ruština a turečtina; německé, francouzské, italské a španělské texty byly zkontrolovány a opraveny.",
-    "hu": "A felhasználói felület mostantól a Power PDF mind a 16 nyelvén elérhető: bekerült a holland, portugál, dán, finn, norvég, svéd, lengyel, cseh, magyar, orosz és török; a német, francia, olasz és spanyol szövegeket átnéztük és javítottuk.",
-    "ru": "Интерфейс теперь доступен на всех 16 языках Power PDF: добавлены нидерландский, португальский, датский, финский, норвежский, шведский, польский, чешский, венгерский, русский и турецкий; тексты на немецком, французском, итальянском и испанском проверены и исправлены.",
-    "tr": "Kullanıcı arayüzü artık Power PDF'in 16 dilinin tamamında kullanılabilir: Felemenkçe, Portekizce, Danca, Fince, Norveççe, İsveççe, Lehçe, Çekçe, Macarca, Rusça ve Türkçe eklendi; Almanca, Fransızca, İtalyanca ve İspanyolca metinler gözden geçirilip düzeltildi."
+    "en": "Fresh look: the Stamp Assistant now has the common design of the Tungsten add-ons for Power PDF, and text, prompt, look-up and counter are edited right in the same window. The user interface is now also available in Chinese, Japanese, Korean and Arabic.",
+    "de": "Neues Aussehen: Der Stempel-Assistent hat jetzt das einheitliche Design der Tungsten-Add-ons für Power PDF, und Text, Abfrage, Nachschlagen und Zähler bearbeiten Sie direkt im selben Fenster. Die Oberfläche gibt es jetzt auch auf Chinesisch, Japanisch, Koreanisch und Arabisch.",
+    "fr": "Nouveau look : l'assistant tampons adopte le design commun des modules Tungsten pour Power PDF, et le texte, la saisie, la recherche et le compteur se modifient directement dans la même fenêtre. L'interface est désormais aussi disponible en chinois, japonais, coréen et arabe.",
+    "it": "Nuovo aspetto: l'assistente timbri ha ora il design comune dei componenti aggiuntivi Tungsten per Power PDF e testo, richiesta, ricerca e contatore si modificano nella stessa finestra. L'interfaccia è ora disponibile anche in cinese, giapponese, coreano e arabo.",
+    "es": "Nuevo aspecto: el asistente de sellos tiene ahora el diseño común de los complementos de Tungsten para Power PDF, y el texto, la solicitud, la búsqueda y el contador se editan en la misma ventana. La interfaz ya está disponible también en chino, japonés, coreano y árabe.",
+    "nl": "Nieuwe uitstraling: de stempelassistent heeft nu het gemeenschappelijke ontwerp van de Tungsten-add-ons voor Power PDF, en tekst, invoer, opzoeken en teller bewerkt u direct in hetzelfde venster. De interface is nu ook beschikbaar in het Chinees, Japans, Koreaans en Arabisch.",
+    "pt": "Novo visual: o assistente de carimbos tem agora o design comum dos suplementos Tungsten para o Power PDF, e texto, solicitação, pesquisa e contador editam-se na mesma janela. A interface está agora também disponível em chinês, japonês, coreano e árabe.",
+    "da": "Nyt udseende: stempelassistenten har nu det fælles design for Tungsten-tilføjelsesprogrammer til Power PDF, og tekst, forespørgsel, opslag og tæller redigeres direkte i samme vindue. Brugerfladen findes nu også på kinesisk, japansk, koreansk og arabisk.",
+    "fi": "Uusi ulkoasu: leima-avustajassa on nyt Tungstenin Power PDF -lisäosien yhteinen ulkoasu, ja tekstiä, kyselyä, hakua ja laskuria muokataan suoraan samassa ikkunassa. Käyttöliittymä on nyt saatavilla myös kiinaksi, japaniksi, koreaksi ja arabiaksi.",
+    "nb": "Nytt utseende: stempelassistenten har nå det felles designet for Tungsten-tilleggene til Power PDF, og tekst, forespørsel, oppslag og teller redigeres direkte i samme vindu. Brukergrensesnittet finnes nå også på kinesisk, japansk, koreansk og arabisk.",
+    "sv": "Nytt utseende: stämpelassistenten har nu den gemensamma designen för Tungstens tillägg till Power PDF, och text, fråga, uppslag och räknare redigeras direkt i samma fönster. Gränssnittet finns nu även på kinesiska, japanska, koreanska och arabiska.",
+    "pl": "Nowy wygląd: asystent pieczątek ma teraz wspólny wygląd dodatków Tungsten do Power PDF, a tekst, zapytanie, wyszukiwanie i licznik edytuje się w tym samym oknie. Interfejs jest teraz dostępny także po chińsku, japońsku, koreańsku i arabsku.",
+    "cs": "Nový vzhled: průvodce razítky má nyní společný design doplňků Tungsten pro Power PDF a text, dotaz, vyhledání a počítadlo upravíte přímo ve stejném okně. Rozhraní je nyní k dispozici také v čínštině, japonštině, korejštině a arabštině.",
+    "hu": "Új megjelenés: a bélyegző-varázsló mostantól a Tungsten Power PDF-bővítmények közös kialakítását kapta, a szöveget, a bekérést, a keresést és a számlálót pedig ugyanabban az ablakban szerkesztheti. A felület mostantól kínaiul, japánul, koreaiul és arabul is elérhető.",
+    "ru": "Новый вид: мастер штампов теперь выполнен в едином стиле надстроек Tungsten для Power PDF, а текст, запрос, поиск и счётчик редактируются прямо в том же окне. Интерфейс теперь доступен также на китайском, японском, корейском и арабском языках.",
+    "tr": "Yeni görünüm: Damga Yardımcısı artık Power PDF için Tungsten eklentilerinin ortak tasarımına sahip; metin, sorgu, arama ve sayaç aynı pencerede düzenleniyor. Arayüz artık Çince, Japonca, Korece ve Arapça olarak da kullanılabiliyor.",
+    "zh-Hans": "全新外观：图章助手现在采用 Tungsten Power PDF 加载项的统一设计，文本、询问、查找和编号可直接在同一窗口中编辑。界面现在还提供中文、日语、韩语和阿拉伯语版本。",
+    "zh-Hant": "全新外觀：圖章小幫手現在採用 Tungsten Power PDF 增益集的統一設計，文字、詢問、查詢和編號可直接在同一個視窗中編輯。介面現在也提供中文、日文、韓文和阿拉伯文版本。",
+    "ja": "新しい外観: スタンプ アシスタントは Power PDF 向け Tungsten アドオン共通のデザインになり、テキスト、入力、検索、番号を同じウィンドウで直接編集できます。ユーザー インターフェイスは中国語、日本語、韓国語、アラビア語でも利用できるようになりました。",
+    "ko": "새로운 모습: 스탬프 도우미에 Power PDF용 Tungsten 추가 기능의 공통 디자인이 적용되었으며, 텍스트, 입력 요청, 조회, 번호를 같은 창에서 바로 편집할 수 있습니다. 이제 중국어, 일본어, 한국어, 아랍어 인터페이스도 제공됩니다.",
+    "ar": "مظهر جديد: أصبح مساعد الأختام بالتصميم الموحد لوظائف Tungsten الإضافية لـ Power PDF، ويمكنك تحرير النص والسؤال والبحث والعداد مباشرة في النافذة نفسها. تتوفر الواجهة الآن أيضًا باللغات الصينية واليابانية والكورية والعربية."
   },
   "minPowerPdfVersion": "5.0",
   "ribbonAtomNamespace": "FeaturePack::StampAssistant",
@@ -86,10 +96,23 @@
     "extraPaths": []
   },
   "category": "productivity",
-  "thirdParty": [],
+  "thirdParty": [
+    {
+      "name": "nlohmann/json",
+      "version": "3.12.0",
+      "license": "MIT",
+      "source": "https://github.com/nlohmann/json"
+    },
+    {
+      "name": "Microsoft WebView2 SDK (headers and static loader)",
+      "version": "1.0.4258.31",
+      "license": "BSD-3-Clause",
+      "source": "https://www.nuget.org/packages/Microsoft.Web.WebView2"
+    }
+  ],
   "complianceAudit": {
     "confirmed": true,
-    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, CryptoAPI and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and LICENSES.md (icons generated by make_store_icons.py), copied code, secrets and personal data (none in the package), and all network code. No third-party code. Works offline.",
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, CryptoAPI and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and LICENSES.md (icons generated by make_store_icons.py), copied code, secrets and personal data (none in the package), and all network code. Works offline. Since 1.2.0 the assistant and the stamp-time input are local pages of the Tungsten Plug-in UI (own code, MIT) in WebView2 (Microsoft WebView2 SDK, BSD-3-Clause; the Edge WebView2 Runtime is part of Windows); the pages are inlined into the plug-in, may not navigate, open windows, download or ask for permissions, and talk to the plug-in only through JSON messages (nlohmann/json 3.12.0, MIT, header-only); without WebView2 the classic dialogs are shown.",
     "externalServices": []
   },
   "author": "Tungsten Automation",

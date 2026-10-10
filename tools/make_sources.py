@@ -36,7 +36,8 @@ FP1_MODULES = {
 # FP2's common folder also holds code other modules use (OCR, conversion); each
 # package gets only the common files its project compiles plus their headers.
 FP2_COMMON = ['res', 'store/make_store_icons.py', 'store/make_store_layout.py', 'store/make_store_rc.py']
-FP2_MODULES = {'StampAssistant': ['stamp'], 'PrintixSecurePrint': ['printix']}
+FP2_MODULES = {'StampAssistant': ['stamp', 'third_party/tpui', 'third_party/webview2', 'printix/json.hpp'],   # 1.2.0: pages of the Plug-in UI
+               'PrintixSecurePrint': ['printix']}
 
 README = """Source code of {name} {version} ({id})
 
