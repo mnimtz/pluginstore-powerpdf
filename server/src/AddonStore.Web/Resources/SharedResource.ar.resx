@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>بيئة UAT، ليست بيئة إنتاج</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>هل تريد إلغاء حظر بيئة UAT هذه؟</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>هل تريد حظر بيئة UAT هذه؟ تُرفض طلباتها حتى تلغي الحظر.</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>إعداد أجهزة الاختبار</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>يستخدم جهاز الاختبار بيئة UAT هذه بمجرد أن يضبط قسم تقنية المعلومات سياستين ضمن HKLM؛ وبدونهما يبقى على الإنتاج. لا يمكن أبدًا إضافة مفتاح توقيع ضمن HKCU.</value></data>
+  <data name="Registry key" xml:space="preserve"><value>مفتاح السجل</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>تنزيل ملف .reg لأجهزة الاختبار</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>تنزيل ملف .reg للعودة إلى الإنتاج</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>توقّع بيئة UAT هذه الحزم بالمفتاح نفسه الذي يستخدمه الإنتاج (هل أُعدّت من نسخة احتياطية للإنتاج؟). ستثق أجهزة الاختبار عندئذٍ بحزم هذه البيئة كأنها حزم إنتاج؛ أعدّ بيئة UAT دون مفتاح توقيع الإنتاج.</value></data>
 </root>

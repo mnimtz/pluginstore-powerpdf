@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>UAT 環境，非正式環境</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>解除封鎖此 UAT？</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>封鎖此 UAT？在您解除封鎖之前，它的要求都會遭到拒絕。</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>設定測試電腦</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>一旦 IT 在 HKLM 下設定兩項原則，測試電腦就會使用此 UAT；沒有這些原則，它仍使用正式環境。在 HKCU 下永遠無法新增簽章金鑰。</value></data>
+  <data name="Registry key" xml:space="preserve"><value>登錄機碼</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>下載測試電腦用的 .reg</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>下載返回正式環境的 .reg</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>此 UAT 使用與正式環境相同的金鑰簽署套件（是否從正式備份設定？）。測試電腦會像信任正式套件一樣信任此 UAT 的套件；請在不使用正式簽章金鑰的情況下設定 UAT。</value></data>
 </root>

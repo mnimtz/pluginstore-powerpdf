@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>UAT 환경, 프로덕션 아님</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>이 UAT의 차단을 해제할까요?</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>이 UAT를 차단할까요? 차단을 해제할 때까지 요청이 거부됩니다.</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>테스트 PC 설정</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>IT가 HKLM에 두 정책을 설정하면 테스트 PC가 이 UAT를 사용합니다. 정책이 없으면 프로덕션에 남습니다. HKCU에서는 서명 키를 추가할 수 없습니다.</value></data>
+  <data name="Registry key" xml:space="preserve"><value>레지스트리 키</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>테스트 PC용 .reg 다운로드</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>프로덕션 복귀용 .reg 다운로드</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>이 UAT는 프로덕션과 같은 키로 패키지에 서명합니다(프로덕션 백업에서 설정했나요?). 그러면 테스트 PC가 이 UAT의 패키지를 프로덕션 패키지처럼 신뢰합니다. 프로덕션 서명 키 없이 UAT를 설정하세요.</value></data>
 </root>

@@ -1250,6 +1250,7 @@ portal page /Admin/Uat:
 | `POST /api/admin/uat/pair` `{"masterUrl":"https://...","code":"..."}` | UAT | pair with the production server |
 | `POST /api/admin/uat/test` | UAT | signed test request to the production server |
 | `DELETE /api/admin/uat/pairing` | UAT | forget the pairing |
+| `GET /api/admin/uat/reg?to=uat` | UAT | .reg for test PCs: `ServerUrl` and `TrustedSigningKeys` under HKLM (`to=production` removes both) |
 | `POST`/`DELETE /api/admin/uat/uats/{id}/block` | production | block or unblock a UAT |
 | `DELETE /api/admin/uat/uats/{id}` | production | remove a UAT (pairing again needs a new code) |
 
@@ -1266,6 +1267,13 @@ production server signs its answer the same way over `AddonStore-Federation-v1`,
 `response`, nonce, status and body hash, with its own federation key (never the
 package signing key). Customer data, accounts, tokens and signing keys are
 never exchanged.
+
+Test PCs: the store client goes to the UAT only with two HKLM policies
+(`HKLM\SOFTWARE\Kofax\PDF\Tungsten Power PDF\PluginStore\Policies\Store`, values
+`ServerUrl` and `TrustedSigningKeys` = "keyId:base64(X||Y)" of the UAT's own
+package signing key); `GET /api/admin/uat` on the UAT lists both under
+`uat.testPc`. `uat.sameSigningKeyAsProduction` is true when the UAT signs with
+the production key (set up from a production backup), which a UAT must not do.
 
 | Code | HTTP | Meaning |
 |---|---|---|

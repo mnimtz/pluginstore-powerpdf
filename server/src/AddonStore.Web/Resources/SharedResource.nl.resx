@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>UAT-omgeving, geen productie</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>Dit UAT deblokkeren?</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Dit UAT blokkeren? Zijn verzoeken worden geweigerd tot u het deblokkeert.</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>Test-pc's instellen</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>Een test-pc gebruikt dit UAT zodra IT twee beleidsregels onder HKLM instelt; zonder deze blijft hij bij productie. Onder HKCU kan nooit een ondertekeningssleutel worden toegevoegd.</value></data>
+  <data name="Registry key" xml:space="preserve"><value>Registersleutel</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>.reg voor test-pc's downloaden</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>.reg terug naar productie downloaden</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Dit UAT ondertekent pakketten met dezelfde sleutel als productie (ingericht vanuit een productieback-up?). Test-pc's zouden pakketten uit dit UAT dan als productiepakketten vertrouwen; richt het UAT in zonder de ondertekeningssleutel van productie.</value></data>
 </root>

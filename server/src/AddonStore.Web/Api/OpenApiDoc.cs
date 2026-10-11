@@ -65,6 +65,7 @@ public static class OpenApiDoc
         new("post", "/api/federation/pair", "federationPair", "A UAT pairs with a one-time code of this server: body {code, publicKey (ECDSA P-256 SPKI base64), url}; answers pairingId and masterPublicKey. 404 while this server has no UAT and no open code.", "none", Array.Empty<string>()),
         new("get", "/api/federation/ping", "federationPing", "Signed test request of a paired UAT (headers X-Federation-Id, -Timestamp, -Nonce, -Signature); the answer is signed too. 404 without a UAT.", "none", Array.Empty<string>()),
         new("get", "/api/admin/uat", "getUat", "UAT environments: mode of this server, paired UATs and open pairing codes, or the pairing of this UAT.", "admin", Array.Empty<string>()),
+        new("get", "/api/admin/uat/reg", "getUatReg", "On a UAT: .reg file for test PCs (to=uat sets ServerUrl and TrustedSigningKeys under HKLM, to=production removes them).", "admin", new[] { "to:query:uat or production" }, Returns: "file"),
         new("put", "/api/admin/uat/mode", "setUatMode", "Body {mode: 'child' | 'standalone'}; standalone forgets the pairing.", "admin", Array.Empty<string>()),
         new("post", "/api/admin/uat/codes", "createUatCode", "Add UAT: body {name}; a one-time pairing code, valid 15 minutes, shown only in this answer.", "admin", Array.Empty<string>()),
         new("delete", "/api/admin/uat/codes/{id}", "revokeUatCode", "Revoke an open pairing code.", "admin", new[] { "id:path:code id" }),

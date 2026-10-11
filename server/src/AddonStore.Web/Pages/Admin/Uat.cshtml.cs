@@ -36,6 +36,16 @@ public class UatModel : PageModel
 
     public async Task OnGetAsync() => await LoadAsync();
 
+    /// <summary>E1b: .reg for test PCs (to=uat sets ServerUrl and TrustedSigningKeys, to=production removes them).</summary>
+    public async Task<IActionResult> OnGetRegAsync(string to)
+    {
+        var st = await _svc.ChildStateAsync();
+        if (!st.IsChild || st.TrustedSigningKeys.Length == 0) return NotFound();
+        var uat = to != "production";
+        return File(FederationService.RegFile(uat, await OwnUrlAsync(), st.TrustedSigningKeys), "application/octet-stream",
+                    uat ? "addon-store-use-uat.reg" : "addon-store-use-production.reg");
+    }
+
     private async Task<string> AdminAsync() => (await _users.GetUserAsync(User))?.DisplayName ?? "admin";
 
     private async Task<IActionResult> DoneAsync(FedResult r, string okNotice)

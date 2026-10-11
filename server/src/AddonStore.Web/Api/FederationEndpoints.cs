@@ -63,6 +63,13 @@ public static class FederationEndpoints
         return user is { Status: UserStatus.Active } ? user : null;
     }
 
+    // the public address of this server (App.PublicBaseUrl wins over the request)
+    private static string OwnUrl(HttpContext ctx)
+    {
+        var s = ctx.RequestServices.GetRequiredService<SettingsService>().GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl").GetAwaiter().GetResult().TrimEnd('/');
+        return s.Length > 0 ? s : $"{ctx.Request.Scheme}://{ctx.Request.Host}";
+    }
+
     private static IResult NotAdmin() => Err("ADMIN_ONLY", "Only store admins manage UAT environments.", 403);
 
     public static void MapFederation(this WebApplication app)
@@ -119,8 +126,22 @@ public static class FederationEndpoints
                 {
                     masterUrl = st.MasterUrl, paired = st.PairingId.Length > 0, pairingId = st.PairingId, name = st.Name,
                     masterKeyId = st.MasterKeyId, ownKeyId = st.OwnKeyId, pairedAt = st.PairedAt, lastTest = st.LastTest, keyProblem = st.KeyProblem,
+                    // E1b: the two IT policies of a test PC, and the warning when this UAT signs with the production key
+                    testPc = new { registryKey = FederationService.PolicyKey, serverUrl = OwnUrl(ctx), trustedSigningKeys = st.TrustedSigningKeys },
+                    sameSigningKeyAsProduction = st.SameSigningKey,
                 },
             });
+        });
+
+        // E1b: .reg for test PCs of this UAT (to=uat sets the policies, to=production removes them)
+        adm.MapGet("/reg", async (string? to, HttpContext ctx, UserManager<AppUser> users, FederationService svc) =>
+        {
+            if (await AdminAsync(ctx, users) is null) return NotAdmin();
+            var st = await svc.ChildStateAsync();
+            if (!st.IsChild) return Err("FED_NOT_UAT", "Only a UAT gives test PCs its policies.", 409);
+            var uat = to != "production";
+            return Results.File(FederationService.RegFile(uat, OwnUrl(ctx), st.TrustedSigningKeys), "application/octet-stream",
+                                uat ? "addon-store-use-uat.reg" : "addon-store-use-production.reg");
         });
 
         adm.MapPut("/mode", async (HttpContext ctx, UserManager<AppUser> users, FederationService svc) =>

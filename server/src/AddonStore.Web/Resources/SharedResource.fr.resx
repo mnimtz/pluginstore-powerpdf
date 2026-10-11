@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>Environnement UAT, pas de production</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>Débloquer cet UAT ?</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Bloquer cet UAT ? Ses requêtes sont refusées jusqu'à ce que vous le débloquiez.</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>Configurer les PC de test</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>Un PC de test utilise cet UAT dès que l'IT définit deux stratégies sous HKLM ; sans elles, il reste sur la production. Une clé de signature ne peut jamais être ajoutée sous HKCU.</value></data>
+  <data name="Registry key" xml:space="preserve"><value>Clé de registre</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>Télécharger le .reg pour les PC de test</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>Télécharger le .reg de retour à la production</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Cet UAT signe les paquets avec la même clé que la production (configuré à partir d'une sauvegarde de production ?). Les PC de test feraient alors confiance aux paquets de cet UAT comme à ceux de la production ; configurez l'UAT sans la clé de signature de la production.</value></data>
 </root>

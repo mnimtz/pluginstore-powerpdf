@@ -36,6 +36,9 @@ public class FederationService
     public const string MasterPublicKeyKey = "Federation.MasterPublicKey";   // UAT: master federation key (SPKI, base64)
     public const string PairedAtKey = "Federation.PairedAt";
     public const string LastTestKey = "Federation.LastTest";         // UAT: "<utc iso>|ok" or "<utc iso>|<code>"
+    public const string MasterSigningKeyIdKey = "Federation.MasterSigningKeyId";   // UAT: package signing key id of production (E1b)
+    /// <summary>Where the store client reads its IT policies (HKLM); a test PC gets ServerUrl and TrustedSigningKeys there.</summary>
+    public const string PolicyKey = @"HKEY_LOCAL_MACHINE\SOFTWARE\Kofax\PDF\Tungsten Power PDF\PluginStore\Policies\Store";
     public const string OwnKeyKey = "Federation.PrivateKey";         // both sides: own federation key ("dp:" protected PEM)
     public const string HttpName = "federation";
     public const string SignPrefix = "AddonStore-Federation-v1";
@@ -57,11 +60,12 @@ public class FederationService
     private readonly IHttpClientFactory _http;
     private readonly IHostEnvironment _env;
     private readonly AuditService _audit;
+    private readonly PackageSigning _signing;
 
     public FederationService(AppDbContext db, SettingsService settings, IDataProtectionProvider dp, IHttpClientFactory http,
-                             IHostEnvironment env, AuditService audit)
+                             IHostEnvironment env, AuditService audit, PackageSigning signing)
     {
-        _db = db; _settings = settings; _dp = dp; _http = http; _env = env; _audit = audit;
+        _db = db; _settings = settings; _dp = dp; _http = http; _env = env; _audit = audit; _signing = signing;
     }
 
     private static FedResult Err(string code, string message, int status = 400) => new(false, code, message, status);
@@ -102,6 +106,7 @@ public class FederationService
 
     public static string KeyIdOf(string spkiBase64)
     {
+        if (string.IsNullOrEmpty(spkiBase64)) return "";
         try { return Convert.ToHexString(SHA256.HashData(Convert.FromBase64String(spkiBase64)))[..16].ToLowerInvariant(); }
         catch (FormatException) { return ""; }
     }
@@ -275,7 +280,10 @@ public class FederationService
         await _db.SaveChangesAsync();
         await _audit.LogAsync("UAT " + row.Name, "federation.uat.paired", row.Name, $"pairing {id}, key {KeyIdOf(child.PublicKey)}, from {fromIp}" + (childUrl.Length > 0 ? ", " + childUrl : ""));
         var master = PublicKeyOf(own);
-        return FedResult.Done(new { pairingId = id, name = row.Name, masterPublicKey = master, masterKeyId = KeyIdOf(master), childKeyId = KeyIdOf(child.PublicKey) });
+        // E1b: the UAT warns when it signs packages with the same key as production
+        await _signing.EnsureLoadedAsync();
+        return FedResult.Done(new { pairingId = id, name = row.Name, masterPublicKey = master, masterKeyId = KeyIdOf(master), childKeyId = KeyIdOf(child.PublicKey),
+                                    signingKeyId = _signing.KeyId });
     }
 
     /// <summary>Checks a signed request of a paired UAT; the body is the exact bytes received.</summary>
@@ -323,7 +331,8 @@ public class FederationService
     // ---- UAT side -----------------------------------------------------------------------------
 
     public record ChildState(bool IsChild, string MasterUrl, string PairingId, string Name, string MasterKeyId, string OwnKeyId,
-                             DateTime? PairedAt, string LastTest, bool KeyProblem);
+                             DateTime? PairedAt, string LastTest, bool KeyProblem, string SigningKeyId = "", string TrustedSigningKeys = "",
+                             bool SameSigningKey = false);
 
     public async Task<ChildState> ChildStateAsync()
     {
@@ -338,8 +347,37 @@ public class FederationService
         }
         DateTime? paired = DateTime.TryParse(await _settings.GetAsync(PairedAtKey), System.Globalization.CultureInfo.InvariantCulture,
                                              System.Globalization.DateTimeStyles.AdjustToUniversal | System.Globalization.DateTimeStyles.AssumeUniversal, out var p) ? p : null;
+        await _signing.EnsureLoadedAsync();
+        var signingId = _signing.KeyId;
+        var masterSigning = await _settings.GetAsync(MasterSigningKeyIdKey);
         return new ChildState(IsChild, await _settings.GetAsync(MasterUrlKey), pairingId, await _settings.GetAsync(PairingNameKey),
-                              KeyIdOf(master), own, paired, await _settings.GetAsync(LastTestKey), problem);
+                              KeyIdOf(master), own, paired, await _settings.GetAsync(LastTestKey), problem,
+                              signingId, signingId.Length > 0 && _signing.PublicKeyRaw is { Length: > 0 } raw ? signingId + ":" + raw : "",
+                              masterSigning.Length > 0 && masterSigning == signingId);
+    }
+
+    /// <summary>
+    /// E1b: a .reg file for test PCs. "uat" sets ServerUrl and TrustedSigningKeys (this UAT's address
+    /// and package signing key), "production" removes both again. UTF-16 LE with BOM, as regedit writes it.
+    /// </summary>
+    public static byte[] RegFile(bool toUat, string serverUrl, string trustedSigningKeys)
+    {
+        static string Q(string s) => s.Replace("\\", "\\\\").Replace("\"", "\\\"");
+        var sb = new StringBuilder();
+        sb.Append("Windows Registry Editor Version 5.00\r\n\r\n");
+        sb.Append("; Add-on Store for Power PDF: ").Append(toUat ? "this PC uses the UAT store " + serverUrl : "this PC uses production again").Append("\r\n");
+        sb.Append('[').Append(PolicyKey).Append("]\r\n");
+        if (toUat)
+        {
+            sb.Append("\"ServerUrl\"=\"").Append(Q(serverUrl)).Append("\"\r\n");
+            sb.Append("\"TrustedSigningKeys\"=\"").Append(Q(trustedSigningKeys)).Append("\"\r\n");
+        }
+        else
+        {
+            sb.Append("\"ServerUrl\"=-\r\n");
+            sb.Append("\"TrustedSigningKeys\"=-\r\n");
+        }
+        return [.. Encoding.Unicode.GetPreamble(), .. Encoding.Unicode.GetBytes(sb.ToString())];
     }
 
     /// <summary>Switches between "on its own" and "UAT (child)". Leaving UAT mode forgets the pairing.</summary>
@@ -357,7 +395,7 @@ public class FederationService
 
     private async Task ForgetPairingAsync()
     {
-        foreach (var k in new[] { PairingIdKey, PairingNameKey, MasterPublicKeyKey, PairedAtKey, LastTestKey, OwnKeyKey })
+        foreach (var k in new[] { PairingIdKey, PairingNameKey, MasterPublicKeyKey, PairedAtKey, LastTestKey, OwnKeyKey, MasterSigningKeyIdKey })
             await _settings.SetAsync(k, "");
     }
 
@@ -416,6 +454,7 @@ public class FederationService
         await _settings.SetAsync(PairingIdKey, pairingId);
         await _settings.SetAsync(PairingNameKey, S("name"));
         await _settings.SetAsync(MasterPublicKeyKey, masterKey);
+        await _settings.SetAsync(MasterSigningKeyIdKey, S("signingKeyId"));
         await _settings.SetAsync(PairedAtKey, DateTime.UtcNow.ToString("o"));
         await _settings.SetAsync(LastTestKey, DateTime.UtcNow.ToString("o") + "|ok");
         await _audit.LogAsync(by, "federation.paired", url, $"pairing {pairingId}, master key {KeyIdOf(masterKey)}");

@@ -158,4 +158,26 @@ else
             </form>
         }
     </div>
+    @if (st.SameSigningKey)
+    {
+        <div class="alert error" style="max-width:720px">@L["This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key."]</div>
+    }
+    @if (st.TrustedSigningKeys.Length > 0)
+    {
+        <div class="card" style="max-width:720px">
+            <h2 style="margin-top:0">@L["Set up test PCs"]</h2>
+            <p>@L["A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU."]</p>
+            <div class="table-wrap">
+            <table class="no-rtable">
+                <tr><th>@L["Registry key"]</th><td><code>@AddonStore.Web.Services.FederationService.PolicyKey</code></td></tr>
+                <tr><th>ServerUrl (REG_SZ)</th><td><code>@Model.OwnUrl</code></td></tr>
+                <tr><th>TrustedSigningKeys (REG_SZ)</th><td><code>@st.TrustedSigningKeys</code></td></tr>
+            </table>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+                <a class="btn" href="/Admin/Uat?handler=Reg&amp;to=uat">@L["Download .reg for test PCs"]</a>
+                <a class="btn secondary" href="/Admin/Uat?handler=Reg&amp;to=production">@L["Download .reg back to production"]</a>
+            </div>
+        </div>
+    }
 }

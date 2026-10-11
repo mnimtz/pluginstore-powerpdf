@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>UAT-miljö, inte produktion</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>Avspärra det här UAT?</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Spärra det här UAT? Dess förfrågningar nekas tills du häver spärren.</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>Konfigurera test-datorer</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>En test-dator använder det här UAT så snart IT anger två principer under HKLM; utan dem stannar den i produktion. Under HKCU kan en signeringsnyckel aldrig läggas till.</value></data>
+  <data name="Registry key" xml:space="preserve"><value>Registernyckel</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>Hämta .reg för test-datorer</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>Hämta .reg tillbaka till produktion</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Det här UAT signerar paket med samma nyckel som produktion (konfigurerat från en produktionssäkerhetskopia?). Test-datorer skulle då lita på paket från det här UAT som produktionspaket; konfigurera UAT utan produktionens signeringsnyckel.</value></data>
 </root>

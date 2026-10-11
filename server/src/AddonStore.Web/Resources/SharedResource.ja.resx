@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>UAT 環境 (本番ではありません)</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>この UAT のブロックを解除しますか?</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>この UAT をブロックしますか? ブロックを解除するまで、その要求は拒否されます。</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>テスト用 PC の設定</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>IT が HKLM に 2 つのポリシーを設定すると、テスト用 PC はこの UAT を使用します。設定がなければ本番環境のままです。HKCU で署名キーを追加することはできません。</value></data>
+  <data name="Registry key" xml:space="preserve"><value>レジストリ キー</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>テスト用 PC 向け .reg をダウンロード</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>本番環境に戻す .reg をダウンロード</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>この UAT は本番環境と同じキーでパッケージに署名しています (本番環境のバックアップから設定しましたか?)。テスト用 PC はこの UAT のパッケージを本番パッケージと同様に信頼してしまいます。本番環境の署名キーなしで UAT を設定してください。</value></data>
 </root>

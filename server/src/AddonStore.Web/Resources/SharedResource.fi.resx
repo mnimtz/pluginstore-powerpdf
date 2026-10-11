@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>UAT-ympäristö, ei tuotanto</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>Poistetaanko tämän UAT:n esto?</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Estetäänkö tämä UAT? Sen pyynnöt hylätään, kunnes poistat eston.</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>Testitietokoneiden määritys</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>Testitietokone käyttää tätä UAT:ta, kun IT asettaa kaksi käytäntöä HKLM:ään; ilman niitä se pysyy tuotannossa. HKCU:hun ei voi koskaan lisätä allekirjoitusavainta.</value></data>
+  <data name="Registry key" xml:space="preserve"><value>Rekisteriavain</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>Lataa .reg testitietokoneille</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>Lataa .reg takaisin tuotantoon</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Tämä UAT allekirjoittaa paketit samalla avaimella kuin tuotanto (määritetty tuotannon varmuuskopiosta?). Testitietokoneet luottaisivat silloin tämän UAT:n paketteihin kuin tuotantopaketteihin; määritä UAT ilman tuotannon allekirjoitusavainta.</value></data>
 </root>

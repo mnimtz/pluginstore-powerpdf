@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>UAT-környezet, nem éles</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>Feloldja ennek az UAT-nek a tiltását?</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Letiltja ezt az UAT-t? A kérései elutasításra kerülnek, amíg fel nem oldja a tiltást.</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>Teszt-számítógépek beállítása</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>Egy teszt-számítógép akkor használja ezt az UAT-t, ha az IT beállít két házirendet a HKLM alatt; ezek nélkül az éles rendszernél marad. HKCU alatt aláírókulcs soha nem adható hozzá.</value></data>
+  <data name="Registry key" xml:space="preserve"><value>Beállításkulcs</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>.reg letöltése teszt-számítógépekhez</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>.reg letöltése az éles rendszerhez való visszatéréshez</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Ez az UAT ugyanazzal a kulccsal írja alá a csomagokat, mint az éles rendszer (éles biztonsági mentésből állították be?). A teszt-számítógépek így éles csomagként fogadnák el az UAT csomagjait; állítsa be az UAT-t az éles aláírókulcs nélkül.</value></data>
 </root>

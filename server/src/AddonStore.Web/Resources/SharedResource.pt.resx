@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>Ambiente UAT, não é produção</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>Desbloquear este UAT?</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Bloquear este UAT? Os seus pedidos são recusados até o desbloquear.</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>Configurar os PCs de teste</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>Um PC de teste usa este UAT assim que a TI define duas políticas em HKLM; sem elas fica na produção. Em HKCU nunca é possível adicionar uma chave de assinatura.</value></data>
+  <data name="Registry key" xml:space="preserve"><value>Chave de registo</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>Transferir .reg para os PCs de teste</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>Transferir .reg de regresso à produção</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Este UAT assina pacotes com a mesma chave da produção (configurado a partir de uma cópia de produção?). Os PCs de teste confiariam então nos pacotes deste UAT como pacotes de produção; configure o UAT sem a chave de assinatura da produção.</value></data>
 </root>

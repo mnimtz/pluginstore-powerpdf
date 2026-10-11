@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>Prostředí UAT, není produkce</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>Odblokovat toto UAT?</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Zablokovat toto UAT? Jeho požadavky budou odmítány, dokud ho neodblokujete.</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>Nastavení testovacích počítačů</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>Testovací počítač použije toto UAT, jakmile IT nastaví dvě zásady v HKLM; bez nich zůstane u produkce. V HKCU nelze nikdy přidat podpisový klíč.</value></data>
+  <data name="Registry key" xml:space="preserve"><value>Klíč registru</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>Stáhnout .reg pro testovací počítače</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>Stáhnout .reg pro návrat do produkce</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Toto UAT podepisuje balíčky stejným klíčem jako produkce (nastaveno ze zálohy produkce?). Testovací počítače by pak balíčkům z tohoto UAT důvěřovaly jako produkčním; nastavte UAT bez podpisového klíče produkce.</value></data>
 </root>

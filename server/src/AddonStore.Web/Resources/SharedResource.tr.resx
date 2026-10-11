@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>UAT ortamı, üretim değil</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>Bu UAT'nin engeli kaldırılsın mı?</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Bu UAT engellensin mi? Engeli kaldırana kadar istekleri reddedilir.</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>Test bilgisayarlarını ayarla</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>Bir test bilgisayarı, BT HKLM altında iki ilke ayarladığında bu UAT'yi kullanır; bunlar olmadan üretimde kalır. HKCU altında hiçbir zaman imza anahtarı eklenemez.</value></data>
+  <data name="Registry key" xml:space="preserve"><value>Kayıt defteri anahtarı</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>Test bilgisayarları için .reg indir</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>Üretime dönüş için .reg indir</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Bu UAT paketleri üretimle aynı anahtarla imzalıyor (bir üretim yedeğinden mi kuruldu?). Test bilgisayarları bu UAT'deki paketlere üretim paketleri gibi güvenir; UAT'yi üretimin imza anahtarı olmadan kurun.</value></data>
 </root>

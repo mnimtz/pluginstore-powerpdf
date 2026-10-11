@@ -1079,8 +1079,11 @@ pairing:
   "UAT" in the page title; the JSON catalog and `/api/client/access` report
   `"environment": "uat"`.
 - Admin API: `/api/admin/uat` (agent guide, section *UAT environments*).
-- Handing versions to production, the `.reg` download for test PCs and the
-  client marking "from the test system" follow in the next stages (E1b, E2).
+- Test PCs (S1.21.1, E1b): the UAT page offers a `.reg` for test PCs
+  (`ServerUrl` and `TrustedSigningKeys` under HKLM, see the agent guide) and one
+  back to production, and warns when the UAT signs with the production key.
+- Handing versions to production and the client marking "from the test system"
+  follow in the next stages (E2, client E1b).
 
 ## Local development
 

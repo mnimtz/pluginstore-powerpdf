@@ -1576,4 +1576,10 @@
   <data name="UAT environment, not production" xml:space="preserve"><value>Среда UAT, не рабочая</value></data>
   <data name="Unblock this UAT?" xml:space="preserve"><value>Разблокировать этот UAT?</value></data>
   <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Заблокировать этот UAT? Его запросы будут отклоняться, пока вы его не разблокируете.</value></data>
+  <data name="Set up test PCs" xml:space="preserve"><value>Настройка тестовых ПК</value></data>
+  <data name="A test PC uses this UAT once IT sets two policies under HKLM; without them it stays with production. A signing key can never be added under HKCU." xml:space="preserve"><value>Тестовый ПК использует этот UAT, как только ИТ задаст две политики в HKLM; без них он остаётся в рабочей среде. В HKCU ключ подписи добавить нельзя никогда.</value></data>
+  <data name="Registry key" xml:space="preserve"><value>Раздел реестра</value></data>
+  <data name="Download .reg for test PCs" xml:space="preserve"><value>Скачать .reg для тестовых ПК</value></data>
+  <data name="Download .reg back to production" xml:space="preserve"><value>Скачать .reg для возврата в рабочую среду</value></data>
+  <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Этот UAT подписывает пакеты тем же ключом, что и рабочая среда (настроен из резервной копии рабочей среды?). Тогда тестовые ПК доверяли бы пакетам из этого UAT как рабочим; настройте UAT без ключа подписи рабочей среды.</value></data>
 </root>
