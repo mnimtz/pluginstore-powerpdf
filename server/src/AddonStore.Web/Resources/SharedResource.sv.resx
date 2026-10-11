@@ -1582,4 +1582,25 @@
   <data name="Download .reg for test PCs" xml:space="preserve"><value>Hämta .reg för test-datorer</value></data>
   <data name="Download .reg back to production" xml:space="preserve"><value>Hämta .reg tillbaka till produktion</value></data>
   <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Det här UAT signerar paket med samma nyckel som produktion (konfigurerat från en produktionssäkerhetskopia?). Test-datorer skulle då lita på paket från det här UAT som produktionspaket; konfigurera UAT utan produktionens signeringsnyckel.</value></data>
+  <data name="Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store." xml:space="preserve"><value>Markera den här servern som testsystem (band på varje sida, butiksklienter ser miljön UAT). Stäng av det om servern förblir i produktiv användning för sina egna kunder, till exempel som utvecklingsserver för en företagsbutik.</value></data>
+  <data name="Hand this version to production? Production checks it again and its reviewers decide." xml:space="preserve"><value>Lämna den här versionen till produktion? Produktion kontrollerar den igen och dess granskare beslutar.</value></data>
+  <data name="Note for production (optional)" xml:space="preserve"><value>Anteckning till produktion (valfritt)</value></data>
+  <data name="Hand over to production" xml:space="preserve"><value>Lämna till produktion</value></data>
+  <data name="From UAT {0}" xml:space="preserve"><value>Från UAT {0}</value></data>
+  <data name="Handed to production" xml:space="preserve"><value>Lämnad till produktion</value></data>
+  <data name="Refused by production" xml:space="preserve"><value>Nekad av produktion</value></data>
+  <data name="Handover failed" xml:space="preserve"><value>Överlämning misslyckades</value></data>
+  <data name="uploaded there by {0}" xml:space="preserve"><value>uppladdad där av {0}</value></data>
+  <data name="Review in the UAT" xml:space="preserve"><value>Granskning i UAT</value></data>
+  <data name="The UAT review is information only: approve here as for any upload. Whoever uploaded the version in the UAT cannot approve it here." xml:space="preserve"><value>Granskningen i UAT är bara information: godkänn här som för vilken uppladdning som helst. Den som laddade upp versionen i UAT kan inte godkänna den här.</value></data>
+  <data name="Versions handed over from UATs" xml:space="preserve"><value>Versioner lämnade från UAT</value></data>
+  <data name="Refused" xml:space="preserve"><value>Nekad</value></data>
+  <data name="Announced" xml:space="preserve"><value>Aviserad</value></data>
+  <data name="Versions handed to production" xml:space="preserve"><value>Versioner lämnade till produktion</value></data>
+  <data name="By" xml:space="preserve"><value>Av</value></data>
+  <data name="Sending" xml:space="preserve"><value>Skickar</value></data>
+  <data name="Handed to production; it waits there for review." xml:space="preserve"><value>Lämnad till produktion; den väntar där på granskning.</value></data>
+  <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>Produktion nekade versionen; fynden visas under versionen.</value></data>
+  <data name="The handover failed: {0}" xml:space="preserve"><value>Överlämningen misslyckades: {0}</value></data>
+  <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Fyraögonsprincipen: du laddade upp den här versionen i UAT; en annan administratör eller granskare i produktion godkänner den.</value></data>
 </root>

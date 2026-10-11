@@ -1582,4 +1582,25 @@
   <data name="Download .reg for test PCs" xml:space="preserve"><value>.reg voor test-pc's downloaden</value></data>
   <data name="Download .reg back to production" xml:space="preserve"><value>.reg terug naar productie downloaden</value></data>
   <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Dit UAT ondertekent pakketten met dezelfde sleutel als productie (ingericht vanuit een productieback-up?). Test-pc's zouden pakketten uit dit UAT dan als productiepakketten vertrouwen; richt het UAT in zonder de ondertekeningssleutel van productie.</value></data>
+  <data name="Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store." xml:space="preserve"><value>Deze server als testsysteem markeren (balk op elke pagina, storeclients zien de omgeving UAT). Schakel het uit als de server productief blijft voor zijn eigen klanten, bijvoorbeeld als ontwikkelserver van een bedrijfsstore.</value></data>
+  <data name="Hand this version to production? Production checks it again and its reviewers decide." xml:space="preserve"><value>Deze versie aan productie doorgeven? Productie controleert haar opnieuw en haar beoordelaars beslissen.</value></data>
+  <data name="Note for production (optional)" xml:space="preserve"><value>Notitie voor productie (optioneel)</value></data>
+  <data name="Hand over to production" xml:space="preserve"><value>Aan productie doorgeven</value></data>
+  <data name="From UAT {0}" xml:space="preserve"><value>Uit UAT {0}</value></data>
+  <data name="Handed to production" xml:space="preserve"><value>Aan productie doorgegeven</value></data>
+  <data name="Refused by production" xml:space="preserve"><value>Door productie geweigerd</value></data>
+  <data name="Handover failed" xml:space="preserve"><value>Doorgeven mislukt</value></data>
+  <data name="uploaded there by {0}" xml:space="preserve"><value>daar geüpload door {0}</value></data>
+  <data name="Review in the UAT" xml:space="preserve"><value>Beoordeling in het UAT</value></data>
+  <data name="The UAT review is information only: approve here as for any upload. Whoever uploaded the version in the UAT cannot approve it here." xml:space="preserve"><value>De beoordeling in het UAT is alleen ter informatie: keur hier goed zoals bij elke upload. Wie de versie in het UAT heeft geüpload, kan haar hier niet goedkeuren.</value></data>
+  <data name="Versions handed over from UATs" xml:space="preserve"><value>Versies doorgegeven uit UAT's</value></data>
+  <data name="Refused" xml:space="preserve"><value>Geweigerd</value></data>
+  <data name="Announced" xml:space="preserve"><value>Aangekondigd</value></data>
+  <data name="Versions handed to production" xml:space="preserve"><value>Aan productie doorgegeven versies</value></data>
+  <data name="By" xml:space="preserve"><value>Door</value></data>
+  <data name="Sending" xml:space="preserve"><value>Bezig met verzenden</value></data>
+  <data name="Handed to production; it waits there for review." xml:space="preserve"><value>Aan productie doorgegeven; daar wacht ze op beoordeling.</value></data>
+  <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>Productie heeft de versie geweigerd; de bevindingen staan onder de versie.</value></data>
+  <data name="The handover failed: {0}" xml:space="preserve"><value>Doorgeven mislukt: {0}</value></data>
+  <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Vierogenprincipe: u hebt deze versie in het UAT geüpload; een andere beheerder of beoordelaar van productie keurt haar goed.</value></data>
 </root>

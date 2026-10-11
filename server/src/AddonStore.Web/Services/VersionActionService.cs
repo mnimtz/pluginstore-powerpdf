@@ -172,6 +172,9 @@ public class VersionActionService
         var actorIsAdmin = (await _users.GetRolesAsync(actor)).Contains("Admin");
         if (approve && v.PackageId != SubmissionService.ClientPackageId && own && (!actorIsAdmin || await FourEyesAsync()))
             return "Four-eyes rule: another admin or reviewer has to approve a version you uploaded or own.";
+        // UAT handover (S1.22.0): whoever uploaded the version in the UAT never approves it here, whatever the setting
+        if (approve && v.OriginUploaderEmail is { Length: > 0 } uatUploader && string.Equals(uatUploader, actor.Email, StringComparison.OrdinalIgnoreCase))
+            return "Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it.";
         v.Status = !approve ? VersionStatus.Rejected : stage == "beta" ? VersionStatus.Beta : VersionStatus.Live;
         v.ReviewedById = actor.Id;
         v.ReviewedAt = DateTime.UtcNow;

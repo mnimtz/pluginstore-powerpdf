@@ -1582,4 +1582,25 @@
   <data name="Download .reg for test PCs" xml:space="preserve"><value>Scarica il .reg per i PC di test</value></data>
   <data name="Download .reg back to production" xml:space="preserve"><value>Scarica il .reg per tornare alla produzione</value></data>
   <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Questo UAT firma i pacchetti con la stessa chiave della produzione (configurato da un backup di produzione?). I PC di test si fiderebbero dei pacchetti di questo UAT come di quelli di produzione; configura l'UAT senza la chiave di firma della produzione.</value></data>
+  <data name="Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store." xml:space="preserve"><value>Contrassegna questo server come sistema di test (banda su ogni pagina, i client dello store vedono l'ambiente UAT). Disattivalo se il server resta in uso produttivo per i propri clienti, ad esempio come server di sviluppo di uno store aziendale.</value></data>
+  <data name="Hand this version to production? Production checks it again and its reviewers decide." xml:space="preserve"><value>Passare questa versione alla produzione? La produzione la controlla di nuovo e decidono i suoi revisori.</value></data>
+  <data name="Note for production (optional)" xml:space="preserve"><value>Nota per la produzione (facoltativa)</value></data>
+  <data name="Hand over to production" xml:space="preserve"><value>Passa alla produzione</value></data>
+  <data name="From UAT {0}" xml:space="preserve"><value>Dall'UAT {0}</value></data>
+  <data name="Handed to production" xml:space="preserve"><value>Passato alla produzione</value></data>
+  <data name="Refused by production" xml:space="preserve"><value>Rifiutato dalla produzione</value></data>
+  <data name="Handover failed" xml:space="preserve"><value>Passaggio non riuscito</value></data>
+  <data name="uploaded there by {0}" xml:space="preserve"><value>caricato lì da {0}</value></data>
+  <data name="Review in the UAT" xml:space="preserve"><value>Revisione nell'UAT</value></data>
+  <data name="The UAT review is information only: approve here as for any upload. Whoever uploaded the version in the UAT cannot approve it here." xml:space="preserve"><value>La revisione nell'UAT è solo un'informazione: approva qui come per qualsiasi caricamento. Chi ha caricato la versione nell'UAT non può approvarla qui.</value></data>
+  <data name="Versions handed over from UATs" xml:space="preserve"><value>Versioni passate dagli UAT</value></data>
+  <data name="Refused" xml:space="preserve"><value>Rifiutato</value></data>
+  <data name="Announced" xml:space="preserve"><value>Annunciato</value></data>
+  <data name="Versions handed to production" xml:space="preserve"><value>Versioni passate alla produzione</value></data>
+  <data name="By" xml:space="preserve"><value>Da</value></data>
+  <data name="Sending" xml:space="preserve"><value>Invio in corso</value></data>
+  <data name="Handed to production; it waits there for review." xml:space="preserve"><value>Passata alla produzione; lì attende la revisione.</value></data>
+  <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>La produzione ha rifiutato la versione; i risultati sono elencati sotto la versione.</value></data>
+  <data name="The handover failed: {0}" xml:space="preserve"><value>Il passaggio non è riuscito: {0}</value></data>
+  <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Regola dei quattro occhi: hai caricato questa versione nell'UAT; la approva un altro amministratore o revisore della produzione.</value></data>
 </root>

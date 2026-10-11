@@ -1582,4 +1582,25 @@
   <data name="Download .reg for test PCs" xml:space="preserve"><value>Pobierz .reg dla komputerów testowych</value></data>
   <data name="Download .reg back to production" xml:space="preserve"><value>Pobierz .reg powrotu do produkcji</value></data>
   <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Ten UAT podpisuje pakiety tym samym kluczem co produkcja (skonfigurowany z kopii produkcyjnej?). Komputery testowe ufałyby wtedy pakietom z tego UAT jak produkcyjnym; skonfiguruj UAT bez klucza podpisu produkcji.</value></data>
+  <data name="Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store." xml:space="preserve"><value>Oznacz ten serwer jako system testowy (pasek na każdej stronie, klienci sklepu widzą środowisko UAT). Wyłącz to, jeśli serwer pozostaje w użyciu produkcyjnym dla własnych klientów, na przykład jako serwer deweloperski sklepu firmowego.</value></data>
+  <data name="Hand this version to production? Production checks it again and its reviewers decide." xml:space="preserve"><value>Przekazać tę wersję do produkcji? Produkcja sprawdzi ją ponownie, a decydują jej recenzenci.</value></data>
+  <data name="Note for production (optional)" xml:space="preserve"><value>Uwaga dla produkcji (opcjonalnie)</value></data>
+  <data name="Hand over to production" xml:space="preserve"><value>Przekaż do produkcji</value></data>
+  <data name="From UAT {0}" xml:space="preserve"><value>Z UAT {0}</value></data>
+  <data name="Handed to production" xml:space="preserve"><value>Przekazano do produkcji</value></data>
+  <data name="Refused by production" xml:space="preserve"><value>Odrzucono przez produkcję</value></data>
+  <data name="Handover failed" xml:space="preserve"><value>Przekazanie nie powiodło się</value></data>
+  <data name="uploaded there by {0}" xml:space="preserve"><value>przesłane tam przez {0}</value></data>
+  <data name="Review in the UAT" xml:space="preserve"><value>Recenzja w UAT</value></data>
+  <data name="The UAT review is information only: approve here as for any upload. Whoever uploaded the version in the UAT cannot approve it here." xml:space="preserve"><value>Recenzja w UAT jest tylko informacją: zatwierdzaj tutaj jak każde przesłanie. Osoba, która przesłała wersję w UAT, nie może jej tu zatwierdzić.</value></data>
+  <data name="Versions handed over from UATs" xml:space="preserve"><value>Wersje przekazane z UAT</value></data>
+  <data name="Refused" xml:space="preserve"><value>Odrzucono</value></data>
+  <data name="Announced" xml:space="preserve"><value>Zapowiedziano</value></data>
+  <data name="Versions handed to production" xml:space="preserve"><value>Wersje przekazane do produkcji</value></data>
+  <data name="By" xml:space="preserve"><value>Przez</value></data>
+  <data name="Sending" xml:space="preserve"><value>Wysyłanie</value></data>
+  <data name="Handed to production; it waits there for review." xml:space="preserve"><value>Przekazano do produkcji; czeka tam na recenzję.</value></data>
+  <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>Produkcja odrzuciła wersję; ustalenia są podane pod wersją.</value></data>
+  <data name="The handover failed: {0}" xml:space="preserve"><value>Przekazanie nie powiodło się: {0}</value></data>
+  <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Zasada czterech oczu: przesłałeś tę wersję w UAT; zatwierdza ją inny administrator lub recenzent produkcji.</value></data>
 </root>

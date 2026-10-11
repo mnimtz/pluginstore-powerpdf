@@ -1582,4 +1582,25 @@
   <data name="Download .reg for test PCs" xml:space="preserve"><value>Stáhnout .reg pro testovací počítače</value></data>
   <data name="Download .reg back to production" xml:space="preserve"><value>Stáhnout .reg pro návrat do produkce</value></data>
   <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Toto UAT podepisuje balíčky stejným klíčem jako produkce (nastaveno ze zálohy produkce?). Testovací počítače by pak balíčkům z tohoto UAT důvěřovaly jako produkčním; nastavte UAT bez podpisového klíče produkce.</value></data>
+  <data name="Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store." xml:space="preserve"><value>Označit tento server jako testovací systém (pruh na každé stránce, klienti obchodu vidí prostředí UAT). Vypněte to, pokud server zůstává v produktivním provozu pro vlastní zákazníky, například jako vývojový server firemního obchodu.</value></data>
+  <data name="Hand this version to production? Production checks it again and its reviewers decide." xml:space="preserve"><value>Předat tuto verzi do produkce? Produkce ji znovu zkontroluje a rozhodnou její posuzovatelé.</value></data>
+  <data name="Note for production (optional)" xml:space="preserve"><value>Poznámka pro produkci (volitelné)</value></data>
+  <data name="Hand over to production" xml:space="preserve"><value>Předat do produkce</value></data>
+  <data name="From UAT {0}" xml:space="preserve"><value>Z UAT {0}</value></data>
+  <data name="Handed to production" xml:space="preserve"><value>Předáno do produkce</value></data>
+  <data name="Refused by production" xml:space="preserve"><value>Odmítnuto produkcí</value></data>
+  <data name="Handover failed" xml:space="preserve"><value>Předání se nezdařilo</value></data>
+  <data name="uploaded there by {0}" xml:space="preserve"><value>nahráno tam uživatelem {0}</value></data>
+  <data name="Review in the UAT" xml:space="preserve"><value>Posouzení v UAT</value></data>
+  <data name="The UAT review is information only: approve here as for any upload. Whoever uploaded the version in the UAT cannot approve it here." xml:space="preserve"><value>Posouzení v UAT je jen informativní: schvalujte zde jako u každého nahrání. Kdo verzi nahrál v UAT, nemůže ji zde schválit.</value></data>
+  <data name="Versions handed over from UATs" xml:space="preserve"><value>Verze předané z UAT</value></data>
+  <data name="Refused" xml:space="preserve"><value>Odmítnuto</value></data>
+  <data name="Announced" xml:space="preserve"><value>Ohlášeno</value></data>
+  <data name="Versions handed to production" xml:space="preserve"><value>Verze předané do produkce</value></data>
+  <data name="By" xml:space="preserve"><value>Kdo</value></data>
+  <data name="Sending" xml:space="preserve"><value>Odesílá se</value></data>
+  <data name="Handed to production; it waits there for review." xml:space="preserve"><value>Předáno do produkce; tam čeká na posouzení.</value></data>
+  <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>Produkce verzi odmítla; zjištění jsou uvedena pod verzí.</value></data>
+  <data name="The handover failed: {0}" xml:space="preserve"><value>Předání se nezdařilo: {0}</value></data>
+  <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Pravidlo čtyř očí: tuto verzi jste nahráli v UAT; schvaluje ji jiný správce nebo posuzovatel produkce.</value></data>
 </root>

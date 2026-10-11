@@ -1082,8 +1082,16 @@ pairing:
 - Test PCs (S1.21.1, E1b): the UAT page offers a `.reg` for test PCs
   (`ServerUrl` and `TrustedSigningKeys` under HKLM, see the agent guide) and one
   back to production, and warns when the UAT signs with the production key.
-- Handing versions to production and the client marking "from the test system"
-  follow in the next stages (E2, client E1b).
+- Handing versions to production (S1.22.0, E2): on a paired UAT the owner of an
+  add-on or an admin clicks "Hand over to production" at an approved version.
+  The UAT sends the exact .ppak and source ZIP it tested (two signed steps);
+  production checks the hashes, runs every automatic check and stores the version
+  as submitted with its UAT origin. Production reviewers decide; whoever uploaded
+  the version in the UAT cannot approve it in production.
+- The role and the marking are separate: a UAT can drop the test system marking
+  (band, environment `uat`) when it stays in productive use for its own
+  customers, for example our Azure store as development server of a company store.
+- The client marking "from the test system" follows (client part of E1b).
 
 ## Local development
 

@@ -427,7 +427,7 @@ public static class ApiEndpoints
             var entries = await CatalogAsync(db, beta, Base(ctx), grants, signing, storeAllowed ? await customers.TestGrantsAsync(ctx) : new(),
                                              clientOnly: !storeAllowed, restricted: storeAllowed && await customers.IsRestrictedAsync(ctx));
             return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live",
-                environment = FederationService.IsChild ? "uat" : "production", packages = entries } });
+                environment = FederationService.MarkedAsTest ? "uat" : "production", packages = entries } });
         });
 
         // Power PDF update hint for the store client (S1.8.0): is there a newer update for its release line?
@@ -459,7 +459,7 @@ public static class ApiEndpoints
             var mode = StoreAccess.ModeOf(ctx);
             return Results.Json(new { ok = true, data = new { allowed = allowedModes.Contains(mode), mode,
                 allowedModes = StoreAccess.Modes.Select(m => m.Key).Where(allowedModes.Contains),
-                environment = FederationService.IsChild ? "uat" : "production" } });   // S1.21.0
+                environment = FederationService.MarkedAsTest ? "uat" : "production" } });   // S1.21.0
         });
 
         api.MapGet("/packages/{id}", async (string id, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService customers) =>

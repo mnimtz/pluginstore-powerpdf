@@ -1582,4 +1582,25 @@
   <data name="Download .reg for test PCs" xml:space="preserve"><value>下載測試電腦用的 .reg</value></data>
   <data name="Download .reg back to production" xml:space="preserve"><value>下載返回正式環境的 .reg</value></data>
   <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>此 UAT 使用與正式環境相同的金鑰簽署套件（是否從正式備份設定？）。測試電腦會像信任正式套件一樣信任此 UAT 的套件；請在不使用正式簽章金鑰的情況下設定 UAT。</value></data>
+  <data name="Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store." xml:space="preserve"><value>將此伺服器標記為測試系統（每個頁面顯示橫幅，商店用戶端看到 UAT 環境）。如果伺服器仍為其自己的客戶提供正式服務（例如作為公司商店的開發伺服器），請關閉此選項。</value></data>
+  <data name="Hand this version to production? Production checks it again and its reviewers decide." xml:space="preserve"><value>將此版本移交給正式環境？正式環境會再次檢查，並由其審核人員決定。</value></data>
+  <data name="Note for production (optional)" xml:space="preserve"><value>給正式環境的備註（選填）</value></data>
+  <data name="Hand over to production" xml:space="preserve"><value>移交給正式環境</value></data>
+  <data name="From UAT {0}" xml:space="preserve"><value>來自 UAT {0}</value></data>
+  <data name="Handed to production" xml:space="preserve"><value>已移交給正式環境</value></data>
+  <data name="Refused by production" xml:space="preserve"><value>遭正式環境拒絕</value></data>
+  <data name="Handover failed" xml:space="preserve"><value>移交失敗</value></data>
+  <data name="uploaded there by {0}" xml:space="preserve"><value>在該處由 {0} 上傳</value></data>
+  <data name="Review in the UAT" xml:space="preserve"><value>UAT 中的審核</value></data>
+  <data name="The UAT review is information only: approve here as for any upload. Whoever uploaded the version in the UAT cannot approve it here." xml:space="preserve"><value>UAT 中的審核僅供參考：請像對待任何上傳一樣在此核准。在 UAT 中上傳該版本的人不能在此核准它。</value></data>
+  <data name="Versions handed over from UATs" xml:space="preserve"><value>從 UAT 移交的版本</value></data>
+  <data name="Refused" xml:space="preserve"><value>已拒絕</value></data>
+  <data name="Announced" xml:space="preserve"><value>已通知</value></data>
+  <data name="Versions handed to production" xml:space="preserve"><value>已移交給正式環境的版本</value></data>
+  <data name="By" xml:space="preserve"><value>操作人</value></data>
+  <data name="Sending" xml:space="preserve"><value>正在傳送</value></data>
+  <data name="Handed to production; it waits there for review." xml:space="preserve"><value>已移交給正式環境；正在那裡等待審核。</value></data>
+  <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>正式環境拒絕了該版本；結果列在版本下方。</value></data>
+  <data name="The handover failed: {0}" xml:space="preserve"><value>移交失敗：{0}</value></data>
+  <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>四眼原則：您在 UAT 中上傳了此版本；由正式環境的其他管理員或審核人員核准。</value></data>
 </root>

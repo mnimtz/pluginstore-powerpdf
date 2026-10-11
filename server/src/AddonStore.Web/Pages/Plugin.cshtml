@@ -16,7 +16,7 @@
 
 @if (Model.Notice is not null)
 {
-    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+    <div class="alert @Model.NoticeKind">@(Model.NoticeArg is null ? L[Model.Notice] : L[Model.Notice, Model.NoticeArg])</div>
 }
 @if (pkg.BlockedAt is not null)
 {
@@ -148,7 +148,16 @@
                 }
             </td>
             <td style="max-width:420px">@CatalogUi.ManifestText(v, "changelog", lang, v.Changelog)</td>
-            <td>@Time.Fmt(v.SubmittedAt, false)<br /><small style="color:var(--tun-slate)">@v.SubmittedBy</small></td>
+            <td>@Time.Fmt(v.SubmittedAt, false)<br /><small style="color:var(--tun-slate)">@v.SubmittedBy</small>
+                @if (v.OriginUat is { Length: > 0 })
+                {
+                    <br /><small class="badge beta" title="@v.OriginNote">@L["From UAT {0}", v.OriginUat]</small>
+                }
+                @foreach (var h in Model.Handovers.Where(h => h.VersionId == v.Id).Take(1))
+                {
+                    <br /><small style="color:@(h.State == "accepted" ? "var(--tun-green, #016839)" : "var(--tun-red, #9b1c1c)")">@L[h.State == "accepted" ? "Handed to production" : h.State == "rejected" ? "Refused by production" : "Handover failed"] · @Time.Fmt(h.CreatedAt)@(h.Message.Length > 0 ? ": " + h.Message : "")</small>
+                }
+            </td>
             <td>@v.Downloads</td>
             <td style="text-align:right">
                 <div style="display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap">
@@ -200,6 +209,16 @@
                                 <button type="submit" class="btn small secondary">@L["Lift the block"]</button>
                             </form>
                         }
+                    }
+                    @if (Model.CanHandOver && v.Status is VersionStatus.Live or VersionStatus.Beta && v.BlockedAt is null
+                         && !Model.Handovers.Any(h => h.VersionId == v.Id && h.State == "accepted"))
+                    {
+                        <form method="post" asp-page-handler="HandOver" asp-route-id="@pkg.Id" style="display:flex;gap:6px;align-items:center"
+                              data-confirm="@L["Hand this version to production? Production checks it again and its reviewers decide."]">
+                            <input type="hidden" name="versionId" value="@v.Id" />
+                            <input type="text" name="note" maxlength="1000" placeholder="@L["Note for production (optional)"]" style="width:200px" />
+                            <button type="submit" class="btn small">@L["Hand over to production"]</button>
+                        </form>
                     }
                     @if (VersionActionService.CanRestore(v, Model.IsAdmin))
                     {

@@ -1582,4 +1582,25 @@
   <data name="Download .reg for test PCs" xml:space="preserve"><value>テスト用 PC 向け .reg をダウンロード</value></data>
   <data name="Download .reg back to production" xml:space="preserve"><value>本番環境に戻す .reg をダウンロード</value></data>
   <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>この UAT は本番環境と同じキーでパッケージに署名しています (本番環境のバックアップから設定しましたか?)。テスト用 PC はこの UAT のパッケージを本番パッケージと同様に信頼してしまいます。本番環境の署名キーなしで UAT を設定してください。</value></data>
+  <data name="Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store." xml:space="preserve"><value>このサーバーをテスト システムとして表示します (すべてのページに帯を表示し、ストア クライアントには UAT 環境として見えます)。サーバーが自社の顧客向けに本番利用を続ける場合 (例: 企業ストアの開発サーバー) はオフにしてください。</value></data>
+  <data name="Hand this version to production? Production checks it again and its reviewers decide." xml:space="preserve"><value>このバージョンを本番環境に引き渡しますか? 本番環境で再度チェックされ、その審査担当者が判断します。</value></data>
+  <data name="Note for production (optional)" xml:space="preserve"><value>本番環境へのメモ (任意)</value></data>
+  <data name="Hand over to production" xml:space="preserve"><value>本番環境に引き渡す</value></data>
+  <data name="From UAT {0}" xml:space="preserve"><value>UAT {0} から</value></data>
+  <data name="Handed to production" xml:space="preserve"><value>本番環境に引き渡し済み</value></data>
+  <data name="Refused by production" xml:space="preserve"><value>本番環境で拒否されました</value></data>
+  <data name="Handover failed" xml:space="preserve"><value>引き渡しに失敗しました</value></data>
+  <data name="uploaded there by {0}" xml:space="preserve"><value>{0} がそこでアップロード</value></data>
+  <data name="Review in the UAT" xml:space="preserve"><value>UAT での審査</value></data>
+  <data name="The UAT review is information only: approve here as for any upload. Whoever uploaded the version in the UAT cannot approve it here." xml:space="preserve"><value>UAT での審査は参考情報です。ほかのアップロードと同様にここで承認してください。UAT でこのバージョンをアップロードした人は、ここで承認できません。</value></data>
+  <data name="Versions handed over from UATs" xml:space="preserve"><value>UAT から引き渡されたバージョン</value></data>
+  <data name="Refused" xml:space="preserve"><value>拒否</value></data>
+  <data name="Announced" xml:space="preserve"><value>通知済み</value></data>
+  <data name="Versions handed to production" xml:space="preserve"><value>本番環境に引き渡したバージョン</value></data>
+  <data name="By" xml:space="preserve"><value>実行者</value></data>
+  <data name="Sending" xml:space="preserve"><value>送信中</value></data>
+  <data name="Handed to production; it waits there for review." xml:space="preserve"><value>本番環境に引き渡しました。そこで審査を待っています。</value></data>
+  <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>本番環境がこのバージョンを拒否しました。結果はバージョンの下に表示されています。</value></data>
+  <data name="The handover failed: {0}" xml:space="preserve"><value>引き渡しに失敗しました: {0}</value></data>
+  <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>4 アイ ルール: このバージョンは UAT であなたがアップロードしました。本番環境の別の管理者または審査担当者が承認します。</value></data>
 </root>

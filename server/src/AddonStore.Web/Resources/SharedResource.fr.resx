@@ -1582,4 +1582,25 @@
   <data name="Download .reg for test PCs" xml:space="preserve"><value>Télécharger le .reg pour les PC de test</value></data>
   <data name="Download .reg back to production" xml:space="preserve"><value>Télécharger le .reg de retour à la production</value></data>
   <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Cet UAT signe les paquets avec la même clé que la production (configuré à partir d'une sauvegarde de production ?). Les PC de test feraient alors confiance aux paquets de cet UAT comme à ceux de la production ; configurez l'UAT sans la clé de signature de la production.</value></data>
+  <data name="Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store." xml:space="preserve"><value>Signaler ce serveur comme système de test (bandeau sur chaque page, les clients du store voient l'environnement UAT). Désactivez-le si le serveur reste en production pour ses propres clients, par exemple comme serveur de développement d'un store d'entreprise.</value></data>
+  <data name="Hand this version to production? Production checks it again and its reviewers decide." xml:space="preserve"><value>Transmettre cette version à la production ? La production la vérifie à nouveau et ses réviseurs décident.</value></data>
+  <data name="Note for production (optional)" xml:space="preserve"><value>Note pour la production (facultatif)</value></data>
+  <data name="Hand over to production" xml:space="preserve"><value>Transmettre à la production</value></data>
+  <data name="From UAT {0}" xml:space="preserve"><value>Depuis l'UAT {0}</value></data>
+  <data name="Handed to production" xml:space="preserve"><value>Transmis à la production</value></data>
+  <data name="Refused by production" xml:space="preserve"><value>Refusé par la production</value></data>
+  <data name="Handover failed" xml:space="preserve"><value>Échec de la transmission</value></data>
+  <data name="uploaded there by {0}" xml:space="preserve"><value>téléversé là-bas par {0}</value></data>
+  <data name="Review in the UAT" xml:space="preserve"><value>Révision dans l'UAT</value></data>
+  <data name="The UAT review is information only: approve here as for any upload. Whoever uploaded the version in the UAT cannot approve it here." xml:space="preserve"><value>La révision dans l'UAT n'est qu'une information : approuvez ici comme pour tout téléversement. La personne qui a téléversé la version dans l'UAT ne peut pas l'approuver ici.</value></data>
+  <data name="Versions handed over from UATs" xml:space="preserve"><value>Versions transmises par des UAT</value></data>
+  <data name="Refused" xml:space="preserve"><value>Refusé</value></data>
+  <data name="Announced" xml:space="preserve"><value>Annoncé</value></data>
+  <data name="Versions handed to production" xml:space="preserve"><value>Versions transmises à la production</value></data>
+  <data name="By" xml:space="preserve"><value>Par</value></data>
+  <data name="Sending" xml:space="preserve"><value>Envoi en cours</value></data>
+  <data name="Handed to production; it waits there for review." xml:space="preserve"><value>Transmis à la production ; elle y attend la révision.</value></data>
+  <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>La production a refusé la version ; les constats figurent sous la version.</value></data>
+  <data name="The handover failed: {0}" xml:space="preserve"><value>La transmission a échoué : {0}</value></data>
+  <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Règle des quatre yeux : vous avez téléversé cette version dans l'UAT ; un autre administrateur ou réviseur de la production l'approuve.</value></data>
 </root>

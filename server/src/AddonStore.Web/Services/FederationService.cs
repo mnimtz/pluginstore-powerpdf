@@ -27,9 +27,10 @@ public record FedResult(bool Ok, string Code = "", string Message = "", int Stat
 /// UAT is signed (method, path, time, nonce, SHA-256 of the body) and every answer of the master too.
 /// The federation keys are separate from the package signing key and protected like it.
 /// </summary>
-public class FederationService
+public partial class FederationService
 {
     public const string ModeKey = "Federation.Mode";                 // "" (on its own) or "child" (UAT)
+    public const string MarkKey = "Federation.MarkAsTest";           // UAT: "false" = no test system band / environment (S1.22.0)
     public const string MasterUrlKey = "Federation.MasterUrl";       // UAT: https address of its master
     public const string PairingIdKey = "Federation.PairingId";       // UAT: id the master gave
     public const string PairingNameKey = "Federation.PairingName";   // UAT: name the master gave
@@ -41,6 +42,7 @@ public class FederationService
     public const string PolicyKey = @"HKEY_LOCAL_MACHINE\SOFTWARE\Kofax\PDF\Tungsten Power PDF\PluginStore\Policies\Store";
     public const string OwnKeyKey = "Federation.PrivateKey";         // both sides: own federation key ("dp:" protected PEM)
     public const string HttpName = "federation";
+    public const string UploadHttpName = "federation-upload";        // handovers: up to 220 MB, 15 minutes (S1.22.0)
     public const string SignPrefix = "AddonStore-Federation-v1";
     private const string Purpose = "AddonStore.Federation";
 
@@ -48,8 +50,14 @@ public class FederationService
     public static readonly TimeSpan MaxClockSkew = TimeSpan.FromMinutes(5);
     private const string CodeAlphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";   // no 0/O, 1/I
 
-    /// <summary>Mode of this server, read at start and after every change (portal band, catalog "environment").</summary>
+    /// <summary>Mode of this server, read at start and after every change: may hand versions to a master.</summary>
     public static volatile bool IsChild;
+    /// <summary>
+    /// The UAT shows itself as a test system (portal band, "UAT" in titles, environment "uat" for catalog and
+    /// clients). On by default; off for a server that stays in productive use for its own customers while
+    /// it is the development server of another store (S1.22.0).
+    /// </summary>
+    public static volatile bool MarkedAsTest;
 
     // nonces of the last minutes per pairing: a request seen once is refused again (replay)
     private static readonly ConcurrentDictionary<string, DateTime> SeenNonces = new();
@@ -61,16 +69,21 @@ public class FederationService
     private readonly IHostEnvironment _env;
     private readonly AuditService _audit;
     private readonly PackageSigning _signing;
+    private readonly IServiceProvider _sp;   // submission pipeline and users for handovers (S1.22.0), resolved on use
 
     public FederationService(AppDbContext db, SettingsService settings, IDataProtectionProvider dp, IHttpClientFactory http,
-                             IHostEnvironment env, AuditService audit, PackageSigning signing)
+                             IHostEnvironment env, AuditService audit, PackageSigning signing, IServiceProvider sp)
     {
-        _db = db; _settings = settings; _dp = dp; _http = http; _env = env; _audit = audit; _signing = signing;
+        _db = db; _settings = settings; _dp = dp; _http = http; _env = env; _audit = audit; _signing = signing; _sp = sp;
     }
 
     private static FedResult Err(string code, string message, int status = 400) => new(false, code, message, status);
 
-    public async Task InitAsync() => IsChild = await _settings.GetAsync(ModeKey) == "child";
+    public async Task InitAsync()
+    {
+        IsChild = await _settings.GetAsync(ModeKey) == "child";
+        MarkedAsTest = IsChild && await _settings.GetAsync(MarkKey) != "false";
+    }
 
     // ---- keys -------------------------------------------------------------------------------
 
@@ -196,7 +209,7 @@ public class FederationService
     }
 
     /// <summary>"Add UAT": a one-time pairing code (shown once; only its hash is kept).</summary>
-    public async Task<FedResult> CreateCodeAsync(string name, string by)
+    public async Task<FedResult> CreateCodeAsync(string name, string by, string? byId = null)
     {
         if (IsChild) return Err("FED_IS_UAT", "This server is a UAT itself; only a server that runs on its own adds a UAT.", 409);
         name = (name ?? "").Trim();
@@ -210,7 +223,7 @@ public class FederationService
         if (await OwnKeyAsync(create: true) is null)
             return Err("FED_KEY_UNREADABLE", "The federation key of this server cannot be read (restored without its key ring).", 500);
         var code = NewCode();
-        var row = new FederationPairingCode { Name = name, CodeHash = CodeHash(code), CreatedBy = by, CreatedAt = now, ExpiresAt = now + CodeLifetime };
+        var row = new FederationPairingCode { Name = name, CodeHash = CodeHash(code), CreatedBy = by, CreatedById = byId, CreatedAt = now, ExpiresAt = now + CodeLifetime };
         _db.FederationPairingCodes.Add(row);
         await _db.SaveChangesAsync();
         await _audit.LogAsync(by, "federation.code.created", name, $"code {row.Id}, valid until {row.ExpiresAt:u}");
@@ -274,7 +287,7 @@ public class FederationService
         var child = new FederationChild
         {
             Id = id, Name = row.Name, PublicKey = PublicKeyOf(childKey), ChildUrl = childUrl,
-            CreatedAt = now, CreatedBy = row.CreatedBy, LastSeenAt = now,
+            CreatedAt = now, CreatedBy = row.CreatedBy, CreatedById = row.CreatedById, LastSeenAt = now,
         };
         _db.FederationChildren.Add(child);
         await _db.SaveChangesAsync();
@@ -287,7 +300,11 @@ public class FederationService
     }
 
     /// <summary>Checks a signed request of a paired UAT; the body is the exact bytes received.</summary>
-    public async Task<(FederationChild? Child, FedResult? Error)> VerifyRequestAsync(HttpRequest req, byte[] body)
+    public Task<(FederationChild? Child, FedResult? Error)> VerifyRequestAsync(HttpRequest req, byte[] body) =>
+        VerifyRequestAsync(req, Sha256Hex(body));
+
+    /// <summary>Same check with the SHA-256 (lowercase hex) of a body that was streamed to a file (handover, S1.22.0).</summary>
+    public async Task<(FederationChild? Child, FedResult? Error)> VerifyRequestAsync(HttpRequest req, string bodyHash)
     {
         string H(string name) => req.Headers[name].ToString();
         var id = H("X-Federation-Id");
@@ -306,7 +323,7 @@ public class FederationService
         if ((now - at).Duration() > MaxClockSkew)
             return (null, Err("FED_TIMESTAMP", "The request is older than 5 minutes or the clocks differ; check the time of both servers.", 401));
         using var key = ImportPublicKey(child.PublicKey);
-        var text = RequestText(child.Id, req.Method, req.Path.Value + req.QueryString.Value, ts, nonce, Sha256Hex(body));
+        var text = RequestText(child.Id, req.Method, req.Path.Value + req.QueryString.Value, ts, nonce, bodyHash);
         if (key is null || !Verify(key, text, sig)) return (null, Err("FED_SIGNATURE_INVALID", "Unknown pairing or wrong signature.", 401));
         // only now, so nobody can fill the list with unsigned requests
         if (SeenNonces.Count > 50000)
@@ -330,7 +347,7 @@ public class FederationService
 
     // ---- UAT side -----------------------------------------------------------------------------
 
-    public record ChildState(bool IsChild, string MasterUrl, string PairingId, string Name, string MasterKeyId, string OwnKeyId,
+    public record ChildState(bool IsChild, bool MarkedAsTest, string MasterUrl, string PairingId, string Name, string MasterKeyId, string OwnKeyId,
                              DateTime? PairedAt, string LastTest, bool KeyProblem, string SigningKeyId = "", string TrustedSigningKeys = "",
                              bool SameSigningKey = false);
 
@@ -350,7 +367,7 @@ public class FederationService
         await _signing.EnsureLoadedAsync();
         var signingId = _signing.KeyId;
         var masterSigning = await _settings.GetAsync(MasterSigningKeyIdKey);
-        return new ChildState(IsChild, await _settings.GetAsync(MasterUrlKey), pairingId, await _settings.GetAsync(PairingNameKey),
+        return new ChildState(IsChild, MarkedAsTest, await _settings.GetAsync(MasterUrlKey), pairingId, await _settings.GetAsync(PairingNameKey),
                               KeyIdOf(master), own, paired, await _settings.GetAsync(LastTestKey), problem,
                               signingId, signingId.Length > 0 && _signing.PublicKeyRaw is { Length: > 0 } raw ? signingId + ":" + raw : "",
                               masterSigning.Length > 0 && masterSigning == signingId);
@@ -380,17 +397,27 @@ public class FederationService
         return [.. Encoding.Unicode.GetPreamble(), .. Encoding.Unicode.GetBytes(sb.ToString())];
     }
 
-    /// <summary>Switches between "on its own" and "UAT (child)". Leaving UAT mode forgets the pairing.</summary>
-    public async Task<FedResult> SetModeAsync(bool child, string by)
+    /// <summary>Switches between "on its own" and "UAT (child)". Leaving UAT mode forgets the pairing.
+    /// markAsTest (UAT only): show the server as a test system; null keeps the setting.</summary>
+    public async Task<FedResult> SetModeAsync(bool child, string by, bool? markAsTest = null)
     {
-        if (child == IsChild) return FedResult.Done(new { mode = child ? "child" : "standalone" });
+        if (child && markAsTest is { } mark && mark != MarkedAsTest)
+        {
+            await _settings.SetAsync(MarkKey, mark ? "" : "false");
+            await _audit.LogAsync(by, "settings.changed", MarkKey, mark ? "on" : "off");
+        }
+        if (child == IsChild)
+        {
+            await InitAsync();
+            return FedResult.Done(new { mode = child ? "child" : "standalone", markAsTest = MarkedAsTest });
+        }
         if (child && await _db.FederationChildren.AnyAsync())
             return Err("FED_HAS_UAT", "This server is the master of a UAT; remove its UATs before it becomes a UAT itself.", 409);
         if (!child) await ForgetPairingAsync();
         await _settings.SetAsync(ModeKey, child ? "child" : "");
-        IsChild = child;
+        await InitAsync();
         await _audit.LogAsync(by, "settings.changed", ModeKey, child ? "child" : "standalone");
-        return FedResult.Done(new { mode = child ? "child" : "standalone" });
+        return FedResult.Done(new { mode = child ? "child" : "standalone", markAsTest = MarkedAsTest });
     }
 
     private async Task ForgetPairingAsync()
@@ -486,28 +513,44 @@ public class FederationService
     }
 
     /// <summary>A request to the master: no redirects, 20 s, at most 64 KB answer; signed (and the answer checked) when a key is given.</summary>
-    private async Task<(int Status, JsonElement? Json, string Raw, FedResult? Error)> SendAsync(HttpMethod method, string url, byte[] body, (string Id, ECDsa Key)? signer)
+    private async Task<(int Status, JsonElement? Json, string Raw, FedResult? Error)> SendAsync(HttpMethod method, string url, byte[] body, (string Id, ECDsa Key)? signer,
+                                                                                               string? filePath = null)
     {
         using var req = new HttpRequestMessage(method, url);
-        if (body.Length > 0 || method == HttpMethod.Post)
+        string bodyHash;
+        FileStream? file = null;
+        if (filePath is not null)
         {
-            req.Content = new ByteArrayContent(body);
-            req.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            // a handover: the upload package from a temp file, hashed first, then streamed
+            using (var hs = File.OpenRead(filePath)) bodyHash = Convert.ToHexString(await SHA256.HashDataAsync(hs)).ToLowerInvariant();
+            file = File.OpenRead(filePath);
+            req.Content = new StreamContent(file);
+            req.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
         }
+        else
+        {
+            bodyHash = Sha256Hex(body);
+            if (body.Length > 0 || method == HttpMethod.Post)
+            {
+                req.Content = new ByteArrayContent(body);
+                req.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            }
+        }
+        using var fileGuard = file;
         string nonce = "";
         if (signer is { } s)
         {
             var ts = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString(System.Globalization.CultureInfo.InvariantCulture);
             nonce = Convert.ToBase64String(RandomNumberGenerator.GetBytes(18)).Replace('+', '-').Replace('/', '_');
             var uri = new Uri(url);
-            var text = RequestText(s.Id, method.Method, uri.AbsolutePath + uri.Query, ts, nonce, Sha256Hex(body));
+            var text = RequestText(s.Id, method.Method, uri.AbsolutePath + uri.Query, ts, nonce, bodyHash);
             req.Headers.Add("X-Federation-Id", s.Id);
             req.Headers.Add("X-Federation-Timestamp", ts);
             req.Headers.Add("X-Federation-Nonce", nonce);
             req.Headers.Add("X-Federation-Signature", Sign(s.Key, text));
         }
         HttpResponseMessage resp;
-        try { resp = await _http.CreateClient(HttpName).SendAsync(req, HttpCompletionOption.ResponseHeadersRead); }
+        try { resp = await _http.CreateClient(filePath is null ? HttpName : UploadHttpName).SendAsync(req, HttpCompletionOption.ResponseHeadersRead); }
         catch (Exception e) when (e is HttpRequestException or TaskCanceledException or OperationCanceledException)
         {
             return (0, null, "", Err("FED_MASTER_UNREACHABLE", "The production server cannot be reached: " + e.GetType().Name + ".", 502));

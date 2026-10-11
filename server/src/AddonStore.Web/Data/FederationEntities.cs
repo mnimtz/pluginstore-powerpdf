@@ -16,6 +16,8 @@ public class FederationChild
     public string ChildUrl { get; set; } = "";
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public string CreatedBy { get; set; } = "";
+    /// <summary>Master admin who created the pairing code (S1.22.0): uploader of handed-over versions when no account has the UAT uploader's e-mail.</summary>
+    public string? CreatedById { get; set; }
     public DateTime? BlockedAt { get; set; }
     public string? BlockedBy { get; set; }
     public DateTime? LastSeenAt { get; set; }
@@ -31,9 +33,56 @@ public class FederationPairingCode
     public string CodeHash { get; set; } = "";
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public string CreatedBy { get; set; } = "";
+    public string? CreatedById { get; set; }
     public DateTime ExpiresAt { get; set; }
     public DateTime? UsedAt { get; set; }
     public string? ChildId { get; set; }
+}
+
+/// <summary>
+/// Master side of a handover (S1.22.0, stage E2): a UAT announces one version (id, version, SHA-256 of package and
+/// source, note, its uploader and review), then sends the upload package; the master checks it like any upload.
+/// </summary>
+public class FederationIntake
+{
+    public string Id { get; set; } = Guid.NewGuid().ToString("N");
+    public string ChildId { get; set; } = "";
+    public string PackageId { get; set; } = "";
+    public string Version { get; set; } = "";
+    public string Sha256 { get; set; } = "";
+    public string SourceSha256 { get; set; } = "";
+    public string Note { get; set; } = "";
+    public string UploaderEmail { get; set; } = "";
+    public string UploaderName { get; set; } = "";
+    public string HandedOverBy { get; set; } = "";
+    public string ReviewJson { get; set; } = "";
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    /// <summary>waiting (announced), accepted (stored as submitted version), rejected (findings).</summary>
+    public string State { get; set; } = "waiting";
+    public string Message { get; set; } = "";
+    public string FindingsJson { get; set; } = "";
+    public int? VersionId { get; set; }
+    public DateTime? DoneAt { get; set; }
+}
+
+/// <summary>UAT side of a handover (S1.22.0): what was handed to production and the answer.</summary>
+public class FederationHandover
+{
+    public string Id { get; set; } = Guid.NewGuid().ToString("N");
+    public int VersionId { get; set; }
+    public string PackageId { get; set; } = "";
+    public string Version { get; set; } = "";
+    public string Sha256 { get; set; } = "";
+    public string Note { get; set; } = "";
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public string CreatedBy { get; set; } = "";
+    /// <summary>sending, accepted (submitted on production), rejected (findings), failed (not delivered).</summary>
+    public string State { get; set; } = "sending";
+    public string Code { get; set; } = "";
+    public string Message { get; set; } = "";
+    public string FindingsJson { get; set; } = "";
+    public string MasterIntakeId { get; set; } = "";
+    public DateTime? DoneAt { get; set; }
 }
 
 /// <summary>Idempotent SQL for databases created before S1.21.0 (EnsureCreated never alters).</summary>
@@ -46,5 +95,22 @@ public static class FederationSchema
         "CREATE TABLE IF NOT EXISTS FederationPairingCodes (Id TEXT NOT NULL PRIMARY KEY, Name TEXT NOT NULL, CodeHash TEXT NOT NULL, " +
             "CreatedAt TEXT NOT NULL, CreatedBy TEXT NOT NULL, ExpiresAt TEXT NOT NULL, UsedAt TEXT NULL, ChildId TEXT NULL)",
         "CREATE UNIQUE INDEX IF NOT EXISTS IX_FederationPairingCodes_CodeHash ON FederationPairingCodes (CodeHash)",
+        // S1.22.0 (stage E2): handing versions to production
+        "ALTER TABLE FederationChildren ADD COLUMN CreatedById TEXT NULL",
+        "ALTER TABLE FederationPairingCodes ADD COLUMN CreatedById TEXT NULL",
+        "CREATE TABLE IF NOT EXISTS FederationIntakes (Id TEXT NOT NULL PRIMARY KEY, ChildId TEXT NOT NULL, PackageId TEXT NOT NULL, Version TEXT NOT NULL, " +
+            "Sha256 TEXT NOT NULL, SourceSha256 TEXT NOT NULL, Note TEXT NOT NULL, UploaderEmail TEXT NOT NULL, UploaderName TEXT NOT NULL, " +
+            "HandedOverBy TEXT NOT NULL, ReviewJson TEXT NOT NULL, CreatedAt TEXT NOT NULL, State TEXT NOT NULL, Message TEXT NOT NULL, " +
+            "FindingsJson TEXT NOT NULL, VersionId INTEGER NULL, DoneAt TEXT NULL)",
+        "CREATE TABLE IF NOT EXISTS FederationHandovers (Id TEXT NOT NULL PRIMARY KEY, VersionId INTEGER NOT NULL, PackageId TEXT NOT NULL, " +
+            "Version TEXT NOT NULL, Sha256 TEXT NOT NULL, Note TEXT NOT NULL, CreatedAt TEXT NOT NULL, CreatedBy TEXT NOT NULL, State TEXT NOT NULL, " +
+            "Code TEXT NOT NULL, Message TEXT NOT NULL, FindingsJson TEXT NOT NULL, MasterIntakeId TEXT NOT NULL, DoneAt TEXT NULL)",
+        "ALTER TABLE PackageVersions ADD COLUMN OriginChildId TEXT NULL",
+        "ALTER TABLE PackageVersions ADD COLUMN OriginUat TEXT NULL",
+        "ALTER TABLE PackageVersions ADD COLUMN OriginNote TEXT NULL",
+        "ALTER TABLE PackageVersions ADD COLUMN OriginUploaderEmail TEXT NULL",
+        "ALTER TABLE PackageVersions ADD COLUMN OriginUploader TEXT NULL",
+        "ALTER TABLE PackageVersions ADD COLUMN OriginReviewJson TEXT NULL",
+        "ALTER TABLE PackageVersions ADD COLUMN OriginAt TEXT NULL",
     };
 }

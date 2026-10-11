@@ -212,6 +212,8 @@ builder.Services.AddHostedService<SendToMaintenance>();
 builder.Services.AddScoped<FederationService>();
 builder.Services.AddHttpClient(FederationService.HttpName, c => { c.Timeout = TimeSpan.FromSeconds(20); c.DefaultRequestHeaders.UserAgent.ParseAdd("AddonStore-Server (federation)"); })
     .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
+builder.Services.AddHttpClient(FederationService.UploadHttpName, c => { c.Timeout = TimeSpan.FromMinutes(15); c.DefaultRequestHeaders.UserAgent.ParseAdd("AddonStore-Server (federation)"); })
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 
 var versionFile = Path.Combine(AppContext.BaseDirectory, "VERSION");
 var appVersion = File.Exists(versionFile) ? File.ReadAllText(versionFile).Trim() : "0.0.0-dev";
@@ -296,7 +298,9 @@ app.Use(async (ctx, next) =>
 {
     var p = ctx.Request.Path;
     var upload = (HttpMethods.IsPost(ctx.Request.Method) && (p.Equals("/api/packages") || p.Equals("/api/packages/validate")))
-                 || (HttpMethods.IsPut(ctx.Request.Method) && p.StartsWithSegments("/api/packages") && p.Value!.EndsWith("/source"));
+                 || (HttpMethods.IsPut(ctx.Request.Method) && p.StartsWithSegments("/api/packages") && p.Value!.EndsWith("/source"))
+                 // UAT handover (S1.22.0): package and source of one version, signed; limited to 220 MB in the endpoint
+                 || (HttpMethods.IsPut(ctx.Request.Method) && p.StartsWithSegments("/api/federation/promotions") && p.Value!.EndsWith("/package"));
     // web uploads: the package form, the source upload of a version, backup restore
     upload |= HttpMethods.IsPost(ctx.Request.Method) &&
               (p.Equals("/Dashboard") || p.StartsWithSegments("/Admin/Backup") ||

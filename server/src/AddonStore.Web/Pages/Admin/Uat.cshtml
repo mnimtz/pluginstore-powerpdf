@@ -24,6 +24,7 @@
     <form method="post" asp-page-handler="Mode" class="stack" style="max-width:none">
         <label style="font-weight:400"><input type="radio" name="mode" value="standalone" checked="@(!st.IsChild)" /> @L["On its own (production); with a UAT added it is that UAT's master"]</label>
         <label style="font-weight:400"><input type="radio" name="mode" value="child" checked="@st.IsChild" /> @L["UAT: test system of a production server"]</label>
+        <label style="font-weight:400;margin-inline-start:22px"><input type="checkbox" name="markAsTest" value="true" checked="@(!st.IsChild || st.MarkedAsTest)" /> @L["Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store."]</label>
         <div><button type="submit" class="btn">@L["Save mode"]</button></div>
     </form>
 </div>
@@ -108,6 +109,27 @@
             </div>
         }
     </div>
+    @if (Model.Intakes.Count > 0)
+    {
+        <div class="card" style="max-width:960px">
+            <h2 style="margin-top:0">@L["Versions handed over from UATs"]</h2>
+            <div class="table-wrap">
+            <table>
+                <tr><th>@L["Add-on"]</th><th>@L["Version"]</th><th>UAT</th><th>@L["Status"]</th><th>@L["Received"]</th></tr>
+                @foreach (var x in Model.Intakes)
+                {
+                    <tr>
+                        <td>@if (x.VersionId is not null) { <a href="/Plugin?id=@Uri.EscapeDataString(x.PackageId)">@x.PackageId</a> } else { @x.PackageId }</td>
+                        <td>@x.Version</td>
+                        <td>@(Model.Children.FirstOrDefault(c => c.Id == x.ChildId)?.Name ?? x.ChildId)</td>
+                        <td>@L[x.State == "accepted" ? "Awaiting review" : x.State == "rejected" ? "Refused" : "Announced"]@(x.State == "rejected" && x.Message.Length > 0 ? ": " + x.Message : "")</td>
+                        <td>@Time.Fmt(x.CreatedAt)</td>
+                    </tr>
+                }
+            </table>
+            </div>
+        </div>
+    }
 }
 else
 {
@@ -177,6 +199,27 @@ else
             <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
                 <a class="btn" href="/Admin/Uat?handler=Reg&amp;to=uat">@L["Download .reg for test PCs"]</a>
                 <a class="btn secondary" href="/Admin/Uat?handler=Reg&amp;to=production">@L["Download .reg back to production"]</a>
+            </div>
+        </div>
+    }
+    @if (Model.Handovers.Count > 0)
+    {
+        <div class="card" style="max-width:960px">
+            <h2 style="margin-top:0">@L["Versions handed to production"]</h2>
+            <div class="table-wrap">
+            <table>
+                <tr><th>@L["Add-on"]</th><th>@L["Version"]</th><th>@L["Status"]</th><th>@L["By"]</th><th>@L["Date"]</th></tr>
+                @foreach (var h in Model.Handovers)
+                {
+                    <tr>
+                        <td><a href="/Plugin?id=@Uri.EscapeDataString(h.PackageId)">@h.PackageId</a></td>
+                        <td>@h.Version</td>
+                        <td>@L[h.State == "accepted" ? "Handed to production" : h.State == "rejected" ? "Refused by production" : h.State == "failed" ? "Handover failed" : "Sending"]@(h.State != "accepted" && h.Message.Length > 0 ? ": " + h.Message : "")</td>
+                        <td>@h.CreatedBy</td>
+                        <td>@Time.Fmt(h.CreatedAt)</td>
+                    </tr>
+                }
+            </table>
             </div>
         </div>
     }

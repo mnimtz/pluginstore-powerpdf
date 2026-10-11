@@ -304,6 +304,15 @@ public class PackageVersion
     public DateTime? BlockedAt { get; set; }
     public string? BlockReason { get; set; }
     public string? BlockedBy { get; set; }
+    /// <summary>UAT origin (S1.22.0, master-child E2): the version came from this paired UAT, with the UAT's note,
+    /// its uploader (four-eyes across both environments) and an excerpt of its review there. Null = normal upload.</summary>
+    public string? OriginChildId { get; set; }
+    public string? OriginUat { get; set; }
+    public string? OriginNote { get; set; }
+    public string? OriginUploaderEmail { get; set; }
+    public string? OriginUploader { get; set; }
+    public string? OriginReviewJson { get; set; }
+    public DateTime? OriginAt { get; set; }
 }
 
 public class AuditEntry

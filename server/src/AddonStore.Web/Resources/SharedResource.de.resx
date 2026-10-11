@@ -1582,4 +1582,25 @@
   <data name="Download .reg for test PCs" xml:space="preserve"><value>.reg für Test-PCs herunterladen</value></data>
   <data name="Download .reg back to production" xml:space="preserve"><value>.reg zurück zur Produktion herunterladen</value></data>
   <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Dieses UAT signiert Pakete mit demselben Schlüssel wie die Produktion (aus einem Produktiv-Backup eingerichtet?). Test-PCs würden Pakete aus diesem UAT dann wie Produktivpakete behandeln; richten Sie das UAT ohne den Signaturschlüssel der Produktion ein.</value></data>
+  <data name="Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store." xml:space="preserve"><value>Diesen Server als Testsystem kennzeichnen (Band auf jeder Seite, Store-Clients sehen die Umgebung UAT). Schalten Sie es aus, wenn der Server für seine eigenen Kunden produktiv bleibt, zum Beispiel als Entwicklungsserver eines Firmen-Stores.</value></data>
+  <data name="Hand this version to production? Production checks it again and its reviewers decide." xml:space="preserve"><value>Diese Version an die Produktion übergeben? Die Produktion prüft sie erneut, und ihre Prüfer entscheiden.</value></data>
+  <data name="Note for production (optional)" xml:space="preserve"><value>Notiz für die Produktion (optional)</value></data>
+  <data name="Hand over to production" xml:space="preserve"><value>An Produktion übergeben</value></data>
+  <data name="From UAT {0}" xml:space="preserve"><value>Aus UAT {0}</value></data>
+  <data name="Handed to production" xml:space="preserve"><value>An Produktion übergeben</value></data>
+  <data name="Refused by production" xml:space="preserve"><value>Von der Produktion abgelehnt</value></data>
+  <data name="Handover failed" xml:space="preserve"><value>Übergabe fehlgeschlagen</value></data>
+  <data name="uploaded there by {0}" xml:space="preserve"><value>dort hochgeladen von {0}</value></data>
+  <data name="Review in the UAT" xml:space="preserve"><value>Prüfung im UAT</value></data>
+  <data name="The UAT review is information only: approve here as for any upload. Whoever uploaded the version in the UAT cannot approve it here." xml:space="preserve"><value>Die Prüfung im UAT ist nur ein Hinweis: Geben Sie hier frei wie bei jedem Upload. Wer die Version im UAT hochgeladen hat, kann sie hier nicht freigeben.</value></data>
+  <data name="Versions handed over from UATs" xml:space="preserve"><value>Aus UATs übergebene Versionen</value></data>
+  <data name="Refused" xml:space="preserve"><value>Abgelehnt</value></data>
+  <data name="Announced" xml:space="preserve"><value>Angekündigt</value></data>
+  <data name="Versions handed to production" xml:space="preserve"><value>An die Produktion übergebene Versionen</value></data>
+  <data name="By" xml:space="preserve"><value>Von</value></data>
+  <data name="Sending" xml:space="preserve"><value>Wird gesendet</value></data>
+  <data name="Handed to production; it waits there for review." xml:space="preserve"><value>An die Produktion übergeben; sie wartet dort auf die Prüfung.</value></data>
+  <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>Die Produktion hat die Version abgelehnt; die Befunde stehen unter der Version.</value></data>
+  <data name="The handover failed: {0}" xml:space="preserve"><value>Die Übergabe ist fehlgeschlagen: {0}</value></data>
+  <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Vier-Augen-Regel: Sie haben diese Version im UAT hochgeladen; ein anderer Admin oder Prüfer der Produktion gibt sie frei.</value></data>
 </root>

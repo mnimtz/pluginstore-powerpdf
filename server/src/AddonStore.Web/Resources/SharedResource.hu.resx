@@ -1582,4 +1582,25 @@
   <data name="Download .reg for test PCs" xml:space="preserve"><value>.reg letöltése teszt-számítógépekhez</value></data>
   <data name="Download .reg back to production" xml:space="preserve"><value>.reg letöltése az éles rendszerhez való visszatéréshez</value></data>
   <data name="This UAT signs packages with the same key as production (set up from a production backup?). Test PCs would then also trust packages from this UAT as production packages; set the UAT up without the production signing key." xml:space="preserve"><value>Ez az UAT ugyanazzal a kulccsal írja alá a csomagokat, mint az éles rendszer (éles biztonsági mentésből állították be?). A teszt-számítógépek így éles csomagként fogadnák el az UAT csomagjait; állítsa be az UAT-t az éles aláírókulcs nélkül.</value></data>
+  <data name="Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store." xml:space="preserve"><value>A kiszolgáló megjelölése tesztrendszerként (sáv minden oldalon, az áruház kliensei UAT környezetet látnak). Kapcsolja ki, ha a kiszolgáló a saját ügyfelei számára éles használatban marad, például egy vállalati áruház fejlesztői kiszolgálójaként.</value></data>
+  <data name="Hand this version to production? Production checks it again and its reviewers decide." xml:space="preserve"><value>Átadja ezt a verziót az éles rendszernek? Az éles rendszer újra ellenőrzi, és annak ellenőrei döntenek.</value></data>
+  <data name="Note for production (optional)" xml:space="preserve"><value>Megjegyzés az éles rendszernek (nem kötelező)</value></data>
+  <data name="Hand over to production" xml:space="preserve"><value>Átadás az éles rendszernek</value></data>
+  <data name="From UAT {0}" xml:space="preserve"><value>UAT-ből: {0}</value></data>
+  <data name="Handed to production" xml:space="preserve"><value>Átadva az éles rendszernek</value></data>
+  <data name="Refused by production" xml:space="preserve"><value>Az éles rendszer elutasította</value></data>
+  <data name="Handover failed" xml:space="preserve"><value>Az átadás sikertelen</value></data>
+  <data name="uploaded there by {0}" xml:space="preserve"><value>ott feltöltötte: {0}</value></data>
+  <data name="Review in the UAT" xml:space="preserve"><value>Ellenőrzés az UAT-ben</value></data>
+  <data name="The UAT review is information only: approve here as for any upload. Whoever uploaded the version in the UAT cannot approve it here." xml:space="preserve"><value>Az UAT-beli ellenőrzés csak tájékoztatás: itt is úgy hagyja jóvá, mint bármely feltöltést. Aki az UAT-ben feltöltötte a verziót, itt nem hagyhatja jóvá.</value></data>
+  <data name="Versions handed over from UATs" xml:space="preserve"><value>UAT-kből átadott verziók</value></data>
+  <data name="Refused" xml:space="preserve"><value>Elutasítva</value></data>
+  <data name="Announced" xml:space="preserve"><value>Bejelentve</value></data>
+  <data name="Versions handed to production" xml:space="preserve"><value>Az éles rendszernek átadott verziók</value></data>
+  <data name="By" xml:space="preserve"><value>Ki</value></data>
+  <data name="Sending" xml:space="preserve"><value>Küldés folyamatban</value></data>
+  <data name="Handed to production; it waits there for review." xml:space="preserve"><value>Átadva az éles rendszernek; ott ellenőrzésre vár.</value></data>
+  <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>Az éles rendszer elutasította a verziót; a megállapítások a verzió alatt láthatók.</value></data>
+  <data name="The handover failed: {0}" xml:space="preserve"><value>Az átadás sikertelen: {0}</value></data>
+  <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Négy szem elve: ezt a verziót Ön töltötte fel az UAT-ben; egy másik éles rendszergazda vagy ellenőr hagyja jóvá.</value></data>
 </root>

@@ -46,6 +46,8 @@ public class AppDbContext : IdentityDbContext<AppUser>
     // UAT environments (S1.21.0, docs/concepts/master-child.md)
     public DbSet<FederationChild> FederationChildren => Set<FederationChild>();
     public DbSet<FederationPairingCode> FederationPairingCodes => Set<FederationPairingCode>();
+    public DbSet<FederationIntake> FederationIntakes => Set<FederationIntake>();          // S1.22.0 (E2)
+    public DbSet<FederationHandover> FederationHandovers => Set<FederationHandover>();
 
     // S1.17.3: inside an explicit transaction SaveChanges returns before the commit, so a catalog loaded in between
     // still read the old rows under the new generation; the commit of such a transaction starts one more generation

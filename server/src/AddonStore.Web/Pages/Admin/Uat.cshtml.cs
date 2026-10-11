@@ -30,6 +30,8 @@ public class UatModel : PageModel
     public FederationService.ChildState State { get; private set; } = null!;
     public List<FederationChild> Children { get; private set; } = new();
     public List<FederationService.CodeInfo> Codes { get; private set; } = new();
+    public List<FederationIntake> Intakes { get; private set; } = new();
+    public List<FederationHandover> Handovers { get; private set; } = new();
     public string OwnUrl { get; private set; } = "";
     /// <summary>The code just created: shown once.</summary>
     public (string Code, string Name, DateTime ExpiresAt)? NewCode { get; private set; }
@@ -61,12 +63,13 @@ public class UatModel : PageModel
         return Page();
     }
 
-    public async Task<IActionResult> OnPostModeAsync(string mode) =>
-        await DoneAsync(await _svc.SetModeAsync(mode == "child", await AdminAsync()), "Mode saved.");
+    public async Task<IActionResult> OnPostModeAsync(string mode, bool markAsTest) =>
+        await DoneAsync(await _svc.SetModeAsync(mode == "child", await AdminAsync(), mode == "child" ? markAsTest : null), "Mode saved.");
 
     public async Task<IActionResult> OnPostCodeAsync(string name)
     {
-        var r = await _svc.CreateCodeAsync(name, await AdminAsync());
+        var me = await _users.GetUserAsync(User);
+        var r = await _svc.CreateCodeAsync(name, me?.DisplayName ?? "admin", me?.Id);
         if (r.Data is FederationService.CodeCreated c) NewCode = (c.Code, c.Name, c.ExpiresAt);
         return await DoneAsync(r, "Pairing code created.");
     }
@@ -102,7 +105,9 @@ public class UatModel : PageModel
         {
             Children = await _svc.ChildrenAsync();
             Codes = await _svc.OpenCodesAsync();
+            Intakes = await _svc.IntakesAsync();
         }
+        else Handovers = await _svc.HandoversAsync();
         OwnUrl = await OwnUrlAsync();
     }
 }

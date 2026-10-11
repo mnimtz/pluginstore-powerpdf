@@ -54,6 +54,12 @@ public class PluginModel : PageModel
         IsOwner = Pkg.OwnerId == Me.Id;
         CanReview = VersionActionService.CanReview(User);
         if (!IsOwner && !IsAdmin && !CanReview) return false;
+        if (FederationService.IsChild && (IsOwner || IsAdmin))
+        {
+            var fed = HttpContext.RequestServices.GetRequiredService<FederationService>();
+            CanHandOver = (await fed.ChildStateAsync()).PairingId.Length > 0;
+            Handovers = await fed.HandoversAsync(Pkg.Id);
+        }
 
         var cmp = new SemVerComparer();
         Versions = Pkg.Versions.OrderByDescending(v => v.Version, cmp).ThenByDescending(v => v.SubmittedAt).ToList();
@@ -113,6 +119,34 @@ public class PluginModel : PageModel
 
     public Task<IActionResult> OnPostRestoreAsync(string id, int versionId) =>
         ActAsync(id, () => _actions.RestoreAsync(versionId, Me!, IsAdmin));
+
+    // UAT (S1.22.0): hand an approved version to the paired production server
+    public List<FederationHandover> Handovers { get; private set; } = new();
+    public bool CanHandOver { get; private set; }
+
+    public async Task<IActionResult> OnPostHandOverAsync(string id, int versionId, string? note)
+    {
+        if (!await LoadAsync(id)) return Forbid();
+        var fed = HttpContext.RequestServices.GetRequiredService<FederationService>();
+        var r = await fed.HandOverAsync(versionId, note, Me!);
+        await LoadAsync(id);
+        if (r.Ok && r.Data is not null && System.Text.Json.JsonSerializer.SerializeToElement(r.Data).GetProperty("state").GetString() == "accepted")
+            Notice = "Handed to production; it waits there for review.";
+        else if (r.Ok)
+        {
+            Notice = "Production refused the version; the findings are listed below the version.";
+            NoticeKind = "error";
+        }
+        else
+        {
+            Notice = "The handover failed: {0}";
+            NoticeArg = r.Code + ": " + r.Message;
+            NoticeKind = "error";
+        }
+        return Page();
+    }
+
+    public string? NoticeArg { get; private set; }
 
     public async Task<IActionResult> OnPostSourceAsync(string id, int versionId, IFormFile? source)
     {

@@ -43,6 +43,17 @@
         <div style="color:var(--tun-slate);font-size:.85rem;margin:4px 0 8px">
             @L["Submitted by"] @v.SubmittedBy · @v.SubmittedVia · @Time.Fmt(v.SubmittedAt) · @(v.SizeBytes / 1024) KB · SHA-256 <code>@v.Sha256[..16]…</code>
         </div>
+        @if (v.OriginUat is { Length: > 0 })
+        {
+            // S1.22.0: handed over from a paired UAT; its review there is information only
+            var rv = AddonStore.Web.Services.FederationService.ReviewExcerpt(v.OriginReviewJson);
+            <div class="alert warn" style="margin:6px 0 8px">
+                <b>@L["From UAT {0}", v.OriginUat]</b> · @L["uploaded there by {0}", string.IsNullOrEmpty(v.OriginUploader) ? (v.OriginUploaderEmail ?? "") : v.OriginUploader]
+                @if (rv.Length > 0) { <br /><span>@L["Review in the UAT"]: @rv</span> }
+                @if (!string.IsNullOrEmpty(v.OriginNote)) { <br /><span>@L["Note"]: <span style="unicode-bidi:plaintext">@v.OriginNote</span></span> }
+                <br /><small>@L["The UAT review is information only: approve here as for any upload. Whoever uploaded the version in the UAT cannot approve it here."]</small>
+            </div>
+        }
         <p style="margin:6px 0"><b>@L["Changelog"]:</b> @AddonStore.Web.Services.CatalogUi.ManifestText(v, "changelog", lang, v.Changelog)</p>
         <partial name="_ValidationReport" model="AddonStore.Web.Validation.ReportView.Parse(v.ValidationReportJson)"
                  view-data="@(new Microsoft.AspNetCore.Mvc.ViewFeatures.ViewDataDictionary(ViewData) { ["open"] = true })" />

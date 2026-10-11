@@ -1,5 +1,6 @@
 using System.Collections.Concurrent;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text.Json;
 using AddonStore.Web.Data;
 using AddonStore.Web.Services;
@@ -70,6 +71,15 @@ public static class FederationEndpoints
         return s.Length > 0 ? s : $"{ctx.Request.Scheme}://{ctx.Request.Host}";
     }
 
+    /// <summary>The answer to a signed request, signed by this server (the UAT checks it on 200).</summary>
+    private static async Task<IResult> SignedAsync(HttpContext ctx, FederationService svc, FedResult r)
+    {
+        if (!r.Ok) return Err(r.Code, r.Message, r.Status);
+        var bytes = JsonSerializer.SerializeToUtf8Bytes(new { ok = true, data = r.Data }, new JsonSerializerOptions(JsonSerializerDefaults.Web));
+        ctx.Response.Headers["X-Federation-Signature"] = await svc.SignResponseAsync(ctx.Request.Headers["X-Federation-Nonce"].ToString(), 200, bytes);
+        return Results.Bytes(bytes, "application/json; charset=utf-8");
+    }
+
     private static IResult NotAdmin() => Err("ADMIN_ONLY", "Only store admins manage UAT environments.", 403);
 
     public static void MapFederation(this WebApplication app)
@@ -105,6 +115,76 @@ public static class FederationEndpoints
             return Results.Bytes(bytes, "application/json; charset=utf-8");
         });
 
+        // Handover, step 1 (S1.22.0): a paired UAT announces one version; answer: the intake id.
+        fed.MapPost("/promotions", async (HttpContext ctx, FederationService svc) =>
+        {
+            if (!await svc.MasterActiveAsync()) return Results.NotFound();
+            var body = await ReadBodyAsync(ctx, 65536);
+            if (body is null) return Err("FED_BODY_INVALID", "The announcement is larger than 64 KB.");
+            var (child, error) = await svc.VerifyRequestAsync(ctx.Request, body);
+            if (error is not null) return Answer(error);
+            return await SignedAsync(ctx, svc, await svc.OpenIntakeAsync(child!, Json(body)));
+        });
+
+        // Handover, step 2: the upload package (.ppak and source ZIP) of an announced version, signed over its SHA-256.
+        // Cheap checks first (known, unblocked UAT, clock, announced handover), then the body is streamed to a file.
+        fed.MapPut("/promotions/{id}/package", async (string id, HttpContext ctx, FederationService svc, AppDbContext db) =>
+        {
+            if (!await svc.MasterActiveAsync()) return Results.NotFound();
+            var childId = ctx.Request.Headers["X-Federation-Id"].ToString();
+            if (!long.TryParse(ctx.Request.Headers["X-Federation-Timestamp"].ToString(), out var unix) ||
+                (DateTime.UtcNow - DateTimeOffset.FromUnixTimeSeconds(Math.Clamp(unix, 0, 253402300799)).UtcDateTime).Duration() > FederationService.MaxClockSkew)
+                return Err("FED_TIMESTAMP", "The request is older than 5 minutes or the clocks differ; check the time of both servers.", 401);
+            if (id.Length > 64 || childId.Length is < 1 or > 40 ||
+                !await Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.AnyAsync(db.FederationIntakes,
+                    x => x.Id == id && x.ChildId == childId && x.State == "waiting"))
+                return Err("FED_HANDOVER_NOT_FOUND", "No announced handover with this id (older than an hour, or of another UAT).", 404);
+            if (ctx.Request.ContentLength is > FederationService.MaxUploadBytes)
+                return Err("FED_TOO_LARGE", "Package and source together are larger than 220 MB.", 413);
+            var tmp = Path.Combine(Path.GetTempPath(), "uat-intake-" + Guid.NewGuid().ToString("N") + ".zip");
+            try
+            {
+                string hash;
+                await using (var file = File.Create(tmp))
+                using (var sha = IncrementalHash.CreateHash(HashAlgorithmName.SHA256))
+                {
+                    var buf = new byte[81920];
+                    long total = 0;
+                    int n;
+                    while ((n = await ctx.Request.Body.ReadAsync(buf)) > 0)
+                    {
+                        total += n;
+                        if (total > FederationService.MaxUploadBytes) return Err("FED_TOO_LARGE", "Package and source together are larger than 220 MB.", 413);
+                        sha.AppendData(buf, 0, n);
+                        await file.WriteAsync(buf.AsMemory(0, n));
+                    }
+                    hash = Convert.ToHexString(sha.GetHashAndReset()).ToLowerInvariant();
+                }
+                var (child, error) = await svc.VerifyRequestAsync(ctx.Request, hash);
+                if (error is not null) return Answer(error);
+                return await SignedAsync(ctx, svc, await svc.ReceivePackageAsync(child!, id, tmp));
+            }
+            finally
+            {
+                try { File.Delete(tmp); } catch (IOException) { }
+            }
+        });
+
+        // ---- owners and admins of a UAT: hand a version to production (S1.22.0) -------------------
+        var pkgs = app.MapGroup("/api/packages").RequireAuthorization("BearerOnly");
+        pkgs.MapPost("/{id}/{version}/handover", async (string id, string version, HttpContext ctx, UserManager<AppUser> users,
+                                                       FederationService svc, AppDbContext db) =>
+        {
+            var uid = ctx.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = uid is null ? null : await users.FindByIdAsync(uid);
+            if (user is not { Status: UserStatus.Active }) return Err("UNAUTHENTICATED", "Send a valid API token.", 401);
+            var v = await Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.FirstOrDefaultAsync(db.PackageVersions,
+                        x => x.PackageId == id && x.Version == version);
+            if (v is null) return Err("VERSION_NOT_FOUND", $"No version {version} of '{id}'.", 404);
+            var j = Json(await ReadBodyAsync(ctx, 8192) ?? Array.Empty<byte>());
+            return Answer(await svc.HandOverAsync(v.Id, S(j, "note"), user));
+        });
+
         // ---- admins ------------------------------------------------------------------------
         var adm = app.MapGroup("/api/admin/uat").RequireAuthorization("BearerOnly");
 
@@ -118,10 +198,21 @@ public static class FederationEndpoints
                 createdAt = c.CreatedAt, lastSeenAt = c.LastSeenAt, blocked = c.BlockedAt is not null,
             });
             var codes = (await svc.OpenCodesAsync()).Select(c => new { id = c.Id, name = c.Name, createdAt = c.CreatedAt, expiresAt = c.ExpiresAt });
+            var intakes = st.IsChild ? null : (await svc.IntakesAsync()).Select(x => new
+            {
+                id = x.Id, uatId = x.ChildId, packageId = x.PackageId, version = x.Version, state = x.State, message = x.Message,
+                versionId = x.VersionId, createdAt = x.CreatedAt, doneAt = x.DoneAt,
+            });
+            var handovers = !st.IsChild ? null : (await svc.HandoversAsync()).Select(h => new
+            {
+                id = h.Id, packageId = h.PackageId, version = h.Version, state = h.State, code = h.Code, message = h.Message,
+                createdAt = h.CreatedAt, createdBy = h.CreatedBy, doneAt = h.DoneAt,
+            });
             return Ok(new
             {
                 mode = st.IsChild ? "child" : "standalone",
-                master = st.IsChild ? null : new { uats = children, openCodes = codes },
+                markAsTest = st.MarkedAsTest,
+                master = st.IsChild ? null : new { uats = children, openCodes = codes, handovers = intakes },
                 uat = !st.IsChild ? null : new
                 {
                     masterUrl = st.MasterUrl, paired = st.PairingId.Length > 0, pairingId = st.PairingId, name = st.Name,
@@ -129,6 +220,7 @@ public static class FederationEndpoints
                     // E1b: the two IT policies of a test PC, and the warning when this UAT signs with the production key
                     testPc = new { registryKey = FederationService.PolicyKey, serverUrl = OwnUrl(ctx), trustedSigningKeys = st.TrustedSigningKeys },
                     sameSigningKeyAsProduction = st.SameSigningKey,
+                    handovers,
                 },
             });
         });
@@ -151,7 +243,9 @@ public static class FederationEndpoints
             var j = Json(await ReadBodyAsync(ctx, 4096) ?? Array.Empty<byte>());
             var mode = S(j, "mode");
             if (mode is not ("child" or "standalone")) return Err("FED_MODE_INVALID", "Send {\"mode\": \"child\"} or {\"mode\": \"standalone\"}.");
-            return Answer(await svc.SetModeAsync(mode == "child", admin.DisplayName));
+            bool? mark = j is { } o && o.TryGetProperty("markAsTest", out var m) && m.ValueKind is JsonValueKind.True or JsonValueKind.False
+                ? m.ValueKind == JsonValueKind.True : null;
+            return Answer(await svc.SetModeAsync(mode == "child", admin.DisplayName, mark));
         });
 
         adm.MapPost("/codes", async (HttpContext ctx, UserManager<AppUser> users, FederationService svc) =>
@@ -159,7 +253,7 @@ public static class FederationEndpoints
             var admin = await AdminAsync(ctx, users);
             if (admin is null) return NotAdmin();
             var j = Json(await ReadBodyAsync(ctx, 4096) ?? Array.Empty<byte>());
-            return Answer(await svc.CreateCodeAsync(S(j, "name"), admin.DisplayName));
+            return Answer(await svc.CreateCodeAsync(S(j, "name"), admin.DisplayName, admin.Id));
         });
 
         adm.MapDelete("/codes/{id}", async (string id, HttpContext ctx, UserManager<AppUser> users, FederationService svc) =>

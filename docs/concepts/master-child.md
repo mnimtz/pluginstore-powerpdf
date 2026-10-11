@@ -1,6 +1,6 @@
 # Konzept: Master-Child-Betrieb (UAT-Server vor der Produktion)
 
-Stand: Okt 11, 2026 · Status: entschieden, Umsetzung ab Etappe E1
+Stand: Okt 11, 2026 · Status: E1 (S1.21.0), E1b Server (S1.21.1) und E2 (S1.22.0) umgesetzt
 
 ## Ziel
 
@@ -210,6 +210,15 @@ Agent-Guide, OpenAPI und README werden wie bei jeder Neuerung mitgeführt.
 | E5 | Auslieferungs-Vorlagen übertragen |
 
 E1 bis E3 ergeben den Kern deiner Idee; E4 und E5 sind Ergänzungen.
+
+## Rolle und Kennzeichnung (Okt 11, 2026)
+
+Der UAT-Modus ist nur eine Rolle: Ein Server darf damit Versionen an seinen
+Master übergeben, sonst ändert sich nichts. Die Kennzeichnung als Testsystem
+(Band, „UAT“ im Titel, Umgebung `uat` für Katalog und Clients) ist davon
+getrennt und abschaltbar. So kann sich zum Beispiel unser Azure-Store später als
+Entwicklungs- und UAT-Server mit dem Produktivserver einer Firma koppeln und für
+seine eigenen Kunden trotzdem ganz normal produktiv bleiben.
 
 ## Entscheidungen (Okt 11, 2026)
 

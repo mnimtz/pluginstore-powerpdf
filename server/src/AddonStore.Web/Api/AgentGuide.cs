@@ -1231,7 +1231,7 @@ submitter: the server signs what it accepted.
 A store can run a second, separate store as its UAT (user acceptance test):
 new versions are tested there in real Power PDF first and handed to
 production later (stage E1 of docs/concepts/master-child.md: pairing; handing
-versions over follows in a later release). A server runs on its own until an
+versions over is stage E2, see below). A server runs on its own until an
 admin adds a UAT; only then it accepts federation requests, otherwise
 `/api/federation/*` answers 404. Only the UAT has a setting: the mode `child`
 plus the address of its production server. The catalog (`environment` in the
@@ -1251,6 +1251,8 @@ portal page /Admin/Uat:
 | `POST /api/admin/uat/test` | UAT | signed test request to the production server |
 | `DELETE /api/admin/uat/pairing` | UAT | forget the pairing |
 | `GET /api/admin/uat/reg?to=uat` | UAT | .reg for test PCs: `ServerUrl` and `TrustedSigningKeys` under HKLM (`to=production` removes both) |
+| `PUT /api/admin/uat/mode` `{"mode":"child","markAsTest":false}` | UAT | keep the role but drop the test system marking (band, environment `uat`), for a server that stays in productive use for its own customers |
+| `POST /api/packages/{id}/{version}/handover` `{"note":"..."}` | UAT | hand an approved version (beta or live) to production; the owner of the add-on or an admin |
 | `POST`/`DELETE /api/admin/uat/uats/{id}/block` | production | block or unblock a UAT |
 | `DELETE /api/admin/uat/uats/{id}` | production | remove a UAT (pairing again needs a new code) |
 
@@ -1274,6 +1276,21 @@ Test PCs: the store client goes to the UAT only with two HKLM policies
 package signing key); `GET /api/admin/uat` on the UAT lists both under
 `uat.testPc`. `uat.sameSigningKeyAsProduction` is true when the UAT signs with
 the production key (set up from a production backup), which a UAT must not do.
+
+Handing a version to production (stage E2): the UAT sends exactly the .ppak and
+source ZIP it tested. Signed step 1 `POST /api/federation/promotions` announces
+`packageId`, `version`, `sha256` (of the .ppak), `sourceSha256`, `note`, the
+UAT uploader (`uploaderEmail`, `uploaderName`), `handedOverBy` and `review`
+(status, reviewer, date, comment there) and returns `intakeId`; signed step 2
+`PUT /api/federation/promotions/{intakeId}/package` carries the upload package
+(the .ppak and `<id>-<version>-source.zip` in one ZIP, at most 220 MB). Production
+compares both hashes, runs every automatic check and its source policy as for any
+upload (`SubmittedVia` = `uat:<name>`), and stores the version as submitted with
+its origin (`Origin*`), shown on the review page. The uploader there is the
+account with the UAT uploader's e-mail, else the admin who added the UAT. A UAT
+approval is never an approval in production: reviewers of production decide, and
+whoever uploaded the version in the UAT cannot approve it there (four-eyes across
+both environments, matched by e-mail). 30 handovers per UAT and hour.
 
 | Code | HTTP | Meaning |
 |---|---|---|
@@ -1299,6 +1316,14 @@ the production key (set up from a production backup), which a UAT must not do.
 | FED_PAIR_FAILED | 502 | The production server refused the pairing for another reason. |
 | FED_ANSWER_UNSIGNED | 502 | The answer of the production server is not signed with its federation key. |
 | FED_KEY_UNREADABLE | 500 | The federation key cannot be read (restored without its key ring); pair again. |
+| FED_HANDOVER_INVALID | 400 | The announcement needs packageId, version and sha256 (64 hex characters). |
+| FED_HANDOVER_NOT_FOUND | 404 | No announced handover with this id (older than an hour, answered, or of another UAT). |
+| FED_HANDOVER_DONE | 409 | This handover was answered already. |
+| FED_VERSION_NOT_APPROVED | 409 | Only a version approved in the UAT (beta or live) and not blocked is handed over. |
+| FED_HANDED_OVER | 409 | This version was handed to production already. |
+| FED_FILE_MISSING | 500 | The package file of the version is missing on the UAT. |
+| FED_TOO_LARGE | 413 | Package and source together are larger than 220 MB. |
+| UNAUTHENTICATED | 401 | The handover call needs a valid API token of an active account. |
 
 ## Versioning and ownership
 
