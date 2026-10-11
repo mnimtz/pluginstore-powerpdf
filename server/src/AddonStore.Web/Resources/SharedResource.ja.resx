@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>本番環境の状態を更新</value></data>
   <data name="On production" xml:space="preserve"><value>本番環境</value></data>
   <data name="Removed" xml:space="preserve"><value>削除済み</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>本番環境のリリース済みの状態を 1 日 1 回引き継ぐ (UAT の場合のみ。オフ: 要求時のみ)</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>本番環境のリリース済みの状態</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>この UAT にない本番環境のリリース済み公開アドインを引き継ぎ、新しいバージョンを実際の状態に対してテストできるようにします。この UAT が新しいバージョンでテストしているアドインはそのままです。顧客データは引き継がれません。</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>前回の実行 {0}: 引き継ぎ {1}、変更なし {2}、失敗 {3}。</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>本番環境のリリース済みの状態を今すぐ引き継ぎますか?</value></data>
+  <data name="Take over now" xml:space="preserve"><value>今すぐ引き継ぐ</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>1 日 1 回: [設定] の [機能]</value></data>
+  <data name="Taken over" xml:space="preserve"><value>引き継ぎ済み</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>この UAT に新しいバージョンがあります</value></data>
+  <data name="Next run" xml:space="preserve"><value>次回の実行</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>本番環境のリリース済みの状態を引き継ぎました。</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>テンプレートを本番環境に引き渡しました (顧客なし)。</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>テンプレートを本番環境に引き渡せませんでした: {0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>このテンプレートを本番環境に引き渡しますか? 本番環境が把握しているアドインとバージョンのみを渡し、顧客は渡しません。</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>テンプレートを本番環境に引き渡す</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>前回の引き渡し {0}</value></data>
 </root>

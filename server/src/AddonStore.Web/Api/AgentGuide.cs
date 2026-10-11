@@ -1255,6 +1255,8 @@ portal page /Admin/Uat:
 | `POST /api/packages/{id}/{version}/handover` `{"note":"..."}` | UAT | hand an approved version (beta or live) to production; the owner of the add-on or an admin |
 | `POST /api/admin/uat/handovers/refresh` | UAT | ask production for the state of the open handovers |
 | `POST /api/admin/uat/handovers/{id}/catalog` | production | take over the differing fields of a UAT catalog proposal |
+| `POST /api/admin/uat/mirror` | UAT | take over production's released public add-ons now |
+| `POST /api/admin/uat/templates/{id}/handover` | UAT | hand a delivery template to production, without customers |
 | `POST`/`DELETE /api/admin/uat/uats/{id}/block` | production | block or unblock a UAT |
 | `DELETE /api/admin/uat/uats/{id}` | production | remove a UAT (pairing again needs a new code) |
 
@@ -1306,6 +1308,26 @@ and on `POST /api/admin/uat/handovers/refresh` (signed
 rejected, withdrawn, blocked or removed, plus the reason of a rejection) and
 shows it as `uat.handovers[].productionStatus`.
 
+Production's released state in the UAT (stage E4): `POST /api/admin/uat/mirror`
+on a paired UAT takes over production's released public add-ons it is missing
+(newest live and newer beta version per add-on; never private customer deliveries
+or the store client). A version the UAT has, or an add-on it tests in a newer
+version, stays as it is; at most 25 versions per run. Mirrored versions are
+released in the UAT without review and without mails (`SubmittedVia` = `mirror`)
+and are never handed back (`FED_FROM_PRODUCTION`); a new add-on takes
+production's catalog entry. Once a day only when switched on
+(`PUT /api/admin/uat/mode` with `"mirrorDaily": true`; off by default). Signed
+`GET /api/federation/catalog` and `GET /api/federation/catalog/{id}/{version}/package`
+(the answer signed over the SHA-256 of the upload package).
+
+Delivery templates (stage E5): `POST /api/admin/uat/templates/{id}/handover`
+sends a template of the UAT (name, description, catalog option, add-ons and fixed
+versions) to production, never its customers. Production creates it (owner: the
+admin who added the UAT) or updates the one it received from that UAT before;
+add-ons production does not know are skipped, a fixed version production has not
+approved becomes "newest approved". A template production has assigned to
+customers is not changed (`FED_TEMPLATE_IN_USE`). Signed `POST /api/federation/templates`.
+
 | Code | HTTP | Meaning |
 |---|---|---|
 | FED_CODE_INVALID | 400/403 | The pairing code is wrong, used or expired (20 characters, groups of 5). |
@@ -1340,6 +1362,12 @@ shows it as `uat.handovers[].productionStatus`.
 | UNAUTHENTICATED | 401 | The handover call needs a valid API token of an active account. |
 | FED_CATALOG_SAME | 409 | The UAT catalog entry does not differ, or it was taken over already. |
 | FED_CATALOG_INVALID | 400 | The UAT catalog proposal does not pass the catalog checks. |
+| FED_FROM_PRODUCTION | 409 | The version came from production (mirrored) and is not handed back. |
+| FED_NOT_MIRRORED | 404 | The version is no released public version of production. |
+| FED_MIRROR_RUNNING | 409 | The UAT is mirroring production already. |
+| FED_TEMPLATE_INVALID | 400/409 | The template needs templateId, a name and a short description; or the admin who added the UAT is no longer active. |
+| FED_TEMPLATE_IN_USE | 409 | Production has assigned this template to customers; its admins change it there. |
+| TEMPLATE_NOT_FOUND | 404 | No delivery template with this id. |
 
 ## Versioning and ownership
 

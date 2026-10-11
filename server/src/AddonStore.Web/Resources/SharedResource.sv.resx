@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>Uppdatera status i produktion</value></data>
   <data name="On production" xml:space="preserve"><value>I produktion</value></data>
   <data name="Removed" xml:space="preserve"><value>Borttagen</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>Ta över produktionens publicerade läge en gång om dagen (endast som UAT; av: bara på begäran)</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>Produktionens publicerade läge</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>Tar över produktionens publicerade offentliga tillägg som saknas i det här UAT, så att nya versioner testas mot det verkliga läget. Ett tillägg som det här UAT testar i en nyare version förblir som det är; kunddata tas aldrig över.</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>Senaste körning {0}: {1} övertagna, {2} oförändrade, {3} misslyckades.</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>Ta över produktionens publicerade läge nu?</value></data>
+  <data name="Take over now" xml:space="preserve"><value>Ta över nu</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>En gång om dagen: Inställningar, Funktioner</value></data>
+  <data name="Taken over" xml:space="preserve"><value>Övertagen</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>Nyare version i det här UAT</value></data>
+  <data name="Next run" xml:space="preserve"><value>Nästa körning</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>Produktionens publicerade läge har tagits över.</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>Mall lämnad till produktion (utan kunder).</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>Mallen kunde inte lämnas till produktion: {0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Lämna den här mallen till produktion? Produktion får de tillägg och versioner den känner till, aldrig kunderna.</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>Lämna mall till produktion</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>Senast lämnad {0}</value></data>
 </root>

@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>Üretimdeki durumu güncelle</value></data>
   <data name="On production" xml:space="preserve"><value>Üretimde</value></data>
   <data name="Removed" xml:space="preserve"><value>Kaldırıldı</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>Üretimin yayımlanmış durumunu günde bir kez al (yalnızca UAT olarak; kapalı: yalnızca istek üzerine)</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>Üretimin yayımlanmış durumu</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>Bu UAT'de eksik olan üretimin yayımlanmış herkese açık eklentilerini alır; böylece yeni sürümler gerçek duruma göre test edilir. Bu UAT'nin daha yeni bir sürümle test ettiği eklenti olduğu gibi kalır; müşteri verileri asla alınmaz.</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>Son çalıştırma {0}: {1} alındı, {2} değişmedi, {3} başarısız.</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>Üretimin yayımlanmış durumu şimdi alınsın mı?</value></data>
+  <data name="Take over now" xml:space="preserve"><value>Şimdi al</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>Günde bir kez: Ayarlar, Özellikler</value></data>
+  <data name="Taken over" xml:space="preserve"><value>Alındı</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>Bu UAT'de daha yeni sürüm</value></data>
+  <data name="Next run" xml:space="preserve"><value>Sonraki çalıştırma</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>Üretimin yayımlanmış durumu alındı.</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>Şablon üretime aktarıldı (müşteriler olmadan).</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>Şablon üretime aktarılamadı: {0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Bu şablon üretime aktarılsın mı? Üretim bildiği eklentileri ve sürümleri alır, müşterileri asla.</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>Şablonu üretime aktar</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>Son aktarım {0}</value></data>
 </root>

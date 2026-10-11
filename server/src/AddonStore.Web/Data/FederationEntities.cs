@@ -127,5 +127,9 @@ public static class FederationSchema
         "ALTER TABLE FederationHandovers ADD COLUMN MasterStatus TEXT NOT NULL DEFAULT ''",
         "ALTER TABLE FederationHandovers ADD COLUMN MasterStatusAt TEXT NULL",
         "ALTER TABLE FederationHandovers ADD COLUMN MasterComment TEXT NOT NULL DEFAULT ''",
+        // S1.24.0 (stages E4/E5): templates from a UAT
+        "ALTER TABLE DeliveryTemplates ADD COLUMN OriginChildId TEXT NULL",
+        "ALTER TABLE DeliveryTemplates ADD COLUMN OriginTemplateId INTEGER NULL",
+        "ALTER TABLE DeliveryTemplates ADD COLUMN HandedOverAt TEXT NULL",
     };
 }

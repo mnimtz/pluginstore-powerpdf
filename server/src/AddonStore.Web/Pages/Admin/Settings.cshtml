@@ -264,6 +264,7 @@ else if (Model.SigningKeyId.Length > 0)
         <label style="font-weight:400"><input type="radio" name="mode" value="standalone" checked="@(!Model.UatIsChild)" style="width:auto" /> @L["On its own (production); with a UAT added it is that UAT's master"]</label>
         <label style="font-weight:400"><input type="radio" name="mode" value="child" checked="@Model.UatIsChild" style="width:auto" /> @L["UAT: test system of a production server"]</label>
         <label style="font-weight:400;margin-inline-start:22px"><input type="checkbox" name="markAsTest" value="true" checked="@(!Model.UatIsChild || Model.UatMarkedAsTest)" style="width:auto" /> @L["Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store."]</label>
+        <label style="font-weight:400;margin-inline-start:22px"><input type="checkbox" name="mirrorDaily" value="true" checked="@Model.UatMirrorDaily" style="width:auto" /> @L["Take over the released state of production once a day (only as UAT; off: only on demand)"]</label>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
             <button type="submit" class="btn cta">@L["Save mode"]</button>
             <a href="/Admin/Uat">@L["Manage UAT environments"] →</a>

@@ -218,4 +218,33 @@ else
             </div>
         </div>
     }
+    @if (st.PairingId.Length > 0)
+    {
+        <div class="card" style="max-width:960px">
+            <h2 style="margin-top:0">@L["Released state of production"]</h2>
+            <p>@L["Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over."]</p>
+            @{ var lm = Model.LastMirror.Split('|'); }
+            @if (lm.Length == 4 && DateTime.TryParse(lm[0], System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal, out var lmAt))
+            {
+                <p class="muted">@L["Last run {0}: {1} taken over, {2} unchanged, {3} failed.", Time.Fmt(lmAt), lm[1], lm[2], lm[3]]</p>
+            }
+            <form method="post" asp-page-handler="Mirror" data-confirm="@L["Take over the released state of production now?"]">
+                <button type="submit" class="btn">@L["Take over now"]</button>
+                <a href="/Admin/Settings?view=features#uat" style="margin-inline-start:8px">@L["Once a day: Settings, Features"]</a>
+            </form>
+            @if (Model.MirrorResult.Count > 0)
+            {
+                <div class="table-wrap" style="margin-top:10px">
+                <table>
+                    <tr><th>@L["Add-on"]</th><th>@L["Version"]</th><th>@L["Status"]</th></tr>
+                    @foreach (var m in Model.MirrorResult.Where(x => x.Result != "present"))
+                    {
+                        <tr><td>@m.PackageId</td><td>@m.Version</td>
+                            <td>@L[m.Result == "mirrored" ? "Taken over" : m.Result == "newer-in-uat" ? "Newer version in this UAT" : m.Result == "later" ? "Next run" : "Failed"]@(m.Detail.Length > 0 && m.Result == "failed" ? ": " + m.Detail : "")</td></tr>
+                    }
+                </table>
+                </div>
+            }
+        </div>
+    }
 }

@@ -37,7 +37,9 @@ public partial class FederationService
     public const string MasterPublicKeyKey = "Federation.MasterPublicKey";   // UAT: master federation key (SPKI, base64)
     public const string PairedAtKey = "Federation.PairedAt";
     public const string LastTestKey = "Federation.LastTest";         // UAT: "<utc iso>|ok" or "<utc iso>|<code>"
-    public const string MasterSigningKeyIdKey = "Federation.MasterSigningKeyId";   // UAT: package signing key id of production (E1b)
+    public const string MasterSigningKeyIdKey = "Federation.MasterSigningKeyId";
+    public const string MirrorDailyKey = "Federation.MirrorDaily";   // UAT: "true" = mirror production once a day (S1.24.0, off by default)
+    public const string LastMirrorKey = "Federation.LastMirror";     // UAT: "<utc iso>|<mirrored>|<skipped>|<failed>"   // UAT: package signing key id of production (E1b)
     /// <summary>Where the store client reads its IT policies (HKLM); a test PC gets ServerUrl and TrustedSigningKeys there.</summary>
     public const string PolicyKey = @"HKEY_LOCAL_MACHINE\SOFTWARE\Kofax\PDF\Tungsten Power PDF\PluginStore\Policies\Store";
     public const string OwnKeyKey = "Federation.PrivateKey";         // both sides: own federation key ("dp:" protected PEM)
@@ -339,6 +341,13 @@ public partial class FederationService
     }
 
     /// <summary>Signature of an answer to a signed request (header X-Federation-Signature).</summary>
+    /// <summary>Same over the SHA-256 (hex) of a body streamed from a file (mirror downloads, S1.24.0).</summary>
+    public async Task<string> SignResponseHashAsync(string nonce, int status, string bodyHash)
+    {
+        using var own = await OwnKeyAsync(create: false);
+        return own is null ? "" : Sign(own, ResponseText(nonce, status, bodyHash));
+    }
+
     public async Task<string> SignResponseAsync(string nonce, int status, byte[] body)
     {
         using var own = await OwnKeyAsync(create: false);
@@ -399,8 +408,14 @@ public partial class FederationService
 
     /// <summary>Switches between "on its own" and "UAT (child)". Leaving UAT mode forgets the pairing.
     /// markAsTest (UAT only): show the server as a test system; null keeps the setting.</summary>
-    public async Task<FedResult> SetModeAsync(bool child, string by, bool? markAsTest = null)
+    public async Task<FedResult> SetModeAsync(bool child, string by, bool? markAsTest = null, bool? mirrorDaily = null)
     {
+        // E4 (S1.24.0): mirroring production once a day, a UAT setting (off by default)
+        if (child && mirrorDaily is { } daily && daily != (await _settings.GetAsync(MirrorDailyKey) == "true"))
+        {
+            await _settings.SetAsync(MirrorDailyKey, daily ? "true" : "");
+            await _audit.LogAsync(by, "settings.changed", MirrorDailyKey, daily ? "on" : "off");
+        }
         if (child && markAsTest is { } mark && mark != MarkedAsTest)
         {
             await _settings.SetAsync(MarkKey, mark ? "" : "false");
@@ -413,7 +428,11 @@ public partial class FederationService
         }
         if (child && await _db.FederationChildren.AnyAsync())
             return Err("FED_HAS_UAT", "This server is the master of a UAT; remove its UATs before it becomes a UAT itself.", 409);
-        if (!child) await ForgetPairingAsync();
+        if (!child)
+        {
+            await ForgetPairingAsync();
+            await _settings.SetAsync(MirrorDailyKey, "");
+        }
         await _settings.SetAsync(ModeKey, child ? "child" : "");
         await InitAsync();
         await _audit.LogAsync(by, "settings.changed", ModeKey, child ? "child" : "standalone");
@@ -514,7 +533,7 @@ public partial class FederationService
 
     /// <summary>A request to the master: no redirects, 20 s, at most 64 KB answer; signed (and the answer checked) when a key is given.</summary>
     private async Task<(int Status, JsonElement? Json, string Raw, FedResult? Error)> SendAsync(HttpMethod method, string url, byte[] body, (string Id, ECDsa Key)? signer,
-                                                                                               string? filePath = null)
+                                                                                               string? filePath = null, int maxResponse = 65536)
     {
         using var req = new HttpRequestMessage(method, url);
         string bodyHash;
@@ -560,7 +579,7 @@ public partial class FederationService
             var status = (int)resp.StatusCode;
             if (status is >= 300 and < 400)
                 return (status, null, "", Err("FED_MASTER_UNREACHABLE", $"The production server answered with a redirect (HTTP {status}); enter its final address.", 502));
-            var buf = new byte[65536];
+            var buf = new byte[maxResponse];
             var n = 0;
             await using (var st = await resp.Content.ReadAsStreamAsync())
             {

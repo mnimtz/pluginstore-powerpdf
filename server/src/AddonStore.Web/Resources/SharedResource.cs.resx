@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>Aktualizovat stav v produkci</value></data>
   <data name="On production" xml:space="preserve"><value>V produkci</value></data>
   <data name="Removed" xml:space="preserve"><value>Odebráno</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>Přebírat uvolněný stav produkce jednou denně (jen jako UAT; vypnuto: jen na vyžádání)</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>Uvolněný stav produkce</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>Převezme uvolněné veřejné doplňky produkce, které tomuto UAT chybějí, aby se nové verze testovaly proti skutečnému stavu. Doplněk, který toto UAT testuje v novější verzi, zůstane beze změny; data zákazníků se nikdy nepřebírají.</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>Poslední běh {0}: převzato {1}, beze změny {2}, neúspěšné {3}.</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>Převzít nyní uvolněný stav produkce?</value></data>
+  <data name="Take over now" xml:space="preserve"><value>Převzít nyní</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>Jednou denně: Nastavení, Funkce</value></data>
+  <data name="Taken over" xml:space="preserve"><value>Převzato</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>Novější verze v tomto UAT</value></data>
+  <data name="Next run" xml:space="preserve"><value>Další běh</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>Uvolněný stav produkce převzat.</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>Šablona předána do produkce (bez zákazníků).</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>Šablonu nelze předat do produkce: {0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Předat tuto šablonu do produkce? Produkce dostane doplňky a verze, které zná, nikdy zákazníky.</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>Předat šablonu do produkce</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>Naposledy předáno {0}</value></data>
 </root>

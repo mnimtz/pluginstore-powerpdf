@@ -180,6 +180,43 @@ public static class FederationEndpoints
             return await SignedAsync(ctx, svc, await svc.IntakeStatusAsync(child!, id));
         });
 
+        // E4 (S1.24.0): production's released public add-ons for a paired UAT
+        fed.MapGet("/catalog", async (HttpContext ctx, FederationService svc) =>
+        {
+            if (!await svc.MasterActiveAsync()) return Results.NotFound();
+            var body = await ReadBodyAsync(ctx, 1024) ?? Array.Empty<byte>();
+            var (child, error) = await svc.VerifyRequestAsync(ctx.Request, body);
+            if (error is not null) return Answer(error);
+            return await SignedAsync(ctx, svc, await svc.MirrorCatalogAsync(child!));
+        });
+
+        // E4: package and source of one released version; the answer is signed over the SHA-256 of the file
+        fed.MapGet("/catalog/{id}/{version}/package", async (string id, string version, HttpContext ctx, FederationService svc) =>
+        {
+            if (!await svc.MasterActiveAsync()) return Results.NotFound();
+            var body = await ReadBodyAsync(ctx, 1024) ?? Array.Empty<byte>();
+            var (child, error) = await svc.VerifyRequestAsync(ctx.Request, body);
+            if (error is not null) return Answer(error);
+            var (path, perr) = await svc.MirrorPackageAsync(child!, id, version);
+            if (perr is not null) return Answer(perr);
+            string hash;
+            using (var s = File.OpenRead(path!)) hash = Convert.ToHexString(await SHA256.HashDataAsync(s)).ToLowerInvariant();
+            ctx.Response.Headers["X-Federation-Signature"] = await svc.SignResponseHashAsync(ctx.Request.Headers["X-Federation-Nonce"].ToString(), 200, hash);
+            var stream = new FileStream(path!, FileMode.Open, FileAccess.Read, FileShare.Read | FileShare.Delete, 81920, FileOptions.DeleteOnClose);
+            return Results.Stream(stream, "application/zip");
+        });
+
+        // E5 (S1.24.0): a delivery template from a paired UAT, without customers
+        fed.MapPost("/templates", async (HttpContext ctx, FederationService svc) =>
+        {
+            if (!await svc.MasterActiveAsync()) return Results.NotFound();
+            var body = await ReadBodyAsync(ctx, 65536);
+            if (body is null) return Err("FED_BODY_INVALID", "The template is larger than 64 KB.");
+            var (child, error) = await svc.VerifyRequestAsync(ctx.Request, body);
+            if (error is not null) return Answer(error);
+            return await SignedAsync(ctx, svc, await svc.ReceiveTemplateAsync(child!, Json(body)));
+        });
+
         // ---- owners and admins of a UAT: hand a version to production (S1.22.0) -------------------
         var pkgs = app.MapGroup("/api/packages").RequireAuthorization("BearerOnly");
         pkgs.MapPost("/{id}/{version}/handover", async (string id, string version, HttpContext ctx, UserManager<AppUser> users,
@@ -198,7 +235,7 @@ public static class FederationEndpoints
         // ---- admins ------------------------------------------------------------------------
         var adm = app.MapGroup("/api/admin/uat").RequireAuthorization("BearerOnly");
 
-        adm.MapGet("", async (HttpContext ctx, UserManager<AppUser> users, FederationService svc) =>
+        adm.MapGet("", async (HttpContext ctx, UserManager<AppUser> users, FederationService svc, SettingsService settingsSvc) =>
         {
             if (await AdminAsync(ctx, users) is null) return NotAdmin();
             var st = await svc.ChildStateAsync();
@@ -237,6 +274,8 @@ public static class FederationEndpoints
                     testPc = new { registryKey = FederationService.PolicyKey, serverUrl = OwnUrl(ctx), trustedSigningKeys = st.TrustedSigningKeys },
                     sameSigningKeyAsProduction = st.SameSigningKey,
                     handovers,
+                    mirrorDaily = await settingsSvc.GetAsync(FederationService.MirrorDailyKey) == "true",
+                    lastMirror = await settingsSvc.GetAsync(FederationService.LastMirrorKey),
                 },
             });
         });
@@ -261,7 +300,9 @@ public static class FederationEndpoints
             if (mode is not ("child" or "standalone")) return Err("FED_MODE_INVALID", "Send {\"mode\": \"child\"} or {\"mode\": \"standalone\"}.");
             bool? mark = j is { } o && o.TryGetProperty("markAsTest", out var m) && m.ValueKind is JsonValueKind.True or JsonValueKind.False
                 ? m.ValueKind == JsonValueKind.True : null;
-            return Answer(await svc.SetModeAsync(mode == "child", admin.DisplayName, mark));
+            bool? daily = j is { } o2 && o2.TryGetProperty("mirrorDaily", out var md) && md.ValueKind is JsonValueKind.True or JsonValueKind.False
+                ? md.ValueKind == JsonValueKind.True : null;
+            return Answer(await svc.SetModeAsync(mode == "child", admin.DisplayName, mark, daily));
         });
 
         adm.MapPost("/codes", async (HttpContext ctx, UserManager<AppUser> users, FederationService svc) =>
@@ -324,6 +365,22 @@ public static class FederationEndpoints
             var admin = await AdminAsync(ctx, users);
             if (admin is null) return NotAdmin();
             return Answer(await svc.ApplyCatalogAsync(id, admin));
+        });
+
+        // E4: take over production's released state now (also once a day when switched on)
+        adm.MapPost("/mirror", async (HttpContext ctx, UserManager<AppUser> users, FederationService svc) =>
+        {
+            var admin = await AdminAsync(ctx, users);
+            if (admin is null) return NotAdmin();
+            return Answer(await svc.MirrorAsync(admin));
+        });
+
+        // E5: hand a delivery template to production (no customers)
+        adm.MapPost("/templates/{id:int}/handover", async (int id, HttpContext ctx, UserManager<AppUser> users, FederationService svc) =>
+        {
+            var admin = await AdminAsync(ctx, users);
+            if (admin is null) return NotAdmin();
+            return Answer(await svc.HandOverTemplateAsync(id, admin));
         });
 
         adm.MapPost("/test", async (HttpContext ctx, UserManager<AppUser> users, FederationService svc) =>

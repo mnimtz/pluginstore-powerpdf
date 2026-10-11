@@ -86,6 +86,24 @@ public class UatModel : PageModel
     public async Task<IActionResult> OnPostTestAsync() =>
         await DoneAsync(await _svc.TestConnectionAsync(await AdminAsync()), "The connection to the production server works.");
 
+    /// <summary>E4: the result of a mirror run, shown once.</summary>
+    public List<(string PackageId, string Version, string Result, string Detail)> MirrorResult { get; private set; } = new();
+    public string LastMirror { get; private set; } = "";
+
+    public async Task<IActionResult> OnPostMirrorAsync()
+    {
+        var me = await _users.GetUserAsync(User);
+        var r = await _svc.MirrorAsync(me!);
+        if (r.Ok && r.Data is not null)
+        {
+            var el = System.Text.Json.JsonSerializer.SerializeToElement(r.Data);
+            foreach (var i in el.GetProperty("items").EnumerateArray())
+                MirrorResult.Add((i.GetProperty("packageId").GetString() ?? "", i.GetProperty("version").GetString() ?? "",
+                                  i.GetProperty("result").GetString() ?? "", i.GetProperty("detail").GetString() ?? ""));
+        }
+        return await DoneAsync(r, "Released state of production taken over.");
+    }
+
     public async Task<IActionResult> OnPostRefreshAsync() =>
         await DoneAsync(await _svc.RefreshStatusAsync(await AdminAsync()), "State on production updated.");
 
@@ -114,7 +132,11 @@ public class UatModel : PageModel
             Codes = await _svc.OpenCodesAsync();
             Intakes = await _svc.IntakesAsync();
         }
-        else Handovers = await _svc.HandoversAsync();
+        else
+        {
+            Handovers = await _svc.HandoversAsync();
+            LastMirror = await _settings.GetAsync(FederationService.LastMirrorKey);
+        }
         OwnUrl = await OwnUrlAsync();
     }
 }

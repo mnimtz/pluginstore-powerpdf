@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>更新生产环境中的状态</value></data>
   <data name="On production" xml:space="preserve"><value>在生产环境中</value></data>
   <data name="Removed" xml:space="preserve"><value>已删除</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>每天采用一次生产环境的已发布状态（仅作为 UAT；关闭：仅按需）</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>生产环境的已发布状态</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>采用此 UAT 缺少的生产环境已发布公共加载项，以便针对真实状态测试新版本。此 UAT 正在以较新版本测试的加载项保持不变；绝不会采用客户数据。</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>上次运行 {0}：采用 {1} 个，未变 {2} 个，失败 {3} 个。</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>现在采用生产环境的已发布状态？</value></data>
+  <data name="Take over now" xml:space="preserve"><value>立即采用</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>每天一次：“设置”&gt;“功能”</value></data>
+  <data name="Taken over" xml:space="preserve"><value>已采用</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>此 UAT 中有较新版本</value></data>
+  <data name="Next run" xml:space="preserve"><value>下次运行</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>已采用生产环境的已发布状态。</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>模板已移交给生产环境（不含客户）。</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>无法将模板移交给生产环境：{0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>将此模板移交给生产环境？生产环境会获得它已知的加载项和版本，绝不包括客户。</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>将模板移交给生产环境</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>上次移交 {0}</value></data>
 </root>

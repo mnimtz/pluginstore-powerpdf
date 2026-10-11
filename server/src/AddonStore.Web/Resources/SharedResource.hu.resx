@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>Éles állapot frissítése</value></data>
   <data name="On production" xml:space="preserve"><value>Az éles rendszerben</value></data>
   <data name="Removed" xml:space="preserve"><value>Eltávolítva</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>Az éles rendszer kiadott állapotának átvétele naponta egyszer (csak UAT-ként; kikapcsolva: csak kérésre)</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>Az éles rendszer kiadott állapota</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>Átveszi az éles rendszer kiadott nyilvános bővítményeit, amelyek ebből az UAT-ből hiányoznak, így az új verziók a valós állapottal szemben tesztelhetők. Az a bővítmény, amelyet ez az UAT újabb verzióban tesztel, változatlan marad; ügyféladatokat soha nem vesz át.</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>Utolsó futás {0}: {1} átvéve, {2} változatlan, {3} sikertelen.</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>Átveszi most az éles rendszer kiadott állapotát?</value></data>
+  <data name="Take over now" xml:space="preserve"><value>Átvétel most</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>Naponta egyszer: Beállítások, Funkciók</value></data>
+  <data name="Taken over" xml:space="preserve"><value>Átvéve</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>Újabb verzió ebben az UAT-ben</value></data>
+  <data name="Next run" xml:space="preserve"><value>Következő futás</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>Az éles rendszer kiadott állapota átvéve.</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>A sablon átadva az éles rendszernek (ügyfelek nélkül).</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>A sablont nem sikerült átadni az éles rendszernek: {0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Átadja ezt a sablont az éles rendszernek? Az éles rendszer az általa ismert bővítményeket és verziókat kapja meg, az ügyfeleket soha.</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>Sablon átadása az éles rendszernek</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>Utoljára átadva: {0}</value></data>
 </root>

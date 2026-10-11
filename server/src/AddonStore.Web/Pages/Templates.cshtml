@@ -12,7 +12,7 @@
 
 @if (Model.Notice is not null)
 {
-    <div class="alert @Model.NoticeKind">@L[Model.Notice]</div>
+    <div class="alert @Model.NoticeKind">@(Model.NoticeArg is null ? L[Model.Notice] : L[Model.Notice, Model.NoticeArg])</div>
 }
 
 @if (Model.Edit is { } v)
@@ -72,6 +72,14 @@
             <ul>@foreach (var c in Model.UsedBy) { <li><a href="/Customer?id=@c.Id">@c.Name</a></li> }</ul>
         }
     </div>
+    @if (Model.CanHandOver)
+    {
+        <form method="post" asp-page-handler="HandOver" asp-route-id="@v.Template.Id" style="margin-bottom:8px"
+              data-confirm="@L["Hand this template to production? Production gets the add-ons and versions it knows, never the customers."]">
+            <button type="submit" class="btn small secondary">@L["Hand template to production"]</button>
+            @if (v.Template.HandedOverAt is { } ho) { <span class="small muted">@L["Last handed over {0}", Time.Fmt(ho)]</span> }
+        </form>
+    }
     @if (Model.CanEdit)
     {
         <form method="post" asp-page-handler="Delete" asp-route-id="@v.Template.Id"

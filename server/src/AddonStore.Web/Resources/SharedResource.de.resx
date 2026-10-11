@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>Stand in der Produktion aktualisieren</value></data>
   <data name="On production" xml:space="preserve"><value>In der Produktion</value></data>
   <data name="Removed" xml:space="preserve"><value>Entfernt</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>Den freigegebenen Stand der Produktion einmal täglich übernehmen (nur als UAT; aus: nur auf Knopfdruck)</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>Freigegebener Stand der Produktion</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>Übernimmt die freigegebenen öffentlichen Add-ons der Produktion, die diesem UAT fehlen, damit neue Versionen gegen den echten Stand getestet werden. Ein Add-on, das dieses UAT in einer neueren Version testet, bleibt, wie es ist; Kundendaten werden nie übernommen.</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>Letzter Lauf {0}: {1} übernommen, {2} unverändert, {3} fehlgeschlagen.</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>Den freigegebenen Stand der Produktion jetzt übernehmen?</value></data>
+  <data name="Take over now" xml:space="preserve"><value>Jetzt übernehmen</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>Einmal täglich: Einstellungen, Funktionen</value></data>
+  <data name="Taken over" xml:space="preserve"><value>Übernommen</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>Neuere Version in diesem UAT</value></data>
+  <data name="Next run" xml:space="preserve"><value>Nächster Lauf</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>Freigegebener Stand der Produktion übernommen.</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>Vorlage an die Produktion übergeben (ohne Kunden).</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>Die Vorlage konnte nicht an die Produktion übergeben werden: {0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Diese Vorlage an die Produktion übergeben? Die Produktion bekommt die Add-ons und Versionen, die sie kennt, nie die Kunden.</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>Vorlage an Produktion übergeben</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>Zuletzt übergeben {0}</value></data>
 </root>

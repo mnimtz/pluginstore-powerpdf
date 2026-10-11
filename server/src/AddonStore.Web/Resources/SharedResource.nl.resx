@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>Status in productie bijwerken</value></data>
   <data name="On production" xml:space="preserve"><value>In productie</value></data>
   <data name="Removed" xml:space="preserve"><value>Verwijderd</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>De vrijgegeven stand van productie één keer per dag overnemen (alleen als UAT; uit: alleen op verzoek)</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>Vrijgegeven stand van productie</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>Neemt de vrijgegeven openbare add-ons van productie over die dit UAT mist, zodat nieuwe versies tegen de echte stand worden getest. Een add-on die dit UAT in een nieuwere versie test, blijft zoals hij is; klantgegevens worden nooit overgenomen.</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>Laatste run {0}: {1} overgenomen, {2} ongewijzigd, {3} mislukt.</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>De vrijgegeven stand van productie nu overnemen?</value></data>
+  <data name="Take over now" xml:space="preserve"><value>Nu overnemen</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>Eén keer per dag: Instellingen, Functies</value></data>
+  <data name="Taken over" xml:space="preserve"><value>Overgenomen</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>Nieuwere versie in dit UAT</value></data>
+  <data name="Next run" xml:space="preserve"><value>Volgende run</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>Vrijgegeven stand van productie overgenomen.</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>Sjabloon aan productie doorgegeven (zonder klanten).</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>Het sjabloon kon niet aan productie worden doorgegeven: {0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Dit sjabloon aan productie doorgeven? Productie krijgt de add-ons en versies die zij kent, nooit de klanten.</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>Sjabloon aan productie doorgeven</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>Laatst doorgegeven {0}</value></data>
 </root>

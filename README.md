@@ -1095,6 +1095,15 @@ pairing:
   withdrawn), asked every 15 minutes and on demand. Production sees where the
   UAT's catalog entry differs and an admin takes it over with one click. Handed
   over versions are always submitted as the admin who added the UAT.
+- Production's released state in the UAT (S1.24.0, E4): on a paired UAT
+  "Take over now" (and once a day, when switched on under Settings, Features)
+  copies production's released public add-ons the UAT is missing, released there
+  without review or mails; versions the UAT tests in a newer version stay. Never
+  private deliveries, customers or the store client.
+- Delivery templates (S1.24.0, E5): a UAT hands a template to production
+  without its customers; production creates or updates it, unless it has
+  assigned that template to customers already.
+- Without a pairing none of this runs; a server on its own works as before.
 - The role and the marking are separate: a UAT can drop the test system marking
   (band, environment `uat`) when it stays in productive use for its own
   customers, for example our Azure store as development server of a company store.

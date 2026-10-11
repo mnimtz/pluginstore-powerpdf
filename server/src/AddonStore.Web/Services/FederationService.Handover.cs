@@ -205,6 +205,8 @@ public partial class FederationService
             return Err("NOT_OWNER", "Only the owner of the add-on or an admin hands a version to production.", 403);
         if (v.Status is not (VersionStatus.Beta or VersionStatus.Live) || v.BlockedAt is not null)
             return Err("FED_VERSION_NOT_APPROVED", "Only a version approved here (beta or live) and not blocked goes to production.", 409);
+        if (v.SubmittedVia == "mirror")
+            return Err("FED_FROM_PRODUCTION", "This version came from production (mirrored); it is not handed back.", 409);
         if (await _db.FederationHandovers.AnyAsync(h => h.VersionId == v.Id && h.State == "accepted"))
             return Err("FED_HANDED_OVER", "This version was handed to production already.", 409);
         using var own = await OwnKeyAsync(create: false);

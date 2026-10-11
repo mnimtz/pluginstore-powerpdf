@@ -1,6 +1,6 @@
 # Konzept: Master-Child-Betrieb (UAT-Server vor der Produktion)
 
-Stand: Okt 11, 2026 · Status: E1 (S1.21.0), E1b Server (S1.21.1), E2 (S1.22.0) und E3 (S1.23.0) umgesetzt
+Stand: Okt 11, 2026 · Status: E1 (S1.21.0), E1b Server (S1.21.1), E2 (S1.22.0), E3 (S1.23.0), E4 und E5 (S1.24.0) umgesetzt; Client-Teil von E1b entfällt (Entscheidung Marcus)
 
 ## Ziel
 

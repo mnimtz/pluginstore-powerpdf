@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>프로덕션 상태 업데이트</value></data>
   <data name="On production" xml:space="preserve"><value>프로덕션에서</value></data>
   <data name="Removed" xml:space="preserve"><value>제거됨</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>프로덕션의 출시된 상태를 하루 한 번 가져오기(UAT일 때만, 끄면 요청 시에만)</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>프로덕션의 출시된 상태</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>이 UAT에 없는 프로덕션의 출시된 공개 추가 기능을 가져와 새 버전을 실제 상태에 대해 테스트합니다. 이 UAT가 더 새 버전으로 테스트 중인 추가 기능은 그대로 유지되며, 고객 데이터는 절대 가져오지 않습니다.</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>마지막 실행 {0}: 가져옴 {1}, 변경 없음 {2}, 실패 {3}.</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>지금 프로덕션의 출시된 상태를 가져올까요?</value></data>
+  <data name="Take over now" xml:space="preserve"><value>지금 가져오기</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>하루 한 번: 설정 &gt; 기능</value></data>
+  <data name="Taken over" xml:space="preserve"><value>가져옴</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>이 UAT에 더 새 버전 있음</value></data>
+  <data name="Next run" xml:space="preserve"><value>다음 실행</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>프로덕션의 출시된 상태를 가져왔습니다.</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>템플릿을 프로덕션에 넘겼습니다(고객 제외).</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>템플릿을 프로덕션에 넘길 수 없습니다: {0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>이 템플릿을 프로덕션에 넘길까요? 프로덕션은 알고 있는 추가 기능과 버전만 받으며, 고객은 절대 받지 않습니다.</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>템플릿을 프로덕션에 넘기기</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>마지막으로 넘김 {0}</value></data>
 </root>

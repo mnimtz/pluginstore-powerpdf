@@ -249,11 +249,12 @@ public class SettingsModel : PageModel
     // UAT environments (S1.22.1): mode and test system marking under Features; pairing on /Admin/Uat
     public bool UatIsChild { get; private set; }
     public bool UatMarkedAsTest { get; private set; }
+    public bool UatMirrorDaily { get; private set; }
 
-    public async Task OnPostUatModeAsync(string mode, bool markAsTest, [FromServices] FederationService fed)
+    public async Task OnPostUatModeAsync(string mode, bool markAsTest, bool mirrorDaily, [FromServices] FederationService fed)
     {
         var admin = await _users.GetUserAsync(User);
-        var r = await fed.SetModeAsync(mode == "child", admin!.DisplayName, mode == "child" ? markAsTest : null);
+        var r = await fed.SetModeAsync(mode == "child", admin!.DisplayName, mode == "child" ? markAsTest : null, mode == "child" ? mirrorDaily : null);
         if (r.Ok) Notice = "Mode saved.";
         else
         {
@@ -558,6 +559,7 @@ public class SettingsModel : PageModel
         SendToEnabled = (await sendCfg.ConfigAsync()).Enabled;
         UatIsChild = FederationService.IsChild;
         UatMarkedAsTest = FederationService.MarkedAsTest;
+        UatMirrorDaily = await _settings.GetAsync(FederationService.MirrorDailyKey) == "true";
         SendToStorageReady = await HttpContext.RequestServices.GetRequiredService<SendToStorage>().IsConfiguredAsync();
         InvOn = await _settings.GetAsync(InventoryService.EnabledKey) == "on";
         InvConfirmedBy = await _settings.GetAsync(InventoryService.ConfirmedByKey);

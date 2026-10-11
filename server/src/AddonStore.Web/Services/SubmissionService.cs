@@ -54,7 +54,8 @@ public class SubmissionService
     // One submission per package at a time (two uploads of the same new version would race).
     private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, SemaphoreSlim> Locks = new();
 
-    public async Task<SubmissionResult> SubmitAsync(string zipPath, AppUser user, string via)
+    /// <param name="notify">false: no staff mail and no receipt (a UAT mirroring production's released versions, S1.24.0)</param>
+    public async Task<SubmissionResult> SubmitAsync(string zipPath, AppUser user, string via, bool notify = true)
     {
         var validator = new PackageValidator(_db, _categories);
         var (report, manifest) = await validator.ValidateAsync(zipPath, user.Id, await _users.IsInRoleAsync(user, "Admin"));
@@ -65,7 +66,7 @@ public class SubmissionService
 
         var gate = Locks.GetOrAdd(manifest.Id, _ => new SemaphoreSlim(1, 1));
         await gate.WaitAsync();
-        try { return await SubmitCheckedAsync(zipPath, user, via, report, manifest); }
+        try { return await SubmitCheckedAsync(zipPath, user, via, report, manifest, notify); }
         finally { gate.Release(); }
     }
 
@@ -81,7 +82,7 @@ public class SubmissionService
                 : $"Version {manifest.Version} already exists with different content. Bump 'version' in the manifest and upload again.");
     }
 
-    private async Task<SubmissionResult> SubmitCheckedAsync(string zipPath, AppUser user, string via, ValidationReport report, ParsedManifest manifest)
+    private async Task<SubmissionResult> SubmitCheckedAsync(string zipPath, AppUser user, string via, ValidationReport report, ParsedManifest manifest, bool notify = true)
     {
 
         // The store client has its own lane: only admins publish it, and a new
@@ -168,6 +169,8 @@ public class SubmissionService
         await _audit.LogAsync(user.DisplayName, "package.submitted",
             $"{manifest.Id} {manifest.Version}",
             $"via {via}; changelog: {Truncate(manifest.Changelog, 300)}; warnings: {report.Findings.Count(f => f.Severity == "warning")}");
+
+        if (!notify) return new SubmissionResult(report, version);
 
         await _notify.NotifyStaffAsync("Submission",
             $"[Add-on Store] New submission: {manifest.Id} {manifest.Version}",

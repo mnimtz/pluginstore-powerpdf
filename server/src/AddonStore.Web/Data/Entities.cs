@@ -396,6 +396,11 @@ public class DeliveryTemplate
     public string OwnerId { get; set; } = "";
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
+    /// <summary>UAT (S1.24.0, stage E5). Production: the template came from this UAT and its template id there.
+    /// UAT: when it was last handed to production.</summary>
+    public string? OriginChildId { get; set; }
+    public int? OriginTemplateId { get; set; }
+    public DateTime? HandedOverAt { get; set; }
 }
 
 /// <summary>One add-on of a template: Version null = the newest approved version, else that fixed version.</summary>

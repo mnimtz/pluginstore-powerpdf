@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>Päivitä tila tuotannossa</value></data>
   <data name="On production" xml:space="preserve"><value>Tuotannossa</value></data>
   <data name="Removed" xml:space="preserve"><value>Poistettu</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>Ota tuotannon julkaistu tila käyttöön kerran päivässä (vain UAT:na; pois: vain pyynnöstä)</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>Tuotannon julkaistu tila</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>Ottaa käyttöön tuotannon julkaistut julkiset lisäosat, jotka tästä UAT:sta puuttuvat, jotta uudet versiot testataan todellista tilaa vasten. Lisäosa, jota tämä UAT testaa uudempana versiona, pysyy ennallaan; asiakastietoja ei koskaan siirretä.</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>Viimeisin ajo {0}: {1} otettu käyttöön, {2} ennallaan, {3} epäonnistui.</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>Otetaanko tuotannon julkaistu tila käyttöön nyt?</value></data>
+  <data name="Take over now" xml:space="preserve"><value>Ota käyttöön nyt</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>Kerran päivässä: Asetukset, Toiminnot</value></data>
+  <data name="Taken over" xml:space="preserve"><value>Otettu käyttöön</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>Uudempi versio tässä UAT:ssa</value></data>
+  <data name="Next run" xml:space="preserve"><value>Seuraava ajo</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>Tuotannon julkaistu tila otettu käyttöön.</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>Malli siirretty tuotantoon (ilman asiakkaita).</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>Mallia ei voitu siirtää tuotantoon: {0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Siirretäänkö tämä malli tuotantoon? Tuotanto saa tuntemansa lisäosat ja versiot, ei koskaan asiakkaita.</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>Siirrä malli tuotantoon</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>Viimeksi siirretty {0}</value></data>
 </root>

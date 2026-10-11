@@ -15,7 +15,7 @@ SOURCES = ['Validation/PackageValidator.cs', 'Validation/ReportView.cs', 'Servic
            'Services/PackageMetaService.cs', 'Services/CategoryService.cs', 'Services/SourceService.cs',
            'Services/CustomerService.cs', 'Services/TemplateService.cs', 'Program.cs',
            'Services/SendToService.cs', 'Api/SendToEndpoints.cs',
-           'Services/FederationService.cs', 'Services/FederationService.Handover.cs', 'Api/FederationEndpoints.cs']   # UAT environments (S1.21.0)
+           'Services/FederationService.cs', 'Services/FederationService.Handover.cs', 'Services/FederationService.Mirror.cs', 'Api/FederationEndpoints.cs']   # UAT environments (S1.21.0)
 EXTRA_CODES = {'CLIENT_ADMIN_ONLY', 'VERSION_EXISTS', 'VALIDATION_FAILED', 'NOT_OWNER', 'LIVE_VERSION',
                'TOKEN_INVALID', 'TOKEN_REVOKED', 'USER_NOT_ACTIVE', 'NO_PACKAGE',
                'METADATA_INVALID', 'PACKAGE_NOT_FOUND', 'SOURCE_REJECTED', 'SOURCE_MISSING', 'ADMIN_ONLY',

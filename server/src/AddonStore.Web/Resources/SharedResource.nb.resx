@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>Oppdater status i produksjon</value></data>
   <data name="On production" xml:space="preserve"><value>I produksjon</value></data>
   <data name="Removed" xml:space="preserve"><value>Fjernet</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>Overta den frigitte tilstanden fra produksjon én gang om dagen (bare som UAT; av: bare ved behov)</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>Frigitt tilstand i produksjon</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>Overtar de frigitte offentlige tilleggene fra produksjon som dette UAT mangler, slik at nye versjoner testes mot den virkelige tilstanden. Et tillegg som dette UAT tester i en nyere versjon, forblir som det er; kundedata overtas aldri.</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>Siste kjøring {0}: {1} overtatt, {2} uendret, {3} mislyktes.</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>Overta den frigitte tilstanden fra produksjon nå?</value></data>
+  <data name="Take over now" xml:space="preserve"><value>Overta nå</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>Én gang om dagen: Innstillinger, Funksjoner</value></data>
+  <data name="Taken over" xml:space="preserve"><value>Overtatt</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>Nyere versjon i dette UAT</value></data>
+  <data name="Next run" xml:space="preserve"><value>Neste kjøring</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>Den frigitte tilstanden fra produksjon er overtatt.</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>Mal gitt videre til produksjon (uten kunder).</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>Malen kunne ikke gis videre til produksjon: {0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Gi denne malen videre til produksjon? Produksjon får tilleggene og versjonene den kjenner, aldri kundene.</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>Gi mal videre til produksjon</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>Sist gitt videre {0}</value></data>
 </root>

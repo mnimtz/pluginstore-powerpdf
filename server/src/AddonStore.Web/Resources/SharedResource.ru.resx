@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>Обновить состояние в рабочей среде</value></data>
   <data name="On production" xml:space="preserve"><value>В рабочей среде</value></data>
   <data name="Removed" xml:space="preserve"><value>Удалено</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>Принимать выпущенное состояние рабочей среды раз в день (только как UAT; выкл.: только по запросу)</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>Выпущенное состояние рабочей среды</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>Принимает выпущенные общедоступные надстройки рабочей среды, которых нет в этом UAT, чтобы новые версии проверялись на реальном состоянии. Надстройка, которую этот UAT тестирует в более новой версии, остаётся как есть; данные клиентов никогда не принимаются.</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>Последний запуск {0}: принято {1}, без изменений {2}, ошибок {3}.</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>Принять выпущенное состояние рабочей среды сейчас?</value></data>
+  <data name="Take over now" xml:space="preserve"><value>Принять сейчас</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>Раз в день: «Настройки», «Функции»</value></data>
+  <data name="Taken over" xml:space="preserve"><value>Принято</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>Более новая версия в этом UAT</value></data>
+  <data name="Next run" xml:space="preserve"><value>Следующий запуск</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>Выпущенное состояние рабочей среды принято.</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>Шаблон передан в рабочую среду (без клиентов).</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>Не удалось передать шаблон в рабочую среду: {0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Передать этот шаблон в рабочую среду? Рабочая среда получит известные ей надстройки и версии, но никогда не клиентов.</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>Передать шаблон в рабочую среду</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>Последняя передача {0}</value></data>
 </root>

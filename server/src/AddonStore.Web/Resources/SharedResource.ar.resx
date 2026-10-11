@@ -1616,4 +1616,20 @@
   <data name="Update state on production" xml:space="preserve"><value>تحديث الحالة في الإنتاج</value></data>
   <data name="On production" xml:space="preserve"><value>في الإنتاج</value></data>
   <data name="Removed" xml:space="preserve"><value>تمت الإزالة</value></data>
+  <data name="Take over the released state of production once a day (only as UAT; off: only on demand)" xml:space="preserve"><value>اعتماد الحالة المنشورة للإنتاج مرة يوميًا (كبيئة UAT فقط؛ عند الإيقاف: عند الطلب فقط)</value></data>
+  <data name="Released state of production" xml:space="preserve"><value>الحالة المنشورة للإنتاج</value></data>
+  <data name="Takes over the released public add-ons of production that this UAT is missing, so new versions are tested against the real state. A version this UAT tests in a newer version stays as it is; customer data is never taken over." xml:space="preserve"><value>يعتمد الوظائف الإضافية العامة المنشورة في الإنتاج التي تنقص بيئة UAT هذه، لاختبار الإصدارات الجديدة مقابل الحالة الفعلية. وتبقى الوظيفة الإضافية التي تختبرها هذه البيئة بإصدار أحدث كما هي؛ ولا تُعتمد بيانات العملاء أبدًا.</value></data>
+  <data name="Last run {0}: {1} taken over, {2} unchanged, {3} failed." xml:space="preserve"><value>آخر تشغيل {0}: اعتُمد {1}، دون تغيير {2}، فشل {3}.</value></data>
+  <data name="Take over the released state of production now?" xml:space="preserve"><value>هل تريد اعتماد الحالة المنشورة للإنتاج الآن؟</value></data>
+  <data name="Take over now" xml:space="preserve"><value>اعتماد الآن</value></data>
+  <data name="Once a day: Settings, Features" xml:space="preserve"><value>مرة يوميًا: الإعدادات، الميزات</value></data>
+  <data name="Taken over" xml:space="preserve"><value>تم الاعتماد</value></data>
+  <data name="Newer version in this UAT" xml:space="preserve"><value>إصدار أحدث في بيئة UAT هذه</value></data>
+  <data name="Next run" xml:space="preserve"><value>التشغيل التالي</value></data>
+  <data name="Released state of production taken over." xml:space="preserve"><value>تم اعتماد الحالة المنشورة للإنتاج.</value></data>
+  <data name="Template handed to production (without customers)." xml:space="preserve"><value>تم تسليم القالب إلى الإنتاج (دون العملاء).</value></data>
+  <data name="The template could not be handed to production: {0}" xml:space="preserve"><value>تعذّر تسليم القالب إلى الإنتاج: {0}</value></data>
+  <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>هل تريد تسليم هذا القالب إلى الإنتاج؟ يتلقى الإنتاج الوظائف الإضافية والإصدارات التي يعرفها، ولا يتلقى العملاء أبدًا.</value></data>
+  <data name="Hand template to production" xml:space="preserve"><value>تسليم القالب إلى الإنتاج</value></data>
+  <data name="Last handed over {0}" xml:space="preserve"><value>آخر تسليم {0}</value></data>
 </root>

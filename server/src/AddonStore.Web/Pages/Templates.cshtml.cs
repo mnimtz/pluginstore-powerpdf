@@ -37,6 +37,22 @@ public class TemplatesModel : PageModel
 
     public async Task OnGetAsync() => await LoadAsync();
 
+    // UAT (S1.24.0, stage E5): hand this template to production, without customers
+    public bool CanHandOver => FederationService.IsChild && CanEdit && Edit is not null;
+
+    public async Task<IActionResult> OnPostHandOverAsync()
+    {
+        var me = await _users.GetUserAsync(User);
+        if (me is null || Id is null) return Forbid();
+        var r = await HttpContext.RequestServices.GetRequiredService<FederationService>().HandOverTemplateAsync(Id.Value, me);
+        if (r.Ok) Notice = "Template handed to production (without customers).";
+        else { Notice = "The template could not be handed to production: {0}"; NoticeArg = r.Code + ": " + r.Message; NoticeKind = "error"; }
+        await LoadAsync();
+        return Page();
+    }
+
+    public string? NoticeArg { get; private set; }
+
     public async Task<IActionResult> OnPostCreateAsync(string? name, string? description, bool restrictCatalog)
     {
         var me = await _users.GetUserAsync(User);
