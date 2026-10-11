@@ -1603,4 +1603,6 @@
   <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>本番環境がこのバージョンを拒否しました。結果はバージョンの下に表示されています。</value></data>
   <data name="The handover failed: {0}" xml:space="preserve"><value>引き渡しに失敗しました: {0}</value></data>
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>4 アイ ルール: このバージョンは UAT であなたがアップロードしました。本番環境の別の管理者または審査担当者が承認します。</value></data>
+  <data name="Manage UAT environments" xml:space="preserve"><value>UAT 環境を管理</value></data>
+  <data name="Change under Settings, Features" xml:space="preserve"><value>[設定] の [機能] で変更</value></data>
 </root>

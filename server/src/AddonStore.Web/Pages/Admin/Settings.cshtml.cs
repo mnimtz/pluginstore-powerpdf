@@ -246,6 +246,24 @@ public class SettingsModel : PageModel
 
     /// <summary>"Send to" master switch (S1.17.0 draft): the only "Send to" control left while it is off.</summary>
     public bool SendToEnabled { get; private set; }
+    // UAT environments (S1.22.1): mode and test system marking under Features; pairing on /Admin/Uat
+    public bool UatIsChild { get; private set; }
+    public bool UatMarkedAsTest { get; private set; }
+
+    public async Task OnPostUatModeAsync(string mode, bool markAsTest, [FromServices] FederationService fed)
+    {
+        var admin = await _users.GetUserAsync(User);
+        var r = await fed.SetModeAsync(mode == "child", admin!.DisplayName, mode == "child" ? markAsTest : null);
+        if (r.Ok) Notice = "Mode saved.";
+        else
+        {
+            Notice = "The step was refused.";
+            NoticeKind = "error";
+            TestDetail = r.Code + ": " + r.Message;
+        }
+        View = "features";
+        await LoadAsync();
+    }
     public bool SendToStorageReady { get; private set; }
 
     public async Task OnPostFeaturesAsync(bool sendTo, [FromServices] SendToService sendToSvc, [FromServices] SendToStorage storage)
@@ -538,6 +556,8 @@ public class SettingsModel : PageModel
         StoreModes = await StoreAccess.AllowedModesAsync(_settings);
         var sendCfg = HttpContext.RequestServices.GetRequiredService<SendToService>();
         SendToEnabled = (await sendCfg.ConfigAsync()).Enabled;
+        UatIsChild = FederationService.IsChild;
+        UatMarkedAsTest = FederationService.MarkedAsTest;
         SendToStorageReady = await HttpContext.RequestServices.GetRequiredService<SendToStorage>().IsConfiguredAsync();
         InvOn = await _settings.GetAsync(InventoryService.EnabledKey) == "on";
         InvConfirmedBy = await _settings.GetAsync(InventoryService.ConfirmedByKey);

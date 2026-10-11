@@ -1603,4 +1603,6 @@
   <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>Producción rechazó la versión; los hallazgos aparecen debajo de la versión.</value></data>
   <data name="The handover failed: {0}" xml:space="preserve"><value>El traspaso falló: {0}</value></data>
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Regla de los cuatro ojos: usted subió esta versión en el UAT; la aprueba otro administrador o revisor de producción.</value></data>
+  <data name="Manage UAT environments" xml:space="preserve"><value>Administrar entornos UAT</value></data>
+  <data name="Change under Settings, Features" xml:space="preserve"><value>Cambiar en Configuración, Funciones</value></data>
 </root>

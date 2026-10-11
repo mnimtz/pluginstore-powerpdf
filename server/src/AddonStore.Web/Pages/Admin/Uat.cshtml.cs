@@ -63,9 +63,6 @@ public class UatModel : PageModel
         return Page();
     }
 
-    public async Task<IActionResult> OnPostModeAsync(string mode, bool markAsTest) =>
-        await DoneAsync(await _svc.SetModeAsync(mode == "child", await AdminAsync(), mode == "child" ? markAsTest : null), "Mode saved.");
-
     public async Task<IActionResult> OnPostCodeAsync(string name)
     {
         var me = await _users.GetUserAsync(User);

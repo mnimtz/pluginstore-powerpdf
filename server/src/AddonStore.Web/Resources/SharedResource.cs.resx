@@ -1603,4 +1603,6 @@
   <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>Produkce verzi odmítla; zjištění jsou uvedena pod verzí.</value></data>
   <data name="The handover failed: {0}" xml:space="preserve"><value>Předání se nezdařilo: {0}</value></data>
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Pravidlo čtyř očí: tuto verzi jste nahráli v UAT; schvaluje ji jiný správce nebo posuzovatel produkce.</value></data>
+  <data name="Manage UAT environments" xml:space="preserve"><value>Spravovat prostředí UAT</value></data>
+  <data name="Change under Settings, Features" xml:space="preserve"><value>Změnit v Nastavení, Funkce</value></data>
 </root>

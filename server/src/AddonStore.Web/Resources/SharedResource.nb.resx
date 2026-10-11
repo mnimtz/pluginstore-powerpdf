@@ -1603,4 +1603,6 @@
   <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>Produksjon avviste versjonen; funnene står under versjonen.</value></data>
   <data name="The handover failed: {0}" xml:space="preserve"><value>Overleveringen mislyktes: {0}</value></data>
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Fireøyneprinsippet: Du lastet opp denne versjonen i UAT; en annen administrator eller kontrollør i produksjon godkjenner den.</value></data>
+  <data name="Manage UAT environments" xml:space="preserve"><value>Administrer UAT-miljøer</value></data>
+  <data name="Change under Settings, Features" xml:space="preserve"><value>Endre under Innstillinger, Funksjoner</value></data>
 </root>

@@ -1064,8 +1064,10 @@ A second, separate store can serve as UAT (test system) of the production
 store; concept and stages in `docs/concepts/master-child.md`. Stage E1 is the
 pairing:
 
-- A server runs on its own until an admin adds a UAT under
-  *Settings, UAT environments* (`/Admin/Uat`). "Add UAT" creates a one-time
+- The mode (on its own or UAT) and the test system marking are set under
+  *Settings, Features* (S1.22.1); pairing, codes and handovers are on
+  *UAT environments* (`/Admin/Uat`).
+- A server runs on its own until an admin adds a UAT on `/Admin/Uat`. "Add UAT" creates a one-time
   pairing code (15 minutes, only its hash is stored). Without a UAT and without
   an open code `/api/federation/*` answers 404.
 - The UAT admin switches the mode to *UAT* and enters the production address

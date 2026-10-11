@@ -256,6 +256,20 @@ else if (Model.SigningKeyId.Length > 0)
         <button type="submit" class="btn cta" style="margin-top:8px">@L["Save"]</button>
     </form>
 </div>
+<div class="card" style="max-width:760px" id="uat">
+    <h2 style="margin-top:0">@L["UAT environments"]</h2>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["Test new add-on versions in a separate store (UAT) first, then hand them to production. A server runs on its own until you add a UAT; only the UAT needs settings."]</p>
+    <form method="post" asp-page-handler="UatMode" class="stack" style="max-width:none">
+        <h3 style="margin:0">@L["Mode of this server"]</h3>
+        <label style="font-weight:400"><input type="radio" name="mode" value="standalone" checked="@(!Model.UatIsChild)" style="width:auto" /> @L["On its own (production); with a UAT added it is that UAT's master"]</label>
+        <label style="font-weight:400"><input type="radio" name="mode" value="child" checked="@Model.UatIsChild" style="width:auto" /> @L["UAT: test system of a production server"]</label>
+        <label style="font-weight:400;margin-inline-start:22px"><input type="checkbox" name="markAsTest" value="true" checked="@(!Model.UatIsChild || Model.UatMarkedAsTest)" style="width:auto" /> @L["Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store."]</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <button type="submit" class="btn cta">@L["Save mode"]</button>
+            <a href="/Admin/Uat">@L["Manage UAT environments"] →</a>
+        </div>
+    </form>
+</div>
 }
 
 @if (Model.View == "store")

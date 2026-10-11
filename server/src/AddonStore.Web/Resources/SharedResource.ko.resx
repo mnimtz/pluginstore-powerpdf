@@ -1603,4 +1603,6 @@
   <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>프로덕션에서 버전을 거부했습니다. 결과는 버전 아래에 표시됩니다.</value></data>
   <data name="The handover failed: {0}" xml:space="preserve"><value>넘기기 실패: {0}</value></data>
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>4인 확인 규칙: 이 버전은 UAT에서 사용자가 업로드했습니다. 프로덕션의 다른 관리자나 검토자가 승인합니다.</value></data>
+  <data name="Manage UAT environments" xml:space="preserve"><value>UAT 환경 관리</value></data>
+  <data name="Change under Settings, Features" xml:space="preserve"><value>설정 &gt; 기능에서 변경</value></data>
 </root>

@@ -1603,4 +1603,6 @@
   <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>正式環境拒絕了該版本；結果列在版本下方。</value></data>
   <data name="The handover failed: {0}" xml:space="preserve"><value>移交失敗：{0}</value></data>
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>四眼原則：您在 UAT 中上傳了此版本；由正式環境的其他管理員或審核人員核准。</value></data>
+  <data name="Manage UAT environments" xml:space="preserve"><value>管理 UAT 環境</value></data>
+  <data name="Change under Settings, Features" xml:space="preserve"><value>在「設定」&gt;「功能」中變更</value></data>
 </root>

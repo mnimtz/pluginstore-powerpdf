@@ -1603,4 +1603,6 @@
   <data name="Production refused the version; the findings are listed below the version." xml:space="preserve"><value>Üretim sürümü reddetti; bulgular sürümün altında listelenir.</value></data>
   <data name="The handover failed: {0}" xml:space="preserve"><value>Aktarım başarısız: {0}</value></data>
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Dört göz kuralı: bu sürümü UAT'ye siz yüklediniz; onu üretimin başka bir yöneticisi veya gözden geçireni onaylar.</value></data>
+  <data name="Manage UAT environments" xml:space="preserve"><value>UAT ortamlarını yönet</value></data>
+  <data name="Change under Settings, Features" xml:space="preserve"><value>Ayarlar, Özellikler altında değiştir</value></data>
 </root>

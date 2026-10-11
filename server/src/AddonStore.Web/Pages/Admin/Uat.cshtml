@@ -19,15 +19,8 @@
     </div>
 }
 
-<div class="card" style="max-width:720px">
-    <h2 style="margin-top:0">@L["Mode of this server"]</h2>
-    <form method="post" asp-page-handler="Mode" class="stack" style="max-width:none">
-        <label style="font-weight:400"><input type="radio" name="mode" value="standalone" checked="@(!st.IsChild)" /> @L["On its own (production); with a UAT added it is that UAT's master"]</label>
-        <label style="font-weight:400"><input type="radio" name="mode" value="child" checked="@st.IsChild" /> @L["UAT: test system of a production server"]</label>
-        <label style="font-weight:400;margin-inline-start:22px"><input type="checkbox" name="markAsTest" value="true" checked="@(!st.IsChild || st.MarkedAsTest)" /> @L["Mark this server as a test system (band on every page, store clients see the environment UAT). Switch it off when the server stays in productive use for its own customers, for example as development server of a company store."]</label>
-        <div><button type="submit" class="btn">@L["Save mode"]</button></div>
-    </form>
-</div>
+<p style="max-width:720px">@L["Mode of this server"]: <b>@L[st.IsChild ? "UAT: test system of a production server" : "On its own (production); with a UAT added it is that UAT's master"]</b>
+    · <a href="/Admin/Settings?view=features#uat">@L["Change under Settings, Features"]</a></p>
 
 @if (!st.IsChild)
 {
