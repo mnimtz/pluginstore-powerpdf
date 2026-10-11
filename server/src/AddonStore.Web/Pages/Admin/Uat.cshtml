@@ -1,0 +1,161 @@
+@page
+@model AddonStore.Web.Pages.Admin.UatModel
+@{
+    ViewData["Title"] = "UAT environments";
+    var st = Model.State;
+}
+
+<p style="margin:0 0 6px"><a href="/Admin/Settings">← @L["Settings"]</a></p>
+<h1>@L["UAT environments"]</h1>
+<p class="lead">@L["Test new add-on versions in a separate store (UAT) first, then hand them to production. A server runs on its own until you add a UAT; only the UAT needs settings."]</p>
+
+@if (Model.Notice is not null)
+{
+    <div class="alert @Model.NoticeKind">@L[Model.Notice]
+        @if (Model.Detail is not null)
+        {
+            <br /><code>@Model.Detail</code>
+        }
+    </div>
+}
+
+<div class="card" style="max-width:720px">
+    <h2 style="margin-top:0">@L["Mode of this server"]</h2>
+    <form method="post" asp-page-handler="Mode" class="stack" style="max-width:none">
+        <label style="font-weight:400"><input type="radio" name="mode" value="standalone" checked="@(!st.IsChild)" /> @L["On its own (production); with a UAT added it is that UAT's master"]</label>
+        <label style="font-weight:400"><input type="radio" name="mode" value="child" checked="@st.IsChild" /> @L["UAT: test system of a production server"]</label>
+        <div><button type="submit" class="btn">@L["Save mode"]</button></div>
+    </form>
+</div>
+
+@if (!st.IsChild)
+{
+    @if (Model.NewCode is { } nc)
+    {
+        <div class="alert ok" style="max-width:720px">
+            @L["Pairing code for {0}, valid until {1}. It is shown only once: enter it on the UAT together with the address of this server.", nc.Name, Time.Fmt(nc.ExpiresAt)]
+            <p style="font-size:1.25rem;font-weight:700;letter-spacing:.06em;margin:10px 0 4px"><code>@nc.Code</code></p>
+            <p style="margin:0">@L["Address of this server"]: <code>@Model.OwnUrl</code></p>
+        </div>
+    }
+
+    <div class="card" style="max-width:720px">
+        <h2 style="margin-top:0">@L["Add UAT"]</h2>
+        <form method="post" asp-page-handler="Code" class="stack" style="max-width:none">
+            <div>
+                <label>@L["Name of the UAT"]</label>
+                <input type="text" name="name" value="UAT" maxlength="60" required />
+            </div>
+            <div><button type="submit" class="btn">@L["Create pairing code"]</button></div>
+        </form>
+        @if (Model.Codes.Count > 0)
+        {
+            <h3>@L["Open pairing codes"]</h3>
+            <div class="table-wrap">
+            <table>
+                <tr><th>@L["Name"]</th><th>@L["Valid until"]</th><th></th></tr>
+                @foreach (var c in Model.Codes)
+                {
+                    <tr>
+                        <td>@c.Name</td><td>@Time.Fmt(c.ExpiresAt)</td>
+                        <td><form method="post" asp-page-handler="Revoke"><input type="hidden" name="id" value="@c.Id" /><button type="submit" class="btn small secondary">@L["Revoke"]</button></form></td>
+                    </tr>
+                }
+            </table>
+            </div>
+        }
+    </div>
+
+    <div class="card" style="max-width:960px">
+        <h2 style="margin-top:0">@L["Paired UATs"]</h2>
+        @if (Model.Children.Count == 0)
+        {
+            <p class="muted">@L["No UAT is paired."]</p>
+        }
+        else
+        {
+            <div class="table-wrap">
+            <table>
+                <tr><th>@L["Name"]</th><th>@L["Pairing id"]</th><th>@L["Key"]</th><th>@L["Paired since"]</th><th>@L["Last contact"]</th><th>@L["Status"]</th><th></th></tr>
+                @foreach (var c in Model.Children)
+                {
+                    var blocked = c.BlockedAt is not null;
+                    <tr>
+                        <td>@c.Name
+                            @if (c.ChildUrl.Length > 0)
+                            {
+                                <br /><span class="muted" style="font-size:.82rem">@c.ChildUrl</span>
+                            }
+                        </td>
+                        <td><code>@c.Id</code></td>
+                        <td><code>@AddonStore.Web.Services.FederationService.KeyIdOf(c.PublicKey)</code></td>
+                        <td>@Time.Fmt(c.CreatedAt)</td>
+                        <td>@Time.Fmt(c.LastSeenAt)</td>
+                        <td>@L[blocked ? "Blocked" : "Active"]</td>
+                        <td style="white-space:nowrap">
+                            <form method="post" asp-page-handler="Block" style="display:inline" data-confirm="@L[blocked ? "Unblock this UAT?" : "Block this UAT? Its requests are refused until you unblock it."]">
+                                <input type="hidden" name="id" value="@c.Id" /><input type="hidden" name="blocked" value="@(blocked ? "false" : "true")" />
+                                <button type="submit" class="btn small secondary">@L[blocked ? "Unblock" : "Block"]</button>
+                            </form>
+                            <form method="post" asp-page-handler="Remove" style="display:inline" data-confirm="@L["Remove this UAT? It can no longer reach this server; pairing again needs a new code."]">
+                                <input type="hidden" name="id" value="@c.Id" />
+                                <button type="submit" class="btn small danger">@L["Remove"]</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="card" style="max-width:720px">
+        <h2 style="margin-top:0">@L["Pairing with the production server"]</h2>
+        @if (st.KeyProblem)
+        {
+            <div class="alert error">@L["The federation key cannot be read (restored without its key ring). Unpair and pair again."]</div>
+        }
+        @if (st.PairingId.Length > 0)
+        {
+            var test = st.LastTest.Split('|');
+            <div class="table-wrap">
+            <table class="no-rtable">
+                <tr><th>@L["Production server"]</th><td><code>@st.MasterUrl</code></td></tr>
+                <tr><th>@L["Name of the UAT"]</th><td>@st.Name</td></tr>
+                <tr><th>@L["Pairing id"]</th><td><code>@st.PairingId</code></td></tr>
+                <tr><th>@L["Key of the production server"]</th><td><code>@st.MasterKeyId</code></td></tr>
+                <tr><th>@L["Key of this UAT"]</th><td><code>@st.OwnKeyId</code></td></tr>
+                <tr><th>@L["Paired since"]</th><td>@Time.Fmt(st.PairedAt)</td></tr>
+                @if (test.Length == 2 && DateTime.TryParse(test[0], System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AdjustToUniversal, out var tAt))
+                {
+                    <tr><th>@L["Last test"]</th><td>@Time.Fmt(tAt):
+                        @if (test[1] == "ok") { @L["works"] } else { <code>@test[1]</code> }</td></tr>
+                }
+            </table>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+                <form method="post" asp-page-handler="Test"><button type="submit" class="btn">@L["Test connection"]</button></form>
+                <form method="post" asp-page-handler="Unpair" data-confirm="@L["Unpair this UAT? It can no longer hand versions to production until it pairs again."]">
+                    <button type="submit" class="btn secondary">@L["Unpair"]</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <p>@L["On the production server, an admin opens UAT environments and creates a pairing code with Add UAT. Enter its address and the code here."]</p>
+            <form method="post" asp-page-handler="Pair" class="stack" style="max-width:none">
+                <div>
+                    <label>@L["Address of the production server"]</label>
+                    <input type="url" name="masterUrl" value="@st.MasterUrl" placeholder="https://addon.example.com" maxlength="200" required />
+                </div>
+                <div>
+                    <label>@L["Pairing code"]</label>
+                    <input type="text" name="code" placeholder="ABCDE-FGHJK-LMNPQ-RSTUV" maxlength="40" autocomplete="off" required />
+                </div>
+                <div><button type="submit" class="btn">@L["Pair"]</button></div>
+            </form>
+        }
+    </div>
+}

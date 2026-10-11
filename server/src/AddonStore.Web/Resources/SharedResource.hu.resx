@@ -1531,4 +1531,49 @@
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>A fejlesztő bejelentése szerint, az ellenőrzés során vizsgálva.</value></data>
   <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>A forráskódnak a feltöltéssel együtt kell érkeznie: válassza a feltöltési csomagot (egy ZIP a .ppak fájllal és ennek a verziónak a forráskód-ZIP-jével, pl. &lt;id&gt;-&lt;version&gt;-upload.zip). Semmi sem lett mentve.</value></data>
   <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>A feltöltési csomagban lévő forráskód nem felelt meg az ellenőrzéseknek; semmi sem lett mentve. Javítsa az alábbi megállapításokat, és töltse fel újra.</value></data>
+  <data name="UAT environments" xml:space="preserve"><value>UAT-környezetek</value></data>
+  <data name="Test new add-on versions in a separate store (UAT) first, then hand them to production. A server runs on its own until you add a UAT; only the UAT needs settings." xml:space="preserve"><value>Az új bővítményverziókat először egy külön áruházban (UAT) tesztelje, majd adja át az éles rendszernek. A kiszolgáló önállóan fut, amíg nem ad hozzá UAT-t; beállítások csak az UAT-nek kellenek.</value></data>
+  <data name="Mode of this server" xml:space="preserve"><value>A kiszolgáló üzemmódja</value></data>
+  <data name="On its own (production); with a UAT added it is that UAT's master" xml:space="preserve"><value>Önállóan (éles); hozzáadott UAT esetén annak fő kiszolgálója</value></data>
+  <data name="UAT: test system of a production server" xml:space="preserve"><value>UAT: egy éles kiszolgáló tesztrendszere</value></data>
+  <data name="Save mode" xml:space="preserve"><value>Üzemmód mentése</value></data>
+  <data name="Pairing code for {0}, valid until {1}. It is shown only once: enter it on the UAT together with the address of this server." xml:space="preserve"><value>Párosítási kód ehhez: {0}, érvényes eddig: {1}. Csak egyszer jelenik meg: adja meg az UAT-ben a kiszolgáló címével együtt.</value></data>
+  <data name="Address of this server" xml:space="preserve"><value>A kiszolgáló címe</value></data>
+  <data name="Add UAT" xml:space="preserve"><value>UAT hozzáadása</value></data>
+  <data name="Name of the UAT" xml:space="preserve"><value>Az UAT neve</value></data>
+  <data name="Create pairing code" xml:space="preserve"><value>Párosítási kód létrehozása</value></data>
+  <data name="Open pairing codes" xml:space="preserve"><value>Nyitott párosítási kódok</value></data>
+  <data name="Valid until" xml:space="preserve"><value>Érvényes eddig</value></data>
+  <data name="Paired UATs" xml:space="preserve"><value>Párosított UAT-k</value></data>
+  <data name="No UAT is paired." xml:space="preserve"><value>Nincs párosított UAT.</value></data>
+  <data name="Pairing id" xml:space="preserve"><value>Párosítási azonosító</value></data>
+  <data name="Paired since" xml:space="preserve"><value>Párosítva ekkor óta</value></data>
+  <data name="Last contact" xml:space="preserve"><value>Utolsó kapcsolat</value></data>
+  <data name="Remove this UAT? It can no longer reach this server; pairing again needs a new code." xml:space="preserve"><value>Eltávolítja ezt az UAT-t? Ezután nem éri el ezt a kiszolgálót; az újbóli párosításhoz új kód kell.</value></data>
+  <data name="Pairing with the production server" xml:space="preserve"><value>Párosítás az éles kiszolgálóval</value></data>
+  <data name="The federation key cannot be read (restored without its key ring). Unpair and pair again." xml:space="preserve"><value>A párosítási kulcs nem olvasható (kulcskarika nélkül állították vissza). Bontsa a párosítást, és párosítson újra.</value></data>
+  <data name="Production server" xml:space="preserve"><value>Éles kiszolgáló</value></data>
+  <data name="Key of the production server" xml:space="preserve"><value>Az éles kiszolgáló kulcsa</value></data>
+  <data name="Key of this UAT" xml:space="preserve"><value>Ennek az UAT-nek a kulcsa</value></data>
+  <data name="Last test" xml:space="preserve"><value>Utolsó teszt</value></data>
+  <data name="works" xml:space="preserve"><value>működik</value></data>
+  <data name="Unpair this UAT? It can no longer hand versions to production until it pairs again." xml:space="preserve"><value>Bontja ennek az UAT-nek a párosítását? Újbóli párosításig nem adhat át verziókat az éles rendszernek.</value></data>
+  <data name="Unpair" xml:space="preserve"><value>Párosítás bontása</value></data>
+  <data name="On the production server, an admin opens UAT environments and creates a pairing code with Add UAT. Enter its address and the code here." xml:space="preserve"><value>Az éles kiszolgálón egy rendszergazda megnyitja az UAT-környezeteket, és az UAT hozzáadása gombbal párosítási kódot hoz létre. Itt adja meg a címét és a kódot.</value></data>
+  <data name="Address of the production server" xml:space="preserve"><value>Az éles kiszolgáló címe</value></data>
+  <data name="Pairing code" xml:space="preserve"><value>Párosítási kód</value></data>
+  <data name="Pair" xml:space="preserve"><value>Párosítás</value></data>
+  <data name="The step was refused." xml:space="preserve"><value>A lépés elutasítva.</value></data>
+  <data name="Mode saved." xml:space="preserve"><value>Üzemmód mentve.</value></data>
+  <data name="Pairing code created." xml:space="preserve"><value>Párosítási kód létrehozva.</value></data>
+  <data name="Pairing code revoked." xml:space="preserve"><value>Párosítási kód visszavonva.</value></data>
+  <data name="UAT blocked." xml:space="preserve"><value>UAT letiltva.</value></data>
+  <data name="UAT unblocked." xml:space="preserve"><value>UAT tiltása feloldva.</value></data>
+  <data name="UAT removed." xml:space="preserve"><value>UAT eltávolítva.</value></data>
+  <data name="Paired with the production server." xml:space="preserve"><value>Párosítva az éles kiszolgálóval.</value></data>
+  <data name="The connection to the production server works." xml:space="preserve"><value>A kapcsolat az éles kiszolgálóval működik.</value></data>
+  <data name="Pairing removed." xml:space="preserve"><value>Párosítás bontva.</value></data>
+  <data name="UAT environment, not production" xml:space="preserve"><value>UAT-környezet, nem éles</value></data>
+  <data name="Unblock this UAT?" xml:space="preserve"><value>Feloldja ennek az UAT-nek a tiltását?</value></data>
+  <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Letiltja ezt az UAT-t? A kérései elutasításra kerülnek, amíg fel nem oldja a tiltást.</value></data>
 </root>

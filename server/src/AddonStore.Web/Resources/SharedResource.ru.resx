@@ -1531,4 +1531,49 @@
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>По данным разработчика, проверено при рецензировании.</value></data>
   <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>Исходный код должен прилагаться к загрузке: выберите пакет для загрузки (один ZIP с файлом .ppak и ZIP исходного кода этой версии, например &lt;id&gt;-&lt;version&gt;-upload.zip). Ничего не сохранено.</value></data>
   <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>Исходный код в пакете для загрузки не прошёл проверки; ничего не сохранено. Устраните замечания ниже и загрузите снова.</value></data>
+  <data name="UAT environments" xml:space="preserve"><value>Среды UAT</value></data>
+  <data name="Test new add-on versions in a separate store (UAT) first, then hand them to production. A server runs on its own until you add a UAT; only the UAT needs settings." xml:space="preserve"><value>Сначала проверяйте новые версии надстроек в отдельном магазине (UAT), затем передавайте их в рабочую среду. Сервер работает самостоятельно, пока вы не добавите UAT; настройки нужны только UAT.</value></data>
+  <data name="Mode of this server" xml:space="preserve"><value>Режим этого сервера</value></data>
+  <data name="On its own (production); with a UAT added it is that UAT's master" xml:space="preserve"><value>Самостоятельно (рабочая среда); после добавления UAT он становится его главным сервером</value></data>
+  <data name="UAT: test system of a production server" xml:space="preserve"><value>UAT: тестовая система рабочего сервера</value></data>
+  <data name="Save mode" xml:space="preserve"><value>Сохранить режим</value></data>
+  <data name="Pairing code for {0}, valid until {1}. It is shown only once: enter it on the UAT together with the address of this server." xml:space="preserve"><value>Код сопряжения для {0}, действителен до {1}. Он показывается только один раз: введите его в UAT вместе с адресом этого сервера.</value></data>
+  <data name="Address of this server" xml:space="preserve"><value>Адрес этого сервера</value></data>
+  <data name="Add UAT" xml:space="preserve"><value>Добавить UAT</value></data>
+  <data name="Name of the UAT" xml:space="preserve"><value>Имя UAT</value></data>
+  <data name="Create pairing code" xml:space="preserve"><value>Создать код сопряжения</value></data>
+  <data name="Open pairing codes" xml:space="preserve"><value>Открытые коды сопряжения</value></data>
+  <data name="Valid until" xml:space="preserve"><value>Действителен до</value></data>
+  <data name="Paired UATs" xml:space="preserve"><value>Сопряжённые UAT</value></data>
+  <data name="No UAT is paired." xml:space="preserve"><value>Нет сопряжённых UAT.</value></data>
+  <data name="Pairing id" xml:space="preserve"><value>ID сопряжения</value></data>
+  <data name="Paired since" xml:space="preserve"><value>Сопряжён с</value></data>
+  <data name="Last contact" xml:space="preserve"><value>Последний контакт</value></data>
+  <data name="Remove this UAT? It can no longer reach this server; pairing again needs a new code." xml:space="preserve"><value>Удалить этот UAT? Он больше не сможет связаться с этим сервером; для повторного сопряжения нужен новый код.</value></data>
+  <data name="Pairing with the production server" xml:space="preserve"><value>Сопряжение с рабочим сервером</value></data>
+  <data name="The federation key cannot be read (restored without its key ring). Unpair and pair again." xml:space="preserve"><value>Ключ сопряжения не читается (восстановлено без связки ключей). Разорвите сопряжение и выполните его заново.</value></data>
+  <data name="Production server" xml:space="preserve"><value>Рабочий сервер</value></data>
+  <data name="Key of the production server" xml:space="preserve"><value>Ключ рабочего сервера</value></data>
+  <data name="Key of this UAT" xml:space="preserve"><value>Ключ этого UAT</value></data>
+  <data name="Last test" xml:space="preserve"><value>Последняя проверка</value></data>
+  <data name="works" xml:space="preserve"><value>работает</value></data>
+  <data name="Unpair this UAT? It can no longer hand versions to production until it pairs again." xml:space="preserve"><value>Разорвать сопряжение этого UAT? До повторного сопряжения он не сможет передавать версии в рабочую среду.</value></data>
+  <data name="Unpair" xml:space="preserve"><value>Разорвать сопряжение</value></data>
+  <data name="On the production server, an admin opens UAT environments and creates a pairing code with Add UAT. Enter its address and the code here." xml:space="preserve"><value>На рабочем сервере администратор открывает «Среды UAT» и создаёт код сопряжения кнопкой «Добавить UAT». Введите здесь его адрес и код.</value></data>
+  <data name="Address of the production server" xml:space="preserve"><value>Адрес рабочего сервера</value></data>
+  <data name="Pairing code" xml:space="preserve"><value>Код сопряжения</value></data>
+  <data name="Pair" xml:space="preserve"><value>Выполнить сопряжение</value></data>
+  <data name="The step was refused." xml:space="preserve"><value>Действие отклонено.</value></data>
+  <data name="Mode saved." xml:space="preserve"><value>Режим сохранён.</value></data>
+  <data name="Pairing code created." xml:space="preserve"><value>Код сопряжения создан.</value></data>
+  <data name="Pairing code revoked." xml:space="preserve"><value>Код сопряжения отозван.</value></data>
+  <data name="UAT blocked." xml:space="preserve"><value>UAT заблокирован.</value></data>
+  <data name="UAT unblocked." xml:space="preserve"><value>UAT разблокирован.</value></data>
+  <data name="UAT removed." xml:space="preserve"><value>UAT удалён.</value></data>
+  <data name="Paired with the production server." xml:space="preserve"><value>Сопряжено с рабочим сервером.</value></data>
+  <data name="The connection to the production server works." xml:space="preserve"><value>Соединение с рабочим сервером работает.</value></data>
+  <data name="Pairing removed." xml:space="preserve"><value>Сопряжение разорвано.</value></data>
+  <data name="UAT environment, not production" xml:space="preserve"><value>Среда UAT, не рабочая</value></data>
+  <data name="Unblock this UAT?" xml:space="preserve"><value>Разблокировать этот UAT?</value></data>
+  <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Заблокировать этот UAT? Его запросы будут отклоняться, пока вы его не разблокируете.</value></data>
 </root>

@@ -1531,4 +1531,49 @@
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Geliştiricinin beyanına göre, incelemede kontrol edildi.</value></data>
   <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>Kaynak kod yüklemeyle birlikte gelmelidir: yükleme paketini seçin (bu sürümün .ppak dosyasını ve kaynak kod ZIP dosyasını içeren tek bir ZIP, ör. &lt;id&gt;-&lt;version&gt;-upload.zip). Hiçbir şey kaydedilmedi.</value></data>
   <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>Yükleme paketindeki kaynak kod denetimleri geçemedi; hiçbir şey kaydedilmedi. Aşağıdaki bulguları düzeltin ve yeniden yükleyin.</value></data>
+  <data name="UAT environments" xml:space="preserve"><value>UAT ortamları</value></data>
+  <data name="Test new add-on versions in a separate store (UAT) first, then hand them to production. A server runs on its own until you add a UAT; only the UAT needs settings." xml:space="preserve"><value>Yeni eklenti sürümlerini önce ayrı bir mağazada (UAT) test edin, sonra üretime aktarın. Bir sunucu siz UAT ekleyene kadar tek başına çalışır; ayar yalnızca UAT için gerekir.</value></data>
+  <data name="Mode of this server" xml:space="preserve"><value>Bu sunucunun modu</value></data>
+  <data name="On its own (production); with a UAT added it is that UAT's master" xml:space="preserve"><value>Tek başına (üretim); UAT eklendiğinde onun ana sunucusudur</value></data>
+  <data name="UAT: test system of a production server" xml:space="preserve"><value>UAT: bir üretim sunucusunun test sistemi</value></data>
+  <data name="Save mode" xml:space="preserve"><value>Modu kaydet</value></data>
+  <data name="Pairing code for {0}, valid until {1}. It is shown only once: enter it on the UAT together with the address of this server." xml:space="preserve"><value>{0} için eşleştirme kodu, {1} tarihine kadar geçerli. Yalnızca bir kez gösterilir: UAT içinde bu sunucunun adresiyle birlikte girin.</value></data>
+  <data name="Address of this server" xml:space="preserve"><value>Bu sunucunun adresi</value></data>
+  <data name="Add UAT" xml:space="preserve"><value>UAT ekle</value></data>
+  <data name="Name of the UAT" xml:space="preserve"><value>UAT adı</value></data>
+  <data name="Create pairing code" xml:space="preserve"><value>Eşleştirme kodu oluştur</value></data>
+  <data name="Open pairing codes" xml:space="preserve"><value>Açık eşleştirme kodları</value></data>
+  <data name="Valid until" xml:space="preserve"><value>Geçerlilik sonu</value></data>
+  <data name="Paired UATs" xml:space="preserve"><value>Eşleştirilmiş UAT'ler</value></data>
+  <data name="No UAT is paired." xml:space="preserve"><value>Eşleştirilmiş UAT yok.</value></data>
+  <data name="Pairing id" xml:space="preserve"><value>Eşleştirme kimliği</value></data>
+  <data name="Paired since" xml:space="preserve"><value>Eşleştirme tarihi</value></data>
+  <data name="Last contact" xml:space="preserve"><value>Son iletişim</value></data>
+  <data name="Remove this UAT? It can no longer reach this server; pairing again needs a new code." xml:space="preserve"><value>Bu UAT kaldırılsın mı? Artık bu sunucuya ulaşamaz; yeniden eşleştirme için yeni bir kod gerekir.</value></data>
+  <data name="Pairing with the production server" xml:space="preserve"><value>Üretim sunucusuyla eşleştirme</value></data>
+  <data name="The federation key cannot be read (restored without its key ring). Unpair and pair again." xml:space="preserve"><value>Eşleştirme anahtarı okunamıyor (anahtarlık olmadan geri yüklendi). Eşleştirmeyi kaldırıp yeniden eşleştirin.</value></data>
+  <data name="Production server" xml:space="preserve"><value>Üretim sunucusu</value></data>
+  <data name="Key of the production server" xml:space="preserve"><value>Üretim sunucusunun anahtarı</value></data>
+  <data name="Key of this UAT" xml:space="preserve"><value>Bu UAT'nin anahtarı</value></data>
+  <data name="Last test" xml:space="preserve"><value>Son test</value></data>
+  <data name="works" xml:space="preserve"><value>çalışıyor</value></data>
+  <data name="Unpair this UAT? It can no longer hand versions to production until it pairs again." xml:space="preserve"><value>Bu UAT'nin eşleştirmesi kaldırılsın mı? Yeniden eşleştirilene kadar üretime sürüm aktaramaz.</value></data>
+  <data name="Unpair" xml:space="preserve"><value>Eşleştirmeyi kaldır</value></data>
+  <data name="On the production server, an admin opens UAT environments and creates a pairing code with Add UAT. Enter its address and the code here." xml:space="preserve"><value>Üretim sunucusunda bir yönetici UAT ortamlarını açar ve UAT ekle ile bir eşleştirme kodu oluşturur. Adresini ve kodu buraya girin.</value></data>
+  <data name="Address of the production server" xml:space="preserve"><value>Üretim sunucusunun adresi</value></data>
+  <data name="Pairing code" xml:space="preserve"><value>Eşleştirme kodu</value></data>
+  <data name="Pair" xml:space="preserve"><value>Eşleştir</value></data>
+  <data name="The step was refused." xml:space="preserve"><value>Adım reddedildi.</value></data>
+  <data name="Mode saved." xml:space="preserve"><value>Mod kaydedildi.</value></data>
+  <data name="Pairing code created." xml:space="preserve"><value>Eşleştirme kodu oluşturuldu.</value></data>
+  <data name="Pairing code revoked." xml:space="preserve"><value>Eşleştirme kodu iptal edildi.</value></data>
+  <data name="UAT blocked." xml:space="preserve"><value>UAT engellendi.</value></data>
+  <data name="UAT unblocked." xml:space="preserve"><value>UAT engeli kaldırıldı.</value></data>
+  <data name="UAT removed." xml:space="preserve"><value>UAT kaldırıldı.</value></data>
+  <data name="Paired with the production server." xml:space="preserve"><value>Üretim sunucusuyla eşleştirildi.</value></data>
+  <data name="The connection to the production server works." xml:space="preserve"><value>Üretim sunucusuyla bağlantı çalışıyor.</value></data>
+  <data name="Pairing removed." xml:space="preserve"><value>Eşleştirme kaldırıldı.</value></data>
+  <data name="UAT environment, not production" xml:space="preserve"><value>UAT ortamı, üretim değil</value></data>
+  <data name="Unblock this UAT?" xml:space="preserve"><value>Bu UAT'nin engeli kaldırılsın mı?</value></data>
+  <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Bu UAT engellensin mi? Engeli kaldırana kadar istekleri reddedilir.</value></data>
 </root>

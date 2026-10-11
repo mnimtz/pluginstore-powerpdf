@@ -1,6 +1,6 @@
 # Konzept: Master-Child-Betrieb (UAT-Server vor der Produktion)
 
-Stand: Okt 10, 2026 · Status: Entwurf zur Besprechung (noch nichts umgesetzt)
+Stand: Okt 11, 2026 · Status: entschieden, Umsetzung ab Etappe E1
 
 ## Ziel
 
@@ -88,7 +88,7 @@ Wiederherstellung.
 ## Ablauf einer Übermittlung
 
 1. Im UAT ist eine Version freigegeben (Beta oder Live) und wurde getestet.
-2. Ein Admin des Childs klickt in der Versionsansicht auf **„An Produktion
+2. Ein Admin des Childs oder der Besitzer des Add-ons klickt in der Versionsansicht auf **„An Produktion
    übermitteln“**, optional mit einer Notiz („2 Wochen bei Testkunde A, keine
    Fehler“).
 3. Der Master legt die Version als **eingereicht, Herkunft: UAT „Name“** an.
@@ -211,16 +211,16 @@ Agent-Guide, OpenAPI und README werden wie bei jeder Neuerung mitgeführt.
 
 E1 bis E3 ergeben den Kern deiner Idee; E4 und E5 sind Ergänzungen.
 
-## Offene Fragen zur Entscheidung
+## Entscheidungen (Okt 11, 2026)
 
-1. **Mehrere Childs?** Ein Master mit mehreren UATs (zum Beispiel „UAT“ und
-   „Entwicklung“) ist im Modell vorgesehen. Brauchen wir das, oder reicht eins?
-2. **Wer darf übermitteln?** Vorschlag: nur Admins des Childs. Sollen auch
-   Besitzer eines Add-ons ihre eigenen Versionen übermitteln dürfen?
-3. **Vertrauensstufe:** Soll der Master eine UAT-Freigabe durch einen anderen
-   Prüfer als Freigabe anerkennen dürfen (schneller), oder bleibt die
-   Master-Prüfung immer Pflicht (Vorschlag: immer Pflicht)?
-4. **Spiegeln:** Soll das UAT den Produktivstand automatisch (zum Beispiel
-   täglich) oder nur auf Knopfdruck übernehmen?
-5. **Hosting des UAT:** eigener Azure App Service mit eigener Datenbank (wie
-   Produktion, Vorschlag) oder ein zweiter Slot derselben App?
+1. **Mehrere UATs:** Das Datenmodell erlaubt mehrere UATs je Master. Die
+   Oberfläche führt zunächst eines, ein weiteres lässt sich ohne Umbau ergänzen.
+2. **Wer übermittelt:** Admins des UAT und die Besitzer eines Add-ons für ihre
+   eigenen Versionen.
+3. **Vertrauensstufe:** Eine UAT-Freigabe ersetzt die Prüfung am Master nie.
+   Die Master-Prüfung bleibt Pflicht, mit Vier-Augen-Regel über beide
+   Umgebungen.
+4. **Spiegeln:** auf Knopfdruck, dazu optional täglich (Einstellung am UAT).
+5. **Hosting:** eigener Azure App Service mit eigener Datenbank und eigenem
+   Dateispeicher, kein zweiter Slot der Produktion. Die Einrichtung in Azure
+   macht Marcus, sobald E1 steht.

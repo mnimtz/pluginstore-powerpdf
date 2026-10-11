@@ -1531,4 +1531,49 @@
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Angaben des Entwicklers, bei der Prüfung kontrolliert.</value></data>
   <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>Der Quellcode muss mit dem Upload kommen: Wählen Sie das Upload-Paket (ein ZIP mit der .ppak und dem Quellcode-ZIP dieser Version, z. B. &lt;id&gt;-&lt;version&gt;-upload.zip). Es wurde nichts gespeichert.</value></data>
   <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>Der Quellcode im Upload-Paket hat die Prüfungen nicht bestanden; es wurde nichts gespeichert. Beheben Sie die Befunde unten und laden Sie erneut hoch.</value></data>
+  <data name="UAT environments" xml:space="preserve"><value>UAT-Umgebungen</value></data>
+  <data name="Test new add-on versions in a separate store (UAT) first, then hand them to production. A server runs on its own until you add a UAT; only the UAT needs settings." xml:space="preserve"><value>Neue Add-on-Versionen zuerst in einem eigenen Store (UAT) testen und dann an die Produktion übergeben. Ein Server läuft allein, bis Sie ein UAT hinzufügen; Einstellungen braucht nur das UAT.</value></data>
+  <data name="Mode of this server" xml:space="preserve"><value>Betriebsart dieses Servers</value></data>
+  <data name="On its own (production); with a UAT added it is that UAT's master" xml:space="preserve"><value>Allein (Produktion); mit hinzugefügtem UAT ist er dessen Master</value></data>
+  <data name="UAT: test system of a production server" xml:space="preserve"><value>UAT: Testsystem eines Produktivservers</value></data>
+  <data name="Save mode" xml:space="preserve"><value>Betriebsart speichern</value></data>
+  <data name="Pairing code for {0}, valid until {1}. It is shown only once: enter it on the UAT together with the address of this server." xml:space="preserve"><value>Kopplungscode für {0}, gültig bis {1}. Er wird nur einmal angezeigt: Geben Sie ihn im UAT zusammen mit der Adresse dieses Servers ein.</value></data>
+  <data name="Address of this server" xml:space="preserve"><value>Adresse dieses Servers</value></data>
+  <data name="Add UAT" xml:space="preserve"><value>UAT hinzufügen</value></data>
+  <data name="Name of the UAT" xml:space="preserve"><value>Name des UAT</value></data>
+  <data name="Create pairing code" xml:space="preserve"><value>Kopplungscode erstellen</value></data>
+  <data name="Open pairing codes" xml:space="preserve"><value>Offene Kopplungscodes</value></data>
+  <data name="Valid until" xml:space="preserve"><value>Gültig bis</value></data>
+  <data name="Paired UATs" xml:space="preserve"><value>Gekoppelte UATs</value></data>
+  <data name="No UAT is paired." xml:space="preserve"><value>Kein UAT ist gekoppelt.</value></data>
+  <data name="Pairing id" xml:space="preserve"><value>Kopplungs-ID</value></data>
+  <data name="Paired since" xml:space="preserve"><value>Gekoppelt seit</value></data>
+  <data name="Last contact" xml:space="preserve"><value>Letzter Kontakt</value></data>
+  <data name="Remove this UAT? It can no longer reach this server; pairing again needs a new code." xml:space="preserve"><value>Dieses UAT entfernen? Es erreicht diesen Server dann nicht mehr; neu koppeln geht nur mit einem neuen Code.</value></data>
+  <data name="Pairing with the production server" xml:space="preserve"><value>Kopplung mit dem Produktivserver</value></data>
+  <data name="The federation key cannot be read (restored without its key ring). Unpair and pair again." xml:space="preserve"><value>Der Kopplungsschlüssel ist nicht lesbar (ohne Schlüsselring wiederhergestellt). Kopplung lösen und neu koppeln.</value></data>
+  <data name="Production server" xml:space="preserve"><value>Produktivserver</value></data>
+  <data name="Key of the production server" xml:space="preserve"><value>Schlüssel des Produktivservers</value></data>
+  <data name="Key of this UAT" xml:space="preserve"><value>Schlüssel dieses UAT</value></data>
+  <data name="Last test" xml:space="preserve"><value>Letzter Test</value></data>
+  <data name="works" xml:space="preserve"><value>funktioniert</value></data>
+  <data name="Unpair this UAT? It can no longer hand versions to production until it pairs again." xml:space="preserve"><value>Kopplung dieses UAT lösen? Es kann dann keine Versionen mehr an die Produktion übergeben, bis es neu gekoppelt ist.</value></data>
+  <data name="Unpair" xml:space="preserve"><value>Kopplung lösen</value></data>
+  <data name="On the production server, an admin opens UAT environments and creates a pairing code with Add UAT. Enter its address and the code here." xml:space="preserve"><value>Am Produktivserver öffnet ein Admin die UAT-Umgebungen und erstellt mit „UAT hinzufügen“ einen Kopplungscode. Geben Sie hier dessen Adresse und den Code ein.</value></data>
+  <data name="Address of the production server" xml:space="preserve"><value>Adresse des Produktivservers</value></data>
+  <data name="Pairing code" xml:space="preserve"><value>Kopplungscode</value></data>
+  <data name="Pair" xml:space="preserve"><value>Koppeln</value></data>
+  <data name="The step was refused." xml:space="preserve"><value>Der Schritt wurde abgelehnt.</value></data>
+  <data name="Mode saved." xml:space="preserve"><value>Betriebsart gespeichert.</value></data>
+  <data name="Pairing code created." xml:space="preserve"><value>Kopplungscode erstellt.</value></data>
+  <data name="Pairing code revoked." xml:space="preserve"><value>Kopplungscode widerrufen.</value></data>
+  <data name="UAT blocked." xml:space="preserve"><value>UAT gesperrt.</value></data>
+  <data name="UAT unblocked." xml:space="preserve"><value>UAT entsperrt.</value></data>
+  <data name="UAT removed." xml:space="preserve"><value>UAT entfernt.</value></data>
+  <data name="Paired with the production server." xml:space="preserve"><value>Mit dem Produktivserver gekoppelt.</value></data>
+  <data name="The connection to the production server works." xml:space="preserve"><value>Die Verbindung zum Produktivserver funktioniert.</value></data>
+  <data name="Pairing removed." xml:space="preserve"><value>Kopplung gelöst.</value></data>
+  <data name="UAT environment, not production" xml:space="preserve"><value>UAT-Umgebung, nicht produktiv</value></data>
+  <data name="Unblock this UAT?" xml:space="preserve"><value>Dieses UAT entsperren?</value></data>
+  <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Dieses UAT sperren? Seine Anfragen werden abgelehnt, bis Sie es entsperren.</value></data>
 </root>

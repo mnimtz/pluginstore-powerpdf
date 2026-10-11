@@ -106,8 +106,10 @@ public class BackupService
                 // avatars, devkit, keys. New data must land in one of them, or be added here.
                 // Not backed up on purpose: data/geo (DB-IP databases, downloaded again by GeoService);
                 // Send to transfers (rows and the encrypted blocks in their own blob container).
+                // UAT environments (S1.21.0): paired UATs, pairing code hashes and the federation keys are in
+                // pluginstore.db (keys protected by keys/); the replay list of nonces lives only in memory.
                 contents = new[] { "pluginstore.db", "packages/ (packages and source code)", "avatars/", "devkit/",
-                                   "keys/ (data protection key ring for encrypted settings such as the AI key)" }
+                                   "keys/ (data protection key ring for encrypted settings such as the AI key and the UAT federation keys)" }
             };
 
             await using var fs = File.Create(target);

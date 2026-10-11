@@ -1058,6 +1058,30 @@ repository `C:\Claude\SendTo` (spike).
 - Development: `SendTo__Storage=local` uses `data/sendto-dev` instead of Blob;
   `/sendto/dev/mails` and `/sendto/dev/config` exist only in Development.
 
+## UAT environments (S1.21.0)
+
+A second, separate store can serve as UAT (test system) of the production
+store; concept and stages in `docs/concepts/master-child.md`. Stage E1 is the
+pairing:
+
+- A server runs on its own until an admin adds a UAT under
+  *Settings, UAT environments* (`/Admin/Uat`). "Add UAT" creates a one-time
+  pairing code (15 minutes, only its hash is stored). Without a UAT and without
+  an open code `/api/federation/*` answers 404.
+- The UAT admin switches the mode to *UAT* and enters the production address
+  (https) and the code. The UAT sends its own ECDSA P-256 key and receives the
+  production server's federation key (separate from the package signing key,
+  both protected by Data Protection like the signing key and part of backups).
+- Every later request of the UAT is signed (method, path, Unix time, nonce,
+  SHA-256 of the body; at most 5 minutes off, each nonce once), every answer of
+  production as well. Production admins block or remove a UAT at any time.
+- A UAT shows the band "UAT environment, not production" on every page and
+  "UAT" in the page title; the JSON catalog and `/api/client/access` report
+  `"environment": "uat"`.
+- Admin API: `/api/admin/uat` (agent guide, section *UAT environments*).
+- Handing versions to production, the `.reg` download for test PCs and the
+  client marking "from the test system" follow in the next stages (E1b, E2).
+
 ## Local development
 
 ```bash

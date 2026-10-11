@@ -43,6 +43,9 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<SendToQuick> SendToQuicks => Set<SendToQuick>();
     public DbSet<SendToTransfer> SendToTransfers => Set<SendToTransfer>();
     public DbSet<SendToEnvelope> SendToEnvelopes => Set<SendToEnvelope>();
+    // UAT environments (S1.21.0, docs/concepts/master-child.md)
+    public DbSet<FederationChild> FederationChildren => Set<FederationChild>();
+    public DbSet<FederationPairingCode> FederationPairingCodes => Set<FederationPairingCode>();
 
     // S1.17.3: inside an explicit transaction SaveChanges returns before the commit, so a catalog loaded in between
     // still read the old rows under the new generation; the commit of such a transaction starts one more generation
@@ -95,6 +98,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
         base.OnModelCreating(b);
         b.Entity<ApiToken>().HasIndex(t => t.TokenHash).IsUnique();
         b.Entity<AppSetting>().HasKey(s => s.Key);
+        b.Entity<FederationPairingCode>().HasIndex(c => c.CodeHash).IsUnique();
         b.Entity<Category>().HasKey(c => c.Slug);
         b.Entity<UsageStat>().HasKey(s => new { s.Day, s.Kind, s.PackageId, s.Version, s.Source, s.Lang, s.ClientVersion,
                                                 s.Country, s.Region, s.City, s.Org, s.Arch, s.HostVersion, s.OsVersion });

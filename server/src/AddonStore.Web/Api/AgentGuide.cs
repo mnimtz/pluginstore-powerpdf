@@ -1226,6 +1226,72 @@ Every catalog entry carries a signature of the server (ECDSA P-256 over
 packages signed with a key it trusts, so nothing changes for you as a
 submitter: the server signs what it accepted.
 
+## UAT environments (test store before production)
+
+A store can run a second, separate store as its UAT (user acceptance test):
+new versions are tested there in real Power PDF first and handed to
+production later (stage E1 of docs/concepts/master-child.md: pairing; handing
+versions over follows in a later release). A server runs on its own until an
+admin adds a UAT; only then it accepts federation requests, otherwise
+`/api/federation/*` answers 404. Only the UAT has a setting: the mode `child`
+plus the address of its production server. The catalog (`environment` in the
+JSON answer) and `GET /api/client/access` say `"uat"` or `"production"`; the
+portal of a UAT shows the band "UAT environment, not production".
+
+Admins (Bearer token, role Admin) do every step through the API or on the
+portal page /Admin/Uat:
+
+| Call | Side | Purpose |
+|---|---|---|
+| `GET /api/admin/uat` | both | mode, paired UATs and open codes (production) or the pairing (UAT) |
+| `PUT /api/admin/uat/mode` `{"mode":"child"}` | UAT | switch to UAT mode (`"standalone"` switches back and forgets the pairing) |
+| `POST /api/admin/uat/codes` `{"name":"UAT"}` | production | one-time pairing code, 15 minutes, shown once |
+| `DELETE /api/admin/uat/codes/{id}` | production | revoke an open code |
+| `POST /api/admin/uat/pair` `{"masterUrl":"https://...","code":"..."}` | UAT | pair with the production server |
+| `POST /api/admin/uat/test` | UAT | signed test request to the production server |
+| `DELETE /api/admin/uat/pairing` | UAT | forget the pairing |
+| `POST`/`DELETE /api/admin/uat/uats/{id}/block` | production | block or unblock a UAT |
+| `DELETE /api/admin/uat/uats/{id}` | production | remove a UAT (pairing again needs a new code) |
+
+Between the servers: `POST /api/federation/pair` takes `{"code","publicKey","url"}`
+(the UAT's ECDSA P-256 key as SubjectPublicKeyInfo in base64) and answers with
+`pairingId`, `masterPublicKey` and the key ids; 20 attempts per address and
+hour. Every later request of the UAT carries `X-Federation-Id`,
+`X-Federation-Timestamp` (Unix seconds, at most 5 minutes off),
+`X-Federation-Nonce` (16 to 64 characters, used once) and
+`X-Federation-Signature`: base64 of the ECDSA P-256 signature (IEEE P1363,
+SHA-256) over the lines `AddonStore-Federation-v1`, pairing id, method, path
+with query, timestamp, nonce and the lowercase hex SHA-256 of the body. The
+production server signs its answer the same way over `AddonStore-Federation-v1`,
+`response`, nonce, status and body hash, with its own federation key (never the
+package signing key). Customer data, accounts, tokens and signing keys are
+never exchanged.
+
+| Code | HTTP | Meaning |
+|---|---|---|
+| FED_CODE_INVALID | 400/403 | The pairing code is wrong, used or expired (20 characters, groups of 5). |
+| FED_KEY_INVALID | 400 | publicKey is not an ECDSA P-256 public key. |
+| FED_BODY_INVALID | 400 | The pairing request is not a JSON object of at most 16 KB. |
+| FED_SIGNATURE_INVALID | 401 | Headers missing, unknown pairing or wrong signature. |
+| FED_TIMESTAMP | 401 | The request is older than 5 minutes or the clocks differ. |
+| FED_REPLAY | 401 | The nonce was used before. |
+| FED_BLOCKED | 403 | The production server blocked this UAT. |
+| FED_NAME_INVALID | 400 | The UAT name needs 1 to 60 characters without control characters. |
+| FED_TOO_MANY_CODES | 409 | 5 open pairing codes already. |
+| FED_CODE_NOT_FOUND | 404 | No open pairing code with this id. |
+| FED_UAT_NOT_FOUND | 404 | No paired UAT with this id. |
+| FED_IS_UAT | 409 | This server is a UAT itself and cannot add a UAT. |
+| FED_HAS_UAT | 409 | This server is the master of a UAT and cannot become a UAT. |
+| FED_NOT_UAT | 409 | Pairing needs the mode UAT (child) first. |
+| FED_NOT_PAIRED | 409/502 | This UAT is not paired, or the production server no longer knows it. |
+| FED_MODE_INVALID | 400 | mode is `child` or `standalone`. |
+| FED_URL_INVALID | 400 | The production address must be https without user, query or fragment. |
+| FED_MASTER_UNREACHABLE | 502 | The production server cannot be reached, redirects or answers invalidly. |
+| FED_MASTER_NOT_READY | 502 | The production server takes no pairing now (no open code there). |
+| FED_PAIR_FAILED | 502 | The production server refused the pairing for another reason. |
+| FED_ANSWER_UNSIGNED | 502 | The answer of the production server is not signed with its federation key. |
+| FED_KEY_UNREADABLE | 500 | The federation key cannot be read (restored without its key ring); pair again. |
+
 ## Versioning and ownership
 
 - `version` is three numbers, optionally a fourth (digits only, no suffixes):

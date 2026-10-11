@@ -1531,4 +1531,49 @@
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>開発者の申告に基づき、審査で確認済みです。</value></data>
   <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>ソース コードはアップロードと一緒に必要です: アップロード パッケージ (このバージョンの .ppak とソース コード ZIP を含む 1 つの ZIP、例: &lt;id&gt;-&lt;version&gt;-upload.zip) を選択してください。何も保存されていません。</value></data>
   <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>アップロード パッケージのソース コードがチェックに合格しなかったため、何も保存されていません。下の指摘を修正してから、もう一度アップロードしてください。</value></data>
+  <data name="UAT environments" xml:space="preserve"><value>UAT 環境</value></data>
+  <data name="Test new add-on versions in a separate store (UAT) first, then hand them to production. A server runs on its own until you add a UAT; only the UAT needs settings." xml:space="preserve"><value>新しいアドイン バージョンは、まず別のストア (UAT) でテストしてから本番環境に引き渡します。UAT を追加するまでサーバーは単独で動作し、設定が必要なのは UAT だけです。</value></data>
+  <data name="Mode of this server" xml:space="preserve"><value>このサーバーのモード</value></data>
+  <data name="On its own (production); with a UAT added it is that UAT's master" xml:space="preserve"><value>単独 (本番)。UAT を追加すると、その UAT のマスターになります</value></data>
+  <data name="UAT: test system of a production server" xml:space="preserve"><value>UAT: 本番サーバーのテスト システム</value></data>
+  <data name="Save mode" xml:space="preserve"><value>モードを保存</value></data>
+  <data name="Pairing code for {0}, valid until {1}. It is shown only once: enter it on the UAT together with the address of this server." xml:space="preserve"><value>{0} のペアリング コード ({1} まで有効)。表示されるのは 1 回だけです。このサーバーのアドレスと一緒に UAT で入力してください。</value></data>
+  <data name="Address of this server" xml:space="preserve"><value>このサーバーのアドレス</value></data>
+  <data name="Add UAT" xml:space="preserve"><value>UAT を追加</value></data>
+  <data name="Name of the UAT" xml:space="preserve"><value>UAT の名前</value></data>
+  <data name="Create pairing code" xml:space="preserve"><value>ペアリング コードを作成</value></data>
+  <data name="Open pairing codes" xml:space="preserve"><value>未使用のペアリング コード</value></data>
+  <data name="Valid until" xml:space="preserve"><value>有効期限</value></data>
+  <data name="Paired UATs" xml:space="preserve"><value>ペアリング済みの UAT</value></data>
+  <data name="No UAT is paired." xml:space="preserve"><value>ペアリングされた UAT はありません。</value></data>
+  <data name="Pairing id" xml:space="preserve"><value>ペアリング ID</value></data>
+  <data name="Paired since" xml:space="preserve"><value>ペアリング日時</value></data>
+  <data name="Last contact" xml:space="preserve"><value>最終接続</value></data>
+  <data name="Remove this UAT? It can no longer reach this server; pairing again needs a new code." xml:space="preserve"><value>この UAT を削除しますか? このサーバーに接続できなくなり、再びペアリングするには新しいコードが必要です。</value></data>
+  <data name="Pairing with the production server" xml:space="preserve"><value>本番サーバーとのペアリング</value></data>
+  <data name="The federation key cannot be read (restored without its key ring). Unpair and pair again." xml:space="preserve"><value>ペアリング キーを読み取れません (キー リングなしで復元されました)。ペアリングを解除して、もう一度ペアリングしてください。</value></data>
+  <data name="Production server" xml:space="preserve"><value>本番サーバー</value></data>
+  <data name="Key of the production server" xml:space="preserve"><value>本番サーバーのキー</value></data>
+  <data name="Key of this UAT" xml:space="preserve"><value>この UAT のキー</value></data>
+  <data name="Last test" xml:space="preserve"><value>前回のテスト</value></data>
+  <data name="works" xml:space="preserve"><value>正常</value></data>
+  <data name="Unpair this UAT? It can no longer hand versions to production until it pairs again." xml:space="preserve"><value>この UAT のペアリングを解除しますか? もう一度ペアリングするまで、バージョンを本番環境に引き渡せなくなります。</value></data>
+  <data name="Unpair" xml:space="preserve"><value>ペアリングを解除</value></data>
+  <data name="On the production server, an admin opens UAT environments and creates a pairing code with Add UAT. Enter its address and the code here." xml:space="preserve"><value>本番サーバーで管理者が [UAT 環境] を開き、[UAT を追加] でペアリング コードを作成します。そのアドレスとコードをここに入力してください。</value></data>
+  <data name="Address of the production server" xml:space="preserve"><value>本番サーバーのアドレス</value></data>
+  <data name="Pairing code" xml:space="preserve"><value>ペアリング コード</value></data>
+  <data name="Pair" xml:space="preserve"><value>ペアリング</value></data>
+  <data name="The step was refused." xml:space="preserve"><value>この手順は拒否されました。</value></data>
+  <data name="Mode saved." xml:space="preserve"><value>モードを保存しました。</value></data>
+  <data name="Pairing code created." xml:space="preserve"><value>ペアリング コードを作成しました。</value></data>
+  <data name="Pairing code revoked." xml:space="preserve"><value>ペアリング コードを取り消しました。</value></data>
+  <data name="UAT blocked." xml:space="preserve"><value>UAT をブロックしました。</value></data>
+  <data name="UAT unblocked." xml:space="preserve"><value>UAT のブロックを解除しました。</value></data>
+  <data name="UAT removed." xml:space="preserve"><value>UAT を削除しました。</value></data>
+  <data name="Paired with the production server." xml:space="preserve"><value>本番サーバーとペアリングしました。</value></data>
+  <data name="The connection to the production server works." xml:space="preserve"><value>本番サーバーへの接続は正常です。</value></data>
+  <data name="Pairing removed." xml:space="preserve"><value>ペアリングを解除しました。</value></data>
+  <data name="UAT environment, not production" xml:space="preserve"><value>UAT 環境 (本番ではありません)</value></data>
+  <data name="Unblock this UAT?" xml:space="preserve"><value>この UAT のブロックを解除しますか?</value></data>
+  <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>この UAT をブロックしますか? ブロックを解除するまで、その要求は拒否されます。</value></data>
 </root>

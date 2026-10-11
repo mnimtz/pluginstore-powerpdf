@@ -272,7 +272,11 @@ public class BackupModel : PageModel
             // An older backup may lack newer columns, tables or role names:
             // upgrade it now instead of at the next app start.
             using (var scope = _scopes.CreateScope())
+            {
                 await SchemaUpgrade.RunAsync(scope.ServiceProvider);
+                // the restored settings may switch the UAT mode (S1.21.0)
+                await scope.ServiceProvider.GetRequiredService<FederationService>().InitAsync();
+            }
             // The audit table itself was just replaced; record the restore in the restored log.
             await _audit.LogAsync(admin.DisplayName, "backup.restored", label, "safety backup: " + Path.GetFileName(safety));
             if (fresh)

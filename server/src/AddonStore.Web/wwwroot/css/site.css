@@ -157,6 +157,8 @@ input:focus, textarea:focus, select:focus { outline: 2px solid var(--tun-blue); 
 .alert.ok { background: #B6FFDE; color: #016839; }
 .alert.warn { background: #FFDF85; color: #634E12; }
 .alert.error { background: #FFBDBD; color: #421F1F; }
+/* UAT (S1.21.0): fixed note on every page of a test store */
+.uat-band { background: #FFDF85; color: #634E12; text-align: center; font-weight: 700; font-size: .85rem; padding: 5px 12px; letter-spacing: .02em; }
 .alert code { word-break: break-all; }
 
 ul.findings { list-style: none; padding: 0; margin: 10px 0 0; }

@@ -1531,4 +1531,49 @@
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>依據開發者的宣告，並於審核時檢查。</value></data>
   <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>原始碼必須隨上傳一起提供：請選擇上傳套件（一個 ZIP，包含此版本的 .ppak 和原始碼 ZIP，例如 &lt;id&gt;-&lt;version&gt;-upload.zip）。未儲存任何內容。</value></data>
   <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>上傳套件中的原始碼未通過檢查；未儲存任何內容。請修正下列問題後重新上傳。</value></data>
+  <data name="UAT environments" xml:space="preserve"><value>UAT 環境</value></data>
+  <data name="Test new add-on versions in a separate store (UAT) first, then hand them to production. A server runs on its own until you add a UAT; only the UAT needs settings." xml:space="preserve"><value>先在獨立的商店 (UAT) 中測試新的增益集版本，然後再移交給正式環境。在您新增 UAT 之前，伺服器獨立運作；只有 UAT 需要設定。</value></data>
+  <data name="Mode of this server" xml:space="preserve"><value>此伺服器的模式</value></data>
+  <data name="On its own (production); with a UAT added it is that UAT's master" xml:space="preserve"><value>獨立運作（正式）；新增 UAT 後即為該 UAT 的主伺服器</value></data>
+  <data name="UAT: test system of a production server" xml:space="preserve"><value>UAT：正式伺服器的測試系統</value></data>
+  <data name="Save mode" xml:space="preserve"><value>儲存模式</value></data>
+  <data name="Pairing code for {0}, valid until {1}. It is shown only once: enter it on the UAT together with the address of this server." xml:space="preserve"><value>{0} 的配對碼，有效期限至 {1}。它只會顯示一次：請在 UAT 中連同此伺服器的位址一起輸入。</value></data>
+  <data name="Address of this server" xml:space="preserve"><value>此伺服器的位址</value></data>
+  <data name="Add UAT" xml:space="preserve"><value>新增 UAT</value></data>
+  <data name="Name of the UAT" xml:space="preserve"><value>UAT 名稱</value></data>
+  <data name="Create pairing code" xml:space="preserve"><value>建立配對碼</value></data>
+  <data name="Open pairing codes" xml:space="preserve"><value>未使用的配對碼</value></data>
+  <data name="Valid until" xml:space="preserve"><value>有效期限至</value></data>
+  <data name="Paired UATs" xml:space="preserve"><value>已配對的 UAT</value></data>
+  <data name="No UAT is paired." xml:space="preserve"><value>尚未配對任何 UAT。</value></data>
+  <data name="Pairing id" xml:space="preserve"><value>配對 ID</value></data>
+  <data name="Paired since" xml:space="preserve"><value>配對時間</value></data>
+  <data name="Last contact" xml:space="preserve"><value>上次聯繫</value></data>
+  <data name="Remove this UAT? It can no longer reach this server; pairing again needs a new code." xml:space="preserve"><value>移除此 UAT？它將無法再連線到此伺服器；重新配對需要新的配對碼。</value></data>
+  <data name="Pairing with the production server" xml:space="preserve"><value>與正式伺服器配對</value></data>
+  <data name="The federation key cannot be read (restored without its key ring). Unpair and pair again." xml:space="preserve"><value>無法讀取配對金鑰（還原時未包含其金鑰環）。請解除配對後重新配對。</value></data>
+  <data name="Production server" xml:space="preserve"><value>正式伺服器</value></data>
+  <data name="Key of the production server" xml:space="preserve"><value>正式伺服器的金鑰</value></data>
+  <data name="Key of this UAT" xml:space="preserve"><value>此 UAT 的金鑰</value></data>
+  <data name="Last test" xml:space="preserve"><value>上次測試</value></data>
+  <data name="works" xml:space="preserve"><value>正常</value></data>
+  <data name="Unpair this UAT? It can no longer hand versions to production until it pairs again." xml:space="preserve"><value>解除此 UAT 的配對？在重新配對之前，它無法再將版本移交給正式環境。</value></data>
+  <data name="Unpair" xml:space="preserve"><value>解除配對</value></data>
+  <data name="On the production server, an admin opens UAT environments and creates a pairing code with Add UAT. Enter its address and the code here." xml:space="preserve"><value>在正式伺服器上，管理員開啟「UAT 環境」，並透過「新增 UAT」建立配對碼。請在此輸入其位址和配對碼。</value></data>
+  <data name="Address of the production server" xml:space="preserve"><value>正式伺服器的位址</value></data>
+  <data name="Pairing code" xml:space="preserve"><value>配對碼</value></data>
+  <data name="Pair" xml:space="preserve"><value>配對</value></data>
+  <data name="The step was refused." xml:space="preserve"><value>此步驟遭到拒絕。</value></data>
+  <data name="Mode saved." xml:space="preserve"><value>模式已儲存。</value></data>
+  <data name="Pairing code created." xml:space="preserve"><value>配對碼已建立。</value></data>
+  <data name="Pairing code revoked." xml:space="preserve"><value>配對碼已撤銷。</value></data>
+  <data name="UAT blocked." xml:space="preserve"><value>UAT 已封鎖。</value></data>
+  <data name="UAT unblocked." xml:space="preserve"><value>UAT 已解除封鎖。</value></data>
+  <data name="UAT removed." xml:space="preserve"><value>UAT 已移除。</value></data>
+  <data name="Paired with the production server." xml:space="preserve"><value>已與正式伺服器配對。</value></data>
+  <data name="The connection to the production server works." xml:space="preserve"><value>與正式伺服器的連線正常。</value></data>
+  <data name="Pairing removed." xml:space="preserve"><value>已解除配對。</value></data>
+  <data name="UAT environment, not production" xml:space="preserve"><value>UAT 環境，非正式環境</value></data>
+  <data name="Unblock this UAT?" xml:space="preserve"><value>解除封鎖此 UAT？</value></data>
+  <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>封鎖此 UAT？在您解除封鎖之前，它的要求都會遭到拒絕。</value></data>
 </root>

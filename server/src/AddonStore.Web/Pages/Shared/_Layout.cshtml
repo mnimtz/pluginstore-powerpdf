@@ -14,6 +14,8 @@
     var pageTitle = ViewData["Title"] is string t && t.Length > 0
         ? L[t].Value + " · " + L["Add-on Store for Power PDF"].Value
         : siteName;
+    // UAT (S1.21.0): every tab says so, so nobody confuses the test store with production
+    if (AddonStore.Web.Services.FederationService.IsChild) pageTitle = "UAT · " + pageTitle;
     var description = ViewData["Description"] as string
         ?? L["Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF."].Value;
     var host = Context.Request.Host;
@@ -80,6 +82,10 @@
     @await RenderSectionAsync("Head", required: false)
 </head>
 <body class="@(shell ? "with-shell" : "")">
+@if (AddonStore.Web.Services.FederationService.IsChild)
+{
+    <div class="uat-band" role="note">@L["UAT environment, not production"]</div>
+}
 @if (shell)
 {
     // ---- new navigation (S1.5.0 preview): top bar with the account menu, sidebar with the areas

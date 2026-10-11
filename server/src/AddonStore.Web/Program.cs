@@ -134,7 +134,8 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Admin/Settings", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Backup", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Categories", "PageAdmin");
-        o.Conventions.AuthorizePage("/Admin/SendTo", "PageAdmin");   // "Send to" (S1.17.0 draft)
+        o.Conventions.AuthorizePage("/Admin/SendTo", "PageAdmin");
+        o.Conventions.AuthorizePage("/Admin/Uat", "PageAdmin");      // UAT environments (S1.21.0)   // "Send to" (S1.17.0 draft)
         o.Conventions.AuthorizePage("/Admin/Rules", "PageUser");        // read: everyone signed in; edit: admins (S1.0.9)
         o.Conventions.AuthorizePage("/Admin/Docs", "PageUser");         // every document in one place (S1.0.12)
         o.Conventions.AddPageRoute("/Admin/Docs", "Docs");               // short address for developers (S1.0.13)
@@ -207,6 +208,10 @@ builder.Services.AddScoped<IAppEmailSender, ResendEmailSender>();
 builder.Services.AddScoped<SendToStorage>();
 builder.Services.AddScoped<SendToService>();
 builder.Services.AddHostedService<SendToMaintenance>();
+// UAT environments (S1.21.0, docs/concepts/master-child.md): no redirects, short timeout, the service limits the answer size
+builder.Services.AddScoped<FederationService>();
+builder.Services.AddHttpClient(FederationService.HttpName, c => { c.Timeout = TimeSpan.FromSeconds(20); c.DefaultRequestHeaders.UserAgent.ParseAdd("AddonStore-Server (federation)"); })
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 
 var versionFile = Path.Combine(AppContext.BaseDirectory, "VERSION");
 var appVersion = File.Exists(versionFile) ? File.ReadAllText(versionFile).Trim() : "0.0.0-dev";
@@ -235,6 +240,8 @@ using (var scope = app.Services.CreateScope())
     await AddonStore.Web.Validation.RuleCatalog.LoadAsync(scope.ServiceProvider.GetRequiredService<AppDbContext>());
     // "Send to": the public documents describe it only while the master switch is on
     await scope.ServiceProvider.GetRequiredService<SendToService>().ConfigAsync();
+    // UAT mode: portal band and catalog "environment" read it without a database round trip
+    await scope.ServiceProvider.GetRequiredService<FederationService>().InitAsync();
     startLog.LogInformation("Startup: database ready after {Ms} ms", clock.ElapsedMilliseconds);
 }
 
@@ -398,5 +405,6 @@ app.MapGet("/avatar/{id}", (string id, IConfiguration config, IWebHostEnvironmen
 app.MapRazorPages();
 app.MapApi();
 app.MapSendTo();
+app.MapFederation();
 
 app.Run();

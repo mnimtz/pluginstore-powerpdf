@@ -1531,4 +1531,49 @@
   <data name="As declared by the developer and checked in the review." xml:space="preserve"><value>Enligt utvecklarens uppgifter, kontrollerade vid granskningen.</value></data>
   <data name="The source code must come with the upload: choose the upload package (one ZIP with the .ppak and the source ZIP of this version, e.g. &lt;id&gt;-&lt;version&gt;-upload.zip). Nothing was stored." xml:space="preserve"><value>Källkoden måste följa med uppladdningen: välj uppladdningspaketet (en ZIP med .ppak-filen och källkods-ZIP:en för den här versionen, t.ex. &lt;id&gt;-&lt;version&gt;-upload.zip). Inget sparades.</value></data>
   <data name="The source code in the upload package did not pass its checks; nothing was stored. Fix the findings below and upload again." xml:space="preserve"><value>Källkoden i uppladdningspaketet klarade inte kontrollerna; inget sparades. Åtgärda resultaten nedan och ladda upp igen.</value></data>
+  <data name="UAT environments" xml:space="preserve"><value>UAT-miljöer</value></data>
+  <data name="Test new add-on versions in a separate store (UAT) first, then hand them to production. A server runs on its own until you add a UAT; only the UAT needs settings." xml:space="preserve"><value>Testa nya tilläggsversioner i en separat butik (UAT) först och lämna dem sedan till produktion. En server körs fristående tills du lägger till ett UAT; bara UAT behöver inställningar.</value></data>
+  <data name="Mode of this server" xml:space="preserve"><value>Den här serverns läge</value></data>
+  <data name="On its own (production); with a UAT added it is that UAT's master" xml:space="preserve"><value>Fristående (produktion); med ett tillagt UAT är den dess master</value></data>
+  <data name="UAT: test system of a production server" xml:space="preserve"><value>UAT: testsystem för en produktionsserver</value></data>
+  <data name="Save mode" xml:space="preserve"><value>Spara läge</value></data>
+  <data name="Pairing code for {0}, valid until {1}. It is shown only once: enter it on the UAT together with the address of this server." xml:space="preserve"><value>Kopplingskod för {0}, giltig till {1}. Den visas bara en gång: ange den i UAT tillsammans med den här serverns adress.</value></data>
+  <data name="Address of this server" xml:space="preserve"><value>Den här serverns adress</value></data>
+  <data name="Add UAT" xml:space="preserve"><value>Lägg till UAT</value></data>
+  <data name="Name of the UAT" xml:space="preserve"><value>Namn på UAT</value></data>
+  <data name="Create pairing code" xml:space="preserve"><value>Skapa kopplingskod</value></data>
+  <data name="Open pairing codes" xml:space="preserve"><value>Öppna kopplingskoder</value></data>
+  <data name="Valid until" xml:space="preserve"><value>Giltig till</value></data>
+  <data name="Paired UATs" xml:space="preserve"><value>Kopplade UAT</value></data>
+  <data name="No UAT is paired." xml:space="preserve"><value>Inget UAT är kopplat.</value></data>
+  <data name="Pairing id" xml:space="preserve"><value>Kopplings-id</value></data>
+  <data name="Paired since" xml:space="preserve"><value>Kopplad sedan</value></data>
+  <data name="Last contact" xml:space="preserve"><value>Senaste kontakt</value></data>
+  <data name="Remove this UAT? It can no longer reach this server; pairing again needs a new code." xml:space="preserve"><value>Ta bort det här UAT? Det når då inte längre den här servern; ny koppling kräver en ny kod.</value></data>
+  <data name="Pairing with the production server" xml:space="preserve"><value>Koppling till produktionsservern</value></data>
+  <data name="The federation key cannot be read (restored without its key ring). Unpair and pair again." xml:space="preserve"><value>Kopplingsnyckeln kan inte läsas (återställd utan nyckelring). Häv kopplingen och koppla igen.</value></data>
+  <data name="Production server" xml:space="preserve"><value>Produktionsserver</value></data>
+  <data name="Key of the production server" xml:space="preserve"><value>Produktionsserverns nyckel</value></data>
+  <data name="Key of this UAT" xml:space="preserve"><value>Det här UAT:s nyckel</value></data>
+  <data name="Last test" xml:space="preserve"><value>Senaste test</value></data>
+  <data name="works" xml:space="preserve"><value>fungerar</value></data>
+  <data name="Unpair this UAT? It can no longer hand versions to production until it pairs again." xml:space="preserve"><value>Häva kopplingen för det här UAT? Det kan då inte lämna versioner till produktion förrän det kopplats igen.</value></data>
+  <data name="Unpair" xml:space="preserve"><value>Häv koppling</value></data>
+  <data name="On the production server, an admin opens UAT environments and creates a pairing code with Add UAT. Enter its address and the code here." xml:space="preserve"><value>På produktionsservern öppnar en administratör UAT-miljöer och skapar en kopplingskod med Lägg till UAT. Ange dess adress och koden här.</value></data>
+  <data name="Address of the production server" xml:space="preserve"><value>Produktionsserverns adress</value></data>
+  <data name="Pairing code" xml:space="preserve"><value>Kopplingskod</value></data>
+  <data name="Pair" xml:space="preserve"><value>Koppla</value></data>
+  <data name="The step was refused." xml:space="preserve"><value>Steget nekades.</value></data>
+  <data name="Mode saved." xml:space="preserve"><value>Läget sparat.</value></data>
+  <data name="Pairing code created." xml:space="preserve"><value>Kopplingskod skapad.</value></data>
+  <data name="Pairing code revoked." xml:space="preserve"><value>Kopplingskod återkallad.</value></data>
+  <data name="UAT blocked." xml:space="preserve"><value>UAT spärrat.</value></data>
+  <data name="UAT unblocked." xml:space="preserve"><value>UAT avspärrat.</value></data>
+  <data name="UAT removed." xml:space="preserve"><value>UAT borttaget.</value></data>
+  <data name="Paired with the production server." xml:space="preserve"><value>Kopplad till produktionsservern.</value></data>
+  <data name="The connection to the production server works." xml:space="preserve"><value>Anslutningen till produktionsservern fungerar.</value></data>
+  <data name="Pairing removed." xml:space="preserve"><value>Koppling hävd.</value></data>
+  <data name="UAT environment, not production" xml:space="preserve"><value>UAT-miljö, inte produktion</value></data>
+  <data name="Unblock this UAT?" xml:space="preserve"><value>Avspärra det här UAT?</value></data>
+  <data name="Block this UAT? Its requests are refused until you unblock it." xml:space="preserve"><value>Spärra det här UAT? Dess förfrågningar nekas tills du häver spärren.</value></data>
 </root>

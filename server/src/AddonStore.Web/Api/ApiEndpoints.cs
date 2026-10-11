@@ -179,6 +179,8 @@ public static class ApiEndpoints
                     "GET  /api/features               which optional AI features are switched on",
                     "GET  /api/search?q=&lang=&channel=  find add-ons by need (AI ranking with reasons when enabled, else word search; ?format=tsv)",
                     "GET  /api/signing-key              public key of the catalog signatures (ECDSA P-256)",
+                    "GET  /api/admin/uat                UAT environments: mode, paired UATs, pairing codes (admins; see agent guide)",
+                    "POST /api/federation/pair          a UAT pairs with a one-time code (404 while no UAT is added)",
                     "GET|POST /api/packages/{id}/{version}/ai-review  read or create the AI review aid (reviewers/admins)",
                     "GET|POST /api/customers          customer deliveries: list or create customers (auth)",
                     "GET|PATCH /api/customers/{cid}   one customer with codes and deliveries (creator/admin; reviewers read); DELETE removes it with its codes and deliveries",
@@ -424,7 +426,8 @@ public static class ApiEndpoints
 
             var entries = await CatalogAsync(db, beta, Base(ctx), grants, signing, storeAllowed ? await customers.TestGrantsAsync(ctx) : new(),
                                              clientOnly: !storeAllowed, restricted: storeAllowed && await customers.IsRestrictedAsync(ctx));
-            return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live", packages = entries } });
+            return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live",
+                environment = FederationService.IsChild ? "uat" : "production", packages = entries } });
         });
 
         // Power PDF update hint for the store client (S1.8.0): is there a newer update for its release line?
@@ -455,7 +458,8 @@ public static class ApiEndpoints
             var allowedModes = await StoreAccess.AllowedModesAsync(settings);
             var mode = StoreAccess.ModeOf(ctx);
             return Results.Json(new { ok = true, data = new { allowed = allowedModes.Contains(mode), mode,
-                allowedModes = StoreAccess.Modes.Select(m => m.Key).Where(allowedModes.Contains) } });
+                allowedModes = StoreAccess.Modes.Select(m => m.Key).Where(allowedModes.Contains),
+                environment = FederationService.IsChild ? "uat" : "production" } });   // S1.21.0
         });
 
         api.MapGet("/packages/{id}", async (string id, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService customers) =>
