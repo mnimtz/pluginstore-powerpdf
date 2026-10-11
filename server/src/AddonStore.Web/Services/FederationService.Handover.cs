@@ -56,6 +56,8 @@ public partial class FederationService
             return Err("RATE_LIMITED", $"More than {MaxHandoversPerHour} handovers from this UAT within an hour.", 429);
         var review = b.TryGetProperty("review", out var r) && r.ValueKind == JsonValueKind.Object ? r.GetRawText() : "";
         if (review.Length > 4000) review = "";
+        var catalog = b.TryGetProperty("catalog", out var cat) && cat.ValueKind == JsonValueKind.Object ? cat.GetRawText() : "";
+        if (catalog.Length > 200000) catalog = "";
         // an announcement that never got its package is of no use after an hour
         var old = DateTime.UtcNow.AddHours(-1);
         await _db.FederationIntakes.Where(x => x.State == "waiting" && x.CreatedAt < old).ExecuteDeleteAsync();
@@ -63,7 +65,7 @@ public partial class FederationService
         {
             ChildId = child.Id, PackageId = id, Version = version, Sha256 = sha, SourceSha256 = srcSha,
             Note = Cap(S("note"), 1000), UploaderEmail = Cap(S("uploaderEmail"), 254), UploaderName = Cap(S("uploaderName"), 100),
-            HandedOverBy = Cap(S("handedOverBy"), 100), ReviewJson = review,
+            HandedOverBy = Cap(S("handedOverBy"), 100), ReviewJson = review, CatalogJson = catalog,
         };
         _db.FederationIntakes.Add(row);
         await _db.SaveChangesAsync();
@@ -107,14 +109,13 @@ public partial class FederationService
             var submissions = _sp.GetRequiredService<SubmissionService>();
             var sources = _sp.GetRequiredService<SourceService>();
 
-            // uploader on production: the account with the UAT uploader's e-mail, else the admin who added this UAT
+            // uploader on production: always the admin who added this UAT (S1.23.0). The UAT uploader's e-mail is
+            // never an account here; it only keeps that person from approving the version (four-eyes).
             AppUser? uploader = null;
-            if (row.UploaderEmail.Contains('@'))
-                uploader = await users.FindByEmailAsync(row.UploaderEmail) is { Status: UserStatus.Active } u ? u : null;
-            if (uploader is null && child.CreatedById is { Length: > 0 } adminId)
+            if (child.CreatedById is { Length: > 0 } adminId)
                 uploader = await users.FindByIdAsync(adminId) is { Status: UserStatus.Active } a && await users.IsInRoleAsync(a, "Admin") ? a : null;
             if (uploader is null)
-                return await RejectIntakeAsync(row, child, "Production has no account with the uploader's e-mail address and the admin who added this UAT is no longer active.");
+                return await RejectIntakeAsync(row, child, "The admin who added this UAT is no longer an active admin; remove the UAT and add it again.");
 
             // the source policy of production, as for every upload (POST /api/packages)
             if (await sources.RequiredAtSubmitAsync(bundle.PpakPath))
@@ -197,7 +198,7 @@ public partial class FederationService
         var url = await _settings.GetAsync(MasterUrlKey);
         var pairingId = await _settings.GetAsync(PairingIdKey);
         if (!IsChild || pairingId.Length == 0 || url.Length == 0) return Err("FED_NOT_PAIRED", "This UAT is not paired with a production server.", 409);
-        var v = await _db.PackageVersions.Include(x => x.Package).FirstOrDefaultAsync(x => x.Id == versionId);
+        var v = await _db.PackageVersions.Include(x => x.Package).ThenInclude(p => p!.Versions).FirstOrDefaultAsync(x => x.Id == versionId);
         if (v is null) return Err("VERSION_NOT_FOUND", "No version with this id.", 404);
         var users = _sp.GetRequiredService<UserManager<AppUser>>();
         if (!(v.Package?.OwnerId == actor.Id || await users.IsInRoleAsync(actor, "Admin")))
@@ -247,6 +248,7 @@ public partial class FederationService
                     status = v.Status == VersionStatus.Live ? "live" : "beta", reviewedBy = reviewer?.DisplayName ?? "",
                     reviewedAt = v.ReviewedAt, comment = Cap(v.ReviewComment, 1000), server = await OwnBaseUrlAsync(),
                 },
+                catalog = v.Package is null ? null : CatalogOf(v.Package),   // E3: a proposal for production
             });
             var (st1, j1, _, e1) = await SendAsync(HttpMethod.Post, url + "/api/federation/promotions", announce, (pairingId, own));
             if (e1 is not null) return await FailHandoverAsync(handover, e1);
@@ -298,5 +300,158 @@ public partial class FederationService
         await _db.SaveChangesAsync();
         await _audit.LogAsync(h.CreatedBy, "federation.handover.failed", $"{h.PackageId} {h.Version}", error.Code);
         return error;
+    }
+
+    // ---- E3 (S1.23.0): catalog proposal ----------------------------------------------------------
+
+    /// <summary>The catalog entry as the catalog shows it: overrides first, then the newest manifest.</summary>
+    public static Dictionary<string, object?> CatalogOf(Package pkg)
+    {
+        var shown = pkg.Versions.Where(x => x.Status is VersionStatus.Live or VersionStatus.Beta).ToList();
+        var newest = (shown.Count > 0 ? shown : pkg.Versions.ToList()).OrderByDescending(x => x.SubmittedAt).FirstOrDefault();
+        var (name, description, author, contact) = PackageMetaService.Current(pkg, newest);
+        return new Dictionary<string, object?>
+        {
+            ["name"] = name, ["description"] = description, ["author"] = author, ["contactEmail"] = contact,
+            ["category"] = CategoryService.EffectiveSlug(pkg),
+            ["providers"] = PackageMetaService.CurrentProviders(pkg, newest).Select(x => new { name = x.Name, website = x.Website }).ToList(),
+        };
+    }
+
+    public record CatalogDiff(string Field, string Production, string Uat);
+
+    private static string Canon(JsonElement e) => e.ValueKind switch
+    {
+        JsonValueKind.Object => "{" + string.Join(",", e.EnumerateObject().OrderBy(p => p.Name, StringComparer.Ordinal)
+                                       .Select(p => JsonSerializer.Serialize(p.Name) + ":" + Canon(p.Value))) + "}",
+        JsonValueKind.Array => "[" + string.Join(",", e.EnumerateArray().Select(Canon)) + "]",
+        JsonValueKind.String => JsonSerializer.Serialize((e.GetString() ?? "").Trim()),
+        _ => e.GetRawText(),
+    };
+
+    private static string Preview(JsonElement e) => e.ValueKind switch
+    {
+        JsonValueKind.Object when e.TryGetProperty("en", out var en) && en.ValueKind == JsonValueKind.String => Cap(en.GetString(), 160),
+        JsonValueKind.Object => Cap(string.Join(" / ", e.EnumerateObject().Take(2).Select(p => p.Value.ToString())), 160),
+        JsonValueKind.Array => Cap(string.Join(", ", e.EnumerateArray().Select(x => x.TryGetProperty("name", out var n) ? n.GetString() : x.ToString())), 160),
+        JsonValueKind.String => Cap(e.GetString(), 160),
+        _ => "",
+    };
+
+    /// <summary>Fields where the UAT's catalog entry differs from production's (empty when applied or nothing differs).</summary>
+    public async Task<List<CatalogDiff>> CatalogDiffAsync(FederationIntake row)
+    {
+        var diffs = new List<CatalogDiff>();
+        if (row.CatalogJson.Length == 0 || row.CatalogAppliedAt is not null || row.State != "accepted") return diffs;
+        var pkg = await _db.Packages.Include(p => p.Versions).FirstOrDefaultAsync(p => p.Id == row.PackageId);
+        if (pkg is null) return diffs;
+        using var uat = JsonDocument.Parse(row.CatalogJson);
+        using var prod = JsonDocument.Parse(JsonSerializer.Serialize(CatalogOf(pkg)));
+        foreach (var f in new[] { "name", "description", "author", "contactEmail", "category", "providers" })
+        {
+            if (!uat.RootElement.TryGetProperty(f, out var u)) continue;
+            var pr = prod.RootElement.GetProperty(f);
+            if (Canon(u) != Canon(pr)) diffs.Add(new CatalogDiff(f, Preview(pr), Preview(u)));
+        }
+        return diffs;
+    }
+
+    /// <summary>A production admin takes over the differing fields of the UAT's catalog entry (checked like any edit).</summary>
+    public async Task<FedResult> ApplyCatalogAsync(string intakeId, AppUser admin)
+    {
+        var users = _sp.GetRequiredService<UserManager<AppUser>>();
+        if (!await users.IsInRoleAsync(admin, "Admin")) return Err("ADMIN_ONLY", "Only admins take over a catalog proposal.", 403);
+        var row = await _db.FederationIntakes.FirstOrDefaultAsync(x => x.Id == intakeId);
+        if (row is null) return Err("FED_HANDOVER_NOT_FOUND", "No handover with this id.", 404);
+        var diffs = await CatalogDiffAsync(row);
+        if (diffs.Count == 0) return Err("FED_CATALOG_SAME", "The catalog entry of the UAT does not differ (or was taken over already).", 409);
+        var pkg = await _db.Packages.FirstAsync(p => p.Id == row.PackageId);
+        using var uat = JsonDocument.Parse(row.CatalogJson);
+        var u = uat.RootElement;
+        Dictionary<string, string>? Map(string k) => u.TryGetProperty(k, out var el) && el.ValueKind == JsonValueKind.Object
+            ? el.EnumerateObject().Where(p => p.Value.ValueKind == JsonValueKind.String).ToDictionary(p => p.Name, p => p.Value.GetString() ?? "") : null;
+        string? Str(string k) => u.TryGetProperty(k, out var el) && el.ValueKind == JsonValueKind.String ? el.GetString() : null;
+        var change = new MetaChange();
+        foreach (var d in diffs)
+            switch (d.Field)
+            {
+                case "name": change.SetName = true; change.Name = Map("name"); break;
+                case "description": change.SetDescription = true; change.Description = Map("description"); break;
+                case "author": change.SetAuthor = true; change.Author = Str("author"); break;
+                case "contactEmail": change.SetContact = true; change.ContactEmail = Str("contactEmail"); break;
+                case "category": change.SetCategory = true; change.Category = Str("category"); break;
+                case "providers":
+                    change.SetProviders = true;
+                    change.Providers = u.TryGetProperty("providers", out var pv) && pv.ValueKind == JsonValueKind.Array
+                        ? pv.EnumerateArray().Select(x => new AddonProvider(x.TryGetProperty("name", out var n) ? n.GetString() ?? "" : "",
+                                                                             x.TryGetProperty("website", out var w) ? w.GetString() ?? "" : "")).ToList()
+                        : new List<AddonProvider>();
+                    break;
+            }
+        var issues = await _sp.GetRequiredService<PackageMetaService>().ApplyAsync(pkg, admin, change);
+        if (issues.Any(i => i.Severity == "error"))
+            return new FedResult(false, "FED_CATALOG_INVALID", "The proposal does not pass the catalog checks: " +
+                                 string.Join("; ", issues.Where(i => i.Severity == "error").Select(i => i.Code)), 400);
+        row.CatalogAppliedAt = DateTime.UtcNow;
+        row.CatalogAppliedBy = admin.DisplayName;
+        await _db.SaveChangesAsync();
+        await _audit.LogAsync(admin.DisplayName, "federation.catalog.applied", row.PackageId, string.Join(", ", diffs.Select(d => d.Field)));
+        return FedResult.Done(new { intakeId, applied = diffs.Select(d => d.Field) });
+    }
+
+    // ---- E3 (S1.23.0): status back to the UAT ---------------------------------------------------
+
+    /// <summary>Production: the state of a handed-over version for its UAT.</summary>
+    public async Task<FedResult> IntakeStatusAsync(FederationChild child, string intakeId)
+    {
+        var row = await _db.FederationIntakes.FirstOrDefaultAsync(x => x.Id == intakeId && x.ChildId == child.Id);
+        if (row is null) return Err("FED_HANDOVER_NOT_FOUND", "No handover with this id from this UAT.", 404);
+        var v = row.VersionId is int vid ? await _db.PackageVersions.FirstOrDefaultAsync(x => x.Id == vid) : null;
+        var status = row.State != "accepted" ? row.State : v is null ? "removed" : v.BlockedAt is not null ? "blocked" : v.Status switch
+        {
+            VersionStatus.Submitted => "submitted", VersionStatus.Beta => "beta", VersionStatus.Live => "live",
+            VersionStatus.Rejected => "rejected", _ => "withdrawn",
+        };
+        return FedResult.Done(new
+        {
+            intakeId, state = row.State, versionStatus = status, reviewedAt = v?.ReviewedAt,
+            // a rejection reason helps the UAT; approval comments stay internal
+            comment = status == "rejected" ? Cap(v?.ReviewComment, 1000) : "",
+            catalogTakenOver = row.CatalogAppliedAt is not null,
+        });
+    }
+
+    public static readonly HashSet<string> FinalStatus = new() { "live", "rejected", "withdrawn", "removed", "blocked" };
+
+    /// <summary>UAT: asks production for the state of every handover that is not final yet (at most 50 per run).</summary>
+    public async Task<FedResult> RefreshStatusAsync(string by)
+    {
+        var url = await _settings.GetAsync(MasterUrlKey);
+        var pairingId = await _settings.GetAsync(PairingIdKey);
+        if (!IsChild || pairingId.Length == 0 || url.Length == 0) return Err("FED_NOT_PAIRED", "This UAT is not paired with a production server.", 409);
+        using var own = await OwnKeyAsync(create: false);
+        if (own is null) return Err("FED_KEY_UNREADABLE", "The federation key of this UAT cannot be read (restored without its key ring); pair again.", 500);
+        var open = (await _db.FederationHandovers.Where(h => h.State == "accepted" && h.MasterIntakeId != "").ToListAsync())
+            .Where(h => !FinalStatus.Contains(h.MasterStatus)).OrderBy(h => h.MasterStatusAt ?? h.CreatedAt).Take(50).ToList();
+        var changed = 0;
+        foreach (var h in open)
+        {
+            var (st, j, _, e) = await SendAsync(HttpMethod.Get, url + "/api/federation/promotions/" + h.MasterIntakeId, Array.Empty<byte>(), (pairingId, own));
+            if (e is not null) return e;   // production unreachable: try again next time
+            if (j is not { } d || !d.TryGetProperty("ok", out var ok) || ok.ValueKind != JsonValueKind.True) continue;
+            var data = d.GetProperty("data");
+            var status = data.TryGetProperty("versionStatus", out var s) ? Cap(s.GetString(), 20) : "";
+            if (status.Length == 0) continue;
+            if (status != h.MasterStatus)
+            {
+                changed++;
+                await _audit.LogAsync(by, "federation.handover.status", $"{h.PackageId} {h.Version}", status);
+            }
+            h.MasterStatus = status;
+            h.MasterStatusAt = DateTime.UtcNow;
+            h.MasterComment = data.TryGetProperty("comment", out var c) ? Cap(c.GetString(), 1000) : "";
+        }
+        await _db.SaveChangesAsync();
+        return FedResult.Done(new { asked = open.Count, changed });
     }
 }

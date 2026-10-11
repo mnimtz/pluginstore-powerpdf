@@ -63,6 +63,10 @@ public class FederationIntake
     public string FindingsJson { get; set; } = "";
     public int? VersionId { get; set; }
     public DateTime? DoneAt { get; set; }
+    /// <summary>S1.23.0 (E3): the UAT's catalog entry as a proposal {name, description, author, contactEmail, category, providers}.</summary>
+    public string CatalogJson { get; set; } = "";
+    public DateTime? CatalogAppliedAt { get; set; }
+    public string? CatalogAppliedBy { get; set; }
 }
 
 /// <summary>UAT side of a handover (S1.22.0): what was handed to production and the answer.</summary>
@@ -83,6 +87,10 @@ public class FederationHandover
     public string FindingsJson { get; set; } = "";
     public string MasterIntakeId { get; set; } = "";
     public DateTime? DoneAt { get; set; }
+    /// <summary>S1.23.0 (E3): state of the version on production: submitted, beta, live, rejected, withdrawn, blocked.</summary>
+    public string MasterStatus { get; set; } = "";
+    public DateTime? MasterStatusAt { get; set; }
+    public string MasterComment { get; set; } = "";
 }
 
 /// <summary>Idempotent SQL for databases created before S1.21.0 (EnsureCreated never alters).</summary>
@@ -112,5 +120,12 @@ public static class FederationSchema
         "ALTER TABLE PackageVersions ADD COLUMN OriginUploader TEXT NULL",
         "ALTER TABLE PackageVersions ADD COLUMN OriginReviewJson TEXT NULL",
         "ALTER TABLE PackageVersions ADD COLUMN OriginAt TEXT NULL",
+        // S1.23.0 (stage E3): status back to the UAT, catalog proposal
+        "ALTER TABLE FederationIntakes ADD COLUMN CatalogJson TEXT NOT NULL DEFAULT ''",
+        "ALTER TABLE FederationIntakes ADD COLUMN CatalogAppliedAt TEXT NULL",
+        "ALTER TABLE FederationIntakes ADD COLUMN CatalogAppliedBy TEXT NULL",
+        "ALTER TABLE FederationHandovers ADD COLUMN MasterStatus TEXT NOT NULL DEFAULT ''",
+        "ALTER TABLE FederationHandovers ADD COLUMN MasterStatusAt TEXT NULL",
+        "ALTER TABLE FederationHandovers ADD COLUMN MasterComment TEXT NOT NULL DEFAULT ''",
     };
 }

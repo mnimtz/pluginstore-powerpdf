@@ -1605,4 +1605,15 @@
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Vierogenprincipe: u hebt deze versie in het UAT geüpload; een andere beheerder of beoordelaar van productie keurt haar goed.</value></data>
   <data name="Manage UAT environments" xml:space="preserve"><value>UAT-omgevingen beheren</value></data>
   <data name="Change under Settings, Features" xml:space="preserve"><value>Wijzigen onder Instellingen, Functies</value></data>
+  <data name="Catalog entry proposed by the UAT" xml:space="preserve"><value>Door het UAT voorgestelde catalogusvermelding</value></data>
+  <data name="Field" xml:space="preserve"><value>Veld</value></data>
+  <data name="Production" xml:space="preserve"><value>Productie</value></data>
+  <data name="Take over these fields of the UAT catalog entry?" xml:space="preserve"><value>Deze velden van de UAT-catalogusvermelding overnemen?</value></data>
+  <data name="Take over catalog entry" xml:space="preserve"><value>Catalogusvermelding overnemen</value></data>
+  <data name="Catalog entry taken over from the UAT." xml:space="preserve"><value>Catalogusvermelding uit het UAT overgenomen.</value></data>
+  <data name="The catalog proposal could not be taken over; it does not pass the catalog checks or was taken over already." xml:space="preserve"><value>Het catalogusvoorstel kon niet worden overgenomen; het doorstaat de cataloguscontroles niet of is al overgenomen.</value></data>
+  <data name="State on production updated." xml:space="preserve"><value>Status in productie bijgewerkt.</value></data>
+  <data name="Update state on production" xml:space="preserve"><value>Status in productie bijwerken</value></data>
+  <data name="On production" xml:space="preserve"><value>In productie</value></data>
+  <data name="Removed" xml:space="preserve"><value>Verwijderd</value></data>
 </root>

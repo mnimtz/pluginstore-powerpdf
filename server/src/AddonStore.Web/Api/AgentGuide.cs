@@ -1253,6 +1253,8 @@ portal page /Admin/Uat:
 | `GET /api/admin/uat/reg?to=uat` | UAT | .reg for test PCs: `ServerUrl` and `TrustedSigningKeys` under HKLM (`to=production` removes both) |
 | `PUT /api/admin/uat/mode` `{"mode":"child","markAsTest":false}` | UAT | keep the role but drop the test system marking (band, environment `uat`), for a server that stays in productive use for its own customers |
 | `POST /api/packages/{id}/{version}/handover` `{"note":"..."}` | UAT | hand an approved version (beta or live) to production; the owner of the add-on or an admin |
+| `POST /api/admin/uat/handovers/refresh` | UAT | ask production for the state of the open handovers |
+| `POST /api/admin/uat/handovers/{id}/catalog` | production | take over the differing fields of a UAT catalog proposal |
 | `POST`/`DELETE /api/admin/uat/uats/{id}/block` | production | block or unblock a UAT |
 | `DELETE /api/admin/uat/uats/{id}` | production | remove a UAT (pairing again needs a new code) |
 
@@ -1286,11 +1288,23 @@ UAT uploader (`uploaderEmail`, `uploaderName`), `handedOverBy` and `review`
 (the .ppak and `<id>-<version>-source.zip` in one ZIP, at most 220 MB). Production
 compares both hashes, runs every automatic check and its source policy as for any
 upload (`SubmittedVia` = `uat:<name>`), and stores the version as submitted with
-its origin (`Origin*`), shown on the review page. The uploader there is the
-account with the UAT uploader's e-mail, else the admin who added the UAT. A UAT
-approval is never an approval in production: reviewers of production decide, and
-whoever uploaded the version in the UAT cannot approve it there (four-eyes across
-both environments, matched by e-mail). 30 handovers per UAT and hour.
+its origin (`Origin*`), shown on the review page. The uploader there is always
+the admin who added the UAT; the UAT uploader's e-mail only keeps that person
+from approving it. A UAT approval is never an approval in production: reviewers
+of production decide, and whoever uploaded the version in the UAT cannot approve
+it there (four-eyes across both environments, matched by e-mail). 30 handovers
+per UAT and hour.
+
+State and catalog (stage E3): the announcement also carries the UAT's catalog
+entry (`catalog`: name, description, author, contactEmail, category,
+providers). Production shows the fields that differ on the review page and in
+`GET /api/admin/uat` (`master.handovers[].catalogDiff`); an admin takes them
+over with `POST /api/admin/uat/handovers/{id}/catalog` (checked like any catalog
+edit). The UAT asks for the state of its handed-over versions every 15 minutes
+and on `POST /api/admin/uat/handovers/refresh` (signed
+`GET /api/federation/promotions/{id}`: `versionStatus` = submitted, beta, live,
+rejected, withdrawn, blocked or removed, plus the reason of a rejection) and
+shows it as `uat.handovers[].productionStatus`.
 
 | Code | HTTP | Meaning |
 |---|---|---|
@@ -1324,6 +1338,8 @@ both environments, matched by e-mail). 30 handovers per UAT and hour.
 | FED_FILE_MISSING | 500 | The package file of the version is missing on the UAT. |
 | FED_TOO_LARGE | 413 | Package and source together are larger than 220 MB. |
 | UNAUTHENTICATED | 401 | The handover call needs a valid API token of an active account. |
+| FED_CATALOG_SAME | 409 | The UAT catalog entry does not differ, or it was taken over already. |
+| FED_CATALOG_INVALID | 400 | The UAT catalog proposal does not pass the catalog checks. |
 
 ## Versioning and ownership
 

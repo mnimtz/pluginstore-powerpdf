@@ -119,8 +119,8 @@ public static class FederationEndpoints
         fed.MapPost("/promotions", async (HttpContext ctx, FederationService svc) =>
         {
             if (!await svc.MasterActiveAsync()) return Results.NotFound();
-            var body = await ReadBodyAsync(ctx, 65536);
-            if (body is null) return Err("FED_BODY_INVALID", "The announcement is larger than 64 KB.");
+            var body = await ReadBodyAsync(ctx, 262144);
+            if (body is null) return Err("FED_BODY_INVALID", "The announcement is larger than 256 KB.");
             var (child, error) = await svc.VerifyRequestAsync(ctx.Request, body);
             if (error is not null) return Answer(error);
             return await SignedAsync(ctx, svc, await svc.OpenIntakeAsync(child!, Json(body)));
@@ -170,6 +170,16 @@ public static class FederationEndpoints
             }
         });
 
+        // E3 (S1.23.0): the state of a handed-over version on production, for its UAT (signed both ways)
+        fed.MapGet("/promotions/{id}", async (string id, HttpContext ctx, FederationService svc) =>
+        {
+            if (!await svc.MasterActiveAsync()) return Results.NotFound();
+            var body = await ReadBodyAsync(ctx, 1024) ?? Array.Empty<byte>();
+            var (child, error) = await svc.VerifyRequestAsync(ctx.Request, body);
+            if (error is not null) return Answer(error);
+            return await SignedAsync(ctx, svc, await svc.IntakeStatusAsync(child!, id));
+        });
+
         // ---- owners and admins of a UAT: hand a version to production (S1.22.0) -------------------
         var pkgs = app.MapGroup("/api/packages").RequireAuthorization("BearerOnly");
         pkgs.MapPost("/{id}/{version}/handover", async (string id, string version, HttpContext ctx, UserManager<AppUser> users,
@@ -198,15 +208,21 @@ public static class FederationEndpoints
                 createdAt = c.CreatedAt, lastSeenAt = c.LastSeenAt, blocked = c.BlockedAt is not null,
             });
             var codes = (await svc.OpenCodesAsync()).Select(c => new { id = c.Id, name = c.Name, createdAt = c.CreatedAt, expiresAt = c.ExpiresAt });
-            var intakes = st.IsChild ? null : (await svc.IntakesAsync()).Select(x => new
-            {
-                id = x.Id, uatId = x.ChildId, packageId = x.PackageId, version = x.Version, state = x.State, message = x.Message,
-                versionId = x.VersionId, createdAt = x.CreatedAt, doneAt = x.DoneAt,
-            });
+            var intakeRows = st.IsChild ? new List<FederationIntake>() : await svc.IntakesAsync();
+            var intakes = new List<object>();
+            foreach (var x in intakeRows)
+                intakes.Add(new
+                {
+                    id = x.Id, uatId = x.ChildId, packageId = x.PackageId, version = x.Version, state = x.State, message = x.Message,
+                    versionId = x.VersionId, createdAt = x.CreatedAt, doneAt = x.DoneAt,
+                    catalogDiff = (await svc.CatalogDiffAsync(x)).Select(d => new { field = d.Field, production = d.Production, uat = d.Uat }),
+                    catalogTakenOverAt = x.CatalogAppliedAt,
+                });
             var handovers = !st.IsChild ? null : (await svc.HandoversAsync()).Select(h => new
             {
                 id = h.Id, packageId = h.PackageId, version = h.Version, state = h.State, code = h.Code, message = h.Message,
                 createdAt = h.CreatedAt, createdBy = h.CreatedBy, doneAt = h.DoneAt,
+                productionStatus = h.MasterStatus, productionStatusAt = h.MasterStatusAt, productionComment = h.MasterComment,
             });
             return Ok(new
             {
@@ -292,6 +308,22 @@ public static class FederationEndpoints
             var own = (await settings.GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl")).TrimEnd('/');
             if (own.Length == 0) own = $"{ctx.Request.Scheme}://{ctx.Request.Host}";
             return Answer(await svc.PairWithMasterAsync(S(j, "masterUrl"), S(j, "code"), own, admin.DisplayName));
+        });
+
+        // E3: ask production for the state of every open handover (the UAT also does it every 15 minutes)
+        adm.MapPost("/handovers/refresh", async (HttpContext ctx, UserManager<AppUser> users, FederationService svc) =>
+        {
+            var admin = await AdminAsync(ctx, users);
+            if (admin is null) return NotAdmin();
+            return Answer(await svc.RefreshStatusAsync(admin.DisplayName));
+        });
+
+        // E3: on production, take over the catalog proposal of a handover (the differing fields)
+        adm.MapPost("/handovers/{id}/catalog", async (string id, HttpContext ctx, UserManager<AppUser> users, FederationService svc) =>
+        {
+            var admin = await AdminAsync(ctx, users);
+            if (admin is null) return NotAdmin();
+            return Answer(await svc.ApplyCatalogAsync(id, admin));
         });
 
         adm.MapPost("/test", async (HttpContext ctx, UserManager<AppUser> users, FederationService svc) =>

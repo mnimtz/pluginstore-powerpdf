@@ -1090,6 +1090,11 @@ pairing:
   production checks the hashes, runs every automatic check and stores the version
   as submitted with its UAT origin. Production reviewers decide; whoever uploaded
   the version in the UAT cannot approve it in production.
+- State and catalog (S1.23.0, E3): the UAT shows the state of every handed-over
+  version on production (submitted, beta, live, rejected with its reason,
+  withdrawn), asked every 15 minutes and on demand. Production sees where the
+  UAT's catalog entry differs and an admin takes it over with one click. Handed
+  over versions are always submitted as the admin who added the UAT.
 - The role and the marking are separate: a UAT can drop the test system marking
   (band, environment `uat`) when it stays in productive use for its own
   customers, for example our Azure store as development server of a company store.

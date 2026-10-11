@@ -1605,4 +1605,15 @@
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Dört göz kuralı: bu sürümü UAT'ye siz yüklediniz; onu üretimin başka bir yöneticisi veya gözden geçireni onaylar.</value></data>
   <data name="Manage UAT environments" xml:space="preserve"><value>UAT ortamlarını yönet</value></data>
   <data name="Change under Settings, Features" xml:space="preserve"><value>Ayarlar, Özellikler altında değiştir</value></data>
+  <data name="Catalog entry proposed by the UAT" xml:space="preserve"><value>UAT'nin önerdiği katalog girdisi</value></data>
+  <data name="Field" xml:space="preserve"><value>Alan</value></data>
+  <data name="Production" xml:space="preserve"><value>Üretim</value></data>
+  <data name="Take over these fields of the UAT catalog entry?" xml:space="preserve"><value>UAT katalog girdisinin bu alanları alınsın mı?</value></data>
+  <data name="Take over catalog entry" xml:space="preserve"><value>Katalog girdisini al</value></data>
+  <data name="Catalog entry taken over from the UAT." xml:space="preserve"><value>Katalog girdisi UAT'den alındı.</value></data>
+  <data name="The catalog proposal could not be taken over; it does not pass the catalog checks or was taken over already." xml:space="preserve"><value>Katalog önerisi alınamadı; katalog denetimlerini geçmiyor veya zaten alındı.</value></data>
+  <data name="State on production updated." xml:space="preserve"><value>Üretimdeki durum güncellendi.</value></data>
+  <data name="Update state on production" xml:space="preserve"><value>Üretimdeki durumu güncelle</value></data>
+  <data name="On production" xml:space="preserve"><value>Üretimde</value></data>
+  <data name="Removed" xml:space="preserve"><value>Kaldırıldı</value></data>
 </root>

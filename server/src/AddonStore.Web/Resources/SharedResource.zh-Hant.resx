@@ -1605,4 +1605,15 @@
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>四眼原則：您在 UAT 中上傳了此版本；由正式環境的其他管理員或審核人員核准。</value></data>
   <data name="Manage UAT environments" xml:space="preserve"><value>管理 UAT 環境</value></data>
   <data name="Change under Settings, Features" xml:space="preserve"><value>在「設定」&gt;「功能」中變更</value></data>
+  <data name="Catalog entry proposed by the UAT" xml:space="preserve"><value>UAT 建議的目錄項目</value></data>
+  <data name="Field" xml:space="preserve"><value>欄位</value></data>
+  <data name="Production" xml:space="preserve"><value>正式環境</value></data>
+  <data name="Take over these fields of the UAT catalog entry?" xml:space="preserve"><value>採用 UAT 目錄項目的這些欄位？</value></data>
+  <data name="Take over catalog entry" xml:space="preserve"><value>採用目錄項目</value></data>
+  <data name="Catalog entry taken over from the UAT." xml:space="preserve"><value>已採用 UAT 的目錄項目。</value></data>
+  <data name="The catalog proposal could not be taken over; it does not pass the catalog checks or was taken over already." xml:space="preserve"><value>無法採用目錄建議；它未通過目錄檢查或已被採用。</value></data>
+  <data name="State on production updated." xml:space="preserve"><value>已更新正式環境中的狀態。</value></data>
+  <data name="Update state on production" xml:space="preserve"><value>更新正式環境中的狀態</value></data>
+  <data name="On production" xml:space="preserve"><value>在正式環境中</value></data>
+  <data name="Removed" xml:space="preserve"><value>已移除</value></data>
 </root>

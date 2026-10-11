@@ -199,15 +199,17 @@ else
     {
         <div class="card" style="max-width:960px">
             <h2 style="margin-top:0">@L["Versions handed to production"]</h2>
+            <form method="post" asp-page-handler="Refresh" style="margin:0 0 8px"><button type="submit" class="btn small secondary">@L["Update state on production"]</button></form>
             <div class="table-wrap">
             <table>
-                <tr><th>@L["Add-on"]</th><th>@L["Version"]</th><th>@L["Status"]</th><th>@L["By"]</th><th>@L["Date"]</th></tr>
+                <tr><th>@L["Add-on"]</th><th>@L["Version"]</th><th>@L["Status"]</th><th>@L["On production"]</th><th>@L["By"]</th><th>@L["Date"]</th></tr>
                 @foreach (var h in Model.Handovers)
                 {
                     <tr>
                         <td><a href="/Plugin?id=@Uri.EscapeDataString(h.PackageId)">@h.PackageId</a></td>
                         <td>@h.Version</td>
                         <td>@L[h.State == "accepted" ? "Handed to production" : h.State == "rejected" ? "Refused by production" : h.State == "failed" ? "Handover failed" : "Sending"]@(h.State != "accepted" && h.Message.Length > 0 ? ": " + h.Message : "")</td>
+                        <td>@(h.MasterStatus.Length == 0 ? "" : L[AddonStore.Web.Pages.Admin.UatModel.StatusLabel(h.MasterStatus)].Value)@(h.MasterComment.Length > 0 ? ": " + h.MasterComment : "")</td>
                         <td>@h.CreatedBy</td>
                         <td>@Time.Fmt(h.CreatedAt)</td>
                     </tr>

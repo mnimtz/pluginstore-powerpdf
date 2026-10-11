@@ -1,6 +1,6 @@
 # Konzept: Master-Child-Betrieb (UAT-Server vor der Produktion)
 
-Stand: Okt 11, 2026 · Status: E1 (S1.21.0), E1b Server (S1.21.1) und E2 (S1.22.0) umgesetzt
+Stand: Okt 11, 2026 · Status: E1 (S1.21.0), E1b Server (S1.21.1), E2 (S1.22.0) und E3 (S1.23.0) umgesetzt
 
 ## Ziel
 
@@ -102,8 +102,10 @@ Wiederherstellung.
    in Prüfung, abgelehnt (mit Befunden), live seit …*.
 
 Die Add-on-ID ist in beiden Umgebungen dieselbe. Gibt es die ID am Master noch
-nicht, legt die erste Übermittlung das Add-on dort an; Besitzer wird das Konto
-mit derselben E-Mail-Adresse, sonst der übermittelnde Admin.
+nicht, legt die erste Übermittlung das Add-on dort an. **Entschieden (Okt 11,
+2026):** Eingereicht wird am Master immer unter dem Admin, der das UAT gekoppelt
+hat; Besitzer eines neuen Add-ons wird damit dieser Admin. Die E-Mail-Adresse des
+Uploaders im UAT dient nur der Vier-Augen-Regel.
 
 ## Rückrichtung: Produktivstand ins UAT holen (optional)
 

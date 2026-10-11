@@ -1605,4 +1605,15 @@
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>قاعدة الأعين الأربع: لقد رفعت هذا الإصدار في UAT؛ ويوافق عليه مسؤول أو مراجع آخر في الإنتاج.</value></data>
   <data name="Manage UAT environments" xml:space="preserve"><value>إدارة بيئات UAT</value></data>
   <data name="Change under Settings, Features" xml:space="preserve"><value>التغيير ضمن الإعدادات، الميزات</value></data>
+  <data name="Catalog entry proposed by the UAT" xml:space="preserve"><value>إدخال الكتالوج المقترح من UAT</value></data>
+  <data name="Field" xml:space="preserve"><value>الحقل</value></data>
+  <data name="Production" xml:space="preserve"><value>الإنتاج</value></data>
+  <data name="Take over these fields of the UAT catalog entry?" xml:space="preserve"><value>هل تريد اعتماد هذه الحقول من إدخال كتالوج UAT؟</value></data>
+  <data name="Take over catalog entry" xml:space="preserve"><value>اعتماد إدخال الكتالوج</value></data>
+  <data name="Catalog entry taken over from the UAT." xml:space="preserve"><value>تم اعتماد إدخال الكتالوج من UAT.</value></data>
+  <data name="The catalog proposal could not be taken over; it does not pass the catalog checks or was taken over already." xml:space="preserve"><value>تعذّر اعتماد اقتراح الكتالوج؛ فهو لا يجتاز فحوص الكتالوج أو اعتُمد بالفعل.</value></data>
+  <data name="State on production updated." xml:space="preserve"><value>تم تحديث الحالة في الإنتاج.</value></data>
+  <data name="Update state on production" xml:space="preserve"><value>تحديث الحالة في الإنتاج</value></data>
+  <data name="On production" xml:space="preserve"><value>في الإنتاج</value></data>
+  <data name="Removed" xml:space="preserve"><value>تمت الإزالة</value></data>
 </root>

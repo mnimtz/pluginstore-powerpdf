@@ -210,6 +210,7 @@ builder.Services.AddScoped<SendToService>();
 builder.Services.AddHostedService<SendToMaintenance>();
 // UAT environments (S1.21.0, docs/concepts/master-child.md): no redirects, short timeout, the service limits the answer size
 builder.Services.AddScoped<FederationService>();
+builder.Services.AddHostedService<FederationStatusWorker>();   // E3: state of handed-over versions (UAT only)
 builder.Services.AddHttpClient(FederationService.HttpName, c => { c.Timeout = TimeSpan.FromSeconds(20); c.DefaultRequestHeaders.UserAgent.ParseAdd("AddonStore-Server (federation)"); })
     .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 builder.Services.AddHttpClient(FederationService.UploadHttpName, c => { c.Timeout = TimeSpan.FromMinutes(15); c.DefaultRequestHeaders.UserAgent.ParseAdd("AddonStore-Server (federation)"); })

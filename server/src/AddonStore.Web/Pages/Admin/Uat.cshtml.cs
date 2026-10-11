@@ -86,8 +86,18 @@ public class UatModel : PageModel
     public async Task<IActionResult> OnPostTestAsync() =>
         await DoneAsync(await _svc.TestConnectionAsync(await AdminAsync()), "The connection to the production server works.");
 
+    public async Task<IActionResult> OnPostRefreshAsync() =>
+        await DoneAsync(await _svc.RefreshStatusAsync(await AdminAsync()), "State on production updated.");
+
     public async Task<IActionResult> OnPostUnpairAsync() =>
         await DoneAsync(await _svc.UnpairAsync(await AdminAsync()), "Pairing removed.");
+
+    /// <summary>Label of a production state of a handed-over version (E3).</summary>
+    public static string StatusLabel(string s) => s switch
+    {
+        "submitted" => "Awaiting review", "beta" => "Beta", "live" => "Live", "rejected" => "Rejected",
+        "withdrawn" => "Withdrawn", "blocked" => "Blocked", "removed" => "Removed", _ => s,
+    };
 
     private async Task<string> OwnUrlAsync()
     {

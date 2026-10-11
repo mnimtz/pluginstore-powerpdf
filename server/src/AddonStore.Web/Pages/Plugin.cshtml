@@ -155,7 +155,11 @@
                 }
                 @foreach (var h in Model.Handovers.Where(h => h.VersionId == v.Id).Take(1))
                 {
-                    <br /><small style="color:@(h.State == "accepted" ? "var(--tun-green, #016839)" : "var(--tun-red, #9b1c1c)")">@L[h.State == "accepted" ? "Handed to production" : h.State == "rejected" ? "Refused by production" : "Handover failed"] · @Time.Fmt(h.CreatedAt)@(h.Message.Length > 0 ? ": " + h.Message : "")</small>
+                    <br /><small style="color:@(h.State == "accepted" ? "var(--tun-green, #016839)" : "var(--tun-red, #9b1c1c)")">@L[h.State == "accepted" ? "Handed to production" : h.State == "rejected" ? "Refused by production" : "Handover failed"] · @Time.Fmt(h.CreatedAt)@(h.Message.Length > 0 && h.State != "accepted" ? ": " + h.Message : "")</small>
+                    @if (h.MasterStatus.Length > 0)
+                    {
+                        <br /><small>@L["On production"]: @L[AddonStore.Web.Pages.Admin.UatModel.StatusLabel(h.MasterStatus)]@(h.MasterComment.Length > 0 ? ": " + h.MasterComment : "")</small>
+                    }
                 }
             </td>
             <td>@v.Downloads</td>

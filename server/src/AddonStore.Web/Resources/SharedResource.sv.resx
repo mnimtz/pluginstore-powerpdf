@@ -1605,4 +1605,15 @@
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Fyraögonsprincipen: du laddade upp den här versionen i UAT; en annan administratör eller granskare i produktion godkänner den.</value></data>
   <data name="Manage UAT environments" xml:space="preserve"><value>Hantera UAT-miljöer</value></data>
   <data name="Change under Settings, Features" xml:space="preserve"><value>Ändra under Inställningar, Funktioner</value></data>
+  <data name="Catalog entry proposed by the UAT" xml:space="preserve"><value>Katalogpost föreslagen av UAT</value></data>
+  <data name="Field" xml:space="preserve"><value>Fält</value></data>
+  <data name="Production" xml:space="preserve"><value>Produktion</value></data>
+  <data name="Take over these fields of the UAT catalog entry?" xml:space="preserve"><value>Ta över dessa fält från UAT-katalogposten?</value></data>
+  <data name="Take over catalog entry" xml:space="preserve"><value>Ta över katalogpost</value></data>
+  <data name="Catalog entry taken over from the UAT." xml:space="preserve"><value>Katalogposten har tagits över från UAT.</value></data>
+  <data name="The catalog proposal could not be taken over; it does not pass the catalog checks or was taken over already." xml:space="preserve"><value>Katalogförslaget kunde inte tas över; det klarar inte katalogkontrollen eller har redan tagits över.</value></data>
+  <data name="State on production updated." xml:space="preserve"><value>Status i produktion uppdaterad.</value></data>
+  <data name="Update state on production" xml:space="preserve"><value>Uppdatera status i produktion</value></data>
+  <data name="On production" xml:space="preserve"><value>I produktion</value></data>
+  <data name="Removed" xml:space="preserve"><value>Borttagen</value></data>
 </root>

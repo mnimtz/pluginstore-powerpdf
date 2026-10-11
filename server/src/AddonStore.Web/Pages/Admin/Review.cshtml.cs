@@ -21,6 +21,16 @@ public class ReviewModel : PageModel
     public Dictionary<string, Package> Packages { get; private set; } = new();
     public string? Notice { get; private set; }
     public bool AiReviewOn { get; private set; }
+    /// <summary>UAT handovers (S1.23.0): intake per version id and the catalog proposal differences per intake.</summary>
+    public Dictionary<int, FederationIntake> Intakes { get; private set; } = new();
+    public Dictionary<string, List<FederationService.CatalogDiff>> CatalogDiffs { get; private set; } = new();
+
+    public async Task OnPostApplyCatalogAsync(string intakeId)
+    {
+        var r = await HttpContext.RequestServices.GetRequiredService<FederationService>().ApplyCatalogAsync(intakeId, (await _users.GetUserAsync(User))!);
+        Notice = r.Ok ? "Catalog entry taken over from the UAT." : "The catalog proposal could not be taken over; it does not pass the catalog checks or was taken over already.";
+        await LoadAsync();
+    }
 
     public ReviewModel(AppDbContext db, UserManager<AppUser> users, VersionActionService actions, AiService ai, AiAssist assist)
     {
@@ -89,5 +99,13 @@ public class ReviewModel : PageModel
             .OrderBy(v => v.PackageId).ToList();
         var ids = Queue.Concat(InBeta).Select(q => q.PackageId).Distinct().ToList();
         Packages = await _db.Packages.Where(p => ids.Contains(p.Id)).ToDictionaryAsync(p => p.Id);
+        var originIds = Queue.Where(q => q.OriginChildId != null).Select(q => (int?)q.Id).ToList();
+        if (originIds.Count > 0)
+        {
+            var fed = HttpContext.RequestServices.GetRequiredService<FederationService>();
+            Intakes = (await _db.FederationIntakes.Where(x => originIds.Contains(x.VersionId)).ToListAsync())
+                .GroupBy(x => x.VersionId!.Value).ToDictionary(g => g.Key, g => g.OrderByDescending(x => x.CreatedAt).First());
+            foreach (var ik in Intakes.Values) CatalogDiffs[ik.Id] = await fed.CatalogDiffAsync(ik);
+        }
     }
 }

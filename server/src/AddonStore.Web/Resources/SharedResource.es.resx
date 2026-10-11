@@ -1605,4 +1605,15 @@
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Regla de los cuatro ojos: usted subió esta versión en el UAT; la aprueba otro administrador o revisor de producción.</value></data>
   <data name="Manage UAT environments" xml:space="preserve"><value>Administrar entornos UAT</value></data>
   <data name="Change under Settings, Features" xml:space="preserve"><value>Cambiar en Configuración, Funciones</value></data>
+  <data name="Catalog entry proposed by the UAT" xml:space="preserve"><value>Entrada de catálogo propuesta por el UAT</value></data>
+  <data name="Field" xml:space="preserve"><value>Campo</value></data>
+  <data name="Production" xml:space="preserve"><value>Producción</value></data>
+  <data name="Take over these fields of the UAT catalog entry?" xml:space="preserve"><value>¿Adoptar estos campos de la entrada de catálogo del UAT?</value></data>
+  <data name="Take over catalog entry" xml:space="preserve"><value>Adoptar entrada de catálogo</value></data>
+  <data name="Catalog entry taken over from the UAT." xml:space="preserve"><value>Entrada de catálogo adoptada del UAT.</value></data>
+  <data name="The catalog proposal could not be taken over; it does not pass the catalog checks or was taken over already." xml:space="preserve"><value>No se pudo adoptar la propuesta de catálogo; no pasa las comprobaciones del catálogo o ya se adoptó.</value></data>
+  <data name="State on production updated." xml:space="preserve"><value>Estado en producción actualizado.</value></data>
+  <data name="Update state on production" xml:space="preserve"><value>Actualizar estado en producción</value></data>
+  <data name="On production" xml:space="preserve"><value>En producción</value></data>
+  <data name="Removed" xml:space="preserve"><value>Quitado</value></data>
 </root>

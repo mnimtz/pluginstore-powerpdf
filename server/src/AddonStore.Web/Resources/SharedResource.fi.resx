@@ -1605,4 +1605,15 @@
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>Neljän silmän periaate: lähetit tämän version UAT:hen; toinen tuotannon ylläpitäjä tai tarkastaja hyväksyy sen.</value></data>
   <data name="Manage UAT environments" xml:space="preserve"><value>Hallitse UAT-ympäristöjä</value></data>
   <data name="Change under Settings, Features" xml:space="preserve"><value>Muuta kohdassa Asetukset, Toiminnot</value></data>
+  <data name="Catalog entry proposed by the UAT" xml:space="preserve"><value>UAT:n ehdottama luettelomerkintä</value></data>
+  <data name="Field" xml:space="preserve"><value>Kenttä</value></data>
+  <data name="Production" xml:space="preserve"><value>Tuotanto</value></data>
+  <data name="Take over these fields of the UAT catalog entry?" xml:space="preserve"><value>Otetaanko nämä UAT:n luettelomerkinnän kentät käyttöön?</value></data>
+  <data name="Take over catalog entry" xml:space="preserve"><value>Ota luettelomerkintä käyttöön</value></data>
+  <data name="Catalog entry taken over from the UAT." xml:space="preserve"><value>Luettelomerkintä otettu käyttöön UAT:sta.</value></data>
+  <data name="The catalog proposal could not be taken over; it does not pass the catalog checks or was taken over already." xml:space="preserve"><value>Luetteloehdotusta ei voitu ottaa käyttöön; se ei läpäise luettelon tarkistuksia tai on jo otettu käyttöön.</value></data>
+  <data name="State on production updated." xml:space="preserve"><value>Tila tuotannossa päivitetty.</value></data>
+  <data name="Update state on production" xml:space="preserve"><value>Päivitä tila tuotannossa</value></data>
+  <data name="On production" xml:space="preserve"><value>Tuotannossa</value></data>
+  <data name="Removed" xml:space="preserve"><value>Poistettu</value></data>
 </root>

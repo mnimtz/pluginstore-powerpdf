@@ -1605,4 +1605,15 @@
   <data name="Four-eyes rule: you uploaded this version in the UAT; another admin or reviewer of production approves it." xml:space="preserve"><value>4 アイ ルール: このバージョンは UAT であなたがアップロードしました。本番環境の別の管理者または審査担当者が承認します。</value></data>
   <data name="Manage UAT environments" xml:space="preserve"><value>UAT 環境を管理</value></data>
   <data name="Change under Settings, Features" xml:space="preserve"><value>[設定] の [機能] で変更</value></data>
+  <data name="Catalog entry proposed by the UAT" xml:space="preserve"><value>UAT が提案したカタログ エントリ</value></data>
+  <data name="Field" xml:space="preserve"><value>フィールド</value></data>
+  <data name="Production" xml:space="preserve"><value>本番環境</value></data>
+  <data name="Take over these fields of the UAT catalog entry?" xml:space="preserve"><value>UAT のカタログ エントリのこれらのフィールドを引き継ぎますか?</value></data>
+  <data name="Take over catalog entry" xml:space="preserve"><value>カタログ エントリを引き継ぐ</value></data>
+  <data name="Catalog entry taken over from the UAT." xml:space="preserve"><value>UAT からカタログ エントリを引き継ぎました。</value></data>
+  <data name="The catalog proposal could not be taken over; it does not pass the catalog checks or was taken over already." xml:space="preserve"><value>カタログの提案を引き継げませんでした。カタログのチェックに合格しないか、すでに引き継がれています。</value></data>
+  <data name="State on production updated." xml:space="preserve"><value>本番環境の状態を更新しました。</value></data>
+  <data name="Update state on production" xml:space="preserve"><value>本番環境の状態を更新</value></data>
+  <data name="On production" xml:space="preserve"><value>本番環境</value></data>
+  <data name="Removed" xml:space="preserve"><value>削除済み</value></data>
 </root>
