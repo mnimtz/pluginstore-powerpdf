@@ -37,7 +37,10 @@ FP1_MODULES = {
 # package gets only the common files its project compiles plus their headers.
 FP2_COMMON = ['res', 'store/make_store_icons.py', 'store/make_store_layout.py', 'store/make_store_rc.py']
 FP2_MODULES = {'StampAssistant': ['stamp', 'third_party/tpui', 'third_party/webview2', 'printix/json.hpp'],   # 1.2.0: pages of the Plug-in UI
-               'PrintixSecurePrint': ['printix']}
+               # 1.2.0: windows on the Plug-in UI, ribbon icons, texts, setup code tool
+               'PrintixSecurePrint': ['printix', 'third_party/tpui', 'third_party/webview2', 'store/make_px_icons.py',
+                                      'tools/px_strings.py', 'tools/add_rc_strings.py', 'tools/px_setupcode.py',
+                                      'docs/concepts/printix-1.2.md', 'docs/concepts/printix-secureprint.md']}
 
 README = """Source code of {name} {version} ({id})
 
