@@ -15,9 +15,13 @@
 
   ProductVersion: build_msi.cmd derives it from common\version.h and passes it
   as -dFPVersion. Bump version.h on every release.
+
+  C1.9.13 (license audit): the MSI carries no WiX runtime parts any more. The dialogs are our
+  own (Ui.wxs, texts in l10n via ui_texts.py, banner.bmp), the quote page opens through
+  Windows' explorer.exe, and Windows Installer's Restart Manager offers to close Power PDF.
+  WiX 3.14 is only the compiler.
 -->
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
-     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Id="*"
            Name="Add-on Store for Tungsten Power PDF"
            Language="!(loc.ProductLanguage)"
@@ -153,12 +157,14 @@
          stops it): the same message plus "Request a quote", which opens Tungsten's quote
          page of the setup language in the browser only when clicked. Silent installs
          (/qn) have no UI sequence: they stop at the condition, no browser opens. -->
-    <Property Id="WixShellExecTarget" Value="!(loc.SaasQuoteUrl)" />
-    <CustomAction Id="OpenSaasQuote" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" Return="ignore" />
+    <!-- C1.9.13: Windows' own explorer.exe opens the page in the default browser (no custom action DLL) -->
+    <Property Id="SAASQUOTEURL" Value="!(loc.SaasQuoteUrl)" />
+    <CustomAction Id="OpenSaasQuote" Directory="WindowsFolder" ExeCommand="&quot;[WindowsFolder]explorer.exe&quot; &quot;[SAASQUOTEURL]&quot;"
+                  Impersonate="yes" Return="asyncNoWait" />
     <UI>
       <Dialog Id="SaasOnlyDlg" Width="370" Height="270" Title="[ProductName]">
-        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner" />
-        <Control Id="Title" Type="Text" X="15" Y="6" Width="290" Height="30" Transparent="yes" NoPrefix="yes" Text="{\WixUI_Font_Title}Power PDF Business SaaS" />
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}Power PDF Business SaaS" />
         <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
         <Control Id="Message" Type="Text" X="25" Y="62" Width="320" Height="60" NoPrefix="yes" Text="!(loc.PowerPdfSaasOnly)" />
         <Control Id="Hint" Type="Text" X="25" Y="128" Width="320" Height="60" NoPrefix="yes" Text="!(loc.SaasHint)" />
@@ -167,7 +173,7 @@
           <Publish Event="DoAction" Value="OpenSaasQuote" Order="1">1</Publish>
           <Publish Event="EndDialog" Value="Exit" Order="2">1</Publish>
         </Control>
-        <Control Id="Close" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.WixUICancel)">
+        <Control Id="Close" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.UiCancel)">
           <Publish Event="EndDialog" Value="Exit">1</Publish>
         </Control>
       </Dialog>
@@ -192,15 +198,12 @@
       <![CDATA[Installed OR NOT PPDFPRODUCT OR NOT PPDFSHORTVER OR PPDFPRODUCT >< "Business" OR NOT (PPDFPRODUCT >< "Standard" OR PPDFPRODUCT >< "Advanced") OR PPDFSHORTVER >= "26.4"]]>
     </Condition>
 
-    <!-- Power PDF must be closed: the .zxt is locked while it runs. -->
-    <util:CloseApplication Id="ClosePowerPDF"
-                           Target="PowerPDF.exe"
-                           CloseMessage="no"
-                           RebootPrompt="no"
-                           PromptToContinue="yes"
-                           Description="!(loc.ClosePowerPdf)" />
+    <!-- Power PDF must be closed: the .zxt is locked while it runs. C1.9.13: Windows Installer's
+         Restart Manager finds it and the dialog MsiRMFilesInUse (Ui.wxs) offers to close it; the
+         self-update waits until Power PDF has ended anyway. -->
 
     <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="WindowsFolder" />
       <!-- Fresh installs only (never on an upgrade): the client clears the
            shared "FeaturePack" tab once per user on its first start, so
            leftovers of plug-ins that are no longer installed disappear. -->
@@ -410,9 +413,9 @@
       <ComponentRef Id="cmpARA" />
     </Feature>
 
-    <UIRef Id="WixUI_Minimal" />
-    <!-- per language: build_msi.py passes -dWixUILicenseRtf=l10n\license-<culture>.rtf to light -->
-    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\installer\l10n\license-en-US.rtf" Overridable="yes" />
+    <UIRef Id="TpUI" />
+    <!-- per language: build_msi.py passes -dTpLicenseRtf=l10n\license-<culture>.rtf to light -->
+    <WixVariable Id="TpLicenseRtf" Value="$(var.ProjectDir)\installer\l10n\license-en-US.rtf" Overridable="yes" />
 
   </Product>
 </Wix>

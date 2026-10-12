@@ -7,6 +7,9 @@ It contains one third-party component:
   PluginStore.zxt), BSD-3-Clause, https://www.nuget.org/packages/Microsoft.Web.WebView2.
   The WebView2 runtime itself is part of Windows and is not shipped with the client.
 
+The installer (MSI) is built with the WiX Toolset 3.14; it contains no WiX runtime parts
+(no WiX dialogs, bitmaps, texts or custom action DLLs). Its dialogs, texts and banner are our own.
+
 ## BSD-3-Clause (Microsoft WebView2 SDK)
 
 Copyright (C) Microsoft Corporation. All rights reserved.

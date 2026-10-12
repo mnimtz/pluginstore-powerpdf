@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 """make_l10n.py - writes the localization files of the client MSI (C0.8.0).
 
-For each of the 16 store languages: l10n/<culture>.wxl (our own installer
-texts; WiX brings the standard dialogs in these cultures) and
+For each of the 21 store languages: l10n/<culture>.wxl (our own installer
+texts, including those of our own dialogs from ui_texts.py; C1.9.13) and
 l10n/license-<culture>.rtf (translated heading and note, then the MIT license
 in its English original, which stays authoritative).
 
     python installer/make_l10n.py
 """
 import os
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+from ui_texts import KEYS as UI_KEYS, UI as UI_TEXT   # noqa: E402  our own dialog texts (C1.9.13)
 OUT = os.path.join(HERE, 'l10n')
 
 # culture, LCID, codepage of the MSI tables for that language
@@ -298,6 +301,7 @@ def main():
                f'  <String Id="SaasQuoteUrl">{xml(quote_url(culture))}</String>\n'
                f'  <String Id="ClosePowerPdf">{xml(close)}</String>\n'
                f'  <String Id="Downgrade">{xml(downgrade)}</String>\n'
+               + ''.join(f'  <String Id="{k}">{xml(v)}</String>\n' for k, v in zip(UI_KEYS, UI_TEXT[culture])) +
                f'</WixLocalization>\n')
         with open(os.path.join(OUT, f'{culture}.wxl'), 'w', encoding='utf-8') as f:
             f.write(wxl)

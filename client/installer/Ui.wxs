@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Ui.wxs - the setup dialogs of the Add-on Store client (C1.9.13).
+
+  Our own dialogs, texts (l10n/<culture>.wxl via make_l10n.py and ui_texts.py) and banner
+  (banner.bmp, made by make_banner.py); nothing of WiX's dialog library (WixUI, MS-RL) is in
+  the MSI. WiX 3.14 only compiles. Same steps as before: welcome with the license, progress,
+  finish, cancel and error, repair or remove, programs in use (Windows Installer's Restart
+  Manager closes Power PDF on request), not enough disk space, and the SaaS hint.
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <Binary Id="TpBanner" SourceFile="$(var.ProjectDir)\installer\banner.bmp" />
+    <Property Id="ErrorDialog" Value="TpErrorDlg" />
+    <Property Id="DefaultUIFont" Value="TpNormal" />
+    <Property Id="TPRMOPTION" Value="UseRM" />
+
+    <UI Id="TpUI">
+      <TextStyle Id="TpNormal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="TpTitle" FaceName="Tahoma" Size="12" Bold="yes" Red="255" Green="255" Blue="255" />
+      <TextStyle Id="TpHeading" FaceName="Tahoma" Size="9" Bold="yes" />
+
+      <!-- welcome and license (fresh install and resume) -->
+      <Dialog Id="TpWelcomeDlg" Width="370" Height="270" Title="[ProductName]">
+        <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiWelcomeTitle)" />
+        <Control Id="Intro" Type="Text" X="20" Y="52" Width="330" Height="24" NoPrefix="yes" Text="!(loc.UiWelcomeText)" />
+        <Control Id="License" Type="ScrollableText" X="20" Y="80" Width="330" Height="122" Sunken="yes" TabSkip="no">
+          <Text SourceFile="!(wix.TpLicenseRtf)" />
+        </Control>
+        <Control Id="Accept" Type="CheckBox" X="20" Y="210" Width="330" Height="16" CheckBoxValue="1" Property="LICENSEACCEPTED" Text="!(loc.UiAccept)" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Install" Type="PushButton" X="236" Y="243" Width="60" Height="17" Default="yes" ElevationShield="yes" Text="!(loc.UiInstall)">
+          <Condition Action="disable"><![CDATA[LICENSEACCEPTED <> "1"]]></Condition>
+          <Condition Action="enable"><![CDATA[LICENSEACCEPTED = "1"]]></Condition>
+          <Publish Event="SpawnDialog" Value="TpOutOfDiskDlg" Order="1"><![CDATA[OutOfDiskSpace = 1]]></Publish>
+          <Publish Event="EndDialog" Value="Return" Order="2"><![CDATA[OutOfDiskSpace <> 1]]></Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.UiCancel)">
+          <Publish Event="SpawnDialog" Value="TpCancelDlg">1</Publish>
+        </Control>
+      </Dialog>
+
+      <!-- repair or remove (an installed version, Programs and Features: "Change") -->
+      <Dialog Id="TpMaintenanceDlg" Width="370" Height="270" Title="[ProductName]">
+        <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiMaintTitle)" />
+        <Control Id="Text" Type="Text" X="20" Y="60" Width="330" Height="40" NoPrefix="yes" Text="!(loc.UiMaintText)" />
+        <Control Id="Repair" Type="PushButton" X="20" Y="110" Width="100" Height="17" Default="yes" ElevationShield="yes" Text="!(loc.UiRepair)">
+          <Publish Property="REINSTALLMODE" Value="ecmus" Order="1">1</Publish>
+          <Publish Event="Reinstall" Value="All" Order="2">1</Publish>
+          <Publish Event="EndDialog" Value="Return" Order="3">1</Publish>
+        </Control>
+        <Control Id="Remove" Type="PushButton" X="20" Y="135" Width="100" Height="17" ElevationShield="yes" Text="!(loc.UiRemove)">
+          <Publish Event="Remove" Value="All" Order="1">1</Publish>
+          <Publish Event="EndDialog" Value="Return" Order="2">1</Publish>
+        </Control>
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.UiCancel)">
+          <Publish Event="SpawnDialog" Value="TpCancelDlg">1</Publish>
+        </Control>
+      </Dialog>
+
+      <!-- progress (modeless while the changes are made) -->
+      <Dialog Id="TpProgressDlg" Width="370" Height="270" Title="[ProductName]" Modeless="yes">
+        <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiProgressTitle)" />
+        <Control Id="Text" Type="Text" X="20" Y="60" Width="330" Height="20" NoPrefix="yes" Text="!(loc.UiProgressText)" />
+        <Control Id="ActionText" Type="Text" X="20" Y="90" Width="330" Height="12" NoPrefix="yes">
+          <Subscribe Event="ActionText" Attribute="Text" />
+        </Control>
+        <Control Id="Progress" Type="ProgressBar" X="20" Y="106" Width="330" Height="12" ProgressBlocks="yes" Text="Progress">
+          <Subscribe Event="SetProgress" Attribute="Progress" />
+        </Control>
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.UiCancel)">
+          <Publish Event="SpawnDialog" Value="TpCancelDlg">1</Publish>
+        </Control>
+      </Dialog>
+
+      <!-- the three ends of a setup -->
+      <Dialog Id="TpExitDlg" Width="370" Height="270" Title="[ProductName]">
+        <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiExitTitle)" />
+        <Control Id="Text" Type="Text" X="20" Y="60" Width="330" Height="40" NoPrefix="yes" Text="!(loc.UiExitText)" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Finish" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.UiFinish)">
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+      </Dialog>
+      <Dialog Id="TpUserExitDlg" Width="370" Height="270" Title="[ProductName]">
+        <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiUserExitTitle)" />
+        <Control Id="Text" Type="Text" X="20" Y="60" Width="330" Height="40" NoPrefix="yes" Text="!(loc.UiUserExitText)" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Finish" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.UiFinish)">
+          <Publish Event="EndDialog" Value="Exit">1</Publish>
+        </Control>
+      </Dialog>
+      <Dialog Id="TpFatalErrorDlg" Width="370" Height="270" Title="[ProductName]">
+        <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiFatalTitle)" />
+        <Control Id="Text" Type="Text" X="20" Y="60" Width="330" Height="40" NoPrefix="yes" Text="!(loc.UiFatalText)" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Finish" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.UiFinish)">
+          <Publish Event="EndDialog" Value="Exit">1</Publish>
+        </Control>
+      </Dialog>
+
+      <!-- small ones: cancel question, errors, programs in use, disk space -->
+      <Dialog Id="TpCancelDlg" Width="260" Height="85" Title="[ProductName]" NoMinimize="yes">
+        <Control Id="Text" Type="Text" X="15" Y="15" Width="230" Height="30" NoPrefix="yes" Text="!(loc.UiCancelText)" />
+        <Control Id="Yes" Type="PushButton" X="132" Y="57" Width="56" Height="17" Text="!(loc.UiYes)">
+          <Publish Event="EndDialog" Value="Exit">1</Publish>
+        </Control>
+        <Control Id="No" Type="PushButton" X="194" Y="57" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.UiNo)">
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+      </Dialog>
+      <Dialog Id="TpErrorDlg" Width="270" Height="105" Title="[ProductName]" ErrorDialog="yes">
+        <Control Id="ErrorText" Type="Text" X="15" Y="12" Width="240" Height="60" NoPrefix="yes" TabSkip="no" Text="." />
+        <Control Id="Y" Type="PushButton" X="80" Y="80" Width="56" Height="17" TabSkip="yes" Text="!(loc.UiYes)">
+          <Publish Event="EndDialog" Value="ErrorYes">1</Publish>
+        </Control>
+        <Control Id="A" Type="PushButton" X="80" Y="80" Width="56" Height="17" TabSkip="yes" Text="!(loc.UiAbort)">
+          <Publish Event="EndDialog" Value="ErrorAbort">1</Publish>
+        </Control>
+        <Control Id="C" Type="PushButton" X="80" Y="80" Width="56" Height="17" TabSkip="yes" Text="!(loc.UiCancel)">
+          <Publish Event="EndDialog" Value="ErrorCancel">1</Publish>
+        </Control>
+        <Control Id="I" Type="PushButton" X="80" Y="80" Width="56" Height="17" TabSkip="yes" Text="!(loc.UiIgnore)">
+          <Publish Event="EndDialog" Value="ErrorIgnore">1</Publish>
+        </Control>
+        <Control Id="N" Type="PushButton" X="80" Y="80" Width="56" Height="17" TabSkip="yes" Text="!(loc.UiNo)">
+          <Publish Event="EndDialog" Value="ErrorNo">1</Publish>
+        </Control>
+        <Control Id="O" Type="PushButton" X="80" Y="80" Width="56" Height="17" TabSkip="yes" Text="!(loc.UiOk)">
+          <Publish Event="EndDialog" Value="ErrorOk">1</Publish>
+        </Control>
+        <Control Id="R" Type="PushButton" X="80" Y="80" Width="56" Height="17" TabSkip="yes" Text="!(loc.UiRetry)">
+          <Publish Event="EndDialog" Value="ErrorRetry">1</Publish>
+        </Control>
+      </Dialog>
+      <Dialog Id="FilesInUse" Width="370" Height="270" Title="[ProductName]" KeepModeless="yes">
+        <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiInUseTitle)" />
+        <Control Id="Text" Type="Text" X="20" Y="55" Width="330" Height="20" NoPrefix="yes" Text="!(loc.ClosePowerPdf) !(loc.UiInUseText)" />
+        <Control Id="List" Type="ListBox" X="20" Y="80" Width="330" Height="140" Property="FileInUseProcess" Sunken="yes" TabSkip="yes" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Retry" Type="PushButton" X="172" Y="243" Width="60" Height="17" Default="yes" Text="!(loc.UiRetry)">
+          <Publish Event="EndDialog" Value="Retry">1</Publish>
+        </Control>
+        <Control Id="Ignore" Type="PushButton" X="238" Y="243" Width="60" Height="17" Text="!(loc.UiIgnore)">
+          <Publish Event="EndDialog" Value="Ignore">1</Publish>
+        </Control>
+        <Control Id="Exit" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.UiExit)">
+          <Publish Event="EndDialog" Value="Exit">1</Publish>
+        </Control>
+      </Dialog>
+      <!-- Windows Installer's Restart Manager: offers to close Power PDF (replaces WiX's CloseApplication) -->
+      <Dialog Id="MsiRMFilesInUse" Width="370" Height="270" Title="[ProductName]" KeepModeless="yes">
+        <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiInUseTitle)" />
+        <Control Id="Text" Type="Text" X="20" Y="55" Width="330" Height="20" NoPrefix="yes" Text="!(loc.ClosePowerPdf) !(loc.UiInUseText)" />
+        <Control Id="List" Type="ListBox" X="20" Y="80" Width="330" Height="100" Property="FileInUseProcess" Sunken="yes" TabSkip="yes" />
+        <Control Id="Options" Type="RadioButtonGroup" X="20" Y="188" Width="330" Height="40" Property="TPRMOPTION">
+          <RadioButtonGroup Property="TPRMOPTION">
+            <RadioButton Value="UseRM" X="0" Y="0" Width="330" Height="16" Text="!(loc.UiRmClose)" />
+            <RadioButton Value="DontUseRM" X="0" Y="20" Width="330" Height="16" Text="!(loc.UiRmKeep)" />
+          </RadioButtonGroup>
+        </Control>
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="OK" Type="PushButton" X="238" Y="243" Width="60" Height="17" Default="yes" Text="!(loc.UiOk)">
+          <Publish Event="EndDialog" Value="Return" Order="1">1</Publish>
+          <Publish Event="RMShutdownAndRestart" Value="0" Order="2"><![CDATA[TPRMOPTION ~= "UseRM"]]></Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.UiCancel)">
+          <Publish Event="EndDialog" Value="Exit">1</Publish>
+        </Control>
+      </Dialog>
+      <Dialog Id="TpOutOfDiskDlg" Width="300" Height="110" Title="[ProductName]">
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="270" Height="14" NoPrefix="yes" Text="{\TpHeading}!(loc.UiDiskTitle)" />
+        <Control Id="Text" Type="Text" X="15" Y="32" Width="270" Height="40" NoPrefix="yes" Text="!(loc.UiDiskText)" />
+        <Control Id="OK" Type="PushButton" X="229" Y="84" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.UiOk)">
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+      </Dialog>
+
+      <InstallUISequence>
+        <Show Dialog="TpWelcomeDlg" After="CostFinalize"><![CDATA[NOT Installed OR RESUME]]></Show>
+        <Show Dialog="TpMaintenanceDlg" After="TpWelcomeDlg"><![CDATA[Installed AND NOT RESUME AND NOT Preselected AND NOT PATCH]]></Show>
+        <Show Dialog="TpProgressDlg" Before="ExecuteAction" />
+        <Show Dialog="TpExitDlg" OnExit="success" />
+        <Show Dialog="TpUserExitDlg" OnExit="cancel" />
+        <Show Dialog="TpFatalErrorDlg" OnExit="error" />
+      </InstallUISequence>
+      <AdminUISequence>
+        <Show Dialog="TpProgressDlg" Before="ExecuteAction" />
+        <Show Dialog="TpExitDlg" OnExit="success" />
+        <Show Dialog="TpUserExitDlg" OnExit="cancel" />
+        <Show Dialog="TpFatalErrorDlg" OnExit="error" />
+      </AdminUISequence>
+    </UI>
+  </Fragment>
+</Wix>
