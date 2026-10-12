@@ -18,7 +18,9 @@ if (string.IsNullOrWhiteSpace(dataDir))
 Directory.CreateDirectory(dataDir);
 var connection = builder.Configuration.GetConnectionString("Default")
                  ?? $"Data Source={Path.Combine(dataDir, "pluginstore.db")}";
-builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(connection));
+// S1.25.2: page cache for the database on the data share (see SqliteCacheInterceptor)
+var sqliteCache = new SqliteCacheInterceptor(builder.Configuration.GetValue("Storage:SqliteCacheMb", 128));
+builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(connection).AddInterceptors(sqliteCache));
 // Keys for auth cookies and antiforgery tokens live in the persistent data
 // folder; in the container's default location they were lost on every restart,
 // which signed everybody out after each deployment.

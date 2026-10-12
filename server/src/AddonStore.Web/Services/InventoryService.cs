@@ -232,7 +232,7 @@ public class InventoryService
         var domains = await _db.CustomerDomains.AsNoTracking().ToDictionaryAsync(d => d.Domain);
         var cmp = new SemVerComparer();
         // newest version the store offers per add-on (live, else beta) and its display name
-        var versions = await _db.PackageVersions.AsNoTracking().Where(v => v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta).ToListAsync();
+        var versions = await _db.PackageVersions.AsNoTracking().Where(v => v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta).Select(PackageVersion.Light).ToListAsync();
         var pkgs = await _db.Packages.AsNoTracking().ToDictionaryAsync(p => p.Id);
         var newest = versions.GroupBy(v => v.PackageId).ToDictionary(g => g.Key, g =>
             g.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault() ?? g.OrderByDescending(v => v.Version, cmp).First());

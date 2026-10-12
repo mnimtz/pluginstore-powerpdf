@@ -192,7 +192,7 @@ public class CustomerService
     {
         return (await _db.PackageVersions.AsNoTracking()
                 .Where(v => v.PackageId == packageId && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta))
-                .ToListAsync())
+                .Select(PackageVersion.Light).ToListAsync())
             .OrderByDescending(v => v.Version, new SemVerComparer()).ToList();
     }
 
@@ -514,7 +514,7 @@ public class CustomerService
         var versions = await _db.PackageVersions.AsNoTracking()
             .Where(v => pkgIds.Contains(v.PackageId) && v.BlockedAt == null &&
                         (v.Status == VersionStatus.Submitted || v.Status == VersionStatus.Beta || v.Status == VersionStatus.Live))
-            .ToListAsync();
+            .Select(PackageVersion.Light).ToListAsync();
         var cmp = new SemVerComparer();
         var result = new List<TestGrant>();
         foreach (var p in pkgs)

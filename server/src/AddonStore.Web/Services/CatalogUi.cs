@@ -128,6 +128,7 @@ public static class CatalogUi
         var all = (await db.PackageVersions
             .Where(v => v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta))
             .Where(v => db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private"))
+            .Select(PackageVersion.Light)   // S1.25.2: without the large review columns
             .ToListAsync())
             .Where(v => binOk || !HasBin(v)).ToList();   // an older client gets the newest version it can install
         var cmp = new SemVerComparer();

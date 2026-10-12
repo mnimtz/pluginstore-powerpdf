@@ -313,6 +313,24 @@ public class PackageVersion
     public string? OriginUploader { get; set; }
     public string? OriginReviewJson { get; set; }
     public DateTime? OriginAt { get; set; }
+
+    /// <summary>S1.25.2: a version without its large review columns (validation and source reports, rules snapshot,
+    /// approval, AI review and its translations, UAT review excerpt) for the catalog and other lists. Loading
+    /// those for every version over the data share made each catalog build take 10 to 20 seconds. Untracked.</summary>
+    public static readonly System.Linq.Expressions.Expression<Func<PackageVersion, PackageVersion>> Light = v => new PackageVersion
+    {
+        Id = v.Id, PackageId = v.PackageId, Version = v.Version, Status = v.Status, Changelog = v.Changelog,
+        ManifestJson = v.ManifestJson, AtomNamespace = v.AtomNamespace, MinPowerPdfVersion = v.MinPowerPdfVersion,
+        FilePath = v.FilePath, Sha256 = v.Sha256, SizeBytes = v.SizeBytes,
+        SourcePath = v.SourcePath, SourceSizeBytes = v.SourceSizeBytes, SourceSha256 = v.SourceSha256,
+        SourceUploadedAt = v.SourceUploadedAt, SourceUploadedBy = v.SourceUploadedBy,
+        SubmittedAt = v.SubmittedAt, SubmittedBy = v.SubmittedBy, SubmittedById = v.SubmittedById, SubmittedVia = v.SubmittedVia,
+        ReviewedById = v.ReviewedById, ReviewedAt = v.ReviewedAt, ReviewComment = v.ReviewComment, Downloads = v.Downloads,
+        AiReviewAt = v.AiReviewAt, AiReviewModel = v.AiReviewModel, AiReviewLang = v.AiReviewLang,
+        BlockedAt = v.BlockedAt, BlockReason = v.BlockReason, BlockedBy = v.BlockedBy,
+        OriginChildId = v.OriginChildId, OriginUat = v.OriginUat, OriginNote = v.OriginNote,
+        OriginUploaderEmail = v.OriginUploaderEmail, OriginUploader = v.OriginUploader, OriginAt = v.OriginAt,
+    };
 }
 
 public class AuditEntry

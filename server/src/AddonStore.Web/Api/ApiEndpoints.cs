@@ -1393,7 +1393,10 @@ public static class ApiEndpoints
         api.MapGet("/categories", async (AppDbContext db, CategoryService categories) =>
         {
             var all = await categories.AllAsync();
-            var pkgs = await db.Packages.Include(p => p.Versions).Where(p => p.Visibility != "private").ToListAsync();
+            // S1.25.2: versions without their large review columns (was Include(p => p.Versions): every column of every version)
+            var pkgs = await db.Packages.AsNoTracking().Where(p => p.Visibility != "private").ToListAsync();
+            var light = (await db.PackageVersions.Select(PackageVersion.Light).ToListAsync()).ToLookup(v => v.PackageId);
+            foreach (var p in pkgs) p.Versions = light[p.Id].ToList();
             var used = pkgs.GroupBy(CategoryService.EffectiveSlug).ToDictionary(g => g.Key, g => g.Count());
             return Results.Json(new
             {
@@ -1899,6 +1902,7 @@ public static class ApiEndpoints
         if (signing is not null) await signing.EnsureLoadedAsync();
         var all = await db.PackageVersions
             .Where(v => v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta))
+            .Select(PackageVersion.Light)   // S1.25.2: without the large review columns
             .ToListAsync();
         var cmp = new SemVerComparer();
         var result = new List<object>();

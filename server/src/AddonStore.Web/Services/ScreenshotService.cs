@@ -23,7 +23,7 @@ public static class ScreenshotService
     {
         var cmp = new SemVerComparer();
         var versions = await db.PackageVersions.AsNoTracking()
-            .Where(v => v.PackageId == packageId && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)).ToListAsync();
+            .Where(v => v.PackageId == packageId && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)).Select(PackageVersion.Light).ToListAsync();
         return versions.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault()
                ?? versions.OrderByDescending(v => v.Version, cmp).FirstOrDefault();
     }

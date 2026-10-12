@@ -503,6 +503,14 @@ taken again; a bundle that fails the checks is logged (`client.bundle.failed`)
 and not tried again until the next start. An empty `ClientBundle__Path` switches
 the import off (local development and tests).
 
+**Database speed on the data share (S1.25.2):** the SQLite database lives on the
+Azure Files share (/data). SQLite's page cache is raised from 2 MB to 128 MB
+(`Storage__SqliteCacheMb`, 0 = SQLite's default; shared by all connections of
+the process, no memory mapping), and catalog and list queries leave out the large
+review columns of each version (validation and source reports, rules snapshot,
+AI review and its translations). Before, every catalog build read hundreds of MB
+from the share again and took 10 to 20 seconds once the data had grown.
+
 **Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
 wide screen) with numbered pages under the grid (1 2 3, on long lists
 1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again

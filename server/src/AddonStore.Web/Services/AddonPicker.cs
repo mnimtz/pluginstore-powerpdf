@@ -31,7 +31,7 @@ public static class AddonPicker
         var versions = (await db.PackageVersions.AsNoTracking()
                 .Where(v => v.PackageId != SubmissionService.ClientPackageId &&
                             (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta || v.Status == VersionStatus.Submitted))
-                .ToListAsync())
+                .Select(PackageVersion.Light).ToListAsync())
             .GroupBy(v => v.PackageId).ToDictionary(g => g.Key, g => g.OrderByDescending(v => v.Version, new SemVerComparer()).ToList());
         var known = await db.Categories.AsNoTracking().ToDictionaryAsync(c => c.Slug);
         var items = new List<Item>();
