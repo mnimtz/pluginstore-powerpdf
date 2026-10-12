@@ -1,0 +1,34 @@
+name: Prune GHCR images
+
+# Manual start only (Actions > Prune GHCR images > Run workflow). Deleting is final:
+# start with dry_run = true, check the list, then run again with dry_run = false.
+on:
+  workflow_dispatch:
+    inputs:
+      keep:
+        description: Number of server releases (S<version> tags) to keep
+        default: '15'
+        required: true
+      dry_run:
+        description: List only, delete nothing (true/false)
+        default: 'true'
+        required: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Prune old container versions
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          PACKAGE: ${{ github.event.repository.name }}
+          KEEP: ${{ inputs.keep }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: python3 tools/ghcr_prune.py
