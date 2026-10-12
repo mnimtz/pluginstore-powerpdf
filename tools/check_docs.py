@@ -107,3 +107,14 @@ if undocumented:
     print('OpenAPI document (Api/OpenApiDoc.cs) is missing these routes:', ', '.join(undocumented))
     sys.exit(1)
 print(f'OK: all {len(routes)} API routes are described in the OpenAPI document.')
+
+# Third-party notices in the image (S1.25.0): every package the server references, at its version
+with open(os.path.join(ROOT, 'AddonStore.Web.csproj'), encoding='utf-8') as f:
+    refs = re.findall(r'<PackageReference Include="([^"]+)" Version="([^"]+)"', f.read())
+with open(os.path.join(os.path.dirname(os.path.dirname(ROOT)), 'THIRD-PARTY-NOTICES.md'), encoding='utf-8') as f:
+    notices = f.read()
+stale = [f'{n} {v}' for n, v in refs if f'### {n} {v}\n' not in notices]
+if stale:
+    print('server/THIRD-PARTY-NOTICES.md misses these packages (run python tools/gen_third_party_notices.py):', ', '.join(stale))
+    sys.exit(1)
+print(f'OK: all {len(refs)} package references are in the third-party notices.')
