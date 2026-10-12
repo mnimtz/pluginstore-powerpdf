@@ -1633,4 +1633,5 @@
   <data name="Hand template to production" xml:space="preserve"><value>Siirrä malli tuotantoon</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>Viimeksi siirretty {0}</value></data>
   <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>Vain kolmannen osapuolen komponentteja, joiden lisenssi on MIT, BSD, Apache-2.0 tai CC0-1.0.</value></data>
+  <data name="LICENSES.md reproduces each component with its copyright and full license text, including code a library contains from others; check the built package yourself before the upload." xml:space="preserve"><value>LICENSES.md esittää jokaisen komponentin tekijänoikeuksineen ja koko lisenssiteksteineen, myös kirjaston sisältämän muiden koodin; tarkista koottu paketti itse ennen lähetystä.</value></data>
 </root>

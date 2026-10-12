@@ -1633,4 +1633,5 @@
   <data name="Hand template to production" xml:space="preserve"><value>템플릿을 프로덕션에 넘기기</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>마지막으로 넘김 {0}</value></data>
   <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>타사 구성 요소는 MIT, BSD, Apache-2.0 또는 CC0-1.0 라이선스만 허용.</value></data>
+  <data name="LICENSES.md reproduces each component with its copyright and full license text, including code a library contains from others; check the built package yourself before the upload." xml:space="preserve"><value>LICENSES.md에는 라이브러리에 포함된 다른 사람의 코드를 포함하여 각 구성 요소의 저작권과 전체 라이선스 텍스트를 싣습니다. 업로드 전에 빌드한 패키지를 직접 확인하세요.</value></data>
 </root>

@@ -1633,4 +1633,5 @@
   <data name="Hand template to production" xml:space="preserve"><value>Şablonu üretime aktar</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>Son aktarım {0}</value></data>
   <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>Yalnızca MIT, BSD, Apache-2.0 veya CC0-1.0 lisanslı üçüncü taraf bileşenler.</value></data>
+  <data name="LICENSES.md reproduces each component with its copyright and full license text, including code a library contains from others; check the built package yourself before the upload." xml:space="preserve"><value>LICENSES.md her bileşeni telif hakkı ve tam lisans metniyle verir; bir kitaplığın içerdiği başkalarına ait kod da buna dahildir. Yüklemeden önce oluşturulan paketi kendiniz kontrol edin.</value></data>
 </root>

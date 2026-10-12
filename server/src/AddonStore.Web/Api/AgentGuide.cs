@@ -290,8 +290,21 @@ item passes because a similar plugin passed.
       Watermark, ... see RESERVED_NAME), and not used by another store
       package (checked online). (ZXT_NAME_INVALID, RESERVED_NAME, ZXT_NAME_TAKEN)
 - [ ] No GPL/AGPL code or license texts anywhere; third-party code only under
-      MIT, BSD or Apache-2.0. (LICENSE_NOT_ALLOWED, LICENSE_COPYLEFT_BINARY,
+      MIT, BSD, Apache-2.0 or CC0-1.0. (LICENSE_NOT_ALLOWED, LICENSE_COPYLEFT_BINARY,
       LICENSE_COPYLEFT_SOURCE)
+- [ ] LICENSES.md reproduces, for every `thirdParty` entry, its copyright notice
+      and its full license text (a table row or a link is not enough), including
+      code a library contains from other authors (nlohmann/json: Google Abseil
+      excerpt under Apache-2.0, Hoehrmann and Loitsch under MIT, Hedley under
+      CC0; ZXing-C++: libzueci under BSD-3-Clause). (LICENSE_TEXT_MISSING,
+      NOTICE_INCOMPLETE)
+- [ ] Build tools count when they put their own parts into the package:
+      no WiX dialogs, WiX custom action DLL or WiX bootstrapper (MS-RL) in an
+      MSI or EXE; a compiler alone is fine. (LICENSE_NOT_ALLOWED)
+- [ ] Before the upload, open the built package and the source ZIP and check
+      LICENSES.md and `thirdParty` against what is really inside (binaries,
+      fonts, icons, images, documents). The store's checks and a review do not
+      replace this check of the submitter.
 - [ ] No credentials, API keys, private keys or key containers (.pfx, .p12,
       .pem, .snk) in the package or the source. (SECRET_DETECTED, SOURCE_SECRET)
 - [ ] Each .zxt at most 120 MB unpacked. (ENTRY_TOO_LARGE, ENTRY_NOT_SCANNED)
@@ -494,6 +507,39 @@ below) and does not rely on the statement alone.
    reviewer. Copyleft licenses (GPL, AGPL, LGPL, MPL, EPL, CC-BY-SA, ...)
    fail the check (`LICENSE_NOT_ALLOWED`). Put the full license texts of all
    components in `LICENSES.md`.
+
+   **Code inside libraries** (S1.25.0). A library can contain code of other
+   authors; each part is declared in `thirdParty` and reproduced in
+   LICENSES.md with its copyright and license text. Known cases:
+   - nlohmann/json 3.x (`json.hpp`): the MIT code of Niels Lohmann, a UTF-8
+     decoder by Bjoern Hoehrmann (MIT), Grisu2 by Florian Loitsch (MIT), Hedley
+     by Evan Nemerson (CC0-1.0) and an unchanged excerpt of Google Abseil
+     (`absl/utility/utility.h`, Apache-2.0, no NOTICE file). Declare at least
+     `{"name": "Google Abseil excerpt in nlohmann/json", "license": "Apache-2.0"}`
+     next to nlohmann/json and include the Apache-2.0 text.
+   - ZXing-C++ 2.x: Apache-2.0 plus its bundled libzueci (BSD-3-Clause,
+     Copyright (C) 2022 gitlost), which contains Hoehrmann's MIT decoder.
+   The server refuses a package when it finds these libraries and the texts
+   are missing (`NOTICE_INCOMPLETE`), and when a declared license has no full
+   text in LICENSES.md or another license file of the package
+   (`LICENSE_TEXT_MISSING`).
+
+   **Tools and assets.** Whatever a build tool puts into the package counts as
+   shipped: installer dialogs and custom action DLLs (WiX: MS-RL, refused),
+   bootstrappers, static runtimes, generated runtime parts. Icons, images,
+   fonts and sounds are your own work or under an allowed license and named in
+   LICENSES.md; a font file needs a license that allows embedding and
+   redistribution (SIL OFL-1.1 and other font licenses go to the reviewer,
+   `FONT_LICENSE_REVIEW`). The source ZIP holds no documents of others that may
+   not be passed on (standards, specifications, schemas, sample files, data
+   sets): leave them out and name where to get them (`SOURCE_FOREIGN_DOCUMENT`).
+   Every `thirdParty` entry appears in LICENSES.md and every component
+   LICENSES.md names is declared (`THIRDPARTY_NOT_IN_LICENSES`).
+
+   **Your check before the upload** is part of the submission: open the built
+   package and the source ZIP and compare LICENSES.md and `thirdParty` with
+   what is really inside. A passing check or an approval in the store does not
+   replace it.
 3. **If you find a problem you cannot fix** (a disallowed license, an asset
    without a license, a secret): declare it, tell the user, propose a fix, and
    do not upload a package that hides it.
@@ -511,7 +557,11 @@ What the server verifies independently:
   (.pfx/.p12/.key/.snk);
 - it lists the URLs compiled into the binaries and compares their hosts with
   `externalServices`;
-- it checks names and descriptions for third-party brand names.
+- it checks names and descriptions for third-party brand names;
+- it requires the full license text of each declared component and the code
+  contained in nlohmann/json and ZXing-C++ in LICENSES.md (S1.25.0), refuses
+  WiX runtime parts in an installer, and flags fonts and documents of others in
+  the source ZIP for the reviewer.
 
 ## Categories (mandatory)
 
@@ -1629,7 +1679,11 @@ be free of warnings before review. Info is for information only.
 | EXTERNAL_SERVICES_MISSING | error | `complianceAudit.externalServices` is missing (use [] when offline). |
 | THIRDPARTY_DECLARATION_MISSING | error | `thirdParty` is missing (use [] when there is none). |
 | THIRDPARTY_INVALID | error | `thirdParty` is not an array of {name, license} objects. |
-| LICENSE_NOT_ALLOWED | error | A declared component has a copyleft license. |
+| LICENSE_NOT_ALLOWED | error | A declared component has a copyleft license, or an installer contains WiX runtime parts (MS-RL). |
+| LICENSE_TEXT_MISSING | error | LICENSES.md has no full license text for a declared component. |
+| NOTICE_INCOMPLETE | error | nlohmann/json or ZXing-C++ is compiled in, but LICENSES.md misses code they contain (Abseil, Hoehrmann, Loitsch, Hedley; libzueci). |
+| THIRDPARTY_NOT_IN_LICENSES | warning | A thirdParty entry is not named in LICENSES.md. |
+| FONT_LICENSE_REVIEW | warning | The package ships font files; their license is checked by the reviewer. |
 | LICENSE_NEEDS_REVIEW | warning | A declared component has a permissive license outside MIT/BSD/Apache-2.0/CC0-1.0. |
 | LICENSE_COPYLEFT_BINARY | error | GPL/AGPL code or license text found in the package. |
 | LICENSE_WEAK_COPYLEFT_BINARY | warning | LGPL or restricted-license code found in the package. |
@@ -1701,6 +1755,7 @@ be free of warnings before review. Info is for information only.
 | LICENSE_COPYLEFT_SOURCE | error | GPL/AGPL code or license files in the source. |
 | LICENSE_WEAK_COPYLEFT_SOURCE | warning | LGPL/MPL/EPL code in the source. |
 | SOURCE_BUILD_OUTPUT | warning | Build output or binaries in the source ZIP. |
+| SOURCE_FOREIGN_DOCUMENT | warning | The source ZIP contains documents of others with a copyright notice (standards, schemas, data). |
 | SOURCE_SDK_INCLUDED | warning | Power PDF Plugin SDK headers in the source ZIP. |
 | SOURCE_NO_CODE | warning (error at submission under the policy "required") | No C, C++ or C# files in the source ZIP. |
 | THIRDPARTY_SOURCE_DETECTED | info | Folders with third-party license files (MIT/BSD/Apache). |

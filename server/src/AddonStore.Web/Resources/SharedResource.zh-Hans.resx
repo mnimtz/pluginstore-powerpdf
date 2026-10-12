@@ -1633,4 +1633,5 @@
   <data name="Hand template to production" xml:space="preserve"><value>将模板移交给生产环境</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>上次移交 {0}</value></data>
   <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>仅限采用 MIT、BSD、Apache-2.0 或 CC0-1.0 许可的第三方组件。</value></data>
+  <data name="LICENSES.md reproduces each component with its copyright and full license text, including code a library contains from others; check the built package yourself before the upload." xml:space="preserve"><value>LICENSES.md 会列出每个组件的版权和完整许可证文本，包括库中所含他人的代码；上传前请自行检查构建好的程序包。</value></data>
 </root>

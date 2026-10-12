@@ -1236,6 +1236,21 @@ public class PackageValidator
     // Standing team policy: shipped plugins contain only MIT / BSD / Apache-2.0
     // third-party code, and CC0-1.0 (public domain dedication, S1.24.1: e.g. Hedley inside
     // nlohmann/json). Other permissive licenses go to the reviewer; copyleft fails.
+    // S1.25.0: a phrase every full text of these licenses contains (LICENSE_TEXT_MISSING)
+    private static readonly Dictionary<string, string> LicenseTextMarkers = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["MIT"] = "Permission is hereby granted",
+        ["BSD-2-Clause"] = "Redistribution and use in source and binary forms",
+        ["BSD-3-Clause"] = "Redistribution and use in source and binary forms",
+        ["0BSD"] = "Permission to use, copy, modify, and/or distribute",
+        ["ISC"] = "Permission to use, copy, modify, and/or distribute",
+        ["Apache-2.0"] = "TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION",
+        ["Zlib"] = "This software is provided 'as-is'",
+        ["BSL-1.0"] = "Boost Software License",
+        ["CC0-1.0"] = "CC0",
+    };
+    private static readonly string[] WixMarkers = { "WixCA", "wixca", "WixUI_", "WixShellExec", "WixStdBA", "WixBundle" };
+
     private static readonly HashSet<string> AllowedLicenses = new(StringComparer.OrdinalIgnoreCase)
     {
         "MIT", "BSD-2-Clause", "BSD-3-Clause", "0BSD", "Apache-2.0", "CC0-1.0"
@@ -1263,6 +1278,7 @@ public class PackageValidator
         ("curl",          LibKind.Permissive, new[] { "libcurl/" }, new[] { "curl" }),
         ("SQLite",        LibKind.Permissive, new[] { "SQLite format 3" }, new[] { "sqlite" }),
         ("nlohmann/json", LibKind.Permissive, new[] { "[json.exception." }, new[] { "nlohmann", "json for modern c++" }),
+        ("ZXing-C++",     LibKind.Permissive, new[] { "ZXing" }, new[] { "zxing" }),   // S1.25.0
         ("FreeType",      LibKind.Permissive, new[] { "FreeType" }, new[] { "freetype" }),
         ("libtiff",       LibKind.Permissive, new[] { "LIBTIFF, Version" }, new[] { "libtiff" }),
         ("OpenJPEG",      LibKind.Permissive, new[] { "OpenJPEG" }, new[] { "openjpeg" }),
@@ -1287,6 +1303,7 @@ public class PackageValidator
     private void CheckThirdParty(ValidationReport report, ZipArchive zip, JsonElement root)
     {
         var declared = new List<string>();
+        var declaredLicenses = new List<(string Name, string License)>();   // S1.25.0: full texts in LICENSES.md
         var declaredHosts = new List<string>();
         if (!root.TryGetProperty("complianceAudit", out var audit) || audit.ValueKind != JsonValueKind.Object
             || !audit.TryGetProperty("confirmed", out var conf) || conf.ValueKind != JsonValueKind.True
@@ -1353,6 +1370,7 @@ public class PackageValidator
                     continue;
                 }
                 declared.Add(name);
+                declaredLicenses.Add((name, license));
                 var parts = license.Split(new[] { " OR ", " or " }, StringSplitOptions.TrimEntries);
                 if (parts.Any(p => AllowedLicenses.Contains(p)))
                     continue;
@@ -1385,11 +1403,24 @@ public class PackageValidator
 
         var secrets = new SortedSet<string>();
         var hosts = new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
+        var wixParts = new SortedSet<string>();   // S1.25.0: WiX runtime parts (MS-RL) in an MSI or a bootstrapper
+        var zueci = false;                        // libzueci (BSD-3-Clause) compiled into ZXing-C++
+        var fonts = new SortedSet<string>();
 
         foreach (var entry in zip.Entries)
         {
             if (entry.FullName.EndsWith('/')) continue;
             var ext = Path.GetExtension(entry.Name).ToLowerInvariant();
+            if (ext is ".ttf" or ".otf" or ".woff" or ".woff2" or ".ttc") fonts.Add(entry.FullName);
+            if (ext is ".msi" or ".msm" or ".msp" or ".exe")
+            {
+                // an installer framework's dialogs and custom action DLLs ship with the package (S1.25.0)
+                var inst = ReadCapped(entry, MaxZxtBytes);
+                if (inst is not null)
+                    foreach (var marker in WixMarkers)
+                        if (Contains(inst, marker)) { wixParts.Add($"{entry.FullName} ({marker})"); break; }
+                if (ext != ".exe") continue;
+            }
             if (ext is ".pfx" or ".p12" or ".key" or ".snk")
             {
                 secrets.Add($"{entry.FullName} (key or certificate container)");
@@ -1465,7 +1496,62 @@ public class PackageValidator
             foreach (var lib in KnownLibraries)
                 if (lib.Signatures.Any(s => Contains(bytes, s)))
                     Hit(lib.Name, lib.Kind, lib.Aliases, entry.FullName);
+            if (Contains(bytes, "zueci")) zueci = true;
         }
+
+        // S1.25.0 (license audit): code a library contains from other authors, full license texts,
+        // installer framework parts, fonts and the LICENSES.md list
+        // LICENSES.md and every license or notice file of the package (e.g. docs/ZXing-LICENSE.txt)
+        var noticeText = new System.Text.StringBuilder(licensesText);
+        foreach (var le in zip.Entries)
+        {
+            var ln = le.Name.ToLowerInvariant();
+            if (le.FullName.Equals("LICENSES.md", StringComparison.OrdinalIgnoreCase) || !(ln.Contains("license") || ln.Contains("notice") || ln.StartsWith("copying")))
+                continue;
+            var lb = ReadCapped(le, MaxTextEntryBytes);
+            if (lb is not null) noticeText.Append('\n').Append(System.Text.Encoding.UTF8.GetString(lb));
+        }
+        var notices = noticeText.ToString();
+        bool Lic(string s) => notices.Contains(s, StringComparison.OrdinalIgnoreCase);
+        if (hits.ContainsKey("nlohmann/json"))
+        {
+            var miss = new List<string>();
+            if (!Lic("Niels Lohmann") || !Lic("Permission is hereby granted")) miss.Add("nlohmann/json itself (Niels Lohmann, MIT text)");
+            if (!Lic("Abseil") || !Lic("TERMS AND CONDITIONS")) miss.Add("the excerpt of Google Abseil (absl/utility/utility.h) with the Apache-2.0 text");
+            if (!Lic("Hoehrmann") || !Lic("Loitsch")) miss.Add("the MIT code of Bjoern Hoehrmann and Florian Loitsch");
+            if (!Lic("Hedley")) miss.Add("Hedley (CC0-1.0)");
+            if (miss.Count > 0)
+                report.Error("NOTICE_INCOMPLETE", "nlohmann/json is compiled in, and LICENSES.md misses code it contains: " + string.Join("; ", miss) + ".",
+                    "json.hpp contains code by other authors. Reproduce each in LICENSES.md with its copyright and license text and declare the Abseil excerpt in thirdParty: {\"name\": \"Google Abseil excerpt in nlohmann/json\", \"license\": \"Apache-2.0\"}. A ready text block: agent guide, section \"Code inside libraries\".");
+        }
+        if (hits.ContainsKey("ZXing-C++"))
+        {
+            var miss = new List<string>();
+            if (!Lic("TERMS AND CONDITIONS")) miss.Add("the Apache-2.0 text of ZXing-C++");
+            if (zueci && !Lic("gitlost")) miss.Add("libzueci (BSD-3-Clause, Copyright gitlost) that ZXing-C++ compiles in");
+            if (miss.Count > 0)
+                report.Error("NOTICE_INCOMPLETE", "ZXing-C++ is compiled in, and LICENSES.md misses: " + string.Join("; ", miss) + ".",
+                    "Reproduce the Apache-2.0 text of ZXing-C++ and, when its bundled libzueci is built in (ZXing-C++ 2.x), the BSD-3-Clause text with \"Copyright (C) 2022 gitlost\"; declare libzueci in thirdParty.");
+        }
+        foreach (var (name, license) in declaredLicenses)
+        {
+            // each declared license comes with its full text (a table row or a link is not enough)
+            var parts = license.Split(new[] { " OR ", " or ", " AND ", " and " }, StringSplitOptions.TrimEntries);
+            var known = parts.Select(p => LicenseTextMarkers.TryGetValue(p, out var m) ? m : null).Where(m => m is not null).ToList();
+            if (known.Count > 0 && !known.Any(m => Lic(m!)))
+                report.Error("LICENSE_TEXT_MISSING", $"LICENSES.md has no full {license} text for '{name}'.",
+                    $"Reproduce the full license text of each component with its copyright notice in LICENSES.md (for {license} it contains \"{known[0]}\"); naming the license or linking to it is not enough.");
+            var key = Regex.Replace(name, @"\s*\(.*\)\s*$", "").Trim();
+            if (key.Length > 0 && !Lic(key) && !Lic(name))
+                report.Warn("THIRDPARTY_NOT_IN_LICENSES", $"'{name}' is declared in thirdParty but not named in LICENSES.md.",
+                    "Every thirdParty entry appears in LICENSES.md with its copyright and license text, and every component LICENSES.md names is declared in thirdParty.");
+        }
+        if (wixParts.Count > 0)
+            report.Error("LICENSE_NOT_ALLOWED", $"The installer contains WiX runtime parts (Microsoft Reciprocal License, MS-RL): {string.Join("; ", wixParts.Take(5))}.",
+                "Build tools count when they put their own parts into the package: WiX dialogs (WixUI), its custom action DLL (wixca) and bootstrapper parts are MS-RL. Use own dialogs and texts and Windows Installer's built-in actions; WiX as a compiler alone is fine.");
+        if (fonts.Count > 0)
+            report.Warn("FONT_LICENSE_REVIEW", $"The package ships font files: {string.Join(", ", fonts.Take(5))}.",
+                "Ship only fonts whose license allows embedding and redistribution, declare each in thirdParty and LICENSES.md; SIL OFL-1.1 and other font licenses go to the reviewer. Prefer fonts that are part of Windows.");
 
         foreach (var (name, h) in hits)
         {

@@ -180,6 +180,7 @@ public class SourceService
             var weak = new SortedSet<string>();
             var thirdParty = new SortedSet<string>();
             var tlsOff = new SortedSet<string>();
+            var foreignDocs = new SortedSet<string>();   // S1.25.0: standards, schemas, data with a copyright notice
             var hasCode = false;
 
             foreach (var e in entries)
@@ -193,6 +194,21 @@ public class SourceService
                 if (BuildOutputDirs.Any(lower.Contains) || BuildOutputExtensions.Contains(ext)) buildOutput.Add(e.FullName);
                 if (SdkHeaders.Contains(name)) sdk.Add(e.FullName);
                 if (ext is ".pfx" or ".p12" or ".key" or ".snk") { secrets.Add($"{e.FullName} (key or certificate container)"); continue; }
+
+                // S1.25.0 (license audit): documents of others (standards, specifications, schemas, sample files,
+                // data sets) may only be included when their license allows passing them on
+                if (ext is ".xsd" or ".sch" or ".xsl" or ".xslt" or ".yaml" or ".yml" or ".pdf" or ".icc" or ".icm" && e.Length <= MaxScannedFileBytes)
+                {
+                    try
+                    {
+                        using var ds = e.Open();
+                        using var ms = new MemoryStream();
+                        ds.CopyTo(ms);
+                        var db = ms.ToArray();
+                        if (db.AsSpan().IndexOf("Copyright"u8) >= 0 || db.AsSpan().IndexOf("©"u8) >= 0) foreignDocs.Add(e.FullName);
+                    }
+                    catch { }
+                }
 
                 // LICENSES.md is the package's own component list, not a license text.
                 var isLicense = (name.StartsWith("license") && !name.StartsWith("licenses.")) || name.StartsWith("copying") || name.StartsWith("notice");
@@ -258,6 +274,9 @@ public class SourceService
             if (weak.Count > 0)
                 report.Warn("LICENSE_WEAK_COPYLEFT_SOURCE", $"LGPL/MPL/EPL code in the source: {string.Join("; ", weak.Take(10))}.",
                     "These licenses need a legal review and usually cannot ship. Prefer an MIT/BSD/Apache-2.0 alternative.");
+            if (foreignDocs.Count > 0)
+                report.Warn("SOURCE_FOREIGN_DOCUMENT", $"The source ZIP contains documents with a copyright notice: {string.Join("; ", foreignDocs.Take(10))}.",
+                    "Include standards, specifications, schemas, sample files and data sets of others only when their license allows passing them on; otherwise leave them out and say in a README where to get them. Your own documents are fine; the reviewer checks.");
             if (thirdParty.Count > 0)
                 report.Info("THIRDPARTY_SOURCE_DETECTED", $"Third-party code folders: {string.Join("; ", thirdParty.Take(15))}.");
             if (buildOutput.Count > 0)

@@ -1633,4 +1633,5 @@
   <data name="Hand template to production" xml:space="preserve"><value>تسليم القالب إلى الإنتاج</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>آخر تسليم {0}</value></data>
   <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>مكونات الجهات الخارجية بموجب MIT أو BSD أو Apache-2.0 أو CC0-1.0 فقط.</value></data>
+  <data name="LICENSES.md reproduces each component with its copyright and full license text, including code a library contains from others; check the built package yourself before the upload." xml:space="preserve"><value>يعرض LICENSES.md كل مكوّن مع حقوق النشر والنص الكامل لترخيصه، بما في ذلك تعليمات برمجية لآخرين تتضمنها مكتبة ما؛ تحقق بنفسك من الحزمة المبنية قبل الرفع.</value></data>
 </root>
