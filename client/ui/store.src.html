@@ -62,6 +62,10 @@ header.tp-head{padding:12px 18px}
 .p-cust{background:var(--tp-info-bg);color:var(--tp-navy);max-width:180px;overflow:hidden;text-overflow:ellipsis}
 .reason{font-size:12px;color:var(--tp-navy);margin-top:2px;white-space:normal}
 .btn.sm{padding:5px 12px;font-size:12px}
+.split{display:inline-flex;flex:none}
+.split>.btn:first-child{border-start-end-radius:0;border-end-end-radius:0}
+.split>.caret{border-start-start-radius:0;border-end-start-radius:0;padding-inline:7px;margin-inline-start:1px}
+.split>.pop{min-width:170px}
 .btn:disabled{opacity:.55}
 .detail{overflow-y:auto;padding:18px 20px}
 .dhead{display:flex;gap:14px;align-items:center}
@@ -281,7 +285,7 @@ function pill(x) {
   if (x.orphan) return el("span", "pill p-upd", S.orphanPill);   // installed, no longer offered (C1.4.1)
   var s = status(x);
   if (s === "inst") return el("span", "pill p-inst", S.stInstalled);
-  if (s === "upd") return el("span", "pill p-upd", S.stUpdate);
+  if (s === "upd") { var pu = el("span", "pill p-upd", S.stUpdate); if (x.needsHost) pu.title = fmt(S.needsHost, x.needsHost); return pu; }
   if (x.channel === "beta") return el("span", "pill p-beta", S.beta);
   return null;
 }
@@ -295,14 +299,56 @@ function actionButtons(x, small) {
   if (locked) return out;
   function b(label, cls, fn) { var e = el("button", "btn" + (cls ? " " + cls : "") + (small ? " sm" : ""), label); e.disabled = busy; e.onclick = function (ev) { ev.stopPropagation(); fn(); }; out.push(e); }
   if (x.needsHost) {
-    // needs a newer Power PDF: no install or update offered, only the reason
-    out.push(el("span", "chip" + (small ? " sm" : ""), fmt(S.needsHost, x.needsHost)));
+    // needs a newer Power PDF: no install or update offered, only the reason; in the list an installed
+    // add-on shows its Remove button instead, the reason is on its pill and in the details (C1.9.14)
+    if (!(small && s === "upd")) out.push(el("span", "chip" + (small ? " sm" : ""), fmt(S.needsHost, x.needsHost)));
   } else {
     if (s === "none") b(S.install, "", function () { confirmAct("install", x); });
+    // C1.9.14 (customer feedback): an update in the list keeps "Remove" reachable, as a split button
+    if (s === "upd" && small) { out.push(splitButton(x)); return out; }
     if (s === "upd") b(S.update, "", function () { confirmAct("install", x); });
   }
-  if (s === "inst" || (s === "upd" && !small)) b(S.remove, "sec", function () { confirmAct("uninstall", x); });
+  if (s === "inst" || s === "upd") b(S.remove, "sec", function () { confirmAct("uninstall", x); });
   return out;
+}
+// Split button (C1.9.14): "Update" as the main action, the arrow opens a menu with Update and Remove.
+// Keyboard: Enter/Space/Down opens and focuses the first entry, Up/Down move, Escape closes back to the arrow.
+function splitButton(x) {
+  var w = el("div", "menu end split"), label = S.update + " / " + S.remove;
+  var main = el("button", "btn sm", S.update), arrow = el("button", "btn sm caret", "▾"), pop = el("div", "pop");
+  main.disabled = arrow.disabled = busy;
+  arrow.title = label; arrow.setAttribute("aria-label", label);
+  arrow.setAttribute("aria-haspopup", "menu"); arrow.setAttribute("aria-expanded", "false");
+  pop.setAttribute("role", "menu");
+  function item(text, fn) {
+    var e = el("button", "", text); e.type = "button"; e.setAttribute("role", "menuitem"); e.tabIndex = -1;
+    e.onclick = function (ev) { ev.stopPropagation(); close(false); fn(); };
+    pop.appendChild(e); return e;
+  }
+  var entries = [item(S.update, function () { confirmAct("install", x); }),
+                 item(S.remove, function () { confirmAct("uninstall", x); })];
+  function open() {
+    document.querySelectorAll(".menu.open").forEach(function (m) { m.classList.remove("open"); });
+    w.classList.add("open"); arrow.setAttribute("aria-expanded", "true"); entries[0].focus();
+  }
+  function close(focusArrow) { w.classList.remove("open"); arrow.setAttribute("aria-expanded", "false"); if (focusArrow) arrow.focus(); }
+  main.onclick = function (ev) { ev.stopPropagation(); confirmAct("install", x); };
+  arrow.onclick = function (ev) { ev.stopPropagation(); if (w.classList.contains("open")) close(false); else open(); };
+  // the window's own Up/Down moves the selected card and redraws the list: keys in the menu stay here
+  arrow.onkeydown = function (ev) { if (ev.key === "ArrowDown") { ev.preventDefault(); ev.stopPropagation(); open(); } };
+  pop.onkeydown = function (ev) {
+    var i = entries.indexOf(document.activeElement);
+    if (ev.key === "ArrowDown" || ev.key === "ArrowUp") {
+      ev.preventDefault(); ev.stopPropagation();
+      entries[(i + (ev.key === "ArrowDown" ? 1 : entries.length - 1)) % entries.length].focus();
+    } else if (ev.key === "Escape" || ev.key === "Tab") {
+      if (ev.key === "Escape") { ev.preventDefault(); ev.stopPropagation(); }
+      close(ev.key === "Escape");
+    }
+  };
+  w.onclick = function (ev) { ev.stopPropagation(); };   // a click in the menu does not select the card
+  w.appendChild(main); w.appendChild(arrow); w.appendChild(pop);
+  return w;
 }
 function visible() {
   if (need) {
@@ -398,7 +444,8 @@ function renderUpdates() {
   ups.forEach(function (x) {
     n++;
     u.appendChild(ucard(tile(x), x.name, fmt(S.updFromTo, x.installed, x.version), x.changelog || "",
-      locked ? [] : [{ label: S.update, disabled: busy, fn: function () { confirmAct("install", x); } }]));
+      locked ? [] : [{ label: S.update, disabled: busy, fn: function () { confirmAct("install", x); } },
+                     { label: S.remove, sec: true, disabled: busy, fn: function () { confirmAct("uninstall", x); } }]));   // C1.9.14
   });
   if (!n) u.appendChild(catalogLoaded ? el("div", "empty", S.updNone || "") : loadingBox());
   u.scrollTop = keep;
