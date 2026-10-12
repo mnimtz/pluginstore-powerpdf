@@ -1632,4 +1632,5 @@
   <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>이 템플릿을 프로덕션에 넘길까요? 프로덕션은 알고 있는 추가 기능과 버전만 받으며, 고객은 절대 받지 않습니다.</value></data>
   <data name="Hand template to production" xml:space="preserve"><value>템플릿을 프로덕션에 넘기기</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>마지막으로 넘김 {0}</value></data>
+  <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>타사 구성 요소는 MIT, BSD, Apache-2.0 또는 CC0-1.0 라이선스만 허용.</value></data>
 </root>

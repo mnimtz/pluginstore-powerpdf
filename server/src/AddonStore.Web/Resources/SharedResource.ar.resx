@@ -1632,4 +1632,5 @@
   <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>هل تريد تسليم هذا القالب إلى الإنتاج؟ يتلقى الإنتاج الوظائف الإضافية والإصدارات التي يعرفها، ولا يتلقى العملاء أبدًا.</value></data>
   <data name="Hand template to production" xml:space="preserve"><value>تسليم القالب إلى الإنتاج</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>آخر تسليم {0}</value></data>
+  <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>مكونات الجهات الخارجية بموجب MIT أو BSD أو Apache-2.0 أو CC0-1.0 فقط.</value></data>
 </root>

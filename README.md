@@ -325,7 +325,7 @@ manifest.json          id · version (SemVer, must increase) · names per langua
 x64/MyPlugin.zxt       required
 arm64/MyPlugin.zxt     required (both architectures, always)
 assets/icon.png        square icon for the catalog
-LICENSES.md            third-party licenses (MIT/BSD/Apache-2.0 only)
+LICENSES.md            third-party licenses (MIT/BSD/Apache-2.0/CC0-1.0 only)
 ```
 
 **Ribbon governance:** all store plugins share ONE ribbon tab (toolbar atom

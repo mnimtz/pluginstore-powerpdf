@@ -1632,4 +1632,5 @@
   <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>将此模板移交给生产环境？生产环境会获得它已知的加载项和版本，绝不包括客户。</value></data>
   <data name="Hand template to production" xml:space="preserve"><value>将模板移交给生产环境</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>上次移交 {0}</value></data>
+  <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>仅限采用 MIT、BSD、Apache-2.0 或 CC0-1.0 许可的第三方组件。</value></data>
 </root>

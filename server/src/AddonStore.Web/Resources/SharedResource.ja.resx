@@ -1632,4 +1632,5 @@
   <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>このテンプレートを本番環境に引き渡しますか? 本番環境が把握しているアドインとバージョンのみを渡し、顧客は渡しません。</value></data>
   <data name="Hand template to production" xml:space="preserve"><value>テンプレートを本番環境に引き渡す</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>前回の引き渡し {0}</value></data>
+  <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>サードパーティ コンポーネントは MIT、BSD、Apache-2.0、CC0-1.0 のもののみ。</value></data>
 </root>

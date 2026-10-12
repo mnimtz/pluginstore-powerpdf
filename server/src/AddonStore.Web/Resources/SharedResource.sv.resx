@@ -1632,4 +1632,5 @@
   <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Lämna den här mallen till produktion? Produktion får de tillägg och versioner den känner till, aldrig kunderna.</value></data>
   <data name="Hand template to production" xml:space="preserve"><value>Lämna mall till produktion</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>Senast lämnad {0}</value></data>
+  <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>Endast komponenter från tredje part under MIT, BSD, Apache-2.0 eller CC0-1.0.</value></data>
 </root>

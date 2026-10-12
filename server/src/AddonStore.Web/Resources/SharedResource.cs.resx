@@ -1632,4 +1632,5 @@
   <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Předat tuto šablonu do produkce? Produkce dostane doplňky a verze, které zná, nikdy zákazníky.</value></data>
   <data name="Hand template to production" xml:space="preserve"><value>Předat šablonu do produkce</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>Naposledy předáno {0}</value></data>
+  <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>Pouze komponenty třetích stran s licencí MIT, BSD, Apache-2.0 nebo CC0-1.0.</value></data>
 </root>

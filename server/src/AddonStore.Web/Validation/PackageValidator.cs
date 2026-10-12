@@ -1234,10 +1234,11 @@ public class PackageValidator
     }
 
     // Standing team policy: shipped plugins contain only MIT / BSD / Apache-2.0
-    // third-party code. Other permissive licenses go to the reviewer; copyleft fails.
+    // third-party code, and CC0-1.0 (public domain dedication, S1.24.1: e.g. Hedley inside
+    // nlohmann/json). Other permissive licenses go to the reviewer; copyleft fails.
     private static readonly HashSet<string> AllowedLicenses = new(StringComparer.OrdinalIgnoreCase)
     {
-        "MIT", "BSD-2-Clause", "BSD-3-Clause", "0BSD", "Apache-2.0"
+        "MIT", "BSD-2-Clause", "BSD-3-Clause", "0BSD", "Apache-2.0", "CC0-1.0"
     };
     private static readonly Regex CopyleftLicense = new(
         @"(^|[^A-Za-z])(A?GPL|LGPL|GPL|MPL|EPL|CDDL|EUPL|OSL|SSPL|CC-BY-SA|CC-BY-NC)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
@@ -1359,7 +1360,7 @@ public class PackageValidator
                     report.Error("LICENSE_NOT_ALLOWED", $"'{name}' is licensed under {license}.",
                         "Shipped plugins may contain only MIT, BSD or Apache-2.0 third-party code. Replace or remove the component; copyleft licenses (GPL, AGPL, LGPL, MPL, EPL, CC-BY-SA ...) are not accepted.");
                 else
-                    report.Warn("LICENSE_NEEDS_REVIEW", $"'{name}' is licensed under {license}, outside the standard list (MIT, BSD, Apache-2.0).",
+                    report.Warn("LICENSE_NEEDS_REVIEW", $"'{name}' is licensed under {license}, outside the standard list (MIT, BSD, Apache-2.0, CC0-1.0).",
                         "Permissive licenses such as Zlib, ISC or BSL-1.0 can be acceptable after review; prefer an MIT/BSD/Apache-2.0 alternative, otherwise explain the choice in LICENSES.md.");
             }
         }

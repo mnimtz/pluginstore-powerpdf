@@ -1632,4 +1632,5 @@
   <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Siirretäänkö tämä malli tuotantoon? Tuotanto saa tuntemansa lisäosat ja versiot, ei koskaan asiakkaita.</value></data>
   <data name="Hand template to production" xml:space="preserve"><value>Siirrä malli tuotantoon</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>Viimeksi siirretty {0}</value></data>
+  <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>Vain kolmannen osapuolen komponentteja, joiden lisenssi on MIT, BSD, Apache-2.0 tai CC0-1.0.</value></data>
 </root>

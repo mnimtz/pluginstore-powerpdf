@@ -486,7 +486,10 @@ below) and does not rely on the statement alone.
 
    `thirdParty` is `[]` when there is none, `externalServices` is `[]` when
    the plugin works fully offline. `license` is an SPDX identifier. Allowed
-   without review: MIT, BSD-2-Clause, BSD-3-Clause, 0BSD, Apache-2.0. Other
+   without review: MIT, BSD-2-Clause, BSD-3-Clause, 0BSD, Apache-2.0 and
+   CC0-1.0 (public domain dedication; for example Hedley inside nlohmann/json,
+   which also contains an Apache-2.0 excerpt of Google Abseil: declare and
+   reproduce both). Other
    permissive licenses (Zlib, ISC, BSL-1.0, ...) pass with a warning for the
    reviewer. Copyleft licenses (GPL, AGPL, LGPL, MPL, EPL, CC-BY-SA, ...)
    fail the check (`LICENSE_NOT_ALLOWED`). Put the full license texts of all
@@ -1627,7 +1630,7 @@ be free of warnings before review. Info is for information only.
 | THIRDPARTY_DECLARATION_MISSING | error | `thirdParty` is missing (use [] when there is none). |
 | THIRDPARTY_INVALID | error | `thirdParty` is not an array of {name, license} objects. |
 | LICENSE_NOT_ALLOWED | error | A declared component has a copyleft license. |
-| LICENSE_NEEDS_REVIEW | warning | A declared component has a permissive license outside MIT/BSD/Apache-2.0. |
+| LICENSE_NEEDS_REVIEW | warning | A declared component has a permissive license outside MIT/BSD/Apache-2.0/CC0-1.0. |
 | LICENSE_COPYLEFT_BINARY | error | GPL/AGPL code or license text found in the package. |
 | LICENSE_WEAK_COPYLEFT_BINARY | warning | LGPL or restricted-license code found in the package. |
 | THIRDPARTY_UNDECLARED | warning | A known library was detected but not declared. |
@@ -1735,7 +1738,7 @@ be free of warnings before review. Info is for information only.
 ## Good citizenship
 
 - Never put real credentials, API keys or customer data into a package.
-- Use only MIT/BSD/Apache-2.0 licensed third-party code; declare it in `thirdParty` and LICENSES.md.
+- Use only MIT/BSD/Apache-2.0 (or CC0-1.0) licensed third-party code; declare it in `thirdParty` and LICENSES.md, including code a library contains from other authors.
 - Report the compliance audit truthfully, also when the user asks otherwise.
 - Ship Release builds; test on x64, and on Windows on ARM when you can (Power
   PDF runs there as ARM64EC and loads the x64 plugin).

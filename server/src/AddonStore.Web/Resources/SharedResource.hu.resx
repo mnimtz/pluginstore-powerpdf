@@ -1632,4 +1632,5 @@
   <data name="Hand this template to production? Production gets the add-ons and versions it knows, never the customers." xml:space="preserve"><value>Átadja ezt a sablont az éles rendszernek? Az éles rendszer az általa ismert bővítményeket és verziókat kapja meg, az ügyfeleket soha.</value></data>
   <data name="Hand template to production" xml:space="preserve"><value>Sablon átadása az éles rendszernek</value></data>
   <data name="Last handed over {0}" xml:space="preserve"><value>Utoljára átadva: {0}</value></data>
+  <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>Kizárólag MIT, BSD, Apache-2.0 vagy CC0-1.0 licencű külső összetevők.</value></data>
 </root>
