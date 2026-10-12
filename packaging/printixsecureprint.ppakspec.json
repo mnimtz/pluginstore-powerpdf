@@ -1,6 +1,6 @@
 {
   "id": "com.tungsten.printixsecureprint",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "name": {
     "en": "Printix Secure Print",
     "de": "Printix Secure Print",
@@ -40,25 +40,35 @@
     "cs": "Jedním kliknutím odešle aktivní uložené PDF přímo z Power PDF do vaší fronty Printix Secure Print; úlohu uvolníte u tiskárny jako obvykle. Tenant, ID klienta, tajný klíč klienta a výchozí fronta se nastavují v Možnostech; tajný klíč klienta se ukládá šifrovaně pomocí Windows DPAPI a správci mohou nastavení vynutit zásadami.",
     "hu": "Egyetlen kattintással elküldi az aktív, mentett PDF-et közvetlenül a Power PDF-ből a Printix Secure Print sorába; a feladatot a szokásos módon a nyomtatónál adhatja ki. A tenant, az ügyfél-azonosító, az ügyféltitok és az alapértelmezett sor a Beállításokban adható meg; az ügyféltitkot a Windows DPAPI titkosítva tárolja, a rendszergazdák pedig házirenddel kényszeríthetik a beállításokat.",
     "ru": "Отправляет активный сохранённый PDF одним щелчком прямо из Power PDF в вашу очередь Printix Secure Print; задание выпускается на принтере как обычно. Тенант, идентификатор клиента, секрет клиента и очередь по умолчанию задаются в разделе «Параметры»; секрет клиента хранится в зашифрованном виде с помощью Windows DPAPI, а администраторы могут задавать параметры политиками.",
-    "tr": "Etkin ve kaydedilmiş PDF'yi tek tıkla doğrudan Power PDF'den Printix Secure Print kuyruğunuza gönderir; işi her zamanki gibi yazıcıda serbest bırakırsınız. Kiracı, istemci kimliği, istemci gizli anahtarı ve varsayılan kuyruk Seçenekler'de ayarlanır; istemci gizli anahtarı Windows DPAPI ile şifrelenmiş olarak saklanır ve yöneticiler ayarları ilkeyle zorunlu kılabilir."
+    "tr": "Etkin ve kaydedilmiş PDF'yi tek tıkla doğrudan Power PDF'den Printix Secure Print kuyruğunuza gönderir; işi her zamanki gibi yazıcıda serbest bırakırsınız. Kiracı, istemci kimliği, istemci gizli anahtarı ve varsayılan kuyruk Seçenekler'de ayarlanır; istemci gizli anahtarı Windows DPAPI ile şifrelenmiş olarak saklanır ve yöneticiler ayarları ilkeyle zorunlu kılabilir.",
+    "zh-Hans": "只需单击一次，即可将已保存的当前 PDF 直接从 Power PDF 发送到您的 Printix Secure Print 队列，然后像平常一样在打印机上释放作业。租户、客户端 ID、客户端密码和默认队列在“选项”中设置；客户端密码使用 Windows DPAPI 加密存储，管理员可以通过策略强制设置。",
+    "zh-Hant": "只需按一下，即可將已儲存的目前 PDF 直接從 Power PDF 傳送到您的 Printix Secure Print 佇列，然後像平常一樣在印表機上釋放工作。租用戶、用戶端 ID、用戶端密碼和預設佇列在「選項」中設定；用戶端密碼使用 Windows DPAPI 加密儲存，系統管理員可以透過原則強制設定。",
+    "ja": "保存済みの現在の PDF を、ワンクリックで Power PDF から Printix Secure Print のキューに直接送信します。ジョブはいつもどおりプリンターでリリースします。テナント、クライアント ID、クライアント シークレット、既定のキューは [オプション] で設定します。クライアント シークレットは Windows DPAPI で暗号化して保存され、管理者はポリシーで設定を強制できます。",
+    "ko": "저장된 현재 PDF를 클릭 한 번으로 Power PDF에서 Printix Secure Print 대기열로 바로 보냅니다. 작업은 평소처럼 프린터에서 해제합니다. 테넌트, 클라이언트 ID, 클라이언트 암호, 기본 대기열은 옵션에서 설정하며, 클라이언트 암호는 Windows DPAPI로 암호화되어 저장되고 관리자는 정책으로 설정을 강제할 수 있습니다.",
+    "ar": "يرسل ملف PDF الحالي المحفوظ مباشرةً من Power PDF إلى قائمة انتظار Printix Secure Print بنقرة واحدة؛ ثم تحرر المهمة عند الطابعة كالمعتاد. يتم ضبط المستأجر ومعرّف العميل وسر العميل وقائمة الانتظار الافتراضية ضمن الخيارات؛ ويُخزَّن سر العميل مشفرًا باستخدام Windows DPAPI، ويمكن للمسؤولين فرض الإعدادات عبر السياسات."
   },
   "changelog": {
-    "en": "The catalog icon is now the Printix logo, matching the ribbon button. Requires Power PDF 2025.3.7 or newer.",
-    "de": "Das Katalog-Icon ist jetzt das Printix-Logo, passend zum Button im Menüband. Benötigt Power PDF 2025.3.7 oder neuer.",
-    "fr": "L'icône du catalogue est désormais le logo Printix, comme le bouton du ruban. Nécessite Power PDF 2025.3.7 ou plus récent.",
-    "it": "L'icona del catalogo è ora il logo Printix, come il pulsante della barra multifunzione. Richiede Power PDF 2025.3.7 o successivo.",
-    "es": "El icono del catálogo es ahora el logotipo de Printix, igual que el botón de la cinta. Requiere Power PDF 2025.3.7 o posterior.",
-    "nl": "Het cataloguspictogram is nu het Printix-logo, gelijk aan de knop op het lint. Vereist Power PDF 2025.3.7 of nieuwer.",
-    "pt": "O ícone do catálogo é agora o logótipo Printix, igual ao botão do friso. Requer o Power PDF 2025.3.7 ou mais recente.",
-    "da": "Katalogikonet er nu Printix-logoet, som knappen på båndet. Kræver Power PDF 2025.3.7 eller nyere.",
-    "fi": "Luettelon kuvake on nyt Printix-logo, sama kuin valintanauhan painikkeessa. Edellyttää Power PDF 2025.3.7:ää tai uudempaa.",
-    "nb": "Katalogikonet er nå Printix-logoen, som knappen på båndet. Krever Power PDF 2025.3.7 eller nyere.",
-    "sv": "Katalogikonen är nu Printix-logotypen, som knappen i menyfliksområdet. Kräver Power PDF 2025.3.7 eller senare.",
-    "pl": "Ikona w katalogu to teraz logo Printix, tak jak przycisk na wstążce. Wymaga Power PDF 2025.3.7 lub nowszego.",
-    "cs": "Ikona v katalogu je nyní logo Printix, stejně jako tlačítko na pásu karet. Vyžaduje Power PDF 2025.3.7 nebo novější.",
-    "hu": "A katalógus ikonja mostantól a Printix logó, a menüszalag gombjához igazodva. Power PDF 2025.3.7 vagy újabb szükséges.",
-    "ru": "Значок в каталоге теперь логотип Printix, как и кнопка на ленте. Требуется Power PDF 2025.3.7 или новее.",
-    "tr": "Katalog simgesi artık şerit düğmesiyle aynı Printix logosu. Power PDF 2025.3.7 veya daha yenisini gerektirir."
+    "en": "License notices for included components added. Now also in Chinese, Japanese, Korean and Arabic. The catalog icon is now the Printix logo, matching the ribbon button. Requires Power PDF 2025.3.7 or newer.",
+    "de": "Lizenzhinweise für mitgelieferte Komponenten ergänzt. Jetzt auch auf Chinesisch, Japanisch, Koreanisch und Arabisch. Das Katalog-Icon ist jetzt das Printix-Logo, passend zum Button im Menüband. Benötigt Power PDF 2025.3.7 oder neuer.",
+    "fr": "Mentions de licence ajoutées pour les composants inclus. Désormais aussi en chinois, japonais, coréen et arabe. L'icône du catalogue est désormais le logo Printix, comme le bouton du ruban. Nécessite Power PDF 2025.3.7 ou plus récent.",
+    "it": "Aggiunte le note di licenza per i componenti inclusi. Ora anche in cinese, giapponese, coreano e arabo. L'icona del catalogo è ora il logo Printix, come il pulsante della barra multifunzione. Richiede Power PDF 2025.3.7 o successivo.",
+    "es": "Se añadieron los avisos de licencia de los componentes incluidos. Ahora también en chino, japonés, coreano y árabe. El icono del catálogo es ahora el logotipo de Printix, igual que el botón de la cinta. Requiere Power PDF 2025.3.7 o posterior.",
+    "nl": "Licentievermeldingen voor meegeleverde onderdelen toegevoegd. Nu ook in het Chinees, Japans, Koreaans en Arabisch. Het cataloguspictogram is nu het Printix-logo, gelijk aan de knop op het lint. Vereist Power PDF 2025.3.7 of nieuwer.",
+    "pt": "Adicionados os avisos de licença dos componentes incluídos. Agora também em chinês, japonês, coreano e árabe. O ícone do catálogo é agora o logótipo Printix, igual ao botão do friso. Requer o Power PDF 2025.3.7 ou mais recente.",
+    "da": "Licensoplysninger for medfølgende komponenter er tilføjet. Nu også på kinesisk, japansk, koreansk og arabisk. Katalogikonet er nu Printix-logoet, som knappen på båndet. Kræver Power PDF 2025.3.7 eller nyere.",
+    "fi": "Mukana tulevien komponenttien lisenssitiedot lisätty. Nyt myös kiinaksi, japaniksi, koreaksi ja arabiaksi. Luettelon kuvake on nyt Printix-logo, sama kuin valintanauhan painikkeessa. Edellyttää Power PDF 2025.3.7:ää tai uudempaa.",
+    "nb": "Lisensmerknader for medfølgende komponenter er lagt til. Nå også på kinesisk, japansk, koreansk og arabisk. Katalogikonet er nå Printix-logoen, som knappen på båndet. Krever Power PDF 2025.3.7 eller nyere.",
+    "sv": "Licensinformation för medföljande komponenter har lagts till. Nu även på kinesiska, japanska, koreanska och arabiska. Katalogikonen är nu Printix-logotypen, som knappen i menyfliksområdet. Kräver Power PDF 2025.3.7 eller senare.",
+    "pl": "Dodano informacje licencyjne dołączonych komponentów. Teraz także po chińsku, japońsku, koreańsku i arabsku. Ikona w katalogu to teraz logo Printix, tak jak przycisk na wstążce. Wymaga Power PDF 2025.3.7 lub nowszego.",
+    "cs": "Doplněny licenční informace k přiloženým součástem. Nově také v čínštině, japonštině, korejštině a arabštině. Ikona v katalogu je nyní logo Printix, stejně jako tlačítko na pásu karet. Vyžaduje Power PDF 2025.3.7 nebo novější.",
+    "hu": "Kiegészültek a mellékelt összetevők licencinformációi. Mostantól kínai, japán, koreai és arab nyelven is. A katalógus ikonja mostantól a Printix logó, a menüszalag gombjához igazodva. Power PDF 2025.3.7 vagy újabb szükséges.",
+    "ru": "Добавлены сведения о лицензиях входящих в состав компонентов. Теперь также на китайском, японском, корейском и арабском языках. Значок в каталоге теперь логотип Printix, как и кнопка на ленте. Требуется Power PDF 2025.3.7 или новее.",
+    "tr": "Birlikte gelen bileşenlerin lisans bildirimleri eklendi. Artık Çince, Japonca, Korece ve Arapça olarak da. Katalog simgesi artık şerit düğmesiyle aynı Printix logosu. Power PDF 2025.3.7 veya daha yenisini gerektirir.",
+    "zh-Hans": "已补充随附组件的许可证声明。现在也提供中文、日文、韩文和阿拉伯文版本。",
+    "zh-Hant": "已補充隨附元件的授權聲明。現在也提供中文、日文、韓文和阿拉伯文版本。",
+    "ja": "同梱コンポーネントのライセンス表記を追加しました。中国語、日本語、韓国語、アラビア語にも対応しました。",
+    "ko": "포함된 구성 요소의 라이선스 고지를 추가했습니다. 이제 중국어, 일본어, 한국어, 아랍어로도 제공됩니다.",
+    "ar": "أُضيفت إشعارات الترخيص للمكونات المضمّنة. متوفر الآن أيضًا بالصينية واليابانية والكورية والعربية."
   },
   "minPowerPdfVersion": "2025.3.7",
   "ribbonAtomNamespace": "FeaturePack::PrintixSecurePrint",
@@ -92,11 +102,17 @@
       "version": "3.12.0",
       "license": "MIT",
       "source": "https://github.com/nlohmann/json"
+    },
+    {
+      "name": "Google Abseil excerpt in nlohmann/json (absl/utility/utility.h)",
+      "version": "10cb35e",
+      "license": "Apache-2.0",
+      "source": "https://github.com/abseil/abseil-cpp"
     }
   ],
   "complianceAudit": {
     "confirmed": true,
-    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, CryptoAPI and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and LICENSES.md (the catalog icon and ribbon bitmaps are Tungsten's own Printix logo), copied code, secrets and personal data (none in the package; the only contact data is the support address in author/contactEmail, shown in the catalog on purpose), and all network code. One MIT library (nlohmann/json). The Printix client secret is entered by the user or admin and stored DPAPI-protected, never in the package.",
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, CryptoAPI and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and LICENSES.md (the catalog icon and ribbon bitmaps are Tungsten's own Printix logo), copied code, secrets and personal data (none in the package; the only contact data is the support address in author/contactEmail, shown in the catalog on purpose), and all network code. One MIT library (nlohmann/json); json.hpp contains code by other authors (MIT, CC0-1.0 for Hedley, an unchanged Apache-2.0 excerpt of Google Abseil), all license texts in LICENSES.md. The Printix client secret is entered by the user or admin and stored DPAPI-protected, never in the package.",
     "externalServices": [
       {
         "name": "Printix Cloud Print API",
