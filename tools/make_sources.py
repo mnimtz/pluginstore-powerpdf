@@ -20,7 +20,7 @@ OUT = os.path.join(STORE, 'dist', 'sources')
 
 SKIP_DIRS = {'release', 'debug', 'x64', 'arm64', 'obj', '.vs', 'ipch', '__pycache__', 'zxing-build', 'delivery'}
 SKIP_EXT = {'.pdb', '.obj', '.zxt', '.exe', '.dll', '.lib', '.exp', '.ilk', '.aps', '.user', '.res', '.tlog',
-            '.msi', '.ppak', '.log', '.iobj', '.ipdb', '.pch', '.idb', '.wixobj', '.wixpdb', '.zip'}
+            '.msi', '.ppak', '.log', '.iobj', '.ipdb', '.pch', '.idb', '.wixobj', '.wixpdb', '.zip', '.bak'}   # .bak: local backups, never shipped (Printix 1.2.4)
 
 FP1_COMMON = ['common', 'res', 'store/common', 'store/tools', 'store/build_store.cmd']
 FP1_MODULES = {
