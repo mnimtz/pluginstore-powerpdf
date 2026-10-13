@@ -60,6 +60,41 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+  # Oct 13, 2026: known vulnerabilities of the image just built (Ubuntu packages of the
+  # base image, .NET runtime, NuGet packages) to the Security tab; never blocks.
+  trivy-image:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1   # v7.0.1
+
+      - name: Image of this commit
+        run: echo "IMAGE=${{ env.REGISTRY }}/${IMAGE_NAME,,}:sha-${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f   # v4.6.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25   # v0.36.0
+        with:
+          image-ref: ${{ env.IMAGE }}
+          severity: CRITICAL,HIGH,MEDIUM
+          ignore-unfixed: true
+          format: sarif
+          output: trivy-image.sarif
+          exit-code: '0'
+
+      - uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d   # v4.38.3
+        with:
+          sarif_file: trivy-image.sarif
+          category: trivy-image
+
   # Every server (S<version>) and client (C<version>) version gets a Git tag
   # and a GitHub Release the first time it reaches main.
   tag-releases:

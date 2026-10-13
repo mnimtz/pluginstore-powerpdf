@@ -1,0 +1,89 @@
+name: Security
+
+# Static analysis and dependency checks (Oct 13, 2026). Results go to the repository's
+# Security tab (Code scanning); nothing here blocks a deployment. Actions are pinned
+# to full commit hashes, so a moved tag cannot change what runs.
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '17 4 * * 1'      # every Monday: new CodeQL queries and CVEs reach unchanged code too
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  codeql:
+    name: CodeQL (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # the server: C# with data flow, built like the container build
+          - language: csharp
+            build-mode: manual
+          # JavaScript of the server pages and of the store window (client/ui)
+          - language: javascript-typescript
+            build-mode: none
+          # the workflows themselves (injection through event data, unpinned actions)
+          - language: actions
+            build-mode: none
+          # the ribbon client: the Power PDF Plugin SDK headers are not in the repository,
+          # so C++ is analysed without a build (fewer results than a real build)
+          - language: c-cpp
+            build-mode: none
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1   # v7.0.1
+
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68   # v6.0.0
+        if: matrix.language == 'csharp'
+        with:
+          dotnet-version: '10.0.x'
+
+      - uses: github/codeql-action/init@24c54180a607b1449ed407dd24f251e4e9147c8d   # v4.38.3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          queries: security-extended
+
+      - name: Build the server
+        if: matrix.language == 'csharp'
+        run: dotnet build server/src/AddonStore.Web/AddonStore.Web.csproj -c Release
+
+      - uses: github/codeql-action/analyze@24c54180a607b1449ed407dd24f251e4e9147c8d   # v4.38.3
+        with:
+          category: /language:${{ matrix.language }}
+
+  trivy-repo:
+    name: Trivy (repository)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1   # v7.0.1
+
+      # NuGet packages, secrets in files, misconfiguration (Dockerfile, ARM template)
+      - uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25   # v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln,secret,misconfig
+          severity: CRITICAL,HIGH,MEDIUM
+          skip-dirs: dist,testdata,packaging/client-bundle
+          format: sarif
+          output: trivy-repo.sarif
+          exit-code: '0'
+
+      - uses: github/codeql-action/upload-sarif@24c54180a607b1449ed407dd24f251e4e9147c8d   # v4.38.3
+        with:
+          sarif_file: trivy-repo.sarif
+          category: trivy-repo

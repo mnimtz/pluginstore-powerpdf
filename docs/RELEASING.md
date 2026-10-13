@@ -96,3 +96,25 @@ with an admin token).
 Plugins are submitted by their authors (or their Claude session) through the
 API; see `/api/agent-guide`. Packaging helpers for our own plugins live in
 `packaging/*.ppakspec.json` and `tools/make_ppak.py`.
+
+## Security scans (GitHub)
+
+Two workflows report to the repository's **Security > Code scanning** page;
+neither blocks a build or a deployment:
+
+- `.github/workflows/security.yml` on every push and pull request to `main`,
+  every Monday and on demand:
+  - **CodeQL** (`security-extended` queries) for C# (the server, built with
+    .NET 10), JavaScript (server pages, store window), the workflows
+    themselves and C++ (the client, analysed without a build because the
+    Power PDF Plugin SDK headers are not in the repository).
+  - **Trivy** on the repository: vulnerable packages, secrets in files,
+    misconfiguration (Dockerfile, ARM template).
+- `container.yml`, job `trivy-image`: **Trivy** on the image just built
+  (`sha-<commit>`): Ubuntu packages, .NET runtime, NuGet packages; only
+  vulnerabilities with a fix.
+
+Every alert names file and line (or package and fixed version) and can be
+dismissed as "false positive" or "won't fix" with a reason on the alert
+page. All actions are pinned to full commit hashes; update a hash together
+with its version comment.
