@@ -399,14 +399,15 @@ app.MapGet("/set-shell", (string? mode, string? returnUrl, HttpContext ctx) =>
 });
 
 // Avatars live under data/avatars and are uploaded on the profile page.
-app.MapGet("/avatar/{id}", (string id, IConfiguration config, IWebHostEnvironment env) =>
+// The folder is fixed at start-up from the data folder (not from handler parameters, which
+// static analysis cannot tell apart from request values).
+var avatarDir = Path.Combine(dataDir, "avatars");
+app.MapGet("/avatar/{id}", (string id) =>
 {
     if (!System.Text.RegularExpressions.Regex.IsMatch(id, "^[A-Za-z0-9-]{1,64}$"))
         return Results.NotFound();
-    var dataRoot = config["Storage:Data"];
-    if (string.IsNullOrWhiteSpace(dataRoot)) dataRoot = Path.Combine(env.ContentRootPath, "data");
     // the request only selects one of the stored avatars; the path comes from the folder listing
-    var dir = Path.Combine(dataRoot, "avatars");
+    var dir = avatarDir;
     var file = Directory.Exists(dir)
         ? Directory.EnumerateFiles(dir).FirstOrDefault(f => Path.GetFileNameWithoutExtension(f) == id &&
                                                            Path.GetExtension(f) is ".png" or ".jpg")

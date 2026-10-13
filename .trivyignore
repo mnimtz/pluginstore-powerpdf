@@ -21,6 +21,10 @@ AZU-0001
 # (finding not reproducible).
 AZU-0002
 
+# Blob soft delete: set in the child resource storageAccounts/blobServices "default"
+# (deleteRetentionPolicy 7 days); Trivy's ARM check does not read that resource.
+AZU-0056
+
 # Docker HEALTHCHECK: App Service checks the container itself (healthCheckPath /api/ping
 # in infra/azuredeploy.json); the aspnet base image has no curl for a HEALTHCHECK.
 DS-0026
