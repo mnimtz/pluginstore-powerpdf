@@ -272,7 +272,14 @@ public class AiAssist
             {
                 var budget = 60000;
                 var diff = new StringBuilder();
-                foreach (var k in changed.Concat(added))
+                // S1.27.3: changed lines only of files that can end up in a plug-in (code, resources, project
+                // files, web pages); build tooling, documents and data tables (generator tables of other modules
+                // in a multi-module repository) are named only. What ships is checked by the binary checks.
+                var tooling = changed.Concat(added).Where(k => !IsShippable(k)).ToList();
+                if (tooling.Count > 0)
+                    facts.Append("Changed build tooling, documents and data files (not compiled into the plug-in; lines not shown):\n<data>\n")
+                         .Append(Data(string.Join(", ", tooling.Take(60)))).Append("\n</data>\n");
+                foreach (var k in changed.Concat(added).Where(IsShippable))
                 {
                     var lines = LineDiff(oldSrc?.GetValueOrDefault(k) ?? "", newSrc[k]);
                     if (lines.Length == 0) continue;
@@ -444,6 +451,12 @@ public class AiAssist
         }
         catch (JsonException) { return "unknown (check report unreadable)"; }
     }
+
+    /// <summary>S1.27.3: files whose changed lines the review aid reads (they can be compiled or packaged into a plug-in).</summary>
+    private static readonly HashSet<string> ShippableExt = new(StringComparer.OrdinalIgnoreCase)
+        { ".cpp", ".c", ".cc", ".cxx", ".h", ".hpp", ".hxx", ".inl", ".cs", ".rc", ".rc2", ".def", ".idl",
+          ".vcxproj", ".props", ".targets", ".csproj", ".html", ".htm", ".js", ".css", ".xml" };
+    private static bool IsShippable(string path) => ShippableExt.Contains(Path.GetExtension(path));
 
     /// <summary>S1.27.0: messages of the code security findings (they name file:line), one per line, capped.</summary>
     private static string SecurityFindings(string? reportJson)

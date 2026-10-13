@@ -563,6 +563,12 @@ THIRDPARTY_UNDECLARED, NOTICE_INCOMPLETE, LICENSE_*_BINARY) or "none", as the
 authoritative answer; warnings on code the version does not change are no reason for
 "check_more" on their own.
 
+**AI review aid reads shippable files only (S1.27.3):** the changed lines it receives
+come only from files that can end up in a plug-in (C/C++/C#, resources, project files,
+web pages); build tooling, documents and data tables (`.py`, `.md`, `.json`, `.cmd` ...,
+for example a generator table that also describes other modules) are only named.
+What ships is covered by the binary checks.
+
 **Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
 wide screen) with numbered pages under the grid (1 2 3, on long lists
 1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again

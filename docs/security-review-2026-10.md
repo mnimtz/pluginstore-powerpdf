@@ -477,3 +477,10 @@ comparison base is the newest released version (unreleased versions in
 between are named), a fixed line states the third-party code the binary
 checks found ("none" for both signing add-ons) as authoritative, and warnings
 on unchanged code alone do not call for "check_more".
+
+With S1.27.2 QES Sign and Send to moved to "approve"; 1-Click Signing and
+Commerzbank Sign stayed on "check_more" because the model kept quoting the
+generator table `store/tools/gen_store.py` against the fact line. S1.27.3
+sends the changed lines only of shippable file types (code, resources,
+project files, web pages) and names build tooling, documents and data files
+without their content.
