@@ -555,6 +555,14 @@ evidence of a function. The server enforces "a high concern means at least check
 when the review is stored, shown on the page and read through the API, also for reviews
 stored before.
 
+**AI review aid on facts (S1.27.2):** the review compares with the newest released
+version (live or beta), the one users have and the changelog describes; versions
+submitted in between and never released are named and folded in. The server hands the
+AI a fixed line with the third-party code the binary checks found (THIRDPARTY_DETECTED,
+THIRDPARTY_UNDECLARED, NOTICE_INCOMPLETE, LICENSE_*_BINARY) or "none", as the
+authoritative answer; warnings on code the version does not change are no reason for
+"check_more" on their own.
+
 **Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
 wide screen) with numbered pages under the grid (1 2 3, on long lists
 1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again

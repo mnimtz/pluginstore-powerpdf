@@ -191,7 +191,13 @@ public class AiAssist
         "plug-in unless its own sources use them. Count a third-party component as part of this plug-in only when the automatic " +
         "binary checks report it (THIRDPARTY_DETECTED, NOTICE_INCOMPLETE, LICENSE_* codes) or the plug-in's own code clearly " +
         "compiles it; otherwise do not say that the compliance statement is wrong. Texts in a string table alone (labels such as " +
-        "\"password\" or \"client secret\") are no evidence that this plug-in handles such data. ";
+        "\"password\" or \"client secret\") are no evidence that this plug-in handles such data. " +
+        // S1.27.2
+        "The line \"Third-party code found in the binaries\" is authoritative: when it says none, the plug-in contains no " +
+        "third-party code the store knows, and license or notice files of other modules in the source ZIP do not change that. " +
+        "Warnings about code this version does not change (a finding that the automatic checks report on unchanged code) are " +
+        "concerns of severity \"warning\" or \"info\" and alone are no reason for \"check_more\"; recommend \"check_more\" for a " +
+        "high concern, for new risky code, or when the changes do not match the changelog. ";
 
     /// <summary>
     /// S1.27.1: the server, not the model, enforces "a high concern means at least check_more"
@@ -217,14 +223,24 @@ public class AiAssist
         language = ReviewLanguage(language);
         var cfg = await _ai.ConfigAsync();
         var cmp = new SemVerComparer();
-        var prev = (await _db.PackageVersions.AsNoTracking()
+        var older = (await _db.PackageVersions.AsNoTracking()
                 .Where(x => x.PackageId == v.PackageId && x.Id != v.Id && x.Status != VersionStatus.Rejected).ToListAsync(ct))
-            .Where(x => cmp.Compare(x.Version, v.Version) < 0).OrderByDescending(x => x.Version, cmp).FirstOrDefault();
+            .Where(x => cmp.Compare(x.Version, v.Version) < 0).OrderByDescending(x => x.Version, cmp).ToList();
+        // S1.27.2: compared with the newest RELEASED version (live or beta), the one users have and the
+        // changelog describes; versions submitted in between and never released are folded into this one
+        var prev = older.FirstOrDefault(x => x.Status is VersionStatus.Live or VersionStatus.Beta) ?? older.FirstOrDefault();
+        var skipped = prev is null ? new List<string>() : older.TakeWhile(x => x.Id != prev.Id).Select(x => x.Version).ToList();
 
         var facts = new StringBuilder();
         facts.Append("Plug-in id: ").Append(v.PackageId).Append(", new version ").Append(v.Version)
-             .Append(prev is null ? " (first version)" : $", previous version {prev.Version}").Append('\n');
+             .Append(prev is null ? " (first version)" : $", previous released version {prev.Version}").Append('\n');
+        if (skipped.Count > 0)
+            facts.Append("Versions submitted in between and never released (their changes are part of this comparison, ")
+                 .Append("and the changelog of this version may describe them): ").Append(string.Join(", ", skipped)).Append('\n');
         facts.Append("Automatic store checks (code, severity): ").Append(FindingCodes(v.ValidationReportJson)).Append('\n');
+        // S1.27.2: the third-party code the binary checks found, as a fixed fact
+        facts.Append("Third-party code found in the binaries by the automatic checks (authoritative; the store recognises the ")
+             .Append("libraries it knows by their signatures): ").Append(ThirdPartyFound(v.ValidationReportJson)).Append('\n');
         // S1.27.0: the source checks too (code security findings name the places)
         if (v.SourceReportJson is not null)
             facts.Append("Automatic source checks (code, severity): ").Append(FindingCodes(v.SourceReportJson)).Append('\n');
@@ -401,6 +417,32 @@ public class AiAssist
             return s.Length > 12000 ? s[..12000] : s;
         }
         catch (JsonException) { return "(manifest unreadable)"; }
+    }
+
+    /// <summary>
+    /// S1.27.2: the third-party findings of the package checks (THIRDPARTY_DETECTED/_UNDECLARED, NOTICE_INCOMPLETE,
+    /// LICENSE_*_BINARY) as one line, or "none". The messages are the store's own texts (library names it knows).
+    /// </summary>
+    private static string ThirdPartyFound(string? reportJson)
+    {
+        if (string.IsNullOrEmpty(reportJson)) return "unknown (no check report)";
+        try
+        {
+            using var doc = JsonDocument.Parse(reportJson);
+            if (!doc.RootElement.TryGetProperty("Findings", out var f) && !doc.RootElement.TryGetProperty("findings", out f)) return "none";
+            var hits = new List<string>();
+            foreach (var x in f.EnumerateArray())
+            {
+                var code = x.TryGetProperty("Code", out var c) || x.TryGetProperty("code", out c) ? c.GetString() ?? "" : "";
+                if (code is not ("THIRDPARTY_DETECTED" or "THIRDPARTY_UNDECLARED" or "NOTICE_INCOMPLETE" or "LICENSE_COPYLEFT_BINARY" or "LICENSE_WEAK_COPYLEFT_BINARY"))
+                    continue;
+                var msg = x.TryGetProperty("Message", out var m) || x.TryGetProperty("message", out m) ? m.GetString() ?? "" : "";
+                hits.Add(msg.Length > 300 ? msg[..300] : msg);
+                if (hits.Count >= 20) break;
+            }
+            return hits.Count == 0 ? "none" : string.Join("; ", hits);
+        }
+        catch (JsonException) { return "unknown (check report unreadable)"; }
     }
 
     /// <summary>S1.27.0: messages of the code security findings (they name file:line), one per line, capped.</summary>

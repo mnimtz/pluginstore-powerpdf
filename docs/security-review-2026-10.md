@@ -466,3 +466,14 @@ counts third-party code only on the binary checks' evidence or the plug-in's
 own compiled code, and treats UI texts as no evidence. The server enforces
 "high means at least check_more" when a review is stored, shown and read
 through the API, also for reviews stored earlier.
+
+Re-run with S1.27.1 on the 15 submitted versions: 11 "approve", 4 "check_more",
+none of them about the plug-in itself. The model (gemini-2.5-flash) still took
+the shared generator table of FP1 for third-party code of 1-Click Signing and
+Commerzbank Sign, rated the known SHA-1 (VRI key) of QES Sign enough for
+"check_more", and compared Send to 0.2.11 with the never released 0.2.10.
+S1.27.2 therefore moves these judgements to facts the server provides: the
+comparison base is the newest released version (unreleased versions in
+between are named), a fixed line states the third-party code the binary
+checks found ("none" for both signing add-ons) as authoritative, and warnings
+on unchanged code alone do not call for "check_more".
