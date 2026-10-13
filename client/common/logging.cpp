@@ -9,8 +9,15 @@ static bool g_verbose = false;
 bool FPVerboseLog() { return g_verbose; }
 void FPLogSetVerbose(bool on) { g_verbose = on; }
 
-static void WriteLine(const wchar_t* line)
+static void WriteLine(const wchar_t* rawLine)
 {
+    // one log entry = one line: CR, LF and other control characters from
+    // server or catalog values are replaced, so no entry can be forged
+    wchar_t line[2048];
+    size_t i = 0;
+    for (; rawLine[i] && i < 2047; ++i)
+        line[i] = (rawLine[i] < 0x20 || rawLine[i] == 0x7F) ? L'?' : rawLine[i];
+    line[i] = 0;
     wchar_t path[MAX_PATH];
     if (!GetTempPathW(MAX_PATH, path)) return;
     wcscat_s(path, MAX_PATH, L"PluginStore.log");

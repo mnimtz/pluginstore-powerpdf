@@ -76,9 +76,7 @@ protected:
         }
         if (m_preselect != L"com.tungsten.pluginstore")
         {
-            wchar_t msg[400];
-            _snwprintf_s(msg, 400, _TRUNCATE, FPLoc(IDS_PSD_LINK_NOTFOUND).c_str(), m_preselect.c_str());
-            SetDlgItemTextW(IDC_PS_STATUS, msg);
+            SetDlgItemTextW(IDC_PS_STATUS, FPLocFormat(IDS_PSD_LINK_NOTFOUND, { m_preselect }).c_str());
         }
     }
 
@@ -115,9 +113,7 @@ protected:
         GetDlgItem(IDC_PS_SELFUPDATE)->ShowWindow(m_selfUpdate ? SW_SHOW : SW_HIDE);
         if (m_selfUpdate)
         {
-            wchar_t hint[256];
-            _snwprintf_s(hint, 256, _TRUNCATE, FPLoc(IDS_PSD_SELF_UPDATE).c_str(), m_self.version.c_str(), FP_VERSION_W);
-            SetDlgItemTextW(IDC_PS_STATUS, hint);
+            SetDlgItemTextW(IDC_PS_STATUS, FPLocFormat(IDS_PSD_SELF_UPDATE, { m_self.version, FP_VERSION_W }).c_str());
         }
         if (m_entries.empty())
         {
@@ -190,9 +186,8 @@ protected:
         const PSCatalogEntry* e = Selected();
         if (!e || e->installedVersion.empty() || _wcsicmp(e->zxtName.c_str(), L"PluginStore") == 0) return;
 
-        wchar_t ask[512];
-        _snwprintf_s(ask, 512, _TRUNCATE, FPLoc(IDS_PSD_CONFIRM_UNINST).c_str(), e->name.c_str());
-        if (MessageBoxW(ask, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
+        std::wstring ask = FPLocFormat(IDS_PSD_CONFIRM_UNINST, { e->name });
+        if (MessageBoxW(ask.c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
             return;
 
         std::wstring name = e->name;
@@ -206,9 +201,7 @@ protected:
         }
         else
         {
-            wchar_t msg[256];
-            _snwprintf_s(msg, 256, _TRUNCATE, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
-            SetDlgItemTextW(IDC_PS_STATUS, msg);
+            SetDlgItemTextW(IDC_PS_STATUS, FPLocFormat(IDS_PSD_MSG_INSTFAIL, { std::to_wstring(rc) }).c_str());
         }
     }
 
@@ -218,9 +211,8 @@ protected:
     // documents are offered for saving and the user can still cancel.
     void OfferRestart(UINT idsQuestion, const std::wstring& name)
     {
-        wchar_t ask[600];
-        _snwprintf_s(ask, 600, _TRUNCATE, FPLoc(idsQuestion).c_str(), name.c_str());
-        if (MessageBoxW(ask, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
+        std::wstring ask = FPLocFormat(idsQuestion, { name });
+        if (MessageBoxW(ask.c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
             return;
 
         HWND mainWnd = ::GetAncestor(GetSafeHwnd(), GA_ROOTOWNER);
@@ -240,9 +232,8 @@ protected:
         const PSCatalogEntry* e = Selected();
         if (!e) return;
 
-        wchar_t ask[512];
-        _snwprintf_s(ask, 512, _TRUNCATE, FPLoc(IDS_PSD_CONFIRM).c_str(), e->name.c_str(), e->version.c_str());
-        if (MessageBoxW(ask, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
+        std::wstring ask = FPLocFormat(IDS_PSD_CONFIRM, { e->name, e->version });
+        if (MessageBoxW(ask.c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONQUESTION) != IDYES)
             return;
 
         std::wstring name = e->name;
@@ -262,9 +253,7 @@ protected:
         }
         else
         {
-            wchar_t msg[256];
-            _snwprintf_s(msg, 256, _TRUNCATE, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
-            SetDlgItemTextW(IDC_PS_STATUS, msg);
+            SetDlgItemTextW(IDC_PS_STATUS, FPLocFormat(IDS_PSD_MSG_INSTFAIL, { std::to_wstring(rc) }).c_str());
         }
     }
 
@@ -295,9 +284,7 @@ protected:
             SetDlgItemTextW(IDC_PS_STATUS, FPLoc(rc == 2 ? IDS_PSD_MSG_HASH : IDS_PSD_MSG_SIG).c_str());
         else
         {
-            wchar_t msg[256];
-            _snwprintf_s(msg, 256, _TRUNCATE, FPLoc(IDS_PSD_MSG_INSTFAIL).c_str(), rc);
-            SetDlgItemTextW(IDC_PS_STATUS, msg);
+            SetDlgItemTextW(IDC_PS_STATUS, FPLocFormat(IDS_PSD_MSG_INSTFAIL, { std::to_wstring(rc) }).c_str());
         }
     }
     afx_msg void OnListChanged(NMHDR*, LRESULT* result) { UpdateDescription(); *result = 0; }

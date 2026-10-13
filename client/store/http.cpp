@@ -157,7 +157,8 @@ bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& reque
     if (!WinHttpSetOption(session, WINHTTP_OPTION_SECURE_PROTOCOLS, &protocols, sizeof(protocols)))
     {
         protocols = WINHTTP_FLAG_SECURE_PROTOCOL_TLS1_2;
-        WinHttpSetOption(session, WINHTTP_OPTION_SECURE_PROTOCOLS, &protocols, sizeof(protocols));
+        if (!WinHttpSetOption(session, WINHTTP_OPTION_SECURE_PROTOCOLS, &protocols, sizeof(protocols)))
+            return false;   // never fall back to the system default (could allow TLS 1.0/1.1)
     }
 
     connect = WinHttpConnect(session, u.host.c_str(), u.port, 0);
@@ -171,7 +172,8 @@ bool Send(const Url& u, HINTERNET& session, HINTERNET& connect, HINTERNET& reque
     // Never follow a redirect: Allowed() checked THIS host only, and a
     // redirect could lead the download to any other address.
     DWORD redirect = WINHTTP_OPTION_REDIRECT_POLICY_NEVER;
-    WinHttpSetOption(request, WINHTTP_OPTION_REDIRECT_POLICY, &redirect, sizeof(redirect));
+    if (!WinHttpSetOption(request, WINHTTP_OPTION_REDIRECT_POLICY, &redirect, sizeof(redirect)))
+        return false;   // the default policy would follow https redirects to other hosts
 
     // Customer deliveries: the code goes to the store host only (Allowed above).
     std::wstring headers;

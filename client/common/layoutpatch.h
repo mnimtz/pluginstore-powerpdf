@@ -80,6 +80,7 @@ inline bool ReadTextFile(const std::wstring& path, std::wstring& out, bool& isUt
         return true;
     }
 
+    if (raw.empty()) return false;
     size_t skip = (raw.size() >= 3 && raw[0] == 0xEF && raw[1] == 0xBB && raw[2] == 0xBF) ? 3 : 0;
     int need = MultiByteToWideChar(CP_UTF8, 0, (const char*)&raw[skip],
                                    (int)(raw.size() - skip), NULL, 0);

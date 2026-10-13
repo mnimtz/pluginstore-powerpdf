@@ -47,22 +47,19 @@ static void OpenStoreView(const std::wstring& view)
     const std::wstring host = PSHostVersion();
     if (PSHostTooOld())
     {
-        wchar_t msg[600];
-        _snwprintf_s(msg, _countof(msg), _TRUNCATE, FPLoc(IDS_PS_HOST_TOO_OLD).c_str(), kPSMinHost, host.c_str());
+        std::wstring msg = FPLocFormat(IDS_PS_HOST_TOO_OLD, { kPSMinHost, host });
         FPLogW(L"[Store] host %s is older than %s - store not opened", host.c_str(), kPSMinHost);
-        FPMessageBox(NULL, msg, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
+        FPMessageBox(NULL, msg.c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
         return;
     }
     // Standard/Advanced before 2026.4: the SDK is for Business only there (C1.1.3).
     if (PSHostEditionUnsupported())
     {
         const std::wstring edition = PSHostEdition();
-        wchar_t msg[700];
-        _snwprintf_s(msg, _countof(msg), _TRUNCATE, FPLoc(IDS_PS_HOST_EDITION).c_str(),
-                     kPSMinHost, kPSAllEditionsFrom, edition.c_str(), host.c_str());
+        std::wstring msg = FPLocFormat(IDS_PS_HOST_EDITION, { kPSMinHost, kPSAllEditionsFrom, edition, host });
         FPLogW(L"[Store] host %s %s does not load add-ons before %s - store not opened",
                edition.c_str(), host.c_str(), kPSAllEditionsFrom);
-        FPMessageBox(NULL, msg, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
+        FPMessageBox(NULL, msg.c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
         return;
     }
     DURING PSShowStoreDialog(view); HANDLER END_HANDLER
@@ -85,9 +82,7 @@ static void SetBadge(RVToolButton b, int count, UINT tipNone, UINT tipSome)
         std::wstring tip = FPLoc(tipNone);
         if (count)
         {
-            wchar_t buf[400];
-            _snwprintf_s(buf, _countof(buf), _TRUNCATE, FPLoc(tipSome).c_str(), count);
-            tip = buf;
+            tip = FPLocFormat(tipSome, { std::to_wstring(count) });
         }
         DUText h = MakeDUText(tip);
         RVToolButtonSetHelpText(b, h); DUTextDestroy(h);

@@ -141,15 +141,20 @@ static unsigned long long DownloadCap(unsigned long long announced)
 // Download target in the user's TEMP, unique per run: two runs for the same
 // package (a store window reopened while the first one still works) never
 // share or delete each other's file.
+// The name is built from a fresh GUID only (no catalog values in file paths).
 static std::wstring TempPackagePath(const PSCatalogEntry& e)
 {
+    (void)e;
     wchar_t tempDir[MAX_PATH] = { 0 };
-    GetTempPathW(MAX_PATH, tempDir);
+    DWORD n = GetTempPathW(MAX_PATH, tempDir);
+    if (n == 0 || n >= MAX_PATH) return L"";   // never fall back to a relative path
     GUID g = { 0 };
-    wchar_t tag[40] = L"0";
-    if (SUCCEEDED(CoCreateGuid(&g)))
-        swprintf_s(tag, 40, L"%08lx%04x%04x", g.Data1, g.Data2, g.Data3);
-    return std::wstring(tempDir) + e.id + L"-" + e.version + L"-" + tag + L".ppak";
+    if (FAILED(CoCreateGuid(&g))) return L"";
+    wchar_t name[64] = { 0 };
+    swprintf_s(name, 64, L"addonstore-%08lx%04x%04x%02x%02x%02x%02x%02x%02x%02x%02x.ppak",
+               g.Data1, g.Data2, g.Data3, g.Data4[0], g.Data4[1], g.Data4[2], g.Data4[3],
+               g.Data4[4], g.Data4[5], g.Data4[6], g.Data4[7]);
+    return std::wstring(tempDir) + name;
 }
 
 static std::wstring PsQuote(const std::wstring& v)
@@ -234,7 +239,11 @@ static std::wstring EncodedArgs(const std::wstring& script)
 // The ONE UAC prompt. Returns false when the user declined; exit code in *code.
 static bool RunElevated(const std::wstring& script, HWND owner, DWORD timeoutMs, DWORD* code)
 {
-    std::wstring exe = PowerShellExe(), args = EncodedArgs(script);
+    // Modules only from the PowerShell folder (admin-only): a module of the same
+    // name in the user's Documents could otherwise run in the elevated step.
+    // Plain string assignment, no cmdlet runs before it.
+    std::wstring exe = PowerShellExe(),
+                 args = EncodedArgs(L"$env:PSModulePath=$PSHOME+'\\Modules'\r\n" + script);
     SHELLEXECUTEINFOW sei = { sizeof(sei) };
     sei.fMask = SEE_MASK_NOCLOSEPROCESS;
     sei.hwnd = owner;
@@ -286,6 +295,7 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
     }
 
     std::wstring ppak = TempPackagePath(e);
+    if (ppak.empty()) return 1;
 
     // 1) download (user context); never more than the catalog announced
     DWORD status = 0;
@@ -497,7 +507,7 @@ std::wstring PSSelfUpdateScript(const std::wstring& ppak, const std::wstring& sh
         // The MSI log goes to the Windows TEMP under a fresh name, never into a
         // folder the user can prepare (a link there would redirect the write
         // of an administrator).
-        L"$mlog=Join-Path $env:windir ('Temp\\AddonStoreUpdate-'+[guid]::NewGuid().ToString('N')+'.log')\r\n" +
+        L"$mlog=Join-Path ([Environment]::GetFolderPath('Windows')) ('Temp\\AddonStoreUpdate-'+[guid]::NewGuid().ToString('N')+'.log')\r\n" +
         L"$msiexec=Join-Path ([Environment]::GetFolderPath('System')) 'msiexec.exe'\r\n" +
         L"$lang=@(" + (lcid == 1033 ? std::wstring() : L"'TRANSFORMS=:" + std::to_wstring(lcid) + L"'") + L")\r\n" +
         L"$rc=1\r\n" +
@@ -545,6 +555,7 @@ int PSSelfUpdateDownload(const PSCatalogEntry& e, std::wstring& ppak)
     if (!PSSignatureValid(e)) return 6;
     if (PluginsDir().empty()) return 8;
     std::wstring path = TempPackagePath(e);
+    if (path.empty()) return 1;
 
     DWORD status = 0;
     if (!PSHttpGetFile(e.downloadUrl, path, &status, DownloadCap(e.sizeBytes))) return 1;

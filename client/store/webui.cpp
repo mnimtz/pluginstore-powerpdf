@@ -103,16 +103,12 @@ std::wstring RawField(const std::wstring& json, const wchar_t* key)
 
 std::wstring Fmt(UINT id, const std::wstring& a, const std::wstring& b = std::wstring())
 {
-    wchar_t buf[1200];
-    _snwprintf_s(buf, 1200, _TRUNCATE, FPLoc(id).c_str(), a.c_str(), b.c_str());
-    return buf;
+    return FPLocFormat(id, { a, b });
 }
 
 std::wstring FmtInt(UINT id, int n)
 {
-    wchar_t buf[600];
-    _snwprintf_s(buf, 600, _TRUNCATE, FPLoc(id).c_str(), n);
-    return buf;
+    return FPLocFormat(id, { std::to_wstring(n) });
 }
 
 std::wstring Base64(const std::vector<BYTE>& data)
@@ -468,7 +464,12 @@ protected:
     {
         if (FAILED(res) || !ctrl || !::IsWindow(m_hWnd)) { FPLogW(L"[Store] WebView2 controller failed (0x%08x)", (unsigned)res); PostMessage(WM_FAIL); return S_OK; }
         m_ctrl = ctrl;
-        m_ctrl->get_CoreWebView2(&m_web);
+        if (FAILED(m_ctrl->get_CoreWebView2(&m_web)) || !m_web)
+        {
+            FPLogW(L"[Store] WebView2 core not available");
+            PostMessage(WM_FAIL);
+            return S_OK;
+        }
 
         ComPtr<ICoreWebView2Settings> s;
         if (SUCCEEDED(m_web->get_Settings(&s)) && s)

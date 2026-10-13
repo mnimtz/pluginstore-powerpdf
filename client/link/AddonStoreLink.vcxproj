@@ -37,12 +37,17 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <!-- static runtime: the helper needs no Visual C++ redistributable -->
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <!-- C1.9.15: Control Flow Guard; full PDB for static analysis (Veracode needs it, not shipped) -->
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <CETCompat>true</CETCompat>
+      <AdditionalOptions>/DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

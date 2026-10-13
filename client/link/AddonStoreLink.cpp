@@ -51,9 +51,19 @@ static std::wstring PowerPdfExe()
     wchar_t path[MAX_PATH] = { 0 };
     DWORD sz = sizeof(path);
     if (RegGetValueW(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\PowerPDF.exe",
-                     NULL, RRF_RT_REG_SZ | RRF_SUBKEY_WOW6464KEY, NULL, path, &sz) == ERROR_SUCCESS)
-        return path;
-    return std::wstring();
+                     NULL, RRF_RT_REG_SZ | RRF_SUBKEY_WOW6464KEY, NULL, path, &sz) != ERROR_SUCCESS)
+        return std::wstring();
+    // only an absolute path to an existing PowerPDF.exe (drive or UNC), nothing else is started
+    std::wstring p = path;
+    const std::wstring tail = L"\\powerpdf.exe";
+    std::wstring low = p;
+    for (auto& c : low) c = (wchar_t)towlower(c);
+    bool absolute = (p.size() > 3 && p[1] == L':' && p[2] == L'\\') || (p.size() > 2 && p[0] == L'\\' && p[1] == L'\\');
+    if (!absolute || low.size() < tail.size() || low.compare(low.size() - tail.size(), tail.size(), tail) != 0)
+        return std::wstring();
+    DWORD a = GetFileAttributesW(p.c_str());
+    if (a == INVALID_FILE_ATTRIBUTES || (a & FILE_ATTRIBUTE_DIRECTORY)) return std::wstring();
+    return p;
 }
 
 int WINAPI wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)

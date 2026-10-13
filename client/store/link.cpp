@@ -213,10 +213,9 @@ LRESULT CALLBACK LinkWndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp)
         if (r->names.size() > 8) list += L"\n- ...";
         for (const auto& k : r->keys) keys += (keys.empty() ? L"" : L";") + k;
         PSSetNotifiedUpdates(keys);   // told once, whatever the answer
-        wchar_t text[2400];
-        _snwprintf_s(text, _countof(text), _TRUNCATE, FPLoc(IDS_PS_NOTICE_TEXT).c_str(), list.c_str());
+        std::wstring text = FPLocFormat(IDS_PS_NOTICE_TEXT, { list });
         FPLogW(L"[Store] notice about %d new update(s)", r->count);
-        if (FPMessageBox(main, text, FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONINFORMATION) == IDYES)
+        if (FPMessageBox(main, text.c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_YESNO | MB_ICONINFORMATION) == IDYES)
             PSRibbonOpenUpdates();
         return 0;
     }

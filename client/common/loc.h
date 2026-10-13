@@ -13,6 +13,12 @@
 
 void         FPLocInit();
 std::wstring FPLoc(UINT id);
+#include <initializer_list>
+// Fills the %s / %d placeholders of a localized text in order, by plain
+// string replacement (no printf with a non-constant format; a wrong
+// placeholder in a translation can never read past the arguments).
+std::wstring FPFormat(const std::wstring& text, std::initializer_list<std::wstring> args);
+std::wstring FPLocFormat(UINT id, std::initializer_list<std::wstring> args);
 // The LANGID of the strings in use (Power PDF's UI language, else English).
 LANGID       FPLocLangId();
 // Arabic (C1.3.0): right-to-left; message boxes then read and align right to left.

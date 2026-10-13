@@ -52,9 +52,8 @@ static INT_PTR CALLBACK PsoDlgProc(HWND h, UINT msg, WPARAM /*wp*/, LPARAM /*lp*
         SendDlgItemMessageW(h, IDC_PSO_CODE, EM_LIMITTEXT, 700, 0);   // up to 10 codes, separated by ';' (C1.4.1)
         if (PSWebUiAvailable())
         {
-            wchar_t ci[400]; _snwprintf_s(ci, 400, _TRUNCATE, FPLoc(IDS_PSO_CODE_INFO).c_str(),
-                                           std::to_wstring(PSCustomerCodes().size()).c_str());
-            SetDlgItemTextW(h, IDC_PSO_CODE_INFO, ci);
+            SetDlgItemTextW(h, IDC_PSO_CODE_INFO,
+                            FPLocFormat(IDS_PSO_CODE_INFO, { std::to_wstring(PSCustomerCodes().size()) }).c_str());
             ShowWindow(GetDlgItem(h, IDC_PSO_CODE), SW_HIDE);
             ShowWindow(GetDlgItem(h, IDC_PSO_CODE_INFO), SW_SHOW);
         }
@@ -68,8 +67,7 @@ static INT_PTR CALLBACK PsoDlgProc(HWND h, UINT msg, WPARAM /*wp*/, LPARAM /*lp*
         SetDlgItemTextW(h, IDC_PSO_HINT,     FPLoc(IDS_PSO_HINT).c_str());
         SetDlgItemTextW(h, IDC_PSO_GRP_DIAG, FPLoc(IDS_PSO_GRP_DIAG).c_str());
         SetDlgItemTextW(h, IDC_PSO_VERBOSE,  FPLoc(IDS_PSO_VERBOSE).c_str());
-        wchar_t v[160]; _snwprintf_s(v, 160, _TRUNCATE, FPLoc(IDS_PSO_VERSIONLBL).c_str(), FP_VERSION_W);
-        SetDlgItemTextW(h, IDC_PSO_VERSION, v);
+        SetDlgItemTextW(h, IDC_PSO_VERSION, FPLocFormat(IDS_PSO_VERSIONLBL, { FP_VERSION_W }).c_str());
         CheckDlgButton(h, IDC_PSO_BETA, PSBetaChannel() ? BST_CHECKED : BST_UNCHECKED);
         CheckDlgButton(h, IDC_PSO_VERBOSE, ReadVerbose() ? BST_CHECKED : BST_UNCHECKED);
 

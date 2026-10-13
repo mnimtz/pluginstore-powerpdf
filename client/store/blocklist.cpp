@@ -221,9 +221,7 @@ bool PSIsBlockedVersion(const std::wstring& id, const std::wstring& version)
 
 static std::wstring FormatW(const std::wstring& fmt, const std::wstring& a, const std::wstring& b, const std::wstring& c)
 {
-    wchar_t buf[2048];
-    _snwprintf_s(buf, _countof(buf), _TRUNCATE, fmt.c_str(), a.c_str(), b.c_str(), c.c_str());
-    return buf;
+    return FPFormat(fmt, { a, b, c });
 }
 
 void PSOfferBlockedRemoval(HWND owner, bool force)
@@ -249,9 +247,8 @@ void PSOfferBlockedRemoval(HWND owner, bool force)
         if (rc == 0) ++removed;
         else
         {
-            wchar_t err[1024];
-            _snwprintf_s(err, _countof(err), _TRUNCATE, FPLoc(IDS_PS_BLOCKED_FAILED).c_str(), b.name.c_str(), rc);
-            FPMessageBox(owner, err, FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONERROR);
+            std::wstring err = FPLocFormat(IDS_PS_BLOCKED_FAILED, { b.name, std::to_wstring(rc) });
+            FPMessageBox(owner, err.c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONERROR);
         }
     }
     if (removed > 0)

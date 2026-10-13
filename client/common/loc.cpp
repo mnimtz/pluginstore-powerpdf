@@ -249,3 +249,32 @@ bool FPConfirmText(const std::wstring& msg)
     DUTextDestroy(msgTxt);
     return btn == 1;    // button 1 = Yes
 }
+
+std::wstring FPFormat(const std::wstring& text, std::initializer_list<std::wstring> args)
+{
+    std::wstring out;
+    out.reserve(text.size() + 64);
+    auto next = args.begin();
+    for (size_t i = 0; i < text.size(); ++i)
+    {
+        wchar_t c = text[i];
+        if (c == L'%' && i + 1 < text.size())
+        {
+            wchar_t t = text[i + 1];
+            if (t == L'%') { out += L'%'; ++i; continue; }
+            if (t == L's' || t == L'd' || t == L'u')
+            {
+                if (next != args.end()) out += *next++;
+                ++i;
+                continue;
+            }
+        }
+        out += c;
+    }
+    return out;
+}
+
+std::wstring FPLocFormat(UINT id, std::initializer_list<std::wstring> args)
+{
+    return FPFormat(FPLoc(id), args);
+}

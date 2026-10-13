@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "settings.h"
 #include <algorithm>
+#include <atomic>
 #include "policy.h"
 #include "logging.h"
 
@@ -15,8 +16,8 @@ static const wchar_t* kDefaultUrl = L"https://addon.power-pdf.de";
 static std::wstring g_url = kDefaultUrl;
 // g_url is read by worker threads while Options may rewrite it.
 static SRWLOCK g_urlLock = SRWLOCK_INIT;
-static bool g_beta = false;
-static bool g_urlLocked = false;
+static std::atomic<bool> g_beta(false);        // read by worker threads
+static std::atomic<bool> g_urlLocked(false);
 
 static bool ReadUserString(const wchar_t* name, std::wstring& v)
 {
@@ -122,12 +123,25 @@ void PSSetPowerPdfHiddenUpdate(const std::wstring& version)
 }
 
 static SRWLOCK g_idLock = SRWLOCK_INIT;
+// 8-4-4-4-12 hex digits; the value goes into a request header (no CR/LF possible)
+static bool IsInstallId(const std::wstring& id)
+{
+    if (id.size() != 36) return false;
+    for (size_t i = 0; i < id.size(); ++i)
+    {
+        wchar_t c = id[i];
+        bool dash = (i == 8 || i == 13 || i == 18 || i == 23);
+        if (dash ? c != L'-' : !iswxdigit(c)) return false;
+    }
+    return true;
+}
+
 std::wstring PSInstallId()
 {
     AcquireSRWLockExclusive(&g_idLock);   // C1.9.2: two workers on the very first start made two ids
     struct Unlock { ~Unlock() { ReleaseSRWLockExclusive(&g_idLock); } } unlock;
     std::wstring id;
-    if (ReadUserString(L"InstallId", id) && id.size() == 36) return id;
+    if (ReadUserString(L"InstallId", id) && IsInstallId(id)) return id;
     GUID g;
     if (FAILED(CoCreateGuid(&g))) return L"";
     wchar_t buf[64] = { 0 };
