@@ -72,6 +72,12 @@ public sealed class SendToStorage
 
     private static string BlobName(string transferId, int n) => $"{transferId}/{n}";
 
+    /// <summary>The local folder of a transfer: the id is always a GUID ("N"), and only the parsed
+    /// GUID goes into the path (CodeQL cs/path-injection).</summary>
+    private string LocalDir(string transferId) =>
+        Guid.TryParseExact(transferId, "N", out var g) ? Path.Combine(LocalRoot(), g.ToString("N"))
+                                                       : throw new ArgumentException("not a transfer id", nameof(transferId));
+
     private string LocalRoot()
     {
         var data = _config["Storage:Data"];
@@ -102,7 +108,7 @@ public sealed class SendToStorage
     {
         if (await UseLocalAsync())
         {
-            var p = Path.Combine(LocalRoot(), transferId, n.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            var p = Path.Combine(LocalDir(transferId), n.ToString(System.Globalization.CultureInfo.InvariantCulture));
             Directory.CreateDirectory(Path.GetDirectoryName(p)!);
             await File.WriteAllBytesAsync(p, data, ct);
             return;
@@ -115,7 +121,7 @@ public sealed class SendToStorage
     {
         if (await UseLocalAsync())
         {
-            var p = Path.Combine(LocalRoot(), transferId, n.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            var p = Path.Combine(LocalDir(transferId), n.ToString(System.Globalization.CultureInfo.InvariantCulture));
             return File.Exists(p) ? await File.ReadAllBytesAsync(p, ct) : null;
         }
         var c = await ContainerAsync();
@@ -133,7 +139,7 @@ public sealed class SendToStorage
     {
         if (await UseLocalAsync())
         {
-            try { Directory.Delete(Path.Combine(LocalRoot(), transferId), true); } catch (DirectoryNotFoundException) { }
+            try { Directory.Delete(LocalDir(transferId), true); } catch (DirectoryNotFoundException) { }
             return;
         }
         var c = await ContainerAsync();

@@ -1,0 +1,26 @@
+# Trivy findings decided against on purpose (Oct 13, 2026). Every entry needs a reason;
+# remove an entry when the decision changes. Open on purpose: AZU-0058 (geo-redundant
+# storage, a cost decision) and DS-0002 (container as non-root, to be tested on UAT with
+# the Azure Files mount first).
+
+# Storage account reachable from all networks: App Service mounts the Azure Files share
+# over the public endpoint; closing it needs VNet integration (a larger change).
+AZU-0012
+
+# Storage analytics logging: extra cost; the store logs and audits on its own.
+AZU-0057
+
+# App Service authentication (Easy Auth): the store has its own sign-in, and the catalog
+# and API must stay reachable for Power PDF clients without an Entra ID login.
+AZU-0003
+
+# Client certificates: Power PDF clients across many companies use the public catalog.
+AZU-0001
+
+# Managed identity: the template sets "identity": {"type": "SystemAssigned"} on the site
+# (finding not reproducible).
+AZU-0002
+
+# Docker HEALTHCHECK: App Service checks the container itself (healthCheckPath /api/ping
+# in infra/azuredeploy.json); the aspnet base image has no curl for a HEALTHCHECK.
+DS-0026

@@ -581,6 +581,15 @@ the part that is new against the compared version and hands only that part to th
 this version's claim; a changelog that does not match the changes is a "warning", never
 "high".
 
+**Security scans on GitHub (S1.27.6):** CodeQL (C#, JavaScript, C++, workflows) and
+Trivy (repository and container image) report to Security > Code scanning, see
+docs/RELEASING.md. First findings fixed: the local Send to storage builds its paths from
+the parsed transfer GUID, avatars are picked from the folder listing, the update-watch
+pattern is compiled with a timeout, all actions are pinned to commit hashes. The Azure
+template now asks for infrastructure encryption, soft delete for blobs and the data share
+(7 days) and the App Service health check on /api/ping; findings decided against are
+listed with their reasons in `.trivyignore`.
+
 **Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
 wide screen) with numbered pages under the grid (1 2 3, on long lists
 1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again

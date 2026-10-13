@@ -57,7 +57,38 @@
       "properties": {
         "minimumTlsVersion": "TLS1_2",
         "allowBlobPublicAccess": false,
-        "supportsHttpsTrafficOnly": true
+        "supportsHttpsTrafficOnly": true,
+        "encryption": {
+          "keySource": "Microsoft.Storage",
+          "requireInfrastructureEncryption": true,
+          "services": {
+            "blob": { "enabled": true },
+            "file": { "enabled": true }
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/blobServices",
+      "apiVersion": "2023-05-01",
+      "name": "[concat(variables('storageAccountName'), '/default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+      ],
+      "properties": {
+        "deleteRetentionPolicy": { "enabled": true, "days": 7 },
+        "containerDeleteRetentionPolicy": { "enabled": true, "days": 7 }
+      }
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts/fileServices",
+      "apiVersion": "2023-05-01",
+      "name": "[concat(variables('storageAccountName'), '/default')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+      ],
+      "properties": {
+        "shareDeleteRetentionPolicy": { "enabled": true, "days": 7 }
       }
     },
     {
@@ -65,7 +96,7 @@
       "apiVersion": "2023-05-01",
       "name": "[concat(variables('storageAccountName'), '/default/', variables('dataShareName'))]",
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts/fileServices', variables('storageAccountName'), 'default')]"
       ],
       "properties": { "shareQuota": 10 }
     },
@@ -97,6 +128,7 @@
           "alwaysOn": "[if(equals(parameters('sku'), 'F1'), false(), true())]",
           "ftpsState": "Disabled",
           "minTlsVersion": "1.2",
+          "healthCheckPath": "/api/ping",
           "http20Enabled": true,
           "appSettings": [
             { "name": "WEBSITES_PORT", "value": "8080" },

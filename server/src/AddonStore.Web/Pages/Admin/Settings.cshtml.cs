@@ -153,7 +153,8 @@ public class SettingsModel : PageModel
             : pattern.Length > 300 ? "The pattern is too long." : null;
         if (problem is null)
         {
-            try { _ = new System.Text.RegularExpressions.Regex(pattern); }
+            // only compiled to check it; with a timeout like every use of it (CodeQL cs/regex-injection)
+            try { _ = new System.Text.RegularExpressions.Regex(pattern, System.Text.RegularExpressions.RegexOptions.None, TimeSpan.FromSeconds(2)); }
             catch (ArgumentException) { problem = "The pattern is not a valid regular expression."; }
         }
         var line = id is null ? null : await db.PowerPdfLines.FirstOrDefaultAsync(l => l.Id == id);

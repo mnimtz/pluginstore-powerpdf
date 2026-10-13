@@ -405,13 +405,14 @@ app.MapGet("/avatar/{id}", (string id, IConfiguration config, IWebHostEnvironmen
         return Results.NotFound();
     var dataRoot = config["Storage:Data"];
     if (string.IsNullOrWhiteSpace(dataRoot)) dataRoot = Path.Combine(env.ContentRootPath, "data");
-    foreach (var ext in new[] { "png", "jpg" })
-    {
-        var p = Path.Combine(dataRoot, "avatars", Path.GetFileName($"{id}.{ext}"));
-        if (File.Exists(p))
-            return Results.File(p, ext == "png" ? "image/png" : "image/jpeg");
-    }
-    return Results.NotFound();
+    // the request only selects one of the stored avatars; the path comes from the folder listing
+    var dir = Path.Combine(dataRoot, "avatars");
+    var file = Directory.Exists(dir)
+        ? Directory.EnumerateFiles(dir).FirstOrDefault(f => Path.GetFileNameWithoutExtension(f) == id &&
+                                                           Path.GetExtension(f) is ".png" or ".jpg")
+        : null;
+    return file is null ? Results.NotFound()
+        : Results.File(file, Path.GetExtension(file) == ".png" ? "image/png" : "image/jpeg");
 });
 
 app.MapRazorPages();
