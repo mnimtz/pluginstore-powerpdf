@@ -112,7 +112,7 @@ public class AiService
         }
         catch (Exception ex) when (ex is not OperationCanceledException || !ct.IsCancellationRequested)
         {
-            _log.LogWarning(ex, "Loading the model list failed ({Provider})", cfg.Provider);
+            _log.LogWarning(ex, "Loading the model list failed ({Provider})", LogSafe.Of(cfg.Provider));
             return (false, $"{cfg.Provider}: the key was not accepted or the provider is not reachable ({ex.GetType().Name}).", new());
         }
         if (models.Count == 0) return (false, $"{cfg.Provider}: no usable models for this key.", new());
@@ -220,7 +220,7 @@ public class AiService
         }
         catch (Exception ex) when (ex is not OperationCanceledException || !ct.IsCancellationRequested)
         {
-            _log.LogWarning(ex, "AI request failed ({Provider})", cfg.Provider);
+            _log.LogWarning(ex, "AI request failed ({Provider})", LogSafe.Of(cfg.Provider));
             return null;
         }
     }
@@ -293,7 +293,7 @@ public class AiService
         var body = await resp.Content.ReadAsStringAsync(ct);
         if (!resp.IsSuccessStatusCode)
         {
-            _log.LogWarning("Gemini returned {Status}: {Body}", (int)resp.StatusCode, body.Length > 300 ? body[..300] : body);
+            _log.LogWarning("Gemini returned {Status}: {Body}", (int)resp.StatusCode, LogSafe.Of(body, 300));
             return null;
         }
         using var doc = JsonDocument.Parse(body);

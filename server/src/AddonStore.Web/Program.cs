@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 
+// S1.26.0: no regular expression may run longer than 2 s on any input (CWE-1333);
+// set before the first Regex is built
+AppContext.SetData("REGEX_DEFAULT_MATCH_TIMEOUT", TimeSpan.FromSeconds(2));
+
 var builder = WebApplication.CreateBuilder(args);
 
 // --- data ---------------------------------------------------------------
@@ -191,6 +195,7 @@ builder.Services.AddSingleton<SetupGate>();
 builder.Services.AddScoped<TimeDisplay>();
 builder.Services.AddScoped<BackupService>();
 builder.Services.AddScoped<CloudBackupService>();
+CloudBackupService.AllowLocalEmulator = builder.Environment.IsDevelopment();
 builder.Services.AddHostedService<CloudBackupScheduler>();
 // Power PDF update hints (S1.8.0): no automatic redirects, the service checks every target itself
 builder.Services.AddHttpClient(PowerPdfUpdateService.HttpName, c => { c.Timeout = TimeSpan.FromSeconds(20); c.DefaultRequestHeaders.UserAgent.ParseAdd("AddonStore-Server/1.8 (update watch)"); })
@@ -370,15 +375,15 @@ app.MapGet("/set-lang", (string culture, string? returnUrl, HttpContext ctx) =>
     if (!cultures.Contains(culture)) culture = "en";
     // Browsers drop tabs and line breaks ("/\t/evil.example" becomes "//evil.example"),
     // so any control character, backslash or "//" rejects the target.
-    var target = returnUrl is not null && returnUrl.StartsWith('/') && !returnUrl.StartsWith("//") &&
-                 !returnUrl.Any(ch => char.IsControl(ch) || ch == '\\' || char.IsWhiteSpace(ch)) &&
-                 !returnUrl.Replace("\t", "").Contains("//")
-        ? returnUrl : "/";
+    var target = AddonStore.Web.Services.Shell.SafeTarget(returnUrl);
+    // S1.26.0: HttpOnly, SameSite and Secure like every other cookie (no script reads it)
     ctx.Response.Cookies.Append(
         CookieRequestCultureProvider.DefaultCookieName,
         CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-        new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1), IsEssential = true });
-    return Results.Redirect(target);
+        new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1), IsEssential = true, HttpOnly = true,
+                            SameSite = SameSiteMode.Lax, Secure = !app.Environment.IsDevelopment() });
+    // LocalRedirect refuses anything that is not a local path (second line of defence)
+    return Results.LocalRedirect(target);
 });
 
 // New navigation (S1.5.0 preview): each user switches between the classic top bar and the sidebar.
@@ -387,10 +392,10 @@ app.MapGet("/set-shell", (string? mode, string? returnUrl, HttpContext ctx) =>
     var sidebar = mode == "sidebar";
     ctx.Response.Cookies.Append(AddonStore.Web.Services.Shell.Cookie, sidebar ? "sidebar" : "classic",
         new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1), IsEssential = true, HttpOnly = true, SameSite = SameSiteMode.Lax,
-                            Secure = ctx.Request.IsHttps });
+                            Secure = !app.Environment.IsDevelopment() });
     var target = AddonStore.Web.Services.Shell.SafeTarget(returnUrl);
     if (!sidebar && target.StartsWith("/Start", StringComparison.OrdinalIgnoreCase)) target = "/Dashboard";
-    return Results.Redirect(target);
+    return Results.LocalRedirect(target);
 });
 
 // Avatars live under data/avatars and are uploaded on the profile page.
@@ -402,7 +407,7 @@ app.MapGet("/avatar/{id}", (string id, IConfiguration config, IWebHostEnvironmen
     if (string.IsNullOrWhiteSpace(dataRoot)) dataRoot = Path.Combine(env.ContentRootPath, "data");
     foreach (var ext in new[] { "png", "jpg" })
     {
-        var p = Path.Combine(dataRoot, "avatars", $"{id}.{ext}");
+        var p = Path.Combine(dataRoot, "avatars", Path.GetFileName($"{id}.{ext}"));
         if (File.Exists(p))
             return Results.File(p, ext == "png" ? "image/png" : "image/jpeg");
     }

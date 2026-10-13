@@ -63,17 +63,18 @@
             </span>
         </div>
     </dialog>
-    <script type="application/json" id="@k-data">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(data))</script>
+    <div hidden id="@k-data" data-json="@System.Text.Json.JsonSerializer.Serialize(data)"></div>
 </div>
-<script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
+<script nonce="@ViewContext.HttpContext.Items["CspNonce"]" data-k="@k" data-form="@Model.FormId" data-t="@System.Text.Json.JsonSerializer.Serialize(strings)">
 (function () {
-    var K = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(k)), FORM = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.FormId));
+    var D = document.currentScript.dataset;
+    var K = D.k, FORM = D.form;
     var SUBMIT = @(Model.SubmitOnApply ? "true" : "false"), AGAIN = @(Model.PresentSelectable ? "true" : "false");
-    var T = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(strings));
+    var T = JSON.parse(D.t);
     function $(s) { return document.getElementById(K + '-' + s); }
     function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
     function fmt(s) { var a = arguments; return s.replace(/\{(\d)\}/g, function (m, i) { return a[+i + 1]; }); }
-    var items = JSON.parse($('data').textContent), byId = {};
+    var items = JSON.parse($('data').dataset.json), byId = {};
     items.forEach(function (x) { byId[x.id] = x; });
     var form = document.getElementById(FORM), dlg = $('dlg');
     var chosen = [];          // [{id, ver}] in the form

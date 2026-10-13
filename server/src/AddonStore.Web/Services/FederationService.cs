@@ -388,7 +388,8 @@ public partial class FederationService
     /// </summary>
     public static byte[] RegFile(bool toUat, string serverUrl, string trustedSigningKeys)
     {
-        static string Q(string s) => s.Replace("\\", "\\\\").Replace("\"", "\\\"");
+        // S1.26.0: control characters dropped, so no value can start a new line (= a further registry entry)
+        static string Q(string s) => new string(s.Where(c => !char.IsControl(c)).ToArray()).Replace("\\", "\\\\").Replace("\"", "\\\"");
         var sb = new StringBuilder();
         sb.Append("Windows Registry Editor Version 5.00\r\n\r\n");
         sb.Append("; Add-on Store for Power PDF: ").Append(toUat ? "this PC uses the UAT store " + serverUrl : "this PC uses production again").Append("\r\n");

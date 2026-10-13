@@ -107,7 +107,7 @@ public sealed class ClientBundleWorker : BackgroundService
         {
             _failed = version;
             var errors = string.Join(", ", result.Report.Findings.Where(f => f.Severity == "error").Select(f => f.Code).Take(10));
-            _log.LogWarning("client bundle {Version} not taken: {Code} {Errors}", version, result.ErrorCode, errors);
+            _log.LogWarning("client bundle {Version} not taken: {Code} {Errors}", LogSafe.Of(version), LogSafe.Of(result.ErrorCode), LogSafe.Of(errors, 1000));
             await audit.LogAsync("system", "client.bundle.failed", version, $"{result.ErrorCode} {errors}".Trim());
             return "failed";
         }
@@ -115,7 +115,7 @@ public sealed class ClientBundleWorker : BackgroundService
             && (await scope.ServiceProvider.GetRequiredService<SourceService>().UploadAsync(result.Version, source, admin, true)).Passed;
         await audit.LogAsync("system", "client.bundle.imported", version,
             $"from the server image, released under {admin.DisplayName}; source {(source is null ? "missing" : stored ? "stored" : "refused by the source check")}");
-        _log.LogInformation("client bundle {Version} released", version);
+        _log.LogInformation("client bundle {Version} released", LogSafe.Of(version));
         return "imported";
     }
 }

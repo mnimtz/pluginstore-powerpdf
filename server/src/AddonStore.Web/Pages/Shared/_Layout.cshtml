@@ -331,7 +331,7 @@ else
     <a href="/Disclaimer" style="color:var(--tun-slate)">@L["Disclaimer"]</a>
     <a href="/api/agent-guide" style="color:var(--tun-slate)">API</a>
 </footer>
-<script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
+<script nonce="@ViewContext.HttpContext.Items["CspNonce"]" data-cancel="@L["Cancel"].Value">
 // Behaviour without inline handlers (CSP): menu toggle, language switch,
 // confirmations (data-confirm), image fallbacks (data-fallback), print buttons.
 (function () {
@@ -369,7 +369,7 @@ else
     // Confirmations as an in-page dialog (no browser popup): message from
     // data-confirm, the confirm button carries the label of the button that was
     // clicked ("Delete customer"), Cancel is focused (safe default), Escape cancels.
-    var cancelLabel = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Cancel"].Value));
+    var cancelLabel = document.currentScript.dataset.cancel;
     document.addEventListener('submit', function (e) {
         var f = e.target;
         if (!f.dataset || !f.dataset.confirm) return;

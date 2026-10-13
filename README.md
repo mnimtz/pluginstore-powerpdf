@@ -511,6 +511,23 @@ review columns of each version (validation and source reports, rules snapshot,
 AI review and its translations). Before, every catalog build read hundreds of MB
 from the share again and took 10 to 20 seconds once the data had grown.
 
+**Static analysis pre-check (S1.26.0 + C1.9.15):** server and client were reviewed
+against the CWE classes a Veracode policy scan reports, before the company's
+release scan. Values from requests, packages and other servers pass `LogSafe.Of`
+before they reach the log (no forged log lines); pages no longer embed JSON with
+`Html.Raw` but read it from Razor-encoded `data-*` attributes; `/set-lang` and
+`/set-shell` answer with `LocalRedirect`; the culture cookie is HttpOnly, Secure
+and SameSite=Lax; devkit, SDK, avatar and safety-backup downloads pick one of the
+files that really exist instead of building a path from the request; every
+regular expression has a 2-second default timeout; validation answers no longer
+carry exception texts; the public base address is checked when saved. The client
+is built with Control Flow Guard, CET compatibility, `/DEPENDENTLOADFLAG:0x800`
+and full PDBs, fills its localized messages without printf formats, keeps catalog
+values out of temp file names, refuses to download when TLS 1.2 or the redirect
+block cannot be set, and its elevated step loads PowerShell modules only from
+the PowerShell folder. Findings, fixes and the prepared mitigation texts:
+`docs/security-review-2026-10.md`, section "Veracode pre-check".
+
 **Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
 wide screen) with numbered pages under the grid (1 2 3, on long lists
 1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again

@@ -65,7 +65,7 @@ public class ShareService
         }
         catch (Exception ex)
         {
-            _log.LogWarning(ex, "share counter failed for {Package}", packageId);
+            _log.LogWarning(ex, "share counter failed for {Package}", LogSafe.Of(packageId));
         }
     }
 }

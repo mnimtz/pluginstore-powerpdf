@@ -244,7 +244,7 @@ public sealed class SendToStorage
         }
         catch (Exception e)
         {
-            f.Add(("error", "Storage not reachable: " + e.Message));
+            f.Add(("error", "Storage not reachable: " + CloudBackupService.Short(e)));   // S1.26.0: SAS/AccountKey masked
         }
         return (!f.Any(x => x.Item1 == "error"), f);
     }

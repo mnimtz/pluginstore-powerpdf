@@ -138,8 +138,12 @@ else
             <button type="button" class="btn small secondary" id="pkg-next">@L["Next"] ›</button>
         </span>
     </nav>
-    <script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
+    @* S1.26.0: page values as data attributes (Razor encodes them), no Html.Raw *@
+    <script nonce="@ViewContext.HttpContext.Items["CspNonce"]"
+            data-t="@System.Text.Json.JsonSerializer.Serialize(new { range = L["{0} to {1} of {2}"].Value, page = L["Page {0} of {1}"].Value, searching = L["Searching…"].Value, nothing = L["Nothing suitable found."].Value, unavailable = L["The search is not available right now."].Value })"
+            data-slugs="@System.Text.Json.JsonSerializer.Serialize(Model.Slugs)">
         (function () {
+            var D = document.currentScript.dataset;
             var search = document.getElementById('pkg-search');
             var chips = document.querySelectorAll('#pkg-chips .chip');
             var cards = document.querySelectorAll('#pkg-grid .pkg');
@@ -167,7 +171,7 @@ else
             // so "back" from an add-on returns to it.
             var size = 9, page = Math.max(1, parseInt(new URLSearchParams(location.search).get('page'), 10) || 1);
             var pager = document.getElementById('pkg-pager');
-            var T = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(new { range = L["{0} to {1} of {2}"].Value, page = L["Page {0} of {1}"].Value }));
+            var T = JSON.parse(D.t);
             function remember() {
                 try {
                     var u = new URL(location.href);
@@ -225,16 +229,16 @@ else
             if (ask) {
                 var box = document.getElementById('ai-results'), list = document.getElementById('ai-list'),
                     status = document.getElementById('ai-status');
-                var slugs = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Slugs));
+                var slugs = JSON.parse(D.slugs);
                 function run() {
                     var q = search.value.trim();
                     if (q.length < 2) { search.focus(); return; }
-                    box.hidden = false; list.innerHTML = ''; status.textContent = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Searching…"].Value));
+                    box.hidden = false; list.innerHTML = ''; status.textContent = T.searching;
                     fetch('/api/search?q=' + encodeURIComponent(q) + '&lang=' + encodeURIComponent(document.documentElement.lang || 'en'))
                         .then(function (r) { return r.json(); })
                         .then(function (j) {
                             var res = (j.ok && j.data && j.data.results) || [];
-                            status.textContent = res.length ? '' : @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Nothing suitable found."].Value));
+                            status.textContent = res.length ? '' : T.nothing;
                             res.forEach(function (h) {
                                 var li = document.createElement('li'), a = document.createElement('a');
                                 a.href = slugs[h.id] ? '/a/' + slugs[h.id] : '#';
@@ -244,7 +248,7 @@ else
                                 list.appendChild(li);
                             });
                         })
-                        .catch(function () { status.textContent = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["The search is not available right now."].Value)); });
+                        .catch(function () { status.textContent = T.unavailable; });
                 }
                 ask.addEventListener('click', run);
                 search.addEventListener('keydown', function (e) { if (e.key === 'Enter') run(); });

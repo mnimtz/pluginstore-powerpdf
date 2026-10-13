@@ -15,6 +15,8 @@ namespace AddonStore.Web.Services;
 /// </summary>
 public class CloudBackupService
 {
+    /// <summary>The local storage emulator (http://127.0.0.1) only on development servers (S1.26.0).</summary>
+    public static bool AllowLocalEmulator { get; set; }
     public const string EnabledKey = "Backup.Cloud.Enabled";
     public const string ConnectionKey = "Backup.Cloud.Connection";   // protected
     public const string ContainerKey = "Backup.Cloud.Container";
@@ -290,7 +292,7 @@ public class CloudBackupService
         try
         {
             if (access.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ||
-                access.StartsWith("http://127.0.0.1", StringComparison.OrdinalIgnoreCase))
+                (AllowLocalEmulator && access.StartsWith("http://127.0.0.1", StringComparison.OrdinalIgnoreCase)))
             {
                 var uri = new Uri(access);
                 if (!uri.Query.Contains("sig=", StringComparison.Ordinal)) return null;
@@ -323,7 +325,7 @@ public class CloudBackupService
     private static string Ascii(string s) => new(s.Select(c => c is >= ' ' and <= '~' ? c : '_').Take(120).ToArray());
 
     /// <summary>Error text without secrets (the SDK's messages can contain the request URL with its SAS).</summary>
-    private static string Short(Exception ex)
+    internal static string Short(Exception ex)
     {
         // "Retry failed after 6 tries ..." wraps the actual cause
         if (ex is AggregateException { InnerExceptions.Count: > 0 } agg) ex = agg.InnerExceptions[^1];

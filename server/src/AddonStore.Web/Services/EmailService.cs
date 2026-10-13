@@ -68,7 +68,7 @@ public class ResendEmailSender : IAppEmailSender
         }
         catch (Exception ex)
         {
-            _log.LogWarning(ex, "Sending mail to {To} failed", to);
+            _log.LogWarning(ex, "Sending mail to {To} failed", LogSafe.Of(to));
             await _audit.LogAsync("system", "mail.failed", to, $"{eventKey}: {ex.Message}");
             return new MailResult(false, ex.Message);
         }

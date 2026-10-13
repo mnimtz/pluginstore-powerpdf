@@ -159,8 +159,12 @@ public class BackupModel : PageModel
     {
         View = "safety";
         if (!Regex.IsMatch(name ?? "", @"^pre-restore-\d{8}-\d{6}\.zip$")) return NotFound();
-        var path = Path.Combine(_backup.SafetyRoot, name!);
-        if (!System.IO.File.Exists(path)) return NotFound();
+        // S1.26.0: one of the safety backups that exist, chosen by name (no form value in the path)
+        var path = Directory.Exists(_backup.SafetyRoot)
+            ? Directory.EnumerateFiles(_backup.SafetyRoot, "pre-restore-*.zip").FirstOrDefault(f => Path.GetFileName(f) == name)
+            : null;
+        if (path is null) return NotFound();
+        name = Path.GetFileName(path);
         if (BadPassword(keyPassword)) { Fail("The password must have at least 12 characters."); await LoadAsync(); return Page(); }
         var admin = await _users.GetUserAsync(User);
         var tmp = Path.Combine(Path.GetTempPath(), "pluginstore-safety-" + Guid.NewGuid().ToString("N") + ".zip");

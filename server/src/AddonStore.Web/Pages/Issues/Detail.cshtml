@@ -169,12 +169,13 @@
 <style>
     @@media (max-width: 860px) { .issue-grid { grid-template-columns: minmax(0, 1fr) !important; } }
 </style>
-<script nonce="@HttpContext.Items["CspNonce"]">
+<script nonce="@HttpContext.Items["CspNonce"]" data-ask="@L["Send this text by email to the reporter?"].Value">
     // a reply goes to the reporter by mail: ask first (in-page dialog of the layout)
     (function () {
+        var ask = document.currentScript.dataset.ask;
         var f = document.getElementById("note-form"), b = f && f.querySelector("button[data-reply]");
         if (!b) return;
-        b.addEventListener("click", function () { f.dataset.confirm = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Send this text by email to the reporter?"].Value)); });
+        b.addEventListener("click", function () { f.dataset.confirm = ask; });
         f.querySelector("button[value=note]").addEventListener("click", function () { delete f.dataset.confirm; });
     })();
 </script>

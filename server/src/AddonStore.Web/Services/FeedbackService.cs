@@ -144,7 +144,7 @@ public class FeedbackService
                 await _notify.NotifyUserAsync("Feedback", pkg.Owner, subject, text);
             }
         }
-        catch (Exception ex) { _log.LogWarning(ex, "feedback mail failed for {Package}", packageId); }
+        catch (Exception ex) { _log.LogWarning(ex, "feedback mail failed for {Package}", LogSafe.Of(packageId)); }
         return new(true, "OK", "Thank you, the report was sent to the developer.");
     }
 

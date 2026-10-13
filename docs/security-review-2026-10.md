@@ -218,3 +218,157 @@ Decided earlier and still open: no server-side malware scan (decision Oct 3,
   like a normal request so bots learn nothing; dropped attempts are audited. Still 5 requests
   per address and hour, no account enumeration.
 
+# Veracode pre-check, Oct 13, 2026 (S1.26.0, C1.9.15)
+
+Tungsten releases developments such as the Add-on Store only after a Veracode
+policy scan (static analysis of the compiled binaries, taint analysis from
+untrusted sources to sinks, findings by CWE, "Fix Required by Policy" with a
+deadline). Before that scan, server and client were reviewed with the CWE
+classes Veracode reports. Two independent read-only passes (server C#/Razor,
+client C++/WebView2), every finding checked in the code. No serious defect was
+found; the fixes below remove the real weaknesses and most findings Veracode
+would raise without a recognised cleanser. What remains is listed with a
+prepared mitigation text.
+
+Dependencies (SCA): `dotnet list package --vulnerable --include-transitive`
+clean; the client links only the WebView2 SDK 1.0.4258.31 (static loader) and
+the Plug-in UI kit; nlohmann/json is not in the client.
+
+## Fixed in S1.26.0 (server)
+
+| CWE | Where | Fix |
+|---|---|---|
+| 614 / 1004 | Culture cookie of `/set-lang` without Secure, HttpOnly, SameSite | HttpOnly, SameSite=Lax, Secure outside Development; the shell cookie is Secure outside Development too |
+| 601 | `/set-lang`, `/set-shell` redirected with `Results.Redirect` after an own check | Shared `Shell.SafeTarget` plus `Results.LocalRedirect` |
+| 22 / 73 | Restore: key file names from the backup ZIP were only checked for `/` (a backslash would leave the folder on Windows) | Exact pattern `key-<guid>.xml`, `Path.GetFileName` |
+| 73 | `/api/devkit/{path}`, `/api/sdk/{name}`, avatars, safety-backup download built paths from request values | The request only selects one of the files that exist; the path comes from the directory listing or a constant |
+| 73 | Upload bundle temp file took the extension of the ZIP entry name | Fixed `.ppak` / `.zip` |
+| 117 | Package ids, versions, kinds, mail addresses, provider names, answers of other servers went into the log unchanged | `LogSafe.Of`: control characters (also U+2028/2029) become `_`, values are cut |
+| 79 / 80 | 12 × `Html.Raw(JsonSerializer.Serialize(...))` in Index, layout, add-on picker, issue detail; `HtmlString` from a regex in Admin/Rules | JSON in Razor-encoded `data-*` attributes, read with `document.currentScript.dataset` / `JSON.parse`; rule texts built from encoded parts with `HtmlContentBuilder` |
+| 209 | Validation answers carried `ex.Message` (ZIP, JSON); SendTo storage test showed the unmasked SDK message | ZIP: exception type only; JSON: line and position; SendTo uses the masking `CloudBackupService.Short` |
+| 1333 / 400 | Regular expressions on package content without a timeout | Process-wide default timeout of 2 s (`REGEX_DEFAULT_MATCH_TIMEOUT`) |
+| 918 | Cloud backup accepted `http://127.0.0.1` (storage emulator) in production | Only on Development servers |
+| 20 / 93 | `App.PublicBaseUrl` stored unchecked; it goes into mail links and the UAT `.reg` file | Absolute https (http only for loopback), no query, fragment or user info; `.reg` values drop control characters |
+
+Note for local tests: the cloud backup against the storage emulator now needs
+the Development environment (launch configuration `pluginstore-dev`). The plain
+`pluginstore` configuration runs in Production, where antiforgery requires
+HTTPS and sign-in pages answer 500 on http://localhost.
+
+## Fixed in C1.9.15 (client)
+
+| CWE | Where | Fix |
+|---|---|---|
+| 252 / 295 | Redirect block and TLS 1.2 fallback set without checking the result (a failed call would have left the WinHTTP defaults) | Download stops when either cannot be set |
+| 73 / 252 | Temp package name contained catalog id and version; `GetTempPathW` unchecked | `addonstore-<guid>.ppak`, stop when TEMP is not available |
+| 134 | 18 messages formatted with `_snwprintf_s` and a format string from the string resources | `FPFormat` / `FPLocFormat`: placeholders filled by plain replacement; a wrong placeholder in a translation can no longer read past the arguments |
+| 117 | Log lines with catalog and server values | `WriteLine` replaces control characters |
+| 113 | `X-Install-Id` from HKCU only checked for length | Exactly 8-4-4-4-12 hex digits |
+| 476 | `get_CoreWebView2` unchecked before use | Checked, store window falls back like any WebView2 failure |
+| 362 | Beta and URL-lock flags read by worker threads | `std::atomic<bool>` |
+| 125 | Empty layout file read through `&raw[0]` | Returns early |
+| 427 (hardening) | Elevated PowerShell resolved modules through the user's `PSModulePath`; MSI log path from `$env:windir` | `$env:PSModulePath=$PSHOME+'\Modules'` before any cmdlet; `[Environment]::GetFolderPath('Windows')` |
+| 20 | `AddonStoreLink.exe` started whatever HKLM App Paths named | Only an absolute path ending in `\PowerPDF.exe` that exists |
+| Build | No CFG/CET; `AddonStoreLink.exe` without PDB | `/guard:cf`, `/CETCOMPAT`, `/DEPENDENTLOADFLAG:0x800`, full PDB for both binaries (verified with dumpbin) |
+
+## Expected findings with prepared mitigation texts
+
+Veracode does not recognise own validation routines as cleansers, so these
+places will probably still be reported. The texts are written for the
+"Propose Mitigation" dialog (English, as the reviewers read them).
+
+**CWE-78 OS Command Injection** (client `install.cpp` RunElevated and helper
+start, `webui.cpp` ShellExecute of links, `AddonStoreLink.cpp`). Mitigated by
+Design: "The started program is fixed: powershell.exe from GetSystemDirectoryW,
+msiexec.exe from the system folder, PowerPDF.exe from HKLM App Paths (admin-only,
+checked to be an existing absolute path to PowerPDF.exe). Every value from the
+network or the registry is checked against strict character whitelists (package
+id, SemVer, SHA-256 hex, binary name) after the catalog signature (ECDSA P-256,
+pinned key) was verified, quoted as a PowerShell literal and passed only as
+Base64 via -EncodedCommand, so no value can leave its string literal or add
+arguments. Links are opened only as https URLs on an allowlist or as mailto with
+one checked address, never as a file or program."
+
+**CWE-494 Download of Code Without Integrity Check** (client download and
+install chain). Mitigated by Design: "Every package is signed in the catalog
+(ECDSA P-256 over id, version, SHA-256 and binary name; public key pinned in the
+client). The SHA-256 is checked in the user context and again in the elevated
+step after the file was copied into a staging folder that only administrators
+can write, before anything is extracted or run. Redirects are disabled and the
+download is limited to the announced size."
+
+**CWE-321 / 798 Hard-coded Cryptographic Key** (client `signature.cpp`).
+Potential False Positive: "Pinned public verification keys (key pinning). They
+are not secret; the private keys exist only on the server (Data Protection
+encrypted) and offline."
+
+**CWE-73 External Control of File Name or Path** (server storage paths from
+the database: package files, source ZIPs, screenshots, mirrored packages;
+client cache file names). Mitigated by Design: "Path components are restricted
+by strict whitelists at upload (package id
+`^[a-z0-9][a-z0-9-]*(\.[a-z0-9][a-z0-9-]*)+$`, SemVer); the resolved full path is
+verified to lie inside the storage root (separator-aware prefix check). Values
+read from the database were validated when they were written."
+
+**CWE-117 Improper Output Neutralization for Logs** (remaining log calls, if
+Veracode does not accept `LogSafe.Of`). Mitigated by Design: "All values that
+do not come from constants pass a central neutralizer (LogSafe.Of on the server,
+WriteLine on the client) that replaces CR, LF, all other control characters and
+the Unicode line separators before the entry is written, so a value cannot start
+a new log line."
+
+**CWE-918 Server-Side Request Forgery** (federation master URL, update watch,
+AI providers, Azure Blob). Mitigated by Design: "Target hosts are configured by
+store administrators only (admin-only pages, audited). Federation and update-watch
+requests use https only, no automatic redirects and a timeout; federation
+requests are ECDSA-signed both ways; AI providers and Azure Blob Storage are
+reached on their fixed vendor hosts; path segments from remote answers are
+validated (alphanumeric) or Uri.EscapeDataString-encoded."
+
+**CWE-352 Cross-Site Request Forgery** (cookie-authenticated minimal API
+writes). Mitigated by Design: "Razor Pages use the antiforgery token on every
+form. Cookie-authenticated state-changing API calls need a custom request header
+that browsers cannot send cross-site without CORS (CORS is off); the sign-in
+cookie is SameSite=Lax, HttpOnly, Secure. Bearer-token calls carry no ambient
+credentials."
+
+**CWE-113 HTTP Response Splitting** (Content-Disposition file names,
+`X-Source-Version`). Potential False Positive: "Kestrel refuses CR, LF and
+other control characters in response header values; the values are validated
+(SemVer, file-name whitelist) before."
+
+**CWE-80 / 79 in text responses** (TSV catalog, markdown guide, OpenAPI).
+Potential False Positive: "Served as text/plain, text/markdown or
+text/tab-separated-values with X-Content-Type-Options: nosniff and a CSP
+without inline scripts; browsers do not render them as HTML."
+
+**CWE-319 Cleartext Transmission** (client accepts http://localhost for the
+development server). Mitigated by Network Environment: "Plain http is accepted
+only for loopback addresses (local development server); every other address
+must use https with TLS 1.2 or newer."
+
+## Not changed, on purpose
+
+- No JSON console logger: it would neutralize log injection for Veracode
+  reviewers beyond doubt, but changes the App Service log stream that
+  operations read. Revisit if Veracode refuses the CWE-117 mitigation.
+- The client keeps `_CRT_SECURE_NO_WARNINGS` (removing it is not yet tested
+  against the Power PDF SDK headers) and the `http://localhost` exception
+  (development against a local server with release builds).
+- Icons and screenshots have no catalog hash: they are no code, are checked by
+  their magic bytes and shown only as `data:` images in the store window.
+
+## For the upload to Veracode
+
+- Server: `dotnet publish -c Release` with portable PDBs; upload the publish
+  folder without `appsettings.Development.json`. Never include
+  `server/dev-credentials.local.txt` or `server/signing-recovery-key.local.pem`
+  (both are git-ignored, but they sit next to the sources).
+- Client: `client\Release\PluginStore.zxt` + `PluginStore.pdb` and
+  `client\link\Release\AddonStoreLink.exe` + `AddonStoreLink.pdb`. Veracode may
+  recognise modules by their extension; upload the plug-in as
+  `PluginStore.dll` with `PluginStore.pdb` if `.zxt` is not accepted. The PDBs
+  are not part of the MSI.
+- Python under `tools/` and `client/installer/` is build tooling and never
+  shipped; leave it out of the upload, otherwise Veracode scans it as an
+  application module.

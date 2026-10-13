@@ -1689,15 +1689,22 @@ public static class ApiEndpoints
         api.MapGet("/sdk/{name}", (string name, IWebHostEnvironment env) =>
         {
             if (name is not "pluginstore_bin.h") return NotFound("FILE_NOT_FOUND", $"No SDK file '{name}'. Available: pluginstore_bin.h.");
-            var full = Path.Combine(env.WebRootPath, "sdk", name);
-            return File.Exists(full) ? Results.File(full, "text/plain; charset=utf-8", name) : NotFound("FILE_NOT_FOUND", $"No SDK file '{name}'.");
+            // S1.26.0: the path is built from the constant, the request only selects it
+            var full = Path.Combine(env.WebRootPath, "sdk", "pluginstore_bin.h");
+            return File.Exists(full) ? Results.File(full, "text/plain; charset=utf-8", "pluginstore_bin.h") : NotFound("FILE_NOT_FOUND", "No SDK file 'pluginstore_bin.h'.");
         });
 
         api.MapGet("/devkit/{**path}", (string path, IConfiguration config, IWebHostEnvironment env) =>
         {
             var root = DevkitRoot(config, env);
-            var full = Path.GetFullPath(Path.Combine(root, path));
-            if (!IsUnder(root, full) || !File.Exists(full))
+            // S1.26.0: the request path only selects one of the files that really are in the
+            // devkit; the file served is the one found there (no request value in a file path)
+            var wanted = (path ?? "").Replace('\\', '/').TrimStart('/');
+            var full = Directory.Exists(root)
+                ? Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories)
+                    .FirstOrDefault(f => string.Equals(Path.GetRelativePath(root, f).Replace('\\', '/'), wanted, StringComparison.Ordinal))
+                : null;
+            if (full is null || !IsUnder(root, Path.GetFullPath(full)))
                 return NotFound("FILE_NOT_FOUND", $"No devkit file '{path}'. List files via GET /api/devkit.");
             var ext = Path.GetExtension(full).ToLowerInvariant();
             var type = ext switch

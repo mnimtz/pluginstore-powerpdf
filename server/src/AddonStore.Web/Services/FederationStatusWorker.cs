@@ -27,7 +27,7 @@ public class FederationStatusWorker : BackgroundService
             .OrderBy(u => u.CreatedAt).FirstOrDefault();
         if (admin is null) return;
         var r = await fed.MirrorAsync(admin);
-        _log.LogInformation("UAT daily mirror: {Result}", r.Ok ? "done" : r.Code);
+        _log.LogInformation("UAT daily mirror: {Result}", r.Ok ? "done" : LogSafe.Of(r.Code));
     }
 
     protected override async Task ExecuteAsync(CancellationToken stop)
@@ -42,7 +42,7 @@ public class FederationStatusWorker : BackgroundService
                     using var scope = _scopes.CreateScope();
                     var fed = scope.ServiceProvider.GetRequiredService<FederationService>();
                     var r = await fed.RefreshStatusAsync("UAT status check");
-                    if (!r.Ok && r.Code != "FED_NOT_PAIRED") _log.LogInformation("UAT status check: {Code}", r.Code);
+                    if (!r.Ok && r.Code != "FED_NOT_PAIRED") _log.LogInformation("UAT status check: {Code}", LogSafe.Of(r.Code));
                     await MirrorDailyAsync(scope.ServiceProvider, fed);
                 }
                 catch (Exception e) { _log.LogWarning(e, "UAT status check failed"); }

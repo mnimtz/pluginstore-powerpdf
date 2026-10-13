@@ -177,7 +177,7 @@ public class PackageValidator
         }
         catch (Exception ex)
         {
-            report.Error("ZIP_UNREADABLE", $"The file is not a readable ZIP archive ({ex.Message}).",
+            report.Error("ZIP_UNREADABLE", $"The file is not a readable ZIP archive ({ex.GetType().Name}).",   // S1.26.0: no exception text in answers
                 "Create the package as a standard ZIP container with manifest.json at the root.");
             return (report, null);
         }
@@ -278,7 +278,7 @@ public class PackageValidator
             }
             catch (JsonException ex)
             {
-                report.Error("MANIFEST_INVALID_JSON", $"manifest.json is not valid JSON ({ex.Message}).",
+                report.Error("MANIFEST_INVALID_JSON", $"manifest.json is not valid JSON (line {(ex.LineNumber ?? 0) + 1}, position {(ex.BytePositionInLine ?? 0) + 1}).",
                     "Fix the JSON syntax; validate it locally before uploading.");
                 return (report, null);
             }

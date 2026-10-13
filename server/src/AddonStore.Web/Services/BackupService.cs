@@ -342,8 +342,10 @@ public class BackupService
         foreach (var e in zip.Entries.Where(e => e.FullName.StartsWith(prefix) && e.Length > 0 && e.Length < 64 * 1024))
         {
             var name = e.FullName[prefix.Length..];
-            if (name.Contains('/') || !name.StartsWith("key-") || !name.EndsWith(".xml")) continue;
-            var target = Path.Combine(root, name);
+            // S1.26.0: exactly the names the key ring writes ("key-<guid>.xml"); a backslash
+            // or ".." would leave the folder on Windows
+            if (!System.Text.RegularExpressions.Regex.IsMatch(name, @"\Akey-[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}\.xml\z")) continue;
+            var target = Path.Combine(root, Path.GetFileName(name));
             if (!File.Exists(target)) e.ExtractToFile(target);
         }
     }

@@ -33,7 +33,7 @@ public static class SchemaUpgrade
             if (conn.State != System.Data.ConnectionState.Open) conn.Open();
             using var cmd = conn.CreateCommand();
             cmd.CommandText = "PRAGMA journal_mode=DELETE";
-            log.LogInformation("Startup: SQLite journal mode {Mode}", cmd.ExecuteScalar());
+            log.LogInformation("Startup: SQLite journal mode {Mode}", AddonStore.Web.Services.LogSafe.Of(cmd.ExecuteScalar()));
         }
         catch (Exception ex) { log.LogWarning(ex, "Startup: SQLite journal mode could not be changed"); }
 

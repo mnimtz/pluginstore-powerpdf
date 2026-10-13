@@ -10,8 +10,19 @@
     int nErr = rules.Count(r => RulesModel.SeverityOf(r, house) == "error"), nWarn = rules.Count(r => RulesModel.SeverityOf(r, house) == "warning"),
         nInfo = rules.Count(r => RulesModel.SeverityOf(r, house) == "info"), nApi = rules.Count(r => r.Api);
     // rule texts come from the guide (markdown): `code` spans as <code>, everything else encoded
-    Microsoft.AspNetCore.Html.IHtmlContent Text(string? s) => new Microsoft.AspNetCore.Html.HtmlString(
-        System.Text.RegularExpressions.Regex.Replace(System.Net.WebUtility.HtmlEncode(s ?? ""), "`([^`]+)`", "<code>$1</code>"));
+    // (S1.26.0: built from encoded parts, no raw HTML string)
+    Microsoft.AspNetCore.Html.IHtmlContent Text(string? s)
+    {
+        var b = new Microsoft.AspNetCore.Html.HtmlContentBuilder();
+        var text = s ?? "";
+        var at = 0;
+        foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(text, "`([^`]+)`"))
+        {
+            b.Append(text[at..m.Index]).AppendHtml("<code>").Append(m.Groups[1].Value).AppendHtml("</code>");
+            at = m.Index + m.Length;
+        }
+        return b.Append(text[at..]);
+    }
     string Chip(string? s) => (Model.Sev ?? "") == (s ?? "") ? "chip active" : "chip";
     var areaHouse = Model.Area is null || Model.Area == RulesModel.StoreView ? house.Rules.ToList() : house.Rules.Where(h => h.Area == Model.Area).ToList();
 }

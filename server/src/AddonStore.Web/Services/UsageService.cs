@@ -98,7 +98,7 @@ public class UsageService
         }
         catch (Exception ex)
         {
-            _log.LogWarning(ex, "usage counter failed for {Kind} {Package}", kind, packageId);
+            _log.LogWarning(ex, "usage counter failed for {Kind} {Package}", LogSafe.Of(kind), LogSafe.Of(packageId));
         }
     }
 

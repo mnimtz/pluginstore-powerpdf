@@ -72,7 +72,9 @@ public static class UploadBundle
     /// <summary>Copies one entry to a temp file, never more than <paramref name="cap"/> bytes (declared sizes can lie).</summary>
     private static string Extract(ZipArchiveEntry entry, long cap)
     {
-        var path = Path.Combine(Path.GetTempPath(), "bundle-" + Guid.NewGuid().ToString("N") + Path.GetExtension(entry.FullName));
+        // fixed extension (S1.26.0): nothing of the entry name ends up in the path
+        var ext = entry.FullName.EndsWith(".zip", StringComparison.OrdinalIgnoreCase) ? ".zip" : ".ppak";
+        var path = Path.Combine(Path.GetTempPath(), "bundle-" + Guid.NewGuid().ToString("N") + ext);
         using var input = entry.Open();
         using var output = File.Create(path);
         var buffer = new byte[81920];

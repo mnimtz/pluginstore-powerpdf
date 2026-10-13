@@ -314,13 +314,28 @@ public class SettingsModel : PageModel
         await LoadAsync();
     }
 
+    private static bool IsBaseUrl(string s) =>
+        s.Length <= 300 && !s.Any(char.IsControl) &&
+        Uri.TryCreate(s, UriKind.Absolute, out var u) &&
+        (u.Scheme == Uri.UriSchemeHttps || (u.Scheme == Uri.UriSchemeHttp && u.IsLoopback)) &&
+        string.IsNullOrEmpty(u.UserInfo) && string.IsNullOrEmpty(u.Query) && string.IsNullOrEmpty(u.Fragment);
+
     public async Task OnPostServerAsync(string? baseUrl, string? timeZone, string? sourcePolicy, bool fourEyes)
     {
         if (sourcePolicy is "off" or "recommended" or "required")
             await _settings.SetAsync("Source.Policy", sourcePolicy);
         await _settings.SetAsync("Review.FourEyes", fourEyes ? "on" : "off");
         var admin = await _users.GetUserAsync(User);
-        await _settings.SetAsync("App.PublicBaseUrl", (baseUrl ?? "").Trim().TrimEnd('/'));
+        // S1.26.0: the address goes into mail links and .reg files: absolute http(s), nothing else
+        var cleanBase = (baseUrl ?? "").Trim().TrimEnd('/');
+        if (cleanBase.Length > 0 && !IsBaseUrl(cleanBase))
+        {
+            Notice = "The public address must be an absolute https:// address without path parameters.";
+            NoticeKind = "error";
+            await LoadAsync();
+            return;
+        }
+        await _settings.SetAsync("App.PublicBaseUrl", cleanBase);
         if (timeZone is not null && TimeDisplay.Zones.Contains(timeZone))
             await _settings.SetAsync("App.TimeZone", timeZone);
         await _audit.LogAsync(admin!.DisplayName, "settings.changed", "Server", $"public base url, time zone {timeZone}, four-eyes {(fourEyes ? "on" : "off")}");
