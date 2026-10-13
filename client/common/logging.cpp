@@ -15,7 +15,7 @@ static void WriteLine(const wchar_t* rawLine)
     // server or catalog values are replaced, so no entry can be forged
     wchar_t line[2048];
     size_t i = 0;
-    for (; rawLine[i] && i < 2047; ++i)
+    for (; i < 2047 && rawLine[i]; ++i)   // bound first, then the character (CodeQL)
         line[i] = (rawLine[i] < 0x20 || rawLine[i] == 0x7F) ? L'?' : rawLine[i];
     line[i] = 0;
     wchar_t path[MAX_PATH];
