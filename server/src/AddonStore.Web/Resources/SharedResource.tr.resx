@@ -185,6 +185,8 @@
   <data name="Languages" xml:space="preserve"><value>Diller</value></data>
   <data name="Licenses" xml:space="preserve"><value>Lisanslar</value></data>
   <data name="Licenses, legal and privacy" xml:space="preserve"><value>Lisanslar, hukuki konular ve gizlilik</value></data>
+  <data name="Code security" xml:space="preserve"><value>Kod güvenliği</value></data>
+  <data name="Code security: the checks also report, as warnings, the weaknesses the company's release scan finds (unsafe buffer and format functions, command lines, DLL loading, weak cryptography, script in web windows and more). The agent guide shows what to write instead." xml:space="preserve"><value>Kod güvenliği: denetimler, şirketin yayın taramasının bulduğu zayıflıkları da uyarı olarak bildirir (güvenli olmayan arabellek ve biçim işlevleri, komut satırları, DLL yükleme, zayıf şifreleme, web pencerelerindeki betikler ve daha fazlası). Ajan kılavuzu bunların yerine ne yazılacağını gösterir.</value></data>
   <data name="List of all endpoints" xml:space="preserve"><value>Tüm uç noktaların listesi</value></data>
   <data name="Manifest and versioning" xml:space="preserve"><value>Manifest ve sürüm yönetimi</value></data>
   <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>Yalnızca MIT, BSD veya Apache-2.0 lisanslı üçüncü taraf bileşenler.</value></data>

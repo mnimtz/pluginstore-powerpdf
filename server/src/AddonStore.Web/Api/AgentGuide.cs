@@ -136,7 +136,8 @@ bearer token and JSON; nothing in it depends on one vendor. Set yourself up once
 3. **Check the connection:** `GET {{baseUrl}}/api/me` with the token.
 4. Then follow the rest of this guide: apply the **Pre-flight checklist**
    while you develop (most rules concern the plugin code, not only the
-   package), package, validate until green, submit.
+   package), write the code along **Code security** (the weaknesses the
+   company's release scan reports), package, validate until green, submit.
 5. **Store not reachable or no token?** (for example a cloud sandbox whose
    network policy blocks {{baseUrl}}): do not stop with instructions. Offer
    the user right away to build a finished **manual upload package** and
@@ -431,6 +432,32 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       run of a bare .ppak fails the same way, and a source without any C,
       C++ or C# file does not count. (SOURCE_REQUIRED, SOURCE_REJECTED,
       SOURCE_NOT_INCLUDED, SOURCE_NO_CODE)
+
+**F. Code security (warnings; admins can make them mandatory, see "Code security")**
+- [ ] Release build with /GS, /guard:cf, /CETCOMPAT, /DYNAMICBASE,
+      /NXCOMPAT and /HIGHENTROPYVA. (PE_HARDENING, PE_EXPLOIT_MITIGATIONS)
+- [ ] No copy or format function without a buffer size (strcpy, wcscat,
+      sprintf, lstrcpy ...): the `_s` versions, StringCch* or std::wstring.
+      (PE_UNSAFE_FUNCTIONS, SOURCE_UNSAFE_FUNCTION)
+- [ ] Every printf-style format is a literal; localized texts with
+      placeholders are filled by plain replacement, not by a format string
+      from the string table. (SOURCE_FORMAT_STRING)
+- [ ] Programs are started directly with their full path and quoted
+      arguments, never through system(), _popen() or a NULL program path;
+      DLLs are loaded with a full path or LOAD_LIBRARY_SEARCH_SYSTEM32, and
+      the process-wide DLL search is left alone. (SOURCE_COMMAND_EXEC,
+      SOURCE_DLL_SEARCH_PATH)
+- [ ] SHA-256 or better, AES-GCM, BCryptGenRandom for anything security
+      relevant; no fixed key, IV or salt bytes. (SOURCE_WEAK_CRYPTO,
+      SOURCE_HARDCODED_KEY)
+- [ ] XML without DTDs and external entities (MSXML 6 or XmlLite with
+      DtdProcessing_Prohibit); temporary files with random names and
+      CREATE_NEW; no NULL DACL or SDDL that grants Everyone/Users access.
+      (SOURCE_XML_EXTERNAL_ENTITIES, SOURCE_TEMP_FILE, SOURCE_WEAK_PERMISSIONS)
+- [ ] Web windows (WebView2): text through textContent, no innerHTML,
+      eval, srcdoc or postMessage to "*"; host objects and developer tools
+      off; messages checked for their source. (SOURCE_UNSAFE_HTML,
+      SOURCE_WEBVIEW_EXPOSURE)
 
 {{AddonStore.Web.Validation.RuleCatalog.ChecklistMarkdown()}}Warnings (yellow) do not block, but fix them too: missing icon, author,
 contact, screenshots, LICENSES.md.
@@ -921,6 +948,69 @@ without it):
   approve a version without stored source (versions from before S1.20.0).
 - Admins may upload new versions of any package (finding
   `ADMIN_UPLOAD_FOR_OWNER`); the owner stays the same.
+
+## Code security (static analysis)
+
+Tungsten releases software only after a static analysis release scan
+(Veracode SAST): it follows data from outside (network answers, documents,
+registry, files, page messages) to dangerous places and reports each one by
+its CWE number. Under the scanner's recommended High policy one finding of
+severity 3 (Medium) or higher fails the scan, and format strings, command
+injection and DLL loading are severity 5. The store checks the same weakness classes in every upload so
+they are fixed while you write the plug-in, not after the scan:
+
+- **Binary:** the exploit mitigations of the .zxt and the DLLs in bin/, and
+  imports of copy or format functions without a buffer size.
+- **Source:** patterns in your own files (folders of third-party code with
+  their own license file, `third_party/`, `vendor/`, `external/` ... are left
+  out). Each finding names the file and line.
+- **AI review aid** (when the store admins use it): judges in the changed
+  lines whether outside data really reaches such a place and lists every
+  weakness as its own concern with the CWE number.
+
+The pattern checks are warnings and find more than the scan (a strcpy of a
+constant is safe, the scan stays silent); fix them anyway, it is cheaper than
+proving each one safe. Admins can make any of them mandatory as a house rule.
+
+What to write, by weakness class:
+
+| CWE | Write this | Not this |
+|---|---|---|
+| 120/676 buffer copies | `wcscpy_s`, `StringCchCopyW`, `std::wstring` | `strcpy`, `wcscat`, `sprintf`, `lstrcpy`, `strncpy` |
+| 134 format strings | `swprintf_s(buf, n, L"%s", text)`; localized templates filled by plain replacement of `%s` | `swprintf_s(buf, n, LoadText(IDS_X).c_str(), ...)`, `CString::Format(IDS_X, ...)` |
+| 78 commands | `CreateProcessW(L"C:\\Windows\\System32\\x.exe", quotedArgs, ...)`, path from `GetSystemDirectoryW` | `system()`, `_popen()`, `WinExec`, `CreateProcessW(NULL, cmdline, ...)`, document text in a command line |
+| 427/114 DLL loading | `LoadLibraryExW(L"x.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32)`, own DLLs through `pluginstore_bin.h` | `LoadLibraryW(L"x.dll")`, `SetDllDirectoryW`, `SetDefaultDllDirectories` (they change all of Power PDF) |
+| 327/328/338 crypto | SHA-256, AES-GCM, `BCryptGenRandom` | MD5, SHA-1, DES, RC4, ECB, `rand()` for anything security relevant |
+| 321 keys | keys created at run time, secrets with DPAPI (`CryptProtectData`) | `static const BYTE kKey[] = { 0x.. }` |
+| 611 XML | MSXML 6, XmlLite with `DtdProcessing_Prohibit` | MSXML 3 (`DOMDocument30`), `ProhibitDTD` false, `resolveExternals` true |
+| 377 temp files | GUID name in `GetTempPathW`, `CreateFileW(..., CREATE_NEW, ...)` | `tmpnam`, `_mktemp`, `tmpfile` |
+| 732 permissions | NULL security attributes (the user's default DACL) | `SetSecurityDescriptorDacl(&sd, TRUE, NULL, ...)`, SDDL `(A;;GA;;;WD)` |
+| 117 logs | strip CR, LF and control characters from outside values before they reach a log line | logging a server answer or a file name unchanged |
+| 79/749/346 web windows | `textContent`, `createElement`, `PostWebMessageAsJson`, check the message source, block `NavigationStarting` | `innerHTML` with data, `eval`, `srcdoc`, `postMessage(x, "*")`, `AddHostObjectToScript`, developer tools on |
+
+Release build settings (Visual Studio, Release|x64):
+
+```xml
+<ClCompile>
+  <ControlFlowGuard>Guard</ControlFlowGuard>       <!-- /guard:cf -->
+  <BufferSecurityCheck>true</BufferSecurityCheck>  <!-- /GS (default) -->
+  <SDLCheck>true</SDLCheck>                        <!-- /sdl -->
+  <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>  <!-- /Zi -->
+</ClCompile>
+<Link>
+  <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+  <CETCompat>true</CETCompat>                      <!-- /CETCOMPAT -->
+  <AdditionalOptions>/DEPENDENTLOADFLAG:0x800 %(AdditionalOptions)</AdditionalOptions>
+</Link>
+```
+
+For the release scan itself, the scanner wants its own build: a separate
+configuration (for example `VeracodeScan|x64`) with `/Zi /Od /GS-`, the debug
+runtime (`/MTd` or `/MDd`), no `/RTC`, and `/INCREMENTAL:NO /DEBUG:FULL`,
+uploaded with the PDB of every EXE and DLL. Only x64 is scanned (no ARM64).
+Never put that scan build into a store package: its debug runtime is refused
+(PE_DEBUG_RUNTIME). The HTML and JavaScript of web windows go to the scan as
+source files, not minified.
 
 ## Changing an existing add-on (admins: source round trip)
 
@@ -1646,6 +1736,19 @@ be free of warnings before review. Info is for information only.
 | PACKAGE_BLOCKED | error | The add-on is blocked by the store admins for a security reason; it takes no uploads. |
 | BLOCK_INVALID | error (400) | A block request without a reason (3 to 300 characters), or for something that cannot be blocked. |
 | PE_HARDENING | warning | Built without ASLR (/DYNAMICBASE) or DEP (/NXCOMPAT). |
+| PE_EXPLOIT_MITIGATIONS | warning | A .zxt or bin/ DLL is built without Control Flow Guard (/guard:cf), stack buffer checks (/GS), CET shadow stack compatibility (/CETCOMPAT) or 64-bit ASLR (/HIGHENTROPYVA); see "Code security". |
+| PE_UNSAFE_FUNCTIONS | warning | The binary imports copy or format functions without a buffer size (strcpy, wcscat, sprintf, gets, lstrcpy, StrCpy, wsprintf ...; CWE-120). |
+| SOURCE_UNSAFE_FUNCTION | warning | Your source calls copy or format functions without a buffer size, also strncpy/strncat (CWE-120/676); file:line in the message. |
+| SOURCE_FORMAT_STRING | warning | A printf-style call (printf, sprintf_s, swprintf_s, _snwprintf_s, StringCchPrintf, CString::Format ...) whose format is not a literal or named constant, e.g. a text from the string table (CWE-134). |
+| SOURCE_COMMAND_EXEC | warning | system(), _popen(), WinExec or CreateProcess with a NULL program path (CWE-78). |
+| SOURCE_DLL_SEARCH_PATH | warning | LoadLibrary/LoadLibraryEx with a bare file name and no LOAD_LIBRARY_SEARCH flag, or SetDllDirectory/SetDefaultDllDirectories/AddDllDirectory/SetSearchPathMode, which change the DLL search of all of Power PDF (CWE-427/114). |
+| SOURCE_WEAK_CRYPTO | warning | MD5, MD4, SHA-1, DES, 3DES, RC2, RC4, ECB mode or rand()/srand() (CWE-327/328/338); fine where nothing depends on it for security, say so to the reviewer. |
+| SOURCE_UNSAFE_HTML | warning | The add-on's HTML/JS sets innerHTML/outerHTML/srcdoc with data, calls insertAdjacentHTML, document.write, eval, new Function, jQuery .html(), timers with a string, or postMessage to "*" (CWE-79). |
+| SOURCE_XML_EXTERNAL_ENTITIES | warning | MSXML 3, ProhibitDTD switched off, resolveExternals on, XmlLite DtdProcessing_Parse or libxml2 entity/DTD loading (CWE-611). |
+| SOURCE_TEMP_FILE | warning | tmpnam, _tempnam, _mktemp or tmpfile: predictable temporary file names (CWE-377). |
+| SOURCE_WEAK_PERMISSIONS | warning | A NULL DACL (SetSecurityDescriptorDacl with NULL) or SDDL that grants Everyone, Users or anonymous full access (CWE-732). |
+| SOURCE_HARDCODED_KEY | warning | A byte array named key, iv, salt or secret with fixed values (CWE-321/329); public verification keys are fine, say so to the reviewer. |
+| SOURCE_WEBVIEW_EXPOSURE | warning | WebView2 with AddHostObjectToScript, host objects allowed or developer tools switched on (CWE-749/346). |
 | VERSIONINFO_MISSING | warning | The .zxt has no VERSIONINFO resource. |
 | VERSIONINFO_MISMATCH | warning | The FILEVERSION of the .zxt differs from the manifest version (usually an old build was packaged). |
 | UI_LANGS_UNREADABLE | warning | The resources of the .zxt could not be read to check the languages. |
@@ -1896,7 +1999,10 @@ Store: {{baseUrl}}
    build a plugin or package from memory.
 1b. Apply the guide's **Pre-flight checklist** (every hard rule: code and
    build, manifest, ribbon and UILayout, ZIP, source) while you write the
-   plugin, and check every item again before each package.
+   plugin, and check every item again before each package. Write the code
+   along the guide's **Code security** table from the first line (bounded
+   copies, literal formats, full paths, no innerHTML): the company's release
+   scan reports exactly these weaknesses.
 2. The personal API token is in the environment variable `PPAK_TOKEN`.
    Never print it, never write it into files or commits. If it is missing,
    ask the user to create one on {{baseUrl}}/Profile and set the variable.

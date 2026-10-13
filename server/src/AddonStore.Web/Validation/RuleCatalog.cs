@@ -125,12 +125,15 @@ public static class RuleCatalog
     {
         "Package structure", "Manifest and versioning", "Categories", "Languages", "Binaries and integrity",
         "Runtime and dependencies", "Ribbon and layout", "Licenses, legal and privacy", "Icon and screenshots",
-        "Security and system access", "Source code", "Customer deliveries", "API, accounts and limits",
+        "Security and system access", "Code security", "Source code", "Customer deliveries", "API, accounts and limits",
     };
 
     public static string AreaOf(string code)
     {
         bool Any(params string[] prefixes) => prefixes.Any(p => code.StartsWith(p, StringComparison.Ordinal));
+        // S1.27.0: the weakness classes of a static analysis release scan (also the report area)
+        if (code is "PE_HARDENING" or "PE_EXPLOIT_MITIGATIONS" or "PE_UNSAFE_FUNCTIONS" || SourceSecurity.Codes.Contains(code))
+            return "Code security";
         if (code is "NETWORK_UNDECLARED" or "PROCESS_INJECTION" or "RUNTIME_DOWNLOAD" or "PROCESS_START" or "PERSISTENCE"
             or "ELEVATION_UNDECLARED" or "ELEVATION_DECLARED" or "COMMAND_SHELL" or "IMPORT_BY_ORDINAL"
             or "INSECURE_HTTP" or "TLS_CHECK_DISABLED" or "PACKAGE_BLOCKED") return "Security and system access";

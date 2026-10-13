@@ -528,6 +528,24 @@ block cannot be set, and its elevated step loads PowerShell modules only from
 the PowerShell folder. Findings, fixes and the prepared mitigation texts:
 `docs/security-review-2026-10.md`, section "Veracode pre-check".
 
+**Code security checks for every add-on (S1.27.0):** the weakness classes of the
+release scan are part of the store's checks for every upload. A new report and
+rules area "Code security" covers the exploit mitigations of the .zxt and bin/
+DLLs (`PE_EXPLOIT_MITIGATIONS`: /guard:cf, /GS, /CETCOMPAT, /HIGHENTROPYVA),
+imports of unbounded copy/format functions (`PE_UNSAFE_FUNCTIONS`) and eleven
+source checks on the developer's own files (`SOURCE_UNSAFE_FUNCTION`,
+`SOURCE_FORMAT_STRING`, `SOURCE_COMMAND_EXEC`, `SOURCE_DLL_SEARCH_PATH`,
+`SOURCE_WEAK_CRYPTO`, `SOURCE_UNSAFE_HTML`, `SOURCE_XML_EXTERNAL_ENTITIES`,
+`SOURCE_TEMP_FILE`, `SOURCE_WEAK_PERMISSIONS`, `SOURCE_HARDCODED_KEY`,
+`SOURCE_WEBVIEW_EXPOSURE`), each with file and line. All are warnings; admins can
+make any of them mandatory on the Rules page, which now also applies to the source
+report. The agent guide has a "Code security" section (what to write instead, the
+release build settings and the separate scan build), checklist part F and the
+workflow of SKILL.md and AGENTS.md point at it. The AI review aid gets the
+findings with their places and a review brief by CWE class; every weakness becomes
+its own concern with the CWE number. Trial run and sources:
+`docs/security-review-2026-10.md`, section "Code security checks for every add-on".
+
 **Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
 wide screen) with numbered pages under the grid (1 2 3, on long lists
 1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again

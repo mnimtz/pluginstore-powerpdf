@@ -185,6 +185,8 @@
   <data name="Languages" xml:space="preserve"><value>Nyelvek</value></data>
   <data name="Licenses" xml:space="preserve"><value>Licencek</value></data>
   <data name="Licenses, legal and privacy" xml:space="preserve"><value>Licencek, jogi kérdések és adatvédelem</value></data>
+  <data name="Code security" xml:space="preserve"><value>Kódbiztonság</value></data>
+  <data name="Code security: the checks also report, as warnings, the weaknesses the company's release scan finds (unsafe buffer and format functions, command lines, DLL loading, weak cryptography, script in web windows and more). The agent guide shows what to write instead." xml:space="preserve"><value>Kódbiztonság: az ellenőrzések figyelmeztetésként jelzik azokat a gyengeségeket is, amelyeket a vállalat kiadási vizsgálata talál (nem biztonságos puffer- és formázófüggvények, parancssorok, DLL-betöltés, gyenge titkosítás, szkriptek webes ablakokban és egyebek). Az ügynök útmutatója megmutatja, mit kell helyettük írni.</value></data>
   <data name="List of all endpoints" xml:space="preserve"><value>Az összes végpont listája</value></data>
   <data name="Manifest and versioning" xml:space="preserve"><value>Manifest és verziókezelés</value></data>
   <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>Kizárólag MIT, BSD vagy Apache-2.0 licencű külső összetevők.</value></data>

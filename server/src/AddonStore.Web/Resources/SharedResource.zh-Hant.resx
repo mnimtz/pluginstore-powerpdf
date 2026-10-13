@@ -185,6 +185,8 @@
   <data name="Languages" xml:space="preserve"><value>語言</value></data>
   <data name="Licenses" xml:space="preserve"><value>授權</value></data>
   <data name="Licenses, legal and privacy" xml:space="preserve"><value>授權、法律與隱私權</value></data>
+  <data name="Code security" xml:space="preserve"><value>程式碼安全</value></data>
+  <data name="Code security: the checks also report, as warnings, the weaknesses the company's release scan finds (unsafe buffer and format functions, command lines, DLL loading, weak cryptography, script in web windows and more). The agent guide shows what to write instead." xml:space="preserve"><value>程式碼安全：檢查也會以警告形式回報公司發行掃描所發現的弱點（不安全的緩衝區與格式化函式、命令列、DLL 載入、弱加密、Web 視窗中的指令碼等）。代理程式指南說明了應改為如何撰寫。</value></data>
   <data name="List of all endpoints" xml:space="preserve"><value>所有端點清單</value></data>
   <data name="Manifest and versioning" xml:space="preserve"><value>資訊清單與版本設定</value></data>
   <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>僅限採用 MIT、BSD 或 Apache-2.0 授權的協力廠商元件。</value></data>

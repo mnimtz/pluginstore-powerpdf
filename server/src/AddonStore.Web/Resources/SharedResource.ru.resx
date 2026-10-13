@@ -185,6 +185,8 @@
   <data name="Languages" xml:space="preserve"><value>Языки</value></data>
   <data name="Licenses" xml:space="preserve"><value>Лицензии</value></data>
   <data name="Licenses, legal and privacy" xml:space="preserve"><value>Лицензии, правовые вопросы и конфиденциальность</value></data>
+  <data name="Code security" xml:space="preserve"><value>Безопасность кода</value></data>
+  <data name="Code security: the checks also report, as warnings, the weaknesses the company's release scan finds (unsafe buffer and format functions, command lines, DLL loading, weak cryptography, script in web windows and more). The agent guide shows what to write instead." xml:space="preserve"><value>Безопасность кода: проверки также сообщают в виде предупреждений об уязвимостях, которые находит релизное сканирование компании (небезопасные функции работы с буферами и форматированием, командные строки, загрузка DLL, слабая криптография, скрипты в веб-окнах и другое). В руководстве для агента показано, что писать вместо этого.</value></data>
   <data name="List of all endpoints" xml:space="preserve"><value>Список всех конечных точек</value></data>
   <data name="Manifest and versioning" xml:space="preserve"><value>Манифест и управление версиями</value></data>
   <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>Только сторонние компоненты под лицензиями MIT, BSD или Apache-2.0.</value></data>

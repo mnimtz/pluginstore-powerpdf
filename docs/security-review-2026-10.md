@@ -369,6 +369,73 @@ must use https with TLS 1.2 or newer."
   recognise modules by their extension; upload the plug-in as
   `PluginStore.dll` with `PluginStore.pdb` if `.zxt` is not accepted. The PDBs
   are not part of the MSI.
+  Correction (S1.27.0, from the Veracode packaging guide for Windows C/C++,
+  https://docs.veracode.com/r/compilation_winccpp): Veracode prefers its own
+  build, `/Zi /Od /GS-`, debug runtime (`/MTd` or `/MDd`), no `/RTC`,
+  `/INCREMENTAL:NO /DEBUG:FULL`, every EXE/DLL with its PDB; without the PDB of
+  the main module the scan does not start. `/Z7` does not produce usable PDBs.
+  Only x86/x64 are scanned (no ARM64). Optimized release builds work but give
+  weaker results. Such a scan build must never be packaged for the store.
 - Python under `tools/` and `client/installer/` is build tooling and never
   shipped; leave it out of the upload, otherwise Veracode scans it as an
   application module.
+
+# Code security checks for every add-on (S1.27.0)
+
+The CWE classes of the release scan became part of the store's own checks for
+every upload, the agent guide and the AI review aid.
+
+What Veracode does (research Oct 13, 2026, docs.veracode.com):
+- "Veracode and the CWE" (https://docs.veracode.com/r/c_review_cwe) lists
+  about 175 CWEs with severity 0 to 5; for example 78, 114, 134 and 190 are
+  severity 5, 22, 73, 79, 80, 117, 327, 377, 427, 611, 732 and 798 severity 3.
+- The recommended High and Very High policies allow no finding of Medium (3)
+  or higher; grace periods are set per organisation policy, Veracode has no
+  default (https://docs.veracode.com/r/Built_in_security_policies,
+  https://docs.veracode.com/r/c_policy_grace_period).
+- Findings need data flow from an attacker-controlled source. For C there are
+  only two recognised cleansers (base64_encode, UrlEscape, CWE-113) and no
+  custom cleansers (https://docs.veracode.com/r/Supported_C_Cleansing_Functions,
+  https://docs.veracode.com/r/customcleansers); the rest is closed by
+  mitigation proposals.
+
+What the store checks now (all warnings; admins can make each mandatory on
+the Rules page, which now also applies to the source report):
+
+| Code | CWE | Where |
+|---|---|---|
+| PE_EXPLOIT_MITIGATIONS | hardening | .zxt and bin/: /guard:cf, /GS (load config security cookie), /CETCOMPAT (debug directory type 20), /HIGHENTROPYVA |
+| PE_UNSAFE_FUNCTIONS | 120 | imports of strcpy, wcscat, sprintf, gets, lstrcpy, StrCpy, wsprintf ... |
+| SOURCE_UNSAFE_FUNCTION | 120/676 | the Microsoft SDL banned copy/format functions, also strncpy/strncat |
+| SOURCE_FORMAT_STRING | 134 | printf family and CString::Format whose format is not a literal or named constant (IDS_ ids count as resource formats) |
+| SOURCE_COMMAND_EXEC | 78 | system, _popen, WinExec, CreateProcess with a NULL program path |
+| SOURCE_DLL_SEARCH_PATH | 427/114 | LoadLibrary with a bare name and no LOAD_LIBRARY_SEARCH flag; SetDllDirectory, SetDefaultDllDirectories, AddDllDirectory, SetSearchPathMode |
+| SOURCE_WEAK_CRYPTO | 327/328/338 | MD5, MD4, SHA-1, DES, 3DES, RC2, RC4, ECB, rand() |
+| SOURCE_UNSAFE_HTML | 79 | innerHTML/outerHTML/srcdoc with data, insertAdjacentHTML, document.write, eval, new Function, jQuery .html(), string timers, postMessage to "*" |
+| SOURCE_XML_EXTERNAL_ENTITIES | 611 | MSXML 3, ProhibitDTD off, resolveExternals on, XmlLite DtdProcessing_Parse, libxml2 NOENT/DTDLOAD |
+| SOURCE_TEMP_FILE | 377 | tmpnam, _tempnam, _mktemp, tmpfile |
+| SOURCE_WEAK_PERMISSIONS | 732 | NULL DACL, SDDL granting Everyone/Users/anonymous full access |
+| SOURCE_HARDCODED_KEY | 321/329 | byte arrays named key/iv/salt/secret with fixed values |
+| SOURCE_WEBVIEW_EXPOSURE | 749/346 | AddHostObjectToScript, host objects allowed, developer tools on |
+
+Source checks read the developer's own files only: comments are blanked,
+string literals masked for name searches, folders with their own license file
+and `third_party/`, `vendor/`, `external/`, `deps/`, `node_modules/`,
+`packages/` are skipped. The AI review aid receives the code security findings
+with their places and a review brief for the CWE classes that patterns cannot
+judge (integer overflow in sizes, paths and commands from outside data, log
+injection, secrets in memory or storage, prompt injection); it reports every
+weakness as its own concern with the CWE number, and a high one means at least
+"check_more".
+
+Trial run over the newest version of our 17 own add-ons (package + source):
+- No CET anywhere and no Control Flow Guard in 13 of them; /GS and 64-bit ASLR
+  everywhere. The store client 1.9.15 is the only add-on without findings.
+- SOURCE_FORMAT_STRING in 11 add-ons: localized texts formatted with a format
+  from the string table (the pattern C1.9.15 removed from the client).
+- rand() in Barcode Stamps (GUID fallback), SHA-1 in QES Sign (LTV) and a
+  Cloud Signature test tool, a constant SVG through innerHTML in the AI
+  services window.
+- False alarms found in the trial run and fixed before release: names inside
+  string literals, the template form `sprintf_s(buf, "fmt", ...)`, named
+  constant formats, and "file.html (x)" in comments.

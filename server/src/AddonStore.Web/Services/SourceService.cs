@@ -182,6 +182,19 @@ public class SourceService
             var tlsOff = new SortedSet<string>();
             var foreignDocs = new SortedSet<string>();   // S1.25.0: standards, schemas, data with a copyright notice
             var hasCode = false;
+            // S1.27.0 code security: only the developer's own files; folders of third-party code
+            // (a license file of their own, or a usual vendor folder name) are left out
+            var security = new AddonStore.Web.Validation.SourceSecurity();
+            var foreignDirs = entries
+                .Select(x => x.FullName.Replace('\\', '/'))
+                .Where(f => { var n = Path.GetFileName(f).ToLowerInvariant(); return (n.StartsWith("license") && !n.StartsWith("licenses.")) || n.StartsWith("copying"); })
+                .Select(f => Path.GetDirectoryName(f)?.Replace('\\', '/') ?? "")
+                .Where(d => d.Length > 0)
+                .Select(d => "/" + d.ToLowerInvariant() + "/")
+                .ToHashSet();
+            bool OwnCode(string lowerPath) =>
+                !foreignDirs.Any(lowerPath.StartsWith) &&
+                !new[] { "/third_party/", "/thirdparty/", "/3rdparty/", "/vendor/", "/external/", "/extern/", "/deps/", "/node_modules/", "/packages/" }.Any(lowerPath.Contains);
 
             foreach (var e in entries)
             {
@@ -212,7 +225,8 @@ public class SourceService
 
                 // LICENSES.md is the package's own component list, not a license text.
                 var isLicense = (name.StartsWith("license") && !name.StartsWith("licenses.")) || name.StartsWith("copying") || name.StartsWith("notice");
-                if (!isLicense && !TextExtensions.Contains(ext)) continue;
+                var isWeb = AddonStore.Web.Validation.SourceSecurity.IsWeb(ext);
+                if (!isLicense && !TextExtensions.Contains(ext) && !isWeb) continue;
                 if (e.Length > MaxScannedFileBytes) continue;
 
                 string text;
@@ -226,6 +240,7 @@ public class SourceService
 
                 foreach (var (label, rx) in PackageValidator.SecretPatterns)
                     if (rx.IsMatch(text)) secrets.Add($"{label} in {e.FullName}");
+                if (!isLicense && !SdkHeaders.Contains(name) && OwnCode(lower)) security.Scan(e.FullName, ext, text);
                 // certificate checks switched off (S1.0.11): documents and credentials would be open to interception
                 if (ext is ".c" or ".cc" or ".cpp" or ".cxx" or ".h" or ".hpp" or ".hxx" or ".inl" or ".cs")
                     foreach (var (label, rx) in TlsBypassPatterns)
@@ -277,6 +292,7 @@ public class SourceService
             if (foreignDocs.Count > 0)
                 report.Warn("SOURCE_FOREIGN_DOCUMENT", $"The source ZIP contains documents with a copyright notice: {string.Join("; ", foreignDocs.Take(10))}.",
                     "Include standards, specifications, schemas, sample files and data sets of others only when their license allows passing them on; otherwise leave them out and say in a README where to get them. Your own documents are fine; the reviewer checks.");
+            ReportSecurity(report, security);
             if (thirdParty.Count > 0)
                 report.Info("THIRDPARTY_SOURCE_DETECTED", $"Third-party code folders: {string.Join("; ", thirdParty.Take(15))}.");
             if (buildOutput.Count > 0)
@@ -286,6 +302,41 @@ public class SourceService
                 report.Warn("SOURCE_SDK_INCLUDED", $"The ZIP contains Power PDF Plugin SDK headers, e.g. {string.Join(", ", sdk.Take(3))}.",
                     "Do not bundle the SDK; reference its location (e.g. in the project file or a README).");
         }
+        // S1.27.0: the store's stricter rules apply to the source checks too (code security
+        // warnings an admin made mandatory become errors and refuse the source)
+        AddonStore.Web.Validation.RuleCatalog.Escalate(report);
         return report;
+    }
+
+    /// <summary>Code security findings of the source (S1.27.0), warnings with the places (file:line).</summary>
+    private static void ReportSecurity(ValidationReport report, AddonStore.Web.Validation.SourceSecurity s)
+    {
+        string Places(string code) => string.Join("; ", s.Findings[code].Take(12)) + (s.Findings[code].Count > 12 ? $" (+{s.Findings[code].Count - 12} more)" : "");
+        void Warn(string code, string what, string hint)
+        {
+            if (s.Findings.ContainsKey(code)) report.Warn(code, $"{what}: {Places(code)}.", hint);
+        }
+        Warn(AddonStore.Web.Validation.SourceSecurity.UnsafeFunction, "Copy or format functions without a buffer size (CWE-120)",
+            "Use the bounded versions: strcpy_s/wcscpy_s, strcat_s/wcscat_s, sprintf_s/swprintf_s, StringCchCopy/StringCchPrintf, or std::string/std::wstring. A value longer than the buffer would overwrite memory.");
+        Warn(AddonStore.Web.Validation.SourceSecurity.FormatString, "Format strings that are not a constant (CWE-134)",
+            "Pass a literal format (L\"%s\") and the text as an argument, or fill placeholders by plain replacement. A format from resources, files or the network with a wrong placeholder reads past the arguments and can crash Power PDF.");
+        Warn(AddonStore.Web.Validation.SourceSecurity.CommandExec, "Commands started through the shell or without a program path (CWE-78)",
+            "Start the program directly with CreateProcessW and its full path as the first argument (from GetSystemDirectoryW or the install folder), quote every argument, and never put document, user or network text into a command line.");
+        Warn(AddonStore.Web.Validation.SourceSecurity.DllSearchPath, "DLLs loaded by name only (CWE-427)",
+            "Load system DLLs with LoadLibraryExW(name, nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32) and your own DLLs with their full path (bin/ through pluginstore_bin.h); a bare name lets a DLL of the same name in another folder load into Power PDF.");
+        Warn(AddonStore.Web.Validation.SourceSecurity.WeakCrypto, "Weak cryptography or random numbers (CWE-327/328/338)",
+            "For security use SHA-256 or better, AES-GCM, and BCryptGenRandom (RandomNumberGenerator in .NET). MD5, SHA-1 or rand() are fine only where nothing depends on them for security (a cache key, a checksum a standard demands); say so to the reviewer.");
+        Warn(AddonStore.Web.Validation.SourceSecurity.UnsafeHtml, "HTML or script built from strings in the add-on's web pages (CWE-79)",
+            "Set text with textContent and build elements with createElement; no innerHTML/outerHTML/insertAdjacentHTML/srcdoc/jQuery .html() with data, no eval, new Function or string timers, and postMessage only to a named origin. Document or server text in HTML runs as script in the add-on's window.");
+        Warn(AddonStore.Web.Validation.SourceSecurity.XmlEntities, "XML parsing that may resolve external entities or DTDs (CWE-611)",
+            "Use MSXML 6 (DTDs are refused by default) or XmlLite with DtdProcessing_Prohibit; never switch ProhibitDTD off or resolveExternals on. A crafted XML (XFA, XMP, e-invoice) could otherwise read local files or call out to the network.");
+        Warn(AddonStore.Web.Validation.SourceSecurity.TempFile, "Temporary files with predictable names (CWE-377)",
+            "Create temporary files with a random name (a GUID) in GetTempPath2W/GetTempPathW and open them with CreateFileW(CREATE_NEW); tmpnam, _mktemp and tmpfile names can be guessed and taken over by another process.");
+        Warn(AddonStore.Web.Validation.SourceSecurity.WeakPermissions, "Objects created with open access rights (CWE-732)",
+            "Pass NULL security attributes (the default DACL of the user) or a DACL limited to the current user; a NULL DACL or SDDL that grants Everyone/Users full access lets any process on the machine change files, keys or events of the add-on.");
+        Warn(AddonStore.Web.Validation.SourceSecurity.HardcodedKey, "Fixed key, IV or salt bytes in the code (CWE-321/329)",
+            "Create keys and IVs at run time (BCryptGenRandom), keep secrets with DPAPI (CryptProtectData) and never ship a fixed key: it is the same in every installation and can be read from the DLL. Public verification keys are fine; say so to the reviewer.");
+        Warn(AddonStore.Web.Validation.SourceSecurity.WebViewExposure, "WebView2 settings that open the window to page scripts (CWE-749/346)",
+            "Talk to the page through PostWebMessageAsJson/WebMessageReceived and check the message source; keep host objects and developer tools off in release builds, and block navigation away from your own page (NavigationStarting).");
     }
 }

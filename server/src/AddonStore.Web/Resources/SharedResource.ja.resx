@@ -185,6 +185,8 @@
   <data name="Languages" xml:space="preserve"><value>言語</value></data>
   <data name="Licenses" xml:space="preserve"><value>ライセンス</value></data>
   <data name="Licenses, legal and privacy" xml:space="preserve"><value>ライセンス、法務、プライバシー</value></data>
+  <data name="Code security" xml:space="preserve"><value>コードのセキュリティ</value></data>
+  <data name="Code security: the checks also report, as warnings, the weaknesses the company's release scan finds (unsafe buffer and format functions, command lines, DLL loading, weak cryptography, script in web windows and more). The agent guide shows what to write instead." xml:space="preserve"><value>コードのセキュリティ: チェックでは、社内のリリーススキャンが検出する脆弱性も警告として報告します（安全でないバッファー関数や書式関数、コマンドライン、DLL の読み込み、弱い暗号、Web ウィンドウ内のスクリプトなど）。代わりに何を書くべきかはエージェント ガイドに記載されています。</value></data>
   <data name="List of all endpoints" xml:space="preserve"><value>すべてのエンドポイントの一覧</value></data>
   <data name="Manifest and versioning" xml:space="preserve"><value>マニフェストとバージョン管理</value></data>
   <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>サードパーティ コンポーネントは MIT、BSD、Apache-2.0 のもののみ。</value></data>

@@ -61,6 +61,49 @@ public sealed class PeResources
     /// <summary>True when the image carries a CLR (.NET) header.</summary>
     public bool IsManaged => Directory(14).Rva != 0;
 
+    // --- exploit mitigations (S1.27.0) -----------------------------------------------------
+
+    /// <summary>/HIGHENTROPYVA (IMAGE_DLLCHARACTERISTICS_HIGH_ENTROPY_VA).</summary>
+    public bool HighEntropyVa => (DllCharacteristics & 0x0020) != 0;
+
+    /// <summary>/guard:cf (IMAGE_DLLCHARACTERISTICS_GUARD_CF).</summary>
+    public bool ControlFlowGuard => (DllCharacteristics & 0x4000) != 0;
+
+    /// <summary>/GS: the load configuration names a security cookie (IMAGE_LOAD_CONFIG_DIRECTORY64.SecurityCookie).</summary>
+    public bool StackCookie
+    {
+        get
+        {
+            var (rva, _) = Directory(10);
+            var o = rva == 0 ? -1 : Offset(rva);
+            if (o < 0 || o + 4 > _b.Length) return false;
+            var size = BitConverter.ToUInt32(_b, (int)o);
+            const int cookie = 0x58;
+            return size >= cookie + 8 && o + cookie + 8 <= _b.Length && BitConverter.ToUInt64(_b, (int)o + cookie) != 0;
+        }
+    }
+
+    /// <summary>/CETCOMPAT: debug directory entry of type 20 (EX_DLLCHARACTERISTICS) with the CET_COMPAT bit.</summary>
+    public bool CetCompatible
+    {
+        get
+        {
+            var (rva, size) = Directory(6);
+            var o = rva == 0 ? -1 : Offset(rva);
+            if (o < 0) return false;
+            var n = Math.Min(size / 28, 64u);
+            for (int i = 0; i < n; i++)
+            {
+                var e = o + i * 28;
+                if (e + 28 > _b.Length) break;
+                if (BitConverter.ToUInt32(_b, (int)e + 12) != 20) continue;
+                var raw = BitConverter.ToUInt32(_b, (int)e + 24);
+                return raw + 4 <= _b.Length && (BitConverter.ToUInt32(_b, (int)raw) & 0x1) != 0;
+            }
+            return false;
+        }
+    }
+
     /// <summary>Names exported by the DLL (at most 4096).</summary>
     public List<string> Exports()
     {

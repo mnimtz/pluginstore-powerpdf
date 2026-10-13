@@ -152,6 +152,34 @@ public class AiAssist
         return ReviewLanguages.ContainsKey(c) ? c : fallback;
     }
 
+    /// <summary>
+    /// S1.27.0: the code security part of the review aid. The weakness classes a static
+    /// analysis of a release scan reports; the store's pattern checks find places, the AI
+    /// judges in the changed lines whether outside data really reaches them and says so.
+    /// </summary>
+    internal const string SecurityLens =
+        "Then review the changed lines for code weaknesses as a static security analysis (release scan) would report them, " +
+        "and judge each one: does data from outside (network answers, documents, registry, files, command line, web page messages) " +
+        "reach it? Look for: OS command injection, values in command lines or scripts (CWE-78); file paths built from outside " +
+        "values (CWE-22/73); format strings that are not constant, also loaded from resources (CWE-134); copies or formatting " +
+        "without a buffer size, unchecked lengths, integer overflow in sizes (CWE-120/190); log lines with outside values that may " +
+        "contain line breaks (CWE-117); DLLs loaded by bare name or from writable folders (CWE-427/114); weak hashes, ciphers or " +
+        "rand() for anything security relevant (CWE-327/328/338); certificate checks switched off or plain http (CWE-295/319); " +
+        "hard-coded passwords, keys or tokens (CWE-798); HTML or script built from strings in the add-on's web windows, " +
+        "messages accepted without checking their origin (CWE-79/346); error texts with internal details shown to users (CWE-209); " +
+        "temporary files with predictable names (CWE-377); null pointers or unchecked return values of security calls (CWE-476/252); " +
+        "sizes for allocations computed from outside values without an overflow check (CWE-190/680); XML parsed with DTDs or " +
+        "external entities (CWE-611); objects created with open access rights (CWE-732); secrets stored in the registry or files " +
+        "without DPAPI, or kept in memory without SecureZeroMemory (CWE-312/316); fixed keys or IVs (CWE-321); WebView2 host objects " +
+        "or developer tools left on (CWE-749); document or user text put into an AI prompt without separating it from the " +
+        "instructions (prompt injection, CWE-1427). " +
+        "Report every weakness you find as its own concern that starts with the CWE number and names the file, for example " +
+        "\"CWE-134 (stamp.cpp): the message format comes from the string table\"; severity \"high\" when outside data reaches it, " +
+        "\"warning\" when it is only a risky pattern. When the automatic checks list code security findings (codes PE_EXPLOIT_MITIGATIONS, " +
+        "PE_UNSAFE_FUNCTIONS, TLS_CHECK_DISABLED and the SOURCE_ codes of the code security area), give each of them a concern too and say whether it looks " +
+        "harmless or needs a fix before the release scan. Any \"high\" security concern means the recommendation is at least " +
+        "\"check_more\". ";
+
     /// <summary>Builds the review aid for a version in <paramref name="language"/> (one of
     /// <see cref="ReviewLanguages"/>, else English) and stores it; returns false when AI gave no answer.</summary>
     public async Task<bool> ReviewAsync(PackageVersion v, string language, CancellationToken ct = default)
@@ -167,6 +195,12 @@ public class AiAssist
         facts.Append("Plug-in id: ").Append(v.PackageId).Append(", new version ").Append(v.Version)
              .Append(prev is null ? " (first version)" : $", previous version {prev.Version}").Append('\n');
         facts.Append("Automatic store checks (code, severity): ").Append(FindingCodes(v.ValidationReportJson)).Append('\n');
+        // S1.27.0: the source checks too (code security findings name the places)
+        if (v.SourceReportJson is not null)
+            facts.Append("Automatic source checks (code, severity): ").Append(FindingCodes(v.SourceReportJson)).Append('\n');
+        var places = SecurityFindings(v.ValidationReportJson) + SecurityFindings(v.SourceReportJson);
+        if (places.Length > 0)   // file names are the developer's text: inside <data>
+            facts.Append("Code security findings with their places:\n<data>\n").Append(Data(places)).Append("</data>\n");
 
         var newSrc = v.SourcePath is null ? null : ReadSource(Path.Combine(_svc.StorageRoot, v.SourcePath));
         var oldSrc = prev?.SourcePath is null ? null : ReadSource(Path.Combine(_svc.StorageRoot, prev.SourcePath));
@@ -217,7 +251,8 @@ public class AiAssist
             "version. Summarize what changed compared with the previous version, judge whether the developer's changelog " +
             "matches the changes, and list concerns: new network access or hosts, new third-party code or licenses, " +
             "credentials, file or registry operations outside the plug-in's own data, process launches, obfuscation, " +
-            "and anything that contradicts the compliance statement. Be concrete and short. The administrator decides; " +
+            "and anything that contradicts the compliance statement. " + SecurityLens +
+            "Be concrete and short. The administrator decides; " +
             $"you only advise. Write all text in {lang}. " + Untrusted,
             facts.ToString() + manifest, ReviewSchema, true, ct);
         if (r is not { } e) return false;
@@ -336,6 +371,28 @@ public class AiAssist
             return s.Length > 12000 ? s[..12000] : s;
         }
         catch (JsonException) { return "(manifest unreadable)"; }
+    }
+
+    /// <summary>S1.27.0: messages of the code security findings (they name file:line), one per line, capped.</summary>
+    private static string SecurityFindings(string? reportJson)
+    {
+        if (string.IsNullOrEmpty(reportJson)) return "";
+        try
+        {
+            using var doc = JsonDocument.Parse(reportJson);
+            if (!doc.RootElement.TryGetProperty("Findings", out var f) && !doc.RootElement.TryGetProperty("findings", out f)) return "";
+            var sb = new StringBuilder();
+            foreach (var x in f.EnumerateArray())
+            {
+                var code = x.TryGetProperty("Code", out var c) || x.TryGetProperty("code", out c) ? c.GetString() ?? "" : "";
+                if (!Validation.ReportView.IsCodeSecurity(code)) continue;
+                var msg = x.TryGetProperty("Message", out var m) || x.TryGetProperty("message", out m) ? m.GetString() ?? "" : "";
+                sb.Append(code).Append(": ").Append(msg.Length > 1500 ? msg[..1500] : msg).Append('\n');
+                if (sb.Length > 8000) break;
+            }
+            return sb.ToString();
+        }
+        catch (JsonException) { return ""; }
     }
 
     private static string FindingCodes(string reportJson)

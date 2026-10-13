@@ -185,6 +185,8 @@
   <data name="Languages" xml:space="preserve"><value>Språk</value></data>
   <data name="Licenses" xml:space="preserve"><value>Lisenser</value></data>
   <data name="Licenses, legal and privacy" xml:space="preserve"><value>Lisenser, juss og personvern</value></data>
+  <data name="Code security" xml:space="preserve"><value>Kodesikkerhet</value></data>
+  <data name="Code security: the checks also report, as warnings, the weaknesses the company's release scan finds (unsafe buffer and format functions, command lines, DLL loading, weak cryptography, script in web windows and more). The agent guide shows what to write instead." xml:space="preserve"><value>Kodesikkerhet: Kontrollene rapporterer også som advarsler svakhetene som selskapets frigivelsesskanning finner (usikre buffer- og formatfunksjoner, kommandolinjer, lasting av DLL-er, svak kryptografi, skript i webvinduer og mer). Agentveiledningen viser hva du skal skrive i stedet.</value></data>
   <data name="List of all endpoints" xml:space="preserve"><value>Liste over alle endepunkter</value></data>
   <data name="Manifest and versioning" xml:space="preserve"><value>Manifest og versjonering</value></data>
   <data name="Only third-party components under MIT, BSD or Apache-2.0." xml:space="preserve"><value>Bare tredjepartskomponenter under MIT, BSD eller Apache-2.0.</value></data>

@@ -709,6 +709,7 @@ public class PackageValidator
         if ((pe.DllCharacteristics & DynamicBase) == 0 || (pe.DllCharacteristics & NxCompat) == 0)
             report.Warn("PE_HARDENING", $"'{file}' is built without ASLR (/DYNAMICBASE) or DEP (/NXCOMPAT).",
                 "Keep the default linker options /DYNAMICBASE and /NXCOMPAT (and /HIGHENTROPYVA); they make exploits much harder.");
+        CheckMitigations(report, file, pe);
         var fv = pe.FileVersion();
         if (fv is null)
             report.Warn("VERSIONINFO_MISSING", $"'{file}' has no version resource.",
@@ -804,6 +805,11 @@ public class PackageValidator
     private static readonly string[] PersistenceStrings =
         { @"\currentversion\run", @"\currentversion\runonce", "schedule.service", "schtasks", @"\start menu\programs\startup",
           "image file execution options", "appinit_dlls", @"\currentversion\winlogon" };
+    /// <summary>C runtime and Windows functions without a buffer size (S1.27.0, CWE-120/676; Microsoft SDL banned list).</summary>
+    internal static readonly string[] UnsafeFunctions =
+        { "strcpy", "wcscpy", "_mbscpy", "strcat", "wcscat", "_mbscat", "sprintf", "vsprintf", "gets", "_getws",
+          "lstrcpyA", "lstrcpyW", "lstrcpynA", "lstrcpynW", "lstrcatA", "lstrcatW", "StrCpyA", "StrCpyW", "StrCatA", "StrCatW",
+          "StrCatBuffA", "StrCatBuffW", "wsprintfA", "wsprintfW", "wvsprintfA", "wvsprintfW" };
     private static readonly Regex PlainHttpUrl = new(@"http://([A-Za-z0-9\-]+(?:\.[A-Za-z0-9\-]+)*\.[A-Za-z]{2,})", RegexOptions.Compiled);
 
     private static void CheckCapabilities(ValidationReport report, string file, byte[] bytes, JsonElement root)
@@ -841,6 +847,12 @@ public class PackageValidator
         if (download.Count > 0)
             report.Error("RUNTIME_DOWNLOAD", $"'{file}' downloads files to disk with {string.Join(", ", download)}.",
                 "Add-ons must not fetch and run code at run time: updates come only through the store, where they are checked. Fetch data from a declared service with WinHTTP and never execute or load what you download.");
+
+        // S1.27.0 (code security): only real imports count here; the names also appear as strings in harmless places
+        var unsafeImports = UnsafeFunctions.Where(imp.Functions.Contains).ToList();
+        if (unsafeImports.Count > 0)
+            report.Warn("PE_UNSAFE_FUNCTIONS", $"'{file}' imports functions that copy or format without a buffer size: {string.Join(", ", unsafeImports)}.",
+                "Use the bounded versions (strcpy_s, wcscat_s, sprintf_s, StringCchCopy, StringCchPrintf, std::string/std::wstring); a too long value would overwrite memory (CWE-120).");
 
         var processes = Uses(ProcessFunctions);
         if (HasToken(bytes, "Win32_Process")) processes.Add("WMI Win32_Process");   // process creation through WMI (S1.13.1)
@@ -1102,6 +1114,25 @@ public class PackageValidator
         if ((pe.DllCharacteristics & DynamicBase) == 0 || (pe.DllCharacteristics & NxCompat) == 0)
             report.Warn("PE_HARDENING", $"'{file}' is built without ASLR (/DYNAMICBASE) or DEP (/NXCOMPAT).",
                 "Keep the default linker options /DYNAMICBASE and /NXCOMPAT (and /HIGHENTROPYVA).");
+        CheckMitigations(report, file, pe);
+    }
+
+    /// <summary>
+    /// Code security (S1.27.0): the exploit mitigations a static analysis or security
+    /// review expects in a native DLL besides ASLR and DEP. A warning; admins can make it
+    /// mandatory as a house rule.
+    /// </summary>
+    private static void CheckMitigations(ValidationReport report, string file, PeResources pe)
+    {
+        var missing = new List<string>();
+        if (!pe.ControlFlowGuard) missing.Add("Control Flow Guard (/guard:cf)");
+        if (!pe.StackCookie) missing.Add("stack buffer checks (/GS)");
+        if (!pe.CetCompatible) missing.Add("CET shadow stack compatibility (/CETCOMPAT)");
+        if (!pe.HighEntropyVa) missing.Add("64-bit ASLR (/HIGHENTROPYVA)");
+        if (missing.Count > 0)
+            report.Warn("PE_EXPLOIT_MITIGATIONS", $"'{file}' is built without {string.Join(", ", missing)}.",
+                "Release configuration: C/C++ > Code Generation > Control Flow Guard = Yes (/guard:cf) and Security Check = /GS; " +
+                "Linker > Advanced > CET Shadow Stack Compatible = Yes (/CETCOMPAT) and /HIGHENTROPYVA. Their run-time cost is small, and they make exploits of memory errors much harder.");
     }
 
     private void CheckIcon(ValidationReport report, ZipArchive zip)

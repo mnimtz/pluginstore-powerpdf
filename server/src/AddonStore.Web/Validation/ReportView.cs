@@ -33,6 +33,9 @@ public static class ReportView
                                       "LICENSE_NOT_ALLOWED", "LICENSE_NEEDS_REVIEW", "LICENSE_COPYLEFT_BINARY",
                                       "LICENSE_WEAK_COPYLEFT_BINARY", "THIRDPARTY_UNDECLARED", "THIRDPARTY_DETECTED",
                                       "SECRET_DETECTED", "EXTERNAL_SERVICE_UNDECLARED", "THIRDPARTY_TRADEMARK" }),
+        // S1.27.0: the weakness classes (CWE) a static analysis of a release scan reports
+        ("Code security", new[] { "PE_HARDENING", "PE_EXPLOIT_MITIGATIONS", "PE_UNSAFE_FUNCTIONS", "TLS_CHECK_DISABLED" }
+                                      .Concat(SourceSecurity.Codes).ToArray()),
         ("Icon", new[] { "ICON_MISSING", "ICON_INVALID", "ICON_NOT_SQUARE", "ICON_TOO_LARGE" }),
     };
 
@@ -60,6 +63,9 @@ public static class ReportView
         }
         return report;
     }
+
+    /// <summary>True for a finding of the "Code security" area (S1.27.0; the AI review aid reads their places).</summary>
+    public static bool IsCodeSecurity(string code) => Areas.First(a => a.Label == "Code security").Codes.Contains(code);
 
     public static List<Area> Build(ValidationReport report)
     {

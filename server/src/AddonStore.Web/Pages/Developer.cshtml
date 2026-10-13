@@ -61,7 +61,8 @@ Invoke-WebRequest @(b)/api/skill -OutFile "$env:USERPROFILE\.claude\skills\power
         <li>@L["Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0."]</li>
         <li>@L["LICENSES.md reproduces each component with its copyright and full license text, including code a library contains from others; check the built package yourself before the upload."]</li>
     </ul>
-    <p style="font-size:.88rem;color:var(--tun-slate)">@L["The automatic checks verify these rules; every finding comes with a concrete fix."]</p>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["Code security: the checks also report, as warnings, the weaknesses the company's release scan finds (unsafe buffer and format functions, command lines, DLL loading, weak cryptography, script in web windows and more). The agent guide shows what to write instead."] <a href="/agent-guide">@L["Agent guide"]</a></p>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["The automatic checks verify these rules; every finding comeswith a concrete fix."]</p>
 </div>
 
 <div class="card">
