@@ -546,6 +546,15 @@ findings with their places and a review brief by CWE class; every weakness becom
 its own concern with the CWE number. Trial run and sources:
 `docs/security-review-2026-10.md`, section "Code security checks for every add-on".
 
+**Sharper AI review aid (S1.27.1):** concerns name only weaknesses still open in the new
+version (a removed one belongs in the summary and is never "high"); in a multi-module
+repository the shared build tooling, generator tables and string tables in the source ZIP
+are not taken for this plug-in's code, a third-party component counts only when the
+binary checks report it or the plug-in's own code compiles it, and UI texts alone are no
+evidence of a function. The server enforces "a high concern means at least check_more"
+when the review is stored, shown on the page and read through the API, also for reviews
+stored before.
+
 **Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
 wide screen) with numbered pages under the grid (1 2 3, on long lists
 1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again

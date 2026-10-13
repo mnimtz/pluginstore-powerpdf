@@ -126,8 +126,11 @@ public class AiAssist
                 ? c.EnumerateArray().Where(x => x.ValueKind == JsonValueKind.Object)
                    .Select(x => (Pick(x, "severity", "info", "info", "warning", "high"), Str(x, "text"))).ToList()
                 : new();
+            var rec = Pick(e, "recommendation", "check_more", "approve", "check_more", "reject");
+            // S1.27.1: also for reviews stored before: a high concern never shows "approve"
+            if (rec == "approve" && concerns.Any(x => x.Item1 == "high")) rec = "check_more";
             return new ReviewView(Str(e, "summary"), Strings("changes"), Pick(e, "changelog_fits", "unknown", "yes", "partly", "no", "unknown"),
-                                  Str(e, "changelog_comment"), concerns, Pick(e, "recommendation", "check_more", "approve", "check_more", "reject"));
+                                  Str(e, "changelog_comment"), concerns, rec);
         }
         catch (JsonException) { return null; }
     }
@@ -178,7 +181,34 @@ public class AiAssist
         "\"warning\" when it is only a risky pattern. When the automatic checks list code security findings (codes PE_EXPLOIT_MITIGATIONS, " +
         "PE_UNSAFE_FUNCTIONS, TLS_CHECK_DISABLED and the SOURCE_ codes of the code security area), give each of them a concern too and say whether it looks " +
         "harmless or needs a fix before the release scan. Any \"high\" security concern means the recommendation is at least " +
-        "\"check_more\". ";
+        "\"check_more\". " +
+        // S1.27.1: lessons from the first reviews (a fixed weakness rated "high", shared tooling taken for plug-in code)
+        "Concerns are only about what is still open in the NEW version: a weakness this version removes (for example innerHTML " +
+        "replaced by DOMParser, a printf format replaced by plain replacement) belongs in the summary and the changes, never in the " +
+        "concerns, and is never \"high\". Severity says how big the remaining risk is, not how important the change is. " +
+        "The source ZIP of a plug-in from a multi-module repository can contain the repository's shared build tooling (generator " +
+        "tables and texts of other modules, shared string tables, shared helper code): changes there are not changes of this " +
+        "plug-in unless its own sources use them. Count a third-party component as part of this plug-in only when the automatic " +
+        "binary checks report it (THIRDPARTY_DETECTED, NOTICE_INCOMPLETE, LICENSE_* codes) or the plug-in's own code clearly " +
+        "compiles it; otherwise do not say that the compliance statement is wrong. Texts in a string table alone (labels such as " +
+        "\"password\" or \"client secret\") are no evidence that this plug-in handles such data. ";
+
+    /// <summary>
+    /// S1.27.1: the server, not the model, enforces "a high concern means at least check_more"
+    /// (a review recommended "approve" next to a "high" concern). The stored JSON is otherwise
+    /// the model's answer unchanged.
+    /// </summary>
+    internal static string EnforceRecommendation(JsonElement review)
+    {
+        var node = System.Text.Json.Nodes.JsonNode.Parse(review.GetRawText())!.AsObject();
+        static string? S(System.Text.Json.Nodes.JsonNode? n) =>
+            n is System.Text.Json.Nodes.JsonValue v && v.TryGetValue<string>(out var s) ? s : null;   // never throws on odd types
+        var high = node["concerns"] is System.Text.Json.Nodes.JsonArray arr &&
+                   arr.Any(c => c is System.Text.Json.Nodes.JsonObject o && S(o["severity"]) == "high");
+        if (high && S(node["recommendation"]) == "approve")
+            node["recommendation"] = "check_more";
+        return node.ToJsonString(new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });   // stored, never put into HTML as is
+    }
 
     /// <summary>Builds the review aid for a version in <paramref name="language"/> (one of
     /// <see cref="ReviewLanguages"/>, else English) and stores it; returns false when AI gave no answer.</summary>
@@ -257,7 +287,7 @@ public class AiAssist
             facts.ToString() + manifest, ReviewSchema, true, ct);
         if (r is not { } e) return false;
         var target = await _db.PackageVersions.FirstAsync(x => x.Id == v.Id, ct);
-        target.AiReviewJson = e.GetRawText();
+        target.AiReviewJson = EnforceRecommendation(e);
         target.AiReviewAt = DateTime.UtcNow;
         target.AiReviewModel = cfg.Provider + "/" + cfg.Model;
         target.AiReviewLang = language;

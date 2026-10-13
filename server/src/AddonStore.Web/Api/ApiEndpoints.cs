@@ -1106,7 +1106,9 @@ public static class ApiEndpoints
             var v = await db.PackageVersions.AsNoTracking().FirstOrDefaultAsync(x => x.PackageId == id && x.Version == version);
             if (v is null) return NotFound("VERSION_NOT_FOUND", $"No version {version} of '{id}'.");
             if (v.AiReviewJson is null) return NotFound("AI_REVIEW_MISSING", "No review aid has been created for this version.");
-            using var doc = System.Text.Json.JsonDocument.Parse(v.AiReviewJson);
+            using var raw = System.Text.Json.JsonDocument.Parse(v.AiReviewJson);
+            // S1.27.1: reviews stored before also answer with the enforced recommendation
+            using var doc = System.Text.Json.JsonDocument.Parse(AddonStore.Web.Services.AiAssist.EnforceRecommendation(raw.RootElement));
             return Results.Json(new { ok = true, data = new { id, version, model = v.AiReviewModel, at = v.AiReviewAt, language = v.AiReviewLang, review = doc.RootElement.Clone() } });
         }).RequireAuthorization("ReviewerOrAdmin");
 

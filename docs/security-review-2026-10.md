@@ -439,3 +439,30 @@ Trial run over the newest version of our 17 own add-ons (package + source):
 - False alarms found in the trial run and fixed before release: names inside
   string literals, the template form `sprintf_s(buf, "fmt", ...)`, named
   constant formats, and "file.html (x)" in comments.
+
+Follow-up releases the same day: all 15 own add-ons submitted with CFG/CET and
+the CWE-134 fixes, Send to 0.2.11 and Cloud Signature 0.2.5 (LICENSES.md names
+every declared component), Stamp Assistant 1.2.6 (unique temporary file name
+with CREATE_NEW when the ribbon layout is written, CWE-377; FP1 and Printix
+carry the fix in their next release).
+
+## AI review aid, first results (S1.27.1)
+
+The first review aids on the submitted versions showed three kinds of error,
+all fixed in the review brief:
+- a weakness the version removes (innerHTML replaced by DOMParser in the AI
+  services window) was reported as a "high" concern, next to the
+  recommendation "approve";
+- in the multi-module Feature Packs the source ZIP holds the shared build
+  tooling (generator table of all modules, notices of nlohmann/json, shared
+  web window code): the AI took it for new third-party code of 1-Click
+  Signing and Commerzbank Sign and called their compliance statement wrong,
+  although neither compiles nlohmann/json or WebView2;
+- the shared FP2 string table made it assume that the Stamp Assistant handles
+  Printix credentials (Printix itself keeps the secret with DPAPI and clears
+  it with SecureZeroMemory).
+The brief now limits concerns to weaknesses still open in the new version,
+counts third-party code only on the binary checks' evidence or the plug-in's
+own compiled code, and treats UI texts as no evidence. The server enforces
+"high means at least check_more" when a review is stored, shown and read
+through the API, also for reviews stored earlier.
