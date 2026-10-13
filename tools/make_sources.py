@@ -83,6 +83,8 @@ def project_common(root, proj_rel):
         text = f.read()
     files = set()
     for inc in re.findall(r'<(?:ClCompile|ClInclude)\s+Include="([^"]+)"', text):
+        # FP1 store projects name their files as $(FPRoot)common\... (the pack root)
+        inc = inc.replace('$(FPRoot)', root + os.sep)
         p = on_disk(os.path.normpath(os.path.join(base, inc)))
         if os.path.isfile(p):
             files.add(p)
@@ -100,6 +102,13 @@ def project_common(root, proj_rel):
                     break
     common = os.path.join(root, 'common') + os.sep
     return sorted(os.path.relpath(p, root) for p in files if p.startswith(common))
+
+
+def fp1_paths(module, dirs):
+    """What an FP1 store module's source ZIP holds (S1.27.3): of common/ only the files its project
+    compiles and their headers (as FP2), so the source shows nothing of other modules' shared code."""
+    return ([p for p in FP1_COMMON if p != 'common'] + project_common(FP1, f'store/{module}/{module}.vcxproj')
+            + dirs + [f'store/{module}'])
 
 
 def spec(name):
@@ -132,7 +141,7 @@ def main():
                  'MailMerge': 'mailmerge', 'CommerzbankSign': 'commerzbanksign'}[module]
         s = spec(sname)
         build(s['id'], version_of(s), module, 'Enhanced Feature Pack (C:\\Claude\\EnhancedFeaturePack), store build', FP1,
-              FP1_COMMON + dirs + [f'store/{module}'],
+              fp1_paths(module, dirs),
               f'Run: python store/tools/gen_store.py, then store/build_store.cmd (builds store/{module}/{module}.vcxproj).')
     for module, dirs in FP2_MODULES.items():
         s = spec(module.lower())
