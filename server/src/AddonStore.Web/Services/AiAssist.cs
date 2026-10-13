@@ -279,16 +279,28 @@ public class AiAssist
                 if (tooling.Count > 0)
                     facts.Append("Changed build tooling, documents and data files (not compiled into the plug-in; lines not shown):\n<data>\n")
                          .Append(Data(string.Join(", ", tooling.Take(60)))).Append("\n</data>\n");
-                foreach (var k in changed.Concat(added).Where(IsShippable))
+                // S1.27.4: code first, then web pages, then resources and project files; every file gets at
+                // most a share of the budget, so a big string table (new languages) cannot push the code out
+                const int perFile = 12000;
+                var shortened = new List<string>();
+                foreach (var k in changed.Concat(added).Where(IsShippable).OrderBy(DiffRank).ThenBy(k => k, StringComparer.Ordinal))
                 {
                     var lines = LineDiff(oldSrc?.GetValueOrDefault(k) ?? "", newSrc[k]);
                     if (lines.Length == 0) continue;
+                    if (budget <= 0) { shortened.Add(k + " (not shown)"); continue; }
                     var chunk = $"--- {k}\n{lines}\n";
-                    if (chunk.Length > budget) chunk = chunk[..budget];
+                    var cap = Math.Min(perFile, budget);
+                    if (chunk.Length > cap)
+                    {
+                        chunk = chunk[..cap] + "\n[... more changed lines of this file not shown]\n";
+                        shortened.Add(k);
+                    }
                     diff.Append(chunk);
                     budget -= chunk.Length;
-                    if (budget <= 0) break;
                 }
+                if (shortened.Count > 0)
+                    facts.Append("Files whose changed lines are shortened or not shown (size limit; do not conclude that nothing changed there):\n<data>\n")
+                         .Append(Data(string.Join(", ", shortened.Take(60)))).Append("\n</data>\n");
                 facts.Append("Changed lines (+ added, - removed), possibly shortened:\n<data>\n").Append(Data(diff.ToString())).Append("\n</data>\n");
             }
             else facts.Append("Source excerpts are not sent (setting off); judge from the file lists, hosts and manifest.\n");
@@ -457,6 +469,14 @@ public class AiAssist
         { ".cpp", ".c", ".cc", ".cxx", ".h", ".hpp", ".hxx", ".inl", ".cs", ".rc", ".rc2", ".def", ".idl",
           ".vcxproj", ".props", ".targets", ".csproj", ".html", ".htm", ".js", ".css", ".xml" };
     private static bool IsShippable(string path) => ShippableExt.Contains(Path.GetExtension(path));
+
+    /// <summary>S1.27.4: order of the changed files in the review aid: code, web pages, then resources and projects.</summary>
+    private static int DiffRank(string path) => Path.GetExtension(path).ToLowerInvariant() switch
+    {
+        ".cpp" or ".c" or ".cc" or ".cxx" or ".h" or ".hpp" or ".hxx" or ".inl" or ".cs" => 0,
+        ".html" or ".htm" or ".js" or ".css" => 1,
+        _ => 2,
+    };
 
     /// <summary>S1.27.0: messages of the code security findings (they name file:line), one per line, capped.</summary>
     private static string SecurityFindings(string? reportJson)

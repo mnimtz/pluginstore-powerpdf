@@ -484,3 +484,14 @@ generator table `store/tools/gen_store.py` against the fact line. S1.27.3
 sends the changed lines only of shippable file types (code, resources,
 project files, web pages) and names build tooling, documents and data files
 without their content.
+
+With S1.27.3 1-Click Signing moved to "approve". Commerzbank Sign 1.5.2 showed
+the shared web window code (`common/fpweb.*`) because FP1 source ZIPs held the
+whole `common/` folder; they now hold only the files the module compiles
+(tools/make_sources.py, as FP2), and the 1.5.2 source on production was
+replaced. Its remaining changelog notes were right, so Commerzbank Sign 1.5.3
+names the five further languages and the options page under Add-on Store.
+The review of 1.5.3 then missed the options change: the 60,000-character
+budget went to `res/FeaturePack.rc` (110 KB of new language blocks, sorted
+before `store/common/storeinit.cpp`). S1.27.4 sends code files first, caps
+each file at 12,000 characters and names shortened files.

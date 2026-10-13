@@ -569,6 +569,12 @@ web pages); build tooling, documents and data tables (`.py`, `.md`, `.json`, `.c
 for example a generator table that also describes other modules) are only named.
 What ships is covered by the binary checks.
 
+**AI review aid sees the code first (S1.27.4):** changed files are sent code first
+(C/C++/C#), then web pages, then resources and project files, each at most 12,000
+characters of the 60,000; files that were shortened or left out are named, so the AI
+does not conclude that nothing changed there (before, a string table with five new
+languages used up the budget and hid the code change behind a changelog entry).
+
 **Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
 wide screen) with numbered pages under the grid (1 2 3, on long lists
 1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again
