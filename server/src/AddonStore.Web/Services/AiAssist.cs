@@ -197,7 +197,10 @@ public class AiAssist
         "third-party code the store knows, and license or notice files of other modules in the source ZIP do not change that. " +
         "Warnings about code this version does not change (a finding that the automatic checks report on unchanged code) are " +
         "concerns of severity \"warning\" or \"info\" and alone are no reason for \"check_more\"; recommend \"check_more\" for a " +
-        "high concern, for new risky code, or when the changes do not match the changelog. ";
+        "high concern, for new risky code, or when the changes do not match the changelog. " +
+        // S1.27.5
+        "When the facts give the new part of a running changelog, judge only that part against the changes. A changelog that " +
+        "does not match the changes is a concern of severity \"warning\" (never \"high\"): it is a text problem, not a risk. ";
 
     /// <summary>
     /// S1.27.1: the server, not the model, enforces "a high concern means at least check_more"
@@ -307,6 +310,11 @@ public class AiAssist
         }
 
         var manifest = new StringBuilder();
+        // S1.27.5: what this version itself claims, against a running changelog
+        if (prev is not null && NewChangelogPart(ChangelogEn(v.ManifestJson), ChangelogEn(prev.ManifestJson)) is { } part)
+            manifest.Append("The changelog of this plug-in keeps the texts of earlier versions. The part that is new against the compared version ")
+                    .Append("(judge only this part against the changes; the rest describes earlier versions):\n<data>\n")
+                    .Append(Data(part.Length == 0 ? "(no new text: the changelog is the same as before)" : part)).Append("\n</data>\n");
         manifest.Append("New manifest:\n<data>\n").Append(Data(ManifestDigest(v.ManifestJson))).Append("\n</data>\n");
         if (prev is not null) manifest.Append("Previous manifest:\n<data>\n").Append(Data(ManifestDigest(prev.ManifestJson))).Append("\n</data>\n");
 
@@ -415,6 +423,36 @@ public class AiAssist
         foreach (var l in oldText.Split('\n'))
             if (l.Trim().Length > 0 && (!newCount.TryGetValue(l, out var c) || c-- <= 0)) { sb.Append("- ").Append(l).Append('\n'); if (c >= 0) newCount[l] = c; }
         return sb.Length > 20000 ? sb.ToString(0, 20000) : sb.ToString();
+    }
+
+    /// <summary>The English changelog of a manifest ("" when missing or unreadable).</summary>
+    private static string ChangelogEn(string? json)
+    {
+        if (string.IsNullOrEmpty(json)) return "";
+        try
+        {
+            using var doc = JsonDocument.Parse(json);
+            if (!doc.RootElement.TryGetProperty("changelog", out var f)) return "";
+            if (f.ValueKind == JsonValueKind.String) return f.GetString() ?? "";
+            return f.ValueKind == JsonValueKind.Object && f.TryGetProperty("en", out var en) && en.ValueKind == JsonValueKind.String ? en.GetString() ?? "" : "";
+        }
+        catch (JsonException) { return ""; }
+    }
+
+    /// <summary>
+    /// S1.27.5: the part of the changelog that is new against the compared version. Many plug-ins keep
+    /// a running changelog (new text in front of, or behind, the earlier ones); the review judges only
+    /// the new part. Null when the changelog does not continue the earlier one (then all of it is new).
+    /// </summary>
+    internal static string? NewChangelogPart(string current, string previous)
+    {
+        string N(string s) => System.Text.RegularExpressions.Regex.Replace(s, @"\s+", " ").Trim();
+        var cur = N(current); var old = N(previous);
+        if (old.Length == 0 || cur.Length == 0) return null;
+        if (cur == old) return "";
+        if (cur.EndsWith(old, StringComparison.Ordinal)) return cur[..^old.Length].Trim();
+        if (cur.StartsWith(old, StringComparison.Ordinal)) return cur[old.Length..].Trim();
+        return null;
     }
 
     private static string ManifestDigest(string json)

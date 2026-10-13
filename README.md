@@ -575,6 +575,12 @@ characters of the 60,000; files that were shortened or left out are named, so th
 does not conclude that nothing changed there (before, a string table with five new
 languages used up the budget and hid the code change behind a changelog entry).
 
+**Running changelogs in the AI review aid (S1.27.5):** many add-ons keep the texts of
+earlier versions in their changelog (new text in front or behind). The server works out
+the part that is new against the compared version and hands only that part to the AI as
+this version's claim; a changelog that does not match the changes is a "warning", never
+"high".
+
 **Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
 wide screen) with numbered pages under the grid (1 2 3, on long lists
 1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again

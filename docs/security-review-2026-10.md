@@ -495,3 +495,10 @@ The review of 1.5.3 then missed the options change: the 60,000-character
 budget went to `res/FeaturePack.rc` (110 KB of new language blocks, sorted
 before `store/common/storeinit.cpp`). S1.27.4 sends code files first, caps
 each file at 12,000 characters and names shortened files.
+
+Meanwhile 1.5.2 was approved, so 1.5.3 (same code) compared with 1.5.2 and the
+model read the whole running changelog (all texts since 1.5.0) as claims of
+1.5.3, rated "high". S1.27.5 hands the AI only the new part of a running
+changelog (text added in front or behind, worked out by the server) and makes
+a changelog mismatch a "warning". Commerzbank Sign 1.5.3 itself is redundant
+after the approval of 1.5.2 (rejection recommended).
