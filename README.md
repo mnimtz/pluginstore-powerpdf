@@ -590,6 +590,12 @@ template now asks for infrastructure encryption, soft delete for blobs and the d
 (7 days) and the App Service health check on /api/ping; findings decided against are
 listed with their reasons in `.trivyignore`.
 
+**Author filter (S1.28.0, client 1.9.16):** the start page and the store window
+in Power PDF offer an author choice next to the search ("Author: All" and the
+names), shown once at least two authors have add-ons in the catalog. It works
+together with category and search; the start page keeps it in the address
+(`?author=`, an unknown name is ignored).
+
 **Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
 wide screen) with numbered pages under the grid (1 2 3, on long lists
 1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again

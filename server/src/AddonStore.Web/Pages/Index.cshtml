@@ -59,6 +59,20 @@ else
         {
             <button type="button" class="btn small secondary" id="ai-ask" title="@L["Describe what you want to do; AI suggests matching add-ons."]">@L["Ask AI"]</button>
         }
+        @* S1.28.0: only the add-ons of one author; shown from two authors on, labels from existing texts *@
+        @{ var authors = Model.Items.Select(i => i.Author).Where(a => !string.IsNullOrWhiteSpace(a)).Distinct().OrderBy(a => a, StringComparer.CurrentCultureIgnoreCase).ToList(); }
+        @if (authors.Count > 1)
+        {
+            <label class="author-pick">@L["Author"]
+                <select id="pkg-author">
+                    <option value="">@L["All"]</option>
+                    @foreach (var a in authors)
+                    {
+                        <option value="@a">@a</option>
+                    }
+                </select>
+            </label>
+        }
         <div class="chips" id="pkg-chips">
             <button class="chip active" data-cat="">@L["All"]</button>
             @foreach (var cat in Model.Items.GroupBy(i => i.Category).Select(g => g.First()).OrderBy(i => i.CategoryName))
@@ -86,7 +100,7 @@ else
     <div class="grid" id="pkg-grid">
         @foreach (var item in Model.Items)
         {
-            <div class="card pkg@(item.Featured ? " featured" : "")" data-cat="@item.Category" data-id="@item.Id"
+            <div class="card pkg@(item.Featured ? " featured" : "")" data-cat="@item.Category" data-id="@item.Id" data-author="@item.Author"
                  data-text="@(item.Name.ToLowerInvariant()) @(item.Id) @(item.Description.ToLowerInvariant()) @(item.Author.ToLowerInvariant())">
                 @if (item.Featured)
                 {
@@ -148,6 +162,13 @@ else
             var chips = document.querySelectorAll('#pkg-chips .chip');
             var cards = document.querySelectorAll('#pkg-grid .pkg');
             var cat = '';
+            // S1.28.0: author filter, kept in the address (?author=) like the page
+            var authorSel = document.getElementById('pkg-author'), author = '';
+            if (authorSel) {
+                var wanted = new URLSearchParams(location.search).get('author') || '';
+                if (Array.prototype.some.call(authorSel.options, function (o) { return o.value === wanted; })) { authorSel.value = wanted; author = wanted; }
+                authorSel.addEventListener('change', function () { author = authorSel.value; apply(); });
+            }
             // Without a registered addonstore:// handler the browser does nothing.
             // When Power PDF or the "Open Add-on Store?" prompt appears, the page
             // loses focus; if it keeps focus, show how to get the client.
@@ -176,6 +197,7 @@ else
                 try {
                     var u = new URL(location.href);
                     if (page > 1) u.searchParams.set('page', page); else u.searchParams.delete('page');
+                    if (author) u.searchParams.set('author', author); else u.searchParams.delete('author');
                     history.replaceState(history.state, '', u.pathname + u.search + u.hash);
                 } catch (e) { }
             }
@@ -205,6 +227,7 @@ else
                 var hits = [];
                 cards.forEach(function (c) {
                     var hit = (!cat || c.dataset.cat === cat) &&
+                              (!author || c.dataset.author === author) &&
                               (!q || c.dataset.text.indexOf(q) >= 0);
                     if (hit) hits.push(c);
                     c.style.display = 'none';
