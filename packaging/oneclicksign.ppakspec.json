@@ -71,7 +71,7 @@
     "ar": "أمان أكبر في الخلفية: تستخدم الوظيفة الإضافية الآن ميزات حماية إضافية في Windows، وتُركَّب الرسائل بطريقة أكثر أمانًا. لا يتغير شيء في طريقة الاستخدام. إصلاح: عادت الإعدادات إلى خيارات Power PDF ضمن Add-on Store. يشير تنبيه الشهادة المفقودة الآن إلى المكان الصحيح في الخيارات."
   },
   "minPowerPdfVersion": "2025.3.7",
-  "author": "Tungsten Automation",
+  "author": "Marcus Nimtz",
   "contactEmail": "marcus.nimtz@tungstenautomation.com",
   "ribbonAtomNamespace": "FeaturePack::OneClickSign",
   "zxt": {

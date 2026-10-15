@@ -133,7 +133,7 @@
       "website": "https://www.tungstenautomation.com"
     }
   ],
-  "author": "Tungsten Automation",
+  "author": "Marcus Nimtz",
   "contactEmail": "marcus.nimtz@tungstenautomation.com",
   "elevation": {
     "reason": "Installing, updating and removing add-ons writes to Power PDF's Plug-Ins folder in Program Files: one PowerShell step runs elevated after the UAC prompt, only when the user installs, updates or removes an add-on (the self-update starts msiexec the same way)."
