@@ -596,6 +596,13 @@ names), shown once at least two authors have add-ons in the catalog. It works
 together with category and search; the start page keeps it in the address
 (`?author=`, an unknown name is ignored).
 
+**Windows text and graphics DLLs (S1.28.1):** the import check no longer reports
+FOREIGN_DEPENDENCY for System32 libraries a plug-in uses for text and graphics:
+usp10 (Uniscribe, found with Zone Tools 1.0.0), shcore, msftedit, riched20, t2embed,
+fontsub, d3d11, dxgi and dcomp (gdiplus, uxtheme, dwmapi, msimg32, d2d1, dwrite and
+windowscodecs were already allowed). These names are also reserved in bin/. First unit
+tests of the server: `dotnet test server/tests/AddonStore.Web.Tests`.
+
 **Catalog pages (S1.14.1):** the start page shows 9 tiles a page (3 x 3 on a
 wide screen) with numbered pages under the grid (1 2 3, on long lists
 1 ... 4 5 6 ... 12) instead of 25/50/100 rows; search and category start again

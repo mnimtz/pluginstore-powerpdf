@@ -666,7 +666,7 @@ public class PackageValidator
         }
     }
 
-    private static void CheckPe(ValidationReport report, string arch, string file, byte[] bytes, string manifestVersion,
+    internal static void CheckPe(ValidationReport report, string arch, string file, byte[] bytes, string manifestVersion,
                                 ISet<string>? bundled = null)
     {
         const ushort MachineX64 = 0x8664, MachineArm64 = 0xAA64, DllFlag = 0x2000;
@@ -920,6 +920,8 @@ public class PackageValidator
         "uxtheme","dwmapi","gdiplus","msimg32","imm32","oledlg","winmm","wintrust","secur32",
         "rpcrt4","userenv","netapi32","iphlpapi","dbghelp","psapi","d2d1","dwrite","windowscodecs",
         "urlmon","propsys","uiautomationcore","mscoree",
+        // text and graphics in System32 (S1.28.1): Uniscribe, DPI, RichEdit, font embedding, Direct3D/DXGI under Direct2D
+        "usp10","shcore","msftedit","riched20","t2embed","fontsub","d3d11","dxgi","dcomp",
         "mfc","vcruntime","msvcp","msvcr","ucrtbase","concrt","api-ms-","ext-ms-","ntdll","kernelbase"
     };
 

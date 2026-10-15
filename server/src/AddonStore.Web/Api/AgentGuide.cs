@@ -276,6 +276,10 @@ item passes because a similar plugin passed.
 - [ ] Imports only DLLs of Windows or Power PDF. Link every other library
       statically (MIT/BSD/Apache-2.0 only) or load it yourself with
       LoadLibraryEx and a full path. (FOREIGN_DEPENDENCY)
+      Windows DLLs for text and graphics may be imported directly, e.g.
+      gdiplus, uxtheme, dwmapi, msimg32, d2d1, dwrite, windowscodecs,
+      usp10 (Uniscribe), shcore, msftedit/riched20, t2embed, fontsub,
+      d3d11, dxgi, dcomp.
 - [ ] All UI texts (string tables, dialogs, menus) are in the .zxt in all
       16 European Power PDF languages: one LANGUAGE block each for English,
       German, French, Italian, Spanish, Dutch, Portuguese (Brazil), Danish,
@@ -1695,7 +1699,7 @@ be free of warnings before review. Info is for information only.
 | PE_WRONG_MACHINE | error | The .zxt is built for the wrong CPU (x64 = 0x8664, arm64 = 0xAA64). |
 | PE_NOT_DLL | error | The .zxt is not a DLL. |
 | PE_DEBUG_RUNTIME | error | The .zxt imports a debug C/C++ runtime; ship the Release build. |
-| FOREIGN_DEPENDENCY | error | The .zxt imports DLLs that are not part of Windows or Power PDF. Power PDF loads plug-ins from its program folder and the store installs only the .zxt, so link such libraries statically (MIT/BSD/Apache-2.0 only) or load them yourself with LoadLibraryEx and a full path (delay-load). |
+| FOREIGN_DEPENDENCY | error | The .zxt imports DLLs that are not part of Windows or Power PDF. Power PDF loads plug-ins from its program folder and the store installs only the .zxt, so link such libraries statically (MIT/BSD/Apache-2.0 only) or load them yourself with LoadLibraryEx and a full path (delay-load). System32 libraries such as usp10 (Uniscribe), dwrite, d2d1, gdiplus or windowscodecs are part of Windows and pass. |
 | ATOM_NAMESPACE_MISSING | warning | `ribbonAtomNamespace` is not set. |
 | ATOM_NOT_SHARED_TAB | error | A PUBLIC plugin creates its own ribbon tab instead of a group on "FeaturePack" (only the store client and private customer add-ons may have their own tab). |
 | OWN_TAB_PRIVATE | info | The private add-on brings its own ribbon tab; allowed while it stays private. |

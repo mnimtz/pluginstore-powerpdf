@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="AddonStore.Web.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\..\..\VERSION" Link="VERSION" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
