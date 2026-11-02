@@ -90,7 +90,21 @@ public class PluginModel : PageModel
             : new();
         var ai = await _ai.ConfigAsync();
         AiReviewOn = CanReview && ai.On && ai.Review;
+        if (IsAdmin) DeleteBlockers = await _actions.DeleteBlockersAsync(Pkg.Id);
         return true;
+    }
+
+    /// <summary>S1.29.0: customer deliveries and template entries that keep an admin from deleting the add-on.</summary>
+    public (int Deliveries, int TemplateItems) DeleteBlockers { get; private set; }
+
+    public async Task<IActionResult> OnPostDeletePackageAsync(string id, string? confirmId)
+    {
+        if (!await LoadAsync(id ?? "")) return Forbid();
+        var (ok, message) = await _actions.DeletePackageAsync(id!, confirmId, Me!, IsAdmin);
+        if (ok) return Redirect("/Dashboard?deleted=" + Uri.EscapeDataString(id!));
+        Notice = message; NoticeKind = "warn";
+        await LoadAsync(id!);
+        return Page();
     }
 
     public async Task<IActionResult> OnGetAsync(string id) => await LoadAsync(id ?? "") ? Page() : Forbid();

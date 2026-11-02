@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>Atualização da versão beta {0}</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Conta desde {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Autor no catálogo</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Excluir definitivamente</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Remove todas as versões com os arquivos de pacote e de código-fonte, as avaliações, os relatórios de problemas e os dados de uso. O log de auditoria mantém a exclusão e o id do pacote não pode ser usado novamente. As cópias instaladas continuam funcionando, mas não recebem atualizações.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Ainda não é possível: {0} entrega(s) a clientes e {1} entrada(s) de modelos de entrega incluem este suplemento. Remova-as primeiro.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Excluir definitivamente este suplemento? Isso não pode ser desfeito.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>Digite o id do pacote para confirmar</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>O suplemento {0} foi excluído definitivamente. Seu id não pode ser usado novamente.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Digite exatamente o id do pacote para confirmar a exclusão.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>O suplemento ainda é entregue a clientes ou faz parte de um modelo de entrega. Remova primeiro essas entregas e entradas de modelo.</value></data>
 </root>

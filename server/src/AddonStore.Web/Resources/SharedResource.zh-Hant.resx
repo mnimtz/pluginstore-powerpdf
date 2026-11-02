@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>測試版 {0} 的更新</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>帳戶建立於 {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>目錄中的作者</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>永久刪除</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>移除所有版本及其套件和原始程式碼檔案、評分、問題報告和使用資料。稽核記錄會保留此刪除紀錄，且該套件 ID 無法再次使用。已安裝的副本仍可繼續使用，但不會再取得更新。</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>暫時無法刪除：有 {0} 個客戶交付和 {1} 個交付範本項目參照此增益集。請先將其移除。</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>永久刪除此增益集？此動作無法復原。</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>輸入套件 ID 以確認</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>增益集 {0} 已永久刪除。其 ID 無法再次使用。</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>請準確輸入套件 ID 以確認刪除。</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>此增益集仍在向客戶交付，或屬於某個交付範本。請先移除這些交付和範本項目。</value></data>
 </root>

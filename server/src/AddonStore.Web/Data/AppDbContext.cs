@@ -14,6 +14,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<AppSetting> AppSettings => Set<AppSetting>();
     public DbSet<Invite> Invites => Set<Invite>();
     public DbSet<Category> Categories => Set<Category>();
+    public DbSet<RetiredPackage> RetiredPackages => Set<RetiredPackage>();   // S1.29.0
     public DbSet<UsageStat> UsageStats => Set<UsageStat>();
     public DbSet<UsageEvent> UsageEvents => Set<UsageEvent>();
     public DbSet<ShareStat> ShareStats => Set<ShareStat>();

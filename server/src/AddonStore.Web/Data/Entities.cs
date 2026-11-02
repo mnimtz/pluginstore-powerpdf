@@ -28,6 +28,17 @@ public class AppUser : IdentityUser
 /// propose a new high-level category (see CategoryService), admins merge or
 /// delete them.
 /// </summary>
+/// <summary>S1.29.0: an add-on an admin deleted for good. Its id stays taken (PACKAGE_ID_RETIRED), so nobody can
+/// later publish something else under the id of a once released add-on; who deleted it and when is kept here and in the audit log.</summary>
+public class RetiredPackage
+{
+    public string Id { get; set; } = "";
+    public DateTime RetiredAt { get; set; } = DateTime.UtcNow;
+    public string RetiredBy { get; set; } = "";
+    public string OwnerName { get; set; } = "";
+    public string Versions { get; set; } = "";   // the versions it had, comma separated
+}
+
 public class Category
 {
     public string Slug { get; set; } = "";

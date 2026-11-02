@@ -541,6 +541,13 @@ public class PackageValidator
     {
         var package = await _db.Packages.Include(p => p.Owner)
             .FirstOrDefaultAsync(p => p.Id == manifest.Id);
+        // S1.29.0: the id of an add-on an admin deleted stays taken
+        if (package is null && await _db.RetiredPackages.AnyAsync(r => r.Id == manifest.Id))
+        {
+            report.Error("PACKAGE_ID_RETIRED", $"Package id '{manifest.Id}' belonged to an add-on that was deleted from the store; it cannot be used again.",
+                "Choose a different package id.");
+            return;
+        }
 
         if (package is not null && package.OwnerId != callerUserId && callerIsAdmin)
             report.Info("ADMIN_UPLOAD_FOR_OWNER",

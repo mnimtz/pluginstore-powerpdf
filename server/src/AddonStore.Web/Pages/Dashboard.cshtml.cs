@@ -44,7 +44,15 @@ public class DashboardModel : PageModel
         _db = db; _users = users; _svc = svc; _sources = sources;
     }
 
-    public async Task OnGetAsync() => await LoadAsync();
+    public async Task OnGetAsync(string? deleted)
+    {
+        // S1.29.0: back from deleting an add-on for good (shown only for an id that really was deleted)
+        if (!string.IsNullOrEmpty(deleted) && User.IsInRole("Admin") && await _db.RetiredPackages.AnyAsync(r => r.Id == deleted))
+            DeletedId = deleted;
+        await LoadAsync();
+    }
+
+    public string? DeletedId { get; private set; }
 
     public async Task OnPostAsync(IFormFile? package)
     {

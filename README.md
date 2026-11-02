@@ -590,6 +590,14 @@ template now asks for infrastructure encryption, soft delete for blobs and the d
 (7 days) and the App Service health check on /api/ping; findings decided against are
 listed with their reasons in `.trivyignore`.
 
+**Delete for good (S1.29.0):** besides "Take out of the store" (withdraw, restorable) and the
+security block, an admin can delete an add-on for good on its plug-in page, after typing its package id
+again. It removes every version with its package and source files, the ratings, problem reports with
+notes and attachments, usage and share figures and UAT handover records. It is refused while a customer
+delivery or a delivery template names the add-on, and for the store client. The audit log keeps
+`package.deleted`, the owner gets an e-mail, and the id stays taken: an upload with it is refused with
+`PACKAGE_ID_RETIRED`. Installed copies keep working; the store client shows them as no longer offered.
+
 **Who submitted it (S1.28.2):** the review queue names the submitters of all waiting
 versions at the top, and each version shows a submitter block: name, picture or initial,
 e-mail address, account date, whether it is a new add-on or an update of the live or beta

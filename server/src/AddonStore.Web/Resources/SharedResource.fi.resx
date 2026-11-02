@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>Päivitys beetaversioon {0}</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Tili alkaen {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Kirjoittaja luettelossa</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Poista pysyvästi</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Poistaa kaikki versiot paketti- ja lähdekooditiedostoineen, arviot, ongelmailmoitukset ja käyttötiedot. Tarkastusloki säilyttää poiston, eikä paketin tunnusta voi käyttää uudelleen. Asennetut kopiot toimivat edelleen, mutta eivät saa päivityksiä.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Ei vielä mahdollista: {0} asiakastoimitusta ja {1} toimitusmallin kohtaa mainitsee tämän lisäosan. Poista ne ensin.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Poistetaanko tämä lisäosa pysyvästi? Toimintoa ei voi kumota.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>Vahvista kirjoittamalla paketin tunnus</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Lisäosa {0} poistettiin pysyvästi. Sen tunnusta ei voi käyttää uudelleen.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Vahvista poisto kirjoittamalla paketin tunnus täsmälleen.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Lisäosaa toimitetaan yhä asiakkaille tai se kuuluu toimitusmalliin. Poista ensin nämä toimitukset ja mallin kohdat.</value></data>
 </root>

@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>{0} beta sürümünün güncellemesi</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Hesap tarihi: {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Katalogdaki yazar</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Kalıcı olarak sil</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Tüm sürümleri paket ve kaynak kod dosyalarıyla, puanları, sorun bildirimlerini ve kullanım verilerini kaldırır. Denetim günlüğü silme işlemini saklar ve paket kimliği yeniden kullanılamaz. Yüklü kopyalar çalışmaya devam eder ancak güncelleme almaz.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Henüz mümkün değil: {0} müşteri teslimatı ve {1} teslimat şablonu kaydı bu eklentiyi içeriyor. Önce bunları kaldırın.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Bu eklenti kalıcı olarak silinsin mi? Bu işlem geri alınamaz.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>Onaylamak için paket kimliğini yazın</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>{0} eklentisi kalıcı olarak silindi. Kimliği yeniden kullanılamaz.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Silme işlemini onaylamak için paket kimliğini tam olarak yazın.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Eklenti hâlâ müşterilere teslim ediliyor veya bir teslimat şablonunun parçası. Önce bu teslimatları ve şablon kayıtlarını kaldırın.</value></data>
 </root>

@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>Aktualizace beta verze {0}</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Účet od {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Autor v katalogu</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Trvale odstranit</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Odstraní všechny verze se soubory balíčku a zdrojového kódu, hodnocení, hlášení problémů a údaje o používání. Protokol auditu odstranění zachová a ID balíčku již nelze znovu použít. Nainstalované kopie dál fungují, ale nedostávají aktualizace.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Zatím nelze: {0} dodávka(y) zákazníkům a {1} položka(y) šablon dodávek uvádějí tento doplněk. Nejprve je odstraňte.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Trvale odstranit tento doplněk? Akci nelze vrátit zpět.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>Pro potvrzení zadejte ID balíčku</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Doplněk {0} byl trvale odstraněn. Jeho ID již nelze znovu použít.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Pro potvrzení odstranění zadejte přesně ID balíčku.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Doplněk se stále dodává zákazníkům nebo je součástí šablony dodávek. Nejprve tyto dodávky a položky šablon odstraňte.</value></data>
 </root>

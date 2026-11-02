@@ -75,6 +75,9 @@ public static class SchemaUpgrade
             "ALTER TABLE PackageVersions ADD COLUMN SourceReportJson TEXT NULL",
             "CREATE TABLE IF NOT EXISTS Categories (Slug TEXT NOT NULL PRIMARY KEY, NameJson TEXT NULL, " +
                 "Builtin INTEGER NOT NULL DEFAULT 0, CreatedAt TEXT NOT NULL, CreatedBy TEXT NOT NULL)",
+            // S1.29.0: ids of deleted add-ons stay taken
+            "CREATE TABLE IF NOT EXISTS RetiredPackages (Id TEXT NOT NULL PRIMARY KEY, RetiredAt TEXT NOT NULL, " +
+                "RetiredBy TEXT NOT NULL, OwnerName TEXT NOT NULL, Versions TEXT NOT NULL)",
             "ALTER TABLE Packages ADD COLUMN DescriptionJson TEXT NULL",
             "ALTER TABLE Packages ADD COLUMN Author TEXT NULL",
             "ALTER TABLE Packages ADD COLUMN ContactEmail TEXT NULL",

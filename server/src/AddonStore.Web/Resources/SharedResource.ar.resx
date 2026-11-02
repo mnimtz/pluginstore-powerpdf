@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>تحديث للإصدار التجريبي {0}</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>الحساب منذ {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>المؤلف في الكتالوج</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>حذف نهائي</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>يزيل كل الإصدارات مع ملفات الحزمة والتعليمات البرمجية المصدرية، والتقييمات وبلاغات المشكلات وأرقام الاستخدام. يحتفظ سجل التدقيق بعملية الحذف، ولا يمكن استخدام معرّف الحزمة مرة أخرى. تستمر النسخ المثبتة في العمل لكنها لا تتلقى تحديثات.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>غير ممكن بعد: تذكر {0} عملية تسليم للعملاء و{1} إدخال في قوالب التسليم هذه الوظيفة الإضافية. أزلها أولاً.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>هل تريد حذف هذه الوظيفة الإضافية نهائياً؟ لا يمكن التراجع عن ذلك.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>اكتب معرّف الحزمة للتأكيد</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>تم حذف الوظيفة الإضافية {0} نهائياً. لا يمكن استخدام معرّفها مرة أخرى.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>اكتب معرّف الحزمة بدقة لتأكيد الحذف.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>لا تزال الوظيفة الإضافية تُسلَّم للعملاء أو جزءاً من قالب تسليم. أزل عمليات التسليم وإدخالات القوالب هذه أولاً.</value></data>
 </root>

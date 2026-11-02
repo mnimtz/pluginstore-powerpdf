@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>Update der Beta-Version {0}</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Konto seit {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Autor im Katalog</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Endgültig löschen</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Entfernt alle Versionen mit Paket- und Quellcodedateien, die Bewertungen, Problemmeldungen und Nutzungszahlen. Das Audit-Protokoll behält die Löschung, und die Paket-ID kann nicht wieder verwendet werden. Installierte Kopien funktionieren weiter, erhalten aber keine Updates.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Noch nicht möglich: {0} Kundenauslieferung(en) und {1} Eintrag/Einträge in Auslieferungsvorlagen nennen dieses Add-on. Entfernen Sie diese zuerst.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Dieses Add-on endgültig löschen? Das lässt sich nicht rückgängig machen.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>Zur Bestätigung die Paket-ID eingeben</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Das Add-on {0} wurde endgültig gelöscht. Seine ID kann nicht wieder verwendet werden.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Geben Sie zur Bestätigung der Löschung die Paket-ID genau ein.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Das Add-on wird noch an Kunden ausgeliefert oder ist Teil einer Auslieferungsvorlage. Entfernen Sie zuerst diese Auslieferungen und Vorlageneinträge.</value></data>
 </root>

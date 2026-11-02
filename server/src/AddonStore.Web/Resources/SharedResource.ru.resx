@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>Обновление бета-версии {0}</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Учётная запись с {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Автор в каталоге</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Удалить навсегда</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Удаляет все версии с файлами пакета и исходного кода, оценки, сообщения о проблемах и статистику использования. Журнал аудита сохраняет запись об удалении, а идентификатор пакета больше нельзя использовать. Установленные копии продолжают работать, но не получают обновлений.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Пока невозможно: эту надстройку указывают поставки клиентам ({0}) и записи шаблонов поставок ({1}). Сначала удалите их.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Удалить эту надстройку навсегда? Это действие нельзя отменить.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>Для подтверждения введите идентификатор пакета</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Надстройка {0} удалена навсегда. Её идентификатор больше нельзя использовать.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Чтобы подтвердить удаление, введите точный идентификатор пакета.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Надстройка всё ещё поставляется клиентам или входит в шаблон поставки. Сначала удалите эти поставки и записи шаблонов.</value></data>
 </root>

@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>A(z) {0} bétaverzió frissítése</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Fiók létrehozva: {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Szerző a katalógusban</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Végleges törlés</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Eltávolítja az összes verziót a csomag- és forráskódfájlokkal, az értékeléseket, a hibabejelentéseket és a használati adatokat. A naplóban a törlés megmarad, és a csomagazonosító nem használható újra. A telepített példányok tovább működnek, de nem kapnak frissítést.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Még nem lehetséges: {0} ügyfélszállítás és {1} szállítási sablonbejegyzés hivatkozik erre a bővítményre. Először távolítsa el őket.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Véglegesen törli ezt a bővítményt? A művelet nem vonható vissza.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>A megerősítéshez írja be a csomagazonosítót</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>A(z) {0} bővítmény véglegesen törölve. Az azonosítója nem használható újra.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>A törlés megerősítéséhez pontosan írja be a csomagazonosítót.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>A bővítményt még szállítják ügyfeleknek, vagy egy szállítási sablon része. Először távolítsa el ezeket a szállításokat és sablonbejegyzéseket.</value></data>
 </root>

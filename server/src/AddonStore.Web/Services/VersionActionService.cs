@@ -16,11 +16,13 @@ public class VersionActionService
     private readonly SourceService _sources;
     private readonly SettingsService _settings;
     private readonly Microsoft.AspNetCore.Identity.UserManager<AppUser> _users;
+    private readonly SubmissionService _submissions;
 
     public VersionActionService(AppDbContext db, AuditService audit, NotificationService notify, SourceService sources,
-                                SettingsService settings, Microsoft.AspNetCore.Identity.UserManager<AppUser> users)
+                                SettingsService settings, Microsoft.AspNetCore.Identity.UserManager<AppUser> users,
+                                SubmissionService submissions)
     {
-        _db = db; _audit = audit; _notify = notify; _sources = sources; _settings = settings; _users = users;
+        _db = db; _audit = audit; _notify = notify; _sources = sources; _settings = settings; _users = users; _submissions = submissions;
     }
 
     private static string Enc(string s) => System.Net.WebUtility.HtmlEncode(s);
@@ -285,5 +287,82 @@ public class VersionActionService
             $"<p><b>{Enc(actor.DisplayName)}</b> took <b>{packageId}</b> out of the store (versions {string.Join(", ", versions.Select(v => v.Version))}). " +
             "Installed copies keep working; an admin can restore single versions.</p>");
         return "The plug-in was taken out of the store. Installed copies keep working; restore single versions to publish it again.";
+    }
+
+    /// <summary>S1.29.0: what keeps an admin from deleting an add-on for good: customer deliveries and template entries.</summary>
+    public async Task<(int Deliveries, int TemplateItems)> DeleteBlockersAsync(string packageId) =>
+        (await _db.Deliveries.CountAsync(d => d.PackageId == packageId),
+         await _db.DeliveryTemplateItems.CountAsync(t => t.PackageId == packageId));
+
+    /// <summary>
+    /// S1.29.0: deletes an add-on for good (admins only, the id typed again to confirm): every version with its package
+    /// and source files, ratings, problem reports with notes and attachments, usage and share figures and UAT handover
+    /// records. Not while a customer delivery or a delivery template names it. The audit log keeps "package.deleted",
+    /// the id stays taken (RetiredPackages), the owner gets an e-mail. Installed copies keep working; the store client
+    /// shows them as no longer offered.
+    /// </summary>
+    public async Task<(bool Ok, string Message)> DeletePackageAsync(string packageId, string? typedId, AppUser actor, bool isAdmin)
+    {
+        if (!isAdmin || packageId == SubmissionService.ClientPackageId) return (false, "This action is not allowed for this version.");
+        if (!string.Equals((typedId ?? "").Trim(), packageId, StringComparison.Ordinal))
+            return (false, "Type the package id exactly to confirm the deletion.");
+        var pkg = await _db.Packages.Include(p => p.Owner).FirstOrDefaultAsync(p => p.Id == packageId);
+        if (pkg is null) return (false, "This action is not allowed for this version.");
+        var (deliveries, items) = await DeleteBlockersAsync(packageId);
+        if (deliveries > 0 || items > 0)
+            return (false, "The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first.");
+
+        var versions = await _db.PackageVersions.Where(v => v.PackageId == packageId).Select(v => v.Version).ToListAsync();
+        var cmp = new Validation.SemVerComparer();
+        var versionList = string.Join(", ", versions.OrderBy(v => v, cmp));
+        var owner = pkg.Owner;
+        var feedbackIds = _db.Feedbacks.Where(f => f.PackageId == packageId).Select(f => f.Id);
+        int ratings, reports;
+        await using (var tx = await _db.Database.BeginTransactionAsync())
+        {
+            await _db.FeedbackAttachments.Where(a => feedbackIds.Contains(a.FeedbackId)).ExecuteDeleteAsync();
+            await _db.FeedbackNotes.Where(n => feedbackIds.Contains(n.FeedbackId)).ExecuteDeleteAsync();
+            reports = await _db.Feedbacks.Where(f => f.PackageId == packageId).ExecuteDeleteAsync();
+            ratings = await _db.Ratings.Where(r => r.PackageId == packageId).ExecuteDeleteAsync();
+            await _db.UsageStats.Where(s => s.PackageId == packageId).ExecuteDeleteAsync();
+            await _db.UsageEvents.Where(e => e.PackageId == packageId).ExecuteDeleteAsync();
+            await _db.ShareStats.Where(s => s.PackageId == packageId).ExecuteDeleteAsync();
+            await _db.FederationIntakes.Where(i => i.PackageId == packageId).ExecuteDeleteAsync();
+            await _db.FederationHandovers.Where(h => h.PackageId == packageId).ExecuteDeleteAsync();
+            await _db.PackageVersions.Where(v => v.PackageId == packageId).ExecuteDeleteAsync();
+            await _db.Packages.Where(p => p.Id == packageId).ExecuteDeleteAsync();
+            if (!await _db.RetiredPackages.AnyAsync(r => r.Id == packageId))
+                _db.RetiredPackages.Add(new RetiredPackage
+                {
+                    Id = packageId, RetiredBy = actor.DisplayName, OwnerName = owner?.DisplayName ?? "", Versions = versionList,
+                });
+            await _db.SaveChangesAsync();
+            await tx.CommitAsync();
+        }
+        _db.ChangeTracker.Clear();
+        CatalogUi.Invalidate();
+
+        // package and source files: the add-on's own folder in the package storage, nothing outside it
+        var removedFiles = "files removed";
+        try
+        {
+            var root = Path.GetFullPath(_submissions.StorageRoot);
+            var dir = Path.GetFullPath(Path.Combine(root, packageId));
+            if (dir.StartsWith(root.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)
+                && Directory.Exists(dir))
+                Directory.Delete(dir, recursive: true);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            removedFiles = "files could not all be removed: " + ex.GetType().Name;
+        }
+
+        await _audit.LogAsync(actor.DisplayName, "package.deleted", packageId,
+            $"owner {owner?.DisplayName ?? "-"}; versions {versionList}; ratings {ratings}; problem reports {reports}; {removedFiles}; the id stays taken");
+        if (owner is not null && owner.Id != actor.Id)   // no link: the plug-in page is gone
+            await _notify.NotifyUserAsync("StatusChange", owner, $"[Add-on Store] {packageId} deleted",
+                $"<p><b>{Enc(actor.DisplayName)}</b> deleted the add-on <b>{Enc(packageId)}</b> from the store for good " +
+                $"(versions {Enc(versionList)}). Its id cannot be used again. Installed copies keep working, but get no updates.</p>");
+        return (true, "deleted");
     }
 }

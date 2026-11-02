@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>Update van bètaversie {0}</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Account sinds {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Auteur in de catalogus</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Definitief verwijderen</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Verwijdert alle versies met hun pakket- en broncodebestanden, de beoordelingen, probleemmeldingen en gebruikscijfers. Het auditlogboek bewaart de verwijdering en de pakket-id kan niet opnieuw worden gebruikt. Geïnstalleerde exemplaren blijven werken, maar krijgen geen updates.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Nog niet mogelijk: {0} klantlevering(en) en {1} item(s) in leveringssjablonen noemen deze invoegtoepassing. Verwijder die eerst.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Deze invoegtoepassing definitief verwijderen? Dit kan niet ongedaan worden gemaakt.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>Typ de pakket-id ter bevestiging</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>De invoegtoepassing {0} is definitief verwijderd. De id kan niet opnieuw worden gebruikt.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Typ de pakket-id exact om het verwijderen te bevestigen.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>De invoegtoepassing wordt nog aan klanten geleverd of maakt deel uit van een leveringssjabloon. Verwijder eerst die leveringen en sjabloonitems.</value></data>
 </root>

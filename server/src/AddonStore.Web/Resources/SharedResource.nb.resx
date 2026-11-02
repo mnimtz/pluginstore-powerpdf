@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>Oppdatering av betaversjon {0}</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Konto siden {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Forfatter i katalogen</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Slett permanent</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Fjerner alle versjoner med pakke- og kildekodefiler, vurderinger, problemrapporter og bruksdata. Revisjonsloggen beholder slettingen, og pakke-ID-en kan ikke brukes igjen. Installerte kopier fortsetter å virke, men får ingen oppdateringer.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Ikke mulig ennå: {0} kundeleveranse(r) og {1} oppføring(er) i leveransemaler nevner dette tillegget. Fjern dem først.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Slette dette tillegget permanent? Dette kan ikke angres.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>Skriv inn pakke-ID-en for å bekrefte</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Tillegget {0} er slettet permanent. ID-en kan ikke brukes igjen.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Skriv inn pakke-ID-en nøyaktig for å bekrefte slettingen.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Tillegget leveres fortsatt til kunder eller er del av en leveransemal. Fjern disse leveransene og maloppføringene først.</value></data>
 </root>

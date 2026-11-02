@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>ベータ版 {0} の更新</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>アカウント作成日 {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>カタログ上の作成者</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>完全に削除</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>すべてのバージョンを、パッケージとソース コードのファイル、評価、問題の報告、利用状況のデータとともに削除します。監査ログには削除が記録され、このパッケージ ID は再利用できません。インストール済みのコピーは引き続き動作しますが、更新は届きません。</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>まだ削除できません: このアドオンを指定している顧客への配布が {0} 件、配布テンプレートの項目が {1} 件あります。先にそれらを削除してください。</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>このアドオンを完全に削除しますか? 元に戻すことはできません。</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>確認のためパッケージ ID を入力してください</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>アドオン {0} を完全に削除しました。この ID は再利用できません。</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>削除を確認するには、パッケージ ID を正確に入力してください。</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>このアドオンはまだ顧客に配布されているか、配布テンプレートに含まれています。先にそれらの配布とテンプレートの項目を削除してください。</value></data>
 </root>

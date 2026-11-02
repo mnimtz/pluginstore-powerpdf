@@ -338,9 +338,10 @@ item passes because a similar plugin passed.
 MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
 - [ ] `id`: lowercase reverse-DNS of YOUR domain (com.example.myplugin),
       not `com.tungsten.`, `com.kofax.`, `com.nuance.` (reserved for the
-      store operators); an id that belongs to another account, or an add-on
-      the store has blocked, is refused online. (ID_INVALID, ID_RESERVED,
-      PACKAGE_OWNED_BY_OTHER, PACKAGE_BLOCKED)
+      store operators); an id that belongs to another account, an add-on
+      the store has blocked, or the id of an add-on deleted from the store, is
+      refused online. (ID_INVALID, ID_RESERVED, PACKAGE_OWNED_BY_OTHER,
+      PACKAGE_BLOCKED, PACKAGE_ID_RETIRED)
 - [ ] `version`: three numbers or four (e.g. 1.2.0, 2026.4.0.3), higher than every version submitted
       before (checked online). (VERSION_INVALID, VERSION_NOT_INCREMENTED)
 - [ ] `name`: at least `en`, only known language codes, at most 80
@@ -1669,6 +1670,7 @@ be free of warnings before review. Info is for information only.
 | VERSION_INVALID | error | `version` is missing or not three numbers with an optional fourth. |
 | VERSION_NOT_INCREMENTED | error | `version` is not higher than the latest submitted version. |
 | PACKAGE_OWNED_BY_OTHER | error | The id belongs to another account. |
+| PACKAGE_ID_RETIRED | error | The id belonged to an add-on an admin deleted from the store; it cannot be used again (S1.29.0). |
 | NAME_MISSING | error | `name` is missing or has no language. |
 | BIN_INVALID | error | `files.bin` is not an array of ZIP paths. |
 | BIN_FILE_INVALID | error | A file in bin/ is not a DLL directly in the folder with an allowed name (no .exe, no subfolders). |

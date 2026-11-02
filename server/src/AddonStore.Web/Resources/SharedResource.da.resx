@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>Opdatering af betaversion {0}</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Konto siden {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Forfatter i kataloget</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Slet permanent</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Fjerner alle versioner med pakke- og kildekodefiler, bedømmelser, problemrapporter og brugstal. Revisionsloggen bevarer sletningen, og pakke-id'et kan ikke bruges igen. Installerede kopier virker fortsat, men får ingen opdateringer.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Endnu ikke muligt: {0} kundeleverance(r) og {1} post(er) i leveranceskabeloner nævner denne tilføjelse. Fjern dem først.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Slette denne tilføjelse permanent? Det kan ikke fortrydes.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>Skriv pakke-id'et for at bekræfte</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Tilføjelsen {0} er slettet permanent. Dens id kan ikke bruges igen.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Skriv pakke-id'et nøjagtigt for at bekræfte sletningen.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Tilføjelsen leveres stadig til kunder eller indgår i en leveranceskabelon. Fjern først disse leverancer og skabelonposter.</value></data>
 </root>

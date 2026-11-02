@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>Aktualizacja wersji beta {0}</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Konto od {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Autor w katalogu</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Usuń trwale</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Usuwa wszystkie wersje wraz z plikami pakietu i kodu źródłowego, oceny, zgłoszenia problemów i dane o użyciu. Dziennik audytu zachowuje usunięcie, a identyfikatora pakietu nie można użyć ponownie. Zainstalowane kopie nadal działają, ale nie otrzymują aktualizacji.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Jeszcze niemożliwe: {0} dostaw(y) do klientów i {1} wpis(y) w szablonach dostaw wskazują ten dodatek. Najpierw je usuń.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Trwale usunąć ten dodatek? Tej operacji nie można cofnąć.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>Wpisz identyfikator pakietu, aby potwierdzić</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Dodatek {0} został trwale usunięty. Jego identyfikatora nie można użyć ponownie.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Wpisz dokładnie identyfikator pakietu, aby potwierdzić usunięcie.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Dodatek jest nadal dostarczany klientom lub należy do szablonu dostaw. Najpierw usuń te dostawy i wpisy szablonów.</value></data>
 </root>

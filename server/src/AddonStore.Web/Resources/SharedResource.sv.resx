@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>Uppdatering av betaversion {0}</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Konto sedan {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Författare i katalogen</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Ta bort permanent</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Tar bort alla versioner med paket- och källkodsfiler, betyg, problemrapporter och användningssiffror. Granskningsloggen behåller borttagningen och paket-id:t kan inte användas igen. Installerade kopior fortsätter att fungera men får inga uppdateringar.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Inte möjligt än: {0} kundleverans(er) och {1} post(er) i leveransmallar nämner detta tillägg. Ta bort dem först.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Ta bort detta tillägg permanent? Det går inte att ångra.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>Skriv paket-id:t för att bekräfta</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Tillägget {0} har tagits bort permanent. Dess id kan inte användas igen.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Skriv paket-id:t exakt för att bekräfta borttagningen.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Tillägget levereras fortfarande till kunder eller ingår i en leveransmall. Ta först bort dessa leveranser och mallposter.</value></data>
 </root>

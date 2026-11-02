@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>测试版 {0} 的更新</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>账户创建于 {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>目录中的作者</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>永久删除</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>删除所有版本及其程序包和源代码文件、评分、问题报告和使用数据。审核日志会保留此删除记录，且该程序包 ID 不能再次使用。已安装的副本仍可继续使用，但不再获得更新。</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>暂不可删除：有 {0} 个客户交付和 {1} 个交付模板条目引用此加载项。请先将其移除。</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>永久删除此加载项？此操作无法撤消。</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>输入程序包 ID 以确认</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>加载项 {0} 已永久删除。其 ID 不能再次使用。</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>请准确输入程序包 ID 以确认删除。</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>此加载项仍在向客户交付，或属于某个交付模板。请先移除这些交付和模板条目。</value></data>
 </root>

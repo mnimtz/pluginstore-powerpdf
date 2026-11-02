@@ -1641,4 +1641,12 @@
   <data name="Update of beta version {0}" xml:space="preserve"><value>Aggiornamento della versione beta {0}</value></data>
   <data name="Account since {0}" xml:space="preserve"><value>Account dal {0}</value></data>
   <data name="Author in the catalog" xml:space="preserve"><value>Autore nel catalogo</value></data>
+  <data name="Delete for good" xml:space="preserve"><value>Elimina definitivamente</value></data>
+  <data name="Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates." xml:space="preserve"><value>Rimuove tutte le versioni con i file del pacchetto e del codice sorgente, le valutazioni, le segnalazioni di problemi e i dati di utilizzo. Il registro di controllo conserva l'eliminazione e l'ID del pacchetto non può essere riutilizzato. Le copie installate continuano a funzionare ma non ricevono aggiornamenti.</value></data>
+  <data name="Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first." xml:space="preserve"><value>Non ancora possibile: {0} consegna/e ai clienti e {1} voce/i di modelli di consegna indicano questo componente aggiuntivo. Rimuovile prima.</value></data>
+  <data name="Delete this add-on for good? This cannot be undone." xml:space="preserve"><value>Eliminare definitivamente questo componente aggiuntivo? Non è possibile annullare.</value></data>
+  <data name="Type the package id to confirm" xml:space="preserve"><value>Digita l'ID del pacchetto per confermare</value></data>
+  <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Il componente aggiuntivo {0} è stato eliminato definitivamente. Il suo ID non può essere riutilizzato.</value></data>
+  <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Digita esattamente l'ID del pacchetto per confermare l'eliminazione.</value></data>
+  <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Il componente aggiuntivo è ancora consegnato ai clienti o fa parte di un modello di consegna. Rimuovi prima queste consegne e voci di modello.</value></data>
 </root>

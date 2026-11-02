@@ -111,6 +111,26 @@
                         <button type="submit" class="btn small secondary">@L["Lift the block"]</button>
                     </form>
                 }
+                @* S1.29.0: delete for good; the id is typed again, deliveries and templates block it *@
+                <details class="approve-box">
+                    <summary class="btn small danger">@L["Delete for good"]</summary>
+                    <div class="stack" style="max-width:none;margin-top:8px">
+                        <p class="muted small" style="margin:0">@L["Removes every version with its package and source files, the ratings, problem reports and usage figures. The audit log keeps the deletion, and the package id cannot be used again. Installed copies keep working but get no updates."]</p>
+                        @if (Model.DeleteBlockers.Deliveries > 0 || Model.DeleteBlockers.TemplateItems > 0)
+                        {
+                            <div class="alert warn" style="margin:0">@L["Not possible yet: {0} customer delivery(s) and {1} delivery template entry(s) name this add-on. Remove them first.", Model.DeleteBlockers.Deliveries, Model.DeleteBlockers.TemplateItems]</div>
+                        }
+                        else
+                        {
+                            <form method="post" asp-page-handler="DeletePackage" asp-route-id="@pkg.Id" class="stack" style="max-width:none"
+                                  data-confirm="@L["Delete this add-on for good? This cannot be undone."]">
+                                <label for="pkg-delete">@L["Type the package id to confirm"]: <code>@pkg.Id</code></label>
+                                <input id="pkg-delete" name="confirmId" required autocomplete="off" spellcheck="false" pattern="@System.Text.RegularExpressions.Regex.Escape(pkg.Id)" />
+                                <button type="submit" class="btn small danger">@L["Delete for good"]</button>
+                            </form>
+                        }
+                    </div>
+                </details>
             }
         </div>
     </div>
