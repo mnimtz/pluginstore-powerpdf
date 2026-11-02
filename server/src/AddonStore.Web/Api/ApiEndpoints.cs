@@ -753,6 +753,9 @@ public static class ApiEndpoints
                 .Where(x => x.PackageId == id && (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta)).ToListAsync();
             if (v is not null && !versions.Any(x => x.Version == v) && await customers.IsTestVersionAsync(ctx, id, v))   // S1.6.0
                 versions.AddRange(await db.PackageVersions.Where(x => x.PackageId == id && x.Version == v).ToListAsync());
+            // S1.29.1: admins and reviewers see the icon of a version still waiting for review (review queue)
+            if (v is not null && !versions.Any(x => x.Version == v) && (ctx.User.IsInRole("Admin") || ctx.User.IsInRole("Reviewer")))
+                versions.AddRange(await db.PackageVersions.Where(x => x.PackageId == id && x.Version == v).ToListAsync());
             var pick = (v is null ? null : versions.FirstOrDefault(x => x.Version == v))
                        ?? versions.Where(x => x.Status == VersionStatus.Live).OrderByDescending(x => x.Version, cmp).FirstOrDefault()
                        ?? versions.OrderByDescending(x => x.Version, cmp).FirstOrDefault();

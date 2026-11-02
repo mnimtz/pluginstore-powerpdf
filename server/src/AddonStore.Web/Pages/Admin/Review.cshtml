@@ -42,10 +42,24 @@ else
         @{
             var lang = AddonStore.Web.Services.Lang.Current;
         }
-        <strong style="color:var(--tun-navy)"><a href="/Plugin?id=@v.PackageId">@(Model.Packages.TryGetValue(v.PackageId, out var rp) ? AddonStore.Web.Services.CatalogUi.DisplayName(rp, v, lang) : AddonStore.Web.Services.CatalogUi.ManifestText(v, "name", lang, v.PackageId))</a></strong>
-        <span style="color:var(--tun-slate)">@v.PackageId</span> v@(v.Version)
-        <span class="badge submitted">@L["Awaiting review"]</span>
-        @if (rp?.Visibility == "private") { <span class="badge disabled">@L["private"]</span> }
+        @{
+            // S1.29.1: the add-on itself as the card head: icon, name, id and version, short description
+            var rpName = Model.Packages.TryGetValue(v.PackageId, out var rp) ? AddonStore.Web.Services.CatalogUi.DisplayName(rp, v, lang) : AddonStore.Web.Services.CatalogUi.ManifestText(v, "name", lang, v.PackageId);
+            var rpDesc = AddonStore.Web.Services.CatalogUi.ManifestText(v, "description", lang);
+        }
+        <div class="review-head">
+            @if (Model.HasIcon.Contains(v.Id)) { <img class="review-icon" src="/api/packages/@v.PackageId/icon?v=@v.Version" alt="" /> }
+            else { <span class="review-icon" aria-hidden="true">@(rpName.Trim().FirstOrDefault())</span> }
+            <div>
+                <h2 class="review-title"><a href="/Plugin?id=@v.PackageId">@rpName</a></h2>
+                <div class="review-meta">
+                    <code>@v.PackageId</code> · v@(v.Version)
+                    <span class="badge submitted">@L["Awaiting review"]</span>
+                    @if (rp?.Visibility == "private") { <span class="badge disabled">@L["private"]</span> }
+                </div>
+                @if (rpDesc.Length > 0) { <p class="review-desc">@(rpDesc.Length > 240 ? rpDesc[..240] + "…" : rpDesc)</p> }
+            </div>
+        </div>
         @{
             // S1.28.2: the submitter as a block of its own: account, e-mail, since when; owner and catalog author when they differ
             var who = v.SubmittedById is not null && Model.Submitters.TryGetValue(v.SubmittedById, out var su) ? su : null;
@@ -139,9 +153,15 @@ else
     {
         var lang = AddonStore.Web.Services.Lang.Current;
         <div class="card">
-            <strong style="color:var(--tun-navy)"><a href="/Plugin?id=@v.PackageId">@(Model.Packages.TryGetValue(v.PackageId, out var bp) ? AddonStore.Web.Services.CatalogUi.DisplayName(bp, v, lang) : v.PackageId)</a></strong>
-            <span style="color:var(--tun-slate)">@v.PackageId</span> v@(v.Version)
-            <span class="badge beta">@L["Beta"]</span>
+            @{ var bpName = Model.Packages.TryGetValue(v.PackageId, out var bp) ? AddonStore.Web.Services.CatalogUi.DisplayName(bp, v, lang) : v.PackageId; }
+            <div class="review-head">
+                @if (Model.HasIcon.Contains(v.Id)) { <img class="review-icon" src="/api/packages/@v.PackageId/icon?v=@v.Version" alt="" /> }
+                else { <span class="review-icon" aria-hidden="true">@(bpName.Trim().FirstOrDefault())</span> }
+                <div>
+                    <h3 class="review-title"><a href="/Plugin?id=@v.PackageId">@bpName</a></h3>
+                    <div class="review-meta"><code>@v.PackageId</code> · v@(v.Version) <span class="badge beta">@L["Beta"]</span></div>
+                </div>
+            </div>
             <div style="color:var(--tun-slate);font-size:.85rem;margin:4px 0 8px">
                 @L["Approved for beta"]: @Time.Fmt(v.ReviewedAt ?? v.SubmittedAt) · @L["Downloads"]: @v.Downloads
             </div>

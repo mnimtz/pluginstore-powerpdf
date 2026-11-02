@@ -590,6 +590,9 @@ template now asks for infrastructure encryption, soft delete for blobs and the d
 (7 days) and the App Service health check on /api/ping; findings decided against are
 listed with their reasons in `.trivyignore`.
 
+**Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
+name as a heading, id and version, and the short description; the submitter block follows below.
+
 **Delete for good (S1.29.0):** besides "Take out of the store" (withdraw, restorable) and the
 security block, an admin can delete an add-on for good on its plug-in page, after typing its package id
 again. It removes every version with its package and source files, the ratings, problem reports with

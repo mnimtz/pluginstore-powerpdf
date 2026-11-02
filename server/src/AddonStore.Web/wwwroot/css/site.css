@@ -102,6 +102,14 @@ ul.findings li, ul.findings .hint { overflow-wrap: anywhere; }
 .catalog-tools { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
 .catalog-tools input[type=search] { max-width: 260px; border-radius: 999px; padding: 8px 16px; }
 .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+/* S1.29.1: card head in the review queue: the add-on first */
+.review-head { display: flex; gap: 14px; align-items: flex-start; }
+.review-icon { flex: none; width: 52px; height: 52px; border-radius: 12px; object-fit: contain; background: var(--tun-gray-50, #f4f6f9); display: inline-flex; align-items: center; justify-content: center; color: var(--tun-navy); font-size: 1.5rem; font-weight: 700; }
+.review-title { margin: 0; font-size: 1.3rem; line-height: 1.25; color: var(--tun-navy); }
+.review-title a { color: inherit; text-decoration: none; }
+.review-title a:hover { text-decoration: underline; }
+.review-meta { color: var(--tun-slate); font-size: .85rem; margin-top: 2px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.review-desc { margin: 6px 0 0; color: var(--tun-slate); }
 /* S1.28.2: submitter block in the review queue */
 .submitter { display: flex; gap: 10px; align-items: center; margin: 8px 0 2px; padding: 8px 10px; border-radius: 10px; background: var(--tun-gray-50, #f4f6f9); }
 .submitter .initial { flex: none; width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--tun-navy); color: #fff; font-weight: 700; overflow: hidden; }

@@ -27,6 +27,8 @@ public class ReviewModel : PageModel
     /// <summary>S1.28.2: who submitted each version (account by id), and the live version per add-on (none = a new add-on).</summary>
     public Dictionary<string, AppUser> Submitters { get; private set; } = new();
     public Dictionary<string, (bool Live, string Version)> Released { get; private set; } = new();
+    /// <summary>S1.29.1: versions in the queue whose package carries assets/icon.png.</summary>
+    public HashSet<int> HasIcon { get; private set; } = new();
 
     public async Task OnPostApplyCatalogAsync(string intakeId)
     {
@@ -111,6 +113,16 @@ public class ReviewModel : PageModel
             .GroupBy(v => v.PackageId)
             .ToDictionary(g => g.Key, g => g.Where(v => v.Status == VersionStatus.Live).Select(v => v.Version).OrderByDescending(x => x, cmp).FirstOrDefault() is { } live
                 ? (true, live) : (false, g.Select(v => v.Version).OrderByDescending(x => x, cmp).First()));
+        var root = HttpContext.RequestServices.GetRequiredService<SubmissionService>().StorageRoot;
+        foreach (var q in Queue.Concat(InBeta))
+        {
+            try
+            {
+                using var zip = System.IO.Compression.ZipFile.OpenRead(Path.Combine(root, q.FilePath));
+                if (zip.GetEntry("assets/icon.png") is { Length: > 0 }) HasIcon.Add(q.Id);
+            }
+            catch (Exception e) when (e is IOException or InvalidDataException or UnauthorizedAccessException) { }
+        }
         var originIds = Queue.Where(q => q.OriginChildId != null).Select(q => (int?)q.Id).ToList();
         if (originIds.Count > 0)
         {
