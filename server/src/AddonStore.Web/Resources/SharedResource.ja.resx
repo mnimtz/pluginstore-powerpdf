@@ -1636,4 +1636,9 @@
   <data name="Last handed over {0}" xml:space="preserve"><value>前回の引き渡し {0}</value></data>
   <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>サードパーティ コンポーネントは MIT、BSD、Apache-2.0、CC0-1.0 のもののみ。</value></data>
   <data name="LICENSES.md reproduces each component with its copyright and full license text, including code a library contains from others; check the built package yourself before the upload." xml:space="preserve"><value>LICENSES.md には各コンポーネントの著作権表示とライセンス全文を、ライブラリに含まれる他者のコードも含めて記載します。アップロード前に、ビルドしたパッケージをご自身で確認してください。</value></data>
+  <data name="New add-on" xml:space="preserve"><value>新しいアドオン</value></data>
+  <data name="Update of live version {0}" xml:space="preserve"><value>公開版 {0} の更新</value></data>
+  <data name="Update of beta version {0}" xml:space="preserve"><value>ベータ版 {0} の更新</value></data>
+  <data name="Account since {0}" xml:space="preserve"><value>アカウント作成日 {0}</value></data>
+  <data name="Author in the catalog" xml:space="preserve"><value>カタログ上の作成者</value></data>
 </root>

@@ -24,6 +24,9 @@ public class ReviewModel : PageModel
     /// <summary>UAT handovers (S1.23.0): intake per version id and the catalog proposal differences per intake.</summary>
     public Dictionary<int, FederationIntake> Intakes { get; private set; } = new();
     public Dictionary<string, List<FederationService.CatalogDiff>> CatalogDiffs { get; private set; } = new();
+    /// <summary>S1.28.2: who submitted each version (account by id), and the live version per add-on (none = a new add-on).</summary>
+    public Dictionary<string, AppUser> Submitters { get; private set; } = new();
+    public Dictionary<string, (bool Live, string Version)> Released { get; private set; } = new();
 
     public async Task OnPostApplyCatalogAsync(string intakeId)
     {
@@ -98,7 +101,16 @@ public class ReviewModel : PageModel
             .Where(b => !lives.Any(l => l.PackageId == b.PackageId && cmp.Compare(l.Version, b.Version) >= 0))
             .OrderBy(v => v.PackageId).ToList();
         var ids = Queue.Concat(InBeta).Select(q => q.PackageId).Distinct().ToList();
-        Packages = await _db.Packages.Where(p => ids.Contains(p.Id)).ToDictionaryAsync(p => p.Id);
+        Packages = await _db.Packages.Include(p => p.Owner).Where(p => ids.Contains(p.Id)).ToDictionaryAsync(p => p.Id);
+        var userIds = Queue.Select(q => q.SubmittedById).Where(u => u != null).Distinct().ToList();
+        Submitters = await _db.Users.Where(u => userIds.Contains(u.Id)).ToDictionaryAsync(u => u.Id);
+        // newest approved version (live, else beta) of each add-on in the queue; none = a new add-on
+        var queued = Queue.Select(q => q.PackageId).Distinct().ToList();
+        Released = (await _db.PackageVersions.Where(v => queued.Contains(v.PackageId) && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta))
+                .Select(v => new { v.PackageId, v.Version, v.Status }).ToListAsync())
+            .GroupBy(v => v.PackageId)
+            .ToDictionary(g => g.Key, g => g.Where(v => v.Status == VersionStatus.Live).Select(v => v.Version).OrderByDescending(x => x, cmp).FirstOrDefault() is { } live
+                ? (true, live) : (false, g.Select(v => v.Version).OrderByDescending(x => x, cmp).First()));
         var originIds = Queue.Where(q => q.OriginChildId != null).Select(q => (int?)q.Id).ToList();
         if (originIds.Count > 0)
         {

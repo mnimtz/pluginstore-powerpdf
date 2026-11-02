@@ -590,6 +590,11 @@ template now asks for infrastructure encryption, soft delete for blobs and the d
 (7 days) and the App Service health check on /api/ping; findings decided against are
 listed with their reasons in `.trivyignore`.
 
+**Who submitted it (S1.28.2):** the review queue names the submitters of all waiting
+versions at the top, and each version shows a submitter block: name, picture or initial,
+e-mail address, account date, whether it is a new add-on or an update of the live or beta
+version, and the owner and catalog author when they differ; private add-ons carry a badge.
+
 **Author filter (S1.28.0, client 1.9.16):** the start page and the store window
 in Power PDF offer an author choice next to the search ("Author: All" and the
 names), shown once at least two authors have add-ons in the catalog. It works

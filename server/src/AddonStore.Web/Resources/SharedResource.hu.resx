@@ -1636,4 +1636,9 @@
   <data name="Last handed over {0}" xml:space="preserve"><value>Utoljára átadva: {0}</value></data>
   <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>Kizárólag MIT, BSD, Apache-2.0 vagy CC0-1.0 licencű külső összetevők.</value></data>
   <data name="LICENSES.md reproduces each component with its copyright and full license text, including code a library contains from others; check the built package yourself before the upload." xml:space="preserve"><value>A LICENSES.md minden összetevőt szerzői joggal és teljes licencszöveggel közöl, a könyvtárban lévő mások által írt kódot is; feltöltés előtt ellenőrizze saját maga a felépített csomagot.</value></data>
+  <data name="New add-on" xml:space="preserve"><value>Új bővítmény</value></data>
+  <data name="Update of live version {0}" xml:space="preserve"><value>A közzétett {0} verzió frissítése</value></data>
+  <data name="Update of beta version {0}" xml:space="preserve"><value>A(z) {0} bétaverzió frissítése</value></data>
+  <data name="Account since {0}" xml:space="preserve"><value>Fiók létrehozva: {0}</value></data>
+  <data name="Author in the catalog" xml:space="preserve"><value>Szerző a katalógusban</value></data>
 </root>

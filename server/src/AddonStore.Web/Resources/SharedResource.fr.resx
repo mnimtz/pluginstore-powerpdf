@@ -1636,4 +1636,9 @@
   <data name="Last handed over {0}" xml:space="preserve"><value>Dernière transmission {0}</value></data>
   <data name="Only third-party components under MIT, BSD, Apache-2.0 or CC0-1.0." xml:space="preserve"><value>Uniquement des composants tiers sous licence MIT, BSD, Apache-2.0 ou CC0-1.0.</value></data>
   <data name="LICENSES.md reproduces each component with its copyright and full license text, including code a library contains from others; check the built package yourself before the upload." xml:space="preserve"><value>LICENSES.md reprend chaque composant avec son copyright et le texte complet de sa licence, y compris le code d'autres auteurs qu'une bibliothèque contient ; vérifiez vous-même le paquet construit avant le téléversement.</value></data>
+  <data name="New add-on" xml:space="preserve"><value>Nouveau complément</value></data>
+  <data name="Update of live version {0}" xml:space="preserve"><value>Mise à jour de la version publiée {0}</value></data>
+  <data name="Update of beta version {0}" xml:space="preserve"><value>Mise à jour de la version bêta {0}</value></data>
+  <data name="Account since {0}" xml:space="preserve"><value>Compte depuis le {0}</value></data>
+  <data name="Author in the catalog" xml:space="preserve"><value>Auteur dans le catalogue</value></data>
 </root>

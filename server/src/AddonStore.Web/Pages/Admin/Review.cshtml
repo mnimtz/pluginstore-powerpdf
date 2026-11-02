@@ -31,6 +31,11 @@
 {
     <div class="card">@L["Nothing to review right now."]</div>
 }
+else
+{
+    @* S1.28.2: who the waiting versions come from, at a glance *@
+    <p class="muted" style="margin:0 0 10px">@L["Submitted by"]: @string.Join(", ", Model.Queue.GroupBy(q => q.SubmittedBy).Select(g => g.Count() > 1 ? $"{g.Key} ({g.Count()})" : g.Key))</p>
+}
 @foreach (var v in Model.Queue)
 {
     <div class="card">
@@ -40,8 +45,41 @@
         <strong style="color:var(--tun-navy)"><a href="/Plugin?id=@v.PackageId">@(Model.Packages.TryGetValue(v.PackageId, out var rp) ? AddonStore.Web.Services.CatalogUi.DisplayName(rp, v, lang) : AddonStore.Web.Services.CatalogUi.ManifestText(v, "name", lang, v.PackageId))</a></strong>
         <span style="color:var(--tun-slate)">@v.PackageId</span> v@(v.Version)
         <span class="badge submitted">@L["Awaiting review"]</span>
+        @if (rp?.Visibility == "private") { <span class="badge disabled">@L["private"]</span> }
+        @{
+            // S1.28.2: the submitter as a block of its own: account, e-mail, since when; owner and catalog author when they differ
+            var who = v.SubmittedById is not null && Model.Submitters.TryGetValue(v.SubmittedById, out var su) ? su : null;
+            var whoName = who?.DisplayName is { Length: > 0 } dn ? dn : v.SubmittedBy;
+            var ownerName = rp?.Owner?.DisplayName;
+            string? catalogAuthor = null;
+            try
+            {
+                using var mdoc = JsonDocument.Parse(v.ManifestJson);
+                catalogAuthor = AddonStore.Web.Services.CatalogUi.EffectiveAuthor(rp, mdoc.RootElement,
+                    rp?.Owner is not null ? AddonStore.Web.Services.CatalogUi.PublicName(rp.Owner) : v.SubmittedBy);
+            }
+            catch (JsonException) { }
+        }
+        <div class="submitter">
+            <span class="initial" aria-hidden="true">
+                @if (who?.AvatarFile is not null) { <img src="/avatar/@who.Id" alt="" /> } else { @(whoName.Trim().FirstOrDefault()) }
+            </span>
+            <div>
+                <div><span class="muted">@L["Submitted by"]</span> <b>@whoName</b>
+                    @if (!string.IsNullOrEmpty(who?.Email)) { <text> · </text><a href="mailto:@who.Email">@who.Email</a> }
+                    @if (who is not null) { <text> · </text><span class="muted">@L["Account since {0}", Time.Fmt(who.CreatedAt)]</span> }
+                </div>
+                <div class="muted small">
+                    @if (!Model.Released.TryGetValue(v.PackageId, out var released)) { @L["New add-on"] }
+                    else if (released.Live) { @L["Update of live version {0}", released.Version] }
+                    else { @L["Update of beta version {0}", released.Version] }
+                    @if (ownerName is { Length: > 0 } && ownerName != whoName) { <text> · </text>@L["Owner"]<text>: </text>@ownerName }
+                    @if (catalogAuthor is { Length: > 0 } && catalogAuthor != whoName) { <text> · </text>@L["Author in the catalog"]<text>: </text>@catalogAuthor }
+                </div>
+            </div>
+        </div>
         <div style="color:var(--tun-slate);font-size:.85rem;margin:4px 0 8px">
-            @L["Submitted by"] @v.SubmittedBy · @v.SubmittedVia · @Time.Fmt(v.SubmittedAt) · @(v.SizeBytes / 1024) KB · SHA-256 <code>@v.Sha256[..16]…</code>
+            @v.SubmittedVia · @Time.Fmt(v.SubmittedAt) · @(v.SizeBytes / 1024) KB · SHA-256 <code>@v.Sha256[..16]…</code>
         </div>
         @if (v.OriginUat is { Length: > 0 })
         {
