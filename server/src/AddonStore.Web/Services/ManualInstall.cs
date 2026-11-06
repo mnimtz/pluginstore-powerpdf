@@ -18,17 +18,18 @@ public static class ManualInstall
 {
     public const string Format = "addonstore-manual-v1";
 
-    /// <summary>Public, not blocked add-ons (never the store client) and their newest live version.</summary>
-    public static async Task<Dictionary<string, PackageVersion>> AvailableAsync(AppDbContext db, string? onlyId = null)
+    /// <summary>Public, not blocked add-ons (never the store client) and their newest live version (row id, version).
+    /// Only these columns: the catalog page asks on every view, and the database lies on a network share.</summary>
+    public static async Task<Dictionary<string, (int Id, string Version)>> AvailableAsync(AppDbContext db, string? onlyId = null)
     {
-        var pkgs = await db.Packages.AsNoTracking()
-            .Where(p => p.Visibility != "private" && p.BlockedAt == null && p.Id != SubmissionService.ClientPackageId && (onlyId == null || p.Id == onlyId))
-            .Select(p => p.Id).ToListAsync();
         var lives = await db.PackageVersions.AsNoTracking()
-            .Where(v => v.Status == VersionStatus.Live && v.BlockedAt == null && pkgs.Contains(v.PackageId))
-            .Select(PackageVersion.Light).ToListAsync();
+            .Where(v => v.Status == VersionStatus.Live && v.BlockedAt == null && v.PackageId != SubmissionService.ClientPackageId &&
+                        (onlyId == null || v.PackageId == onlyId) &&
+                        db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private" && p.BlockedAt == null))
+            .Select(v => new { v.Id, v.PackageId, v.Version }).ToListAsync();
         var cmp = new SemVerComparer();
-        return lives.GroupBy(v => v.PackageId).ToDictionary(g => g.Key, g => g.OrderByDescending(v => v.Version, cmp).First());
+        return lives.GroupBy(v => v.PackageId)
+            .ToDictionary(g => g.Key, g => g.OrderByDescending(v => v.Version, cmp).Select(v => (v.Id, v.Version)).First());
     }
 
     /// <summary>File name of the zip, e.g. SmartBookmarks-1.5.2-manual-install.zip.</summary>
@@ -70,9 +71,11 @@ public static class ManualInstall
                                                  .Replace("{id}", v.PackageId).Replace("{page}", page), true);
         Text("package.json", json, false);
         zip.CreateEntryFromFile(packageFile, root + "package.ppak", CompressionLevel.NoCompression);   // unchanged: its hash is signed
-        // the licence texts of the package, readable before installing
-        using (var ppak = ZipFile.OpenRead(packageFile))
+        // the licence texts of the package, readable before installing; a package that cannot be read is not offered
+        try
         {
+            using var ppak = ZipFile.OpenRead(packageFile);
+            if (ppak.GetEntry($"x64/{zxt}.zxt") is null) return false;
             foreach (var n in new[] { "LICENSES.md", "THIRD-PARTY-NOTICES.txt" })
             {
                 var e = ppak.GetEntry(n);
@@ -83,6 +86,7 @@ public static class ManualInstall
                 from.CopyTo(to);
             }
         }
+        catch (InvalidDataException) { return false; }
         return true;
     }
 

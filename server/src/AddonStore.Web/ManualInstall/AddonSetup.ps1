@@ -33,6 +33,8 @@ $ErrorActionPreference = 'Stop'
 $env:PSModulePath = Join-Path $PSHOME 'Modules'
 if (-not $Source) { $Source = $PSScriptRoot }
 $Source = $Source.TrimEnd('\')
+# the text this process runs: what is kept for the removal, never the file again (it lies in a folder the user can write)
+$SelfText = $MyInvocation.MyCommand.ScriptContents
 
 $De = (Get-UICulture).TwoLetterISOLanguageName -eq 'de'
 function T([string]$de, [string]$en) { if ($De) { $de } else { $en } }
@@ -99,8 +101,20 @@ function Read-Package([string]$dir) {
     if ([string]$p.version -notmatch '^[0-9]+(\.[0-9]+){1,3}([-+][0-9A-Za-z.-]{1,40})?$') { return $null }
     if ([string]$p.zxtName -notmatch '^[A-Za-z0-9_-]{1,64}$' -or [string]$p.zxtName -eq 'PluginStore') { return $null }
     if ([string]$p.sha256 -notmatch '^[0-9a-f]{64}$') { return $null }
-    if ($null -eq $p.name -or ([string]$p.name).Length -gt 200) { $p | Add-Member -Force -NotePropertyName name -NotePropertyValue ([string]$p.id) }
-    return $p
+    # name, author and page are not covered by the signature: they only become display texts, cleaned and capped
+    $name = Get-CleanText $p.name 120; if (-not $name) { $name = [string]$p.id }
+    $page = [string]$p.page
+    if ($page.Length -gt 300 -or $page -notmatch '^https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[A-Za-z0-9._~%/?#=&+-]*)?$') { $page = '' }
+    return [pscustomobject]@{ format = [string]$p.format; id = [string]$p.id; version = [string]$p.version; name = $name
+                              author = (Get-CleanText $p.author 120); zxtName = [string]$p.zxtName; sha256 = [string]$p.sha256
+                              signature = [string]$p.signature; page = $page }
+}
+
+function Get-CleanText($value, [int]$max) {
+    $s = ([string]$value) -replace '[\p{Cc}\p{Cf}]', ''
+    $s = $s.Trim()
+    if ($s.Length -gt $max) { $s = $s.Substring(0, $max) }
+    return $s
 }
 
 # --- Power PDF ------------------------------------------------------------------------------------------------------
@@ -155,9 +169,15 @@ function Test-Admin {
 }
 function Test-System { return [Security.Principal.WindowsIdentity]::GetCurrent().IsSystem }
 
+function Test-PowerPdfOpen {
+    # only in this Windows session: on a terminal server other users' Power PDF must not hold the installation
+    $me = (Get-Process -Id $PID).SessionId
+    return [bool](@(Get-Process -Name PowerPDF -ErrorAction SilentlyContinue | Where-Object { $_.SessionId -eq $me }).Count)
+}
+
 function Wait-PowerPdfClosed {
     if ($Quiet) { return }
-    while (Get-Process -Name PowerPDF -ErrorAction SilentlyContinue) {
+    while (Test-PowerPdfOpen) {
         Say (T 'Power PDF ist geöffnet. Bitte schließen Sie Power PDF und drücken Sie dann die Eingabetaste (abbrechen mit Strg+C).' `
                'Power PDF is open. Please close Power PDF, then press Enter (Ctrl+C cancels).') 'Yellow'
         [void](Read-Host)
@@ -302,11 +322,15 @@ function Get-UserLayoutFiles {
     return $files
 }
 
-function Update-UserLayout([string]$plugins, [string]$name, [bool]$remove) {
+function Get-OwnGroups([string]$plugins, [string]$name) {
     $own = Join-Path $plugins "$name\UILayout\Publish Mode.xml"
-    if (-not (Test-Path -LiteralPath $own)) { return 0 }
-    $l = Read-Layout $own; if (-not $l) { return 0 }
-    $groups = @(Get-AddonGroups $l.Text)
+    if (-not (Test-Path -LiteralPath $own)) { return @() }
+    $l = Read-Layout $own; if (-not $l) { return @() }
+    return @(Get-AddonGroups $l.Text)
+}
+
+function Update-UserLayout([string]$plugins, [string]$name, [bool]$remove, $groups = $null) {
+    if ($null -eq $groups) { $groups = @(Get-OwnGroups $plugins $name) }
     if ($groups.Count -eq 0) { return 0 }
     $written = 0
     foreach ($f in Get-UserLayoutFiles) {
@@ -331,20 +355,33 @@ function Clear-Bin([string]$dir, [string]$plugins) {
     Remove-Item -LiteralPath $dir -Recurse -Force
 }
 
-function New-Stage([string]$plugins) {
-    # SYSTEM and Administrators only, nothing inherited (the same as the store client)
-    $stage = Join-Path $plugins ('.psstage-' + [guid]::NewGuid().ToString('N'))
+# SYSTEM and Administrators only, nothing inherited (the same as the store client); $readers may read and run.
+function New-AdminFolder([string]$path, [string[]]$readers) {
     $acl = New-Object System.Security.AccessControl.DirectorySecurity
     $acl.SetAccessRuleProtection($true, $false)
     foreach ($sid in @('S-1-5-18', 'S-1-5-32-544')) {
         $acl.AddAccessRule((New-Object System.Security.AccessControl.FileSystemAccessRule((New-Object System.Security.Principal.SecurityIdentifier $sid), 'FullControl', 'ContainerInherit,ObjectInherit', 'None', 'Allow')))
     }
-    $acl.AddAccessRule((New-Object System.Security.AccessControl.FileSystemAccessRule((New-Object System.Security.Principal.SecurityIdentifier 'S-1-3-4'), 'ReadAndExecute', 'ContainerInherit,ObjectInherit', 'None', 'Allow')))
-    [void][System.IO.Directory]::CreateDirectory($stage, $acl)
-    return $stage
+    foreach ($sid in @('S-1-3-4') + $readers) {   # OWNER RIGHTS: whoever owns it gets no implicit WRITE_DAC
+        $acl.AddAccessRule((New-Object System.Security.AccessControl.FileSystemAccessRule((New-Object System.Security.Principal.SecurityIdentifier $sid), 'ReadAndExecute', 'ContainerInherit,ObjectInherit', 'None', 'Allow')))
+    }
+    [void][System.IO.Directory]::CreateDirectory($path, $acl)
+    return $path
+}
+
+function New-Stage([string]$plugins) { return New-AdminFolder (Join-Path $plugins ('.psstage-' + [guid]::NewGuid().ToString('N'))) @() }
+
+# package.json for the removal, from the CHECKED values (the file next to the zip can have changed since)
+function Get-PackageJson($pkg) {
+    return ([pscustomobject]@{ format = $pkg.format; id = $pkg.id; version = $pkg.version; name = $pkg.name; author = $pkg.author
+                               zxtName = $pkg.zxtName; sha256 = $pkg.sha256; signature = $pkg.signature; page = $pkg.page } | ConvertTo-Json)
 }
 
 function Get-EntryKey($pkg) { return 'AddonStore_' + $pkg.id }
+function Test-Entry($pkg) {
+    try { $k = [Microsoft.Win32.RegistryKey]::OpenBaseKey('LocalMachine', 'Registry64').OpenSubKey('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\' + (Get-EntryKey $pkg)) } catch { return $false }
+    if ($k) { $k.Close(); return $true } else { return $false }
+}
 
 function Invoke-MachineInstall($pkg) {
     $root = Find-PowerPdf; if (-not $root) { return 5 }
@@ -387,12 +424,15 @@ function Invoke-MachineInstall($pkg) {
                 New-Item -ItemType Directory -Force -Path (Join-Path $data 'bin') | Out-Null
                 foreach ($f in $dlls) { Copy-Item -LiteralPath $f.FullName -Destination (Join-Path $data "bin\$($f.Name)") -Force }
             }
-            # this script and package.json stay in the admin-only data folder, for the removal and for other users
+            # this script and package.json stay for the removal and for other users, in a folder of its own that only
+            # administrators can change (even if an installer widened the rights of Plug-Ins): Active Setup runs it for
+            # every user, and an administrator runs it for the removal
             $setup = Join-Path $data 'setup'
             if (Test-Path -LiteralPath $setup) { Remove-Item -LiteralPath $setup -Recurse -Force }
-            New-Item -ItemType Directory -Force -Path $setup | Out-Null
-            Copy-Item -LiteralPath $PSCommandPath -Destination (Join-Path $setup 'AddonSetup.ps1') -Force
-            Copy-Item -LiteralPath (Join-Path $Source 'package.json') -Destination (Join-Path $setup 'package.json') -Force
+            [void](New-AdminFolder $setup @('S-1-5-32-545'))
+            $utf8Bom = New-Object Text.UTF8Encoding($true)
+            [IO.File]::WriteAllText((Join-Path $setup 'AddonSetup.ps1'), $SelfText, $utf8Bom)
+            [IO.File]::WriteAllText((Join-Path $setup 'package.json'), (Get-PackageJson $pkg), (New-Object Text.UTF8Encoding($false)))
         } catch { return 9 }
         Register-Entries $pkg $root $data
         return 0
@@ -504,6 +544,7 @@ try {
         }
         'Install' {
             Say ((T 'Add-on installieren: ' 'Installing add-on: ') + "$($pkg.name) $($pkg.version)") 'Cyan'
+            if (-not (Test-Path -LiteralPath (Join-Path $Source 'package.ppak'))) { Say (Get-Message 8) 'Red'; Finish 8 }
             if ((Get-FileHash -LiteralPath (Join-Path $Source 'package.ppak') -Algorithm SHA256).Hash.ToLowerInvariant() -ne $pkg.sha256) { Say (Get-Message 2) 'Red'; Finish 2 }
             if (-not (Test-Signature $pkg)) { Say (Get-Message 3) 'Red'; Finish 3 }
             Say (T 'Signatur und Prüfsumme in Ordnung.' 'Signature and checksum are fine.')
@@ -521,12 +562,16 @@ try {
             $root = Find-PowerPdf; if (-not $root) { Say (Get-Message 5) 'Red'; Finish 5 }
             $plugins = Join-Path $root 'bin\Plug-Ins'
             $have = Get-InstalledManifest $plugins $pkg.zxtName
-            Wait-PowerPdfClosed
-            # user part first: the group names come from the add-on's own layout, which goes with it
             $mine = $have -and $have.id -eq $pkg.id
-            if ($mine -and -not (Test-System)) { [void](Update-UserLayout $plugins $pkg.zxtName $true) }
+            if (-not $have -and -not (Test-Entry $pkg)) { Say (Get-Message 11) 'Yellow'; Finish 11 }   # nothing to do: no UAC prompt
+            if ($have -and -not $mine) { Say (Get-Message 6) 'Red'; Finish 6 }
+            Wait-PowerPdfClosed
+            # the group names come from the add-on's own layout, which goes with it: read them now, take them out
+            # of the user's ribbon only once the files are really gone (a refused prompt changes nothing)
+            $groups = @(); if ($mine) { $groups = @(Get-OwnGroups $plugins $pkg.zxtName) }
             $rc = Get-Code (Invoke-AdminStep 'MachineUninstall' $pkg)
             if ($rc -eq 0 -and -not (Test-System)) {
+                [void](Update-UserLayout $plugins $pkg.zxtName $true $groups)
                 # the add-on's settings key of this user (as the store client does) and the Active Setup mark
                 Remove-Item -LiteralPath ('HKCU:\Software\Kofax\PDF\Tungsten Power PDF\' + $pkg.zxtName) -Recurse -Force -ErrorAction SilentlyContinue
                 Remove-Item -LiteralPath ('HKCU:\Software\Microsoft\Active Setup\Installed Components\' + (Get-EntryKey $pkg)) -Recurse -Force -ErrorAction SilentlyContinue

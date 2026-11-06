@@ -62,7 +62,7 @@ public class AddonModel : PageModel
             ClientVersion = client.Version;
             ClientDownloadUrl = "/download/pluginstore.msi" + (Ref.Length > 0 ? $"?pkg={Uri.EscapeDataString(Item.Id)}&ref={Ref}" : $"?pkg={Uri.EscapeDataString(Item.Id)}");
         }
-        ManualVersion = (await ManualInstall.AvailableAsync(_db, Item.Id)).GetValueOrDefault(Item.Id)?.Version;
+        ManualVersion = (await ManualInstall.AvailableAsync(_db, Item.Id)).TryGetValue(Item.Id, out var manual) ? manual.Version : null;
         var shown = await ScreenshotService.DisplayVersionAsync(_db, Item.Id);
         if (shown is not null)
         {

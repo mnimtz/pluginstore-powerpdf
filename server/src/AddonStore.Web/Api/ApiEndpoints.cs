@@ -1675,13 +1675,15 @@ public static class ApiEndpoints
         api.MapGet("/packages/{id}/manual", async (string id, AppDbContext db, SubmissionService svc, UsageService usage,
                                                     PackageSigning signing, HttpContext ctx) =>
         {
-            var pick = (await ManualInstall.AvailableAsync(db, id)).GetValueOrDefault(id);
-            if (pick is null) return NotFound("PACKAGE_NOT_FOUND", $"No public live version of '{id}' for a manual installation.");
+            var avail = await ManualInstall.AvailableAsync(db, id);
+            if (!avail.TryGetValue(id, out var hit)) return NotFound("PACKAGE_NOT_FOUND", $"No public live version of '{id}' for a manual installation.");
+            var pick = await db.PackageVersions.AsNoTracking().Where(x => x.Id == hit.Id).Select(PackageVersion.Light).FirstAsync();
             var path = Path.Combine(svc.StorageRoot, pick.FilePath);
             if (!File.Exists(path)) return NotFound("FILE_MISSING", "The package file is missing on the server; contact an admin.");
-            await signing.EnsureLoadedAsync();
             var zxt = ManualInstall.Zxt(pick);
-            var signature = zxt.Length == 0 ? "" : signing.Sign(pick.PackageId, pick.Version, pick.Sha256, zxt);
+            if (zxt.Length == 0) return NotFound("FILE_MISSING", "The package declares no x64 binary for a manual installation.");
+            await signing.EnsureLoadedAsync();
+            var signature = signing.Sign(pick.PackageId, pick.Version, pick.Sha256, zxt);
             if (signature.Length == 0)
                 return Results.Json(new { ok = false, error = new { code = "SIGNING_UNAVAILABLE",
                     message = "The package cannot be signed right now, so no manual installation is offered.",
