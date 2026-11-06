@@ -1649,4 +1649,6 @@
   <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Lisäosa {0} poistettiin pysyvästi. Sen tunnusta ei voi käyttää uudelleen.</value></data>
   <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Vahvista poisto kirjoittamalla paketin tunnus täsmälleen.</value></data>
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Lisäosaa toimitetaan yhä asiakkaille tai se kuuluu toimitusmalliin. Poista ensin nämä toimitukset ja mallin kohdat.</value></data>
+  <data name="Manual (ZIP)" xml:space="preserve"><value>Manuaalinen (ZIP)</value></data>
+  <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Manuaalinen asennus ilman Add-on Storea: ZIP-tiedosto, jossa on install.bat ja uninstall.bat, myös ohjelmistojakeluun. Ei automaattisia päivityksiä.</value></data>
 </root>

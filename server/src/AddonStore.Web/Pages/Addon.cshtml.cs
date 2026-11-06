@@ -32,6 +32,8 @@ public class AddonModel : PageModel
     public string? ClientDownloadUrl { get; private set; }
     public List<ScreenshotService.Shot> Shots { get; private set; } = new();
     public string ShotVersion { get; private set; } = "";
+    /// <summary>S1.30.0: live version offered as a manual installation (ZIP); null when there is none.</summary>
+    public string? ManualVersion { get; private set; }
 
     public async Task<IActionResult> OnGetAsync(string slug, [FromQuery(Name = "ref")] string? reference)
     {
@@ -60,6 +62,7 @@ public class AddonModel : PageModel
             ClientVersion = client.Version;
             ClientDownloadUrl = "/download/pluginstore.msi" + (Ref.Length > 0 ? $"?pkg={Uri.EscapeDataString(Item.Id)}&ref={Ref}" : $"?pkg={Uri.EscapeDataString(Item.Id)}");
         }
+        ManualVersion = (await ManualInstall.AvailableAsync(_db, Item.Id)).GetValueOrDefault(Item.Id)?.Version;
         var shown = await ScreenshotService.DisplayVersionAsync(_db, Item.Id);
         if (shown is not null)
         {

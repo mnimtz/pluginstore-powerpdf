@@ -593,6 +593,19 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Manual installation (S1.30.0):** every public add-on with a live version has a small "Manual (ZIP)"
+button on its catalog card and on its add-on page (`GET /api/packages/{id}/manual`, no sign-in). The zip is
+built on request from the newest live version, so each newly released add-on and each update has it without
+any extra step. It holds `install.bat`, `uninstall.bat`, the generic `AddonSetup.ps1`
+(`server/src/AddonStore.Web/ManualInstall/`, embedded in the server), the unchanged signed `.ppak`,
+`package.json` (id, version, SHA-256, store signature) and the add-on's `LICENSES.md`. The script checks the
+store signature (the same pinned keys and HKLM policies as the client) and the hash, copies the add-on from an
+admin-only staging folder into `Plug-Ins\` after one UAC prompt, adds its group to the shared tab of the
+user's ribbon layout (other users through Active Setup at their next sign-in) and registers an entry under
+"Apps and features". `/quiet` runs without questions (Intune, SCCM). Such installations get no updates and no
+security block; a store client installed later recognises and updates them. Script messages are German or
+English, following the Windows display language.
+
 **Delete for good (S1.29.0):** besides "Take out of the store" (withdraw, restorable) and the
 security block, an admin can delete an add-on for good on its plug-in page, after typing its package id
 again. It removes every version with its package and source files, the ratings, problem reports with

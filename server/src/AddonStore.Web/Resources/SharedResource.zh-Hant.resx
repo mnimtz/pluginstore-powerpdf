@@ -1649,4 +1649,6 @@
   <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>增益集 {0} 已永久刪除。其 ID 無法再次使用。</value></data>
   <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>請準確輸入套件 ID 以確認刪除。</value></data>
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>此增益集仍在向客戶交付，或屬於某個交付範本。請先移除這些交付和範本項目。</value></data>
+  <data name="Manual (ZIP)" xml:space="preserve"><value>手動 (ZIP)</value></data>
+  <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>不需 Add-on Store 的手動安裝：包含 install.bat 和 uninstall.bat 的 ZIP 檔案，也適用於軟體派送。不會自動更新。</value></data>
 </root>

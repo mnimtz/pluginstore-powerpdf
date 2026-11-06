@@ -1649,4 +1649,6 @@
   <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Надстройка {0} удалена навсегда. Её идентификатор больше нельзя использовать.</value></data>
   <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Чтобы подтвердить удаление, введите точный идентификатор пакета.</value></data>
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Надстройка всё ещё поставляется клиентам или входит в шаблон поставки. Сначала удалите эти поставки и записи шаблонов.</value></data>
+  <data name="Manual (ZIP)" xml:space="preserve"><value>Вручную (ZIP)</value></data>
+  <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Установка вручную без Add-on Store: ZIP-архив с install.bat и uninstall.bat, также для распространения ПО. Без автоматических обновлений.</value></data>
 </root>

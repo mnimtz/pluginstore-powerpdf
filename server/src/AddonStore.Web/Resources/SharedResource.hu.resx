@@ -1649,4 +1649,6 @@
   <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>A(z) {0} bővítmény véglegesen törölve. Az azonosítója nem használható újra.</value></data>
   <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>A törlés megerősítéséhez pontosan írja be a csomagazonosítót.</value></data>
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>A bővítményt még szállítják ügyfeleknek, vagy egy szállítási sablon része. Először távolítsa el ezeket a szállításokat és sablonbejegyzéseket.</value></data>
+  <data name="Manual (ZIP)" xml:space="preserve"><value>Kézi (ZIP)</value></data>
+  <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Kézi telepítés Add-on Store nélkül: ZIP-fájl install.bat és uninstall.bat fájllal, szoftverterjesztéshez is. Nincs automatikus frissítés.</value></data>
 </root>

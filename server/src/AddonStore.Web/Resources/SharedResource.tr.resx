@@ -1649,4 +1649,6 @@
   <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>{0} eklentisi kalıcı olarak silindi. Kimliği yeniden kullanılamaz.</value></data>
   <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Silme işlemini onaylamak için paket kimliğini tam olarak yazın.</value></data>
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Eklenti hâlâ müşterilere teslim ediliyor veya bir teslimat şablonunun parçası. Önce bu teslimatları ve şablon kayıtlarını kaldırın.</value></data>
+  <data name="Manual (ZIP)" xml:space="preserve"><value>Elle (ZIP)</value></data>
+  <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Add-on Store olmadan elle kurulum: install.bat ve uninstall.bat içeren bir ZIP, yazılım dağıtımı için de. Otomatik güncelleme yok.</value></data>
 </root>

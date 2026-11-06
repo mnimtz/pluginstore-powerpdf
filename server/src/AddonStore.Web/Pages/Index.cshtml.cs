@@ -21,6 +21,8 @@ public class IndexModel : PageModel
     public string? ClientDownloadUrl { get; private set; }
     /// <summary>Short page name per add-on for the share links (/a/{slug}).</summary>
     public Dictionary<string, string> Slugs { get; } = new();
+    /// <summary>S1.30.0: add-ons offered as a manual installation (ZIP).</summary>
+    public HashSet<string> ManualIds { get; private set; } = new();
     public bool AiSearch { get; private set; }
     /// <summary>Admins mark highlights right on the tiles (S1.16.0).</summary>
     public bool IsAdmin { get; private set; }
@@ -91,5 +93,6 @@ public class IndexModel : PageModel
         var all = (await CatalogUi.GetAsync(_db, culture, includeBeta: true))
             .Where(i => i.Id != ClientPackageId).Select(i => i.Id).ToList();
         foreach (var i in Items) Slugs[i.Id] = ShareService.Slug(i.Id, all);
+        ManualIds = (await ManualInstall.AvailableAsync(_db)).Keys.ToHashSet();
     }
 }

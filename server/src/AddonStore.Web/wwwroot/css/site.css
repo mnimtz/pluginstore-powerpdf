@@ -480,6 +480,13 @@ ol.steps { padding-left: 20px; margin: 0 0 14px; line-height: 1.6; }
 .share-row { display: flex; gap: 8px; }
 .share-row input { flex: 1; min-width: 0; font-size: .85rem; }
 .pkg-actions .btn + .btn { margin-left: 6px; }
+/* S1.30.0: buttons wrap with a gap (narrow cards); the manual ZIP is the quiet one of them */
+.pkg-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pkg-actions .btn + .btn { margin-left: 0; }
+.pkg-actions .client-hint { flex-basis: 100%; }
+.btn.manual-link { font-weight: 500; background: transparent; border-color: var(--tun-gray-200, #d5dbe3); color: var(--tun-slate); }
+.btn.manual-link:hover, .btn.manual-link:focus-visible { color: var(--tun-navy); border-color: var(--tun-blue); }
+.btn.manual-link .dl { font-weight: 700; margin-inline-end: 4px; }
 @media (max-width: 760px) {
   .addon-hero { flex-direction: column; gap: 12px; }
   .addon-icon { width: 72px; height: 72px; }

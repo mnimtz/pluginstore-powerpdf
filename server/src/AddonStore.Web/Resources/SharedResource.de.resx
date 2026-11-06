@@ -1649,4 +1649,6 @@
   <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Das Add-on {0} wurde endgültig gelöscht. Seine ID kann nicht wieder verwendet werden.</value></data>
   <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Geben Sie zur Bestätigung der Löschung die Paket-ID genau ein.</value></data>
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Das Add-on wird noch an Kunden ausgeliefert oder ist Teil einer Auslieferungsvorlage. Entfernen Sie zuerst diese Auslieferungen und Vorlageneinträge.</value></data>
+  <data name="Manual (ZIP)" xml:space="preserve"><value>Manuell (ZIP)</value></data>
+  <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Manuelle Installation ohne Add-on Store: eine ZIP-Datei mit install.bat und uninstall.bat, auch für die Softwareverteilung. Keine automatischen Updates.</value></data>
 </root>

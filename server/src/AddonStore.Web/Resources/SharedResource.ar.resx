@@ -1649,4 +1649,6 @@
   <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>تم حذف الوظيفة الإضافية {0} نهائياً. لا يمكن استخدام معرّفها مرة أخرى.</value></data>
   <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>اكتب معرّف الحزمة بدقة لتأكيد الحذف.</value></data>
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>لا تزال الوظيفة الإضافية تُسلَّم للعملاء أو جزءاً من قالب تسليم. أزل عمليات التسليم وإدخالات القوالب هذه أولاً.</value></data>
+  <data name="Manual (ZIP)" xml:space="preserve"><value>يدوي (ZIP)</value></data>
+  <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>تثبيت يدوي من دون Add-on Store: ملف ZIP يحتوي على install.bat وuninstall.bat، ويصلح أيضاً لتوزيع البرامج. لا توجد تحديثات تلقائية.</value></data>
 </root>

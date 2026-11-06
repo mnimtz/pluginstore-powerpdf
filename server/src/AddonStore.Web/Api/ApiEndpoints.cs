@@ -1670,6 +1670,49 @@ public static class ApiEndpoints
             return Results.File(path, "application/zip", $"{id}-{version}.ppak");
         });
 
+        // S1.30.0: manual installation without the store client: a zip with install.bat/uninstall.bat, built on request
+        // from the newest live version of a public add-on (so every newly released one has it, too)
+        api.MapGet("/packages/{id}/manual", async (string id, AppDbContext db, SubmissionService svc, UsageService usage,
+                                                    PackageSigning signing, HttpContext ctx) =>
+        {
+            var pick = (await ManualInstall.AvailableAsync(db, id)).GetValueOrDefault(id);
+            if (pick is null) return NotFound("PACKAGE_NOT_FOUND", $"No public live version of '{id}' for a manual installation.");
+            var path = Path.Combine(svc.StorageRoot, pick.FilePath);
+            if (!File.Exists(path)) return NotFound("FILE_MISSING", "The package file is missing on the server; contact an admin.");
+            await signing.EnsureLoadedAsync();
+            var zxt = ManualInstall.Zxt(pick);
+            var signature = zxt.Length == 0 ? "" : signing.Sign(pick.PackageId, pick.Version, pick.Sha256, zxt);
+            if (signature.Length == 0)
+                return Results.Json(new { ok = false, error = new { code = "SIGNING_UNAVAILABLE",
+                    message = "The package cannot be signed right now, so no manual installation is offered.",
+                    hint = "Try again later; an admin finds the signing key status in the server log." } }, statusCode: 503);
+            var pkg = await db.Packages.AsNoTracking().Include(p => p.Owner).FirstAsync(p => p.Id == id);
+            var lang = Services.Lang.Current;
+            using var mdoc = JsonDocument.Parse(pick.ManifestJson);
+            var author = Services.CatalogUi.EffectiveAuthor(pkg, mdoc.RootElement, Services.CatalogUi.PublicName(pkg.Owner));
+            // the same id set the add-on page resolves its short links against
+            var slugIds = await db.PackageVersions.Where(v => v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)
+                .Where(v => v.PackageId != SubmissionService.ClientPackageId && db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private"))
+                .Select(v => v.PackageId).Distinct().ToListAsync();
+            var page = $"{Base(ctx)}/a/{ShareService.Slug(id, slugIds)}";
+            // into a temporary file that goes away with the response (ZipArchive writes synchronously)
+            var tmp = Path.Combine(Path.GetTempPath(), "addonstore-manual-" + Guid.NewGuid().ToString("N") + ".zip");
+            var fs = new FileStream(tmp, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None, 81920, FileOptions.DeleteOnClose);
+            try
+            {
+                if (!ManualInstall.Build(fs, pick, path, Services.CatalogUi.DisplayName(pkg, pick, lang), author, signature, page))
+                {
+                    await fs.DisposeAsync();
+                    return NotFound("FILE_MISSING", "The package has no x64 binary for a manual installation.");
+                }
+            }
+            catch { await fs.DisposeAsync(); throw; }
+            fs.Position = 0;
+            await db.PackageVersions.Where(x => x.Id == pick.Id).ExecuteUpdateAsync(s => s.SetProperty(x => x.Downloads, x => x.Downloads + 1));
+            await usage.CountAsync(ctx, "download", pick.PackageId, pick.Version);
+            return Results.File(fs, "application/zip", ManualInstall.FileName(pick));
+        });
+
         api.MapGet("/devkit", (IConfiguration config, IWebHostEnvironment env, HttpContext ctx) =>
         {
             var root = DevkitRoot(config, env);

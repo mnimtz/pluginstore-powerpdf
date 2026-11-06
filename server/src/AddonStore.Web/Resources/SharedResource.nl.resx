@@ -1649,4 +1649,6 @@
   <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>De invoegtoepassing {0} is definitief verwijderd. De id kan niet opnieuw worden gebruikt.</value></data>
   <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Typ de pakket-id exact om het verwijderen te bevestigen.</value></data>
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>De invoegtoepassing wordt nog aan klanten geleverd of maakt deel uit van een leveringssjabloon. Verwijder eerst die leveringen en sjabloonitems.</value></data>
+  <data name="Manual (ZIP)" xml:space="preserve"><value>Handmatig (ZIP)</value></data>
+  <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Handmatige installatie zonder de Add-on Store: een ZIP met install.bat en uninstall.bat, ook voor softwaredistributie. Geen automatische updates.</value></data>
 </root>

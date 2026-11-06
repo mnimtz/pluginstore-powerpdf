@@ -25,4 +25,9 @@
     <None Include="..\..\..\VERSION" Link="VERSION" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- S1.30.0: files of the manual installation zip (Services/ManualInstall.cs) -->
+    <EmbeddedResource Include="ManualInstall\*" LogicalName="ManualInstall.%(Filename)%(Extension)" />
+  </ItemGroup>
+
 </Project>

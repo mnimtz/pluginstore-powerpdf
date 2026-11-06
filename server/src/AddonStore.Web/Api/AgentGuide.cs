@@ -1631,6 +1631,17 @@ and installs it with ONE administrator prompt:
   ("Install in Power PDF"); the client (0.3.7 or later) opens the store dialog
   with that package selected and asks the user before installing. Keep your
   package id stable so such links keep working.
+- Manual installation (S1.30.0): next to it, every public add-on with a live
+  version offers "Manual (ZIP)", `GET /api/packages/{id}/manual`, for
+  computers without the store client. The store builds the zip itself from
+  your newest live version: `install.bat`, `uninstall.bat`, the generic
+  `AddonSetup.ps1`, your unchanged signed `.ppak`, `package.json` and your
+  `LICENSES.md`. It installs exactly as the store client does (same folders,
+  same manifest, the group on the shared tab), registers an entry under
+  "Apps and features" and runs without questions with `/quiet`. You do
+  nothing for it; a store client installed later takes the add-on over.
+  Such installations get no updates, so keep settings compatible across
+  versions as for store installations.
 - The client talks to the store over HTTPS only. Your plugin's own network
   traffic is yours: declare it in `complianceAudit.externalServices`.
 
@@ -1874,6 +1885,7 @@ be free of warnings before review. Info is for information only.
 | TEMPLATE_INVALID | error (400) | Delivery template: name missing or longer than 80 characters, or description longer than 1000. |
 | TEMPLATE_ITEM_INVALID | error (400) | Delivery template: an add-on is unknown or listed twice, its version is not approved, or more than 50 add-ons. |
 | TEMPLATE_NOT_FOUND | error (404) | No delivery template with this id. |
+| SIGNING_UNAVAILABLE | error (503) | GET /api/packages/{id}/manual: the store cannot sign the package right now, so no manual installation is offered; try again later. |
 | NOT_DELIVERED | error (403) | Download with the code of a customer whose catalog is limited to its deliveries (`restrictCatalog`): this add-on or version is not delivered to it. |
 | SEATS_RATE_LIMITED | error (429) | More than 200 new installations from one network address within an hour. |
 | SEATS_BUSY | error (503) | The store could not record the installation right now (database busy); try again. |

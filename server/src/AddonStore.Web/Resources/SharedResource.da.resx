@@ -1649,4 +1649,6 @@
   <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Tilføjelsen {0} er slettet permanent. Dens id kan ikke bruges igen.</value></data>
   <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Skriv pakke-id'et nøjagtigt for at bekræfte sletningen.</value></data>
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Tilføjelsen leveres stadig til kunder eller indgår i en leveranceskabelon. Fjern først disse leverancer og skabelonposter.</value></data>
+  <data name="Manual (ZIP)" xml:space="preserve"><value>Manuel (ZIP)</value></data>
+  <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Manuel installation uden Add-on Store: en ZIP-fil med install.bat og uninstall.bat, også til softwaredistribution. Ingen automatiske opdateringer.</value></data>
 </root>

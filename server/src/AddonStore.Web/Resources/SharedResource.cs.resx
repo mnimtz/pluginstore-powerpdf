@@ -1649,4 +1649,6 @@
   <data name="The add-on {0} was deleted for good. Its id cannot be used again." xml:space="preserve"><value>Doplněk {0} byl trvale odstraněn. Jeho ID již nelze znovu použít.</value></data>
   <data name="Type the package id exactly to confirm the deletion." xml:space="preserve"><value>Pro potvrzení odstranění zadejte přesně ID balíčku.</value></data>
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Doplněk se stále dodává zákazníkům nebo je součástí šablony dodávek. Nejprve tyto dodávky a položky šablon odstraňte.</value></data>
+  <data name="Manual (ZIP)" xml:space="preserve"><value>Ručně (ZIP)</value></data>
+  <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Ruční instalace bez Add-on Store: soubor ZIP s install.bat a uninstall.bat, i pro distribuci softwaru. Bez automatických aktualizací.</value></data>
 </root>

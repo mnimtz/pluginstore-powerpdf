@@ -124,6 +124,11 @@ else
                        title="@L["Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)."]">@L["Install in Power PDF"]</a>
                     <a class="btn small secondary share-link" href="/a/@Model.Slugs[item.Id]"
                        title="@L["Own page of this add-on with a link to send to customers"]">@L["Share link"]</a>
+                    @if (Model.ManualIds.Contains(item.Id))
+                    {
+                        <a class="btn small secondary manual-link" href="/api/packages/@item.Id/manual" download
+                           title="@L["Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates."]"><span class="dl" aria-hidden="true">↓</span>@L["Manual (ZIP)"]</a>
+                    }
                     @if (Model.IsAdmin)
                     {
                         <form method="post" asp-page-handler="Highlight" class="hl-form">
@@ -172,7 +177,7 @@ else
             // Without a registered addonstore:// handler the browser does nothing.
             // When Power PDF or the "Open Add-on Store?" prompt appears, the page
             // loses focus; if it keeps focus, show how to get the client.
-            document.querySelectorAll('.pkg-actions a.btn:not(.share-link)').forEach(function (a) {
+            document.querySelectorAll('.pkg-actions a.btn:not(.share-link):not(.manual-link)').forEach(function (a) {
                 a.addEventListener('click', function () {
                     var hint = a.parentNode.querySelector('.client-hint');
                     var left = false;
