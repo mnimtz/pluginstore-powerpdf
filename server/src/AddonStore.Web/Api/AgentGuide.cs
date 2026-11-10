@@ -948,7 +948,12 @@ without it):
   (`LICENSE_COPYLEFT_SOURCE`) reject the upload; build output, SDK headers,
   LGPL/MPL/EPL code and a ZIP without source files give warnings. The
   submit response names the store's policy (`sourcePolicy`) and the URL for
-  a later replacement (`sourceUploadUrl`). With the default policy `required`
+  a later replacement (`sourceUploadUrl`). A license file is a file named
+  LICENSE, LICENCE, COPYING or NOTICE, alone or with a qualifier
+  (`LICENSE-MIT`, `NOTICE_ZXing`, `COPYING.LESSER`), without an extension or
+  with `.txt`, `.md` or `.rst`; a folder with one counts as third-party code
+  (`THIRDPARTY_SOURCE_DETECTED`). Source files such as `notice.cpp` and the
+  package's own `LICENSES.md` are never license files. With the default policy `required`
   a submission must bring the source (`SOURCE_REQUIRED`), and an admin cannot
   approve a version without stored source (versions from before S1.20.0).
 - Admins may upload new versions of any package (finding
@@ -967,7 +972,7 @@ they are fixed while you write the plug-in, not after the scan:
 - **Binary:** the exploit mitigations of the .zxt and the DLLs in bin/, and
   imports of copy or format functions without a buffer size.
 - **Source:** patterns in your own files (folders of third-party code with
-  their own license file, `third_party/`, `vendor/`, `external/` ... are left
+  their own LICENSE or COPYING file, `third_party/`, `vendor/`, `external/` ... are left
   out). Each finding names the file and line.
 - **AI review aid** (when the store admins use it): judges in the changed
   lines whether outside data really reaches such a place and lists every

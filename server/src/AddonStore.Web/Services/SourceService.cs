@@ -42,6 +42,40 @@ public class SourceService
         "dewcalls.h", "ddswritecalls.h", "ddsreadcalls.h", "ddmetadatacalls.h", "rvpanelpagepref.h", "picommon.h",
     };
 
+    private static readonly string[] LicenseNames = { "license", "licence", "copying", "notice" };
+    // Usual qualifiers written as an extension: COPYING.LESSER, COPYING.LIB, LICENSE.MIT ...
+    private static readonly HashSet<string> LicenseQualifierExtensions = new(StringComparer.Ordinal)
+    {
+        ".lesser", ".lib", ".gpl", ".lgpl", ".mit", ".bsd", ".apache", ".mpl",
+    };
+
+    /// <summary>
+    /// S1.30.2: whether a file holds a license text, judged by its name: LICENSE, LICENCE, COPYING or
+    /// NOTICE, alone or with a qualifier after '-', '_' or '.' (LICENSE-MIT, NOTICE_ZXing, COPYING.LESSER),
+    /// without an extension or with .txt, .md or .rst. Source files are never license files
+    /// (notice.cpp/notice.h of Kennwortsafe 0.1.0 marked addon/src as third-party code), and
+    /// LICENSES.md is the package's own component list. <paramref name="includeNotice"/> false
+    /// leaves NOTICE out (folders of third-party code are marked by their license file).
+    /// </summary>
+    internal static bool IsLicenseFile(string path, bool includeNotice = true)
+    {
+        var name = Path.GetFileName(path.Replace('\\', '/')).ToLowerInvariant();
+        var ext = Path.GetExtension(name);
+        string stem;
+        if (ext is "" or ".txt" or ".md" or ".rst") stem = name[..^ext.Length];
+        else if (LicenseQualifierExtensions.Contains(ext)) stem = name;
+        else return false;
+
+        foreach (var word in LicenseNames)
+        {
+            if (!includeNotice && word == "notice") continue;
+            if (stem == word) return true;
+            if (stem.Length > word.Length + 1 && stem.StartsWith(word, StringComparison.Ordinal) && stem[word.Length] is '-' or '_' or '.')
+                return true;
+        }
+        return false;
+    }
+
     private readonly AppDbContext _db;
     private readonly SettingsService _settings;
     private readonly AuditService _audit;
@@ -187,7 +221,7 @@ public class SourceService
             var security = new AddonStore.Web.Validation.SourceSecurity();
             var foreignDirs = entries
                 .Select(x => x.FullName.Replace('\\', '/'))
-                .Where(f => { var n = Path.GetFileName(f).ToLowerInvariant(); return (n.StartsWith("license") && !n.StartsWith("licenses.")) || n.StartsWith("copying"); })
+                .Where(f => IsLicenseFile(f, includeNotice: false))
                 .Select(f => Path.GetDirectoryName(f)?.Replace('\\', '/') ?? "")
                 .Where(d => d.Length > 0)
                 .Select(d => "/" + d.ToLowerInvariant() + "/")
@@ -223,8 +257,7 @@ public class SourceService
                     catch { }
                 }
 
-                // LICENSES.md is the package's own component list, not a license text.
-                var isLicense = (name.StartsWith("license") && !name.StartsWith("licenses.")) || name.StartsWith("copying") || name.StartsWith("notice");
+                var isLicense = IsLicenseFile(name);
                 var isWeb = AddonStore.Web.Validation.SourceSecurity.IsWeb(ext);
                 if (!isLicense && !TextExtensions.Contains(ext) && !isWeb) continue;
                 if (e.Length > MaxScannedFileBytes) continue;
