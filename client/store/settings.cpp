@@ -6,18 +6,20 @@
 #include <atomic>
 #include "policy.h"
 #include "logging.h"
+#include "failover.h"
 
 const wchar_t* kPSRegKey = L"Software\\Kofax\\PDF\\Tungsten Power PDF\\PluginStore";
 
 // Our team instance; the Options page and the HKLM policy can override it
 // any time (e.g. http://localhost:5190 during development).
-static const wchar_t* kDefaultUrl = L"https://addon.power-pdf.de";
+static const wchar_t* kDefaultUrl = psfailover::kPrimaryBase;   // https://addon.power-pdf.de
 
 static std::wstring g_url = kDefaultUrl;
 // g_url is read by worker threads while Options may rewrite it.
 static SRWLOCK g_urlLock = SRWLOCK_INIT;
 static std::atomic<bool> g_beta(false);        // read by worker threads
 static std::atomic<bool> g_urlLocked(false);
+static std::atomic<bool> g_urlDefault(true);   // C1.9.17: the built-in address, so its second address may help
 
 static bool ReadUserString(const wchar_t* name, std::wstring& v)
 {
@@ -370,9 +372,13 @@ void PSSettingsLoad()
     { url = TrimUrl(s); locked = true; }
     else if (ReadUserString(L"ServerUrl", s) && !s.empty())
         url = TrimUrl(s);
+    // C1.9.17: an own address of the user that is the built-in one (the Options page saves the
+    // field as shown) still counts as the default; a policy never does, IT chose that host
+    bool isDefault = !locked && _wcsicmp(url.c_str(), kDefaultUrl) == 0;
     AcquireSRWLockExclusive(&g_urlLock);
     g_url = url;
     g_urlLocked = locked;
+    g_urlDefault = isDefault;
     ReleaseSRWLockExclusive(&g_urlLock);
 
     if (FPPolicyDword(L"Store", L"BetaChannel", d))
@@ -394,6 +400,7 @@ std::wstring PSServerUrl()
 }
 bool PSBetaChannel()       { return g_beta; }
 bool PSUrlLocked()         { return g_urlLocked; }
+bool PSServerUrlIsDefault() { return g_urlDefault; }
 
 void PSSaveUserSettings(const std::wstring& url, bool beta)
 {

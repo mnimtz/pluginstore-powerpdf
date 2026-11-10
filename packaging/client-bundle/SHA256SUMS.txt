@@ -1,2 +1,2 @@
-5075f1f75a3315315dbc2796322409f13d58799237a5f8b9f01e5c60065f91dd  com.tungsten.pluginstore-1.9.16.ppak
-a793ff95085bd33ee88fa352860494506db8048f28420e48272d02361a9f2f83  com.tungsten.pluginstore-1.9.16.source.zip
+2d3ccb91a9b18753fe4fbe1c01c6680922d784a77ee058dd14fd7fb77cf9a840  com.tungsten.pluginstore-1.9.17.ppak
+9acff2758cb8e537548f385f5c4dbb9ee272f1e3f5634523a6630b8a66d0bea2  com.tungsten.pluginstore-1.9.17.source.zip

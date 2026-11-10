@@ -140,6 +140,7 @@
     <ClInclude Include="common\version.h" />
     <ClInclude Include="store\catalog.h" />
     <ClInclude Include="store\dialog.h" />
+    <ClInclude Include="store\failover.h" />
     <ClInclude Include="store\http.h" />
     <ClInclude Include="store\install.h" />
     <ClInclude Include="store\settings.h" />

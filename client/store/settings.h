@@ -13,6 +13,9 @@ void         PSSettingsLoad();            // resolve once (PluginInit)
 std::wstring PSServerUrl();               // e.g. https://host (no trailing slash)
 bool         PSBetaChannel();
 bool         PSUrlLocked();               // true when a policy enforces the URL
+// C1.9.17: true with the built-in address (no policy, no other address of the user); only then
+// may http.cpp retry a failed request on the store's second address (failover.h)
+bool         PSServerUrlIsDefault();
 void         PSSaveUserSettings(const std::wstring& url, bool beta);
 bool         PSIsAllowedServerUrl(const std::wstring& url); // https://, or http:// for loopback; empty = default
 bool         PSUseClassicUI();

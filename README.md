@@ -176,7 +176,25 @@ built with the Power PDF Plugin SDK):
 - **One firewall rule is enough:** catalog, downloads and self-updates use
   HTTPS (port 443) to the configured store host only, through the system proxy.
   The client refuses plain HTTP (except localhost for development) and any
-  other host, whatever the catalog says.
+  other host, whatever the catalog says. With the built-in address the rule
+  needs two names: `addon.power-pdf.de` and `ppdf-store.azurewebsites.net`
+  (the second address, see below).
+- **Second store address** (client 1.9.17+): with the built-in address (no
+  `ServerUrl` policy, no other address in the options; a user value equal to
+  the built-in address counts as built-in) a request that fails on
+  `https://addon.power-pdf.de` is sent once more to the store's Azure address
+  `https://ppdf-store.azurewebsites.net`. "Fails" means no connection, a TLS or
+  certificate error, a dropped answer, or an HTTP error while `GET /api/ping`
+  of that host does not answer `"name":"pluginstore-powerpdf"`. The client
+  switches only after the other host passed that ping, stays on it for the
+  running Power PDF and asks the main address again every 10 minutes (pings
+  wait 5 s at most). A POST that may have reached the store (no answer after
+  sending) is never sent twice. HTTPS with certificate checks, the catalog
+  signature and the package hashes stay as they are on both hosts; any other
+  host stays refused. The log (`%TEMP%\PluginStore.log`) says when the client
+  switches and back. Background: on Nov 10, 2026 the DNS name pointed at a
+  foreign web server for a while and every client lost the store, although
+  the Azure address kept answering.
 - **"Install in Power PDF" buttons** on the catalog website: the MSI registers
   the `addonstore://` URL scheme with a small helper (`AddonStoreLink.exe`) that
   passes a validated package id to the client; Power PDF opens the store dialog
@@ -206,7 +224,8 @@ msiexec /i PluginStore-<version>.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"
   fine: the layout is merged on the first start.
 - Preconfigure for all users under
   `HKLM\SOFTWARE\Kofax\PDF\Tungsten Power PDF\PluginStore\Policies\Store`:
-  `ServerUrl` (REG_SZ, locks the URL), `BetaChannel` (DWORD), `LockPage`
+  `ServerUrl` (REG_SZ, locks the URL; from client 1.9.17 on it also switches
+  the second store address off), `BetaChannel` (DWORD), `LockPage`
   (DWORD 1 locks the options page), `ClassicUI` (DWORD 1),
   `DisableInstall` (DWORD 1: browse only, no install or removal; client
   0.4.3+), `DisableSelfUpdate` (DWORD 1: no store-client update from the
@@ -605,6 +624,12 @@ user's ribbon layout (other users through Active Setup at their next sign-in) an
 "Apps and features". `/quiet` runs without questions (Intune, SCCM). Such installations get no updates and no
 security block; a store client installed later recognises and updates them. Script messages are German or
 English, following the Windows display language.
+
+**Second store address (client 1.9.17):** with the built-in address the client sends
+a failed request once more to `https://ppdf-store.azurewebsites.net`, after that host
+answered `GET /api/ping` as the store, and stays there for the running Power PDF
+(main address asked again every 10 minutes). A `ServerUrl` policy or an own address
+switches it off. Details under "The Power PDF client".
 
 **Delete for good (S1.29.0):** besides "Take out of the store" (withdraw, restorable) and the
 security block, an admin can delete an add-on for good on its plug-in page, after typing its package id
@@ -1246,7 +1271,12 @@ dotnet run --project server/src/AddonStore.Web --urls http://localhost:5190
 ```
 
 SQLite and package storage land in `server/src/AddonStore.Web/data/`.
-The client's default server URL is `https://addon.power-pdf.de` (the Azure address `https://ppdf-store.azurewebsites.net` keeps working); point it at `http://localhost:5190` for local development via *File → Options → Add-on Store*.
+The client's default server URL is `https://addon.power-pdf.de` (the Azure address `https://ppdf-store.azurewebsites.net` keeps working and is the client's second address since 1.9.17); point it at `http://localhost:5190` for local development via *File → Options → Add-on Store* (an own address switches the second address off).
+
+Client tests (console programs, no Power PDF needed): `client\tests\run_tests.cmd`
+runs the unit tests of the second address (`client/tests/failover_tests.cpp`);
+`client\tests\run_tests.cmd live` also runs the real `client/store/http.cpp`
+against the real hosts (`client/tests/http_live.cpp`, needs the internet).
 
 ## Versions and releases
 
