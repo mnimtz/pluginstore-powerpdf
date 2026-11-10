@@ -1214,6 +1214,18 @@ It is ignored (`result: "off"`) unless the store admins switched it on after
 the GDPR confirmation; only the store client may call it (403 CLIENT_ONLY).
 Do not call it from assistants or scripts.
 
+Store clients 1.9.17+ with the built-in address `https://addon.power-pdf.de` (no
+`ServerUrl` policy, no other address in the options) retry a failed request once on
+the store's Azure address `https://ppdf-store.azurewebsites.net` and stay there for
+the running Power PDF, asking the main address again every 10 minutes. "Failed"
+means no connection, a TLS or certificate error, or an HTTP error while
+`GET /api/ping` does not answer `name: "pluginstore-powerpdf"`. A host counts as
+the store only after that ping; HTTPS with certificate checks and the catalog
+signature apply to both addresses. A POST that may have reached the store is
+never sent twice. With a `ServerUrl` policy (UAT test PCs, own instances) there
+is no second address. Firewalls that list hosts need both names. When you
+debug a client, `%TEMP%\PluginStore.log` names the host in use.
+
 ## Customer deliveries (private add-ons)
 
 Add-ons can be delivered to single customers instead of (or in addition to)
