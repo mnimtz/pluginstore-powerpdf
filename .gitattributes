@@ -1,0 +1,11 @@
+# S1.31.1: brand files stay byte for byte as delivered (originals only, Brand Book November 2026)
+server/src/AddonStore.Web/wwwroot/img/tungsten-automation-logo-2026-*.svg binary
+server/src/AddonStore.Web/wwwroot/img/tungsten-power-pdf-lockup*.svg binary
+server/src/AddonStore.Web/wwwroot/img/flowlines-title.svg binary
+server/src/AddonStore.Web/wwwroot/img/icons/*.svg binary
+server/src/AddonStore.Web/wwwroot/fonts/*.ttf binary
+docs/img/tungsten-logo-*.svg binary
+docs/design-2026/logos/** binary
+docs/design-2026/icons/** binary
+docs/design-2026/fonts/** binary
+docs/design-2026/flowlines/** binary
