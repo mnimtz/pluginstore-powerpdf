@@ -1,5 +1,5 @@
 /*tpui:begin*/
-/* Tungsten Plug-in UI (tpui) 1.0.1 - line icons in the Brand Book style (p. 57/58): one base
+/* Tungsten Plug-in UI (tpui) 1.1.0 - line icons in the Brand Book style (p. 57/58): one base
    colour (currentColor) plus an accent part in the accent blue (class "ac"). 24 x 24 grid,
    round line ends. Drawn for this kit, MIT License, see LICENSE.
    Use: TPUI.icon("search") or <svg class="i" data-icon="search"></svg> (filled by TPUI.icons()). */

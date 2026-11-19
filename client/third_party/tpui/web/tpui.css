@@ -1,20 +1,21 @@
 /*tpui:begin*/
-/* Tungsten Plug-in UI (tpui) 1.0.1 - the shared look of our Power PDF plug-ins.
+/* Tungsten Plug-in UI (tpui) 1.1.0 - the shared look of our Power PDF plug-ins.
    The look of Smart Compare and the Add-on Store, aligned with the Tungsten Automation
-   Brand Book (Style Guide March 2025). Pages use the variables and building blocks
-   below and write no colour values of their own (tools/check_ui.py checks it).
+   Brand Book November 2026 (1.1.0: white header with the 2026 logo, calmer lines, medium
+   weight buttons; colours of the 2026 template, unchanged). Pages use the variables and
+   building blocks below and write no colour values of their own (tools/check_ui.py checks it).
    MIT License, see LICENSE. */
 :root {
-  /* brand palette (Brand Book p. 18-21) */
+  /* brand palette (theme "Tungsten Automation 2026" of the official template) */
   --tp-navy: #002854;          /* primary, headings, primary buttons, header */
-  --tp-navy-deep: #004766;     /* hover and pressed of navy surfaces */
+  --tp-navy-deep: #003A6D;     /* hover and pressed of navy surfaces (navy 85 % + blue) */
   --tp-blue: #00A0FB;          /* accent: focus, active markers, icon accents, progress; never text on white (2.8:1) */
   --tp-blue-light: #9DDDF9;
   --tp-green: #00EB86;         /* start of the PDF & eSignature gradient */
   --tp-ink: #231F20;           /* body text */
   --tp-gray-50: #FAFAFA;       /* page background */
   --tp-gray-100: #F0F0F0;      /* surfaces */
-  --tp-gray-200: #E4E4E4;      /* lines, borders */
+  --tp-gray-200: #E0E5EA;      /* lines, borders (navy 12 % + white) */
   --tp-gray-blue: #D9DFE6;     /* blue tinted surface, input borders */
   --tp-slate: #8094AA;         /* decoration and disabled only (3.1:1) */
   --tp-yellow: #FFC600;
@@ -34,8 +35,8 @@
   --tp-sel-bg: #E8F6FE;
   /* gradients */
   --tp-accent-pdf: linear-gradient(90deg, #00EB86 0%, #00A0FB 100%);
-  --tp-domain-blue: linear-gradient(135deg, #00123B 0%, #002854 55%, #00A0FB 100%);
-  /* type (Brand Book p. 23-25; sizes are ours, the Brand Book names none) */
+  --tp-domain-blue: #002854;   /* 1.1.0: navy surfaces are plain navy */
+  /* type (Brand Book p. 20, 22; sizes are ours: a plug-in window is denser than a page) */
   --tp-font: "Red Hat Display", Arial, sans-serif;
   --tp-fs-h1: 17px;   /* window title in the header */
   --tp-fs-h2: 16px;   /* page heading */
@@ -46,7 +47,8 @@
   --tp-lh: 1.5;
   /* shape */
   --tp-radius: 8px;
-  --tp-radius-card: 10px;
+  --tp-radius-card: 6px;      /* 1.1.0: flatter tiles */
+  --tp-radius-btn: 4px;
   --tp-radius-pill: 999px;
   --tp-shadow-pop: 0 8px 28px rgba(0, 30, 60, .18);
   --tp-shadow-dialog: 0 12px 40px rgba(0, 0, 0, .25);
@@ -72,10 +74,14 @@ body { font-family: var(--tp-font); font-size: var(--tp-fs-body); line-height: v
 body.tp-fixed { overflow: hidden; user-select: none; }
 button, select, input, textarea { font: inherit; color: inherit; }
 h1, h2, h3, h4, h5, h6 { color: var(--tp-navy); margin: 0 0 6px; line-height: 1.3; }
-h1 { font-size: var(--tp-fs-h1); font-weight: 700; }
-h2 { font-size: var(--tp-fs-h2); font-weight: 700; }
-h3 { font-size: var(--tp-fs-h3); font-weight: 700; }
-h4 { font-size: var(--tp-fs-h4); font-weight: 700; }
+/* 1.1.0: headings lighter as in the Brand Book; at window sizes in navy (the primary blue would be too
+   faint below 24px) */
+h1 { font-size: var(--tp-fs-h1); font-weight: 400; }
+h2 { font-size: var(--tp-fs-h2); font-weight: 400; }
+h3 { font-size: var(--tp-fs-h3); font-weight: 600; }
+h4 { font-size: var(--tp-fs-h4); font-weight: 600; }
+/* large display heading (a product or add-on name): light weight */
+.tp-display { font-size: 22px; font-weight: 300; line-height: 1.2; color: var(--tp-navy); }
 h5 { font-size: var(--tp-fs-body); font-weight: 400; }
 h6 { font-size: var(--tp-fs-small); font-weight: 400; color: var(--tp-text-muted); }
 p { margin: 0 0 10px; }
@@ -91,14 +97,20 @@ code, kbd { font-family: Consolas, "Cascadia Mono", monospace; font-size: .92em;
 .grow { flex: 1; }
 .hidden { display: none !important; }
 
-/* ---- frame: header with accent line, optional side navigation ---- */
+/* ---- frame: header, optional side navigation ---- */
+/* 1.1.0: a white header with a line below and the 2026 logo in navy (web/brand, Brand Book p. 13):
+   <header class="tp-head"><img class="tp-logo" src=".../brand/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation">
+   <span class="tp-sep"></span><span class="t">...</span><span class="s">...</span>...</header> */
 .tp-app { display: flex; flex-direction: column; height: 100%; }
-.tp-head { background: var(--tp-navy); color: #fff; padding: 10px 18px; display: flex; align-items: center; gap: 10px; flex: none; }
-.tp-head .t { font-size: var(--tp-fs-h1); font-weight: 700; }
-.tp-head .s { font-size: var(--tp-fs-small); color: var(--tp-blue-light); }
-.tp-head .btn.ghost { color: #fff; }
-.tp-head .btn.ghost:hover { background: var(--tp-navy-deep); }
-.tp-accent { height: 3px; background: var(--tp-accent-pdf); flex: none; }
+.tp-head { background: #fff; color: var(--tp-navy); padding: 10px 18px; display: flex; align-items: center; gap: 10px; flex: none; border-bottom: 1px solid var(--tp-gray-200); }
+.tp-head .tp-logo { height: 22px; width: auto; display: block; flex: none; }
+.tp-head .tp-sep { width: 1px; height: 22px; background: var(--tp-gray-200); flex: none; margin: 0 4px; }
+.tp-head .t { font-size: var(--tp-fs-h1); font-weight: 400; }
+.tp-head .s { font-size: var(--tp-fs-small); color: var(--tp-text-muted); }
+.tp-head .btn.ghost { color: var(--tp-navy); }
+.tp-head .btn.ghost:hover { background: var(--tp-gray-100); }
+/* the gradient line under the header is gone (1.1.0); the class stays so older pages keep their layout */
+.tp-accent { display: none; }
 .tp-body { flex: 1; display: flex; min-height: 0; }
 .tp-side { width: 210px; flex: none; border-inline-end: 1px solid var(--tp-gray-200); background: var(--tp-gray-50); padding: 12px 8px; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
 .tp-side button { all: unset; cursor: pointer; padding: 8px 12px; border-radius: var(--tp-radius); color: var(--tp-navy); display: flex; align-items: center; gap: 8px; }
@@ -115,8 +127,8 @@ code, kbd { font-family: Consolas, "Cascadia Mono", monospace; font-size: .92em;
 .card > h3 { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
 .card.soft { background: var(--tp-gray-50); }
 
-/* ---- buttons (sentence case, bold; Brand Book p. 24, 27) ---- */
-.btn { border: 0; border-radius: var(--tp-radius); padding: 8px 16px; font-size: var(--tp-fs-body); font-weight: 700; background: var(--tp-navy); color: #fff; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+/* ---- buttons (sentence case, medium weight; Brand Book p. 20) ---- */
+.btn { border: 0; border-radius: var(--tp-radius-btn); padding: 8px 16px; font-size: var(--tp-fs-body); font-weight: 500; background: var(--tp-navy); color: #fff; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
 .btn:hover { background: var(--tp-navy-deep); }
 .btn.sec { background: #fff; color: var(--tp-navy); border: 1px solid var(--tp-gray-blue); }
 .btn.sec:hover { background: var(--tp-gray-100); }
@@ -225,12 +237,12 @@ table.tp-table { width: 100%; border-collapse: collapse; }
 .menu > .pop button small { display: block; }
 .menu > .pop hr { border: 0; border-top: 1px solid var(--tp-gray-200); margin: 4px 0; }
 
-/* ---- icons: line icons, base colour plus accent (Brand Book p. 57/58) ---- */
+/* ---- icons: line icons, base colour plus accent (Brand Book p. 23) ---- */
 svg.i { width: 16px; height: 16px; flex: none; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; }
 svg.i .ac { stroke: var(--tp-blue); }
 svg.i.lg { width: 24px; height: 24px; stroke-width: 1.6; }
 /* on navy surfaces the accent turns light so it stays visible */
-.tp-head svg.i .ac, .btn:not(.sec):not(.ghost) svg.i .ac, .tp-side button.on svg.i .ac, .seg button.on svg.i .ac, .chip.on svg.i .ac { stroke: var(--tp-blue-light); }
+.btn:not(.sec):not(.ghost) svg.i .ac, .tp-side button.on svg.i .ac, .seg button.on svg.i .ac, .chip.on svg.i .ac { stroke: var(--tp-blue-light); }
 
 /* ---- right to left, motion ---- */
 [dir=rtl] .tp-side, [dir=rtl] .tp-main { direction: rtl; }

@@ -86,6 +86,10 @@ Colorway auf Navy. Im Katalog je bekannter Kategorie ein Icon (`wwwroot/img/icon
 
 ## Übertragung auf Store-Client und Plug-ins (Phasen 2 und 3)
 
+Phase 2 erledigt mit C1.9.18 (Nov 19, 2026): Store-Fenster auf Plug-in UI 1.1.0, Logo 2026 und
+Red Hat Display eingebettet (`font-src data:`, `img-src data:` in der CSP der Seite). Phase 3: jedes
+Plug-in übernimmt Kit 1.1.0 mit seinem nächsten Release.
+
 - Store-Fenster und Plug-in UI-Kit übernehmen dieselben Tokens, Schriftschnitte
   und Komponenten (Kopf weiß mit Logo 2026, Light-Überschriften, Callouts, flache
   Kacheln).

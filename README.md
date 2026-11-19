@@ -618,7 +618,9 @@ Red Hat Display Light in the primary blue, flat light tiles, callouts with a blu
 flow lines of the 2026 template as an accent on the start page, category icons of the brand icon library,
 the Power PDF lockup and counted key figures in the start page block, a new preview card for shared links.
 Red Hat Display is now served by the store itself (`wwwroot/fonts`, SIL OFL 1.1); before, only visitors
-who had it installed saw it. Only original brand files are used.
+who had it installed saw it. Only original brand files are used. The store window of the client follows
+since C1.9.18 (Tungsten Plug-in UI 1.1.0: white header with the 2026 logo, the brand font embedded in the
+page, Light names in the detail pane).
 
 **Manual installation (S1.30.0):** every public add-on with a live version has a small "Manual (ZIP)"
 button on its catalog card and on its add-on page (`GET /api/packages/{id}/manual`, no sign-in). The zip is

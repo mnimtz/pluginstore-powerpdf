@@ -9,3 +9,5 @@ docs/design-2026/logos/** binary
 docs/design-2026/icons/** binary
 docs/design-2026/fonts/** binary
 docs/design-2026/flowlines/** binary
+client/third_party/tpui/web/brand/** binary
+client/third_party/tpui/web/fonts/*.ttf binary

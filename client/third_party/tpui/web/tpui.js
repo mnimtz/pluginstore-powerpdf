@@ -1,11 +1,11 @@
 /*tpui:begin*/
-/* Tungsten Plug-in UI (tpui) 1.0.1 - behaviour shared by our Power PDF plug-in pages:
+/* Tungsten Plug-in UI (tpui) 1.1.0 - behaviour shared by our Power PDF plug-in pages:
    host bridge, 21 languages with right-to-left, in-page dialogs (never alert/confirm/prompt),
    toasts, busy overlay, paged lists, menus, icons. No dependencies, no network.
    MIT License, see LICENSE. */
 (function () {
   "use strict";
-  var TPUI = { version: "1.0.1" };
+  var TPUI = { version: "1.1.0" };
 
   // ---- small helpers -------------------------------------------------------
   function el(tag, cls, text) {
@@ -23,14 +23,57 @@
 
   // ---- host bridge: JSON messages {type: ...} to and from the C++ side ---------
   var host = window.chrome && window.chrome.webview ? window.chrome.webview : null;
-  var handlers = {};
+  var handlers = Object.create(null);   // 1.0.2: "__proto__" or "constructor" are plain message types
   TPUI.inHost = !!host;
   TPUI.post = function (msg) {
     if (!msg || typeof msg.type !== "string") throw new Error("tpui: a message needs a type");
     if (host) host.postMessage(msg);
     else if (TPUI.onPreviewPost) TPUI.onPreviewPost(msg);   // browser preview
   };
-  TPUI.on = function (type, fn) { (handlers[type] = handlers[type] || []).push(fn); };
+  // 1.0.3: files from a drop or an <input type="file"> go to the plug-in as "paths" (full paths, set
+  // by the host); in a browser preview the plug-in side sees only "names"
+  TPUI.postFiles = function (msg, files) {
+    if (!msg || typeof msg.type !== "string") throw new Error("tpui: a message needs a type");
+    var list = Array.prototype.slice.call(files || []);
+    if (host && host.postMessageWithAdditionalObjects) host.postMessageWithAdditionalObjects(msg, list);
+    else if (host) host.postMessage(msg);
+    else if (TPUI.onPreviewPost) {
+      var copy = {};
+      Object.keys(msg).forEach(function (k) { copy[k] = msg[k]; });
+      copy.names = list.map(function (f) { return f && f.name; });
+      TPUI.onPreviewPost(copy);
+    }
+  };
+  // 1.0.4: the window opens at the size of its content, without scrolling right away.
+  // Call once after the page is built (and again after a big change of content):
+  //   TPUI.fit()                 lists and work windows: grow until the content fits
+  //   TPUI.fit({ shrink: true }) forms: also shrink to the natural height
+  //   el: the scrolling area (selector or element; default .tp-main, else the page)
+  // The host grows the window at most to the work area minus 40 px. A timer, never
+  // requestAnimationFrame: that pauses while the window is still hidden.
+  TPUI.fit = function (o) {
+    o = o || {};
+    setTimeout(function () {
+      var de = document.documentElement;
+      var el = typeof o.el === "string" ? document.querySelector(o.el) : o.el;
+      if (!el) el = document.querySelector(".tp-main");
+      var page = !el;
+      if (page) el = document.scrollingElement || de;
+      var natural = el.scrollHeight;
+      if (o.shrink && !page) {
+        var keep = el.style.cssText;
+        el.style.flex = "none"; el.style.height = "auto"; el.style.minHeight = "0";
+        el.style.alignSelf = "flex-start"; el.style.overflow = "visible";
+        natural = el.offsetHeight;
+        el.style.cssText = keep;
+      }
+      var dh = natural - el.clientHeight;
+      if (!(o.shrink && !page) && dh < 0) dh = 0;
+      var dw = Math.max(0, de.scrollWidth - de.clientWidth, page ? 0 : el.scrollWidth - el.clientWidth);
+      if (Math.abs(dh) > 4 || dw > 4) TPUI.post({ type: "tpui-fit", dh: Math.ceil(dh), dw: Math.ceil(dw) });
+    }, o.delay == null ? 60 : o.delay);
+  };
+  TPUI.on = function (type, fn) { if (typeof type === "string" && typeof fn === "function") (handlers[type] = handlers[type] || []).push(fn); };
   TPUI.receive = function (msg) {   // also used by previews to simulate the host
     if (!msg || typeof msg.type !== "string") return;
     (handlers[msg.type] || []).forEach(function (fn) { try { fn(msg); } catch (e) { if (window.console) console.error(e); } });
@@ -62,7 +105,7 @@
   // ---- dialogs in the page -----------------------------------------------------
   // Cancel is focused first (safe default), Escape and a click on the veil cancel,
   // Tab stays inside the dialog. Returns a Promise.
-  var openDialogs = 0;
+  var openDialogs = 0, dialogStack = [];
   function dialog(o) {
     return new Promise(function (resolve) {
       var veil = el("div", "tp-veil"), box = el("div", "tp-dialog");
@@ -89,13 +132,20 @@
       box.appendChild(acts);
       veil.appendChild(box);
       var before = document.activeElement;
+      var me = {};
+      dialogStack.push(me);
       function close(v) {
+        var at = dialogStack.indexOf(me);
+        if (at >= 0) dialogStack.splice(at, 1);
         document.removeEventListener("keydown", key, true);
         veil.remove();
         if (before && before.focus) try { before.focus(); } catch (e) { }
         resolve(v);
       }
       function key(e) {
+        // 1.0.2: only the top dialog answers, and no key reaches the page behind it
+        if (dialogStack[dialogStack.length - 1] !== me) return;
+        e.stopImmediatePropagation();
         if (e.key === "Escape") { e.preventDefault(); close(o.input ? null : false); }
         else if (e.key === "Enter" && input && document.activeElement === input) { e.preventDefault(); close(input.value); }
         else if (e.key === "Tab") {

@@ -56,7 +56,7 @@ Steps (Windows, Visual Studio 2022, WiX v3 in `C:\Claude\Tools\wix314`):
 
 1. Bump the version in `client/common/version.h` and the `VERSIONINFO` block
    in `client/res/PluginStore.rc`.
-2. Write the changelog for **all 16 languages** into
+2. Write the changelog for **all 21 languages** into
    `packaging/pluginstore.ppakspec.json` (`changelog`); the server rejects
    uploads with missing languages.
 3. Build (once per machine first: `python tools\fetch_webview2.py` fetches the

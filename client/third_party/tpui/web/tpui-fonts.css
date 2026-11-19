@@ -1,0 +1,11 @@
+/* Tungsten Plug-in UI - Red Hat Display, the brand font (Brand Book November 2026, p. 20).
+   Optional (1.1.0): a page that links this file next to tpui.css shows the brand font even on computers
+   without it; tools/inline.py embeds the four files as data: URIs (about 250 KB), so the page's
+   Content-Security-Policy needs "font-src data:". Without this file the kit asks for the font by name and
+   falls back to Arial. SIL Open Font License 1.1, see fonts/OFL.txt. */
+/*tpui:begin*/
+@font-face { font-family: "Red Hat Display"; font-style: normal; font-weight: 300; src: url("fonts/RedHatDisplay-Light.ttf") format("truetype"); }
+@font-face { font-family: "Red Hat Display"; font-style: normal; font-weight: 400; src: url("fonts/RedHatDisplay-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Red Hat Display"; font-style: normal; font-weight: 500; src: url("fonts/RedHatDisplay-Medium.ttf") format("truetype"); }
+@font-face { font-family: "Red Hat Display"; font-style: normal; font-weight: 600 700; src: url("fonts/RedHatDisplay-Bold.ttf") format("truetype"); }
+/*tpui:end*/

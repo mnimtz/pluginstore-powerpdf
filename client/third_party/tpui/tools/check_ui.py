@@ -9,9 +9,15 @@ Errors (exit code 1):
                       /* tpui:domain-colors */ and /* /tpui:domain-colors */.
   BROWSER_POPUP       alert(), confirm() or prompt(); use TPUI.alert/confirm/prompt
   REMOTE_RESOURCE     a script, style, image or frame from the network
+  CSP_MISSING         the page has no Content-Security-Policy meta tag (1.0.2)
+  FONT_CSP            the page links tpui-fonts.css, but its policy lacks "font-src data:" (1.1.0)
+  IMG_CSP             the page has local <img> files (inlined as data:), but no "img-src data:" (1.1.0)
   STRINGS_MISSING     with --strings: a language of the 21 is missing, or keys differ from en
 Warnings:
   NO_KIT              the page does not use the kit (no tpui.css)
+  NO_FIT              the page never calls TPUI.fit(): the window may open too small (1.0.4)
+  INNER_HTML          innerHTML, outerHTML, insertAdjacentHTML or document.write in a script (1.0.2):
+                      fine for a constant, never for text from documents, users or the network
 The kit itself (between /*tpui:begin*/ and /*tpui:end*/) is not checked, so pages can be
 checked before or after tools/inline.py. Also checks the kit's own text colours for a
 contrast of at least 4.5:1. MIT License, see LICENSE.
@@ -66,19 +72,37 @@ def check_page(path):
     text = strip_domain(strip_kit(raw))
     if 'tpui.css' not in raw and '/*tpui:begin*/' not in raw:
         warnings.append('NO_KIT the page does not use the kit (tpui.css)')
+    if ('tpui.js' in raw or '/*tpui:begin*/' in raw) and 'TPUI.fit(' not in text:
+        warnings.append('NO_FIT the page never calls TPUI.fit(): open the window at the size of its content')
     styles = re.findall(r'<style[^>]*>(.*?)</style>', text, flags=re.S | re.I)
     inline_styles = re.findall(r'\sstyle="([^"]*)"', text)
     for chunk in styles + inline_styles:
         for line in chunk.splitlines():
             if COLOR.search(line):
                 errors.append('COLOR_OUTSIDE_KIT ' + line.strip()[:120])
+    csp = re.search(r'<meta\s+http-equiv="Content-Security-Policy"\s+content="([^"]*)"', raw, re.I)
+    if not re.search(r'<meta\s+http-equiv="Content-Security-Policy"', raw, re.I):
+        errors.append('CSP_MISSING the page has no <meta http-equiv="Content-Security-Policy" content="default-src \'none\'; ...">')
+    elif csp:
+        # 1.1.0: the embedded brand font and logo are data: URIs; without these sources the window silently
+        # falls back to Arial or shows no logo
+        policy = csp.group(1)
+        if 'tpui-fonts.css' in raw and not re.search(r"font-src[^;]*\bdata:", policy):
+            errors.append('FONT_CSP the page uses tpui-fonts.css, its Content-Security-Policy needs "font-src data:"')
+        if re.search(r'<img\b[^>]*\bsrc="(?!data:)[^"]+\.(svg|png|jpe?g|gif)"', text, re.I) and not re.search(r"img-src[^;]*\bdata:", policy):
+            errors.append('IMG_CSP the page embeds images (tools/inline.py), its Content-Security-Policy needs "img-src data:"')
     scripts = re.findall(r'<script[^>]*>(.*?)</script>', text, flags=re.S | re.I)
     for chunk in scripts:
-        code = re.sub(r'//[^\n]*|/\*.*?\*/', '', chunk, flags=re.S)
+        # 1.0.2: a "//" inside a string ("https://x") is no comment
+        code = re.sub(r'(?<![:"\'\\])//[^\n]*|/\*.*?\*/', '', chunk, flags=re.S)
+        for m in re.finditer(r'\b(innerHTML|outerHTML|insertAdjacentHTML|document\.write)\b', code):
+            warnings.append(f'INNER_HTML {m.group(1)} in a script')
         for m in re.finditer(r'(?<![\w.$])(?:window\.)?(alert|confirm|prompt)\s*\(', code):
             errors.append(f'BROWSER_POPUP {m.group(1)}() in a script')
-    for m in re.finditer(r'<(script|link|img|iframe|audio|video|source)\b[^>]*\b(src|href)\s*=\s*"((?:https?:)?//[^"]*)"', text, re.I):
+    for m in re.finditer(r'<(script|link|img|iframe|audio|video|source|object|embed)\b[^>]*\b(src|href|srcset|data)\s*=\s*["\']((?:https?:)?//[^"\']*)', text, re.I):
         errors.append('REMOTE_RESOURCE ' + m.group(3))
+    for m in re.finditer(r'url\(\s*["\']?((?:https?:)?//[^)"\']*)', text, re.I):
+        errors.append('REMOTE_RESOURCE ' + m.group(1))
     return errors, warnings
 
 
