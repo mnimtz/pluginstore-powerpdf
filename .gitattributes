@@ -11,3 +11,9 @@ docs/design-2026/fonts/** binary
 docs/design-2026/flowlines/** binary
 client/third_party/tpui/web/brand/** binary
 client/third_party/tpui/web/fonts/*.ttf binary
+# S2.0.0: the app icon (original lockup, only the viewBox changed) and the icons rendered from it
+server/src/AddonStore.Web/wwwroot/img/tungsten-power-pdf-icon.svg binary
+client/ui/img/tungsten-power-pdf-icon.svg binary
+server/src/AddonStore.Web/wwwroot/favicon.ico binary
+server/src/AddonStore.Web/wwwroot/img/*.png binary
+client/installer/banner.bmp binary

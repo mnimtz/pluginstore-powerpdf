@@ -28,8 +28,8 @@ public static class ApiEndpoints
                 start_url = "/",
                 scope = "/",
                 display = "standalone",
-                background_color = "#002854",
-                theme_color = "#002854",
+                background_color = "#FFFFFF",
+                theme_color = "#FFFFFF",
                 icons = new object[]
                 {
                     new { src = "/img/icon-192.png", sizes = "192x192", type = "image/png", purpose = "any" },
@@ -107,7 +107,7 @@ public static class ApiEndpoints
             var html = "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" +
                        "<title>Agent guide - Add-on Store for Tungsten Power PDF</title>" +
                        "<meta name=\"description\" content=\"How an AI assistant publishes, updates and maintains Power PDF add-ons through the Add-on Store API.\"></head>" +
-                       "<body style=\"font-family:Arial,sans-serif;max-width:980px;margin:24px auto;padding:0 16px;color:#002854\">" +
+                       "<style>@font-face{font-family:\"Red Hat Display\";font-weight:400;src:url(\"/fonts/RedHatDisplay-Regular.ttf\") format(\"truetype\")}</style>" + "<body style=\"font-family:'Red Hat Display',Arial,sans-serif;max-width:980px;margin:24px auto;padding:0 16px;color:#002854\">" +
                        "<p>Machine-readable versions: <a href=\"/api/agent-guide\">/api/agent-guide</a> (Markdown), " +
                        "<a href=\"/api/openapi.json\">/api/openapi.json</a>, <a href=\"/llms.txt\">/llms.txt</a>.</p>" +
                        "<pre style=\"white-space:pre-wrap;word-wrap:break-word;font:14px/1.5 Consolas,monospace\">" +
@@ -1845,7 +1845,7 @@ public static class ApiEndpoints
     private static string GuideHtml(string title, string md) =>
         "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" +
         $"<title>{System.Net.WebUtility.HtmlEncode(title)}</title></head>" +
-        "<body style=\"font-family:Arial,sans-serif;max-width:980px;margin:24px auto;padding:0 16px;color:#002854\">" +
+        "<style>@font-face{font-family:\"Red Hat Display\";font-weight:400;src:url(\"/fonts/RedHatDisplay-Regular.ttf\") format(\"truetype\")}</style>" + "<body style=\"font-family:'Red Hat Display',Arial,sans-serif;max-width:980px;margin:24px auto;padding:0 16px;color:#002854\">" +
         "<p>Full guide: <a href=\"/agent-guide\">/agent-guide</a> (Markdown: <a href=\"/api/agent-guide\">/api/agent-guide</a>).</p>" +
         "<pre style=\"white-space:pre-wrap;word-wrap:break-word;font:14px/1.5 Consolas,monospace\">" +
         System.Net.WebUtility.HtmlEncode(md) + "</pre></body></html>";

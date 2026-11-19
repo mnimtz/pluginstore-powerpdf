@@ -200,11 +200,11 @@ public class IssueService
                 : CatalogUi.DisplayName(pkg, pkg.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault(), "en");
             static string enc(string? v) => System.Net.WebUtility.HtmlEncode(v ?? "");
             // the text is the developer's, not the store's: say so above it (audit S1.3.1)
-            var html = $"<p style=\"color:#8094AA\">Reply from {enc(user.DisplayName)}, who looks after the add-on {enc(name)}, sent through the Add-on Store. " +
+            var html = $"<p style=\"color:#476484\">Reply from {enc(user.DisplayName)}, who looks after the add-on {enc(name)}, sent through the Add-on Store. " +
                        "The store forwards this message; it did not write it.</p>" +
                        $"<p>{enc(text).Replace("\n", "<br />")}</p>" +
-                       $"<p style=\"color:#8094AA\">About your report on {enc(name)} {enc(f.Version)}:</p>" +
-                       $"<blockquote style=\"white-space:pre-wrap;color:#8094AA\">{enc(f.Message.Length > 1500 ? f.Message[..1500] + " ..." : f.Message)}</blockquote>";
+                       $"<p style=\"color:#476484\">About your report on {enc(name)} {enc(f.Version)}:</p>" +
+                       $"<blockquote style=\"white-space:pre-wrap;color:#476484\">{enc(f.Message.Length > 1500 ? f.Message[..1500] + " ..." : f.Message)}</blockquote>";
             var sent = await _notify.SendDirectAsync(f.Email, $"[Add-on Store] Re: your report on {name}", html, "Feedback");
             if (!sent.Sent) return (null, new("MAIL_FAILED", "The reply could not be sent: " + sent.Detail));
             sentTo = f.Email;

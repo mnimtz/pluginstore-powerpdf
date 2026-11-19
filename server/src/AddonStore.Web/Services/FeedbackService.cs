@@ -138,7 +138,7 @@ public class FeedbackService
                 var text = $"<p>{(kind == "problem" ? "A user reported a problem" : "A user left a comment")} for <b>{enc(packageId)}</b> " +
                            $"version {enc(fb.Version)}:</p><blockquote style=\"white-space:pre-wrap\">{enc(message)}</blockquote>" +
                            (email is null ? "<p>No reply address was given.</p>" : $"<p>Reply to: <a href=\"mailto:{enc(email)}\">{enc(email)}</a></p>") +
-                           $"<p style=\"color:#8094AA\">{enc(fb.ClientInfo)}{(fb.LogExcerpt is null ? "" : " · log excerpt attached in the portal")}" +
+                           $"<p style=\"color:#476484\">{enc(fb.ClientInfo)}{(fb.LogExcerpt is null ? "" : " · log excerpt attached in the portal")}" +
                            $"{(files.Count == 0 ? "" : $" · {files.Count} attachment(s) in the portal")}</p>" +
                            $"<p><a href=\"{await _notify.BaseUrlAsync()}/Issues/{fb.Id}\">{enc($"{await _notify.BaseUrlAsync()}/Issues/{fb.Id}")}</a></p>";
                 await _notify.NotifyUserAsync("Feedback", pkg.Owner, subject, text);

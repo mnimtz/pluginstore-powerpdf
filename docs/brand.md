@@ -33,6 +33,10 @@ Mischverhältnis im Kommentar). Wichtig sind vor allem die Kontrastwerte:
 | `--tun-gray-200` | `#E0E5EA` | Navy 12 % + Weiß | Linien, Rahmen |
 | `--tun-on-navy` | `#BFE7FE` | Weiß 75 % + Blau | Nebentext auf Navy |
 
+**Statustexte (S2.0.0):** nie die hellen Akzente als Schrift auf Weiß. Erfolg
+`--tun-ok` `#016839` (6,9:1), Fehler `--tun-err` `#B3261E` (6,5:1), Nebentext
+`#476484`. Auf Navy bleiben die hellen Akzente lesbar.
+
 **Kontrast:** Weiße Schrift auf `#00A0FB` erreicht nur 2,8:1. Der helle Hauptknopf
 (`.btn.cta`) trägt deshalb navyfarbene Schrift. Überschriften in `#00A0FB` sind
 groß und dünn, wie das Brand Book es verlangt (S. 22). Ihr Kontrast auf Weiß
@@ -60,9 +64,15 @@ Store nur noch für Highlights und Fortschrittsbalken.
 - **Don'ts:** das alte Logo mit Kasten hinter „AUTOMATION“, linksbündig, andere
   Schrift oder Farbe, verzerrt oder gedreht, mit Kontur oder Effekten, ohne
   „Automation“, mit „Formerly Kofax“.
-- Power-PDF-Lockup (`tungsten-power-pdf-lockup(-reverse).svg`) nur für das Produkt
+- Power-PDF-Lockup (`tungsten-power-pdf-lockup-reverse.svg`) nur für das Produkt
   Power PDF. **Add-ons unabhängiger Autoren bekommen nie ein Tungsten-Lockup**,
   sonst wirken sie wie offizielle Produkte.
+- **App-Symbol (S2.0.0):** `tungsten-power-pdf-icon.svg` ist die Original-Datei
+  `Tungsten-Power-PDF.svg` mit nur einem geänderten `viewBox` (Ausschnitt auf das
+  Symbol). Daraus entstehen `favicon.ico` (16/32/48), `favicon-32.png`,
+  `apple-touch-icon.png` und `icon-192/256/512.png` (weißer Grund, 8 % Rand).
+  Kein Symbol aus `PowerPDF.exe`, nichts nachgezeichnet. Der Store-Client zeigt
+  dasselbe Symbol bei einem Power-PDF-Update (`client/ui/img`).
 
 ## Flächen, Callouts, Flow lines (S. 3, 22, 26)
 
@@ -87,7 +97,9 @@ Colorway auf Navy. Im Katalog je bekannter Kategorie ein Icon (`wwwroot/img/icon
 ## Übertragung auf Store-Client und Plug-ins (Phasen 2 und 3)
 
 Phase 2 erledigt mit C1.9.18 (Nov 19, 2026): Store-Fenster auf Plug-in UI 1.1.0, Logo 2026 und
-Red Hat Display eingebettet (`font-src data:`, `img-src data:` in der CSP der Seite). Phase 3: jedes
+Red Hat Display eingebettet (`font-src data:`, `img-src data:` in der CSP der Seite). C2.0.0:
+Setup-Banner weiß mit dem Original-Logo 2026 (PNG aus dem Brand-Paket, nur skaliert, rechts),
+Titel navy; Update-Ansicht mit dem Power-PDF-Symbol. Phase 3: jedes
 Plug-in übernimmt Kit 1.1.0 mit seinem nächsten Release.
 
 - Store-Fenster und Plug-in UI-Kit übernehmen dieselben Tokens, Schriftschnitte

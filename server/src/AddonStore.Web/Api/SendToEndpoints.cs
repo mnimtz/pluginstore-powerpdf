@@ -271,8 +271,8 @@ public static class SendToEndpoints
         var html = $"""
             <div{dir}>
             <p>{H(SendToTexts.Fill(t.Intro, from.Name, from.Email, date))}</p>
-            <p><a href="{H(link)}" style="display:inline-block;background:#00A0FB;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:bold">{H(t.Button)}</a></p>
-            <p style="color:#6b7a8c;font-size:13px">{H(SendToTexts.Fill(t.Footer, from.Name, from.Email, date))}</p>
+            <p><a href="{H(link)}" style="display:inline-block;background:#002854;color:#fff;padding:10px 18px;border-radius:4px;text-decoration:none;font-weight:500">{H(t.Button)}</a></p>
+            <p style="color:#476484;font-size:13px">{H(SendToTexts.Fill(t.Footer, from.Name, from.Email, date))}</p>
             </div>
             """;
         if (env.IsDevelopment())
@@ -328,14 +328,18 @@ public static class SendToEndpoints
             <!doctype html><html lang="{{H(lang)}}" dir="{{dir}}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
             <meta name="robots" content="noindex,nofollow"><title>{{H(t.Title)}}</title>
             <style>
-            :root{--navy:#002854;--blue:#00A0FB;--ink:#1f2a37;--line:#e1e7ee}
-            body{margin:0;font-family:"Red Hat Display","Segoe UI",Arial,sans-serif;color:var(--ink);background:#f2f6fa}
-            .bar{background:var(--navy);color:#fff;padding:14px 20px;font-weight:700}.line{height:4px;background:linear-gradient(90deg,#00EB86,#00A0FB)}
-            main{max-width:540px;margin:40px auto;padding:28px;background:#fff;border:1px solid var(--line);border-radius:10px}
-            h1{color:var(--navy);font-size:22px;margin:0 0 12px}
-            button{font:inherit;padding:9px 18px;border-radius:6px;border:1px solid var(--line);background:#fff;cursor:pointer;margin-inline-end:8px}
-            button.p{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700}
-            </style></head><body><div class="bar">Tungsten Power PDF</div><div class="line"></div><main>{{body}}</main></body></html>
+            @font-face{font-family:"Red Hat Display";font-weight:300;src:url("/fonts/RedHatDisplay-Light.ttf") format("truetype")}
+            @font-face{font-family:"Red Hat Display";font-weight:400;src:url("/fonts/RedHatDisplay-Regular.ttf") format("truetype")}
+            @font-face{font-family:"Red Hat Display";font-weight:500;src:url("/fonts/RedHatDisplay-Medium.ttf") format("truetype")}
+            :root{--navy:#002854;--blue:#00A0FB;--ink:#231F20;--line:#E0E5EA;--muted:#476484}
+            body{margin:0;font-family:"Red Hat Display","Segoe UI",Arial,sans-serif;color:var(--ink);background:#FAFAFA}
+            .bar{background:#fff;color:var(--navy);padding:14px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px}
+            .bar img{height:28px;display:block}.bar span{padding-inline-start:16px;border-inline-start:1px solid var(--line);font-size:16px}
+            main{max-width:540px;margin:40px auto;padding:28px;background:#fff;border:1px solid var(--line);border-radius:6px}
+            h1{color:var(--blue);font-weight:300;font-size:26px;margin:0 0 12px}
+            button{font:inherit;padding:9px 18px;border-radius:4px;border:1px solid var(--line);background:#fff;color:var(--navy);cursor:pointer;margin-inline-end:8px}
+            button.p{background:var(--navy);border-color:var(--navy);color:#fff;font-weight:500}
+            </style></head><body><div class="bar"><img src="/img/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation"><span>Tungsten Power PDF</span></div><main>{{body}}</main></body></html>
             """;
     }
 
