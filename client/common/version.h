@@ -3,8 +3,8 @@
 // Rule: bump on EVERY release, never ship an unchanged number.
 #pragma once
 
-#define FP_VERSION_MAJOR 1
-#define FP_VERSION_MINOR 9
-#define FP_VERSION_PATCH 18
-#define FP_VERSION_W  L"1.9.18"
-#define FP_VERSION_A   "1.9.18"
+#define FP_VERSION_MAJOR 2
+#define FP_VERSION_MINOR 0
+#define FP_VERSION_PATCH 0
+#define FP_VERSION_W  L"2.0.0"
+#define FP_VERSION_A   "2.0.0"

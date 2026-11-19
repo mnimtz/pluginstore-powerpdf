@@ -61,6 +61,10 @@ Store nur noch für Highlights und Fortschrittsbalken.
 
 - Logo 2026 (`tungsten-automation-logo-2026-blue.svg` / `-white.svg`): auf hell
   `#002854`, auf dunkel weiß. Mindesthöhe 50 px; Schutzraum = Höhe des „N“.
+- **Bewusste Ausnahme (Marcus, Nov 19, 2026):** Programmoberflächen behalten kompakte
+  Kopfzeilen: Website-Kopf 30 px (Handy 26 px), Store-Fenster und Plug-in UI-Kit 22 px,
+  Setup-Banner 24 px. Druck, Dokumente und große Flächen (Social Card, Startseiten-Block)
+  halten die 50 px ein.
 - **Don'ts:** das alte Logo mit Kasten hinter „AUTOMATION“, linksbündig, andere
   Schrift oder Farbe, verzerrt oder gedreht, mit Kontur oder Effekten, ohne
   „Automation“, mit „Formerly Kofax“.

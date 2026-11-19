@@ -17,13 +17,13 @@
 
     <UI Id="TpUI">
       <TextStyle Id="TpNormal" FaceName="Tahoma" Size="8" />
-      <TextStyle Id="TpTitle" FaceName="Tahoma" Size="12" Bold="yes" Red="255" Green="255" Blue="255" />
+      <TextStyle Id="TpTitle" FaceName="Tahoma" Size="12" Bold="yes" Red="0" Green="40" Blue="84" />
       <TextStyle Id="TpHeading" FaceName="Tahoma" Size="9" Bold="yes" />
 
       <!-- welcome and license (fresh install and resume) -->
       <Dialog Id="TpWelcomeDlg" Width="370" Height="270" Title="[ProductName]">
         <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
-        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiWelcomeTitle)" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="255" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiWelcomeTitle)" />
         <Control Id="Intro" Type="Text" X="20" Y="52" Width="330" Height="24" NoPrefix="yes" Text="!(loc.UiWelcomeText)" />
         <Control Id="License" Type="ScrollableText" X="20" Y="80" Width="330" Height="122" Sunken="yes" TabSkip="no">
           <Text SourceFile="!(wix.TpLicenseRtf)" />
@@ -44,7 +44,7 @@
       <!-- repair or remove (an installed version, Programs and Features: "Change") -->
       <Dialog Id="TpMaintenanceDlg" Width="370" Height="270" Title="[ProductName]">
         <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
-        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiMaintTitle)" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="255" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiMaintTitle)" />
         <Control Id="Text" Type="Text" X="20" Y="60" Width="330" Height="40" NoPrefix="yes" Text="!(loc.UiMaintText)" />
         <Control Id="Repair" Type="PushButton" X="20" Y="110" Width="100" Height="17" Default="yes" ElevationShield="yes" Text="!(loc.UiRepair)">
           <Publish Property="REINSTALLMODE" Value="ecmus" Order="1">1</Publish>
@@ -64,7 +64,7 @@
       <!-- progress (modeless while the changes are made) -->
       <Dialog Id="TpProgressDlg" Width="370" Height="270" Title="[ProductName]" Modeless="yes">
         <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
-        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiProgressTitle)" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="255" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiProgressTitle)" />
         <Control Id="Text" Type="Text" X="20" Y="60" Width="330" Height="20" NoPrefix="yes" Text="!(loc.UiProgressText)" />
         <Control Id="ActionText" Type="Text" X="20" Y="90" Width="330" Height="12" NoPrefix="yes">
           <Subscribe Event="ActionText" Attribute="Text" />
@@ -81,7 +81,7 @@
       <!-- the three ends of a setup -->
       <Dialog Id="TpExitDlg" Width="370" Height="270" Title="[ProductName]">
         <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
-        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiExitTitle)" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="255" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiExitTitle)" />
         <Control Id="Text" Type="Text" X="20" Y="60" Width="330" Height="40" NoPrefix="yes" Text="!(loc.UiExitText)" />
         <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
         <Control Id="Finish" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.UiFinish)">
@@ -90,7 +90,7 @@
       </Dialog>
       <Dialog Id="TpUserExitDlg" Width="370" Height="270" Title="[ProductName]">
         <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
-        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiUserExitTitle)" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="255" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiUserExitTitle)" />
         <Control Id="Text" Type="Text" X="20" Y="60" Width="330" Height="40" NoPrefix="yes" Text="!(loc.UiUserExitText)" />
         <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
         <Control Id="Finish" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.UiFinish)">
@@ -99,7 +99,7 @@
       </Dialog>
       <Dialog Id="TpFatalErrorDlg" Width="370" Height="270" Title="[ProductName]">
         <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
-        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiFatalTitle)" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="255" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiFatalTitle)" />
         <Control Id="Text" Type="Text" X="20" Y="60" Width="330" Height="40" NoPrefix="yes" Text="!(loc.UiFatalText)" />
         <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
         <Control Id="Finish" Type="PushButton" X="304" Y="243" Width="56" Height="17" Default="yes" Cancel="yes" Text="!(loc.UiFinish)">
@@ -143,7 +143,7 @@
       </Dialog>
       <Dialog Id="FilesInUse" Width="370" Height="270" Title="[ProductName]" KeepModeless="yes">
         <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
-        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiInUseTitle)" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="255" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiInUseTitle)" />
         <Control Id="Text" Type="Text" X="20" Y="55" Width="330" Height="20" NoPrefix="yes" Text="!(loc.ClosePowerPdf) !(loc.UiInUseText)" />
         <Control Id="List" Type="ListBox" X="20" Y="80" Width="330" Height="140" Property="FileInUseProcess" Sunken="yes" TabSkip="yes" />
         <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
@@ -160,7 +160,7 @@
       <!-- Windows Installer's Restart Manager: offers to close Power PDF (replaces WiX's CloseApplication) -->
       <Dialog Id="MsiRMFilesInUse" Width="370" Height="270" Title="[ProductName]" KeepModeless="yes">
         <Control Id="Banner" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
-        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiInUseTitle)" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="255" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}!(loc.UiInUseTitle)" />
         <Control Id="Text" Type="Text" X="20" Y="55" Width="330" Height="20" NoPrefix="yes" Text="!(loc.ClosePowerPdf) !(loc.UiInUseText)" />
         <Control Id="List" Type="ListBox" X="20" Y="80" Width="330" Height="100" Property="FileInUseProcess" Sunken="yes" TabSkip="yes" />
         <Control Id="Options" Type="RadioButtonGroup" X="20" Y="188" Width="330" Height="40" Property="TPRMOPTION">

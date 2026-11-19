@@ -156,6 +156,7 @@ body.upmode #storeBtn{display:flex;margin-inline-start:auto}
 .ucard .ut{white-space:pre-wrap;font-size:13px;line-height:1.5;color:var(--tp-ink);max-height:240px;overflow:auto;user-select:text}
 .ucard .ua{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 .tile.pp{background:var(--tp-navy);font-size:12px}
+.tile.pp img{border:1px solid var(--tp-gray-200);border-radius:inherit;box-sizing:border-box;padding:4px}
 [dir=rtl] .ucard .un,[dir=rtl] .ucard .ut{unicode-bidi:plaintext;text-align:start}
 </style>
 </head>
@@ -163,6 +164,7 @@ body.upmode #storeBtn{display:flex;margin-inline-start:auto}
 <div class="app">
   <header class="tp-head">
     <img class="tp-logo" src="../third_party/tpui/web/brand/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation">
+    <img id="ppIcon" hidden src="img/tungsten-power-pdf-icon.svg" alt="">
     <span class="tp-sep"></span>
     <span class="t" id="title"></span>
     <span class="s">Tungsten Power PDF</span>
@@ -456,7 +458,8 @@ function renderUpdates() {
   var n = 0;
   if (ppu) {
     n++;
-    var pt = el("div", "tile pp", "PDF");
+    var pt = el("div", "tile pp"), pi = document.createElement("img");   // C2.0.0: the Power PDF icon instead of "PDF"
+    pi.src = $("ppIcon").src; pi.alt = ""; pt.appendChild(pi);
     var ver = ppu.installed ? fmt(S.updFromTo, ppu.installed, ppu.latest) : ppu.latest;
     if (ppu.buildDate) ver += "  \u00b7  " + ppu.buildDate;
     var pb = [];
@@ -466,7 +469,7 @@ function renderUpdates() {
   }
   if (self) {
     n++;
-    var st = el("div", "tile pp", "AS"); st.style.background = "var(--blue)";
+    var st = el("div", "tile pp", "AS");   // C2.0.0: navy like every letter tile (white on #00A0FB missed the contrast minimum)
     u.appendChild(ucard(st, S.title, fmt(S.updFromTo, self.installed, self.version), self.changelog || "",
       [{ label: S.selfUpdateBtn, disabled: busy, fn: function () { busyModal(S.selfUpdateBtn); post({ cmd: "selfUpdate" }); } }]));
   }

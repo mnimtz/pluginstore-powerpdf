@@ -164,7 +164,7 @@
     <UI>
       <Dialog Id="SaasOnlyDlg" Width="370" Height="270" Title="[ProductName]">
         <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="TpBanner" />
-        <Control Id="Title" Type="Text" X="15" Y="12" Width="340" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}Power PDF Business SaaS" />
+        <Control Id="Title" Type="Text" X="15" Y="12" Width="255" Height="22" Transparent="yes" NoPrefix="yes" Text="{\TpTitle}Power PDF Business SaaS" />
         <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
         <Control Id="Message" Type="Text" X="25" Y="62" Width="320" Height="60" NoPrefix="yes" Text="!(loc.PowerPdfSaasOnly)" />
         <Control Id="Hint" Type="Text" X="25" Y="128" Width="320" Height="60" NoPrefix="yes" Text="!(loc.SaasHint)" />
