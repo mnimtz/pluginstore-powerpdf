@@ -1,6 +1,6 @@
 {
   "id": "com.tungsten.stampassistant",
-  "version": "1.2.7",
+  "version": "1.3.0",
   "name": {
     "en": "Stamp Assistant",
     "de": "Stempel-Assistent",
@@ -48,27 +48,27 @@
     "ar": "أختام ديناميكية بدون JavaScript: كوّن نص الختم من عناصر مثل التاريخ والوقت والمستخدم والصفحة واسم الملف وطلب إدخال والبحث في CSV وعداد متسلسل وتاريخ استحقاق، ثم انقر على الصفحة لوضعه. توفر اللوحة الجانبية أختامًا بنقرة واحدة ومفضلاتك المحفوظة."
   },
   "changelog": {
-    "en": "The side panel no longer opens by itself every time you open a PDF, so the panel you are working with, for example Bookmarks, stays in front. Open it with the \"Side panel\" button on the ribbon whenever you need it. If you prefer the previous behavior, turn on \"Open the side panel automatically when a document opens\" under File > Options.",
-    "de": "Die Seitenleiste öffnet sich nicht mehr bei jedem PDF von selbst. So bleibt die Leiste vorne, mit der Sie gerade arbeiten, zum Beispiel die Lesezeichen. Bei Bedarf öffnen Sie sie mit der Schaltfläche „Seitenleiste“ im Menüband. Wer das bisherige Verhalten möchte, schaltet unter Datei > Optionen „Seitenleiste beim Öffnen eines Dokuments automatisch anzeigen“ ein.",
-    "fr": "Le panneau latéral ne s'ouvre plus tout seul à chaque PDF : le panneau que vous utilisez, par exemple les signets, reste au premier plan. Ouvrez-le au besoin avec le bouton « Panneau latéral » du ruban. Pour retrouver l'ancien comportement, activez « Afficher automatiquement le panneau latéral à l'ouverture d'un document » sous Fichier > Options.",
-    "it": "Il pannello laterale non si apre più da solo a ogni PDF: il pannello che state usando, ad esempio i segnalibri, resta in primo piano. Apritelo quando serve con il pulsante \"Pannello laterale\" della barra multifunzione. Per il comportamento precedente attivate \"Mostra automaticamente il pannello laterale all'apertura di un documento\" in File > Opzioni.",
-    "es": "El panel lateral ya no se abre solo con cada PDF, así que el panel que está usando, por ejemplo los marcadores, permanece delante. Ábralo cuando lo necesite con el botón \"Panel lateral\" de la cinta. Si prefiere el comportamiento anterior, active \"Mostrar automáticamente el panel lateral al abrir un documento\" en Archivo > Opciones.",
-    "nl": "Het zijpaneel gaat niet meer bij elke pdf vanzelf open, zodat het paneel waarmee u werkt, bijvoorbeeld de bladwijzers, vooraan blijft. Open het wanneer nodig met de knop \"Zijpaneel\" op het lint. Wilt u het oude gedrag, schakel dan \"Zijpaneel automatisch tonen bij het openen van een document\" in onder Bestand > Opties.",
-    "pt": "O painel lateral não abre mais sozinho a cada PDF, então o painel que você está usando, por exemplo os marcadores, fica em primeiro plano. Abra-o quando precisar com o botão \"Painel lateral\" na faixa de opções. Se preferir o comportamento anterior, ative \"Mostrar o painel lateral automaticamente ao abrir um documento\" em Arquivo > Opções.",
-    "da": "Sidepanelet åbner ikke længere af sig selv ved hver PDF, så det panel, du arbejder med, for eksempel bogmærkerne, bliver foran. Åbn det efter behov med knappen \"Sidepanel\" på båndet. Vil du have den tidligere adfærd, så slå \"Vis sidepanelet automatisk, når et dokument åbnes\" til under Filer > Indstillinger.",
-    "fi": "Sivupaneeli ei enää avaudu itsestään jokaisen PDF:n kohdalla, joten käyttämäsi paneeli, esimerkiksi kirjanmerkit, pysyy edessä. Avaa se tarvittaessa valintanauhan Sivupaneeli-painikkeella. Jos haluat aiemman toiminnan, ota käyttöön \"Näytä sivupaneeli automaattisesti, kun asiakirja avataan\" kohdassa Tiedosto > Asetukset.",
-    "nb": "Sidepanelet åpnes ikke lenger av seg selv for hver PDF, så panelet du jobber med, for eksempel bokmerkene, blir liggende foran. Åpne det ved behov med knappen \"Sidepanel\" på båndet. Vil du ha den tidligere oppførselen, slår du på \"Vis sidepanelet automatisk når et dokument åpnes\" under Fil > Alternativer.",
-    "sv": "Sidopanelen öppnas inte längre av sig själv för varje PDF, så panelen du arbetar med, till exempel bokmärkena, ligger kvar framme. Öppna den vid behov med knappen \"Sidopanel\" i menyfliksområdet. Vill du ha det tidigare beteendet aktiverar du \"Visa sidopanelen automatiskt när ett dokument öppnas\" under Arkiv > Alternativ.",
-    "pl": "Panel boczny nie otwiera się już sam przy każdym pliku PDF, więc panel, z którego korzystasz, na przykład zakładki, pozostaje na wierzchu. W razie potrzeby otwórz go przyciskiem „Panel boczny” na wstążce. Jeśli wolisz dotychczasowe działanie, włącz „Automatycznie pokazuj panel boczny po otwarciu dokumentu” w menu Plik > Opcje.",
-    "cs": "Boční panel se už neotevírá sám u každého PDF, takže panel, se kterým pracujete, například záložky, zůstává vpředu. Podle potřeby ho otevřete tlačítkem „Boční panel“ na pásu karet. Pokud chcete dosavadní chování, zapněte „Automaticky zobrazit boční panel při otevření dokumentu“ v nabídce Soubor > Možnosti.",
-    "hu": "Az oldalpanel már nem nyílik meg magától minden PDF-nél, így az a panel marad elöl, amellyel éppen dolgozik, például a könyvjelzők. Szükség esetén a menüszalag „Oldalpanel” gombjával nyithatja meg. Ha a korábbi működést szeretné, kapcsolja be a Fájl > Beállítások alatt az „Oldalpanel automatikus megjelenítése dokumentum megnyitásakor” lehetőséget.",
-    "ru": "Боковая панель больше не открывается сама при каждом PDF, поэтому панель, с которой вы работаете, например закладки, остается на переднем плане. При необходимости откройте ее кнопкой «Боковая панель» на ленте. Если вам нужно прежнее поведение, включите «Автоматически показывать боковую панель при открытии документа» в разделе Файл > Параметры.",
-    "tr": "Yan panel artık her PDF'de kendiliğinden açılmıyor; böylece çalıştığınız panel, örneğin yer imleri, önde kalıyor. Gerektiğinde şeritteki \"Yan panel\" düğmesiyle açın. Önceki davranışı tercih ederseniz Dosya > Seçenekler altında \"Belge açıldığında yan paneli otomatik olarak göster\" seçeneğini açın.",
-    "zh-Hans": "侧面板不再在每次打开 PDF 时自动弹出，您正在使用的面板（例如书签）会保持在前面。需要时，可通过功能区中的“侧面板”按钮打开。如果希望保留以前的行为，请在“文件 > 选项”中启用“打开文档时自动显示侧面板”。",
-    "zh-Hant": "側邊面板不再於每次開啟 PDF 時自動彈出，您正在使用的面板（例如書籤）會保持在前面。需要時，可透過功能區中的「側邊面板」按鈕開啟。如果想保留先前的行為，請在「檔案 > 選項」中啟用「開啟文件時自動顯示側邊面板」。",
-    "ja": "PDF を開くたびにサイド パネルが自動的に開くことはなくなりました。作業中のパネル (しおりなど) が前面に表示されたままになります。必要なときはリボンの [サイド パネル] ボタンで開いてください。以前の動作に戻すには、[ファイル] > [オプション] で [ドキュメントを開くときにサイド パネルを自動的に表示する] をオンにします。",
-    "ko": "이제 PDF를 열 때마다 측면 패널이 자동으로 열리지 않으므로 작업 중인 패널(예: 책갈피)이 앞에 그대로 유지됩니다. 필요할 때 리본의 [측면 패널] 단추로 여세요. 이전 동작을 원하면 [파일] > [옵션]에서 [문서를 열 때 측면 패널 자동 표시]를 켜세요.",
-    "ar": "لم تعد اللوحة الجانبية تُفتح تلقائيًا مع كل ملف PDF، فتبقى اللوحة التي تعمل بها، مثل الإشارات المرجعية، في المقدمة. افتحها عند الحاجة باستخدام زر \"اللوحة الجانبية\" في الشريط. إذا كنت تفضّل السلوك السابق، فشغّل \"إظهار اللوحة الجانبية تلقائيًا عند فتح مستند\" من ملف > خيارات."
+    "en": "New look: the windows and the side panel follow the new Tungsten brand, with a light header, the new Tungsten Automation logo and the brand font. Nothing changes in how you use it.",
+    "de": "Neues Aussehen: Die Fenster und die Seitenleiste folgen dem neuen Tungsten-Design, mit heller Kopfzeile, dem neuen Logo von Tungsten Automation und der Hausschrift. An der Bedienung ändert sich nichts.",
+    "fr": "Nouvel aspect : les fenêtres et le panneau latéral suivent la nouvelle identité de Tungsten, avec un en-tête clair, le nouveau logo de Tungsten Automation et la police de la marque. Rien ne change dans l'utilisation.",
+    "it": "Nuovo aspetto: le finestre e il pannello laterale seguono la nuova immagine di Tungsten, con un'intestazione chiara, il nuovo logo di Tungsten Automation e il carattere del marchio. Nell'uso non cambia nulla.",
+    "es": "Nuevo aspecto: las ventanas y el panel lateral siguen la nueva imagen de Tungsten, con un encabezado claro, el nuevo logotipo de Tungsten Automation y la fuente de la marca. Su uso no cambia.",
+    "nl": "Nieuw uiterlijk: de vensters en het zijpaneel volgen de nieuwe huisstijl van Tungsten, met een lichte kop, het nieuwe logo van Tungsten Automation en het huislettertype. In het gebruik verandert niets.",
+    "pt": "Novo visual: as janelas e o painel lateral seguem a nova identidade da Tungsten, com um cabeçalho claro, o novo logotipo da Tungsten Automation e a fonte da marca. O uso não muda.",
+    "da": "Nyt udseende: vinduerne og sidepanelet følger Tungstens nye design med en lys topbjælke, det nye Tungsten Automation-logo og husets skrifttype. Brugen ændres ikke.",
+    "fi": "Uusi ulkoasu: ikkunat ja sivupaneeli noudattavat Tungstenin uutta ilmettä, jossa on vaalea yläpalkki, Tungsten Automationin uusi logo ja brändin fontti. Käyttö ei muutu.",
+    "nb": "Nytt utseende: vinduene og sidepanelet følger Tungstens nye profil, med et lyst toppfelt, den nye Tungsten Automation-logoen og merkevarens skrift. Bruken endres ikke.",
+    "sv": "Nytt utseende: fönstren och sidopanelen följer Tungstens nya profil, med ett ljust sidhuvud, den nya Tungsten Automation-logotypen och varumärkets typsnitt. Användningen ändras inte.",
+    "pl": "Nowy wygląd: okna i panel boczny są zgodne z nową identyfikacją Tungsten: jasny nagłówek, nowe logo Tungsten Automation i czcionka marki. Sposób korzystania się nie zmienia.",
+    "cs": "Nový vzhled: okna a boční panel odpovídají nové vizuální identitě Tungsten: světlé záhlaví, nové logo Tungsten Automation a firemní písmo. Na ovládání se nic nemění.",
+    "hu": "Új megjelenés: az ablakok és az oldalpanel a Tungsten új arculatát követik, világos fejléccel, a Tungsten Automation új logójával és a márka betűtípusával. A használat nem változik.",
+    "ru": "Новый облик: окна и боковая панель оформлены в новом фирменном стиле Tungsten: светлый заголовок, новый логотип Tungsten Automation и фирменный шрифт. Порядок работы не меняется.",
+    "tr": "Yeni görünüm: pencereler ve yan panel açık renkli bir üst başlık, yeni Tungsten Automation logosu ve marka yazı tipiyle Tungsten'in yeni kurumsal kimliğini izliyor. Kullanımda hiçbir şey değişmez.",
+    "zh-Hans": "新外观：窗口和侧面板采用 Tungsten 的新品牌形象，包括浅色标题栏、Tungsten Automation 的新徽标和品牌字体。使用方式不变。",
+    "zh-Hant": "新外觀：視窗和側邊面板採用 Tungsten 的新品牌形象，包括淺色標題列、Tungsten Automation 的新標誌和品牌字型。使用方式不變。",
+    "ja": "新しいデザイン: ウィンドウとサイド パネルが Tungsten の新しいブランドに合わせて、明るいヘッダー、Tungsten Automation の新しいロゴ、ブランド フォントになりました。使い方は変わりません。",
+    "ko": "새로운 디자인: 창과 측면 패널이 밝은 머리글, Tungsten Automation의 새 로고, 브랜드 글꼴을 갖춘 Tungsten의 새 브랜드를 따릅니다. 사용 방법은 바뀌지 않습니다.",
+    "ar": "مظهر جديد: تتبع النوافذ واللوحة الجانبية الهوية الجديدة لـ Tungsten، مع شريط علوي فاتح وشعار Tungsten Automation الجديد وخط العلامة التجارية. لا يتغير شيء في طريقة الاستخدام."
   },
   "minPowerPdfVersion": "5.0",
   "ribbonAtomNamespace": "FeaturePack::StampAssistant",
@@ -114,11 +114,17 @@
       "version": "1.0.4258.31",
       "license": "BSD-3-Clause",
       "source": "https://www.nuget.org/packages/Microsoft.Web.WebView2"
+    },
+    {
+      "name": "Red Hat Display (font)",
+      "version": "1.023",
+      "license": "OFL-1.1",
+      "source": "https://github.com/RedHatOfficial/RedHatFont"
     }
   ],
   "complianceAudit": {
     "confirmed": true,
-    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, CryptoAPI and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and LICENSES.md (icons generated by make_store_icons.py), copied code, secrets and personal data (none in the package), and all network code. Works offline. Since 1.2.0 the assistant, the stamp-time input and (1.2.1) the side panel are local pages of the Tungsten Plug-in UI (own code, MIT) in WebView2 (Microsoft WebView2 SDK, BSD-3-Clause; the Edge WebView2 Runtime is part of Windows); the pages are inlined into the plug-in, may not navigate, open windows, download or ask for permissions, and talk to the plug-in only through JSON messages (nlohmann/json 3.12.0, MIT, header-only); without WebView2 the classic dialogs are shown.",
+    "method": "Checked every #include and linker input of the store project (Windows SDK, MFC/ATL, CryptoAPI and the Tungsten Power PDF Plugin SDK), the bundled UILayout, assets and LICENSES.md (icons generated by make_store_icons.py), copied code, secrets and personal data (none in the package), and all network code. Works offline. Since 1.2.0 the assistant, the stamp-time input and (1.2.1) the side panel are local pages of the Tungsten Plug-in UI (own code, MIT) in WebView2 (Microsoft WebView2 SDK, BSD-3-Clause; the Edge WebView2 Runtime is part of Windows); the pages are inlined into the plug-in, may not navigate, open windows, download or ask for permissions, and talk to the plug-in only through JSON messages (nlohmann/json 3.12.0, MIT, header-only); without WebView2 the classic dialogs are shown. Since 1.3.0 the pages also embed the font Red Hat Display 1.023 (SIL OFL 1.1, which allows embedding; inlined at build time, license text in LICENSES.md) and the Tungsten Automation logo 2026 (original SVG from the Tungsten Automation Brand Book, property of Tungsten Automation).",
     "externalServices": []
   },
   "author": "Marcus Nimtz",
