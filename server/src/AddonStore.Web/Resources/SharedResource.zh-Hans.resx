@@ -1651,4 +1651,5 @@
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>此加载项仍在向客户交付，或属于某个交付模板。请先移除这些交付和模板条目。</value></data>
   <data name="Manual (ZIP)" xml:space="preserve"><value>手动 (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>无需 Add-on Store 的手动安装：包含 install.bat 和 uninstall.bat 的 ZIP 文件，也适用于软件分发。不会自动更新。</value></data>
+  <data name="Every add-on version reviewed" xml:space="preserve"><value>每个加载项版本均经过审核</value></data>
 </root>

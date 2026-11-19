@@ -3,6 +3,13 @@
 @{
     ViewData["PublicPage"] = true;   // public: always the classic layout (S1.5.0)
     ViewData["Title"] = "";   // start page: the full site name is the title
+    // S1.31.0: an icon of the Brand Book library per known category (light colourway); others get none
+    static string? ChipIcon(string category) => category switch
+    {
+        "navigation" => "Compass_Arrow_Pointer_Direction", "productivity" => "Document_Productivity",
+        "signing" => "Document_Sign_Pen_Signature", "printing" => "Printer", "conversion" => "Document_Arrows_Conversion_Transfer",
+        "forms" => "Document_Checklist", "system" => "Gears", "other" => "Puzzle_Integration", _ => null,
+    };
 }
 
 <div class="hero">
@@ -21,7 +28,7 @@
                     @L["The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF."]
                 </span>
             </span>
-            <span style="color:var(--tun-blue-light);font-size:.85rem;max-width:460px">@L["Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date."]</span>
+            <span style="color:var(--tun-on-navy);font-size:.85rem;max-width:460px">@L["Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date."]</span>
         </div>
         <script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
             // The Windows warning appears right after the download: show the hint for a while.
@@ -38,9 +45,16 @@
             })();
         </script>
     }
+    <img class="hero-lockup" src="/img/tungsten-power-pdf-lockup-reverse.svg" alt="Tungsten Power PDF" />
+    @* S1.31.0: key figures of the store, all counted, none typed in *@
+    <ul class="hero-facts">
+        <li><b>@Model.Items.Count</b>@L["Add-ons"]</li>
+        <li><b>@AddonStore.Web.Services.Lang.Ui.Length</b>@L["Languages"]</li>
+        <li><b>100 %</b>@L["Every add-on version reviewed"]</li>
+    </ul>
 </div>
 
-<div class="alert warn" style="font-size:.88rem">
+<div class="callout quiet">
     <span class="desktop-only-inline">@L["Plugins from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability."]</span>
     <span class="mobile-only-inline">@L["Add-ons from independent authors, without warranty or official support."]</span>
     <a href="/Disclaimer">@L["Disclaimer"]</a>
@@ -74,10 +88,10 @@ else
             </label>
         }
         <div class="chips" id="pkg-chips">
-            <button class="chip active" data-cat="">@L["All"]</button>
+            <button class="chip active" data-cat=""><img src="/img/icons/Marketplace_Store.svg" alt="" />@L["All"]</button>
             @foreach (var cat in Model.Items.GroupBy(i => i.Category).Select(g => g.First()).OrderBy(i => i.CategoryName))
             {
-                <button class="chip" data-cat="@cat.Category">@cat.CategoryName</button>
+                <button class="chip" data-cat="@cat.Category">@if (ChipIcon(cat.Category) is { } ic) { <img src="/img/icons/@(ic).svg" alt="" /> }@cat.CategoryName</button>
             }
         </div>
     </div>
@@ -106,8 +120,13 @@ else
                 {
                     <span class="badge highlight"><span aria-hidden="true">★</span> @L["Highlight"]</span>
                 }
-                <span class="name">@item.Name</span>
-                <partial name="_Stars" model="(item.Rating, item.RatingCount)" />
+                <div class="pkg-top">
+                    <img class="pkg-icon" src="/api/packages/@item.Id/icon" alt="" width="48" height="48" loading="lazy" data-fallback="/img/powerpdf-icon.svg" />
+                    <div>
+                        <span class="name">@item.Name</span>
+                        <partial name="_Stars" model="(item.Rating, item.RatingCount)" />
+                    </div>
+                </div>
                 <span class="meta">
                     <span class="badge live" style="font-weight:500">@item.CategoryName</span>
                     @item.Id · v@(item.Version) · @(item.SizeBytes / 1024) KB · @item.Downloads @L["download(s)"]
@@ -116,7 +135,7 @@ else
                 <span class="meta">@L["Author"]: @item.Author
                     @if (!string.IsNullOrEmpty(item.ContactEmail))
                     {
-                        <text> · </text><a href="mailto:@item.ContactEmail" style="color:var(--tun-blue)">@item.ContactEmail</a>
+                        <text> · </text><a href="mailto:@item.ContactEmail">@item.ContactEmail</a>
                     }
                 </span>
                 <span class="pkg-actions">

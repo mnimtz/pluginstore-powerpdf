@@ -1651,4 +1651,5 @@
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Tilføjelsen leveres stadig til kunder eller indgår i en leveranceskabelon. Fjern først disse leverancer og skabelonposter.</value></data>
   <data name="Manual (ZIP)" xml:space="preserve"><value>Manuel (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Manuel installation uden Add-on Store: en ZIP-fil med install.bat og uninstall.bat, også til softwaredistribution. Ingen automatiske opdateringer.</value></data>
+  <data name="Every add-on version reviewed" xml:space="preserve"><value>Hver version af en tilføjelse kontrolleret</value></data>
 </root>

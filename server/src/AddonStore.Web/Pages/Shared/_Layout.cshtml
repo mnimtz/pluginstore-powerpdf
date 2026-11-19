@@ -64,7 +64,7 @@
         <meta property="og:title" content="@pageTitle" />
         <meta property="og:description" content="@description" />
         <meta property="og:url" content="@(origin + Context.Request.Path)" />
-        <meta property="og:image" content="@(origin)/img/social-card.png" />
+        <meta property="og:image" content="@(origin)/img/social-card-2026.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="@CultureInfo.CurrentUICulture.Name" />
@@ -95,7 +95,7 @@
                 <span></span><span></span><span></span>
             </button>
             <a class="brand" href="/Start">
-                <img class="logo" src="/img/tungsten-logo-white.svg" alt="Tungsten Automation" />
+                <img class="logo" src="/img/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation" />
                 <div class="title">Add-on Store<small>Tungsten Power PDF</small></div>
             </a>
             <span class="spacer"></span>
@@ -131,7 +131,6 @@
             </details>
         </div>
     </header>
-    <div class="accent-line"></div>
     <div class="shell">
         <nav class="side-nav" id="side-nav" aria-label="@L["Navigation"]">
             <a class="@On("/Start")" href="/Start">@L["Start"]</a>
@@ -202,7 +201,7 @@ else
 {
 <header class="site">
     <div class="bar">
-        <img class="logo" src="/img/tungsten-logo-white.svg" alt="Tungsten Automation" />
+        <img class="logo" src="/img/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation" />
         <div class="title">Add-on Store<small>Tungsten Power PDF</small></div>
         <button type="button" class="nav-toggle" aria-label="@L["Menu"]" aria-expanded="false" aria-controls="site-nav">
             <span></span><span></span><span></span>
@@ -311,13 +310,12 @@ else
         </nav>
     </div>
 </header>
-<div class="accent-line"></div>
 <main>
     @RenderBody()
 </main>
 }
 <footer class="site">
-    <img src="/img/tungsten-logo-navy.svg" alt="Tungsten Automation" />
+    <img src="/img/tungsten-automation-logo-2026-white.svg" alt="Tungsten Automation" />
     <span>Add-on Store S@(AppVer.Value)</span>
     <span class="spacer"></span>
     @if (!(User.Identity?.IsAuthenticated ?? false))
@@ -326,10 +324,10 @@ else
     }
     @if (SignInManager.IsSignedIn(User) && !shell)
     {
-        <a href="/set-shell?mode=sidebar&returnUrl=/Start" style="color:var(--tun-slate)">@L["Try the new navigation (preview)"]</a>
+        <a href="/set-shell?mode=sidebar&returnUrl=/Start">@L["Try the new navigation (preview)"]</a>
     }
-    <a href="/Disclaimer" style="color:var(--tun-slate)">@L["Disclaimer"]</a>
-    <a href="/api/agent-guide" style="color:var(--tun-slate)">API</a>
+    <a href="/Disclaimer">@L["Disclaimer"]</a>
+    <a href="/api/agent-guide">API</a>
 </footer>
 <script nonce="@ViewContext.HttpContext.Items["CspNonce"]" data-cancel="@L["Cancel"].Value">
 // Behaviour without inline handlers (CSP): menu toggle, language switch,

@@ -1,103 +1,99 @@
 # Brand-Vorgaben für den Add-on Store
 
-Quelle: Tungsten Automation Brand Book, Style Guide März 2025 (60 Seiten).
-Gilt verbindlich für ALLES Sichtbare in diesem Projekt: Server-Web-UI
-(Katalog ist zwar API-only, aber Login, Review-Queue, Admin-Seiten, E-Mails),
-Store-Client (Dialoge, Panel, Icons), Developer-Kit-Doku und Paket-Icons.
+Quelle: **Tungsten Automation Brand Book, November 2026** (40 Seiten), dazu die
+offizielle Vorlage `Tungsten_2027_Template.potx` (Theme „Tungsten Automation 2026“).
+Es ersetzt den Style Guide vom März 2025. Gilt verbindlich für alles Sichtbare in
+diesem Projekt: Server-Web-UI, E-Mails, Store-Client (Fenster, Dialoge, Icons),
+Developer-Kit-Doku und Paket-Icons.
+
+**Nur Originale:** Logos, Lockups, Icons, Schriften und Flow lines kommen aus dem
+Brand-Ordner (Logos & Lockups, Icons, Fonts, PowerPoint-Vorlage). Nichts wird
+nachgezeichnet, aus PDFs ausgeschnitten oder umgefärbt.
 
 ## Farben
 
-Primärpalette (Brand Book S. 18), trägt die Mehrheit jeder Fläche:
+Die Palette 2026 ist gegenüber 2025 unverändert. Werte aus dem Theme der Vorlage:
 
-| Token | Hex | Verwendung |
-|---|---|---|
-| `--tun-navy` | `#002854` | Primäres Markenblau (Pantone 295); Überschriften, Buttons, Logo auf hell |
-| `--tun-navy-deep` | `#004766` | Dunkle Abstufung |
-| `--tun-blue` | `#00A0FB` | Akzentblau, Links, aktive Zustände |
-| `--tun-blue-light` | `#9DDDF9` | Helle Abstufung |
-| `--tun-gray-100` | `#FAFAFA` | Seitenhintergrund hell |
-| `--tun-gray-150` | `#F0F0F0` | Flächen |
-| `--tun-gray-200` | `#E4E4E4` | Rahmen, Trenner |
-| `--tun-gray-blue` | `#D9DFE6` | Flächen mit Blaustich |
-| `--tun-slate` | `#8094AA` | Sekundärtext |
-| `--tun-black` | `#231F20` | Fließtext auf hell |
+| Rolle im Theme | Hex | Token | Verwendung |
+|---|---|---|---|
+| dk2 | `#002854` | `--tun-navy` | Logo auf hell, Buttons, Navy-Flächen, Unterüberschriften |
+| accent1 | `#00A0FB` | `--tun-blue` | Überschriften, Akzente, Callout-Linie |
+| dk1 | `#231F20` | `--tun-ink` | Fließtext |
+| lt2 | `#FAFAFA` | `--tun-gray-100` | Kacheln, Karten |
+| accent3-6 | `#D030E8`, `#FF6D69`, `#FFC600`, `#00EB86` | `--tun-magenta` usw. | sparsam, Statusfarben |
 
-Domains (S. 19), als Hintergrund-Verläufe:
-- Blue Domain: `#00123B → #002854 → #00A0FB` (dunkle Hero-/Sidebar-Flächen)
-- Light Domain: `#FAFAFA → #E4E4E4` (helle Inhaltsflächen)
+Abstufungen werden nur aus diesen Farben gemischt (in `site.css` als Hexwert, mit
+Mischverhältnis im Kommentar). Wichtig sind vor allem die Kontrastwerte:
 
-Akzentfarben (S. 20) sparsam, max. ~20 % der Fläche:
-- Firmenweit: Grün `#00EB86` (hell `#B6FFDE`, dunkel `#016839`)
-- Gelb `#FFC600` (CTA-Tauglich), Koralle `#FF6D69`, Magenta `#D030E8`
+| Token | Hex | Mischung | Zweck |
+|---|---|---|---|
+| `--tun-blue-ink` | `#0072BC` | Blau 62 % + Navy | Links und blauer Text auf Weiß, Kontrast 5:1 |
+| `--tun-slate` | `#476484` | Navy 72 % + Weiß | Nebentext, Kontrast 6:1 (statt `#8094AA`, 3,2:1) |
+| `--tun-tint` | `#E8F6FF` | Blau 9 % + Weiß | Callouts |
+| `--tun-gray-200` | `#E0E5EA` | Navy 12 % + Weiß | Linien, Rahmen |
+| `--tun-on-navy` | `#BFE7FE` | Weiß 75 % + Blau | Nebentext auf Navy |
 
-**Unsere Produktfamilie ist "PDF & eSignature"** (S. 15/21): deren Farbcode ist
-`#002854` + `#00A0FB` + `#00EB86`, zugewiesener Zwei-Farb-Verlauf
-**`#00EB86 → #00A0FB`**. Diesen Verlauf nutzen wir als Signatur-Akzent des
-Stores (z. B. Hero-Leiste im Web-UI, Banner im Store-Panel).
+**Kontrast:** Weiße Schrift auf `#00A0FB` erreicht nur 2,8:1. Der helle Hauptknopf
+(`.btn.cta`) trägt deshalb navyfarbene Schrift. Überschriften in `#00A0FB` sind
+groß und dünn, wie das Brand Book es verlangt (S. 22). Ihr Kontrast auf Weiß
+(2,8:1) liegt unter der WCAG-Schwelle für großen Text (3:1). Bewusste
+Brand-Entscheidung; die Inhalte darunter tragen die Information.
 
-## Typografie (S. 23-25)
+**Produktfamilie „PDF & eSignature“** (Power PDF): Verlauf `#00EB86 → #00A0FB`, im
+Store nur noch für Highlights und Fortschrittsbalken.
 
-- **Red Hat Display** in allen gebrandeten Anwendungen, statische Schnitte
-  (nicht variable), Quelle Google Fonts (Lizenz: SIL OFL 1.1, für Web-UI
-  selbst gehostet ausliefern, nicht von Google-CDN laden).
-- **Fallback: Arial** (wichtig für native Dialoge im Store-Client: dort wird
-  die Systemschrift des Hosts respektiert; Red Hat Display nur, wo wir eigene
-  Flächen rendern und die Schrift mitbringen).
-- Hierarchie: Titel/Buttons **Bold**, Untertitel **Medium**, Fließtext
-  **Regular**; Größenverhältnis grob 100 % Titel, 60 % Untertitel, 30 % Text.
-- Textfarbe auf hell: `#002854` für Überschriften, `#231F20` für Fließtext.
+## Typografie (S. 20, 22)
 
-## Logo (S. 5-9)
+- **Red Hat Display**, vom Store selbst ausgeliefert (`wwwroot/fonts`, Light,
+  Regular, Medium, Bold; SIL OFL 1.1, `OFL.txt` daneben und im Notices-File).
+  Fallback Arial.
+- Überschriften **Light** in `#00A0FB`. Ist das auf dem Grund nicht lesbar, dann
+  Navy; auf Navy weiß.
+- Unterüberschriften **Regular** Navy, Fließtext **Regular**, Callouts **Medium**.
+  **Bold** nur zum Hervorheben einzelner Wörter, Zahlen oder Kennwerte.
+- Überschriften und Buttons in **Satzschreibung**, nie alles groß oder jedes Wort groß.
 
-- Auf dunklem Grund weiß, auf hellem Grund `#002854`. Nie verzerren, drehen,
-  umfärben, keine Effekte.
-- Schutzraum: Höhe des "N" rundum; Mindesthöhe Full Logo 50 px.
-- Keine Mitführung fremder Logos außer nach Partner-Lockup-Regeln.
+## Logo (S. 13, 14)
 
-## Namensregeln (S. 5, 12)
+- Logo 2026 (`tungsten-automation-logo-2026-blue.svg` / `-white.svg`): auf hell
+  `#002854`, auf dunkel weiß. Mindesthöhe 50 px; Schutzraum = Höhe des „N“.
+- **Don'ts:** das alte Logo mit Kasten hinter „AUTOMATION“, linksbündig, andere
+  Schrift oder Farbe, verzerrt oder gedreht, mit Kontur oder Effekten, ohne
+  „Automation“, mit „Formerly Kofax“.
+- Power-PDF-Lockup (`tungsten-power-pdf-lockup(-reverse).svg`) nur für das Produkt
+  Power PDF. **Add-ons unabhängiger Autoren bekommen nie ein Tungsten-Lockup**,
+  sonst wirken sie wie offizielle Produkte.
 
-- Erste Nennung "Tungsten Automation", danach "Tungsten".
-- Produkte: erste Nennung "Tungsten Power PDF" (mit Marke), danach "Power PDF".
-- Keine Akronyme in externen Materialien.
+## Flächen, Callouts, Flow lines (S. 3, 22, 26)
 
-## CSS-Startblock für das Server-Web-UI
+- Viel Weißraum. Flache Kacheln in `#FAFAFA`, Navy-Blöcke nur zur Betonung (Bühne,
+  Fußzeile).
+- Callout: hellblau hinterlegt, Strich auf der Startseite in `#00A0FB`, Medium.
+  Hinweise (`.alert`) folgen derselben Form in den Statusfarben.
+- Flow lines (`flowlines-title.svg` aus dem Titel-Layout der Vorlage, Original
+  `ppt/media/image1.svg`): nur als Akzent im freien Raum, **nie hinter Text**; auf
+  schmalen Bildschirmen weggelassen.
 
-```css
-:root {
-  --tun-navy: #002854;
-  --tun-navy-deep: #004766;
-  --tun-ink: #231F20;
-  --tun-blue: #00A0FB;
-  --tun-blue-light: #9DDDF9;
-  --tun-green: #00EB86;
-  --tun-yellow: #FFC600;
-  --tun-gray-100: #FAFAFA;
-  --tun-gray-150: #F0F0F0;
-  --tun-gray-200: #E4E4E4;
-  --tun-gray-blue: #D9DFE6;
-  --tun-slate: #8094AA;
-  --tun-domain-blue: linear-gradient(135deg, #00123B 0%, #002854 55%, #00A0FB 100%);
-  --tun-accent-pdf: linear-gradient(90deg, #00EB86 0%, #00A0FB 100%);
-  font-family: "Red Hat Display", Arial, sans-serif;
-}
-```
+## Icons (S. 23)
 
-## Übersetzung auf den Store-Client (natives MFC)
+Icon-Bibliothek, 230 Stück, Light Colorway (`#00A0FB` + `#002854`) auf hell, Dark
+Colorway auf Navy. Im Katalog je bekannter Kategorie ein Icon (`wwwroot/img/icons`).
 
-Power PDFs eigene Oberfläche dominiert; wir branden gezielt, nicht flächig:
+## Namensregeln (S. 13, 15)
 
-- Panel-/Dialog-Kopfzeile: Navy `#002854` mit weißem Titel, darunter eine
-  dünne Akzentlinie im PDF-Verlauf (`#00EB86 → #00A0FB`).
-- Primäraktion ("Installieren"): Navy-Button, weiße Bold-Schrift; Fokus/Hover
-  mit `#00A0FB`.
-- Statusfarben: Erfolg `#00EB86`-Familie, Warnung `#FFC600`, Fehler `#FF6D69`.
-- Icons im Ribbon/Panel nach den bekannten technischen Regeln (Panel 24x24
-  32-bit mit Alpha, Ribbon 24-bit deckend) und farblich aus dieser Palette.
-- Schrift in nativen Dialogen: System-/Hostschrift (Fallback-Regel), KEIN
-  Einbetten von Red Hat Display in den Client.
+- Erste Nennung „Tungsten Automation“, danach „Tungsten“.
+- Produkte: erste Nennung „Tungsten Power PDF“, danach „Power PDF“. Keine Akronyme.
+
+## Übertragung auf Store-Client und Plug-ins (Phasen 2 und 3)
+
+- Store-Fenster und Plug-in UI-Kit übernehmen dieselben Tokens, Schriftschnitte
+  und Komponenten (Kopf weiß mit Logo 2026, Light-Überschriften, Callouts, flache
+  Kacheln).
+- Native MFC-Dialoge: Systemschrift, nur Farbakzente. Icons nach den technischen
+  Regeln: Panel 24x24 32-bit mit Alpha, Ribbon 24-bit deckend.
 
 ## Prüfschritt
 
-"Brand-Check" ist Teil der Definition of Done jedes UI-Inkrements (Server wie
-Client) und Teil der Admin-Review-Checkliste für eingereichte Plug-ins
-(Paket-Icon und Katalogtexte folgen den Namensregeln).
+„Brand-Check“ gehört zur Definition of Done jedes UI-Inkrements (Server wie Client)
+und zur Admin-Review-Checkliste für eingereichte Plug-ins: Paket-Icon,
+Katalogtexte nach den Namensregeln, kein Tungsten-Lockup bei fremden Add-ons.

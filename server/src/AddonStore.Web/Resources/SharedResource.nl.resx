@@ -1651,4 +1651,5 @@
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>De invoegtoepassing wordt nog aan klanten geleverd of maakt deel uit van een leveringssjabloon. Verwijder eerst die leveringen en sjabloonitems.</value></data>
   <data name="Manual (ZIP)" xml:space="preserve"><value>Handmatig (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Handmatige installatie zonder de Add-on Store: een ZIP met install.bat en uninstall.bat, ook voor softwaredistributie. Geen automatische updates.</value></data>
+  <data name="Every add-on version reviewed" xml:space="preserve"><value>Elke versie van een invoegtoepassing gecontroleerd</value></data>
 </root>

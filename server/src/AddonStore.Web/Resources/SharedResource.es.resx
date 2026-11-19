@@ -1651,4 +1651,5 @@
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>El complemento todavía se entrega a clientes o forma parte de una plantilla de entrega. Elimine primero esas entregas y entradas de plantilla.</value></data>
   <data name="Manual (ZIP)" xml:space="preserve"><value>Manual (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Instalación manual sin el Add-on Store: un ZIP con install.bat y uninstall.bat, también para la distribución de software. Sin actualizaciones automáticas.</value></data>
+  <data name="Every add-on version reviewed" xml:space="preserve"><value>Cada versión de complemento revisada</value></data>
 </root>

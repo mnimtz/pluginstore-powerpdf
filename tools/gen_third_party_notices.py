@@ -12,6 +12,7 @@ import io, json, os, re, sys, glob, hashlib
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(ROOT, 'server', 'src', 'AddonStore.Web', 'obj', 'project.assets.json')
 OUT = os.path.join(ROOT, 'server', 'THIRD-PARTY-NOTICES.md')
+FONT_LICENSE = os.path.join(ROOT, 'server', 'src', 'AddonStore.Web', 'wwwroot', 'fonts', 'OFL.txt')   # S1.31.0
 
 MIT = '''Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -108,7 +109,13 @@ def build():
     for p in pkgs:
         lic = p['lic'] or {'Apache.Arrow': 'Apache-2.0', 'SQLite': 'Public domain'}.get(p['name'], 'see below')
         o.append('| %s | %s | %s | %s |' % (p['name'], p['ver'], lic, p['copyright'] or 'see below'))
-    o += ['', BASE_IMAGE, '', '## Packages', '']
+    ofl = read(FONT_LICENSE)
+    o.append('| Red Hat Display (font, wwwroot/fonts) | 1.023 | OFL-1.1 | %s |' % ofl.split('\n', 1)[0].strip())
+    o += ['', BASE_IMAGE, '', '## Fonts', '',
+          '### Red Hat Display 1.023', '',
+          'The brand font of Tungsten Automation, served by the store itself (`/fonts/`, Light, Regular,',
+          'Medium and Bold), unchanged. Licence as in `/fonts/OFL.txt`:', '', '```text', ofl, '```', '',
+          '## Packages', '']
     for p in pkgs:
         o += ['### %s %s' % (p['name'], p['ver']), '']
         if p['url']:

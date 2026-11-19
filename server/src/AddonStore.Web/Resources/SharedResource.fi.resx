@@ -1651,4 +1651,5 @@
   <data name="The add-on is still delivered to customers or part of a delivery template. Remove those deliveries and template entries first." xml:space="preserve"><value>Lisäosaa toimitetaan yhä asiakkaille tai se kuuluu toimitusmalliin. Poista ensin nämä toimitukset ja mallin kohdat.</value></data>
   <data name="Manual (ZIP)" xml:space="preserve"><value>Manuaalinen (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Manuaalinen asennus ilman Add-on Storea: ZIP-tiedosto, jossa on install.bat ja uninstall.bat, myös ohjelmistojakeluun. Ei automaattisia päivityksiä.</value></data>
+  <data name="Every add-on version reviewed" xml:space="preserve"><value>Jokainen lisäosan versio tarkistettu</value></data>
 </root>

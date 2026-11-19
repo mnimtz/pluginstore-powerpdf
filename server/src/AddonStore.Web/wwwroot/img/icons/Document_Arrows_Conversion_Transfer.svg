@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Icons_Light_Colorway" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 112">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #00a0fb;
+        stroke-width: 3.76px;
+      }
+
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .cls-2 {
+        stroke: #231f20;
+        stroke-width: 3.44px;
+      }
+    </style>
+  </defs>
+  <g>
+    <path class="cls-2" d="M67.75,9H20.75v94h70.5V33.28c0-.43-.24-1.03-.54-1.35l-21.63-22.37c-.3-.31-.89-.56-1.33-.56Z"/>
+    <path class="cls-2" d="M67.28,9v23.19c0,.43.35.78.78.78h23.19"/>
+  </g>
+  <polyline class="cls-1" points="70.73 45.77 79.41 55.33 30.22 55.33"/>
+  <line class="cls-1" x1="71.24" y1="64.89" x2="79.41" y2="55.33"/>
+  <line class="cls-1" x1="30.47" y1="79.13" x2="38.64" y2="69.57"/>
+  <polyline class="cls-1" points="38.9 89.28 30.22 79.72 79.41 79.72"/>
+</svg>

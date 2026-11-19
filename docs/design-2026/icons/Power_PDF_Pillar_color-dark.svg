@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Icons_Dark_Colorway" data-name="Icons Dark Colorway" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 112">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #00eb86;
+        stroke-width: 3.76px;
+      }
+
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .cls-2 {
+        stroke: #fff;
+        stroke-width: 3.44px;
+      }
+    </style>
+  </defs>
+  <g>
+    <path class="cls-1" d="M35.67,68.77v-22.23h6.6c2.06,0,4.26,2.49,4.26,6.21s-3.03,4.9-5.43,4.9h-4.61"/>
+    <path class="cls-1" d="M53.27,67.39v-20.74h3.71c1.65,0,8.8,0,8.8,10.59,0,6.97-5.02,10.15-8.8,10.15h-3.71Z"/>
+    <polyline class="cls-1" points="74.04 68.77 74.04 46.65 84.9 46.65"/>
+    <line class="cls-1" x1="82.7" y1="57.02" x2="74.04" y2="57.02"/>
+  </g>
+  <g>
+    <path class="cls-2" d="M71.2,8.64H24.2v94h70.5V32.92c0-.43-.24-1.03-.54-1.35l-21.63-22.37c-.3-.31-.89-.56-1.33-.56Z"/>
+    <path class="cls-2" d="M70.73,8.64v23.19c0,.43.35.78.78.78h23.19"/>
+  </g>
+</svg>

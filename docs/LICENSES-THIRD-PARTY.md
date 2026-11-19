@@ -27,8 +27,8 @@ text of every NuGet package (generated from the restored packages by
 | Microsoft.Extensions.AI.Abstractions | 10.5.1 | MIT | pulled in by Anthropic |
 | Apache.Arrow | 22.1.0 | Apache-2.0 | pulled in by Anthropic; its LICENSE (with the FlatBuffers part) and the NOTICE of Apache Arrow .NET are in the notices file |
 | DB-IP "IP to City Lite" + "IP to ASN Lite" (data) | monthly | CC BY 4.0 | since S0.9.0; data, not code; downloaded at runtime into data/geo, not in the image; attribution "IP Geolocation by DB-IP" with link on the reports page |
-| Red Hat Display (font) | n/a | SIL OFL 1.1 | referenced by name only (`font-family`), no font file bundled |
-| Tungsten logos / brand assets | n/a | Tungsten Automation property | per Brand Book |
+| Red Hat Display (font) | 1.023 | SIL OFL 1.1 | since S1.31.0 served by the store (`wwwroot/fonts`, Light, Regular, Medium, Bold, unchanged) with `OFL.txt`; in the notices file of the image |
+| Tungsten logos / brand assets | n/a | Tungsten Automation property | per Brand Book November 2026: logo 2026, Power PDF lockup, icons and flow lines (from the 2026 template), originals only |
 
 **Base image.** `mcr.microsoft.com/dotnet/aspnet:10.0` is Ubuntu 24.04 "noble". Its
 Ubuntu packages (some under GPL or LGPL, for example the C library) are passed on

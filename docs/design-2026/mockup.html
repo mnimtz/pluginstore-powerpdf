@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Add-on Store Entwurf 2026</title>
+<style>
+/* ---------- Entwurf: Add-on Store nach dem Brand Book November 2026 ---------- */
+@font-face { font-family: "Red Hat Display"; font-weight: 300; src: url("fonts/RedHatDisplay-Light.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Red Hat Display"; font-weight: 400; src: url("fonts/RedHatDisplay-Regular.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Red Hat Display"; font-weight: 500; src: url("fonts/RedHatDisplay-Medium.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "Red Hat Display"; font-weight: 700; src: url("fonts/RedHatDisplay-Bold.ttf") format("truetype"); font-display: swap; }
+
+/* Farben: Theme "Tungsten Automation 2026" der offiziellen PowerPoint-Vorlage;
+   Stufen (tint, line, slate, blue-ink) sind aus diesen Farben gemischt, keine neuen Farben */
+:root {
+  --navy: #002854;        /* dk2: Primärfarbe dunkelblau */
+  --blue: #00A0FB;        /* accent1: Überschriften, Akzente */
+  --ink: #231F20;         /* dk1: Fließtext */
+  --tile: #FAFAFA;        /* lt2: flache Kacheln */
+  --magenta: #D030E8; --coral: #FF6D69; --yellow: #FFC600; --green: #00EB86;   /* accent3 bis 6, sparsam */
+  --blue-ink: color-mix(in srgb, #00A0FB 62%, #002854);   /* Links auf Weiß, Kontrast AA */
+  --slate: color-mix(in srgb, #002854 72%, #fff);         /* Nebentext */
+  --tint: color-mix(in srgb, #00A0FB 9%, #fff);           /* Hervorhebungen (Callouts) */
+  --line: color-mix(in srgb, #002854 12%, #fff);
+  --radius: 6px;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; font-family: "Red Hat Display", Arial, sans-serif; color: var(--ink); background: #fff; line-height: 1.5; }
+a { color: var(--blue-ink); }
+h1, h2 { font-weight: 300; color: var(--blue); line-height: 1.15; margin: 0; }
+h3 { font-weight: 500; color: var(--navy); margin: 0; }
+
+/* Umschalter des Entwurfs (gehört nicht zum Design) */
+.mock-bar { position: sticky; top: 0; z-index: 50; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; padding: 8px 16px;
+  background: #FFF4D6; color: #5C4400; font: 500 .82rem Arial, sans-serif; border-bottom: 1px solid #F0D58A; }
+.mock-bar button { font: inherit; border: 1px solid #C9A64A; background: #fff; border-radius: 4px; padding: 4px 10px; cursor: pointer; }
+.mock-bar button[aria-pressed="true"] { background: #5C4400; color: #fff; border-color: #5C4400; }
+.mock-bar span { margin-inline-start: auto; }
+
+/* Kopfzeile: weiß, Logo navy, ruhige Navigation */
+.site-head { border-bottom: 1px solid var(--line); background: #fff; }
+.site-head .bar { max-width: 1240px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 22px; }
+.brand { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+.brand img { height: 30px; display: block; }
+.brand .sep { width: 1px; height: 30px; background: var(--line); }
+.brand .name { color: var(--navy); font-weight: 400; font-size: 1.12rem; line-height: 1.1; }
+.brand .name small { display: block; color: var(--slate); font-size: .74rem; font-weight: 400; }
+.site-head nav { margin-inline-start: auto; display: flex; align-items: center; gap: 22px; }
+.site-head nav a { color: var(--navy); text-decoration: none; font-weight: 500; font-size: .92rem; padding: 6px 0; border-bottom: 2px solid transparent; }
+.site-head nav a.on { border-bottom-color: var(--blue); }
+.lang { border: 1px solid var(--line); border-radius: 4px; padding: 4px 8px; font: 500 .82rem "Red Hat Display", Arial; color: var(--navy); background: #fff; }
+
+/* Schaltflächen: Satzschreibung, ruhige Ecken */
+.btn { display: inline-flex; align-items: center; gap: 8px; font: 500 .92rem "Red Hat Display", Arial, sans-serif; border-radius: 4px; padding: 10px 18px;
+  text-decoration: none; border: 1.5px solid transparent; cursor: pointer; }
+.btn.primary { background: var(--navy); color: #fff; }
+.btn.primary:hover { background: #003A78; }
+.btn.bright { background: var(--blue); color: var(--navy); }
+.btn.bright:hover { background: #33B3FC; }
+.btn.outline { border-color: var(--navy); color: var(--navy); background: transparent; }
+.btn.outline-light { border-color: rgba(255,255,255,.7); color: #fff; background: transparent; }
+.btn.small { padding: 6px 12px; font-size: .84rem; }
+.btn.quiet { color: var(--slate); border-color: var(--line); background: transparent; }
+.btn.quiet:hover { color: var(--navy); border-color: var(--blue); }
+
+/* Bühne: dunkelblauer Block, Flow lines nur als Akzent im Weißraum rechts */
+.hero { background: var(--navy); color: #fff; overflow: hidden; }
+.hero .in { max-width: 1240px; margin: 0 auto; padding: 56px 24px 52px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+.eyebrow { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); font-weight: 500; margin: 0 0 12px; }
+.hero h1 { color: #fff; font-size: clamp(2rem, 4vw, 3.1rem); }
+.hero h1 b { font-weight: 500; color: var(--blue); }
+.hero p.lead { font-size: 1.12rem; color: #C9DDF0; max-width: 560px; margin: 18px 0 26px; }
+.hero .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero .facts { display: flex; gap: 28px; flex-wrap: wrap; margin-top: 34px; }
+.hero .facts div { font-size: .85rem; color: #C9DDF0; }
+.hero .facts b { display: block; font-weight: 300; font-size: 1.9rem; color: #fff; line-height: 1.1; }
+.flow { width: 100%; max-width: 440px; justify-self: end; opacity: .9; }
+.hero .lockup { display: block; height: 40px; margin-top: 30px; }
+
+/* Hervorhebung wie im Brand Book: hellblau, Strich links, Medium */
+.callout { background: var(--tint); border-inline-start: 4px solid var(--blue); padding: 14px 18px; font-weight: 500; color: var(--navy); border-radius: 0 var(--radius) var(--radius) 0; }
+.callout b { font-weight: 700; }
+.callout.small { font-size: .86rem; font-weight: 400; }
+
+main { max-width: 1240px; margin: 0 auto; padding: 36px 24px 56px; }
+.section-head { display: flex; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin: 34px 0 18px; }
+.section-head h2 { font-size: 2rem; }
+.section-head .count { color: var(--slate); font-size: .92rem; }
+.tools { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; }
+.search { flex: 1 1 260px; max-width: 360px; border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px 10px 38px; font: 400 .95rem "Red Hat Display", Arial;
+  background: #fff url("icons/Document_Magnifying_Glass_Inspect_Search.svg") no-repeat 8px center / 22px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px 5px 6px; font-size: .85rem; color: var(--navy); background: #fff; cursor: pointer; }
+.chip img { width: 22px; height: 22px; }
+.chip.on { border-color: var(--navy); background: var(--navy); color: #fff; }
+.chip.on img { filter: brightness(0) invert(1); }
+
+/* Kacheln: flach, hellgrau, kein Schatten */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
+.tile { background: var(--tile); border-radius: var(--radius); padding: 20px; display: flex; flex-direction: column; gap: 10px; border: 1px solid transparent; transition: border-color .15s; }
+.tile:hover { border-color: var(--blue); }
+.tile .top { display: flex; gap: 14px; align-items: center; }
+.tile .top img { width: 48px; height: 48px; border-radius: 10px; background: #fff; object-fit: contain; flex: none; }
+.tile h3 { font-size: 1.08rem; }
+.tile .meta { color: var(--slate); font-size: .8rem; }
+.tile .desc { font-size: .9rem; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.tile .acts { margin-top: auto; display: flex; gap: 8px; flex-wrap: wrap; padding-top: 6px; }
+.tag { display: inline-block; font-size: .72rem; font-weight: 500; color: var(--navy); background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; }
+.tag.hl { background: var(--blue); border-color: var(--blue); color: var(--navy); }
+.stars { color: var(--blue); font-size: .85rem; letter-spacing: 1px; }
+.stars span { color: var(--slate); letter-spacing: 0; margin-inline-start: 4px; }
+
+/* drei Schritte, Icons aus der Brand-Bibliothek */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 44px; }
+.steps div { padding: 22px; border-top: 3px solid var(--blue); background: #fff; }
+.steps img { width: 56px; height: 56px; }
+.steps h3 { margin: 10px 0 6px; font-weight: 500; font-size: 1.05rem; }
+.steps p { margin: 0; font-size: .9rem; color: var(--slate); }
+
+.site-foot { background: var(--navy); color: #C9DDF0; }
+.site-foot .in { max-width: 1240px; margin: 0 auto; padding: 28px 24px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; font-size: .85rem; }
+.site-foot img { height: 26px; }
+.site-foot a { color: #fff; text-decoration: none; }
+.site-foot nav { margin-inline-start: auto; display: flex; gap: 20px; flex-wrap: wrap; }
+
+/* Add-on-Seite */
+.crumb { font-size: .86rem; margin: 0 0 18px; }
+.crumb a { text-decoration: none; }
+.addon-head { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 28px; align-items: start; }
+.addon-head .icon { width: 112px; height: 112px; border-radius: 18px; background: var(--tile); padding: 14px; }
+.addon-head h1 { font-size: clamp(2rem, 4vw, 2.8rem); }
+.addon-head .meta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; color: var(--slate); font-size: .88rem; margin: 10px 0 14px; }
+.addon-head p.desc { font-size: 1.06rem; max-width: 760px; margin: 0 0 22px; }
+.addon-head .acts { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.cols { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 28px; margin-top: 40px; }
+.cols h2 { font-size: 1.55rem; margin-bottom: 14px; }
+.panel { background: var(--tile); border-radius: var(--radius); padding: 22px; }
+.checks { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.checks li { display: grid; grid-template-columns: 24px 1fr; gap: 10px; font-size: .92rem; }
+.checks img { width: 24px; height: 24px; }
+.checks code { font-size: .82rem; background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+.shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.shots div { aspect-ratio: 16 / 10; border-radius: var(--radius); background: linear-gradient(135deg, #E9EEF4, #F7F9FB); border: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center; color: var(--slate); font-size: .8rem; }
+.share { display: flex; gap: 8px; margin-top: 10px; }
+.share input { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; font: 400 .85rem "Red Hat Display", Arial; }
+
+[hidden] { display: none !important; }
+@media (max-width: 860px) {
+  .hero .in { grid-template-columns: minmax(0, 1fr); padding: 40px 16px 40px; }
+  .flow { display: none; }
+  .steps, .cols, .shots { grid-template-columns: minmax(0, 1fr); }
+  .site-head .bar { padding: 12px 16px; gap: 12px; }
+  .site-head nav { gap: 12px; }
+  .site-head nav a:not(.keep), .site-head nav .lang, .mock-bar span { display: none; }
+  .brand { gap: 10px; } .brand img { height: 24px; }
+  .brand .sep, .brand .name { display: none; }
+  main { padding: 28px 16px 44px; }
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .addon-head { grid-template-columns: 72px minmax(0, 1fr); gap: 16px; }
+  .addon-head .icon { width: 72px; height: 72px; padding: 8px; border-radius: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="mock-bar" role="toolbar" aria-label="Entwurf">
+  <b>Entwurf</b>
+  <button type="button" data-view="catalog" aria-pressed="true">Katalog</button>
+  <button type="button" data-view="addon" aria-pressed="false">Add-on-Seite</button>
+  <span>Nur Originale: Logo 2026 und Power-PDF-Lockup als SVG, Red Hat Display, Icon-Bibliothek, Farben der Vorlage 2026.</span>
+</div>
+
+<header class="site-head">
+  <div class="bar">
+    <a class="brand" href="#">
+      <img src="logos/TungstenAutomationLogo-Blue.svg" alt="Tungsten Automation">
+      <span class="sep" aria-hidden="true"></span>
+      <span class="name">Add-on Store<small>für Tungsten Power PDF</small></span>
+    </a>
+    <nav aria-label="Hauptnavigation">
+      <a href="#" class="on keep">Katalog</a>
+      <a href="#">So funktioniert es</a>
+      <a href="#">Für Entwickler</a>
+      <select class="lang" aria-label="Sprache"><option>Deutsch</option><option>English</option></select>
+      <a class="btn outline small keep" href="#">Anmelden</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= Katalog ================= -->
+<div id="view-catalog">
+  <section class="hero">
+    <div class="in">
+      <div>
+        <p class="eyebrow">Add-on Store</p>
+        <h1>Mehr aus Power PDF holen, <b>mit geprüften Add-ons</b></h1>
+        <p class="lead">Jede Version wird vor der Freigabe geprüft: Signatur, Lizenzen, Quellcode. Installiert wird direkt in Power PDF, mit einem Klick.</p>
+        <div class="actions">
+          <a class="btn bright" href="#">Add-on Store herunterladen</a>
+          <a class="btn outline-light" href="#">So funktioniert es</a>
+        </div>
+        <img class="lockup" src="logos/Tungsten-Power-PDF reverse.svg" alt="Tungsten Power PDF">
+        <div class="facts">
+          <div><b>24</b>Add-ons</div>
+          <div><b>21</b>Sprachen</div>
+          <div><b>100 %</b>geprüft vor der Freigabe</div>
+        </div>
+      </div>
+      <!-- Flow lines: nur Akzent, kein Text darüber (Brand Book S. 26) -->
+      <img class="flow" src="flowlines/flowlines-title.svg" alt="" aria-hidden="true">
+    </div>
+  </section>
+
+  <main>
+    <div class="callout small">Add-ons unabhängiger Entwicklerinnen und Entwickler, keine offiziellen Produkte der Tungsten Automation. Bereitstellung ohne Gewähr und ohne offiziellen Support. <a href="#">Haftungsausschluss</a></div>
+
+    <div class="section-head">
+      <h2>Veröffentlichte Add-ons</h2>
+      <span class="count">24 Add-ons</span>
+    </div>
+    <div class="tools">
+      <input class="search" type="search" placeholder="Suchen, z. B. Signatur oder Barcode" aria-label="Suchen">
+      <div class="chips">
+        <span class="chip on"><img src="icons/Marketplace_Store.svg" alt="">Alle</span>
+        <span class="chip"><img src="icons/Document_Sign_Pen_Signature.svg" alt="">Signieren</span>
+        <span class="chip"><img src="icons/Document_PDF.svg" alt="">Produktivität</span>
+        <span class="chip"><img src="icons/Printer.svg" alt="">Drucken</span>
+        <span class="chip"><img src="icons/Cloud_Arrows_Upload_Download.svg" alt="">Konvertieren</span>
+        <span class="chip"><img src="icons/Gears.svg" alt="">System</span>
+      </div>
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="steps">
+      <div><img src="icons/Download_Arrow.svg" alt=""><h3>Store einmal installieren</h3><p>Ein kleines Installationsprogramm, danach erscheint das Register „Store“ in Power PDF.</p></div>
+      <div><img src="icons/Shield_Security_Checkmark.svg" alt=""><h3>Geprüfte Add-ons auswählen</h3><p>Jede Version ist signiert und vor der Freigabe auf Lizenzen und Sicherheit geprüft.</p></div>
+      <div><img src="icons/Puzzle_Integration.svg" alt=""><h3>Direkt in Power PDF nutzen</h3><p>Updates kommen von selbst. Ohne Store geht es auch: als ZIP zur manuellen Installation.</p></div>
+    </div>
+  </main>
+</div>
+
+<!-- ================= Add-on-Seite ================= -->
+<div id="view-addon" hidden>
+  <main>
+    <p class="crumb"><a href="#">Katalog</a> / Signieren</p>
+    <div class="addon-head">
+      <img class="icon" src="https://addon.power-pdf.de/api/packages/com.tungsten.smartbookmarks/icon" alt="">
+      <div>
+        <h1>Smart Bookmarks</h1>
+        <div class="meta"><span class="tag">Navigation</span> Version 1.5.3 · Autor: Marcus Nimtz · Power PDF 5.0 oder neuer</div>
+        <p class="desc">Erzeugt automatisch eine mehrstufige Lesezeichen-Gliederung für jedes PDF: Überschriften-Erkennung, Live-Vorschau-Panel, Inhaltsverzeichnis, optionale OCR.</p>
+        <div class="acts">
+          <a class="btn primary" href="#">In Power PDF installieren</a>
+          <a class="btn quiet small" href="#">↓ Manuell (ZIP)</a>
+          <a class="btn quiet small" href="#">Link teilen</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div>
+        <h2>Neu in Version 1.5.3</h2>
+        <div class="callout">Überschriften in Tabellen werden jetzt erkannt. <b>Das Ergebnis:</b> sauberere Gliederungen bei Verträgen und Berichten.</div>
+        <h2 style="margin-top:32px">Bildschirmfotos</h2>
+        <div class="shots"><div>Bildschirmfoto 1</div><div>Bildschirmfoto 2</div><div>Bildschirmfoto 3</div></div>
+      </div>
+      <div>
+        <div class="panel">
+          <h2>Verbindet sich mit</h2>
+          <ul class="checks">
+            <li><img src="icons/Checkmark.svg" alt=""><span>Arbeitet vollständig offline, keine Daten verlassen den Rechner.</span></li>
+            <li><img src="icons/Shield_Security_Checkmark.svg" alt=""><span>Vom Entwickler erklärt und in der Prüfung bestätigt.</span></li>
+          </ul>
+        </div>
+        <div class="panel" style="margin-top:18px">
+          <h2>Teilen</h2>
+          <p style="margin:0;font-size:.88rem;color:var(--slate)">Dieser Link zeigt nur dieses Add-on.</p>
+          <div class="share"><input readonly value="https://addon.power-pdf.de/a/smartbookmarks" aria-label="Link"><a class="btn primary small" href="#">Link kopieren</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="site-foot">
+  <div class="in">
+    <img src="logos/TungstenAutomationLogo-White.svg" alt="Tungsten Automation">
+    <span>Add-on Store S1.31.0</span>
+    <nav><a href="#">Entwicklerkonto anfragen</a><a href="#">Haftungsausschluss</a><a href="#">API</a></nav>
+  </div>
+</footer>
+
+<script>
+  // echte Einträge des öffentlichen Katalogs (Stand Nov 19, 2026), Icons live vom Store
+  var items = [
+    ['smartbookmarks', 'Smart Bookmarks', 'Navigation', '1.5.3', 'Marcus Nimtz', 'Erzeugt automatisch eine mehrstufige Lesezeichen-Gliederung für jedes PDF: Überschriften-Erkennung, Live-Vorschau-Panel, Inhaltsverzeichnis, optionale OCR.', true],
+    ['smartcompare', 'Smart Compare', 'Produktivität', '2.1.3', 'Marcus Nimtz', 'Vergleicht zwei Fassungen eines Dokuments: eingefügter, gelöschter, ersetzter und verschobener Text, übersichtlich nebeneinander.', true],
+    ['qessign', 'QES Sign', 'Signieren', '1.2.4', 'Marcus Nimtz', 'Qualifizierte elektronische Signaturen direkt von der Signaturkarte: Kartenzertifikat, Grund und Zeitstempel.', false],
+    ['barcodestamps', 'Barcode-Stempel', 'Produktivität', '1.2.6', 'Marcus Nimtz', 'Erstellt mit einem Assistenten Barcode-Stempel (QR-Code, DataMatrix, PDF417, Aztec, Code 128, EAN und mehr).', false],
+    ['printixsecureprint', 'Printix Secure Print', 'Drucken', '1.2.5', 'Marcus Nimtz', 'Sendet PDFs direkt aus Power PDF an Printix Secure Print; den Job geben Sie an einem beliebigen Drucker frei.', false],
+    ['einvoice', 'E-Rechnung', 'Produktivität', '1.2.4', 'Marcus Nimtz', 'Zeigt die in hybriden E-Rechnungen (ZUGFeRD, Factur-X, XRechnung) eingebetteten Rechnungsdaten.', false]
+  ];
+  var grid = document.getElementById('grid');
+  items.forEach(function (i) {
+    var t = document.createElement('div'); t.className = 'tile';
+    t.innerHTML = '<div class="top"><img alt="" src="https://addon.power-pdf.de/api/packages/com.tungsten.' + i[0] + '/icon"><div><h3></h3></div></div>' +
+      '<div class="meta"><span class="tag"></span> v' + i[3] + ' · <span class="au"></span></div><p class="desc"></p>' +
+      '<div class="acts"><a class="btn primary small" href="#">In Power PDF installieren</a><a class="btn quiet small" href="#">↓ Manuell (ZIP)</a></div>';
+    t.querySelector('h3').textContent = i[1];
+    t.querySelector('.tag').textContent = i[2];
+    if (i[6]) { var h = document.createElement('span'); h.className = 'tag hl'; h.textContent = 'Highlight'; t.querySelector('.meta').prepend(h, ' '); }
+    t.querySelector('.au').textContent = i[4];
+    t.querySelector('.desc').textContent = i[5];
+    grid.appendChild(t);
+  });
+  document.querySelectorAll('.mock-bar button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.mock-bar button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      document.getElementById('view-catalog').hidden = b.dataset.view !== 'catalog';
+      document.getElementById('view-addon').hidden = b.dataset.view !== 'addon';
+      window.scrollTo(0, 0);
+    });
+  });
+  if (location.hash === '#addon') document.querySelector('.mock-bar button[data-view="addon"]').click();
+</script>
+</body>
+</html>

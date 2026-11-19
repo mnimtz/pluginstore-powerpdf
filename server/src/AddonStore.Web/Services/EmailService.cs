@@ -203,11 +203,10 @@ public class NotificationService
         await _mail.SendAsync(to, subject, await WrapAsync(text), eventKey);
 
     private async Task<string> WrapAsync(string text) => $"""
-        <div style="font-family:'Red Hat Display',Arial,sans-serif;color:#231F20">
-          <div style="background:#002854;color:#fff;padding:14px 20px;font-weight:bold">Tungsten Power PDF Add-on Store</div>
-          <div style="height:4px;background:linear-gradient(90deg,#00EB86,#00A0FB)"></div>
+        <div style="font-family:'Red Hat Display',Arial,sans-serif;color:#231F20;line-height:1.45">
+          <div style="background:#002854;color:#fff;padding:16px 20px;font-size:17px;border-bottom:3px solid #00A0FB">Add-on Store <span style="color:#BFE7FE;font-size:13px">· Tungsten Power PDF</span></div>
           <div style="padding:20px">{text}</div>
-          <div style="padding:0 20px 16px;color:#8094AA;font-size:12px">{await BaseUrlAsync()}</div>
+          <div style="padding:0 20px 16px;color:#476484;font-size:12px">{await BaseUrlAsync()}</div>
         </div>
         """;
 }
