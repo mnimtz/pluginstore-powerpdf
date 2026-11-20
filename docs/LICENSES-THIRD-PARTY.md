@@ -15,13 +15,14 @@ text of every NuGet package (generated from the restored packages by
 | Component | Version | License | Notes |
 |---|---|---|---|
 | ASP.NET Core 10 / .NET 10 runtime | 10.0 | MIT | part of the base image, notices in `/usr/share/dotnet/ThirdPartyNotices.txt` |
+| Microsoft.AspNetCore.Authentication.OpenIdConnect (+ Microsoft.IdentityModel.Protocols.OpenIdConnect, Protocols, Tokens, JsonWebTokens, Logging, System.IdentityModel.Tokens.Jwt 8.19.2) | 10.0.12 | MIT | "Sign in with Microsoft" (Entra ID), off until configured (docs/entra-setup.md) |
 | Microsoft.AspNetCore.Identity.EntityFrameworkCore | 10.0.12 | MIT | |
 | Microsoft.EntityFrameworkCore.Sqlite (+ Core, Relational, Abstractions, Analyzers, Microsoft.Data.Sqlite.Core) | 10.0.12 | MIT | |
 | SQLitePCLRaw.bundle_e_sqlite3 (+ config, core, provider) | 3.0.5 | Apache-2.0 | pinned directly; 2.x carried GHSA-2m69-gcr7-jv3q (High), 3.x is clean |
 | SQLite (native, via bundle) | 3.53.4 | Public domain | |
 | MaxMind.Db (reader for .mmdb files) | 5.2.0 | Apache-2.0 | since S0.9.0, reports geolocation |
 | Azure.Storage.Blobs (+ Azure.Storage.Common 12.29.0, Azure.Core 1.60.0, System.ClientModel 1.14.0, System.IO.Hashing, System.Memory.Data, Microsoft.Bcl.AsyncInterfaces) | 12.30.0 | MIT | since S0.18.0, automatic backup to Azure Blob Storage (off until configured) |
-| Microsoft.Identity.Client (+ Extensions.Msal, IdentityModel.Abstractions) | 4.84.2 | MIT | pulled in by Azure.Core |
+| Microsoft.Identity.Client (+ Extensions.Msal, IdentityModel.Abstractions 8.19.2) | 4.84.2 | MIT | pulled in by Azure.Core; IdentityModel.Abstractions raised to 8.19.2 by the OpenID Connect package |
 | System.Security.Cryptography.ProtectedData | 4.5.0 | MIT | |
 | Anthropic (official C# SDK for the Claude API) | 12.53.0 | MIT | since S0.12.0, optional AI assistant (off by default); Gemini is called via plain HTTPS, no extra package |
 | Microsoft.Extensions.AI.Abstractions | 10.5.1 | MIT | pulled in by Anthropic |

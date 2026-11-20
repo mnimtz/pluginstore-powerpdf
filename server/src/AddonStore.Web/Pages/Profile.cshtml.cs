@@ -17,6 +17,7 @@ public class ProfileModel : PageModel
     private readonly IWebHostEnvironment _env;
     private readonly SignInManager<AppUser> _signIn;
     private readonly CustomerService _customers;
+    private readonly AddonStore.Web.Auth.EntraSettings _entra;
 
     public List<ApiToken> Tokens { get; private set; } = new();
     public string? NewToken { get; private set; }
@@ -25,11 +26,38 @@ public class ProfileModel : PageModel
     public string NoticeKind { get; private set; } = "ok";
     /// <summary>The personal test code (S1.6.0), null when none is active.</summary>
     public string? TestCode { get; private set; }
+    /// <summary>"Sign in with Microsoft": shown while the feature is on or a Microsoft account is still linked.</summary>
+    public bool ShowMicrosoft { get; private set; }
+    public bool MicrosoftLinked { get; private set; }
+    public bool HasPassword { get; private set; }
 
     public ProfileModel(AppDbContext db, UserManager<AppUser> users, TokenService tokens,
-        AuditService audit, IConfiguration config, IWebHostEnvironment env, SignInManager<AppUser> signIn, CustomerService customers)
+        AuditService audit, IConfiguration config, IWebHostEnvironment env, SignInManager<AppUser> signIn, CustomerService customers,
+        AddonStore.Web.Auth.EntraSettings entra)
     {
         _db = db; _users = users; _tokens = tokens; _audit = audit; _config = config; _env = env; _signIn = signIn; _customers = customers;
+        _entra = entra;
+    }
+
+    // Unlink the Microsoft account: only while the account has a password, so nobody locks themselves out.
+    public async Task OnPostMicrosoftUnlinkAsync()
+    {
+        var user = await _users.GetUserAsync(User);
+        if (user is null) { await LoadAsync(); return; }
+        var logins = (await _users.GetLoginsAsync(user)).Where(l => l.LoginProvider == EntraAccountService.Provider).ToList();
+        if (logins.Count > 0 && !await _users.HasPasswordAsync(user))
+        {
+            Notice = "Set a password first (\"Forgot password?\" on the sign-in page), then you can unlink the Microsoft account.";
+            NoticeKind = "error";
+        }
+        else if (logins.Count > 0)
+        {
+            foreach (var l in logins) await _users.RemoveLoginAsync(user, l.LoginProvider, l.ProviderKey);
+            await _signIn.RefreshSignInAsync(user);   // the security stamp changed: keep this session, end the others
+            await _audit.LogAsync(user.DisplayName, "user.entra-unlinked", user.Email ?? user.Id);
+            Notice = "Microsoft account unlinked.";
+        }
+        await LoadAsync();
     }
 
     // Personal test code (S1.6.0): shows the own versions that wait for review in the store window.
@@ -184,5 +212,11 @@ public class ProfileModel : PageModel
         Tokens = await _db.ApiTokens.Where(t => t.UserId == userId)
             .OrderByDescending(t => t.CreatedAt).ToListAsync();
         TestCode = userId is null ? null : await _customers.TestCodeOfAsync(userId);
+        if (Me is not null)
+        {
+            MicrosoftLinked = (await _users.GetLoginsAsync(Me)).Any(l => l.LoginProvider == EntraAccountService.Provider);
+            HasPassword = await _users.HasPasswordAsync(Me);
+        }
+        ShowMicrosoft = _entra.Enabled || MicrosoftLinked;
     }
 }

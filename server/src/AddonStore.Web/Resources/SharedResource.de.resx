@@ -1652,4 +1652,17 @@
   <data name="Manual (ZIP)" xml:space="preserve"><value>Manuell (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Manuelle Installation ohne Add-on Store: eine ZIP-Datei mit install.bat und uninstall.bat, auch für die Softwareverteilung. Keine automatischen Updates.</value></data>
   <data name="Every add-on version reviewed" xml:space="preserve"><value>Jede Add-on-Version geprüft</value></data>
+  <data name="or" xml:space="preserve"><value>oder</value></data>
+  <data name="Sign in with Microsoft" xml:space="preserve"><value>Mit Microsoft anmelden</value></data>
+  <data name="Your Microsoft account belongs to an organization that cannot sign in here. Sign in with email and password instead." xml:space="preserve"><value>Ihr Microsoft-Konto gehört zu einer Organisation, die sich hier nicht anmelden kann. Melden Sie sich stattdessen mit E-Mail und Passwort an.</value></data>
+  <data name="Your Microsoft account did not provide an email address verified by its organization. Sign in with email and password instead." xml:space="preserve"><value>Ihr Microsoft-Konto hat keine von seiner Organisation bestätigte E-Mail-Adresse übermittelt. Melden Sie sich stattdessen mit E-Mail und Passwort an.</value></data>
+  <data name="Sign-in with Microsoft failed. Try again, or sign in with email and password." xml:space="preserve"><value>Die Anmeldung mit Microsoft ist fehlgeschlagen. Versuchen Sie es erneut oder melden Sie sich mit E-Mail und Passwort an.</value></data>
+  <data name="Microsoft account" xml:space="preserve"><value>Microsoft-Konto</value></data>
+  <data name="A Microsoft account is linked. You can sign in with it instead of your password." xml:space="preserve"><value>Ein Microsoft-Konto ist verknüpft. Sie können sich damit statt mit Ihrem Passwort anmelden.</value></data>
+  <data name="Unlink the Microsoft account? You then sign in with your password only." xml:space="preserve"><value>Verknüpfung mit dem Microsoft-Konto aufheben? Sie melden sich dann nur noch mit Ihrem Passwort an.</value></data>
+  <data name="Unlink" xml:space="preserve"><value>Verknüpfung aufheben</value></data>
+  <data name="Set a password first (&quot;Forgot password?&quot; on the sign-in page), then you can unlink the Microsoft account." xml:space="preserve"><value>Legen Sie zuerst ein Passwort fest („Passwort vergessen?“ auf der Anmeldeseite), dann können Sie die Verknüpfung mit dem Microsoft-Konto aufheben.</value></data>
+  <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>Kein Microsoft-Konto verknüpft. Verwenden Sie „Mit Microsoft anmelden“ auf der Anmeldeseite mit derselben E-Mail-Adresse, um es zu verknüpfen.</value></data>
+  <data name="Microsoft account unlinked." xml:space="preserve"><value>Verknüpfung mit dem Microsoft-Konto aufgehoben.</value></data>
+  <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Ihr Konto hat noch kein Passwort. Um eines festzulegen, verwenden Sie „Passwort vergessen?“ auf der Anmeldeseite.</value></data>
 </root>

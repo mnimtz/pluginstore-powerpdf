@@ -46,6 +46,16 @@
     </form>
 </div>
 
+@if (!Model.HasPassword)
+{
+    @* accounts created by "Sign in with Microsoft" start without a password *@
+    <div class="card" style="max-width:560px">
+        <h2 style="margin-top:0">@L["Change password"]</h2>
+        <p class="muted" style="margin-bottom:0">@L["Your account has no password yet. To set one, use \"Forgot password?\" on the sign-in page."]</p>
+    </div>
+}
+else
+{
 <div class="card" style="max-width:560px">
     <h2 style="margin-top:0">@L["Change password"]</h2>
     <form method="post" asp-page-handler="Password" class="stack" style="max-width:none">
@@ -64,6 +74,32 @@
         <button type="submit" class="btn">@L["Change password"]</button>
     </form>
 </div>
+}
+
+@if (Model.ShowMicrosoft)
+{
+    <div class="card" style="max-width:560px" id="microsoft">
+        <h2 style="margin-top:0">@L["Microsoft account"]</h2>
+        @if (Model.MicrosoftLinked)
+        {
+            <p class="muted">@L["A Microsoft account is linked. You can sign in with it instead of your password."]</p>
+            @if (Model.HasPassword)
+            {
+                <form method="post" asp-page-handler="MicrosoftUnlink" data-confirm="@L["Unlink the Microsoft account? You then sign in with your password only."]">
+                    <button type="submit" class="btn small secondary">@L["Unlink"]</button>
+                </form>
+            }
+            else
+            {
+                <p class="muted" style="margin-bottom:0">@L["Set a password first (\"Forgot password?\" on the sign-in page), then you can unlink the Microsoft account."]</p>
+            }
+        }
+        else
+        {
+            <p class="muted" style="margin-bottom:0">@L["No Microsoft account is linked. Use \"Sign in with Microsoft\" on the sign-in page with the same email address to link it."]</p>
+        }
+    </div>
+}
 
 <div class="card" style="max-width:720px" id="testcode">
     <h2 style="margin-top:0">@L["Personal test code"]</h2>

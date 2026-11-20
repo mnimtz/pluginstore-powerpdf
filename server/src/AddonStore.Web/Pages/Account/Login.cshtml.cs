@@ -17,9 +17,11 @@ public class LoginModel : PageModel
     public string? Message { get; private set; }
     public string MessageKind { get; private set; } = "warn";
 
-    public LoginModel(SignInManager<AppUser> signIn, UserManager<AppUser> users, IMemoryCache cache)
+    private readonly AddonStore.Web.Auth.EntraSettings _entra;
+
+    public LoginModel(SignInManager<AppUser> signIn, UserManager<AppUser> users, IMemoryCache cache, AddonStore.Web.Auth.EntraSettings entra)
     {
-        _signIn = signIn; _users = users; _cache = cache;
+        _signIn = signIn; _users = users; _cache = cache; _entra = entra;
     }
 
     /// <summary>At most 20 sign-in attempts per address within 15 minutes.</summary>
@@ -31,8 +33,31 @@ public class LoginModel : PageModel
         lock (n) return ++n[0] > MaxAttemptsPer15Min;
     }
 
-    public void OnGet(string? registered, string? reset)
+    public void OnGet(string? registered, string? reset, string? entra)
     {
+        // result of "Sign in with Microsoft" (Auth/EntraSignIn.cs): the same answers as the password sign-in below
+        switch (_entra.Enabled ? entra : null)
+        {
+            case "pending":
+                Message = "Your access request is still awaiting admin approval.";
+                break;
+            case "inactive":
+                Message = "This account is not active. Contact an administrator.";
+                MessageKind = "error";
+                break;
+            case "tenant":
+                Message = "Your Microsoft account belongs to an organization that cannot sign in here. Sign in with email and password instead.";
+                MessageKind = "error";
+                break;
+            case "email":
+                Message = "Your Microsoft account did not provide an email address verified by its organization. Sign in with email and password instead.";
+                MessageKind = "error";
+                break;
+            case "failed":
+                Message = "Sign-in with Microsoft failed. Try again, or sign in with email and password.";
+                MessageKind = "error";
+                break;
+        }
         if (reset == "1")
         {
             Message = "Password changed. Sign in with the new password.";

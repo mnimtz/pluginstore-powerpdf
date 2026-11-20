@@ -1652,4 +1652,17 @@
   <data name="Manual (ZIP)" xml:space="preserve"><value>수동 (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Add-on Store 없이 수동 설치: install.bat 및 uninstall.bat이 포함된 ZIP 파일로, 소프트웨어 배포에도 사용할 수 있습니다. 자동 업데이트는 없습니다.</value></data>
   <data name="Every add-on version reviewed" xml:space="preserve"><value>모든 추가 기능 버전 검토 완료</value></data>
+  <data name="or" xml:space="preserve"><value>또는</value></data>
+  <data name="Sign in with Microsoft" xml:space="preserve"><value>Microsoft로 로그인</value></data>
+  <data name="Your Microsoft account belongs to an organization that cannot sign in here. Sign in with email and password instead." xml:space="preserve"><value>Microsoft 계정이 여기에 로그인할 수 없는 조직에 속해 있습니다. 대신 이메일과 암호로 로그인하십시오.</value></data>
+  <data name="Your Microsoft account did not provide an email address verified by its organization. Sign in with email and password instead." xml:space="preserve"><value>Microsoft 계정에서 조직이 확인한 이메일 주소를 제공하지 않았습니다. 대신 이메일과 암호로 로그인하십시오.</value></data>
+  <data name="Sign-in with Microsoft failed. Try again, or sign in with email and password." xml:space="preserve"><value>Microsoft로 로그인하지 못했습니다. 다시 시도하거나 이메일과 암호로 로그인하십시오.</value></data>
+  <data name="Microsoft account" xml:space="preserve"><value>Microsoft 계정</value></data>
+  <data name="A Microsoft account is linked. You can sign in with it instead of your password." xml:space="preserve"><value>Microsoft 계정이 연결되어 있습니다. 암호 대신 이 계정으로 로그인할 수 있습니다.</value></data>
+  <data name="Unlink the Microsoft account? You then sign in with your password only." xml:space="preserve"><value>Microsoft 계정 연결을 해제하시겠습니까? 이후에는 암호로만 로그인합니다.</value></data>
+  <data name="Unlink" xml:space="preserve"><value>연결 해제</value></data>
+  <data name="Set a password first (&quot;Forgot password?&quot; on the sign-in page), then you can unlink the Microsoft account." xml:space="preserve"><value>먼저 암호를 설정한 다음(로그인 페이지의 "암호를 잊으셨습니까?") Microsoft 계정 연결을 해제할 수 있습니다.</value></data>
+  <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>연결된 Microsoft 계정이 없습니다. 연결하려면 로그인 페이지에서 같은 이메일 주소로 "Microsoft로 로그인"을 사용하십시오.</value></data>
+  <data name="Microsoft account unlinked." xml:space="preserve"><value>Microsoft 계정 연결이 해제되었습니다.</value></data>
+  <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>계정에 아직 암호가 없습니다. 암호를 설정하려면 로그인 페이지에서 "암호를 잊으셨습니까?"를 사용하십시오.</value></data>
 </root>

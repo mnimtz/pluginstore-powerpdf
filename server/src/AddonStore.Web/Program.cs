@@ -35,13 +35,7 @@ builder.Services.AddDataProtection()
     .SetApplicationName("AddonStore");
 
 // --- identity + token auth ----------------------------------------------
-builder.Services.AddIdentity<AppUser, IdentityRole>(o =>
-    {
-        o.Password.RequiredLength = 10;
-        o.Password.RequireNonAlphanumeric = false;
-        o.Lockout.MaxFailedAccessAttempts = 8;
-        o.User.RequireUniqueEmail = true;
-    })
+builder.Services.AddIdentity<AppUser, IdentityRole>(IdentitySetup.Apply)
     .AddErrorDescriber<AddonStore.Web.Services.LocalizedIdentityErrors>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
@@ -66,9 +60,13 @@ builder.Services.AddAntiforgery(o =>
     o.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
 });
 
+// "Sign in with Microsoft" (Entra ID): only with a complete Entra:* configuration, otherwise nothing is registered
+var entra = EntraSettings.From(builder.Configuration);
+builder.Services.AddSingleton(entra);
 builder.Services.AddAuthentication()
     .AddScheme<Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions, ApiTokenAuthHandler>(
-        ApiTokenAuthHandler.Scheme, null);
+        ApiTokenAuthHandler.Scheme, null)
+    .AddEntraSignIn(entra, builder.Environment.IsDevelopment());
 
 builder.Services.AddAuthorization(o =>
 {
@@ -258,6 +256,8 @@ using (var scope = app.Services.CreateScope())
     // UAT mode: portal band and catalog "environment" read it without a database round trip
     await scope.ServiceProvider.GetRequiredService<FederationService>().InitAsync();
     startLog.LogInformation("Startup: database ready after {Ms} ms", clock.ElapsedMilliseconds);
+    if (entra.Enabled) startLog.LogInformation("Startup: Sign in with Microsoft on, {Count} allowed tenant(s)", entra.AllowedTenants.Count);
+    else if (entra.Problem is not null) startLog.LogWarning("Startup: Sign in with Microsoft stays off: {Problem}", entra.Problem);
 }
 
 // S2.0.2: time and database share of every request (Server-Timing), slow ones in the log
@@ -427,6 +427,7 @@ app.MapGet("/avatar/{id}", (string id) =>
 });
 
 app.MapRazorPages();
+app.MapEntraSignIn(entra);
 app.MapApi();
 app.MapSendTo();
 app.MapFederation();

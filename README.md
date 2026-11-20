@@ -105,6 +105,15 @@ and sender on the admin **Settings** page (or as app settings
 setup, and choose which events send mail. Without a key the app runs
 normally; skipped mails are recorded in the audit log.
 
+**Sign in with Microsoft (optional):** with the app settings `Entra__ClientId`,
+`Entra__ClientSecret`, `Entra__TenantId` (or `Entra__Authority`) and
+`Entra__AllowedTenants` the login page gets a *Sign in with Microsoft* button next
+to the email/password form (OpenID Connect, code flow with PKCE, callback
+`/signin-oidc`). A Microsoft sign-in with the address of an existing account is
+linked to that account, never a second one; a new address becomes an access
+request like *Request access*. Without these settings nothing changes. Setup
+guide (German): [docs/entra-setup.md](docs/entra-setup.md).
+
 **Backup and restore:** admin **Settings → Backup and restore**. Store backup
 files like passwords: they contain password hashes and settings. For automatic
 backups, paste the connection string of an Azure storage account (Azure portal:

@@ -1652,4 +1652,17 @@
   <data name="Manual (ZIP)" xml:space="preserve"><value>手動 (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>不需 Add-on Store 的手動安裝：包含 install.bat 和 uninstall.bat 的 ZIP 檔案，也適用於軟體派送。不會自動更新。</value></data>
   <data name="Every add-on version reviewed" xml:space="preserve"><value>每個增益集版本皆經過審核</value></data>
+  <data name="or" xml:space="preserve"><value>或</value></data>
+  <data name="Sign in with Microsoft" xml:space="preserve"><value>使用 Microsoft 登入</value></data>
+  <data name="Your Microsoft account belongs to an organization that cannot sign in here. Sign in with email and password instead." xml:space="preserve"><value>您的 Microsoft 帳戶所屬的組織無法在此登入。請改用電子郵件和密碼登入。</value></data>
+  <data name="Your Microsoft account did not provide an email address verified by its organization. Sign in with email and password instead." xml:space="preserve"><value>您的 Microsoft 帳戶未提供經其組織驗證的電子郵件地址。請改用電子郵件和密碼登入。</value></data>
+  <data name="Sign-in with Microsoft failed. Try again, or sign in with email and password." xml:space="preserve"><value>使用 Microsoft 登入失敗。請再試一次，或使用電子郵件和密碼登入。</value></data>
+  <data name="Microsoft account" xml:space="preserve"><value>Microsoft 帳戶</value></data>
+  <data name="A Microsoft account is linked. You can sign in with it instead of your password." xml:space="preserve"><value>已連結 Microsoft 帳戶。您可以用它代替密碼登入。</value></data>
+  <data name="Unlink the Microsoft account? You then sign in with your password only." xml:space="preserve"><value>要取消連結 Microsoft 帳戶嗎？之後您只能使用密碼登入。</value></data>
+  <data name="Unlink" xml:space="preserve"><value>取消連結</value></data>
+  <data name="Set a password first (&quot;Forgot password?&quot; on the sign-in page), then you can unlink the Microsoft account." xml:space="preserve"><value>請先設定密碼（登入頁面上的「忘記密碼？」），然後才能取消連結 Microsoft 帳戶。</value></data>
+  <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>未連結 Microsoft 帳戶。若要連結，請在登入頁面上使用相同的電子郵件地址選擇「使用 Microsoft 登入」。</value></data>
+  <data name="Microsoft account unlinked." xml:space="preserve"><value>已取消連結 Microsoft 帳戶。</value></data>
+  <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>您的帳戶尚無密碼。若要設定密碼，請使用登入頁面上的「忘記密碼？」。</value></data>
 </root>

@@ -1652,4 +1652,17 @@
   <data name="Manual (ZIP)" xml:space="preserve"><value>Handmatig (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Handmatige installatie zonder de Add-on Store: een ZIP met install.bat en uninstall.bat, ook voor softwaredistributie. Geen automatische updates.</value></data>
   <data name="Every add-on version reviewed" xml:space="preserve"><value>Elke versie van een invoegtoepassing gecontroleerd</value></data>
+  <data name="or" xml:space="preserve"><value>of</value></data>
+  <data name="Sign in with Microsoft" xml:space="preserve"><value>Aanmelden met Microsoft</value></data>
+  <data name="Your Microsoft account belongs to an organization that cannot sign in here. Sign in with email and password instead." xml:space="preserve"><value>Uw Microsoft-account hoort bij een organisatie die zich hier niet kan aanmelden. Meld u in plaats daarvan aan met e-mail en wachtwoord.</value></data>
+  <data name="Your Microsoft account did not provide an email address verified by its organization. Sign in with email and password instead." xml:space="preserve"><value>Uw Microsoft-account heeft geen e-mailadres doorgegeven dat door de organisatie is geverifieerd. Meld u in plaats daarvan aan met e-mail en wachtwoord.</value></data>
+  <data name="Sign-in with Microsoft failed. Try again, or sign in with email and password." xml:space="preserve"><value>Aanmelden met Microsoft is mislukt. Probeer het opnieuw of meld u aan met e-mail en wachtwoord.</value></data>
+  <data name="Microsoft account" xml:space="preserve"><value>Microsoft-account</value></data>
+  <data name="A Microsoft account is linked. You can sign in with it instead of your password." xml:space="preserve"><value>Er is een Microsoft-account gekoppeld. U kunt zich daarmee aanmelden in plaats van met uw wachtwoord.</value></data>
+  <data name="Unlink the Microsoft account? You then sign in with your password only." xml:space="preserve"><value>De koppeling met het Microsoft-account opheffen? U meldt zich dan alleen nog met uw wachtwoord aan.</value></data>
+  <data name="Unlink" xml:space="preserve"><value>Ontkoppelen</value></data>
+  <data name="Set a password first (&quot;Forgot password?&quot; on the sign-in page), then you can unlink the Microsoft account." xml:space="preserve"><value>Stel eerst een wachtwoord in ("Wachtwoord vergeten?" op de aanmeldpagina), daarna kunt u het Microsoft-account ontkoppelen.</value></data>
+  <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>Er is geen Microsoft-account gekoppeld. Gebruik "Aanmelden met Microsoft" op de aanmeldpagina met hetzelfde e-mailadres om het te koppelen.</value></data>
+  <data name="Microsoft account unlinked." xml:space="preserve"><value>Microsoft-account ontkoppeld.</value></data>
+  <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Uw account heeft nog geen wachtwoord. Gebruik "Wachtwoord vergeten?" op de aanmeldpagina om er een in te stellen.</value></data>
 </root>
