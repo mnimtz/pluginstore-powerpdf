@@ -1,6 +1,6 @@
 @page
 @model AddonStore.Web.Pages.Account.LoginModel
-@inject AddonStore.Web.Auth.EntraSettings Entra
+@inject AddonStore.Web.Auth.EntraRuntime EntraRuntime
 @{
     ViewData["Title"] = "Sign in";
 }
@@ -25,7 +25,8 @@
         </div>
         <button type="submit" class="btn">@L["Sign in"]</button>
     </form>
-    @if (Entra.Enabled)
+    @* the current configuration: the admin page switches it on and off without a restart *@
+    @if ((await EntraRuntime.GetAsync()).Enabled)
     {
         @* "Sign in with Microsoft" (Entra ID, docs/entra-setup.md): a plain link, see Auth/EntraSignIn.cs *@
         <p class="muted" style="text-align:center;margin:14px 0 10px">@L["or"]</p>

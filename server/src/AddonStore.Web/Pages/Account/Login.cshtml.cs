@@ -17,9 +17,9 @@ public class LoginModel : PageModel
     public string? Message { get; private set; }
     public string MessageKind { get; private set; } = "warn";
 
-    private readonly AddonStore.Web.Auth.EntraSettings _entra;
+    private readonly AddonStore.Web.Auth.EntraRuntime _entra;
 
-    public LoginModel(SignInManager<AppUser> signIn, UserManager<AppUser> users, IMemoryCache cache, AddonStore.Web.Auth.EntraSettings entra)
+    public LoginModel(SignInManager<AppUser> signIn, UserManager<AppUser> users, IMemoryCache cache, AddonStore.Web.Auth.EntraRuntime entra)
     {
         _signIn = signIn; _users = users; _cache = cache; _entra = entra;
     }
@@ -33,10 +33,10 @@ public class LoginModel : PageModel
         lock (n) return ++n[0] > MaxAttemptsPer15Min;
     }
 
-    public void OnGet(string? registered, string? reset, string? entra)
+    public async Task OnGetAsync(string? registered, string? reset, string? entra)
     {
         // result of "Sign in with Microsoft" (Auth/EntraSignIn.cs): the same answers as the password sign-in below
-        switch (_entra.Enabled ? entra : null)
+        switch ((await _entra.GetAsync()).Enabled ? entra : null)
         {
             case "pending":
                 Message = "Your access request is still awaiting admin approval.";

@@ -1665,4 +1665,60 @@
   <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>未关联 Microsoft 账户。要关联，请在登录页面上使用相同的电子邮件地址选择“使用 Microsoft 登录”。</value></data>
   <data name="Microsoft account unlinked." xml:space="preserve"><value>已取消关联 Microsoft 账户。</value></data>
   <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>您的账户尚无密码。要设置密码，请使用登录页面上的“忘记密码？”。</value></data>
+  <data name="The application (client) ID is missing." xml:space="preserve"><value>缺少应用程序(客户端) ID。</value></data>
+  <data name="The client secret is missing or can no longer be read. Enter it again." xml:space="preserve"><value>缺少客户端密码，或已无法读取。请重新输入。</value></data>
+  <data name="The directory is missing." xml:space="preserve"><value>缺少目录。</value></data>
+  <data name="The directory could not be resolved to a directory ID. Save the settings again." xml:space="preserve"><value>无法将目录解析为目录 ID。请重新保存设置。</value></data>
+  <data name="Test passed: Microsoft accepted the directory, the application and the client secret." xml:space="preserve"><value>测试通过: Microsoft 已接受该目录、应用程序和客户端密码。</value></data>
+  <data name="Directory not found. Check the directory (tenant) ID or the domain." xml:space="preserve"><value>未找到目录。请检查目录(租户) ID 或域。</value></data>
+  <data name="Application not found in this directory. Check the application (client) ID and that the app is registered in this directory." xml:space="preserve"><value>在此目录中未找到应用程序。请检查应用程序(客户端) ID，并确认该应用已在此目录中注册。</value></data>
+  <data name="The client secret is wrong or has expired. Create a new client secret and copy its value (not the secret ID)." xml:space="preserve"><value>客户端密码错误或已过期。请创建新的客户端密码并复制其值(不是密码 ID)。</value></data>
+  <data name="Directory and application found. Enter the client secret to test it as well." xml:space="preserve"><value>已找到目录和应用程序。输入客户端密码即可一并测试。</value></data>
+  <data name="Microsoft could not be reached. Check the internet connection of the server and try again." xml:space="preserve"><value>无法连接到 Microsoft。请检查服务器的互联网连接，然后重试。</value></data>
+  <data name="Microsoft answered with an unexpected error." xml:space="preserve"><value>Microsoft 返回了意外错误。</value></data>
+  <data name="The application (client) ID must be a GUID such as 00000000-0000-0000-0000-000000000000." xml:space="preserve"><value>应用程序(客户端) ID 必须是 GUID，例如 00000000-0000-0000-0000-000000000000。</value></data>
+  <data name="The directory must be a directory (tenant) ID or a verified domain such as contoso.com." xml:space="preserve"><value>目录必须是目录(租户) ID 或已验证的域，例如 contoso.com。</value></data>
+  <data name="The client secret is too long or contains invalid characters." xml:space="preserve"><value>客户端密码过长或包含无效字符。</value></data>
+  <data name="Additional allowed directories: enter directory IDs or domains, separated by commas (at most 20)." xml:space="preserve"><value>其他允许的目录: 输入目录 ID 或域，以逗号分隔(最多 20 个)。</value></data>
+  <data name="Enter the application (client) ID and the directory first." xml:space="preserve"><value>请先输入应用程序(客户端) ID 和目录。</value></data>
+  <data name="The app settings Entra:* decide; change the values there." xml:space="preserve"><value>以应用设置 Entra:* 为准；请在那里更改这些值。</value></data>
+  <data name="To switch it on, enter the application (client) ID, the directory and the client secret." xml:space="preserve"><value>要启用，请输入应用程序(客户端) ID、目录和客户端密码。</value></data>
+  <data name="Saved. The sign-in page now shows &quot;Sign in with Microsoft&quot;." xml:space="preserve"><value>已保存。登录页面现在显示“使用 Microsoft 登录”。</value></data>
+  <data name="Saved, but incomplete: the button stays hidden." xml:space="preserve"><value>已保存，但不完整: 按钮仍处于隐藏状态。</value></data>
+  <data name="Saved. Sign in with Microsoft is off." xml:space="preserve"><value>已保存。使用 Microsoft 登录已关闭。</value></data>
+  <data name="Client secret removed." xml:space="preserve"><value>已删除客户端密码。</value></data>
+  <data name="The test needs Entra:ClientId and Entra:TenantId (directory ID or domain) in the app settings." xml:space="preserve"><value>测试需要应用设置中的 Entra:ClientId 和 Entra:TenantId(目录 ID 或域)。</value></data>
+  <data name="Microsoft answered with an unexpected error: {0}" xml:space="preserve"><value>Microsoft 返回了意外错误: {0}</value></data>
+  <data name="Directory not found: {0}" xml:space="preserve"><value>未找到目录: {0}</value></data>
+  <data name="An additional button on the sign-in page for the Microsoft work accounts of your organization (Microsoft Entra ID). Email and password keep working. Personal Microsoft accounts and guests are refused on purpose." xml:space="preserve"><value>在登录页面上为贵组织的 Microsoft 工作帐户(Microsoft Entra ID)额外提供一个按钮。电子邮件和密码登录仍然可用。个人 Microsoft 帐户和来宾会被有意拒绝。</value></data>
+  <data name="The sign-in page shows the button &quot;Sign in with Microsoft&quot;." xml:space="preserve"><value>登录页面显示“使用 Microsoft 登录”按钮。</value></data>
+  <data name="Incomplete" xml:space="preserve"><value>不完整</value></data>
+  <data name="The button stays hidden until the configuration is complete." xml:space="preserve"><value>在配置完成之前，按钮保持隐藏。</value></data>
+  <data name="The sign-in page shows no Microsoft button." xml:space="preserve"><value>登录页面不显示 Microsoft 按钮。</value></data>
+  <data name="Set by app settings (Entra:*). They take precedence over this page; change the values in the app settings. The client secret is never shown." xml:space="preserve"><value>由应用设置(Entra:*)设定。它们优先于此页面；请在应用设置中更改这些值。客户端密码从不显示。</value></data>
+  <data name="Register the app in Microsoft Entra (three steps)" xml:space="preserve"><value>在 Microsoft Entra 中注册应用(三个步骤)</value></data>
+  <data name="App registrations, New registration: any name, &quot;Accounts in this organizational directory only&quot;, redirect URI type Web with this address:" xml:space="preserve"><value>应用注册，新注册: 任意名称，“仅此组织目录中的帐户”，类型为 Web 的重定向 URI 使用此地址:</value></data>
+  <data name="Redirect URI" xml:space="preserve"><value>重定向 URI</value></data>
+  <data name="No public base URL is set (section Server), so the address comes from this request. It must be the address users open the store with." xml:space="preserve"><value>未设置公共基础 URL(“服务器”部分)，因此地址取自此请求。它必须是用户打开商店时使用的地址。</value></data>
+  <data name="Certificates &amp; secrets, New client secret: copy the value (not the secret ID)." xml:space="preserve"><value>证书和密码，新客户端密码: 复制值(不是密码 ID)。</value></data>
+  <data name="Overview: copy the application (client) ID and the directory (tenant) ID into the fields below." xml:space="preserve"><value>概述: 将应用程序(客户端) ID 和目录(租户) ID 复制到下面的字段中。</value></data>
+  <data name="Open the Microsoft Entra admin center" xml:space="preserve"><value>打开 Microsoft Entra 管理中心</value></data>
+  <data name="No optional claims and no API permissions are needed." xml:space="preserve"><value>无需可选声明，也无需 API 权限。</value></data>
+  <data name="Enter the values" xml:space="preserve"><value>输入值</value></data>
+  <data name="Application (client) ID" xml:space="preserve"><value>应用程序(客户端) ID</value></data>
+  <data name="Directory (tenant) ID or domain" xml:space="preserve"><value>目录(租户) ID 或域</value></data>
+  <data name="Client secret" xml:space="preserve"><value>客户端密码</value></data>
+  <data name="Stored encrypted and never shown again. Leave the field empty to keep the stored secret." xml:space="preserve"><value>加密存储，不会再次显示。将字段留空即可保留已存储的密码。</value></data>
+  <data name="Stored encrypted and never shown again." xml:space="preserve"><value>加密存储，不会再次显示。</value></data>
+  <data name="Additional allowed directories (optional)" xml:space="preserve"><value>其他允许的目录(可选)</value></data>
+  <data name="Only for later use with a multi-tenant app registration: directory IDs or domains, separated by commas. Leave empty for your own directory only." xml:space="preserve"><value>仅供以后与多租户应用注册一起使用: 目录 ID 或域，以逗号分隔。如果只允许你自己的目录，请留空。</value></data>
+  <data name="Enabled: show &quot;Sign in with Microsoft&quot; on the sign-in page" xml:space="preserve"><value>已启用: 在登录页面上显示“使用 Microsoft 登录”</value></data>
+  <data name="Testing with Microsoft…" xml:space="preserve"><value>正在通过 Microsoft 测试…</value></data>
+  <data name="The test could not be run. Reload the page and try again." xml:space="preserve"><value>无法运行测试。请重新加载页面，然后重试。</value></data>
+  <data name="Checks the entered values with Microsoft without saving them." xml:space="preserve"><value>通过 Microsoft 检查输入的值，但不保存。</value></data>
+  <data name="Remove the stored client secret? Sign in with Microsoft stops until a new secret is saved." xml:space="preserve"><value>删除已存储的客户端密码? 在保存新密码之前，使用 Microsoft 登录将停止工作。</value></data>
+  <data name="Remove secret" xml:space="preserve"><value>删除密码</value></data>
+  <data name="Try it" xml:space="preserve"><value>试用</value></data>
+  <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>注销，然后使用你目录中的用户(已验证域上的地址)选择“使用 Microsoft 登录”。新用户会成为发给管理员的访问请求；具有相同地址的现有帐户会被关联，绝不会重复创建。</value></data>
+  <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>此页面是通过另一个地址打开的。如果用户也通过该地址登录，请同时添加此重定向 URI: {0}</value></data>
 </root>

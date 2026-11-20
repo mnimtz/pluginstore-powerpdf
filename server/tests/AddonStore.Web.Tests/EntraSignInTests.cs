@@ -121,6 +121,26 @@ public class EntraSignInTests : IDisposable
     }
 
     [Fact]
+    public void Default_v2_id_token_claims_suffice()
+    {
+        // what a fresh app registration sends without optional claims (scopes openid profile email): no upn,
+        // no xms_edov, no idp for a member; email only when the mailbox has one
+        var claims = new List<Claim>
+        {
+            new("aud", "aaaaaaaa-1111-2222-3333-444444444444"), new("iss", $"https://login.microsoftonline.com/{Tenant}/v2.0"),
+            new("tid", Tenant), new("oid", "aaaaaaaa-0000-0000-0000-000000000009"), new("sub", "x"),
+            new("preferred_username", "carol@power-pdf.de"), new("name", "Carol Example"), new("ver", "2.0"),
+        };
+        var (id, rejection) = EntraIdentity.Read(claims, Allowed);
+        Assert.Equal(EntraRejection.None, rejection);
+        Assert.Equal("carol@power-pdf.de", id!.Email);
+        Assert.Equal("Carol Example", id.Name);
+        // a guest in the same token shape carries idp (its home tenant or live.com) by default and is refused
+        claims.Add(new("idp", "live.com"));
+        Assert.Equal(EntraRejection.Email, EntraIdentity.Read(claims, Allowed).Rejection);
+    }
+
+    [Fact]
     public void Upn_wins_over_preferred_username()
     {
         var (id, _) = EntraIdentity.Read(Token(upn: "alice@power-pdf.de", preferred: "other@power-pdf.de"), Allowed);

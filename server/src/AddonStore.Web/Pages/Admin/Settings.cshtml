@@ -38,7 +38,7 @@ else if (Model.SigningKeyId.Length > 0)
 
 @if (Model.Notice is not null)
 {
-    <div class="alert @Model.NoticeKind">@L[Model.Notice]
+    <div class="alert @Model.NoticeKind" role="status">@(Model.NoticeArgs.Length > 0 ? L[Model.Notice, Model.NoticeArgs] : L[Model.Notice])
         @if (Model.TestDetail is not null)
         {
             <br /><code>@Model.TestDetail</code>
@@ -68,6 +68,130 @@ else if (Model.SigningKeyId.Length > 0)
     </form>
     <p style="font-size:.82rem;color:var(--tun-slate)">@L["Without a verified sender domain, Resend only delivers to the email address of the Resend account owner."]</p>
 </div>
+}
+
+@if (Model.View == "entra" && Model.Entra is { } en)
+{
+    var draft = Model.EntraDraft;
+    var ro = en.FromAppSettings;
+<div class="card" style="max-width:760px" id="entra">
+    <h2 style="margin-top:0">@L["Sign in with Microsoft"]</h2>
+    <p style="font-size:.88rem;color:var(--tun-slate)">@L["An additional button on the sign-in page for the Microsoft work accounts of your organization (Microsoft Entra ID). Email and password keep working. Personal Microsoft accounts and guests are refused on purpose."]</p>
+    @if (en.Active)
+    {
+        <p><span class="badge live">@L["On"]</span> @L["The sign-in page shows the button \"Sign in with Microsoft\"."]</p>
+    }
+    else if (en.Enabled || en.Problem is not null)
+    {
+        <div class="alert warn"><b>@L["Incomplete"]:</b> @L["The button stays hidden until the configuration is complete."]
+            @if (en.Problem is not null) { <br />@L[en.Problem] }
+        </div>
+    }
+    else
+    {
+        <p><span class="badge withdrawn">@L["Off"]</span> @L["The sign-in page shows no Microsoft button."]</p>
+    }
+    @if (ro)
+    {
+        <div class="alert warn">@L["Set by app settings (Entra:*). They take precedence over this page; change the values in the app settings. The client secret is never shown."]</div>
+    }
+
+    <h3>1. @L["Register the app in Microsoft Entra (three steps)"]</h3>
+    <ol style="font-size:.9rem;padding-inline-start:20px;margin:6px 0 10px">
+        <li style="margin-bottom:6px">@L["App registrations, New registration: any name, \"Accounts in this organizational directory only\", redirect URI type Web with this address:"]
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px">
+                <input id="entra-redirect" type="text" dir="ltr" readonly value="@en.RedirectUri" aria-label="@L["Redirect URI"]" style="flex:1;min-width:240px;font-family:Consolas,monospace" />
+                <button type="button" class="btn small secondary" id="entra-copy" data-done="@L["Copied"].Value">@L["Copy"]</button>
+                <span id="entra-copied" class="small" role="status" aria-live="polite"></span>
+            </div>
+            @if (en.RedirectFromRequest)
+            {
+                <small style="color:var(--tun-slate)">@L["No public base URL is set (section Server), so the address comes from this request. It must be the address users open the store with."]</small>
+            }
+            else if (en.OtherRedirectUri is not null)
+            {
+                <small style="color:var(--tun-slate)">@L["This page is open under another address. If users also sign in there, add this redirect URI as well: {0}", en.OtherRedirectUri]</small>
+            }
+        </li>
+        <li style="margin-bottom:6px">@L["Certificates & secrets, New client secret: copy the value (not the secret ID)."]</li>
+        <li>@L["Overview: copy the application (client) ID and the directory (tenant) ID into the fields below."]</li>
+    </ol>
+    <p class="small" style="margin:0 0 12px"><a href="https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationsListBlade" target="_blank" rel="noopener noreferrer">@L["Open the Microsoft Entra admin center"] ↗</a>
+        · @L["No optional claims and no API permissions are needed."]</p>
+
+    <h3>2. @L["Enter the values"]</h3>
+    <form method="post" asp-page-handler="Entra" class="stack" style="max-width:none" id="entra-form">
+        <div>
+            <label for="entra-client">@L["Application (client) ID"]</label>
+            <input id="entra-client" type="text" dir="ltr" name="entraClientId" value="@(draft?.ClientId ?? en.ClientId)" readonly="@ro" maxlength="36" autocomplete="off" spellcheck="false"
+                   placeholder="00000000-0000-0000-0000-000000000000" style="font-family:Consolas,monospace" />
+        </div>
+        <div>
+            <label for="entra-tenant">@L["Directory (tenant) ID or domain"]</label>
+            <input id="entra-tenant" type="text" dir="ltr" name="entraTenant" value="@(draft?.Tenant ?? en.Tenant)" readonly="@ro" maxlength="253" autocomplete="off" spellcheck="false"
+                   placeholder="00000000-0000-0000-0000-000000000000 / contoso.com" style="font-family:Consolas,monospace" />
+        </div>
+        <div>
+            <label for="entra-secret">@L["Client secret"]</label>
+            <input id="entra-secret" type="password" name="entraSecret" readonly="@ro" maxlength="500" autocomplete="new-password" spellcheck="false"
+                   placeholder="@(en.HasSecret ? "••••••••  (" + L["configured"].Value + ")" : "")" />
+            @if (!ro)
+            {
+                <small style="color:var(--tun-slate)">@(en.HasSecret ? L["Stored encrypted and never shown again. Leave the field empty to keep the stored secret."] : L["Stored encrypted and never shown again."])</small>
+            }
+        </div>
+        <div>
+            <label for="entra-dirs">@L["Additional allowed directories (optional)"]</label>
+            <input id="entra-dirs" type="text" dir="ltr" name="entraDirectories" value="@(draft?.Directories ?? en.Directories)" readonly="@ro" maxlength="2000" autocomplete="off" spellcheck="false" />
+            <small style="color:var(--tun-slate)">@L["Only for later use with a multi-tenant app registration: directory IDs or domains, separated by commas. Leave empty for your own directory only."]</small>
+        </div>
+        <label style="display:flex;gap:8px;align-items:center;font-weight:600">
+            <input type="checkbox" name="entraEnabled" value="true" checked="@(draft?.Enabled ?? en.Enabled)" disabled="@ro" style="width:auto" />
+            <span>@L["Enabled: show \"Sign in with Microsoft\" on the sign-in page"]</span>
+        </label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            @if (!ro)
+            {
+                <button type="submit" class="btn cta">@L["Save"]</button>
+            }
+            <button type="submit" class="btn secondary" id="entra-test" asp-page-handler="EntraTest" formnovalidate
+                    data-wait="@L["Testing with Microsoft…"].Value" data-fail="@L["The test could not be run. Reload the page and try again."].Value">@L["Test"]</button>
+            <small style="color:var(--tun-slate)">@L["Checks the entered values with Microsoft without saving them."]</small>
+        </div>
+        <div id="entra-test-result" role="status" aria-live="polite"></div>
+    </form>
+    @if (!ro && en.HasSecret)
+    {
+        <form method="post" asp-page-handler="EntraRemoveSecret" style="margin-top:10px"
+              data-confirm="@L["Remove the stored client secret? Sign in with Microsoft stops until a new secret is saved."]">
+            <button type="submit" class="btn small danger">@L["Remove secret"]</button>
+        </form>
+    }
+
+    <h3>3. @L["Try it"]</h3>
+    <p style="font-size:.9rem;margin:0">@L["Sign out and choose \"Sign in with Microsoft\" with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated."]</p>
+</div>
+<script nonce="@HttpContext.Items["CspNonce"]">
+(function () {
+    var copy = document.getElementById('entra-copy'), field = document.getElementById('entra-redirect'), copied = document.getElementById('entra-copied');
+    function done() { copied.textContent = copy.dataset.done; setTimeout(function () { copied.textContent = ''; }, 2500); }
+    function fallback() { field.select(); try { if (document.execCommand('copy')) done(); } catch (e) { } }
+    if (copy) copy.addEventListener('click', function () {
+        if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(field.value).then(done, fallback); else fallback();
+    });
+    // the test sends the form as it is (nothing is saved) and shows the answer next to the button
+    var test = document.getElementById('entra-test'), out = document.getElementById('entra-test-result');
+    if (test) test.addEventListener('click', function (e) {
+        e.preventDefault();
+        out.className = 'alert'; out.textContent = test.dataset.wait; test.disabled = true;
+        fetch(test.formAction, { method: 'POST', body: new FormData(test.form), credentials: 'same-origin', headers: { 'X-Requested-With': 'fetch' } })
+            .then(function (r) { if (!r.ok) throw new Error(); return r.json(); })
+            .then(function (j) { out.className = 'alert ' + (j.ok ? 'ok' : 'error'); out.textContent = j.message; })
+            .catch(function () { out.className = 'alert error'; out.textContent = test.dataset.fail; })
+            .then(function () { test.disabled = false; });
+    });
+})();
+</script>
 }
 
 <style>.ppline input:not([type=checkbox]):not([type=hidden]), .ppline select { width: 100%; box-sizing: border-box; }</style>

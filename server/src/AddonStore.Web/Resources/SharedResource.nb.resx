@@ -1665,4 +1665,60 @@
   <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>Ingen Microsoft-konto er koblet til. Bruk "Logg på med Microsoft" på påloggingssiden med samme e-postadresse for å koble den til.</value></data>
   <data name="Microsoft account unlinked." xml:space="preserve"><value>Koblingen til Microsoft-kontoen er fjernet.</value></data>
   <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Kontoen din har ikke noe passord ennå. Bruk "Glemt passordet?" på påloggingssiden for å angi et.</value></data>
+  <data name="The application (client) ID is missing." xml:space="preserve"><value>Program-ID-en (klient) mangler.</value></data>
+  <data name="The client secret is missing or can no longer be read. Enter it again." xml:space="preserve"><value>Klienthemmeligheten mangler eller kan ikke lenger leses. Skriv den inn på nytt.</value></data>
+  <data name="The directory is missing." xml:space="preserve"><value>Katalogen mangler.</value></data>
+  <data name="The directory could not be resolved to a directory ID. Save the settings again." xml:space="preserve"><value>Katalogen kunne ikke knyttes til en katalog-ID. Lagre innstillingene på nytt.</value></data>
+  <data name="Test passed: Microsoft accepted the directory, the application and the client secret." xml:space="preserve"><value>Testen bestått: Microsoft godtok katalogen, programmet og klienthemmeligheten.</value></data>
+  <data name="Directory not found. Check the directory (tenant) ID or the domain." xml:space="preserve"><value>Fant ikke katalogen. Kontroller katalog-ID-en (leier) eller domenet.</value></data>
+  <data name="Application not found in this directory. Check the application (client) ID and that the app is registered in this directory." xml:space="preserve"><value>Fant ikke programmet i denne katalogen. Kontroller program-ID-en (klient) og at appen er registrert i denne katalogen.</value></data>
+  <data name="The client secret is wrong or has expired. Create a new client secret and copy its value (not the secret ID)." xml:space="preserve"><value>Klienthemmeligheten er feil eller utløpt. Opprett en ny klienthemmelighet og kopier verdien (ikke hemmelighets-ID-en).</value></data>
+  <data name="Directory and application found. Enter the client secret to test it as well." xml:space="preserve"><value>Katalog og program funnet. Skriv inn klienthemmeligheten for å teste den også.</value></data>
+  <data name="Microsoft could not be reached. Check the internet connection of the server and try again." xml:space="preserve"><value>Får ikke kontakt med Microsoft. Kontroller internettilkoblingen til serveren og prøv igjen.</value></data>
+  <data name="Microsoft answered with an unexpected error." xml:space="preserve"><value>Microsoft svarte med en uventet feil.</value></data>
+  <data name="The application (client) ID must be a GUID such as 00000000-0000-0000-0000-000000000000." xml:space="preserve"><value>Program-ID-en (klient) må være en GUID, for eksempel 00000000-0000-0000-0000-000000000000.</value></data>
+  <data name="The directory must be a directory (tenant) ID or a verified domain such as contoso.com." xml:space="preserve"><value>Katalogen må være en katalog-ID (leier) eller et bekreftet domene som contoso.com.</value></data>
+  <data name="The client secret is too long or contains invalid characters." xml:space="preserve"><value>Klienthemmeligheten er for lang eller inneholder ugyldige tegn.</value></data>
+  <data name="Additional allowed directories: enter directory IDs or domains, separated by commas (at most 20)." xml:space="preserve"><value>Flere tillatte kataloger: skriv inn katalog-ID-er eller domener atskilt med komma (høyst 20).</value></data>
+  <data name="Enter the application (client) ID and the directory first." xml:space="preserve"><value>Skriv først inn program-ID-en (klient) og katalogen.</value></data>
+  <data name="The app settings Entra:* decide; change the values there." xml:space="preserve"><value>Appinnstillingene Entra:* bestemmer; endre verdiene der.</value></data>
+  <data name="To switch it on, enter the application (client) ID, the directory and the client secret." xml:space="preserve"><value>For å slå det på må du skrive inn program-ID-en (klient), katalogen og klienthemmeligheten.</value></data>
+  <data name="Saved. The sign-in page now shows &quot;Sign in with Microsoft&quot;." xml:space="preserve"><value>Lagret. Påloggingssiden viser nå «Logg på med Microsoft».</value></data>
+  <data name="Saved, but incomplete: the button stays hidden." xml:space="preserve"><value>Lagret, men ufullstendig: knappen forblir skjult.</value></data>
+  <data name="Saved. Sign in with Microsoft is off." xml:space="preserve"><value>Lagret. Pålogging med Microsoft er slått av.</value></data>
+  <data name="Client secret removed." xml:space="preserve"><value>Klienthemmeligheten er fjernet.</value></data>
+  <data name="The test needs Entra:ClientId and Entra:TenantId (directory ID or domain) in the app settings." xml:space="preserve"><value>Testen trenger Entra:ClientId og Entra:TenantId (katalog-ID eller domene) i appinnstillingene.</value></data>
+  <data name="Microsoft answered with an unexpected error: {0}" xml:space="preserve"><value>Microsoft svarte med en uventet feil: {0}</value></data>
+  <data name="Directory not found: {0}" xml:space="preserve"><value>Fant ikke katalogen: {0}</value></data>
+  <data name="An additional button on the sign-in page for the Microsoft work accounts of your organization (Microsoft Entra ID). Email and password keep working. Personal Microsoft accounts and guests are refused on purpose." xml:space="preserve"><value>En ekstra knapp på påloggingssiden for organisasjonens Microsoft-jobbkontoer (Microsoft Entra ID). E-post og passord fungerer fortsatt. Personlige Microsoft-kontoer og gjester avvises med vilje.</value></data>
+  <data name="The sign-in page shows the button &quot;Sign in with Microsoft&quot;." xml:space="preserve"><value>Påloggingssiden viser knappen «Logg på med Microsoft».</value></data>
+  <data name="Incomplete" xml:space="preserve"><value>Ufullstendig</value></data>
+  <data name="The button stays hidden until the configuration is complete." xml:space="preserve"><value>Knappen forblir skjult til konfigurasjonen er fullstendig.</value></data>
+  <data name="The sign-in page shows no Microsoft button." xml:space="preserve"><value>Påloggingssiden viser ingen Microsoft-knapp.</value></data>
+  <data name="Set by app settings (Entra:*). They take precedence over this page; change the values in the app settings. The client secret is never shown." xml:space="preserve"><value>Angitt i appinnstillingene (Entra:*). De har forrang foran denne siden; endre verdiene i appinnstillingene. Klienthemmeligheten vises aldri.</value></data>
+  <data name="Register the app in Microsoft Entra (three steps)" xml:space="preserve"><value>Registrer appen i Microsoft Entra (tre trinn)</value></data>
+  <data name="App registrations, New registration: any name, &quot;Accounts in this organizational directory only&quot;, redirect URI type Web with this address:" xml:space="preserve"><value>Appregistreringer, Ny registrering: valgfritt navn, «Bare kontoer i denne organisasjonskatalogen», omdirigerings-URI av typen Web med denne adressen:</value></data>
+  <data name="Redirect URI" xml:space="preserve"><value>Omdirigerings-URI</value></data>
+  <data name="No public base URL is set (section Server), so the address comes from this request. It must be the address users open the store with." xml:space="preserve"><value>Ingen offentlig basis-URL er angitt (delen Server), så adressen kommer fra denne forespørselen. Den må være adressen brukerne åpner butikken med.</value></data>
+  <data name="Certificates &amp; secrets, New client secret: copy the value (not the secret ID)." xml:space="preserve"><value>Sertifikater og hemmeligheter, Ny klienthemmelighet: kopier verdien (ikke hemmelighets-ID-en).</value></data>
+  <data name="Overview: copy the application (client) ID and the directory (tenant) ID into the fields below." xml:space="preserve"><value>Oversikt: kopier program-ID-en (klient) og katalog-ID-en (leier) til feltene nedenfor.</value></data>
+  <data name="Open the Microsoft Entra admin center" xml:space="preserve"><value>Åpne administrasjonssenteret for Microsoft Entra</value></data>
+  <data name="No optional claims and no API permissions are needed." xml:space="preserve"><value>Det trengs verken valgfrie krav eller API-tillatelser.</value></data>
+  <data name="Enter the values" xml:space="preserve"><value>Skriv inn verdiene</value></data>
+  <data name="Application (client) ID" xml:space="preserve"><value>Program-ID (klient)</value></data>
+  <data name="Directory (tenant) ID or domain" xml:space="preserve"><value>Katalog-ID (leier) eller domene</value></data>
+  <data name="Client secret" xml:space="preserve"><value>Klienthemmelighet</value></data>
+  <data name="Stored encrypted and never shown again. Leave the field empty to keep the stored secret." xml:space="preserve"><value>Lagres kryptert og vises aldri igjen. La feltet stå tomt for å beholde den lagrede hemmeligheten.</value></data>
+  <data name="Stored encrypted and never shown again." xml:space="preserve"><value>Lagres kryptert og vises aldri igjen.</value></data>
+  <data name="Additional allowed directories (optional)" xml:space="preserve"><value>Flere tillatte kataloger (valgfritt)</value></data>
+  <data name="Only for later use with a multi-tenant app registration: directory IDs or domains, separated by commas. Leave empty for your own directory only." xml:space="preserve"><value>Bare for senere bruk med en appregistrering for flere leiere: katalog-ID-er eller domener atskilt med komma. La feltet stå tomt hvis bare din egen katalog er tillatt.</value></data>
+  <data name="Enabled: show &quot;Sign in with Microsoft&quot; on the sign-in page" xml:space="preserve"><value>Slått på: vis «Logg på med Microsoft» på påloggingssiden</value></data>
+  <data name="Testing with Microsoft…" xml:space="preserve"><value>Tester hos Microsoft …</value></data>
+  <data name="The test could not be run. Reload the page and try again." xml:space="preserve"><value>Testen kunne ikke kjøres. Last inn siden på nytt og prøv igjen.</value></data>
+  <data name="Checks the entered values with Microsoft without saving them." xml:space="preserve"><value>Kontrollerer de angitte verdiene hos Microsoft uten å lagre dem.</value></data>
+  <data name="Remove the stored client secret? Sign in with Microsoft stops until a new secret is saved." xml:space="preserve"><value>Vil du fjerne den lagrede klienthemmeligheten? Pålogging med Microsoft stopper til en ny hemmelighet er lagret.</value></data>
+  <data name="Remove secret" xml:space="preserve"><value>Fjern hemmelighet</value></data>
+  <data name="Try it" xml:space="preserve"><value>Prøv det</value></data>
+  <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>Logg av og velg «Logg på med Microsoft» med en bruker fra katalogen din (en adresse på et bekreftet domene). En ny person blir en tilgangsforespørsel for administratorene; en eksisterende konto med samme adresse kobles til og opprettes aldri dobbelt.</value></data>
+  <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>Denne siden er åpnet under en annen adresse. Hvis brukere også logger på der, legger du i tillegg til denne omdirigerings-URI-en: {0}</value></data>
 </root>
