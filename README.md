@@ -612,6 +612,15 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Speed on the data share (S2.0.2, Nov 20, 2026):** PackageVersions is rebuilt once at start-up with the small
+columns first and the large review reports at the end (`Data/VersionTableLayout.cs`): SQLite walks the overflow pages
+of every column before the one it reads, and the columns added over time sat behind the reports, so even the light
+version query read every report over the network (6 to 8 s for the catalog and the categories, over a minute after
+sign-in). A column added later moves forward at the next start. Sign-in (start page insights), dashboard, report
+lists, categories and the reports page load versions without the reports; the JSON catalog without customer codes
+and `/api/categories` are cached like the TSV catalog. Every response carries `Server-Timing` (database time and
+number of queries); requests slower than `Storage:SlowRequestMs` (2000) are logged with path and slowest query.
+
 **Catalog tiles of equal height (S2.0.1, Nov 20, 2026):** a tile shows at most twelve lines of the description
 (the full text on the add-on page and as a tooltip), the author line sits at the bottom. A new warning
 `DESCRIPTION_LENGTH` recommends about 300 to 450 characters in English (three or four sentences). Fixed: a

@@ -160,12 +160,13 @@ public class DashboardModel : PageModel
         var userId = _users.GetUserId(User);
         // Admins see every package so they can maintain the whole store.
         var isAdmin = User.IsInRole("Admin");
-        Packages = await _db.Packages
+        // S2.0.2: read only, versions without their large review columns
+        Packages = await _db.Packages.AsNoTracking()
             .Where(p => isAdmin || p.OwnerId == userId)
-            .Include(p => p.Versions)
             .Include(p => p.Owner)
             .OrderBy(p => p.Id)
             .ToListAsync();
+        await AddonStore.Web.Data.LightVersions.AttachAsync(_db, Packages);
 
         var lang = AddonStore.Web.Services.Lang.Current;
         var cmp = new SemVerComparer();

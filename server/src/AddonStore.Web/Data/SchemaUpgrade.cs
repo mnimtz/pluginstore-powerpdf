@@ -210,6 +210,9 @@ public static class SchemaUpgrade
             catch (Microsoft.Data.Sqlite.SqliteException) { /* column/table already there */ }
         }
 
+        // S2.0.2: small columns of PackageVersions before the large reports (once; see VersionTableLayout)
+        VersionTableLayout.Ensure(db, log);
+
         await CategoryService.SeedAsync(db, services.GetRequiredService<IStringLocalizer<SharedResource>>());
 
         var roles = services.GetRequiredService<RoleManager<IdentityRole>>();

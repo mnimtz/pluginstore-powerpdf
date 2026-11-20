@@ -195,7 +195,8 @@ public class IssueService
                 (perUser is not null && perUser[0] >= MaxRepliesPerDay))
                 return (null, new("RATE_LIMITED", $"At most {MaxRepliesPerDay} replies to reporters per day."));
             if (perUser is not null) lock (perUser) perUser[0]++;
-            var pkg = await _db.Packages.AsNoTracking().Include(p => p.Versions).FirstOrDefaultAsync(p => p.Id == f.PackageId);
+            var pkg = await _db.Packages.AsNoTracking().FirstOrDefaultAsync(p => p.Id == f.PackageId);   // S2.0.2: light versions
+            if (pkg is not null) await AddonStore.Web.Data.LightVersions.AttachAsync(_db, new[] { pkg });
             var name = pkg is null ? f.PackageId
                 : CatalogUi.DisplayName(pkg, pkg.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault(), "en");
             static string enc(string? v) => System.Net.WebUtility.HtmlEncode(v ?? "");

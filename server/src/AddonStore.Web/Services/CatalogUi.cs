@@ -111,6 +111,24 @@ public static class CatalogUi
     /// <summary>Drops the cached catalogs (a write to packages, versions, categories, ratings or accounts).</summary>
     public static void Invalidate() => Interlocked.Increment(ref _generation);
 
+    // S2.0.2: other answers that are the same for every caller (JSON catalog without customer codes, categories),
+    // under the same rules: a new generation on writes, at most a minute old
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, (long Gen, DateTime At, object Value)> _objects = new();
+
+    /// <summary>The cached answer for <paramref name="key"/> of the current generation, or null.</summary>
+    public static object? CachedObject(string key) =>
+        _objects.TryGetValue(key, out var hit) && hit.Gen == Interlocked.Read(ref _generation) && DateTime.UtcNow - hit.At < CacheAge ? hit.Value : null;
+
+    /// <summary>Keeps <paramref name="value"/> for <paramref name="key"/>; <paramref name="gen"/> is the generation read before the value was built.</summary>
+    public static void CacheObject(string key, long gen, object value)
+    {
+        if (_objects.Count > 100) _objects.Clear();
+        _objects[key] = (gen, DateTime.UtcNow, value);
+    }
+
+    /// <summary>The current generation (read it before building a value for <see cref="CacheObject"/>).</summary>
+    public static long Generation => Interlocked.Read(ref _generation);
+
     public static async Task<List<CatalogItem>> GetAsync(AppDbContext db, string culture, bool includeBeta = false, bool binOk = true)
     {
         var key = $"{culture}|{includeBeta}|{binOk}";

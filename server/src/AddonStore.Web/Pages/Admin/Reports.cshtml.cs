@@ -203,7 +203,8 @@ public class ReportsModel : PageModel
         var first = await _db.UsageStats.AsNoTracking().OrderBy(s => s.Day).Select(s => s.Day).FirstOrDefaultAsync();
         if (first is not null && DateOnly.TryParseExact(first, "yyyy-MM-dd", out var f)) TrackingSince = f;
 
-        var packages = await _db.Packages.AsNoTracking().Include(p => p.Owner).Include(p => p.Versions).ToListAsync();
+        var packages = await _db.Packages.AsNoTracking().Include(p => p.Owner).ToListAsync();   // S2.0.2: light versions
+        await AddonStore.Web.Data.LightVersions.AttachAsync(_db, packages);
         var versions = packages.SelectMany(p => p.Versions).ToList();
         var cmp = new SemVerComparer();
         foreach (var p in packages.Where(p => p.Id != SubmissionService.ClientPackageId))

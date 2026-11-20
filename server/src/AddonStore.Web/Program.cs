@@ -24,7 +24,9 @@ var connection = builder.Configuration.GetConnectionString("Default")
                  ?? $"Data Source={Path.Combine(dataDir, "pluginstore.db")}";
 // S1.25.2: page cache for the database on the data share (see SqliteCacheInterceptor)
 var sqliteCache = new SqliteCacheInterceptor(builder.Configuration.GetValue("Storage:SqliteCacheMb", 128));
-builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(connection).AddInterceptors(sqliteCache));
+// S2.0.2: database time per request (Server-Timing header, slow requests in the log)
+var requestTiming = new AddonStore.Web.Data.RequestTimingInterceptor();
+builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlite(connection).AddInterceptors(sqliteCache, requestTiming));
 // Keys for auth cookies and antiforgery tokens live in the persistent data
 // folder; in the container's default location they were lost on every restart,
 // which signed everybody out after each deployment.
@@ -254,6 +256,11 @@ using (var scope = app.Services.CreateScope())
     await scope.ServiceProvider.GetRequiredService<FederationService>().InitAsync();
     startLog.LogInformation("Startup: database ready after {Ms} ms", clock.ElapsedMilliseconds);
 }
+
+// S2.0.2: time and database share of every request (Server-Timing), slow ones in the log
+var timingLog = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("AddonStore.Timing");
+var slowMs = app.Configuration.GetValue("Storage:SlowRequestMs", 2000);
+app.Use((ctx, next) => AddonStore.Web.Data.RequestTiming.Middleware(ctx, next, timingLog, slowMs));
 
 // Security response headers. TLS terminates at App Service, which does not
 // add HSTS itself; browsers only honour the header on HTTPS responses.

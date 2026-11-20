@@ -62,7 +62,8 @@ public class IndexModel : PageModel
         // add-ons that have reports in the scope, with their display names
         var culture = AddonStore.Web.Services.Lang.Current;
         var ids = await scope.Select(f => f.PackageId).Distinct().ToListAsync();
-        var pkgs = await _db.Packages.AsNoTracking().Include(p => p.Versions).Where(p => ids.Contains(p.Id)).ToListAsync();
+        var pkgs = await _db.Packages.AsNoTracking().Where(p => ids.Contains(p.Id)).ToListAsync();   // S2.0.2: light versions
+        await AddonStore.Web.Data.LightVersions.AttachAsync(_db, pkgs);
         var names = pkgs.ToDictionary(p => p.Id, p => CatalogUi.DisplayName(p, p.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault(), culture));
         PackageOptions.AddRange(names.Select(n => (n.Key, n.Value)).OrderBy(n => n.Value, StringComparer.CurrentCultureIgnoreCase));
         if (Pkg is not null && !names.ContainsKey(Pkg)) Pkg = null;

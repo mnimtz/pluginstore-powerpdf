@@ -61,7 +61,8 @@ public class CategoriesModel : PageModel
     private async Task LoadAsync()
     {
         var lang = AddonStore.Web.Services.Lang.Current;
-        var pkgs = await _db.Packages.Include(p => p.Versions).ToListAsync();
+        var pkgs = await _db.Packages.AsNoTracking().ToListAsync();   // S2.0.2: light versions
+        await AddonStore.Web.Data.LightVersions.AttachAsync(_db, pkgs);
         var used = pkgs.GroupBy(CategoryService.EffectiveSlug).ToDictionary(g => g.Key, g => g.Count());
         Rows = (await _categories.AllAsync())
             .Select(c => new Row(c, CategoryService.Name(c, c.Slug, lang), used.GetValueOrDefault(c.Slug)))

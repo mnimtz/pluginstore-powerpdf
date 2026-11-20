@@ -424,8 +424,17 @@ public static class ApiEndpoints
                 return Results.Text(sb.ToString(), "text/tab-separated-values; charset=utf-8");
             }
 
-            var entries = await CatalogAsync(db, beta, Base(ctx), grants, signing, storeAllowed ? await customers.TestGrantsAsync(ctx) : new(),
-                                             clientOnly: !storeAllowed, restricted: storeAllowed && await customers.IsRestrictedAsync(ctx));
+            var testGrants = storeAllowed ? await customers.TestGrantsAsync(ctx) : new();
+            var restrictedCatalog = storeAllowed && await customers.IsRestrictedAsync(ctx);
+            // S2.0.2: without customer or test codes the answer is the same for everyone: cached like the TSV catalog
+            var cacheKey = grants.Count == 0 && testGrants.Count == 0 && !restrictedCatalog ? $"catalog|{beta}|{!storeAllowed}|{Base(ctx)}" : null;
+            if (cacheKey is not null && Services.CatalogUi.CachedObject(cacheKey) is List<object> cached)
+                return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live",
+                    environment = FederationService.MarkedAsTest ? "uat" : "production", packages = cached } });
+            var gen = Services.CatalogUi.Generation;
+            var entries = await CatalogAsync(db, beta, Base(ctx), grants, signing, testGrants,
+                                             clientOnly: !storeAllowed, restricted: restrictedCatalog);
+            if (cacheKey is not null) Services.CatalogUi.CacheObject(cacheKey, gen, entries);
             return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live",
                 environment = FederationService.MarkedAsTest ? "uat" : "production", packages = entries } });
         });
@@ -1397,13 +1406,15 @@ public static class ApiEndpoints
 
         api.MapGet("/categories", async (AppDbContext db, CategoryService categories) =>
         {
+            // S2.0.2: the answer is the same for everyone: kept like the catalogs (new generation on writes, at most a minute)
+            if (Services.CatalogUi.CachedObject("categories") is { } hit) return Results.Json(hit);
+            var gen = Services.CatalogUi.Generation;
             var all = await categories.AllAsync();
             // S1.25.2: versions without their large review columns (was Include(p => p.Versions): every column of every version)
             var pkgs = await db.Packages.AsNoTracking().Where(p => p.Visibility != "private").ToListAsync();
-            var light = (await db.PackageVersions.Select(PackageVersion.Light).ToListAsync()).ToLookup(v => v.PackageId);
-            foreach (var p in pkgs) p.Versions = light[p.Id].ToList();
+            await AddonStore.Web.Data.LightVersions.AttachAsync(db, pkgs);   // S2.0.2: only the versions of these packages
             var used = pkgs.GroupBy(CategoryService.EffectiveSlug).ToDictionary(g => g.Key, g => g.Count());
-            return Results.Json(new
+            var answer = new
             {
                 ok = true,
                 data = new
@@ -1418,7 +1429,9 @@ public static class ApiEndpoints
                     }),
                     hint = "Use an existing slug as manifest 'category'. Propose a new one only if none fits (see the agent guide, section Categories)."
                 }
-            });
+            };
+            Services.CatalogUi.CacheObject("categories", gen, answer);
+            return Results.Json(answer);
         });
 
         api.MapPatch("/packages/{id}", async (string id, HttpContext ctx, UserManager<AppUser> users,

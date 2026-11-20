@@ -36,11 +36,13 @@ public class InsightsService
     {
         if (!Periods.Contains(days)) days = 30;
         var cmp = new SemVerComparer();
-        var pq = _db.Packages.AsNoTracking().Include(p => p.Versions).Include(p => p.Owner)
+        // S2.0.2: versions without their large review columns (was Include(p => p.Versions))
+        var pq = _db.Packages.AsNoTracking().Include(p => p.Owner)
                     .Where(p => p.Id != SubmissionService.ClientPackageId);
         if (!admin) { pq = pq.Where(p => p.OwnerId == user.Id); ownerId = null; }
         else if (!string.IsNullOrEmpty(ownerId)) pq = pq.Where(p => p.OwnerId == ownerId);
         var packages = await pq.ToListAsync();
+        await AddonStore.Web.Data.LightVersions.AttachAsync(_db, packages);
         var developers = admin
             ? (await _db.Packages.AsNoTracking().Include(p => p.Owner).Where(p => p.Id != SubmissionService.ClientPackageId && p.Owner != null)
                     .Select(p => new { p.OwnerId, p.Owner!.DisplayName }).Distinct().ToListAsync())

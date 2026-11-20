@@ -90,7 +90,8 @@ public class DetailModel : PageModel
         if (user is null) return false;
         F = await _issues.Scope(user, User.IsInRole("Admin")).AsNoTracking().FirstOrDefaultAsync(f => f.Id == id);
         if (F is null) return false;
-        var pkg = await _db.Packages.AsNoTracking().Include(p => p.Versions).FirstOrDefaultAsync(p => p.Id == F.PackageId);
+        var pkg = await _db.Packages.AsNoTracking().FirstOrDefaultAsync(p => p.Id == F.PackageId);   // S2.0.2: light versions
+        if (pkg is not null) await AddonStore.Web.Data.LightVersions.AttachAsync(_db, new[] { pkg });
         var culture = AddonStore.Web.Services.Lang.Current;
         Name = pkg is null ? F.PackageId : CatalogUi.DisplayName(pkg, pkg.Versions.OrderByDescending(v => v.SubmittedAt).FirstOrDefault(), culture);
         Notes = await _db.FeedbackNotes.AsNoTracking().Where(n => n.FeedbackId == id).OrderBy(n => n.Id).ToListAsync();
