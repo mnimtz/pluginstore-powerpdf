@@ -760,14 +760,14 @@ public static class ApiEndpoints
             if (!await MayAccessAsync(ctx, id, db, users, customers)) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
             var cmp = new SemVerComparer();
             // S2.0.3: versions without their review columns, not tracked (every catalog tile asks here)
-            var versions = await db.PackageVersions.AsNoTracking()
-                .Where(x => x.PackageId == id && (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta)).Select(PackageVersion.Light).ToListAsync();
+            var allRows = await AddonStore.Web.Data.LightVersions.AllAsync(db);   // S2.0.6: from memory
+            var versions = allRows.Where(x => x.PackageId == id && (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta)).ToList();
             var released = v is null || versions.Any(x => x.Version == v);
             if (v is not null && !versions.Any(x => x.Version == v) && await customers.IsTestVersionAsync(ctx, id, v))   // S1.6.0
-                versions.AddRange(await db.PackageVersions.AsNoTracking().Where(x => x.PackageId == id && x.Version == v).Select(PackageVersion.Light).ToListAsync());
+                versions.AddRange(allRows.Where(x => x.PackageId == id && x.Version == v));
             // S1.29.1: admins and reviewers see the icon of a version still waiting for review (review queue)
             if (v is not null && !versions.Any(x => x.Version == v) && (ctx.User.IsInRole("Admin") || ctx.User.IsInRole("Reviewer")))
-                versions.AddRange(await db.PackageVersions.AsNoTracking().Where(x => x.PackageId == id && x.Version == v).Select(PackageVersion.Light).ToListAsync());
+                versions.AddRange(allRows.Where(x => x.PackageId == id && x.Version == v));
             var pick = (v is null ? null : versions.FirstOrDefault(x => x.Version == v))
                        ?? versions.Where(x => x.Status == VersionStatus.Live).OrderByDescending(x => x.Version, cmp).FirstOrDefault()
                        ?? versions.OrderByDescending(x => x.Version, cmp).FirstOrDefault();
@@ -1984,10 +1984,9 @@ public static class ApiEndpoints
     {
         tests ??= new();
         if (signing is not null) await signing.EnsureLoadedAsync();
-        var all = await db.PackageVersions
-            .Where(v => v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta))
-            .Select(PackageVersion.Light)   // S1.25.2: without the large review columns
-            .ToListAsync();
+        // S2.0.6: the light rows from memory (LightVersions)
+        var all = (await AddonStore.Web.Data.LightVersions.AllAsync(db))
+            .Where(v => v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta)).ToList();
         var cmp = new SemVerComparer();
         var result = new List<object>();
         var ownerRows = await db.Packages.Include(p => p.Owner).ToListAsync();

@@ -612,6 +612,13 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Version rows in memory (S2.0.6, Nov 20, 2026):** the light rows of all versions (a few hundred) are kept in process
+memory (`LightVersions.AllAsync`): even with a held connection, SQLite's page cache did not survive pauses on the
+share, and every list page read the version table again (22 s for the start page after 200 s without requests). A
+write to packages or versions starts a new generation and the next caller loads afresh; otherwise the rows refresh in
+the background after ten minutes (download counters may lag that long). Catalogs, start page, dashboard, insights,
+reports, report lists, categories and icons use them.
+
 **Page cache that stays (S2.0.5, Nov 20, 2026):** SQLite frees the shared page cache when the last connection
 closes, and Microsoft.Data.Sqlite's pool closes idle connections (prune timer), so after every short pause the next
 page started cold (about 50 ms per page on the share, 7 to 17 s for a list page). `Data/CacheKeeper.cs` holds one

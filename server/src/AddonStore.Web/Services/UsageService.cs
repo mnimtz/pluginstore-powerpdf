@@ -138,6 +138,7 @@ public class UsageService
         {
             u = await _db.UsageStats.ExecuteDeleteAsync();
             d = await _db.PackageVersions.Where(v => v.Downloads != 0).ExecuteUpdateAsync(x => x.SetProperty(v => v.Downloads, 0));
+            CatalogUi.Invalidate();   // S2.0.6: the cached version rows carry the old counters
         }
         if (shares) s = await _db.ShareStats.ExecuteDeleteAsync();
         if (ipEvents) ip = await _db.UsageEvents.ExecuteDeleteAsync();

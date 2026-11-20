@@ -262,6 +262,9 @@ using (var scope = app.Services.CreateScope())
     startLog.LogInformation("Startup: database ready after {Ms} ms", clock.ElapsedMilliseconds);
 }
 
+// S2.0.6: version rows in memory load in a scope of their own
+AddonStore.Web.Data.LightVersions.Init(app.Services.GetRequiredService<IServiceScopeFactory>());
+
 // S2.0.2: time and database share of every request (Server-Timing), slow ones in the log
 var timingLog = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("AddonStore.Timing");
 var slowMs = app.Configuration.GetValue("Storage:SlowRequestMs", 2000);

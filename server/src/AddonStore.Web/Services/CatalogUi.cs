@@ -143,11 +143,10 @@ public static class CatalogUi
 
     private static async Task<List<CatalogItem>> LoadAsync(AppDbContext db, string culture, bool includeBeta, bool binOk)
     {
-        var all = (await db.PackageVersions
-            .Where(v => v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta))
-            .Where(v => db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private"))
-            .Select(PackageVersion.Light)   // S1.25.2: without the large review columns
-            .ToListAsync())
+        // S2.0.6: the light rows from memory (LightVersions), only the package visibility from the database
+        var publicIds = (await db.Packages.AsNoTracking().Where(p => p.Visibility != "private").Select(p => p.Id).ToListAsync()).ToHashSet();
+        var all = (await AddonStore.Web.Data.LightVersions.AllAsync(db))
+            .Where(v => (v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta)) && publicIds.Contains(v.PackageId))
             .Where(v => binOk || !HasBin(v)).ToList();   // an older client gets the newest version it can install
         var cmp = new SemVerComparer();
         var items = new List<CatalogItem>();

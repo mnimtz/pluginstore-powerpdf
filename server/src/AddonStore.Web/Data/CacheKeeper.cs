@@ -64,7 +64,7 @@ public sealed class CacheKeeper : BackgroundService
             {
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 // what the list pages read: the light version rows, packages, accounts, reports, categories
-                await db.PackageVersions.AsNoTracking().Select(PackageVersion.Light).ToListAsync(stop);
+                await LightVersions.AllAsync(db);   // S2.0.6: the version rows the list pages use, into memory
                 await db.Packages.AsNoTracking().ToListAsync(stop);
                 await db.Users.AsNoTracking().ToListAsync(stop);
                 await db.Feedbacks.AsNoTracking().Select(f => new { f.Id, f.PackageId, f.Status }).ToListAsync(stop);
