@@ -21,6 +21,8 @@ cl /nologo /EHsc /std:c++17 /W4 /WX /permissive- /DUNICODE /D_UNICODE /I"%HERE%s
 "%HERE%out\logging_tests.exe" || exit /b 1
 cl /nologo /EHsc /std:c++17 /W4 /WX /permissive- /DUNICODE /D_UNICODE /Fo"%HERE%out\\" /Fe"%HERE%out\layoutdir_tests.exe" "%HERE%layoutdir_tests.cpp" || exit /b 1
 "%HERE%out\layoutdir_tests.exe" || exit /b 1
+rem optional code signing step (signing\sign.py): configuration checks and command lines, signs nothing
+python "%HERE%signing_tests.py" "%HERE%out\failover_tests.exe" || exit /b 1
 if /i not "%~1"=="live" goto :done
 rem stubs\stdafx.h replaces MFC and the Power PDF SDK; the other headers are the plug-in's own
 cl /nologo /EHsc /std:c++17 /W4 /permissive- /DUNICODE /D_UNICODE /I"%HERE%stubs" /I"%HERE%..\common" /Fo"%HERE%out\\" /Fe"%HERE%out\http_live.exe" "%HERE%http_live.cpp" "%HERE%..\store\http.cpp" winhttp.lib version.lib advapi32.lib user32.lib || exit /b 1

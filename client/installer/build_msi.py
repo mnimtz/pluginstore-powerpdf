@@ -23,6 +23,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PROJ = os.path.dirname(HERE)
 OUT = os.path.join(HERE, 'Release')
 LANGDIR = os.path.join(OUT, 'lang')
+SIGN = os.path.join(PROJ, 'signing', 'sign.py')
 sys.path.insert(0, HERE)
 from make_l10n import CULTURES, main as make_l10n   # noqa: E402
 
@@ -34,9 +35,21 @@ def run(args):
         raise SystemExit(f'failed: {os.path.basename(args[0])} ({r.returncode})')
 
 
+def sign(mode, *files, remove_on_failure=()):
+    """Optional Authenticode signing (signing/sign.py, docs/code-signing.md): nothing when it is not configured."""
+    args = [sys.executable, SIGN] + (['--check'] if mode == 'check' else []) + list(files)
+    if subprocess.run(args).returncode != 0:
+        for f in remove_on_failure:   # no unsigned MSI of this version is left for make_ppak.py to pick up
+            if os.path.exists(f):
+                os.remove(f)
+        raise SystemExit('Code signing failed (see the [sign] lines above).')
+
+
 def main():
     if not os.path.exists(os.path.join(PROJ, 'Release', 'PluginStore.zxt')):
         raise SystemExit('Plug-in not built - run build.cmd first.')
+    # with signing configured, the MSI may only pack binaries that build.cmd has signed
+    sign('check', os.path.join(PROJ, 'Release', 'PluginStore.zxt'), os.path.join(PROJ, 'link', 'Release', 'AddonStoreLink.exe'))
     version = subprocess.run([sys.executable, os.path.join(HERE, 'get_version.py')], capture_output=True, text=True).stdout.strip()
     if not version:
         raise SystemExit('Version not found - check common\\version.h.')
@@ -82,8 +95,10 @@ def main():
     si.SetProperty(msilib.PID_TEMPLATE, 'x64;' + ','.join(str(l) for l, _ in [(1033, '')] + transforms))
     si.Persist()
     db.Commit()
-    del db
+    del si, view, db   # every handle closed, or signtool finds the MSI still open
 
+    # the signature comes last: any later change to the MSI (transforms, summary) would break it
+    sign('sign', base, remove_on_failure=(base, os.path.join(OUT, 'PluginStore.msi')))
     shutil.copyfile(base, os.path.join(OUT, 'PluginStore.msi'))
     print(f'OK. MSI: {base} ({len(transforms) + 1} languages)')
 

@@ -65,6 +65,17 @@ Steps (Windows, Visual Studio 2022, WiX v3 in `C:\Claude\Tools\wix314`):
    client\build.cmd
    client\installer\build_msi.cmd
    ```
+   Optional code signing (Authenticode, see `docs/code-signing.md`): off unless a signing
+   configuration exists outside the repository (`%LOCALAPPDATA%\AddonStoreBuild\signing.json` or
+   the path in `ADDONSTORE_SIGN_CONFIG`; Azure Trusted Signing via signtool and its dlib, an
+   external signing script such as the one Tungsten IT provides, or a certificate thumbprint).
+   Without it both scripts print one `[sign] ... not configured` line and change nothing. With it,
+   `build.cmd` signs `PluginStore.zxt` and `AddonStoreLink.exe`, `build_msi.py` refuses unsigned
+   inputs and signs the finished MSI last (after the language transforms); any signing or
+   verification error fails the build. Check the setup with
+   `python client\signing\sign.py --status` and the result with `signtool verify /pa /v <file>`.
+   Sign before step 4: the store's own catalog signature is computed on upload and stays
+   independent of Authenticode.
    `build_msi.cmd` produces `PluginStore-<version>.msi` and the stable copy
    `PluginStore.msi` that the package spec references. Since client 0.8.0 it
    runs `build_msi.py` (Python 3.12 or older, for `msilib`): one MSI per

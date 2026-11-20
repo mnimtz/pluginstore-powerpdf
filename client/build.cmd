@@ -10,5 +10,10 @@ set RC1=%ERRORLEVEL%
 "%MSB%" /nologo /v:m /p:Configuration=Release /p:Platform=x64 "%~dp0link\AddonStoreLink.vcxproj"
 set RC2=%ERRORLEVEL%
 set /a MSB_RC=RC1+RC2
+if not "%MSB_RC%"=="0" ( echo MSB_EXIT=%MSB_RC% & exit /b %MSB_RC% )
+rem Optional Authenticode signing (docs\code-signing.md): off unless a signing configuration exists
+rem outside the repository; then it signs both binaries BEFORE the MSI packs them, and fails loudly.
+python "%~dp0signing\sign.py" "%~dp0Release\PluginStore.zxt" "%~dp0link\Release\AddonStoreLink.exe"
+if errorlevel 1 ( echo SIGN_EXIT=1 & echo MSB_EXIT=1 & exit /b 1 )
 echo MSB_EXIT=%MSB_RC%
 exit /b %MSB_RC%
