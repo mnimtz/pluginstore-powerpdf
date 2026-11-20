@@ -60,13 +60,18 @@ builder.Services.AddAntiforgery(o =>
     o.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
 });
 
-// "Sign in with Microsoft" (Entra ID): only with a complete Entra:* configuration, otherwise nothing is registered
-var entra = EntraSettings.From(builder.Configuration);
-builder.Services.AddSingleton(entra);
+// "Sign in with Microsoft" (Entra ID): the scheme is always registered and stays inert until the Entra:* app
+// settings or the admin page (Settings > Sign in with Microsoft) give a complete configuration; changes on the
+// admin page take effect without a restart (Auth/EntraRuntime.cs)
 builder.Services.AddAuthentication()
     .AddScheme<Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions, ApiTokenAuthHandler>(
         ApiTokenAuthHandler.Scheme, null)
-    .AddEntraSignIn(entra, builder.Environment.IsDevelopment());
+    .AddEntraSignIn(builder.Environment.IsDevelopment());
+// the test on the admin page: only login.microsoftonline.com, short timeout, no redirects (Services/EntraSetupService.cs)
+builder.Services.AddHttpClient(EntraProbe.HttpName, c => { c.Timeout = TimeSpan.FromSeconds(10); c.DefaultRequestHeaders.UserAgent.ParseAdd("AddonStore-Server (entra setup)"); })
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
+builder.Services.AddSingleton<EntraProbe>();
+builder.Services.AddScoped<EntraSetupService>();
 
 builder.Services.AddAuthorization(o =>
 {
@@ -258,8 +263,9 @@ using (var scope = app.Services.CreateScope())
     // UAT mode: portal band and catalog "environment" read it without a database round trip
     await scope.ServiceProvider.GetRequiredService<FederationService>().InitAsync();
     startLog.LogInformation("Startup: database ready after {Ms} ms", clock.ElapsedMilliseconds);
-    if (entra.Enabled) startLog.LogInformation("Startup: Sign in with Microsoft on, {Count} allowed tenant(s)", entra.AllowedTenants.Count);
-    else if (entra.Problem is not null) startLog.LogWarning("Startup: Sign in with Microsoft stays off: {Problem}", entra.Problem);
+    var entra = await app.Services.GetRequiredService<EntraRuntime>().ReloadAsync();
+    if (entra.Enabled) startLog.LogInformation("Startup: Sign in with Microsoft on ({Source}), {Count} allowed tenant(s)", entra.Source, entra.AllowedTenants.Count);
+    else if (entra.Problem is not null) startLog.LogWarning("Startup: Sign in with Microsoft stays off ({Source}): {Problem}", entra.Source, entra.Problem);
 }
 
 // S2.0.6: version rows in memory load in a scope of their own
@@ -432,7 +438,7 @@ app.MapGet("/avatar/{id}", (string id) =>
 });
 
 app.MapRazorPages();
-app.MapEntraSignIn(entra);
+app.MapEntraSignIn();
 app.MapApi();
 app.MapSendTo();
 app.MapFederation();

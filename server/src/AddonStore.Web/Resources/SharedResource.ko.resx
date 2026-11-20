@@ -1665,4 +1665,60 @@
   <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>연결된 Microsoft 계정이 없습니다. 연결하려면 로그인 페이지에서 같은 이메일 주소로 "Microsoft로 로그인"을 사용하십시오.</value></data>
   <data name="Microsoft account unlinked." xml:space="preserve"><value>Microsoft 계정 연결이 해제되었습니다.</value></data>
   <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>계정에 아직 암호가 없습니다. 암호를 설정하려면 로그인 페이지에서 "암호를 잊으셨습니까?"를 사용하십시오.</value></data>
+  <data name="The application (client) ID is missing." xml:space="preserve"><value>애플리케이션(클라이언트) ID가 없습니다.</value></data>
+  <data name="The client secret is missing or can no longer be read. Enter it again." xml:space="preserve"><value>클라이언트 암호가 없거나 더 이상 읽을 수 없습니다. 다시 입력하세요.</value></data>
+  <data name="The directory is missing." xml:space="preserve"><value>디렉터리가 없습니다.</value></data>
+  <data name="The directory could not be resolved to a directory ID. Save the settings again." xml:space="preserve"><value>디렉터리를 디렉터리 ID로 확인할 수 없습니다. 설정을 다시 저장하세요.</value></data>
+  <data name="Test passed: Microsoft accepted the directory, the application and the client secret." xml:space="preserve"><value>테스트 통과: Microsoft가 디렉터리, 애플리케이션 및 클라이언트 암호를 수락했습니다.</value></data>
+  <data name="Directory not found. Check the directory (tenant) ID or the domain." xml:space="preserve"><value>디렉터리를 찾을 수 없습니다. 디렉터리(테넌트) ID 또는 도메인을 확인하세요.</value></data>
+  <data name="Application not found in this directory. Check the application (client) ID and that the app is registered in this directory." xml:space="preserve"><value>이 디렉터리에서 애플리케이션을 찾을 수 없습니다. 애플리케이션(클라이언트) ID와 앱이 이 디렉터리에 등록되어 있는지 확인하세요.</value></data>
+  <data name="The client secret is wrong or has expired. Create a new client secret and copy its value (not the secret ID)." xml:space="preserve"><value>클라이언트 암호가 잘못되었거나 만료되었습니다. 새 클라이언트 암호를 만들고 그 값(암호 ID가 아님)을 복사하세요.</value></data>
+  <data name="Directory and application found. Enter the client secret to test it as well." xml:space="preserve"><value>디렉터리와 애플리케이션을 찾았습니다. 클라이언트 암호도 테스트하려면 입력하세요.</value></data>
+  <data name="Microsoft could not be reached. Check the internet connection of the server and try again." xml:space="preserve"><value>Microsoft에 연결할 수 없습니다. 서버의 인터넷 연결을 확인하고 다시 시도하세요.</value></data>
+  <data name="Microsoft answered with an unexpected error." xml:space="preserve"><value>Microsoft가 예기치 않은 오류로 응답했습니다.</value></data>
+  <data name="The application (client) ID must be a GUID such as 00000000-0000-0000-0000-000000000000." xml:space="preserve"><value>애플리케이션(클라이언트) ID는 GUID여야 합니다(예: 00000000-0000-0000-0000-000000000000).</value></data>
+  <data name="The directory must be a directory (tenant) ID or a verified domain such as contoso.com." xml:space="preserve"><value>디렉터리는 디렉터리(테넌트) ID이거나 contoso.com과 같은 확인된 도메인이어야 합니다.</value></data>
+  <data name="The client secret is too long or contains invalid characters." xml:space="preserve"><value>클라이언트 암호가 너무 길거나 잘못된 문자가 포함되어 있습니다.</value></data>
+  <data name="Additional allowed directories: enter directory IDs or domains, separated by commas (at most 20)." xml:space="preserve"><value>추가 허용 디렉터리: 디렉터리 ID 또는 도메인을 쉼표로 구분하여 입력하세요(최대 20개).</value></data>
+  <data name="Enter the application (client) ID and the directory first." xml:space="preserve"><value>먼저 애플리케이션(클라이언트) ID와 디렉터리를 입력하세요.</value></data>
+  <data name="The app settings Entra:* decide; change the values there." xml:space="preserve"><value>앱 설정 Entra:*이 우선합니다. 값은 그곳에서 변경하세요.</value></data>
+  <data name="To switch it on, enter the application (client) ID, the directory and the client secret." xml:space="preserve"><value>켜려면 애플리케이션(클라이언트) ID, 디렉터리 및 클라이언트 암호를 입력하세요.</value></data>
+  <data name="Saved. The sign-in page now shows &quot;Sign in with Microsoft&quot;." xml:space="preserve"><value>저장했습니다. 이제 로그인 페이지에 "Microsoft로 로그인"이 표시됩니다.</value></data>
+  <data name="Saved, but incomplete: the button stays hidden." xml:space="preserve"><value>저장했지만 불완전합니다. 단추가 계속 숨겨져 있습니다.</value></data>
+  <data name="Saved. Sign in with Microsoft is off." xml:space="preserve"><value>저장했습니다. Microsoft 로그인이 꺼져 있습니다.</value></data>
+  <data name="Client secret removed." xml:space="preserve"><value>클라이언트 암호를 제거했습니다.</value></data>
+  <data name="The test needs Entra:ClientId and Entra:TenantId (directory ID or domain) in the app settings." xml:space="preserve"><value>테스트하려면 앱 설정에 Entra:ClientId와 Entra:TenantId(디렉터리 ID 또는 도메인)가 필요합니다.</value></data>
+  <data name="Microsoft answered with an unexpected error: {0}" xml:space="preserve"><value>Microsoft가 예기치 않은 오류로 응답했습니다: {0}</value></data>
+  <data name="Directory not found: {0}" xml:space="preserve"><value>디렉터리를 찾을 수 없습니다: {0}</value></data>
+  <data name="An additional button on the sign-in page for the Microsoft work accounts of your organization (Microsoft Entra ID). Email and password keep working. Personal Microsoft accounts and guests are refused on purpose." xml:space="preserve"><value>조직의 Microsoft 회사 계정(Microsoft Entra ID)을 위한 추가 단추가 로그인 페이지에 표시됩니다. 이메일과 암호로도 계속 로그인할 수 있습니다. 개인 Microsoft 계정과 게스트는 의도적으로 거부됩니다.</value></data>
+  <data name="The sign-in page shows the button &quot;Sign in with Microsoft&quot;." xml:space="preserve"><value>로그인 페이지에 "Microsoft로 로그인" 단추가 표시됩니다.</value></data>
+  <data name="Incomplete" xml:space="preserve"><value>불완전</value></data>
+  <data name="The button stays hidden until the configuration is complete." xml:space="preserve"><value>구성이 완료될 때까지 단추는 숨겨져 있습니다.</value></data>
+  <data name="The sign-in page shows no Microsoft button." xml:space="preserve"><value>로그인 페이지에 Microsoft 단추가 표시되지 않습니다.</value></data>
+  <data name="Set by app settings (Entra:*). They take precedence over this page; change the values in the app settings. The client secret is never shown." xml:space="preserve"><value>앱 설정(Entra:*)으로 지정되어 있습니다. 이 페이지보다 우선하므로 값은 앱 설정에서 변경하세요. 클라이언트 암호는 표시되지 않습니다.</value></data>
+  <data name="Register the app in Microsoft Entra (three steps)" xml:space="preserve"><value>Microsoft Entra에 앱 등록(3단계)</value></data>
+  <data name="App registrations, New registration: any name, &quot;Accounts in this organizational directory only&quot;, redirect URI type Web with this address:" xml:space="preserve"><value>앱 등록, 새 등록: 이름은 자유롭게, "이 조직 디렉터리의 계정만", 이 주소를 사용하는 웹 유형의 리디렉션 URI:</value></data>
+  <data name="Redirect URI" xml:space="preserve"><value>리디렉션 URI</value></data>
+  <data name="No public base URL is set (section Server), so the address comes from this request. It must be the address users open the store with." xml:space="preserve"><value>공개 기본 URL이 설정되어 있지 않아(서버 섹션) 주소를 이 요청에서 가져왔습니다. 사용자가 스토어를 여는 주소여야 합니다.</value></data>
+  <data name="Certificates &amp; secrets, New client secret: copy the value (not the secret ID)." xml:space="preserve"><value>인증서 및 암호, 새 클라이언트 암호: 값(암호 ID가 아님)을 복사합니다.</value></data>
+  <data name="Overview: copy the application (client) ID and the directory (tenant) ID into the fields below." xml:space="preserve"><value>개요: 애플리케이션(클라이언트) ID와 디렉터리(테넌트) ID를 아래 필드에 복사합니다.</value></data>
+  <data name="Open the Microsoft Entra admin center" xml:space="preserve"><value>Microsoft Entra 관리 센터 열기</value></data>
+  <data name="No optional claims and no API permissions are needed." xml:space="preserve"><value>선택적 클레임이나 API 권한은 필요하지 않습니다.</value></data>
+  <data name="Enter the values" xml:space="preserve"><value>값 입력</value></data>
+  <data name="Application (client) ID" xml:space="preserve"><value>애플리케이션(클라이언트) ID</value></data>
+  <data name="Directory (tenant) ID or domain" xml:space="preserve"><value>디렉터리(테넌트) ID 또는 도메인</value></data>
+  <data name="Client secret" xml:space="preserve"><value>클라이언트 암호</value></data>
+  <data name="Stored encrypted and never shown again. Leave the field empty to keep the stored secret." xml:space="preserve"><value>암호화되어 저장되며 다시 표시되지 않습니다. 저장된 암호를 유지하려면 필드를 비워 두세요.</value></data>
+  <data name="Stored encrypted and never shown again." xml:space="preserve"><value>암호화되어 저장되며 다시 표시되지 않습니다.</value></data>
+  <data name="Additional allowed directories (optional)" xml:space="preserve"><value>추가 허용 디렉터리(선택 사항)</value></data>
+  <data name="Only for later use with a multi-tenant app registration: directory IDs or domains, separated by commas. Leave empty for your own directory only." xml:space="preserve"><value>나중에 다중 테넌트 앱 등록에서 사용하는 경우에만: 디렉터리 ID 또는 도메인을 쉼표로 구분합니다. 내 디렉터리만 허용하려면 비워 두세요.</value></data>
+  <data name="Enabled: show &quot;Sign in with Microsoft&quot; on the sign-in page" xml:space="preserve"><value>켜기: 로그인 페이지에 "Microsoft로 로그인" 표시</value></data>
+  <data name="Testing with Microsoft…" xml:space="preserve"><value>Microsoft에서 테스트하는 중…</value></data>
+  <data name="The test could not be run. Reload the page and try again." xml:space="preserve"><value>테스트를 실행할 수 없습니다. 페이지를 다시 로드하고 다시 시도하세요.</value></data>
+  <data name="Checks the entered values with Microsoft without saving them." xml:space="preserve"><value>입력한 값을 저장하지 않고 Microsoft에서 확인합니다.</value></data>
+  <data name="Remove the stored client secret? Sign in with Microsoft stops until a new secret is saved." xml:space="preserve"><value>저장된 클라이언트 암호를 제거하시겠습니까? 새 암호가 저장될 때까지 Microsoft 로그인이 중지됩니다.</value></data>
+  <data name="Remove secret" xml:space="preserve"><value>암호 제거</value></data>
+  <data name="Try it" xml:space="preserve"><value>사용해 보기</value></data>
+  <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>로그아웃한 다음 디렉터리의 사용자(확인된 도메인의 주소)로 "Microsoft로 로그인"을 선택하세요. 새 사용자는 관리자에게 액세스 요청이 되며, 같은 주소의 기존 계정은 연결되고 중복으로 만들어지지 않습니다.</value></data>
+  <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>이 페이지는 다른 주소로 열려 있습니다. 사용자가 그 주소로도 로그인하는 경우 이 리디렉션 URI도 추가하세요: {0}</value></data>
 </root>

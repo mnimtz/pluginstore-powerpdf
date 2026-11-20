@@ -1665,4 +1665,60 @@
   <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>Microsoft アカウントはリンクされていません。リンクするには、サインイン ページで同じメール アドレスを使って「Microsoft でサインイン」を選択してください。</value></data>
   <data name="Microsoft account unlinked." xml:space="preserve"><value>Microsoft アカウントのリンクを解除しました。</value></data>
   <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>このアカウントにはまだパスワードがありません。設定するには、サインイン ページの「パスワードを忘れた場合」を使用してください。</value></data>
+  <data name="The application (client) ID is missing." xml:space="preserve"><value>アプリケーション (クライアント) ID がありません。</value></data>
+  <data name="The client secret is missing or can no longer be read. Enter it again." xml:space="preserve"><value>クライアント シークレットがないか、読み取れなくなりました。もう一度入力してください。</value></data>
+  <data name="The directory is missing." xml:space="preserve"><value>ディレクトリがありません。</value></data>
+  <data name="The directory could not be resolved to a directory ID. Save the settings again." xml:space="preserve"><value>ディレクトリをディレクトリ ID に解決できませんでした。設定をもう一度保存してください。</value></data>
+  <data name="Test passed: Microsoft accepted the directory, the application and the client secret." xml:space="preserve"><value>テスト成功: Microsoft はディレクトリ、アプリケーション、クライアント シークレットを受け入れました。</value></data>
+  <data name="Directory not found. Check the directory (tenant) ID or the domain." xml:space="preserve"><value>ディレクトリが見つかりません。ディレクトリ (テナント) ID またはドメインを確認してください。</value></data>
+  <data name="Application not found in this directory. Check the application (client) ID and that the app is registered in this directory." xml:space="preserve"><value>このディレクトリにアプリケーションが見つかりません。アプリケーション (クライアント) ID と、アプリがこのディレクトリに登録されていることを確認してください。</value></data>
+  <data name="The client secret is wrong or has expired. Create a new client secret and copy its value (not the secret ID)." xml:space="preserve"><value>クライアント シークレットが間違っているか、有効期限が切れています。新しいクライアント シークレットを作成し、その値 (シークレット ID ではありません) をコピーしてください。</value></data>
+  <data name="Directory and application found. Enter the client secret to test it as well." xml:space="preserve"><value>ディレクトリとアプリケーションが見つかりました。クライアント シークレットも入力すると、それもテストされます。</value></data>
+  <data name="Microsoft could not be reached. Check the internet connection of the server and try again." xml:space="preserve"><value>Microsoft に接続できません。サーバーのインターネット接続を確認して、もう一度お試しください。</value></data>
+  <data name="Microsoft answered with an unexpected error." xml:space="preserve"><value>Microsoft から予期しないエラーが返されました。</value></data>
+  <data name="The application (client) ID must be a GUID such as 00000000-0000-0000-0000-000000000000." xml:space="preserve"><value>アプリケーション (クライアント) ID は GUID である必要があります (例: 00000000-0000-0000-0000-000000000000)。</value></data>
+  <data name="The directory must be a directory (tenant) ID or a verified domain such as contoso.com." xml:space="preserve"><value>ディレクトリには、ディレクトリ (テナント) ID または contoso.com のような確認済みドメインを指定してください。</value></data>
+  <data name="The client secret is too long or contains invalid characters." xml:space="preserve"><value>クライアント シークレットが長すぎるか、無効な文字が含まれています。</value></data>
+  <data name="Additional allowed directories: enter directory IDs or domains, separated by commas (at most 20)." xml:space="preserve"><value>追加で許可するディレクトリ: ディレクトリ ID またはドメインをコンマ区切りで入力してください (最大 20 個)。</value></data>
+  <data name="Enter the application (client) ID and the directory first." xml:space="preserve"><value>先にアプリケーション (クライアント) ID とディレクトリを入力してください。</value></data>
+  <data name="The app settings Entra:* decide; change the values there." xml:space="preserve"><value>アプリ設定 Entra:* が優先されます。値はそちらで変更してください。</value></data>
+  <data name="To switch it on, enter the application (client) ID, the directory and the client secret." xml:space="preserve"><value>有効にするには、アプリケーション (クライアント) ID、ディレクトリ、クライアント シークレットを入力してください。</value></data>
+  <data name="Saved. The sign-in page now shows &quot;Sign in with Microsoft&quot;." xml:space="preserve"><value>保存しました。サインイン ページに「Microsoft でサインイン」が表示されるようになりました。</value></data>
+  <data name="Saved, but incomplete: the button stays hidden." xml:space="preserve"><value>保存しましたが、不完全です。ボタンは非表示のままです。</value></data>
+  <data name="Saved. Sign in with Microsoft is off." xml:space="preserve"><value>保存しました。Microsoft でのサインインはオフです。</value></data>
+  <data name="Client secret removed." xml:space="preserve"><value>クライアント シークレットを削除しました。</value></data>
+  <data name="The test needs Entra:ClientId and Entra:TenantId (directory ID or domain) in the app settings." xml:space="preserve"><value>テストには、アプリ設定の Entra:ClientId と Entra:TenantId (ディレクトリ ID またはドメイン) が必要です。</value></data>
+  <data name="Microsoft answered with an unexpected error: {0}" xml:space="preserve"><value>Microsoft から予期しないエラーが返されました: {0}</value></data>
+  <data name="Directory not found: {0}" xml:space="preserve"><value>ディレクトリが見つかりません: {0}</value></data>
+  <data name="An additional button on the sign-in page for the Microsoft work accounts of your organization (Microsoft Entra ID). Email and password keep working. Personal Microsoft accounts and guests are refused on purpose." xml:space="preserve"><value>組織の Microsoft 職場アカウント (Microsoft Entra ID) 用に、サインイン ページにボタンを追加します。メール アドレスとパスワードによるサインインも引き続き使えます。個人用 Microsoft アカウントとゲストは意図的に拒否されます。</value></data>
+  <data name="The sign-in page shows the button &quot;Sign in with Microsoft&quot;." xml:space="preserve"><value>サインイン ページに「Microsoft でサインイン」ボタンが表示されます。</value></data>
+  <data name="Incomplete" xml:space="preserve"><value>不完全</value></data>
+  <data name="The button stays hidden until the configuration is complete." xml:space="preserve"><value>構成が完了するまで、ボタンは非表示のままです。</value></data>
+  <data name="The sign-in page shows no Microsoft button." xml:space="preserve"><value>サインイン ページに Microsoft ボタンは表示されません。</value></data>
+  <data name="Set by app settings (Entra:*). They take precedence over this page; change the values in the app settings. The client secret is never shown." xml:space="preserve"><value>アプリ設定 (Entra:*) で設定されています。このページより優先されます。値はアプリ設定で変更してください。クライアント シークレットは表示されません。</value></data>
+  <data name="Register the app in Microsoft Entra (three steps)" xml:space="preserve"><value>Microsoft Entra にアプリを登録する (3 ステップ)</value></data>
+  <data name="App registrations, New registration: any name, &quot;Accounts in this organizational directory only&quot;, redirect URI type Web with this address:" xml:space="preserve"><value>アプリの登録、新規登録: 任意の名前、「この組織ディレクトリのみに含まれるアカウント」、種類 Web のリダイレクト URI にこのアドレス:</value></data>
+  <data name="Redirect URI" xml:space="preserve"><value>リダイレクト URI</value></data>
+  <data name="No public base URL is set (section Server), so the address comes from this request. It must be the address users open the store with." xml:space="preserve"><value>公開ベース URL が設定されていないため (サーバー セクション)、アドレスはこの要求から取得されています。ユーザーがストアを開くアドレスである必要があります。</value></data>
+  <data name="Certificates &amp; secrets, New client secret: copy the value (not the secret ID)." xml:space="preserve"><value>証明書とシークレット、新しいクライアント シークレット: 値 (シークレット ID ではありません) をコピーします。</value></data>
+  <data name="Overview: copy the application (client) ID and the directory (tenant) ID into the fields below." xml:space="preserve"><value>概要: アプリケーション (クライアント) ID とディレクトリ (テナント) ID を下のフィールドにコピーします。</value></data>
+  <data name="Open the Microsoft Entra admin center" xml:space="preserve"><value>Microsoft Entra 管理センターを開く</value></data>
+  <data name="No optional claims and no API permissions are needed." xml:space="preserve"><value>オプションの要求や API のアクセス許可は不要です。</value></data>
+  <data name="Enter the values" xml:space="preserve"><value>値を入力する</value></data>
+  <data name="Application (client) ID" xml:space="preserve"><value>アプリケーション (クライアント) ID</value></data>
+  <data name="Directory (tenant) ID or domain" xml:space="preserve"><value>ディレクトリ (テナント) ID またはドメイン</value></data>
+  <data name="Client secret" xml:space="preserve"><value>クライアント シークレット</value></data>
+  <data name="Stored encrypted and never shown again. Leave the field empty to keep the stored secret." xml:space="preserve"><value>暗号化して保存され、再表示されません。保存済みのシークレットを維持するには、空欄のままにしてください。</value></data>
+  <data name="Stored encrypted and never shown again." xml:space="preserve"><value>暗号化して保存され、再表示されません。</value></data>
+  <data name="Additional allowed directories (optional)" xml:space="preserve"><value>追加で許可するディレクトリ (省略可能)</value></data>
+  <data name="Only for later use with a multi-tenant app registration: directory IDs or domains, separated by commas. Leave empty for your own directory only." xml:space="preserve"><value>将来マルチテナントのアプリ登録で使う場合のみ: ディレクトリ ID またはドメインをコンマ区切りで入力します。自分のディレクトリだけを許可する場合は空欄のままにします。</value></data>
+  <data name="Enabled: show &quot;Sign in with Microsoft&quot; on the sign-in page" xml:space="preserve"><value>有効: サインイン ページに「Microsoft でサインイン」を表示する</value></data>
+  <data name="Testing with Microsoft…" xml:space="preserve"><value>Microsoft でテスト中…</value></data>
+  <data name="The test could not be run. Reload the page and try again." xml:space="preserve"><value>テストを実行できませんでした。ページを再読み込みして、もう一度お試しください。</value></data>
+  <data name="Checks the entered values with Microsoft without saving them." xml:space="preserve"><value>入力した値を保存せずに Microsoft で確認します。</value></data>
+  <data name="Remove the stored client secret? Sign in with Microsoft stops until a new secret is saved." xml:space="preserve"><value>保存済みのクライアント シークレットを削除しますか? 新しいシークレットが保存されるまで、Microsoft でのサインインは停止します。</value></data>
+  <data name="Remove secret" xml:space="preserve"><value>シークレットを削除</value></data>
+  <data name="Try it" xml:space="preserve"><value>試してみる</value></data>
+  <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>サインアウトし、ディレクトリのユーザー (確認済みドメインのアドレス) で「Microsoft でサインイン」を選択します。新しいユーザーは管理者へのアクセス要求になります。同じアドレスの既存アカウントはリンクされ、重複して作成されることはありません。</value></data>
+  <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>このページは別のアドレスで開かれています。ユーザーがそのアドレスでもサインインする場合は、このリダイレクト URI も追加してください: {0}</value></data>
 </root>

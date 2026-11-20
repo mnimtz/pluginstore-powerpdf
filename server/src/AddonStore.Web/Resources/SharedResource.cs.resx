@@ -1665,4 +1665,60 @@
   <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>Není propojen žádný účet Microsoft. Pro propojení použijte na přihlašovací stránce „Přihlásit se účtem Microsoft“ se stejnou e-mailovou adresou.</value></data>
   <data name="Microsoft account unlinked." xml:space="preserve"><value>Propojení s účtem Microsoft bylo zrušeno.</value></data>
   <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Váš účet zatím nemá heslo. Heslo nastavíte pomocí „Zapomněli jste heslo?“ na přihlašovací stránce.</value></data>
+  <data name="The application (client) ID is missing." xml:space="preserve"><value>Chybí ID aplikace (klienta).</value></data>
+  <data name="The client secret is missing or can no longer be read. Enter it again." xml:space="preserve"><value>Tajný klíč klienta chybí nebo ho už nelze přečíst. Zadejte ho znovu.</value></data>
+  <data name="The directory is missing." xml:space="preserve"><value>Chybí adresář.</value></data>
+  <data name="The directory could not be resolved to a directory ID. Save the settings again." xml:space="preserve"><value>Adresář se nepodařilo přiřadit k ID adresáře. Uložte nastavení znovu.</value></data>
+  <data name="Test passed: Microsoft accepted the directory, the application and the client secret." xml:space="preserve"><value>Test proběhl úspěšně: Microsoft přijal adresář, aplikaci i tajný klíč klienta.</value></data>
+  <data name="Directory not found. Check the directory (tenant) ID or the domain." xml:space="preserve"><value>Adresář nebyl nalezen. Zkontrolujte ID adresáře (tenanta) nebo doménu.</value></data>
+  <data name="Application not found in this directory. Check the application (client) ID and that the app is registered in this directory." xml:space="preserve"><value>Aplikace nebyla v tomto adresáři nalezena. Zkontrolujte ID aplikace (klienta) a zda je aplikace v tomto adresáři zaregistrovaná.</value></data>
+  <data name="The client secret is wrong or has expired. Create a new client secret and copy its value (not the secret ID)." xml:space="preserve"><value>Tajný klíč klienta je nesprávný nebo vypršel. Vytvořte nový tajný klíč klienta a zkopírujte jeho hodnotu (ne ID tajného klíče).</value></data>
+  <data name="Directory and application found. Enter the client secret to test it as well." xml:space="preserve"><value>Adresář i aplikace nalezeny. Zadejte tajný klíč klienta, aby se otestoval také.</value></data>
+  <data name="Microsoft could not be reached. Check the internet connection of the server and try again." xml:space="preserve"><value>Microsoft není dostupný. Zkontrolujte internetové připojení serveru a zkuste to znovu.</value></data>
+  <data name="Microsoft answered with an unexpected error." xml:space="preserve"><value>Microsoft odpověděl neočekávanou chybou.</value></data>
+  <data name="The application (client) ID must be a GUID such as 00000000-0000-0000-0000-000000000000." xml:space="preserve"><value>ID aplikace (klienta) musí být GUID, například 00000000-0000-0000-0000-000000000000.</value></data>
+  <data name="The directory must be a directory (tenant) ID or a verified domain such as contoso.com." xml:space="preserve"><value>Adresář musí být ID adresáře (tenanta) nebo ověřená doména, například contoso.com.</value></data>
+  <data name="The client secret is too long or contains invalid characters." xml:space="preserve"><value>Tajný klíč klienta je příliš dlouhý nebo obsahuje neplatné znaky.</value></data>
+  <data name="Additional allowed directories: enter directory IDs or domains, separated by commas (at most 20)." xml:space="preserve"><value>Další povolené adresáře: zadejte ID adresářů nebo domény oddělené čárkami (nejvýše 20).</value></data>
+  <data name="Enter the application (client) ID and the directory first." xml:space="preserve"><value>Nejprve zadejte ID aplikace (klienta) a adresář.</value></data>
+  <data name="The app settings Entra:* decide; change the values there." xml:space="preserve"><value>Rozhodují nastavení aplikace Entra:*; změňte hodnoty tam.</value></data>
+  <data name="To switch it on, enter the application (client) ID, the directory and the client secret." xml:space="preserve"><value>Pro zapnutí zadejte ID aplikace (klienta), adresář a tajný klíč klienta.</value></data>
+  <data name="Saved. The sign-in page now shows &quot;Sign in with Microsoft&quot;." xml:space="preserve"><value>Uloženo. Přihlašovací stránka nyní zobrazuje „Přihlásit se účtem Microsoft“.</value></data>
+  <data name="Saved, but incomplete: the button stays hidden." xml:space="preserve"><value>Uloženo, ale neúplné: tlačítko zůstává skryté.</value></data>
+  <data name="Saved. Sign in with Microsoft is off." xml:space="preserve"><value>Uloženo. Přihlášení účtem Microsoft je vypnuté.</value></data>
+  <data name="Client secret removed." xml:space="preserve"><value>Tajný klíč klienta byl odebrán.</value></data>
+  <data name="The test needs Entra:ClientId and Entra:TenantId (directory ID or domain) in the app settings." xml:space="preserve"><value>Test vyžaduje Entra:ClientId a Entra:TenantId (ID adresáře nebo doménu) v nastavení aplikace.</value></data>
+  <data name="Microsoft answered with an unexpected error: {0}" xml:space="preserve"><value>Microsoft odpověděl neočekávanou chybou: {0}</value></data>
+  <data name="Directory not found: {0}" xml:space="preserve"><value>Adresář nebyl nalezen: {0}</value></data>
+  <data name="An additional button on the sign-in page for the Microsoft work accounts of your organization (Microsoft Entra ID). Email and password keep working. Personal Microsoft accounts and guests are refused on purpose." xml:space="preserve"><value>Další tlačítko na přihlašovací stránce pro pracovní účty Microsoft vaší organizace (Microsoft Entra ID). E-mail a heslo fungují dál. Osobní účty Microsoft a hosté jsou záměrně odmítáni.</value></data>
+  <data name="The sign-in page shows the button &quot;Sign in with Microsoft&quot;." xml:space="preserve"><value>Přihlašovací stránka zobrazuje tlačítko „Přihlásit se účtem Microsoft“.</value></data>
+  <data name="Incomplete" xml:space="preserve"><value>Neúplné</value></data>
+  <data name="The button stays hidden until the configuration is complete." xml:space="preserve"><value>Tlačítko zůstává skryté, dokud není konfigurace úplná.</value></data>
+  <data name="The sign-in page shows no Microsoft button." xml:space="preserve"><value>Přihlašovací stránka nezobrazuje žádné tlačítko Microsoft.</value></data>
+  <data name="Set by app settings (Entra:*). They take precedence over this page; change the values in the app settings. The client secret is never shown." xml:space="preserve"><value>Nastaveno v nastavení aplikace (Entra:*). Mají přednost před touto stránkou; hodnoty změňte v nastavení aplikace. Tajný klíč klienta se nikdy nezobrazuje.</value></data>
+  <data name="Register the app in Microsoft Entra (three steps)" xml:space="preserve"><value>Zaregistrujte aplikaci v Microsoft Entra (tři kroky)</value></data>
+  <data name="App registrations, New registration: any name, &quot;Accounts in this organizational directory only&quot;, redirect URI type Web with this address:" xml:space="preserve"><value>Registrace aplikací, Nová registrace: libovolný název, „Jen účty v tomto organizačním adresáři“, identifikátor URI pro přesměrování typu Web s touto adresou:</value></data>
+  <data name="Redirect URI" xml:space="preserve"><value>Identifikátor URI pro přesměrování</value></data>
+  <data name="No public base URL is set (section Server), so the address comes from this request. It must be the address users open the store with." xml:space="preserve"><value>Není nastavena veřejná základní adresa URL (oddíl Server), proto adresa pochází z tohoto požadavku. Musí to být adresa, kterou uživatelé otevírají obchod.</value></data>
+  <data name="Certificates &amp; secrets, New client secret: copy the value (not the secret ID)." xml:space="preserve"><value>Certifikáty a tajné kódy, Nový tajný klíč klienta: zkopírujte hodnotu (ne ID tajného klíče).</value></data>
+  <data name="Overview: copy the application (client) ID and the directory (tenant) ID into the fields below." xml:space="preserve"><value>Přehled: zkopírujte ID aplikace (klienta) a ID adresáře (tenanta) do polí níže.</value></data>
+  <data name="Open the Microsoft Entra admin center" xml:space="preserve"><value>Otevřít Centrum pro správu Microsoft Entra</value></data>
+  <data name="No optional claims and no API permissions are needed." xml:space="preserve"><value>Volitelné deklarace ani oprávnění API nejsou potřeba.</value></data>
+  <data name="Enter the values" xml:space="preserve"><value>Zadejte hodnoty</value></data>
+  <data name="Application (client) ID" xml:space="preserve"><value>ID aplikace (klienta)</value></data>
+  <data name="Directory (tenant) ID or domain" xml:space="preserve"><value>ID adresáře (tenanta) nebo doména</value></data>
+  <data name="Client secret" xml:space="preserve"><value>Tajný klíč klienta</value></data>
+  <data name="Stored encrypted and never shown again. Leave the field empty to keep the stored secret." xml:space="preserve"><value>Uloženo šifrovaně a už nikdy se nezobrazí. Ponechte pole prázdné, chcete-li zachovat uložený tajný klíč.</value></data>
+  <data name="Stored encrypted and never shown again." xml:space="preserve"><value>Uloženo šifrovaně a už nikdy se nezobrazí.</value></data>
+  <data name="Additional allowed directories (optional)" xml:space="preserve"><value>Další povolené adresáře (volitelné)</value></data>
+  <data name="Only for later use with a multi-tenant app registration: directory IDs or domains, separated by commas. Leave empty for your own directory only." xml:space="preserve"><value>Jen pro pozdější použití s víceklientskou registrací aplikace: ID adresářů nebo domény oddělené čárkami. Pokud je povolen jen váš adresář, ponechte prázdné.</value></data>
+  <data name="Enabled: show &quot;Sign in with Microsoft&quot; on the sign-in page" xml:space="preserve"><value>Zapnuto: zobrazit „Přihlásit se účtem Microsoft“ na přihlašovací stránce</value></data>
+  <data name="Testing with Microsoft…" xml:space="preserve"><value>Probíhá test u Microsoftu…</value></data>
+  <data name="The test could not be run. Reload the page and try again." xml:space="preserve"><value>Test nelze spustit. Načtěte stránku znovu a zkuste to znovu.</value></data>
+  <data name="Checks the entered values with Microsoft without saving them." xml:space="preserve"><value>Ověří zadané hodnoty u Microsoftu, aniž by je uložil.</value></data>
+  <data name="Remove the stored client secret? Sign in with Microsoft stops until a new secret is saved." xml:space="preserve"><value>Odebrat uložený tajný klíč klienta? Přihlášení účtem Microsoft přestane fungovat, dokud nebude uložen nový tajný klíč.</value></data>
+  <data name="Remove secret" xml:space="preserve"><value>Odebrat tajný klíč</value></data>
+  <data name="Try it" xml:space="preserve"><value>Vyzkoušet</value></data>
+  <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>Odhlaste se a zvolte „Přihlásit se účtem Microsoft“ s uživatelem svého adresáře (adresa na ověřené doméně). Z nové osoby se stane žádost o přístup pro správce; existující účet se stejnou adresou se propojí a nikdy se nevytvoří podruhé.</value></data>
+  <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>Tato stránka je otevřená pod jinou adresou. Pokud se uživatelé přihlašují i tam, přidejte také tento identifikátor URI pro přesměrování: {0}</value></data>
 </root>

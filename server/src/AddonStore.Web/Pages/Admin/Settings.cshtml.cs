@@ -29,10 +29,60 @@ public class SettingsModel : PageModel
     public static readonly (string Key, string Label)[] Views =
     {
         ("server", "Server"), ("features", "Features"), ("store", "Add-on Store"), ("updates", "Power PDF updates"), ("email", "Email"), ("notifications", "Notifications"),
-        ("ai", "AI assistant"), ("privacy", "Data protection"), ("reset", "Reset statistics"),
+        ("entra", "Sign in with Microsoft"), ("ai", "AI assistant"), ("privacy", "Data protection"), ("reset", "Reset statistics"),
     };
     [BindProperty(SupportsGet = true)] public string? View { get; set; }
     public string? Notice { get; private set; }
+    /// <summary>Arguments of <see cref="Notice"/> (a resource key with placeholders); empty for plain texts.</summary>
+    public object[] NoticeArgs { get; private set; } = Array.Empty<object>();
+
+    // "Sign in with Microsoft" (Services/EntraSetupService.cs): the section never receives the secret itself
+    public EntraSetupService.Section? Entra { get; private set; }
+    /// <summary>Values entered before a refused save or a test without script: shown again instead of the stored ones (never the secret).</summary>
+    public EntraSetupService.Input? EntraDraft { get; private set; }
+
+    private static EntraSetupService.Input EntraInput(string? entraClientId, string? entraTenant, string? entraSecret, string? entraDirectories, bool entraEnabled) =>
+        new(entraClientId, entraTenant, entraSecret, entraDirectories, entraEnabled);
+
+    public async Task OnPostEntraAsync(string? entraClientId, string? entraTenant, string? entraSecret, string? entraDirectories, bool entraEnabled,
+                                       [FromServices] EntraSetupService setup)
+    {
+        var admin = await _users.GetUserAsync(User);
+        var input = EntraInput(entraClientId, entraTenant, entraSecret, entraDirectories, entraEnabled);
+        var r = await setup.SaveAsync(input, admin!.DisplayName, HttpContext.RequestAborted);
+        Notice = r.Message; NoticeArgs = r.Args; NoticeKind = r.Ok ? "ok" : "error";
+        if (!r.Ok) EntraDraft = input with { Secret = null };
+        View = "entra";
+        await LoadAsync();
+    }
+
+    public async Task OnPostEntraRemoveSecretAsync([FromServices] EntraSetupService setup)
+    {
+        var admin = await _users.GetUserAsync(User);
+        var r = await setup.RemoveSecretAsync(admin!.DisplayName);
+        Notice = r.Message; NoticeKind = r.Ok ? "ok" : "error";
+        View = "entra";
+        await LoadAsync();
+    }
+
+    /// <summary>
+    /// Tests the entered values without saving. The page script sends the form with X-Requested-With: fetch and shows
+    /// the JSON answer next to the button (the entered values stay in the form); without script the page is shown again.
+    /// </summary>
+    public async Task<IActionResult> OnPostEntraTestAsync(string? entraClientId, string? entraTenant, string? entraSecret, string? entraDirectories, bool entraEnabled,
+                                                          [FromServices] EntraSetupService setup,
+                                                          [FromServices] Microsoft.Extensions.Localization.IStringLocalizer<SharedResource> loc)
+    {
+        var input = EntraInput(entraClientId, entraTenant, entraSecret, entraDirectories, entraEnabled);
+        var r = await setup.TestAsync(input, HttpContext.RequestAborted);
+        if (Request.Headers["X-Requested-With"] == "fetch")
+            return new JsonResult(new { ok = r.Ok, message = loc[r.Message, r.Args].Value });
+        Notice = r.Message; NoticeArgs = r.Args; NoticeKind = r.Ok ? "ok" : "error";
+        EntraDraft = input with { Secret = null };
+        View = "entra";
+        await LoadAsync();
+        return Page();
+    }
     public string NoticeKind { get; private set; } = "ok";
     public string? TestDetail { get; private set; }
     public Dictionary<string, bool> EventEnabled { get; } = new();
@@ -567,6 +617,7 @@ public class SettingsModel : PageModel
         {
             var h = (string?)Request.Query["handler"] ?? "";
             View = h.StartsWith("Ip") || h.StartsWith("Inv") ? "privacy" : h.StartsWith("Ai") ? "ai" : h is "Email" or "TestMail" ? "email"
+                 : h.StartsWith("Entra") ? "entra"
                  : h == "Notifications" ? "notifications" : h == "Reset" ? "reset" : h == "StoreAccess" ? "store" : h == "Features" ? "features"
                  : h.StartsWith("Pp") ? "updates" : "server";
         }
@@ -613,6 +664,13 @@ public class SettingsModel : PageModel
         HasResendKey = (await _settings.GetAsync("Email.ResendApiKey", "Email:ResendApiKey")).Length > 0;
         From = await _settings.GetAsync("Email.From", "Email:From");
         BaseUrl = await _settings.GetAsync("App.PublicBaseUrl", "App:PublicBaseUrl");
+        if (View == "entra")
+        {
+            // what the sign-in sends when started from this address (Auth/EntraSignIn.cs: https outside Development)
+            var here = $"{(_env.IsDevelopment() ? Request.Scheme : "https")}://{Request.Host}{Request.PathBase}{AddonStore.Web.Auth.EntraSettings.CallbackPath}";
+            Entra = await HttpContext.RequestServices.GetRequiredService<EntraSetupService>()
+                .LoadAsync(await _notify.BaseUrlAsync(), BaseUrl.Trim().Length == 0, here);
+        }
         var sp = await _settings.GetAsync("Source.Policy");
         SourcePolicy = sp is "off" or "recommended" or "required" ? sp : "required";
         FourEyes = await _settings.GetAsync("Review.FourEyes") == "on";

@@ -1,16 +1,20 @@
+using System.Text.Encodings.Web;
 using AddonStore.Web.Data;
 using AddonStore.Web.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AddonStore.Web.Auth;
 
 /// <summary>
-/// Wiring of "Sign in with Microsoft" (docs/entra-setup.md). Everything here is skipped while
-/// <see cref="EntraSettings.Enabled"/> is false.
+/// Wiring of "Sign in with Microsoft" (docs/entra-setup.md). The OpenID Connect scheme is always registered;
+/// while <see cref="EntraRuntime.Current"/> is off, its handler ignores every request (/signin-oidc ends in 404
+/// like any unknown address) and the routes below answer 404, exactly as without any configuration.
 /// <para>Flow: GET /Account/Microsoft starts the OpenID Connect challenge (authorization code flow with PKCE,
 /// response_mode=query); Entra returns to GET /signin-oidc; the handler redeems the code with the client secret,
 /// validates the ID token (signature, issuer of an allowed tenant, audience, lifetime, nonce) and
@@ -37,26 +41,51 @@ public static class EntraSignIn
         _ => "failed",
     };
 
-    public static void AddEntraSignIn(this AuthenticationBuilder auth, EntraSettings s, bool development)
+    public static void AddEntraSignIn(this AuthenticationBuilder auth, bool development)
     {
-        if (!s.Enabled) return;
+        var services = auth.Services;
         var cookiePolicy = development ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
-        auth.Services.AddScoped<EntraAccountService>();
+        services.AddSingleton<EntraRuntime>();
+        services.AddScoped<EntraAccountService>();
         // the external cookie only carries the trimmed identity for a few minutes between /signin-oidc and the callback
-        auth.Services.ConfigureExternalCookie(o =>
+        services.ConfigureExternalCookie(o =>
         {
             o.Cookie.HttpOnly = true;
             o.Cookie.SameSite = SameSiteMode.Lax;
             o.Cookie.SecurePolicy = cookiePolicy;
             o.ExpireTimeSpan = TimeSpan.FromMinutes(5);
         });
-        auth.AddOpenIdConnect(EntraSettings.Scheme, EntraAccountService.ProviderDisplayName, o =>
+        // what AddOpenIdConnect registers, with the handler that knows when the feature is off
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<IPostConfigureOptions<OpenIdConnectOptions>, OpenIdConnectPostConfigureOptions>());
+        services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>>(sp => new EntraOptionsSetup(sp.GetRequiredService<EntraRuntime>(), cookiePolicy, development));
+        auth.AddRemoteScheme<OpenIdConnectOptions, EntraOidcHandler>(EntraSettings.Scheme, EntraAccountService.ProviderDisplayName, configureOptions: null);
+    }
+
+    /// <summary>
+    /// Builds the options of the "Entra" scheme from the configuration current at that moment. The options monitor
+    /// caches the result; <see cref="EntraRuntime.Apply"/> removes the cached entry when the configuration changes.
+    /// </summary>
+    internal sealed class EntraOptionsSetup(EntraRuntime runtime, CookieSecurePolicy cookiePolicy, bool development) : IConfigureNamedOptions<OpenIdConnectOptions>
+    {
+        public void Configure(OpenIdConnectOptions o) => Configure(Options.DefaultName, o);
+
+        public void Configure(string? name, OpenIdConnectOptions o)
         {
+            if (name != EntraSettings.Scheme) return;
+            var s = runtime.Current;
             o.SignInScheme = IdentityConstants.ExternalScheme;
+            o.CallbackPath = EntraSettings.CallbackPath;
+            if (!s.Enabled)
+            {
+                // valid but inert options: the handler ignores every request while off, and an empty static
+                // configuration means no metadata is ever fetched
+                o.ClientId = "off";
+                o.Configuration = new OpenIdConnectConfiguration();
+                return;
+            }
             o.Authority = s.Authority;
             o.ClientId = s.ClientId;
             o.ClientSecret = s.ClientSecret;
-            o.CallbackPath = EntraSettings.CallbackPath;
             o.ResponseType = OpenIdConnectResponseType.Code;
             o.ResponseMode = OpenIdConnectResponseMode.Query;
             o.UsePkce = true;
@@ -65,7 +94,7 @@ public static class EntraSignIn
             o.Scope.Add("profile");
             o.Scope.Add("email");
             o.Prompt = "select_account";
-            o.MapInboundClaims = false;          // raw claim names (tid, oid, upn, ...)
+            o.MapInboundClaims = false;          // raw claim names (tid, oid, preferred_username, ...)
             o.SaveTokens = false;                // no tokens in any cookie
             o.GetClaimsFromUserInfoEndpoint = false;
             o.RequireHttpsMetadata = true;
@@ -78,6 +107,7 @@ public static class EntraSignIn
             o.CorrelationCookie.SecurePolicy = cookiePolicy;
             o.NonceCookie.SameSite = SameSiteMode.Lax;
             o.NonceCookie.SecurePolicy = cookiePolicy;
+            var allowed = s.AllowedTenants;
             o.Events = new OpenIdConnectEvents
             {
                 OnRedirectToIdentityProvider = ctx =>
@@ -89,7 +119,7 @@ public static class EntraSignIn
                 },
                 OnTokenValidated = ctx =>
                 {
-                    var (identity, rejection) = EntraIdentity.Read(ctx.Principal?.Claims ?? Enumerable.Empty<System.Security.Claims.Claim>(), s.AllowedTenants);
+                    var (identity, rejection) = EntraIdentity.Read(ctx.Principal?.Claims ?? Enumerable.Empty<System.Security.Claims.Claim>(), allowed);
                     if (identity is null) ctx.Fail(new RejectedException(rejection));
                     else ctx.Principal = identity.ToPrincipal();   // only key, address and name reach the cookie
                     return Task.CompletedTask;
@@ -109,17 +139,33 @@ public static class EntraSignIn
                     return Task.CompletedTask;
                 },
             };
-        });
+        }
     }
 
-    public static void MapEntraSignIn(this WebApplication app, EntraSettings s)
+    /// <summary>The OpenID Connect handler, inactive while "Sign in with Microsoft" is off.</summary>
+    public sealed class EntraOidcHandler(IOptionsMonitor<OpenIdConnectOptions> options, ILoggerFactory logger, HtmlEncoder htmlEncoder,
+                                         UrlEncoder encoder, EntraRuntime runtime)
+        : OpenIdConnectHandler(options, logger, htmlEncoder, encoder)
     {
-        if (!s.Enabled) return;
+        // off: neither /signin-oidc nor the sign-out paths of the handler are answered
+        public override Task<bool> HandleRequestAsync() =>
+            runtime.Current.Enabled && Options.ClientId == runtime.Current.ClientId ? base.HandleRequestAsync() : Task.FromResult(false);
 
+        protected override Task HandleChallengeAsync(AuthenticationProperties properties)
+        {
+            if (runtime.Current.Enabled) return base.HandleChallengeAsync(properties);
+            Response.StatusCode = StatusCodes.Status404NotFound;
+            return Task.CompletedTask;
+        }
+    }
+
+    public static void MapEntraSignIn(this WebApplication app)
+    {
         // A plain link starts the sign-in (see the class remarks); starting it cannot sign anybody in by itself,
         // the correlation cookie and state bind the answer to this browser.
-        app.MapGet(EntraSettings.ChallengePath, async (HttpContext ctx, ILoggerFactory logs) =>
+        app.MapGet(EntraSettings.ChallengePath, async (HttpContext ctx, EntraRuntime runtime, ILoggerFactory logs) =>
         {
+            if (!(await runtime.GetAsync()).Enabled) return Results.NotFound();
             // S2.1.0: a wrong tenant or an unreachable Microsoft endpoint must not end in a server error page
             try
             {
@@ -128,14 +174,15 @@ public static class EntraSignIn
             }
             catch (InvalidOperationException ex)
             {
-                logs.CreateLogger("AddonStore.Entra").LogWarning(ex, "Sign in with Microsoft: the Entra configuration could not be loaded (check Entra:TenantId / Entra:Authority)");
+                logs.CreateLogger("AddonStore.Entra").LogWarning(ex, "Sign in with Microsoft: the Entra configuration could not be loaded (check the directory on the Settings page or Entra:TenantId / Entra:Authority)");
                 return Results.LocalRedirect("/Account/Login?entra=failed");
             }
         });
 
-        app.MapGet(EntraSettings.CompletePath, async (HttpContext ctx, EntraAccountService accounts, UserManager<AppUser> users,
+        app.MapGet(EntraSettings.CompletePath, async (HttpContext ctx, EntraRuntime runtime, EntraAccountService accounts, UserManager<AppUser> users,
                                                       SignInManager<AppUser> signIn, AuditService audit, NotificationService notify) =>
         {
+            if (!(await runtime.GetAsync()).Enabled) return Results.NotFound();
             var external = await ctx.AuthenticateAsync(IdentityConstants.ExternalScheme);
             await ctx.SignOutAsync(IdentityConstants.ExternalScheme);
             var id = external.Succeeded ? EntraIdentity.FromPrincipal(external.Principal) : null;

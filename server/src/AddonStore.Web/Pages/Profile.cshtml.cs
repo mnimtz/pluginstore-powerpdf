@@ -17,7 +17,7 @@ public class ProfileModel : PageModel
     private readonly IWebHostEnvironment _env;
     private readonly SignInManager<AppUser> _signIn;
     private readonly CustomerService _customers;
-    private readonly AddonStore.Web.Auth.EntraSettings _entra;
+    private readonly AddonStore.Web.Auth.EntraRuntime _entra;
 
     public List<ApiToken> Tokens { get; private set; } = new();
     public string? NewToken { get; private set; }
@@ -33,7 +33,7 @@ public class ProfileModel : PageModel
 
     public ProfileModel(AppDbContext db, UserManager<AppUser> users, TokenService tokens,
         AuditService audit, IConfiguration config, IWebHostEnvironment env, SignInManager<AppUser> signIn, CustomerService customers,
-        AddonStore.Web.Auth.EntraSettings entra)
+        AddonStore.Web.Auth.EntraRuntime entra)
     {
         _db = db; _users = users; _tokens = tokens; _audit = audit; _config = config; _env = env; _signIn = signIn; _customers = customers;
         _entra = entra;
@@ -217,6 +217,6 @@ public class ProfileModel : PageModel
             MicrosoftLinked = (await _users.GetLoginsAsync(Me)).Any(l => l.LoginProvider == EntraAccountService.Provider);
             HasPassword = await _users.HasPasswordAsync(Me);
         }
-        ShowMicrosoft = _entra.Enabled || MicrosoftLinked;
+        ShowMicrosoft = (await _entra.GetAsync()).Enabled || MicrosoftLinked;
     }
 }
