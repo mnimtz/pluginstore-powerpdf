@@ -490,10 +490,15 @@ public static class ApiEndpoints
             var isOwner = user is not null &&
                 (package.OwnerId == user.Id || ctx.User.IsInRole("Admin"));
 
-            var versions = await db.PackageVersions.Where(v => v.PackageId == id)
-                .OrderByDescending(v => v.SubmittedAt).ToListAsync();
+            // S2.1.2: the version rows from memory; only owners and admins get the check results, and only that column
+            // is read for them (before, every column of every version, review reports included, was loaded: 2 to 4 s)
+            var versions = (await AddonStore.Web.Data.LightVersions.AllAsync(db)).Where(v => v.PackageId == id)
+                .OrderByDescending(v => v.SubmittedAt).ToList();
             if (!isOwner)
                 versions = versions.Where(v => v.Status is VersionStatus.Live or VersionStatus.Beta).ToList();
+            var reports = isOwner
+                ? await db.PackageVersions.AsNoTracking().Where(v => v.PackageId == id).Select(v => new { v.Id, v.ValidationReportJson }).ToDictionaryAsync(v => v.Id, v => v.ValidationReportJson)
+                : new Dictionary<int, string>();
 
             return Results.Json(new
             {
@@ -528,7 +533,7 @@ public static class ApiEndpoints
                         // Admins only: where to fetch it (source round trip, see the agent guide).
                         sourceUrl = v.SourcePath is not null && ctx.User.IsInRole("Admin")
                             ? $"{Base(ctx)}/api/packages/{v.PackageId}/{v.Version}/source" : null,
-                        findings = isOwner ? JsonSerializer.Deserialize<JsonElement>(v.ValidationReportJson) : (object?)null
+                        findings = isOwner && reports.TryGetValue(v.Id, out var rep) && !string.IsNullOrEmpty(rep) ? JsonSerializer.Deserialize<JsonElement>(rep) : (object?)null
                     })
                 }
             });
