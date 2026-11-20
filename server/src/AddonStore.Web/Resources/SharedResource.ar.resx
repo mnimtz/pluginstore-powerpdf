@@ -1652,4 +1652,17 @@
   <data name="Manual (ZIP)" xml:space="preserve"><value>يدوي (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>تثبيت يدوي من دون Add-on Store: ملف ZIP يحتوي على install.bat وuninstall.bat، ويصلح أيضاً لتوزيع البرامج. لا توجد تحديثات تلقائية.</value></data>
   <data name="Every add-on version reviewed" xml:space="preserve"><value>كل إصدار من الوظائف الإضافية تمت مراجعته</value></data>
+  <data name="or" xml:space="preserve"><value>أو</value></data>
+  <data name="Sign in with Microsoft" xml:space="preserve"><value>تسجيل الدخول باستخدام Microsoft</value></data>
+  <data name="Your Microsoft account belongs to an organization that cannot sign in here. Sign in with email and password instead." xml:space="preserve"><value>ينتمي حساب Microsoft الخاص بك إلى مؤسسة لا يمكنها تسجيل الدخول هنا. سجّل الدخول بالبريد الإلكتروني وكلمة المرور بدلاً من ذلك.</value></data>
+  <data name="Your Microsoft account did not provide an email address verified by its organization. Sign in with email and password instead." xml:space="preserve"><value>لم يقدّم حساب Microsoft الخاص بك عنوان بريد إلكتروني تحققت منه مؤسسته. سجّل الدخول بالبريد الإلكتروني وكلمة المرور بدلاً من ذلك.</value></data>
+  <data name="Sign-in with Microsoft failed. Try again, or sign in with email and password." xml:space="preserve"><value>فشل تسجيل الدخول باستخدام Microsoft. حاول مرة أخرى، أو سجّل الدخول بالبريد الإلكتروني وكلمة المرور.</value></data>
+  <data name="Microsoft account" xml:space="preserve"><value>حساب Microsoft</value></data>
+  <data name="A Microsoft account is linked. You can sign in with it instead of your password." xml:space="preserve"><value>تم ربط حساب Microsoft. يمكنك تسجيل الدخول به بدلاً من كلمة المرور.</value></data>
+  <data name="Unlink the Microsoft account? You then sign in with your password only." xml:space="preserve"><value>هل تريد إلغاء ربط حساب Microsoft؟ ستسجّل الدخول بعد ذلك بكلمة المرور فقط.</value></data>
+  <data name="Unlink" xml:space="preserve"><value>إلغاء الربط</value></data>
+  <data name="Set a password first (&quot;Forgot password?&quot; on the sign-in page), then you can unlink the Microsoft account." xml:space="preserve"><value>عيّن كلمة مرور أولاً ("هل نسيت كلمة المرور؟" في صفحة تسجيل الدخول)، ثم يمكنك إلغاء ربط حساب Microsoft.</value></data>
+  <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>لا يوجد حساب Microsoft مرتبط. لربطه، استخدم "تسجيل الدخول باستخدام Microsoft" في صفحة تسجيل الدخول بعنوان البريد الإلكتروني نفسه.</value></data>
+  <data name="Microsoft account unlinked." xml:space="preserve"><value>تم إلغاء ربط حساب Microsoft.</value></data>
+  <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>لا توجد كلمة مرور لحسابك بعد. لتعيين كلمة مرور، استخدم "هل نسيت كلمة المرور؟" في صفحة تسجيل الدخول.</value></data>
 </root>

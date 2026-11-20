@@ -1652,4 +1652,17 @@
   <data name="Manual (ZIP)" xml:space="preserve"><value>Вручную (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Установка вручную без Add-on Store: ZIP-архив с install.bat и uninstall.bat, также для распространения ПО. Без автоматических обновлений.</value></data>
   <data name="Every add-on version reviewed" xml:space="preserve"><value>Каждая версия надстройки проверена</value></data>
+  <data name="or" xml:space="preserve"><value>или</value></data>
+  <data name="Sign in with Microsoft" xml:space="preserve"><value>Войти с помощью Microsoft</value></data>
+  <data name="Your Microsoft account belongs to an organization that cannot sign in here. Sign in with email and password instead." xml:space="preserve"><value>Ваша учетная запись Microsoft принадлежит организации, которой вход здесь недоступен. Войдите с помощью адреса электронной почты и пароля.</value></data>
+  <data name="Your Microsoft account did not provide an email address verified by its organization. Sign in with email and password instead." xml:space="preserve"><value>Ваша учетная запись Microsoft не передала адрес электронной почты, подтвержденный организацией. Войдите с помощью адреса электронной почты и пароля.</value></data>
+  <data name="Sign-in with Microsoft failed. Try again, or sign in with email and password." xml:space="preserve"><value>Не удалось войти с помощью Microsoft. Повторите попытку или войдите с помощью адреса электронной почты и пароля.</value></data>
+  <data name="Microsoft account" xml:space="preserve"><value>Учетная запись Microsoft</value></data>
+  <data name="A Microsoft account is linked. You can sign in with it instead of your password." xml:space="preserve"><value>Учетная запись Microsoft привязана. Вы можете входить с ее помощью вместо пароля.</value></data>
+  <data name="Unlink the Microsoft account? You then sign in with your password only." xml:space="preserve"><value>Отвязать учетную запись Microsoft? После этого вы будете входить только с паролем.</value></data>
+  <data name="Unlink" xml:space="preserve"><value>Отвязать</value></data>
+  <data name="Set a password first (&quot;Forgot password?&quot; on the sign-in page), then you can unlink the Microsoft account." xml:space="preserve"><value>Сначала задайте пароль («Забыли пароль?» на странице входа), затем можно отвязать учетную запись Microsoft.</value></data>
+  <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>Учетная запись Microsoft не привязана. Чтобы привязать ее, используйте «Войти с помощью Microsoft» на странице входа с тем же адресом электронной почты.</value></data>
+  <data name="Microsoft account unlinked." xml:space="preserve"><value>Учетная запись Microsoft отвязана.</value></data>
+  <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>У вашей учетной записи еще нет пароля. Чтобы задать его, используйте «Забыли пароль?» на странице входа.</value></data>
 </root>

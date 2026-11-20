@@ -1652,4 +1652,17 @@
   <data name="Manual (ZIP)" xml:space="preserve"><value>Manual (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Instalación manual sin el Add-on Store: un ZIP con install.bat y uninstall.bat, también para la distribución de software. Sin actualizaciones automáticas.</value></data>
   <data name="Every add-on version reviewed" xml:space="preserve"><value>Cada versión de complemento revisada</value></data>
+  <data name="or" xml:space="preserve"><value>o</value></data>
+  <data name="Sign in with Microsoft" xml:space="preserve"><value>Iniciar sesión con Microsoft</value></data>
+  <data name="Your Microsoft account belongs to an organization that cannot sign in here. Sign in with email and password instead." xml:space="preserve"><value>Su cuenta de Microsoft pertenece a una organización que no puede iniciar sesión aquí. Inicie sesión con su correo y contraseña.</value></data>
+  <data name="Your Microsoft account did not provide an email address verified by its organization. Sign in with email and password instead." xml:space="preserve"><value>Su cuenta de Microsoft no proporcionó una dirección de correo verificada por su organización. Inicie sesión con su correo y contraseña.</value></data>
+  <data name="Sign-in with Microsoft failed. Try again, or sign in with email and password." xml:space="preserve"><value>Error al iniciar sesión con Microsoft. Inténtelo de nuevo o inicie sesión con su correo y contraseña.</value></data>
+  <data name="Microsoft account" xml:space="preserve"><value>Cuenta de Microsoft</value></data>
+  <data name="A Microsoft account is linked. You can sign in with it instead of your password." xml:space="preserve"><value>Hay una cuenta de Microsoft vinculada. Puede iniciar sesión con ella en lugar de con su contraseña.</value></data>
+  <data name="Unlink the Microsoft account? You then sign in with your password only." xml:space="preserve"><value>¿Desvincular la cuenta de Microsoft? Después solo iniciará sesión con su contraseña.</value></data>
+  <data name="Unlink" xml:space="preserve"><value>Desvincular</value></data>
+  <data name="Set a password first (&quot;Forgot password?&quot; on the sign-in page), then you can unlink the Microsoft account." xml:space="preserve"><value>Primero establezca una contraseña ("¿Ha olvidado la contraseña?" en la página de inicio de sesión) y después podrá desvincular la cuenta de Microsoft.</value></data>
+  <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>No hay ninguna cuenta de Microsoft vinculada. Use "Iniciar sesión con Microsoft" en la página de inicio de sesión con la misma dirección de correo para vincularla.</value></data>
+  <data name="Microsoft account unlinked." xml:space="preserve"><value>Cuenta de Microsoft desvinculada.</value></data>
+  <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Su cuenta aún no tiene contraseña. Para establecer una, use "¿Ha olvidado la contraseña?" en la página de inicio de sesión.</value></data>
 </root>

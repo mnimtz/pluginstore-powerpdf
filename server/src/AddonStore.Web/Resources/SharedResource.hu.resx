@@ -1652,4 +1652,17 @@
   <data name="Manual (ZIP)" xml:space="preserve"><value>Kézi (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Kézi telepítés Add-on Store nélkül: ZIP-fájl install.bat és uninstall.bat fájllal, szoftverterjesztéshez is. Nincs automatikus frissítés.</value></data>
   <data name="Every add-on version reviewed" xml:space="preserve"><value>Minden bővítményverzió ellenőrizve</value></data>
+  <data name="or" xml:space="preserve"><value>vagy</value></data>
+  <data name="Sign in with Microsoft" xml:space="preserve"><value>Bejelentkezés Microsoft-fiókkal</value></data>
+  <data name="Your Microsoft account belongs to an organization that cannot sign in here. Sign in with email and password instead." xml:space="preserve"><value>A Microsoft-fiókja olyan szervezethez tartozik, amely itt nem jelentkezhet be. Jelentkezzen be inkább e-maillel és jelszóval.</value></data>
+  <data name="Your Microsoft account did not provide an email address verified by its organization. Sign in with email and password instead." xml:space="preserve"><value>A Microsoft-fiókja nem adott meg a szervezete által ellenőrzött e-mail-címet. Jelentkezzen be inkább e-maillel és jelszóval.</value></data>
+  <data name="Sign-in with Microsoft failed. Try again, or sign in with email and password." xml:space="preserve"><value>A Microsoft-fiókkal való bejelentkezés sikertelen. Próbálja újra, vagy jelentkezzen be e-maillel és jelszóval.</value></data>
+  <data name="Microsoft account" xml:space="preserve"><value>Microsoft-fiók</value></data>
+  <data name="A Microsoft account is linked. You can sign in with it instead of your password." xml:space="preserve"><value>Microsoft-fiók van összekapcsolva. A jelszó helyett ezzel is bejelentkezhet.</value></data>
+  <data name="Unlink the Microsoft account? You then sign in with your password only." xml:space="preserve"><value>Megszünteti a Microsoft-fiók összekapcsolását? Ezután csak a jelszavával jelentkezhet be.</value></data>
+  <data name="Unlink" xml:space="preserve"><value>Összekapcsolás megszüntetése</value></data>
+  <data name="Set a password first (&quot;Forgot password?&quot; on the sign-in page), then you can unlink the Microsoft account." xml:space="preserve"><value>Előbb állítson be jelszót („Elfelejtette a jelszavát?” a bejelentkezési oldalon), utána megszüntetheti a Microsoft-fiók összekapcsolását.</value></data>
+  <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>Nincs összekapcsolt Microsoft-fiók. Az összekapcsoláshoz használja a bejelentkezési oldalon a „Bejelentkezés Microsoft-fiókkal” lehetőséget ugyanazzal az e-mail-címmel.</value></data>
+  <data name="Microsoft account unlinked." xml:space="preserve"><value>A Microsoft-fiók összekapcsolása megszűnt.</value></data>
+  <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>A fiókjának még nincs jelszava. Jelszó beállításához használja a bejelentkezési oldalon az „Elfelejtette a jelszavát?” lehetőséget.</value></data>
 </root>

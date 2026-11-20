@@ -105,6 +105,15 @@ and sender on the admin **Settings** page (or as app settings
 setup, and choose which events send mail. Without a key the app runs
 normally; skipped mails are recorded in the audit log.
 
+**Sign in with Microsoft (optional):** with the app settings `Entra__ClientId`,
+`Entra__ClientSecret`, `Entra__TenantId` (or `Entra__Authority`) and
+`Entra__AllowedTenants` the login page gets a *Sign in with Microsoft* button next
+to the email/password form (OpenID Connect, code flow with PKCE, callback
+`/signin-oidc`). A Microsoft sign-in with the address of an existing account is
+linked to that account, never a second one; a new address becomes an access
+request like *Request access*. Without these settings nothing changes. Setup
+guide (German): [docs/entra-setup.md](docs/entra-setup.md).
+
 **Backup and restore:** admin **Settings → Backup and restore**. Store backup
 files like passwords: they contain password hashes and settings. For automatic
 backups, paste the connection string of an Azure storage account (Azure portal:
@@ -611,6 +620,13 @@ listed with their reasons in `.trivyignore`.
 
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
+
+**Sign in with Microsoft (S2.1.0, Nov 20, 2026):** optional Entra ID sign-in next to e-mail and password, fully off
+until `Entra:ClientId`, `Entra:ClientSecret` and `Entra:TenantId` (or `Entra:Authority` plus `Entra:AllowedTenants`) are set
+as app settings. Code flow with PKCE; the address comes from `upn`/`preferred_username` of an allowed tenant. An
+existing account with the same address is linked, never duplicated (other sessions end, the address gets a notice);
+a new address becomes an access request like a manual registration; roles stay in the store. A wrong tenant ends on
+the login page with a notice instead of an error page. Setup guide (German): `docs/entra-setup.md`.
 
 **Remaining speed items (S2.0.7, Nov 20, 2026):** the add-on page, screenshots and the AI search take the shown version
 from the in-memory rows; share and page-view counters go through the minute buffer like the other counters; cached

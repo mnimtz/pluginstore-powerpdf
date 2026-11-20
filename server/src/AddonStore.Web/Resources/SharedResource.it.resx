@@ -1652,4 +1652,17 @@
   <data name="Manual (ZIP)" xml:space="preserve"><value>Manuale (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Installazione manuale senza l'Add-on Store: un file ZIP con install.bat e uninstall.bat, anche per la distribuzione del software. Nessun aggiornamento automatico.</value></data>
   <data name="Every add-on version reviewed" xml:space="preserve"><value>Ogni versione del componente verificata</value></data>
+  <data name="or" xml:space="preserve"><value>oppure</value></data>
+  <data name="Sign in with Microsoft" xml:space="preserve"><value>Accedi con Microsoft</value></data>
+  <data name="Your Microsoft account belongs to an organization that cannot sign in here. Sign in with email and password instead." xml:space="preserve"><value>Il tuo account Microsoft appartiene a un'organizzazione che non può accedere qui. Accedi invece con e-mail e password.</value></data>
+  <data name="Your Microsoft account did not provide an email address verified by its organization. Sign in with email and password instead." xml:space="preserve"><value>Il tuo account Microsoft non ha fornito un indirizzo e-mail verificato dalla sua organizzazione. Accedi invece con e-mail e password.</value></data>
+  <data name="Sign-in with Microsoft failed. Try again, or sign in with email and password." xml:space="preserve"><value>Accesso con Microsoft non riuscito. Riprova oppure accedi con e-mail e password.</value></data>
+  <data name="Microsoft account" xml:space="preserve"><value>Account Microsoft</value></data>
+  <data name="A Microsoft account is linked. You can sign in with it instead of your password." xml:space="preserve"><value>È collegato un account Microsoft. Puoi accedere con esso al posto della password.</value></data>
+  <data name="Unlink the Microsoft account? You then sign in with your password only." xml:space="preserve"><value>Scollegare l'account Microsoft? In seguito accederai solo con la password.</value></data>
+  <data name="Unlink" xml:space="preserve"><value>Scollega</value></data>
+  <data name="Set a password first (&quot;Forgot password?&quot; on the sign-in page), then you can unlink the Microsoft account." xml:space="preserve"><value>Imposta prima una password ("Password dimenticata?" nella pagina di accesso), poi potrai scollegare l'account Microsoft.</value></data>
+  <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>Nessun account Microsoft collegato. Usa "Accedi con Microsoft" nella pagina di accesso con lo stesso indirizzo e-mail per collegarlo.</value></data>
+  <data name="Microsoft account unlinked." xml:space="preserve"><value>Account Microsoft scollegato.</value></data>
+  <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Il tuo account non ha ancora una password. Per impostarne una, usa "Password dimenticata?" nella pagina di accesso.</value></data>
 </root>

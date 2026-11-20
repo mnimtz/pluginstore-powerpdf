@@ -1652,4 +1652,17 @@
   <data name="Manual (ZIP)" xml:space="preserve"><value>Ručně (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Ruční instalace bez Add-on Store: soubor ZIP s install.bat a uninstall.bat, i pro distribuci softwaru. Bez automatických aktualizací.</value></data>
   <data name="Every add-on version reviewed" xml:space="preserve"><value>Každá verze doplňku zkontrolována</value></data>
+  <data name="or" xml:space="preserve"><value>nebo</value></data>
+  <data name="Sign in with Microsoft" xml:space="preserve"><value>Přihlásit se účtem Microsoft</value></data>
+  <data name="Your Microsoft account belongs to an organization that cannot sign in here. Sign in with email and password instead." xml:space="preserve"><value>Váš účet Microsoft patří organizaci, která se zde nemůže přihlásit. Přihlaste se místo toho e-mailem a heslem.</value></data>
+  <data name="Your Microsoft account did not provide an email address verified by its organization. Sign in with email and password instead." xml:space="preserve"><value>Váš účet Microsoft neposkytl e-mailovou adresu ověřenou jeho organizací. Přihlaste se místo toho e-mailem a heslem.</value></data>
+  <data name="Sign-in with Microsoft failed. Try again, or sign in with email and password." xml:space="preserve"><value>Přihlášení účtem Microsoft se nezdařilo. Zkuste to znovu nebo se přihlaste e-mailem a heslem.</value></data>
+  <data name="Microsoft account" xml:space="preserve"><value>Účet Microsoft</value></data>
+  <data name="A Microsoft account is linked. You can sign in with it instead of your password." xml:space="preserve"><value>Je propojen účet Microsoft. Můžete se jím přihlašovat místo hesla.</value></data>
+  <data name="Unlink the Microsoft account? You then sign in with your password only." xml:space="preserve"><value>Zrušit propojení s účtem Microsoft? Potom se budete přihlašovat jen heslem.</value></data>
+  <data name="Unlink" xml:space="preserve"><value>Zrušit propojení</value></data>
+  <data name="Set a password first (&quot;Forgot password?&quot; on the sign-in page), then you can unlink the Microsoft account." xml:space="preserve"><value>Nejprve nastavte heslo („Zapomněli jste heslo?“ na přihlašovací stránce), potom můžete zrušit propojení s účtem Microsoft.</value></data>
+  <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>Není propojen žádný účet Microsoft. Pro propojení použijte na přihlašovací stránce „Přihlásit se účtem Microsoft“ se stejnou e-mailovou adresou.</value></data>
+  <data name="Microsoft account unlinked." xml:space="preserve"><value>Propojení s účtem Microsoft bylo zrušeno.</value></data>
+  <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>Váš účet zatím nemá heslo. Heslo nastavíte pomocí „Zapomněli jste heslo?“ na přihlašovací stránce.</value></data>
 </root>

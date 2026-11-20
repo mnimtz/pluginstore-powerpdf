@@ -1652,4 +1652,17 @@
   <data name="Manual (ZIP)" xml:space="preserve"><value>手動 (ZIP)</value></data>
   <data name="Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates." xml:space="preserve"><value>Add-on Store を使わない手動インストール: install.bat と uninstall.bat を含む ZIP ファイルで、ソフトウェア配布にも使えます。自動更新はありません。</value></data>
   <data name="Every add-on version reviewed" xml:space="preserve"><value>アドオンのすべてのバージョンを審査済み</value></data>
+  <data name="or" xml:space="preserve"><value>または</value></data>
+  <data name="Sign in with Microsoft" xml:space="preserve"><value>Microsoft でサインイン</value></data>
+  <data name="Your Microsoft account belongs to an organization that cannot sign in here. Sign in with email and password instead." xml:space="preserve"><value>この Microsoft アカウントは、ここにサインインできない組織に属しています。代わりにメール アドレスとパスワードでサインインしてください。</value></data>
+  <data name="Your Microsoft account did not provide an email address verified by its organization. Sign in with email and password instead." xml:space="preserve"><value>この Microsoft アカウントからは、組織が確認したメール アドレスが提供されませんでした。代わりにメール アドレスとパスワードでサインインしてください。</value></data>
+  <data name="Sign-in with Microsoft failed. Try again, or sign in with email and password." xml:space="preserve"><value>Microsoft でのサインインに失敗しました。もう一度お試しいただくか、メール アドレスとパスワードでサインインしてください。</value></data>
+  <data name="Microsoft account" xml:space="preserve"><value>Microsoft アカウント</value></data>
+  <data name="A Microsoft account is linked. You can sign in with it instead of your password." xml:space="preserve"><value>Microsoft アカウントがリンクされています。パスワードの代わりにこのアカウントでサインインできます。</value></data>
+  <data name="Unlink the Microsoft account? You then sign in with your password only." xml:space="preserve"><value>Microsoft アカウントのリンクを解除しますか? 以後はパスワードでのみサインインします。</value></data>
+  <data name="Unlink" xml:space="preserve"><value>リンク解除</value></data>
+  <data name="Set a password first (&quot;Forgot password?&quot; on the sign-in page), then you can unlink the Microsoft account." xml:space="preserve"><value>先にパスワードを設定してください (サインイン ページの「パスワードを忘れた場合」)。その後、Microsoft アカウントのリンクを解除できます。</value></data>
+  <data name="No Microsoft account is linked. Use &quot;Sign in with Microsoft&quot; on the sign-in page with the same email address to link it." xml:space="preserve"><value>Microsoft アカウントはリンクされていません。リンクするには、サインイン ページで同じメール アドレスを使って「Microsoft でサインイン」を選択してください。</value></data>
+  <data name="Microsoft account unlinked." xml:space="preserve"><value>Microsoft アカウントのリンクを解除しました。</value></data>
+  <data name="Your account has no password yet. To set one, use &quot;Forgot password?&quot; on the sign-in page." xml:space="preserve"><value>このアカウントにはまだパスワードがありません。設定するには、サインイン ページの「パスワードを忘れた場合」を使用してください。</value></data>
 </root>

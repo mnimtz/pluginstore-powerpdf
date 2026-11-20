@@ -33,3 +33,5 @@ client/third_party/webview2/x64/
 # signing keys never go into the repository
 *.local.pem
 client/tests/out/
+# agent worktrees (local only)
+.claude/worktrees/
