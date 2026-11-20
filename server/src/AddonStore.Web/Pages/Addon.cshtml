@@ -42,7 +42,7 @@ else
 
     <div class="addon-page">
         <div class="card addon-hero">
-            <img class="addon-icon" src="/api/packages/@item.Id/icon" alt="" width="96" height="96"
+            <img class="addon-icon" src="/api/packages/@item.Id/icon?v=@Uri.EscapeDataString(item.Version)" alt="" width="96" height="96"
                  data-fallback="/img/tungsten-power-pdf-icon.svg" />
             <div class="addon-head">
                 <h1>@item.Name</h1>
@@ -59,7 +59,7 @@ else
                        title="@L["Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)."]">@L["Install in Power PDF"]</a>
                     @if (Model.ManualVersion is not null)
                     {
-                        <a class="btn small secondary manual-link" href="/api/packages/@item.Id/manual" download
+                        <a class="btn small secondary manual-link" href="/api/packages/@item.Id/manual" rel="nofollow" download
                            title="@L["Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates."]"><span class="dl" aria-hidden="true">↓</span>@L["Manual (ZIP)"]</a>
                     }
                     <span class="client-hint" id="client-hint" hidden>

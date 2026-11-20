@@ -22,6 +22,17 @@ public static class ManualInstall
     /// Only these columns: the catalog page asks on every view, and the database lies on a network share.</summary>
     public static async Task<Dictionary<string, (int Id, string Version)>> AvailableAsync(AppDbContext db, string? onlyId = null)
     {
+        // S2.0.3: kept with the catalog generation (a write to packages or versions, at most a minute)
+        var key = "manual|" + (onlyId ?? "*");
+        if (Services.CatalogUi.CachedObject(key) is Dictionary<string, (int Id, string Version)> hit) return new(hit);
+        var gen = Services.CatalogUi.Generation;
+        var result = await LoadAvailableAsync(db, onlyId);
+        Services.CatalogUi.CacheObject(key, gen, result);
+        return new(result);
+    }
+
+    private static async Task<Dictionary<string, (int Id, string Version)>> LoadAvailableAsync(AppDbContext db, string? onlyId)
+    {
         var lives = await db.PackageVersions.AsNoTracking()
             .Where(v => v.Status == VersionStatus.Live && v.BlockedAt == null && v.PackageId != SubmissionService.ClientPackageId &&
                         (onlyId == null || v.PackageId == onlyId) &&
@@ -39,6 +50,46 @@ public static class ManualInstall
     {
         using var doc = JsonDocument.Parse(v.ManifestJson);
         return AddonStore.Web.Api.ApiEndpoints.ZxtNameOf(doc.RootElement);
+    }
+
+    /// <summary>
+    /// S2.0.3: the finished zip from the container's local disk (built at the first request for this version, name,
+    /// author, signature and address), opened for reading; null when the package file is missing or has no x64 binary.
+    /// </summary>
+    public static FileStream? CachedZip(PackageVersion v, string packageFile, string name, string author, string signature, string page)
+    {
+        var dir = Path.Combine(Path.GetTempPath(), "addonstore-manual");
+        Directory.CreateDirectory(dir);
+        var key = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(
+            Encoding.UTF8.GetBytes(string.Join("\n", Format, v.PackageId, v.Version, v.Sha256, name, author, signature, page))))[..32].ToLowerInvariant();
+        var file = Path.Combine(dir, key + ".zip");
+        if (!File.Exists(file))
+        {
+            if (!File.Exists(packageFile)) return null;
+            Prune(dir);
+            var tmp = Path.Combine(dir, key + "." + Guid.NewGuid().ToString("N") + ".tmp");
+            try
+            {
+                using (var fs = new FileStream(tmp, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None))
+                    if (!Build(fs, v, packageFile, name, author, signature, page)) return null;
+                File.Move(tmp, file, overwrite: true);
+            }
+            finally { try { if (File.Exists(tmp)) File.Delete(tmp); } catch (IOException) { } }
+        }
+        return new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read | FileShare.Delete, 81920, useAsync: true);
+    }
+
+    /// <summary>At most 300 cached zips: the oldest go first.</summary>
+    private static void Prune(string dir)
+    {
+        try
+        {
+            var files = new DirectoryInfo(dir).GetFiles("*.zip");
+            if (files.Length < 300) return;
+            foreach (var f in files.OrderBy(f => f.LastWriteTimeUtc).Take(files.Length - 250))
+                try { f.Delete(); } catch (IOException) { } catch (UnauthorizedAccessException) { }
+        }
+        catch (IOException) { }
     }
 
     /// <summary>Writes the zip into <paramref name="target"/>; false when the package file is missing or has no x64 binary.</summary>

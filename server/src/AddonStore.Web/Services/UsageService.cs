@@ -40,6 +40,18 @@ public class UsageService
     public record ClientInfo(string Source, string ClientVersion, string HostVersion, string OsVersion, string Arch);
 
     /// <summary>Source and client details derived from the request's user agent.</summary>
+    // S2.0.3: crawlers and link previews (they follow download links on public pages)
+    private static readonly System.Text.RegularExpressions.Regex BotAgent = new(
+        @"bot\b|crawl|spider|slurp|preview|facebookexternalhit|embedly|whatsapp|telegram|skypeuri|headless|curl/|wget/|python-requests|go-http-client",
+        System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+
+    /// <summary>A crawler, link preview or script by its user agent (not counted as a download).</summary>
+    public static bool IsBot(HttpContext ctx)
+    {
+        var ua = ctx.Request.Headers.UserAgent.ToString();
+        return ua.Length == 0 || BotAgent.IsMatch(ua);
+    }
+
     public static ClientInfo Classify(HttpContext ctx)
     {
         var ua = ctx.Request.Headers.UserAgent.ToString();

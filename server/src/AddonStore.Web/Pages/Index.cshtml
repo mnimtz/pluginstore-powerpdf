@@ -121,7 +121,7 @@ else
                     <span class="badge highlight"><span aria-hidden="true">★</span> @L["Highlight"]</span>
                 }
                 <div class="pkg-top">
-                    <img class="pkg-icon" src="/api/packages/@item.Id/icon" alt="" width="48" height="48" loading="lazy" data-fallback="/img/tungsten-power-pdf-icon.svg" />
+                    <img class="pkg-icon" src="/api/packages/@item.Id/icon?v=@Uri.EscapeDataString(item.Version)" alt="" width="48" height="48" loading="lazy" data-fallback="/img/tungsten-power-pdf-icon.svg" />
                     <div>
                         <span class="name">@item.Name</span>
                         <partial name="_Stars" model="(item.Rating, item.RatingCount)" />
@@ -145,7 +145,7 @@ else
                        title="@L["Own page of this add-on with a link to send to customers"]">@L["Share link"]</a>
                     @if (Model.ManualIds.Contains(item.Id))
                     {
-                        <a class="btn small secondary manual-link" href="/api/packages/@item.Id/manual" download
+                        <a class="btn small secondary manual-link" href="/api/packages/@item.Id/manual" rel="nofollow" download
                            title="@L["Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates."]"><span class="dl" aria-hidden="true">↓</span>@L["Manual (ZIP)"]</a>
                     }
                     @if (Model.IsAdmin)

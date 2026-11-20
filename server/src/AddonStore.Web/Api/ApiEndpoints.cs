@@ -126,6 +126,7 @@ public static class ApiEndpoints
             Allow: /api/openapi.json
             Disallow: /Admin/
             Disallow: /Account/
+            Disallow: /api/packages/*/manual
             Disallow: /Dashboard
             Disallow: /Profile
             Disallow: /Customer
@@ -758,32 +759,27 @@ public static class ApiEndpoints
         {
             if (!await MayAccessAsync(ctx, id, db, users, customers)) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
             var cmp = new SemVerComparer();
-            var versions = await db.PackageVersions
-                .Where(x => x.PackageId == id && (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta)).ToListAsync();
+            // S2.0.3: versions without their review columns, not tracked (every catalog tile asks here)
+            var versions = await db.PackageVersions.AsNoTracking()
+                .Where(x => x.PackageId == id && (x.Status == VersionStatus.Live || x.Status == VersionStatus.Beta)).Select(PackageVersion.Light).ToListAsync();
+            var released = v is null || versions.Any(x => x.Version == v);
             if (v is not null && !versions.Any(x => x.Version == v) && await customers.IsTestVersionAsync(ctx, id, v))   // S1.6.0
-                versions.AddRange(await db.PackageVersions.Where(x => x.PackageId == id && x.Version == v).ToListAsync());
+                versions.AddRange(await db.PackageVersions.AsNoTracking().Where(x => x.PackageId == id && x.Version == v).Select(PackageVersion.Light).ToListAsync());
             // S1.29.1: admins and reviewers see the icon of a version still waiting for review (review queue)
             if (v is not null && !versions.Any(x => x.Version == v) && (ctx.User.IsInRole("Admin") || ctx.User.IsInRole("Reviewer")))
-                versions.AddRange(await db.PackageVersions.Where(x => x.PackageId == id && x.Version == v).ToListAsync());
+                versions.AddRange(await db.PackageVersions.AsNoTracking().Where(x => x.PackageId == id && x.Version == v).Select(PackageVersion.Light).ToListAsync());
             var pick = (v is null ? null : versions.FirstOrDefault(x => x.Version == v))
                        ?? versions.Where(x => x.Status == VersionStatus.Live).OrderByDescending(x => x.Version, cmp).FirstOrDefault()
                        ?? versions.OrderByDescending(x => x.Version, cmp).FirstOrDefault();
             if (pick is null) return NotFound("PACKAGE_NOT_FOUND", $"No released package with id '{id}'.");
-            var path = Path.Combine(svc.StorageRoot, pick.FilePath);
-            if (!File.Exists(path)) return NotFound("FILE_MISSING", "The package file is missing on the server.");
-            try
-            {
-                using var zip = System.IO.Compression.ZipFile.OpenRead(path);
-                var entry = zip.GetEntry("assets/icon.png");
-                if (entry is null || entry.Length > 4 * 1024 * 1024) return NotFound("ICON_MISSING", "This package has no icon.");
-                using var s = entry.Open();
-                using var ms = new MemoryStream();
-                await s.CopyToAsync(ms);
-                var bytes = ms.ToArray();
-                if (bytes.Length < 8 || bytes[0] != 0x89 || bytes[1] != (byte)'P') return NotFound("ICON_MISSING", "This package has no valid PNG icon.");
-                return Results.File(bytes, "image/png", lastModified: pick.SubmittedAt, entityTag: new Microsoft.Net.Http.Headers.EntityTagHeaderValue($"\"{pick.Sha256[..16]}\""));
-            }
-            catch (InvalidDataException) { return NotFound("ICON_MISSING", "The package could not be read."); }
+            // S2.0.3: a version never changes: its icon is kept in memory (by package hash) and, when the URL names the
+            // released version (?v=), browsers and proxies may keep it for a year; other answers stay private and short
+            var publicPkg = await db.Packages.AsNoTracking().AnyAsync(p => p.Id == id && p.Visibility != "private");
+            ctx.Response.Headers.CacheControl = v is not null && v == pick.Version && released && publicPkg
+                ? "public, max-age=31536000, immutable" : "private, max-age=300";
+            var bytes = await IconCache.GetAsync(pick.Sha256, Path.Combine(svc.StorageRoot, pick.FilePath));
+            if (bytes is null) return NotFound("ICON_MISSING", "This package has no valid PNG icon.");
+            return Results.File(bytes, "image/png", lastModified: pick.SubmittedAt, entityTag: new Microsoft.Net.Http.Headers.EntityTagHeaderValue($"\"{pick.Sha256[..16]}\""));
         });
 
         // Screenshots (S0.11.0): list with localized captions (JSON, or TSV "url<TAB>caption" for the client) and images.
@@ -1710,22 +1706,29 @@ public static class ApiEndpoints
                 .Where(v => v.PackageId != SubmissionService.ClientPackageId && db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private"))
                 .Select(v => v.PackageId).Distinct().ToListAsync();
             var page = $"{Base(ctx)}/a/{ShareService.Slug(id, slugIds)}";
-            // into a temporary file that goes away with the response (ZipArchive writes synchronously)
-            var tmp = Path.Combine(Path.GetTempPath(), "addonstore-manual-" + Guid.NewGuid().ToString("N") + ".zip");
-            var fs = new FileStream(tmp, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None, 81920, FileOptions.DeleteOnClose);
-            try
-            {
-                if (!ManualInstall.Build(fs, pick, path, Services.CatalogUi.DisplayName(pkg, pick, lang), author, signature, page))
+            var name = Services.CatalogUi.DisplayName(pkg, pick, lang);
+            // S2.0.3: built once per version, language, address, author and signing key, then served from the container's
+            // local disk (before, every request copied the whole package from the data share)
+            var fs = ManualInstall.CachedZip(pick, path, name, author, signature, page);
+            if (fs is null) return NotFound("FILE_MISSING", "The package has no x64 binary for a manual installation.");
+            // S2.0.3: crawlers and link previews do not count, and a busy database never breaks a finished download
+            if (!UsageService.IsBot(ctx))
+                try
                 {
-                    await fs.DisposeAsync();
-                    return NotFound("FILE_MISSING", "The package has no x64 binary for a manual installation.");
+                    await db.PackageVersions.Where(x => x.Id == pick.Id).ExecuteUpdateAsync(s => s.SetProperty(x => x.Downloads, x => x.Downloads + 1));
+                    await usage.CountAsync(ctx, "download", pick.PackageId, pick.Version);
                 }
-            }
-            catch { await fs.DisposeAsync(); throw; }
-            fs.Position = 0;
-            await db.PackageVersions.Where(x => x.Id == pick.Id).ExecuteUpdateAsync(s => s.SetProperty(x => x.Downloads, x => x.Downloads + 1));
-            await usage.CountAsync(ctx, "download", pick.PackageId, pick.Version);
+                catch (Exception ex) when (ex is Microsoft.Data.Sqlite.SqliteException or InvalidOperationException) { }
             return Results.File(fs, "application/zip", ManualInstall.FileName(pick));
+        });
+
+        // S2.0.3: HEAD on the manual download (link checkers, download managers): available or not, nothing built or counted
+        api.MapMethods("/packages/{id}/manual", new[] { "HEAD" }, async (string id, AppDbContext db, HttpContext ctx) =>
+        {
+            var avail = await ManualInstall.AvailableAsync(db, id);
+            if (!avail.ContainsKey(id)) return Results.StatusCode(404);
+            ctx.Response.ContentType = "application/zip";
+            return Results.Ok();
         });
 
         api.MapGet("/devkit", (IConfiguration config, IWebHostEnvironment env, HttpContext ctx) =>

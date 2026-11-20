@@ -114,14 +114,12 @@ public class ReviewModel : PageModel
             .ToDictionary(g => g.Key, g => g.Where(v => v.Status == VersionStatus.Live).Select(v => v.Version).OrderByDescending(x => x, cmp).FirstOrDefault() is { } live
                 ? (true, live) : (false, g.Select(v => v.Version).OrderByDescending(x => x, cmp).First()));
         var root = HttpContext.RequestServices.GetRequiredService<SubmissionService>().StorageRoot;
+        // S2.0.3: the icon cache (by package hash) instead of opening every package on the data share at every view;
+        // only a valid PNG counts, the same the icon endpoint serves
         foreach (var q in Queue.Concat(InBeta))
         {
-            try
-            {
-                using var zip = System.IO.Compression.ZipFile.OpenRead(Path.Combine(root, q.FilePath));
-                if (zip.GetEntry("assets/icon.png") is { Length: > 0 }) HasIcon.Add(q.Id);
-            }
-            catch (Exception e) when (e is IOException or InvalidDataException or UnauthorizedAccessException) { }
+            try { if (await AddonStore.Web.Services.IconCache.GetAsync(q.Sha256, Path.Combine(root, q.FilePath)) is not null) HasIcon.Add(q.Id); }
+            catch (UnauthorizedAccessException) { }
         }
         var originIds = Queue.Where(q => q.OriginChildId != null).Select(q => (int?)q.Id).ToList();
         if (originIds.Count > 0)

@@ -17,7 +17,7 @@ public static class ReportView
         ("Package structure", new[] { "ZIP_UNREADABLE", "ZIP_SLIP", "SIZE_LIMIT", "MANIFEST_MISSING",
                                       "MANIFEST_INVALID_JSON", "MANIFEST_TOO_LARGE", "ENTRY_TOO_LARGE" }),
         ("Manifest and versioning", new[] { "ID_INVALID", "VERSION_INVALID", "VERSION_NOT_INCREMENTED",
-                                      "VERSION_EXISTS", "NAME_MISSING", "CHANGELOG_EMPTY", "MIN_HOST_VERSION_MISSING",
+                                      "VERSION_EXISTS", "NAME_MISSING", "CHANGELOG_EMPTY", "DESCRIPTION_LENGTH", "MIN_HOST_VERSION_MISSING",
                                       "CATEGORY_MISSING", "CATEGORY_UNKNOWN", "PACKAGE_OWNED_BY_OTHER", "PACKAGE_ID_RETIRED",
                                       "CATEGORY_INVALID", "CATEGORY_PROPOSAL_INVALID", "CATEGORY_TOO_SIMILAR",
                                       "CATEGORY_TOO_SPECIFIC", "CATEGORY_LIMIT_REACHED", "CATEGORY_NEW" }),

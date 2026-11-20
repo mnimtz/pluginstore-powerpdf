@@ -18,7 +18,8 @@
   Exit codes: 0 done, 1 unexpected error, 2 package damaged, 3 signature not
   trusted, 4 administrator rights refused, 5 Power PDF not found, 6 the name
   belongs to another add-on, 7 a newer version is installed, 8 package invalid,
-  9 copying failed, 11 not installed.
+  9 copying failed, 11 not installed, 12 PowerShell runs in Constrained Language
+  Mode (AppLocker/WDAC script rules), 13 Power PDF is older than the add-on needs.
 #>
 [CmdletBinding()]
 param(
@@ -43,6 +44,14 @@ function Join-Bytes([byte[]]$a, [byte[]]$b) { $r = New-Object byte[] ($a.Length 
 # the last value a function wrote is its result; anything else it emitted must not become the exit code
 function Get-Code($out) { $last = @($out)[-1]; if ($last -is [int]) { return $last } else { return 1 } }
 function Say([string]$text, [string]$color = 'Gray') { if (-not $Quiet -or $color -eq 'Red') { Write-Host $text -ForegroundColor $color } }
+
+# S2.0.3: under AppLocker/WDAC script rules PowerShell runs unsigned scripts in Constrained Language Mode, where the
+# .NET calls below are blocked; say so plainly instead of reporting a damaged package
+if ($ExecutionContext.SessionState.LanguageMode -ne 'FullLanguage') {
+    Write-Host (T 'PowerShell ist auf diesem Computer eingeschränkt (Constrained Language Mode, z. B. durch AppLocker oder WDAC). Die manuelle Installation ist so nicht möglich; bitte wenden Sie sich an Ihre IT oder installieren Sie das Add-on über den Add-on Store.' 'PowerShell is restricted on this computer (Constrained Language Mode, e.g. by AppLocker or WDAC). The manual installation cannot run like this; please contact your IT or install the add-on through the Add-on Store.') -ForegroundColor Red
+    if (-not $Quiet -and $Action -notlike 'Machine*' -and $Action -ne 'UserLayout') { [void](Read-Host (T 'Eingabetaste drücken zum Schließen' 'Press Enter to close')) }
+    exit 12
+}
 
 # --- the store's signing keys (public keys only, X||Y base64; the same as the store client) ---------------------
 $BuiltInKeys = @{
@@ -405,6 +414,10 @@ function Invoke-MachineInstall($pkg) {
         # x64 binary on every machine: Power PDF on Windows on ARM runs ARM64EC and loads x64 plug-ins
         $bin = Join-Path $tmp "x64\$name.zxt"
         if (-not (Test-Path -LiteralPath $bin) -or -not (Test-Path -LiteralPath (Join-Path $tmp 'manifest.json'))) { return 8 }
+        # S2.0.3: the add-on's minimum Power PDF version (from the signed package), like the store client checks it
+        try { $min = [string](Get-Content -LiteralPath (Join-Path $tmp 'manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json).minPowerPdfVersion } catch { return 8 }
+        $hostVersion = [string](Get-MachineValue 'SOFTWARE\Kofax\PDF\V1' 'VersionLong')
+        if ($min -and $hostVersion -and (Compare-Version $hostVersion $min) -lt 0) { return 13 }
         try {
             $target = Join-Path $plugins "$name.zxt"
             if (Test-Path -LiteralPath $target) {
@@ -516,6 +529,7 @@ function Get-Message([int]$rc) {
         8 { T 'Das Paket ist unvollständig oder ungültig.' 'The package is incomplete or invalid.' }
         9 { T 'Die Dateien konnten nicht kopiert oder entfernt werden.' 'The files could not be copied or removed.' }
         11 { T 'Das Add-on ist nicht installiert.' 'The add-on is not installed.' }
+        13 { T 'Dieses Add-on braucht eine neuere Version von Tungsten Power PDF. Es wurde nichts geändert.' 'This add-on needs a newer version of Tungsten Power PDF. Nothing was changed.' }
         default { T "Unerwarteter Fehler (Code $rc)." "Unexpected error (code $rc)." }
     }
 }

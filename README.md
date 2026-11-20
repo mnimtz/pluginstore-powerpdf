@@ -612,6 +612,15 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Review findings (S2.0.3, Nov 20, 2026):** catalog icons are read once per version and kept in memory; tiles ask for
+`/icon?v=<version>` and get `Cache-Control: public, max-age=31536000, immutable` for a released version of a public
+add-on (everything else stays private and short). The manual-install zip is built once per version, language, address
+and signing key and served from the container's local disk; crawlers and link previews are not counted, a busy database
+never breaks a finished download, HEAD answers without building anything, `robots.txt` and `rel="nofollow"` keep
+crawlers away. `AddonSetup.ps1` stops with exit code 12 and a clear message under Constrained Language Mode
+(AppLocker/WDAC) and with 13 when Power PDF is older than the add-on's `minPowerPdfVersion`. The review page uses the
+icon cache instead of opening every package; `DESCRIPTION_LENGTH` sits under "Manifest and versioning".
+
 **Speed on the data share (S2.0.2, Nov 20, 2026):** PackageVersions is rebuilt once at start-up with the small
 columns first and the large review reports at the end (`Data/VersionTableLayout.cs`): SQLite walks the overflow pages
 of every column before the one it reads, and the columns added over time sat behind the reports, so even the light
