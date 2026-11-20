@@ -10,6 +10,7 @@
 #include "settings.h"
 #include "signature.h"
 #include "blocklist.h"
+#include "manualentry.h"
 #include "loc.h"
 #include "Resource.h"
 #include <bcrypt.h>
@@ -338,6 +339,7 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
         L"$sha=" + PsQuote(sha) + L"\r\n" +
         L"$rc=0\r\n" +
         BinFunctions() +
+        psmanual::RegistryFunctions() +
         L"$stage=Join-Path $plugins ('.psstage-'+[guid]::NewGuid().ToString('N'))\r\n" +
         L"try {\r\n" +
         L"  Add-Type -AssemblyName System.IO.Compression.FileSystem\r\n" +
@@ -369,6 +371,9 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
         L"  }\r\n" +
         L"} catch { $rc=4 }\r\n" +
         L"finally { Remove-Item -LiteralPath $stage -Recurse -Force -ErrorAction SilentlyContinue }\r\n" +
+        // C2.0.1: an add-on installed manually keeps its "Apps and features" entry; show the new version there
+        L"if ($rc -eq 0) { Set-ManualVersion " + PsQuote(psmanual::SafeId(e.id)) + L" (Join-Path $plugins $name) " +
+            PsQuote(psmanual::IsValidVersion(e.version) ? e.version : std::wstring()) + L" }\r\n" +
         L"exit $rc\r\n";
 
     int result;
@@ -681,8 +686,13 @@ int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner, s
     }
     std::wstring pluginsDir = PluginsDir();
     if (pluginsDir.empty()) return 5;
-    std::wstring names;
-    for (const auto& z : zxtNames) names += (names.empty() ? L"" : L",") + PsQuote(z);
+    std::wstring names, ids;
+    for (const auto& z : zxtNames)
+    {
+        names += (names.empty() ? L"" : L",") + PsQuote(z);
+        // C2.0.1: the entries of a manual installation, by the id in the add-on's own manifest
+        ids += (ids.empty() ? L"" : L",") + PsQuote(psmanual::SafeId(InstalledId(z)));
+    }
 
     // One elevated step removes the Program-Files part; the HKCU settings key
     // is removed afterwards in USER context (elevated processes can resolve the
@@ -691,6 +701,8 @@ int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner, s
         L"$ErrorActionPreference='Stop'\r\n" +
         L"$plugins=" + PsQuote(pluginsDir) + L"\r\n" +
         BinFunctions() +
+        psmanual::RegistryFunctions() +
+        L"$ids=@(" + ids + L")\r\n" +
         L"Get-ChildItem -LiteralPath $plugins -Filter '*.zxt.old-*' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue\r\n" +
         // each add-on on its own (C1.4.2): one that is locked must not stop the others; bit i+1 = add-on i
         // failed, bit 0 (any other error, e.g. exit 1 of PowerShell itself) = nothing is certain
@@ -702,6 +714,8 @@ int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner, s
         L"    $data=Join-Path $plugins $name\r\n" +
         L"    Clear-Bin (Join-Path $data 'bin')\r\n" +
         L"    if (Test-Path -LiteralPath $data) { Remove-Item -LiteralPath $data -Recurse -Force }\r\n" +
+        // C2.0.1: with its setup folder gone, the manual installation's entries go too (never another id's)
+        L"    Remove-ManualEntries $ids[$i]\r\n" +
         L"  } catch { $failed = $failed -bor (1 -shl $i) }\r\n" +
         L"  $i++\r\n" +
         L"}\r\n" +
