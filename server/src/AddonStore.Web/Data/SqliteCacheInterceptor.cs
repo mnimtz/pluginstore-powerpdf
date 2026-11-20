@@ -15,8 +15,11 @@ public sealed class SqliteCacheInterceptor : DbConnectionInterceptor
 {
     private readonly string? _pragma;
 
+    // S2.0.4: journal_mode=PERSIST on every connection: the rollback journal file stays and only its header is
+    // cleared after a transaction, instead of creating and deleting the file on the share for every write (still a
+    // rollback journal, never WAL, which needs shared memory the share does not support)
     public SqliteCacheInterceptor(int megabytes) =>
-        _pragma = megabytes > 0 ? $"PRAGMA cache_size=-{Math.Min(megabytes, 2048) * 1024}" : null;
+        _pragma = (megabytes > 0 ? $"PRAGMA cache_size=-{Math.Min(megabytes, 2048) * 1024}; " : "") + "PRAGMA journal_mode=PERSIST;";
 
     public override void ConnectionOpened(DbConnection connection, ConnectionEndEventData eventData)
     {

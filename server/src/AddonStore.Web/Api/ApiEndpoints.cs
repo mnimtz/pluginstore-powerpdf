@@ -81,7 +81,7 @@ public static class ApiEndpoints
                     await es.CopyToAsync(fs);
                 try { File.Move(part, cached, overwrite: true); } catch (IOException) { TryDelete(part); }
             }
-            await db.PackageVersions.Where(x => x.Id == pick.Id).ExecuteUpdateAsync(s => s.SetProperty(x => x.Downloads, x => x.Downloads + 1));
+            usage.CountDownload(pick.Id);   // S2.0.4: buffered
             await usage.CountAsync(ctx, "msi", pick.PackageId, pick.Version);
             // Client installer fetched from a shared add-on page: attribute it to that add-on and ref.
             var fromPkg = ctx.Request.Query["pkg"].ToString();
@@ -1673,7 +1673,7 @@ public static class ApiEndpoints
                         statusCode: claim.Code switch { "SEATS_BUSY" => 503, "SEATS_RATE_LIMITED" => 429, _ => 403 });
             }
             // atomic increment: concurrent downloads must not lose counts
-            await db.PackageVersions.Where(x => x.Id == v.Id).ExecuteUpdateAsync(s => s.SetProperty(x => x.Downloads, x => x.Downloads + 1));
+            usage.CountDownload(v.Id);   // S2.0.4: buffered
             var dlLang = Services.Lang.Normalize(ctx.Request.Query["lang"].ToString());
             await usage.CountAsync(ctx, "download", v.PackageId, v.Version, lang: PackageValidator.AllLanguages.Contains(dlLang) ? dlLang : "");
             return Results.File(path, "application/zip", $"{id}-{version}.ppak");
@@ -1715,12 +1715,23 @@ public static class ApiEndpoints
             if (!UsageService.IsBot(ctx))
                 try
                 {
-                    await db.PackageVersions.Where(x => x.Id == pick.Id).ExecuteUpdateAsync(s => s.SetProperty(x => x.Downloads, x => x.Downloads + 1));
+                    usage.CountDownload(pick.Id);   // S2.0.4: buffered
                     await usage.CountAsync(ctx, "download", pick.PackageId, pick.Version);
                 }
                 catch (Exception ex) when (ex is Microsoft.Data.Sqlite.SqliteException or InvalidOperationException) { }
             return Results.File(fs, "application/zip", ManualInstall.FileName(pick));
         });
+
+        // S2.0.4: the last slow requests (500 ms or more) with their database share, for admins (diagnosis of speed)
+        api.MapGet("/admin/timing", async (HttpContext ctx, UserManager<AppUser> users) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            if (!ctx.User.IsInRole("Admin"))
+                return Results.Json(new { ok = false, error = new { code = "ADMIN_ONLY", message = "Only administrators see the request timings.", hint = "Use an admin account or token." } }, statusCode: 403);
+            return Results.Json(new { ok = true, data = new { since = System.Diagnostics.Process.GetCurrentProcess().StartTime.ToUniversalTime(),
+                requests = AddonStore.Web.Data.RequestTiming.RecentSlow() } });
+        }).RequireAuthorization("AdminOnly");
 
         // S2.0.3: HEAD on the manual download (link checkers, download managers): available or not, nothing built or counted
         api.MapMethods("/packages/{id}/manual", new[] { "HEAD" }, async (string id, AppDbContext db, HttpContext ctx) =>

@@ -31,11 +31,15 @@ public class UsageService
     private readonly GeoService _geo;
     private readonly SettingsService _settings;
     private readonly ILogger<UsageService> _log;
+    private readonly UsageBuffer _buffer;
 
-    public UsageService(AppDbContext db, GeoService geo, SettingsService settings, ILogger<UsageService> log)
+    public UsageService(AppDbContext db, GeoService geo, SettingsService settings, ILogger<UsageService> log, UsageBuffer buffer)
     {
-        _db = db; _geo = geo; _settings = settings; _log = log;
+        _db = db; _geo = geo; _settings = settings; _log = log; _buffer = buffer;
     }
+
+    /// <summary>S2.0.4: one more download of this version (written with the next minute's counters).</summary>
+    public void CountDownload(int versionId) => _buffer.Download(versionId);
 
     public record ClientInfo(string Source, string ClientVersion, string HostVersion, string OsVersion, string Arch);
 
@@ -82,20 +86,15 @@ public class UsageService
             var geo = _geo.Lookup(ctx);
             var day = DateTime.UtcNow.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
             string k = Clean(kind), p = Clean(packageId), v = Clean(version), l = Clean(lang).ToUpperInvariant();
-            await _db.Database.ExecuteSqlInterpolatedAsync($@"
-                INSERT INTO UsageStats (Day, Kind, PackageId, Version, Source, Lang, ClientVersion,
-                                        Country, Region, City, Org, Arch, HostVersion, OsVersion, Count)
-                VALUES ({day}, {k}, {p}, {v}, {c.Source}, {l}, {Clean(c.ClientVersion)},
-                        {Clean(geo.Country)}, {Text(geo.Region)}, {Text(geo.City)}, {Text(geo.Org)},
-                        {Clean(c.Arch)}, {Clean(c.HostVersion)}, {Clean(c.OsVersion)}, 1)
-                ON CONFLICT (Day, Kind, PackageId, Version, Source, Lang, ClientVersion,
-                             Country, Region, City, Org, Arch, HostVersion, OsVersion)
-                DO UPDATE SET Count = Count + 1");
+            // S2.0.4: collected in memory, written once a minute (UsageBuffer)
+            _buffer.Count(new UsageBuffer.StatKey(day, k, p, v, c.Source, l, Clean(c.ClientVersion),
+                Clean(geo.Country), Text(geo.Region), Text(geo.City), Text(geo.Org),
+                Clean(c.Arch), Clean(c.HostVersion), Clean(c.OsVersion)));
 
             if (await IpLoggingOnAsync())
             {
                 var ua = ctx.Request.Headers.UserAgent.ToString();
-                _db.UsageEvents.Add(new UsageEvent
+                _buffer.Event(new UsageEvent
                 {
                     Kind = k, PackageId = p, Version = v, Source = c.Source, Lang = l,
                     ClientVersion = Clean(c.ClientVersion), HostVersion = Clean(c.HostVersion),
@@ -105,7 +104,6 @@ public class UsageService
                     Ip = GeoService.ClientIp(ctx)?.ToString() ?? "",
                     UserAgent = ua.Length > 300 ? ua[..300] : ua
                 });
-                await _db.SaveChangesAsync();
             }
         }
         catch (Exception ex)

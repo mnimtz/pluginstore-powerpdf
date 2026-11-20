@@ -32,7 +32,7 @@ public static class SchemaUpgrade
             var conn = db.Database.GetDbConnection();
             if (conn.State != System.Data.ConnectionState.Open) conn.Open();
             using var cmd = conn.CreateCommand();
-            cmd.CommandText = "PRAGMA journal_mode=DELETE";
+            cmd.CommandText = "PRAGMA journal_mode=PERSIST";   // S2.0.4: rollback journal kept between writes (see SqliteCacheInterceptor)
             log.LogInformation("Startup: SQLite journal mode {Mode}", AddonStore.Web.Services.LogSafe.Of(cmd.ExecuteScalar()));
         }
         catch (Exception ex) { log.LogWarning(ex, "Startup: SQLite journal mode could not be changed"); }

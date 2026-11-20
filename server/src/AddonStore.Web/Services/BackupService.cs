@@ -376,6 +376,7 @@ public class BackupService
             File.Copy(stagedDb, dbPath, overwrite: true);
             SqliteConnection.ClearAllPools();
             CatalogUi.Invalidate();   // S1.13.2: the cached catalog belongs to the old database
+            SettingsService.ClearCache();   // S2.0.4: so do the cached settings
 
             foreach (var (_, root) in folders) SwapContents(root + ".restore", root);
         }

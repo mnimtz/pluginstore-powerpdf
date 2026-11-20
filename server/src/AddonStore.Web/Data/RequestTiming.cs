@@ -41,6 +41,14 @@ public sealed class RequestTiming
         }
     }
 
+    /// <summary>S2.0.4: one slow request as admins see it (path without query string, never user data).</summary>
+    public sealed record Slow(DateTime At, string Method, string Path, int Status, long TotalMs, double DbMs, int Queries, double SlowestMs, string? SlowestSql);
+
+    private static readonly System.Collections.Concurrent.ConcurrentQueue<Slow> Recent = new();
+
+    /// <summary>The last (at most 300) requests that took 500 ms or more, newest first.</summary>
+    public static List<Slow> RecentSlow() => Recent.Reverse().ToList();
+
     /// <summary>The middleware: header on every response, a warning for slow requests.</summary>
     public static async Task Middleware(HttpContext ctx, Func<Task> next, ILogger log, int slowMs)
     {
@@ -56,6 +64,12 @@ public sealed class RequestTiming
         finally
         {
             sw.Stop();
+            if (sw.ElapsedMilliseconds >= 500)
+            {
+                Recent.Enqueue(new Slow(DateTime.UtcNow, ctx.Request.Method, ctx.Request.Path.Value ?? "", ctx.Response.StatusCode,
+                                        sw.ElapsedMilliseconds, Math.Round(t.DbMs), t.Count, Math.Round(t.SlowestMs), t.SlowestSql));
+                while (Recent.Count > 300) Recent.TryDequeue(out _);
+            }
             if (sw.ElapsedMilliseconds >= slowMs)
                 log.LogWarning("Slow request {Method} {Path} -> {Status}: {TotalMs} ms, database {DbMs:0} ms in {Count} commands, slowest {SlowMs:0} ms: {Sql}",
                     ctx.Request.Method, ctx.Request.Path.Value, ctx.Response.StatusCode, sw.ElapsedMilliseconds, t.DbMs, t.Count, t.SlowestMs, t.SlowestSql ?? "-");

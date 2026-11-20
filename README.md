@@ -612,6 +612,12 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Fewer writes on the data share (S2.0.4, Nov 20, 2026):** usage counters, download counters and IP events are
+collected in memory and written once a minute in one transaction (`Services/UsageBuffer.cs`; on the share every single
+write cost 0.2 to 2 s and locked out every reader). The rollback journal stays between writes
+(`journal_mode=PERSIST`, never WAL). Settings are kept in memory for 30 s (`SetAsync` updates at once, a restore clears
+them). Admins read the last requests that took 500 ms or more with their database share at `GET /api/admin/timing`.
+
 **Review findings (S2.0.3, Nov 20, 2026):** catalog icons are read once per version and kept in memory; tiles ask for
 `/icon?v=<version>` and get `Cache-Control: public, max-age=31536000, immutable` for a released version of a public
 add-on (everything else stays private and short). The manual-install zip is built once per version, language, address
