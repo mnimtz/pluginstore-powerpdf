@@ -18,9 +18,14 @@ static void WriteLine(const wchar_t* rawLine)
     for (; i < 2047 && rawLine[i]; ++i)   // bound first, then the character (CodeQL)
         line[i] = (rawLine[i] < 0x20 || rawLine[i] == 0x7F) ? L'?' : rawLine[i];
     line[i] = 0;
-    wchar_t path[MAX_PATH];
-    if (!GetTempPathW(MAX_PATH, path)) return;
-    wcscat_s(path, MAX_PATH, L"PluginStore.log");
+    // client review Nov 2026: a TEMP path near or over MAX_PATH made wcscat_s call the invalid-parameter
+    // handler (Power PDF ended on the first log line) or appended to an unfilled buffer; such a
+    // TEMP now gets no log line instead
+    const wchar_t kName[] = L"PluginStore.log";
+    wchar_t path[1024];
+    DWORD n = GetTempPathW(_countof(path), path);
+    if (n == 0 || n + _countof(kName) > _countof(path)) return;
+    wcscat_s(path, _countof(path), kName);
     FILE* f = NULL;
     if (_wfopen_s(&f, path, L"a, ccs=UTF-8") == 0 && f)
     {

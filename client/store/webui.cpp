@@ -175,8 +175,10 @@ std::wstring Tenths(double v)
 // Last lines of the store log for a problem report (only when the user ticks it).
 std::wstring LogTail(size_t maxLines)
 {
-    wchar_t tmp[MAX_PATH];
-    GetTempPathW(MAX_PATH, tmp);
+    // the same file as logging.cpp; a TEMP longer than the buffer left it unterminated (client review Nov 2026)
+    wchar_t tmp[1024];
+    DWORD tn = GetTempPathW(_countof(tmp), tmp);
+    if (tn == 0 || tn >= _countof(tmp)) return std::wstring();
     HANDLE f = CreateFileW((std::wstring(tmp) + L"PluginStore.log").c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE,
                            NULL, OPEN_EXISTING, 0, NULL);
     if (f == INVALID_HANDLE_VALUE) return std::wstring();
@@ -385,8 +387,8 @@ void Spawn(std::function<void()> work)
         if (t) { CloseHandle(t); return; }
         FreeLibrary(self);
     }
-    std::unique_ptr<std::function<void()>> fn(p);   // no thread: run it here
-    (*fn)();
+    std::unique_ptr<std::function<void()>> fn(p);   // no thread: run it here (as guarded as WorkerMain)
+    try { (*fn)(); } catch (...) { FPLogW(L"[Store] worker failed"); }
 }
 
 // --- the window -------------------------------------------------------------
@@ -522,7 +524,14 @@ protected:
                     return S_OK;
                 }
                 LPWSTR json = nullptr;
-                if (SUCCEEDED(a->get_WebMessageAsJson(&json)) && json) { OnPageMessage(json); CoTaskMemFree(json); }
+                if (SUCCEEDED(a->get_WebMessageAsJson(&json)) && json)
+                {
+                    // no C++ exception may cross WebView2's COM callback or the host's message loop
+                    // (DURING/HANDLER of the SDK does not catch them): Power PDF would end (client review Nov 2026)
+                    try { OnPageMessage(json); }
+                    catch (...) { FPLogW(L"[Store] page message failed"); }
+                    CoTaskMemFree(json);
+                }
                 return S_OK;
             }).Get(), &t);
 
@@ -1482,17 +1491,22 @@ protected:
     {
         std::unique_ptr<AsyncMsg> r(reinterpret_cast<AsyncMsg*>(lp));
         if (!r || !m_web) return 0;
-        switch (r->kind)
+        // MFC's window procedure catches only CException: a std exception would end Power PDF
+        try
         {
-        case KCatalog:  ApplyCatalog(*r); break;
-        case KRated:    ApplyRated(*r); break;
-        case KFeedback: ApplyFeedback(*r); break;
-        case KJob:      ApplyJob(*r); break;
-        case KCustomer: ApplyCustomer(*r); break;
-        case KCodeInfo: Send(r->text); break;
-        case KCodePreview: ApplyCodePreview(*r); break;
-        case KSend:     if (r->gen == 0 || r->gen == m_catalogGen) Send(r->text); break;
+            switch (r->kind)
+            {
+            case KCatalog:  ApplyCatalog(*r); break;
+            case KRated:    ApplyRated(*r); break;
+            case KFeedback: ApplyFeedback(*r); break;
+            case KJob:      ApplyJob(*r); break;
+            case KCustomer: ApplyCustomer(*r); break;
+            case KCodeInfo: Send(r->text); break;
+            case KCodePreview: ApplyCodePreview(*r); break;
+            case KSend:     if (r->gen == 0 || r->gen == m_catalogGen) Send(r->text); break;
+            }
         }
+        catch (...) { FPLogW(L"[Store] worker result %d failed", r->kind); }
         return 0;
     }
 

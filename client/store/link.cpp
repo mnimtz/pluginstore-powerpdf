@@ -66,6 +66,8 @@ DWORD WINAPI UpdateCheckThread(LPVOID p)
     std::vector<PSCatalogEntry> all;
     std::wstring err;
     UpdateResult* r = nullptr;
+    // an exception leaving a thread ends Power PDF (std::terminate): none gets out (client review Nov 2026)
+    try {
     if (PSFetchCatalogFor(*lang, all, err))
     {
         r = new UpdateResult();
@@ -99,6 +101,7 @@ DWORD WINAPI UpdateCheckThread(LPVOID p)
         }
         r->count = (int)r->keys.size();
     }
+    } catch (...) { delete r; r = nullptr; FPLogW(L"[Store] update check failed"); }
     delete lang;
     if (!r || !g_linkWnd || !PostMessageW(g_linkWnd, WM_PS_UPDATES, 0, (LPARAM)r)) delete r;
     InterlockedExchange(&g_checkRunning, 0);
