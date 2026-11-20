@@ -37,6 +37,8 @@ DWORD WINAPI Worker(LPVOID p)
     Job* job = static_cast<Job*>(p);
     std::string body;
     DWORD status = 0;
+    // an exception leaving a thread ends Power PDF (std::terminate): none gets out (client review Nov 2026)
+    try {
     if (PSHttpGetText(job->url, body, &status) && status == 200)
     {
         // {"ok":true,"data":{"allowed":true|false,...}}
@@ -55,6 +57,7 @@ DWORD WINAPI Worker(LPVOID p)
         FPLogW(L"[Store] access check not reachable (HTTP %lu), keeping the last answer", status);
     }
     PSInventoryReportIfDue();   // C1.8.0: once a day, on this worker (at start, then every 4 h)
+    } catch (...) { FPLogW(L"[Store] access check failed"); }
     delete job;
     InterlockedExchange(&g_running, 0);
     FreeLibraryAndExitThread(gHINSTANCE, 0);

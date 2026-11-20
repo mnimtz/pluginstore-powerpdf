@@ -116,6 +116,8 @@ DWORD WINAPI Worker(LPVOID p)
     auto* found = new std::vector<PSBlocked>();
     std::string tsv;
     DWORD status = 0;
+    // an exception leaving a thread ends Power PDF (std::terminate): none gets out (client review Nov 2026)
+    try {
     if (PSHttpGetText(job->url, tsv, &status) && status == 200)
     {
         // installed add-ons of THIS Power PDF: <bin>\Plug-Ins\<zxt>\manifest.json
@@ -176,6 +178,7 @@ DWORD WINAPI Worker(LPVOID p)
         delete found;
         found = nullptr;
     }
+    } catch (...) { delete found; found = nullptr; FPLogW(L"[Store] blocklist check failed"); }
     if (found && (!job->notify || !PostMessageW(job->notify, job->message, 0, (LPARAM)found))) delete found;
     delete job;
     InterlockedExchange(&g_running, 0);

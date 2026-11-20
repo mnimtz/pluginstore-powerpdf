@@ -112,6 +112,42 @@ MIT = ("MIT License\n\nCopyright (c) 2026 Tungsten Automation internal tooling\n
        "SOFTWARE.")
 
 
+# Third-party notices (client review Nov 2026): the MSI is also downloaded on its own from the store's
+# start page, so the notices that the WebView2 SDK loader (BSD-3-Clause) and the Red Hat Display font
+# (OFL-1.1) inside PluginStore.zxt require travel with it: the package's LICENSES.md, after the MIT text.
+LICENSES_MD = os.path.normpath(os.path.join(HERE, '..', '..', 'packaging', 'pluginstore-LICENSES.md'))
+
+
+def third_party_notices():
+    """LICENSES.md as plain text: headings without '#', soft-wrapped lines joined, code blocks kept."""
+    with open(LICENSES_MD, encoding='utf-8') as f:
+        lines = f.read().replace('`' * 3 + 'text', '`' * 3).splitlines()
+    out, para, fenced = [], [], False
+
+    def flush():
+        if para:
+            out.append(' '.join(para))
+            para.clear()
+    for line in lines:
+        s = line.strip()
+        if s.startswith('`' * 3):
+            flush()
+            fenced = not fenced
+            continue
+        if fenced:
+            out.append(line.rstrip())
+        elif not s:
+            flush()
+            out.append('')
+        elif s.startswith('#') or s.startswith('- ') or s.startswith('* '):
+            flush()
+            para.append(s.lstrip('#').strip())
+        else:
+            para.append(s)
+    flush()
+    return '\n'.join(out).replace('`', '').strip()
+
+
 def rtf_text(s):
     """Plain text to RTF: escapes, paragraphs, every non-ASCII character as \\uN?."""
     out = []
@@ -282,6 +318,7 @@ EDITION.update(EDITION_X)
 
 def main():
     os.makedirs(OUT, exist_ok=True)
+    notices = third_party_notices()
     for culture, lcid, cp in CULTURES:
         no_ppdf, close, downgrade, note = TEXT[culture]
         too_old = TOO_OLD[culture].format(v=MIN_PPDF)
@@ -307,7 +344,7 @@ def main():
             f.write(wxl)
         rtf = ('{\\rtf1\\ansi\\ansicpg1252\\deff0{\\fonttbl{\\f0 Arial;}}\\fs18 '
                '{\\b Add-on Store for Tungsten Power PDF}\\par\\par\n'
-               + rtf_text(note) + '\\par\\par\n' + rtf_text(MIT) + '\\par\n}')
+               + rtf_text(note) + '\\par\\par\n' + rtf_text(MIT) + '\\par\\par\n' + rtf_text(notices) + '\\par\n}')
         with open(os.path.join(OUT, f'license-{culture}.rtf'), 'w', encoding='ascii') as f:
             f.write(rtf)
     print(f'{len(CULTURES)} cultures written to {OUT}')

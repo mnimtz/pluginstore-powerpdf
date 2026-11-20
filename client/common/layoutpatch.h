@@ -487,8 +487,11 @@ inline bool PatchButtons(std::wstring& text)
 // elevated process — it would land in the administrator's profile instead.
 inline std::wstring UserLayoutDir()
 {
+    // client review Nov 2026: an APPDATA longer than the buffer returned only the needed size and left
+    // the buffer empty, which made "\Kofax\..." (the root of the current drive); now no folder at all
     wchar_t buf[MAX_PATH] = { 0 };
-    if (!GetEnvironmentVariableW(L"APPDATA", buf, MAX_PATH)) return std::wstring();
+    DWORD n = GetEnvironmentVariableW(L"APPDATA", buf, MAX_PATH);
+    if (n == 0 || n >= MAX_PATH) return std::wstring();
     return std::wstring(buf) + L"\\Kofax\\PDF\\PowerPDF\\UILayout";
 }
 
@@ -498,6 +501,8 @@ inline std::wstring UserLayoutDir()
 inline void CollectLayoutFiles(const std::wstring& dir, std::vector<std::wstring>& out,
                                int depth = 0)
 {
+    // no folder (APPDATA missing or too long): "\*" would list the root of the current drive
+    if (dir.empty()) return;
     WIN32_FIND_DATAW fd;
     HANDLE h = FindFirstFileW((dir + L"\\*").c_str(), &fd);
     if (h == INVALID_HANDLE_VALUE) return;
