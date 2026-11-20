@@ -142,7 +142,7 @@ public class UsageService
         }
         if (shares) s = await _db.ShareStats.ExecuteDeleteAsync();
         if (ipEvents) ip = await _db.UsageEvents.ExecuteDeleteAsync();
-        if (ratings) r = await _db.Ratings.ExecuteDeleteAsync();
+        if (ratings) { r = await _db.Ratings.ExecuteDeleteAsync(); CatalogUi.Invalidate(); }   // S2.0.7: ratings show in the cached catalog
         if (feedback)
         {
             await _db.FeedbackAttachments.ExecuteDeleteAsync();

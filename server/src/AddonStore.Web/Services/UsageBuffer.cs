@@ -15,16 +15,20 @@ public sealed class UsageBuffer
     public sealed record StatKey(string Day, string Kind, string PackageId, string Version, string Source, string Lang, string ClientVersion,
                                  string Country, string Region, string City, string Org, string Arch, string HostVersion, string OsVersion);
 
+    public sealed record ShareKey(string Day, string PackageId, string Ref, string Kind);
+
     private ConcurrentDictionary<StatKey, int> _stats = new();
+    private ConcurrentDictionary<ShareKey, int> _shares = new();
     private ConcurrentDictionary<int, int> _downloads = new();
     private ConcurrentQueue<UsageEvent> _events = new();
     private readonly SemaphoreSlim _flushLock = new(1, 1);
 
     public void Count(StatKey key) => _stats.AddOrUpdate(key, 1, (_, n) => n + 1);
     public void Download(int versionId) => _downloads.AddOrUpdate(versionId, 1, (_, n) => n + 1);
+    public void Share(ShareKey key) => _shares.AddOrUpdate(key, 1, (_, n) => n + 1);
     public void Event(UsageEvent e) { if (_events.Count < 50_000) _events.Enqueue(e); }
 
-    public bool IsEmpty => _stats.IsEmpty && _downloads.IsEmpty && _events.IsEmpty;
+    public bool IsEmpty => _stats.IsEmpty && _downloads.IsEmpty && _events.IsEmpty && _shares.IsEmpty;
 
     /// <summary>Writes everything collected so far in one transaction; on failure the numbers stay for the next try.</summary>
     public async Task FlushAsync(IServiceProvider services, ILogger log, CancellationToken ct = default)
@@ -35,6 +39,7 @@ public sealed class UsageBuffer
         {
             var stats = Interlocked.Exchange(ref _stats, new ConcurrentDictionary<StatKey, int>());
             var downloads = Interlocked.Exchange(ref _downloads, new ConcurrentDictionary<int, int>());
+            var shares = Interlocked.Exchange(ref _shares, new ConcurrentDictionary<ShareKey, int>());
             var events = new List<UsageEvent>();
             while (events.Count < 5000 && _events.TryDequeue(out var e)) events.Add(e);
             try
@@ -53,6 +58,10 @@ public sealed class UsageBuffer
                         DO UPDATE SET Count = Count + {n}", ct);
                 foreach (var (id, n) in downloads)
                     await db.Database.ExecuteSqlInterpolatedAsync($"UPDATE PackageVersions SET Downloads = Downloads + {n} WHERE Id = {id}", ct);
+                foreach (var (k, n) in shares)
+                    await db.Database.ExecuteSqlInterpolatedAsync($@"
+                        INSERT INTO ShareStats (Day, PackageId, Ref, Kind, Count) VALUES ({k.Day}, {k.PackageId}, {k.Ref}, {k.Kind}, {n})
+                        ON CONFLICT (Day, PackageId, Ref, Kind) DO UPDATE SET Count = Count + {n}", ct);
                 if (events.Count > 0) { db.UsageEvents.AddRange(events); await db.SaveChangesAsync(ct); }
                 await tx.CommitAsync(ct);
             }
@@ -61,6 +70,7 @@ public sealed class UsageBuffer
                 // keep the numbers for the next try (the events go back to the queue)
                 foreach (var (k, n) in stats) _stats.AddOrUpdate(k, n, (_, m) => m + n);
                 foreach (var (id, n) in downloads) _downloads.AddOrUpdate(id, n, (_, m) => m + n);
+                foreach (var (k, n) in shares) _shares.AddOrUpdate(k, n, (_, m) => m + n);
                 foreach (var e in events) { e.Id = 0; _events.Enqueue(e); }
                 log.LogWarning(ex, "Usage counters could not be written; trying again in a minute");
             }

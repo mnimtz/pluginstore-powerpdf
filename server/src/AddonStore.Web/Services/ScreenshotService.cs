@@ -22,8 +22,9 @@ public static class ScreenshotService
     public static async Task<PackageVersion?> DisplayVersionAsync(AppDbContext db, string packageId)
     {
         var cmp = new SemVerComparer();
-        var versions = await db.PackageVersions.AsNoTracking()
-            .Where(v => v.PackageId == packageId && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)).Select(PackageVersion.Light).ToListAsync();
+        // S2.0.7: from the in-memory version rows (add-on page, screenshots, AI search)
+        var versions = (await AddonStore.Web.Data.LightVersions.AllAsync(db))
+            .Where(v => v.PackageId == packageId && (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta)).ToList();
         return versions.Where(v => v.Status == VersionStatus.Live).OrderByDescending(v => v.Version, cmp).FirstOrDefault()
                ?? versions.OrderByDescending(v => v.Version, cmp).FirstOrDefault();
     }

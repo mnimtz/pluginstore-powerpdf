@@ -17,8 +17,9 @@ public class ShareService
 
     private readonly AppDbContext _db;
     private readonly ILogger<ShareService> _log;
+    private readonly UsageBuffer _buffer;
 
-    public ShareService(AppDbContext db, ILogger<ShareService> log) { _db = db; _log = log; }
+    public ShareService(AppDbContext db, ILogger<ShareService> log, UsageBuffer buffer) { _db = db; _log = log; _buffer = buffer; }
 
     /// <summary>Lower-case short name or "" when invalid.</summary>
     public static string CleanRef(string? r)
@@ -58,10 +59,9 @@ public class ShareService
         try
         {
             var day = DateTime.UtcNow.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-            var r = CleanRef(reference);
-            await _db.Database.ExecuteSqlInterpolatedAsync($@"
-                INSERT INTO ShareStats (Day, PackageId, Ref, Kind, Count) VALUES ({day}, {packageId}, {r}, {kind}, 1)
-                ON CONFLICT (Day, PackageId, Ref, Kind) DO UPDATE SET Count = Count + 1");
+            // S2.0.7: written with the next minute's counters (UsageBuffer), not on every page view
+            _buffer.Share(new UsageBuffer.ShareKey(day, packageId, CleanRef(reference), kind));
+            await Task.CompletedTask;
         }
         catch (Exception ex)
         {

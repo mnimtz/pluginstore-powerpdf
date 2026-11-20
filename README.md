@@ -612,6 +612,10 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Remaining speed items (S2.0.7, Nov 20, 2026):** the add-on page, screenshots and the AI search take the shown version
+from the in-memory rows; share and page-view counters go through the minute buffer like the other counters; cached
+catalog answers live ten minutes (every write still starts a new generation); a ratings reset invalidates the catalog.
+
 **Version rows in memory (S2.0.6, Nov 20, 2026):** the light rows of all versions (a few hundred) are kept in process
 memory (`LightVersions.AllAsync`): even with a held connection, SQLite's page cache did not survive pauses on the
 share, and every list page read the version table again (22 s for the start page after 200 s without requests). A

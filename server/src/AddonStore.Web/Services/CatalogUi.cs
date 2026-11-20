@@ -43,7 +43,7 @@ public static class CatalogUi
         public Dictionary<string, FeedbackService.Summary> Ratings = new();
         public static async Task<Context> LoadAsync(AppDbContext db) => new()
         {
-            Packages = await db.Packages.Include(p => p.Owner).ToDictionaryAsync(p => p.Id),
+            Packages = await db.Packages.AsNoTracking().Include(p => p.Owner).ToDictionaryAsync(p => p.Id),
             Known = await db.Categories.ToDictionaryAsync(c => c.Slug),
             Ratings = await FeedbackService.SummariesAsync(db),
         };
@@ -106,7 +106,9 @@ public static class CatalogUi
     // is at most a minute old (raw updates such as download counters bypass the generation).
     private static long _generation;
     private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, (long Gen, DateTime At, List<CatalogItem> Items)> _cache = new();
-    private static readonly TimeSpan CacheAge = TimeSpan.FromMinutes(1);
+    // S2.0.7: ten minutes (was one): every write to what the catalog shows starts a new generation anyway; only
+    // download counters and ratings changed by raw updates may lag that long
+    private static readonly TimeSpan CacheAge = TimeSpan.FromMinutes(10);
 
     /// <summary>Drops the cached catalogs (a write to packages, versions, categories, ratings or accounts).</summary>
     public static void Invalidate() => Interlocked.Increment(ref _generation);
