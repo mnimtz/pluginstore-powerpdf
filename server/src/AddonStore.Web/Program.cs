@@ -170,6 +170,8 @@ builder.Services.AddScoped<UsageService>();
 // S2.0.4: usage and download counters written once a minute (UsageBuffer)
 builder.Services.AddSingleton<UsageBuffer>();
 builder.Services.AddHostedService<UsageBufferWorker>();
+// S2.0.5: one connection held open keeps the shared page cache alive; warmed in the background after the start
+builder.Services.AddHostedService<AddonStore.Web.Data.CacheKeeper>();
 builder.Services.AddScoped<ShareService>();
 builder.Services.AddScoped<FeedbackService>();
 builder.Services.AddScoped<IssueService>();

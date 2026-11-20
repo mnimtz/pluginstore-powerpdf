@@ -612,6 +612,12 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Page cache that stays (S2.0.5, Nov 20, 2026):** SQLite frees the shared page cache when the last connection
+closes, and Microsoft.Data.Sqlite's pool closes idle connections (prune timer), so after every short pause the next
+page started cold (about 50 ms per page on the share, 7 to 17 s for a list page). `Data/CacheKeeper.cs` holds one
+connection open for the life of the process (released and reopened around a restore) and warms the main list
+queries in the background after the start.
+
 **Fewer writes on the data share (S2.0.4, Nov 20, 2026):** usage counters, download counters and IP events are
 collected in memory and written once a minute in one transaction (`Services/UsageBuffer.cs`; on the share every single
 write cost 0.2 to 2 s and locked out every reader). The rollback journal stays between writes

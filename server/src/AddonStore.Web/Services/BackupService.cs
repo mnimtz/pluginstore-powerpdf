@@ -370,11 +370,17 @@ public class BackupService
             // old database goes: a leftover rollback journal (-journal, since S0.17.1) would
             // be applied to the RESTORED file on the next open and damage it; -wal/-shm come
             // from databases before S0.17.1.
-            SqliteConnection.ClearAllPools();
-            foreach (var side in new[] { dbPath + "-journal", dbPath + "-wal", dbPath + "-shm" })
-                if (File.Exists(side)) File.Delete(side);
-            File.Copy(stagedDb, dbPath, overwrite: true);
-            SqliteConnection.ClearAllPools();
+            // S2.0.5: the connection that keeps the page cache alive closes too, and opens again on the new file
+            AddonStore.Web.Data.CacheKeeper.Release();
+            try
+            {
+                SqliteConnection.ClearAllPools();
+                foreach (var side in new[] { dbPath + "-journal", dbPath + "-wal", dbPath + "-shm" })
+                    if (File.Exists(side)) File.Delete(side);
+                File.Copy(stagedDb, dbPath, overwrite: true);
+                SqliteConnection.ClearAllPools();
+            }
+            finally { AddonStore.Web.Data.CacheKeeper.Hold(); }
             CatalogUi.Invalidate();   // S1.13.2: the cached catalog belongs to the old database
             SettingsService.ClearCache();   // S2.0.4: so do the cached settings
 
