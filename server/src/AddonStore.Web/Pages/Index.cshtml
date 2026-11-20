@@ -131,7 +131,7 @@ else
                     <span class="badge live" style="font-weight:500">@item.CategoryName</span>
                     @item.Id · v@(item.Version) · @(item.SizeBytes / 1024) KB · @item.Downloads @L["download(s)"]
                 </span>
-                <span class="desc">@item.Description</span>
+                <span class="desc" title="@item.Description">@item.Description</span>
                 <span class="meta">@L["Author"]: @item.Author
                     @if (!string.IsNullOrEmpty(item.ContactEmail))
                     {

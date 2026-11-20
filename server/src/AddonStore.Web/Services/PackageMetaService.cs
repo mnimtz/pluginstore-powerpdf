@@ -39,6 +39,17 @@ public class PackageMetaService
     private static readonly HashSet<string> KnownLangs =
         new(PackageValidator.AllLanguages.Append("no"), StringComparer.Ordinal);
 
+    // S2.0.1: a language code in any case maps to its canonical spelling ("ZH-HANS" -> "zh-Hans"); before,
+    // Normalize lowercased every code and KnownLangs then refused "zh-hans" and "zh-hant"
+    private static readonly Dictionary<string, string> CanonicalLangs =
+        KnownLangs.ToDictionary(l => l, l => l, StringComparer.OrdinalIgnoreCase);
+
+    internal static string CanonicalLang(string code)
+    {
+        var k = code.Trim();
+        return CanonicalLangs.TryGetValue(k, out var c) ? c : k.ToLowerInvariant();
+    }
+
     private readonly AppDbContext _db;
     private readonly AuditService _audit;
     private readonly NotificationService _notify;
@@ -214,12 +225,12 @@ public class PackageMetaService
         return issues;
     }
 
-    private static void Normalize(MetaChange c)
+    internal static void Normalize(MetaChange c)
     {
         static string Clean(string s) => new string(s.Where(ch => !char.IsControl(ch) || ch == '\n').ToArray()).Trim();
         static Dictionary<string, string>? CleanMap(Dictionary<string, string>? m) =>
             m?.Where(kv => !string.IsNullOrWhiteSpace(kv.Value))
-              .GroupBy(kv => kv.Key.Trim().ToLowerInvariant()).ToDictionary(g => g.Key, g => Clean(g.Last().Value));
+              .GroupBy(kv => CanonicalLang(kv.Key)).ToDictionary(g => g.Key, g => Clean(g.Last().Value));
         c.Name = CleanMap(c.Name);
         c.Description = CleanMap(c.Description);
         if (c.Author is not null) c.Author = Clean(c.Author).Replace('\n', ' ');

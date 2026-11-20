@@ -353,6 +353,13 @@ public class PackageValidator
                             "Power PDF also runs in Simplified and Traditional Chinese, Japanese, Korean and Arabic: add " +
                             "\"zh-Hans\", \"zh-Hant\", \"ja\", \"ko\" and \"ar\" (translate the text yourself). All 21 Power PDF languages are required.");
                 }
+                // S2.0.1: catalog tiles look alike when descriptions have a similar length (about 300 to 450
+                // characters in English, three or four sentences); a tile shows at most twelve lines
+                var descEn = root.TryGetProperty("description", out var dLen) && dLen.ValueKind == JsonValueKind.Object ? (GetString(dLen, "en") ?? "").Trim() : "";
+                if (descEn.Length > 0 && (descEn.Length < DescriptionMinLength || descEn.Length > DescriptionMaxLength))
+                    report.Warn("DESCRIPTION_LENGTH", $"The English description has {descEn.Length} characters (recommended {DescriptionMinLength} to {DescriptionMaxLength}).",
+                        "Write three or four sentences: what the add-on does in Power PDF, its two to four main functions, optionally one key property. " +
+                        "Catalog tiles show at most twelve lines; the full text stays on the add-on's page.");
 
                 // Add-ons without ribbon buttons (S1.1.1) declare "ui": "none"; the ribbon rules
                 // do not apply to them, every other check does.
@@ -1910,6 +1917,9 @@ public class PackageValidator
     }
 
     /// <summary>The 16 European Power PDF UI languages (manifest language codes); required.</summary>
+    /// <summary>S2.0.1: recommended length of the English catalog description (DESCRIPTION_LENGTH).</summary>
+    public const int DescriptionMinLength = 250, DescriptionMaxLength = 500;
+
     public static readonly string[] RequiredLanguages =
         { "en", "de", "fr", "it", "es", "nl", "pt", "da", "fi", "nb", "sv", "pl", "cs", "hu", "ru", "tr" };
 

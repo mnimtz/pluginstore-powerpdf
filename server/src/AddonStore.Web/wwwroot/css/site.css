@@ -156,7 +156,10 @@ ul.findings li, ul.findings .hint { overflow-wrap: anywhere; }
 .pkg-icon { width: 48px; height: 48px; flex: none; border-radius: 10px; background: #fff; object-fit: contain; }
 .pkg .name { font-weight: 500; color: var(--tun-navy); font-size: 1.08rem; }
 .pkg .meta { color: var(--tun-slate); font-size: .82rem; }
-.pkg .desc { font-size: .92rem; }
+/* S2.0.1: tiles of equal height: at most twelve lines of description (full text on the add-on page),
+   author line at the bottom */
+.pkg .desc { font-size: .92rem; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 12; line-clamp: 12; overflow: hidden; }
+.pkg .desc + .meta { margin-top: auto; }
 .chip img { width: 20px; height: 20px; margin-inline-end: 6px; vertical-align: -5px; }
 .chip.active img { filter: brightness(0) invert(1); }
 

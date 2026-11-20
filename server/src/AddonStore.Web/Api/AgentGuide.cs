@@ -352,6 +352,10 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       pt da fi nb sv pl cs hu ru tr zh-Hans zh-Hant ja ko ar), description at
       most 2000 characters, changelog not empty. (LANG_TEXT_INCOMPLETE,
       LANG_TEXT_EXTENDED, CHANGELOG_EMPTY, DESCRIPTION_TOO_LONG)
+- [ ] `description` length: about 300 to 450 characters in English (three
+      or four sentences: what the add-on does in Power PDF, its two to four
+      main functions, optionally one key property), so the catalog tiles look
+      alike; tiles show at most twelve lines. (DESCRIPTION_LENGTH)
 - [ ] `category`: a slug from `GET {{baseUrl}}/api/categories` (built-in:
       conversion, forms, signing, navigation, printing, productivity,
       system, other), 3 to 24 lowercase letters or hyphens. Propose a new
@@ -1791,6 +1795,7 @@ be free of warnings before review. Info is for information only.
 | UI_NONE_HAS_LAYOUT | error | `"ui": "none"`, but the package ships a UILayout folder. |
 | UI_NONE_ATOM | warning | `"ui": "none"` with a ribbonAtomNamespace; the namespace is ignored. |
 | UI_NONE | info | Add-on without ribbon buttons; reviewers check approval condition R5. |
+| DESCRIPTION_LENGTH | warning | The English description is shorter than 250 or longer than 500 characters; aim for three or four sentences (about 300 to 450 characters) so the catalog tiles look alike. |
 | UI_NONE_DESCRIPTION | warning | The English description of an add-on without buttons has fewer than 80 characters; say where the function appears and how to switch it off. |
 | ATOM_OUTSIDE_NAMESPACE | error | The layout declares group/button atoms outside the declared ribbonAtomNamespace. |
 | ID_RESERVED | error | The id uses a prefix reserved for the store operators (com.tungsten., com.kofax., com.nuance.); use your own. |
