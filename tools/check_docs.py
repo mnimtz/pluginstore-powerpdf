@@ -101,7 +101,7 @@ with open(os.path.join(ROOT, 'Api', 'FederationEndpoints.cs'), encoding='utf-8')
 routes |= {(m.upper(), norm('/api/federation' + p)) for m, p in re.findall(r'fed\.Map(Get|Post|Put|Patch|Delete)\("([^"]*)"', federation)}
 routes |= {(m.upper(), norm('/api/admin/uat' + p)) for m, p in re.findall(r'adm\.Map(Get|Post|Put|Patch|Delete)\("([^"]*)"', federation)}
 routes |= {(m.upper(), norm('/api/packages' + p)) for m, p in re.findall(r'pkgs\.Map(Get|Post|Put|Patch|Delete)\("([^"]*)"', federation)}
-described = {(m.upper(), norm(p)) for m, p in re.findall(r'new\("(get|post|put|patch|delete)", "([^"]+)"', openapi)}
+described = {(m.upper(), norm(p)) for m, p in re.findall(r'new\("(get|post|put|patch|delete|head)", "([^"]+)"', openapi)}
 undocumented = sorted(f'{m} {p}' for m, p in routes - described)
 if undocumented:
     print('OpenAPI document (Api/OpenApiDoc.cs) is missing these routes:', ', '.join(undocumented))
