@@ -1,6 +1,7 @@
 # Add-on Store client - third-party licenses
 
-The client itself is licensed under the MIT License (see the repository's LICENSE).
+The client's own code is licensed under the MIT License (the repository's LICENSE; the setup shows
+it above this text).
 It contains two third-party components:
 
 - Microsoft WebView2 SDK 1.0.4258.31, static loader (WebView2LoaderStatic.lib, linked into
@@ -12,6 +13,20 @@ It contains two third-party components:
 
 The installer (MSI) is built with the WiX Toolset 3.14; it contains no WiX runtime parts
 (no WiX dialogs, bitmaps, texts or custom action DLLs). Its dialogs, texts and banner are our own.
+
+Tungsten Automation's own parts (not third-party, listed for completeness):
+
+- Tungsten Plug-in UI kit 1.1.0 (styles and scripts inlined into the store window page),
+  MIT License, Copyright (c) 2026 Tungsten Automation.
+- Tungsten Power PDF Plugin SDK 2025.3.6: the plug-in entry file `pimain.cpp` (unchanged SDK
+  source) is compiled into PluginStore.zxt, Copyright Tungsten Automation; it is not covered by
+  the MIT License of the client's own code.
+- Tungsten Automation logo 2026 and the Power PDF symbol, property of Tungsten Automation,
+  used per the Brand Book.
+
+Microsoft Visual C++: PluginStore.zxt uses the MFC and C++ runtime DLLs that Power PDF itself
+requires and ships none of them; AddonStoreLink.exe links the Visual C++ runtime statically
+(Visual Studio license terms), so no runtime DLL is part of the MSI.
 
 ## BSD-3-Clause (Microsoft WebView2 SDK)
 
