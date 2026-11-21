@@ -627,6 +627,11 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**List columns aligned at every width (S2.3.1, Nov 21, 2026):** below 1,100 px the button column of the list had an
+automatic width, so rows without the manual ZIP were narrower and every column shifted. All list tracks now have a fixed
+size or a fixed minimum, and the buttons sit in fixed slots (install, share, manual, star); checked at 1,400, 1,180, 968,
+800 and 375 px, for visitors and admins.
+
 **Calmer start page (S2.3.0, Nov 21, 2026):** a compact head (title, edition, one sentence, download, key figures in one row);
 highlights in their own "Recommended" row above the catalog (no glow in the catalog any more); tiles open the add-on page
 with a click anywhere, show four lines of text, category and version, and the author without an e-mail address (downloads
