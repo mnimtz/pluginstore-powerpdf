@@ -12,6 +12,7 @@
 #include "Resource.h"
 #include "version.h"
 #include "webui.h"
+#include "helpwin.h"
 #include <afxcmn.h>
 #include <vector>
 
@@ -43,6 +44,7 @@ protected:
         SetDlgItemTextW(IDC_PS_ADMIN_NOTE, FPLoc(IDS_PSD_ADMIN_NOTE).c_str());
         SetDlgItemTextW(IDC_PS_DISCLAIMER, FPLoc(IDS_PSD_DISCLAIMER).c_str());
         SetDlgItemTextW(IDC_PS_DISCLAIMER_BTN, FPLoc(IDS_PSD_BTN_DISCLAIMER).c_str());
+        SetDlgItemTextW(IDC_PS_HELP, FPLoc(IDS_PSW_HELP).c_str());   // C2.1.0: the central help (also F1)
 
         m_list.SubclassDlgItem(IDC_PS_LIST, this);
         m_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
@@ -265,6 +267,13 @@ protected:
         MessageBoxW(FPLoc(IDS_PSD_DISCLAIMER_FULL).c_str(), FPLoc(IDS_PSD_BTN_DISCLAIMER).c_str(),
                     MB_OK | MB_ICONINFORMATION);
     }
+    // C2.1.0: the central help at the store window's chapter; F1 comes as WM_HELP
+    afx_msg void OnHelpClicked()
+    {
+        if (!PSShowHelp(PS_CLIENT_ID, L"store"))
+            MessageBoxW(FPLoc(IDS_PSW_HELP_MISSING).c_str(), FPLoc(IDS_PSD_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
+    }
+    afx_msg BOOL OnHelpInfo(HELPINFO*) { OnHelpClicked(); return TRUE; }
     afx_msg void OnSelfUpdateClicked()
     {
         if (!m_selfUpdate) return;
@@ -298,6 +307,8 @@ BEGIN_MESSAGE_MAP(CStoreDialog, CDialog)
     ON_BN_CLICKED(IDC_PS_UNINSTALL, &CStoreDialog::OnUninstallClicked)
     ON_BN_CLICKED(IDC_PS_SELFUPDATE, &CStoreDialog::OnSelfUpdateClicked)
     ON_BN_CLICKED(IDC_PS_DISCLAIMER_BTN, &CStoreDialog::OnDisclaimerClicked)
+    ON_BN_CLICKED(IDC_PS_HELP, &CStoreDialog::OnHelpClicked)
+    ON_WM_HELPINFO()
     ON_NOTIFY(LVN_ITEMCHANGED, IDC_PS_LIST, &CStoreDialog::OnListChanged)
     ON_MESSAGE(CStoreDialog::WM_ASK_INSTALL, &CStoreDialog::OnAskInstall)
 END_MESSAGE_MAP()

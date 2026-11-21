@@ -1,0 +1,469 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; font-src data:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; form-action 'none'; base-uri 'none'">
+<title>Help</title>
+<link rel="stylesheet" href="../third_party/tpui/web/tpui.css">
+<link rel="stylesheet" href="../third_party/tpui/web/tpui-fonts.css">
+<style>
+/* Central help (C2.1.0): the look of the store window (Tungsten Plug-in UI 1.1.0), colours only as kit variables.
+   The help texts come from the add-ons: the host cleans them, this page cleans them again and builds the
+   DOM itself (allow list below); nothing of a help text can run as a script. */
+html,body{overflow:hidden}
+.app{display:flex;flex-direction:column;height:100%}
+header.tp-head{padding:12px 18px}
+.search{margin-inline-start:auto;display:flex;align-items:center;gap:8px;background:var(--tp-gray-50);border:1px solid var(--tp-gray-blue);border-radius:var(--tp-radius-btn);padding:6px 11px;width:min(460px,46vw)}
+.search:focus-within{border-color:var(--tp-blue);outline:2px solid var(--tp-blue);outline-offset:-1px;background:var(--tp-white)}
+.search svg.i{color:var(--tp-text-muted);flex:none}
+.search input{all:unset;font-size:13px;color:var(--tp-ink);width:100%;user-select:text}
+.search input::placeholder{color:var(--tp-text-muted)}
+.search .x{all:unset;cursor:pointer;color:var(--tp-text-muted);font-size:16px;line-height:1;padding:0 2px}
+.search .x[hidden]{display:none}
+.hbtn{background:var(--tp-white);color:var(--tp-navy);border:1px solid var(--tp-gray-blue);border-radius:var(--tp-radius-btn);padding:6px 12px;font-size:12px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:6px;cursor:pointer}
+.hbtn:hover{background:var(--tp-gray-100)}
+.main{flex:1;display:grid;grid-template-columns:minmax(220px,300px) minmax(0,1fr);min-height:0}
+nav{overflow-y:auto;padding:10px 8px 16px;border-inline-end:1px solid var(--tp-gray-200);background:var(--tp-gray-50)}
+nav .addon{margin-bottom:2px}
+nav .ab{all:unset;cursor:pointer;display:flex;gap:6px;align-items:center;width:100%;box-sizing:border-box;padding:7px 8px;border-radius:8px;font-size:13px;font-weight:600;color:var(--tp-navy)}
+nav .ab:hover{background:var(--tp-gray-100)}
+nav .ab:focus-visible,nav .ch:focus-visible{outline:2px solid var(--tp-blue);outline-offset:-2px}
+nav .ab .car{flex:none;width:14px;text-align:center;color:var(--tp-text-muted);transition:transform .12s}
+nav .addon.open .ab .car{transform:rotate(90deg)}
+[dir=rtl] nav .ab .car{transform:scaleX(-1)}
+[dir=rtl] nav .addon.open .ab .car{transform:rotate(90deg)}
+nav .ab .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;unicode-bidi:plaintext;text-align:start}
+nav .chs{display:none;padding:2px 0 6px}
+nav .addon.open .chs{display:block}
+nav .ch{all:unset;cursor:pointer;display:block;box-sizing:border-box;width:100%;padding:5px 8px 5px 28px;border-radius:6px;font-size:12.5px;color:var(--tp-ink);line-height:1.35}
+[dir=rtl] nav .ch{padding:5px 28px 5px 8px}
+nav .ch:hover{background:var(--tp-gray-100)}
+nav .ch.on{background:var(--tp-sel-bg);color:var(--tp-navy);font-weight:600}
+.view{overflow-y:auto;min-height:0;padding:22px 34px 40px}
+.crumb{font-size:12px;color:var(--tp-text-muted);margin-bottom:6px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.crumb .grow{flex:1}
+.doc{max-width:860px;font-size:14px;line-height:1.6;color:var(--tp-ink);user-select:text}
+.doc h1{font-size:26px;font-weight:300;color:var(--tp-navy);margin:0 0 14px;line-height:1.25}
+.doc h2{font-size:18px;font-weight:400;color:var(--tp-navy);margin:24px 0 8px}
+.doc h3{font-size:15px;font-weight:600;color:var(--tp-navy);margin:18px 0 6px}
+.doc p{margin:0 0 10px}
+.doc ul,.doc ol{margin:0 0 12px;padding-inline-start:22px}
+.doc li{margin:0 0 4px}
+.doc code,.doc pre{font-family:Consolas,"Courier New",monospace;font-size:12.5px;background:var(--tp-gray-100);border-radius:4px}
+.doc code{padding:0 4px;overflow-wrap:anywhere}
+.doc pre{padding:10px 12px;overflow-x:auto;white-space:pre-wrap}
+.doc table{border-collapse:collapse;width:100%;margin:6px 0 16px;font-size:13px}
+.doc th{text-align:start;font-weight:500;color:var(--tp-white);background:var(--tp-navy);padding:6px 9px;vertical-align:top}
+.doc td{padding:6px 9px;border-bottom:1px solid var(--tp-gray-200);vertical-align:top}
+.doc tr:nth-child(even) td{background:var(--tp-gray-50)}
+.doc .callout{background:var(--tp-info-bg);border-inline-start:4px solid var(--tp-blue);padding:10px 14px;margin:10px 0 14px;border-radius:0 8px 8px 0}
+[dir=rtl] .doc .callout{border-radius:8px 0 0 8px}
+.doc ol.steps{counter-reset:s;list-style:none;padding-inline-start:0}
+.doc ol.steps>li{counter-increment:s;position:relative;padding-inline-start:34px;margin-bottom:9px}
+.doc ol.steps>li::before{content:counter(s);position:absolute;inset-inline-start:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--tp-navy);color:var(--tp-white);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.doc a{color:var(--tp-link);text-decoration:underline;cursor:pointer}
+.doc img{max-width:100%;height:auto;border:1px solid var(--tp-gray-200);border-radius:6px}
+mark{background:var(--tp-yellow);color:var(--tp-ink);border-radius:2px;padding:0 1px}
+mark.cur{outline:2px solid var(--tp-navy)}
+.pager{display:flex;gap:10px;margin-top:28px;max-width:860px}
+.pager .btn{max-width:48%;overflow:hidden;text-overflow:ellipsis}
+.pager .grow{flex:1}
+/* results of the search */
+.res-head{font-size:12px;color:var(--tp-text-muted);margin:0 0 10px}
+.hit{all:unset;cursor:pointer;display:block;box-sizing:border-box;width:100%;max-width:860px;padding:10px 12px;border-radius:10px;border:1px solid transparent;margin-bottom:4px}
+.hit:hover{background:var(--tp-gray-100)}
+.hit.sel{background:var(--tp-sel-bg);border-color:var(--tp-blue)}
+.hit .where{font-size:11.5px;color:var(--tp-text-muted);unicode-bidi:plaintext;text-align:start}
+.hit .ttl{font-size:14px;font-weight:600;color:var(--tp-navy);margin:2px 0;unicode-bidi:plaintext;text-align:start}
+.hit .snip{font-size:12.5px;color:var(--tp-ink);line-height:1.5;unicode-bidi:plaintext;text-align:start}
+.start h1{font-size:26px;font-weight:300;color:var(--tp-navy);margin:0 0 6px}
+.start p{color:var(--tp-text-muted);margin:0 0 18px;max-width:760px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;max-width:900px}
+.card{all:unset;cursor:pointer;display:block;box-sizing:border-box;border:1px solid var(--tp-gray-200);border-radius:10px;padding:12px 14px;background:var(--tp-white)}
+.card:hover{border-color:var(--tp-blue)}
+.card:focus-visible{outline:2px solid var(--tp-blue)}
+.card b{display:block;color:var(--tp-navy);font-size:14px;unicode-bidi:plaintext;text-align:start}
+.card span{font-size:12px;color:var(--tp-text-muted)}
+.empty{padding:28px 12px;color:var(--tp-text-muted);font-size:13px}
+@media print {
+  html,body{overflow:visible;height:auto}
+  header,nav,.crumb,.pager{display:none!important}
+  .main{display:block}
+  .view{overflow:visible;padding:0}
+  mark{background:none;outline:none}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="tp-head">
+    <img class="tp-logo" src="../third_party/tpui/web/brand/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation">
+    <span class="tp-sep"></span>
+    <span class="t" id="title"></span>
+    <span class="s">Tungsten Power PDF</span>
+    <label class="search">
+      <svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="text" autocomplete="off" spellcheck="false">
+      <button class="x" id="qx" type="button" hidden>×</button>
+    </label>
+    <button class="hbtn" id="helpBtn" type="button"><svg class="i" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18z"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.5M12 17h.01"/></svg><span id="helpText"></span></button>
+  </header>
+  <div class="main">
+    <nav id="nav" aria-label="contents"></nav>
+    <div class="view" id="view" tabindex="-1"></div>
+  </div>
+</div>
+<script>
+"use strict";
+var S = {}, docs = [], selfId = "", cur = null, terms = [], hits = [], hitSel = -1, open = {};
+var host = window.chrome && window.chrome.webview;
+function post(m) { if (host) host.postMessage(m); }
+function $(id) { return document.getElementById(id); }
+function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function fmt(s) { var a = Array.prototype.slice.call(arguments, 1), i = 0; return String(s || "").replace(/%s/g, function () { return a[i] != null ? String(a[i++]) : ""; }); }
+
+// ---- second cleaning: an allow list that builds new nodes (the host already cleaned the text) ----
+var TAGS = { H1: 1, H2: 1, H3: 1, P: 1, UL: 1, OL: 1, LI: 1, TABLE: 1, THEAD: 1, TBODY: 1, TR: 1, TH: 1, TD: 1, B: 1, STRONG: 1,
+             I: 1, EM: 1, CODE: 1, PRE: 1, BR: 1, DIV: 1, SPAN: 1, A: 1, IMG: 1 };
+var DROP = { SCRIPT: 1, STYLE: 1, TEMPLATE: 1, IFRAME: 1, OBJECT: 1, EMBED: 1, SVG: 1, MATH: 1, FORM: 1, NOSCRIPT: 1, TEXTAREA: 1, SELECT: 1, BUTTON: 1 };
+var ID_RE = /^[A-Za-z0-9_-]{1,100}$/;
+function okHttps(u) { return /^https:\/\/[A-Za-z0-9.-]+(?:[\/?#][^\s"'<>\\`{}|^]*)?$/.test(u) && u.length <= 2000 && !/^https:\/\/[^\/?#]*[@:%]/.test(u); }
+function cleanNode(src, depth) {
+  var out = document.createDocumentFragment();
+  if (depth > 60) return out;
+  for (var n = src.firstChild; n; n = n.nextSibling) {
+    if (n.nodeType === 3) { out.appendChild(document.createTextNode(n.nodeValue)); continue; }
+    if (n.nodeType !== 1) continue;
+    var t = n.tagName.toUpperCase();
+    if (DROP[t]) continue;
+    if (!TAGS[t]) { out.appendChild(cleanNode(n, depth + 1)); continue; }
+    var e = document.createElement(t.toLowerCase());
+    var id = n.getAttribute("id"); if (id && ID_RE.test(id)) e.setAttribute("id", id);
+    var cls = (n.getAttribute("class") || "").split(/\s+/).filter(function (c) { return c === "callout" || c === "steps"; });
+    if (cls.length) e.className = cls.join(" ");
+    if (t === "A") {
+      var h = n.getAttribute("href") || "";
+      if (h.charAt(0) === "#" && ID_RE.test(h.slice(1))) e.setAttribute("data-jump", h.slice(1));
+      else if (okHttps(h)) { e.setAttribute("data-url", h); e.title = S.link || ""; }
+      e.setAttribute("href", "#");
+    }
+    if (t === "IMG") {
+      var s = n.getAttribute("src") || "";
+      if (!/^data:image\/(png|jpeg);base64,[A-Za-z0-9+\/=]+$/.test(s)) continue;
+      e.setAttribute("src", s); e.setAttribute("alt", (n.getAttribute("alt") || "").slice(0, 300));
+      out.appendChild(e); continue;
+    }
+    if ((t === "TD" || t === "TH")) {
+      ["colspan", "rowspan"].forEach(function (a) { var v = n.getAttribute(a); if (v && /^\d{1,2}$/.test(v)) e.setAttribute(a, v); });
+    }
+    if (t !== "BR") e.appendChild(cleanNode(n, depth + 1));
+    out.appendChild(e);
+  }
+  return out;
+}
+
+// ---- text normalisation for the search: no case, no accents ----
+var MARKS = /[̀-ͯ᪰-᫿᷀-᷿⃐-⃿︠-︯]/g;
+function norm(s) { return s.normalize("NFD").replace(MARKS, "").toLowerCase().replace(/ß/g, "ss"); }   // "grosse" finds "Größe"
+// the normalised text plus, for each of its characters, the index in the original
+function normMap(s) {
+  var o = "", map = [];
+  for (var i = 0; i < s.length; i++) {
+    var ch = s.charAt(i);
+    if (ch >= "\ud800" && ch <= "\udbff" && i + 1 < s.length) { ch = s.substr(i, 2); }
+    var n = norm(ch);
+    for (var k = 0; k < n.length; k++) { o += n.charAt(k); map.push(i); }
+    i += ch.length - 1;
+  }
+  return { t: o, m: map };
+}
+function tokens(q) { var a = norm(q).split(/\s+/).filter(Boolean); var u = []; a.forEach(function (x) { if (u.indexOf(x) < 0) u.push(x); }); return u.slice(0, 12); }
+
+// the text of a node as it reads: table cells, list items and paragraphs apart, not glued together
+var BLOCK = { P: 1, LI: 1, TD: 1, TH: 1, TR: 1, H1: 1, H2: 1, H3: 1, DIV: 1, PRE: 1, BR: 1, TABLE: 1, UL: 1, OL: 1 };
+function textOf(n) {
+  if (n.nodeType === 3) return n.nodeValue;
+  if (n.nodeType !== 1) return "";
+  var s = "";
+  for (var c = n.firstChild; c; c = c.nextSibling) s += textOf(c);
+  return BLOCK[n.tagName] ? " " + s + " " : s;
+}
+// ---- the helps: chapters (h1) and their sections (h2) ----
+function buildDoc(item) {
+  var parsed = new DOMParser().parseFromString("<!doctype html><body>" + (item.html || ""), "text/html");
+  var frag = cleanNode(parsed.body, 0);
+  var d = { id: item.id, name: item.name, topics: item.topics || {}, chapters: [] };
+  var ch = null;
+  Array.prototype.slice.call(frag.childNodes).forEach(function (n) {
+    if (n.nodeType === 1 && n.tagName === "H1") {
+      ch = { id: n.id || ("c" + d.chapters.length), title: n.textContent.trim(), nodes: [n] };
+      d.chapters.push(ch);
+    } else {
+      if (!ch) { if (n.nodeType === 3 && !n.nodeValue.trim()) return; ch = { id: "", title: item.name, nodes: [] }; d.chapters.push(ch); }
+      ch.nodes.push(n);
+    }
+  });
+  // search index: one entry per section of a chapter (the part before the first h2 belongs to the chapter)
+  d.sections = [];
+  d.chapters.forEach(function (c, ci) {
+    var sec = { ci: ci, id: c.id, title: c.title, text: "" };
+    function push() { sec.raw = sec.text.replace(/\s+/g, " ").trim(); sec.n = normMap(sec.raw); sec.nt = norm(sec.title); d.sections.push(sec); }
+    c.nodes.forEach(function (n) {
+      if (n.nodeType === 1 && n.tagName === "H2") { push(); sec = { ci: ci, id: n.id || c.id, title: n.textContent.trim(), text: "" }; return; }
+      if (n.nodeType === 1 && n.tagName === "H1") return;
+      sec.text += " " + textOf(n);
+    });
+    push();
+  });
+  return d;
+}
+
+// ---- the left side: add-ons and their chapters ----
+function renderNav() {
+  var nv = $("nav"); nv.textContent = "";
+  docs.forEach(function (d, di) {
+    var box = el("div", "addon" + (open[d.id] ? " open" : ""));
+    var b = el("button", "ab"); b.type = "button"; b.setAttribute("aria-expanded", open[d.id] ? "true" : "false");
+    b.appendChild(el("span", "car", "▸")); b.appendChild(el("span", "nm", d.name)); b.title = d.name;
+    b.onclick = function () { open[d.id] = !open[d.id]; renderNav(); };
+    box.appendChild(b);
+    var list = el("div", "chs");
+    d.chapters.forEach(function (c, ci) {
+      var a = el("button", "ch" + (cur && cur.d === di && cur.c === ci ? " on" : ""), c.title); a.type = "button";
+      a.onclick = function () { clearSearch(true); showChapter(di, ci, null); };
+      list.appendChild(a);
+    });
+    box.appendChild(list);
+    nv.appendChild(box);
+  });
+  if (!docs.length) nv.appendChild(el("div", "empty", S.empty || ""));
+}
+
+// ---- the right side ----
+function highlight(root, ts) {
+  if (!ts.length) return [];
+  var marks = [], walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(function (tn) {
+    var s = tn.nodeValue, nm = normMap(s), ranges = [];
+    ts.forEach(function (t) { var p = 0; while ((p = nm.t.indexOf(t, p)) >= 0) { ranges.push([nm.m[p], nm.m[p + t.length - 1] + 1]); p += t.length; } });
+    if (!ranges.length) return;
+    ranges.sort(function (a, b) { return a[0] - b[0]; });
+    var merged = [];
+    ranges.forEach(function (r) { var l = merged[merged.length - 1]; if (l && r[0] <= l[1]) l[1] = Math.max(l[1], r[1]); else merged.push(r.slice()); });
+    var frag = document.createDocumentFragment(), at = 0;
+    merged.forEach(function (r) {
+      var end = Math.min(s.length, r[1] + (s.charAt(r[1] - 1) >= "\ud800" && s.charAt(r[1] - 1) <= "\udbff" ? 1 : 0));
+      if (r[0] > at) frag.appendChild(document.createTextNode(s.slice(at, r[0])));
+      var m = el("mark", "", s.slice(r[0], end)); frag.appendChild(m); marks.push(m); at = end;
+    });
+    if (at < s.length) frag.appendChild(document.createTextNode(s.slice(at)));
+    tn.parentNode.replaceChild(frag, tn);
+  });
+  return marks;
+}
+function findTarget(di, id) {
+  var d = docs[di];
+  for (var ci = 0; ci < d.chapters.length; ci++) {
+    var c = d.chapters[ci];
+    if (c.id === id) return { c: ci, el: null };
+    for (var k = 0; k < c.nodes.length; k++) {
+      var n = c.nodes[k];
+      if (n.nodeType !== 1) continue;
+      if (n.id === id) return { c: ci, id: id };
+      if (n.querySelector && n.querySelector("#" + CSS.escape(id))) return { c: ci, id: id };
+    }
+  }
+  return null;
+}
+function showChapter(di, ci, anchorId, ts) {
+  var d = docs[di], c = d && d.chapters[ci];
+  if (!c) return;
+  cur = { d: di, c: ci };
+  open[d.id] = true;
+  renderNav();
+  var v = $("view"); v.textContent = "";
+  var cr = el("div", "crumb"); cr.appendChild(el("span", "grow", d.name));
+  var pr = el("button", "hbtn", S.print || ""); pr.type = "button"; pr.onclick = function () { window.print(); };
+  cr.appendChild(pr); v.appendChild(cr);
+  var doc = el("div", "doc");
+  c.nodes.forEach(function (n) { doc.appendChild(n.cloneNode(true)); });
+  v.appendChild(doc);
+  var pg = el("div", "pager");
+  if (ci > 0) { var p = el("button", "btn sec", "‹ " + d.chapters[ci - 1].title); p.type = "button"; p.onclick = function () { showChapter(di, ci - 1, null); }; pg.appendChild(p); }
+  pg.appendChild(el("span", "grow"));
+  if (ci + 1 < d.chapters.length) { var nx = el("button", "btn sec", d.chapters[ci + 1].title + " ›"); nx.type = "button"; nx.onclick = function () { showChapter(di, ci + 1, null); }; pg.appendChild(nx); }
+  v.appendChild(pg);
+  document.title = c.title + " · " + (S.title || "");
+  var marks = highlight(doc, ts || []);
+  var target = anchorId ? doc.querySelector("#" + CSS.escape(anchorId)) : null;
+  var first = null;
+  if (marks.length) {
+    // the first mark inside the section of the hit, else the first one at all
+    first = marks[0];
+    if (target) for (var i = 0; i < marks.length; i++) if (target.compareDocumentPosition(marks[i]) & Node.DOCUMENT_POSITION_FOLLOWING) { first = marks[i]; break; }
+    first.classList.add("cur");
+  }
+  v.scrollTop = 0;
+  var go = first || target;
+  if (go) go.scrollIntoView({ block: first ? "center" : "start" });
+}
+function showStart() {
+  cur = null; renderNav();
+  var v = $("view"); v.textContent = "";
+  var st = el("div", "start");
+  st.appendChild(el("h1", "", S.title || ""));
+  st.appendChild(el("p", "", S.hint || ""));
+  if (!docs.length) st.appendChild(el("div", "empty", S.empty || ""));
+  var cards = el("div", "cards");
+  docs.forEach(function (d, di) {
+    var c = el("button", "card"); c.type = "button";
+    c.appendChild(el("b", "", d.name)); c.appendChild(el("span", "", (S.contents || "") + ": " + d.chapters.length));
+    c.onclick = function () { showChapter(di, 0, null); };
+    cards.appendChild(c);
+  });
+  st.appendChild(cards);
+  v.appendChild(st);
+  document.title = S.title || "";
+}
+function show(addon, id) {
+  var di = -1;
+  for (var i = 0; i < docs.length; i++) if (docs[i].id === addon) { di = i; break; }
+  if (di < 0) { showStart(); return; }
+  if (id && docs[di].topics[id]) id = docs[di].topics[id];
+  var t = id ? findTarget(di, id) : null;
+  showChapter(di, t ? t.c : 0, t ? t.id || null : null);
+}
+
+// ---- search over all helps ----
+function snippet(sec, ts) {
+  var n = sec.n, p = -1;
+  ts.forEach(function (t) { var x = n.t.indexOf(t); if (x >= 0 && (p < 0 || x < p)) p = x; });
+  var raw = sec.raw, s = 0, e = Math.min(raw.length, 200);
+  if (p >= 0) { var o = n.m[p]; s = Math.max(0, o - 60); e = Math.min(raw.length, o + 150); }
+  if (s > 0) { var sp = raw.indexOf(" ", s); if (sp > 0 && sp < s + 20) s = sp + 1; }
+  var text = (s > 0 ? "…" : "") + raw.slice(s, e) + (e < raw.length ? "…" : "");
+  var box = el("div", "snip", text);
+  highlight(box, ts);
+  return box;
+}
+function runSearch() {
+  var q = $("q").value;
+  $("qx").hidden = !q;
+  terms = tokens(q);
+  if (!terms.length) { hits = []; hitSel = -1; if (cur) showChapter(cur.d, cur.c, null); else showStart(); return; }
+  hits = [];
+  docs.forEach(function (d, di) {
+    d.sections.forEach(function (sec) {
+      var score = 0;
+      for (var i = 0; i < terms.length; i++) {
+        var inT = sec.nt.indexOf(terms[i]) >= 0, inX = sec.n.t.indexOf(terms[i]) >= 0;
+        if (!inT && !inX) return;
+        score += (inT ? 3 : 0) + (inX ? 1 : 0);
+      }
+      if (hits.length < 300) hits.push({ di: di, sec: sec, score: score, order: hits.length });
+    });
+  });
+  hits.sort(function (a, b) { return b.score - a.score || a.order - b.order; });
+  hitSel = hits.length ? 0 : -1;
+  renderHits();
+}
+function renderHits() {
+  var v = $("view"); v.textContent = "";
+  v.appendChild(el("div", "res-head", hits.length ? fmt(S.hits, hits.length) : fmt(S.noHits, $("q").value.trim())));
+  hits.forEach(function (h, i) {
+    var d = docs[h.di], c = d.chapters[h.sec.ci];
+    var b = el("button", "hit" + (i === hitSel ? " sel" : "")); b.type = "button";
+    b.appendChild(el("div", "where", d.name + "  ›  " + c.title));
+    var tt = el("div", "ttl", h.sec.title); highlight(tt, terms); b.appendChild(tt);
+    b.appendChild(snippet(h.sec, terms));
+    b.onclick = function () { openHit(i); };
+    b.onmouseenter = function () { selectHit(i, false); };
+    v.appendChild(b);
+  });
+  v.scrollTop = 0;
+}
+function selectHit(i, scroll) {
+  if (!hits.length) return;
+  hitSel = Math.max(0, Math.min(hits.length - 1, i));
+  var list = $("view").querySelectorAll(".hit");
+  for (var k = 0; k < list.length; k++) list[k].classList.toggle("sel", k === hitSel);
+  if (scroll && list[hitSel]) list[hitSel].scrollIntoView({ block: "nearest" });
+}
+function openHit(i) {
+  var h = hits[i]; if (!h) return;
+  showChapter(h.di, h.sec.ci, h.sec.id !== docs[h.di].chapters[h.sec.ci].id ? h.sec.id : null, terms);
+}
+function clearSearch(keepView) { $("q").value = ""; $("qx").hidden = true; terms = []; hits = []; hitSel = -1; if (!keepView) { if (cur) showChapter(cur.d, cur.c, null); else showStart(); } }
+var searchTimer = 0;
+$("q").addEventListener("input", function () { clearTimeout(searchTimer); searchTimer = setTimeout(runSearch, 90); });
+$("q").addEventListener("keydown", function (e) {
+  if (e.key === "ArrowDown" && hits.length) { e.preventDefault(); selectHit(hitSel + 1, true); }
+  else if (e.key === "ArrowUp" && hits.length) { e.preventDefault(); selectHit(hitSel - 1, true); }
+  else if (e.key === "Enter") { e.preventDefault(); clearTimeout(searchTimer); if (!hits.length && $("q").value.trim()) runSearch(); if (hitSel >= 0) openHit(hitSel); }
+  else if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); clearSearch(false); }
+});
+$("qx").onclick = function () { clearSearch(false); $("q").focus(); };
+
+// links inside a help: "#id" jumps inside the same help, https:// opens in the browser through the host
+$("view").addEventListener("click", function (e) {
+  var a = e.target.closest ? e.target.closest("a") : null;
+  if (!a) return;
+  e.preventDefault();
+  var j = a.getAttribute("data-jump"), u = a.getAttribute("data-url");
+  if (j && cur) { var t = findTarget(cur.d, j); if (t) showChapter(cur.d, t.c, t.id || null); }
+  else if (u) post({ cmd: "open", url: u });
+});
+function ownHelp() {
+  for (var i = 0; i < docs.length; i++) if (docs[i].id === selfId) {
+    clearSearch(true);
+    var t = findTarget(i, "overview-and-terms-help");
+    showChapter(i, t ? t.c : 0, t ? t.id || null : null); return;
+  }
+}
+$("helpBtn").onclick = ownHelp;
+document.addEventListener("keydown", function (e) {
+  if (e.key === "F1") { e.preventDefault(); if (!e.repeat) ownHelp(); return; }
+  if ((e.ctrlKey && (e.key === "f" || e.key === "F")) || e.key === "F3") { e.preventDefault(); $("q").focus(); $("q").select(); return; }
+  if (e.key === "F5") { e.preventDefault(); post({ cmd: "reload" }); return; }
+  if (e.key === "Escape" && $("q").value) { e.preventDefault(); clearSearch(false); return; }
+  if (e.ctrlKey && (e.key === "p" || e.key === "P")) { e.preventDefault(); if (cur && !terms.length) window.print(); }
+});
+document.addEventListener("contextmenu", function (e) { if (e.target.tagName !== "INPUT") e.preventDefault(); });
+
+function apply(m) {
+  if (!m || typeof m !== "object") return;
+  if (m.type === "init") {
+    S = m.strings || {};
+    selfId = typeof m.self === "string" ? m.self : "";
+    document.documentElement.dir = m.dir === "rtl" ? "rtl" : "ltr";
+    if (typeof m.lang === "string") document.documentElement.lang = m.lang;
+    $("title").textContent = S.title || ""; document.title = S.title || "";
+    $("q").placeholder = S.search || ""; $("q").setAttribute("aria-label", S.search || ""); $("q").title = S.hint || "";
+    $("qx").title = S.clear || ""; $("qx").setAttribute("aria-label", S.clear || "");
+    $("helpText").textContent = S.help || ""; $("helpBtn").title = (S.help || "") + " (F1)";
+    $("nav").setAttribute("aria-label", S.contents || "");
+  } else if (m.type === "docs") {
+    var keep = cur ? { id: docs[cur.d] && docs[cur.d].id, c: cur.c } : null;
+    docs = [];
+    (Array.isArray(m.items) ? m.items : []).forEach(function (it) {
+      if (!it || typeof it.id !== "string" || typeof it.html !== "string") return;
+      try { var d = buildDoc(it); if (d.chapters.length) docs.push(d); } catch (err) { if (window.console) console.error(err); }
+    });
+    cur = null;
+    if (keep) for (var i = 0; i < docs.length; i++) if (docs[i].id === keep.id && docs[i].chapters[keep.c]) cur = { d: i, c: keep.c };
+    renderNav();
+    if (terms.length) runSearch(); else if (cur) showChapter(cur.d, cur.c, null); else showStart();
+  } else if (m.type === "show") {
+    clearSearch(true);
+    show(typeof m.addon === "string" ? m.addon : "", typeof m.id === "string" ? m.id : "");
+  }
+}
+if (host) host.addEventListener("message", function (e) {
+  try { apply(e.data); }
+  catch (err) { if (window.console) console.error(err); }
+});
+post({ cmd: "ready" });
+</script>
+</body>
+</html>

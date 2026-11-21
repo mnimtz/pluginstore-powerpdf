@@ -146,6 +146,9 @@
     <ClInclude Include="store\settings.h" />
     <ClInclude Include="store\link.h" />
     <ClInclude Include="store\webui.h" />
+    <ClInclude Include="store\helpwin.h" />
+    <ClInclude Include="store\helpcore.h" />
+    <ClInclude Include="common\addonhelp.h" />
     <ClInclude Include="res\Resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +177,7 @@
     <ClCompile Include="store\access.cpp" />
     <ClCompile Include="store\inventory.cpp" />
     <ClCompile Include="store\webui.cpp" />
+    <ClCompile Include="store\helpwin.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

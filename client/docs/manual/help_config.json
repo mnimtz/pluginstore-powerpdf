@@ -1,0 +1,24 @@
+{
+ "addon": "com.tungsten.pluginstore",
+ "topics": {
+  "overview": 1,
+  "install": 2,
+  "quickstart": 3,
+  "ribbon": 4,
+  "store": 5,
+  "search": 6,
+  "install-remove": 7,
+  "updates": 8,
+  "report": 9,
+  "codes": 10,
+  "notes": 11,
+  "options": 12,
+  "links": 13,
+  "admin": 14,
+  "messages": 15,
+  "troubleshooting": 16,
+  "faq": 17,
+  "limits": 18,
+  "history": 19
+ }
+}

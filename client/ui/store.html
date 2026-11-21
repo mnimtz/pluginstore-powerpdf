@@ -442,6 +442,8 @@ body.upmode #storeBtn{display:flex;margin-inline-start:auto}
     </label>
     <button class="hbtn" id="codeBtn" type="button"></button>
     <button class="hbtn" id="storeBtn" type="button"></button>
+    <!-- C2.1.0: the central help at this view's chapter (also F1), in both views -->
+    <button class="hbtn" id="helpBtn" type="button"><svg class="i" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18z"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7v.5M12 17h.01"/></svg><span id="helpText"></span></button>
   </header>
   <div class="banner upd" id="upd" style="display:none">
     <svg class="i" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>
@@ -997,6 +999,15 @@ function reportForm(x) {
   a.appendChild(cancel); a.appendChild(send); m.appendChild(a);
   $("veil").classList.add("on"); ta.focus();
 }
+// C2.1.0: the central help at the chapter of this view (header button and F1); "helpMissing" when it is not there
+function openHelp() { post({ cmd: "help", topic: mode === "updates" ? "updates" : "store" }); }
+// a short note in the kit's toast style (no browser popup)
+function toast(text, kind) {
+  var box = document.querySelector(".tp-toasts");
+  if (!box) { box = el("div", "tp-toasts"); box.setAttribute("aria-live", "polite"); document.body.appendChild(box); }
+  var t = el("div", "tp-toast" + (kind ? " " + kind : ""), text); box.appendChild(t);
+  setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 6000);
+}
 function busyModal(text) { var m = $("modal"); m.textContent = ""; m.appendChild(el("div", "spin")); var p = el("p", "", text); p.style.textAlign = "center"; m.appendChild(p); $("veil").classList.add("on"); }
 function confirmAct(action, x) {
   if (busy) return;
@@ -1065,6 +1076,8 @@ function apply(m) {
     $("lock").style.display = locked ? "flex" : "none"; $("lock").textContent = S.installLocked || "";
     $("storeBtn").textContent = S.updStore || "";
     $("storeBtn").onclick = function () { setMode("store"); };
+    $("helpText").textContent = S.help || "";
+    $("helpBtn").title = (S.help || "") + " (F1)"; $("helpBtn").setAttribute("aria-label", S.help || "");
     setMode(m.mode);
   } else if (m.type === "catalog") {
     items = m.items || []; self = m.self || null; catalogLoaded = true;
@@ -1147,6 +1160,8 @@ function apply(m) {
     codeAsk(m);
   } else if (m.type === "result") {
     onResult(m);
+  } else if (m.type === "helpMissing") {
+    toast(S.helpMissing || "", "err");
   } else if (m.type === "message") {
     // an install or removal in progress keeps its progress dialog; only its
     // own "result" ends it (a late rating/feedback reply must not)
@@ -1165,6 +1180,7 @@ if (host) host.addEventListener("message", function (e) {
     if (window.console) console.error(err);
   }
 });
+$("helpBtn").onclick = openHelp;
 $("author").addEventListener("change", function () { author = $("author").value; render(); });
 $("q").addEventListener("input", function () { if (need) { need = null; $("need").style.display = "none"; } render(); });
 $("q").addEventListener("keydown", function (e) {
@@ -1176,6 +1192,7 @@ $("q").addEventListener("keydown", function (e) {
   if (e.key === "Escape" && need) { clearNeed(); e.stopPropagation(); }
 });
 document.addEventListener("keydown", function (e) {
+  if (e.key === "F1") { e.preventDefault(); if (!e.repeat) openHelp(); return; }   // C2.1.0, also over a dialog; a held key sends one
   if (e.key === "Escape" && $("veil").classList.contains("on") && !busy) { closeModal(); return; }
   if ($("veil").classList.contains("on")) return;
   if (e.key === "ArrowDown" || e.key === "ArrowUp") {

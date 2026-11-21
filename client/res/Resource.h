@@ -177,6 +177,25 @@
 #define IDS_PSW_CONN_PROVIDER   372
 #define IDS_PSW_CONN_NOTE       374
 #define IDS_PSW_CONN_DATA       375
+#define IDS_PSW_HELP            376   // C2.0.3: the manual (store window, classic dialog, Options)
+#define IDS_PSW_HELP_MISSING    377
+#define IDS_PSH_TITLE           378
+#define IDS_PSH_SEARCH          379
+#define IDS_PSH_HITS            380
+#define IDS_PSH_NOHITS          381
+#define IDS_PSH_EMPTY           382
+#define IDS_PSH_CONTENTS        383
+#define IDS_PSH_PRINT           384
+#define IDS_PSH_LINK            385
+#define IDS_PSH_HINT            386
+#define IDS_PSH_PREV            387
+#define IDS_PSH_NEXT            388
+#define IDS_PSH_CLEAR           389
+#define IDS_PSH_NOWEBVIEW       390
+#define IDS_PSH_TIP             391
+#define IDR_HELP_HTML           262   // C2.1.0: the central help page
+#define IDB_HELP                254
+#define IDB_HELP16              255
 #define IDD_PS_WEB              1480
 #define IDR_STORE_HTML          260
 #define IDI_PS_STORE            261
@@ -215,3 +234,4 @@
 #define IDC_PS_SELFUPDATE       1508
 #define IDC_PS_DISCLAIMER       1509
 #define IDC_PS_DISCLAIMER_BTN   1510
+#define IDC_PS_HELP             1511   // C2.0.3

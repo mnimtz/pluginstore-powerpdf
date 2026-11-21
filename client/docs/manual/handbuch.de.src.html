@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Add-on Store für Tungsten Power PDF: Handbuch</title>
+<link rel="stylesheet" href="../../third_party/tpui/web/tpui-fonts.css">
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<section class="cover">
+  <img src="../../third_party/tpui/web/brand/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation">
+  <div>
+    <p class="t">Add-on Store</p>
+    <p class="s">Handbuch für Anwender und Administratoren</p>
+    <p class="v">Version {VERSION} · Client für Tungsten Power PDF</p>
+  </div>
+  <div class="band"></div>
+</section>
+
+<h1 class="first">Inhalt</h1>
+<div class="toc">
+  <div>1 Überblick und Begriffe</div>
+  <div>2 Voraussetzungen und Installation</div>
+  <div>3 Schnellstart</div>
+  <div>4 Der Add-on Store im Menüband</div>
+  <div>5 Das Store-Fenster</div>
+  <div>6 Suchen und Filtern</div>
+  <div>7 Installieren, aktualisieren, entfernen</div>
+  <div>8 Updates</div>
+  <div>9 Was ist neu, Bewertungen, Problem melden</div>
+  <div>10 Kundencodes</div>
+  <div>11 Weitere Hinweise im Fenster</div>
+  <div>12 Die Optionsseite</div>
+  <div>13 Links von der Website, manuelle Installation</div>
+  <div>14 Für Administratoren</div>
+  <div>15 Alle Meldungen</div>
+  <div>16 Fehlerbehebung</div>
+  <div>17 Häufige Fragen</div>
+  <div>18 Grenzen und technische Daten</div>
+  <div>19 Versionsgeschichte</div>
+</div>
+
+<h1 class="np">1 Überblick und Begriffe</h1>
+<p>Der Add-on Store bringt Erweiterungen für Tungsten Power PDF direkt ins Programm. Sie finden Add-ons in einem Katalog, lesen Beschreibung, Bildschirmfotos und Bewertungen und installieren, aktualisieren oder entfernen sie mit einem Klick. Der Store hält außerdem sich selbst und Ihre Add-ons aktuell und meldet, wenn ein Update für Power PDF bereitsteht.</p>
+<p>Dieses Handbuch beschreibt den <b>Client</b>: das Add-on in Power PDF mit dem Store-Fenster. Die Website des Store und das Portal für Entwickler und Administratoren des Store-Servers beschreibt das Gesamthandbuch des Add-on Store.</p>
+<h2>Was der Add-on Store kann</h2>
+<ul>
+  <li>Den Katalog der Add-ons in der Sprache von Power PDF zeigen: Name, Beschreibung, Kategorie, Version, Größe, Autor, Bildschirmfotos, Bewertungen und „Neu in“ der aktuellen Version.</li>
+  <li>Add-ons installieren, aktualisieren und entfernen; jede Änderung braucht einmal die Bestätigung als Administrator.</li>
+  <li>Nur geprüfte und signierte Pakete installieren: Signatur des Store und Prüfsumme (SHA-256) werden vor dem Kopieren geprüft.</li>
+  <li>Neue Versionen melden: ein Punkt am Menüband-Knopf, die Ansicht <b>Verfügbare Updates</b> und auf Wunsch ein einmaliger Hinweis.</li>
+  <li>Sich selbst aktualisieren: Power PDF schließt sich, das neue Setup läuft und Power PDF startet wieder.</li>
+  <li>Nach Bedarf suchen: Sie beschreiben, was Sie brauchen, der Store schlägt passende Add-ons vor.</li>
+  <li>Add-ons für Ihre Organisation freischalten: mit einem Kundencode Ihres Add-on-Anbieters.</li>
+  <li>Probleme und Vorschläge an den Entwickler eines Add-ons melden, mit Anhängen und auf Wunsch dem Protokoll.</li>
+  <li>Add-ons mit Sterne-Bewertungen versehen.</li>
+  <li>Gesperrte Add-ons erkennen und deren Entfernung anbieten.</li>
+</ul>
+<h2>Begriffe</h2>
+<table>
+  <tr><th>Begriff</th><th>Bedeutung</th></tr>
+  <tr><td>Add-on (Plug-in)</td><td>Eine Erweiterung für Power PDF. Die meisten Add-ons erscheinen im Register <b>Erweiterte Funktionen</b> mit einer eigenen Gruppe.</td></tr>
+  <tr><td>Client</td><td>Das Add-on „Add-on Store“ in Power PDF, mit dem Register <b>Store</b> und dem Store-Fenster.</td></tr>
+  <tr><td>Store-Server</td><td>Der Dienst, von dem der Client Katalog und Pakete lädt. Voreingestellt ist <code>https://addon.power-pdf.de</code>.</td></tr>
+  <tr><td>Katalog</td><td>Die Liste aller Add-ons, die der Server für diesen Computer anbietet.</td></tr>
+  <tr><td>Paket</td><td>Die Datei eines Add-ons in einer Version, signiert vom Store.</td></tr>
+  <tr><td>Beta</td><td>Versionen, die die automatische Prüfung bestanden haben, aber noch nicht von einem Administrator des Store freigegeben sind. Sichtbar nur mit eingeschaltetem Beta-Kanal.</td></tr>
+  <tr><td>Kundencode</td><td>Ein Code Ihres Add-on-Anbieters, der Add-ons für Ihre Organisation freischaltet.</td></tr>
+  <tr><td>Richtlinie</td><td>Ein Wert, den die IT in der Registrierung unter HKLM setzt; er hat Vorrang vor den Einstellungen des Benutzers.</td></tr>
+</table>
+<h2>Hilfe</h2>
+<p>Der Add-on Store bringt eine gemeinsame Hilfe für alle installierten Add-ons mit, in der Sie über alle Hilfetexte zugleich suchen. Sie öffnen sie so:</p>
+<ul>
+  <li>im Register <b>Erweiterte Funktionen</b> mit dem Knopf <b>Hilfe</b> (ganz rechts, Gruppe <b>Hilfe</b>);</li>
+  <li>im Store-Fenster mit <b>Hilfe</b> oben rechts oder mit <b>F1</b>: die Hilfe springt direkt zum Kapitel dieses Fensters;</li>
+  <li>in jedem Add-on mit Hilfe-Knopf oder F1: die Hilfe springt zum passenden Kapitel des Add-ons;</li>
+  <li>im klassischen Fenster mit <b>Hilfe</b>, auf der Optionsseite mit der Hilfe von Power PDF.</li>
+</ul>
+<p>Links stehen die installierten Add-ons; ein Klick klappt ihre Kapitel auf oder zu. Rechts steht das gewählte Kapitel mit <b>Zurück</b> und <b>Weiter</b> unten und <b>Kapitel drucken</b> oben. Oben in <b>Hilfe durchsuchen</b> tippen Sie einen oder mehrere Begriffe: Die Treffer erscheinen sofort, mit Add-on, Kapitel und einem Ausschnitt; Groß- und Kleinschreibung und Akzente spielen keine Rolle, und alle Wörter müssen vorkommen. Pfeil auf und ab wählt einen Treffer, Enter öffnet ihn mit hervorgehobenen Suchbegriffen, Esc leert die Suche. Links zu Websites öffnen sich im Webbrowser. F1 im Hilfefenster zeigt diesen Abschnitt.</p>
+<p>Die Hilfe erscheint in der Sprache von Power PDF, wenn ein Add-on sie mitbringt, sonst auf Englisch. Die Hilfe des Add-on Store gibt es auf Deutsch, Englisch, Französisch, Italienisch, Spanisch und Niederländisch.</p>
+
+<h1>2 Voraussetzungen und Installation</h1>
+<h2>Voraussetzungen</h2>
+<ul>
+  <li><b>Tungsten Power PDF Business SaaS</b> (mit Anmeldung) ab Version 2025.3.7. In Power PDF 2025 lädt nur die Edition Business Add-ons; ab 2026.4 jede Edition (Standard, Advanced, Business).</li>
+  <li>Power PDF mit einer Seriennummer lizenziert wird vom Setup abgelehnt; der Add-on Store ist nur für Power PDF mit Anmeldung gedacht.</li>
+  <li>Windows 10 oder 11, x64 oder ARM64.</li>
+  <li>Für das moderne Store-Fenster die Microsoft-WebView2-Runtime (in Windows 10 und 11 meist vorhanden). Ohne sie öffnet sich das klassische Fenster.</li>
+  <li>Eine HTTPS-Verbindung (Port 443) zum Store-Server, direkt oder über den Proxy des Systems.</li>
+  <li>Für Installieren, Aktualisieren und Entfernen von Add-ons: lokale Administratorrechte (eine Abfrage je Vorgang).</li>
+</ul>
+<h2>Installation</h2>
+<ol class="steps">
+  <li>Auf der Website des Add-on Store <b>Add-on Store herunterladen</b> wählen. Sie erhalten das Setup <code>PluginStore.msi</code>.</li>
+  <li>Power PDF schließen und das Setup starten. Beim ersten Herunterladen kann Windows SmartScreen warnen; dann <b>Weitere Informationen</b> und <b>Trotzdem ausführen</b> wählen.</li>
+  <li>Die Lizenz lesen, <b>Ich stimme der Lizenz zu</b> ankreuzen und <b>Installieren</b> wählen. Windows fragt einmal nach Administratorrechten.</li>
+  <li>Power PDF starten. Im Menüband erscheint das Register <b>Store</b> mit dem Knopf <b>Add-on Store</b>.</li>
+</ol>
+<p>Das Setup findet Power PDF selbst (über <code>HKLM\SOFTWARE\Kofax\PDF\V1</code>, ersatzweise über App Paths) und installiert in dessen Ordner <code>bin\Plug-Ins</code>. Läuft Power PDF noch, bietet das Setup an, es zu schließen und danach wieder zu starten. Das Setup gibt es in allen 21 Sprachen von Power PDF; Windows wählt die Sprache des Benutzers.</p>
+<h2>Entfernen</h2>
+<p>Entfernen Sie <b>Add-on Store for Tungsten Power PDF</b> unter Windows-Einstellungen, Apps, Installierte Apps. Das Setup entfernt nur die eigenen Dateien des Store; Add-ons, die Sie installiert haben, bleiben in Power PDF. Entfernen Sie sie vorher im Store-Fenster, wenn Sie sie nicht mehr brauchen.</p>
+
+<h1>3 Schnellstart</h1>
+<ol class="steps">
+  <li>Im Register <b>Store</b> auf <b>Add-on Store</b> klicken. Das Store-Fenster öffnet sich.</li>
+  <li>Links die Liste der Add-ons durchsehen oder oben in <b>Add-ons durchsuchen</b> tippen.</li>
+  <li>Ein Add-on anklicken. Rechts stehen Beschreibung, Bildschirmfotos und Bewertungen.</li>
+  <li><b>Installieren</b> wählen und bestätigen. Windows fragt einmal nach Administratorrechten.</li>
+  <li>Auf die Frage nach dem Neustart <b>Jetzt neu starten</b> wählen. Power PDF lädt Add-ons nur beim Start; ungespeicherte Dokumente werden vorher zum Speichern angeboten.</li>
+</ol>
+<p>Nach dem Neustart steht das Add-on im Register <b>Erweiterte Funktionen</b> (oder dort, wo seine Beschreibung es nennt).</p>
+
+<h1>4 Der Add-on Store im Menüband</h1>
+<table>
+  <tr><th>Ort</th><th>Knopf</th><th>Wirkung</th></tr>
+  <tr><td>Register <b>Store</b>, Gruppe <b>Add-on Store</b></td><td><b>Add-on Store</b></td><td>Öffnet das Store-Fenster mit allen Add-ons.</td></tr>
+  <tr><td>Register <b>Hilfe</b> von Power PDF, Gruppe <b>Add-on Store</b></td><td><b>Updates</b></td><td>Öffnet das Store-Fenster in der Ansicht <b>Verfügbare Updates</b>.</td></tr>
+  <tr><td>Register <b>Erweiterte Funktionen</b>, Gruppe <b>Hilfe</b></td><td><b>Hilfe</b></td><td>Öffnet die Hilfe zu allen installierten Add-ons, mit Suche (Kapitel 1).</td></tr>
+</table>
+<p>Gibt es Updates für den Add-on Store, Ihre Add-ons oder Power PDF, tragen beide Knöpfe einen orangen Punkt, und der Tooltip nennt die Anzahl, zum Beispiel „Add-on Store: 2 Update(s) verfügbar“. Das Register <b>Store</b> steht hinter den Registern der Add-ons; <b>Hilfe</b> bleibt immer das letzte Register.</p>
+<div class="callout"><b>Kein Register Store zu sehen?</b> Die Administratoren des Store können festlegen, welche Lizenzarten von Power PDF den Store nutzen dürfen. Ist Ihre Lizenzart nicht zugelassen, blendet der Client seinen Knopf aus. Bereits installierte Add-ons laufen weiter.</div>
+
+<h1>5 Das Store-Fenster</h1>
+<p>Das Fenster öffnet sich in passender Größe (etwa 1000 × 680 Punkte, nie größer als der Bildschirm) und zeigt sofort den zuletzt geladenen Katalog; im Hintergrund lädt es den aktuellen nach. Bis der erste Katalog da ist, dreht sich ein Ladesymbol.</p>
+<h2>Der Kopf</h2>
+<ul>
+  <li><b>Add-ons durchsuchen:</b> das Suchfeld (Kapitel 6).</li>
+  <li><b>Kundencode:</b> verwaltet die Kundencodes (Kapitel 10). Ein Häkchen zeigt, dass ein Code aktiv ist.</li>
+  <li><b>Alle Add-ons:</b> nur in der Ansicht <b>Verfügbare Updates</b>; zurück zur ganzen Liste.</li>
+  <li><b>Hilfe:</b> öffnet die Hilfe beim Kapitel dieses Fensters (auch mit F1).</li>
+</ul>
+<h2>Hinweisleisten</h2>
+<p>Unter dem Kopf erscheinen bei Bedarf farbige Leisten quer über das Fenster: eine neue Version des Add-on Store, ein Update für Power PDF, gesperrte Add-ons, Add-ons aus einer früheren Power-PDF-Installation, eine Sperre durch die IT oder ein Verbindungsfehler. Kapitel 8 und 11 erklären sie.</p>
+<h2>Kategorien und Autor</h2>
+<p>Unter den Leisten stehen Kategorie-Knöpfe: <b>Alle</b> und je eine Kategorie. Ist ein Kundencode aktiv, steht vorne der Knopf <b>Für</b> mit dem Namen Ihrer Organisation; er zeigt nur die für Sie gelieferten Add-ons. Gibt es Add-ons von mindestens zwei Autoren, wählen Sie unter <b>Autor</b> einen aus.</p>
+<h2>Die Liste</h2>
+<p>Links stehen die Add-ons als Zeilen mit Symbol, Name, Kurzbeschreibung und Sternen. Oben steht der Abschnitt <b>Installiert</b> mit der Zahl der installierten Add-ons und, falls vorhanden, <b>Updates</b> mit ihrer Anzahl; darunter <b>Weitere Add-ons</b>. Unter den installierten kommen zuerst die über einen Kundencode gelieferten, dann die selbst installierten, dann die nicht mehr angebotenen; in jeder Gruppe Updates zuerst, dann nach Name.</p>
+<table>
+  <tr><th>Markierung</th><th>Bedeutung</th></tr>
+  <tr><td>Installiert</td><td>Das Add-on ist in dieser Power-PDF-Installation vorhanden und aktuell.</td></tr>
+  <tr><td>Update verfügbar</td><td>Im Katalog gibt es eine neuere Version.</td></tr>
+  <tr><td>Beta</td><td>Eine Beta-Version (nur mit eingeschaltetem Beta-Kanal).</td></tr>
+  <tr><td>Für &lt;Organisation&gt;</td><td>Über Ihren Kundencode geliefert.</td></tr>
+  <tr><td>Nicht mehr angeboten</td><td>Installiert, aber nicht mehr im Katalog (Kapitel 11).</td></tr>
+</table>
+<p>Rechts in jeder Zeile steht die passende Aktion: <b>Installieren</b>, <b>Entfernen</b> oder bei einem Update der geteilte Knopf <b>Aktualisieren</b>; sein Pfeil öffnet ein Menü mit <b>Aktualisieren</b> und <b>Entfernen</b>.</p>
+<h2>Die Details</h2>
+<p>Rechts stehen zum gewählten Add-on: Symbol, Name, Kategorie, <b>Version</b>, Größe, bei einem Update die installierte Version, Sterne, die Beschreibung, Bildschirmfotos (ein Klick vergrößert), <b>Neu in</b> der Version, <b>Verbindet sich mit</b> (Kapitel 11), <b>Autor</b> mit Kontaktadresse (ein Klick öffnet eine E-Mail), die Aktionen, <b>Problem melden</b> und <b>Ihre Bewertung</b>. Darunter steht der Hinweis, dass für Installieren und Aktualisieren Administratorrechte nötig sind.</p>
+<h2>Die Fußzeile</h2>
+<p>Unten stehen der kurze Haftungsausschluss, der Link <b>Haftungsausschluss</b> mit dem vollen Text und <b>Problem mit dem Add-on Store melden</b>.</p>
+<h2>Tastatur</h2>
+<table>
+  <tr><th>Taste</th><th>Wirkung</th></tr>
+  <tr><td>F1</td><td>Öffnet die Hilfe beim Kapitel dieses Fensters.</td></tr>
+  <tr><td>Pfeil auf, Pfeil ab</td><td>Wählt das vorige oder nächste Add-on der Liste.</td></tr>
+  <tr><td>Strg+F, F3</td><td>Springt ins Suchfeld.</td></tr>
+  <tr><td>Enter im Suchfeld</td><td>Sucht nach Bedarf (Kapitel 6).</td></tr>
+  <tr><td>Esc</td><td>Schließt einen offenen Dialog oder beendet die Bedarfssuche.</td></tr>
+  <tr><td>F5</td><td>Lädt den Katalog neu.</td></tr>
+</table>
+<h2>Das klassische Fenster</h2>
+<p>Ohne WebView2-Runtime, oder wenn die IT <code>ClassicUI</code> setzt, öffnet sich ein schlichtes Fenster: eine Liste mit den Spalten Plug-in, Verfügbar, Installiert, Status, Größe, Autor und Kontakt, darunter die Beschreibung und die Knöpfe <b>Add-on Store aktualisieren</b>, <b>Haftungsausschluss</b>, <b>Hilfe</b>, <b>Aktualisieren</b> (Katalog neu laden), <b>Deinstallieren</b>, <b>Installieren</b> und <b>Schließen</b>. Kundencodes, Bewertungen, Problem melden, Bedarfssuche und die Updates-Ansicht gibt es dort nicht.</p>
+
+<h1>6 Suchen und Filtern</h1>
+<h2>Beim Tippen</h2>
+<p>Was Sie in <b>Add-ons durchsuchen</b> tippen, filtert die Liste sofort nach Name, Beschreibung und Autor. Groß- und Kleinschreibung spielt keine Rolle. Kategorie und Autor gelten zusätzlich. Findet sich nichts, steht dort „Keine Add-ons gefunden.“</p>
+<h2>Nach Bedarf suchen</h2>
+<p>Beschreiben Sie in eigenen Worten, was Sie brauchen, zum Beispiel „Rechnungen per Barcode trennen“, und drücken Sie <b>Enter</b> (mindestens zwei Zeichen). Der Store-Server sucht die passenden Add-ons und ordnet sie nach Eignung; bei eingeschaltetem KI-Assistenten des Store steht unter jedem Treffer eine kurze Begründung. Die Leiste zeigt „Passende Add-ons für: …“ oder „Kein passendes Add-on gefunden für: …“. <b>Alle anzeigen</b>, Esc oder weiteres Tippen beendet die Bedarfssuche.</p>
+
+<h1>7 Installieren, aktualisieren, entfernen</h1>
+<h2>Installieren</h2>
+<ol class="steps">
+  <li><b>Installieren</b> wählen. Die Frage „… Version … jetzt installieren?“ mit <b>Installieren</b> bestätigen.</li>
+  <li>Der Client lädt das Paket, prüft Prüfsumme und Signatur und fragt dann einmal nach Administratorrechten. Während dessen steht „Wird installiert …“.</li>
+  <li>Nach dem Kopieren fragt er, ob Power PDF neu starten soll. <b>Jetzt neu starten</b> schließt Power PDF (ungespeicherte Dokumente werden zum Speichern angeboten) und startet es wieder; <b>Später</b> lädt das Add-on beim nächsten Start.</li>
+</ol>
+<p>Ein Add-on, das eine neuere Version von Power PDF braucht, zeigt statt <b>Installieren</b> den Hinweis „Benötigt Power PDF … oder neuer“.</p>
+<h2>Aktualisieren</h2>
+<p>Bei einem Update wählen Sie <b>Aktualisieren</b>, in der Liste, in den Details oder in <b>Verfügbare Updates</b>. Der Ablauf ist wie beim Installieren. Der Store bietet nur neuere Versionen an; eine ältere Version ersetzt nie eine installierte.</p>
+<h2>Entfernen</h2>
+<p><b>Entfernen</b> wählen und die Frage „… jetzt aus Power PDF entfernen?“ bestätigen. Nach der Administrator-Bestätigung löscht der Client die Datei des Add-ons, seinen Datenordner und seine Benutzereinstellungen. Power PDF entlädt das Add-on beim nächsten Start. Entfernen kann der Store nur Add-ons, die er selbst installiert hat (erkennbar an der Datei <code>manifest.json</code> im Datenordner des Add-ons); auch Add-ons aus einer manuellen Installation (Kapitel 13) erkennt er so.</p>
+<h2>Was dabei geschützt ist</h2>
+<ul>
+  <li>Installiert wird nur, was ein vertrauenswürdiger Store signiert hat; dazu passt die Prüfsumme SHA-256. Beides wird vor dem Kopieren in einem Ordner, auf den nur Administratoren schreiben dürfen, noch einmal geprüft.</li>
+  <li>Der Client spricht nur mit dem eingestellten Store-Server über HTTPS (TLS 1.2 oder neuer) und folgt keiner Umleitung.</li>
+  <li>Der Schritt mit Administratorrechten läuft nur, wenn Sie installieren, aktualisieren oder entfernen; alles andere läuft mit Ihren normalen Rechten.</li>
+</ul>
+
+<h1>8 Updates</h1>
+<h2>Wie der Store Updates findet</h2>
+<p>Etwa 15 Sekunden nach dem Start von Power PDF und kurz nach dem Schließen des Store-Fensters liest der Client im Hintergrund den Katalog. Findet er eine neuere Version des Add-on Store oder eines installierten Add-ons, bekommen die Knöpfe <b>Add-on Store</b> und <b>Updates</b> einen orangen Punkt. Ist der Hinweis auf Power-PDF-Updates eingeschaltet, zählt auch ein Update für Power PDF mit.</p>
+<h2>Die Ansicht „Verfügbare Updates“</h2>
+<p>Der Knopf <b>Updates</b> im Register <b>Hilfe</b> öffnet das Store-Fenster in dieser Ansicht. Sie zeigt je eine Karte für Power PDF, den Add-on Store und jedes installierte Add-on mit Update, jeweils mit „Installiert: …  ·  Neu: …“ und dem Text „Was ist neu“.</p>
+<ul>
+  <li><b>Aktualisieren</b> oder <b>Entfernen</b> je Add-on; bei mehr als einem Update <b>Alle aktualisieren</b> (nacheinander, am Ende eine Frage nach dem Neustart).</li>
+  <li><b>Add-on Store aktualisieren</b> auf der Karte des Store (Abschnitt unten).</li>
+  <li><b>Was ist neu</b> und <b>Ausblenden</b> auf der Karte von Power PDF.</li>
+  <li><b>Alle Add-ons</b> oben rechts führt zur ganzen Liste. Gibt es nichts, steht dort „Alles ist aktuell.“</li>
+</ul>
+<h2>Einmaliger Hinweis</h2>
+<p>Ist die Option <b>Einmal auf jedes neue Update hinweisen</b> an (Standard), fragt Power PDF bei einem neuen Update einmal „Es sind Updates verfügbar: … Add-on Store jetzt öffnen?“. <b>Ja</b> öffnet die Ansicht <b>Verfügbare Updates</b>. Zum selben Update kommt der Hinweis nicht noch einmal. Ist gerade ein Dialog offen, wartet der Hinweis, bis er geschlossen ist.</p>
+<h2>Den Add-on Store selbst aktualisieren</h2>
+<p>Gibt es eine neue Version des Store, steht oben die Leiste „Eine neue Version des Add-on Store ist verfügbar: … (installiert: …)“ mit <b>Add-on Store aktualisieren</b>. Der Client lädt das Paket, prüft Prüfsumme und Signatur und fragt: „Power PDF wird für das Update geschlossen, …“. Nach <b>Ja</b> schließt sich Power PDF, das neue Setup läuft mit Fortschrittsanzeige (eine Administrator-Abfrage) in der Sprache von Power PDF, und Power PDF startet danach von selbst wieder, auch wenn das Setup abgebrochen wurde.</p>
+<h2>Hinweis auf Updates für Power PDF</h2>
+<p>Bieten die Administratoren des Store für Ihre Power-PDF-Version ein Update an, steht oben „Für Power PDF ist ein Update verfügbar: …“, mit <b>Was ist neu</b> (öffnet die offiziellen Versionshinweise von Tungsten Automation im Browser) und <b>Ausblenden</b> (bis zur nächsten neueren Version). Installieren kann der Store Power PDF nicht: „Das Update installiert Ihre IT oder eine Person mit Administratorrechten.“ Die Option dazu steht auf der Optionsseite.</p>
+
+<h1>9 Was ist neu, Bewertungen, Problem melden</h1>
+<h2>Was ist neu</h2>
+<p>Nach einem Update, ob durch den Store, die IT oder das Selbst-Update, zeigt das Store-Fenster beim nächsten Öffnen einmal <b>Was ist neu</b>: je Add-on und für den Store den Text der neuen Version. <b>Verstanden</b> schließt die Übersicht. Was Sie selbst im Store-Fenster installiert haben, gilt bereits als gesehen.</p>
+<h2>Bewertungen</h2>
+<p>Unter jedem Add-on stehen der Durchschnitt und die Zahl der Bewertungen. Installierte Add-ons bewerten Sie unter <b>Ihre Bewertung</b> mit einem bis fünf Sternen; ein erneuter Klick ändert die Bewertung. Je Installation zählt eine Bewertung. Für nicht installierte Add-ons steht dort „Installieren Sie das Add-on, um es zu bewerten.“</p>
+<h2>Problem melden</h2>
+<ol class="steps">
+  <li>In den Details <b>Problem melden</b> wählen (für den Store selbst unten <b>Problem mit dem Add-on Store melden</b>).</li>
+  <li><b>Problem</b> oder <b>Kommentar oder Vorschlag</b> wählen und beschreiben, was passiert ist (mindestens fünf Zeichen, höchstens 4000).</li>
+  <li>Auf Wunsch eine <b>E-Mail für Rückfragen</b> eintragen, <b>Protokoll der letzten Store-Aktionen anhängen</b> ankreuzen und mit <b>Dateien anhängen</b> bis zu 3 Dateien (PNG, JPEG, PDF, TXT, LOG; je höchstens 5 MB, zusammen höchstens 10 MB) hinzufügen.</li>
+  <li><b>Senden</b> wählen.</li>
+</ol>
+<p>Die Meldung geht an den Entwickler des Add-ons. Mitgesendet werden die Versionen von Add-on, Power PDF und Windows; keine Dokumente. Hängen Sie keine vertraulichen Dokumente an.</p>
+
+<h1>10 Kundencodes</h1>
+<p>Ein Kundencode schaltet Add-ons frei, die Ihr Add-on-Anbieter für Ihre Organisation liefert. Er sieht etwa so aus: <code>XXXX-XXXX-XXXX-XXXX-XXXX</code>.</p>
+<ol class="steps">
+  <li>Im Kopf <b>Kundencode</b> wählen.</li>
+  <li>Den Code eingeben und <b>Code hinzufügen</b> wählen. Der Store prüft ihn und meldet zum Beispiel „Code gültig für …: 3 Add-on(s) freigeschaltet.“</li>
+  <li><b>Schließen</b> wählen. Die freigeschalteten Add-ons stehen in der Liste mit der Markierung „Für …“ und unter dem Kategorie-Knopf <b>Für</b>.</li>
+</ol>
+<p>Unter <b>Kundencodes auf diesem Computer</b> stehen alle Codes (gekürzt angezeigt) mit Organisation, freigeschalteten Add-ons und, wenn die Lieferung begrenzt ist, der Belegung, zum Beispiel „Installationen: 3/10“. Bis zu 10 Codes sind möglich.</p>
+<p><b>Code entfernen</b> fragt „Kundencode von … entfernen?“. Add-ons, die nur über diesen Code kamen, werden dabei ebenfalls aus Power PDF entfernt (eine Administrator-Bestätigung); wird diese abgelehnt, bleibt der Code. Setzt die IT die Codes per Richtlinie, steht dort „Ihre IT verwaltet den Kundencode auf diesem Computer.“ und Sie können nichts ändern.</p>
+
+<h1>11 Weitere Hinweise im Fenster</h1>
+<table>
+  <tr><th>Hinweis</th><th>Bedeutung und was tun</th></tr>
+  <tr><td>Vom Add-on Store aus Sicherheitsgründen gesperrt, bitte entfernen: …</td><td>Die Administratoren des Store haben diese Version gesperrt. <b>Jetzt entfernen</b> entfernt sie (Administrator-Bestätigung). Der Client prüft die Sperrliste 20 Sekunden nach dem Start und danach alle 4 Stunden und fragt je Sitzung einmal; eine Sperre gilt auch, wenn der Server später nicht erreichbar ist.</td></tr>
+  <tr><td>Add-ons aus einer früheren Power-PDF-Installation (…) fehlen in dieser: …</td><td>Nach dem Wechsel auf eine neue Power-PDF-Version findet der Client Add-ons im alten Programmordner. <b>Hier installieren</b> installiert sie nacheinander, am Ende kommt eine Frage nach dem Neustart. <b>Später</b> blendet den Hinweis für diese Add-ons aus.</td></tr>
+  <tr><td>Nicht mehr angeboten</td><td>Das Add-on ist installiert, steht aber nicht mehr im Katalog, zum Beispiel weil der zugehörige Kundencode entfernt wurde. Sie können es weiter entfernen.</td></tr>
+  <tr><td>Benötigt Power PDF … oder neuer</td><td>Das Add-on braucht eine neuere Version von Power PDF. Aktualisieren Sie zuerst Power PDF.</td></tr>
+  <tr><td>Ohne eigene Schaltfläche</td><td>Das Add-on hat keinen eigenen Menüband-Knopf und arbeitet in Funktionen von Power PDF; wo, steht in der Beschreibung.</td></tr>
+  <tr><td>Verbindet sich mit</td><td>Die Online-Dienste, mit denen das Add-on Daten austauscht: <b>Anbieter</b> (mit Link zur Website), Dienst, Adresse und was es <b>Überträgt</b>. Die Angaben stammen vom Entwickler und wurden bei der Prüfung kontrolliert. Fehlt der Kasten, verbindet sich das Add-on mit keinem Dienst.</td></tr>
+  <tr><td>Das Installieren und Entfernen von Add-ons ist von Ihrer IT abgeschaltet.</td><td>Richtlinie <code>DisableInstall</code>: Sie können den Katalog ansehen, aber nichts ändern.</td></tr>
+</table>
+
+<h1>12 Die Optionsseite</h1>
+<p>Unter <b>Datei &gt; Optionen &gt; Add-on Store &gt; Allgemein</b> stehen die Einstellungen des Client. Was die IT per Richtlinie festlegt, ist dort grau.</p>
+<table>
+  <tr><th>Einstellung</th><th>Bedeutung</th></tr>
+  <tr><td>Server-URL</td><td>Adresse des Store-Servers. Leer oder Standard: <code>https://addon.power-pdf.de</code>. Erlaubt ist nur <code>https://</code> (für Tests <code>http://localhost</code>). Eine Änderung gilt ab dem nächsten Start von Power PDF.</td></tr>
+  <tr><td>Kundencodes auf diesem Computer</td><td>Zeigt die Zahl der Codes; verwaltet werden sie im Store-Fenster über <b>Kundencode</b>. Nur ohne modernes Store-Fenster steht hier ein Eingabefeld für Codes, getrennt durch Semikolon.</td></tr>
+  <tr><td>Beta: noch nicht freigegebene Plug-ins anzeigen</td><td>Zeigt auch Beta-Versionen. Sie haben die automatische Prüfung bestanden, sind aber noch nicht von einem Administrator geprüft.</td></tr>
+  <tr><td>Hinweisen, wenn ein Update für Power PDF verfügbar ist</td><td>Hinweis und Karte zu Power-PDF-Updates (Standard: an).</td></tr>
+  <tr><td>Einmal auf jedes neue Update hinweisen</td><td>Der einmalige Hinweis aus Kapitel 8 (Standard: an).</td></tr>
+  <tr><td>Ausführliches Protokoll</td><td>Schreibt mehr Einzelheiten in <code>%TEMP%\PluginStore.log</code>, für die Fehlersuche.</td></tr>
+</table>
+<p>Unten steht die Version des Client, zum Beispiel „Add-on-Store-Client Version {VERSION}“.</p>
+
+<h1>13 Links von der Website, manuelle Installation</h1>
+<h2>„In Power PDF installieren“</h2>
+<p>Auf der Website des Store hat jedes Add-on den Knopf <b>In Power PDF installieren</b>. Er öffnet über den Link <code>addonstore://</code> das Store-Fenster mit diesem Add-on und fragt, ob es installiert werden soll; startet Power PDF erst, wartet der Client, bis das Hauptfenster da ist. Eine Website kann so nur das Fenster öffnen, nie selbst etwas installieren. Ist das Add-on nicht im Katalog, meldet das Fenster „Das Add-on „…“ von der Website ist nicht im Katalog. Eventuell gibt es es nur im Beta-Kanal (Optionen).“</p>
+<h2>Manuelle Installation ohne Client</h2>
+<p>Für Computer ohne den Client bietet die Website je öffentlichem Add-on <b>Manuell (ZIP)</b>: ein ZIP mit <code>install.bat</code>, <code>uninstall.bat</code> und einer Anleitung. <code>install.bat</code> prüft Signatur und Prüfsumme, fragt einmal nach Administratorrechten und richtet die Menüband-Gruppe ein; <code>/quiet</code> installiert ohne Rückfragen für die Softwareverteilung. Eine manuelle Installation erhält keine Updates und keine Sicherheitssperren. Wird der Client später installiert, erkennt er das Add-on und hält es aktuell. Entfernt der Client ein solches Add-on, löscht er auch dessen Eintrag unter Installierte Apps; aktualisiert er es, zieht er die dort angezeigte Version nach.</p>
+
+<h1>14 Für Administratoren</h1>
+<h2>Verteilung</h2>
+<p>Das MSI installiert für den ganzen Computer und läuft still, am besten als eigener Schritt direkt nach Power PDF (Intune, SCCM, GPO, Skripte):</p>
+<p><code>msiexec /i PluginStore.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"</code></p>
+<ul>
+  <li>Power PDF muss vorher installiert sein. Ob es schon einmal gestartet wurde, spielt keine Rolle.</li>
+  <li>Das Setup lehnt ab: Power PDF fehlt, ist älter als 2025.3.7 (geprüft über <code>VersionLong</code> in <code>HKLM\SOFTWARE\Kofax\PDF\V1</code>), ist eine Edition ohne Add-ons vor 2026.4, oder ist mit Seriennummer lizenziert. Für den letzten Fall erlaubt die Eigenschaft <code>ALLOWNONSAAS=1</code> die Installation trotzdem.</li>
+  <li>Eine Sprache erzwingen Sie mit <code>TRANSFORMS=:&lt;LCID&gt;</code>, zum Beispiel <code>TRANSFORMS=:1031</code> für Deutsch.</li>
+  <li>Erkennungsregel für Intune: die Datei <code>&lt;bin&gt;\Plug-Ins\PluginStore.zxt</code> mit Mindestversion (der ProductCode ändert sich mit jeder Version).</li>
+  <li>Eine Neuinstallation (kein Update) räumt einmal je Benutzer Reste entfernter Add-ons aus dem Register <b>Erweiterte Funktionen</b>; installierte Add-ons legen ihre Gruppen beim nächsten Start wieder an.</li>
+  <li>Verteilt die IT das MSI selbst, schaltet <code>DisableSelfUpdate</code> das Selbst-Update ab.</li>
+</ul>
+<h2>Richtlinien</h2>
+<p>Alle Richtlinien stehen unter <code>HKLM\SOFTWARE\Kofax\PDF\Tungsten Power PDF\PluginStore\Policies\Store</code> (64-Bit-Ansicht; aus 32-Bit-Verteilagenten <code>reg add … /reg:64</code>). Sie haben Vorrang vor den Einstellungen des Benutzers und sperren die zugehörigen Felder der Optionsseite. DWORD-Werte dürfen auch als Text wie „1“ (REG_SZ) gesetzt werden. Der Client liest sie beim Start von Power PDF.</p>
+<table>
+  <tr><th>Wert</th><th>Typ</th><th>Wirkung</th></tr>
+  <tr><td><code>ServerUrl</code></td><td>REG_SZ</td><td>Adresse des Store-Servers, gesperrt. Schaltet auch die zweite Adresse ab (siehe Netzwerk).</td></tr>
+  <tr><td><code>BetaChannel</code></td><td>DWORD</td><td>1 = Beta-Versionen anzeigen, 0 = nicht.</td></tr>
+  <tr><td><code>LockPage</code></td><td>DWORD</td><td>1 = die ganze Optionsseite nur lesbar.</td></tr>
+  <tr><td><code>ClassicUI</code></td><td>DWORD</td><td>1 = immer das klassische Fenster (auch als HKCU-Wert möglich).</td></tr>
+  <tr><td><code>DisableInstall</code></td><td>DWORD</td><td>1 = nur ansehen: kein Installieren, Aktualisieren oder Entfernen von Add-ons.</td></tr>
+  <tr><td><code>DisableSelfUpdate</code></td><td>DWORD</td><td>1 = kein Selbst-Update des Store; die IT verteilt neue MSI-Versionen.</td></tr>
+  <tr><td><code>CustomerCode</code></td><td>REG_SZ</td><td>Ein oder mehrere Kundencodes, getrennt durch Semikolon; im Fenster gesperrt.</td></tr>
+  <tr><td><code>UpdateBadge</code></td><td>DWORD</td><td>0 = keine Update-Prüfung im Hintergrund (kein Punkt, kein Hinweis).</td></tr>
+  <tr><td><code>UpdateNotice</code></td><td>DWORD</td><td>0 = kein einmaliger Hinweis auf neue Updates, 1 = Hinweis an.</td></tr>
+  <tr><td><code>PowerPdfUpdates</code></td><td>DWORD</td><td>0 = kein Hinweis auf Updates für Power PDF, 1 = Hinweis an.</td></tr>
+  <tr><td><code>TrustedSigningKeys</code></td><td>REG_SZ oder REG_MULTI_SZ</td><td>Weitere vertrauenswürdige Signaturschlüssel (<code>keyId:base64</code>), für eine eigene Store-Instanz.</td></tr>
+  <tr><td><code>AllowUnsigned</code></td><td>DWORD</td><td>1 = Signaturprüfung aus. Nur für Testserver.</td></tr>
+  <tr><td><code>Inventory</code></td><td>DWORD</td><td>0 = kein täglicher Bestandsbericht (siehe Datenschutz).</td></tr>
+</table>
+<h2>Speicherorte</h2>
+<table>
+  <tr><th>Ort</th><th>Inhalt</th></tr>
+  <tr><td><code>&lt;bin&gt;\Plug-Ins\PluginStore.zxt</code></td><td>Der Client.</td></tr>
+  <tr><td><code>&lt;bin&gt;\Plug-Ins\PluginStore\</code></td><td>Menüband-Dateien (<code>UILayout</code>), <code>AddonStoreLink.exe</code> für <code>addonstore://</code>-Links, die eigene Hilfe (<code>docs\help</code>).</td></tr>
+  <tr><td><code>&lt;bin&gt;\Plug-Ins\&lt;Name&gt;.zxt</code>, <code>&lt;bin&gt;\Plug-Ins\&lt;Name&gt;\</code></td><td>Installierte Add-ons mit Datenordner; <code>manifest.json</code> darin kennzeichnet ein Store-Add-on und seine Version, <code>docs\help</code> enthält seine Hilfe (<code>help.json</code> und eine HTML-Datei je Sprache).</td></tr>
+  <tr><td><code>HKCU\Software\Kofax\PDF\Tungsten Power PDF\PluginStore</code></td><td>Einstellungen des Benutzers: <code>ServerUrl</code>, <code>BetaChannel</code>, <code>ClassicUI</code>, <code>VerboseLog</code>, <code>CustomerCode</code>, <code>CustomerCodeNames</code>, <code>UpdateNotice</code>, <code>PowerPdfUpdateHint</code>, <code>PowerPdfHiddenUpdate</code>, <code>PendingUpdates</code>, <code>NotifiedUpdates</code>, <code>InstallId</code>, <code>StoreAccess</code>, <code>BlockedRules</code>, <code>MigrateDismissed</code>, <code>InventorySent</code>; Unterschlüssel <code>Ratings</code>, <code>Seen</code>, <code>PendingOpen</code>.</td></tr>
+  <tr><td><code>%LOCALAPPDATA%\Tungsten\AddonStore\</code></td><td><code>cache\catalog.tsv</code> (letzter Katalog; Kundencodes nur als Prüfwert), <code>icons</code>, <code>shots</code> (Bildschirmfotos), <code>WebView2</code> (Daten des Store-Fensters).</td></tr>
+  <tr><td><code>%APPDATA%\Kofax\PDF\PowerPDF\UILayout\Publish.xml</code></td><td>Menüband des Benutzers; der Client trägt die Gruppen installierter Add-ons ein und hält die Reihenfolge der Register.</td></tr>
+  <tr><td><code>HKLM\SOFTWARE\Classes\addonstore</code></td><td>Der Link-Typ <code>addonstore://</code> (vom MSI).</td></tr>
+</table>
+<h2>Protokolle</h2>
+<ul>
+  <li><code>%TEMP%\PluginStore.log</code>: Protokoll des Client und seiner Hilfsschritte (Neustart, Selbst-Update, Wechsel auf die zweite Adresse). Mehr Einzelheiten mit <b>Ausführliches Protokoll</b>.</li>
+  <li><code>%WINDIR%\Temp\AddonStoreUpdate-&lt;Kennung&gt;.log</code>: Protokoll des MSI beim Selbst-Update.</li>
+</ul>
+<h2>Netzwerk</h2>
+<ul>
+  <li>Eine Firewall-Regel genügt: HTTPS (Port 443) zum Store-Server, über den Proxy des Systems (automatische Proxy-Erkennung von WinHTTP). TLS 1.2 oder neuer, keine Umleitungen, kein anderer Host, auch wenn der Katalog einen nennen sollte.</li>
+  <li>Mit der eingebauten Adresse braucht die Regel zwei Namen: <code>addon.power-pdf.de</code> und <code>ppdf-store.azurewebsites.net</code>.</li>
+  <li><b>Zweite Adresse:</b> Scheitert eine Anfrage an <code>https://addon.power-pdf.de</code> (keine Verbindung, TLS- oder Zertifikatsfehler, abgebrochene Antwort, HTTP-Fehler), schickt der Client sie einmal an <code>https://ppdf-store.azurewebsites.net</code>, aber nur, wenn dieser Host sich zuvor als Add-on Store ausgewiesen hat (<code>GET /api/ping</code>). Er bleibt dann für die laufende Sitzung dort und prüft alle 10 Minuten die Hauptadresse. Eine POST-Anfrage, die den Server erreicht haben könnte, wird nie doppelt gesendet. Das gilt nur mit der eingebauten Adresse, nicht mit <code>ServerUrl</code> oder einer anderen Adresse in den Optionen.</li>
+  <li>Hintergrundprüfungen: Lizenz-Freigabe 3 Sekunden nach dem Start und alle 4 Stunden, Sperrliste nach 20 Sekunden und alle 4 Stunden, Updates nach etwa 15 Sekunden und nach dem Schließen des Store-Fensters.</li>
+</ul>
+<h2>Datenschutz</h2>
+<p>Der Client sendet keine Dokumente und keine Namen von Benutzern oder Computern. Mit jeder Anfrage gehen technische Angaben an den Store-Server:</p>
+<ul>
+  <li>die Programmkennung mit den Versionen von Client, Power PDF und Windows und der Prozessorarchitektur, zum Beispiel <code>AddonStore-PowerPDF/{VERSION} (PowerPDF …; Windows …; x64)</code>;</li>
+  <li>die Lizenzart von Power PDF (<code>cloud</code>, <code>serial</code> oder <code>unknown</code>), damit der Store prüfen kann, ob er genutzt werden darf;</li>
+  <li>nur mit Kundencode: die Codes und eine zufällige Installationskennung dieses Benutzers; der Server speichert nur einen Prüfwert davon je Lieferung.</li>
+</ul>
+<p>Bewertungen nutzen dieselbe zufällige Kennung, der Server speichert davon nur einen Prüfwert je Add-on. Meldungen enthalten, was Sie eintragen und anhängen, plus die Versionen von Add-on, Power PDF und Windows.</p>
+<p>Einmal am Tag sendet der Client einen Bestandsbericht: die zufällige Installationskennung, die Domain der Power-PDF-Anmeldung (nur der Teil nach dem @, nie die Adresse; Domains öffentlicher Mail-Dienste werden nicht gesendet), die Lizenzart, die Versionen von Power PDF und Client und die installierten Add-ons mit ihren Versionen. Der Server wertet ihn nur aus, wenn seine Administratoren diese Auswertung eingeschaltet haben. Die Richtlinie <code>Inventory = 0</code> schaltet den Bericht ab.</p>
+<p>Klären Sie den Einsatz mit Ihrer Datenschutzstelle; die Erklärung des Betreibers des Store-Servers gilt für die Daten auf dem Server.</p>
+<h2>Sicherheit</h2>
+<ul>
+  <li>Installiert werden nur Pakete, die ein vertrauenswürdiger Store-Schlüssel signiert hat (eingebaut: der Schlüssel des Store und ein Wiederherstellungsschlüssel; weitere nur per Richtlinie <code>TrustedSigningKeys</code>, nie über HKCU).</li>
+  <li>Der Schritt mit Administratorrechten startet die PowerShell von Windows mit vollem Pfad und dem Skript im Speicher. Er kopiert das Paket zuerst in einen Ordner unter <code>Plug-Ins</code>, auf den nur Administratoren schreiben dürfen, prüft die Prüfsumme dort erneut und entpackt erst dann.</li>
+  <li>Das Store-Fenster zeigt eine im Client eingebaute Seite. Sie lädt nichts aus dem Internet, kann nicht navigieren und spricht nur über Nachrichten mit dem Client; Daten erscheinen nur als Text.</li>
+  <li>Der Link-Helfer <code>AddonStoreLink.exe</code> übergibt nur eine geprüfte Add-on-Kennung; installiert wird erst nach Ihrer Bestätigung.</li>
+</ul>
+
+<h1>15 Alle Meldungen</h1>
+<h2>Im Store-Fenster und im klassischen Fenster</h2>
+<table>
+  <tr><th>Meldung</th><th>Bedeutung</th><th>Was tun</th></tr>
+  <tr><td>Der Add-on-Store-Server ist nicht erreichbar. Prüfen Sie die Server-URL unter Datei &gt; Optionen &gt; Add-on Store.</td><td>Keine Verbindung zum Store-Server, oder eine Aktion lief schon.</td><td>Netz, Proxy und Server-URL prüfen; mit F5 neu laden.</td></tr>
+  <tr><td>Auf dem Server sind noch keine Plug-ins verfügbar.</td><td>Der Katalog ist leer.</td><td>Server-URL prüfen; Beta-Kanal oder Kundencode, falls vorgesehen.</td></tr>
+  <tr><td>Keine Add-ons gefunden.</td><td>Suche, Kategorie oder Autor schließen alles aus.</td><td>Suchtext löschen, <b>Alle</b> wählen.</td></tr>
+  <tr><td>… Version … jetzt installieren? Windows fragt einmal nach Administrator-Bestätigung.</td><td>Frage vor dem Installieren oder Aktualisieren.</td><td>Bestätigen oder abbrechen.</td></tr>
+  <tr><td>… jetzt aus Power PDF entfernen? Windows fragt einmal nach Administrator-Bestätigung.</td><td>Frage vor dem Entfernen.</td><td>Bestätigen oder abbrechen.</td></tr>
+  <tr><td>… ist installiert. Power PDF lädt Plug-ins beim Start. Power PDF jetzt neu starten?</td><td>Installation fertig.</td><td><b>Jetzt neu starten</b> oder <b>Später</b>.</td></tr>
+  <tr><td>… ist entfernt. Power PDF entlädt es beim nächsten Start. Power PDF jetzt neu starten?</td><td>Entfernen fertig.</td><td><b>Jetzt neu starten</b> oder <b>Später</b>.</td></tr>
+  <tr><td>Installiert. Starten Sie Power PDF neu, um das Plug-in zu laden.</td><td>Klassisches Fenster: Installation fertig.</td><td>Power PDF neu starten.</td></tr>
+  <tr><td>Deinstalliert. Starten Sie Power PDF neu, um das Plug-in zu entladen.</td><td>Klassisches Fenster: Entfernen fertig.</td><td>Power PDF neu starten.</td></tr>
+  <tr><td>Installation fehlgeschlagen (Code …).</td><td>Siehe Tabelle der Codes unten.</td><td>Je nach Code.</td></tr>
+  <tr><td>Die heruntergeladene Datei hat die Integritätsprüfung (SHA-256) nicht bestanden. Installation abgebrochen.</td><td>Download beschädigt oder verändert.</td><td>Erneut versuchen; bleibt es, Problem melden.</td></tr>
+  <tr><td>Dieses Add-on ist nicht von einem vertrauenswürdigen Add-on Store signiert. Installation abgebrochen. …</td><td>Signatur fehlt oder passt zu keinem vertrauenswürdigen Schlüssel.</td><td>Server-URL prüfen; bei eigener Instanz <code>TrustedSigningKeys</code> setzen.</td></tr>
+  <tr><td>Alle Installationen dieses Add-ons für Ihre Organisation sind belegt. …</td><td>Die Lieferung erlaubt nur eine bestimmte Zahl von Installationen.</td><td>Auf einem anderen Computer entfernen oder beim Anbieter mehr anfragen.</td></tr>
+  <tr><td>Power PDF konnte nicht automatisch neu gestartet werden. …</td><td>Der Neustart-Helfer konnte nicht starten.</td><td>Power PDF selbst schließen und starten.</td></tr>
+  <tr><td>Das Installieren und Entfernen von Add-ons ist von Ihrer IT abgeschaltet. Den Katalog können Sie ansehen.</td><td>Richtlinie <code>DisableInstall</code>.</td><td>An die IT wenden.</td></tr>
+  <tr><td>Eine neue Version des Add-on Store ist verfügbar: … (installiert: …).</td><td>Selbst-Update möglich.</td><td><b>Add-on Store aktualisieren</b>.</td></tr>
+  <tr><td>Power PDF wird für das Update geschlossen, … Jetzt aktualisieren?</td><td>Frage vor dem Selbst-Update.</td><td>Dokumente speichern, <b>Ja</b>.</td></tr>
+  <tr><td>Das Add-on „…“ von der Website ist nicht im Katalog. …</td><td>Ein Website-Link nennt ein Add-on, das hier nicht angeboten wird.</td><td>Beta-Kanal oder Kundencode prüfen.</td></tr>
+  <tr><td>Benötigt Power PDF … oder neuer</td><td>Das Add-on braucht ein neueres Power PDF.</td><td>Power PDF aktualisieren.</td></tr>
+  <tr><td>Danke für Ihre Bewertung. / Die Bewertung konnte nicht gesendet werden. …</td><td>Ergebnis einer Bewertung.</td><td>Bei Fehler Verbindung prüfen, erneut bewerten.</td></tr>
+  <tr><td>Danke. Die Meldung wurde an den Entwickler gesendet. / Die Meldung konnte nicht gesendet werden.</td><td>Ergebnis einer Meldung.</td><td>Bei Fehler später erneut senden.</td></tr>
+  <tr><td>Zu groß oder nicht erlaubt: …</td><td>Anhang über 5 MB, zusammen über 10 MB, mehr als 3 Dateien oder falscher Dateityp.</td><td>Kleinere oder andere Dateien wählen.</td></tr>
+  <tr><td>Code gültig für …: … Add-on(s) freigeschaltet. / Code gültig für … . Dafür sind noch keine Add-ons freigegeben.</td><td>Kundencode angenommen.</td><td>Nichts.</td></tr>
+  <tr><td>Dieser Kundencode ist nicht gültig. …</td><td>Der Store kennt den Code nicht.</td><td>Code prüfen, Anbieter fragen.</td></tr>
+  <tr><td>Der Kundencode darf nur Buchstaben, Ziffern und Bindestriche enthalten (höchstens 64 Zeichen).</td><td>Falsche Schreibweise.</td><td>Code korrigieren.</td></tr>
+  <tr><td>Dieser Code wurde bereits hinzugefügt. / Höchstens 10 Kundencodes. …</td><td>Doppelt oder Liste voll.</td><td>Bei voller Liste einen Code entfernen.</td></tr>
+  <tr><td>Ihre IT verwaltet den Kundencode auf diesem Computer.</td><td>Richtlinie <code>CustomerCode</code>.</td><td>An die IT wenden.</td></tr>
+  <tr><td>Der Kundencode wurde entfernt. / Der Code wurde entfernt, ebenso diese Add-ons: … .</td><td>Code entfernt, gegebenenfalls mit Add-ons.</td><td>Power PDF neu starten.</td></tr>
+  <tr><td>Die Add-ons konnten nicht entfernt werden (…), daher wurde der Code beibehalten.</td><td>Die Administrator-Bestätigung wurde abgelehnt.</td><td>Erneut versuchen und bestätigen.</td></tr>
+  <tr><td>… Add-on(s) installiert. Power PDF jetzt neu starten, um sie zu laden?</td><td>Mehrere Add-ons nacheinander installiert.</td><td><b>Jetzt neu starten</b>.</td></tr>
+  <tr><td>Die Hilfe ist nicht installiert. Führen Sie das Setup des Add-on Store erneut aus.</td><td><b>Hilfe</b> findet die eigene Hilfe des Store nicht.</td><td>Setup erneut ausführen (Reparieren).</td></tr>
+  <tr><td>Die Hilfe benötigt die Microsoft-WebView2-Runtime. …</td><td>Ohne WebView2 kann das Hilfefenster nicht öffnen; Add-ons öffnen dann ihre eigene Hilfe im Webbrowser.</td><td>WebView2-Runtime installieren lassen.</td></tr>
+</table>
+<h2>Beim Start von Power PDF und im Menüband</h2>
+<table>
+  <tr><th>Meldung</th><th>Bedeutung</th><th>Was tun</th></tr>
+  <tr><td>Der Add-on Store benötigt Tungsten Power PDF … oder neuer (installiert ist …). Bitte aktualisieren Sie Power PDF.</td><td>Power PDF ist zu alt für den Client.</td><td>Power PDF aktualisieren.</td></tr>
+  <tr><td>Add-ons benötigen Tungsten Power PDF Business ab … oder eine beliebige Edition ab … .</td><td>Diese Edition lädt in dieser Version keine Add-ons.</td><td>Power PDF aktualisieren oder Business nutzen.</td></tr>
+  <tr><td>Es sind Updates verfügbar: … Add-on Store jetzt öffnen?</td><td>Einmaliger Hinweis auf neue Updates.</td><td><b>Ja</b> öffnet <b>Verfügbare Updates</b>.</td></tr>
+  <tr><td>Das Add-on „…“ (Version …) wurde vom Add-on Store aus Sicherheitsgründen gesperrt: … Jetzt entfernen?</td><td>Sicherheitssperre.</td><td><b>Ja</b> und Administrator-Bestätigung.</td></tr>
+  <tr><td>Gesperrte Add-ons entfernt. Power PDF jetzt neu starten, …?</td><td>Entfernen erfolgreich.</td><td>Neu starten.</td></tr>
+  <tr><td>Das Add-on „…“ konnte nicht entfernt werden (Fehler …). Bitte wenden Sie sich an Ihre IT.</td><td>Entfernen gescheitert.</td><td>IT einschalten.</td></tr>
+</table>
+<h2>Im Setup</h2>
+<table>
+  <tr><th>Meldung</th><th>Was tun</th></tr>
+  <tr><td>Tungsten Power PDF wurde auf diesem Computer nicht gefunden. Bitte installieren Sie zuerst Power PDF.</td><td>Power PDF installieren, dann das Setup erneut starten.</td></tr>
+  <tr><td>Der Add-on Store benötigt Tungsten Power PDF 2025.3.7 oder neuer. …</td><td>Power PDF aktualisieren.</td></tr>
+  <tr><td>Add-ons benötigen Tungsten Power PDF Business ab 2025.3.7 oder eine beliebige Edition (Standard, Advanced, Business) ab 2026.4. …</td><td>Power PDF aktualisieren.</td></tr>
+  <tr><td>Der Add-on Store ist nur für Tungsten Power PDF mit Anmeldung (SaaS) verfügbar. Dieses Power PDF ist mit einer Seriennummer lizenziert.</td><td><b>Angebot anfordern</b> öffnet die Angebotsseite für Power PDF Business SaaS. Administratoren können mit <code>ALLOWNONSAAS=1</code> trotzdem installieren.</td></tr>
+  <tr><td>Eine neuere Version des Add-on Store ist bereits installiert.</td><td>Nichts; die installierte Version bleibt.</td></tr>
+  <tr><td>Programme in Verwendung: Diese Programme nutzen Dateien, die das Setup ersetzen muss</td><td><b>Jetzt schließen und danach wieder starten</b> wählen.</td></tr>
+</table>
+<h2>Codes bei „Installation fehlgeschlagen“</h2>
+<table>
+  <tr><th>Code</th><th>Bedeutung</th></tr>
+  <tr><td>1</td><td>Download fehlgeschlagen.</td></tr>
+  <tr><td>2</td><td>Prüfsumme passt nicht.</td></tr>
+  <tr><td>3</td><td>Administrator-Bestätigung abgelehnt oder fehlgeschlagen.</td></tr>
+  <tr><td>4</td><td>Der Schritt mit Administratorrechten ist gescheitert; beim Entfernen auch: das Add-on wurde nicht vom Store installiert.</td></tr>
+  <tr><td>5</td><td>Der Programmordner von Power PDF wurde nicht gefunden.</td></tr>
+  <tr><td>6</td><td>Nicht von einem vertrauenswürdigen Store signiert.</td></tr>
+  <tr><td>7</td><td>Durch eine Richtlinie abgeschaltet (<code>DisableInstall</code>, beim Selbst-Update <code>DisableSelfUpdate</code>).</td></tr>
+  <tr><td>10</td><td>Die Version ist vom Store gesperrt.</td></tr>
+  <tr><td>11</td><td>Älter als die installierte Version.</td></tr>
+  <tr><td>12</td><td>Der Name gehört einem anderen Add-on oder dem Store selbst.</td></tr>
+  <tr><td>13</td><td>Alle Installationen der Lieferung sind belegt.</td></tr>
+</table>
+
+<h1>16 Fehlerbehebung</h1>
+<table>
+  <tr><th>Problem</th><th>Lösung</th></tr>
+  <tr><td>Das Register <b>Store</b> fehlt.</td><td>Power PDF neu starten. Prüfen, ob <code>PluginStore.zxt</code> im Ordner <code>Plug-Ins</code> liegt und ob Power PDF Business (vor 2026.4) mindestens 2025.3.7 ist. Ist die Lizenzart für den Store nicht zugelassen, bleibt der Knopf aus; die Store-Administratoren fragen.</td></tr>
+  <tr><td>Das Fenster bleibt leer oder zeigt „nicht erreichbar“.</td><td>Netz und Proxy prüfen, Firewall für <code>addon.power-pdf.de</code> und <code>ppdf-store.azurewebsites.net</code> öffnen, Server-URL in den Optionen prüfen, F5 drücken. Ohne Verbindung zeigt das Fenster den zuletzt geladenen Katalog.</td></tr>
+  <tr><td>Ein installiertes Add-on ist nach der Installation nicht zu sehen.</td><td>Power PDF neu starten. Hat das Add-on keine Schaltfläche, steht in der Beschreibung, wo es arbeitet.</td></tr>
+  <tr><td>Windows fragt nicht nach Administratorrechten oder lehnt ab.</td><td>Ohne Administratorrechte ist keine Installation möglich; die IT um Hilfe bitten oder das Add-on über die Softwareverteilung installieren lassen.</td></tr>
+  <tr><td>Es erscheint das klassische Fenster.</td><td>Die WebView2-Runtime fehlt oder <code>ClassicUI</code> ist gesetzt. WebView2-Runtime installieren oder den Wert entfernen.</td></tr>
+  <tr><td>Der orange Punkt bleibt, obwohl alles aktuell scheint.</td><td>Er zählt auch ein Update für Power PDF. Den Knopf <b>Updates</b> öffnen; das Power-PDF-Update mit <b>Ausblenden</b> wegnehmen.</td></tr>
+  <tr><td>Selbst-Update startet nicht.</td><td>Richtlinie <code>DisableSelfUpdate</code> oder eine Power-PDF-Lizenz mit Seriennummer verhindern es. Sonst <code>%TEMP%\PluginStore.log</code> und <code>%WINDIR%\Temp\AddonStoreUpdate-*.log</code> ansehen.</td></tr>
+  <tr><td>Nach einem Power-PDF-Update fehlen Add-ons.</td><td>Das Store-Fenster bietet <b>Hier installieren</b> für Add-ons aus der früheren Installation an.</td></tr>
+  <tr><td>Ein Add-on lässt sich nicht entfernen (Code 4).</td><td>Es wurde nicht vom Store installiert (kein <code>manifest.json</code>). Mit dem Setup entfernen, mit dem es installiert wurde.</td></tr>
+  <tr><td>Fehler genauer untersuchen.</td><td><b>Ausführliches Protokoll</b> einschalten, den Vorgang wiederholen und <code>%TEMP%\PluginStore.log</code> mit <b>Problem melden</b> senden.</td></tr>
+</table>
+
+<h1>17 Häufige Fragen</h1>
+<h3>Sind die Add-ons offizielle Produkte von Tungsten Automation?</h3>
+<p>Nein. Sie stammen von unabhängigen Entwicklerinnen und Entwicklern und werden ohne Gewährleistung und ohne offiziellen Support bereitgestellt; siehe <b>Haftungsausschluss</b>. Fragen beantwortet der im Katalog genannte Autor.</p>
+<h3>Warum brauche ich Administratorrechte?</h3>
+<p>Add-ons liegen im Programmordner von Power PDF unter Programme, auf den nur Administratoren schreiben dürfen. Der Store fragt deshalb einmal je Vorgang.</p>
+<h3>Warum muss Power PDF neu starten?</h3>
+<p>Power PDF lädt Add-ons nur beim Start und gibt sie erst beim Beenden frei.</p>
+<h3>Sieht der Store meine Dokumente?</h3>
+<p>Nein. Der Client sendet keine Dokumente; Kapitel 14 nennt alles, was er sendet.</p>
+<h3>Kann ich die Version eines Add-ons zurücksetzen?</h3>
+<p>Der Store installiert keine älteren Versionen. Entfernen Sie das Add-on und fragen Sie den Autor.</p>
+<h3>Funktioniert der Store ohne Internet?</h3>
+<p>Installierte Add-ons laufen weiter. Das Fenster zeigt den zuletzt geladenen Katalog, installieren und aktualisieren geht erst wieder mit Verbindung.</p>
+<h3>Wie bekomme ich Add-ons, die für meine Firma gemacht sind?</h3>
+<p>Mit dem Kundencode Ihres Anbieters (Kapitel 10), oder Ihre IT setzt ihn per Richtlinie.</p>
+
+<h1>18 Grenzen und technische Daten</h1>
+<table>
+  <tr><th>Eigenschaft</th><th>Wert</th></tr>
+  <tr><td>Power PDF</td><td>Business ab 2025.3.7; jede Edition ab 2026.4; nur mit Anmeldung (SaaS)</td></tr>
+  <tr><td>Windows</td><td>10 und 11, x64 und ARM64</td></tr>
+  <tr><td>Sprachen</td><td>21 Sprachen von Power PDF (Fenster, Menüband, Setup); eigene Hilfe in 6 Sprachen</td></tr>
+  <tr><td>Hilfe der Add-ons</td><td>Format „tungsten-addon-help“ Version 1; je Datei höchstens 4 MB, Bilder PNG oder JPEG bis 2 MB; nur erlaubte Elemente, keine Skripte</td></tr>
+  <tr><td>Verbindung</td><td>HTTPS, TLS 1.2 oder neuer, Port 443, System-Proxy</td></tr>
+  <tr><td>Kundencodes</td><td>bis zu 10, je höchstens 64 Zeichen</td></tr>
+  <tr><td>Problem melden</td><td>Text 5 bis 4000 Zeichen; bis zu 3 Anhänge, je 5 MB, zusammen 10 MB</td></tr>
+  <tr><td>Prüfungen</td><td>Signatur des Store, SHA-256, Sperrliste</td></tr>
+  <tr><td>Store-Fenster</td><td>Microsoft WebView2; ohne Runtime klassisches Fenster</td></tr>
+</table>
+
+<h1>19 Versionsgeschichte</h1>
+<table>
+  <tr><th>Version</th><th>Was ist neu</th></tr>
+  <tr><td>2.1.0</td><td>Gemeinsame Hilfe für alle installierten Add-ons mit Suche: Knopf <b>Hilfe</b> im Register Erweiterte Funktionen, Hilfe-Knopf und F1 im Store-Fenster und in den Add-ons; die Hilfe des Store in sechs Sprachen.</td></tr>
+  <tr><td>2.0.2</td><td>Stabiler: kein Beenden von Power PDF bei sehr langem Ordner für temporäre Dateien oder bei einem Fehler im Store-Fenster; Lizenzhinweise im Setup.</td></tr>
+  <tr><td>2.0.1</td><td>Entfernt der Store ein manuell installiertes Add-on, verschwindet auch sein Eintrag unter Installierte Apps.</td></tr>
+  <tr><td>2.0.0</td><td>Neues Erscheinungsbild für Store-Fenster, Setup und Updates-Ansicht.</td></tr>
+  <tr><td>1.9.17</td><td>Zweite Store-Adresse, wenn die Hauptadresse nicht erreichbar ist.</td></tr>
+  <tr><td>1.9.16</td><td>Auswahl nach Autor im Store-Fenster.</td></tr>
+  <tr><td>1.9.14</td><td>Bei einem Update bleibt <b>Entfernen</b> über den geteilten Knopf erreichbar.</td></tr>
+  <tr><td>1.9.9</td><td><b>Verbindet sich mit</b> zeigt die Online-Dienste eines Add-ons.</td></tr>
+  <tr><td>1.9.5, 1.9.6, 1.9.8</td><td>Setup prüft Power PDF 2025.3.7, nur für Power PDF mit Anmeldung, <b>Angebot anfordern</b>.</td></tr>
+  <tr><td>1.9.0, 1.9.1</td><td>Ansicht <b>Verfügbare Updates</b> und Knopf <b>Updates</b> im Register Hilfe.</td></tr>
+  <tr><td>1.7.0</td><td>Einmaliger Hinweis auf neue Updates.</td></tr>
+  <tr><td>1.6.0</td><td>Hinweis auf Updates für Power PDF.</td></tr>
+  <tr><td>1.4.1, 1.4.3</td><td>Mehrere Kundencodes; installierte Add-ons oben in der Liste.</td></tr>
+  <tr><td>1.3.0</td><td>Store-Fenster und Setup in allen 21 Sprachen von Power PDF.</td></tr>
+  <tr><td>1.2.0</td><td>Anhänge beim Melden, den Store selbst melden, <b>Was ist neu</b>.</td></tr>
+  <tr><td>1.1.5</td><td>Sicherheitssperren erreichen installierte Add-ons.</td></tr>
+  <tr><td>1.1.4</td><td>Add-ons aus einer früheren Power-PDF-Installation übernehmen.</td></tr>
+  <tr><td>1.1.0</td><td>Eigenes Register <b>Store</b>.</td></tr>
+  <tr><td>1.0.0</td><td>Erste vollständige Ausgabe.</td></tr>
+  <tr><td>0.8.0</td><td>Kundencode im Store-Fenster, Setup in mehreren Sprachen.</td></tr>
+  <tr><td>0.7.1</td><td>Nur signierte Pakete werden installiert.</td></tr>
+  <tr><td>0.6.0</td><td>Update-Punkt am Menüband, Kundencode, Bedarfssuche.</td></tr>
+  <tr><td>0.5.0</td><td>Bewertungen, Problem melden, Bildschirmfotos.</td></tr>
+  <tr><td>0.4.0</td><td>Modernes Store-Fenster.</td></tr>
+</table>
+<p class="muted">Add-on Store {VERSION} · Tungsten Automation · Dieses Handbuch beschreibt den Client für Tungsten Power PDF.</p>
+</body>
+</html>

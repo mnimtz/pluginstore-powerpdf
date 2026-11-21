@@ -5,6 +5,8 @@
 #                                        that; the background is the ribbon's own
 #                                        colour #F1F2F4 so the icon looks transparent)
 #   ../../packaging/icon.png             128 px catalog icon, real alpha
+#   icon_help32.bmp / icon_help16.bmp     C2.1.0: "Help" on the shared tab (same format as the store icons):
+#                                         a round badge in the same gradient with a white question mark
 #
 # Motif: shopping bag in the PDF & eSignature gradient (#00EB86 -> #00A0FB) with
 # a navy handle and a white download arrow. Drawn here (no third-party asset),
@@ -61,6 +63,35 @@ def render(size, badge=False):
     return img.resize((size, size), Image.LANCZOS)
 
 
+def render_help(size):
+    ss = 8
+    S = size * ss
+    img = Image.new('RGBA', (S, S), (0, 0, 0, 0))
+
+    def u(v):
+        return int(round(v * S / 32.0))
+
+    grad = Image.new('RGBA', (S, S))
+    gp = grad.load()
+    for y in range(S):
+        for x in range(S):
+            t = min(1.0, max(0.0, (x * 0.35 + y * 0.65) / S))
+            gp[x, y] = (int(GREEN[0] + (BLUE[0] - GREEN[0]) * t),
+                        int(GREEN[1] + (BLUE[1] - GREEN[1]) * t),
+                        int(GREEN[2] + (BLUE[2] - GREEN[2]) * t), 255)
+    mask = Image.new('L', (S, S), 0)
+    ImageDraw.Draw(mask).ellipse([u(2), u(2), u(30), u(30)], fill=255)
+    img.paste(grad, (0, 0), mask)
+    d = ImageDraw.Draw(img)
+    d.ellipse([u(2), u(2), u(30), u(30)], outline=NAVY + (255,), width=max(1, u(1.6)))
+    w = max(1, u(3.4))
+    # question mark: upper arc, stem, dot
+    d.arc([u(10.5), u(7), u(21.5), u(17.5)], start=200, end=420, fill=WHITE + (255,), width=w)
+    d.line([u(16), u(16.6), u(16), u(20)], fill=WHITE + (255,), width=w)
+    d.ellipse([u(14.1), u(22), u(17.9), u(25.8)], fill=WHITE + (255,))
+    return img.resize((size, size), Image.LANCZOS)
+
+
 def on_ribbon(img):
     bg = Image.new('RGBA', img.size, RIBBON_BG + (255,))
     return Image.alpha_composite(bg, img).convert('RGB')
@@ -71,6 +102,8 @@ if __name__ == '__main__':
     on_ribbon(render(16)).save(os.path.join(HERE, 'icon_store16.bmp'))
     on_ribbon(render(32, True)).save(os.path.join(HERE, 'icon_store32_upd.bmp'))
     on_ribbon(render(16, True)).save(os.path.join(HERE, 'icon_store16_upd.bmp'))
+    on_ribbon(render_help(32)).save(os.path.join(HERE, 'icon_help32.bmp'))
+    on_ribbon(render_help(16)).save(os.path.join(HERE, 'icon_help16.bmp'))
     root = os.path.normpath(os.path.join(HERE, '..', '..'))
     render(128).save(os.path.join(root, 'packaging', 'icon.png'))
     print('icons written')

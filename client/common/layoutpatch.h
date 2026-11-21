@@ -579,6 +579,8 @@ inline int ResetSharedTabOnFreshInstall(const wchar_t* regKey)
     if (RegCreateKeyExW(HKEY_CURRENT_USER, regKey, 0, NULL, 0, KEY_WRITE, NULL, &k, NULL) == ERROR_SUCCESS)
     {
         RegSetValueExW(k, L"TabResetFor", 0, REG_SZ, (const BYTE*)machine, (DWORD)((wcslen(machine) + 1) * sizeof(wchar_t)));
+        // C2.1.0: the cleared groups were not removed by the user; forget them so ApplyButtons adds them again
+        RegDeleteValueW(k, L"LayoutGroups");
         RegCloseKey(k);
     }
     return written;
@@ -594,6 +596,22 @@ inline int ResetSharedTabOnFreshInstall(const wchar_t* regKey)
 // The group is rebuilt from checked atom names, never copied as text, so a
 // layout file cannot place anything else into the user's ribbon.
 struct AddonGroup { std::wstring name; std::vector<std::wstring> buttons; std::vector<std::wstring> modes; std::wstring addon; };
+
+// C2.1.0: the store's own group on the shared tab, "Help" for every installed add-on (central help).
+// It goes through the same path as an add-on's group (so a user who removed it keeps it removed) and
+// stays the last group of the tab.
+static const wchar_t kHelpCenterGroup[] = L"FeaturePack::AddonStoreHelp";
+static const wchar_t* const kHelpCenterButtons[] = { L"FeaturePack::AddonStoreHelp::Open" };
+static const GroupDef kHelpCenterDef = { kHelpCenterGroup, kHelpCenterButtons, 1 };
+inline AddonGroup HelpCenterGroup()
+{
+    AddonGroup g;
+    g.name = kHelpCenterGroup;
+    g.buttons.push_back(kHelpCenterButtons[0]);
+    g.modes.push_back(L"4");
+    g.addon = L"PluginStore";
+    return g;
+}
 
 inline bool IsAtomName(const std::wstring& s)
 {
@@ -770,6 +788,7 @@ inline int ApplyButtons(const std::wstring& pluginsDir = std::wstring(), const w
     std::vector<std::wstring> files;
     CollectLayoutFiles(UserLayoutDir(), files);
     std::vector<AddonGroup> addons = InstalledAddonGroups(pluginsDir);
+    addons.push_back(HelpCenterGroup());   // C2.1.0
     std::wstring known = KnownGroups(regKey);
     const std::wstring knownBefore = known;
     {
@@ -807,6 +826,7 @@ inline int ApplyButtons(const std::wstring& pluginsDir = std::wstring(), const w
         if (EnsureHelpGroup(text)) changed = true;   // C1.7.0
         if (CleanLeftPanel(text)) changed = true;   // never touch the native <Left> bar; strip old entries
         if (EnsureAddonGroups(text, addons)) changed = true;   // C1.9.4: groups the host never merged
+        if (MoveGroupToEnd(text, kHelpCenterDef)) changed = true;   // C2.1.0: "Help" last on the shared tab
         if (!changed) continue;
 
         // One pristine copy from before we ever touched it.

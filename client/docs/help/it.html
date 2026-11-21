@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Add-on Store per Tungsten Power PDF: manuale</title>
+</head>
+<body>
+<h1 id="overview-and-terms">1 Panoramica e termini</h1>
+<p>L’Add-on Store porta le estensioni per Tungsten Power PDF direttamente nel programma. Trovi i componenti aggiuntivi in un catalogo, ne leggi la descrizione, le schermate e le valutazioni e li installi, aggiorni o rimuovi con un clic. Lo store mantiene aggiornati anche sé stesso e i tuoi componenti aggiuntivi e ti avvisa quando è disponibile un aggiornamento di Power PDF.</p>
+<p>Questo manuale descrive il <b>client</b>: il componente aggiuntivo in Power PDF con la finestra dello store. Il sito web dello store e il portale per sviluppatori e amministratori del server dello store sono descritti nel manuale generale dell’Add-on Store.</p>
+<h2 id="overview-and-terms-what-the-add-on-store-does">Cosa fa l’Add-on Store</h2>
+<ul>
+  <li>Mostra il catalogo dei componenti aggiuntivi nella lingua di Power PDF: nome, descrizione, categoria, versione, dimensione, autore, schermate, valutazioni e “Novità della” versione attuale.</li>
+  <li>Installa, aggiorna e rimuove componenti aggiuntivi; ogni modifica richiede un’autorizzazione dell’amministratore.</li>
+  <li>Installa solo pacchetti verificati e firmati: la firma dello store e il checksum (SHA-256) vengono controllati prima di copiare qualsiasi file.</li>
+  <li>Segnala le nuove versioni: un punto sul pulsante della barra multifunzione, la vista <b>Aggiornamenti disponibili</b> e, se vuoi, un avviso unico.</li>
+  <li>Si aggiorna da solo: Power PDF si chiude, viene eseguita la nuova installazione e Power PDF si riavvia.</li>
+  <li>Cerca in base all’esigenza: descrivi ciò che ti serve e lo store propone i componenti aggiuntivi adatti.</li>
+  <li>Sblocca componenti aggiuntivi per la tua organizzazione con un codice cliente fornito dal tuo fornitore di componenti aggiuntivi.</li>
+  <li>Invia problemi e suggerimenti allo sviluppatore di un componente aggiuntivo, con allegati e, se vuoi, il log.</li>
+  <li>Ti permette di valutare i componenti aggiuntivi con le stelle.</li>
+  <li>Riconosce i componenti aggiuntivi bloccati e propone di rimuoverli.</li>
+</ul>
+<h2 id="overview-and-terms-terms">Termini</h2>
+<table>
+  <tr><th>Termine</th><th>Significato</th></tr>
+  <tr><td>Componente aggiuntivo (add-on, plug-in)</td><td>Un’estensione per Power PDF. La maggior parte dei componenti aggiuntivi compare nella scheda <b>Funzioni avanzate</b> con un proprio gruppo.</td></tr>
+  <tr><td>Client</td><td>Il componente aggiuntivo “Add-on Store” in Power PDF, con la scheda <b>Store</b> e la finestra dello store.</td></tr>
+  <tr><td>Server dello store</td><td>Il servizio da cui il client carica il catalogo e i pacchetti. L’impostazione predefinita è <code>https://addon.power-pdf.de</code>.</td></tr>
+  <tr><td>Catalogo</td><td>L’elenco di tutti i componenti aggiuntivi che il server offre a questo computer.</td></tr>
+  <tr><td>Pacchetto</td><td>Il file di un componente aggiuntivo in una determinata versione, firmato dallo store.</td></tr>
+  <tr><td>Beta</td><td>Versioni che hanno superato i controlli automatici ma non sono ancora approvate da un amministratore dello store. Visibili solo con il canale beta attivato.</td></tr>
+  <tr><td>Codice cliente</td><td>Un codice del tuo fornitore di componenti aggiuntivi che sblocca componenti aggiuntivi per la tua organizzazione.</td></tr>
+  <tr><td>Criterio (policy)</td><td>Un valore che il reparto IT imposta nel Registro di sistema sotto HKLM; prevale sulle impostazioni dell’utente.</td></tr>
+</table>
+<h2 id="overview-and-terms-help">Guida</h2>
+<p>L’Add-on Store include una guida comune per tutti i componenti aggiuntivi installati, la finestra “Guida dei componenti aggiuntivi”, in cui puoi cercare in tutti i testi della guida contemporaneamente. La apri così:</p>
+<ul>
+  <li>nella scheda <b>Funzioni avanzate</b> con il pulsante <b>Guida</b> (all’estrema destra, gruppo <b>Guida</b>);</li>
+  <li>nella finestra dello store con <b>Guida</b> in alto a destra o con <b>F1</b>: la guida passa direttamente al capitolo su questa finestra;</li>
+  <li>in ogni componente aggiuntivo con il suo pulsante della guida o con F1: la guida passa al capitolo corrispondente del componente aggiuntivo;</li>
+  <li>nella finestra classica con <b>Guida</b>, nella pagina delle opzioni con la guida di Power PDF.</li>
+</ul>
+<p>A sinistra ci sono i componenti aggiuntivi installati; un clic apre o chiude i loro capitoli. A destra c’è il capitolo scelto, con <b>Indietro</b> e <b>Avanti</b> in basso e <b>Stampa capitolo</b> in alto. Digita una o più parole in <b>Cerca nella guida</b> in alto: i risultati compaiono subito, con componente aggiuntivo, capitolo e un estratto; maiuscole, minuscole e accenti non contano, e devono comparire tutte le parole. Freccia su e freccia giù scelgono un risultato, INVIO lo apre con i termini di ricerca evidenziati, ESC cancella la ricerca. I link a siti web si aprono nel browser. F1 nella finestra della guida mostra questa sezione.</p>
+<p>La guida compare nella lingua di Power PDF se il componente aggiuntivo la fornisce, altrimenti in inglese. La guida dell’Add-on Store è disponibile in inglese, francese, italiano, tedesco, spagnolo e olandese.</p>
+
+<h1 id="requirements-and-installation">2 Requisiti e installazione</h1>
+<h2 id="requirements-and-installation-requirements">Requisiti</h2>
+<ul>
+  <li><b>Tungsten Power PDF Business SaaS</b> (con accesso), versione 2025.3.7 o successiva. In Power PDF 2025 solo l’edizione Business carica componenti aggiuntivi; dalla 2026.4 li carica ogni edizione (Standard, Advanced, Business).</li>
+  <li>L’installazione rifiuta un Power PDF concesso in licenza con un numero di serie; l’Add-on Store è pensato solo per Power PDF con accesso.</li>
+  <li>Windows 10 o 11, x64 o ARM64.</li>
+  <li>Per la finestra moderna dello store, il runtime Microsoft WebView2 (di solito presente in Windows 10 e 11). Senza di esso si apre la finestra classica.</li>
+  <li>Una connessione HTTPS (porta 443) al server dello store, diretta o tramite il proxy di sistema.</li>
+  <li>Per installare, aggiornare e rimuovere componenti aggiuntivi: diritti di amministratore locale (una richiesta per ogni azione).</li>
+</ul>
+<h2 id="requirements-and-installation-installation">Installazione</h2>
+<ol class="steps">
+  <li>Sul sito web dell’Add-on Store scegli <b>Scarica Add-on Store</b>. Ottieni il programma di installazione <code>PluginStore.msi</code>.</li>
+  <li>Chiudi Power PDF e avvia l’installazione. Al primo download Windows SmartScreen può mostrare un avviso; in tal caso scegli <b>Ulteriori informazioni</b> e <b>Esegui comunque</b>.</li>
+  <li>Leggi la licenza, seleziona <b>Accetto la licenza</b> e scegli <b>Installa</b>. Windows chiede una sola volta i diritti di amministratore.</li>
+  <li>Avvia Power PDF. La barra multifunzione mostra la scheda <b>Store</b> con il pulsante <b>Add-on Store</b>.</li>
+</ol>
+<p>L’installazione trova Power PDF da sola (tramite <code>HKLM\SOFTWARE\Kofax\PDF\V1</code>, altrimenti tramite App Paths) e installa nella sua cartella <code>bin\Plug-Ins</code>. Se Power PDF è ancora in esecuzione, l’installazione propone di chiuderlo e di riavviarlo al termine. L’installazione è disponibile in tutte le 21 lingue di Power PDF; Windows sceglie la lingua dell’utente.</p>
+<h2 id="requirements-and-installation-removing-it">Disinstallazione</h2>
+<p>Rimuovi <b>Add-on Store for Tungsten Power PDF</b> in Impostazioni di Windows, App, App installate. L’installazione rimuove solo i file propri dello store; i componenti aggiuntivi che hai installato restano in Power PDF. Se non ti servono più, rimuovili prima nella finestra dello store.</p>
+
+<h1 id="quick-start">3 Avvio rapido</h1>
+<ol class="steps">
+  <li>Nella scheda <b>Store</b> fai clic su <b>Add-on Store</b>. Si apre la finestra dello store.</li>
+  <li>Scorri l’elenco dei componenti aggiuntivi a sinistra oppure digita nel campo <b>Cerca componenti aggiuntivi</b> in alto.</li>
+  <li>Fai clic su un componente aggiuntivo. A destra compaiono la descrizione, le schermate e le valutazioni.</li>
+  <li>Scegli <b>Installa</b> e conferma. Windows chiede una sola volta i diritti di amministratore.</li>
+  <li>Quando ti viene chiesto del riavvio, scegli <b>Riavvia ora</b>. Power PDF carica i componenti aggiuntivi solo all’avvio; prima ti viene proposto di salvare i documenti non salvati.</li>
+</ol>
+<p>Dopo il riavvio il componente aggiuntivo si trova nella scheda <b>Funzioni avanzate</b> (o dove indicato nella sua descrizione).</p>
+
+<h1 id="the-add-on-store-on-the-ribbon">4 L’Add-on Store nella barra multifunzione</h1>
+<table>
+  <tr><th>Posizione</th><th>Pulsante</th><th>Funzione</th></tr>
+  <tr><td>Scheda <b>Store</b>, gruppo <b>Add-on Store</b></td><td><b>Add-on Store</b></td><td>Apre la finestra dello store con tutti i componenti aggiuntivi.</td></tr>
+  <tr><td>Scheda <b>Guida</b> di Power PDF, gruppo <b>Add-on Store</b></td><td><b>Aggiornamenti</b></td><td>Apre la finestra dello store nella vista <b>Aggiornamenti disponibili</b>.</td></tr>
+  <tr><td>Scheda <b>Funzioni avanzate</b>, gruppo <b>Guida</b></td><td><b>Guida</b></td><td>Apre la guida di tutti i componenti aggiuntivi installati, con ricerca (capitolo 1).</td></tr>
+</table>
+<p>Quando ci sono aggiornamenti per l’Add-on Store, per i tuoi componenti aggiuntivi o per Power PDF, entrambi i pulsanti mostrano un punto arancione e la descrizione comando indica il numero, ad esempio “Add-on Store: 2 aggiornamento/i disponibile/i”. La scheda <b>Store</b> segue le schede dei componenti aggiuntivi; <b>Guida</b> resta sempre l’ultima scheda.</p>
+<div class="callout"><b>Nessuna scheda Store?</b> Gli amministratori dello store possono decidere quali modalità di licenza di Power PDF possono usare lo store. Se la tua modalità di licenza non è consentita, il client nasconde il suo pulsante. I componenti aggiuntivi già installati continuano a funzionare.</div>
+
+<h1 id="the-store-window">5 La finestra dello store</h1>
+<p>La finestra si apre in una dimensione adatta (circa 1000 × 680 punti, mai più grande dello schermo) e mostra subito l’ultimo catalogo caricato; quello attuale viene scaricato in background. Finché il primo catalogo non è disponibile, ruota un indicatore di caricamento.</p>
+<h2 id="the-store-window-the-header">L’intestazione</h2>
+<ul>
+  <li><b>Cerca componenti aggiuntivi:</b> il campo di ricerca (capitolo 6).</li>
+  <li><b>Codice cliente:</b> gestisce i codici cliente (capitolo 10). Un segno di spunta indica che un codice è attivo.</li>
+  <li><b>Tutti i componenti aggiuntivi:</b> solo nella vista <b>Aggiornamenti disponibili</b>; torna all’elenco completo.</li>
+  <li><b>Guida:</b> apre la guida al capitolo su questa finestra (anche con F1).</li>
+</ul>
+<h2 id="the-store-window-banners">Barre informative</h2>
+<p>Sotto l’intestazione compaiono, quando necessario, barre colorate per tutta la larghezza della finestra: una nuova versione dell’Add-on Store, un aggiornamento di Power PDF, componenti aggiuntivi bloccati, componenti aggiuntivi di un’installazione precedente di Power PDF, un blocco da parte del reparto IT o un errore di connessione. I capitoli 8 e 11 le spiegano.</p>
+<h2 id="the-store-window-categories-and-author">Categorie e autore</h2>
+<p>Sotto le barre informative ci sono i pulsanti delle categorie: <b>Tutti</b> e uno per ogni categoria. Con un codice cliente attivo, al primo posto c’è il pulsante <b>Per</b> con il nome della tua organizzazione; mostra solo i componenti aggiuntivi forniti a te. Se ci sono componenti aggiuntivi di almeno due autori, puoi sceglierne uno in <b>Autore</b>.</p>
+<h2 id="the-store-window-the-list">L’elenco</h2>
+<p>A sinistra i componenti aggiuntivi compaiono come righe con icona, nome, breve descrizione e stelle. In alto c’è la sezione <b>Installati</b> con il numero dei componenti aggiuntivi installati e, se presenti, <b>Aggiornamenti</b> con il loro numero; sotto, <b>Altri componenti aggiuntivi</b>. Tra quelli installati vengono prima quelli forniti con un codice cliente, poi quelli che hai installato tu, poi quelli non più offerti; in ogni gruppo prima gli aggiornamenti, poi in ordine di nome.</p>
+<table>
+  <tr><th>Etichetta</th><th>Significato</th></tr>
+  <tr><td>Installato</td><td>Il componente aggiuntivo è presente in questa installazione di Power PDF ed è aggiornato.</td></tr>
+  <tr><td>Aggiornamento disponibile</td><td>Il catalogo contiene una versione più recente.</td></tr>
+  <tr><td>Beta</td><td>Una versione beta (solo con il canale beta attivato).</td></tr>
+  <tr><td>Per &lt;organizzazione&gt;</td><td>Fornito con il tuo codice cliente.</td></tr>
+  <tr><td>Non più offerto</td><td>Installato, ma non più presente nel catalogo (capitolo 11).</td></tr>
+</table>
+<p>A destra di ogni riga c’è l’azione corrispondente: <b>Installa</b>, <b>Rimuovi</b> oppure, per un aggiornamento, il pulsante combinato <b>Aggiorna</b>; la sua freccia apre un menu con <b>Aggiorna</b> e <b>Rimuovi</b>.</p>
+<h2 id="the-store-window-the-details">I dettagli</h2>
+<p>A destra, per il componente aggiuntivo scelto: icona, nome, categoria, <b>Versione</b>, dimensione, la versione installata quando è in attesa un aggiornamento, stelle, la descrizione, le schermate (un clic le ingrandisce), <b>Novità della</b> versione, <b>Si connette a</b> (capitolo 11), <b>Autore</b> con indirizzo di contatto (un clic avvia un’e-mail), le azioni, <b>Segnala un problema</b> e <b>La tua valutazione</b>. Sotto c’è la nota che l’installazione e l’aggiornamento richiedono diritti di amministratore.</p>
+<h2 id="the-store-window-the-footer">Il piè di pagina</h2>
+<p>In basso ci sono la breve esclusione di responsabilità, il link <b>Note legali</b> con il testo completo e <b>Segnala un problema con Add-on Store</b>.</p>
+<h2 id="the-store-window-keyboard">Tastiera</h2>
+<table>
+  <tr><th>Tasto</th><th>Funzione</th></tr>
+  <tr><td>F1</td><td>Apre la guida al capitolo su questa finestra.</td></tr>
+  <tr><td>Freccia su, freccia giù</td><td>Seleziona il componente aggiuntivo precedente o successivo nell’elenco.</td></tr>
+  <tr><td>CTRL+F, F3</td><td>Passa al campo di ricerca.</td></tr>
+  <tr><td>INVIO nel campo di ricerca</td><td>Cerca in base all’esigenza (capitolo 6).</td></tr>
+  <tr><td>ESC</td><td>Chiude una finestra di dialogo aperta o termina la ricerca in base all’esigenza.</td></tr>
+  <tr><td>F5</td><td>Ricarica il catalogo.</td></tr>
+</table>
+<h2 id="the-store-window-the-classic-window">La finestra classica</h2>
+<p>Senza il runtime WebView2, oppure quando il reparto IT imposta <code>ClassicUI</code>, si apre una finestra semplice: un elenco con le colonne Plug-in, Disponibile, Installata, Stato, Dimensione, Autore e Contatto, sotto la descrizione e i pulsanti <b>Aggiorna Add-on Store</b>, <b>Note legali</b>, <b>Guida</b>, <b>Aggiorna</b> (ricarica il catalogo), <b>Disinstalla</b>, <b>Installa</b> e <b>Chiudi</b>. Codici cliente, valutazioni, segnalazioni di problemi, la ricerca in base all’esigenza e la vista degli aggiornamenti non sono disponibili in questa finestra.</p>
+
+<h1 id="searching-and-filtering">6 Ricerca e filtri</h1>
+<h2 id="searching-and-filtering-while-typing">Durante la digitazione</h2>
+<p>Ciò che digiti in <b>Cerca componenti aggiuntivi</b> filtra subito l’elenco per nome, descrizione e autore. Maiuscole e minuscole non contano. Categoria e autore si applicano in aggiunta. Se non c’è alcuna corrispondenza, l’elenco mostra “Nessun componente aggiuntivo trovato.”</p>
+<h2 id="searching-and-filtering-search-by-need">Ricerca in base all’esigenza</h2>
+<p>Descrivi con parole tue ciò che ti serve, ad esempio “dividere fatture tramite codice a barre”, e premi <b>INVIO</b> (almeno due caratteri). Il server dello store cerca i componenti aggiuntivi adatti e li ordina; quando l’assistente IA dello store è attivo, ogni risultato riporta una breve motivazione. La barra mostra “Risultati migliori per: …” o “Nessun componente trovato per: …”. <b>Mostra tutti</b>, ESC o continuare a digitare termina la ricerca in base all’esigenza.</p>
+
+<h1 id="install-update-remove">7 Installare, aggiornare, rimuovere</h1>
+<h2 id="install-update-remove-installing">Installazione</h2>
+<ol class="steps">
+  <li>Scegli <b>Installa</b>. Conferma la domanda “Installare ora '…' versione …?” con <b>Installa</b>.</li>
+  <li>Il client scarica il pacchetto, controlla checksum e firma e poi chiede una sola volta i diritti di amministratore. Nel frattempo viene mostrato “Installazione…”.</li>
+  <li>Dopo la copia chiede se riavviare Power PDF. <b>Riavvia ora</b> chiude Power PDF (viene proposto di salvare i documenti non salvati) e lo riavvia; con <b>Più tardi</b> il componente aggiuntivo viene caricato al prossimo avvio.</li>
+</ol>
+<p>Un componente aggiuntivo che richiede una versione più recente di Power PDF mostra “Richiede Power PDF … o successivo” al posto di <b>Installa</b>.</p>
+<h2 id="install-update-remove-updating">Aggiornamento</h2>
+<p>Per un aggiornamento scegli <b>Aggiorna</b>, nell’elenco, nei dettagli o in <b>Aggiornamenti disponibili</b>. Funziona come l’installazione. Lo store offre solo versioni più recenti; una versione precedente non sostituisce mai una versione installata.</p>
+<h2 id="install-update-remove-removing">Rimozione</h2>
+<p>Scegli <b>Rimuovi</b> e conferma “Rimuovere ora '…' da Power PDF?”. Dopo l’autorizzazione dell’amministratore il client elimina il file del componente aggiuntivo, la sua cartella dati e le sue impostazioni utente. Power PDF scarica il componente aggiuntivo al prossimo avvio. Lo store può rimuovere solo i componenti aggiuntivi che ha installato lui stesso (riconoscibili dal file <code>manifest.json</code> nella cartella dati del componente aggiuntivo); in questo modo riconosce anche i componenti aggiuntivi di un’installazione manuale (capitolo 13).</p>
+<h2 id="install-update-remove-what-protects-you">Cosa ti protegge</h2>
+<ul>
+  <li>Viene installato solo ciò che è stato firmato da uno store attendibile, e il checksum SHA-256 deve corrispondere. Entrambi vengono controllati di nuovo prima della copia, in una cartella in cui solo gli amministratori possono scrivere.</li>
+  <li>Il client comunica solo con il server dello store configurato tramite HTTPS (TLS 1.2 o successivo) e non segue alcun reindirizzamento.</li>
+  <li>Il passaggio con diritti di amministratore viene eseguito solo quando installi, aggiorni o rimuovi; tutto il resto viene eseguito con i tuoi diritti normali.</li>
+</ul>
+
+<h1 id="updates">8 Aggiornamenti</h1>
+<h2 id="updates-how-the-store-finds-updates">Come lo store trova gli aggiornamenti</h2>
+<p>Circa 15 secondi dopo l’avvio di Power PDF, e poco dopo la chiusura della finestra dello store, il client legge il catalogo in background. Se trova una versione più recente dell’Add-on Store o di un componente aggiuntivo installato, i pulsanti <b>Add-on Store</b> e <b>Aggiornamenti</b> ricevono un punto arancione. Se l’avviso sugli aggiornamenti di Power PDF è attivo, conta anche un aggiornamento di Power PDF.</p>
+<h2 id="updates-the-view-available-updates">La vista “Aggiornamenti disponibili”</h2>
+<p>Il pulsante <b>Aggiornamenti</b> nella scheda <b>Guida</b> apre la finestra dello store in questa vista. Mostra una scheda per Power PDF, una per l’Add-on Store e una per ogni componente aggiuntivo installato con un aggiornamento, ciascuna con “Installata: …  ·  Nuova: …” e il testo delle “Novità”.</p>
+<ul>
+  <li><b>Aggiorna</b> o <b>Rimuovi</b> per ogni componente aggiuntivo; con più di un aggiornamento <b>Aggiorna tutto</b> (uno dopo l’altro, con una sola domanda di riavvio alla fine).</li>
+  <li><b>Aggiorna Add-on Store</b> nella scheda dello store (sezione seguente).</li>
+  <li><b>Novità</b> e <b>Nascondi</b> nella scheda di Power PDF.</li>
+  <li><b>Tutti i componenti aggiuntivi</b> in alto a destra porta all’elenco completo. Se non c’è nulla da aggiornare, compare “È tutto aggiornato.”</li>
+</ul>
+<h2 id="updates-one-time-notice">Avviso unico</h2>
+<p>Con l’opzione <b>Avvisami una volta per ogni nuovo aggiornamento</b> attivata (impostazione predefinita), Power PDF chiede una sola volta per ogni nuovo aggiornamento: “Sono disponibili aggiornamenti: … Aprire ora l'Add-on Store?”. <b>Sì</b> apre la vista <b>Aggiornamenti disponibili</b>. L’avviso non compare di nuovo per lo stesso aggiornamento. Se è aperta una finestra di dialogo, l’avviso attende che venga chiusa.</p>
+<h2 id="updates-updating-the-add-on-store-itself">Aggiornare l’Add-on Store stesso</h2>
+<p>Quando c’è una nuova versione dello store, in alto compare la barra “È disponibile una nuova versione del Add-on Store: … (installata: …)” con <b>Aggiorna Add-on Store</b>. Il client scarica il pacchetto, controlla checksum e firma e chiede: “Power PDF viene chiuso per l'aggiornamento, …”. Dopo <b>Sì</b> Power PDF si chiude, la nuova installazione viene eseguita con una barra di avanzamento (una richiesta di autorizzazione dell’amministratore) nella lingua di Power PDF e Power PDF si riavvia da solo, anche se l’installazione è stata annullata.</p>
+<h2 id="updates-hint-about-updates-for-power-pdf">Avviso sugli aggiornamenti di Power PDF</h2>
+<p>Quando gli amministratori dello store offrono un aggiornamento per la tua versione di Power PDF, in alto compare “È disponibile un aggiornamento di Power PDF: …”, con <b>Novità</b> (apre nel browser le note di rilascio ufficiali di Tungsten Automation) e <b>Nascondi</b> (fino alla prossima versione più recente). Lo store non può installare Power PDF: “L'aggiornamento viene installato dal reparto IT o da una persona con diritti di amministratore.” L’opzione relativa si trova nella pagina delle opzioni.</p>
+
+<h1 id="what-s-new-ratings-problem-reports">9 Novità, valutazioni, segnalazioni di problemi</h1>
+<h2 id="what-s-new-ratings-problem-reports-what-s-new">Novità</h2>
+<p>Dopo un aggiornamento, eseguito dallo store, dal reparto IT o dall’aggiornamento automatico, la finestra dello store mostra <b>Novità</b> una volta alla successiva apertura: il testo della nuova versione per ogni componente aggiuntivo e per lo store. <b>Ho capito</b> chiude la panoramica. Ciò che hai installato tu stesso nella finestra dello store risulta già visto.</p>
+<h2 id="what-s-new-ratings-problem-reports-ratings">Valutazioni</h2>
+<p>Ogni componente aggiuntivo mostra la media e il numero delle valutazioni. Valuti i componenti aggiuntivi installati in <b>La tua valutazione</b> con da una a cinque stelle; un altro clic modifica la valutazione. Conta una valutazione per installazione. Per i componenti aggiuntivi non installati compare “Installa il componente aggiuntivo per valutarlo.”</p>
+<h2 id="what-s-new-ratings-problem-reports-report-a-problem">Segnalare un problema</h2>
+<ol class="steps">
+  <li>Nei dettagli scegli <b>Segnala un problema</b> (per lo store stesso, <b>Segnala un problema con Add-on Store</b> in basso).</li>
+  <li>Scegli <b>Problema</b> o <b>Commento o suggerimento</b> e descrivi cosa è successo (almeno cinque caratteri, al massimo 4000).</li>
+  <li>Se vuoi, inserisci un indirizzo in <b>E-mail per eventuali domande</b>, seleziona <b>Allega il log delle ultime azioni dello store</b> e aggiungi fino a 3 file con <b>Allega file</b> (PNG, JPEG, PDF, TXT, LOG; al massimo 5 MB ciascuno, 10 MB in totale).</li>
+  <li>Scegli <b>Invia</b>.</li>
+</ol>
+<p>La segnalazione va allo sviluppatore del componente aggiuntivo. Vengono inviate anche le versioni del componente aggiuntivo, di Power PDF e di Windows; nessun documento. Non allegare documenti riservati.</p>
+
+<h1 id="customer-codes">10 Codici cliente</h1>
+<p>Un codice cliente sblocca i componenti aggiuntivi che il tuo fornitore di componenti aggiuntivi fornisce alla tua organizzazione. Ha questo aspetto: <code>XXXX-XXXX-XXXX-XXXX-XXXX</code>.</p>
+<ol class="steps">
+  <li>Nell’intestazione scegli <b>Codice cliente</b>.</li>
+  <li>Inserisci il codice e scegli <b>Aggiungi codice</b>. Lo store lo controlla e mostra, ad esempio, “Codice valido per …: 3 componente/i sbloccato/i.”</li>
+  <li>Scegli <b>Chiudi</b>. I componenti aggiuntivi sbloccati compaiono nell’elenco con l’etichetta “Per …” e sotto il pulsante di categoria <b>Per</b>.</li>
+</ol>
+<p><b>Codici cliente su questo computer</b> elenca ogni codice (abbreviato) con organizzazione, componenti aggiuntivi sbloccati e, se la fornitura è limitata, le installazioni in uso, ad esempio “Installazioni: 3/10”. Sono possibili fino a 10 codici.</p>
+<p><b>Rimuovi codice</b> chiede “Rimuovere il codice cliente di …?”. Anche i componenti aggiuntivi arrivati solo con questo codice vengono rimossi da Power PDF (una conferma dell’amministratore); se la conferma viene rifiutata, il codice resta. Quando il reparto IT imposta i codici tramite criterio, la finestra di dialogo mostra “Il reparto IT gestisce il codice cliente su questo computer.” e non è possibile modificare nulla.</p>
+
+<h1 id="further-notes-in-the-window">11 Altre indicazioni nella finestra</h1>
+<table>
+  <tr><th>Indicazione</th><th>Significato e cosa fare</th></tr>
+  <tr><td>Bloccato da Add-on Store per motivi di sicurezza, rimuovere: …</td><td>Gli amministratori dello store hanno bloccato questa versione. <b>Rimuovi ora</b> la rimuove (autorizzazione dell’amministratore). Il client controlla l’elenco dei blocchi 20 secondi dopo l’avvio e poi ogni 4 ore e chiede una volta per sessione; un blocco resta valido anche se in seguito il server non è raggiungibile.</td></tr>
+  <tr><td>Componenti aggiuntivi di un'installazione precedente di Power PDF (…) mancano in questa: …</td><td>Dopo il passaggio a una nuova versione di Power PDF il client trova componenti aggiuntivi nella vecchia cartella del programma. <b>Installa qui</b> li installa uno dopo l’altro, con una sola domanda di riavvio alla fine. <b>Più tardi</b> nasconde l’indicazione per questi componenti aggiuntivi.</td></tr>
+  <tr><td>Non più offerto</td><td>Il componente aggiuntivo è installato ma non è più presente nel catalogo, ad esempio perché il relativo codice cliente è stato rimosso. Puoi comunque rimuoverlo.</td></tr>
+  <tr><td>Richiede Power PDF … o successivo</td><td>Il componente aggiuntivo richiede una versione più recente di Power PDF. Aggiorna prima Power PDF.</td></tr>
+  <tr><td>Senza pulsanti propri</td><td>Il componente aggiuntivo non ha un proprio pulsante nella barra multifunzione e agisce nelle funzioni di Power PDF; la descrizione indica dove.</td></tr>
+  <tr><td>Si connette a</td><td>I servizi online con cui il componente aggiuntivo scambia dati: <b>Fornitore</b> (con un link al sito web), servizio, indirizzo e cosa <b>Trasmette</b>. Le informazioni provengono dallo sviluppatore e sono state verificate nella revisione. Senza questo riquadro il componente aggiuntivo non si connette ad alcun servizio.</td></tr>
+  <tr><td>L'installazione e la rimozione dei componenti aggiuntivi sono disattivate dall'amministratore.</td><td>Criterio <code>DisableInstall</code>: puoi consultare il catalogo ma non modificare nulla.</td></tr>
+</table>
+
+<h1 id="the-options-page">12 La pagina delle opzioni</h1>
+<p>In <b>File &gt; Opzioni &gt; Add-on Store &gt; Generale</b> si trovano le impostazioni del client. Ciò che il reparto IT imposta tramite criterio vi appare in grigio.</p>
+<table>
+  <tr><th>Impostazione</th><th>Significato</th></tr>
+  <tr><td>URL del server</td><td>Indirizzo del server dello store. Vuoto o predefinito: <code>https://addon.power-pdf.de</code>. È consentito solo <code>https://</code> (per i test <code>http://localhost</code>). Una modifica ha effetto dal successivo avvio di Power PDF.</td></tr>
+  <tr><td>Codici cliente su questo computer</td><td>Mostra il numero dei codici; si gestiscono nella finestra dello store con <b>Codice cliente</b>. Solo senza la finestra moderna dello store qui c’è un campo di immissione per i codici, separati da punto e virgola.</td></tr>
+  <tr><td>Beta: mostra i plug-in non ancora approvati</td><td>Mostra anche le versioni beta. Hanno superato i controlli automatici ma non sono ancora state verificate da un amministratore.</td></tr>
+  <tr><td>Avvisa quando è disponibile un aggiornamento di Power PDF</td><td>Barra e scheda sugli aggiornamenti di Power PDF (impostazione predefinita: attivata).</td></tr>
+  <tr><td>Avvisami una volta per ogni nuovo aggiornamento</td><td>L’avviso unico descritto nel capitolo 8 (impostazione predefinita: attivato).</td></tr>
+  <tr><td>Registrazione dettagliata</td><td>Scrive più dettagli in <code>%TEMP%\PluginStore.log</code>, per la risoluzione dei problemi.</td></tr>
+</table>
+<p>In basso è indicata la versione del client, ad esempio “Client Add-on Store versione 2.1.0”.</p>
+
+<h1 id="links-from-the-website-manual-installation">13 Link dal sito web, installazione manuale</h1>
+<h2 id="links-from-the-website-manual-installation-install-in-power-pdf">“Installa in Power PDF”</h2>
+<p>Sul sito web dello store ogni componente aggiuntivo ha il pulsante <b>Installa in Power PDF</b>. Tramite il link <code>addonstore://</code> apre la finestra dello store con questo componente aggiuntivo e chiede se installarlo; se Power PDF si sta ancora avviando, il client attende che la finestra principale sia pronta. In questo modo un sito web può solo aprire la finestra, mai installare qualcosa da solo. Se il componente aggiuntivo non è nel catalogo, la finestra mostra «Il componente aggiuntivo “…” del sito web non è nel catalogo. Potrebbe essere disponibile solo nel canale beta (Opzioni).»</p>
+<h2 id="links-from-the-website-manual-installation-manual-installation-without-the-client">Installazione manuale senza il client</h2>
+<p>Per i computer senza il client il sito web offre <b>Manuale (ZIP)</b> per ogni componente aggiuntivo pubblico: un file ZIP con <code>install.bat</code>, <code>uninstall.bat</code> e le istruzioni. <code>install.bat</code> controlla firma e checksum, chiede una sola volta i diritti di amministratore e configura il gruppo nella barra multifunzione; <code>/quiet</code> installa senza domande, per la distribuzione software. Un’installazione manuale non riceve aggiornamenti né blocchi di sicurezza. Se in seguito viene installato il client, questo riconosce il componente aggiuntivo e lo mantiene aggiornato. Quando il client rimuove un componente aggiuntivo di questo tipo, elimina anche la sua voce in App installate; quando lo aggiorna, aggiorna la versione mostrata lì.</p>
+
+<h1 id="for-administrators">14 Per gli amministratori</h1>
+<h2 id="for-administrators-deployment">Distribuzione</h2>
+<p>Il pacchetto MSI installa per computer e funziona in modalità invisibile, preferibilmente come passaggio separato subito dopo Power PDF (Intune, SCCM, GPO, script):</p>
+<p><code>msiexec /i PluginStore.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"</code></p>
+<ul>
+  <li>Power PDF deve essere installato prima. Non importa se sia mai stato avviato.</li>
+  <li>L’installazione si rifiuta quando Power PDF manca, è precedente alla 2025.3.7 (controllato con <code>VersionLong</code> in <code>HKLM\SOFTWARE\Kofax\PDF\V1</code>), è un’edizione senza componenti aggiuntivi prima della 2026.4 oppure è concesso in licenza con un numero di serie. Per l’ultimo caso la proprietà <code>ALLOWNONSAAS=1</code> installa comunque.</li>
+  <li>Per forzare una lingua usa <code>TRANSFORMS=:&lt;LCID&gt;</code>, ad esempio <code>TRANSFORMS=:1031</code> per il tedesco.</li>
+  <li>Regola di rilevamento di Intune: il file <code>&lt;bin&gt;\Plug-Ins\PluginStore.zxt</code> con una versione minima (il ProductCode cambia a ogni versione).</li>
+  <li>Una nuova installazione (non un aggiornamento) rimuove una volta per utente i residui di componenti aggiuntivi rimossi dalla scheda <b>Funzioni avanzate</b>; i componenti aggiuntivi installati aggiungono di nuovo i loro gruppi al successivo avvio.</li>
+  <li>Se il reparto IT distribuisce direttamente il pacchetto MSI, <code>DisableSelfUpdate</code> disattiva l’aggiornamento automatico.</li>
+</ul>
+<h2 id="for-administrators-policies">Criteri</h2>
+<p>Tutti i criteri si trovano sotto <code>HKLM\SOFTWARE\Kofax\PDF\Tungsten Power PDF\PluginStore\Policies\Store</code> (visualizzazione a 64 bit; dagli agenti di distribuzione a 32 bit usa <code>reg add … /reg:64</code>). Prevalgono sulle impostazioni dell’utente e bloccano i campi corrispondenti della pagina delle opzioni. I valori DWORD possono essere impostati anche come testo, ad esempio "1" (REG_SZ). Il client li legge all’avvio di Power PDF.</p>
+<table>
+  <tr><th>Valore</th><th>Tipo</th><th>Effetto</th></tr>
+  <tr><td><code>ServerUrl</code></td><td>REG_SZ</td><td>Indirizzo del server dello store, bloccato. Disattiva anche il secondo indirizzo (vedi Rete).</td></tr>
+  <tr><td><code>BetaChannel</code></td><td>DWORD</td><td>1 = mostra le versioni beta, 0 = non mostrarle.</td></tr>
+  <tr><td><code>LockPage</code></td><td>DWORD</td><td>1 = l’intera pagina delle opzioni è di sola lettura.</td></tr>
+  <tr><td><code>ClassicUI</code></td><td>DWORD</td><td>1 = sempre la finestra classica (possibile anche come valore HKCU).</td></tr>
+  <tr><td><code>DisableInstall</code></td><td>DWORD</td><td>1 = solo consultazione: nessuna installazione, aggiornamento o rimozione di componenti aggiuntivi.</td></tr>
+  <tr><td><code>DisableSelfUpdate</code></td><td>DWORD</td><td>1 = nessun aggiornamento automatico dello store; il reparto IT distribuisce le nuove versioni MSI.</td></tr>
+  <tr><td><code>CustomerCode</code></td><td>REG_SZ</td><td>Uno o più codici cliente, separati da punto e virgola; bloccati nella finestra.</td></tr>
+  <tr><td><code>UpdateBadge</code></td><td>DWORD</td><td>0 = nessun controllo degli aggiornamenti in background (nessun punto, nessun avviso).</td></tr>
+  <tr><td><code>UpdateNotice</code></td><td>DWORD</td><td>0 = nessun avviso unico sui nuovi aggiornamenti, 1 = avviso attivato.</td></tr>
+  <tr><td><code>PowerPdfUpdates</code></td><td>DWORD</td><td>0 = nessun avviso sugli aggiornamenti di Power PDF, 1 = avviso attivato.</td></tr>
+  <tr><td><code>TrustedSigningKeys</code></td><td>REG_SZ o REG_MULTI_SZ</td><td>Altre chiavi di firma attendibili (<code>keyId:base64</code>), per una propria istanza dello store.</td></tr>
+  <tr><td><code>AllowUnsigned</code></td><td>DWORD</td><td>1 = controllo della firma disattivato. Solo per server di test.</td></tr>
+  <tr><td><code>Inventory</code></td><td>DWORD</td><td>0 = nessun rapporto giornaliero sull’inventario (vedi Privacy).</td></tr>
+</table>
+<h2 id="for-administrators-storage-locations">Percorsi di archiviazione</h2>
+<table>
+  <tr><th>Posizione</th><th>Contenuto</th></tr>
+  <tr><td><code>&lt;bin&gt;\Plug-Ins\PluginStore.zxt</code></td><td>Il client.</td></tr>
+  <tr><td><code>&lt;bin&gt;\Plug-Ins\PluginStore\</code></td><td>File della barra multifunzione (<code>UILayout</code>), <code>AddonStoreLink.exe</code> per i link <code>addonstore://</code>, la guida propria (<code>docs\help</code>).</td></tr>
+  <tr><td><code>&lt;bin&gt;\Plug-Ins\&lt;Name&gt;.zxt</code>, <code>&lt;bin&gt;\Plug-Ins\&lt;Name&gt;\</code></td><td>Componenti aggiuntivi installati con cartella dati; il file <code>manifest.json</code> al suo interno identifica un componente aggiuntivo dello store e la sua versione, <code>docs\help</code> contiene la sua guida (<code>help.json</code> e un file HTML per ogni lingua).</td></tr>
+  <tr><td><code>HKCU\Software\Kofax\PDF\Tungsten Power PDF\PluginStore</code></td><td>Impostazioni utente: <code>ServerUrl</code>, <code>BetaChannel</code>, <code>ClassicUI</code>, <code>VerboseLog</code>, <code>CustomerCode</code>, <code>CustomerCodeNames</code>, <code>UpdateNotice</code>, <code>PowerPdfUpdateHint</code>, <code>PowerPdfHiddenUpdate</code>, <code>PendingUpdates</code>, <code>NotifiedUpdates</code>, <code>InstallId</code>, <code>StoreAccess</code>, <code>BlockedRules</code>, <code>MigrateDismissed</code>, <code>InventorySent</code>; sottochiavi <code>Ratings</code>, <code>Seen</code>, <code>PendingOpen</code>.</td></tr>
+  <tr><td><code>%LOCALAPPDATA%\Tungsten\AddonStore\</code></td><td><code>cache\catalog.tsv</code> (ultimo catalogo; codici cliente solo come valore di controllo), <code>icons</code>, <code>shots</code> (schermate), <code>WebView2</code> (dati della finestra dello store).</td></tr>
+  <tr><td><code>%APPDATA%\Kofax\PDF\PowerPDF\UILayout\Publish.xml</code></td><td>La barra multifunzione dell’utente; il client aggiunge i gruppi dei componenti aggiuntivi installati e mantiene l’ordine delle schede.</td></tr>
+  <tr><td><code>HKLM\SOFTWARE\Classes\addonstore</code></td><td>Il tipo di link <code>addonstore://</code> (dal pacchetto MSI).</td></tr>
+</table>
+<h2 id="for-administrators-logs">Log</h2>
+<ul>
+  <li><code>%TEMP%\PluginStore.log</code>: log del client e dei suoi passaggi ausiliari (riavvio, aggiornamento automatico, passaggio al secondo indirizzo). Più dettagli con <b>Registrazione dettagliata</b>.</li>
+  <li><code>%WINDIR%\Temp\AddonStoreUpdate-&lt;id&gt;.log</code>: il log MSI di un aggiornamento automatico.</li>
+</ul>
+<h2 id="for-administrators-network">Rete</h2>
+<ul>
+  <li>Basta una regola del firewall: HTTPS (porta 443) verso il server dello store, tramite il proxy di sistema (rilevamento automatico del proxy WinHTTP). TLS 1.2 o successivo, nessun reindirizzamento, nessun altro host, anche se il catalogo ne indicasse uno.</li>
+  <li>Con l’indirizzo predefinito la regola richiede due nomi: <code>addon.power-pdf.de</code> e <code>ppdf-store.azurewebsites.net</code>.</li>
+  <li><b>Secondo indirizzo:</b> quando una richiesta a <code>https://addon.power-pdf.de</code> non riesce (nessuna connessione, errore TLS o di certificato, risposta interrotta, errore HTTP), il client la invia una volta a <code>https://ppdf-store.azurewebsites.net</code>, ma solo dopo che questo host si è identificato come Add-on Store (<code>GET /api/ping</code>). Poi resta su questo indirizzo per la sessione in corso e riprova l’indirizzo principale ogni 10 minuti. Una richiesta POST che potrebbe aver raggiunto il server non viene mai inviata due volte. Questo vale solo con l’indirizzo predefinito, non con <code>ServerUrl</code> o con un altro indirizzo nelle opzioni.</li>
+  <li>Controlli in background: approvazione della licenza 3 secondi dopo l’avvio e ogni 4 ore, elenco dei blocchi dopo 20 secondi e ogni 4 ore, aggiornamenti dopo circa 15 secondi e dopo la chiusura della finestra dello store.</li>
+</ul>
+<h2 id="for-administrators-privacy">Privacy</h2>
+<p>Il client non invia documenti né nomi di utenti o computer. Ogni richiesta trasmette dati tecnici al server dello store:</p>
+<ul>
+  <li>l’identificativo del programma con le versioni del client, di Power PDF e di Windows e l’architettura del processore, ad esempio <code>AddonStore-PowerPDF/2.1.0 (PowerPDF …; Windows …; x64)</code>;</li>
+  <li>la modalità di licenza di Power PDF (<code>cloud</code>, <code>serial</code> o <code>unknown</code>), in modo che lo store possa verificare se è consentito usarlo;</li>
+  <li>solo con un codice cliente: i codici e un ID di installazione casuale di questo utente; il server ne conserva solo un valore di controllo per ogni fornitura.</li>
+</ul>
+<p>Le valutazioni usano lo stesso ID casuale; il server ne conserva solo un valore di controllo per ogni componente aggiuntivo. Le segnalazioni contengono ciò che inserisci e alleghi, oltre alle versioni del componente aggiuntivo, di Power PDF e di Windows.</p>
+<p>Una volta al giorno il client invia un rapporto sull’inventario: l’ID di installazione casuale, il dominio dell’accesso a Power PDF (solo la parte dopo la @, mai l’indirizzo; i domini dei servizi di posta pubblici non vengono inviati), la modalità di licenza, le versioni di Power PDF e del client e i componenti aggiuntivi installati con le loro versioni. Il server lo analizza solo se i suoi amministratori hanno attivato questa analisi. Il criterio <code>Inventory = 0</code> disattiva il rapporto.</p>
+<p>Chiarisci l’utilizzo con il responsabile della protezione dei dati; per i dati sul server vale la dichiarazione del gestore del server dello store.</p>
+<h2 id="for-administrators-security">Sicurezza</h2>
+<ul>
+  <li>Vengono installati solo pacchetti firmati con una chiave attendibile dello store (integrate: la chiave dello store e una chiave di ripristino; altre chiavi solo tramite il criterio <code>TrustedSigningKeys</code>, mai tramite HKCU).</li>
+  <li>Il passaggio con diritti di amministratore avvia Windows PowerShell tramite il suo percorso completo con lo script in memoria. Prima copia il pacchetto in una cartella sotto <code>Plug-Ins</code> in cui solo gli amministratori possono scrivere, lì controlla di nuovo il checksum e solo dopo lo decomprime.</li>
+  <li>La finestra dello store mostra una pagina integrata nel client. Non carica nulla da Internet, non può navigare e comunica con il client solo tramite messaggi; i dati vengono mostrati solo come testo.</li>
+  <li>L’helper per i link <code>AddonStoreLink.exe</code> trasmette solo un ID di componente aggiuntivo verificato; nulla viene installato prima della tua conferma.</li>
+</ul>
+
+<h1 id="all-messages">15 Tutti i messaggi</h1>
+<h2 id="all-messages-in-the-store-window-and-the-classic-window">Nella finestra dello store e nella finestra classica</h2>
+<table>
+  <tr><th>Messaggio</th><th>Significato</th><th>Cosa fare</th></tr>
+  <tr><td>Impossibile raggiungere il server del Add-on Store. Verificare l’URL del server in File &gt; Opzioni &gt; Add-on Store.</td><td>Nessuna connessione al server dello store, oppure era ancora in corso un’altra azione.</td><td>Controlla rete, proxy e URL del server; ricarica con F5.</td></tr>
+  <tr><td>Sul server non sono ancora disponibili plug-in.</td><td>Il catalogo è vuoto.</td><td>Controlla l’URL del server; se previsto, il canale beta o il codice cliente.</td></tr>
+  <tr><td>Nessun componente aggiuntivo trovato.</td><td>Ricerca, categoria o autore non lasciano alcun risultato.</td><td>Cancella la ricerca, scegli <b>Tutti</b>.</td></tr>
+  <tr><td>Installare ora '…' versione …? Windows chiederà una sola volta l’autorizzazione dell’amministratore.</td><td>Domanda prima dell’installazione o dell’aggiornamento.</td><td>Conferma o annulla.</td></tr>
+  <tr><td>Rimuovere ora '…' da Power PDF? Windows chiederà una sola volta l’autorizzazione dell’amministratore.</td><td>Domanda prima della rimozione.</td><td>Conferma o annulla.</td></tr>
+  <tr><td>'…' è installato. Power PDF carica i plug-in all’avvio. Riavviare ora Power PDF?</td><td>Installazione completata.</td><td><b>Riavvia ora</b> o <b>Più tardi</b>.</td></tr>
+  <tr><td>'…' è stato rimosso. Power PDF lo disattiverà al prossimo avvio. Riavviare ora Power PDF?</td><td>Rimozione completata.</td><td><b>Riavvia ora</b> o <b>Più tardi</b>.</td></tr>
+  <tr><td>Installato. Riavviare Power PDF per caricare il plug-in.</td><td>Finestra classica: installazione completata.</td><td>Riavvia Power PDF.</td></tr>
+  <tr><td>Disinstallato. Riavviare Power PDF per disattivare il plug-in.</td><td>Finestra classica: rimozione completata.</td><td>Riavvia Power PDF.</td></tr>
+  <tr><td>Installazione non riuscita (codice …).</td><td>Vedi la tabella dei codici più sotto.</td><td>Dipende dal codice.</td></tr>
+  <tr><td>Il file scaricato non ha superato il controllo di integrità (SHA-256). Installazione annullata.</td><td>Download danneggiato o modificato.</td><td>Riprova; se il problema persiste, segnalalo.</td></tr>
+  <tr><td>Questo componente aggiuntivo non è firmato da un Add-on Store attendibile. Installazione interrotta. …</td><td>Firma mancante o non corrispondente ad alcuna chiave attendibile.</td><td>Controlla l’URL del server; per una propria istanza imposta <code>TrustedSigningKeys</code>.</td></tr>
+  <tr><td>Tutte le installazioni di questo componente aggiuntivo per l'organizzazione sono in uso. …</td><td>La fornitura consente solo un determinato numero di installazioni.</td><td>Rimuovilo da un altro computer o chiedi altre installazioni al fornitore.</td></tr>
+  <tr><td>Impossibile riavviare automaticamente Power PDF. …</td><td>L’helper per il riavvio non è riuscito ad avviarsi.</td><td>Chiudi e riavvia Power PDF manualmente.</td></tr>
+  <tr><td>L'installazione e la rimozione dei componenti aggiuntivi sono disattivate dall'amministratore. È possibile consultare il catalogo.</td><td>Criterio <code>DisableInstall</code>.</td><td>Rivolgiti al reparto IT.</td></tr>
+  <tr><td>È disponibile una nuova versione del Add-on Store: … (installata: …).</td><td>Aggiornamento automatico possibile.</td><td><b>Aggiorna Add-on Store</b>.</td></tr>
+  <tr><td>Power PDF viene chiuso per l'aggiornamento, … Aggiornare ora?</td><td>Domanda prima dell’aggiornamento automatico.</td><td>Salva i documenti, <b>Sì</b>.</td></tr>
+  <tr><td>Il componente aggiuntivo “…” del sito web non è nel catalogo. …</td><td>Un link di un sito web indica un componente aggiuntivo che qui non viene offerto.</td><td>Controlla il canale beta o il codice cliente.</td></tr>
+  <tr><td>Richiede Power PDF … o successivo</td><td>Il componente aggiuntivo richiede un Power PDF più recente.</td><td>Aggiorna Power PDF.</td></tr>
+  <tr><td>Grazie per la valutazione. / Impossibile inviare la valutazione. …</td><td>Esito di una valutazione.</td><td>In caso di errore controlla la connessione e valuta di nuovo.</td></tr>
+  <tr><td>Grazie. La segnalazione è stata inviata allo sviluppatore. / Impossibile inviare la segnalazione.</td><td>Esito di una segnalazione.</td><td>In caso di errore inviala di nuovo più tardi.</td></tr>
+  <tr><td>Troppo grande o non consentito: …</td><td>Allegato oltre 5 MB, oltre 10 MB in totale, più di 3 file o un tipo di file non valido.</td><td>Scegli file più piccoli o diversi.</td></tr>
+  <tr><td>Codice valido per …: … componente/i sbloccato/i. / Codice valido per … . Non è ancora sbloccato alcun componente.</td><td>Codice cliente accettato.</td><td>Nulla.</td></tr>
+  <tr><td>Questo codice cliente non è valido. …</td><td>Lo store non conosce il codice.</td><td>Controlla il codice, chiedi al fornitore.</td></tr>
+  <tr><td>Il codice cliente può contenere solo lettere, cifre e trattini (al massimo 64 caratteri).</td><td>Scrittura errata.</td><td>Correggi il codice.</td></tr>
+  <tr><td>Questo codice è già stato aggiunto. / Al massimo 10 codici cliente. …</td><td>Duplicato o elenco pieno.</td><td>Con l’elenco pieno rimuovi un codice.</td></tr>
+  <tr><td>Il reparto IT gestisce il codice cliente su questo computer.</td><td>Criterio <code>CustomerCode</code>.</td><td>Rivolgiti al reparto IT.</td></tr>
+  <tr><td>Il codice cliente è stato rimosso. / Il codice è stato rimosso, insieme a questi componenti aggiuntivi: … .</td><td>Codice rimosso, eventualmente insieme a componenti aggiuntivi.</td><td>Riavvia Power PDF.</td></tr>
+  <tr><td>Non è stato possibile rimuovere i componenti aggiuntivi (…), quindi il codice è stato mantenuto.</td><td>L’autorizzazione dell’amministratore è stata rifiutata.</td><td>Riprova e concedi l’autorizzazione.</td></tr>
+  <tr><td>… componente/i aggiuntivo/i installato/i. Riavviare ora Power PDF per caricarli?</td><td>Diversi componenti aggiuntivi installati uno dopo l’altro.</td><td><b>Riavvia ora</b>.</td></tr>
+  <tr><td>La guida non è installata. Esegui di nuovo il programma di installazione dell’Add-on Store.</td><td><b>Guida</b> non trova la guida propria dello store.</td><td>Esegui di nuovo l’installazione (Ripara).</td></tr>
+  <tr><td>La guida richiede il runtime Microsoft WebView2. …</td><td>Senza WebView2 la finestra della guida non può aprirsi; i componenti aggiuntivi aprono allora la propria guida nel browser.</td><td>Fai installare il runtime WebView2.</td></tr>
+</table>
+<h2 id="all-messages-when-power-pdf-starts-and-on-the-ribbon">All’avvio di Power PDF e nella barra multifunzione</h2>
+<table>
+  <tr><th>Messaggio</th><th>Significato</th><th>Cosa fare</th></tr>
+  <tr><td>Add-on Store richiede Tungsten Power PDF … o successivo (installato: …). Aggiornare Power PDF.</td><td>Power PDF è troppo vecchio per il client.</td><td>Aggiorna Power PDF.</td></tr>
+  <tr><td>I componenti aggiuntivi richiedono Tungsten Power PDF Business … o successivo, oppure qualsiasi edizione dalla …</td><td>Questa edizione non carica componenti aggiuntivi in questa versione.</td><td>Aggiorna Power PDF o usa Business.</td></tr>
+  <tr><td>Sono disponibili aggiornamenti: … Aprire ora l'Add-on Store?</td><td>Avviso unico sui nuovi aggiornamenti.</td><td><b>Sì</b> apre <b>Aggiornamenti disponibili</b>.</td></tr>
+  <tr><td>Il componente aggiuntivo "…" (versione …) è stato bloccato da Add-on Store per motivi di sicurezza: … Rimuoverlo ora?</td><td>Blocco di sicurezza.</td><td><b>Sì</b> e autorizzazione dell’amministratore.</td></tr>
+  <tr><td>Componenti bloccati rimossi. Riavviare ora Power PDF …?</td><td>Rimozione riuscita.</td><td>Riavvia.</td></tr>
+  <tr><td>Impossibile rimuovere il componente aggiuntivo "…" (errore …). Contatta il reparto IT.</td><td>Rimozione non riuscita.</td><td>Coinvolgi il reparto IT.</td></tr>
+</table>
+<h2 id="all-messages-in-the-setup">Durante l’installazione</h2>
+<table>
+  <tr><th>Messaggio</th><th>Cosa fare</th></tr>
+  <tr><td>Tungsten Power PDF non è stato trovato su questo computer. Installare prima Power PDF.</td><td>Installa Power PDF, poi avvia di nuovo l’installazione.</td></tr>
+  <tr><td>Add-on Store richiede Tungsten Power PDF 2025.3.7 o versione successiva. …</td><td>Aggiorna Power PDF.</td></tr>
+  <tr><td>I componenti aggiuntivi richiedono Tungsten Power PDF Business 2025.3.7 o successivo, oppure qualsiasi edizione (Standard, Advanced, Business) dalla 2026.4. …</td><td>Aggiorna Power PDF.</td></tr>
+  <tr><td>L'Add-on Store è disponibile solo per Tungsten Power PDF con accesso (SaaS). Questo Power PDF è concesso in licenza con un numero di serie.</td><td><b>Richiedi un preventivo</b> apre la pagina delle offerte per Power PDF Business SaaS. Gli amministratori possono installare comunque con <code>ALLOWNONSAAS=1</code>.</td></tr>
+  <tr><td>È già installata una versione più recente di Add-on Store.</td><td>Nulla; la versione installata resta.</td></tr>
+  <tr><td>Programmi in uso: Questi programmi usano file che l'installazione deve sostituire</td><td>Scegli <b>Chiudili ora e riavviali dopo</b>.</td></tr>
+</table>
+<h2 id="all-messages-codes-of-installation-failed">Codici di “Installazione non riuscita”</h2>
+<table>
+  <tr><th>Codice</th><th>Significato</th></tr>
+  <tr><td>1</td><td>Download non riuscito.</td></tr>
+  <tr><td>2</td><td>Il checksum non corrisponde.</td></tr>
+  <tr><td>3</td><td>Autorizzazione dell’amministratore rifiutata o non riuscita.</td></tr>
+  <tr><td>4</td><td>Il passaggio con diritti di amministratore non è riuscito; in caso di rimozione anche: il componente aggiuntivo non è stato installato dallo store.</td></tr>
+  <tr><td>5</td><td>La cartella del programma di Power PDF non è stata trovata.</td></tr>
+  <tr><td>6</td><td>Non firmato da uno store attendibile.</td></tr>
+  <tr><td>7</td><td>Disattivato da un criterio (<code>DisableInstall</code>, per l’aggiornamento automatico <code>DisableSelfUpdate</code>).</td></tr>
+  <tr><td>10</td><td>La versione è bloccata dallo store.</td></tr>
+  <tr><td>11</td><td>Precedente alla versione installata.</td></tr>
+  <tr><td>12</td><td>Il nome appartiene a un altro componente aggiuntivo o allo store stesso.</td></tr>
+  <tr><td>13</td><td>Tutte le installazioni della fornitura sono in uso.</td></tr>
+</table>
+
+<h1 id="troubleshooting">16 Risoluzione dei problemi</h1>
+<table>
+  <tr><th>Problema</th><th>Soluzione</th></tr>
+  <tr><td>Manca la scheda <b>Store</b>.</td><td>Riavvia Power PDF. Verifica che <code>PluginStore.zxt</code> si trovi nella cartella <code>Plug-Ins</code> e che Power PDF Business (prima della 2026.4) sia almeno la versione 2025.3.7. Se la modalità di licenza non è consentita per lo store, il pulsante resta nascosto; chiedi agli amministratori dello store.</td></tr>
+  <tr><td>La finestra resta vuota o mostra “Impossibile raggiungere”.</td><td>Controlla rete e proxy, apri il firewall per <code>addon.power-pdf.de</code> e <code>ppdf-store.azurewebsites.net</code>, verifica l’URL del server nelle opzioni, premi F5. Senza connessione la finestra mostra l’ultimo catalogo caricato.</td></tr>
+  <tr><td>Un componente aggiuntivo installato non è visibile dopo l’installazione.</td><td>Riavvia Power PDF. Se il componente aggiuntivo non ha un pulsante, la sua descrizione indica dove agisce.</td></tr>
+  <tr><td>Windows non chiede i diritti di amministratore, oppure li rifiuta.</td><td>Senza diritti di amministratore non è possibile alcuna installazione; chiedi al reparto IT oppure fai installare il componente aggiuntivo tramite la distribuzione software.</td></tr>
+  <tr><td>Compare la finestra classica.</td><td>Manca il runtime WebView2 oppure è impostato <code>ClassicUI</code>. Installa il runtime WebView2 o rimuovi il valore.</td></tr>
+  <tr><td>Il punto arancione resta anche se tutto sembra aggiornato.</td><td>Conta anche un aggiornamento di Power PDF. Apri il pulsante <b>Aggiornamenti</b>; togli l’aggiornamento di Power PDF con <b>Nascondi</b>.</td></tr>
+  <tr><td>L’aggiornamento automatico non si avvia.</td><td>Lo impedisce il criterio <code>DisableSelfUpdate</code> oppure una licenza di Power PDF con numero di serie. Altrimenti consulta <code>%TEMP%\PluginStore.log</code> e <code>%WINDIR%\Temp\AddonStoreUpdate-*.log</code>.</td></tr>
+  <tr><td>Dopo un aggiornamento di Power PDF mancano componenti aggiuntivi.</td><td>La finestra dello store offre <b>Installa qui</b> per i componenti aggiuntivi dell’installazione precedente.</td></tr>
+  <tr><td>Un componente aggiuntivo non può essere rimosso (codice 4).</td><td>Non è stato installato dallo store (nessun <code>manifest.json</code>). Rimuovilo con il programma di installazione con cui è stato installato.</td></tr>
+  <tr><td>Analizzare un errore più a fondo.</td><td>Attiva <b>Registrazione dettagliata</b>, ripeti l’azione e invia <code>%TEMP%\PluginStore.log</code> con <b>Segnala un problema</b>.</td></tr>
+</table>
+
+<h1 id="frequently-asked-questions">17 Domande frequenti</h1>
+<h3>I componenti aggiuntivi sono prodotti ufficiali di Tungsten Automation?</h3>
+<p>No. Provengono da sviluppatori indipendenti e sono forniti senza garanzia e senza supporto ufficiale; vedi <b>Note legali</b>. Alle domande risponde l’autore indicato nel catalogo.</p>
+<h3>Perché servono i diritti di amministratore?</h3>
+<p>I componenti aggiuntivi si trovano nella cartella del programma di Power PDF sotto Programmi, in cui solo gli amministratori possono scrivere. Per questo lo store chiede l’autorizzazione una volta per ogni azione.</p>
+<h3>Perché Power PDF deve essere riavviato?</h3>
+<p>Power PDF carica i componenti aggiuntivi solo all’avvio e li rilascia solo alla chiusura.</p>
+<h3>Lo store vede i miei documenti?</h3>
+<p>No. Il client non invia documenti; il capitolo 14 elenca tutto ciò che invia.</p>
+<h3>Posso tornare a una versione precedente di un componente aggiuntivo?</h3>
+<p>Lo store non installa versioni precedenti. Rimuovi il componente aggiuntivo e rivolgiti al suo autore.</p>
+<h3>Lo store funziona senza Internet?</h3>
+<p>I componenti aggiuntivi installati continuano a funzionare. La finestra mostra l’ultimo catalogo caricato; installazione e aggiornamento funzionano di nuovo non appena è disponibile una connessione.</p>
+<h3>Come ottengo i componenti aggiuntivi creati per la mia azienda?</h3>
+<p>Con il codice cliente del tuo fornitore (capitolo 10), oppure il reparto IT lo imposta tramite criterio.</p>
+
+<h1 id="limits-and-technical-data">18 Limiti e dati tecnici</h1>
+<table>
+  <tr><th>Proprietà</th><th>Valore</th></tr>
+  <tr><td>Power PDF</td><td>Business dalla 2025.3.7; ogni edizione dalla 2026.4; solo con accesso (SaaS)</td></tr>
+  <tr><td>Windows</td><td>10 e 11, x64 e ARM64</td></tr>
+  <tr><td>Lingue</td><td>21 lingue di Power PDF (finestra, barra multifunzione, installazione); guida propria in 6 lingue</td></tr>
+  <tr><td>Guida dei componenti aggiuntivi</td><td>formato “tungsten-addon-help” versione 1; al massimo 4 MB per file, immagini PNG o JPEG fino a 2 MB; solo elementi consentiti, nessuno script</td></tr>
+  <tr><td>Connessione</td><td>HTTPS, TLS 1.2 o successivo, porta 443, proxy di sistema</td></tr>
+  <tr><td>Codici cliente</td><td>fino a 10, al massimo 64 caratteri ciascuno</td></tr>
+  <tr><td>Segnala un problema</td><td>testo da 5 a 4000 caratteri; fino a 3 allegati, 5 MB ciascuno, 10 MB in totale</td></tr>
+  <tr><td>Controlli</td><td>firma dello store, SHA-256, elenco dei blocchi</td></tr>
+  <tr><td>Finestra dello store</td><td>Microsoft WebView2; senza il runtime la finestra classica</td></tr>
+</table>
+
+<h1 id="version-history">19 Cronologia delle versioni</h1>
+<table>
+  <tr><th>Versione</th><th>Novità</th></tr>
+  <tr><td>2.1.0</td><td>Una guida comune per tutti i componenti aggiuntivi installati, con ricerca: pulsante <b>Guida</b> nella scheda Funzioni avanzate, pulsante della guida e F1 nella finestra dello store e nei componenti aggiuntivi; la guida dello store in sei lingue.</td></tr>
+  <tr><td>2.0.2</td><td>Più stabile: Power PDF non si chiude più con una cartella per i file temporanei molto lunga o in caso di errore nella finestra dello store; note sulle licenze nell’installazione.</td></tr>
+  <tr><td>2.0.1</td><td>Quando lo store rimuove un componente aggiuntivo installato manualmente, viene rimossa anche la sua voce in App installate.</td></tr>
+  <tr><td>2.0.0</td><td>Nuovo aspetto per la finestra dello store, l’installazione e la vista degli aggiornamenti.</td></tr>
+  <tr><td>1.9.17</td><td>Secondo indirizzo dello store quando l’indirizzo principale non è raggiungibile.</td></tr>
+  <tr><td>1.9.16</td><td>Scelta per autore nella finestra dello store.</td></tr>
+  <tr><td>1.9.14</td><td>Con un aggiornamento in attesa, <b>Rimuovi</b> resta raggiungibile tramite il pulsante combinato.</td></tr>
+  <tr><td>1.9.9</td><td><b>Si connette a</b> mostra i servizi online di un componente aggiuntivo.</td></tr>
+  <tr><td>1.9.5, 1.9.6, 1.9.8</td><td>L’installazione verifica Power PDF 2025.3.7, solo per Power PDF con accesso, <b>Richiedi un preventivo</b>.</td></tr>
+  <tr><td>1.9.0, 1.9.1</td><td>Vista <b>Aggiornamenti disponibili</b> e pulsante <b>Aggiornamenti</b> nella scheda Guida.</td></tr>
+  <tr><td>1.7.0</td><td>Avviso unico sui nuovi aggiornamenti.</td></tr>
+  <tr><td>1.6.0</td><td>Avviso sugli aggiornamenti di Power PDF.</td></tr>
+  <tr><td>1.4.1, 1.4.3</td><td>Più codici cliente; componenti aggiuntivi installati in cima all’elenco.</td></tr>
+  <tr><td>1.3.0</td><td>Finestra dello store e installazione in tutte le 21 lingue di Power PDF.</td></tr>
+  <tr><td>1.2.0</td><td>Allegati nelle segnalazioni, segnalazioni sullo store stesso, <b>Novità</b>.</td></tr>
+  <tr><td>1.1.5</td><td>I blocchi di sicurezza raggiungono i componenti aggiuntivi installati.</td></tr>
+  <tr><td>1.1.4</td><td>Ripresa dei componenti aggiuntivi da un’installazione precedente di Power PDF.</td></tr>
+  <tr><td>1.1.0</td><td>Scheda <b>Store</b> dedicata.</td></tr>
+  <tr><td>1.0.0</td><td>Prima edizione completa.</td></tr>
+  <tr><td>0.8.0</td><td>Codice cliente nella finestra dello store, installazione in più lingue.</td></tr>
+  <tr><td>0.7.1</td><td>Vengono installati solo pacchetti firmati.</td></tr>
+  <tr><td>0.6.0</td><td>Punto di aggiornamento nella barra multifunzione, codice cliente, ricerca in base all’esigenza.</td></tr>
+  <tr><td>0.5.0</td><td>Valutazioni, segnalazioni di problemi, schermate.</td></tr>
+  <tr><td>0.4.0</td><td>Finestra moderna dello store.</td></tr>
+</table>
+<p>Add-on Store 2.1.0 · Tungsten Automation · Questo manuale descrive il client per Tungsten Power PDF.</p>
+</body>
+</html>

@@ -14,6 +14,7 @@
 #include "clocale.h"
 #include "hostversion.h"
 #include "blocklist.h"
+#include "helpwin.h"
 #include "Resource.h"
 #include "version.h"
 #include <wrl.h>
@@ -655,6 +656,7 @@ protected:
             { L"ppInstallHint", IDS_PSW_PP_INSTALL_HINT },
             { L"updTitle", IDS_PSW_UPD_TITLE }, { L"updAll", IDS_PSW_UPD_ALL }, { L"updNone", IDS_PSW_UPD_NONE },
             { L"updStore", IDS_PSW_UPD_STORE }, { L"updFromTo", IDS_PSW_UPD_FROMTO },
+            { L"help", IDS_PSW_HELP }, { L"helpMissing", IDS_PSW_HELP_MISSING },   // C2.1.0
         };
         // C1.9.11: the page's language tag (de-DE, zh-CN, ar-SA ...), for the fonts of the UI kit
         wchar_t locName[LOCALE_NAME_MAX_LENGTH] = {};
@@ -1386,6 +1388,14 @@ protected:
             }
             EndDialog(IDOK);
             if (mainWnd && mainWnd != m_hWnd) ::PostMessageW(mainWnd, WM_CLOSE, 0, 0);
+        }
+        else if (cmd == L"help")
+        {
+            // C2.1.0: the central help at the chapter of this view (button or F1); the page names only a
+            // topic of the client's own help.json, the add-on id is fixed here
+            std::wstring topic = Field(json, L"topic", 64);
+            for (wchar_t c : topic) if (!((c >= L'a' && c <= L'z') || (c >= L'0' && c <= L'9') || c == L'-')) { topic.clear(); break; }
+            if (!PSShowHelp(PS_CLIENT_ID, topic)) Send(L"{\"type\":\"helpMissing\"}");
         }
         else if (cmd == L"mail")
         {

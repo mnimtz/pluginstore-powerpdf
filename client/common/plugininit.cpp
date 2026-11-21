@@ -16,9 +16,11 @@
 #include "../store/settings.h"
 #include "../store/link.h"
 #include "logging.h"
+#include "../store/helpwin.h"
 
 void PSRegisterUI(RVToolBar bar);           // store/ribbon.cpp
 void PSRegisterHelpUI();                     // store/ribbon.cpp: "Updates available" on the Help tab (C1.7.0)
+void PSRegisterHelpCenterUI(RVToolBar);      // store/ribbon.cpp: "Help" on the shared tab (C2.1.0)
 void PSSettingsLoad();                      // store/settings.cpp
 void PSRegisterOptionsPage(const char*);    // common/optionspage.cpp
 extern ExtensionID gExtensionID;            // common/pimain.cpp
@@ -72,6 +74,20 @@ DCCB1 DUBool DCCB2 PluginInit()
     DURING PSRegisterUI(bar); HANDLER END_HANDLER
     DURING PSRegisterHelpUI(); HANDLER END_HANDLER
 
+    // ---- C2.1.0: "Help" for all add-ons, own group on the SHARED tab ("FeaturePack") ----
+    DURING
+        DUAtom sharedAtom = DUAtomFromString("FeaturePack");
+        RVToolBar shared = RVFrisbeeGetToolBar(sharedAtom);
+        if (!shared)
+        {
+            DUText t = MakeDUText(FPLoc(IDS_PS_TAB_TITLE).c_str());
+            shared = RVToolBarNew(sharedAtom, t);
+            DUTextDestroy(t);
+            if (shared) RVFrisbeeAddToolBar(shared, kDVToolBarDockTop, false, NULL);
+        }
+        PSRegisterHelpCenterUI(shared);
+    HANDLER END_HANDLER
+
     // ---- Options category + page -------------------------------------------
     // A prefs TYPE with ZERO pages CRASHES Power PDF when the category opens,
     // so register the type AND the page together.
@@ -98,9 +114,19 @@ DCCB1 DUBool DCCB2 PluginUnload()
 {
     DURING fplayout::ApplyButtons(PluginsFolder(), kPSRegKey); HANDLER END_HANDLER
     DURING PSLinkShutdown(); HANDLER END_HANDLER
+    try { PSHelpShutdown(); } catch (...) {}
     return true;
 }
-DCCB1 DUBool DCCB2 PluginExportHFTs()  { return true; }
+// C2.1.0: the central help's HFT "TungstenAddonHelp" (common/addonhelp.h), in the earliest phase:
+// add-ons may look it up while they initialise. Failing to publish it never stops the client.
+DCCB1 DUBool DCCB2 PluginExportHFTs()
+{
+    AFX_MANAGE_MODULE_STATE;
+    bool ok = false;
+    try { ok = PSHelpExportHft(); } catch (...) { ok = false; }
+    if (!ok) FPLogW(L"[Help] HFT TungstenAddonHelp could not be published");
+    return true;
+}
 
 DCCB1 DUBool DCCB2 PluginImportReplaceAndRegister()
 {

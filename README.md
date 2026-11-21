@@ -221,6 +221,23 @@ built with the Power PDF Plugin SDK):
 - A fresh MSI installation (not an update) clears leftovers of removed plugins
   from the shared *Enhanced Features* tab once per user; installed plugins add
   their groups again on their next start.
+- **Central help** (client 2.1.0+): one help window for every installed add-on
+  and the store itself, opened with *Help* (own group `FeaturePack::AddonStoreHelp`,
+  the last group of the shared *Enhanced Features* tab), with *Help*/F1 in the
+  store window, and by add-ons through the HFT `TungstenAddonHelp` version 1
+  (`client/common/addonhelp.h`, selector 1 `ShowHelp(addonId, topic)`, 0 = no help
+  here; the helper `addonhelp_client.h` falls back to the add-on's own HTML in the
+  browser). Sources: `Plug-Ins\<Name>\docs\help\help.json` (format
+  `tungsten-addon-help` version 1, its `addon` must equal the id in the add-on's
+  `manifest.json`) plus `<lang>.html` (UI language, else `en`). Search while typing
+  over all helps (several words, no case, no accents), results with add-on, chapter,
+  excerpt and highlights. Untrusted content: size limits (4 MB per page, 2 MB per
+  picture), no reparse points, an allow list in C++ (`client/store/helpcore.h`) and
+  again in the page, strict CSP; https links open in the default browser, never in
+  the window. The window has no owner, so add-ons may call it from modal dialogs.
+  The client's own help is built from `client/docs/manual/*.src.html` by
+  `python -I client/docs/manual/build_help.py` into `client/docs/help` (installed by
+  the MSI into `Plug-Ins\PluginStore\docs\help`).
 
 End users install it with the MSI from the store's landing page
 (`/download/pluginstore.msi`); afterwards the client offers its own updates.

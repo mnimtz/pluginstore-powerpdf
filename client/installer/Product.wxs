@@ -240,6 +240,32 @@
                 </RegistryKey>
               </RegistryKey>
             </Component>
+            <!-- C2.1.0: the client's own help for the central help (client\docs\help, built by docs\manual\build_help.py) -->
+            <Directory Id="PSDOCSDIR" Name="docs">
+              <Directory Id="HELPDIR" Name="help">
+                <Component Id="cmpHelp_help_json" Guid="{4E0C2B7A-8D13-4C61-9B6E-2F5A7C1D9E01}" Win64="yes">
+                  <File Id="filHelp_help_json" Source="$(var.ProjectDir)\docs\help\help.json" Name="help.json" KeyPath="yes" />
+                </Component>
+                <Component Id="cmpHelp_en_html" Guid="{4E0C2B7A-8D13-4C61-9B6E-2F5A7C1D9E02}" Win64="yes">
+                  <File Id="filHelp_en_html" Source="$(var.ProjectDir)\docs\help\en.html" Name="en.html" KeyPath="yes" />
+                </Component>
+                <Component Id="cmpHelp_de_html" Guid="{4E0C2B7A-8D13-4C61-9B6E-2F5A7C1D9E03}" Win64="yes">
+                  <File Id="filHelp_de_html" Source="$(var.ProjectDir)\docs\help\de.html" Name="de.html" KeyPath="yes" />
+                </Component>
+                <Component Id="cmpHelp_fr_html" Guid="{4E0C2B7A-8D13-4C61-9B6E-2F5A7C1D9E04}" Win64="yes">
+                  <File Id="filHelp_fr_html" Source="$(var.ProjectDir)\docs\help\fr.html" Name="fr.html" KeyPath="yes" />
+                </Component>
+                <Component Id="cmpHelp_it_html" Guid="{4E0C2B7A-8D13-4C61-9B6E-2F5A7C1D9E05}" Win64="yes">
+                  <File Id="filHelp_it_html" Source="$(var.ProjectDir)\docs\help\it.html" Name="it.html" KeyPath="yes" />
+                </Component>
+                <Component Id="cmpHelp_es_html" Guid="{4E0C2B7A-8D13-4C61-9B6E-2F5A7C1D9E06}" Win64="yes">
+                  <File Id="filHelp_es_html" Source="$(var.ProjectDir)\docs\help\es.html" Name="es.html" KeyPath="yes" />
+                </Component>
+                <Component Id="cmpHelp_nl_html" Guid="{4E0C2B7A-8D13-4C61-9B6E-2F5A7C1D9E07}" Win64="yes">
+                  <File Id="filHelp_nl_html" Source="$(var.ProjectDir)\docs\help\nl.html" Name="nl.html" KeyPath="yes" />
+                </Component>
+              </Directory>
+            </Directory>
             <Directory Id="UILAYOUTDIR" Name="UILayout">
               <Component Id="cmpLayout" Guid="{9DF9BE9A-7052-4545-BF1A-AF1ADDD56166}" Win64="yes">
                 <File Id="filNameAndTitle"
@@ -411,6 +437,13 @@
       <ComponentRef Id="cmpJPN" />
       <ComponentRef Id="cmpKOR" />
       <ComponentRef Id="cmpARA" />
+      <ComponentRef Id="cmpHelp_help_json" />
+      <ComponentRef Id="cmpHelp_en_html" />
+      <ComponentRef Id="cmpHelp_de_html" />
+      <ComponentRef Id="cmpHelp_fr_html" />
+      <ComponentRef Id="cmpHelp_it_html" />
+      <ComponentRef Id="cmpHelp_es_html" />
+      <ComponentRef Id="cmpHelp_nl_html" />
     </Feature>
 
     <UIRef Id="TpUI" />

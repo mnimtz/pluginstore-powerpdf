@@ -14,6 +14,7 @@
 #include "RVPanelPagePref.h"
 #include "../store/settings.h"
 #include "../store/webui.h"
+#include "../store/helpwin.h"
 
 extern "C" HINSTANCE gHINSTANCE;
 
@@ -135,7 +136,14 @@ static DUBool PsoUpdate(void* hWnd)
     FPLogSetVerbose(verbose);
     return true;
 }
-static void PsoHelp(void*) {}
+// C2.1.0: Power PDF's Help for this Options page opens the central help at the chapter of this page
+static void PsoHelp(void* hWnd)
+{
+    AFX_MANAGE_MODULE_STATE;
+    HWND h = (HWND)hWnd;
+    if (!PSShowHelp(PS_CLIENT_ID, L"options"))
+        MessageBoxW(h, FPLoc(IDS_PSW_HELP_MISSING).c_str(), FPLoc(IDS_PSO_PAGE).c_str(), MB_OK | MB_ICONINFORMATION);
+}
 
 static RVPrefPageHandlerRec g_psoHandler = { PsoCreate, PsoCheck, PsoUpdate, PsoHelp };
 

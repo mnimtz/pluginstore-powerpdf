@@ -12,6 +12,7 @@
 #include "access.h"
 #include "settings.h"
 #include "Resource.h"
+#include "helpwin.h"
 
 extern "C" HINSTANCE gHINSTANCE;
 
@@ -187,4 +188,44 @@ void PSRegisterUI(RVToolBar bar)
     if (sm) RVToolButtonSetIcon(b, sm, false);
     RVToolGroupButtonAddButton(group, b, false, NULL);
     g_openBtn = b;
+}
+
+// C2.1.0: "Help" for every installed add-on, in its own group at the end of the shared "Enhanced Features" tab.
+// New atoms (FeaturePack::AddonStoreHelp...): the host caches a group's buttons by name, and a new button in an
+// existing group would never appear. layoutpatch.h puts the group into the user's layout (the host never
+// merges a tab it already knows). Visible for every license mode: the help is local.
+static DCCB1 void DCCB2 OnOpenHelp(void* /*data*/)
+{
+    AFX_MANAGE_MODULE_STATE;
+    try { PSShowHelp(std::wstring(), std::wstring()); } catch (...) { FPLogW(L"[Help] opening failed"); }
+}
+
+void PSRegisterHelpCenterUI(RVToolBar shared)
+{
+    AFX_MANAGE_MODULE_STATE;
+    if (!shared) return;
+    DUAtom groupAtom = DUAtomFromString("FeaturePack::AddonStoreHelp");
+    RVToolButton group = RVToolBarGetButtonByName(shared, groupAtom);
+    if (!group)
+    {
+        group = RVToolButtonNew(groupAtom, kBtnGroup);
+        RVToolBarAddButton(shared, group, false, NULL);
+    }
+    if (!group) return;
+    {
+        DUText gl = MakeDUText(FPLoc(IDS_PSW_HELP));
+        RVToolButtonSetLabelText(group, gl, kLabelBottom); DUTextDestroy(gl);
+    }
+    RVToolButton b = RVToolButtonNew(DUAtomFromString("FeaturePack::AddonStoreHelp::Open"), kBtnNormal);
+    if (!b) return;
+    DUText l = MakeDUText(FPLoc(IDS_PSW_HELP));
+    RVToolButtonSetLabelText(b, l, kLabelBottom); DUTextDestroy(l);
+    DUText h = MakeDUText(FPLoc(IDS_PSH_TIP));
+    RVToolButtonSetHelpText(b, h); DUTextDestroy(h);
+    RVToolButtonSetExecuteProc(b, OnOpenHelp, NULL);
+    DVIcon big = RVToolGetIconFromBitmap(gHINSTANCE, MAKEINTRESOURCEW(IDB_HELP));
+    if (big) RVToolButtonSetIcon(b, big, true);
+    DVIcon sm = RVToolGetIconFromBitmap(gHINSTANCE, MAKEINTRESOURCEW(IDB_HELP16));
+    if (sm) RVToolButtonSetIcon(b, sm, false);
+    RVToolGroupButtonAddButton(group, b, false, NULL);
 }
