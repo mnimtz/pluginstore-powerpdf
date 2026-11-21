@@ -213,10 +213,10 @@ ul.findings li, ul.findings .hint { overflow-wrap: anywhere; }
 /* "Recommended": the highlights as a calm row, four at a time, more scroll sideways */
 .rec-row { margin: 0 0 22px; }
 .rec-row h2 { margin: 0 0 10px; font-size: 1.25rem; }
-.rec-list { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, calc((100% - 36px) / 4)); gap: 12px;
-  overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 4px; scrollbar-width: thin; }
+/* S2.3.2: the same grid as the tiles below (same columns and gaps at every width), wrapping instead of scrolling */
+.rec-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
 .rec { display: flex; gap: 12px; align-items: flex-start; padding: 14px 14px 12px; border: 1px solid var(--tun-gray-200); border-radius: 8px;
-  background: #fff; text-decoration: none; color: var(--tun-ink); scroll-snap-align: start; position: relative; overflow: hidden; }
+  background: #fff; text-decoration: none; color: var(--tun-ink); position: relative; overflow: hidden; min-width: 0; }
 .rec::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--tun-accent-pdf); }
 .rec:hover, .rec:focus-visible { border-color: var(--tun-blue); outline: none; box-shadow: 0 4px 14px rgba(0, 40, 84, .08); }
 .rec img { width: 40px; height: 40px; flex: none; border-radius: 8px; object-fit: contain; }
@@ -297,7 +297,6 @@ ul.findings li, ul.findings .hint { overflow-wrap: anywhere; }
 @media (max-width: 760px) {
   .tools-end { margin-inline-start: 0; }
   .search-box { max-width: none; flex-basis: 100%; }
-  .rec-list { grid-auto-columns: 82%; }
   .hero.hero-compact { padding: 22px 18px 18px; }
   .hero.hero-compact h1 { font-size: 1.6rem; }
   .catalog.as-list .list-head { display: none; }

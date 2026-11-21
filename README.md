@@ -627,6 +627,9 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Recommended row on the tile grid (S2.3.2, Nov 21, 2026):** the highlights use the same grid as the tiles below (same
+columns, widths and gaps at every window size) and wrap instead of scrolling sideways.
+
 **List columns aligned at every width (S2.3.1, Nov 21, 2026):** below 1,100 px the button column of the list had an
 automatic width, so rows without the manual ZIP were narrower and every column shifted. All list tracks now have a fixed
 size or a fixed minimum, and the buttons sit in fixed slots (install, share, manual, star); checked at 1,400, 1,180, 968,
