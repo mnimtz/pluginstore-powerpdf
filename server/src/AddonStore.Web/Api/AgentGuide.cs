@@ -383,9 +383,9 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       `files.bin`, x64, with a name of its own and delay-loaded by the .zxt.
       (BIN_INVALID, BIN_FILE_INVALID, BIN_TOO_MANY, BIN_UNDECLARED, BIN_MISSING,
       BIN_NAME_RESERVED, BIN_NAME_TAKEN, BIN_IMPORT_NOT_DELAYED)
-- [ ] `author` (person or team, at most 100 characters) and `contactEmail`
+- [ ] `author` (person or team, at most 100 characters, never the company name alone) and `contactEmail`
       (a reachable support address) are both set. (AUTHOR_MISSING,
-      CONTACT_MISSING, AUTHOR_INVALID, CONTACT_INVALID) Catalog edits (PATCH) carry no
+      CONTACT_MISSING, AUTHOR_INVALID, AUTHOR_COMPANY, CONTACT_INVALID) Catalog edits (PATCH) carry no
       text-direction overrides and no line breaks in name, author or contact.
       (TEXT_CONTROL_CHARS)
 - [ ] `screenshots` (optional): an array of at most 6 `{ "file": "assets/..." }`,
@@ -1919,7 +1919,8 @@ be free of warnings before review. Info is for information only.
 | METADATA_INVALID | error (400/422) | PATCH body is not a JSON object, has unknown fields, or a finding with severity error. |
 | NAME_INVALID | error | Catalog name has no `en` entry, an unknown language code or is too long (upload and PATCH: every entry 1 to 80 characters). |
 | DESCRIPTION_TOO_LONG | error | A catalog description is longer than 2000 characters. |
-| AUTHOR_INVALID | error | The author is longer than 100 characters (manifest or PATCH). |
+| AUTHOR_INVALID | error | The author is longer than 100 characters (manifest or PATCH), or a catalog edit names the company alone ("Tungsten Automation") as author. |
+| AUTHOR_COMPANY | warning | The manifest names the company alone ("Tungsten Automation") as author; the catalog shows the publishing account's name instead (S2.3.3). |
 
 | TEXT_CONTROL_CHARS | error | Name, author, contact or description contain text-direction overrides or line breaks where none are allowed (PATCH). |
 | CONTACT_INVALID | error | The contact email is not a valid address (manifest or PATCH). |

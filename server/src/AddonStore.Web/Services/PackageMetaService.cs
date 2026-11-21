@@ -101,6 +101,9 @@ public class PackageMetaService
         }
         if (c.SetAuthor && c.Author is not null && c.Author.Length > MaxAuthor)
             issues.Add(new("AUTHOR_INVALID", "error", $"The author is longer than {MaxAuthor} characters.", "Use a person's or team's name."));
+        else if (c.SetAuthor && CatalogUi.IsCompanyName(c.Author))   // S2.3.3: the company is not an author
+            issues.Add(new("AUTHOR_INVALID", "error", "The company name alone is not an author.",
+                "Use a person's or team's name, or leave the field empty for the name of the publishing account."));
         if (c.SetContact && !string.IsNullOrEmpty(c.ContactEmail) && !System.Net.Mail.MailAddress.TryCreate(c.ContactEmail, out _))
             issues.Add(new("CONTACT_INVALID", "error", $"'{c.ContactEmail}' is not a valid email address.",
                 "Use a reachable address such as team@example.com, or reset the field to fall back to the publishing account."));
@@ -290,6 +293,7 @@ public class PackageMetaService
             }
             catch (JsonException) { }
         }
+        if (CatalogUi.IsCompanyName(author)) author = "";   // S2.3.3: the company is not offered as the author
         return (Map(pkg.NameJson, "name"), Map(pkg.DescriptionJson, "description"), author, contact);
     }
 }

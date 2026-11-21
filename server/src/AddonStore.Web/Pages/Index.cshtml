@@ -192,7 +192,7 @@ else
                         </div>
                     </div>
                     <span class="desc" title="@item.Description">@item.Description</span>
-                    <span class="meta author">@L["Author"]: @item.Author @if (item.Downloads >= ShowDownloadsFrom) { <text> · @item.Downloads @L["download(s)"]</text> }</span>
+                    <span class="meta author">@if (item.Author.Length > 0) { <text>@L["Author"]: @item.Author</text> }@if (item.Author.Length > 0 && item.Downloads >= ShowDownloadsFrom) { <text> · </text> }@if (item.Downloads >= ShowDownloadsFrom) { <text>@item.Downloads @L["download(s)"]</text> }</span>
                     <span class="pkg-actions">
                         <a class="btn small win-only install" href="addonstore://install/@item.Id"
                            title="@L["Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)."]">@L["Install in Power PDF"]</a>

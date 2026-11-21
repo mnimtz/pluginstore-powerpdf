@@ -627,6 +627,12 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Never the company as author (S2.3.3, Nov 21, 2026):** "Tungsten Automation" alone (with or without a legal suffix) is
+not an author: from a manifest or a catalog entry it counts as "not given" and the catalog shows the publishing account's
+name; an account that hides its name shows no author (it used to be "Tungsten Automation"). Uploads get the warning
+AUTHOR_COMPANY, catalog edits refuse it (AUTHOR_INVALID). Saving the catalog entry form unchanged no longer freezes the
+manifest's author and contact as a catalog entry.
+
 **Recommended row on the tile grid (S2.3.2, Nov 21, 2026):** the highlights use the same grid as the tiles below (same
 columns, widths and gaps at every window size) and wrap instead of scrolling sideways.
 

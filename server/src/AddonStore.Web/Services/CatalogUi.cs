@@ -191,11 +191,20 @@ public static class CatalogUi
         _ => "Withdrawn"
     };
 
-    public const string PlaceholderAuthor = "Tungsten Automation";
+    // S2.3.3: the company is never shown as an author. A manifest, a catalog entry or an old packaging template
+    // that names "Tungsten Automation" (with or without a legal suffix) counts as "no author given", and an owner who
+    // hides their name shows no author at all (it used to be "Tungsten Automation").
+    private static readonly System.Text.RegularExpressions.Regex CompanyOnly = new(
+        @"^\s*tungsten(\s+automation)?\s*[,.]?\s*(corp\.?|corporation|inc\.?|gmbh|ltd\.?|llc)?\s*$",
+        System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant,
+        TimeSpan.FromMilliseconds(100));
 
-    /// <summary>The owner's public name, or the placeholder when they opted out.</summary>
+    /// <summary>The company name alone ("Tungsten Automation", "Tungsten Automation Corp." ...) is not an author.</summary>
+    public static bool IsCompanyName(string? author) => !string.IsNullOrWhiteSpace(author) && CompanyOnly.IsMatch(author);
+
+    /// <summary>The owner's public name, or nothing when they opted out (S2.3.3: no company placeholder).</summary>
     public static string PublicName(AppUser? owner) =>
-        owner is null || !owner.ShowContactPublicly ? PlaceholderAuthor : owner.DisplayName;
+        owner is null || !owner.ShowContactPublicly || IsCompanyName(owner.DisplayName) ? "" : owner.DisplayName;
 
     /// <summary>The owner's public email, or nothing when they opted out.</summary>
     public static string PublicEmail(AppUser? owner) =>
@@ -204,9 +213,9 @@ public static class CatalogUi
     /// <summary>Optional manifest "author" (e.g. a team) wins; otherwise the publishing account.</summary>
     public static string AuthorOf(JsonElement root, string ownerName) =>
         root.TryGetProperty("author", out var a) && a.ValueKind == JsonValueKind.String &&
-        !string.IsNullOrWhiteSpace(a.GetString())
+        !string.IsNullOrWhiteSpace(a.GetString()) && !IsCompanyName(a.GetString())
             ? a.GetString()!.Trim()
-            : ownerName;
+            : IsCompanyName(ownerName) ? "" : ownerName;
 
     /// <summary>Optional manifest "contactEmail" wins; otherwise the publishing account's email.</summary>
     public static string ContactOf(JsonElement root, string ownerEmail)
@@ -221,7 +230,7 @@ public static class CatalogUi
 
     /// <summary>Server-side catalog entry wins over the manifest; see PackageMetaService.</summary>
     public static string EffectiveAuthor(Package? pkg, JsonElement root, string ownerName) =>
-        !string.IsNullOrWhiteSpace(pkg?.Author) ? pkg!.Author!.Trim() : AuthorOf(root, ownerName);
+        !string.IsNullOrWhiteSpace(pkg?.Author) && !IsCompanyName(pkg!.Author) ? pkg!.Author!.Trim() : AuthorOf(root, ownerName);
 
     public static string EffectiveContact(Package? pkg, JsonElement root, string ownerEmail) =>
         !string.IsNullOrWhiteSpace(pkg?.ContactEmail) ? pkg!.ContactEmail!.Trim() : ContactOf(root, ownerEmail);

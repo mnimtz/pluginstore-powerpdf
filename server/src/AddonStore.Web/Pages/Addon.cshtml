@@ -50,7 +50,7 @@ else
                 <div class="meta">
                     <span class="badge live">@item.CategoryName</span>
                     @if (item.Channel == "beta") { <span class="badge beta">Beta</span> }
-                    v@(item.Version) · @L["Author"]: @item.Author
+                    v@(item.Version)@if (item.Author.Length > 0) { <text> · @L["Author"]: @item.Author</text> }
                     @if (!string.IsNullOrEmpty(item.MinHost)) { <text> · Power PDF @item.MinHost+</text> }
                 </div>
                 <p class="addon-desc">@item.Description</p>

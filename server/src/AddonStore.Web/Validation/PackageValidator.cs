@@ -402,6 +402,9 @@ public class PackageValidator
                         "Name the person or team behind the add-on, e.g. \"author\": \"Team Signing\"; it is shown in the catalog and in Power PDF.");
                 else if (author.Length > 100)
                     report.Error("AUTHOR_INVALID", "Manifest field 'author' is longer than 100 characters.", "Use a person's or team's name.");
+                else if (Services.CatalogUi.IsCompanyName(author))   // S2.3.3: the company is never shown as an author
+                    report.Warn("AUTHOR_COMPANY", $"Manifest field 'author' is the company name ('{author}'); the catalog shows the name of the publishing account instead.",
+                        "Name the person or team behind the add-on, e.g. \"author\": \"Team Signing\".");
                 var contact = GetString(root, "contactEmail")?.Trim();
                 if (string.IsNullOrEmpty(contact))
                     report.Error("CONTACT_MISSING", "Manifest field 'contactEmail' is not set.",
@@ -564,7 +567,9 @@ public class PackageValidator
             report.Error("PACKAGE_OWNED_BY_OTHER",
                 package.Visibility == "private"
                     ? $"Package id '{manifest.Id}' is taken."
-                    : $"Package id '{manifest.Id}' belongs to another user ({Services.CatalogUi.PublicName(package.Owner)}).",
+                    : Services.CatalogUi.PublicName(package.Owner) is { Length: > 0 } ownerName
+                        ? $"Package id '{manifest.Id}' belongs to another user ({ownerName})."
+                        : $"Package id '{manifest.Id}' belongs to another user.",
                 "Choose a different package id, or ask an admin to transfer ownership.");
             return;
         }

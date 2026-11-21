@@ -111,6 +111,11 @@ public class CatalogEntryModel : PageModel
             .Select(n => new AddonProvider(((string?)Request.Form[$"prov_name_{n}"] ?? "").Trim(), ((string?)Request.Form[$"prov_web_{n}"] ?? "").Trim()))
             .Where(p => p.Name.Length > 0 || p.Website.Length > 0).ToList();
         var keepManifest = posted.SequenceEqual(Providers);   // nothing changed: the value stays where it comes from
+        // S2.3.3: the form shows the manifest's author and contact when the catalog entry has none; saving them
+        // unchanged must not freeze them as a catalog entry (a later package with another author would be ignored)
+        var (_, _, fromManifestAuthor, fromManifestContact) = PackageMetaService.Current(new Package(), Newest());
+        if (pkg.Author is null && (author ?? "").Trim() == fromManifestAuthor.Trim()) author = null;
+        if (pkg.ContactEmail is null && (contact ?? "").Trim() == fromManifestContact.Trim()) contact = null;
 
         var change = new MetaChange
         {
