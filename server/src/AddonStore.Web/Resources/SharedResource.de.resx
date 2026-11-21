@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>Kacheln</value></data>
   <data name="List" xml:space="preserve"><value>Liste</value></data>
   <data name="View" xml:space="preserve"><value>Ansicht</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>Veröffentlichte Add-ons</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Add-ons unabhängiger Entwicklerinnen und Entwickler, keine offiziellen Produkte der Tungsten Automation: Bereitstellung ohne Mängelgewähr, ohne Gewährleistung und ohne offiziellen Support. Nutzung auf eigene Gefahr; Tungsten Automation übernimmt keine Haftung.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>Add-ons werden direkt in Power PDF über das Add-on-Store-Menüband installiert; diese Website richtet sich an Entwickler und Administratoren.</value></data>
+  <data name="Sort" xml:space="preserve"><value>Sortierung</value></data>
+  <data name="Recommended" xml:space="preserve"><value>Empfohlen</value></data>
+  <data name="Newest first" xml:space="preserve"><value>Neueste</value></data>
+  <data name="Most popular" xml:space="preserve"><value>Beliebteste</value></data>
+  <data name="Best rated" xml:space="preserve"><value>Beste Bewertung</value></data>
+  <data name="A to Z" xml:space="preserve"><value>A bis Z</value></data>
+  <data name="Just released" xml:space="preserve"><value>Neu</value></data>
+  <data name="New version" xml:space="preserve"><value>Neue Version</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Highlights: {0} von {1}. Sie erscheinen in der Reihe „Empfohlen“ über dem Katalog. Mit dem Stern-Knopf an einem Eintrag markieren oder entfernen.</value></data>
 </root>

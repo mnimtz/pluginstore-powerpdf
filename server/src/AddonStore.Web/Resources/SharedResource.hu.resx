@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>Csempék</value></data>
   <data name="List" xml:space="preserve"><value>Lista</value></data>
   <data name="View" xml:space="preserve"><value>Nézet</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>Közzétett bővítmények</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Független szerzők bővítményei, nem a Tungsten Automation hivatalos termékei: adott állapotukban, jótállás és hivatalos támogatás nélkül állnak rendelkezésre. Használatuk saját felelősségre történik; a Tungsten Automation nem vállal felelősséget.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>A bővítmények közvetlenül a Power PDF-ben, az Add-on Store menüszalagon keresztül települnek; ez a webhely fejlesztőknek és rendszergazdáknak szól.</value></data>
+  <data name="Sort" xml:space="preserve"><value>Rendezés</value></data>
+  <data name="Recommended" xml:space="preserve"><value>Ajánlott</value></data>
+  <data name="Newest first" xml:space="preserve"><value>Legújabb</value></data>
+  <data name="Most popular" xml:space="preserve"><value>Legnépszerűbb</value></data>
+  <data name="Best rated" xml:space="preserve"><value>Legjobbra értékelt</value></data>
+  <data name="A to Z" xml:space="preserve"><value>A-tól Z-ig</value></data>
+  <data name="Just released" xml:space="preserve"><value>Új</value></data>
+  <data name="New version" xml:space="preserve"><value>Új verzió</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Kiemeltek: {0} / {1}. Az „Ajánlott” sorban jelennek meg a katalógus felett. Egy bejegyzés csillag gombjával jelölheti meg vagy távolíthatja el őket.</value></data>
 </root>

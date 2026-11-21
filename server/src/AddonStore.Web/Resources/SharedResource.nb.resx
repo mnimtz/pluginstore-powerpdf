@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>Fliser</value></data>
   <data name="List" xml:space="preserve"><value>Liste</value></data>
   <data name="View" xml:space="preserve"><value>Visning</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>Publiserte tillegg</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Tillegg fra uavhengige forfattere, ikke offisielle produkter fra Tungsten Automation: leveres slik de foreligger, uten garanti eller offisiell støtte. Bruk skjer på eget ansvar; Tungsten Automation påtar seg intet ansvar.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>Tillegg installeres direkte i Power PDF via båndet Add-on Store; dette nettstedet er for utviklere og administratorer.</value></data>
+  <data name="Sort" xml:space="preserve"><value>Sortering</value></data>
+  <data name="Recommended" xml:space="preserve"><value>Anbefalt</value></data>
+  <data name="Newest first" xml:space="preserve"><value>Nyeste</value></data>
+  <data name="Most popular" xml:space="preserve"><value>Mest populære</value></data>
+  <data name="Best rated" xml:space="preserve"><value>Best vurdert</value></data>
+  <data name="A to Z" xml:space="preserve"><value>A til Å</value></data>
+  <data name="Just released" xml:space="preserve"><value>Ny</value></data>
+  <data name="New version" xml:space="preserve"><value>Ny versjon</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Fremhevede: {0} av {1}. De vises i raden «Anbefalt» over katalogen. Merk eller fjern dem med stjerneknappen på en oppføring.</value></data>
 </root>

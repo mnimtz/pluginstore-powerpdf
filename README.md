@@ -627,6 +627,14 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Calmer start page (S2.3.0, Nov 21, 2026):** a compact head (title, edition, one sentence, download, key figures in one row);
+highlights in their own "Recommended" row above the catalog (no glow in the catalog any more); tiles open the add-on page
+with a click anywhere, show four lines of text, category and version, and the author without an e-mail address (downloads
+from 100 on). Badges "New" (two weeks after the first release) and "New version" (two weeks after an update). Sorting:
+recommended (highlights, then most downloaded), newest, most popular, best rated, A to Z (`?sort=`). Chips show the number
+of add-ons per category and stay in one row; AI search sits inside the search field. The list is a framed table with one
+line per add-on (48 px) and sortable column heads. "Add-ons" throughout; the disclaimer is one line below the catalog.
+
 **Catalog as tiles or list (S2.2.0, Nov 21, 2026):** a switch next to the search shows the released add-ons as tiles
 (9 a page) or as a compact list (one row each: icon, name, rating, two lines of description, details, buttons; 25, 50
 or 100 rows a page). Search, category chips, author filter and paging work the same in both; the search filters while

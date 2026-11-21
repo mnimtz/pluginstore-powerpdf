@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>Плитки</value></data>
   <data name="List" xml:space="preserve"><value>Список</value></data>
   <data name="View" xml:space="preserve"><value>Вид</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>Выпущенные надстройки</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Надстройки независимых авторов, не являющиеся официальными продуктами Tungsten Automation: предоставляются «как есть», без гарантий и официальной поддержки. Используйте на свой риск; Tungsten Automation не несет ответственности.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>Надстройки устанавливаются прямо в Power PDF через ленту Add-on Store; этот сайт предназначен для разработчиков и администраторов.</value></data>
+  <data name="Sort" xml:space="preserve"><value>Сортировка</value></data>
+  <data name="Recommended" xml:space="preserve"><value>Рекомендуемые</value></data>
+  <data name="Newest first" xml:space="preserve"><value>Новые</value></data>
+  <data name="Most popular" xml:space="preserve"><value>Популярные</value></data>
+  <data name="Best rated" xml:space="preserve"><value>С лучшей оценкой</value></data>
+  <data name="A to Z" xml:space="preserve"><value>По алфавиту</value></data>
+  <data name="Just released" xml:space="preserve"><value>Новинка</value></data>
+  <data name="New version" xml:space="preserve"><value>Новая версия</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Рекомендуемые: {0} из {1}. Они показываются в строке «Рекомендуемые» над каталогом. Отметьте или снимите их кнопкой со звездой у записи.</value></data>
 </root>

@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>Ruudut</value></data>
   <data name="List" xml:space="preserve"><value>Luettelo</value></data>
   <data name="View" xml:space="preserve"><value>Näkymä</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>Julkaistut lisäosat</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Riippumattomien tekijöiden lisäosia, eivät virallisia Tungsten Automation -tuotteita: toimitetaan sellaisenaan, ilman takuuta tai virallista tukea. Käyttö omalla vastuulla; Tungsten Automation ei vastaa niistä.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>Lisäosat asennetaan suoraan Power PDF:ään Add-on Store -valintanauhan kautta; tämä sivusto on tarkoitettu kehittäjille ja ylläpitäjille.</value></data>
+  <data name="Sort" xml:space="preserve"><value>Lajittelu</value></data>
+  <data name="Recommended" xml:space="preserve"><value>Suositellut</value></data>
+  <data name="Newest first" xml:space="preserve"><value>Uusimmat</value></data>
+  <data name="Most popular" xml:space="preserve"><value>Suosituimmat</value></data>
+  <data name="Best rated" xml:space="preserve"><value>Parhaiten arvioidut</value></data>
+  <data name="A to Z" xml:space="preserve"><value>A-Ö</value></data>
+  <data name="Just released" xml:space="preserve"><value>Uusi</value></data>
+  <data name="New version" xml:space="preserve"><value>Uusi versio</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Nostot: {0}/{1}. Ne näkyvät Suositellut-rivillä luettelon yläpuolella. Merkitse tai poista ne kohteen tähtipainikkeella.</value></data>
 </root>

@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>Dlaždice</value></data>
   <data name="List" xml:space="preserve"><value>Seznam</value></data>
   <data name="View" xml:space="preserve"><value>Zobrazení</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>Vydané doplňky</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Doplňky od nezávislých autorů, nikoli oficiální produkty společnosti Tungsten Automation: poskytovány tak, jak jsou, bez záruky a bez oficiální podpory. Používání na vlastní nebezpečí; společnost Tungsten Automation nenese žádnou odpovědnost.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>Doplňky se instalují přímo v Power PDF pomocí pásu karet Add-on Store; tento web je určen vývojářům a správcům.</value></data>
+  <data name="Sort" xml:space="preserve"><value>Řazení</value></data>
+  <data name="Recommended" xml:space="preserve"><value>Doporučené</value></data>
+  <data name="Newest first" xml:space="preserve"><value>Nejnovější</value></data>
+  <data name="Most popular" xml:space="preserve"><value>Nejoblíbenější</value></data>
+  <data name="Best rated" xml:space="preserve"><value>Nejlépe hodnocené</value></data>
+  <data name="A to Z" xml:space="preserve"><value>A až Z</value></data>
+  <data name="Just released" xml:space="preserve"><value>Nové</value></data>
+  <data name="New version" xml:space="preserve"><value>Nová verze</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Zvýrazněné: {0} z {1}. Zobrazují se v řádku „Doporučené“ nad katalogem. Označte je nebo odeberte tlačítkem s hvězdičkou u položky.</value></data>
 </root>

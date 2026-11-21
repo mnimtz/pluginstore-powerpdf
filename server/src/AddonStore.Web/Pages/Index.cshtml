@@ -10,16 +10,23 @@
         "signing" => "Document_Sign_Pen_Signature", "printing" => "Printer", "conversion" => "Document_Arrows_Conversion_Transfer",
         "forms" => "Document_Checklist", "system" => "Gears", "other" => "Puzzle_Integration", _ => null,
     };
+    // S2.3.0: "New" for two weeks after the first release, "New version" for two weeks after an update;
+    // download counts only from a figure that says something
+    var now = DateTime.UtcNow;
+    const int FreshDays = 14, ShowDownloadsFrom = 100;
+    static long Unix(DateTime d) => new DateTimeOffset(DateTime.SpecifyKind(d, DateTimeKind.Utc)).ToUnixTimeSeconds();
+    var featured = Model.Items.Where(i => i.Featured).OrderBy(i => i.FeaturedAt).ToList();
 }
 
-<div class="hero">
+@* S2.3.0: compact head: title, edition, one sentence and the download; the key figures in one slim row *@
+<div class="hero hero-compact">
     <h1>@L["Add-on Store for Tungsten Power PDF SaaS"]</h1>
     <p class="hero-edition">@L["For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)."]</p>
-    <p class="desktop-only">@L["Browse released plugins below. Installation happens directly inside Power PDF via the Add-on Store ribbon; this site is for plugin developers and admins."]</p>
-    <p class="mobile-only">@L["Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF."]</p>
+    <p class="desktop-only hero-lead">@L["Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins."]</p>
+    <p class="mobile-only hero-lead">@L["Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF."]</p>
     @if (Model.ClientDownloadUrl is not null)
     {
-        <div class="desktop-only" style="margin-top:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+        <div class="desktop-only hero-cta">
             <span class="tip" id="dl-tip">
                 <a class="btn cta" id="dl-btn" href="@Model.ClientDownloadUrl" aria-describedby="dl-tip-text">@L["Download"]: Add-on Store @L["for Power PDF"] v@(Model.ClientVersion)</a>
                 <button type="button" class="tip-icon" aria-label="@L["Windows warning?"]" aria-describedby="dl-tip-text">i</button>
@@ -28,7 +35,7 @@
                     @L["The installer is not yet widely known, so Windows may show “Windows protected your PC”. Click “More info”, then “Run anyway”. This happens only once: updates and plug-ins are installed from within Power PDF."]
                 </span>
             </span>
-            <span style="color:var(--tun-on-navy);font-size:.85rem;max-width:460px">@L["Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date."]</span>
+            <span class="hero-cta-note">@L["Download and run the installer (administrator rights required); afterwards the add-on keeps itself and your plugins up to date."]</span>
         </div>
         <script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
             // The Windows warning appears right after the download: show the hint for a while.
@@ -45,59 +52,93 @@
             })();
         </script>
     }
-    <img class="hero-lockup" src="/img/tungsten-power-pdf-lockup-reverse.svg" alt="Tungsten Power PDF" />
-    @* S1.31.0: key figures of the store, all counted, none typed in *@
-    <ul class="hero-facts">
-        <li><b>@Model.Items.Count</b>@L["Add-ons"]</li>
-        <li><b>@AddonStore.Web.Services.Lang.Ui.Length</b>@L["Languages"]</li>
-        <li><b>100 %</b>@L["Every add-on version reviewed"]</li>
-    </ul>
+    <div class="hero-foot">
+        <img class="hero-lockup" src="/img/tungsten-power-pdf-lockup-reverse.svg" alt="Tungsten Power PDF" />
+        @* S1.31.0: key figures of the store, all counted, none typed in *@
+        <ul class="hero-facts">
+            <li><b>@Model.Items.Count</b> @L["Add-ons"]</li>
+            <li><b>@AddonStore.Web.Services.Lang.Ui.Length</b> @L["Languages"]</li>
+            <li><b>100 %</b> @L["Every add-on version reviewed"]</li>
+        </ul>
+    </div>
 </div>
 
-<div class="callout quiet">
-    <span class="desktop-only-inline">@L["Plugins from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability."]</span>
-    <span class="mobile-only-inline">@L["Add-ons from independent authors, without warranty or official support."]</span>
-    <a href="/Disclaimer">@L["Disclaimer"]</a>
-</div>
+@* S2.3.0: highlights as their own calm row; in the catalog below they look like every other entry *@
+@if (featured.Count > 0)
+{
+    <section class="rec-row" aria-labelledby="rec-title">
+        <h2 id="rec-title">@L["Recommended"]</h2>
+        <div class="rec-list">
+            @foreach (var item in featured)
+            {
+                <a class="rec" href="/a/@Model.Slugs[item.Id]">
+                    <img src="/api/packages/@item.Id/icon?v=@Uri.EscapeDataString(item.Version)" alt="" width="40" height="40" loading="lazy" data-fallback="/img/tungsten-power-pdf-icon.svg" />
+                    <span class="rec-body">
+                        <b>@item.Name</b>
+                        <small>@item.CategoryName</small>
+                        <span class="rec-desc">@item.Description</span>
+                    </span>
+                </a>
+            }
+        </div>
+    </section>
+}
 
-<h2>@L["Released plugins"]</h2>
+<h2>@L["Released add-ons"]</h2>
 @if (Model.Items.Count == 0)
 {
     <div class="card">@L["No plugins have been released yet."]</div>
 }
 else
 {
-    <div class="catalog-tools">
-        <input type="search" id="pkg-search" placeholder="@L["Search"]…" aria-label="@L["Search"]" autocomplete="off" aria-controls="pkg-grid" />
-        @* S2.2.0: tiles or a compact list; the same entries, search and filters work in both *@
-        <span class="view-switch" role="group" aria-label="@L["View"]">
-            <button type="button" data-view="tiles" aria-pressed="true" title="@L["Tiles"]"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1.5" /><rect x="9" y="1" width="6" height="6" rx="1.5" /><rect x="1" y="9" width="6" height="6" rx="1.5" /><rect x="9" y="9" width="6" height="6" rx="1.5" /></svg><span>@L["Tiles"]</span></button>
-            <button type="button" data-view="list" aria-pressed="false" title="@L["List"]"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="2" width="14" height="2.4" rx="1.2" /><rect x="1" y="6.8" width="14" height="2.4" rx="1.2" /><rect x="1" y="11.6" width="14" height="2.4" rx="1.2" /></svg><span>@L["List"]</span></button>
-        </span>
-        <span class="muted small pkg-count" id="pkg-count" aria-live="polite"></span>
-        @if (Model.AiSearch)
-        {
-            <button type="button" class="btn small secondary" id="ai-ask" title="@L["Describe what you want to do; AI suggests matching add-ons."]">@L["Ask AI"]</button>
-        }
-        @* S1.28.0: only the add-ons of one author; shown from two authors on, labels from existing texts *@
-        @{ var authors = Model.Items.Select(i => i.Author).Where(a => !string.IsNullOrWhiteSpace(a)).Distinct().OrderBy(a => a, StringComparer.CurrentCultureIgnoreCase).ToList(); }
-        @if (authors.Count > 1)
-        {
-            <label class="author-pick">@L["Author"]
-                <select id="pkg-author">
-                    <option value="">@L["All"]</option>
-                    @foreach (var a in authors)
-                    {
-                        <option value="@a">@a</option>
-                    }
-                </select>
-            </label>
-        }
+    <div class="catalog-tools" id="pkg-tools">
+        <div class="tools-row">
+            <div class="search-box@(Model.AiSearch ? " with-ai" : "")">
+                <input type="search" id="pkg-search" placeholder="@L["Search"]…" aria-label="@L["Search"]" autocomplete="off" aria-controls="pkg-grid" />
+                @if (Model.AiSearch)
+                {
+                    <button type="button" class="ai-in-search" id="ai-ask" title="@L["Describe what you want to do; AI suggests matching add-ons."]">@L["Ask AI"]</button>
+                }
+            </div>
+            <span class="muted small pkg-count" id="pkg-count" aria-live="polite"></span>
+            <span class="tools-end">
+                <label class="tool-pick">@L["Sort"]
+                    <select id="pkg-sort">
+                        <option value="recommended">@L["Recommended"]</option>
+                        <option value="newest">@L["Newest first"]</option>
+                        <option value="popular">@L["Most popular"]</option>
+                        <option value="rating">@L["Best rated"]</option>
+                        <option value="name">@L["A to Z"]</option>
+                    </select>
+                </label>
+                @* S1.28.0: only the add-ons of one author; shown from two authors on, labels from existing texts *@
+                @{ var authors = Model.Items.Select(i => i.Author).Where(a => !string.IsNullOrWhiteSpace(a)).Distinct().OrderBy(a => a, StringComparer.CurrentCultureIgnoreCase).ToList(); }
+                @if (authors.Count > 1)
+                {
+                    <label class="tool-pick">@L["Author"]
+                        <select id="pkg-author">
+                            <option value="">@L["All"]</option>
+                            @foreach (var a in authors)
+                            {
+                                <option value="@a">@a</option>
+                            }
+                        </select>
+                    </label>
+                }
+                @* S2.2.0: tiles or a compact list; the same entries, search and filters work in both *@
+                <span class="view-switch" role="group" aria-label="@L["View"]">
+                    <button type="button" data-view="tiles" aria-pressed="true" title="@L["Tiles"]"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1.5" /><rect x="9" y="1" width="6" height="6" rx="1.5" /><rect x="1" y="9" width="6" height="6" rx="1.5" /><rect x="9" y="9" width="6" height="6" rx="1.5" /></svg><span>@L["Tiles"]</span></button>
+                    <button type="button" data-view="list" aria-pressed="false" title="@L["List"]"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="2" width="14" height="2.4" rx="1.2" /><rect x="1" y="6.8" width="14" height="2.4" rx="1.2" /><rect x="1" y="11.6" width="14" height="2.4" rx="1.2" /></svg><span>@L["List"]</span></button>
+                </span>
+            </span>
+        </div>
+        @* S2.3.0: one row of chips with the number of add-ons per category; scrolls sideways on phones *@
         <div class="chips" id="pkg-chips">
-            <button class="chip active" data-cat=""><img src="/img/icons/Marketplace_Store.svg" alt="" />@L["All"]</button>
-            @foreach (var cat in Model.Items.GroupBy(i => i.Category).Select(g => g.First()).OrderBy(i => i.CategoryName))
+            <button class="chip active" data-cat=""><img src="/img/icons/Marketplace_Store.svg" alt="" />@L["All"] <span class="chip-count">@Model.Items.Count</span></button>
+            @foreach (var g in Model.Items.GroupBy(i => i.Category).OrderBy(g => g.First().CategoryName))
             {
-                <button class="chip" data-cat="@cat.Category">@if (ChipIcon(cat.Category) is { } ic) { <img src="/img/icons/@(ic).svg" alt="" /> }@cat.CategoryName</button>
+                var cat = g.First();
+                <button class="chip" data-cat="@cat.Category">@if (ChipIcon(cat.Category) is { } ic) { <img src="/img/icons/@(ic).svg" alt="" /> }@cat.CategoryName <span class="chip-count">@g.Count()</span></button>
             }
         </div>
     </div>
@@ -109,70 +150,80 @@ else
             <p class="muted small">@L["Suggested by AI from the add-on descriptions; please check the details."]</p>
         </div>
     }
+    @if (Model.IsAdmin)
+    {
+        <p class="muted small" style="margin:0 0 10px">@L["Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry.", Model.HighlightCount, AddonStore.Web.Services.Highlights.Max]</p>
+    }
+    @* the highlight change redirects to #pkg-catalog: its result shows right above the catalog *@
     @if (Model.Notice is not null)
     {
         <div class="alert @(Model.NoticeError ? "error" : "ok")" role="status">@L[Model.Notice]</div>
     }
-    @if (Model.IsAdmin)
-    {
-        <p class="muted small" style="margin:0 0 10px">@L["Highlights: {0} of {1}. Highlighted add-ons come first, on the first page, with a glow. Mark or remove them with the star button on a tile.", Model.HighlightCount, AddonStore.Web.Services.Highlights.Max]</p>
-    }
-    <div class="grid" id="pkg-grid">
-        @foreach (var item in Model.Items)
-        {
-            <div class="card pkg@(item.Featured ? " featured" : "")" data-cat="@item.Category" data-id="@item.Id" data-author="@item.Author"
-                 data-text="@(item.Name.ToLowerInvariant()) @(item.Id) @(item.Description.ToLowerInvariant()) @(item.Author.ToLowerInvariant()) @(item.CategoryName.ToLowerInvariant())">
-                @if (item.Featured)
-                {
-                    <span class="badge highlight"><span aria-hidden="true">★</span> @L["Highlight"]</span>
-                }
-                <div class="pkg-top">
-                    <img class="pkg-icon" src="/api/packages/@item.Id/icon?v=@Uri.EscapeDataString(item.Version)" alt="" width="48" height="48" loading="lazy" data-fallback="/img/tungsten-power-pdf-icon.svg" />
-                    <div>
-                        <span class="name">@item.Name</span>
-                        <partial name="_Stars" model="(item.Rating, item.RatingCount)" />
+    <div class="catalog@(Model.IsAdmin ? " admin" : "")" id="pkg-catalog">
+        @* S2.3.0: column heads of the list (one line per add-on); a click sorts *@
+        <div class="list-head">
+            <span></span>
+            <button type="button" data-sort="name">@L["Name"]</button>
+            <span>@L["Description"]</span>
+            <span>@L["Category"]</span>
+            <button type="button" data-sort="newest">@L["Version"]</button>
+            <button type="button" data-sort="rating">@L["Rating"]</button>
+            <span></span>
+        </div>
+        <div class="grid" id="pkg-grid">
+            @{ var rank = 0; }
+            @foreach (var item in Model.Items)
+            {
+                var isNew = (now - item.FirstReleasedAt).TotalDays <= FreshDays;
+                var isUpdate = !isNew && (now - item.ReleasedAt).TotalDays <= FreshDays;
+                <div class="card pkg" data-cat="@item.Category" data-id="@item.Id" data-author="@item.Author"
+                     data-rank="@(rank++)" data-released="@Unix(item.ReleasedAt)" data-downloads="@item.Downloads"
+                     data-rating="@item.Rating.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)" data-ratings="@item.RatingCount" data-name="@item.Name"
+                     data-text="@(item.Name.ToLowerInvariant()) @(item.Id) @(item.Description.ToLowerInvariant()) @(item.Author.ToLowerInvariant()) @(item.CategoryName.ToLowerInvariant())">
+                    <div class="pkg-top">
+                        <img class="pkg-icon" src="/api/packages/@item.Id/icon?v=@Uri.EscapeDataString(item.Version)" alt="" width="48" height="48" loading="lazy" data-fallback="/img/tungsten-power-pdf-icon.svg" />
+                        <div class="pkg-head">
+                            <a class="name" href="/a/@Model.Slugs[item.Id]">@item.Name @if (isNew) { <span class="badge fresh">@L["Just released"]</span> } else if (isUpdate) { <span class="badge fresh update">@L["New version"]</span> }</a>
+                            <span class="pkg-sub">
+                                <span class="badge live cat">@item.CategoryName</span>
+                                <span class="ver">v@(item.Version)</span>
+                                <partial name="_Stars" model="(item.Rating, item.RatingCount)" />
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <span class="meta">
-                    <span class="badge live" style="font-weight:500">@item.CategoryName</span>
-                    @item.Id · v@(item.Version) · @(item.SizeBytes / 1024) KB · @item.Downloads @L["download(s)"]
-                </span>
-                <span class="desc" title="@item.Description">@item.Description</span>
-                <span class="meta">@L["Author"]: @item.Author
-                    @if (!string.IsNullOrEmpty(item.ContactEmail))
-                    {
-                        <text> · </text><a href="mailto:@item.ContactEmail">@item.ContactEmail</a>
-                    }
-                </span>
-                <span class="pkg-actions">
-                    <a class="btn small win-only" href="addonstore://install/@item.Id"
-                       title="@L["Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)."]">@L["Install in Power PDF"]</a>
-                    <a class="btn small secondary share-link" href="/a/@Model.Slugs[item.Id]"
-                       title="@L["Own page of this add-on with a link to send to customers"]">@L["Share link"]</a>
-                    @if (Model.ManualIds.Contains(item.Id))
-                    {
-                        <a class="btn small secondary manual-link" href="/api/packages/@item.Id/manual" rel="nofollow" download
-                           title="@L["Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates."]"><span class="dl" aria-hidden="true">↓</span>@L["Manual (ZIP)"]</a>
-                    }
-                    @if (Model.IsAdmin)
-                    {
-                        <form method="post" asp-page-handler="Highlight" class="hl-form">
-                            <input type="hidden" name="id" value="@item.Id" />
-                            <input type="hidden" name="on" value="@(item.Featured ? "false" : "true")" />
-                            <button type="submit" class="btn small secondary hl-toggle@(item.Featured ? " on" : "")" aria-pressed="@(item.Featured ? "true" : "false")"
-                                    title="@L[item.Featured ? "Remove highlight" : "Mark as highlight"]"><span aria-hidden="true">★</span> @L[item.Featured ? "Remove highlight" : "Mark as highlight"]</button>
-                        </form>
-                    }
-                    <span class="client-hint" hidden>
-                        @L["Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again."]
-                        @if (Model.ClientDownloadUrl is not null)
+                    <span class="desc" title="@item.Description">@item.Description</span>
+                    <span class="meta author">@L["Author"]: @item.Author @if (item.Downloads >= ShowDownloadsFrom) { <text> · @item.Downloads @L["download(s)"]</text> }</span>
+                    <span class="pkg-actions">
+                        <a class="btn small win-only install" href="addonstore://install/@item.Id"
+                           title="@L["Opens Power PDF with this add-on selected and asks before installing. Requires the Add-on Store for Power PDF (version 0.3.7 or later)."]">@L["Install in Power PDF"]</a>
+                        <a class="btn small secondary share-link" href="/a/@Model.Slugs[item.Id]" aria-label="@L["Share link"]"
+                           title="@L["Own page of this add-on with a link to send to customers"]"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M6.5 9.5a3 3 0 0 0 4.2 0l2.6-2.6a3 3 0 0 0-4.2-4.2l-.9.9M9.5 6.5a3 3 0 0 0-4.2 0L2.7 9.1a3 3 0 0 0 4.2 4.2l.9-.9" /></svg><span class="lbl">@L["Share link"]</span></a>
+                        @if (Model.ManualIds.Contains(item.Id))
                         {
-                            <a href="@Model.ClientDownloadUrl">@L["Download the Add-on Store"]</a>
+                            <a class="btn small secondary manual-link" href="/api/packages/@item.Id/manual" rel="nofollow" download aria-label="@L["Manual (ZIP)"]"
+                               title="@L["Manual installation without the Add-on Store: a ZIP with install.bat and uninstall.bat, also for software distribution. No automatic updates."]"><span class="dl" aria-hidden="true">↓</span><span class="lbl">@L["Manual (ZIP)"]</span></a>
                         }
+                        @if (Model.IsAdmin)
+                        {
+                            <form method="post" asp-page-handler="Highlight" class="hl-form">
+                                <input type="hidden" name="id" value="@item.Id" />
+                                <input type="hidden" name="on" value="@(item.Featured ? "false" : "true")" />
+                                <button type="submit" class="btn small secondary hl-toggle@(item.Featured ? " on" : "")" aria-pressed="@(item.Featured ? "true" : "false")"
+                                        aria-label="@L[item.Featured ? "Remove highlight" : "Mark as highlight"]"
+                                        title="@L[item.Featured ? "Remove highlight" : "Mark as highlight"]"><span aria-hidden="true">★</span><span class="lbl"> @L[item.Featured ? "Remove highlight" : "Mark as highlight"]</span></button>
+                            </form>
+                        }
+                        <span class="client-hint" hidden>
+                            @L["Nothing happened? This button needs the Add-on Store for Power PDF, version 0.3.7 or later, on this computer. Install it once (or update it in the store dialog), then click the button again."]
+                            @if (Model.ClientDownloadUrl is not null)
+                            {
+                                <a href="@Model.ClientDownloadUrl">@L["Download the Add-on Store"]</a>
+                            }
+                        </span>
                     </span>
-                </span>
-            </div>
-        }
+                </div>
+            }
+        </div>
     </div>
     <p class="card muted pkg-empty" id="pkg-empty" hidden>@L["Nothing suitable found."]</p>
     <nav class="pager pkg-pager" id="pkg-pager" aria-label="@L["Pages"]" hidden>
@@ -194,21 +245,24 @@ else
             data-slugs="@System.Text.Json.JsonSerializer.Serialize(Model.Slugs)">
         (function () {
             var D = document.currentScript.dataset;
+            var Q = new URLSearchParams(location.search);
             var search = document.getElementById('pkg-search');
             var chips = document.querySelectorAll('#pkg-chips .chip');
-            var cards = document.querySelectorAll('#pkg-grid .pkg');
+            var grid = document.getElementById('pkg-grid');
+            var catalog = document.getElementById('pkg-catalog');
+            var cards = Array.prototype.slice.call(grid.querySelectorAll('.pkg'));
             var cat = '';
             // S1.28.0: author filter, kept in the address (?author=) like the page
             var authorSel = document.getElementById('pkg-author'), author = '';
             if (authorSel) {
-                var wanted = new URLSearchParams(location.search).get('author') || '';
+                var wanted = Q.get('author') || '';
                 if (Array.prototype.some.call(authorSel.options, function (o) { return o.value === wanted; })) { authorSel.value = wanted; author = wanted; }
                 authorSel.addEventListener('change', function () { author = authorSel.value; apply(); });
             }
             // Without a registered addonstore:// handler the browser does nothing.
             // When Power PDF or the "Open Add-on Store?" prompt appears, the page
             // loses focus; if it keeps focus, show how to get the client.
-            document.querySelectorAll('.pkg-actions a.btn:not(.share-link):not(.manual-link)').forEach(function (a) {
+            document.querySelectorAll('.pkg-actions a.install').forEach(function (a) {
                 a.addEventListener('click', function () {
                     var hint = a.parentNode.querySelector('.client-hint');
                     var left = false;
@@ -226,24 +280,22 @@ else
             // filter runs in the browser, so the paging does too. S1.14.1: 9 tiles a
             // page (3 x 3), numbered pages; the page is kept in the address (?page=),
             // so "back" from an add-on returns to it.
-            var size = 9, page = Math.max(1, parseInt(new URLSearchParams(location.search).get('page'), 10) || 1);
+            var size = 9, page = Math.max(1, parseInt(Q.get('page'), 10) || 1);
             var pager = document.getElementById('pkg-pager');
-            var grid = document.getElementById('pkg-grid');
             var T = JSON.parse(D.t);
             // S2.2.0: view switch. Tiles: 9 a page; list: 25, 50 or 100 rows a page. The view is kept in
             // the address (?view=list) and, for the next visit, in this browser (storage may be blocked).
             var LIST_SIZES = [25, 50, 100], view = 'tiles', listSize = 25;
             function stored(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
             function store(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
-            var wantedView = new URLSearchParams(location.search).get('view') || stored('catalog.view');
-            if (wantedView === 'list') view = 'list';
+            if ((Q.get('view') || stored('catalog.view')) === 'list') view = 'list';
             var s = parseInt(stored('catalog.listSize'), 10);
             if (LIST_SIZES.indexOf(s) >= 0) listSize = s;
             var viewButtons = document.querySelectorAll('.view-switch button');
             var sizeButtons = document.querySelectorAll('#pkg-sizes button');
             function showView() {
                 size = view === 'list' ? listSize : 9;
-                grid.classList.toggle('as-list', view === 'list');
+                catalog.classList.toggle('as-list', view === 'list');
                 viewButtons.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false'); });
                 sizeButtons.forEach(function (b) {
                     var on = +b.dataset.size === listSize;
@@ -272,16 +324,39 @@ else
                 });
             });
             showView();
+            // S2.3.0: sort order (?sort=); "recommended" is the order the server sent
+            var sortSel = document.getElementById('pkg-sort'), sort = 'recommended';
+            var SORTS = {
+                recommended: function (a, b) { return a.dataset.rank - b.dataset.rank; },
+                newest: function (a, b) { return b.dataset.released - a.dataset.released; },
+                popular: function (a, b) { return b.dataset.downloads - a.dataset.downloads; },
+                rating: function (a, b) { return (b.dataset.rating - a.dataset.rating) || (b.dataset.ratings - a.dataset.ratings); },
+                name: function (a, b) { return a.dataset.name.localeCompare(b.dataset.name, document.documentElement.lang || undefined, { sensitivity: 'base' }); }
+            };
+            function sortBy(key) {
+                sort = SORTS[key] ? key : 'recommended';
+                sortSel.value = sort;
+                // stable: ties keep the recommended order
+                cards.sort(function (a, b) { return SORTS[sort](a, b) || (a.dataset.rank - b.dataset.rank); });
+                cards.forEach(function (c) { grid.appendChild(c); });
+                document.querySelectorAll('.list-head [data-sort]').forEach(function (h) { h.classList.toggle('active', h.dataset.sort === sort); });
+            }
+            sortSel.addEventListener('change', function () { sortBy(sortSel.value); apply(); });
+            document.querySelectorAll('.list-head [data-sort]').forEach(function (h) {
+                h.addEventListener('click', function () { sortBy(h.dataset.sort === sort ? 'recommended' : h.dataset.sort); apply(); });
+            });
+            sortBy(Q.get('sort') || 'recommended');
             function remember() {
                 try {
                     var u = new URL(location.href);
                     if (page > 1) u.searchParams.set('page', page); else u.searchParams.delete('page');
                     if (author) u.searchParams.set('author', author); else u.searchParams.delete('author');
                     if (view === 'list') u.searchParams.set('view', 'list'); else u.searchParams.delete('view');
+                    if (sort !== 'recommended') u.searchParams.set('sort', sort); else u.searchParams.delete('sort');
                     history.replaceState(history.state, '', u.pathname + u.search + u.hash);
                 } catch (e) { }
             }
-            function go(n) { page = n; apply(true); grid.scrollIntoView({ block: 'start' }); }
+            function go(n) { page = n; apply(true); catalog.scrollIntoView({ block: 'start' }); }
             // 1 2 3 ... with a window around the current page on long lists: 1 ... 4 5 6 ... 12
             function numbers(pages) {
                 var box = document.getElementById('pkg-nums'); box.textContent = '';
@@ -322,6 +397,7 @@ else
                 var filtered = words.length > 0 || !!cat || !!author;
                 countEl.textContent = !filtered ? '' : hits.length === 1 ? '1 ' + T.one : fmt(T.count, hits.length);
                 empty.hidden = hits.length > 0;
+                catalog.hidden = hits.length === 0;
                 // the list keeps its pager (with the row choice) from more rows than its smallest page size on
                 pager.hidden = hits.length <= (view === 'list' ? LIST_SIZES[0] : size);
                 document.getElementById('pkg-sizes').hidden = view !== 'list';
@@ -375,3 +451,10 @@ else
         })();
     </script>
 }
+
+@* S2.3.0: the disclaimer as one quiet line below the catalog *@
+<p class="catalog-note">
+    <span class="desktop-only-inline">@L["Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability."]</span>
+    <span class="mobile-only-inline">@L["Add-ons from independent authors, without warranty or official support."]</span>
+    <a href="/Disclaimer">@L["Disclaimer"]</a>
+</p>

@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>磚塊</value></data>
   <data name="List" xml:space="preserve"><value>清單</value></data>
   <data name="View" xml:space="preserve"><value>檢視</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>已發行的增益集</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>增益集來自獨立作者，並非 Tungsten Automation 官方產品：依「現狀」提供，不提供保固或官方支援。使用風險自負；Tungsten Automation 不承擔任何責任。</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>增益集直接在 Power PDF 中透過 Add-on Store 功能區安裝；本網站適用於開發人員和管理員。</value></data>
+  <data name="Sort" xml:space="preserve"><value>排序</value></data>
+  <data name="Recommended" xml:space="preserve"><value>推薦</value></data>
+  <data name="Newest first" xml:space="preserve"><value>最新</value></data>
+  <data name="Most popular" xml:space="preserve"><value>最受歡迎</value></data>
+  <data name="Best rated" xml:space="preserve"><value>評分最高</value></data>
+  <data name="A to Z" xml:space="preserve"><value>依名稱</value></data>
+  <data name="Just released" xml:space="preserve"><value>新</value></data>
+  <data name="New version" xml:space="preserve"><value>新版本</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>精選：{0}/{1}。它們會顯示在目錄上方的「推薦」列中。使用項目上的星形按鈕標記或取消。</value></data>
 </root>

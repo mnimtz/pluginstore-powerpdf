@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>Mosaico</value></data>
   <data name="List" xml:space="preserve"><value>Lista</value></data>
   <data name="View" xml:space="preserve"><value>Vista</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>Complementos publicados</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Complementos de autores independientes, que no son productos oficiales de Tungsten Automation: se proporcionan tal cual, sin garantía ni soporte oficial. Úselos bajo su propia responsabilidad; Tungsten Automation no asume ninguna responsabilidad.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>Los complementos se instalan directamente en Power PDF desde la cinta Add-on Store; este sitio está dirigido a desarrolladores y administradores.</value></data>
+  <data name="Sort" xml:space="preserve"><value>Ordenar</value></data>
+  <data name="Recommended" xml:space="preserve"><value>Recomendados</value></data>
+  <data name="Newest first" xml:space="preserve"><value>Más recientes</value></data>
+  <data name="Most popular" xml:space="preserve"><value>Más populares</value></data>
+  <data name="Best rated" xml:space="preserve"><value>Mejor valorados</value></data>
+  <data name="A to Z" xml:space="preserve"><value>A a Z</value></data>
+  <data name="Just released" xml:space="preserve"><value>Nuevo</value></data>
+  <data name="New version" xml:space="preserve"><value>Nueva versión</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Destacados: {0} de {1}. Aparecen en la fila «Recomendados» sobre el catálogo. Márquelos o quítelos con el botón de estrella de una entrada.</value></data>
 </root>

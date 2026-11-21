@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>Blocos</value></data>
   <data name="List" xml:space="preserve"><value>Lista</value></data>
   <data name="View" xml:space="preserve"><value>Exibição</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>Complementos publicados</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Complementos de autores independentes, que não são produtos oficiais da Tungsten Automation: fornecidos no estado em que se encontram, sem garantia nem suporte oficial. Utilização por sua conta e risco; a Tungsten Automation não assume qualquer responsabilidade.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>Os complementos são instalados diretamente no Power PDF pela faixa de opções Add-on Store; este site destina-se a desenvolvedores e administradores.</value></data>
+  <data name="Sort" xml:space="preserve"><value>Ordenar</value></data>
+  <data name="Recommended" xml:space="preserve"><value>Recomendados</value></data>
+  <data name="Newest first" xml:space="preserve"><value>Mais recentes</value></data>
+  <data name="Most popular" xml:space="preserve"><value>Mais populares</value></data>
+  <data name="Best rated" xml:space="preserve"><value>Mais bem avaliados</value></data>
+  <data name="A to Z" xml:space="preserve"><value>A a Z</value></data>
+  <data name="Just released" xml:space="preserve"><value>Novo</value></data>
+  <data name="New version" xml:space="preserve"><value>Nova versão</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Destaques: {0} de {1}. Aparecem na linha "Recomendados" acima do catálogo. Marque ou remova com o botão de estrela de uma entrada.</value></data>
 </root>

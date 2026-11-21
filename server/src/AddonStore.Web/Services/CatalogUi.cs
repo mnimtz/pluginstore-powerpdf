@@ -24,6 +24,10 @@ public record CatalogItem(string Id, string Name, string Description, string Ver
     public bool Featured => FeaturedAt is not null;
     /// <summary>"Connects to" (S1.19.0): providers and the declared services of the shown version.</summary>
     public Connections Connections { get; init; } = Connections.None;
+    /// <summary>S2.3.0: when the shown version was released (review date, else upload date).</summary>
+    public DateTime ReleasedAt { get; init; }
+    /// <summary>S2.3.0: when the add-on first appeared in the catalog (earliest released version), for the "New" badge.</summary>
+    public DateTime FirstReleasedAt { get; init; }
 }
 
 public static class CatalogUi
@@ -83,6 +87,8 @@ public static class CatalogUi
             NoUi = IsNoUi(doc.RootElement),
             FeaturedAt = pkg?.Visibility == "private" ? null : pkg?.FeaturedAt,
             Connections = Connections.From(pkg?.ProvidersJson, doc.RootElement),
+            ReleasedAt = pick.ReviewedAt ?? pick.SubmittedAt,
+            FirstReleasedAt = pick.ReviewedAt ?? pick.SubmittedAt,
         };
     }
 
@@ -147,7 +153,11 @@ public static class CatalogUi
     {
         // S2.0.6: the light rows from memory (LightVersions), only the package visibility from the database
         var publicIds = (await db.Packages.AsNoTracking().Where(p => p.Visibility != "private").Select(p => p.Id).ToListAsync()).ToHashSet();
-        var all = (await AddonStore.Web.Data.LightVersions.AllAsync(db))
+        var every = await AddonStore.Web.Data.LightVersions.AllAsync(db);
+        // S2.3.0: first release per add-on: the earliest reviewed version that was ever approved (withdrawn ones count)
+        var first = every.Where(v => v.ReviewedAt is not null && v.Status is VersionStatus.Live or VersionStatus.Beta or VersionStatus.Withdrawn)
+            .GroupBy(v => v.PackageId).ToDictionary(g => g.Key, g => g.Min(v => v.ReviewedAt!.Value));
+        var all = every
             .Where(v => (v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta)) && publicIds.Contains(v.PackageId))
             .Where(v => binOk || !HasBin(v)).ToList();   // an older client gets the newest version it can install
         var cmp = new SemVerComparer();
@@ -164,7 +174,9 @@ public static class CatalogUi
                 pick = beta; channel = "beta";
             }
             if (pick is null) continue;
-            items.Add(Item(ctx, pick, channel, culture));
+            var item = Item(ctx, pick, channel, culture);
+            if (first.TryGetValue(pick.PackageId, out var f) && f < item.FirstReleasedAt) item = item with { FirstReleasedAt = f };
+            items.Add(item);
         }
         return items;
     }

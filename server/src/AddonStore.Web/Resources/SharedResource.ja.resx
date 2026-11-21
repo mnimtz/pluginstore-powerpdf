@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>タイル</value></data>
   <data name="List" xml:space="preserve"><value>リスト</value></data>
   <data name="View" xml:space="preserve"><value>表示</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>リリース済みアドイン</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>独立した作成者によるアドインであり、Tungsten Automation の公式製品ではありません。現状のまま提供され、保証や公式サポートはありません。ご自身の責任でご使用ください。Tungsten Automation は一切責任を負いません。</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>アドインは Power PDF の Add-on Store リボンから直接インストールします。このサイトは開発者と管理者向けです。</value></data>
+  <data name="Sort" xml:space="preserve"><value>並べ替え</value></data>
+  <data name="Recommended" xml:space="preserve"><value>おすすめ</value></data>
+  <data name="Newest first" xml:space="preserve"><value>新しい順</value></data>
+  <data name="Most popular" xml:space="preserve"><value>人気順</value></data>
+  <data name="Best rated" xml:space="preserve"><value>評価順</value></data>
+  <data name="A to Z" xml:space="preserve"><value>名前順</value></data>
+  <data name="Just released" xml:space="preserve"><value>新着</value></data>
+  <data name="New version" xml:space="preserve"><value>新バージョン</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>おすすめ: {0} / {1}。カタログの上の「おすすめ」行に表示されます。各項目の星ボタンで設定または解除します。</value></data>
 </root>

@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>Riquadri</value></data>
   <data name="List" xml:space="preserve"><value>Elenco</value></data>
   <data name="View" xml:space="preserve"><value>Visualizzazione</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>Componenti aggiuntivi pubblicati</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Componenti aggiuntivi di autori indipendenti, non prodotti ufficiali di Tungsten Automation: forniti nello stato in cui si trovano, senza garanzia né supporto ufficiale. Utilizzo a proprio rischio; Tungsten Automation non si assume alcuna responsabilità.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>I componenti aggiuntivi si installano direttamente in Power PDF tramite la barra multifunzione Add-on Store; questo sito è destinato a sviluppatori e amministratori.</value></data>
+  <data name="Sort" xml:space="preserve"><value>Ordina</value></data>
+  <data name="Recommended" xml:space="preserve"><value>Consigliati</value></data>
+  <data name="Newest first" xml:space="preserve"><value>Più recenti</value></data>
+  <data name="Most popular" xml:space="preserve"><value>Più popolari</value></data>
+  <data name="Best rated" xml:space="preserve"><value>Più votati</value></data>
+  <data name="A to Z" xml:space="preserve"><value>A-Z</value></data>
+  <data name="Just released" xml:space="preserve"><value>Nuovo</value></data>
+  <data name="New version" xml:space="preserve"><value>Nuova versione</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>In evidenza: {0} di {1}. Compaiono nella riga "Consigliati" sopra il catalogo. Aggiungili o rimuovili con il pulsante a stella di una voce.</value></data>
 </root>

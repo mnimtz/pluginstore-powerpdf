@@ -56,7 +56,7 @@ public class IndexModel : PageModel
         var err = await Highlights.CheckAsync(_db, pkg, on);
         if (err is null) await Highlights.SetAsync(_db, _audit, pkg, on, me);
         var key = err is null ? (on ? "on" : "off") : err.StartsWith("At most") ? "max" : "private";
-        return Redirect("/?hl=" + key + "#pkg-grid");
+        return Redirect("/?hl=" + key + "#pkg-tools");
     }
 
     public async Task OnGetAsync()
@@ -85,9 +85,11 @@ public class IndexModel : PageModel
             ClientDownloadUrl = "/download/pluginstore.msi";
         }
 
-        // highlights first (in the order they were marked), so on the first page; the rest as before (S1.16.0)
+        // "Recommended" order (S2.3.0): highlights first (in the order they were marked), then the most downloaded,
+        // then by name; the page sorts in the browser from here (newest, popular, rating, A to Z)
         Items = items.Where(i => i.Id != ClientPackageId)
-            .OrderBy(i => i.FeaturedAt is null).ThenBy(i => i.FeaturedAt).ToList();
+            .OrderBy(i => i.FeaturedAt is null).ThenBy(i => i.FeaturedAt)
+            .ThenByDescending(i => i.Downloads).ThenBy(i => i.Name, StringComparer.CurrentCultureIgnoreCase).ToList();
         HighlightCount = Items.Count(i => i.Featured);
         // Slugs over live and beta ids, the same set the add-on page resolves against.
         var all = (await CatalogUi.GetAsync(_db, culture, includeBeta: true))

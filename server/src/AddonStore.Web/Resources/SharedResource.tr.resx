@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>Kutucuklar</value></data>
   <data name="List" xml:space="preserve"><value>Liste</value></data>
   <data name="View" xml:space="preserve"><value>Görünüm</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>Yayımlanan eklentiler</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Bağımsız yazarlara ait eklentiler, resmi Tungsten Automation ürünleri değildir: olduğu gibi, garanti veya resmi destek olmaksızın sunulur. Kullanım riski size aittir; Tungsten Automation hiçbir sorumluluk kabul etmez.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>Eklentiler doğrudan Power PDF içinde Add-on Store şeridinden yüklenir; bu site geliştiriciler ve yöneticiler içindir.</value></data>
+  <data name="Sort" xml:space="preserve"><value>Sırala</value></data>
+  <data name="Recommended" xml:space="preserve"><value>Önerilen</value></data>
+  <data name="Newest first" xml:space="preserve"><value>En yeni</value></data>
+  <data name="Most popular" xml:space="preserve"><value>En popüler</value></data>
+  <data name="Best rated" xml:space="preserve"><value>En yüksek puan</value></data>
+  <data name="A to Z" xml:space="preserve"><value>A'dan Z'ye</value></data>
+  <data name="Just released" xml:space="preserve"><value>Yeni</value></data>
+  <data name="New version" xml:space="preserve"><value>Yeni sürüm</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Öne çıkanlar: {0} / {1}. Kataloğun üstündeki "Önerilen" satırında görünürler. Bir girişteki yıldız düğmesiyle işaretleyin veya kaldırın.</value></data>
 </root>

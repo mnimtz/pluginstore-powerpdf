@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>Rutor</value></data>
   <data name="List" xml:space="preserve"><value>Lista</value></data>
   <data name="View" xml:space="preserve"><value>Vy</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>Publicerade tillägg</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Tillägg från oberoende författare, inte officiella produkter från Tungsten Automation: tillhandahålls i befintligt skick, utan garanti eller officiell support. Användning sker på egen risk; Tungsten Automation tar inget ansvar.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>Tillägg installeras direkt i Power PDF via menyfliksområdet Add-on Store; den här webbplatsen är till för utvecklare och administratörer.</value></data>
+  <data name="Sort" xml:space="preserve"><value>Sortering</value></data>
+  <data name="Recommended" xml:space="preserve"><value>Rekommenderade</value></data>
+  <data name="Newest first" xml:space="preserve"><value>Nyaste</value></data>
+  <data name="Most popular" xml:space="preserve"><value>Populäraste</value></data>
+  <data name="Best rated" xml:space="preserve"><value>Bäst betyg</value></data>
+  <data name="A to Z" xml:space="preserve"><value>A till Ö</value></data>
+  <data name="Just released" xml:space="preserve"><value>Ny</value></data>
+  <data name="New version" xml:space="preserve"><value>Ny version</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Framhävda: {0} av {1}. De visas i raden "Rekommenderade" ovanför katalogen. Markera eller ta bort dem med stjärnknappen på en post.</value></data>
 </root>

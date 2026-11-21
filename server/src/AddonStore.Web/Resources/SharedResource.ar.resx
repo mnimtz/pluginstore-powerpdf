@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>مربعات</value></data>
   <data name="List" xml:space="preserve"><value>قائمة</value></data>
   <data name="View" xml:space="preserve"><value>طريقة العرض</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>الوظائف الإضافية المنشورة</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>وظائف إضافية من مؤلفين مستقلين، وليست منتجات رسمية من Tungsten Automation: تُقدَّم كما هي، دون ضمان أو دعم رسمي. استخدمها على مسؤوليتك الخاصة؛ لا تتحمل Tungsten Automation أي مسؤولية.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>تُثبَّت الوظائف الإضافية مباشرةً داخل Power PDF عبر شريط Add-on Store؛ هذا الموقع مخصص للمطورين والمسؤولين.</value></data>
+  <data name="Sort" xml:space="preserve"><value>ترتيب</value></data>
+  <data name="Recommended" xml:space="preserve"><value>موصى بها</value></data>
+  <data name="Newest first" xml:space="preserve"><value>الأحدث</value></data>
+  <data name="Most popular" xml:space="preserve"><value>الأكثر شيوعًا</value></data>
+  <data name="Best rated" xml:space="preserve"><value>الأعلى تقييمًا</value></data>
+  <data name="A to Z" xml:space="preserve"><value>أ إلى ي</value></data>
+  <data name="Just released" xml:space="preserve"><value>جديد</value></data>
+  <data name="New version" xml:space="preserve"><value>إصدار جديد</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>المميّزة: {0} من {1}. تظهر في صف "موصى بها" أعلى الكتالوج. حدّدها أو أزلها بزر النجمة في أي إدخال.</value></data>
 </root>

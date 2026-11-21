@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>타일</value></data>
   <data name="List" xml:space="preserve"><value>목록</value></data>
   <data name="View" xml:space="preserve"><value>보기</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>릴리스된 추가 기능</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>독립 작성자의 추가 기능으로, 공식 Tungsten Automation 제품이 아닙니다. 보증이나 공식 지원 없이 있는 그대로 제공됩니다. 사용에 따른 위험은 사용자가 부담하며, Tungsten Automation은 어떠한 책임도 지지 않습니다.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>추가 기능은 Power PDF의 Add-on Store 리본에서 바로 설치합니다. 이 사이트는 개발자와 관리자를 위한 곳입니다.</value></data>
+  <data name="Sort" xml:space="preserve"><value>정렬</value></data>
+  <data name="Recommended" xml:space="preserve"><value>추천</value></data>
+  <data name="Newest first" xml:space="preserve"><value>최신순</value></data>
+  <data name="Most popular" xml:space="preserve"><value>인기순</value></data>
+  <data name="Best rated" xml:space="preserve"><value>평점순</value></data>
+  <data name="A to Z" xml:space="preserve"><value>이름순</value></data>
+  <data name="Just released" xml:space="preserve"><value>신규</value></data>
+  <data name="New version" xml:space="preserve"><value>새 버전</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>추천: {0}/{1}. 카탈로그 위의 '추천' 행에 표시됩니다. 항목의 별 버튼으로 지정하거나 해제합니다.</value></data>
 </root>

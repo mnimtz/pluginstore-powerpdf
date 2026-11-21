@@ -1724,4 +1724,16 @@
   <data name="Tiles" xml:space="preserve"><value>Tegels</value></data>
   <data name="List" xml:space="preserve"><value>Lijst</value></data>
   <data name="View" xml:space="preserve"><value>Weergave</value></data>
+  <data name="Released add-ons" xml:space="preserve"><value>Uitgebrachte add-ons</value></data>
+  <data name="Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability." xml:space="preserve"><value>Invoegtoepassingen van onafhankelijke auteurs, geen officiële producten van Tungsten Automation: geleverd zoals ze zijn, zonder garantie of officiële ondersteuning. Gebruik op eigen risico; Tungsten Automation aanvaardt geen aansprakelijkheid.</value></data>
+  <data name="Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins." xml:space="preserve"><value>Add-ons worden rechtstreeks in Power PDF geïnstalleerd via het lint Add-on Store; deze site is bedoeld voor ontwikkelaars en beheerders.</value></data>
+  <data name="Sort" xml:space="preserve"><value>Sorteren</value></data>
+  <data name="Recommended" xml:space="preserve"><value>Aanbevolen</value></data>
+  <data name="Newest first" xml:space="preserve"><value>Nieuwste</value></data>
+  <data name="Most popular" xml:space="preserve"><value>Populairste</value></data>
+  <data name="Best rated" xml:space="preserve"><value>Best beoordeeld</value></data>
+  <data name="A to Z" xml:space="preserve"><value>A tot Z</value></data>
+  <data name="Just released" xml:space="preserve"><value>Nieuw</value></data>
+  <data name="New version" xml:space="preserve"><value>Nieuwe versie</value></data>
+  <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Uitgelicht: {0} van {1}. Ze staan in de rij 'Aanbevolen' boven de catalogus. Markeer of verwijder ze met de sterknop bij een item.</value></data>
 </root>
