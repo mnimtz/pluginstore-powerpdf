@@ -1721,4 +1721,7 @@
   <data name="Try it" xml:space="preserve"><value>試してみる</value></data>
   <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>サインアウトし、ディレクトリのユーザー (確認済みドメインのアドレス) で「Microsoft でサインイン」を選択します。新しいユーザーは管理者へのアクセス要求になります。同じアドレスの既存アカウントはリンクされ、重複して作成されることはありません。</value></data>
   <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>このページは別のアドレスで開かれています。ユーザーがそのアドレスでもサインインする場合は、このリダイレクト URI も追加してください: {0}</value></data>
+  <data name="Tiles" xml:space="preserve"><value>タイル</value></data>
+  <data name="List" xml:space="preserve"><value>リスト</value></data>
+  <data name="View" xml:space="preserve"><value>表示</value></data>
 </root>

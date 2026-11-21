@@ -1721,4 +1721,7 @@
   <data name="Try it" xml:space="preserve"><value>Uitproberen</value></data>
   <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>Meld u af en kies "Aanmelden met Microsoft" met een gebruiker van uw directory (een adres op een geverifieerd domein). Een nieuwe persoon wordt een toegangsaanvraag voor de beheerders; een bestaand account met hetzelfde adres wordt gekoppeld, nooit dubbel aangemaakt.</value></data>
   <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>Deze pagina is geopend onder een ander adres. Als gebruikers zich ook daar aanmelden, voeg dan ook deze omleidings-URI toe: {0}</value></data>
+  <data name="Tiles" xml:space="preserve"><value>Tegels</value></data>
+  <data name="List" xml:space="preserve"><value>Lijst</value></data>
+  <data name="View" xml:space="preserve"><value>Weergave</value></data>
 </root>

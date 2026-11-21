@@ -68,7 +68,13 @@
 else
 {
     <div class="catalog-tools">
-        <input type="search" id="pkg-search" placeholder="@L["Search"]…" aria-label="@L["Search"]" />
+        <input type="search" id="pkg-search" placeholder="@L["Search"]…" aria-label="@L["Search"]" autocomplete="off" aria-controls="pkg-grid" />
+        @* S2.2.0: tiles or a compact list; the same entries, search and filters work in both *@
+        <span class="view-switch" role="group" aria-label="@L["View"]">
+            <button type="button" data-view="tiles" aria-pressed="true" title="@L["Tiles"]"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="1" width="6" height="6" rx="1.5" /><rect x="9" y="1" width="6" height="6" rx="1.5" /><rect x="1" y="9" width="6" height="6" rx="1.5" /><rect x="9" y="9" width="6" height="6" rx="1.5" /></svg><span>@L["Tiles"]</span></button>
+            <button type="button" data-view="list" aria-pressed="false" title="@L["List"]"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1" y="2" width="14" height="2.4" rx="1.2" /><rect x="1" y="6.8" width="14" height="2.4" rx="1.2" /><rect x="1" y="11.6" width="14" height="2.4" rx="1.2" /></svg><span>@L["List"]</span></button>
+        </span>
+        <span class="muted small pkg-count" id="pkg-count" aria-live="polite"></span>
         @if (Model.AiSearch)
         {
             <button type="button" class="btn small secondary" id="ai-ask" title="@L["Describe what you want to do; AI suggests matching add-ons."]">@L["Ask AI"]</button>
@@ -115,7 +121,7 @@ else
         @foreach (var item in Model.Items)
         {
             <div class="card pkg@(item.Featured ? " featured" : "")" data-cat="@item.Category" data-id="@item.Id" data-author="@item.Author"
-                 data-text="@(item.Name.ToLowerInvariant()) @(item.Id) @(item.Description.ToLowerInvariant()) @(item.Author.ToLowerInvariant())">
+                 data-text="@(item.Name.ToLowerInvariant()) @(item.Id) @(item.Description.ToLowerInvariant()) @(item.Author.ToLowerInvariant()) @(item.CategoryName.ToLowerInvariant())">
                 @if (item.Featured)
                 {
                     <span class="badge highlight"><span aria-hidden="true">★</span> @L["Highlight"]</span>
@@ -168,8 +174,14 @@ else
             </div>
         }
     </div>
+    <p class="card muted pkg-empty" id="pkg-empty" hidden>@L["Nothing suitable found."]</p>
     <nav class="pager pkg-pager" id="pkg-pager" aria-label="@L["Pages"]" hidden>
         <span class="muted small" id="pkg-range"></span>
+        <span class="pager-sizes small" id="pkg-sizes" hidden>@L["Rows per page"]:
+            <button type="button" class="page-num" data-size="25">25</button>
+            <button type="button" class="page-num" data-size="50">50</button>
+            <button type="button" class="page-num" data-size="100">100</button>
+        </span>
         <span class="pager-pages">
             <button type="button" class="btn small secondary" id="pkg-prev">‹ @L["Previous"]</button>
             <span class="page-nums" id="pkg-nums"></span>
@@ -178,7 +190,7 @@ else
     </nav>
     @* S1.26.0: page values as data attributes (Razor encodes them), no Html.Raw *@
     <script nonce="@ViewContext.HttpContext.Items["CspNonce"]"
-            data-t="@System.Text.Json.JsonSerializer.Serialize(new { range = L["{0} to {1} of {2}"].Value, page = L["Page {0} of {1}"].Value, searching = L["Searching…"].Value, nothing = L["Nothing suitable found."].Value, unavailable = L["The search is not available right now."].Value })"
+            data-t="@System.Text.Json.JsonSerializer.Serialize(new { range = L["{0} to {1} of {2}"].Value, page = L["Page {0} of {1}"].Value, count = L["{0} add-ons"].Value, one = L["Add-on"].Value, searching = L["Searching…"].Value, nothing = L["Nothing suitable found."].Value, unavailable = L["The search is not available right now."].Value })"
             data-slugs="@System.Text.Json.JsonSerializer.Serialize(Model.Slugs)">
         (function () {
             var D = document.currentScript.dataset;
@@ -216,16 +228,60 @@ else
             // so "back" from an add-on returns to it.
             var size = 9, page = Math.max(1, parseInt(new URLSearchParams(location.search).get('page'), 10) || 1);
             var pager = document.getElementById('pkg-pager');
+            var grid = document.getElementById('pkg-grid');
             var T = JSON.parse(D.t);
+            // S2.2.0: view switch. Tiles: 9 a page; list: 25, 50 or 100 rows a page. The view is kept in
+            // the address (?view=list) and, for the next visit, in this browser (storage may be blocked).
+            var LIST_SIZES = [25, 50, 100], view = 'tiles', listSize = 25;
+            function stored(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+            function store(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
+            var wantedView = new URLSearchParams(location.search).get('view') || stored('catalog.view');
+            if (wantedView === 'list') view = 'list';
+            var s = parseInt(stored('catalog.listSize'), 10);
+            if (LIST_SIZES.indexOf(s) >= 0) listSize = s;
+            var viewButtons = document.querySelectorAll('.view-switch button');
+            var sizeButtons = document.querySelectorAll('#pkg-sizes button');
+            function showView() {
+                size = view === 'list' ? listSize : 9;
+                grid.classList.toggle('as-list', view === 'list');
+                viewButtons.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.view === view ? 'true' : 'false'); });
+                sizeButtons.forEach(function (b) {
+                    var on = +b.dataset.size === listSize;
+                    b.classList.toggle('active', on);
+                    if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+                });
+            }
+            // the first entry on screen stays on screen when the page size changes
+            function resize(fn) {
+                var first = (page - 1) * size;
+                fn(); showView();
+                page = Math.floor(first / size) + 1;
+                apply(true);
+            }
+            viewButtons.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    if (b.dataset.view === view) return;
+                    resize(function () { view = b.dataset.view; });
+                    store('catalog.view', view);
+                });
+            });
+            sizeButtons.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    resize(function () { listSize = +b.dataset.size; });
+                    store('catalog.listSize', String(listSize));
+                });
+            });
+            showView();
             function remember() {
                 try {
                     var u = new URL(location.href);
                     if (page > 1) u.searchParams.set('page', page); else u.searchParams.delete('page');
                     if (author) u.searchParams.set('author', author); else u.searchParams.delete('author');
+                    if (view === 'list') u.searchParams.set('view', 'list'); else u.searchParams.delete('view');
                     history.replaceState(history.state, '', u.pathname + u.search + u.hash);
                 } catch (e) { }
             }
-            function go(n) { page = n; apply(true); document.getElementById('pkg-grid').scrollIntoView({ block: 'start' }); }
+            function go(n) { page = n; apply(true); grid.scrollIntoView({ block: 'start' }); }
             // 1 2 3 ... with a window around the current page on long lists: 1 ... 4 5 6 ... 12
             function numbers(pages) {
                 var box = document.getElementById('pkg-nums'); box.textContent = '';
@@ -246,13 +302,15 @@ else
                 });
             }
             function fmt(t) { var a = arguments; return t.replace(/\{(\d)\}/g, function (m, i) { return a[+i + 1]; }); }
+            var countEl = document.getElementById('pkg-count'), empty = document.getElementById('pkg-empty');
             function apply(keepPage) {
-                var q = search.value.toLowerCase();
+                // S2.2.0: every word must match, in any order ("sign pdf" finds "PDF sign")
+                var words = search.value.toLowerCase().split(/\s+/).filter(Boolean);
                 var hits = [];
                 cards.forEach(function (c) {
                     var hit = (!cat || c.dataset.cat === cat) &&
                               (!author || c.dataset.author === author) &&
-                              (!q || c.dataset.text.indexOf(q) >= 0);
+                              words.every(function (w) { return c.dataset.text.indexOf(w) >= 0; });
                     if (hit) hits.push(c);
                     c.style.display = 'none';
                 });
@@ -261,7 +319,12 @@ else
                 page = Math.min(Math.max(page, 1), pages);
                 hits.slice((page - 1) * size, page * size).forEach(function (c) { c.style.display = ''; });
                 remember();
-                pager.hidden = hits.length <= size;
+                var filtered = words.length > 0 || !!cat || !!author;
+                countEl.textContent = !filtered ? '' : hits.length === 1 ? '1 ' + T.one : fmt(T.count, hits.length);
+                empty.hidden = hits.length > 0;
+                // the list keeps its pager (with the row choice) from more rows than its smallest page size on
+                pager.hidden = hits.length <= (view === 'list' ? LIST_SIZES[0] : size);
+                document.getElementById('pkg-sizes').hidden = view !== 'list';
                 if (pager.hidden) return;
                 document.getElementById('pkg-range').textContent = fmt(T.range, (page - 1) * size + 1, Math.min(hits.length, page * size), hits.length);
                 // style, not the hidden attribute: .btn sets display and would override it

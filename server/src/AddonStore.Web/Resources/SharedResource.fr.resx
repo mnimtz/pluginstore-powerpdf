@@ -1721,4 +1721,7 @@
   <data name="Try it" xml:space="preserve"><value>Essayer</value></data>
   <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>Déconnectez-vous et choisissez « Se connecter avec Microsoft » avec un utilisateur de votre répertoire (adresse sur un domaine vérifié). Une nouvelle personne devient une demande d'accès pour les administrateurs ; un compte existant avec la même adresse est lié, jamais dupliqué.</value></data>
   <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>Cette page est ouverte sous une autre adresse. Si des utilisateurs se connectent aussi à cette adresse, ajoutez également cet URI de redirection : {0}</value></data>
+  <data name="Tiles" xml:space="preserve"><value>Vignettes</value></data>
+  <data name="List" xml:space="preserve"><value>Liste</value></data>
+  <data name="View" xml:space="preserve"><value>Affichage</value></data>
 </root>

@@ -1721,4 +1721,7 @@
   <data name="Try it" xml:space="preserve"><value>试用</value></data>
   <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>注销，然后使用你目录中的用户(已验证域上的地址)选择“使用 Microsoft 登录”。新用户会成为发给管理员的访问请求；具有相同地址的现有帐户会被关联，绝不会重复创建。</value></data>
   <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>此页面是通过另一个地址打开的。如果用户也通过该地址登录，请同时添加此重定向 URI: {0}</value></data>
+  <data name="Tiles" xml:space="preserve"><value>磁贴</value></data>
+  <data name="List" xml:space="preserve"><value>列表</value></data>
+  <data name="View" xml:space="preserve"><value>视图</value></data>
 </root>

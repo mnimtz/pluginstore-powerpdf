@@ -627,6 +627,12 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Catalog as tiles or list (S2.2.0, Nov 21, 2026):** a switch next to the search shows the released add-ons as tiles
+(9 a page) or as a compact list (one row each: icon, name, rating, two lines of description, details, buttons; 25, 50
+or 100 rows a page). Search, category chips, author filter and paging work the same in both; the search filters while
+typing, every word must match in any order, the category name counts too, and a count of the matches shows next to
+the switch. The view is kept in the address (`?view=list`) and in the browser for the next visit.
+
 **Sign in with Microsoft (S2.1.0, Nov 20, 2026):** optional Entra ID sign-in next to e-mail and password, fully off
 until `Entra:ClientId`, `Entra:ClientSecret` and `Entra:TenantId` (or `Entra:Authority` plus `Entra:AllowedTenants`) are set
 as app settings. Code flow with PKCE; the address comes from `upn`/`preferred_username` of an allowed tenant. An

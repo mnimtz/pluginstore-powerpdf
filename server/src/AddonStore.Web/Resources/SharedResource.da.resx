@@ -1721,4 +1721,7 @@
   <data name="Try it" xml:space="preserve"><value>Prøv det</value></data>
   <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>Log ud, og vælg "Log ind med Microsoft" med en bruger fra din mappe (en adresse på et bekræftet domæne). En ny person bliver til en adgangsanmodning for administratorerne; en eksisterende konto med samme adresse tilknyttes og oprettes aldrig to gange.</value></data>
   <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>Denne side er åbnet under en anden adresse. Hvis brugerne også logger ind dér, skal du også tilføje denne omdirigerings-URI: {0}</value></data>
+  <data name="Tiles" xml:space="preserve"><value>Felter</value></data>
+  <data name="List" xml:space="preserve"><value>Liste</value></data>
+  <data name="View" xml:space="preserve"><value>Visning</value></data>
 </root>

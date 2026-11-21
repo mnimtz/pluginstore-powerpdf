@@ -1721,4 +1721,7 @@
   <data name="Try it" xml:space="preserve"><value>Kokeile</value></data>
   <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>Kirjaudu ulos ja valitse ”Kirjaudu sisään Microsoft-tilillä” hakemistosi käyttäjänä (osoite vahvistetussa toimialueessa). Uudesta henkilöstä tulee käyttöoikeuspyyntö järjestelmänvalvojille; olemassa oleva tili, jolla on sama osoite, linkitetään, eikä sitä koskaan luoda kahteen kertaan.</value></data>
   <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>Tämä sivu on avattu toisella osoitteella. Jos käyttäjät kirjautuvat myös sitä kautta, lisää myös tämä uudelleenohjaus-URI: {0}</value></data>
+  <data name="Tiles" xml:space="preserve"><value>Ruudut</value></data>
+  <data name="List" xml:space="preserve"><value>Luettelo</value></data>
+  <data name="View" xml:space="preserve"><value>Näkymä</value></data>
 </root>

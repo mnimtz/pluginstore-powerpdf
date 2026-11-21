@@ -1721,4 +1721,7 @@
   <data name="Try it" xml:space="preserve"><value>Проверить</value></data>
   <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>Выйдите и выберите «Войти с помощью Microsoft» под пользователем вашего каталога (адрес в подтверждённом домене). Новый человек становится запросом на доступ для администраторов; существующая учётная запись с тем же адресом связывается и никогда не создаётся повторно.</value></data>
   <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>Эта страница открыта по другому адресу. Если пользователи входят и через него, добавьте также этот URI перенаправления: {0}</value></data>
+  <data name="Tiles" xml:space="preserve"><value>Плитки</value></data>
+  <data name="List" xml:space="preserve"><value>Список</value></data>
+  <data name="View" xml:space="preserve"><value>Вид</value></data>
 </root>

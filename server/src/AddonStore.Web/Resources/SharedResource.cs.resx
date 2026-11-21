@@ -1721,4 +1721,7 @@
   <data name="Try it" xml:space="preserve"><value>Vyzkoušet</value></data>
   <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>Odhlaste se a zvolte „Přihlásit se účtem Microsoft“ s uživatelem svého adresáře (adresa na ověřené doméně). Z nové osoby se stane žádost o přístup pro správce; existující účet se stejnou adresou se propojí a nikdy se nevytvoří podruhé.</value></data>
   <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>Tato stránka je otevřená pod jinou adresou. Pokud se uživatelé přihlašují i tam, přidejte také tento identifikátor URI pro přesměrování: {0}</value></data>
+  <data name="Tiles" xml:space="preserve"><value>Dlaždice</value></data>
+  <data name="List" xml:space="preserve"><value>Seznam</value></data>
+  <data name="View" xml:space="preserve"><value>Zobrazení</value></data>
 </root>

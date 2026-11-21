@@ -1721,4 +1721,7 @@
   <data name="Try it" xml:space="preserve"><value>사용해 보기</value></data>
   <data name="Sign out and choose &quot;Sign in with Microsoft&quot; with a user of your directory (an address on a verified domain). A new person becomes an access request for the admins; an existing account with the same address is linked, never duplicated." xml:space="preserve"><value>로그아웃한 다음 디렉터리의 사용자(확인된 도메인의 주소)로 "Microsoft로 로그인"을 선택하세요. 새 사용자는 관리자에게 액세스 요청이 되며, 같은 주소의 기존 계정은 연결되고 중복으로 만들어지지 않습니다.</value></data>
   <data name="This page is open under another address. If users also sign in there, add this redirect URI as well: {0}" xml:space="preserve"><value>이 페이지는 다른 주소로 열려 있습니다. 사용자가 그 주소로도 로그인하는 경우 이 리디렉션 URI도 추가하세요: {0}</value></data>
+  <data name="Tiles" xml:space="preserve"><value>타일</value></data>
+  <data name="List" xml:space="preserve"><value>목록</value></data>
+  <data name="View" xml:space="preserve"><value>보기</value></data>
 </root>
