@@ -1756,4 +1756,18 @@
   <data name="Set by an admin; package: {0}" xml:space="preserve"><value>Rendszergazda állította be; csomag: {0}</value></data>
   <data name="Minimum Power PDF version saved." xml:space="preserve"><value>A Power PDF minimális verziója mentve.</value></data>
   <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>Adjon meg egy verziót, például 2025.3 vagy 2025.3.7.</value></data>
+  <data name="Maintenance" xml:space="preserve"><value>Karbantartás</value></data>
+  <data name="Uploads, registrations, ratings, reports and catalog changes pause for everybody except admins; the catalog, downloads and installations from Power PDF keep working. A yellow badge with a wrench and a notice on every page." xml:space="preserve"><value>A feltöltés, regisztráció, értékelés, bejelentés és a katalógus módosítása szünetel mindenki számára a rendszergazdák kivételével; a katalógus, a letöltések és a Power PDF-ből történő telepítések továbbra is működnek. Sárga jelölés villáskulccsal és figyelmeztetés minden oldalon.</value></data>
+  <data name="A blue Test badge and a notice on every page; search engines are asked not to index the store. For test and acceptance systems." xml:space="preserve"><value>Kék Test jelölés és figyelmeztetés minden oldalon; a keresőmotorokat arra kérjük, hogy ne indexeljék az áruházat. Teszt- és átvételi rendszerekhez.</value></data>
+  <data name="Expected end (optional)" xml:space="preserve"><value>Várható befejezés (nem kötelező)</value></data>
+  <data name="Shown in the maintenance notice; time zone {0}." xml:space="preserve"><value>A karbantartási figyelmeztetésben jelenik meg; időzóna: {0}.</value></data>
+  <data name="Additional note (optional, shown in the maintenance notice)" xml:space="preserve"><value>További megjegyzés (nem kötelező, a karbantartási figyelmeztetésben jelenik meg)</value></data>
+  <data name="This server is marked as a UAT test system (Settings &gt; Features); while Production is selected it counts as Test." xml:space="preserve"><value>Ez a szerver UAT-tesztrendszerként van megjelölve (Beállítások &gt; Funkciók); amíg az Éles üzem van kiválasztva, Tesztnek számít.</value></data>
+  <data name="Maintenance work" xml:space="preserve"><value>Karbantartási munkák</value></data>
+  <data name="Test environment: not the production store. Data may be reset at any time." xml:space="preserve"><value>Tesztkörnyezet: nem az éles áruház. Az adatok bármikor visszaállíthatók.</value></data>
+  <data name="Maintenance: uploads, registrations and other changes are paused for the moment. The catalog, downloads and installations from Power PDF keep working." xml:space="preserve"><value>Karbantartás: a feltöltés, a regisztráció és más módosítások átmenetileg nem lehetségesek. A katalógus, a letöltések és a Power PDF-ből történő telepítések továbbra is működnek.</value></data>
+  <data name="Expected until {0}." xml:space="preserve"><value>Várhatóan eddig: {0}.</value></data>
+  <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>Ön rendszergazda: a módosítások továbbra is lehetségesek az Ön számára.</value></data>
+  <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Ez a művelet a karbantartás idejére szünetel. Kérjük, próbálja újra később; a bevitt adatok nem lettek mentve.</value></data>
+  <data name="Back to the catalog" xml:space="preserve"><value>Vissza a katalógushoz</value></data>
 </root>

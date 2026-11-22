@@ -1756,4 +1756,18 @@
   <data name="Set by an admin; package: {0}" xml:space="preserve"><value>Ingesteld door een beheerder; pakket: {0}</value></data>
   <data name="Minimum Power PDF version saved." xml:space="preserve"><value>Minimale versie van Power PDF opgeslagen.</value></data>
   <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>Voer een versie in zoals 2025.3 of 2025.3.7.</value></data>
+  <data name="Maintenance" xml:space="preserve"><value>Onderhoud</value></data>
+  <data name="Uploads, registrations, ratings, reports and catalog changes pause for everybody except admins; the catalog, downloads and installations from Power PDF keep working. A yellow badge with a wrench and a notice on every page." xml:space="preserve"><value>Uploaden, registreren, beoordelingen, meldingen en catalogusaanpassingen liggen stil voor iedereen behalve beheerders; catalogus, downloads en installaties vanuit Power PDF blijven werken. Een geel label met een moersleutel en een melding op elke pagina.</value></data>
+  <data name="A blue Test badge and a notice on every page; search engines are asked not to index the store. For test and acceptance systems." xml:space="preserve"><value>Een blauw Test-label en een melding op elke pagina; zoekmachines wordt gevraagd de store niet te indexeren. Voor test- en acceptatiesystemen.</value></data>
+  <data name="Expected end (optional)" xml:space="preserve"><value>Verwacht einde (optioneel)</value></data>
+  <data name="Shown in the maintenance notice; time zone {0}." xml:space="preserve"><value>Wordt getoond in de onderhoudsmelding; tijdzone {0}.</value></data>
+  <data name="Additional note (optional, shown in the maintenance notice)" xml:space="preserve"><value>Extra opmerking (optioneel, getoond in de onderhoudsmelding)</value></data>
+  <data name="This server is marked as a UAT test system (Settings &gt; Features); while Production is selected it counts as Test." xml:space="preserve"><value>Deze server is gemarkeerd als UAT-testsysteem (Instellingen &gt; Functies); zolang Productie is gekozen, telt hij als Test.</value></data>
+  <data name="Maintenance work" xml:space="preserve"><value>Onderhoudswerkzaamheden</value></data>
+  <data name="Test environment: not the production store. Data may be reset at any time." xml:space="preserve"><value>Testomgeving: niet de productiestore. Gegevens kunnen op elk moment worden gereset.</value></data>
+  <data name="Maintenance: uploads, registrations and other changes are paused for the moment. The catalog, downloads and installations from Power PDF keep working." xml:space="preserve"><value>Onderhoud: uploaden, registreren en andere wijzigingen zijn tijdelijk niet mogelijk. Catalogus, downloads en installaties vanuit Power PDF blijven werken.</value></data>
+  <data name="Expected until {0}." xml:space="preserve"><value>Verwacht tot {0}.</value></data>
+  <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>U bent beheerder: wijzigingen blijven voor u mogelijk.</value></data>
+  <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Deze actie ligt stil tijdens het onderhoud. Probeer het later opnieuw; uw invoer is niet opgeslagen.</value></data>
+  <data name="Back to the catalog" xml:space="preserve"><value>Terug naar de catalogus</value></data>
 </root>

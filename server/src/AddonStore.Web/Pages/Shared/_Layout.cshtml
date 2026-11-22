@@ -18,9 +18,17 @@
         : siteName;
     // UAT (S1.21.0): every tab says so, so nobody confuses the test store with production
     if (AddonStore.Web.Services.FederationService.MarkedAsTest) pageTitle = "UAT · " + pageTitle;
-    // S2.4.0: beta mode: every tab and the logo say so
-    var isBeta = await AddonStore.Web.Services.ServerMode.GetAsync(ModeSettings, ModeConfig) == AddonStore.Web.Services.ServerMode.Beta;
-    if (isBeta) pageTitle = L["Beta"].Value + " · " + pageTitle;
+    // S2.4.0/S2.6.0: beta, maintenance and test: every tab and the logo say so (a marked UAT keeps its "UAT ·")
+    var serverMode = await AddonStore.Web.Services.ServerMode.GetAsync(ModeSettings, ModeConfig);
+    var modeBadge = serverMode != AddonStore.Web.Services.ServerMode.Production;
+    if (serverMode == "beta") pageTitle = L["Beta"].Value + " · " + pageTitle;
+    else if (serverMode == "maintenance") pageTitle = L["Maintenance"].Value + " · " + pageTitle;
+    else if (serverMode == "test" && !AddonStore.Web.Services.FederationService.MarkedAsTest) pageTitle = L["Test"].Value + " · " + pageTitle;
+    var modeHref = serverMode == "beta" ? "/Disclaimer#beta" : serverMode == "maintenance" ? "/Maintenance" : "";
+    var modeTitle = serverMode == "beta" ? L["Beta phase"].Value : serverMode == "maintenance" ? L["Maintenance work"].Value
+                  : L["Test environment: not the production store. Data may be reset at any time."].Value;
+    DateTime? modeUntil = serverMode == "maintenance" ? await AddonStore.Web.Services.ServerMode.UntilAsync(ModeSettings) : null;
+    var modeNote = serverMode == "maintenance" ? await AddonStore.Web.Services.ServerMode.NoteAsync(ModeSettings) : "";
     var description = ViewData["Description"] as string
         ?? L["Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF."].Value;
     var host = Context.Request.Host;
@@ -53,6 +61,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    @if (serverMode == "test") { <meta name="robots" content="noindex, nofollow" /> }
     <title>@pageTitle</title>
     <meta name="description" content="@description" />
     <meta name="application-name" content="Add-on Store" />
@@ -87,9 +96,22 @@
     @await RenderSectionAsync("Head", required: false)
 </head>
 <body class="@(shell ? "with-shell" : "")">
-@if (AddonStore.Web.Services.FederationService.MarkedAsTest)
+@if (serverMode == "test")
 {
-    <div class="uat-band" role="note">@L["UAT environment, not production"]</div>
+    @* S2.6.0: test mode (a marked UAT included): one notice on every page *@
+    <div class="uat-band mode-band-test" role="note"><partial name="_ModeBadge" model='("test", true)' /> @(AddonStore.Web.Services.FederationService.MarkedAsTest ? L["UAT environment, not production"] : L["Test environment: not the production store. Data may be reset at any time."])</div>
+}
+else if (serverMode == "maintenance")
+{
+    @* S2.6.0: maintenance: what pauses, what keeps working, until when; not dismissible *@
+    <div class="mode-band-maintenance" role="status">
+        <partial name="_ModeBadge" model='("maintenance", true)' />
+        <span>@L["Maintenance: uploads, registrations and other changes are paused for the moment. The catalog, downloads and installations from Power PDF keep working."]
+            @if (modeUntil is { } mu) { <b>@L["Expected until {0}.", Time.Fmt(mu)]</b> }
+            @if (modeNote.Length > 0) { <span class="mode-band-note">@modeNote</span> }
+            @if (User.IsInRole("Admin")) { <em>@L["You are an admin: changes remain possible for you."]</em> }
+        </span>
+    </div>
 }
 @if (shell)
 {
@@ -101,7 +123,7 @@
             </button>
             <a class="brand" href="/Start">
                 <img class="logo" src="/img/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation" />
-                <div class="title">Add-on Store<small>Tungsten Power PDF</small>@if (isBeta) { <span class="beta-badge" title="@L["Beta phase"]">@L["Beta"]</span> }</div>
+                <div class="title">Add-on Store<small>Tungsten Power PDF</small>@if (modeBadge) { <span class="mode-link" title="@modeTitle"><partial name="_ModeBadge" model='(serverMode, false)' /></span> }</div>
             </a>
             <span class="spacer"></span>
             <a class="top-link" href="/">@L["Catalog"]</a>
@@ -207,7 +229,7 @@ else
 <header class="site">
     <div class="bar">
         <img class="logo" src="/img/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation" />
-        <div class="title">Add-on Store<small>Tungsten Power PDF</small>@if (isBeta) { <a class="beta-badge" href="/Disclaimer#beta" title="@L["Beta phase"]">@L["Beta"]</a> }</div>
+        <div class="title">Add-on Store<small>Tungsten Power PDF</small>@if (modeBadge) { if (modeHref.Length > 0) { <a class="mode-link" href="@modeHref" title="@modeTitle"><partial name="_ModeBadge" model='(serverMode, false)' /></a> } else { <span class="mode-link" title="@modeTitle"><partial name="_ModeBadge" model='(serverMode, false)' /></span> } }</div>
         <button type="button" class="nav-toggle" aria-label="@L["Menu"]" aria-expanded="false" aria-controls="site-nav">
             <span></span><span></span><span></span>
         </button>

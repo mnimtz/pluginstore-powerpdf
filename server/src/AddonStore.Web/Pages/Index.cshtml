@@ -26,7 +26,7 @@
     @if (isBeta)
     {
         @* S2.4.0: beta mode: one short line in the head, details in the disclaimer *@
-        <p class="hero-beta"><span class="beta-badge inline">@L["Beta"]</span> @L["Beta version: the Add-on Store is still being trialled. Features and content may change, and errors are possible."] <a href="/Disclaimer#beta">@L["Beta phase"]</a></p>
+        <p class="hero-beta"><partial name="_ModeBadge" model='("beta", true)' /> @L["Beta version: the Add-on Store is still being trialled. Features and content may change, and errors are possible."] <a href="/Disclaimer#beta">@L["Beta phase"]</a></p>
     }
     <p class="desktop-only hero-lead">@L["Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins."]</p>
     <p class="mobile-only hero-lead">@L["Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF."]</p>

@@ -1756,4 +1756,18 @@
   <data name="Set by an admin; package: {0}" xml:space="preserve"><value>管理者が設定; パッケージ: {0}</value></data>
   <data name="Minimum Power PDF version saved." xml:space="preserve"><value>Power PDF の最小バージョンを保存しました。</value></data>
   <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>2025.3 や 2025.3.7 のようなバージョンを入力してください。</value></data>
+  <data name="Maintenance" xml:space="preserve"><value>メンテナンス</value></data>
+  <data name="Uploads, registrations, ratings, reports and catalog changes pause for everybody except admins; the catalog, downloads and installations from Power PDF keep working. A yellow badge with a wrench and a notice on every page." xml:space="preserve"><value>管理者以外のすべてのユーザーに対し、アップロード、登録、評価、報告、カタログの変更を一時停止します。カタログ、ダウンロード、Power PDF からのインストールは引き続き利用できます。すべてのページにレンチ付きの黄色いバッジと注意書きを表示します。</value></data>
+  <data name="A blue Test badge and a notice on every page; search engines are asked not to index the store. For test and acceptance systems." xml:space="preserve"><value>すべてのページに青い「Test」バッジと注意書きを表示し、検索エンジンにはストアをインデックスしないよう求めます。テスト システムや受け入れシステム向けです。</value></data>
+  <data name="Expected end (optional)" xml:space="preserve"><value>終了予定 (省略可)</value></data>
+  <data name="Shown in the maintenance notice; time zone {0}." xml:space="preserve"><value>メンテナンスの注意書きに表示されます。タイム ゾーン: {0}。</value></data>
+  <data name="Additional note (optional, shown in the maintenance notice)" xml:space="preserve"><value>追加の注意事項 (省略可、メンテナンスの注意書きに表示)</value></data>
+  <data name="This server is marked as a UAT test system (Settings &gt; Features); while Production is selected it counts as Test." xml:space="preserve"><value>このサーバーは UAT テスト システムとしてマークされています ([設定] &gt; [機能])。[本番] が選択されている間はテストとして扱われます。</value></data>
+  <data name="Maintenance work" xml:space="preserve"><value>メンテナンス作業</value></data>
+  <data name="Test environment: not the production store. Data may be reset at any time." xml:space="preserve"><value>テスト環境: 本番のストアではありません。データはいつでもリセットされる可能性があります。</value></data>
+  <data name="Maintenance: uploads, registrations and other changes are paused for the moment. The catalog, downloads and installations from Power PDF keep working." xml:space="preserve"><value>メンテナンス中: アップロード、登録、その他の変更は一時的に利用できません。カタログ、ダウンロード、Power PDF からのインストールは引き続き利用できます。</value></data>
+  <data name="Expected until {0}." xml:space="preserve"><value>終了予定: {0}。</value></data>
+  <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>管理者のため、変更は引き続き行えます。</value></data>
+  <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>この操作はメンテナンス中は停止しています。後でもう一度お試しください。入力内容は保存されていません。</value></data>
+  <data name="Back to the catalog" xml:space="preserve"><value>カタログに戻る</value></data>
 </root>

@@ -1756,4 +1756,18 @@
   <data name="Set by an admin; package: {0}" xml:space="preserve"><value>Задано администратором; пакет: {0}</value></data>
   <data name="Minimum Power PDF version saved." xml:space="preserve"><value>Минимальная версия Power PDF сохранена.</value></data>
   <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>Введите версию, например 2025.3 или 2025.3.7.</value></data>
+  <data name="Maintenance" xml:space="preserve"><value>Обслуживание</value></data>
+  <data name="Uploads, registrations, ratings, reports and catalog changes pause for everybody except admins; the catalog, downloads and installations from Power PDF keep working. A yellow badge with a wrench and a notice on every page." xml:space="preserve"><value>Загрузка, регистрация, оценки, отчеты и изменения каталога приостановлены для всех, кроме администраторов; каталог, скачивание и установка из Power PDF продолжают работать. Желтый значок с гаечным ключом и уведомление на каждой странице.</value></data>
+  <data name="A blue Test badge and a notice on every page; search engines are asked not to index the store. For test and acceptance systems." xml:space="preserve"><value>Синий значок Test и уведомление на каждой странице; поисковым системам предлагается не индексировать магазин. Для тестовых и приемочных систем.</value></data>
+  <data name="Expected end (optional)" xml:space="preserve"><value>Ожидаемое окончание (необязательно)</value></data>
+  <data name="Shown in the maintenance notice; time zone {0}." xml:space="preserve"><value>Показывается в уведомлении об обслуживании; часовой пояс {0}.</value></data>
+  <data name="Additional note (optional, shown in the maintenance notice)" xml:space="preserve"><value>Дополнительное примечание (необязательно, показывается в уведомлении об обслуживании)</value></data>
+  <data name="This server is marked as a UAT test system (Settings &gt; Features); while Production is selected it counts as Test." xml:space="preserve"><value>Этот сервер отмечен как тестовая система UAT (Настройки &gt; Функции); пока выбран режим «Рабочий», он считается тестовым.</value></data>
+  <data name="Maintenance work" xml:space="preserve"><value>Технические работы</value></data>
+  <data name="Test environment: not the production store. Data may be reset at any time." xml:space="preserve"><value>Тестовая среда: это не рабочий магазин. Данные могут быть сброшены в любое время.</value></data>
+  <data name="Maintenance: uploads, registrations and other changes are paused for the moment. The catalog, downloads and installations from Power PDF keep working." xml:space="preserve"><value>Технические работы: загрузка, регистрация и другие изменения временно недоступны. Каталог, скачивание и установка из Power PDF продолжают работать.</value></data>
+  <data name="Expected until {0}." xml:space="preserve"><value>Ожидаемое окончание: {0}.</value></data>
+  <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>Вы администратор: изменения для вас остаются доступными.</value></data>
+  <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Это действие приостановлено на время обслуживания. Повторите попытку позже; введенные данные не сохранены.</value></data>
+  <data name="Back to the catalog" xml:space="preserve"><value>Назад в каталог</value></data>
 </root>

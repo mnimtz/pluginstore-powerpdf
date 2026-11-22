@@ -1,0 +1,21 @@
+@page
+@model AddonStore.Web.Pages.MaintenanceModel
+@{
+    ViewData["PublicPage"] = true;   // public: always the classic layout
+    ViewData["Title"] = "Maintenance work";
+}
+
+<div class="card maintenance-card">
+    <h1><partial name="_ModeBadge" model='("maintenance", false)' /> @L["Maintenance work"]</h1>
+    <p>@L["This action is paused during the maintenance. Please try again later; your entry has not been saved."]</p>
+    <p>@L["Maintenance: uploads, registrations and other changes are paused for the moment. The catalog, downloads and installations from Power PDF keep working."]</p>
+    @if (Model.Until is { } u)
+    {
+        <p><b>@L["Expected until {0}.", Time.Fmt(u)]</b></p>
+    }
+    @if (Model.Note.Length > 0)
+    {
+        <p class="maintenance-note">@Model.Note</p>
+    }
+    <p><a class="btn cta" href="/">@L["Back to the catalog"]</a></p>
+</div>

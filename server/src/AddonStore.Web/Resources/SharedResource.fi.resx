@@ -1756,4 +1756,18 @@
   <data name="Set by an admin; package: {0}" xml:space="preserve"><value>Ylläpitäjän asettama; paketti: {0}</value></data>
   <data name="Minimum Power PDF version saved." xml:space="preserve"><value>Power PDF:n vähimmäisversio tallennettu.</value></data>
   <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>Anna versio, kuten 2025.3 tai 2025.3.7.</value></data>
+  <data name="Maintenance" xml:space="preserve"><value>Huolto</value></data>
+  <data name="Uploads, registrations, ratings, reports and catalog changes pause for everybody except admins; the catalog, downloads and installations from Power PDF keep working. A yellow badge with a wrench and a notice on every page." xml:space="preserve"><value>Lataukset, rekisteröinnit, arviot, ilmoitukset ja luettelomuutokset on keskeytetty kaikilta paitsi ylläpitäjiltä; luettelo, lataukset ja asennukset Power PDF:stä toimivat edelleen. Keltainen merkki jakoavaimella ja huomautus jokaisella sivulla.</value></data>
+  <data name="A blue Test badge and a notice on every page; search engines are asked not to index the store. For test and acceptance systems." xml:space="preserve"><value>Sininen Testi-merkki ja huomautus jokaisella sivulla; hakukoneita pyydetään olemaan indeksoimatta kauppaa. Testi- ja hyväksyntäjärjestelmille.</value></data>
+  <data name="Expected end (optional)" xml:space="preserve"><value>Arvioitu päättymisaika (valinnainen)</value></data>
+  <data name="Shown in the maintenance notice; time zone {0}." xml:space="preserve"><value>Näytetään huoltohuomautuksessa; aikavyöhyke {0}.</value></data>
+  <data name="Additional note (optional, shown in the maintenance notice)" xml:space="preserve"><value>Lisähuomautus (valinnainen, näytetään huoltohuomautuksessa)</value></data>
+  <data name="This server is marked as a UAT test system (Settings &gt; Features); while Production is selected it counts as Test." xml:space="preserve"><value>Tämä palvelin on merkitty UAT-testijärjestelmäksi (Asetukset &gt; Toiminnot); kun Tuotanto on valittuna, se lasketaan Testiksi.</value></data>
+  <data name="Maintenance work" xml:space="preserve"><value>Huoltotyöt</value></data>
+  <data name="Test environment: not the production store. Data may be reset at any time." xml:space="preserve"><value>Testiympäristö: ei tuotantokauppa. Tiedot voidaan nollata milloin tahansa.</value></data>
+  <data name="Maintenance: uploads, registrations and other changes are paused for the moment. The catalog, downloads and installations from Power PDF keep working." xml:space="preserve"><value>Huolto: lataukset, rekisteröinnit ja muut muutokset on tilapäisesti keskeytetty. Luettelo, lataukset ja asennukset Power PDF:stä toimivat edelleen.</value></data>
+  <data name="Expected until {0}." xml:space="preserve"><value>Arvioitu päättyminen {0}.</value></data>
+  <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>Olet ylläpitäjä: muutokset ovat sinulle edelleen mahdollisia.</value></data>
+  <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Tämä toiminto on keskeytetty huollon ajaksi. Yritä myöhemmin uudelleen; syöttämiäsi tietoja ei tallennettu.</value></data>
+  <data name="Back to the catalog" xml:space="preserve"><value>Takaisin luetteloon</value></data>
 </root>

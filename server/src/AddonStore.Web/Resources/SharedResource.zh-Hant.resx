@@ -1756,4 +1756,18 @@
   <data name="Set by an admin; package: {0}" xml:space="preserve"><value>由管理員設定；套件：{0}</value></data>
   <data name="Minimum Power PDF version saved." xml:space="preserve"><value>已儲存 Power PDF 最低版本。</value></data>
   <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>請輸入版本，例如 2025.3 或 2025.3.7。</value></data>
+  <data name="Maintenance" xml:space="preserve"><value>維護</value></data>
+  <data name="Uploads, registrations, ratings, reports and catalog changes pause for everybody except admins; the catalog, downloads and installations from Power PDF keep working. A yellow badge with a wrench and a notice on every page." xml:space="preserve"><value>除管理員外，所有人的上傳、註冊、評分、回報和目錄變更均暫停；目錄、下載以及從 Power PDF 安裝照常可用。每個頁面顯示帶扳手的黃色標記和提示。</value></data>
+  <data name="A blue Test badge and a notice on every page; search engines are asked not to index the store. For test and acceptance systems." xml:space="preserve"><value>每個頁面顯示藍色「Test」標記和提示；要求搜尋引擎不要收錄本商店。適用於測試和驗收系統。</value></data>
+  <data name="Expected end (optional)" xml:space="preserve"><value>預計結束時間（選用）</value></data>
+  <data name="Shown in the maintenance notice; time zone {0}." xml:space="preserve"><value>顯示在維護提示中；時區 {0}。</value></data>
+  <data name="Additional note (optional, shown in the maintenance notice)" xml:space="preserve"><value>附加說明（選用，顯示在維護提示中）</value></data>
+  <data name="This server is marked as a UAT test system (Settings &gt; Features); while Production is selected it counts as Test." xml:space="preserve"><value>此伺服器已標記為 UAT 測試系統（設定 &gt; 功能）；只要選擇了「生產」，就視為測試。</value></data>
+  <data name="Maintenance work" xml:space="preserve"><value>維護作業</value></data>
+  <data name="Test environment: not the production store. Data may be reset at any time." xml:space="preserve"><value>測試環境：不是生產商店。資料可能隨時被重設。</value></data>
+  <data name="Maintenance: uploads, registrations and other changes are paused for the moment. The catalog, downloads and installations from Power PDF keep working." xml:space="preserve"><value>維護中：上傳、註冊和其他變更暫時無法進行。目錄、下載以及從 Power PDF 安裝照常可用。</value></data>
+  <data name="Expected until {0}." xml:space="preserve"><value>預計持續到 {0}。</value></data>
+  <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>您是管理員：您仍可進行變更。</value></data>
+  <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>此操作在維護期間暫停。請稍後再試；您輸入的內容未儲存。</value></data>
+  <data name="Back to the catalog" xml:space="preserve"><value>返回目錄</value></data>
 </root>

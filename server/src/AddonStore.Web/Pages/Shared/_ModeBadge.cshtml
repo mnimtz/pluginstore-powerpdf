@@ -1,0 +1,18 @@
+@model (string Mode, bool Inline)
+@* S2.6.0: the badge of an operating mode: red "Beta", yellow "Maintenance" with a wrench, blue "Test" with a flask.
+   Own simple icons (no third-party artwork); nothing for production. *@
+@{
+    var cls = "mode-badge mode-" + Model.Mode + (Model.Inline ? " inline" : "");
+}
+@switch (Model.Mode)
+{
+    case "beta":
+        <span class="@cls">@L["Beta"]</span>
+        break;
+    case "maintenance":
+        <span class="@cls"><svg class="mode-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M10.6 1.2a4 4 0 0 0-4.3 5.5L1.5 11.5a1.6 1.6 0 0 0 2.3 2.3l4.8-4.8a4 4 0 0 0 5.5-4.3l-2.3 2.3-2-.6-.6-2z" /></svg>@L["Maintenance"]</span>
+        break;
+    case "test":
+        <span class="@cls"><svg class="mode-ico mode-ico-line" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 1.5h5M6.6 1.5v4.4L2.4 13a1.2 1.2 0 0 0 1 1.8h9.2a1.2 1.2 0 0 0 1-1.8L9.4 5.9V1.5M4.3 10h7.4" /></svg>@L["Test"]</span>
+        break;
+}

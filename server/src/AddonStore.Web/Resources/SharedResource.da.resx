@@ -1756,4 +1756,18 @@
   <data name="Set by an admin; package: {0}" xml:space="preserve"><value>Angivet af en administrator; pakke: {0}</value></data>
   <data name="Minimum Power PDF version saved." xml:space="preserve"><value>Minimumsversion af Power PDF gemt.</value></data>
   <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>Angiv en version som 2025.3 eller 2025.3.7.</value></data>
+  <data name="Maintenance" xml:space="preserve"><value>Vedligeholdelse</value></data>
+  <data name="Uploads, registrations, ratings, reports and catalog changes pause for everybody except admins; the catalog, downloads and installations from Power PDF keep working. A yellow badge with a wrench and a notice on every page." xml:space="preserve"><value>Upload, registrering, bedømmelser, rapporter og katalogændringer er sat på pause for alle undtagen administratorer; katalog, downloads og installationer fra Power PDF fungerer fortsat. Et gult mærke med en skruenøgle og en meddelelse på hver side.</value></data>
+  <data name="A blue Test badge and a notice on every page; search engines are asked not to index the store. For test and acceptance systems." xml:space="preserve"><value>Et blåt Test-mærke og en meddelelse på hver side; søgemaskiner bedes om ikke at indeksere butikken. Til test- og godkendelsessystemer.</value></data>
+  <data name="Expected end (optional)" xml:space="preserve"><value>Forventet afslutning (valgfrit)</value></data>
+  <data name="Shown in the maintenance notice; time zone {0}." xml:space="preserve"><value>Vises i vedligeholdelsesmeddelelsen; tidszone {0}.</value></data>
+  <data name="Additional note (optional, shown in the maintenance notice)" xml:space="preserve"><value>Ekstra bemærkning (valgfrit, vises i vedligeholdelsesmeddelelsen)</value></data>
+  <data name="This server is marked as a UAT test system (Settings &gt; Features); while Production is selected it counts as Test." xml:space="preserve"><value>Denne server er markeret som UAT-testsystem (Indstillinger &gt; Funktioner); så længe Produktion er valgt, gælder den som Test.</value></data>
+  <data name="Maintenance work" xml:space="preserve"><value>Vedligeholdelsesarbejde</value></data>
+  <data name="Test environment: not the production store. Data may be reset at any time." xml:space="preserve"><value>Testmiljø: ikke produktionsbutikken. Data kan til enhver tid blive nulstillet.</value></data>
+  <data name="Maintenance: uploads, registrations and other changes are paused for the moment. The catalog, downloads and installations from Power PDF keep working." xml:space="preserve"><value>Vedligeholdelse: upload, registrering og andre ændringer er midlertidigt ikke mulige. Katalog, downloads og installationer fra Power PDF fungerer fortsat.</value></data>
+  <data name="Expected until {0}." xml:space="preserve"><value>Forventet indtil {0}.</value></data>
+  <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>Du er administrator: ændringer er fortsat mulige for dig.</value></data>
+  <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Denne handling er sat på pause under vedligeholdelsen. Prøv igen senere; dine indtastninger er ikke gemt.</value></data>
+  <data name="Back to the catalog" xml:space="preserve"><value>Tilbage til kataloget</value></data>
 </root>

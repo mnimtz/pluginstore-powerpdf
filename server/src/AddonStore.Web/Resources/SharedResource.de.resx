@@ -1756,4 +1756,18 @@
   <data name="Set by an admin; package: {0}" xml:space="preserve"><value>Vom Admin gesetzt; Paket: {0}</value></data>
   <data name="Minimum Power PDF version saved." xml:space="preserve"><value>Mindestversion von Power PDF gespeichert.</value></data>
   <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>Geben Sie eine Version wie 2025.3 oder 2025.3.7 ein.</value></data>
+  <data name="Maintenance" xml:space="preserve"><value>Wartung</value></data>
+  <data name="Uploads, registrations, ratings, reports and catalog changes pause for everybody except admins; the catalog, downloads and installations from Power PDF keep working. A yellow badge with a wrench and a notice on every page." xml:space="preserve"><value>Hochladen, Registrieren, Bewertungen, Meldungen und Katalogänderungen ruhen für alle außer Admins; Katalog, Downloads und Installationen aus Power PDF funktionieren weiter. Ein gelbes Abzeichen mit Werkzeug und ein Hinweis auf jeder Seite.</value></data>
+  <data name="A blue Test badge and a notice on every page; search engines are asked not to index the store. For test and acceptance systems." xml:space="preserve"><value>Ein blaues Test-Abzeichen und ein Hinweis auf jeder Seite; Suchmaschinen werden gebeten, den Store nicht aufzunehmen. Für Test- und Abnahmesysteme.</value></data>
+  <data name="Expected end (optional)" xml:space="preserve"><value>Voraussichtliches Ende (optional)</value></data>
+  <data name="Shown in the maintenance notice; time zone {0}." xml:space="preserve"><value>Wird im Wartungshinweis angezeigt; Zeitzone {0}.</value></data>
+  <data name="Additional note (optional, shown in the maintenance notice)" xml:space="preserve"><value>Zusätzlicher Hinweis (optional, erscheint im Wartungshinweis)</value></data>
+  <data name="This server is marked as a UAT test system (Settings &gt; Features); while Production is selected it counts as Test." xml:space="preserve"><value>Dieser Server ist als UAT-Testsystem markiert (Einstellungen &gt; Funktionen); solange Produktiv gewählt ist, gilt er als Test.</value></data>
+  <data name="Maintenance work" xml:space="preserve"><value>Wartungsarbeiten</value></data>
+  <data name="Test environment: not the production store. Data may be reset at any time." xml:space="preserve"><value>Testumgebung: nicht der produktive Store. Daten können jederzeit zurückgesetzt werden.</value></data>
+  <data name="Maintenance: uploads, registrations and other changes are paused for the moment. The catalog, downloads and installations from Power PDF keep working." xml:space="preserve"><value>Wartungsarbeiten: Hochladen, Registrieren und andere Änderungen sind vorübergehend nicht möglich. Katalog, Downloads und Installationen aus Power PDF funktionieren weiter.</value></data>
+  <data name="Expected until {0}." xml:space="preserve"><value>Voraussichtlich bis {0}.</value></data>
+  <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>Sie sind Admin: Änderungen bleiben für Sie möglich.</value></data>
+  <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Diese Aktion ruht während der Wartung. Bitte versuchen Sie es später erneut; Ihre Eingabe wurde nicht gespeichert.</value></data>
+  <data name="Back to the catalog" xml:space="preserve"><value>Zurück zum Katalog</value></data>
 </root>

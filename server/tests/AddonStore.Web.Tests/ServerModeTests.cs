@@ -14,14 +14,18 @@ public class ServerModeTests
     [InlineData("Production", "production")]
     [InlineData("", "production")]
     [InlineData(null, "production")]
-    [InlineData("maintenance", "production")]
+    [InlineData("maintenance", "maintenance")]
+    [InlineData(" Test ", "test")]
+    [InlineData("offline", "production")]
     [InlineData("<script>", "production")]
     public void Values_are_normalized(string? given, string expected) => Assert.Equal(expected, ServerMode.Normalize(given));
 
     [Theory]
     [InlineData("beta", true)]
     [InlineData("production", true)]
-    [InlineData("test", false)]
+    [InlineData("test", true)]
+    [InlineData("maintenance", true)]
+    [InlineData("offline", false)]
     [InlineData("", false)]
     [InlineData(null, false)]
     public void Known_modes(string? given, bool known) => Assert.Equal(known, ServerMode.IsKnown(given));

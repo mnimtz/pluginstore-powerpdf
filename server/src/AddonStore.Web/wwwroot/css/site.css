@@ -373,15 +373,35 @@ input:focus, textarea:focus, select:focus { outline: 2px solid var(--tun-blue); 
 /* UAT (S1.21.0): fixed note on every page of a test store */
 .uat-band { background: #FFDF85; color: #634E12; text-align: center; font-weight: 700; font-size: .85rem; padding: 5px 12px; letter-spacing: .02em; }
 
-/* S2.4.0: beta mode. A red pill at the end of the title block that reaches over the header line (red #E30613:
-   white text 4.9:1); the same pill inline in the start page note, the disclaimer and the settings card */
+/* S2.4.0/S2.6.0: operating mode badges. A pill at the end of the title block that reaches over the header line;
+   the same pill smaller inline in notices, the disclaimer and the settings card.
+   beta: red #E30613 with white text (4.9:1); maintenance: brand yellow with navy text and a wrench; test: blue ink
+   #0072BC with white text (5:1) and a flask */
 header.site .title { position: relative; }
-.beta-badge { display: inline-block; background: #E30613; color: #fff; font: 700 .86rem/1 "Red Hat Display", Arial, sans-serif;
-  letter-spacing: .02em; padding: 6px 12px 7px; border-radius: 7px; text-decoration: none; white-space: nowrap;
-  box-shadow: 0 3px 8px rgba(227, 6, 19, .28); }
-header.site .title .beta-badge { position: absolute; inset-inline-end: -12px; bottom: -31px; z-index: 6; }
-a.beta-badge:hover, a.beta-badge:focus-visible { background: #B3261E; color: #fff; outline: none; }
-.beta-badge.inline { position: static; font-size: .7rem; padding: 3px 7px 4px; border-radius: 5px; box-shadow: none; vertical-align: 1px; }
+.mode-badge { display: inline-flex; align-items: center; gap: 5px; font: 700 .86rem/1 "Red Hat Display", Arial, sans-serif;
+  letter-spacing: .02em; padding: 6px 12px 7px; border-radius: 7px; text-decoration: none; white-space: nowrap; }
+.mode-badge.mode-beta { background: #E30613; color: #fff; box-shadow: 0 3px 8px rgba(227, 6, 19, .28); }
+.mode-badge.mode-maintenance { background: var(--tun-yellow); color: var(--tun-navy); box-shadow: 0 3px 8px rgba(160, 120, 0, .28); }
+.mode-badge.mode-test { background: var(--tun-blue-ink); color: #fff; box-shadow: 0 3px 8px rgba(0, 114, 188, .28); }
+.mode-ico { width: 14px; height: 14px; flex: none; fill: currentColor; }
+.mode-ico-line { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+header.site .title .mode-link { position: absolute; inset-inline-end: -12px; bottom: -31px; z-index: 6; text-decoration: none; }
+a.mode-link:hover .mode-badge, a.mode-link:focus-visible .mode-badge { filter: brightness(.92); }
+a.mode-link:focus-visible { outline: none; }
+a.mode-link:focus-visible .mode-badge { outline: 2px solid var(--tun-navy); outline-offset: 2px; }
+.mode-badge.inline { font-size: .7rem; padding: 3px 7px 4px; border-radius: 5px; box-shadow: none; vertical-align: 1px; gap: 4px; }
+.mode-badge.inline .mode-ico { width: 11px; height: 11px; }
+/* notices on every page: maintenance (not dismissible) and test */
+.mode-band-maintenance { display: flex; gap: 10px; align-items: flex-start; justify-content: center; flex-wrap: wrap;
+  background: #FFF4CC; color: var(--tun-navy); border-bottom: 1px solid #F0D27A; padding: 8px 16px; font-size: .88rem; line-height: 1.45; }
+.mode-band-maintenance > span:last-child { max-width: 980px; }
+.mode-band-maintenance b { font-weight: 700; margin-inline-start: 4px; }
+.mode-band-maintenance .mode-band-note { display: inline; margin-inline-start: 4px; }
+.mode-band-maintenance em { display: block; font-style: normal; color: var(--tun-slate); font-size: .82rem; }
+.mode-band-test { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; }
+.maintenance-card { max-width: 760px; margin: 24px auto; line-height: 1.55; border-inline-start: 4px solid var(--tun-yellow); }
+.maintenance-card h1 { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; font-size: 1.8rem; margin: 0 0 12px; }
+.maintenance-note { background: #FFF4CC; border-radius: 6px; padding: 8px 12px; }
 .hero-beta { margin: 0 0 8px; color: #fff; font-size: .88rem; }
 .hero-beta a { color: var(--tun-on-navy); }
 .beta-card { max-width: 820px; line-height: 1.55; border-inline-start: 4px solid #E30613; background: #FFF5F5; scroll-margin-top: 90px; }
@@ -401,6 +421,11 @@ a.beta-badge:hover, a.beta-badge:focus-visible { background: #B3261E; color: #ff
 .mode-choice input { width: auto; margin-top: 3px; }
 .mode-choice b { display: flex; gap: 8px; align-items: center; color: var(--tun-navy); }
 .mode-choice small { display: block; margin-top: 4px; color: var(--tun-slate); font-size: .84rem; line-height: 1.4; }
+.mode-extra { display: grid; grid-template-columns: minmax(200px, 260px) minmax(0, 1fr); gap: 10px 16px; align-items: start; }
+.mode-extra label { display: block; margin-bottom: 4px; }
+.mode-extra input { width: 100%; }
+.mode-extra small { display: block; margin-top: 4px; }
+@media (max-width: 700px) { .mode-extra { grid-template-columns: minmax(0, 1fr); } }
 .alert code { word-break: break-all; }
 
 ul.findings { list-style: none; padding: 0; margin: 10px 0 0; }

@@ -27,6 +27,10 @@ public class SettingsModel : PageModel
     /// <summary>S2.4.0: operating mode (production or beta) and whether the app setting Server:Mode fixes it.</summary>
     public string ServerModeValue { get; private set; } = ServerMode.Production;
     public bool ServerModeForced { get; private set; }
+    /// <summary>S2.6.0: expected end of a maintenance as datetime-local value, the note, and the zone they are shown in.</summary>
+    public string ModeUntilLocal { get; private set; } = "";
+    public string ModeNote { get; private set; } = "";
+    public string TimeZoneId { get; private set; } = "";
     public int ApproverCount { get; private set; }
     /// <summary>Sections of the left navigation (S0.18.0); one is shown at a time.</summary>
     public static readonly (string Key, string Label)[] Views =
@@ -375,7 +379,8 @@ public class SettingsModel : PageModel
         string.IsNullOrEmpty(u.UserInfo) && string.IsNullOrEmpty(u.Query) && string.IsNullOrEmpty(u.Fragment);
 
     /// <summary>S2.4.0: switches the operating mode; refused while the app setting Server:Mode fixes it.</summary>
-    public async Task OnPostServerModeAsync(string? serverMode, [FromServices] IConfiguration config)
+    public async Task OnPostServerModeAsync(string? serverMode, DateTime? maintenanceUntil, string? modeNote,
+                                            [FromServices] IConfiguration config, [FromServices] TimeDisplay time)
     {
         var admin = await _users.GetUserAsync(User);
         if (ServerMode.IsForced(config))
@@ -393,6 +398,10 @@ public class SettingsModel : PageModel
             var mode = ServerMode.Normalize(serverMode);
             var before = ServerMode.Normalize(await _settings.GetAsync(ServerMode.Key));
             await _settings.SetAsync(ServerMode.Key, mode);
+            // S2.6.0: the expected end (entered in the server's time zone, stored as UTC) and the note
+            var until = maintenanceUntil is { } mu ? time.ToUtc(mu) : (DateTime?)null;
+            await _settings.SetAsync(ServerMode.UntilKey, until is { } u ? u.ToString("o", System.Globalization.CultureInfo.InvariantCulture) : "");
+            await _settings.SetAsync(ServerMode.NoteKey, ServerMode.CleanNote(modeNote));
             CatalogUi.Invalidate();   // cached catalog answers carry the mode
             if (before != mode) await _audit.LogAsync(admin!.DisplayName, "settings.changed", ServerMode.Key, $"{before} -> {mode}");
             Notice = "Operating mode saved.";
@@ -705,8 +714,12 @@ public class SettingsModel : PageModel
         SourcePolicy = sp is "off" or "recommended" or "required" ? sp : "required";
         FourEyes = await _settings.GetAsync("Review.FourEyes") == "on";
         var cfg = HttpContext.RequestServices.GetRequiredService<IConfiguration>();
-        ServerModeValue = await ServerMode.GetAsync(_settings, cfg);
+        ServerModeValue = await ServerMode.SelectedAsync(_settings, cfg);
         ServerModeForced = ServerMode.IsForced(cfg);
+        var timeDisplay = HttpContext.RequestServices.GetRequiredService<TimeDisplay>();
+        ModeUntilLocal = await ServerMode.UntilAsync(_settings) is { } mu ? timeDisplay.ToLocal(mu).ToString("yyyy-MM-ddTHH:mm", System.Globalization.CultureInfo.InvariantCulture) : "";
+        ModeNote = await ServerMode.NoteAsync(_settings);
+        TimeZoneId = timeDisplay.ZoneId;
         await _signing.EnsureLoadedAsync();
         SigningProblem = _signing.Problem;
         SigningKeyId = _signing.KeyId;

@@ -1395,14 +1395,26 @@ Every catalog entry carries a signature of the server (ECDSA P-256 over
 packages signed with a key it trusts, so nothing changes for you as a
 submitter: the server signs what it accepted.
 
-## Operating mode (production or beta)
+## Operating mode (production, beta, maintenance, test)
 
 Admins set the operating mode under Settings > Server > Operating mode (or with the
 app setting `Server:Mode`, which wins). `GET /api/ping`, `GET /api/catalog` (JSON) and
-`GET /api/client/access` report it as `serverMode`: `production` (default) or `beta`.
-In beta the portal shows a red "Beta" badge at the logo, a note on the start page and a
-beta section in the disclaimer; store clients that read `serverMode` show the badge in
-the store window. Nothing is locked in beta: uploads, reviews and installs work as usual.
+`GET /api/client/access` report it as `serverMode`: `production` (default), `beta`,
+`maintenance` or `test`. Store clients that read `serverMode` show the same badge in the
+store window.
+
+- `beta`: red "Beta" badge at the logo, a note on the start page, a beta section in the
+  disclaimer. Nothing is locked.
+- `maintenance` (S2.6.0): yellow badge with a wrench and a notice on every page,
+  optionally with an expected end. Every change (POST, PUT, PATCH, DELETE) pauses for
+  everybody except admins (sign-in cookie or admin token): the API answers
+  `503 SERVER_MAINTENANCE` with `Retry-After` and `until`. Reading keeps working:
+  catalog, add-on pages, downloads, installs. Open as well: sign-in, the dry run
+  `POST /api/packages/validate`, and the store client's daily state and seat release.
+  **What to do:** do not retry in a loop; wait for `Retry-After` or check
+  `GET /api/ping` until `serverMode` is no longer `maintenance`, then submit again.
+- `test`: blue "Test" badge and a notice on every page; search engines are kept out.
+  A server marked as UAT test system counts as `test` while `production` is selected.
 
 ## UAT environments (test store before production)
 
@@ -1893,6 +1905,7 @@ be free of warnings before review. Info is for information only.
 | MIN_HOST_VERSION_INVALID | error | `minPowerPdfVersion` must be digits and dots, e.g. `5.0` or `2025.3` (manifest, or the admins' PATCH field). |
 | INFLATE_LIMIT | error | The package unpacks to more than 400 MB; the checks need to read every file. |
 | CSRF_CHECK | error (403) | An API write authenticated by the sign-in cookie needs the header `X-Requested-With`; agents use a bearer token instead. |
+| SERVER_MAINTENANCE | error (503) | The store is in maintenance; changes pause for everybody except admins. Wait for `Retry-After` (or `until`), or poll `GET /api/ping` until `serverMode` is no longer `maintenance`. |
 | VISIBILITY_INVALID | error | `visibility` must be `public` or `private` (manifest or PATCH; the store client is always public). |
 | VISIBILITY_KEPT | info | The manifest asks for another visibility than the package has; visibility only changes in the portal or with PATCH. |
 | CUSTOMER_INVALID | error (400) | Customer: name 1 to 120 characters, valid email, two-letter language, status active or paused. |

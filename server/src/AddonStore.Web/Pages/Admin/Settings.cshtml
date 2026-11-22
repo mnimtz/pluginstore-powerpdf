@@ -451,21 +451,45 @@ else if (Model.SigningKeyId.Length > 0)
 
 @if (Model.View == "server")
 {
-@* S2.4.0: operating mode; beta marks the whole store (badge at the logo, start page note, disclaimer section) *@
-<div class="card" style="max-width:760px" id="server-mode">
+@* S2.4.0/S2.6.0: operating mode: production, beta (badge, notes), maintenance (changes paused), test (badge, notice, no indexing) *@
+<div class="card" style="max-width:860px" id="server-mode">
     <h2 style="margin-top:0">@L["Operating mode"]</h2>
     <form method="post" asp-page-handler="ServerMode" class="stack" style="max-width:none">
+        @{ var dis = Model.ServerModeForced; }
         <div class="mode-choices">
             <label class="mode-choice">
-                <input type="radio" name="serverMode" value="production" checked="@(Model.ServerModeValue == AddonStore.Web.Services.ServerMode.Production)" disabled="@Model.ServerModeForced" />
+                <input type="radio" name="serverMode" value="production" checked="@(Model.ServerModeValue == "production")" disabled="@dis" />
                 <span><b>@L["Production"]</b><small>@L["The store as usual, without beta notes."]</small></span>
             </label>
             <label class="mode-choice">
-                <input type="radio" name="serverMode" value="beta" checked="@(Model.ServerModeValue == AddonStore.Web.Services.ServerMode.Beta)" disabled="@Model.ServerModeForced" />
-                <span><b>@L["Beta"] <span class="beta-badge inline">@L["Beta"]</span></b><small>@L["A red Beta badge at the logo on every page and in the store window of Power PDF, a short note on the start page and beta notes in the disclaimer. Everything keeps working."]</small></span>
+                <input type="radio" name="serverMode" value="beta" checked="@(Model.ServerModeValue == "beta")" disabled="@dis" />
+                <span><b>@L["Beta"] <partial name="_ModeBadge" model='("beta", true)' /></b><small>@L["A red Beta badge at the logo on every page and in the store window of Power PDF, a short note on the start page and beta notes in the disclaimer. Everything keeps working."]</small></span>
+            </label>
+            <label class="mode-choice">
+                <input type="radio" name="serverMode" value="maintenance" checked="@(Model.ServerModeValue == "maintenance")" disabled="@dis" />
+                <span><b>@L["Maintenance"] <partial name="_ModeBadge" model='("maintenance", true)' /></b><small>@L["Uploads, registrations, ratings, reports and catalog changes pause for everybody except admins; the catalog, downloads and installations from Power PDF keep working. A yellow badge with a wrench and a notice on every page."]</small></span>
+            </label>
+            <label class="mode-choice">
+                <input type="radio" name="serverMode" value="test" checked="@(Model.ServerModeValue == "test")" disabled="@dis" />
+                <span><b>@L["Test"] <partial name="_ModeBadge" model='("test", true)' /></b><small>@L["A blue Test badge and a notice on every page; search engines are asked not to index the store. For test and acceptance systems."]</small></span>
             </label>
         </div>
-        @if (Model.ServerModeForced)
+        <div class="mode-extra">
+            <div>
+                <label for="mode-until">@L["Expected end (optional)"]</label>
+                <input type="datetime-local" id="mode-until" name="maintenanceUntil" value="@Model.ModeUntilLocal" disabled="@dis" />
+                <small class="muted">@L["Shown in the maintenance notice; time zone {0}.", Model.TimeZoneId]</small>
+            </div>
+            <div>
+                <label for="mode-note">@L["Additional note (optional, shown in the maintenance notice)"]</label>
+                <input type="text" id="mode-note" name="modeNote" value="@Model.ModeNote" maxlength="@AddonStore.Web.Services.ServerMode.MaxNote" disabled="@dis" />
+            </div>
+        </div>
+        @if (Model.UatMarkedAsTest)
+        {
+            <p class="muted small" style="margin:0">@L["This server is marked as a UAT test system (Settings > Features); while Production is selected it counts as Test."]</p>
+        }
+        @if (dis)
         {
             <p class="muted small" style="margin:0">@L["The operating mode is fixed by the app setting Server:Mode; change it there."]</p>
         }

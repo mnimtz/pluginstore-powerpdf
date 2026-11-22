@@ -1756,4 +1756,18 @@
   <data name="Set by an admin; package: {0}" xml:space="preserve"><value>عيّنها مسؤول؛ الحزمة: {0}</value></data>
   <data name="Minimum Power PDF version saved." xml:space="preserve"><value>تم حفظ الحد الأدنى لإصدار Power PDF.</value></data>
   <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>أدخل إصدارًا مثل 2025.3 أو 2025.3.7.</value></data>
+  <data name="Maintenance" xml:space="preserve"><value>الصيانة</value></data>
+  <data name="Uploads, registrations, ratings, reports and catalog changes pause for everybody except admins; the catalog, downloads and installations from Power PDF keep working. A yellow badge with a wrench and a notice on every page." xml:space="preserve"><value>يتوقف الرفع والتسجيل والتقييمات والبلاغات وتغييرات الكتالوج للجميع باستثناء المسؤولين؛ ويستمر عمل الكتالوج والتنزيلات والتثبيت من Power PDF. شارة صفراء بمفتاح ربط وإشعار في كل صفحة.</value></data>
+  <data name="A blue Test badge and a notice on every page; search engines are asked not to index the store. For test and acceptance systems." xml:space="preserve"><value>شارة Test زرقاء وإشعار في كل صفحة؛ ويُطلب من محركات البحث عدم فهرسة المتجر. لأنظمة الاختبار والقبول.</value></data>
+  <data name="Expected end (optional)" xml:space="preserve"><value>وقت الانتهاء المتوقع (اختياري)</value></data>
+  <data name="Shown in the maintenance notice; time zone {0}." xml:space="preserve"><value>يظهر في إشعار الصيانة؛ المنطقة الزمنية {0}.</value></data>
+  <data name="Additional note (optional, shown in the maintenance notice)" xml:space="preserve"><value>ملاحظة إضافية (اختيارية، تظهر في إشعار الصيانة)</value></data>
+  <data name="This server is marked as a UAT test system (Settings &gt; Features); while Production is selected it counts as Test." xml:space="preserve"><value>تم تمييز هذا الخادم كنظام اختبار UAT (الإعدادات &gt; الوظائف)؛ وطالما تم اختيار الإنتاج فإنه يُعدّ اختبارًا.</value></data>
+  <data name="Maintenance work" xml:space="preserve"><value>أعمال الصيانة</value></data>
+  <data name="Test environment: not the production store. Data may be reset at any time." xml:space="preserve"><value>بيئة اختبار: ليست متجر الإنتاج. قد تتم إعادة تعيين البيانات في أي وقت.</value></data>
+  <data name="Maintenance: uploads, registrations and other changes are paused for the moment. The catalog, downloads and installations from Power PDF keep working." xml:space="preserve"><value>صيانة: الرفع والتسجيل والتغييرات الأخرى غير ممكنة مؤقتًا. يستمر عمل الكتالوج والتنزيلات والتثبيت من Power PDF.</value></data>
+  <data name="Expected until {0}." xml:space="preserve"><value>متوقع حتى {0}.</value></data>
+  <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>أنت مسؤول: تظل التغييرات ممكنة بالنسبة لك.</value></data>
+  <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>هذا الإجراء متوقف أثناء الصيانة. يُرجى المحاولة مرة أخرى لاحقًا؛ لم يتم حفظ ما أدخلته.</value></data>
+  <data name="Back to the catalog" xml:space="preserve"><value>العودة إلى الكتالوج</value></data>
 </root>

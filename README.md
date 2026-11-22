@@ -644,6 +644,14 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Maintenance and test mode (S2.6.0, Nov 22, 2026):** the operating mode has four values. `maintenance`: a yellow badge
+with a wrench at the logo and a notice on every page (optional expected end and note); every change (POST, PUT, PATCH,
+DELETE) pauses for everybody except admins (Services/MaintenanceGate.cs): the API answers `503 SERVER_MAINTENANCE` with
+`Retry-After`, web forms lead to `/Maintenance`. Reading keeps working (catalog, add-on pages, downloads, installs), and so
+do sign-in, the dry-run package check, the share click counter and the store client's daily state and seat release.
+`test`: a blue badge with a flask and a notice on every page, `noindex`; a server marked as UAT test system counts as test
+while production is selected. Badges and notices come from `_ModeBadge`; 14 new texts in 21 languages.
+
 **Minimum Power PDF version per add-on (S2.5.0, Nov 22, 2026):** "All plug-ins" shows the minimum Power PDF version in
 force for each add-on; admins change it right there (field with suggestions from every known minimum, empty = the
 package's own value) or with `PATCH /api/packages/{id}` `{"minPowerPdfVersion": "2025.3.7"}` (admins only, `null` resets).

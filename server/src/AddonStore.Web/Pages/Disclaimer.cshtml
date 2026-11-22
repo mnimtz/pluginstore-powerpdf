@@ -13,7 +13,7 @@
 @if (isBeta)
 {
     <section class="card beta-card" id="beta" aria-labelledby="beta-title">
-        <h2 id="beta-title"><span class="beta-badge inline">@L["Beta"]</span> @L["Beta phase"]</h2>
+        <h2 id="beta-title"><partial name="_ModeBadge" model='("beta", true)' /> @L["Beta phase"]</h2>
         <p>@L["The Add-on Store and its catalog are being trialled (beta)."]</p>
         <ul>
             <li>@L["Features, content and procedures may change or be discontinued at any time."]</li>

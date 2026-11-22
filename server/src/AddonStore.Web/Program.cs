@@ -367,6 +367,9 @@ app.Use(async (ctx, next) =>
     await next();
 });
 
+// S2.6.0: maintenance mode pauses changes for everybody except admins (Services/MaintenanceGate.cs)
+app.Use((ctx, next) => MaintenanceGate.Middleware(ctx, () => next()));
+
 // First-run: until the first (admin) account exists, the UI leads to /Setup.
 var setupDone = false;
 app.Use(async (ctx, next) =>

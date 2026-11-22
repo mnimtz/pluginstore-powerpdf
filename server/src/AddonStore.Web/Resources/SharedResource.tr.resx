@@ -1756,4 +1756,18 @@
   <data name="Set by an admin; package: {0}" xml:space="preserve"><value>Bir yönetici tarafından ayarlandı; paket: {0}</value></data>
   <data name="Minimum Power PDF version saved." xml:space="preserve"><value>En düşük Power PDF sürümü kaydedildi.</value></data>
   <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>2025.3 veya 2025.3.7 gibi bir sürüm girin.</value></data>
+  <data name="Maintenance" xml:space="preserve"><value>Bakım</value></data>
+  <data name="Uploads, registrations, ratings, reports and catalog changes pause for everybody except admins; the catalog, downloads and installations from Power PDF keep working. A yellow badge with a wrench and a notice on every page." xml:space="preserve"><value>Yüklemeler, kayıtlar, puanlamalar, bildirimler ve katalog değişiklikleri yöneticiler dışında herkes için duraklatılır; katalog, indirmeler ve Power PDF'ten kurulumlar çalışmaya devam eder. Her sayfada anahtarlı sarı bir rozet ve bir uyarı.</value></data>
+  <data name="A blue Test badge and a notice on every page; search engines are asked not to index the store. For test and acceptance systems." xml:space="preserve"><value>Her sayfada mavi bir Test rozeti ve bir uyarı; arama motorlarından mağazayı dizine eklememeleri istenir. Test ve kabul sistemleri için.</value></data>
+  <data name="Expected end (optional)" xml:space="preserve"><value>Beklenen bitiş (isteğe bağlı)</value></data>
+  <data name="Shown in the maintenance notice; time zone {0}." xml:space="preserve"><value>Bakım uyarısında gösterilir; saat dilimi {0}.</value></data>
+  <data name="Additional note (optional, shown in the maintenance notice)" xml:space="preserve"><value>Ek not (isteğe bağlı, bakım uyarısında gösterilir)</value></data>
+  <data name="This server is marked as a UAT test system (Settings &gt; Features); while Production is selected it counts as Test." xml:space="preserve"><value>Bu sunucu UAT test sistemi olarak işaretlendi (Ayarlar &gt; İşlevler); Üretim seçili olduğu sürece Test sayılır.</value></data>
+  <data name="Maintenance work" xml:space="preserve"><value>Bakım çalışmaları</value></data>
+  <data name="Test environment: not the production store. Data may be reset at any time." xml:space="preserve"><value>Test ortamı: üretim mağazası değildir. Veriler her an sıfırlanabilir.</value></data>
+  <data name="Maintenance: uploads, registrations and other changes are paused for the moment. The catalog, downloads and installations from Power PDF keep working." xml:space="preserve"><value>Bakım: yüklemeler, kayıtlar ve diğer değişiklikler şu anda geçici olarak yapılamıyor. Katalog, indirmeler ve Power PDF'ten kurulumlar çalışmaya devam ediyor.</value></data>
+  <data name="Expected until {0}." xml:space="preserve"><value>Beklenen bitiş: {0}.</value></data>
+  <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>Yöneticisiniz: değişiklikler sizin için mümkün olmaya devam ediyor.</value></data>
+  <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Bu işlem bakım süresince duraklatıldı. Lütfen daha sonra tekrar deneyin; girdiğiniz bilgiler kaydedilmedi.</value></data>
+  <data name="Back to the catalog" xml:space="preserve"><value>Kataloğa dön</value></data>
 </root>
