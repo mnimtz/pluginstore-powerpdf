@@ -269,7 +269,7 @@ release.
 docs/help/help.json      required
 docs/help/en.html        required
 docs/help/de.html        recommended, as fr, it, es and nl (the six manual languages)
-docs/help/img/...        optional pictures (PNG, JPEG, GIF, WebP), at most 2 MB each
+docs/help/img/...        optional pictures (PNG or JPEG only), at most 2 MB each
 ```
 
 **2. docs/help/help.json** (at most 256 KB)
@@ -285,9 +285,12 @@ docs/help/img/...        optional pictures (PNG, JPEG, GIF, WebP), at most 2 MB 
 ```
 
 - `addon` is exactly the `id` of your manifest.
-- `langs` contains `en`; every listed language needs `docs/help/<lang>.html`.
+- `langs` contains `en`; two-letter codes only (`de`, `zh`: the window picks the
+  page by the first two letters of the Power PDF language); every listed language
+  needs `docs/help/<lang>.html`. Other codes are skipped (HELP_IGNORED).
 - `topics` (optional) maps a short name to a chapter id; each chapter id needs an
-  element with that id in every page (HELP_TOPIC_UNKNOWN otherwise).
+  element with that id in every page (HELP_TOPIC_UNKNOWN otherwise); invalid
+  names are skipped (HELP_IGNORED).
 
 **3. The pages** (one per language, at most 4 MB each)
 
@@ -1704,10 +1707,11 @@ change them.
   highlights; private add-ons and the store client cannot be highlights.
   The JSON catalog reports `featured` per entry. Admins also set it with the
   star button on a tile of the start page.
-- `"minPowerPdfVersion": "2025.3.7"` (admins only, S2.5.0) sets the minimum
-  Power PDF version for the whole add-on: it wins over every version's
-  manifest value, also for later uploads, in the catalog, the store window,
-  the add-on page and the manual ZIP; `null` (or "") returns to each
+- `"minPowerPdfVersion": "2025.3.7"` (admins only, S2.5.0) raises the minimum
+  Power PDF version for the whole add-on: the catalog, the store window, the
+  add-on page and the manual ZIP use the higher of this value and each
+  version's own (also for later uploads); a value below the shown version's
+  own is refused (MIN_HOST_VERSION_INVALID), `null` (or "") returns to each
   version's own value, and a value equal to the shown version's own is stored
   as "none". `catalogEntry.minPowerPdfVersion` shows it. Admins also set it
   in the portal under "All plug-ins" (column "Minimum Power PDF version").
@@ -1859,8 +1863,9 @@ be free of warnings before review. Info is for information only.
 | ENTRY_NOT_SCANNED | error/warning | A binary over 120 MB (error) or a text file over 1 MB (warning) could not be scanned. |
 | DOCS_ACTIVE_CONTENT | warning | Help pages under docs/ contain scripts, frames or external resources. |
 | HELP_MISSING | error | No `docs/help/help.json`: required for add-ons that are not released yet; a released add-on gets it as an urgent warning until it brings a help (S2.7.0). |
-| HELP_INVALID | error | The help cannot be shown completely: wrong format or version, `addon` is not the package id, `langs` without `en` or with a missing page, a page over 4 MB, a picture over 2 MB, help.json over 256 KB or invalid topics. |
+| HELP_INVALID | error | The help cannot be shown completely: wrong format or version, `addon` is not the package id, `langs` without `en` or with a missing page, a page over 4 MB, a picture over 2 MB or help.json over 256 KB. |
 | HELP_LANGUAGES | warning | The help lacks one of the six manual languages (en, de, fr, it, es, nl). |
+| HELP_IGNORED | warning | help.json has entries the help window skips: language codes that are not two letters, invalid topic names or a "topics" that is not an object. |
 | HELP_TOPIC_UNKNOWN | warning | A chapter id of `topics` does not occur in en.html; F1 then opens the start of the help. |
 | HELP_NOT_UPDATED | warning | Update of a released add-on: the help is unchanged since the latest released version; describe the changes. |
 | HELP_HISTORY_MISSING | warning | Update of a released add-on: the English help does not name the new version (version history). |

@@ -1770,4 +1770,5 @@
   <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>Ön rendszergazda: a módosítások továbbra is lehetségesek az Ön számára.</value></data>
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Ez a művelet a karbantartás idejére szünetel. Kérjük, próbálja újra később; a bevitt adatok nem lettek mentve.</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>Vissza a katalógushoz</value></data>
+  <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>A rendszergazdai érték csak emelheti a minimumot: maga a csomag újabb Power PDF-verziót igényel.</value></data>
 </root>

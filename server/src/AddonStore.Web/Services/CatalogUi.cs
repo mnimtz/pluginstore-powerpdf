@@ -200,7 +200,12 @@ public static class CatalogUi
         TimeSpan.FromMilliseconds(100));
 
     /// <summary>The company name alone ("Tungsten Automation", "Tungsten Automation Corp." ...) is not an author.</summary>
-    public static bool IsCompanyName(string? author) => !string.IsNullOrWhiteSpace(author) && CompanyOnly.IsMatch(author);
+    public static bool IsCompanyName(string? author)
+    {
+        if (string.IsNullOrWhiteSpace(author) || author.Length > 200) return false;
+        try { return CompanyOnly.IsMatch(author); }
+        catch (System.Text.RegularExpressions.RegexMatchTimeoutException) { return false; }
+    }
 
     /// <summary>The owner's public name, or nothing when they opted out (S2.3.3: no company placeholder).</summary>
     public static string PublicName(AppUser? owner) =>

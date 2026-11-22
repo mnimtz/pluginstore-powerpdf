@@ -1770,4 +1770,5 @@
   <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>관리자이므로 계속 변경할 수 있습니다.</value></data>
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>유지 관리 중에는 이 작업이 일시 중지됩니다. 나중에 다시 시도하세요. 입력한 내용은 저장되지 않았습니다.</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>카탈로그로 돌아가기</value></data>
+  <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>관리자 값은 최소 버전을 올리는 것만 가능합니다. 패키지 자체가 더 높은 Power PDF 버전을 요구합니다.</value></data>
 </root>

@@ -19,9 +19,19 @@ public static class MinHost
     /// <summary>A version such as 2025.3 or 2025.3.7.0.</summary>
     public static bool IsValid(string? value) => !string.IsNullOrEmpty(value) && Pattern.IsMatch(value);
 
-    /// <summary>The value in force for <paramref name="v"/>: the admin's value when set, else the version's own.</summary>
-    public static string Effective(Package? pkg, PackageVersion? v) =>
-        !string.IsNullOrWhiteSpace(pkg?.MinPowerPdfOverride) ? pkg!.MinPowerPdfOverride!.Trim() : (v?.MinPowerPdfVersion ?? "").Trim();
+    /// <summary>
+    /// The value in force for <paramref name="v"/>: the higher of the admin's value and the version's own (S2.7.1, review:
+    /// an admin value below a later version's own minimum let the store window offer it on a Power PDF that is too old,
+    /// while the manual ZIP refused it). Admins raise the minimum, they never lower a developer's.
+    /// </summary>
+    public static string Effective(Package? pkg, PackageVersion? v)
+    {
+        var own = (v?.MinPowerPdfVersion ?? "").Trim();
+        var admin = (pkg?.MinPowerPdfOverride ?? "").Trim();
+        if (admin.Length == 0 || !IsValid(admin)) return own;
+        if (own.Length == 0 || !IsValid(own)) return admin;
+        return new SemVerComparer().Compare(admin, own) > 0 ? admin : own;
+    }
 
     /// <summary>
     /// Sets or resets (null or empty) the admin's value. A value equal to the package's own (<paramref name="packageValue"/>)
@@ -32,7 +42,10 @@ public static class MinHost
     {
         var v = (value ?? "").Trim();
         if (v.Length > 0 && !IsValid(v)) return "Enter a version such as 2025.3 or 2025.3.7.";
-        string? stored = v.Length == 0 || v == (packageValue ?? "").Trim() ? null : v;
+        var own = (packageValue ?? "").Trim();
+        if (v.Length > 0 && IsValid(own) && new SemVerComparer().Compare(v, own) < 0)
+            return "An admin value can only raise the minimum: the package itself requires a higher Power PDF version.";
+        string? stored = v.Length == 0 || v == own ? null : v;
         if (stored == pkg.MinPowerPdfOverride) return null;
         var before = pkg.MinPowerPdfOverride;
         pkg.MinPowerPdfOverride = stored;

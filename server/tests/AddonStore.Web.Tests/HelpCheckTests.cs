@@ -31,6 +31,32 @@ public class HelpCheckTests
     }
 
     [Fact]
+    public void Help_json_with_a_byte_order_mark_is_valid()
+    {
+        // PowerShell 5.1 writes UTF-8 with a BOM; the client's parser skips it (store/helpcore.h), so the check must too
+        var files = Files(("docs/help/en.html", En));
+        files["docs/help/help.json"] = new byte[] { 0xEF, 0xBB, 0xBF }.Concat(Encoding.UTF8.GetBytes(Json("[\"en\"]"))).ToArray();
+        var r = HelpCheck.Inspect(files, Id);
+        Assert.Empty(r.Problems);
+        Assert.Equal(new[] { "en" }, r.Langs);
+    }
+
+    [Fact]
+    public void Version_written_as_one_point_zero_is_valid()
+    {
+        var json = "{\"format\":\"tungsten-addon-help\",\"version\":1.0,\"addon\":\"" + Id + "\",\"langs\":[\"en\"]}";
+        Assert.Empty(HelpCheck.Inspect(Files(("docs/help/help.json", json), ("docs/help/en.html", En)), Id).Problems);
+    }
+
+    [Fact]
+    public void Deeply_nested_help_json_is_reported_not_thrown()
+    {
+        var deep = string.Concat(Enumerable.Repeat("{\"a\":", 100)) + "1" + new string('}', 100);
+        var r = HelpCheck.Inspect(Files(("docs/help/help.json", deep), ("docs/help/en.html", En)), Id);
+        Assert.Contains(r.Problems, p => p.Contains("not valid JSON"));
+    }
+
+    [Fact]
     public void No_help_at_all()
     {
         var r = HelpCheck.Inspect(Files(("docs/manual.pdf", "x")), Id);
@@ -53,9 +79,6 @@ public class HelpCheckTests
     [InlineData("{\"format\":\"tungsten-addon-help\",\"version\":1,\"addon\":\"com.other\",\"langs\":[\"en\"]}", "\"addon\"")]
     [InlineData("{\"format\":\"tungsten-addon-help\",\"version\":1,\"addon\":\"com.example.demo\",\"langs\":[\"de\"]}", "must contain \"en\"")]
     [InlineData("{\"format\":\"tungsten-addon-help\",\"version\":1,\"addon\":\"com.example.demo\",\"langs\":\"en\"}", "\"langs\" must be an array")]
-    [InlineData("{\"format\":\"tungsten-addon-help\",\"version\":1,\"addon\":\"com.example.demo\",\"langs\":[\"en\",\"../x\"]}", "invalid language code")]
-    [InlineData("{\"format\":\"tungsten-addon-help\",\"version\":1,\"addon\":\"com.example.demo\",\"langs\":[\"en\"],\"topics\":[]}", "\"topics\" must be an object")]
-    [InlineData("{\"format\":\"tungsten-addon-help\",\"version\":1,\"addon\":\"com.example.demo\",\"langs\":[\"en\"],\"topics\":{\"Bad Name\":\"x\"}}", "\"topics\" names")]
     [InlineData("not json", "not valid JSON")]
     [InlineData("[1,2]", "not a JSON object")]
     public void Broken_help_json(string json, string expected)
@@ -63,6 +86,20 @@ public class HelpCheckTests
         var r = HelpCheck.Inspect(Files(("docs/help/help.json", json), ("docs/help/en.html", En), ("docs/help/de.html", En)), Id);
         Assert.True(r.Present);
         Assert.Contains(r.Problems, p => p.Contains(expected));
+    }
+
+    [Theory]
+    [InlineData("[\"en\",\"zh-Hans\"]", "", "zh-Hans")]
+    [InlineData("[\"en\",\"../x\"]", "", "../x")]
+    [InlineData("[\"en\"]", ",\"topics\":[]", "\"topics\"")]
+    [InlineData("[\"en\"]", ",\"topics\":{\"Bad Name\":\"overview\"}", "Bad Name")]
+    public void Entries_the_window_skips_are_warnings_not_errors(string langs, string extra, string expected)
+    {
+        // the client's parser (store/helpcore.h) skips these silently and still shows the help
+        var r = HelpCheck.Inspect(Files(("docs/help/help.json", Json(langs, extra: extra)), ("docs/help/en.html", En)), Id);
+        Assert.Empty(r.Problems);
+        Assert.Contains(r.Ignored, i => i.Contains(expected));
+        Assert.Equal(new[] { "en" }, r.Langs);
     }
 
     [Fact]

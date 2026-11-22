@@ -1770,4 +1770,5 @@
   <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>Yöneticisiniz: değişiklikler sizin için mümkün olmaya devam ediyor.</value></data>
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Bu işlem bakım süresince duraklatıldı. Lütfen daha sonra tekrar deneyin; girdiğiniz bilgiler kaydedilmedi.</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>Kataloğa dön</value></data>
+  <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>Yönetici değeri en düşük sürümü yalnızca yükseltebilir: paketin kendisi daha yeni bir Power PDF sürümü gerektiriyor.</value></data>
 </root>

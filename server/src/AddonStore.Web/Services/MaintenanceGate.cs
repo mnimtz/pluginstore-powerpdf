@@ -13,11 +13,15 @@ namespace AddonStore.Web.Services;
 /// </summary>
 public static class MaintenanceGate
 {
-    private static readonly string[] OpenPrefixes =
+    // S2.7.1 (review): exact paths, never prefixes: a package id such as "validator.tools" would otherwise open
+    // every write under /api/packages/validator.tools/...
+    private static readonly HashSet<string> OpenPaths = new(StringComparer.OrdinalIgnoreCase)
     {
         "/Account/Login", "/Account/Logout", "/signin-oidc",
         "/api/packages/validate", "/api/client/inventory", "/api/deliveries/release",
     };
+    private static readonly System.Text.RegularExpressions.Regex ClickPath = new(@"^/a/[A-Za-z0-9._-]{1,120}/click\z",
+        System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(100));
 
     /// <summary>A request that may change data.</summary>
     public static bool IsWrite(string method) =>
@@ -26,10 +30,10 @@ public static class MaintenanceGate
     /// <summary>Paths that stay open in maintenance (see the class summary).</summary>
     public static bool IsOpen(PathString path)
     {
-        var p = path.Value ?? "";
-        if (OpenPrefixes.Any(o => p.StartsWith(o, StringComparison.OrdinalIgnoreCase))) return true;
+        var p = (path.Value ?? "").TrimEnd('/');
+        if (OpenPaths.Contains(p)) return true;
         // the share click counter of an add-on page: /a/{slug}/click
-        return p.StartsWith("/a/", StringComparison.OrdinalIgnoreCase) && p.EndsWith("/click", StringComparison.OrdinalIgnoreCase);
+        try { return ClickPath.IsMatch(p); } catch (System.Text.RegularExpressions.RegexMatchTimeoutException) { return false; }
     }
 
     /// <summary>Seconds for Retry-After: until the expected end (at most a day), else a quarter of an hour.</summary>
@@ -47,7 +51,8 @@ public static class MaintenanceGate
         var until = await ServerMode.UntilAsync(settings);
         ctx.Response.Headers.RetryAfter = RetryAfterSeconds(until, DateTime.UtcNow).ToString(System.Globalization.CultureInfo.InvariantCulture);
         var path = ctx.Request.Path;
-        if (path.StartsWithSegments("/api") || path.StartsWithSegments("/sendto"))
+        // the SendTo invitation page is a browser form: it gets the explanation page like the other web forms
+        if (path.StartsWithSegments("/api") || (path.StartsWithSegments("/sendto") && !path.StartsWithSegments("/sendto/invite")))
         {
             ctx.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
             await ctx.Response.WriteAsJsonAsync(new

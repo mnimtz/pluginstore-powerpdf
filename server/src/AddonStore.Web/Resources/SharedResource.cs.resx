@@ -1770,4 +1770,5 @@
   <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>Jste správce: změny pro vás zůstávají možné.</value></data>
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Tato akce je během údržby pozastavena. Zkuste to prosím později; vaše zadání nebylo uloženo.</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>Zpět do katalogu</value></data>
+  <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>Hodnota správce může minimum pouze zvýšit: samotný balíček vyžaduje novější verzi Power PDF.</value></data>
 </root>

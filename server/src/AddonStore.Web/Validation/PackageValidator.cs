@@ -1821,11 +1821,12 @@ public class PackageValidator
             files[e.FullName] = e.Length > HelpCheck.MaxHtmlBytes ? null : ReadCapped(e, HelpCheck.MaxHtmlBytes);
         }
         _help = HelpCheck.Inspect(files, manifest.Id);
-        if (_help.Problems.Count > 0)
-            report.Error("HELP_INVALID", "The help under docs/help/ cannot be shown completely by the help window: " +
-                string.Join("; ", _help.Problems.Take(6)) + (_help.Problems.Count > 6 ? $" (+{_help.Problems.Count - 6} more)." : "."),
-                "Fix help.json and the pages. " + HelpGuide);
+        // HELP_INVALID is reported against the store's versions (CheckHelpAgainstReleasesAsync): an error for new
+        // add-ons, a warning for released ones (S2.7.1, review)
         if (!_help.Present || _help.Problems.Count > 0) return;
+        if (_help.Ignored.Count > 0)
+            report.Warn("HELP_IGNORED", "The help window ignores: " + string.Join("; ", _help.Ignored.Take(6)) + ".",
+                "Correct these entries of help.json; the help window skips them without a message.");
         var missing = HelpCheck.ManualLanguages.Where(l => !_help.Langs.Contains(l)).ToList();
         if (missing.Count > 0)
             report.Warn("HELP_LANGUAGES", $"The help is missing in: {string.Join(", ", missing)}.",
@@ -1843,6 +1844,16 @@ public class PackageValidator
     private async Task CheckHelpAgainstReleasesAsync(ValidationReport report, ParsedManifest manifest, Package? package)
     {
         if (_help is null) return;
+        var releasedAny = package is not null && await _db.PackageVersions.AsNoTracking().AnyAsync(v => v.PackageId == manifest.Id && v.ReviewedAt != null &&
+            (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta || v.Status == VersionStatus.Withdrawn));
+        if (_help.Problems.Count > 0)
+        {
+            var what = "The help under docs/help/ cannot be shown completely by the help window: " +
+                string.Join("; ", _help.Problems.Take(6)) + (_help.Problems.Count > 6 ? $" (+{_help.Problems.Count - 6} more)." : ".");
+            if (releasedAny || ReleasedElsewhere) report.Warn("HELP_INVALID", "Urgent: " + what, "Please fix help.json and the pages with this or the next update. " + HelpGuide);
+            else report.Error("HELP_INVALID", what, "Fix help.json and the pages. " + HelpGuide);
+            return;
+        }
         var released = package is null ? new List<(string Version, VersionStatus Status, string FilePath)>()
             : (await _db.PackageVersions.AsNoTracking()
                 .Where(v => v.PackageId == manifest.Id && v.ReviewedAt != null &&

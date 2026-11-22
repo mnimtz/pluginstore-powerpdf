@@ -1770,4 +1770,5 @@
   <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>U bent beheerder: wijzigingen blijven voor u mogelijk.</value></data>
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Deze actie ligt stil tijdens het onderhoud. Probeer het later opnieuw; uw invoer is niet opgeslagen.</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>Terug naar de catalogus</value></data>
+  <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>Een beheerderswaarde kan het minimum alleen verhogen: het pakket zelf vereist een hogere versie van Power PDF.</value></data>
 </root>

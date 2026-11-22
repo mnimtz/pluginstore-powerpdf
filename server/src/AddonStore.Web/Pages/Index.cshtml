@@ -340,7 +340,7 @@ else
                 name: function (a, b) { return a.dataset.name.localeCompare(b.dataset.name, document.documentElement.lang || undefined, { sensitivity: 'base' }); }
             };
             function sortBy(key) {
-                sort = SORTS[key] ? key : 'recommended';
+                sort = Object.prototype.hasOwnProperty.call(SORTS, key) ? key : 'recommended';   // S2.7.1: "__proto__" is no sort
                 sortSel.value = sort;
                 // stable: ties keep the recommended order
                 cards.sort(function (a, b) { return SORTS[sort](a, b) || (a.dataset.rank - b.dataset.rank); });

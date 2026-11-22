@@ -1546,7 +1546,10 @@ public static class ApiEndpoints
                 var shownRow = rows.Where(x => x.Status == VersionStatus.Live).OrderByDescending(x => x.Version, cmpMin).FirstOrDefault()
                     ?? rows.Where(x => x.Status == VersionStatus.Beta).OrderByDescending(x => x.Version, cmpMin).FirstOrDefault()
                     ?? rows.OrderByDescending(x => x.Version, cmpMin).FirstOrDefault();
-                await Services.MinHost.SetAsync(db, audit, pkg, minHostValue, shownRow?.MinPowerPdfVersion ?? "", user.DisplayName);
+                // S2.7.1: an admin value below the package's own minimum is refused, not ignored
+                if (await Services.MinHost.SetAsync(db, audit, pkg, minHostValue, shownRow?.MinPowerPdfVersion ?? "", user.DisplayName) is { } minErr)
+                    issues = issues.Append(new MetaIssue("MIN_HOST_VERSION_INVALID", "error", minErr,
+                        "An admin value can only raise the minimum: send a value at or above " + (shownRow?.MinPowerPdfVersion ?? "the package's own") + ", or null.")).ToList();
             }
             var findings = issues.Select(i => new { code = i.Code, severity = i.Severity, message = i.Message, hint = i.Hint });
             if (issues.Any(i => i.Severity == "error"))

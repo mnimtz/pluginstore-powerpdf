@@ -49,7 +49,13 @@ public class TimeDisplay
     public string ZoneId => Zone().Id;
 
     /// <summary>S2.6.0: a local time of the configured zone (e.g. from a datetime-local field) as UTC.</summary>
-    public DateTime ToUtc(DateTime local) => TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(local, DateTimeKind.Unspecified), Zone());
+    public DateTime ToUtc(DateTime local)
+    {
+        var l = DateTime.SpecifyKind(local, DateTimeKind.Unspecified);
+        var zone = Zone();
+        if (zone.IsInvalidTime(l)) l = l.AddHours(1);   // S2.7.1 (review): the hour skipped at the start of summer time
+        return TimeZoneInfo.ConvertTimeToUtc(l, zone);
+    }
 
     /// <summary>S2.6.0: UTC in the configured zone, for prefilling a datetime-local field.</summary>
     public DateTime ToLocal(DateTime utc) => TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(utc, DateTimeKind.Utc), Zone());

@@ -645,6 +645,13 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Review fixes (S2.7.1, Nov 22, 2026):** the maintenance gate opens exact paths only (a package id such as
+`validator.tools` opened writes before); the admin minimum Power PDF version only raises (the higher of it and each
+version's own, everywhere; a lower value is refused); the help check follows the client's parser exactly (UTF-8 BOM,
+`"version": 1.0`, two-letter language codes, invalid topics and GIF/WebP pictures are `HELP_IGNORED` warnings, PNG/JPEG
+only), `HELP_INVALID` is a warning for released add-ons; a maintenance end in the summer time gap no longer fails, the
+SendTo invitation form gets the maintenance page, `?sort=__proto__` no longer breaks the catalog script.
+
 **Help rule in the upload check (S2.7.0, Nov 22, 2026):** add-ons must join the central help window of Power PDF
 (client 2.1.0+) with `docs/help/help.json` and one `docs/help/<lang>.html` per language (`Validation/HelpCheck.cs`).
 `HELP_MISSING` is an error for add-ons not released yet and an urgent warning for released ones (also for copies of

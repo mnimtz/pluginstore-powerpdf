@@ -1770,4 +1770,5 @@
   <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>Sei un amministratore: le modifiche restano possibili per te.</value></data>
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Questa azione è sospesa durante la manutenzione. Riprova più tardi; i dati inseriti non sono stati salvati.</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>Torna al catalogo</value></data>
+  <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>Un valore dell'amministratore può solo alzare il minimo: il pacchetto stesso richiede una versione di Power PDF più recente.</value></data>
 </root>

@@ -351,8 +351,8 @@ public class AiAssist
     /// <summary>S2.7.0: the start and the end (version history) of docs/help/en.html as plain text, inside &lt;data&gt;.</summary>
     internal static string HelpExcerpt(string packagePath)
     {
-        var files = HelpCheck.ReadFromPackage(packagePath);
-        var html = files.TryGetValue(HelpCheck.Folder + "en.html", out var b) && b is not null ? Encoding.UTF8.GetString(b) : "";
+        var b = HelpCheck.ReadEntry(packagePath, HelpCheck.Folder + "en.html");   // S2.7.1: only this file, not the pictures
+        var html = b is not null ? Encoding.UTF8.GetString(b) : "";
         string text;
         try { text = HelpSpace.Replace(System.Net.WebUtility.HtmlDecode(HelpTag.Replace(html, " ")), " ").Trim(); }
         catch (RegexMatchTimeoutException) { text = ""; }

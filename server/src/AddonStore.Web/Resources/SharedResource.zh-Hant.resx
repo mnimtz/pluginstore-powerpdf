@@ -1770,4 +1770,5 @@
   <data name="You are an admin: changes remain possible for you." xml:space="preserve"><value>您是管理員：您仍可進行變更。</value></data>
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>此操作在維護期間暫停。請稍後再試；您輸入的內容未儲存。</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>返回目錄</value></data>
+  <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>管理員設定的值只能提高最低版本：套件本身要求更高的 Power PDF 版本。</value></data>
 </root>
