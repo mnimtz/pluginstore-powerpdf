@@ -193,6 +193,13 @@
 #define IDS_PSH_CLEAR           389
 #define IDS_PSH_NOWEBVIEW       390
 #define IDS_PSH_TIP             391
+#define IDS_PSW_MODE_BETA       392   // C2.2.0
+#define IDS_PSW_MODE_MAINT      393
+#define IDS_PSW_MODE_TEST       394
+#define IDS_PSW_MODE_BETA_TIP   395
+#define IDS_PSW_MODE_MAINT_NOTE 396
+#define IDS_PSW_MODE_TEST_TIP   397
+#define IDS_PSW_MODE_BETA_DISC  398
 #define IDR_HELP_HTML           262   // C2.1.0: the central help page
 #define IDB_HELP                254
 #define IDB_HELP16              255

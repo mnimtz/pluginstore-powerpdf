@@ -577,6 +577,32 @@ protected:
         return host == dom || (host.size() > dom.size() && host.compare(host.size() - dom.size() - 1, std::wstring::npos, L"." + dom) == 0);
     }
 
+    // C2.2.0: asks the server for its operating mode (GET /api/ping) and tells the page; the answer is also kept
+    // for the next window (HKCU ServerMode). Offline nothing changes: the last known mode stays.
+    void ServerModeRefresh()
+    {
+        std::wstring url = PSServerUrl() + L"/api/ping";
+        HWND h = m_hWnd;
+        Spawn([h, url]() {
+            std::string body;
+            DWORD status = 0;
+            std::wstring out;
+            try
+            {
+                if (PSHttpGetText(url, body, &status) && status == 200)
+                {
+                    PSServerModeTake(PSServerModeOf(body));
+                    out = L"{\"type\":\"mode\",\"serverMode\":" + Json(PSServerMode()) + L"}";
+                }
+            }
+            catch (...) { out.clear(); }
+            if (out.empty()) return;
+            auto* m = new AsyncMsg;
+            m->kind = KSend; m->gen = 0; m->text = out;
+            PostAsync(h, m);
+        });
+    }
+
     void PowerPdfHint()
     {
         if (!PSPowerPdfHint()) return;
@@ -657,6 +683,10 @@ protected:
             { L"updTitle", IDS_PSW_UPD_TITLE }, { L"updAll", IDS_PSW_UPD_ALL }, { L"updNone", IDS_PSW_UPD_NONE },
             { L"updStore", IDS_PSW_UPD_STORE }, { L"updFromTo", IDS_PSW_UPD_FROMTO },
             { L"help", IDS_PSW_HELP }, { L"helpMissing", IDS_PSW_HELP_MISSING },   // C2.1.0
+            // C2.2.0: badge and notice of the server's operating mode (beta, maintenance, test)
+            { L"modeBeta", IDS_PSW_MODE_BETA }, { L"modeMaint", IDS_PSW_MODE_MAINT }, { L"modeTest", IDS_PSW_MODE_TEST },
+            { L"modeBetaTip", IDS_PSW_MODE_BETA_TIP }, { L"modeMaintNote", IDS_PSW_MODE_MAINT_NOTE },
+            { L"modeTestTip", IDS_PSW_MODE_TEST_TIP }, { L"modeBetaDisc", IDS_PSW_MODE_BETA_DISC },
         };
         // C1.9.11: the page's language tag (de-DE, zh-CN, ar-SA ...), for the fonts of the UI kit
         wchar_t locName[LOCALE_NAME_MAX_LENGTH] = {};
@@ -665,6 +695,7 @@ protected:
                          L",\"lang\":" + Json(locName) +
                          (FPLocIsRtl() ? L",\"dir\":\"rtl\"" : L"") +
                          L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") +
+                         L",\"serverMode\":" + Json(PSServerMode()) +   // C2.2.0: last known; ServerModeRefresh asks again
                          (m_preselect == kPSUpdatesView ? L",\"mode\":\"updates\"" : L"") +
                          L",\"code\":" + CodesJson() + L",\"strings\":{";
         for (size_t i = 0; i < _countof(strings); ++i)
@@ -1300,7 +1331,7 @@ protected:
     void OnPageMessage(const std::wstring& json)
     {
         std::wstring cmd = Field(json, L"cmd");
-        if (cmd == L"ready") { SendInit(); LoadCatalog(true); PowerPdfHint(); }
+        if (cmd == L"ready") { SendInit(); LoadCatalog(true); PowerPdfHint(); ServerModeRefresh(); }
         else if (cmd == L"ppHide")
         {
             std::wstring v = Field(json, L"version", 40);
@@ -1314,7 +1345,7 @@ protected:
             std::wstring u = Field(json, L"url", 500);
             if (IsTrustedReadme(u)) ShellExecuteW(m_hWnd, L"open", u.c_str(), NULL, NULL, SW_SHOWNORMAL);
         }
-        else if (cmd == L"refresh") LoadCatalog(false);
+        else if (cmd == L"refresh") { LoadCatalog(false); ServerModeRefresh(); }
         else if (cmd == L"migrateDismiss") MigrateDismiss();
         else if (cmd == L"removeBlocked" && !m_jobRunning) { PSOfferBlockedRemoval(m_hWnd, true); LoadCatalog(false); }
         else if (cmd == L"install" || cmd == L"uninstall")

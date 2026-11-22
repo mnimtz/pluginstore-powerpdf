@@ -29,3 +29,12 @@ void PSAccessCheckStart(HWND notify, UINT message);
 
 // Stores the answer (UI thread).
 void PSAccessTakeResult(bool allowed);
+
+// C2.2.0: operating mode of the store server (S2.4.0/S2.6.0): "production", "beta", "maintenance" or "test".
+// Read from GET /api/client/access (start, every few hours) and /api/ping (store window); kept in HKCU ServerMode
+// so the window shows the badge at once. Anything unknown counts as production.
+std::wstring PSServerMode();
+// Takes a mode from a server answer (any thread); unknown values are ignored.
+void PSServerModeTake(const std::string& mode);
+// The "serverMode" string of a JSON answer, or "" (no JSON parser: the server writes it as a plain string).
+std::string PSServerModeOf(const std::string& body);

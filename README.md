@@ -221,6 +221,7 @@ built with the Power PDF Plugin SDK):
 - A fresh MSI installation (not an update) clears leftovers of removed plugins
   from the shared *Enhanced Features* tab once per user; installed plugins add
   their groups again on their next start.
+- **Operating mode badge** (client 2.2.0+, server S2.4.0/S2.6.0): the store window shows the server's mode next to the title: a red "Beta" pill, a yellow "Maintenance" pill with a wrench plus a notice that ratings and reports pause while installing and updating keep working, a blue "Test" pill with a flask. The client reads `serverMode` from `GET /api/client/access` (start, every 4 h) and `GET /api/ping` (each time the window opens or refreshes), keeps it in HKCU `ServerMode` and ignores unknown values (`store/servermode.h`, tested in `client/tests/servermode_tests.cpp`). In beta the notes start with the beta conditions.
 - **Central help** (client 2.1.0+): one help window for every installed add-on
   and the store itself, opened with *Help* (own group `FeaturePack::AddonStoreHelp`,
   the last group of the shared *Enhanced Features* tab), with *Help*/F1 in the

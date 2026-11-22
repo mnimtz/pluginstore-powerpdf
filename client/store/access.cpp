@@ -6,6 +6,7 @@
 #include "settings.h"
 #include "logging.h"
 #include "inventory.h"
+#include "servermode.h"
 
 extern "C" HINSTANCE gHINSTANCE;
 
@@ -13,6 +14,8 @@ namespace {
 
 volatile LONG g_running = 0;
 volatile LONG g_allowed = -1;   // -1 = not read yet, then 0 / 1 (HKCU StoreAccess)
+volatile LONG g_mode = -1;      // C2.2.0: -1 = not read yet, then an index into kModes (HKCU ServerMode)
+const wchar_t* const kModes[] = { L"production", L"beta", L"maintenance", L"test" };
 
 std::wstring ReadMachine(const wchar_t* sub, const wchar_t* name)
 {
@@ -48,6 +51,7 @@ DWORD WINAPI Worker(LPVOID p)
         if (v != std::string::npos && (body.compare(v, 4, "true") == 0 || body.compare(v, 5, "false") == 0))
         {
             bool allowed = body.compare(v, 4, "true") == 0;
+            PSServerModeTake(PSServerModeOf(body));   // C2.2.0
             FPLogW(L"[Store] access for license mode %s: %s", PSLicenseMode().c_str(), allowed ? L"allowed" : L"not allowed");
             if (job->notify) PostMessageW(job->notify, job->message, allowed ? 1 : 0, 0);
         }
@@ -97,6 +101,36 @@ void PSAccessTakeResult(bool allowed)
     InterlockedExchange(&g_allowed, allowed ? 1 : 0);
     DWORD v = allowed ? 1 : 0;
     RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"StoreAccess", REG_DWORD, &v, sizeof(v));
+}
+
+std::string PSServerModeOf(const std::string& body)
+{
+    return psmode::ModeOf(body);   // store/servermode.h (tested in client\tests\servermode_tests.cpp)
+}
+
+void PSServerModeTake(const std::string& mode)
+{
+    LONG i = psmode::IndexOf(mode);
+    if (i < 0 || i >= (LONG)_countof(kModes)) return;   // unknown values are ignored
+    if (InterlockedExchange(&g_mode, i) != i)
+    {
+        DWORD v = (DWORD)i;
+        RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"ServerMode", REG_DWORD, &v, sizeof(v));
+        FPLogW(L"[Store] server mode: %s", kModes[i]);
+    }
+}
+
+std::wstring PSServerMode()
+{
+    LONG m = g_mode;
+    if (m < 0)
+    {
+        DWORD v = 0, sz = sizeof(v);
+        if (RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, L"ServerMode", RRF_RT_REG_DWORD, NULL, &v, &sz) != ERROR_SUCCESS || v >= _countof(kModes)) v = 0;
+        m = (LONG)v;
+        InterlockedCompareExchange(&g_mode, m, -1);
+    }
+    return kModes[m >= 0 && m < (LONG)_countof(kModes) ? m : 0];
 }
 
 void PSAccessCheckStart(HWND notify, UINT message)
