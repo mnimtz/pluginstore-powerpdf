@@ -24,6 +24,8 @@ public class IndexModel : PageModel
     /// <summary>S1.30.0: add-ons offered as a manual installation (ZIP).</summary>
     public HashSet<string> ManualIds { get; private set; } = new();
     public bool AiSearch { get; private set; }
+    /// <summary>S2.4.0: operating mode (beta shows a note in the head and below the catalog).</summary>
+    public string ServerModeValue { get; private set; } = ServerMode.Production;
     /// <summary>Admins mark highlights right on the tiles (S1.16.0).</summary>
     public bool IsAdmin { get; private set; }
     public int HighlightCount { get; private set; }
@@ -66,6 +68,8 @@ public class IndexModel : PageModel
         {
             Notice = note.Text; NoticeError = note.Error;
         }
+        ServerModeValue = await ServerMode.GetAsync(HttpContext.RequestServices.GetRequiredService<SettingsService>(),
+                                                    HttpContext.RequestServices.GetRequiredService<IConfiguration>());
         var ai = await _ai.ConfigAsync();
         AiSearch = ai.On && ai.Search;
         var culture = AddonStore.Web.Services.Lang.Current;

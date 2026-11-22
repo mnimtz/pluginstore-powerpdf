@@ -210,7 +210,13 @@ public static class ApiEndpoints
             }
         }));
 
-        api.MapGet("/ping", (AppVersion ver) => Results.Json(new { ok = true, data = new { name = "pluginstore-powerpdf", version = ver.Value } }));
+        // S2.4.0: also the operating mode ("production" or "beta"); a database hiccup never fails the health check
+        api.MapGet("/ping", async (AppVersion ver, SettingsService settings, IConfiguration config) =>
+        {
+            var serverMode = Services.ServerMode.Production;
+            try { serverMode = await Services.ServerMode.GetAsync(settings, config); } catch (Exception) { }
+            return Results.Json(new { ok = true, data = new { name = "pluginstore-powerpdf", version = ver.Value, serverMode } });
+        });
 
         // "?download=1" saves it as a file, for assistants without network access (S1.0.7)
         api.MapGet("/agent-guide", (HttpContext ctx, AppVersion ver) => ctx.Request.Query.ContainsKey("download")
@@ -350,7 +356,7 @@ public static class ApiEndpoints
         });
 
         api.MapGet("/catalog", async (AppDbContext db, HttpContext ctx, UsageService usage, CustomerService customers,
-                                      PackageSigning signing, SeatService seatsSvc, SettingsService settings,
+                                      PackageSigning signing, SeatService seatsSvc, SettingsService settings, IConfiguration config,
                                       string? channel, string? format, string? lang) =>
         {
             var beta = string.Equals(channel, "beta", StringComparison.OrdinalIgnoreCase);
@@ -431,13 +437,15 @@ public static class ApiEndpoints
             var cacheKey = grants.Count == 0 && testGrants.Count == 0 && !restrictedCatalog ? $"catalog|{beta}|{!storeAllowed}|{Base(ctx)}" : null;
             if (cacheKey is not null && Services.CatalogUi.CachedObject(cacheKey) is List<object> cached)
                 return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live",
-                    environment = FederationService.MarkedAsTest ? "uat" : "production", packages = cached } });
+                    environment = FederationService.MarkedAsTest ? "uat" : "production",
+                    serverMode = await Services.ServerMode.GetAsync(settings, config), packages = cached } });
             var gen = Services.CatalogUi.Generation;
             var entries = await CatalogAsync(db, beta, Base(ctx), grants, signing, testGrants,
                                              clientOnly: !storeAllowed, restricted: restrictedCatalog);
             if (cacheKey is not null) Services.CatalogUi.CacheObject(cacheKey, gen, entries);
             return Results.Json(new { ok = true, data = new { channel = beta ? "beta" : "live",
-                environment = FederationService.MarkedAsTest ? "uat" : "production", packages = entries } });
+                environment = FederationService.MarkedAsTest ? "uat" : "production",
+                serverMode = await Services.ServerMode.GetAsync(settings, config), packages = entries } });
         });
 
         // Power PDF update hint for the store client (S1.8.0): is there a newer update for its release line?
@@ -463,13 +471,14 @@ public static class ApiEndpoints
 
         // May this store client be used with its Power PDF license (S1.7.0)? Anonymous like the catalog;
         // the client asks at start and hides its ribbon button when not.
-        api.MapGet("/client/access", async (HttpContext ctx, SettingsService settings) =>
+        api.MapGet("/client/access", async (HttpContext ctx, SettingsService settings, IConfiguration config) =>
         {
             var allowedModes = await StoreAccess.AllowedModesAsync(settings);
             var mode = StoreAccess.ModeOf(ctx);
             return Results.Json(new { ok = true, data = new { allowed = allowedModes.Contains(mode), mode,
                 allowedModes = StoreAccess.Modes.Select(m => m.Key).Where(allowedModes.Contains),
-                environment = FederationService.MarkedAsTest ? "uat" : "production" } });   // S1.21.0
+                environment = FederationService.MarkedAsTest ? "uat" : "production",   // S1.21.0
+                serverMode = await Services.ServerMode.GetAsync(settings, config) } });   // S2.4.0: the store window shows the beta badge
         });
 
         api.MapGet("/packages/{id}", async (string id, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerService customers) =>

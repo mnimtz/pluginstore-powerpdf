@@ -451,6 +451,30 @@ else if (Model.SigningKeyId.Length > 0)
 
 @if (Model.View == "server")
 {
+@* S2.4.0: operating mode; beta marks the whole store (badge at the logo, start page note, disclaimer section) *@
+<div class="card" style="max-width:760px" id="server-mode">
+    <h2 style="margin-top:0">@L["Operating mode"]</h2>
+    <form method="post" asp-page-handler="ServerMode" class="stack" style="max-width:none">
+        <div class="mode-choices">
+            <label class="mode-choice">
+                <input type="radio" name="serverMode" value="production" checked="@(Model.ServerModeValue == AddonStore.Web.Services.ServerMode.Production)" disabled="@Model.ServerModeForced" />
+                <span><b>@L["Production"]</b><small>@L["The store as usual, without beta notes."]</small></span>
+            </label>
+            <label class="mode-choice">
+                <input type="radio" name="serverMode" value="beta" checked="@(Model.ServerModeValue == AddonStore.Web.Services.ServerMode.Beta)" disabled="@Model.ServerModeForced" />
+                <span><b>@L["Beta"] <span class="beta-badge inline">@L["Beta"]</span></b><small>@L["A red Beta badge at the logo on every page and in the store window of Power PDF, a short note on the start page and beta notes in the disclaimer. Everything keeps working."]</small></span>
+            </label>
+        </div>
+        @if (Model.ServerModeForced)
+        {
+            <p class="muted small" style="margin:0">@L["The operating mode is fixed by the app setting Server:Mode; change it there."]</p>
+        }
+        else
+        {
+            <div><button type="submit" class="btn cta">@L["Save mode"]</button></div>
+        }
+    </form>
+</div>
 <div class="card" style="max-width:560px">
     <h2 style="margin-top:0">@L["Server"]</h2>
     <form method="post" asp-page-handler="Server" class="stack" style="max-width:none">

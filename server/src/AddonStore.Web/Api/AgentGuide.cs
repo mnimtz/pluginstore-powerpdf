@@ -1395,6 +1395,15 @@ Every catalog entry carries a signature of the server (ECDSA P-256 over
 packages signed with a key it trusts, so nothing changes for you as a
 submitter: the server signs what it accepted.
 
+## Operating mode (production or beta)
+
+Admins set the operating mode under Settings > Server > Operating mode (or with the
+app setting `Server:Mode`, which wins). `GET /api/ping`, `GET /api/catalog` (JSON) and
+`GET /api/client/access` report it as `serverMode`: `production` (default) or `beta`.
+In beta the portal shows a red "Beta" badge at the logo, a note on the start page and a
+beta section in the disclaimer; store clients that read `serverMode` show the badge in
+the store window. Nothing is locked in beta: uploads, reviews and installs work as usual.
+
 ## UAT environments (test store before production)
 
 A store can run a second, separate store as its UAT (user acceptance test):

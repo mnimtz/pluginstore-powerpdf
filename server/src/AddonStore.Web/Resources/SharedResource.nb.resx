@@ -1736,4 +1736,20 @@
   <data name="Just released" xml:space="preserve"><value>Ny</value></data>
   <data name="New version" xml:space="preserve"><value>Ny versjon</value></data>
   <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Fremhevede: {0} av {1}. De vises i raden «Anbefalt» over katalogen. Merk eller fjern dem med stjerneknappen på en oppføring.</value></data>
+  <data name="Operating mode" xml:space="preserve"><value>Driftsmodus</value></data>
+  <data name="The store as usual, without beta notes." xml:space="preserve"><value>Butikken som vanlig, uten betamerknader.</value></data>
+  <data name="A red Beta badge at the logo on every page and in the store window of Power PDF, a short note on the start page and beta notes in the disclaimer. Everything keeps working." xml:space="preserve"><value>Et rødt Beta-merke ved logoen på hver side og i butikkvinduet i Power PDF, en kort merknad på startsiden og betamerknader i ansvarsfraskrivelsen. Alt fortsetter å fungere.</value></data>
+  <data name="The operating mode is fixed by the app setting Server:Mode; change it there." xml:space="preserve"><value>Driftsmodusen er fastsatt av appinnstillingen Server:Mode; endre den der.</value></data>
+  <data name="Unknown operating mode." xml:space="preserve"><value>Ukjent driftsmodus.</value></data>
+  <data name="Operating mode saved." xml:space="preserve"><value>Driftsmodus lagret.</value></data>
+  <data name="Beta phase" xml:space="preserve"><value>Betafase</value></data>
+  <data name="Beta version: the Add-on Store is still being trialled. Features and content may change, and errors are possible." xml:space="preserve"><value>Betaversjon: Add-on Store er fortsatt under utprøving. Funksjoner og innhold kan endres, og feil kan forekomme.</value></data>
+  <data name="During the beta phase the beta notes of the disclaimer also apply." xml:space="preserve"><value>I betafasen gjelder i tillegg betamerknadene i ansvarsfraskrivelsen.</value></data>
+  <data name="The Add-on Store and its catalog are being trialled (beta)." xml:space="preserve"><value>Add-on Store og katalogen er under utprøving (beta).</value></data>
+  <data name="Features, content and procedures may change or be discontinued at any time." xml:space="preserve"><value>Funksjoner, innhold og prosedyrer kan når som helst endres eller falle bort.</value></data>
+  <data name="Errors, interruptions and outages are possible; no availability is guaranteed." xml:space="preserve"><value>Feil, avbrudd og driftsstans kan forekomme; tilgjengelighet er ikke garantert.</value></data>
+  <data name="Data, settings and accounts from the beta phase may be reset or not carried over." xml:space="preserve"><value>Data, innstillinger og kontoer fra betafasen kan bli tilbakestilt eller ikke overført.</value></data>
+  <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>Ikke bruk betaen til tidskritiske eller forretningskritiske prosesser, og ta sikkerhetskopier av viktige dokumenter.</value></data>
+  <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>Tilbakemeldinger om feil er velkomne: bruk rapporteringsfunksjonen i butikkvinduet i Power PDF eller kontakt forfatteren som er oppgitt i katalogen.</value></data>
+  <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>Alle andre bestemmelser i denne ansvarsfraskrivelsen gjelder uendret.</value></data>
 </root>

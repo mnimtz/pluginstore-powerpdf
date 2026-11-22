@@ -1736,4 +1736,20 @@
   <data name="Just released" xml:space="preserve"><value>신규</value></data>
   <data name="New version" xml:space="preserve"><value>새 버전</value></data>
   <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>추천: {0}/{1}. 카탈로그 위의 '추천' 행에 표시됩니다. 항목의 별 버튼으로 지정하거나 해제합니다.</value></data>
+  <data name="Operating mode" xml:space="preserve"><value>운영 모드</value></data>
+  <data name="The store as usual, without beta notes." xml:space="preserve"><value>평소와 같은 스토어(베타 안내 없음).</value></data>
+  <data name="A red Beta badge at the logo on every page and in the store window of Power PDF, a short note on the start page and beta notes in the disclaimer. Everything keeps working." xml:space="preserve"><value>모든 페이지와 Power PDF 스토어 창의 로고 옆에 빨간색 베타 배지, 시작 페이지에 짧은 안내, 면책 조항에 베타 안내를 표시합니다. 모든 기능은 그대로 작동합니다.</value></data>
+  <data name="The operating mode is fixed by the app setting Server:Mode; change it there." xml:space="preserve"><value>운영 모드는 앱 설정 Server:Mode로 고정되어 있습니다. 해당 설정에서 변경하세요.</value></data>
+  <data name="Unknown operating mode." xml:space="preserve"><value>알 수 없는 운영 모드입니다.</value></data>
+  <data name="Operating mode saved." xml:space="preserve"><value>운영 모드를 저장했습니다.</value></data>
+  <data name="Beta phase" xml:space="preserve"><value>베타 기간</value></data>
+  <data name="Beta version: the Add-on Store is still being trialled. Features and content may change, and errors are possible." xml:space="preserve"><value>베타 버전: Add-on Store는 아직 시범 운영 중입니다. 기능과 콘텐츠가 변경될 수 있으며 오류가 발생할 수 있습니다.</value></data>
+  <data name="During the beta phase the beta notes of the disclaimer also apply." xml:space="preserve"><value>베타 기간에는 면책 조항의 베타 안내도 함께 적용됩니다.</value></data>
+  <data name="The Add-on Store and its catalog are being trialled (beta)." xml:space="preserve"><value>Add-on Store와 카탈로그는 시범 운영 중입니다(베타).</value></data>
+  <data name="Features, content and procedures may change or be discontinued at any time." xml:space="preserve"><value>기능, 콘텐츠 및 절차는 언제든지 변경되거나 중단될 수 있습니다.</value></data>
+  <data name="Errors, interruptions and outages are possible; no availability is guaranteed." xml:space="preserve"><value>오류, 중단 및 장애가 발생할 수 있으며 가용성은 보장되지 않습니다.</value></data>
+  <data name="Data, settings and accounts from the beta phase may be reset or not carried over." xml:space="preserve"><value>베타 기간의 데이터, 설정 및 계정은 초기화되거나 이전되지 않을 수 있습니다.</value></data>
+  <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>시간이 중요한 프로세스나 비즈니스에 중요한 프로세스에는 베타를 사용하지 말고 중요한 문서는 백업하세요.</value></data>
+  <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>오류에 대한 의견을 환영합니다. Power PDF 스토어 창의 신고 기능을 사용하거나 카탈로그에 표시된 작성자에게 문의하세요.</value></data>
+  <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>이 면책 조항의 기타 모든 조항은 변경 없이 적용됩니다.</value></data>
 </root>

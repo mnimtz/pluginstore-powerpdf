@@ -1736,4 +1736,20 @@
   <data name="Just released" xml:space="preserve"><value>新</value></data>
   <data name="New version" xml:space="preserve"><value>新版本</value></data>
   <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>精選：{0}/{1}。它們會顯示在目錄上方的「推薦」列中。使用項目上的星形按鈕標記或取消。</value></data>
+  <data name="Operating mode" xml:space="preserve"><value>運作模式</value></data>
+  <data name="The store as usual, without beta notes." xml:space="preserve"><value>商店照常運作，不顯示測試版提示。</value></data>
+  <data name="A red Beta badge at the logo on every page and in the store window of Power PDF, a short note on the start page and beta notes in the disclaimer. Everything keeps working." xml:space="preserve"><value>每個頁面和 Power PDF 商店視窗的標誌旁顯示紅色「Beta」標記，首頁顯示簡短提示，免責聲明中顯示測試版說明。所有功能照常可用。</value></data>
+  <data name="The operating mode is fixed by the app setting Server:Mode; change it there." xml:space="preserve"><value>運作模式由應用程式設定 Server:Mode 固定；請在該處變更。</value></data>
+  <data name="Unknown operating mode." xml:space="preserve"><value>未知的運作模式。</value></data>
+  <data name="Operating mode saved." xml:space="preserve"><value>運作模式已儲存。</value></data>
+  <data name="Beta phase" xml:space="preserve"><value>測試階段</value></data>
+  <data name="Beta version: the Add-on Store is still being trialled. Features and content may change, and errors are possible." xml:space="preserve"><value>測試版：Add-on Store 仍在試用階段。功能和內容可能會變更，也可能發生錯誤。</value></data>
+  <data name="During the beta phase the beta notes of the disclaimer also apply." xml:space="preserve"><value>測試階段期間，免責聲明中的測試版說明同樣適用。</value></data>
+  <data name="The Add-on Store and its catalog are being trialled (beta)." xml:space="preserve"><value>Add-on Store 及其目錄正在試用階段（測試版）。</value></data>
+  <data name="Features, content and procedures may change or be discontinued at any time." xml:space="preserve"><value>功能、內容和流程可能隨時變更或取消。</value></data>
+  <data name="Errors, interruptions and outages are possible; no availability is guaranteed." xml:space="preserve"><value>可能發生錯誤、中斷和故障；不保證可用性。</value></data>
+  <data name="Data, settings and accounts from the beta phase may be reset or not carried over." xml:space="preserve"><value>測試階段的資料、設定和帳戶可能會被重設或不會被保留。</value></data>
+  <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>請勿將測試版用於時間緊迫或業務關鍵的流程，並備份重要文件。</value></data>
+  <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>歡迎回報錯誤：請使用 Power PDF 商店視窗中的回報功能，或聯絡目錄中列出的作者。</value></data>
+  <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>本免責聲明的其他所有條款維持不變。</value></data>
 </root>

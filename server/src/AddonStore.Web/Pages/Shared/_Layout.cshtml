@@ -5,6 +5,8 @@
 @inject AddonStore.Web.Api.AppVersion AppVer
 @inject AddonStore.Web.Services.InventoryService InvNav
 @inject AddonStore.Web.Services.SendToService SendToNav
+@inject AddonStore.Web.Services.SettingsService ModeSettings
+@inject IConfiguration ModeConfig
 <!DOCTYPE html>
 <html lang="@AddonStore.Web.Services.Lang.Current" dir="@(AddonStore.Web.Services.Lang.CurrentIsRtl ? "rtl" : "ltr")">
 @{
@@ -16,6 +18,9 @@
         : siteName;
     // UAT (S1.21.0): every tab says so, so nobody confuses the test store with production
     if (AddonStore.Web.Services.FederationService.MarkedAsTest) pageTitle = "UAT · " + pageTitle;
+    // S2.4.0: beta mode: every tab and the logo say so
+    var isBeta = await AddonStore.Web.Services.ServerMode.GetAsync(ModeSettings, ModeConfig) == AddonStore.Web.Services.ServerMode.Beta;
+    if (isBeta) pageTitle = L["Beta"].Value + " · " + pageTitle;
     var description = ViewData["Description"] as string
         ?? L["Add-ons for Tungsten Power PDF: discover them here and install them directly in Power PDF."].Value;
     var host = Context.Request.Host;
@@ -96,7 +101,7 @@
             </button>
             <a class="brand" href="/Start">
                 <img class="logo" src="/img/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation" />
-                <div class="title">Add-on Store<small>Tungsten Power PDF</small></div>
+                <div class="title">Add-on Store<small>Tungsten Power PDF</small>@if (isBeta) { <span class="beta-badge" title="@L["Beta phase"]">@L["Beta"]</span> }</div>
             </a>
             <span class="spacer"></span>
             <a class="top-link" href="/">@L["Catalog"]</a>
@@ -202,7 +207,7 @@ else
 <header class="site">
     <div class="bar">
         <img class="logo" src="/img/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation" />
-        <div class="title">Add-on Store<small>Tungsten Power PDF</small></div>
+        <div class="title">Add-on Store<small>Tungsten Power PDF</small>@if (isBeta) { <a class="beta-badge" href="/Disclaimer#beta" title="@L["Beta phase"]">@L["Beta"]</a> }</div>
         <button type="button" class="nav-toggle" aria-label="@L["Menu"]" aria-expanded="false" aria-controls="site-nav">
             <span></span><span></span><span></span>
         </button>

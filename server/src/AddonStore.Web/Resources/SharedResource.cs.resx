@@ -1736,4 +1736,20 @@
   <data name="Just released" xml:space="preserve"><value>Nové</value></data>
   <data name="New version" xml:space="preserve"><value>Nová verze</value></data>
   <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Zvýrazněné: {0} z {1}. Zobrazují se v řádku „Doporučené“ nad katalogem. Označte je nebo odeberte tlačítkem s hvězdičkou u položky.</value></data>
+  <data name="Operating mode" xml:space="preserve"><value>Provozní režim</value></data>
+  <data name="The store as usual, without beta notes." xml:space="preserve"><value>Obchod jako obvykle, bez upozornění na betaverzi.</value></data>
+  <data name="A red Beta badge at the logo on every page and in the store window of Power PDF, a short note on the start page and beta notes in the disclaimer. Everything keeps working." xml:space="preserve"><value>Červený štítek Beta u loga na každé stránce a v okně obchodu v Power PDF, krátké upozornění na úvodní stránce a upozornění na betaverzi v prohlášení o vyloučení odpovědnosti. Vše dál funguje.</value></data>
+  <data name="The operating mode is fixed by the app setting Server:Mode; change it there." xml:space="preserve"><value>Provozní režim je určen nastavením aplikace Server:Mode; změňte jej tam.</value></data>
+  <data name="Unknown operating mode." xml:space="preserve"><value>Neznámý provozní režim.</value></data>
+  <data name="Operating mode saved." xml:space="preserve"><value>Provozní režim byl uložen.</value></data>
+  <data name="Beta phase" xml:space="preserve"><value>Beta fáze</value></data>
+  <data name="Beta version: the Add-on Store is still being trialled. Features and content may change, and errors are possible." xml:space="preserve"><value>Betaverze: Add-on Store je stále ve zkušebním provozu. Funkce a obsah se mohou měnit a mohou se vyskytnout chyby.</value></data>
+  <data name="During the beta phase the beta notes of the disclaimer also apply." xml:space="preserve"><value>Během beta fáze platí navíc upozornění na betaverzi v prohlášení o vyloučení odpovědnosti.</value></data>
+  <data name="The Add-on Store and its catalog are being trialled (beta)." xml:space="preserve"><value>Add-on Store a jeho katalog jsou ve zkušebním provozu (beta).</value></data>
+  <data name="Features, content and procedures may change or be discontinued at any time." xml:space="preserve"><value>Funkce, obsah a postupy se mohou kdykoli změnit nebo být zrušeny.</value></data>
+  <data name="Errors, interruptions and outages are possible; no availability is guaranteed." xml:space="preserve"><value>Mohou se vyskytnout chyby, přerušení a výpadky; dostupnost není zaručena.</value></data>
+  <data name="Data, settings and accounts from the beta phase may be reset or not carried over." xml:space="preserve"><value>Data, nastavení a účty z beta fáze mohou být obnovena do výchozího stavu nebo nemusí být převzata.</value></data>
+  <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>Nepoužívejte betaverzi pro časově nebo obchodně kritické procesy a zálohujte důležité dokumenty.</value></data>
+  <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>Zpětná vazba k chybám je vítána: použijte funkci hlášení v okně obchodu v Power PDF nebo kontaktujte autora uvedeného v katalogu.</value></data>
+  <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>Všechna ostatní ustanovení tohoto prohlášení platí beze změny.</value></data>
 </root>

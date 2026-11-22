@@ -1736,4 +1736,20 @@
   <data name="Just released" xml:space="preserve"><value>Uusi</value></data>
   <data name="New version" xml:space="preserve"><value>Uusi versio</value></data>
   <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Nostot: {0}/{1}. Ne näkyvät Suositellut-rivillä luettelon yläpuolella. Merkitse tai poista ne kohteen tähtipainikkeella.</value></data>
+  <data name="Operating mode" xml:space="preserve"><value>Käyttötila</value></data>
+  <data name="The store as usual, without beta notes." xml:space="preserve"><value>Kauppa tavalliseen tapaan, ilman beetahuomautuksia.</value></data>
+  <data name="A red Beta badge at the logo on every page and in the store window of Power PDF, a short note on the start page and beta notes in the disclaimer. Everything keeps working." xml:space="preserve"><value>Punainen Beeta-merkki logon vieressä jokaisella sivulla ja Power PDF:n kauppaikkunassa, lyhyt huomautus aloitussivulla ja beetahuomautukset vastuuvapauslausekkeessa. Kaikki toimii edelleen.</value></data>
+  <data name="The operating mode is fixed by the app setting Server:Mode; change it there." xml:space="preserve"><value>Käyttötila on määritetty sovellusasetuksella Server:Mode; muuta sitä siellä.</value></data>
+  <data name="Unknown operating mode." xml:space="preserve"><value>Tuntematon käyttötila.</value></data>
+  <data name="Operating mode saved." xml:space="preserve"><value>Käyttötila tallennettu.</value></data>
+  <data name="Beta phase" xml:space="preserve"><value>Beetavaihe</value></data>
+  <data name="Beta version: the Add-on Store is still being trialled. Features and content may change, and errors are possible." xml:space="preserve"><value>Beetaversio: Add-on Store on vielä kokeiluvaiheessa. Toiminnot ja sisältö voivat muuttua, ja virheet ovat mahdollisia.</value></data>
+  <data name="During the beta phase the beta notes of the disclaimer also apply." xml:space="preserve"><value>Beetavaiheen aikana sovelletaan lisäksi vastuuvapauslausekkeen beetahuomautuksia.</value></data>
+  <data name="The Add-on Store and its catalog are being trialled (beta)." xml:space="preserve"><value>Add-on Store ja sen luettelo ovat kokeiluvaiheessa (beeta).</value></data>
+  <data name="Features, content and procedures may change or be discontinued at any time." xml:space="preserve"><value>Toiminnot, sisältö ja menettelyt voivat muuttua tai poistua milloin tahansa.</value></data>
+  <data name="Errors, interruptions and outages are possible; no availability is guaranteed." xml:space="preserve"><value>Virheet, katkokset ja häiriöt ovat mahdollisia; saatavuutta ei taata.</value></data>
+  <data name="Data, settings and accounts from the beta phase may be reset or not carried over." xml:space="preserve"><value>Beetavaiheen tiedot, asetukset ja tilit voidaan nollata tai jättää siirtämättä.</value></data>
+  <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>Älä käytä beetaa aikakriittisiin tai liiketoimintakriittisiin prosesseihin, ja varmuuskopioi tärkeät asiakirjat.</value></data>
+  <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>Palaute virheistä on tervetullutta: käytä Power PDF:n kauppaikkunan ilmoitustoimintoa tai ota yhteyttä luettelossa mainittuun tekijään.</value></data>
+  <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>Tämän vastuuvapauslausekkeen muut määräykset ovat voimassa ennallaan.</value></data>
 </root>

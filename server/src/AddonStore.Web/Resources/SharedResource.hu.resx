@@ -1736,4 +1736,20 @@
   <data name="Just released" xml:space="preserve"><value>Új</value></data>
   <data name="New version" xml:space="preserve"><value>Új verzió</value></data>
   <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Kiemeltek: {0} / {1}. Az „Ajánlott” sorban jelennek meg a katalógus felett. Egy bejegyzés csillag gombjával jelölheti meg vagy távolíthatja el őket.</value></data>
+  <data name="Operating mode" xml:space="preserve"><value>Üzemmód</value></data>
+  <data name="The store as usual, without beta notes." xml:space="preserve"><value>Az áruház a megszokott módon, béta-figyelmeztetések nélkül.</value></data>
+  <data name="A red Beta badge at the logo on every page and in the store window of Power PDF, a short note on the start page and beta notes in the disclaimer. Everything keeps working." xml:space="preserve"><value>Piros Béta jelölés a logónál minden oldalon és a Power PDF áruházablakában, rövid figyelmeztetés a kezdőlapon és béta-figyelmeztetések a felelősségkizárásban. Minden tovább működik.</value></data>
+  <data name="The operating mode is fixed by the app setting Server:Mode; change it there." xml:space="preserve"><value>Az üzemmódot a Server:Mode alkalmazásbeállítás rögzíti; ott módosítsa.</value></data>
+  <data name="Unknown operating mode." xml:space="preserve"><value>Ismeretlen üzemmód.</value></data>
+  <data name="Operating mode saved." xml:space="preserve"><value>Az üzemmód mentve.</value></data>
+  <data name="Beta phase" xml:space="preserve"><value>Béta szakasz</value></data>
+  <data name="Beta version: the Add-on Store is still being trialled. Features and content may change, and errors are possible." xml:space="preserve"><value>Bétaverzió: az Add-on Store még kipróbálás alatt áll. A funkciók és a tartalom változhatnak, hibák előfordulhatnak.</value></data>
+  <data name="During the beta phase the beta notes of the disclaimer also apply." xml:space="preserve"><value>A béta szakaszban a felelősségkizárás béta-figyelmeztetései is érvényesek.</value></data>
+  <data name="The Add-on Store and its catalog are being trialled (beta)." xml:space="preserve"><value>Az Add-on Store és katalógusa kipróbálás alatt áll (béta).</value></data>
+  <data name="Features, content and procedures may change or be discontinued at any time." xml:space="preserve"><value>A funkciók, a tartalom és az eljárások bármikor megváltozhatnak vagy megszűnhetnek.</value></data>
+  <data name="Errors, interruptions and outages are possible; no availability is guaranteed." xml:space="preserve"><value>Hibák, megszakítások és kiesések előfordulhatnak; a rendelkezésre állás nem garantált.</value></data>
+  <data name="Data, settings and accounts from the beta phase may be reset or not carried over." xml:space="preserve"><value>A béta szakasz adatai, beállításai és fiókjai visszaállíthatók vagy nem kerülnek átvételre.</value></data>
+  <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>Ne használja a bétát időkritikus vagy üzletkritikus folyamatokhoz, és készítsen biztonsági másolatot a fontos dokumentumokról.</value></data>
+  <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>A hibákkal kapcsolatos visszajelzéseket szívesen fogadjuk: használja a Power PDF áruházablakának bejelentési funkcióját, vagy forduljon a katalógusban megnevezett szerzőhöz.</value></data>
+  <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>A felelősségkizárás többi rendelkezése változatlanul érvényes.</value></data>
 </root>

@@ -1736,4 +1736,20 @@
   <data name="Just released" xml:space="preserve"><value>Nuovo</value></data>
   <data name="New version" xml:space="preserve"><value>Nuova versione</value></data>
   <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>In evidenza: {0} di {1}. Compaiono nella riga "Consigliati" sopra il catalogo. Aggiungili o rimuovili con il pulsante a stella di una voce.</value></data>
+  <data name="Operating mode" xml:space="preserve"><value>Modalità operativa</value></data>
+  <data name="The store as usual, without beta notes." xml:space="preserve"><value>Lo store come di consueto, senza note beta.</value></data>
+  <data name="A red Beta badge at the logo on every page and in the store window of Power PDF, a short note on the start page and beta notes in the disclaimer. Everything keeps working." xml:space="preserve"><value>Un badge Beta rosso accanto al logo su ogni pagina e nella finestra dello store di Power PDF, una breve nota nella pagina iniziale e note beta nell'esclusione di responsabilità. Tutto continua a funzionare.</value></data>
+  <data name="The operating mode is fixed by the app setting Server:Mode; change it there." xml:space="preserve"><value>La modalità operativa è fissata dall'impostazione dell'app Server:Mode; modificala lì.</value></data>
+  <data name="Unknown operating mode." xml:space="preserve"><value>Modalità operativa sconosciuta.</value></data>
+  <data name="Operating mode saved." xml:space="preserve"><value>Modalità operativa salvata.</value></data>
+  <data name="Beta phase" xml:space="preserve"><value>Fase beta</value></data>
+  <data name="Beta version: the Add-on Store is still being trialled. Features and content may change, and errors are possible." xml:space="preserve"><value>Versione beta: l'Add-on Store è ancora in fase di prova. Funzioni e contenuti possono cambiare e sono possibili errori.</value></data>
+  <data name="During the beta phase the beta notes of the disclaimer also apply." xml:space="preserve"><value>Durante la fase beta valgono inoltre le note beta dell'esclusione di responsabilità.</value></data>
+  <data name="The Add-on Store and its catalog are being trialled (beta)." xml:space="preserve"><value>L'Add-on Store e il suo catalogo sono in fase di prova (beta).</value></data>
+  <data name="Features, content and procedures may change or be discontinued at any time." xml:space="preserve"><value>Funzioni, contenuti e procedure possono cambiare o essere sospesi in qualsiasi momento.</value></data>
+  <data name="Errors, interruptions and outages are possible; no availability is guaranteed." xml:space="preserve"><value>Sono possibili errori, interruzioni e malfunzionamenti; non è garantita alcuna disponibilità.</value></data>
+  <data name="Data, settings and accounts from the beta phase may be reset or not carried over." xml:space="preserve"><value>Dati, impostazioni e account della fase beta possono essere reimpostati o non essere trasferiti.</value></data>
+  <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>Non utilizzare la beta per processi urgenti o critici per l'azienda e conserva copie dei documenti importanti.</value></data>
+  <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>Le segnalazioni di errori sono benvenute: usa la funzione di segnalazione nella finestra dello store di Power PDF o contatta l'autore indicato nel catalogo.</value></data>
+  <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>Tutte le altre disposizioni di questa esclusione di responsabilità restano invariate.</value></data>
 </root>

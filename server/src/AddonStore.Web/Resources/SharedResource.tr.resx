@@ -1736,4 +1736,20 @@
   <data name="Just released" xml:space="preserve"><value>Yeni</value></data>
   <data name="New version" xml:space="preserve"><value>Yeni sürüm</value></data>
   <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>Öne çıkanlar: {0} / {1}. Kataloğun üstündeki "Önerilen" satırında görünürler. Bir girişteki yıldız düğmesiyle işaretleyin veya kaldırın.</value></data>
+  <data name="Operating mode" xml:space="preserve"><value>Çalışma modu</value></data>
+  <data name="The store as usual, without beta notes." xml:space="preserve"><value>Mağaza her zamanki gibi, beta notları olmadan.</value></data>
+  <data name="A red Beta badge at the logo on every page and in the store window of Power PDF, a short note on the start page and beta notes in the disclaimer. Everything keeps working." xml:space="preserve"><value>Her sayfada ve Power PDF mağaza penceresinde logonun yanında kırmızı bir Beta rozeti, başlangıç sayfasında kısa bir not ve sorumluluk reddinde beta notları. Her şey çalışmaya devam eder.</value></data>
+  <data name="The operating mode is fixed by the app setting Server:Mode; change it there." xml:space="preserve"><value>Çalışma modu Server:Mode uygulama ayarıyla belirlenmiştir; orada değiştirin.</value></data>
+  <data name="Unknown operating mode." xml:space="preserve"><value>Bilinmeyen çalışma modu.</value></data>
+  <data name="Operating mode saved." xml:space="preserve"><value>Çalışma modu kaydedildi.</value></data>
+  <data name="Beta phase" xml:space="preserve"><value>Beta aşaması</value></data>
+  <data name="Beta version: the Add-on Store is still being trialled. Features and content may change, and errors are possible." xml:space="preserve"><value>Beta sürümü: Add-on Store hâlâ deneme aşamasındadır. İşlevler ve içerik değişebilir, hatalar olabilir.</value></data>
+  <data name="During the beta phase the beta notes of the disclaimer also apply." xml:space="preserve"><value>Beta aşamasında sorumluluk reddindeki beta notları da geçerlidir.</value></data>
+  <data name="The Add-on Store and its catalog are being trialled (beta)." xml:space="preserve"><value>Add-on Store ve kataloğu deneme aşamasındadır (beta).</value></data>
+  <data name="Features, content and procedures may change or be discontinued at any time." xml:space="preserve"><value>İşlevler, içerik ve süreçler her zaman değişebilir veya kaldırılabilir.</value></data>
+  <data name="Errors, interruptions and outages are possible; no availability is guaranteed." xml:space="preserve"><value>Hatalar, kesintiler ve arızalar olabilir; erişilebilirlik garanti edilmez.</value></data>
+  <data name="Data, settings and accounts from the beta phase may be reset or not carried over." xml:space="preserve"><value>Beta aşamasındaki veriler, ayarlar ve hesaplar sıfırlanabilir veya aktarılmayabilir.</value></data>
+  <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>Betayı zaman açısından veya iş açısından kritik süreçler için kullanmayın ve önemli belgelerin yedeğini alın.</value></data>
+  <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>Hatalarla ilgili geri bildirimler memnuniyetle karşılanır: Power PDF mağaza penceresindeki bildirme işlevini kullanın veya katalogda adı geçen yazarla iletişime geçin.</value></data>
+  <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>Bu sorumluluk reddinin diğer tüm hükümleri değişmeden geçerlidir.</value></data>
 </root>

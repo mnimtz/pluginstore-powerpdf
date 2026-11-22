@@ -372,6 +372,29 @@ input:focus, textarea:focus, select:focus { outline: 2px solid var(--tun-blue); 
 .alert.info { background: var(--tun-tint); color: var(--tun-navy); border-color: var(--tun-blue); }
 /* UAT (S1.21.0): fixed note on every page of a test store */
 .uat-band { background: #FFDF85; color: #634E12; text-align: center; font-weight: 700; font-size: .85rem; padding: 5px 12px; letter-spacing: .02em; }
+
+/* S2.4.0: beta mode. A red pill at the end of the title block that reaches over the header line (red #E30613:
+   white text 4.9:1); the same pill inline in the start page note, the disclaimer and the settings card */
+header.site .title { position: relative; }
+.beta-badge { display: inline-block; background: #E30613; color: #fff; font: 700 .86rem/1 "Red Hat Display", Arial, sans-serif;
+  letter-spacing: .02em; padding: 6px 12px 7px; border-radius: 7px; text-decoration: none; white-space: nowrap;
+  box-shadow: 0 3px 8px rgba(227, 6, 19, .28); }
+header.site .title .beta-badge { position: absolute; inset-inline-end: -12px; bottom: -31px; z-index: 6; }
+a.beta-badge:hover, a.beta-badge:focus-visible { background: #B3261E; color: #fff; outline: none; }
+.beta-badge.inline { position: static; font-size: .7rem; padding: 3px 7px 4px; border-radius: 5px; box-shadow: none; vertical-align: 1px; }
+.hero-beta { margin: 0 0 8px; color: #fff; font-size: .88rem; }
+.hero-beta a { color: var(--tun-on-navy); }
+.beta-card { max-width: 820px; line-height: 1.55; border-inline-start: 4px solid #E30613; background: #FFF5F5; scroll-margin-top: 90px; }
+.beta-card h2 { margin: 0 0 8px; font-size: 1.2rem; display: flex; gap: 10px; align-items: center; }
+.beta-card ul { margin: 0 0 10px; padding-inline-start: 20px; }
+.catalog-note-beta { display: inline-block; margin-top: 4px; color: var(--tun-ink); }
+.mode-choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.mode-choice { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border: 1px solid var(--tun-gray-200); border-radius: 8px;
+  background: #fff; cursor: pointer; font-weight: 400; }
+.mode-choice:has(input:checked) { border-color: var(--tun-navy); box-shadow: 0 0 0 1px var(--tun-navy); }
+.mode-choice input { width: auto; margin-top: 3px; }
+.mode-choice b { display: flex; gap: 8px; align-items: center; color: var(--tun-navy); }
+.mode-choice small { display: block; margin-top: 4px; color: var(--tun-slate); font-size: .84rem; line-height: 1.4; }
 .alert code { word-break: break-all; }
 
 ul.findings { list-style: none; padding: 0; margin: 10px 0 0; }

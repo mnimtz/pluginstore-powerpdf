@@ -644,6 +644,13 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Operating mode: production or beta (S2.4.0, Nov 22, 2026):** Settings > Server > Operating mode (or the app setting
+`Server:Mode`, which wins). In beta every page shows a red "Beta" badge at the end of the title block (#E30613, linked to
+the disclaimer), tabs start with "Beta ·", the start page has a short beta note in the head and a beta line below the
+catalog, and the disclaimer opens with a "Beta phase" section; all in 21 languages. Nothing is locked. `GET /api/ping`,
+`GET /api/catalog` and `GET /api/client/access` report `serverMode` (`production` or `beta`) so store clients can show the
+badge in the store window. Switching is admin only, takes effect at once and is written to the audit log.
+
 **Never the company as author (S2.3.3, Nov 21, 2026):** "Tungsten Automation" alone (with or without a legal suffix) is
 not an author: from a manifest or a catalog entry it counts as "not given" and the catalog shows the publishing account's
 name; an account that hides its name shows no author (it used to be "Tungsten Automation"). Uploads get the warning

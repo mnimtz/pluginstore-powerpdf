@@ -16,12 +16,18 @@
     const int FreshDays = 14, ShowDownloadsFrom = 100;
     static long Unix(DateTime d) => new DateTimeOffset(DateTime.SpecifyKind(d, DateTimeKind.Utc)).ToUnixTimeSeconds();
     var featured = Model.Items.Where(i => i.Featured).OrderBy(i => i.FeaturedAt).ToList();
+    var isBeta = Model.ServerModeValue == AddonStore.Web.Services.ServerMode.Beta;
 }
 
 @* S2.3.0: compact head: title, edition, one sentence and the download; the key figures in one slim row *@
 <div class="hero hero-compact">
     <h1>@L["Add-on Store for Tungsten Power PDF SaaS"]</h1>
     <p class="hero-edition">@L["For the Tungsten Power PDF Business SaaS edition only (Power PDF with sign-in)."]</p>
+    @if (isBeta)
+    {
+        @* S2.4.0: beta mode: one short line in the head, details in the disclaimer *@
+        <p class="hero-beta"><span class="beta-badge inline">@L["Beta"]</span> @L["Beta version: the Add-on Store is still being trialled. Features and content may change, and errors are possible."] <a href="/Disclaimer#beta">@L["Beta phase"]</a></p>
+    }
     <p class="desktop-only hero-lead">@L["Add-ons are installed directly inside Power PDF via the Add-on Store ribbon; this site is for developers and admins."]</p>
     <p class="mobile-only hero-lead">@L["Released add-ons for Tungsten Power PDF. They are installed on a Windows PC, directly inside Power PDF."]</p>
     @if (Model.ClientDownloadUrl is not null)
@@ -457,4 +463,8 @@ else
     <span class="desktop-only-inline">@L["Add-ons from independent authors, not official Tungsten Automation products: provided as is, without warranty or official support. Use at your own risk; Tungsten Automation accepts no liability."]</span>
     <span class="mobile-only-inline">@L["Add-ons from independent authors, without warranty or official support."]</span>
     <a href="/Disclaimer">@L["Disclaimer"]</a>
+    @if (isBeta)
+    {
+        <br /><span class="catalog-note-beta">@L["During the beta phase the beta notes of the disclaimer also apply."] <a href="/Disclaimer#beta">@L["Beta phase"]</a></span>
+    }
 </p>

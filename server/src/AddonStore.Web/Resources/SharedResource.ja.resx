@@ -1736,4 +1736,20 @@
   <data name="Just released" xml:space="preserve"><value>新着</value></data>
   <data name="New version" xml:space="preserve"><value>新バージョン</value></data>
   <data name="Highlights: {0} of {1}. They appear in the Recommended row above the catalog. Mark or remove them with the star button on an entry." xml:space="preserve"><value>おすすめ: {0} / {1}。カタログの上の「おすすめ」行に表示されます。各項目の星ボタンで設定または解除します。</value></data>
+  <data name="Operating mode" xml:space="preserve"><value>運用モード</value></data>
+  <data name="The store as usual, without beta notes." xml:space="preserve"><value>通常どおりのストア (ベータの表示なし)。</value></data>
+  <data name="A red Beta badge at the logo on every page and in the store window of Power PDF, a short note on the start page and beta notes in the disclaimer. Everything keeps working." xml:space="preserve"><value>すべてのページと Power PDF のストア ウィンドウのロゴの横に赤い「ベータ」バッジ、スタート ページに短い注意書き、免責事項にベータに関する注意事項を表示します。すべての機能はそのまま使えます。</value></data>
+  <data name="The operating mode is fixed by the app setting Server:Mode; change it there." xml:space="preserve"><value>運用モードはアプリ設定 Server:Mode で固定されています。そちらで変更してください。</value></data>
+  <data name="Unknown operating mode." xml:space="preserve"><value>不明な運用モードです。</value></data>
+  <data name="Operating mode saved." xml:space="preserve"><value>運用モードを保存しました。</value></data>
+  <data name="Beta phase" xml:space="preserve"><value>ベータ期間</value></data>
+  <data name="Beta version: the Add-on Store is still being trialled. Features and content may change, and errors are possible." xml:space="preserve"><value>ベータ版: Add-on Store はまだ試験運用中です。機能や内容は変更される場合があり、エラーが発生する可能性があります。</value></data>
+  <data name="During the beta phase the beta notes of the disclaimer also apply." xml:space="preserve"><value>ベータ期間中は、免責事項のベータに関する注意事項も適用されます。</value></data>
+  <data name="The Add-on Store and its catalog are being trialled (beta)." xml:space="preserve"><value>Add-on Store とそのカタログは試験運用中です (ベータ)。</value></data>
+  <data name="Features, content and procedures may change or be discontinued at any time." xml:space="preserve"><value>機能、内容、手順は予告なく変更または廃止される場合があります。</value></data>
+  <data name="Errors, interruptions and outages are possible; no availability is guaranteed." xml:space="preserve"><value>エラー、中断、障害が発生する可能性があります。可用性は保証されません。</value></data>
+  <data name="Data, settings and accounts from the beta phase may be reset or not carried over." xml:space="preserve"><value>ベータ期間のデータ、設定、アカウントはリセットされるか、引き継がれない場合があります。</value></data>
+  <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>時間的に重要な業務やビジネス上重要な業務にはベータを使用せず、重要な文書はバックアップしてください。</value></data>
+  <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>エラーのご報告を歓迎します。Power PDF のストア ウィンドウの報告機能を使用するか、カタログに記載された作成者にお問い合わせください。</value></data>
+  <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>本免責事項のその他の規定は変更なく適用されます。</value></data>
 </root>

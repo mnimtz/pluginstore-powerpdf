@@ -24,6 +24,9 @@ public class SettingsModel : PageModel
     public string TimeZone { get; private set; } = TimeDisplay.DefaultZone;
     public string SourcePolicy { get; private set; } = "required";
     public bool FourEyes { get; private set; }
+    /// <summary>S2.4.0: operating mode (production or beta) and whether the app setting Server:Mode fixes it.</summary>
+    public string ServerModeValue { get; private set; } = ServerMode.Production;
+    public bool ServerModeForced { get; private set; }
     public int ApproverCount { get; private set; }
     /// <summary>Sections of the left navigation (S0.18.0); one is shown at a time.</summary>
     public static readonly (string Key, string Label)[] Views =
@@ -371,6 +374,33 @@ public class SettingsModel : PageModel
         (u.Scheme == Uri.UriSchemeHttps || (u.Scheme == Uri.UriSchemeHttp && u.IsLoopback)) &&
         string.IsNullOrEmpty(u.UserInfo) && string.IsNullOrEmpty(u.Query) && string.IsNullOrEmpty(u.Fragment);
 
+    /// <summary>S2.4.0: switches the operating mode; refused while the app setting Server:Mode fixes it.</summary>
+    public async Task OnPostServerModeAsync(string? serverMode, [FromServices] IConfiguration config)
+    {
+        var admin = await _users.GetUserAsync(User);
+        if (ServerMode.IsForced(config))
+        {
+            Notice = "The operating mode is fixed by the app setting Server:Mode; change it there.";
+            NoticeKind = "error";
+        }
+        else if (!ServerMode.IsKnown(serverMode))
+        {
+            Notice = "Unknown operating mode.";
+            NoticeKind = "error";
+        }
+        else
+        {
+            var mode = ServerMode.Normalize(serverMode);
+            var before = ServerMode.Normalize(await _settings.GetAsync(ServerMode.Key));
+            await _settings.SetAsync(ServerMode.Key, mode);
+            CatalogUi.Invalidate();   // cached catalog answers carry the mode
+            if (before != mode) await _audit.LogAsync(admin!.DisplayName, "settings.changed", ServerMode.Key, $"{before} -> {mode}");
+            Notice = "Operating mode saved.";
+        }
+        View = "server";
+        await LoadAsync();
+    }
+
     public async Task OnPostServerAsync(string? baseUrl, string? timeZone, string? sourcePolicy, bool fourEyes)
     {
         if (sourcePolicy is "off" or "recommended" or "required")
@@ -674,6 +704,9 @@ public class SettingsModel : PageModel
         var sp = await _settings.GetAsync("Source.Policy");
         SourcePolicy = sp is "off" or "recommended" or "required" ? sp : "required";
         FourEyes = await _settings.GetAsync("Review.FourEyes") == "on";
+        var cfg = HttpContext.RequestServices.GetRequiredService<IConfiguration>();
+        ServerModeValue = await ServerMode.GetAsync(_settings, cfg);
+        ServerModeForced = ServerMode.IsForced(cfg);
         await _signing.EnsureLoadedAsync();
         SigningProblem = _signing.Problem;
         SigningKeyId = _signing.KeyId;
