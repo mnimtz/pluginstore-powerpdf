@@ -21,12 +21,12 @@ button{cursor:pointer}
 .app{display:flex;flex-direction:column;height:100%}
 header.tp-head{padding:12px 18px}
 /* C2.2.0: badge of the server's operating mode next to the title, and the maintenance notice */
-.mode-pill{display:inline-flex;align-items:center;gap:4px;border-radius:5px;padding:3px 8px 4px;font-size:11.5px;font-weight:700;line-height:1;white-space:nowrap;flex:none}
+.mode-pill{display:inline-flex;align-items:center;gap:3px;border-radius:5px;padding:2px 6px 3px;font-size:10.5px;font-weight:700;line-height:1;white-space:nowrap;flex:none;position:relative;top:-7px;margin-inline-start:-6px;margin-inline-end:4px}
 .mode-pill[hidden]{display:none}
 .mode-pill.beta{background:var(--mode-beta);color:var(--tp-white)}
 .mode-pill.maintenance{background:var(--tp-yellow);color:var(--tp-navy)}
 .mode-pill.test{background:var(--mode-test);color:var(--tp-white)}
-.mode-pill svg{width:12px;height:12px;flex:none}
+.mode-pill svg{width:10px;height:10px;flex:none}
 .banner.maint{background:var(--tp-warn-bg);color:var(--tp-navy)}
 .search{margin-inline-start:auto;display:flex;align-items:center;gap:8px;background:var(--tp-gray-50);border:1px solid var(--tp-gray-blue);border-radius:var(--tp-radius-btn);padding:6px 11px;width:280px}
 .search:focus-within{border-color:var(--tp-blue);outline:2px solid var(--tp-blue);outline-offset:-1px;background:var(--tp-white)}
@@ -177,8 +177,8 @@ body.upmode #storeBtn{display:flex;margin-inline-start:auto}
     <img id="ppIcon" hidden src="img/tungsten-power-pdf-icon.svg" alt="">
     <span class="tp-sep"></span>
     <span class="t" id="title"></span>
-    <span class="s">Tungsten Power PDF</span>
     <span class="mode-pill" id="modePill" hidden></span>
+    <span class="s">Tungsten Power PDF</span>
     <label class="search">
       <svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input id="q" type="text" autocomplete="off" spellcheck="false">
