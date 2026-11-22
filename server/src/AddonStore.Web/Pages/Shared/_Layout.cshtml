@@ -123,7 +123,7 @@ else if (serverMode == "maintenance")
             </button>
             <a class="brand" href="/Start">
                 <img class="logo" src="/img/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation" />
-                <div class="title">Add-on Store<small>Tungsten Power PDF</small>@if (modeBadge) { <span class="mode-link" title="@modeTitle"><partial name="_ModeBadge" model='(serverMode, false)' /></span> }</div>
+                <div class="title"><span class="title-main">Add-on Store @if (modeBadge) { <span class="mode-link" title="@modeTitle"><partial name="_ModeBadge" model='(serverMode, false)' /></span> }</span><small>Tungsten Power PDF</small></div>
             </a>
             <span class="spacer"></span>
             <a class="top-link" href="/">@L["Catalog"]</a>
@@ -229,7 +229,7 @@ else
 <header class="site">
     <div class="bar">
         <img class="logo" src="/img/tungsten-automation-logo-2026-blue.svg" alt="Tungsten Automation" />
-        <div class="title">Add-on Store<small>Tungsten Power PDF</small>@if (modeBadge) { if (modeHref.Length > 0) { <a class="mode-link" href="@modeHref" title="@modeTitle"><partial name="_ModeBadge" model='(serverMode, false)' /></a> } else { <span class="mode-link" title="@modeTitle"><partial name="_ModeBadge" model='(serverMode, false)' /></span> } }</div>
+        <div class="title"><span class="title-main">Add-on Store @if (modeBadge) { if (modeHref.Length > 0) { <a class="mode-link" href="@modeHref" title="@modeTitle"><partial name="_ModeBadge" model='(serverMode, false)' /></a> } else { <span class="mode-link" title="@modeTitle"><partial name="_ModeBadge" model='(serverMode, false)' /></span> } }</span><small>Tungsten Power PDF</small></div>
         <button type="button" class="nav-toggle" aria-label="@L["Menu"]" aria-expanded="false" aria-controls="site-nav">
             <span></span><span></span><span></span>
         </button>

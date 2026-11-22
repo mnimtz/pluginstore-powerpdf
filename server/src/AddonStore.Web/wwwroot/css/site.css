@@ -385,7 +385,11 @@ header.site .title { position: relative; }
 .mode-badge.mode-test { background: var(--tun-blue-ink); color: #fff; box-shadow: 0 3px 8px rgba(0, 114, 188, .28); }
 .mode-ico { width: 14px; height: 14px; flex: none; fill: currentColor; }
 .mode-ico-line { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-header.site .title .mode-link { position: absolute; inset-inline-end: -12px; bottom: -31px; z-index: 6; text-decoration: none; }
+/* S2.6.1: top right at "Add-on Store", raised like a superscript tag (it used to hang below the title block) */
+header.site .title .title-main { display: inline-flex; align-items: flex-start; gap: 6px; white-space: nowrap; }
+header.site .title .mode-link { position: relative; top: -7px; text-decoration: none; line-height: 1; }
+header.site .title .mode-link .mode-badge { font-size: .68rem; padding: 3px 7px 4px; border-radius: 5px; gap: 4px; }
+header.site .title .mode-link .mode-ico { width: 11px; height: 11px; }
 a.mode-link:hover .mode-badge, a.mode-link:focus-visible .mode-badge { filter: brightness(.92); }
 a.mode-link:focus-visible { outline: none; }
 a.mode-link:focus-visible .mode-badge { outline: 2px solid var(--tun-navy); outline-offset: 2px; }

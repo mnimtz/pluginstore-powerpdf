@@ -645,6 +645,9 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Badge at the top right (S2.6.1, Nov 22, 2026):** the mode badge sits small and raised at the top right of "Add-on
+Store" in the header (it used to hang below the title block).
+
 **Maintenance and test mode (S2.6.0, Nov 22, 2026):** the operating mode has four values. `maintenance`: a yellow badge
 with a wrench at the logo and a notice on every page (optional expected end and note); every change (POST, PUT, PATCH,
 DELETE) pauses for everybody except admins (Services/MaintenanceGate.cs): the API answers `503 SERVER_MAINTENANCE` with
