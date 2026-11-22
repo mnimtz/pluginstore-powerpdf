@@ -28,6 +28,7 @@ const LONGLONG kMaxJsonBytes     = 256 * 1024;         // help.json
 const LONGLONG kMaxManifestBytes = 1024 * 1024;        // manifest.json of the package
 const LONGLONG kMaxImageBytes    = 2 * 1024 * 1024;    // one picture of a help
 const size_t   kMaxImagesPerDoc  = 64;
+const size_t   kMaxImageDataPerDoc = 16 * 1024 * 1024;   // all data: URIs of one page together (review C2.1.0: 64 x 2 MB made 170 MB)
 const size_t   kMaxAddons        = 200;
 const size_t   kMaxTopics        = 200;
 const int      kMaxJsonDepth     = 32;
@@ -385,7 +386,10 @@ inline std::wstring ManifestName(const JVal& man, const std::wstring& lang)
         if (out.empty()) for (const auto& kv : n->o) if (kv.second.type == JVal::TStr && !kv.second.s.empty()) { out = kv.second.s; break; }
     }
     std::wstring clean;
-    for (wchar_t c : out) if (c >= 0x20 && c != 0x7F && clean.size() < 80) clean += c;
+    // no control characters and no bidi overrides/isolates (a name could otherwise show reversed, review C2.1.0)
+    for (wchar_t c : out)
+        if (c >= 0x20 && !(c >= 0x7F && c <= 0x9F) && !(c >= 0x200E && c <= 0x200F) && !(c >= 0x202A && c <= 0x202E) &&
+            !(c >= 0x2066 && c <= 0x2069) && clean.size() < 80) clean += c;
     return clean;
 }
 
@@ -822,7 +826,16 @@ inline HelpDoc LoadDoc(const HelpSource& s)
         return d;
     if (raw.size() >= 3 && (unsigned char)raw[0] == 0xEF && (unsigned char)raw[1] == 0xBB && (unsigned char)raw[2] == 0xBF) raw.erase(0, 3);
     std::wstring dir = s.helpDir;
-    CleanResult r = CleanHtml(raw, [dir](const std::string& rel) { return ImageDataUri(dir, rel); });
+    // pictures beyond the budget are dropped and, once one did not fit, not read at all; at most a few hundred
+    // attempts (missing or refused files) per page, so a page full of <img> cannot keep the UI thread reading
+    size_t budget = kMaxImageDataPerDoc, tries = 0;
+    CleanResult r = CleanHtml(raw, [dir, &budget, &tries](const std::string& rel) {
+        if (budget < 64 || ++tries > 4 * kMaxImagesPerDoc) return std::string();
+        std::string u = ImageDataUri(dir, rel);
+        if (u.size() > budget) { budget = 0; return std::string(); }
+        budget -= u.size();
+        return u;
+    });
     d.html.swap(r.html);
     d.links.swap(r.links);
     return d;

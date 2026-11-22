@@ -216,7 +216,7 @@
   <tr><td>Einmal auf jedes neue Update hinweisen</td><td>Der einmalige Hinweis aus Kapitel 8 (Standard: an).</td></tr>
   <tr><td>Ausführliches Protokoll</td><td>Schreibt mehr Einzelheiten in <code>%TEMP%\PluginStore.log</code>, für die Fehlersuche.</td></tr>
 </table>
-<p>Unten steht die Version des Client, zum Beispiel „Add-on-Store-Client Version 2.1.0“.</p>
+<p>Unten steht die Version des Client, zum Beispiel „Add-on-Store-Client Version 2.1.1“.</p>
 
 <h1 id="links-from-the-website-manual-installation">13 Links von der Website, manuelle Installation</h1>
 <h2 id="links-from-the-website-manual-installation-install-in-power-pdf">„In Power PDF installieren“</h2>
@@ -280,7 +280,7 @@
 <h2 id="for-administrators-privacy">Datenschutz</h2>
 <p>Der Client sendet keine Dokumente und keine Namen von Benutzern oder Computern. Mit jeder Anfrage gehen technische Angaben an den Store-Server:</p>
 <ul>
-  <li>die Programmkennung mit den Versionen von Client, Power PDF und Windows und der Prozessorarchitektur, zum Beispiel <code>AddonStore-PowerPDF/2.1.0 (PowerPDF …; Windows …; x64)</code>;</li>
+  <li>die Programmkennung mit den Versionen von Client, Power PDF und Windows und der Prozessorarchitektur, zum Beispiel <code>AddonStore-PowerPDF/2.1.1 (PowerPDF …; Windows …; x64)</code>;</li>
   <li>die Lizenzart von Power PDF (<code>cloud</code>, <code>serial</code> oder <code>unknown</code>), damit der Store prüfen kann, ob er genutzt werden darf;</li>
   <li>nur mit Kundencode: die Codes und eine zufällige Installationskennung dieses Benutzers; der Server speichert nur einen Prüfwert davon je Lieferung.</li>
 </ul>
@@ -405,7 +405,7 @@
   <tr><td>Power PDF</td><td>Business ab 2025.3.7; jede Edition ab 2026.4; nur mit Anmeldung (SaaS)</td></tr>
   <tr><td>Windows</td><td>10 und 11, x64 und ARM64</td></tr>
   <tr><td>Sprachen</td><td>21 Sprachen von Power PDF (Fenster, Menüband, Setup); eigene Hilfe in 6 Sprachen</td></tr>
-  <tr><td>Hilfe der Add-ons</td><td>Format „tungsten-addon-help“ Version 1; je Datei höchstens 4 MB, Bilder PNG oder JPEG bis 2 MB; nur erlaubte Elemente, keine Skripte</td></tr>
+  <tr><td>Hilfe der Add-ons</td><td>Format „tungsten-addon-help“ Version 1; je Datei höchstens 4 MB, Bilder PNG oder JPEG bis 2 MB, zusammen höchstens 16 MB Bilder je Seite; nur erlaubte Elemente, keine Skripte</td></tr>
   <tr><td>Verbindung</td><td>HTTPS, TLS 1.2 oder neuer, Port 443, System-Proxy</td></tr>
   <tr><td>Kundencodes</td><td>bis zu 10, je höchstens 64 Zeichen</td></tr>
   <tr><td>Problem melden</td><td>Text 5 bis 4000 Zeichen; bis zu 3 Anhänge, je 5 MB, zusammen 10 MB</td></tr>
@@ -416,6 +416,7 @@
 <h1 id="version-history">19 Versionsgeschichte</h1>
 <table>
   <tr><th>Version</th><th>Was ist neu</th></tr>
+  <tr><td>2.1.1</td><td>Die Hilfe ist zuverlässiger: große Bilder, Suche mit Enter, englische Hilfe in arabischer Oberfläche und Hinweise bei offenen Fenstern.</td></tr>
   <tr><td>2.1.0</td><td>Gemeinsame Hilfe für alle installierten Add-ons mit Suche: Knopf <b>Hilfe</b> im Register Erweiterte Funktionen, Hilfe-Knopf und F1 im Store-Fenster und in den Add-ons; die Hilfe des Store in sechs Sprachen.</td></tr>
   <tr><td>2.0.2</td><td>Stabiler: kein Beenden von Power PDF bei sehr langem Ordner für temporäre Dateien oder bei einem Fehler im Store-Fenster; Lizenzhinweise im Setup.</td></tr>
   <tr><td>2.0.1</td><td>Entfernt der Store ein manuell installiertes Add-on, verschwindet auch sein Eintrag unter Installierte Apps.</td></tr>
@@ -441,6 +442,6 @@
   <tr><td>0.5.0</td><td>Bewertungen, Problem melden, Bildschirmfotos.</td></tr>
   <tr><td>0.4.0</td><td>Modernes Store-Fenster.</td></tr>
 </table>
-<p>Add-on Store 2.1.0 · Tungsten Automation · Dieses Handbuch beschreibt den Client für Tungsten Power PDF.</p>
+<p>Add-on Store 2.1.1 · Tungsten Automation · Dieses Handbuch beschreibt den Client für Tungsten Power PDF.</p>
 </body>
 </html>

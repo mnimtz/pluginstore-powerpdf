@@ -216,7 +216,7 @@
   <tr><td>M'avertir une fois de chaque nouvelle mise à jour</td><td>L’avertissement unique du chapitre 8 (par défaut : activé).</td></tr>
   <tr><td>Journalisation détaillée</td><td>Écrit davantage de détails dans <code>%TEMP%\PluginStore.log</code>, pour le dépannage.</td></tr>
 </table>
-<p>En bas figure la version du client, par exemple « Client Add-on Store version 2.1.0 ».</p>
+<p>En bas figure la version du client, par exemple « Client Add-on Store version 2.1.1 ».</p>
 
 <h1 id="links-from-the-website-manual-installation">13 Liens depuis le site web, installation manuelle</h1>
 <h2 id="links-from-the-website-manual-installation-install-in-power-pdf">« Installer dans Power PDF »</h2>
@@ -280,7 +280,7 @@
 <h2 id="for-administrators-privacy">Confidentialité</h2>
 <p>Le client n’envoie aucun document, ni aucun nom d’utilisateur ou d’ordinateur. Chaque requête transmet des données techniques au serveur du store :</p>
 <ul>
-  <li>l’identifiant du programme avec les versions du client, de Power PDF et de Windows ainsi que l’architecture du processeur, par exemple <code>AddonStore-PowerPDF/2.1.0 (PowerPDF …; Windows …; x64)</code> ;</li>
+  <li>l’identifiant du programme avec les versions du client, de Power PDF et de Windows ainsi que l’architecture du processeur, par exemple <code>AddonStore-PowerPDF/2.1.1 (PowerPDF …; Windows …; x64)</code> ;</li>
   <li>le mode de licence de Power PDF (<code>cloud</code>, <code>serial</code> ou <code>unknown</code>), afin que le store puisse vérifier s’il peut être utilisé ;</li>
   <li>uniquement avec un code client : les codes et un identifiant d’installation aléatoire de cet utilisateur ; le serveur n’en conserve qu’une valeur de contrôle par livraison.</li>
 </ul>
@@ -405,7 +405,7 @@
   <tr><td>Power PDF</td><td>Business à partir de 2025.3.7 ; toutes les éditions à partir de 2026.4 ; uniquement avec connexion (SaaS)</td></tr>
   <tr><td>Windows</td><td>10 et 11, x64 et ARM64</td></tr>
   <tr><td>Langues</td><td>21 langues de Power PDF (fenêtre, ruban, programme d’installation) ; aide propre en 6 langues</td></tr>
-  <tr><td>Aide des modules</td><td>format « tungsten-addon-help » version 1 ; 4 Mo au maximum par fichier, images PNG ou JPEG jusqu’à 2 Mo ; uniquement des éléments autorisés, aucun script</td></tr>
+  <tr><td>Aide des modules</td><td>format « tungsten-addon-help » version 1 ; 4 Mo au maximum par fichier, images PNG ou JPEG jusqu’à 2 Mo, 16 Mo d’images au maximum par page ; uniquement des éléments autorisés, aucun script</td></tr>
   <tr><td>Connexion</td><td>HTTPS, TLS 1.2 ou ultérieur, port 443, proxy du système</td></tr>
   <tr><td>Codes client</td><td>jusqu’à 10, 64 caractères au maximum chacun</td></tr>
   <tr><td>Signaler un problème</td><td>texte de 5 à 4000 caractères ; jusqu’à 3 pièces jointes, 5 Mo chacune, 10 Mo au total</td></tr>
@@ -416,6 +416,7 @@
 <h1 id="version-history">19 Historique des versions</h1>
 <table>
   <tr><th>Version</th><th>Nouveautés</th></tr>
+  <tr><td>2.1.1</td><td>L’aide est plus fiable : grandes images, recherche avec Entrée, aide en anglais dans un Power PDF en arabe et messages lorsque des fenêtres sont ouvertes.</td></tr>
   <tr><td>2.1.0</td><td>Aide commune à tous les modules installés, avec recherche : bouton <b>Aide</b> dans l’onglet Fonctions avancées, bouton d’aide et F1 dans la fenêtre du store et dans les modules ; l’aide du store en six langues.</td></tr>
   <tr><td>2.0.2</td><td>Plus stable : Power PDF ne se ferme plus avec un chemin très long pour le dossier des fichiers temporaires ni en cas d’erreur dans la fenêtre du store ; mentions de licence dans le programme d’installation.</td></tr>
   <tr><td>2.0.1</td><td>Lorsque le store supprime un module installé manuellement, son entrée sous Applications installées disparaît également.</td></tr>
@@ -441,6 +442,6 @@
   <tr><td>0.5.0</td><td>Évaluations, signalements de problèmes, captures d’écran.</td></tr>
   <tr><td>0.4.0</td><td>Fenêtre moderne du store.</td></tr>
 </table>
-<p>Add-on Store 2.1.0 · Tungsten Automation · Ce manuel décrit le client pour Tungsten Power PDF.</p>
+<p>Add-on Store 2.1.1 · Tungsten Automation · Ce manuel décrit le client pour Tungsten Power PDF.</p>
 </body>
 </html>

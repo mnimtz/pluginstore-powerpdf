@@ -256,12 +256,78 @@ static void TestFiles()
     DeleteTree(g_tmp);
 }
 
+static std::string ReadAll(const std::wstring& p)
+{
+    std::string s;
+    ReadFileLimited(p, 64 * 1024 * 1024, s);
+    return s;
+}
+
+static size_t CountOf(const std::string& s, const char* x)
+{
+    size_t n = 0, l = strlen(x);
+    for (size_t p = s.find(x); p != std::string::npos; p = s.find(x, p + l)) ++n;
+    return n;
+}
+
+// An Enhanced Feature Pack module as the store installs it (Mail Merge): <Plug-Ins>\MailMerge.zxt, the data
+// folder <Plug-Ins>\MailMerge (also the folder of its INI, FP_INI_RELPATH) with the package's manifest.json and
+// docs\help from the package. Uses the real help of EnhancedFeaturePack\mailmerge\help (read only, skipped
+// when that folder is missing).
+static void TestFp1Module()
+{
+    const std::wstring src = L"C:\\Claude\\EnhancedFeaturePack\\mailmerge\\help";
+    if (GetFileAttributesW((src + L"\\help.json").c_str()) == INVALID_FILE_ATTRIBUTES) { std::printf("note: Mail Merge test help not found, skipped\n"); return; }
+    wchar_t tmp[MAX_PATH];
+    GetTempPathW(MAX_PATH, tmp);
+    g_tmp = std::wstring(tmp) + L"helpcore_fp1_" + std::to_wstring(GetCurrentProcessId());
+    CreateDirectoryW(g_tmp.c_str(), NULL);
+    Put(L"Plug-Ins\\MailMerge.zxt", "MZ");
+    Put(L"Plug-Ins\\MailMerge\\MailMerge.ini", "[x]\r\n");
+    Put(L"Plug-Ins\\MailMerge\\manifest.json",
+        "{\"id\":\"com.tungsten.mailmerge\",\"version\":\"2.1.0\",\"name\":{\"en\":\"Mail Merge\",\"de\":\"Serienbrief\",\"fr\":\"Publipostage\"},"
+        "\"description\":{\"en\":\"x\"},\"files\":[\"x64/MailMerge.zxt\"],\"ribbonAtomNamespace\":\"FeaturePack::MailMerge\"}");
+    for (const wchar_t* f : { L"help.json", L"en.html", L"de.html", L"fr.html", L"it.html", L"es.html", L"nl.html" })
+        Put(std::wstring(L"Plug-Ins\\MailMerge\\docs\\help\\") + f, ReadAll(src + L"\\" + f));
+    // the store client's own help next to it
+    Put(L"Plug-Ins\\PluginStore\\docs\\help\\help.json", kMeta("com.tungsten.pluginstore"));
+    Put(L"Plug-Ins\\PluginStore\\docs\\help\\en.html", "<body><h1 id=\"a\">Own</h1></body>");
+
+    std::wstring P = g_tmp + L"\\Plug-Ins";
+    for (const wchar_t* ui : { L"de-DE", L"fr-FR", L"ja-JP" })
+    {
+        std::vector<HelpSource> list = FindHelps(P, ui, L"com.tungsten.pluginstore", L"Add-on Store");
+        const HelpSource* mm = nullptr;
+        for (const auto& s : list) if (s.id == L"com.tungsten.mailmerge") mm = &s;
+        CHECK(list.size() == 2 && mm != nullptr);
+        if (!mm) continue;
+        std::wstring l2 = std::wstring(ui).substr(0, 2);
+        CHECK(mm->lang == (l2 == L"ja" ? std::wstring(L"en") : l2));
+        CHECK(mm->name == (l2 == L"de" ? std::wstring(L"Serienbrief") : l2 == L"fr" ? std::wstring(L"Publipostage") : std::wstring(L"Mail Merge")));
+        // the topics the module sends (FPHelpTopic: [a-z-], up to 40) resolve to chapter ids
+        CHECK(ResolveTopic(mm->meta, L"protection") == L"step-3-section-protection");
+        CHECK(ResolveTopic(mm->meta, L"mail") == L"step-3-section-e-mail");
+        CHECK(ResolveTopic(mm->meta, L"check") == L"step-4-check-and-preview");
+        HelpDoc d = LoadDoc(*mm);
+        std::string raw = ReadAll(mm->helpDir + L"\\" + mm->lang + L".html");
+        // the cleaning keeps every chapter and section of a well-formed help
+        CHECK(!d.html.empty() && CountOf(d.html, "<h1 id=\"") == CountOf(raw, "<h1 id=\"") && CountOf(d.html, "<h2 id=\"") == CountOf(raw, "<h2 id=\""));
+        CHECK(Has(d.html, "id=\"step-3-section-protection\""));
+        CHECK(!Has(d.html, "<script") && !Has(d.html, "<style"));
+    }
+    // installed without the store (no manifest.json): its help is not offered
+    DeleteFileW((P + L"\\MailMerge\\manifest.json").c_str());
+    CHECK(FindHelps(P, L"de-DE", L"com.tungsten.pluginstore", L"Add-on Store").size() == 1);
+    DeleteTree(g_tmp);
+}
+
 int main()
 {
     TestJson();
     TestMeta();
     TestClean();
     TestFiles();
+    TestFp1Module();
     std::printf("helpcore_tests: %d checks, %d failed\n", g_checks, g_failed);
     return g_failed ? 1 : 0;
 }

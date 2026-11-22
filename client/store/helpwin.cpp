@@ -51,6 +51,7 @@ struct HelpWindow
 };
 HelpWindow* g_win = nullptr;
 bool g_pendingAgain = false;          // a re-entrant ShowHelp arrived while the window was being made
+bool g_shutdown = false;              // PluginUnload ran: an add-on unloading after us gets no new window (review C2.1.0)
 
 std::wstring Json(const std::wstring& s)
 {
@@ -137,7 +138,8 @@ void SendDocs()
         pshelpcore::HelpDoc d;
         try { d = pshelpcore::LoadDoc(s); } catch (...) { continue; }
         if (d.html.empty()) continue;
-        if (bytes + d.html.size() > 48u * 1024 * 1024) break;   // all helps together: a bound for the message
+        // all helps together: a bound for the message; one oversized help never hides the helps after it
+        if (bytes + d.html.size() > 48u * 1024 * 1024) { FPLogW(L"[Help] %.120s: help too large, skipped", s.id.c_str()); continue; }
         bytes += d.html.size();
         for (const auto& l : d.links) g_win->links.insert(l);
         std::wstring topics = L"{";
@@ -267,6 +269,9 @@ void StartWebView(HelpWindow* w)
                                             CoTaskMemFree(json);
                                         }
                                         return S_OK; }).Get(), &t);
+                                // C2.1.1 (review N9): no file or link dropped into the window can load another page
+                                ComPtr<ICoreWebView2Controller4> c4;
+                                if (SUCCEEDED(c->QueryInterface(IID_PPV_ARGS(&c4))) && c4) c4->put_AllowExternalDrop(FALSE);
                                 Resize();
                                 c->put_IsVisible(TRUE);
                                 c->MoveFocus(COREWEBVIEW2_MOVE_FOCUS_REASON_PROGRAMMATIC);
@@ -308,12 +313,17 @@ LRESULT CALLBACK WndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp)
             const bool own = g_win && g_win->ownUi;
             if (g_win && g_win->hwnd == h) Destroy();
             // only when the ribbon or the store's own windows asked (posted, never inside a ShowHelp call)
-            if (own) FPMessageBox(NULL, FPLoc(IDS_PSH_NOWEBVIEW).c_str(), FPLoc(IDS_PSH_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
+            if (own) FPMessageBox(GetActiveWindow(), FPLoc(IDS_PSH_NOWEBVIEW).c_str(), FPLoc(IDS_PSH_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
             return 0;
         }
         case WM_CLOSE:
             if (g_win && g_win->hwnd == h) Destroy(); else DestroyWindow(h);
             return 0;
+        case WM_NCDESTROY:
+            // destroyed by someone else (not through Destroy, which clears g_win first): forget it, so the next
+            // ShowHelp makes a new window instead of pointing at a dead one (review C2.1.0)
+            if (g_win && g_win->hwnd == h) { g_win->hwnd = NULL; Destroy(); }
+            break;
         case WM_GETMINMAXINFO:
         {
             MINMAXINFO* mm = (MINMAXINFO*)lp;
@@ -407,6 +417,10 @@ int ShowGuarded(const wchar_t* addonId, const wchar_t* topic) noexcept
         std::wstring tp = topic ? std::wstring(topic, wcsnlen(topic, 80)) : std::wstring();
         if (id.size() > 101 || (!id.empty() && !pshelpcore::IsAddonId(id))) return 0;
         if (!pshelpcore::IsTopicName(tp)) tp.clear();
+        // a call from another thread of an add-on gets 0 (it then opens its own file): a window made there would
+        // die with that thread and WebView2 needs the UI thread (review C2.1.0)
+        HWND ui = g_win ? g_win->hwnd : MainWindow();
+        if (ui && GetWindowThreadProcessId(ui, NULL) != GetCurrentThreadId()) { FPLogW(L"[Help] ShowHelp from a worker thread refused"); return 0; }
         return ShowHelpImpl(id, tp, true);   // through the HFT: never a message box or other modal loop
     }
     catch (...) { FPLogW(L"[Help] ShowHelp failed"); return 0; }
@@ -456,6 +470,7 @@ int ShowHelpImpl(const std::wstring& addonId, const std::wstring& topic, bool fr
     // remember the newest target, the running call shows it; never a second window
     static bool inShow = false;
     static std::wstring pendingAddon, pendingTopic;
+    if (g_shutdown) return 0;
     if (inShow) { pendingAddon = addonId; pendingTopic = topic; g_pendingAgain = true; return 1; }
     struct Guard { Guard() { inShow = true; } ~Guard() { inShow = false; } } guard;
     std::wstring id;
@@ -469,7 +484,7 @@ int ShowHelpImpl(const std::wstring& addonId, const std::wstring& topic, bool fr
         if (own && GetTickCount64() - lastBox > 5000)
         {
             lastBox = GetTickCount64();
-            FPMessageBox(NULL, FPLoc(IDS_PSH_NOWEBVIEW).c_str(), FPLoc(IDS_PSH_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
+            FPMessageBox(GetActiveWindow(), FPLoc(IDS_PSH_NOWEBVIEW).c_str(), FPLoc(IDS_PSH_TITLE).c_str(), MB_OK | MB_ICONINFORMATION);
         }
         return own ? 1 : 0;
     }
@@ -499,8 +514,11 @@ int ShowHelpImpl(const std::wstring& addonId, const std::wstring& topic, bool fr
 
 bool PSHelpWindowOpen() { return g_win != nullptr; }
 
+bool PSIsHelpWindow(HWND h) { return h != NULL && g_win != nullptr && g_win->hwnd == h; }
+
 void PSHelpShutdown()
 {
     AFX_MANAGE_MODULE_STATE;
+    g_shutdown = true;
     try { Destroy(); } catch (...) {}
 }

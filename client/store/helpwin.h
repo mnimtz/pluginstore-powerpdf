@@ -16,8 +16,12 @@ bool PSHelpExportHft();
 // Returns 0 when that add-on has no help here (the add-on then opens its own file).
 int PSShowHelp(const std::wstring& addonId, const std::wstring& topic);
 
-// True when the help window is open (the update notice waits for it like for a dialog).
+// True when the help window is open.
 bool PSHelpWindowOpen();
+
+// True for the help window itself: it is a visible top-level window WITHOUT owner, so code that looks for
+// Power PDF's main window that way (link.cpp FindMain) must skip it (review C2.1.0). Include after <windows.h>.
+bool PSIsHelpWindow(HWND h);
 
 // PluginUnload: closes the window.
 void PSHelpShutdown();

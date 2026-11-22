@@ -325,7 +325,7 @@ nav .ch.on{background:var(--tp-sel-bg);color:var(--tp-navy);font-weight:600}
 .doc td{padding:6px 9px;border-bottom:1px solid var(--tp-gray-200);vertical-align:top}
 .doc tr:nth-child(even) td{background:var(--tp-gray-50)}
 .doc .callout{background:var(--tp-info-bg);border-inline-start:4px solid var(--tp-blue);padding:10px 14px;margin:10px 0 14px;border-radius:0 8px 8px 0}
-[dir=rtl] .doc .callout{border-radius:8px 0 0 8px}
+.doc:dir(rtl) .callout{border-radius:8px 0 0 8px}
 .doc ol.steps{counter-reset:s;list-style:none;padding-inline-start:0}
 .doc ol.steps>li{counter-increment:s;position:relative;padding-inline-start:34px;margin-bottom:9px}
 .doc ol.steps>li::before{content:counter(s);position:absolute;inset-inline-start:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--tp-navy);color:var(--tp-white);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
@@ -460,7 +460,8 @@ function textOf(n) {
 function buildDoc(item) {
   var parsed = new DOMParser().parseFromString("<!doctype html><body>" + (item.html || ""), "text/html");
   var frag = cleanNode(parsed.body, 0);
-  var d = { id: item.id, name: item.name, topics: item.topics || {}, chapters: [] };
+  var d = { id: item.id, name: item.name, topics: item.topics || {}, chapters: [],
+            lang: typeof item.lang === "string" && /^[a-z]{2}$/.test(item.lang) ? item.lang : "en" };
   var ch = null;
   Array.prototype.slice.call(frag.childNodes).forEach(function (n) {
     if (n.nodeType === 1 && n.tagName === "H1") {
@@ -555,6 +556,8 @@ function showChapter(di, ci, anchorId, ts) {
   var pr = el("button", "hbtn", S.print || ""); pr.type = "button"; pr.onclick = function () { window.print(); };
   cr.appendChild(pr); v.appendChild(cr);
   var doc = el("div", "doc");
+  // the help's own language and direction (an English help in an Arabic Power PDF reads left to right)
+  doc.lang = d.lang; doc.dir = /^(ar|he|fa|ur)$/.test(d.lang) ? "rtl" : "ltr";
   c.nodes.forEach(function (n) { doc.appendChild(n.cloneNode(true)); });
   v.appendChild(doc);
   var pg = el("div", "pager");
@@ -598,7 +601,8 @@ function show(addon, id) {
   var di = -1;
   for (var i = 0; i < docs.length; i++) if (docs[i].id === addon) { di = i; break; }
   if (di < 0) { showStart(); return; }
-  if (id && docs[di].topics[id]) id = docs[di].topics[id];
+  var tp = docs[di].topics;   // own names only ("constructor" is a valid topic name, not Object.prototype's)
+  if (id && Object.prototype.hasOwnProperty.call(tp, id) && typeof tp[id] === "string") id = tp[id];
   var t = id ? findTarget(di, id) : null;
   showChapter(di, t ? t.c : 0, t ? t.id || null : null);
 }
@@ -662,13 +666,13 @@ function openHit(i) {
   var h = hits[i]; if (!h) return;
   showChapter(h.di, h.sec.ci, h.sec.id !== docs[h.di].chapters[h.sec.ci].id ? h.sec.id : null, terms);
 }
-function clearSearch(keepView) { $("q").value = ""; $("qx").hidden = true; terms = []; hits = []; hitSel = -1; if (!keepView) { if (cur) showChapter(cur.d, cur.c, null); else showStart(); } }
-var searchTimer = 0;
-$("q").addEventListener("input", function () { clearTimeout(searchTimer); searchTimer = setTimeout(runSearch, 90); });
+function clearSearch(keepView) { clearTimeout(searchTimer); searchDue = false; $("q").value = ""; $("qx").hidden = true; terms = []; hits = []; hitSel = -1; if (!keepView) { if (cur) showChapter(cur.d, cur.c, null); else showStart(); } }
+var searchTimer = 0, searchDue = false;   // searchDue: typed, results not yet built (Enter must not open an old hit)
+$("q").addEventListener("input", function () { clearTimeout(searchTimer); searchDue = true; searchTimer = setTimeout(function () { searchDue = false; runSearch(); }, 90); });
 $("q").addEventListener("keydown", function (e) {
   if (e.key === "ArrowDown" && hits.length) { e.preventDefault(); selectHit(hitSel + 1, true); }
   else if (e.key === "ArrowUp" && hits.length) { e.preventDefault(); selectHit(hitSel - 1, true); }
-  else if (e.key === "Enter") { e.preventDefault(); clearTimeout(searchTimer); if (!hits.length && $("q").value.trim()) runSearch(); if (hitSel >= 0) openHit(hitSel); }
+  else if (e.key === "Enter") { e.preventDefault(); clearTimeout(searchTimer); if (searchDue || (!hits.length && $("q").value.trim())) { searchDue = false; runSearch(); } if (hitSel >= 0) openHit(hitSel); }
   else if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); clearSearch(false); }
 });
 $("qx").onclick = function () { clearSearch(false); $("q").focus(); };

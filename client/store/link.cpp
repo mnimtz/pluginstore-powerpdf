@@ -14,6 +14,7 @@
 #include "hostversion.h"
 #include "loc.h"
 #include "Resource.h"
+#include "helpwin.h"
 #include <algorithm>
 #include <memory>
 
@@ -140,7 +141,9 @@ BOOL CALLBACK FindMain(HWND h, LPARAM lp)
 {
     DWORD pid = 0;
     GetWindowThreadProcessId(h, &pid);
-    if (pid == GetCurrentProcessId() && IsWindowVisible(h) && GetWindow(h, GW_OWNER) == NULL)
+    // C2.1.0 review: the central help is also a visible top-level window without owner; it is never the main
+    // window (else the update notice and the removal offer would come over an add-on's modal dialog)
+    if (pid == GetCurrentProcessId() && IsWindowVisible(h) && GetWindow(h, GW_OWNER) == NULL && !PSIsHelpWindow(h))
     {
         *(HWND*)lp = h;
         return FALSE;
