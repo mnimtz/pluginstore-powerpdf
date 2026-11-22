@@ -22,6 +22,26 @@ ALLOWED = {'h1', 'h2', 'h3', 'p', 'ul', 'ol', 'li', 'table', 'thead', 'tbody', '
 VOID = {'br'}
 HTML_VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr'}
 CLASSES = {'callout', 'steps'}
+# fixed style of the page when it opens in the browser (no fonts or pictures loaded; brand colors only)
+FALLBACK_STYLE = """<style>
+:root { color-scheme: light dark; --ink: #1d1d1b; --muted: #5b6770; --line: #d9dee2; --head: #00a0fb; --bg: #ffffff; --soft: #f2f7fb; }
+@media (prefers-color-scheme: dark) { :root { --ink: #e8eaec; --muted: #a9b3ba; --line: #3a434a; --head: #4dbefc; --bg: #15191c; --soft: #1e252a; } }
+html { background: var(--bg); }
+body { max-width: 860px; margin: 0 auto; padding: 24px 20px 64px; font: 15px/1.55 "Segoe UI", system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+h1 { font-weight: 300; font-size: 28px; color: var(--head); margin: 40px 0 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+h1:first-child { border-top: 0; margin-top: 0; }
+h2 { font-weight: 600; font-size: 19px; margin: 28px 0 8px; }
+h3 { font-weight: 600; font-size: 16px; margin: 20px 0 6px; }
+p, li { margin: 6px 0; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 14px; }
+th, td { border: 1px solid var(--line); padding: 6px 8px; text-align: start; vertical-align: top; }
+th { background: var(--soft); font-weight: 600; }
+code, pre { font-family: Consolas, "Cascadia Mono", monospace; font-size: 13px; background: var(--soft); border-radius: 3px; }
+code { padding: 1px 4px; }
+pre { padding: 10px; overflow-x: auto; }
+.callout { border-inline-start: 3px solid var(--head); background: var(--soft); padding: 8px 12px; margin: 12px 0; }
+a { color: var(--head); }
+</style>"""
 
 
 def src_of(folder, lang):
@@ -98,8 +118,38 @@ class Clean(HTMLParser):
         if self.skip:
             return
         if self.cur:
+            # the help navigates by its own outline: no chapter numbers of the PDF manual ("1 Overview" -> "Overview")
+            if not self.cur[1].strip():
+                data = re.sub(r'^(\s*)\d+(?:\.\d+)*\.?\s+', r'\1', data)
             self.cur[1] += data
         self.out.append(html.escape(data, quote=False))
+
+
+# "chapter 16" in the text of the manual -> a jump to that chapter, named by its title (the help shows no numbers)
+CHAPTER_WORDS = {'de': 'Kapitel|Kapiteln', 'en': 'chapters|chapter|Chapters|Chapter', 'fr': 'chapitres|chapitre|Chapitres|Chapitre',
+                 'it': 'capitoli|capitolo|Capitoli|Capitolo', 'es': 'capítulos|capítulo|Capítulos|Capítulo',
+                 'nl': 'hoofdstukken|hoofdstuk|Hoofdstukken|Hoofdstuk'}
+CHAPTER_JOIN = r'(?:\s*,\s*|\s*[-–]\s*|\s+(?:und|bis|oder|and|to|or|et|à|ou|e|a|o|y|en|tot|of)\s+)'
+
+
+def chapter_links(body, lang, chapters):
+    """chapters: [(id, title)] of the h1 headings in order; numbers outside 1..n stay as they are."""
+    words = CHAPTER_WORDS.get(lang)
+    if not words:
+        return body
+
+    def link(num):
+        n = int(num)
+        if 1 <= n <= len(chapters):
+            cid, title = chapters[n - 1]
+            return '<a href="#%s">%s</a>' % (cid, html.escape(title, quote=False))
+        return num
+
+    def repl(m):
+        rest = re.sub(r'(%s)(\d+)' % CHAPTER_JOIN, lambda r: r.group(1) + link(r.group(2)), m.group(3))
+        return m.group(1) + ' ' + link(m.group(2)) + rest
+
+    return re.sub(r'\b(%s)\s+(\d+)((?:%s\d+)*)\b' % (words, CHAPTER_JOIN), repl, body)
 
 
 def slug(text):
@@ -150,9 +200,12 @@ def main():
         body = ''.join(c.out)
         for i, s in enumerate(ids):
             body = body.replace('%%ID%d%%' % i, s, 1)
+        body = chapter_links(body, lang, [(s, txt) for (t, txt), s in zip(c.heads, ids) if t == 'h1'])
         assert '—' not in body, 'em dash in ' + lang
-        doc = ('<!doctype html>\n<html lang="%s">\n<head>\n<meta charset="utf-8">\n<title>%s</title>\n</head>\n<body>\n%s\n</body>\n</html>\n'
-               % (lang, html.escape(c.title.strip(), quote=False), body.strip()))
+        # the central help takes only <body>; the <style> is for the browser fallback (readable, Tungsten look)
+        doc = ('<!doctype html>\n<html lang="%s"%s>\n<head>\n<meta charset="utf-8">\n'
+               '<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>%s</title>\n%s\n</head>\n<body>\n%s\n</body>\n</html>\n'
+               % (lang, ' dir="rtl"' if lang == 'ar' else '', html.escape(c.title.strip(), quote=False), FALLBACK_STYLE, body.strip()))
         with open(os.path.join(out, lang + '.html'), 'w', encoding='utf-8', newline='\n') as f:
             f.write(doc)
     chapters = [s for (t, _), s in zip(docs['en'].heads, ids) if t == 'h1']

@@ -2,10 +2,30 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Add-on Store voor Tungsten Power PDF: handleiding</title>
+<style>
+:root { color-scheme: light dark; --ink: #1d1d1b; --muted: #5b6770; --line: #d9dee2; --head: #00a0fb; --bg: #ffffff; --soft: #f2f7fb; }
+@media (prefers-color-scheme: dark) { :root { --ink: #e8eaec; --muted: #a9b3ba; --line: #3a434a; --head: #4dbefc; --bg: #15191c; --soft: #1e252a; } }
+html { background: var(--bg); }
+body { max-width: 860px; margin: 0 auto; padding: 24px 20px 64px; font: 15px/1.55 "Segoe UI", system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+h1 { font-weight: 300; font-size: 28px; color: var(--head); margin: 40px 0 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+h1:first-child { border-top: 0; margin-top: 0; }
+h2 { font-weight: 600; font-size: 19px; margin: 28px 0 8px; }
+h3 { font-weight: 600; font-size: 16px; margin: 20px 0 6px; }
+p, li { margin: 6px 0; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 14px; }
+th, td { border: 1px solid var(--line); padding: 6px 8px; text-align: start; vertical-align: top; }
+th { background: var(--soft); font-weight: 600; }
+code, pre { font-family: Consolas, "Cascadia Mono", monospace; font-size: 13px; background: var(--soft); border-radius: 3px; }
+code { padding: 1px 4px; }
+pre { padding: 10px; overflow-x: auto; }
+.callout { border-inline-start: 3px solid var(--head); background: var(--soft); padding: 8px 12px; margin: 12px 0; }
+a { color: var(--head); }
+</style>
 </head>
 <body>
-<h1 id="overview-and-terms">1 Overzicht en begrippen</h1>
+<h1 id="overview-and-terms">Overzicht en begrippen</h1>
 <p>De Add-on Store brengt uitbreidingen voor Tungsten Power PDF rechtstreeks in het programma. U vindt add-ons in een catalogus, leest hun beschrijving, schermafbeeldingen en beoordelingen, en installeert, werkt bij of verwijdert ze met één klik. De store houdt zichzelf en uw add-ons ook up-to-date en meldt het wanneer er een update voor Power PDF beschikbaar is.</p>
 <p>Deze handleiding beschrijft de <b>client</b>: de add-on in Power PDF met het storevenster. De website van de store en het portaal voor ontwikkelaars en beheerders van de storeserver worden beschreven in de algemene handleiding van de Add-on Store.</p>
 <h2 id="overview-and-terms-what-the-add-on-store-does">Wat de Add-on Store doet</h2>
@@ -44,7 +64,7 @@
 <p>Links staan de geïnstalleerde add-ons; met een klik klapt u hun hoofdstukken open of dicht. Rechts staat het gekozen hoofdstuk, met <b>Vorige</b> en <b>Volgende</b> onderaan en <b>Hoofdstuk afdrukken</b> bovenaan. Typ bovenaan in <b>Help doorzoeken</b> een of meer woorden: de resultaten verschijnen direct, met add-on, hoofdstuk en een fragment; hoofdletters, kleine letters en accenten maken niet uit, en alle woorden moeten voorkomen. Met pijl-omhoog en pijl-omlaag kiest u een resultaat, Enter opent het met de zoekwoorden gemarkeerd, Esc wist de zoekopdracht. Koppelingen naar websites openen in de webbrowser. F1 in het helpvenster toont dit gedeelte.</p>
 <p>De help verschijnt in de taal van Power PDF als een add-on die taal meelevert, anders in het Engels. De help van de Add-on Store is beschikbaar in het Engels, Frans, Italiaans, Duits, Spaans en Nederlands.</p>
 
-<h1 id="requirements-and-installation">2 Vereisten en installatie</h1>
+<h1 id="requirements-and-installation">Vereisten en installatie</h1>
 <h2 id="requirements-and-installation-requirements">Vereisten</h2>
 <ul>
   <li><b>Tungsten Power PDF Business SaaS</b> (met aanmelding), versie 2025.3.7 of hoger. In Power PDF 2025 laadt alleen de Business-editie add-ons; vanaf 2026.4 doet elke editie dat (Standard, Advanced, Business).</li>
@@ -65,7 +85,7 @@
 <h2 id="requirements-and-installation-removing-it">Verwijderen</h2>
 <p>Verwijder <b>Add-on Store for Tungsten Power PDF</b> via Windows-instellingen, Apps, Geïnstalleerde apps. De installatie verwijdert alleen de eigen bestanden van de store; add-ons die u hebt geïnstalleerd, blijven in Power PDF. Verwijder ze eerst in het storevenster als u ze niet meer nodig hebt.</p>
 
-<h1 id="quick-start">3 Snel aan de slag</h1>
+<h1 id="quick-start">Snel aan de slag</h1>
 <ol class="steps">
   <li>Klik op het tabblad <b>Store</b> op <b>Add-on Store</b>. Het storevenster wordt geopend.</li>
   <li>Bekijk de lijst met add-ons aan de linkerkant, of typ bovenaan in <b>Invoegtoepassingen zoeken</b>.</li>
@@ -75,27 +95,27 @@
 </ol>
 <p>Na de herstart staat de add-on op het tabblad <b>Geavanceerde functies</b> (of op de plaats die de beschrijving noemt).</p>
 
-<h1 id="the-add-on-store-on-the-ribbon">4 De Add-on Store op het lint</h1>
+<h1 id="the-add-on-store-on-the-ribbon">De Add-on Store op het lint</h1>
 <table>
   <tr><th>Plaats</th><th>Knop</th><th>Functie</th></tr>
   <tr><td>Tabblad <b>Store</b>, groep <b>Add-on Store</b></td><td><b>Add-on Store</b></td><td>Opent het storevenster met alle add-ons.</td></tr>
   <tr><td>Tabblad <b>Help</b> van Power PDF, groep <b>Add-on Store</b></td><td><b>Updates</b></td><td>Opent het storevenster in de weergave <b>Beschikbare updates</b>.</td></tr>
-  <tr><td>Tabblad <b>Geavanceerde functies</b>, groep <b>Help</b></td><td><b>Help</b></td><td>Opent de help voor alle geïnstalleerde add-ons, met zoekfunctie (hoofdstuk 1).</td></tr>
+  <tr><td>Tabblad <b>Geavanceerde functies</b>, groep <b>Help</b></td><td><b>Help</b></td><td>Opent de help voor alle geïnstalleerde add-ons, met zoekfunctie (hoofdstuk <a href="#overview-and-terms">Overzicht en begrippen</a>).</td></tr>
 </table>
 <p>Als er updates zijn voor de Add-on Store, uw add-ons of Power PDF, hebben beide knoppen een oranje stip en noemt de knopinfo het aantal, bijvoorbeeld "Add-on Store: 2 update(s) beschikbaar". Het tabblad <b>Store</b> staat na de tabbladen van de add-ons; <b>Help</b> blijft altijd het laatste tabblad.</p>
 <div class="callout"><b>Geen tabblad Store?</b> De beheerders van de store kunnen bepalen welke licentiemodi van Power PDF de store mogen gebruiken. Als uw licentiemodus niet is toegestaan, verbergt de client zijn knop. Add-ons die al zijn geïnstalleerd, blijven werken.</div>
 
-<h1 id="the-store-window">5 Het storevenster</h1>
+<h1 id="the-store-window">Het storevenster</h1>
 <p>Het venster opent in een passende grootte (ongeveer 1000 × 680 punten, nooit groter dan het scherm) en toont meteen de laatst geladen catalogus; de actuele catalogus wordt op de achtergrond opgehaald. Zolang de eerste catalogus er nog niet is, draait een laadindicator.</p>
 <h2 id="the-store-window-the-header">De kopregel</h2>
 <ul>
-  <li><b>Invoegtoepassingen zoeken:</b> het zoekvak (hoofdstuk 6).</li>
-  <li><b>Klantcode:</b> beheert de klantcodes (hoofdstuk 10). Een vinkje geeft aan dat er een code actief is.</li>
+  <li><b>Invoegtoepassingen zoeken:</b> het zoekvak (hoofdstuk <a href="#searching-and-filtering">Zoeken en filteren</a>).</li>
+  <li><b>Klantcode:</b> beheert de klantcodes (hoofdstuk <a href="#customer-codes">Klantcodes</a>). Een vinkje geeft aan dat er een code actief is.</li>
   <li><b>Alle add-ons:</b> alleen in de weergave <b>Beschikbare updates</b>; terug naar de volledige lijst.</li>
   <li><b>Help:</b> opent de help bij het hoofdstuk over dit venster (ook met F1).</li>
 </ul>
 <h2 id="the-store-window-banners">Balken</h2>
-<p>Onder de kopregel verschijnen indien nodig gekleurde balken over de hele breedte van het venster: een nieuwe versie van de Add-on Store, een update voor Power PDF, geblokkeerde add-ons, add-ons uit een eerdere Power PDF-installatie, een vergrendeling door de IT-afdeling of een verbindingsfout. De hoofdstukken 8 en 11 leggen ze uit.</p>
+<p>Onder de kopregel verschijnen indien nodig gekleurde balken over de hele breedte van het venster: een nieuwe versie van de Add-on Store, een update voor Power PDF, geblokkeerde add-ons, add-ons uit een eerdere Power PDF-installatie, een vergrendeling door de IT-afdeling of een verbindingsfout. De hoofdstukken <a href="#updates">Updates</a> en <a href="#further-notes-in-the-window">Overige meldingen in het venster</a> leggen ze uit.</p>
 <h2 id="the-store-window-categories-and-author">Categorieën en auteur</h2>
 <p>Onder de balken staan categorieknoppen: <b>Alle</b> en één per categorie. Met een actieve klantcode komt de knop <b>Voor</b> met de naam van uw organisatie als eerste; deze toont alleen de add-ons die aan u zijn geleverd. Als er add-ons van ten minste twee auteurs zijn, kiest u er een onder <b>Auteur</b>.</p>
 <h2 id="the-store-window-the-list">De lijst</h2>
@@ -106,11 +126,11 @@
   <tr><td>Update beschikbaar</td><td>De catalogus bevat een nieuwere versie.</td></tr>
   <tr><td>Bèta</td><td>Een bètaversie (alleen met het bètakanaal ingeschakeld).</td></tr>
   <tr><td>Voor &lt;organisatie&gt;</td><td>Geleverd met uw klantcode.</td></tr>
-  <tr><td>Niet meer aangeboden</td><td>Geïnstalleerd, maar niet meer in de catalogus (hoofdstuk 11).</td></tr>
+  <tr><td>Niet meer aangeboden</td><td>Geïnstalleerd, maar niet meer in de catalogus (hoofdstuk <a href="#further-notes-in-the-window">Overige meldingen in het venster</a>).</td></tr>
 </table>
 <p>Rechts in elke rij staat de bijbehorende actie: <b>Installeren</b>, <b>Verwijderen</b> of bij een update de gesplitste knop <b>Bijwerken</b>; de pijl daarvan opent een menu met <b>Bijwerken</b> en <b>Verwijderen</b>.</p>
 <h2 id="the-store-window-the-details">De details</h2>
-<p>Rechts, voor de gekozen add-on: pictogram, naam, categorie, <b>Versie</b>, grootte, de geïnstalleerde versie als er een update klaarstaat, sterren, de beschrijving, schermafbeeldingen (een klik vergroot ze), <b>Nieuw in</b> de versie, <b>Maakt verbinding met</b> (hoofdstuk 11), <b>Auteur</b> met contactadres (een klik start een e-mail), de acties, <b>Probleem melden</b> en <b>Uw beoordeling</b>. Daaronder staat de opmerking dat voor installeren en bijwerken beheerdersrechten nodig zijn.</p>
+<p>Rechts, voor de gekozen add-on: pictogram, naam, categorie, <b>Versie</b>, grootte, de geïnstalleerde versie als er een update klaarstaat, sterren, de beschrijving, schermafbeeldingen (een klik vergroot ze), <b>Nieuw in</b> de versie, <b>Maakt verbinding met</b> (hoofdstuk <a href="#further-notes-in-the-window">Overige meldingen in het venster</a>), <b>Auteur</b> met contactadres (een klik start een e-mail), de acties, <b>Probleem melden</b> en <b>Uw beoordeling</b>. Daaronder staat de opmerking dat voor installeren en bijwerken beheerdersrechten nodig zijn.</p>
 <h2 id="the-store-window-the-footer">De voettekst</h2>
 <p>Onderaan staan de korte disclaimer, de koppeling <b>Disclaimer</b> met de volledige tekst en <b>Een probleem met de Add-on Store melden</b>.</p>
 <h2 id="the-store-window-keyboard">Toetsenbord</h2>
@@ -119,20 +139,20 @@
   <tr><td>F1</td><td>Opent de help bij het hoofdstuk over dit venster.</td></tr>
   <tr><td>Pijl-omhoog, pijl-omlaag</td><td>Selecteert de vorige of volgende add-on in de lijst.</td></tr>
   <tr><td>Ctrl+F, F3</td><td>Gaat naar het zoekvak.</td></tr>
-  <tr><td>Enter in het zoekvak</td><td>Zoekt op behoefte (hoofdstuk 6).</td></tr>
+  <tr><td>Enter in het zoekvak</td><td>Zoekt op behoefte (hoofdstuk <a href="#searching-and-filtering">Zoeken en filteren</a>).</td></tr>
   <tr><td>Esc</td><td>Sluit een geopend dialoogvenster of beëindigt het zoeken op behoefte.</td></tr>
   <tr><td>F5</td><td>Laadt de catalogus opnieuw.</td></tr>
 </table>
 <h2 id="the-store-window-the-classic-window">Het klassieke venster</h2>
 <p>Zonder de WebView2-runtime, of als de IT-afdeling <code>ClassicUI</code> instelt, opent een eenvoudig venster: een lijst met de kolommen Plug-in, Beschikbaar, Geïnstalleerd, Status, Grootte, Auteur en Contact, de beschrijving daaronder en de knoppen <b>Add-on Store bijwerken</b>, <b>Disclaimer</b>, <b>Help</b>, <b>Vernieuwen</b> (catalogus opnieuw laden), <b>Verwijderen</b>, <b>Installeren</b> en <b>Sluiten</b>. Klantcodes, beoordelingen, probleemmeldingen, het zoeken op behoefte en de weergave met updates zijn daar niet beschikbaar.</p>
 
-<h1 id="searching-and-filtering">6 Zoeken en filteren</h1>
+<h1 id="searching-and-filtering">Zoeken en filteren</h1>
 <h2 id="searching-and-filtering-while-typing">Tijdens het typen</h2>
 <p>Wat u in <b>Invoegtoepassingen zoeken</b> typt, filtert de lijst direct op naam, beschrijving en auteur. Hoofdletters en kleine letters maken niet uit. Categorie en auteur gelden daarnaast. Als niets overeenkomt, staat in de lijst "Geen invoegtoepassingen gevonden."</p>
 <h2 id="searching-and-filtering-search-by-need">Zoeken op behoefte</h2>
 <p>Beschrijf in uw eigen woorden wat u nodig hebt, bijvoorbeeld "facturen splitsen op barcode", en druk op <b>Enter</b> (minstens twee tekens). De storeserver zoekt passende add-ons en rangschikt ze; als de AI-assistent van de store is ingeschakeld, krijgt elk resultaat een korte toelichting. De balk toont "Beste resultaten voor: …" of "Geen invoegtoepassing gevonden voor: …". <b>Alles tonen</b>, Esc of verder typen beëindigt het zoeken op behoefte.</p>
 
-<h1 id="install-update-remove">7 Installeren, bijwerken, verwijderen</h1>
+<h1 id="install-update-remove">Installeren, bijwerken, verwijderen</h1>
 <h2 id="install-update-remove-installing">Installeren</h2>
 <ol class="steps">
   <li>Kies <b>Installeren</b>. Bevestig de vraag "'…' versie … nu installeren?" met <b>Installeren</b>.</li>
@@ -143,7 +163,7 @@
 <h2 id="install-update-remove-updating">Bijwerken</h2>
 <p>Kies voor een update <b>Bijwerken</b>, in de lijst, in de details of in <b>Beschikbare updates</b>. Dit werkt net als installeren. De store biedt alleen nieuwere versies aan; een oudere versie vervangt nooit een geïnstalleerde versie.</p>
 <h2 id="install-update-remove-removing">Verwijderen</h2>
-<p>Kies <b>Verwijderen</b> en bevestig "'…' nu uit Power PDF verwijderen?". Na de goedkeuring door een beheerder verwijdert de client het bestand van de add-on, de gegevensmap en de gebruikersinstellingen ervan. Power PDF ontlaadt de add-on bij de volgende start. De store kan alleen add-ons verwijderen die hij zelf heeft geïnstalleerd (herkenbaar aan het bestand <code>manifest.json</code> in de gegevensmap van de add-on); zo herkent hij ook add-ons uit een handmatige installatie (hoofdstuk 13).</p>
+<p>Kies <b>Verwijderen</b> en bevestig "'…' nu uit Power PDF verwijderen?". Na de goedkeuring door een beheerder verwijdert de client het bestand van de add-on, de gegevensmap en de gebruikersinstellingen ervan. Power PDF ontlaadt de add-on bij de volgende start. De store kan alleen add-ons verwijderen die hij zelf heeft geïnstalleerd (herkenbaar aan het bestand <code>manifest.json</code> in de gegevensmap van de add-on); zo herkent hij ook add-ons uit een handmatige installatie (hoofdstuk <a href="#links-from-the-website-manual-installation">Koppelingen vanaf de website, handmatige installatie</a>).</p>
 <h2 id="install-update-remove-what-protects-you">Wat u beschermt</h2>
 <ul>
   <li>Alleen wat door een vertrouwde store is ondertekend, wordt geïnstalleerd, en de SHA-256-controlesom moet kloppen. Beide worden vóór het kopiëren nogmaals gecontroleerd, in een map waarin alleen beheerders mogen schrijven.</li>
@@ -151,7 +171,7 @@
   <li>De stap met beheerdersrechten wordt alleen uitgevoerd wanneer u installeert, bijwerkt of verwijdert; al het andere draait met uw normale rechten.</li>
 </ul>
 
-<h1 id="updates">8 Updates</h1>
+<h1 id="updates">Updates</h1>
 <h2 id="updates-how-the-store-finds-updates">Hoe de store updates vindt</h2>
 <p>Ongeveer 15 seconden nadat Power PDF is gestart, en kort nadat het storevenster is gesloten, leest de client de catalogus op de achtergrond. Als hij een nieuwere versie van de Add-on Store of van een geïnstalleerde add-on vindt, krijgen de knoppen <b>Add-on Store</b> en <b>Updates</b> een oranje stip. Als de melding over updates voor Power PDF is ingeschakeld, telt ook een update voor Power PDF mee.</p>
 <h2 id="updates-the-view-available-updates">De weergave "Beschikbare updates"</h2>
@@ -169,7 +189,7 @@
 <h2 id="updates-hint-about-updates-for-power-pdf">Melding over updates voor Power PDF</h2>
 <p>Als de beheerders van de store een update voor uw versie van Power PDF aanbieden, staat bovenaan "Er is een update voor Power PDF beschikbaar: …", met <b>Wat is er nieuw</b> (opent de officiële release notes van Tungsten Automation in de browser) en <b>Verbergen</b> (tot de volgende nieuwere versie). De store kan Power PDF niet installeren: "De update wordt geïnstalleerd door uw IT-afdeling of iemand met beheerdersrechten." De optie hiervoor staat op de optiepagina.</p>
 
-<h1 id="what-s-new-ratings-problem-reports">9 Wat is er nieuw, beoordelingen, probleemmeldingen</h1>
+<h1 id="what-s-new-ratings-problem-reports">Wat is er nieuw, beoordelingen, probleemmeldingen</h1>
 <h2 id="what-s-new-ratings-problem-reports-what-s-new">Wat is er nieuw</h2>
 <p>Na een update, door de store, door de IT-afdeling of door de zelfupdate, toont het storevenster de volgende keer dat het opent eenmaal <b>Wat is er nieuw</b>: de tekst van de nieuwe versie voor elke add-on en voor de store. <b>Begrepen</b> sluit het overzicht. Wat u zelf in het storevenster hebt geïnstalleerd, geldt al als gezien.</p>
 <h2 id="what-s-new-ratings-problem-reports-ratings">Beoordelingen</h2>
@@ -183,7 +203,7 @@
 </ol>
 <p>De melding gaat naar de ontwikkelaar van de add-on. De versies van de add-on, Power PDF en Windows worden meegestuurd; geen documenten. Voeg geen vertrouwelijke documenten toe.</p>
 
-<h1 id="customer-codes">10 Klantcodes</h1>
+<h1 id="customer-codes">Klantcodes</h1>
 <p>Een klantcode geeft add-ons vrij die uw leverancier van add-ons aan uw organisatie levert. Een code ziet er zo uit: <code>XXXX-XXXX-XXXX-XXXX-XXXX</code>.</p>
 <ol class="steps">
   <li>Kies in de kopregel <b>Klantcode</b>.</li>
@@ -193,7 +213,7 @@
 <p><b>Klantcodes op deze computer</b> toont elke code (ingekort) met organisatie, vrijgegeven add-ons en, als de levering beperkt is, de gebruikte installaties, bijvoorbeeld "Installaties: 3/10". Er zijn maximaal 10 codes mogelijk.</p>
 <p><b>Code verwijderen</b> vraagt "Klantcode van … verwijderen?". Add-ons die alleen via deze code zijn geleverd, worden ook uit Power PDF verwijderd (één bevestiging door een beheerder); als die bevestiging wordt geweigerd, blijft de code behouden. Als de IT-afdeling de codes via beleid instelt, staat in het dialoogvenster "Uw IT-afdeling beheert de klantcode op deze computer." en kan er niets worden gewijzigd.</p>
 
-<h1 id="further-notes-in-the-window">11 Overige meldingen in het venster</h1>
+<h1 id="further-notes-in-the-window">Overige meldingen in het venster</h1>
 <table>
   <tr><th>Melding</th><th>Betekenis en wat u moet doen</th></tr>
   <tr><td>Om veiligheidsredenen geblokkeerd door de Add-on Store, verwijder: …</td><td>De beheerders van de store hebben deze versie geblokkeerd. <b>Nu verwijderen</b> verwijdert de add-on (goedkeuring door een beheerder). De client controleert de blokkeerlijst 20 seconden na het starten en daarna elke 4 uur en vraagt het eenmaal per sessie; een blokkering blijft ook gelden als de server later niet bereikbaar is.</td></tr>
@@ -205,7 +225,7 @@
   <tr><td>Het installeren en verwijderen van invoegtoepassingen is door uw beheerder uitgeschakeld.</td><td>Beleid <code>DisableInstall</code>: u kunt de catalogus bekijken, maar niets wijzigen.</td></tr>
 </table>
 
-<h1 id="the-options-page">12 De optiepagina</h1>
+<h1 id="the-options-page">De optiepagina</h1>
 <p>Onder <b>Bestand &gt; Opties &gt; Add-on Store &gt; Algemeen</b> staan de instellingen van de client. Wat de IT-afdeling via beleid instelt, is daar grijs weergegeven.</p>
 <table>
   <tr><th>Instelling</th><th>Betekenis</th></tr>
@@ -213,18 +233,18 @@
   <tr><td>Klantcodes op deze computer</td><td>Toont het aantal codes; ze worden in het storevenster beheerd met <b>Klantcode</b>. Alleen zonder het moderne storevenster staat hier een invoervak voor codes, gescheiden door puntkomma's.</td></tr>
   <tr><td>Beta: plug-ins weergeven die nog niet zijn goedgekeurd</td><td>Toont ook bètaversies. Die hebben de automatische controles doorstaan, maar zijn nog niet door een beheerder beoordeeld.</td></tr>
   <tr><td>Melden wanneer er een update voor Power PDF beschikbaar is</td><td>Balk en kaart over updates voor Power PDF (standaard: ingeschakeld).</td></tr>
-  <tr><td>Eenmalig melden bij elke nieuwe update</td><td>De eenmalige melding uit hoofdstuk 8 (standaard: ingeschakeld).</td></tr>
+  <tr><td>Eenmalig melden bij elke nieuwe update</td><td>De eenmalige melding uit hoofdstuk <a href="#updates">Updates</a> (standaard: ingeschakeld).</td></tr>
   <tr><td>Uitgebreide logboekregistratie</td><td>Schrijft meer details naar <code>%TEMP%\PluginStore.log</code>, voor het oplossen van problemen.</td></tr>
 </table>
-<p>Onderaan staat de versie van de client, bijvoorbeeld "Add-on-Store-client versie 2.2.1".</p>
+<p>Onderaan staat de versie van de client, bijvoorbeeld "Add-on-Store-client versie 2.2.2".</p>
 
-<h1 id="links-from-the-website-manual-installation">13 Koppelingen vanaf de website, handmatige installatie</h1>
+<h1 id="links-from-the-website-manual-installation">Koppelingen vanaf de website, handmatige installatie</h1>
 <h2 id="links-from-the-website-manual-installation-install-in-power-pdf">"Installeren in Power PDF"</h2>
 <p>Op de website van de store heeft elke add-on de knop <b>Installeren in Power PDF</b>. Via de koppeling <code>addonstore://</code> opent deze het storevenster met deze add-on en vraagt of de add-on moet worden geïnstalleerd; als Power PDF nog aan het starten is, wacht de client tot het hoofdvenster er is. Een website kan op deze manier alleen het venster openen en nooit zelf iets installeren. Als de add-on niet in de catalogus staat, meldt het venster "De invoegtoepassing “…” van de website staat niet in de catalogus. Mogelijk is deze alleen in het bètakanaal beschikbaar (Opties)."</p>
 <h2 id="links-from-the-website-manual-installation-manual-installation-without-the-client">Handmatige installatie zonder de client</h2>
 <p>Voor computers zonder de client biedt de website voor elke openbare add-on <b>Handmatig (ZIP)</b> aan: een ZIP-bestand met <code>install.bat</code>, <code>uninstall.bat</code> en instructies. <code>install.bat</code> controleert handtekening en controlesom, vraagt eenmaal om beheerdersrechten en richt de lintgroep in; <code>/quiet</code> installeert zonder vragen, voor softwaredistributie. Een handmatige installatie krijgt geen updates en geen beveiligingsblokkeringen. Als de client later wordt geïnstalleerd, herkent hij de add-on en houdt hij deze up-to-date. Als de client zo'n add-on verwijdert, verwijdert hij ook de vermelding onder Geïnstalleerde apps; als hij de add-on bijwerkt, werkt hij de daar getoonde versie bij.</p>
 
-<h1 id="for-administrators">14 Voor beheerders</h1>
+<h1 id="for-administrators">Voor beheerders</h1>
 <h2 id="for-administrators-deployment">Distributie</h2>
 <p>Het MSI-pakket installeert per computer en draait op de achtergrond, het liefst als eigen stap direct na Power PDF (Intune, SCCM, GPO, scripts):</p>
 <p><code>msiexec /i PluginStore.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"</code></p>
@@ -280,7 +300,7 @@
 <h2 id="for-administrators-privacy">Privacy</h2>
 <p>De client verstuurt geen documenten en geen namen van gebruikers of computers. Elke aanvraag bevat technische gegevens voor de storeserver:</p>
 <ul>
-  <li>de programma-aanduiding met de versies van client, Power PDF en Windows en de processorarchitectuur, bijvoorbeeld <code>AddonStore-PowerPDF/2.2.1 (PowerPDF …; Windows …; x64)</code>;</li>
+  <li>de programma-aanduiding met de versies van client, Power PDF en Windows en de processorarchitectuur, bijvoorbeeld <code>AddonStore-PowerPDF/2.2.2 (PowerPDF …; Windows …; x64)</code>;</li>
   <li>de licentiemodus van Power PDF (<code>cloud</code>, <code>serial</code> of <code>unknown</code>), zodat de store kan controleren of hij mag worden gebruikt;</li>
   <li>alleen met een klantcode: de codes en een willekeurige installatie-id van deze gebruiker; de server slaat daarvan per levering alleen een controlewaarde op.</li>
 </ul>
@@ -295,7 +315,7 @@
   <li>Het koppelingshulpprogramma <code>AddonStoreLink.exe</code> geeft alleen een gecontroleerde add-on-id door; er wordt niets geïnstalleerd voordat u bevestigt.</li>
 </ul>
 
-<h1 id="all-messages">15 Alle meldingen</h1>
+<h1 id="all-messages">Alle meldingen</h1>
 <h2 id="all-messages-in-the-store-window-and-the-classic-window">In het storevenster en het klassieke venster</h2>
 <table>
   <tr><th>Melding</th><th>Betekenis</th><th>Wat u moet doen</th></tr>
@@ -368,7 +388,7 @@
   <tr><td>13</td><td>Alle installaties van de levering zijn in gebruik.</td></tr>
 </table>
 
-<h1 id="troubleshooting">16 Problemen oplossen</h1>
+<h1 id="troubleshooting">Problemen oplossen</h1>
 <table>
   <tr><th>Probleem</th><th>Oplossing</th></tr>
   <tr><td>Het tabblad <b>Store</b> ontbreekt.</td><td>Start Power PDF opnieuw. Controleer of <code>PluginStore.zxt</code> in de map <code>Plug-Ins</code> staat en of Power PDF Business (vóór 2026.4) minstens versie 2025.3.7 heeft. Als de licentiemodus niet voor de store is toegestaan, blijft de knop verborgen; vraag het de beheerders van de store.</td></tr>
@@ -383,7 +403,7 @@
   <tr><td>Een fout nader onderzoeken.</td><td>Schakel <b>Uitgebreide logboekregistratie</b> in, herhaal de actie en stuur <code>%TEMP%\PluginStore.log</code> mee met <b>Probleem melden</b>.</td></tr>
 </table>
 
-<h1 id="frequently-asked-questions">17 Veelgestelde vragen</h1>
+<h1 id="frequently-asked-questions">Veelgestelde vragen</h1>
 <h3>Zijn de add-ons officiële producten van Tungsten Automation?</h3>
 <p>Nee. Ze komen van onafhankelijke ontwikkelaars en worden geleverd zonder garantie en zonder officiële ondersteuning; zie <b>Disclaimer</b>. De auteur die in de catalogus wordt vermeld, beantwoordt vragen.</p>
 <h3>Waarom heb ik beheerdersrechten nodig?</h3>
@@ -391,15 +411,15 @@
 <h3>Waarom moet Power PDF opnieuw starten?</h3>
 <p>Power PDF laadt add-ons alleen bij het starten en geeft ze pas vrij wanneer het wordt afgesloten.</p>
 <h3>Ziet de store mijn documenten?</h3>
-<p>Nee. De client verstuurt geen documenten; hoofdstuk 14 noemt alles wat hij verstuurt.</p>
+<p>Nee. De client verstuurt geen documenten; hoofdstuk <a href="#for-administrators">Voor beheerders</a> noemt alles wat hij verstuurt.</p>
 <h3>Kan ik teruggaan naar een oudere versie van een add-on?</h3>
 <p>De store installeert geen oudere versies. Verwijder de add-on en neem contact op met de auteur.</p>
 <h3>Werkt de store zonder internet?</h3>
 <p>Geïnstalleerde add-ons blijven werken. Het venster toont de laatst geladen catalogus; installeren en bijwerken werken weer zodra er verbinding is.</p>
 <h3>Hoe krijg ik add-ons die voor mijn bedrijf zijn gemaakt?</h3>
-<p>Met de klantcode van uw leverancier (hoofdstuk 10), of de IT-afdeling stelt deze via beleid in.</p>
+<p>Met de klantcode van uw leverancier (hoofdstuk <a href="#customer-codes">Klantcodes</a>), of de IT-afdeling stelt deze via beleid in.</p>
 
-<h1 id="limits-and-technical-data">18 Grenzen en technische gegevens</h1>
+<h1 id="limits-and-technical-data">Grenzen en technische gegevens</h1>
 <table>
   <tr><th>Eigenschap</th><th>Waarde</th></tr>
   <tr><td>Power PDF</td><td>Business vanaf 2025.3.7; elke editie vanaf 2026.4; alleen met aanmelding (SaaS)</td></tr>
@@ -413,9 +433,10 @@
   <tr><td>Storevenster</td><td>Microsoft WebView2; zonder de runtime het klassieke venster</td></tr>
 </table>
 
-<h1 id="version-history">19 Versiegeschiedenis</h1>
+<h1 id="version-history">Versiegeschiedenis</h1>
 <table>
   <tr><th>Versie</th><th>Wat is er nieuw</th></tr>
+  <tr><td>2.2.2</td><td>De hoofdstukken tonen geen nummers meer en verwijzingen naar andere hoofdstukken zijn links die er direct naartoe gaan.</td></tr>
   <tr><td>2.1.1</td><td>De help is betrouwbaarder: grote afbeeldingen, zoeken met Enter, Engelse help in een Arabische Power PDF en meldingen bij geopende vensters.</td></tr>
   <tr><td>2.1.0</td><td>Eén gemeenschappelijke help voor alle geïnstalleerde add-ons, met zoekfunctie: knop <b>Help</b> op het tabblad Geavanceerde functies, Help-knop en F1 in het storevenster en in de add-ons; de help van de store in zes talen.</td></tr>
   <tr><td>2.0.2</td><td>Stabieler: Power PDF sluit niet meer af bij een zeer lange map voor tijdelijke bestanden of bij een fout in het storevenster; licentievermeldingen in de installatie.</td></tr>
@@ -442,6 +463,6 @@
   <tr><td>0.5.0</td><td>Beoordelingen, probleemmeldingen, schermafbeeldingen.</td></tr>
   <tr><td>0.4.0</td><td>Modern storevenster.</td></tr>
 </table>
-<p>Add-on Store 2.2.1 · Tungsten Automation · Deze handleiding beschrijft de client voor Tungsten Power PDF.</p>
+<p>Add-on Store 2.2.2 · Tungsten Automation · Deze handleiding beschrijft de client voor Tungsten Power PDF.</p>
 </body>
 </html>

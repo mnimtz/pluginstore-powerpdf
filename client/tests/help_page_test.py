@@ -87,9 +87,9 @@ try{
  ok(location.href.indexOf("about:")===0||location.protocol==="file:","page did not navigate");
  // jumps: topic name and section id
  send({type:"show",addon:"com.tungsten.pluginstore",id:"codes"});
- ok(/10 /.test(v.querySelector(".doc h1").textContent),"topic codes opens chapter 10");
+ ok(v.querySelector(".doc h1").textContent.indexOf("Kundencodes")===0,"topic codes opens chapter 10");
  send({type:"show",addon:"com.tungsten.pluginstore",id:"for-administrators-policies"});
- ok(/14 /.test(v.querySelector(".doc h1").textContent),"section id opens chapter 14");
+ ok(v.querySelector(".doc h1").textContent.indexOf("Für Administratoren")===0,"section id opens chapter 14");
  ok(document.querySelector("nav .ch.on")!==null,"current chapter marked on the left");
  send({type:"show",addon:"com.x.unknown",id:""});ok(document.querySelector(".start")!==null,"unknown add-on: start page");
  // search while typing: several words, no case, no accents
@@ -115,15 +115,15 @@ try{
     key("Escape");ok(document.getElementById("q").value===""&&!v.querySelector(".hit"),"Esc clears the search");
     // F1: own help, once per key press
     var c=__posts.length;key("F1");key("F1",{repeat:true});key("F1",{repeat:true});
-    ok(/1 /.test(v.querySelector(".doc h1").textContent),"F1 shows the own help chapter 1");
+    ok(v.querySelector(".doc h1").textContent.indexOf("Überblick und Begriffe")===0,"F1 shows the own help chapter 1");
     ok(document.querySelector("#overview-and-terms-help")!==null,"F1 lands at the Help section");
     ok(__posts.length===c,"F1 needs no host message");
     // pager and print
-    var nx=v.querySelector(".pager .btn");ok(nx!==null,"pager");if(nx)nx.click();ok(/2 /.test(v.querySelector(".doc h1").textContent),"next chapter");
+    var nx=v.querySelector(".pager .btn");ok(nx!==null,"pager");if(nx)nx.click();ok(v.querySelector(".doc h1").textContent.indexOf("Voraussetzungen und Installation")===0,"next chapter");
     var pr=v.querySelector(".crumb .hbtn");var p0=__posts.length;pr.click();ok(__posts.length===p0+1&&__posts[p0].cmd==="print","print chapter");
     // F5 asks the host to reload; a reload keeps the chapter
     var f=__posts.length;key("F5");ok(__posts[f]&&__posts[f].cmd==="reload","F5 reloads");
-    send(M.docs);ok(/2 /.test(v.querySelector(".doc h1").textContent),"reload keeps the chapter");
+    send(M.docs);ok(v.querySelector(".doc h1").textContent.indexOf("Voraussetzungen und Installation")===0,"reload keeps the chapter");
     // broken messages do not break the page
     send(null);send({type:"docs",items:[{id:5,html:null},"x",{id:"a.b.c",name:"x",html:"<h1>ok</h1>"}]});
     ok(document.querySelectorAll("nav .addon").length===1,"bad items skipped");

@@ -2,10 +2,30 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Add-on Store pour Tungsten Power PDF : manuel</title>
+<style>
+:root { color-scheme: light dark; --ink: #1d1d1b; --muted: #5b6770; --line: #d9dee2; --head: #00a0fb; --bg: #ffffff; --soft: #f2f7fb; }
+@media (prefers-color-scheme: dark) { :root { --ink: #e8eaec; --muted: #a9b3ba; --line: #3a434a; --head: #4dbefc; --bg: #15191c; --soft: #1e252a; } }
+html { background: var(--bg); }
+body { max-width: 860px; margin: 0 auto; padding: 24px 20px 64px; font: 15px/1.55 "Segoe UI", system-ui, sans-serif; color: var(--ink); background: var(--bg); }
+h1 { font-weight: 300; font-size: 28px; color: var(--head); margin: 40px 0 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+h1:first-child { border-top: 0; margin-top: 0; }
+h2 { font-weight: 600; font-size: 19px; margin: 28px 0 8px; }
+h3 { font-weight: 600; font-size: 16px; margin: 20px 0 6px; }
+p, li { margin: 6px 0; }
+table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 14px; }
+th, td { border: 1px solid var(--line); padding: 6px 8px; text-align: start; vertical-align: top; }
+th { background: var(--soft); font-weight: 600; }
+code, pre { font-family: Consolas, "Cascadia Mono", monospace; font-size: 13px; background: var(--soft); border-radius: 3px; }
+code { padding: 1px 4px; }
+pre { padding: 10px; overflow-x: auto; }
+.callout { border-inline-start: 3px solid var(--head); background: var(--soft); padding: 8px 12px; margin: 12px 0; }
+a { color: var(--head); }
+</style>
 </head>
 <body>
-<h1 id="overview-and-terms">1 Présentation et termes</h1>
+<h1 id="overview-and-terms">Présentation et termes</h1>
 <p>L’Add-on Store intègre directement dans Tungsten Power PDF les extensions du programme. Vous trouvez les modules dans un catalogue, vous consultez leur description, leurs captures d’écran et leurs évaluations, puis vous les installez, les mettez à jour ou les supprimez en un clic. Le store se tient lui-même à jour, tout comme vos modules, et vous signale quand une mise à jour de Power PDF est disponible.</p>
 <p>Ce manuel décrit le <b>client</b> : le module dans Power PDF avec la fenêtre du store. Le site web du store et le portail destiné aux développeurs et aux administrateurs du serveur du store sont décrits dans le manuel général de l’Add-on Store.</p>
 <h2 id="overview-and-terms-what-the-add-on-store-does">Ce que fait l’Add-on Store</h2>
@@ -44,7 +64,7 @@
 <p>À gauche figurent les modules installés ; un clic affiche ou masque leurs chapitres. À droite s’affiche le chapitre sélectionné, avec <b>Précédent</b> et <b>Suivant</b> en bas et <b>Imprimer le chapitre</b> en haut. Saisissez un ou plusieurs mots dans <b>Rechercher dans l’aide</b>, en haut : les résultats apparaissent immédiatement, avec le module, le chapitre et un extrait ; les majuscules, les minuscules et les accents n’ont pas d’importance, et tous les mots doivent figurer dans le texte. Les flèches vers le haut et vers le bas sélectionnent un résultat, Entrée l’ouvre avec les termes recherchés mis en évidence, Échap efface la recherche. Les liens vers des sites web s’ouvrent dans le navigateur. F1 dans la fenêtre d’aide affiche cette section.</p>
 <p>L’aide s’affiche dans la langue de Power PDF lorsqu’un module la fournit dans cette langue, sinon en anglais. L’aide de l’Add-on Store est disponible en anglais, français, italien, allemand, espagnol et néerlandais.</p>
 
-<h1 id="requirements-and-installation">2 Configuration requise et installation</h1>
+<h1 id="requirements-and-installation">Configuration requise et installation</h1>
 <h2 id="requirements-and-installation-requirements">Configuration requise</h2>
 <ul>
   <li><b>Tungsten Power PDF Business SaaS</b> (avec connexion), version 2025.3.7 ou ultérieure. Dans Power PDF 2025, seule l’édition Business charge des modules ; à partir de 2026.4, toutes les éditions le font (Standard, Advanced, Business).</li>
@@ -65,7 +85,7 @@
 <h2 id="requirements-and-installation-removing-it">Désinstallation</h2>
 <p>Supprimez <b>Add-on Store for Tungsten Power PDF</b> dans les Paramètres de Windows, sous Applications, Applications installées. Le programme d’installation ne supprime que les fichiers propres au store ; les modules que vous avez installés restent dans Power PDF. Supprimez-les d’abord dans la fenêtre du store si vous n’en avez plus besoin.</p>
 
-<h1 id="quick-start">3 Prise en main rapide</h1>
+<h1 id="quick-start">Prise en main rapide</h1>
 <ol class="steps">
   <li>Dans l’onglet <b>Store</b>, cliquez sur <b>Add-on Store</b>. La fenêtre du store s’ouvre.</li>
   <li>Parcourez la liste des modules à gauche, ou saisissez un terme dans <b>Rechercher des modules</b> en haut.</li>
@@ -75,27 +95,27 @@
 </ol>
 <p>Après le redémarrage, le module se trouve dans l’onglet <b>Fonctions avancées</b> (ou à l’endroit indiqué dans sa description).</p>
 
-<h1 id="the-add-on-store-on-the-ribbon">4 L’Add-on Store dans le ruban</h1>
+<h1 id="the-add-on-store-on-the-ribbon">L’Add-on Store dans le ruban</h1>
 <table>
   <tr><th>Emplacement</th><th>Bouton</th><th>Fonction</th></tr>
   <tr><td>Onglet <b>Store</b>, groupe <b>Add-on Store</b></td><td><b>Add-on Store</b></td><td>Ouvre la fenêtre du store avec tous les modules.</td></tr>
   <tr><td>Onglet <b>Aide</b> de Power PDF, groupe <b>Add-on Store</b></td><td><b>Mises à jour</b></td><td>Ouvre la fenêtre du store dans la vue <b>Mises à jour disponibles</b>.</td></tr>
-  <tr><td>Onglet <b>Fonctions avancées</b>, groupe <b>Aide</b></td><td><b>Aide</b></td><td>Ouvre l’aide de tous les modules installés, avec recherche (chapitre 1).</td></tr>
+  <tr><td>Onglet <b>Fonctions avancées</b>, groupe <b>Aide</b></td><td><b>Aide</b></td><td>Ouvre l’aide de tous les modules installés, avec recherche (chapitre <a href="#overview-and-terms">Présentation et termes</a>).</td></tr>
 </table>
 <p>Lorsque des mises à jour sont disponibles pour l’Add-on Store, vos modules ou Power PDF, les deux boutons portent un point orange et l’info-bulle en indique le nombre, par exemple « Add-on Store : 2 mise(s) à jour disponible(s) ». L’onglet <b>Store</b> se place après les onglets des modules ; <b>Aide</b> reste toujours le dernier onglet.</p>
 <div class="callout"><b>Pas d’onglet Store ?</b> Les administrateurs du store peuvent définir quels modes de licence de Power PDF ont le droit d’utiliser le store. Si votre mode de licence n’est pas autorisé, le client masque son bouton. Les modules déjà installés continuent de fonctionner.</div>
 
-<h1 id="the-store-window">5 La fenêtre du store</h1>
+<h1 id="the-store-window">La fenêtre du store</h1>
 <p>La fenêtre s’ouvre dans une taille adaptée (environ 1000 × 680 points, jamais plus grande que l’écran) et affiche immédiatement le dernier catalogue chargé ; elle récupère le catalogue actuel en arrière-plan. Tant que le premier catalogue n’est pas disponible, un indicateur de chargement tourne.</p>
 <h2 id="the-store-window-the-header">L’en-tête</h2>
 <ul>
-  <li><b>Rechercher des modules :</b> le champ de recherche (chapitre 6).</li>
-  <li><b>Code client :</b> gère les codes client (chapitre 10). Une coche indique qu’un code est actif.</li>
+  <li><b>Rechercher des modules :</b> le champ de recherche (chapitre <a href="#searching-and-filtering">Rechercher et filtrer</a>).</li>
+  <li><b>Code client :</b> gère les codes client (chapitre <a href="#customer-codes">Codes client</a>). Une coche indique qu’un code est actif.</li>
   <li><b>Tous les modules :</b> uniquement dans la vue <b>Mises à jour disponibles</b> ; revient à la liste complète.</li>
   <li><b>Aide :</b> ouvre l’aide au chapitre consacré à cette fenêtre (également avec F1).</li>
 </ul>
 <h2 id="the-store-window-banners">Bandeaux</h2>
-<p>Sous l’en-tête, des barres colorées apparaissent sur toute la largeur de la fenêtre lorsque c’est nécessaire : une nouvelle version de l’Add-on Store, une mise à jour de Power PDF, des modules bloqués, des modules d’une installation précédente de Power PDF, un verrouillage par le service informatique ou une erreur de connexion. Les chapitres 8 et 11 les expliquent.</p>
+<p>Sous l’en-tête, des barres colorées apparaissent sur toute la largeur de la fenêtre lorsque c’est nécessaire : une nouvelle version de l’Add-on Store, une mise à jour de Power PDF, des modules bloqués, des modules d’une installation précédente de Power PDF, un verrouillage par le service informatique ou une erreur de connexion. Les chapitres <a href="#updates">Mises à jour</a> et <a href="#further-notes-in-the-window">Autres indications dans la fenêtre</a> les expliquent.</p>
 <h2 id="the-store-window-categories-and-author">Catégories et auteur</h2>
 <p>Sous les bandeaux se trouvent les boutons de catégorie : <b>Tous</b> et un bouton par catégorie. Avec un code client actif, le bouton <b>Pour</b>, suivi du nom de votre organisation, apparaît en premier ; il n’affiche que les modules qui vous sont fournis. Lorsque les modules proviennent d’au moins deux auteurs, vous pouvez en choisir un sous <b>Auteur</b>.</p>
 <h2 id="the-store-window-the-list">La liste</h2>
@@ -106,11 +126,11 @@
   <tr><td>Mise à jour disponible</td><td>Le catalogue contient une version plus récente.</td></tr>
   <tr><td>Bêta</td><td>Une version bêta (uniquement avec le canal bêta activé).</td></tr>
   <tr><td>Pour &lt;organisation&gt;</td><td>Fourni avec votre code client.</td></tr>
-  <tr><td>Plus proposé</td><td>Installé, mais ne figure plus dans le catalogue (chapitre 11).</td></tr>
+  <tr><td>Plus proposé</td><td>Installé, mais ne figure plus dans le catalogue (chapitre <a href="#further-notes-in-the-window">Autres indications dans la fenêtre</a>).</td></tr>
 </table>
 <p>À droite de chaque ligne se trouve l’action correspondante : <b>Installer</b>, <b>Supprimer</b> ou, pour une mise à jour, le bouton partagé <b>Mettre à jour</b> ; sa flèche ouvre un menu avec <b>Mettre à jour</b> et <b>Supprimer</b>.</p>
 <h2 id="the-store-window-the-details">Les détails</h2>
-<p>À droite, pour le module sélectionné : icône, nom, catégorie, <b>Version</b>, taille, la version installée lorsqu’une mise à jour est en attente, étoiles, description, captures d’écran (un clic les agrandit), <b>Nouveautés de la</b> version, <b>Se connecte à</b> (chapitre 11), <b>Auteur</b> avec adresse de contact (un clic lance un e-mail), les actions, <b>Signaler un problème</b> et <b>Votre évaluation</b>. En dessous figure la remarque indiquant que l’installation et la mise à jour nécessitent des droits d’administrateur.</p>
+<p>À droite, pour le module sélectionné : icône, nom, catégorie, <b>Version</b>, taille, la version installée lorsqu’une mise à jour est en attente, étoiles, description, captures d’écran (un clic les agrandit), <b>Nouveautés de la</b> version, <b>Se connecte à</b> (chapitre <a href="#further-notes-in-the-window">Autres indications dans la fenêtre</a>), <b>Auteur</b> avec adresse de contact (un clic lance un e-mail), les actions, <b>Signaler un problème</b> et <b>Votre évaluation</b>. En dessous figure la remarque indiquant que l’installation et la mise à jour nécessitent des droits d’administrateur.</p>
 <h2 id="the-store-window-the-footer">Le pied de page</h2>
 <p>En bas se trouvent l’avertissement court, le lien <b>Avertissement</b> vers le texte complet et <b>Signaler un problème avec l'Add-on Store</b>.</p>
 <h2 id="the-store-window-keyboard">Clavier</h2>
@@ -119,20 +139,20 @@
   <tr><td>F1</td><td>Ouvre l’aide au chapitre consacré à cette fenêtre.</td></tr>
   <tr><td>Flèche vers le haut, flèche vers le bas</td><td>Sélectionne le module précédent ou suivant dans la liste.</td></tr>
   <tr><td>Ctrl+F, F3</td><td>Place le curseur dans le champ de recherche.</td></tr>
-  <tr><td>Entrée dans le champ de recherche</td><td>Lance la recherche selon le besoin (chapitre 6).</td></tr>
+  <tr><td>Entrée dans le champ de recherche</td><td>Lance la recherche selon le besoin (chapitre <a href="#searching-and-filtering">Rechercher et filtrer</a>).</td></tr>
   <tr><td>Échap</td><td>Ferme une boîte de dialogue ouverte ou met fin à la recherche selon le besoin.</td></tr>
   <tr><td>F5</td><td>Recharge le catalogue.</td></tr>
 </table>
 <h2 id="the-store-window-the-classic-window">La fenêtre classique</h2>
 <p>Sans le runtime WebView2, ou lorsque le service informatique définit <code>ClassicUI</code>, une fenêtre simple s’ouvre : une liste avec les colonnes Plug-in, Disponible, Installée, État, Taille, Auteur et Contact, la description en dessous, et les boutons <b>Mettre à jour le Add-on Store</b>, <b>Avertissement</b>, <b>Aide</b>, <b>Actualiser</b> (recharger le catalogue), <b>Désinstaller</b>, <b>Installer</b> et <b>Fermer</b>. Les codes client, les évaluations, les signalements de problèmes, la recherche selon le besoin et la vue des mises à jour n’y sont pas disponibles.</p>
 
-<h1 id="searching-and-filtering">6 Rechercher et filtrer</h1>
+<h1 id="searching-and-filtering">Rechercher et filtrer</h1>
 <h2 id="searching-and-filtering-while-typing">Pendant la saisie</h2>
 <p>Ce que vous saisissez dans <b>Rechercher des modules</b> filtre immédiatement la liste par nom, description et auteur. Les majuscules et minuscules n’ont pas d’importance. La catégorie et l’auteur s’appliquent en plus. Si rien ne correspond, la liste indique « Aucun module trouvé. »</p>
 <h2 id="searching-and-filtering-search-by-need">Recherche selon le besoin</h2>
 <p>Décrivez avec vos propres mots ce dont vous avez besoin, par exemple « séparer des factures par code-barres », puis appuyez sur <b>Entrée</b> (au moins deux caractères). Le serveur du store recherche les modules adaptés et les classe ; lorsque l’assistant IA du store est activé, chaque résultat est accompagné d’une courte justification. La barre affiche « Meilleurs résultats pour : … » ou « Aucun module trouvé pour : … ». <b>Tout afficher</b>, Échap ou la poursuite de la saisie mettent fin à la recherche selon le besoin.</p>
 
-<h1 id="install-update-remove">7 Installer, mettre à jour, supprimer</h1>
+<h1 id="install-update-remove">Installer, mettre à jour, supprimer</h1>
 <h2 id="install-update-remove-installing">Installer</h2>
 <ol class="steps">
   <li>Choisissez <b>Installer</b>. Confirmez la question « Installer « … » version … maintenant ? » avec <b>Installer</b>.</li>
@@ -143,7 +163,7 @@
 <h2 id="install-update-remove-updating">Mettre à jour</h2>
 <p>Pour une mise à jour, choisissez <b>Mettre à jour</b>, dans la liste, dans les détails ou dans <b>Mises à jour disponibles</b>. Le déroulement est le même que pour l’installation. Le store ne propose que des versions plus récentes ; une version plus ancienne ne remplace jamais une version installée.</p>
 <h2 id="install-update-remove-removing">Supprimer</h2>
-<p>Choisissez <b>Supprimer</b> et confirmez « Supprimer « … » de Power PDF maintenant ? ». Après l’autorisation d’administrateur, le client efface le fichier du module, son dossier de données et ses paramètres utilisateur. Power PDF décharge le module au prochain démarrage. Le store ne peut supprimer que les modules qu’il a lui-même installés (reconnaissables au fichier <code>manifest.json</code> dans le dossier de données du module) ; il reconnaît aussi de cette façon les modules issus d’une installation manuelle (chapitre 13).</p>
+<p>Choisissez <b>Supprimer</b> et confirmez « Supprimer « … » de Power PDF maintenant ? ». Après l’autorisation d’administrateur, le client efface le fichier du module, son dossier de données et ses paramètres utilisateur. Power PDF décharge le module au prochain démarrage. Le store ne peut supprimer que les modules qu’il a lui-même installés (reconnaissables au fichier <code>manifest.json</code> dans le dossier de données du module) ; il reconnaît aussi de cette façon les modules issus d’une installation manuelle (chapitre <a href="#links-from-the-website-manual-installation">Liens depuis le site web, installation manuelle</a>).</p>
 <h2 id="install-update-remove-what-protects-you">Ce qui vous protège</h2>
 <ul>
   <li>Seul ce qu’un store de confiance a signé est installé, et la somme de contrôle SHA-256 doit correspondre. Les deux sont vérifiées une nouvelle fois avant la copie, dans un dossier où seuls les administrateurs ont le droit d’écrire.</li>
@@ -151,7 +171,7 @@
   <li>L’étape avec droits d’administrateur ne s’exécute que lorsque vous installez, mettez à jour ou supprimez ; tout le reste s’exécute avec vos droits habituels.</li>
 </ul>
 
-<h1 id="updates">8 Mises à jour</h1>
+<h1 id="updates">Mises à jour</h1>
 <h2 id="updates-how-the-store-finds-updates">Comment le store trouve les mises à jour</h2>
 <p>Environ 15 secondes après le démarrage de Power PDF, et peu après la fermeture de la fenêtre du store, le client lit le catalogue en arrière-plan. S’il trouve une version plus récente de l’Add-on Store ou d’un module installé, les boutons <b>Add-on Store</b> et <b>Mises à jour</b> reçoivent un point orange. Lorsque l’indication des mises à jour de Power PDF est activée, une mise à jour de Power PDF compte également.</p>
 <h2 id="updates-the-view-available-updates">La vue « Mises à jour disponibles »</h2>
@@ -169,7 +189,7 @@
 <h2 id="updates-hint-about-updates-for-power-pdf">Indication des mises à jour de Power PDF</h2>
 <p>Lorsque les administrateurs du store proposent une mise à jour pour votre version de Power PDF, le haut de la fenêtre affiche « Une mise à jour de Power PDF est disponible : … », avec <b>Nouveautés</b> (ouvre les notes de version officielles de Tungsten Automation dans le navigateur) et <b>Masquer</b> (jusqu’à la prochaine version plus récente). Le store ne peut pas installer Power PDF : « La mise à jour est installée par votre service informatique ou une personne disposant des droits d'administrateur. » L’option correspondante se trouve sur la page d’options.</p>
 
-<h1 id="what-s-new-ratings-problem-reports">9 Nouveautés, évaluations, signalements</h1>
+<h1 id="what-s-new-ratings-problem-reports">Nouveautés, évaluations, signalements</h1>
 <h2 id="what-s-new-ratings-problem-reports-what-s-new">Nouveautés</h2>
 <p>Après une mise à jour, effectuée par le store, par le service informatique ou par la mise à jour automatique, la fenêtre du store affiche une fois <b>Nouveautés</b> à sa prochaine ouverture : le texte de la nouvelle version pour chaque module et pour le store. <b>Compris</b> ferme cet aperçu. Ce que vous avez installé vous-même dans la fenêtre du store est considéré comme déjà vu.</p>
 <h2 id="what-s-new-ratings-problem-reports-ratings">Évaluations</h2>
@@ -183,7 +203,7 @@
 </ol>
 <p>Le signalement est envoyé au développeur du module, avec les versions du module, de Power PDF et de Windows ; aucun document n’est transmis. Ne joignez pas de documents confidentiels.</p>
 
-<h1 id="customer-codes">10 Codes client</h1>
+<h1 id="customer-codes">Codes client</h1>
 <p>Un code client débloque les modules que votre fournisseur de modules fournit à votre organisation. Il se présente ainsi : <code>XXXX-XXXX-XXXX-XXXX-XXXX</code>.</p>
 <ol class="steps">
   <li>Dans l’en-tête, choisissez <b>Code client</b>.</li>
@@ -193,7 +213,7 @@
 <p><b>Codes client sur cet ordinateur</b> répertorie chaque code (abrégé) avec l’organisation, les modules débloqués et, lorsque la livraison est limitée, les installations utilisées, par exemple « Installations : 3/10 ». Jusqu’à 10 codes sont possibles.</p>
 <p><b>Supprimer le code</b> demande « Supprimer le code client de … ? ». Les modules fournis uniquement avec ce code sont également supprimés de Power PDF (une seule confirmation administrateur) ; si celle-ci est refusée, le code est conservé. Lorsque le service informatique définit les codes par stratégie, la boîte de dialogue indique « Votre service informatique gère le code client sur cet ordinateur. » et rien ne peut être modifié.</p>
 
-<h1 id="further-notes-in-the-window">11 Autres indications dans la fenêtre</h1>
+<h1 id="further-notes-in-the-window">Autres indications dans la fenêtre</h1>
 <table>
   <tr><th>Indication</th><th>Signification et marche à suivre</th></tr>
   <tr><td>Bloqué par l'Add-on Store pour une raison de sécurité, veuillez supprimer : …</td><td>Les administrateurs du store ont bloqué cette version. <b>Supprimer maintenant</b> la supprime (autorisation d’administrateur). Le client vérifie la liste de blocage 20 secondes après le démarrage, puis toutes les 4 heures, et pose la question une fois par session ; un blocage reste valable même si le serveur devient injoignable par la suite.</td></tr>
@@ -205,7 +225,7 @@
   <tr><td>L'installation et la suppression de modules sont désactivées par votre administrateur.</td><td>Stratégie <code>DisableInstall</code> : vous pouvez consulter le catalogue, mais vous ne pouvez rien modifier.</td></tr>
 </table>
 
-<h1 id="the-options-page">12 La page d’options</h1>
+<h1 id="the-options-page">La page d’options</h1>
 <p>Les paramètres du client se trouvent sous <b>Fichier &gt; Options &gt; Add-on Store &gt; Général</b>. Ce que le service informatique définit par stratégie y apparaît grisé.</p>
 <table>
   <tr><th>Paramètre</th><th>Signification</th></tr>
@@ -213,18 +233,18 @@
   <tr><td>Codes client sur cet ordinateur</td><td>Indique le nombre de codes ; ils se gèrent dans la fenêtre du store avec <b>Code client</b>. Ce n’est qu’en l’absence de la fenêtre moderne du store qu’un champ de saisie des codes, séparés par des points-virgules, apparaît ici.</td></tr>
   <tr><td>Beta : afficher les plug-ins qui ne sont pas encore approuvés</td><td>Affiche aussi les versions bêta. Elles ont passé les contrôles automatiques, mais n’ont pas encore été vérifiées par un administrateur.</td></tr>
   <tr><td>Signaler la disponibilité d'une mise à jour de Power PDF</td><td>Barre et carte concernant les mises à jour de Power PDF (par défaut : activé).</td></tr>
-  <tr><td>M'avertir une fois de chaque nouvelle mise à jour</td><td>L’avertissement unique du chapitre 8 (par défaut : activé).</td></tr>
+  <tr><td>M'avertir une fois de chaque nouvelle mise à jour</td><td>L’avertissement unique du chapitre <a href="#updates">Mises à jour</a> (par défaut : activé).</td></tr>
   <tr><td>Journalisation détaillée</td><td>Écrit davantage de détails dans <code>%TEMP%\PluginStore.log</code>, pour le dépannage.</td></tr>
 </table>
-<p>En bas figure la version du client, par exemple « Client Add-on Store version 2.2.1 ».</p>
+<p>En bas figure la version du client, par exemple « Client Add-on Store version 2.2.2 ».</p>
 
-<h1 id="links-from-the-website-manual-installation">13 Liens depuis le site web, installation manuelle</h1>
+<h1 id="links-from-the-website-manual-installation">Liens depuis le site web, installation manuelle</h1>
 <h2 id="links-from-the-website-manual-installation-install-in-power-pdf">« Installer dans Power PDF »</h2>
 <p>Sur le site web du store, chaque module dispose du bouton <b>Installer dans Power PDF</b>. Grâce au lien <code>addonstore://</code>, il ouvre la fenêtre du store sur ce module et demande s’il faut l’installer ; si Power PDF est encore en cours de démarrage, le client attend que sa fenêtre principale soit affichée. Un site web peut uniquement ouvrir la fenêtre de cette façon, jamais installer quoi que ce soit de lui-même. Si le module ne figure pas dans le catalogue, la fenêtre indique « Le module « … » du site web ne figure pas dans le catalogue. Il est peut-être disponible uniquement dans le canal bêta (Options). »</p>
 <h2 id="links-from-the-website-manual-installation-manual-installation-without-the-client">Installation manuelle sans le client</h2>
 <p>Pour les ordinateurs sans client, le site web propose <b>Manuel (ZIP)</b> pour chaque module public : un fichier ZIP contenant <code>install.bat</code>, <code>uninstall.bat</code> et des instructions. <code>install.bat</code> vérifie la signature et la somme de contrôle, demande une seule fois des droits d’administrateur et crée le groupe dans le ruban ; <code>/quiet</code> installe sans poser de questions, pour la distribution de logiciels. Une installation manuelle ne reçoit ni mises à jour ni blocages de sécurité. Si le client est installé ultérieurement, il reconnaît le module et le tient à jour. Lorsque le client supprime un tel module, il efface aussi son entrée sous Applications installées ; lorsqu’il le met à jour, il met à jour la version qui y est affichée.</p>
 
-<h1 id="for-administrators">14 Pour les administrateurs</h1>
+<h1 id="for-administrators">Pour les administrateurs</h1>
 <h2 id="for-administrators-deployment">Déploiement</h2>
 <p>Le MSI s’installe par machine et s’exécute en mode silencieux, de préférence dans une étape distincte juste après Power PDF (Intune, SCCM, GPO, scripts) :</p>
 <p><code>msiexec /i PluginStore.msi /qn /norestart /l*v "%TEMP%\AddonStore.log"</code></p>
@@ -280,7 +300,7 @@
 <h2 id="for-administrators-privacy">Confidentialité</h2>
 <p>Le client n’envoie aucun document, ni aucun nom d’utilisateur ou d’ordinateur. Chaque requête transmet des données techniques au serveur du store :</p>
 <ul>
-  <li>l’identifiant du programme avec les versions du client, de Power PDF et de Windows ainsi que l’architecture du processeur, par exemple <code>AddonStore-PowerPDF/2.2.1 (PowerPDF …; Windows …; x64)</code> ;</li>
+  <li>l’identifiant du programme avec les versions du client, de Power PDF et de Windows ainsi que l’architecture du processeur, par exemple <code>AddonStore-PowerPDF/2.2.2 (PowerPDF …; Windows …; x64)</code> ;</li>
   <li>le mode de licence de Power PDF (<code>cloud</code>, <code>serial</code> ou <code>unknown</code>), afin que le store puisse vérifier s’il peut être utilisé ;</li>
   <li>uniquement avec un code client : les codes et un identifiant d’installation aléatoire de cet utilisateur ; le serveur n’en conserve qu’une valeur de contrôle par livraison.</li>
 </ul>
@@ -295,7 +315,7 @@
   <li>L’assistant de liens <code>AddonStoreLink.exe</code> ne transmet qu’un identifiant de module vérifié ; rien n’est installé avant votre confirmation.</li>
 </ul>
 
-<h1 id="all-messages">15 Tous les messages</h1>
+<h1 id="all-messages">Tous les messages</h1>
 <h2 id="all-messages-in-the-store-window-and-the-classic-window">Dans la fenêtre du store et la fenêtre classique</h2>
 <table>
   <tr><th>Message</th><th>Signification</th><th>Marche à suivre</th></tr>
@@ -368,7 +388,7 @@
   <tr><td>13</td><td>Toutes les installations de la livraison sont utilisées.</td></tr>
 </table>
 
-<h1 id="troubleshooting">16 Dépannage</h1>
+<h1 id="troubleshooting">Dépannage</h1>
 <table>
   <tr><th>Problème</th><th>Solution</th></tr>
   <tr><td>L’onglet <b>Store</b> est absent.</td><td>Redémarrez Power PDF. Vérifiez que <code>PluginStore.zxt</code> se trouve dans le dossier <code>Plug-Ins</code> et que Power PDF Business (avant 2026.4) est au moins en version 2025.3.7. Si le mode de licence n’est pas autorisé pour le store, le bouton reste masqué ; contactez les administrateurs du store.</td></tr>
@@ -383,7 +403,7 @@
   <tr><td>Analyser une erreur plus en détail.</td><td>Activez <b>Journalisation détaillée</b>, répétez l’action et envoyez <code>%TEMP%\PluginStore.log</code> avec <b>Signaler un problème</b>.</td></tr>
 </table>
 
-<h1 id="frequently-asked-questions">17 Questions fréquentes</h1>
+<h1 id="frequently-asked-questions">Questions fréquentes</h1>
 <h3>Les modules sont-ils des produits officiels de Tungsten Automation ?</h3>
 <p>Non. Ils proviennent de développeurs indépendants et sont fournis sans garantie et sans support officiel ; voir <b>Avertissement</b>. L’auteur indiqué dans le catalogue répond aux questions.</p>
 <h3>Pourquoi ai-je besoin de droits d’administrateur ?</h3>
@@ -391,15 +411,15 @@
 <h3>Pourquoi Power PDF doit-il redémarrer ?</h3>
 <p>Power PDF ne charge les modules qu’au démarrage et ne les libère qu’à sa fermeture.</p>
 <h3>Le store voit-il mes documents ?</h3>
-<p>Non. Le client n’envoie aucun document ; le chapitre 14 répertorie tout ce qu’il transmet.</p>
+<p>Non. Le client n’envoie aucun document ; le chapitre <a href="#for-administrators">Pour les administrateurs</a> répertorie tout ce qu’il transmet.</p>
 <h3>Puis-je revenir à une version plus ancienne d’un module ?</h3>
 <p>Le store n’installe pas de versions plus anciennes. Supprimez le module et contactez son auteur.</p>
 <h3>Le store fonctionne-t-il sans Internet ?</h3>
 <p>Les modules installés continuent de fonctionner. La fenêtre affiche le dernier catalogue chargé ; l’installation et la mise à jour fonctionnent à nouveau dès que la connexion est rétablie.</p>
 <h3>Comment obtenir des modules créés pour mon entreprise ?</h3>
-<p>Avec le code client de votre fournisseur (chapitre 10), ou bien le service informatique le définit par stratégie.</p>
+<p>Avec le code client de votre fournisseur (chapitre <a href="#customer-codes">Codes client</a>), ou bien le service informatique le définit par stratégie.</p>
 
-<h1 id="limits-and-technical-data">18 Limites et caractéristiques techniques</h1>
+<h1 id="limits-and-technical-data">Limites et caractéristiques techniques</h1>
 <table>
   <tr><th>Caractéristique</th><th>Valeur</th></tr>
   <tr><td>Power PDF</td><td>Business à partir de 2025.3.7 ; toutes les éditions à partir de 2026.4 ; uniquement avec connexion (SaaS)</td></tr>
@@ -413,9 +433,10 @@
   <tr><td>Fenêtre du store</td><td>Microsoft WebView2 ; sans le runtime, la fenêtre classique</td></tr>
 </table>
 
-<h1 id="version-history">19 Historique des versions</h1>
+<h1 id="version-history">Historique des versions</h1>
 <table>
   <tr><th>Version</th><th>Nouveautés</th></tr>
+  <tr><td>2.2.2</td><td>Les chapitres n'affichent plus de numéros, et les renvois vers d'autres chapitres sont des liens qui y mènent directement.</td></tr>
   <tr><td>2.1.1</td><td>L’aide est plus fiable : grandes images, recherche avec Entrée, aide en anglais dans un Power PDF en arabe et messages lorsque des fenêtres sont ouvertes.</td></tr>
   <tr><td>2.1.0</td><td>Aide commune à tous les modules installés, avec recherche : bouton <b>Aide</b> dans l’onglet Fonctions avancées, bouton d’aide et F1 dans la fenêtre du store et dans les modules ; l’aide du store en six langues.</td></tr>
   <tr><td>2.0.2</td><td>Plus stable : Power PDF ne se ferme plus avec un chemin très long pour le dossier des fichiers temporaires ni en cas d’erreur dans la fenêtre du store ; mentions de licence dans le programme d’installation.</td></tr>
@@ -442,6 +463,6 @@
   <tr><td>0.5.0</td><td>Évaluations, signalements de problèmes, captures d’écran.</td></tr>
   <tr><td>0.4.0</td><td>Fenêtre moderne du store.</td></tr>
 </table>
-<p>Add-on Store 2.2.1 · Tungsten Automation · Ce manuel décrit le client pour Tungsten Power PDF.</p>
+<p>Add-on Store 2.2.2 · Tungsten Automation · Ce manuel décrit le client pour Tungsten Power PDF.</p>
 </body>
 </html>
