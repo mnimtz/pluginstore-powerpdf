@@ -46,7 +46,7 @@ public class SubmissionService
 
     public async Task<ValidationReport> ValidateOnlyAsync(string zipPath, AppUser user)
     {
-        var validator = new PackageValidator(_db, _categories);
+        var validator = new PackageValidator(_db, _categories, StorageRoot);   // S2.7.0: compares the help with the previous version
         var (report, _) = await validator.ValidateAsync(zipPath, user.Id, await _users.IsInRoleAsync(user, "Admin"));
         return report;
     }
@@ -57,7 +57,8 @@ public class SubmissionService
     /// <param name="notify">false: no staff mail and no receipt (a UAT mirroring production's released versions, S1.24.0)</param>
     public async Task<SubmissionResult> SubmitAsync(string zipPath, AppUser user, string via, bool notify = true)
     {
-        var validator = new PackageValidator(_db, _categories);
+        // S2.7.0: the UAT mirror and the bundled store client copy versions released elsewhere (help rule: warning only)
+        var validator = new PackageValidator(_db, _categories, StorageRoot) { ReleasedElsewhere = via is "mirror" or "bundle" };
         var (report, manifest) = await validator.ValidateAsync(zipPath, user.Id, await _users.IsInRoleAsync(user, "Admin"));
         if (manifest is not null && manifest.Id.Length > 0 && report.Findings.Any(f => f.Code == "VERSION_EXISTS"))
             return await ExistingVersionAsync(zipPath, manifest, report);

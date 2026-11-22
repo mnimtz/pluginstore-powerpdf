@@ -254,6 +254,76 @@ A .ppak is a ZIP container:
    from, without build output (`.vs`, `x64`, `Release`, `Debug`, `*.pdb`,
    `*.obj`, `*.zxt`) and without keys or credentials (see "Source code").
 
+## Help for the central help window
+
+Power PDF has one help window for every installed add-on (store client 2.1.0 and
+later): *Help* on the shared tab, F1 in the store window, and add-ons open it at
+their own topics. **Every new add-on must bring a help** (HELP_MISSING is an
+error for add-ons not yet released; released add-ons get an urgent warning until
+they add one). Build it while you write the plugin, and update it with every
+release.
+
+**1. Files in the package**
+
+```
+docs/help/help.json      required
+docs/help/en.html        required
+docs/help/de.html        recommended, as fr, it, es and nl (the six manual languages)
+docs/help/img/...        optional pictures (PNG, JPEG, GIF, WebP), at most 2 MB each
+```
+
+**2. docs/help/help.json** (at most 256 KB)
+
+```json
+{
+  "format": "tungsten-addon-help",
+  "version": 1,
+  "addon": "com.example.myplugin",
+  "langs": ["en", "de", "fr", "it", "es", "nl"],
+  "topics": { "overview": "overview", "settings": "settings", "history": "version-history" }
+}
+```
+
+- `addon` is exactly the `id` of your manifest.
+- `langs` contains `en`; every listed language needs `docs/help/<lang>.html`.
+- `topics` (optional) maps a short name to a chapter id; each chapter id needs an
+  element with that id in every page (HELP_TOPIC_UNKNOWN otherwise).
+
+**3. The pages** (one per language, at most 4 MB each)
+
+Plain HTML that the help window styles itself: one `<h1 id="...">` per chapter,
+`h2`/`h3`, `p`, `ul`/`ol`/`li`, `table`, `b`/`i`/`code`, and `<img>` with a
+relative `src` under `docs/help/`. No scripts, frames, own styles or external
+resources: the window removes them (DOCS_ACTIVE_CONTENT warns). End with a
+version history chapter that names every version:
+
+```html
+<h1 id="overview">My Plugin</h1>
+<p>What the add-on does, in two or three sentences.</p>
+<h1 id="settings">Settings</h1>
+<p>...</p>
+<h1 id="version-history">Version history</h1>
+<h2>1.3.0</h2>
+<ul><li>New: ...</li></ul>
+```
+
+**4. Open the help from your add-on** (Help button, F1 in your dialogs)
+
+The store client publishes the HFT `TungstenAddonHelp` version 1
+(`GET {{baseUrl}}/api/sdk/addonhelp.h`): selector 1 `ShowHelp(addonId, topic)`
+opens the window at a topic of your `topics` (or a chapter id); `topic` empty =
+your start page; the result 0 means "no help here". Without the store client
+(no HFT), open your own `docs/help/<lang>.html` in the browser instead.
+
+**5. Keep it current** (checked on every update of a released add-on)
+
+- HELP_NOT_UPDATED: the help is byte for byte the same as in the latest released
+  version. Describe what changed for the user and add the version history entry.
+- HELP_HISTORY_MISSING: the English help does not name the new version (for
+  example `1.3.0`, or `1.3` for a version ending in `.0`).
+- HELP_PRESENT (info) shows the reviewer the languages and whether the help
+  changed since the previous version.
+
 ## Pre-flight checklist (mandatory: every hard rule)
 
 Every item below is a hard rule of the store: the upload is refused when one
@@ -428,6 +498,11 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
 - [ ] No archive inside (ZIP, 7z, RAR, gzip, CAB; Office documents under
       docs/ are fine). (NESTED_ARCHIVE)
 - [ ] At most 200 MB, at most 400 MB unpacked. (SIZE_LIMIT, INFLATE_LIMIT)
+- [ ] A help for the central help window: `docs/help/help.json` (format
+      `tungsten-addon-help`, version 1, `addon` = your id, `langs` with `en`)
+      and one `docs/help/<lang>.html` per listed language, within the limits;
+      required for new add-ons, and kept current with every update (see "Help
+      for the central help window"). (HELP_MISSING, HELP_INVALID)
 
 **E. Source ZIP**
 - [ ] A readable ZIP of the source tree you built from, at most 100 MB,
@@ -1783,6 +1858,13 @@ be free of warnings before review. Info is for information only.
 | NESTED_ARCHIVE | error | An archive (ZIP, 7z, RAR, gzip, CAB) inside the package; ship files unpacked (Office documents under docs/ are fine). |
 | ENTRY_NOT_SCANNED | error/warning | A binary over 120 MB (error) or a text file over 1 MB (warning) could not be scanned. |
 | DOCS_ACTIVE_CONTENT | warning | Help pages under docs/ contain scripts, frames or external resources. |
+| HELP_MISSING | error | No `docs/help/help.json`: required for add-ons that are not released yet; a released add-on gets it as an urgent warning until it brings a help (S2.7.0). |
+| HELP_INVALID | error | The help cannot be shown completely: wrong format or version, `addon` is not the package id, `langs` without `en` or with a missing page, a page over 4 MB, a picture over 2 MB, help.json over 256 KB or invalid topics. |
+| HELP_LANGUAGES | warning | The help lacks one of the six manual languages (en, de, fr, it, es, nl). |
+| HELP_TOPIC_UNKNOWN | warning | A chapter id of `topics` does not occur in en.html; F1 then opens the start of the help. |
+| HELP_NOT_UPDATED | warning | Update of a released add-on: the help is unchanged since the latest released version; describe the changes. |
+| HELP_HISTORY_MISSING | warning | Update of a released add-on: the English help does not name the new version (version history). |
+| HELP_PRESENT | info | Languages of the help and whether it changed since the previous version (for the reviewer). |
 | ARCH_UNKNOWN | error | 'architectures' names something other than x64 or arm64. |
 | ARCH_UNDECLARED | error | 'files.arm64' is set but "arm64" is not in 'architectures'. |
 | PE_MANAGED | error | The .zxt is a .NET assembly; Power PDF loads native plug-ins only. |

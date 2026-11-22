@@ -1800,10 +1800,12 @@ public static class ApiEndpoints
         // Store SDK files that ship with the server (S1.4.0): the bin/ loader header
         api.MapGet("/sdk/{name}", (string name, IWebHostEnvironment env) =>
         {
-            if (name is not "pluginstore_bin.h") return NotFound("FILE_NOT_FOUND", $"No SDK file '{name}'. Available: pluginstore_bin.h.");
+            // S2.7.0: also addonhelp.h, the HFT of the central help (identical to client/common/addonhelp.h)
+            var file = name switch { "pluginstore_bin.h" => "pluginstore_bin.h", "addonhelp.h" => "addonhelp.h", _ => null };
+            if (file is null) return NotFound("FILE_NOT_FOUND", $"No SDK file '{name}'. Available: pluginstore_bin.h, addonhelp.h.");
             // S1.26.0: the path is built from the constant, the request only selects it
-            var full = Path.Combine(env.WebRootPath, "sdk", "pluginstore_bin.h");
-            return File.Exists(full) ? Results.File(full, "text/plain; charset=utf-8", "pluginstore_bin.h") : NotFound("FILE_NOT_FOUND", "No SDK file 'pluginstore_bin.h'.");
+            var full = Path.Combine(env.WebRootPath, "sdk", file);
+            return File.Exists(full) ? Results.File(full, "text/plain; charset=utf-8", file) : NotFound("FILE_NOT_FOUND", $"No SDK file '{file}'.");
         });
 
         api.MapGet("/devkit/{**path}", (string path, IConfiguration config, IWebHostEnvironment env) =>

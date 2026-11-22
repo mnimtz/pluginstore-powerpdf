@@ -309,6 +309,9 @@ public class AiAssist
             else facts.Append("Source excerpts are not sent (setting off); judge from the file lists, hosts and manifest.\n");
         }
 
+        // S2.7.0: the add-on's help (English): the review says whether it covers the user-visible changes
+        facts.Append(HelpExcerpt(Path.Combine(_svc.StorageRoot, v.FilePath)));
+
         var manifest = new StringBuilder();
         // S1.27.5: what this version itself claims, against a running changelog
         if (prev is not null && NewChangelogPart(ChangelogEn(v.ManifestJson), ChangelogEn(prev.ManifestJson)) is { } part)
@@ -325,6 +328,9 @@ public class AiAssist
             "matches the changes, and list concerns: new network access or hosts, new third-party code or licenses, " +
             "credentials, file or registry operations outside the plug-in's own data, process launches, obfuscation, " +
             "and anything that contradicts the compliance statement. " + SecurityLens +
+            "Judge as well whether the add-on's help text covers the user-visible changes of this version (new functions, " +
+            "changed settings or messages) and names the version in its history; when it does not, or there is no help, " +
+            "add a low concern that the help needs an update and say what is missing. " +
             "Be concrete and short. The administrator decides; " +
             $"you only advise. Write all text in {lang}. " + Untrusted,
             facts.ToString() + manifest, ReviewSchema, true, ct);
@@ -337,6 +343,24 @@ public class AiAssist
         target.AiReviewTranslationsJson = null;   // translations belonged to the previous text
         await _db.SaveChangesAsync(ct);
         return true;
+    }
+
+    private static readonly Regex HelpTag = new("<[^>]{0,2000}>", RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
+    private static readonly Regex HelpSpace = new(@"\s+", RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
+
+    /// <summary>S2.7.0: the start and the end (version history) of docs/help/en.html as plain text, inside &lt;data&gt;.</summary>
+    internal static string HelpExcerpt(string packagePath)
+    {
+        var files = HelpCheck.ReadFromPackage(packagePath);
+        var html = files.TryGetValue(HelpCheck.Folder + "en.html", out var b) && b is not null ? Encoding.UTF8.GetString(b) : "";
+        string text;
+        try { text = HelpSpace.Replace(System.Net.WebUtility.HtmlDecode(HelpTag.Replace(html, " ")), " ").Trim(); }
+        catch (RegexMatchTimeoutException) { text = ""; }
+        if (text.Length == 0) return "Help of the add-on (docs/help/en.html): none.\n";
+        const int part = 3000;
+        var excerpt = text.Length <= 2 * part ? text : text[..part] + " [...] " + text[^part..];
+        return "Help text of the add-on (docs/help/en.html, English; start and end with the version history, possibly shortened):\n<data>\n" +
+               Data(excerpt) + "\n</data>\n";
     }
 
     /// <summary>The stored translations of a review aid (language code to review JSON).</summary>

@@ -148,7 +148,7 @@ public static class RuleCatalog
             return "Binaries and integrity";
         if (Any("LICENSE", "COMPLIANCE_", "EXTERNAL_SERVICE", "THIRDPARTY_", "PROVIDERS_") || code is "SECRET_DETECTED") return "Licenses, legal and privacy";
         if (Any("ZIP_", "MANIFEST_", "ENTRY_") || code is "SIZE_LIMIT" or "NESTED_ARCHIVE" or "UNEXPECTED_ENTRY" or "INFLATE_LIMIT"
-            or "DOCS_ACTIVE_CONTENT" or "BUNDLE_INVALID" or "NO_PACKAGE" or "VALIDATION_FAILED" or "REPORT_UNREADABLE") return "Package structure";
+            or "DOCS_ACTIVE_CONTENT" or "BUNDLE_INVALID" or "NO_PACKAGE" or "VALIDATION_FAILED" or "REPORT_UNREADABLE" || Any("HELP_")) return "Package structure";
         if (Any("ID_", "NAME_", "MIN_HOST_VERSION_", "AUTHOR_", "CONTACT_", "VISIBILITY_", "TEXT_CONTROL_") || code is "VERSION_INVALID" or "VERSION_NOT_INCREMENTED"
             or "VERSION_EXISTS" or "PACKAGE_OWNED_BY_OTHER" or "PACKAGE_ID_RETIRED" or "CHANGELOG_EMPTY" or "DESCRIPTION_TOO_LONG" or "DESCRIPTION_LENGTH" or "METADATA_INVALID"
             or "ADMIN_UPLOAD_FOR_OWNER" or "CLIENT_ADMIN_ONLY") return "Manifest and versioning";

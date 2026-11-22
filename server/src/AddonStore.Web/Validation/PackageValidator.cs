@@ -121,10 +121,17 @@ public class PackageValidator
     private readonly AppDbContext _db;
 
     private readonly Services.CategoryService? _categories;
+    /// <summary>S2.7.0: where stored packages live (the help of the previous version is compared); null = no comparison.</summary>
+    private readonly string? _storageRoot;
+    /// <summary>S2.7.0: the help of this upload (set by the package checks, used against the store's versions).</summary>
+    private HelpCheck.Result? _help;
+    /// <summary>S2.7.0: a copy of a version released on another server (UAT mirror, bundled store client): a missing help
+    /// is then the urgent warning, never the refusal for new add-ons.</summary>
+    public bool ReleasedElsewhere { get; init; }
 
-    public PackageValidator(AppDbContext db, Services.CategoryService? categories = null)
+    public PackageValidator(AppDbContext db, Services.CategoryService? categories = null, string? storageRoot = null)
     {
-        _db = db; _categories = categories;
+        _db = db; _categories = categories; _storageRoot = storageRoot;
     }
 
     public async Task<(ValidationReport Report, ParsedManifest? Manifest)> ValidateAsync(
@@ -537,6 +544,7 @@ public class PackageValidator
                 if (manifest.NoUi) CheckNoUiLayout(report, zip);
                 else CheckUiLayout(report, zip, manifest.AtomNamespace, manifest.Id, manifest.OwnTab);
                 CheckDocs(report, zip);
+                if (manifest.Id.Length > 0) CheckHelp(report, zip, manifest);   // S2.7.0
             }
         }
 
@@ -605,6 +613,8 @@ public class PackageValidator
                     $"Version '{manifest.Version}' is not higher than the latest submitted version '{highest}'.",
                     $"Bump 'version' above {highest}; every release must carry a new, higher version.");
         }
+
+        await CheckHelpAgainstReleasesAsync(report, manifest, package);   // S2.7.0
 
         // Two packages with the same binary name would overwrite and uninstall each other.
         if (manifest.ZxtName.Length > 0)
@@ -1795,6 +1805,83 @@ public class PackageValidator
         if (bad.Count > 0)
             report.Warn("DOCS_ACTIVE_CONTENT", $"Help pages contain scripts or load external resources: {string.Join(", ", bad.Take(5))}.",
                 "Help under docs/ is installed on user machines and opened locally: plain HTML with local images only, no scripts, frames or external sources.");
+    }
+
+    // ---- S2.7.0: help for the central help window of the store client ----------------------------------------
+    private const string HelpGuide = "Step by step: GET /api/agent-guide, section \"Help for the central help window\".";
+
+    /// <summary>Form and limits of docs/help/ (HELP_INVALID, HELP_LANGUAGES, HELP_TOPIC_UNKNOWN); remembers the result.</summary>
+    private void CheckHelp(ValidationReport report, ZipArchive zip, ParsedManifest manifest)
+    {
+        var files = new Dictionary<string, byte[]?>(StringComparer.OrdinalIgnoreCase);
+        foreach (var e in zip.Entries)
+        {
+            if (!e.FullName.StartsWith(HelpCheck.Folder, StringComparison.OrdinalIgnoreCase) || e.FullName.EndsWith('/')) continue;
+            if (files.Count >= 500) break;
+            files[e.FullName] = e.Length > HelpCheck.MaxHtmlBytes ? null : ReadCapped(e, HelpCheck.MaxHtmlBytes);
+        }
+        _help = HelpCheck.Inspect(files, manifest.Id);
+        if (_help.Problems.Count > 0)
+            report.Error("HELP_INVALID", "The help under docs/help/ cannot be shown completely by the help window: " +
+                string.Join("; ", _help.Problems.Take(6)) + (_help.Problems.Count > 6 ? $" (+{_help.Problems.Count - 6} more)." : "."),
+                "Fix help.json and the pages. " + HelpGuide);
+        if (!_help.Present || _help.Problems.Count > 0) return;
+        var missing = HelpCheck.ManualLanguages.Where(l => !_help.Langs.Contains(l)).ToList();
+        if (missing.Count > 0)
+            report.Warn("HELP_LANGUAGES", $"The help is missing in: {string.Join(", ", missing)}.",
+                "Provide the help in the six manual languages (en, de, fr, it, es, nl): one docs/help/<lang>.html each, listed in \"langs\".");
+        if (_help.UnknownTopics.Count > 0)
+            report.Warn("HELP_TOPIC_UNKNOWN", $"\"topics\" points to chapters that en.html does not have: {string.Join(", ", _help.UnknownTopics.Take(8))}.",
+                "Every chapter id in \"topics\" needs an element with that id in each page (e.g. <h1 id=\"settings\">); F1 otherwise opens the start of the help.");
+    }
+
+    /// <summary>
+    /// The help rule against the store's versions: a new add-on must bring a help (HELP_MISSING error), an add-on that is
+    /// already released gets an urgent warning instead. On updates the help is compared with the latest released version
+    /// (HELP_NOT_UPDATED) and must name the new version (HELP_HISTORY_MISSING); HELP_PRESENT sums it up for the reviewer.
+    /// </summary>
+    private async Task CheckHelpAgainstReleasesAsync(ValidationReport report, ParsedManifest manifest, Package? package)
+    {
+        if (_help is null) return;
+        var released = package is null ? new List<(string Version, VersionStatus Status, string FilePath)>()
+            : (await _db.PackageVersions.AsNoTracking()
+                .Where(v => v.PackageId == manifest.Id && v.ReviewedAt != null &&
+                            (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta || v.Status == VersionStatus.Withdrawn))
+                .Select(v => new { v.Version, v.Status, v.FilePath }).ToListAsync())
+                .Select(v => (v.Version, v.Status, v.FilePath)).ToList();
+        if (!_help.Present)
+        {
+            if (released.Count > 0 || ReleasedElsewhere)
+                report.Warn("HELP_MISSING", "Urgent: this add-on has no help for the central help window of Power PDF (docs/help/help.json). Users find nothing when they press F1 or Help.",
+                    "Please add a help with this or the next update; new add-ons cannot be submitted without one. " + HelpGuide);
+            else
+                report.Error("HELP_MISSING", "New add-ons need a help for the central help window of Power PDF (docs/help/help.json and docs/help/en.html).",
+                    "Add docs/help/help.json and one page per language. " + HelpGuide);
+            return;
+        }
+        if (_help.Problems.Count > 0) return;
+        var cmp = new SemVerComparer();
+        var previous = released.Where(v => v.Status != VersionStatus.Withdrawn && cmp.Compare(v.Version, manifest.Version) < 0)
+            .OrderByDescending(v => v.Version, cmp).FirstOrDefault();
+        string change = "";
+        if (previous.Version is { } prevVersion)
+        {
+            var prevFile = previous.FilePath;
+            var prevHash = _storageRoot is null ? "" : HelpCheck.HashOf(HelpCheck.ReadFromPackage(Path.Combine(_storageRoot, prevFile)));
+            if (prevHash.Length > 0 && prevHash == _help.Hash)
+            {
+                var log = manifest.Changelog.Replace('\n', ' ').Trim();
+                if (log.Length > 300) log = log[..300] + "...";
+                report.Warn("HELP_NOT_UPDATED", $"The help is unchanged since version {prevVersion}.",
+                    "Check that the help covers the changes of this version and add them" + (log.Length > 0 ? $" (changelog: {log})" : "") + ", plus an entry in the help's version history.");
+                change = $"unchanged since {prevVersion}";
+            }
+            else change = prevHash.Length > 0 ? $"changed since {prevVersion}" : $"new since {prevVersion}";
+            if (!HelpCheck.MentionsVersion(_help.EnglishText, manifest.Version))
+                report.Warn("HELP_HISTORY_MISSING", $"The English help does not mention version {manifest.Version}.",
+                    "Add this version to the help's version history (a chapter such as \"Version history\") with what changed for the user.");
+        }
+        report.Info("HELP_PRESENT", $"Help in {_help.Langs.Count} language(s) ({string.Join(", ", _help.Langs)})" + (change.Length > 0 ? $", {change}." : "."));
     }
 
     /// <summary>"ui": "none" (S1.1.1): no ribbon layout may be shipped, it would contradict the declaration.</summary>

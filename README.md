@@ -645,6 +645,17 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Help rule in the upload check (S2.7.0, Nov 22, 2026):** add-ons must join the central help window of Power PDF
+(client 2.1.0+) with `docs/help/help.json` and one `docs/help/<lang>.html` per language (`Validation/HelpCheck.cs`).
+`HELP_MISSING` is an error for add-ons not released yet and an urgent warning for released ones (also for copies of
+released versions: UAT mirror, bundled client). `HELP_INVALID` (error) applies the help window's own rules: format and
+version, `addon` = package id, `langs` with `en` and a page each, 256 KB / 4 MB / 2 MB limits, valid topics.
+Warnings: `HELP_LANGUAGES` (not all six manual languages), `HELP_TOPIC_UNKNOWN`, and on updates of released add-ons
+`HELP_NOT_UPDATED` (help byte for byte as in the latest released version, compared with the stored package) and
+`HELP_HISTORY_MISSING` (the English help does not name the new version); `HELP_PRESENT` (info) sums it up for the
+reviewer, and the AI review aid judges whether the help covers the changes. Step by step in the agent guide section
+"Help for the central help window"; `GET /api/sdk/addonhelp.h` serves the HFT header.
+
 **Badge at the top right (S2.6.1, Nov 22, 2026):** the mode badge sits small and raised at the top right of "Add-on
 Store" in the header (it used to hang below the title block).
 
