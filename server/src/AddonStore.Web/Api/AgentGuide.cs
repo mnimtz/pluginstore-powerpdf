@@ -1707,11 +1707,11 @@ change them.
   highlights; private add-ons and the store client cannot be highlights.
   The JSON catalog reports `featured` per entry. Admins also set it with the
   star button on a tile of the start page.
-- `"minPowerPdfVersion": "2025.3.7"` (admins only, S2.5.0) raises the minimum
+- `"minPowerPdfVersion": "2025.3.7"` (admins only, S2.5.0) sets the minimum
   Power PDF version for the whole add-on: the catalog, the store window, the
-  add-on page and the manual ZIP use the higher of this value and each
-  version's own (also for later uploads); a value below the shown version's
-  own is refused (MIN_HOST_VERSION_INVALID), `null` (or "") returns to each
+  add-on page and the manual ZIP use this value instead of each version's own
+  (also for later uploads), higher or lower (S2.7.2: an admin may also lower a
+  developer's minimum), `null` (or "") returns to each
   version's own value, and a value equal to the shown version's own is stored
   as "none". `catalogEntry.minPowerPdfVersion` shows it. Admins also set it
   in the portal under "All plug-ins" (column "Minimum Power PDF version").

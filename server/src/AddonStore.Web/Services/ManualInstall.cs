@@ -105,8 +105,8 @@ public static class ManualInstall
             format = Format,
             id = v.PackageId, version = v.Version, name, author, zxtName = zxt,
             sha256 = v.Sha256.ToLowerInvariant(), signature, page,
-            // S2.5.0: the store's minimum Power PDF version (an admin may have raised it); setup checks the higher of
-            // this and the signed manifest's value, so editing package.json can never lower the bar
+            // S2.5.0: the store's minimum Power PDF version (MinHost.Effective: an admin's value or the package's own);
+            // S2.7.2: setup uses it instead of the manifest's, like the store window
             minPowerPdfVersion = MinHost.IsValid(minHost) ? minHost : "",
         }, new JsonSerializerOptions { WriteIndented = true });
         using var zip = new ZipArchive(target, ZipArchiveMode.Create, leaveOpen: true);

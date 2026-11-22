@@ -20,17 +20,15 @@ public static class MinHost
     public static bool IsValid(string? value) => !string.IsNullOrEmpty(value) && Pattern.IsMatch(value);
 
     /// <summary>
-    /// The value in force for <paramref name="v"/>: the higher of the admin's value and the version's own (S2.7.1, review:
-    /// an admin value below a later version's own minimum let the store window offer it on a Power PDF that is too old,
-    /// while the manual ZIP refused it). Admins raise the minimum, they never lower a developer's.
+    /// The value in force for <paramref name="v"/>: the admin's value when one is set, else the version's own. S2.7.2: the
+    /// admin's value wins in both directions (S2.7.1 let admins only raise it, so a developer's too high minimum could not
+    /// be corrected); the store window and the manual ZIP (package.json) both use this value, so they agree.
     /// </summary>
     public static string Effective(Package? pkg, PackageVersion? v)
     {
         var own = (v?.MinPowerPdfVersion ?? "").Trim();
         var admin = (pkg?.MinPowerPdfOverride ?? "").Trim();
-        if (admin.Length == 0 || !IsValid(admin)) return own;
-        if (own.Length == 0 || !IsValid(own)) return admin;
-        return new SemVerComparer().Compare(admin, own) > 0 ? admin : own;
+        return admin.Length > 0 && IsValid(admin) ? admin : own;
     }
 
     /// <summary>
@@ -43,8 +41,6 @@ public static class MinHost
         var v = (value ?? "").Trim();
         if (v.Length > 0 && !IsValid(v)) return "Enter a version such as 2025.3 or 2025.3.7.";
         var own = (packageValue ?? "").Trim();
-        if (v.Length > 0 && IsValid(own) && new SemVerComparer().Compare(v, own) < 0)
-            return "An admin value can only raise the minimum: the package itself requires a higher Power PDF version.";
         string? stored = v.Length == 0 || v == own ? null : v;
         if (stored == pkg.MinPowerPdfOverride) return null;
         var before = pkg.MinPowerPdfOverride;

@@ -31,8 +31,9 @@ public class MinHostTests
         Assert.Equal("2025.4", MinHost.Effective(new Package { MinPowerPdfOverride = "2025.4" }, v));
         Assert.Equal("2025.3", MinHost.Effective(new Package { MinPowerPdfOverride = "  " }, v));
         Assert.Equal("2025.4", MinHost.Effective(new Package { MinPowerPdfOverride = "2025.4" }, null));
-        // S2.7.1: the higher value wins: a later version that needs more is never offered too early
-        Assert.Equal("2026.1", MinHost.Effective(new Package { MinPowerPdfOverride = "2025.4" }, new PackageVersion { MinPowerPdfVersion = "2026.1" }));
+        // S2.7.2: the admin's value wins in both directions; an admin may lower a developer's too high minimum
+        Assert.Equal("2025.4", MinHost.Effective(new Package { MinPowerPdfOverride = "2025.4" }, new PackageVersion { MinPowerPdfVersion = "2026.1" }));
+        Assert.Equal("2025.3.7", MinHost.Effective(new Package { MinPowerPdfOverride = "2025.3.7" }, new PackageVersion { MinPowerPdfVersion = "2026.4" }));
         Assert.Equal("2025.3.8", MinHost.Effective(new Package { MinPowerPdfOverride = "2025.3.8" }, new PackageVersion { MinPowerPdfVersion = "2025.3.7" }));
         Assert.Equal("2025.3", MinHost.Effective(new Package { MinPowerPdfOverride = "junk" }, v));
         Assert.Equal("", MinHost.Effective(null, null));
