@@ -644,6 +644,14 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Minimum Power PDF version per add-on (S2.5.0, Nov 22, 2026):** "All plug-ins" shows the minimum Power PDF version in
+force for each add-on; admins change it right there (field with suggestions from every known minimum, empty = the
+package's own value) or with `PATCH /api/packages/{id}` `{"minPowerPdfVersion": "2025.3.7"}` (admins only, `null` resets).
+The value is stored per add-on (`Packages.MinPowerPdfOverride`) and wins over every version's manifest value, also for
+later uploads, in both catalog formats (store window), on the add-on page and in the manual ZIP. There `package.json`
+carries it and setup checks the higher of it and the signed manifest's value, so editing the file can never lower the
+bar. A value equal to the package's own is stored as "none"; every change is audited.
+
 **Operating mode: production or beta (S2.4.0, Nov 22, 2026):** Settings > Server > Operating mode (or the app setting
 `Server:Mode`, which wins). In beta every page shows a red "Beta" badge at the end of the title block (#E30613, linked to
 the disclaimer), tabs start with "Beta ·", the start page has a short beta note in the head and a beta line below the

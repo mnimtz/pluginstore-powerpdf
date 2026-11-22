@@ -1612,11 +1612,18 @@ change them.
 - `GET /api/packages/{id}` shows the current `catalogEntry` (null fields come
   from the manifest). Every change is in the audit log.
 - `"featured": true` (admins only, S1.16.0) makes a public add-on a start
-  page highlight: it comes first, so on the first catalog page, with a
-  glowing frame and a "Highlight" badge; `false` removes it. At most 9
+  page highlight: it comes first and appears in the "Recommended" row above
+  the catalog (S2.3.0); `false` removes it. At most 9
   highlights; private add-ons and the store client cannot be highlights.
   The JSON catalog reports `featured` per entry. Admins also set it with the
   star button on a tile of the start page.
+- `"minPowerPdfVersion": "2025.3.7"` (admins only, S2.5.0) sets the minimum
+  Power PDF version for the whole add-on: it wins over every version's
+  manifest value, also for later uploads, in the catalog, the store window,
+  the add-on page and the manual ZIP; `null` (or "") returns to each
+  version's own value, and a value equal to the shown version's own is stored
+  as "none". `catalogEntry.minPowerPdfVersion` shows it. Admins also set it
+  in the portal under "All plug-ins" (column "Minimum Power PDF version").
 - `"providers": [{"name": "...", "website": "https://..."}]` (S1.19.0) names
   the companies behind the declared services, at most 5; `[]` shows none,
   `null` returns to the manifest's `providers`. Invalid entries give
@@ -1883,7 +1890,7 @@ be free of warnings before review. Info is for information only.
 | ZXT_NAME_INVALID | error | `files.x64`/`files.arm64` must be `x64/<Name>.zxt` / `arm64/<Name>.zxt`, name 1 to 64 letters, digits, `-` or `_`. |
 | ZXT_NAME_TAKEN | error | Another package already ships a binary with this file name; choose another one. |
 | VERSION_NOT_WITHDRAWABLE | error (409) | Rejected or already withdrawn versions cannot be withdrawn. |
-| MIN_HOST_VERSION_INVALID | error | `minPowerPdfVersion` must be digits and dots, e.g. `5.0` or `2025.3`. |
+| MIN_HOST_VERSION_INVALID | error | `minPowerPdfVersion` must be digits and dots, e.g. `5.0` or `2025.3` (manifest, or the admins' PATCH field). |
 | INFLATE_LIMIT | error | The package unpacks to more than 400 MB; the checks need to read every file. |
 | CSRF_CHECK | error (403) | An API write authenticated by the sign-in cookie needs the header `X-Requested-With`; agents use a bearer token instead. |
 | VISIBILITY_INVALID | error | `visibility` must be `public` or `private` (manifest or PATCH; the store client is always public). |

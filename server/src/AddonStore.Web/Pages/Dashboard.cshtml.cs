@@ -23,11 +23,19 @@ public class DashboardModel : PageModel
         /// <summary>The beta channel offers something newer than live.</summary>
         public bool BetaAhead => Beta is not null && (Live is null || new SemVerComparer().Compare(Beta.Version, Live.Version) > 0);
         public bool InStore => Live is not null || Beta is not null;
+        /// <summary>S2.5.0: the version whose minimum is shown (live, else beta, else the newest).</summary>
+        public PackageVersion? Shown => Live ?? Beta ?? Newest;
+        /// <summary>S2.5.0: the minimum Power PDF version in force (admin value, else the package's own).</summary>
+        public string MinHostInForce => AddonStore.Web.Services.MinHost.Effective(Pkg, Shown);
+        public string MinHostOfPackage => (Shown?.MinPowerPdfVersion ?? "").Trim();
+        public bool MinHostSetByAdmin => !string.IsNullOrWhiteSpace(Pkg.MinPowerPdfOverride);
     }
 
     public List<Package> Packages { get; private set; } = new();
     public List<Row> Rows { get; private set; } = new();
     public List<Row> Visible { get; private set; } = new();
+    /// <summary>S2.5.0: suggestions for the minimum version field (admins).</summary>
+    public List<string> MinHostChoices { get; private set; } = new();
     [BindProperty(SupportsGet = true)] public string Filter { get; set; } = "all";
     [BindProperty(SupportsGet = true)] public string? Q { get; set; }
     public List<Finding> Findings { get; private set; } = new();
@@ -197,5 +205,6 @@ public class DashboardModel : PageModel
                                 || r.Pkg.Id.Contains(Q, StringComparison.OrdinalIgnoreCase)
                                 || r.Owner.Contains(Q, StringComparison.OrdinalIgnoreCase));
         Visible = rows.OrderByDescending(r => r.Pending).ThenBy(r => r.Name, StringComparer.CurrentCultureIgnoreCase).ToList();
+        if (isAdmin) MinHostChoices = await AddonStore.Web.Services.MinHost.SuggestionsAsync(_db);
     }
 }

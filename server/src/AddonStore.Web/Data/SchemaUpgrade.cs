@@ -52,6 +52,7 @@ public static class SchemaUpgrade
             "ALTER TABLE AspNetUsers ADD COLUMN NotifyAboutPlugins INTEGER NOT NULL DEFAULT 1",
             "ALTER TABLE Packages ADD COLUMN NameJson TEXT NULL",
             "ALTER TABLE Packages ADD COLUMN CategoryOverride TEXT NULL",
+            "ALTER TABLE Packages ADD COLUMN MinPowerPdfOverride TEXT NULL",   // S2.5.0
             "ALTER TABLE PackageVersions ADD COLUMN SourcePath TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN SubmittedById TEXT NULL",
             "ALTER TABLE PackageVersions ADD COLUMN SourceSizeBytes INTEGER NOT NULL DEFAULT 0",

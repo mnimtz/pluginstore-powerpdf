@@ -56,12 +56,13 @@ public static class ManualInstall
     /// S2.0.3: the finished zip from the container's local disk (built at the first request for this version, name,
     /// author, signature and address), opened for reading; null when the package file is missing or has no x64 binary.
     /// </summary>
-    public static FileStream? CachedZip(PackageVersion v, string packageFile, string name, string author, string signature, string page)
+    public static FileStream? CachedZip(PackageVersion v, string packageFile, string name, string author, string signature, string page,
+                                        string minHost = "")
     {
         var dir = Path.Combine(Path.GetTempPath(), "addonstore-manual");
         Directory.CreateDirectory(dir);
         var key = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(
-            Encoding.UTF8.GetBytes(string.Join("\n", Format, v.PackageId, v.Version, v.Sha256, name, author, signature, page))))[..32].ToLowerInvariant();
+            Encoding.UTF8.GetBytes(string.Join("\n", Format, v.PackageId, v.Version, v.Sha256, name, author, signature, page, minHost))))[..32].ToLowerInvariant();
         var file = Path.Combine(dir, key + ".zip");
         if (!File.Exists(file))
         {
@@ -71,7 +72,7 @@ public static class ManualInstall
             try
             {
                 using (var fs = new FileStream(tmp, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.None))
-                    if (!Build(fs, v, packageFile, name, author, signature, page)) return null;
+                    if (!Build(fs, v, packageFile, name, author, signature, page, minHost)) return null;
                 File.Move(tmp, file, overwrite: true);
             }
             finally { try { if (File.Exists(tmp)) File.Delete(tmp); } catch (IOException) { } }
@@ -93,7 +94,8 @@ public static class ManualInstall
     }
 
     /// <summary>Writes the zip into <paramref name="target"/>; false when the package file is missing or has no x64 binary.</summary>
-    public static bool Build(Stream target, PackageVersion v, string packageFile, string name, string author, string signature, string page)
+    public static bool Build(Stream target, PackageVersion v, string packageFile, string name, string author, string signature, string page,
+                             string minHost = "")
     {
         var zxt = Zxt(v);
         if (zxt.Length == 0 || !File.Exists(packageFile)) return false;
@@ -103,6 +105,9 @@ public static class ManualInstall
             format = Format,
             id = v.PackageId, version = v.Version, name, author, zxtName = zxt,
             sha256 = v.Sha256.ToLowerInvariant(), signature, page,
+            // S2.5.0: the store's minimum Power PDF version (an admin may have raised it); setup checks the higher of
+            // this and the signed manifest's value, so editing package.json can never lower the bar
+            minPowerPdfVersion = MinHost.IsValid(minHost) ? minHost : "",
         }, new JsonSerializerOptions { WriteIndented = true });
         using var zip = new ZipArchive(target, ZipArchiveMode.Create, leaveOpen: true);
         void Text(string entry, string text, bool bom)

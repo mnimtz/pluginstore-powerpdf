@@ -114,9 +114,12 @@ function Read-Package([string]$dir) {
     $name = Get-CleanText $p.name 120; if (-not $name) { $name = [string]$p.id }
     $page = [string]$p.page
     if ($page.Length -gt 300 -or $page -notmatch '^https://[A-Za-z0-9.-]+(:[0-9]{1,5})?(/[A-Za-z0-9._~%/?#=&+-]*)?$') { $page = '' }
+    # S2.5.0: the store's minimum Power PDF version; not signed, so it may only RAISE the manifest's minimum (see Install)
+    $minHost = [string]$p.minPowerPdfVersion
+    if ($minHost -notmatch '^[0-9]{1,4}(\.[0-9]{1,6}){0,3}$') { $minHost = '' }
     return [pscustomobject]@{ format = [string]$p.format; id = [string]$p.id; version = [string]$p.version; name = $name
                               author = (Get-CleanText $p.author 120); zxtName = [string]$p.zxtName; sha256 = [string]$p.sha256
-                              signature = [string]$p.signature; page = $page }
+                              signature = [string]$p.signature; page = $page; minHost = $minHost }
 }
 
 function Get-CleanText($value, [int]$max) {
@@ -416,6 +419,8 @@ function Invoke-MachineInstall($pkg) {
         if (-not (Test-Path -LiteralPath $bin) -or -not (Test-Path -LiteralPath (Join-Path $tmp 'manifest.json'))) { return 8 }
         # S2.0.3: the add-on's minimum Power PDF version (from the signed package), like the store client checks it
         try { $min = [string](Get-Content -LiteralPath (Join-Path $tmp 'manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json).minPowerPdfVersion } catch { return 8 }
+        # S2.5.0: a higher minimum set in the store (package.json) wins; a lower one is ignored
+        if ($pkg.minHost -and (-not $min -or (Compare-Version $pkg.minHost $min) -gt 0)) { $min = $pkg.minHost }
         $hostVersion = [string](Get-MachineValue 'SOFTWARE\Kofax\PDF\V1' 'VersionLong')
         if ($min -and $hostVersion -and (Compare-Version $hostVersion $min) -lt 0) { return 13 }
         try {

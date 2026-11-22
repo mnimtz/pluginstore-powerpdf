@@ -1752,4 +1752,8 @@
   <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>時間的に重要な業務やビジネス上重要な業務にはベータを使用せず、重要な文書はバックアップしてください。</value></data>
   <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>エラーのご報告を歓迎します。Power PDF のストア ウィンドウの報告機能を使用するか、カタログに記載された作成者にお問い合わせください。</value></data>
   <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>本免責事項のその他の規定は変更なく適用されます。</value></data>
+  <data name="Empty: the value from the package" xml:space="preserve"><value>空欄: パッケージの値</value></data>
+  <data name="Set by an admin; package: {0}" xml:space="preserve"><value>管理者が設定; パッケージ: {0}</value></data>
+  <data name="Minimum Power PDF version saved." xml:space="preserve"><value>Power PDF の最小バージョンを保存しました。</value></data>
+  <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>2025.3 や 2025.3.7 のようなバージョンを入力してください。</value></data>
 </root>

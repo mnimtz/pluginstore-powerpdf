@@ -388,6 +388,12 @@ a.beta-badge:hover, a.beta-badge:focus-visible { background: #B3261E; color: #ff
 .beta-card h2 { margin: 0 0 8px; font-size: 1.2rem; display: flex; gap: 10px; align-items: center; }
 .beta-card ul { margin: 0 0 10px; padding-inline-start: 20px; }
 .catalog-note-beta { display: inline-block; margin-top: 4px; color: var(--tun-ink); }
+/* S2.5.0: minimum Power PDF version in "All plug-ins": a small field with suggestions and a save button */
+.minhost-form { display: inline-flex; gap: 4px; align-items: center; margin: 0; }
+.minhost-form input[type=text] { width: 104px; padding: 4px 8px; font-size: .85rem; }
+.minhost-form input:invalid { border-color: var(--tun-err); }
+.minhost-form .btn { padding: 3px 9px; }
+.minhost-note { display: block; margin-top: 2px; color: var(--tun-slate); font-size: .74rem; white-space: nowrap; }
 .mode-choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
 .mode-choice { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border: 1px solid var(--tun-gray-200); border-radius: 8px;
   background: #fff; cursor: pointer; font-weight: 400; }

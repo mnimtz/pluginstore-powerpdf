@@ -524,6 +524,7 @@ public static class ApiEndpoints
                         author = package.Author,
                         contactEmail = package.ContactEmail,
                         category = package.CategoryOverride,
+                        minPowerPdfVersion = package.MinPowerPdfOverride,   // S2.5.0: set by an admin; null = each version's own
                         providers = package.ProvidersJson is null ? null : Connections.ParseProviders(package.ProvidersJson).Select(p => new { name = p.Name, website = p.Website }),
                         updatedAt = package.MetaUpdatedAt,
                         updatedBy = package.MetaUpdatedBy,
@@ -1470,6 +1471,7 @@ public static class ApiEndpoints
 
             var change = new MetaChange();
             bool? featured = null;   // start page highlight (S1.16.0): admins only
+            bool minHostSet = false; string? minHostValue = null;   // S2.5.0: minimum Power PDF version, admins only
             Dictionary<string, string>? Map(JsonElement el) => el.ValueKind == JsonValueKind.Object
                 ? el.EnumerateObject().Where(p => p.Value.ValueKind == JsonValueKind.String)
                     .GroupBy(p => p.Name).ToDictionary(g => g.Key, g => g.Last().Value.GetString() ?? "")
@@ -1507,6 +1509,15 @@ public static class ApiEndpoints
                             typeErrors.Add(new("METADATA_INVALID", "error", "Only administrators set start page highlights.", "Leave 'featured' out of the request."));
                         else featured = v.GetBoolean();
                         break;
+                    case "minPowerPdfVersion":   // S2.5.0: wins over every version's manifest value; null = back to the package's own
+                        if (!ctx.User.IsInRole("Admin"))
+                            typeErrors.Add(new("METADATA_INVALID", "error", "Only administrators set the minimum Power PDF version of an add-on.", "Leave 'minPowerPdfVersion' out of the request."));
+                        else if (v.ValueKind == JsonValueKind.Null || (v.ValueKind == JsonValueKind.String && (v.GetString() ?? "").Trim().Length == 0))
+                            minHostSet = true;
+                        else if (v.ValueKind != JsonValueKind.String || !Services.MinHost.IsValid((v.GetString() ?? "").Trim()))
+                            typeErrors.Add(new("MIN_HOST_VERSION_INVALID", "error", "'minPowerPdfVersion' must be a version such as \"2025.3.7\", or null.", "Example: {\"minPowerPdfVersion\": \"2025.3.7\"}; null = the value from the package."));
+                        else { minHostSet = true; minHostValue = (v.GetString() ?? "").Trim(); }
+                        break;
                     case "providers":   // S1.19.0: the companies behind the declared services
                         change.SetProviders = true;
                         if (v.ValueKind == JsonValueKind.Null) change.Providers = null;
@@ -1518,7 +1529,7 @@ public static class ApiEndpoints
                             p.TryGetProperty("website", out var w) && w.ValueKind == JsonValueKind.String ? w.GetString() ?? "" : "")).ToList();
                         break;
                     default:
-                        typeErrors.Add(new("METADATA_INVALID", "error", $"Unknown field '{prop.Name}'.", "Allowed fields: name, description, author, contactEmail, category, visibility, providers, featured (admins)."));
+                        typeErrors.Add(new("METADATA_INVALID", "error", $"Unknown field '{prop.Name}'.", "Allowed fields: name, description, author, contactEmail, category, visibility, providers, featured and minPowerPdfVersion (admins)."));
                         break;
                 }
             }
@@ -1528,6 +1539,15 @@ public static class ApiEndpoints
                 typeErrors.Add(new("METADATA_INVALID", "error", hlErr, on ? "Remove another highlight first, or keep the add-on public." : ""));
             var issues = typeErrors.Count > 0 ? typeErrors : await meta.ApplyAsync(pkg, user, change);
             if (featured is { } f && !issues.Any(i => i.Severity == "error")) await Highlights.SetAsync(db, audit, pkg, f, user);
+            if (minHostSet && !issues.Any(i => i.Severity == "error"))
+            {
+                var cmpMin = new Validation.SemVerComparer();
+                var rows = (await AddonStore.Web.Data.LightVersions.AllAsync(db)).Where(x => x.PackageId == pkg.Id).ToList();
+                var shownRow = rows.Where(x => x.Status == VersionStatus.Live).OrderByDescending(x => x.Version, cmpMin).FirstOrDefault()
+                    ?? rows.Where(x => x.Status == VersionStatus.Beta).OrderByDescending(x => x.Version, cmpMin).FirstOrDefault()
+                    ?? rows.OrderByDescending(x => x.Version, cmpMin).FirstOrDefault();
+                await Services.MinHost.SetAsync(db, audit, pkg, minHostValue, shownRow?.MinPowerPdfVersion ?? "", user.DisplayName);
+            }
             var findings = issues.Select(i => new { code = i.Code, severity = i.Severity, message = i.Message, hint = i.Hint });
             if (issues.Any(i => i.Severity == "error"))
                 return Results.Json(new { ok = false, error = new { code = "METADATA_INVALID", message = "The catalog entry was not changed.", hint = "Fix every finding with severity 'error' and send the request again." }, findings }, statusCode: 422);
@@ -1541,6 +1561,7 @@ public static class ApiEndpoints
                     name = ParseOrNull(pkg.NameJson), description = ParseOrNull(pkg.DescriptionJson),
                     author = pkg.Author, contactEmail = pkg.ContactEmail, category = pkg.CategoryOverride,
                     featured = pkg.FeaturedAt is not null,
+                    minPowerPdfVersion = pkg.MinPowerPdfOverride,
                     providers = pkg.ProvidersJson is null ? null : Connections.ParseProviders(pkg.ProvidersJson).Select(p => new { name = p.Name, website = p.Website }),
                     updatedAt = pkg.MetaUpdatedAt, updatedBy = pkg.MetaUpdatedBy,
                     next = "The catalog, the web UI and the Power PDF client show the new values immediately; no new version is needed."
@@ -1723,7 +1744,7 @@ public static class ApiEndpoints
             var name = Services.CatalogUi.DisplayName(pkg, pick, lang);
             // S2.0.3: built once per version, language, address, author and signing key, then served from the container's
             // local disk (before, every request copied the whole package from the data share)
-            var fs = ManualInstall.CachedZip(pick, path, name, author, signature, page);
+            var fs = ManualInstall.CachedZip(pick, path, name, author, signature, page, Services.MinHost.Effective(pkg, pick));
             if (fs is null) return NotFound("FILE_MISSING", "The package has no x64 binary for a manual installation.");
             // S2.0.3: crawlers and link previews do not count, and a busy database never breaks a finished download
             if (!UsageService.IsBot(ctx))
@@ -2062,7 +2083,7 @@ public static class ApiEndpoints
                 version = pick.Version,
                 channel,
                 changelog = pick.Changelog,
-                minPowerPdfVersion = pick.MinPowerPdfVersion,
+                minPowerPdfVersion = Services.MinHost.Effective(pkg, pick),   // S2.5.0: the admin's minimum wins
                 sha256 = pick.Sha256,
                 sizeBytes = pick.SizeBytes,
                 downloads = pick.Downloads,

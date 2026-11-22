@@ -218,6 +218,27 @@ public class PluginModel : PageModel
         return Page();
     }
 
+    /// <summary>S2.5.0: an admin sets (or with an empty field resets) the add-on's minimum Power PDF version.</summary>
+    public async Task<IActionResult> OnPostMinHostAsync(string id, string? minHost, string? returnUrl)
+    {
+        if (!await LoadAsync(id ?? "")) return Forbid();
+        if (!IsAdmin) return Forbid();
+        var pkg = await _db.Packages.FirstAsync(p => p.Id == id);
+        // the light version rows from memory (no review columns over the data share)
+        var versions = (await LightVersions.AllAsync(_db)).Where(v => v.PackageId == id).ToList();
+        var cmp = new SemVerComparer();
+        PackageVersion? Top(VersionStatus s) => versions.Where(v => v.Status == s).OrderByDescending(v => v.Version, cmp).FirstOrDefault();
+        var shown = Top(VersionStatus.Live) ?? Top(VersionStatus.Beta) ?? versions.OrderByDescending(v => v.Version, cmp).FirstOrDefault();
+        var error = await MinHost.SetAsync(_db, HttpContext.RequestServices.GetRequiredService<AuditService>(), pkg, minHost,
+                                           shown?.MinPowerPdfVersion ?? "", Me!.DisplayName);
+        Notice = error ?? "Minimum Power PDF version saved.";
+        NoticeKind = error is null ? "ok" : "warn";
+        if (error is null && !string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            return LocalRedirect(returnUrl);
+        await LoadAsync(id!);
+        return Page();
+    }
+
     public async Task<IActionResult> OnPostAiReviewAsync(string id, int versionId)
     {
         if (!await LoadAsync(id ?? "") || !CanReview) return Forbid();

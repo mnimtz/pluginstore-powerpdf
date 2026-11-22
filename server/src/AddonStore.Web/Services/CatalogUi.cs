@@ -75,7 +75,7 @@ public static class CatalogUi
             pick.Version, channel,
             LangText(doc.RootElement, "changelog", culture) ?? pick.Changelog,
             pick.SizeBytes, pick.Downloads,
-            pick.Sha256, pick.MinPowerPdfVersion, zxt, category,
+            pick.Sha256, MinHost.Effective(pkg, pick), zxt, category,   // S2.5.0: the admin's minimum wins
             EffectiveAuthor(pkg, doc.RootElement, pkg is null ? pick.SubmittedBy : PublicName(pkg.Owner)),
             EffectiveContact(pkg, doc.RootElement, pkg is null ? "" : PublicEmail(pkg.Owner)),
             CategoryService.Name(ctx.Known.GetValueOrDefault(category), category, culture))

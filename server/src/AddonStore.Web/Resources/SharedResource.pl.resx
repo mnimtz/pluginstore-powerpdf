@@ -1752,4 +1752,8 @@
   <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>Nie używaj wersji beta do procesów krytycznych czasowo lub biznesowo i twórz kopie zapasowe ważnych dokumentów.</value></data>
   <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>Zgłoszenia błędów są mile widziane: użyj funkcji zgłaszania w oknie sklepu w Power PDF lub skontaktuj się z autorem podanym w katalogu.</value></data>
   <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>Wszystkie pozostałe postanowienia tych zastrzeżeń obowiązują bez zmian.</value></data>
+  <data name="Empty: the value from the package" xml:space="preserve"><value>Puste: wartość z pakietu</value></data>
+  <data name="Set by an admin; package: {0}" xml:space="preserve"><value>Ustawione przez administratora; pakiet: {0}</value></data>
+  <data name="Minimum Power PDF version saved." xml:space="preserve"><value>Minimalna wersja Power PDF zapisana.</value></data>
+  <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>Wpisz wersję, np. 2025.3 lub 2025.3.7.</value></data>
 </root>

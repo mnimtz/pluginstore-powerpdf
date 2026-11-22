@@ -1752,4 +1752,8 @@
   <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>請勿將測試版用於時間緊迫或業務關鍵的流程，並備份重要文件。</value></data>
   <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>歡迎回報錯誤：請使用 Power PDF 商店視窗中的回報功能，或聯絡目錄中列出的作者。</value></data>
   <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>本免責聲明的其他所有條款維持不變。</value></data>
+  <data name="Empty: the value from the package" xml:space="preserve"><value>留空：使用套件中的值</value></data>
+  <data name="Set by an admin; package: {0}" xml:space="preserve"><value>由管理員設定；套件：{0}</value></data>
+  <data name="Minimum Power PDF version saved." xml:space="preserve"><value>已儲存 Power PDF 最低版本。</value></data>
+  <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>請輸入版本，例如 2025.3 或 2025.3.7。</value></data>
 </root>

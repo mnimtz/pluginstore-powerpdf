@@ -1752,4 +1752,8 @@
   <data name="Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents." xml:space="preserve"><value>시간이 중요한 프로세스나 비즈니스에 중요한 프로세스에는 베타를 사용하지 말고 중요한 문서는 백업하세요.</value></data>
   <data name="Feedback on errors is welcome: use the report function in the store window of Power PDF or contact the author named in the catalog." xml:space="preserve"><value>오류에 대한 의견을 환영합니다. Power PDF 스토어 창의 신고 기능을 사용하거나 카탈로그에 표시된 작성자에게 문의하세요.</value></data>
   <data name="All other provisions of this disclaimer apply unchanged." xml:space="preserve"><value>이 면책 조항의 기타 모든 조항은 변경 없이 적용됩니다.</value></data>
+  <data name="Empty: the value from the package" xml:space="preserve"><value>비워 두면: 패키지의 값</value></data>
+  <data name="Set by an admin; package: {0}" xml:space="preserve"><value>관리자가 설정함; 패키지: {0}</value></data>
+  <data name="Minimum Power PDF version saved." xml:space="preserve"><value>Power PDF 최소 버전을 저장했습니다.</value></data>
+  <data name="Enter a version such as 2025.3 or 2025.3.7." xml:space="preserve"><value>2025.3 또는 2025.3.7과 같은 버전을 입력하세요.</value></data>
 </root>

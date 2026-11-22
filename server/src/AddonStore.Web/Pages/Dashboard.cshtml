@@ -91,7 +91,7 @@ else
         <tr>
             <th>@L["Plug-in"]</th>
             @if (isAdmin) { <th>@L["Owner"]</th> }
-            <th>@L["Live"]</th><th>@L["Status"]</th><th>@L["Visibility"]</th><th>@L["Downloads"]</th><th>@L["Last activity"]</th><th class="actions"></th>
+            <th>@L["Live"]</th><th>@L["Minimum Power PDF version"]</th><th>@L["Status"]</th><th>@L["Visibility"]</th><th>@L["Downloads"]</th><th>@L["Last activity"]</th><th class="actions"></th>
         </tr>
         @foreach (var r in AddonStore.Web.Services.Paging.Items(Model.Visible, ViewContext.HttpContext.Request, "plugins"))
         {
@@ -99,6 +99,28 @@ else
                 <td><b style="color:var(--tun-navy)">@r.Name</b><br /><span class="pid">@r.Pkg.Id</span></td>
                 @if (isAdmin) { <td>@r.Owner</td> }
                 <td>@(r.Live?.Version ?? "-")</td>
+                <td class="minhost-cell">
+                    @* S2.5.0: admins set the minimum for the whole add-on; empty = the package's own value *@
+                    @if (isAdmin && r.Shown is not null)
+                    {
+                        <form method="post" action="/Plugin?id=@Uri.EscapeDataString(r.Pkg.Id)&amp;handler=MinHost" class="minhost-form">
+                            <input type="text" name="minHost" value="@r.MinHostInForce" list="minhost-choices" maxlength="24" autocomplete="off"
+                                   inputmode="decimal" pattern="[0-9]{1,4}(\.[0-9]{1,6}){0,3}" placeholder="@(r.MinHostOfPackage.Length > 0 ? r.MinHostOfPackage : "-")"
+                                   aria-label="@L["Minimum Power PDF version"]: @r.Name" title="@L["Empty: the value from the package"]" />
+                            <input type="hidden" name="returnUrl" value="@(ViewContext.HttpContext.Request.Path + ViewContext.HttpContext.Request.QueryString)#plugins" />
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn small secondary" aria-label="@L["Save"]" title="@L["Save"]">✓</button>
+                        </form>
+                        @if (r.MinHostSetByAdmin)
+                        {
+                            <small class="minhost-note">@L["Set by an admin; package: {0}", r.MinHostOfPackage.Length > 0 ? r.MinHostOfPackage : "-"]</small>
+                        }
+                    }
+                    else
+                    {
+                        @(r.MinHostInForce.Length > 0 ? r.MinHostInForce : "-")
+                    }
+                </td>
                 <td>
                     @if (r.Pending)
                     {
@@ -143,4 +165,10 @@ else
     </table>
     </div>
     <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("plugins", Model.Visible.Count)' />
+    @if (isAdmin)
+    {
+        <datalist id="minhost-choices">
+            @foreach (var c in Model.MinHostChoices) { <option value="@c"></option> }
+        </datalist>
+    }
 }

@@ -245,6 +245,8 @@ public class Package
     public string? ContactEmail { get; set; }
     /// <summary>Category set on the server (catalog entry or category merge); wins over the manifest.</summary>
     public string? CategoryOverride { get; set; }
+    /// <summary>S2.5.0: minimum Power PDF version set by an admin; wins over every version's manifest value (null = the package's own).</summary>
+    public string? MinPowerPdfOverride { get; set; }
     public DateTime? MetaUpdatedAt { get; set; }
     public string? MetaUpdatedBy { get; set; }
     /// <summary>"public" (catalog) or "private" (only via customer deliveries).</summary>
