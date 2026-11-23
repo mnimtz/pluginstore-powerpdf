@@ -198,6 +198,7 @@ body.upmode #storeBtn{display:flex;margin-inline-start:auto}
   <div class="banner need" id="need" style="display:none"><span id="needText"></span><button class="btn sec sm" style="margin-inline-start:auto" id="needAll"></button></div>
   <div class="banner upd" id="lock" style="display:none"></div>
   <div class="banner err" id="blk" style="display:none"><span id="blkText"></span><button class="btn sm" style="margin-inline-start:auto" id="blkBtn"></button></div>
+  <div class="banner err" id="susp" style="display:none"><span id="suspText"></span><button class="btn sm" style="margin-inline-start:auto;display:none" id="suspBtn"></button></div>
   <div class="banner upd" id="ppu" style="display:none"><span id="ppuText"></span><button class="btn sec sm" style="margin-inline-start:auto" id="ppuNews"></button><button class="btn sec sm" id="ppuHide"></button></div>
   <div class="banner need" id="mig" style="display:none"><span id="migText"></span><button class="btn sm" style="margin-inline-start:auto" id="migBtn"></button><button class="btn sec sm" id="migLater"></button></div>
   <div class="upview" id="upview"></div>
@@ -842,6 +843,7 @@ function apply(m) {
     $("migBtn").textContent = S.migrateBtn || ""; $("migLater").textContent = S.later || "";
     $("blkBtn").textContent = S.blockedBtn || "";
     $("blkBtn").onclick = function () { if (!busy) post({ cmd: "removeBlocked" }); };
+    $("suspBtn").onclick = function () { if (!busy) post({ cmd: "applySuspended" }); };
     $("migLater").onclick = function () { $("mig").style.display = "none"; post({ cmd: "migrateDismiss" }); };
     $("updBtn").textContent = S.selfUpdateBtn;
     $("updBtn").onclick = function () { busyModal(S.selfUpdateBtn); post({ cmd: "selfUpdate" }); };
@@ -876,6 +878,19 @@ function apply(m) {
     var blk = m.blocked && m.blocked.length ? m.blocked : null;
     $("blk").style.display = blk ? "flex" : "none";
     if (blk) $("blkText").textContent = fmt(S.blockedText, blk.map(function (b) { return b.name + " " + b.version + (b.reason ? " (" + b.reason + ")" : ""); }).join("; "));
+    // C2.3.0: add-ons out of service (paused: no updates; disabled: switched off here; back: switched on again)
+    var sus = m.suspended && m.suspended.length ? m.suspended : null;
+    $("susp").style.display = sus ? "flex" : "none";
+    if (sus) {
+      $("suspText").textContent = fmt(S.suspText, sus.map(function (x) {
+        var st = x.level === "disabled" ? (x.off ? S.suspOff : S.suspDisabled) : x.level === "paused" && !x.off ? S.suspPaused : S.suspBack;
+        return x.name + " (" + st + (x.reason ? ": " + x.reason : "") + ")";
+      }).join("; "));
+      var needOff = sus.some(function (x) { return x.level === "disabled" && !x.off; });
+      $("suspBtn").textContent = needOff ? S.suspOffBtn : S.suspOnBtn;
+      $("suspBtn").style.display = m.suspendWork ? "" : "none";
+      $("suspBtn").disabled = busy;
+    }
     var mig = !locked && m.migrate && m.migrate.items && m.migrate.items.length ? m.migrate : null;
     $("mig").style.display = mig && !migQueue ? "flex" : "none";
     if (mig) {

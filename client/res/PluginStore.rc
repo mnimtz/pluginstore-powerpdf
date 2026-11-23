@@ -288,6 +288,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Maintenance: ratings and reports are paused for the moment. Installing and updating add-ons keeps working."
     IDS_PSW_MODE_TEST_TIP  "Test environment: not the production store. Data may be reset at any time."
     IDS_PSW_MODE_BETA_DISC  "Beta phase: The Add-on Store and its catalog are being trialled (beta). Features, content and procedures may change or be discontinued at any time. Errors, interruptions and outages are possible; no availability is guaranteed. Please do not use the beta for time-critical or business-critical processes, and keep backups of important documents."
+    IDS_PS_SUSPEND_ASK  "The add-on “%s” is out of service for now:\n\n%s\n\nThe Add-on Store switches it off without removing it; your settings stay. Switch it off now? Windows asks for administrator rights."
+    IDS_PS_RESUME_ASK  "The add-on “%s” is available again. Switch it on again now? Windows asks for administrator rights."
+    IDS_PS_SUSPEND_FAILED  "The add-on “%s” could not be switched (error %s). Please contact your IT department."
+    IDS_PS_SUSPEND_RESTART  "Done. Restart Power PDF now so the change takes effect?"
+    IDS_PS_SUSPEND_POLICY  "The add-on “%s” is out of service for now:\n\n%s\n\nInstalling and removing add-ons is turned off on this PC, so the Add-on Store cannot switch it off. Please contact your IT department."
+    IDS_PSW_SUSP_BANNER  "Out of service for now: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Switch off now"
+    IDS_PSW_SUSP_ON_BTN  "Switch on again"
+    IDS_PSW_SUSP_PAUSED  "paused, no updates"
+    IDS_PSW_SUSP_DISABLED  "out of service"
+    IDS_PSW_SUSP_OFF  "switched off"
+    IDS_PSW_SUSP_BACK  "available again"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -475,6 +487,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Wartungsarbeiten: Bewertungen und Meldungen sind vorübergehend nicht möglich. Installieren und Aktualisieren von Add-ons funktioniert weiter."
     IDS_PSW_MODE_TEST_TIP  "Testumgebung: nicht der produktive Store. Daten können jederzeit zurückgesetzt werden."
     IDS_PSW_MODE_BETA_DISC  "Beta-Phase: Der Add-on Store und sein Katalog befinden sich in der Erprobung (Beta). Funktionen, Inhalte und Abläufe können sich jederzeit ändern oder entfallen. Fehler, Unterbrechungen und Ausfälle sind möglich; es gibt keine zugesicherte Verfügbarkeit. Bitte nutzen Sie die Beta nicht für zeitkritische oder geschäftskritische Abläufe und sichern Sie wichtige Dokumente."
+    IDS_PS_SUSPEND_ASK  "Das Add-on „%s“ ist vorübergehend außer Betrieb:\n\n%s\n\nDer Add-on Store schaltet es ab, ohne es zu entfernen; Ihre Einstellungen bleiben erhalten. Jetzt abschalten? Windows fragt nach Administratorrechten."
+    IDS_PS_RESUME_ASK  "Das Add-on „%s“ ist wieder verfügbar. Jetzt wieder einschalten? Windows fragt nach Administratorrechten."
+    IDS_PS_SUSPEND_FAILED  "Das Add-on „%s“ konnte nicht umgeschaltet werden (Fehler %s). Bitte wenden Sie sich an Ihre IT."
+    IDS_PS_SUSPEND_RESTART  "Erledigt. Power PDF jetzt neu starten, damit die Änderung wirkt?"
+    IDS_PS_SUSPEND_POLICY  "Das Add-on „%s“ ist vorübergehend außer Betrieb:\n\n%s\n\nAuf diesem PC ist das Installieren und Entfernen von Add-ons ausgeschaltet, daher kann der Add-on Store es nicht abschalten. Bitte wenden Sie sich an Ihre IT."
+    IDS_PSW_SUSP_BANNER  "Vorübergehend außer Betrieb: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Jetzt abschalten"
+    IDS_PSW_SUSP_ON_BTN  "Wieder einschalten"
+    IDS_PSW_SUSP_PAUSED  "pausiert, keine Updates"
+    IDS_PSW_SUSP_DISABLED  "außer Betrieb"
+    IDS_PSW_SUSP_OFF  "abgeschaltet"
+    IDS_PSW_SUSP_BACK  "wieder verfügbar"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -662,6 +686,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Maintenance : les évaluations et les signalements sont momentanément suspendus. L’installation et la mise à jour des modules continuent de fonctionner."
     IDS_PSW_MODE_TEST_TIP  "Environnement de test : il ne s'agit pas du store de production. Les données peuvent être réinitialisées à tout moment."
     IDS_PSW_MODE_BETA_DISC  "Phase bêta : L'Add-on Store et son catalogue sont en phase d'essai (bêta). Les fonctions, les contenus et les procédures peuvent changer ou être supprimés à tout moment. Des erreurs, des interruptions et des pannes sont possibles ; aucune disponibilité n'est garantie. N'utilisez pas la bêta pour des processus urgents ou critiques pour l'entreprise et sauvegardez les documents importants."
+    IDS_PS_SUSPEND_ASK  "Le module « %s » est temporairement hors service :\n\n%s\n\nL'Add-on Store le désactive sans le supprimer ; vos paramètres sont conservés. Le désactiver maintenant ? Windows demande des droits d'administrateur."
+    IDS_PS_RESUME_ASK  "Le module « %s » est de nouveau disponible. Le réactiver maintenant ? Windows demande des droits d'administrateur."
+    IDS_PS_SUSPEND_FAILED  "Le module « %s » n'a pas pu être basculé (erreur %s). Contactez votre service informatique."
+    IDS_PS_SUSPEND_RESTART  "Terminé. Redémarrer Power PDF maintenant pour appliquer la modification ?"
+    IDS_PS_SUSPEND_POLICY  "Le module « %s » est temporairement hors service :\n\n%s\n\nL'installation et la suppression de modules sont désactivées sur ce PC ; l'Add-on Store ne peut donc pas le désactiver. Contactez votre service informatique."
+    IDS_PSW_SUSP_BANNER  "Temporairement hors service : %s"
+    IDS_PSW_SUSP_OFF_BTN  "Désactiver maintenant"
+    IDS_PSW_SUSP_ON_BTN  "Réactiver"
+    IDS_PSW_SUSP_PAUSED  "en pause, pas de mises à jour"
+    IDS_PSW_SUSP_DISABLED  "hors service"
+    IDS_PSW_SUSP_OFF  "désactivé"
+    IDS_PSW_SUSP_BACK  "de nouveau disponible"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -849,6 +885,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Manutenzione: valutazioni e segnalazioni sono momentaneamente sospese. L’installazione e l’aggiornamento dei componenti aggiuntivi continuano a funzionare."
     IDS_PSW_MODE_TEST_TIP  "Ambiente di test: non è lo store di produzione. I dati possono essere reimpostati in qualsiasi momento."
     IDS_PSW_MODE_BETA_DISC  "Fase beta: L'Add-on Store e il suo catalogo sono in fase di prova (beta). Funzioni, contenuti e procedure possono cambiare o essere sospesi in qualsiasi momento. Sono possibili errori, interruzioni e malfunzionamenti; non è garantita alcuna disponibilità. Non utilizzare la beta per processi urgenti o critici per l'azienda e conserva copie dei documenti importanti."
+    IDS_PS_SUSPEND_ASK  "Il componente aggiuntivo ""%s"" è temporaneamente fuori servizio:\n\n%s\n\nAdd-on Store lo disattiva senza rimuoverlo; le impostazioni restano. Disattivarlo ora? Windows chiede i diritti di amministratore."
+    IDS_PS_RESUME_ASK  "Il componente aggiuntivo ""%s"" è di nuovo disponibile. Riattivarlo ora? Windows chiede i diritti di amministratore."
+    IDS_PS_SUSPEND_FAILED  "Impossibile cambiare lo stato del componente aggiuntivo ""%s"" (errore %s). Contatta il reparto IT."
+    IDS_PS_SUSPEND_RESTART  "Fatto. Riavviare ora Power PDF perché la modifica abbia effetto?"
+    IDS_PS_SUSPEND_POLICY  "Il componente aggiuntivo ""%s"" è temporaneamente fuori servizio:\n\n%s\n\nSu questo PC l'installazione e la rimozione dei componenti aggiuntivi sono disattivate, quindi Add-on Store non può disattivarlo. Contatta il reparto IT."
+    IDS_PSW_SUSP_BANNER  "Temporaneamente fuori servizio: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Disattiva ora"
+    IDS_PSW_SUSP_ON_BTN  "Riattiva"
+    IDS_PSW_SUSP_PAUSED  "in pausa, nessun aggiornamento"
+    IDS_PSW_SUSP_DISABLED  "fuori servizio"
+    IDS_PSW_SUSP_OFF  "disattivato"
+    IDS_PSW_SUSP_BACK  "di nuovo disponibile"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1036,6 +1084,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Mantenimiento: las valoraciones y los informes están pausados por el momento. La instalación y la actualización de complementos siguen funcionando."
     IDS_PSW_MODE_TEST_TIP  "Entorno de pruebas: no es la tienda de producción. Los datos pueden restablecerse en cualquier momento."
     IDS_PSW_MODE_BETA_DISC  "Fase beta: El Add-on Store y su catálogo están en fase de pruebas (beta). Las funciones, los contenidos y los procedimientos pueden cambiar o suprimirse en cualquier momento. Pueden producirse errores, interrupciones y caídas; no se garantiza ninguna disponibilidad. No utilice la beta para procesos urgentes o críticos para el negocio y guarde copias de los documentos importantes."
+    IDS_PS_SUSPEND_ASK  "El complemento ""%s"" está fuera de servicio temporalmente:\n\n%s\n\nLa Add-on Store lo desactiva sin eliminarlo; su configuración se conserva. ¿Desactivarlo ahora? Windows pide derechos de administrador."
+    IDS_PS_RESUME_ASK  "El complemento ""%s"" vuelve a estar disponible. ¿Volver a activarlo ahora? Windows pide derechos de administrador."
+    IDS_PS_SUSPEND_FAILED  "No se pudo cambiar el estado del complemento ""%s"" (error %s). Póngase en contacto con su departamento de TI."
+    IDS_PS_SUSPEND_RESTART  "Listo. ¿Reiniciar Power PDF ahora para que el cambio surta efecto?"
+    IDS_PS_SUSPEND_POLICY  "El complemento ""%s"" está fuera de servicio temporalmente:\n\n%s\n\nEn este PC la instalación y eliminación de complementos está desactivada, por lo que la Add-on Store no puede desactivarlo. Póngase en contacto con su departamento de TI."
+    IDS_PSW_SUSP_BANNER  "Fuera de servicio temporalmente: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Desactivar ahora"
+    IDS_PSW_SUSP_ON_BTN  "Volver a activar"
+    IDS_PSW_SUSP_PAUSED  "en pausa, sin actualizaciones"
+    IDS_PSW_SUSP_DISABLED  "fuera de servicio"
+    IDS_PSW_SUSP_OFF  "desactivado"
+    IDS_PSW_SUSP_BACK  "disponible de nuevo"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1223,6 +1283,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Onderhoud: beoordelingen en meldingen zijn tijdelijk niet mogelijk. Installeren en bijwerken van add-ons blijft werken."
     IDS_PSW_MODE_TEST_TIP  "Testomgeving: niet de productiestore. Gegevens kunnen op elk moment worden gereset."
     IDS_PSW_MODE_BETA_DISC  "Bètafase: De Add-on Store en de catalogus worden getest (bèta). Functies, inhoud en procedures kunnen op elk moment veranderen of vervallen. Fouten, onderbrekingen en storingen zijn mogelijk; er is geen gegarandeerde beschikbaarheid. Gebruik de bèta niet voor tijdkritische of bedrijfskritische processen en maak back-ups van belangrijke documenten."
+    IDS_PS_SUSPEND_ASK  "De invoegtoepassing ""%s"" is tijdelijk buiten gebruik:\n\n%s\n\nDe Add-on Store schakelt haar uit zonder haar te verwijderen; uw instellingen blijven behouden. Nu uitschakelen? Windows vraagt om beheerdersrechten."
+    IDS_PS_RESUME_ASK  "De invoegtoepassing ""%s"" is weer beschikbaar. Nu weer inschakelen? Windows vraagt om beheerdersrechten."
+    IDS_PS_SUSPEND_FAILED  "De invoegtoepassing ""%s"" kon niet worden omgeschakeld (fout %s). Neem contact op met uw IT-afdeling."
+    IDS_PS_SUSPEND_RESTART  "Klaar. Power PDF nu opnieuw starten zodat de wijziging van kracht wordt?"
+    IDS_PS_SUSPEND_POLICY  "De invoegtoepassing ""%s"" is tijdelijk buiten gebruik:\n\n%s\n\nOp deze pc is het installeren en verwijderen van invoegtoepassingen uitgeschakeld, dus de Add-on Store kan haar niet uitschakelen. Neem contact op met uw IT-afdeling."
+    IDS_PSW_SUSP_BANNER  "Tijdelijk buiten gebruik: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Nu uitschakelen"
+    IDS_PSW_SUSP_ON_BTN  "Weer inschakelen"
+    IDS_PSW_SUSP_PAUSED  "gepauzeerd, geen updates"
+    IDS_PSW_SUSP_DISABLED  "buiten gebruik"
+    IDS_PSW_SUSP_OFF  "uitgeschakeld"
+    IDS_PSW_SUSP_BACK  "weer beschikbaar"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1410,6 +1482,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Manutenção: avaliações e relatos estão pausados no momento. A instalação e a atualização de complementos continuam funcionando."
     IDS_PSW_MODE_TEST_TIP  "Ambiente de teste: não é a loja de produção. Os dados podem ser redefinidos a qualquer momento."
     IDS_PSW_MODE_BETA_DISC  "Fase beta: O Add-on Store e o seu catálogo estão em fase de testes (beta). Funções, conteúdos e procedimentos podem mudar ou ser descontinuados a qualquer momento. Erros, interrupções e falhas são possíveis; nenhuma disponibilidade é garantida. Não utilize a beta para processos urgentes ou críticos para o negócio e mantenha cópias de documentos importantes."
+    IDS_PS_SUSPEND_ASK  "O suplemento ""%s"" está temporariamente fora de serviço:\n\n%s\n\nA Add-on Store o desativa sem removê-lo; suas configurações são mantidas. Desativá-lo agora? O Windows pede direitos de administrador."
+    IDS_PS_RESUME_ASK  "O suplemento ""%s"" está disponível novamente. Reativá-lo agora? O Windows pede direitos de administrador."
+    IDS_PS_SUSPEND_FAILED  "Não foi possível alternar o suplemento ""%s"" (erro %s). Entre em contato com o departamento de TI."
+    IDS_PS_SUSPEND_RESTART  "Concluído. Reiniciar o Power PDF agora para que a alteração tenha efeito?"
+    IDS_PS_SUSPEND_POLICY  "O suplemento ""%s"" está temporariamente fora de serviço:\n\n%s\n\nA instalação e a remoção de suplementos estão desativadas neste PC, por isso a Add-on Store não pode desativá-lo. Entre em contato com o departamento de TI."
+    IDS_PSW_SUSP_BANNER  "Temporariamente fora de serviço: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Desativar agora"
+    IDS_PSW_SUSP_ON_BTN  "Reativar"
+    IDS_PSW_SUSP_PAUSED  "pausado, sem atualizações"
+    IDS_PSW_SUSP_DISABLED  "fora de serviço"
+    IDS_PSW_SUSP_OFF  "desativado"
+    IDS_PSW_SUSP_BACK  "disponível novamente"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1597,6 +1681,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Vedligeholdelse: bedømmelser og rapporter er midlertidigt sat på pause. Installation og opdatering af tilføjelser fungerer fortsat."
     IDS_PSW_MODE_TEST_TIP  "Testmiljø: ikke produktionsbutikken. Data kan til enhver tid blive nulstillet."
     IDS_PSW_MODE_BETA_DISC  "Betafase: Add-on Store og kataloget er under afprøvning (beta). Funktioner, indhold og procedurer kan til enhver tid ændres eller bortfalde. Fejl, afbrydelser og nedbrud kan forekomme; der gives ingen garanti for tilgængelighed. Brug ikke betaen til tidskritiske eller forretningskritiske processer, og tag sikkerhedskopier af vigtige dokumenter."
+    IDS_PS_SUSPEND_ASK  "Tilføjelsesprogrammet ""%s"" er midlertidigt ude af drift:\n\n%s\n\nAdd-on Store slår det fra uden at fjerne det; dine indstillinger bevares. Slå det fra nu? Windows beder om administratorrettigheder."
+    IDS_PS_RESUME_ASK  "Tilføjelsesprogrammet ""%s"" er tilgængeligt igen. Slå det til igen nu? Windows beder om administratorrettigheder."
+    IDS_PS_SUSPEND_FAILED  "Tilføjelsesprogrammet ""%s"" kunne ikke skiftes (fejl %s). Kontakt din it-afdeling."
+    IDS_PS_SUSPEND_RESTART  "Færdig. Genstart Power PDF nu, så ændringen træder i kraft?"
+    IDS_PS_SUSPEND_POLICY  "Tilføjelsesprogrammet ""%s"" er midlertidigt ude af drift:\n\n%s\n\nInstallation og fjernelse af tilføjelsesprogrammer er slået fra på denne pc, så Add-on Store kan ikke slå det fra. Kontakt din it-afdeling."
+    IDS_PSW_SUSP_BANNER  "Midlertidigt ude af drift: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Slå fra nu"
+    IDS_PSW_SUSP_ON_BTN  "Slå til igen"
+    IDS_PSW_SUSP_PAUSED  "sat på pause, ingen opdateringer"
+    IDS_PSW_SUSP_DISABLED  "ude af drift"
+    IDS_PSW_SUSP_OFF  "slået fra"
+    IDS_PSW_SUSP_BACK  "tilgængeligt igen"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1784,6 +1880,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Huolto: arviot ja ilmoitukset on tilapäisesti keskeytetty. Lisäosien asentaminen ja päivittäminen toimii edelleen."
     IDS_PSW_MODE_TEST_TIP  "Testiympäristö: ei tuotantokauppa. Tiedot voidaan nollata milloin tahansa."
     IDS_PSW_MODE_BETA_DISC  "Beetavaihe: Add-on Store ja sen luettelo ovat kokeiluvaiheessa (beeta). Toiminnot, sisältö ja menettelyt voivat muuttua tai poistua milloin tahansa. Virheet, katkokset ja häiriöt ovat mahdollisia; saatavuutta ei taata. Älä käytä beetaa aikakriittisiin tai liiketoimintakriittisiin prosesseihin, ja varmuuskopioi tärkeät asiakirjat."
+    IDS_PS_SUSPEND_ASK  "Lisäosa ""%s"" on tilapäisesti poissa käytöstä:\n\n%s\n\nAdd-on Store poistaa sen käytöstä poistamatta sitä; asetuksesi säilyvät. Poistetaanko se käytöstä nyt? Windows pyytää järjestelmänvalvojan oikeudet."
+    IDS_PS_RESUME_ASK  "Lisäosa ""%s"" on taas saatavilla. Otetaanko se nyt uudelleen käyttöön? Windows pyytää järjestelmänvalvojan oikeudet."
+    IDS_PS_SUSPEND_FAILED  "Lisäosan ""%s"" tilaa ei voitu vaihtaa (virhe %s). Ota yhteyttä IT-tukeen."
+    IDS_PS_SUSPEND_RESTART  "Valmis. Käynnistetäänkö Power PDF nyt uudelleen, jotta muutos tulee voimaan?"
+    IDS_PS_SUSPEND_POLICY  "Lisäosa ""%s"" on tilapäisesti poissa käytöstä:\n\n%s\n\nLisäosien asentaminen ja poistaminen on estetty tässä tietokoneessa, joten Add-on Store ei voi poistaa sitä käytöstä. Ota yhteyttä IT-tukeen."
+    IDS_PSW_SUSP_BANNER  "Tilapäisesti poissa käytöstä: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Poista käytöstä nyt"
+    IDS_PSW_SUSP_ON_BTN  "Ota uudelleen käyttöön"
+    IDS_PSW_SUSP_PAUSED  "keskeytetty, ei päivityksiä"
+    IDS_PSW_SUSP_DISABLED  "poissa käytöstä"
+    IDS_PSW_SUSP_OFF  "poistettu käytöstä"
+    IDS_PSW_SUSP_BACK  "taas saatavilla"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1971,6 +2079,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Vedlikehold: vurderinger og rapporter er midlertidig satt på pause. Installering og oppdatering av tillegg fungerer fortsatt."
     IDS_PSW_MODE_TEST_TIP  "Testmiljø: ikke produksjonsbutikken. Data kan når som helst bli tilbakestilt."
     IDS_PSW_MODE_BETA_DISC  "Betafase: Add-on Store og katalogen er under utprøving (beta). Funksjoner, innhold og prosedyrer kan når som helst endres eller falle bort. Feil, avbrudd og driftsstans kan forekomme; tilgjengelighet er ikke garantert. Ikke bruk betaen til tidskritiske eller forretningskritiske prosesser, og ta sikkerhetskopier av viktige dokumenter."
+    IDS_PS_SUSPEND_ASK  "Tillegget ""%s"" er midlertidig ute av drift:\n\n%s\n\nAdd-on Store slår det av uten å fjerne det; innstillingene dine beholdes. Slå det av nå? Windows ber om administratorrettigheter."
+    IDS_PS_RESUME_ASK  "Tillegget ""%s"" er tilgjengelig igjen. Slå det på igjen nå? Windows ber om administratorrettigheter."
+    IDS_PS_SUSPEND_FAILED  "Tillegget ""%s"" kunne ikke slås av eller på (feil %s). Kontakt IT-avdelingen."
+    IDS_PS_SUSPEND_RESTART  "Ferdig. Starte Power PDF på nytt nå slik at endringen trer i kraft?"
+    IDS_PS_SUSPEND_POLICY  "Tillegget ""%s"" er midlertidig ute av drift:\n\n%s\n\nInstallering og fjerning av tillegg er slått av på denne PC-en, så Add-on Store kan ikke slå det av. Kontakt IT-avdelingen."
+    IDS_PSW_SUSP_BANNER  "Midlertidig ute av drift: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Slå av nå"
+    IDS_PSW_SUSP_ON_BTN  "Slå på igjen"
+    IDS_PSW_SUSP_PAUSED  "satt på pause, ingen oppdateringer"
+    IDS_PSW_SUSP_DISABLED  "ute av drift"
+    IDS_PSW_SUSP_OFF  "slått av"
+    IDS_PSW_SUSP_BACK  "tilgjengelig igjen"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2158,6 +2278,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Underhåll: betyg och rapporter är tillfälligt pausade. Installation och uppdatering av tillägg fungerar fortfarande."
     IDS_PSW_MODE_TEST_TIP  "Testmiljö: inte produktionsbutiken. Data kan återställas när som helst."
     IDS_PSW_MODE_BETA_DISC  "Betafas: Add-on Store och dess katalog prövas (beta). Funktioner, innehåll och rutiner kan när som helst ändras eller upphöra. Fel, avbrott och driftstopp kan förekomma; ingen tillgänglighet garanteras. Använd inte betan för tidskritiska eller affärskritiska processer och säkerhetskopiera viktiga dokument."
+    IDS_PS_SUSPEND_ASK  "Tillägget ""%s"" är tillfälligt ur drift:\n\n%s\n\nAdd-on Store stänger av det utan att ta bort det; dina inställningar finns kvar. Stänga av det nu? Windows ber om administratörsbehörighet."
+    IDS_PS_RESUME_ASK  "Tillägget ""%s"" är tillgängligt igen. Slå på det igen nu? Windows ber om administratörsbehörighet."
+    IDS_PS_SUSPEND_FAILED  "Tillägget ""%s"" kunde inte växlas (fel %s). Kontakta IT-avdelningen."
+    IDS_PS_SUSPEND_RESTART  "Klart. Starta om Power PDF nu så att ändringen träder i kraft?"
+    IDS_PS_SUSPEND_POLICY  "Tillägget ""%s"" är tillfälligt ur drift:\n\n%s\n\nInstallation och borttagning av tillägg är avstängt på den här datorn, så Add-on Store kan inte stänga av det. Kontakta IT-avdelningen."
+    IDS_PSW_SUSP_BANNER  "Tillfälligt ur drift: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Stäng av nu"
+    IDS_PSW_SUSP_ON_BTN  "Slå på igen"
+    IDS_PSW_SUSP_PAUSED  "pausat, inga uppdateringar"
+    IDS_PSW_SUSP_DISABLED  "ur drift"
+    IDS_PSW_SUSP_OFF  "avstängt"
+    IDS_PSW_SUSP_BACK  "tillgängligt igen"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2345,6 +2477,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Konserwacja: oceny i zgłoszenia są chwilowo wstrzymane. Instalowanie i aktualizowanie dodatków nadal działa."
     IDS_PSW_MODE_TEST_TIP  "Środowisko testowe: to nie jest sklep produkcyjny. Dane mogą zostać w każdej chwili zresetowane."
     IDS_PSW_MODE_BETA_DISC  "Faza beta: Add-on Store i jego katalog są w fazie testów (beta). Funkcje, treści i procedury mogą w każdej chwili ulec zmianie lub zostać wycofane. Możliwe są błędy, przerwy i awarie; dostępność nie jest gwarantowana. Nie używaj wersji beta do procesów krytycznych czasowo lub biznesowo i twórz kopie zapasowe ważnych dokumentów."
+    IDS_PS_SUSPEND_ASK  "Dodatek „%s” jest tymczasowo wyłączony z użytku:\n\n%s\n\nAdd-on Store wyłączy go bez usuwania; ustawienia zostaną zachowane. Wyłączyć go teraz? System Windows poprosi o uprawnienia administratora."
+    IDS_PS_RESUME_ASK  "Dodatek „%s” jest znowu dostępny. Włączyć go ponownie teraz? System Windows poprosi o uprawnienia administratora."
+    IDS_PS_SUSPEND_FAILED  "Nie można przełączyć dodatku „%s” (błąd %s). Skontaktuj się z działem IT."
+    IDS_PS_SUSPEND_RESTART  "Gotowe. Uruchomić ponownie Power PDF teraz, aby zmiana zaczęła działać?"
+    IDS_PS_SUSPEND_POLICY  "Dodatek „%s” jest tymczasowo wyłączony z użytku:\n\n%s\n\nNa tym komputerze instalowanie i usuwanie dodatków jest wyłączone, więc Add-on Store nie może go wyłączyć. Skontaktuj się z działem IT."
+    IDS_PSW_SUSP_BANNER  "Tymczasowo wyłączone z użytku: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Wyłącz teraz"
+    IDS_PSW_SUSP_ON_BTN  "Włącz ponownie"
+    IDS_PSW_SUSP_PAUSED  "wstrzymany, bez aktualizacji"
+    IDS_PSW_SUSP_DISABLED  "wyłączony z użytku"
+    IDS_PSW_SUSP_OFF  "wyłączony"
+    IDS_PSW_SUSP_BACK  "znowu dostępny"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2532,6 +2676,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Údržba: hodnocení a hlášení jsou dočasně pozastavena. Instalace a aktualizace doplňků fungují dál."
     IDS_PSW_MODE_TEST_TIP  "Testovací prostředí: nejde o produkční obchod. Data mohou být kdykoli obnovena do výchozího stavu."
     IDS_PSW_MODE_BETA_DISC  "Beta fáze: Add-on Store a jeho katalog jsou ve zkušebním provozu (beta). Funkce, obsah a postupy se mohou kdykoli změnit nebo být zrušeny. Mohou se vyskytnout chyby, přerušení a výpadky; dostupnost není zaručena. Nepoužívejte betaverzi pro časově nebo obchodně kritické procesy a zálohujte důležité dokumenty."
+    IDS_PS_SUSPEND_ASK  "Doplněk „%s“ je dočasně mimo provoz:\n\n%s\n\nAdd-on Store ho vypne, aniž by ho odebral; vaše nastavení zůstanou zachována. Vypnout ho nyní? Windows požádá o oprávnění správce."
+    IDS_PS_RESUME_ASK  "Doplněk „%s“ je opět k dispozici. Zapnout ho nyní znovu? Windows požádá o oprávnění správce."
+    IDS_PS_SUSPEND_FAILED  "Doplněk „%s“ nebylo možné přepnout (chyba %s). Obraťte se na oddělení IT."
+    IDS_PS_SUSPEND_RESTART  "Hotovo. Restartovat nyní Power PDF, aby se změna projevila?"
+    IDS_PS_SUSPEND_POLICY  "Doplněk „%s“ je dočasně mimo provoz:\n\n%s\n\nNa tomto počítači je instalace a odebírání doplňků vypnuto, proto ho Add-on Store nemůže vypnout. Obraťte se na oddělení IT."
+    IDS_PSW_SUSP_BANNER  "Dočasně mimo provoz: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Vypnout nyní"
+    IDS_PSW_SUSP_ON_BTN  "Znovu zapnout"
+    IDS_PSW_SUSP_PAUSED  "pozastaveno, bez aktualizací"
+    IDS_PSW_SUSP_DISABLED  "mimo provoz"
+    IDS_PSW_SUSP_OFF  "vypnuto"
+    IDS_PSW_SUSP_BACK  "opět k dispozici"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2719,6 +2875,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Karbantartás: az értékelések és bejelentések átmenetileg szünetelnek. A bővítmények telepítése és frissítése továbbra is működik."
     IDS_PSW_MODE_TEST_TIP  "Tesztkörnyezet: nem az éles áruház. Az adatok bármikor visszaállíthatók."
     IDS_PSW_MODE_BETA_DISC  "Béta szakasz: Az Add-on Store és katalógusa kipróbálás alatt áll (béta). A funkciók, a tartalom és az eljárások bármikor megváltozhatnak vagy megszűnhetnek. Hibák, megszakítások és kiesések előfordulhatnak; a rendelkezésre állás nem garantált. Ne használja a bétát időkritikus vagy üzletkritikus folyamatokhoz, és készítsen biztonsági másolatot a fontos dokumentumokról."
+    IDS_PS_SUSPEND_ASK  "A(z) „%s” bővítmény átmenetileg nem üzemel:\n\n%s\n\nAz Add-on Store eltávolítás nélkül kikapcsolja; a beállításai megmaradnak. Kikapcsolja most? A Windows rendszergazdai jogokat kér."
+    IDS_PS_RESUME_ASK  "A(z) „%s” bővítmény újra elérhető. Bekapcsolja most újra? A Windows rendszergazdai jogokat kér."
+    IDS_PS_SUSPEND_FAILED  "A(z) „%s” bővítmény állapotát nem sikerült átváltani (hiba: %s). Forduljon az informatikai részleghez."
+    IDS_PS_SUSPEND_RESTART  "Kész. Újraindítja most a Power PDF-et, hogy a módosítás érvénybe lépjen?"
+    IDS_PS_SUSPEND_POLICY  "A(z) „%s” bővítmény átmenetileg nem üzemel:\n\n%s\n\nEzen a számítógépen a bővítmények telepítése és eltávolítása ki van kapcsolva, ezért az Add-on Store nem tudja kikapcsolni. Forduljon az informatikai részleghez."
+    IDS_PSW_SUSP_BANNER  "Átmenetileg nem üzemel: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Kikapcsolás most"
+    IDS_PSW_SUSP_ON_BTN  "Bekapcsolás újra"
+    IDS_PSW_SUSP_PAUSED  "szüneteltetve, nincs frissítés"
+    IDS_PSW_SUSP_DISABLED  "nem üzemel"
+    IDS_PSW_SUSP_OFF  "kikapcsolva"
+    IDS_PSW_SUSP_BACK  "újra elérhető"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2906,6 +3074,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Технические работы: оценки и отчеты временно недоступны. Установка и обновление надстроек продолжают работать."
     IDS_PSW_MODE_TEST_TIP  "Тестовая среда: это не рабочий магазин. Данные могут быть сброшены в любое время."
     IDS_PSW_MODE_BETA_DISC  "Бета-период: Add-on Store и его каталог проходят испытания (бета). Функции, содержимое и процедуры могут в любое время измениться или быть отменены. Возможны ошибки, перерывы и сбои; доступность не гарантируется. Не используйте бета-версию для срочных или критически важных для бизнеса процессов и делайте резервные копии важных документов."
+    IDS_PS_SUSPEND_ASK  "Надстройка «%s» временно выведена из эксплуатации:\n\n%s\n\nAdd-on Store отключит ее, не удаляя; ваши настройки сохранятся. Отключить ее сейчас? Windows запросит права администратора."
+    IDS_PS_RESUME_ASK  "Надстройка «%s» снова доступна. Включить ее снова сейчас? Windows запросит права администратора."
+    IDS_PS_SUSPEND_FAILED  "Не удалось переключить надстройку «%s» (ошибка %s). Обратитесь в ИТ-отдел."
+    IDS_PS_SUSPEND_RESTART  "Готово. Перезапустить Power PDF сейчас, чтобы изменение вступило в силу?"
+    IDS_PS_SUSPEND_POLICY  "Надстройка «%s» временно выведена из эксплуатации:\n\n%s\n\nНа этом компьютере установка и удаление надстроек отключены, поэтому Add-on Store не может ее отключить. Обратитесь в ИТ-отдел."
+    IDS_PSW_SUSP_BANNER  "Временно выведено из эксплуатации: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Отключить сейчас"
+    IDS_PSW_SUSP_ON_BTN  "Включить снова"
+    IDS_PSW_SUSP_PAUSED  "приостановлено, без обновлений"
+    IDS_PSW_SUSP_DISABLED  "выведено из эксплуатации"
+    IDS_PSW_SUSP_OFF  "отключено"
+    IDS_PSW_SUSP_BACK  "снова доступно"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3093,6 +3273,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "Bakım: puanlamalar ve bildirimler geçici olarak duraklatıldı. Eklentileri yükleme ve güncelleme çalışmaya devam ediyor."
     IDS_PSW_MODE_TEST_TIP  "Test ortamı: üretim mağazası değildir. Veriler her an sıfırlanabilir."
     IDS_PSW_MODE_BETA_DISC  "Beta aşaması: Add-on Store ve kataloğu deneme aşamasındadır (beta). İşlevler, içerik ve süreçler her zaman değişebilir veya kaldırılabilir. Hatalar, kesintiler ve arızalar olabilir; erişilebilirlik garanti edilmez. Betayı zaman açısından veya iş açısından kritik süreçler için kullanmayın ve önemli belgelerin yedeğini alın."
+    IDS_PS_SUSPEND_ASK  """%s"" eklentisi geçici olarak hizmet dışı:\n\n%s\n\nAdd-on Store eklentiyi kaldırmadan devre dışı bırakır; ayarlarınız korunur. Şimdi devre dışı bırakılsın mı? Windows yönetici hakları ister."
+    IDS_PS_RESUME_ASK  """%s"" eklentisi yeniden kullanılabilir. Şimdi yeniden etkinleştirilsin mi? Windows yönetici hakları ister."
+    IDS_PS_SUSPEND_FAILED  """%s"" eklentisinin durumu değiştirilemedi (hata %s). Lütfen BT departmanınıza başvurun."
+    IDS_PS_SUSPEND_RESTART  "Tamamlandı. Değişikliğin etkili olması için Power PDF şimdi yeniden başlatılsın mı?"
+    IDS_PS_SUSPEND_POLICY  """%s"" eklentisi geçici olarak hizmet dışı:\n\n%s\n\nBu bilgisayarda eklenti yükleme ve kaldırma kapalı olduğundan Add-on Store eklentiyi devre dışı bırakamaz. Lütfen BT departmanınıza başvurun."
+    IDS_PSW_SUSP_BANNER  "Geçici olarak hizmet dışı: %s"
+    IDS_PSW_SUSP_OFF_BTN  "Şimdi devre dışı bırak"
+    IDS_PSW_SUSP_ON_BTN  "Yeniden etkinleştir"
+    IDS_PSW_SUSP_PAUSED  "duraklatıldı, güncelleme yok"
+    IDS_PSW_SUSP_DISABLED  "hizmet dışı"
+    IDS_PSW_SUSP_OFF  "devre dışı"
+    IDS_PSW_SUSP_BACK  "yeniden kullanılabilir"
 END
 
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
@@ -3278,6 +3470,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "维护中：评分和报告暂时无法使用。安装和更新加载项照常可用。"
     IDS_PSW_MODE_TEST_TIP  "测试环境：不是生产商店。数据可能随时被重置。"
     IDS_PSW_MODE_BETA_DISC  "测试阶段：Add-on Store 及其目录正处于试用阶段（测试版）。功能、内容和流程可能随时更改或取消。可能出现错误、中断和故障；不保证可用性。请勿将测试版用于时间紧迫或业务关键的流程，并备份重要文档。"
+    IDS_PS_SUSPEND_ASK  "加载项“%s”暂时停止服务：\n\n%s\n\nAdd-on Store 将停用它但不会删除，您的设置会保留。立即停用？Windows 将请求管理员权限。"
+    IDS_PS_RESUME_ASK  "加载项“%s”已重新可用。立即重新启用？Windows 将请求管理员权限。"
+    IDS_PS_SUSPEND_FAILED  "无法切换加载项“%s”的状态（错误 %s）。请联系您的 IT 部门。"
+    IDS_PS_SUSPEND_RESTART  "已完成。立即重新启动 Power PDF 使更改生效？"
+    IDS_PS_SUSPEND_POLICY  "加载项“%s”暂时停止服务：\n\n%s\n\n此电脑已关闭加载项的安装和删除，因此 Add-on Store 无法停用它。请联系您的 IT 部门。"
+    IDS_PSW_SUSP_BANNER  "暂时停止服务：%s"
+    IDS_PSW_SUSP_OFF_BTN  "立即停用"
+    IDS_PSW_SUSP_ON_BTN  "重新启用"
+    IDS_PSW_SUSP_PAUSED  "已暂停，无更新"
+    IDS_PSW_SUSP_DISABLED  "停止服务"
+    IDS_PSW_SUSP_OFF  "已停用"
+    IDS_PSW_SUSP_BACK  "重新可用"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3466,6 +3670,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "維護中：評分和回報暫時無法使用。安裝和更新增益集照常可用。"
     IDS_PSW_MODE_TEST_TIP  "測試環境：不是生產商店。資料可能隨時被重設。"
     IDS_PSW_MODE_BETA_DISC  "測試階段：Add-on Store 及其目錄正在試用階段（測試版）。功能、內容和流程可能隨時變更或取消。可能發生錯誤、中斷和故障；不保證可用性。請勿將測試版用於時間緊迫或業務關鍵的流程，並備份重要文件。"
+    IDS_PS_SUSPEND_ASK  "增益集「%s」暫時停止服務：\n\n%s\n\nAdd-on Store 會停用它但不會移除，您的設定會保留。要立即停用嗎？Windows 會要求系統管理員權限。"
+    IDS_PS_RESUME_ASK  "增益集「%s」已重新可用。要立即重新啟用嗎？Windows 會要求系統管理員權限。"
+    IDS_PS_SUSPEND_FAILED  "無法切換增益集「%s」的狀態 (錯誤 %s)。請聯絡您的 IT 部門。"
+    IDS_PS_SUSPEND_RESTART  "已完成。要立即重新啟動 Power PDF 讓變更生效嗎？"
+    IDS_PS_SUSPEND_POLICY  "增益集「%s」暫時停止服務：\n\n%s\n\n這部電腦已關閉增益集的安裝與移除，因此 Add-on Store 無法停用它。請聯絡您的 IT 部門。"
+    IDS_PSW_SUSP_BANNER  "暫時停止服務：%s"
+    IDS_PSW_SUSP_OFF_BTN  "立即停用"
+    IDS_PSW_SUSP_ON_BTN  "重新啟用"
+    IDS_PSW_SUSP_PAUSED  "已暫停，無更新"
+    IDS_PSW_SUSP_DISABLED  "停止服務"
+    IDS_PSW_SUSP_OFF  "已停用"
+    IDS_PSW_SUSP_BACK  "重新可用"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3654,6 +3870,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "メンテナンス中: 評価と報告は一時的に利用できません。アドインのインストールと更新は引き続き利用できます。"
     IDS_PSW_MODE_TEST_TIP  "テスト環境: 本番のストアではありません。データはいつでもリセットされる可能性があります。"
     IDS_PSW_MODE_BETA_DISC  "ベータ期間: Add-on Store とそのカタログは試験運用中です (ベータ)。機能、内容、手順は予告なく変更または廃止される場合があります。エラー、中断、障害が発生する可能性があります。可用性は保証されません。時間的に重要な業務やビジネス上重要な業務にはベータを使用せず、重要な文書はバックアップしてください。"
+    IDS_PS_SUSPEND_ASK  "アドイン「%s」は一時的に提供を停止しています：\n\n%s\n\nAdd-on Store はこのアドインを削除せずに無効にします。設定は保持されます。今すぐ無効にしますか？Windows が管理者権限を求めます。"
+    IDS_PS_RESUME_ASK  "アドイン「%s」は再び利用できるようになりました。今すぐ再度有効にしますか？Windows が管理者権限を求めます。"
+    IDS_PS_SUSPEND_FAILED  "アドイン「%s」の状態を切り替えられませんでした (エラー %s)。IT 部門にお問い合わせください。"
+    IDS_PS_SUSPEND_RESTART  "完了しました。変更を反映するために、今すぐ Power PDF を再起動しますか？"
+    IDS_PS_SUSPEND_POLICY  "アドイン「%s」は一時的に提供を停止しています：\n\n%s\n\nこの PC ではアドインのインストールと削除が無効になっているため、Add-on Store はこのアドインを無効にできません。IT 部門にお問い合わせください。"
+    IDS_PSW_SUSP_BANNER  "一時的に提供停止中: %s"
+    IDS_PSW_SUSP_OFF_BTN  "今すぐ無効にする"
+    IDS_PSW_SUSP_ON_BTN  "再度有効にする"
+    IDS_PSW_SUSP_PAUSED  "一時停止中、更新なし"
+    IDS_PSW_SUSP_DISABLED  "提供停止"
+    IDS_PSW_SUSP_OFF  "無効"
+    IDS_PSW_SUSP_BACK  "再び利用可能"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3842,6 +4070,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "유지 관리 중: 평가와 신고를 일시적으로 사용할 수 없습니다. 추가 기능 설치와 업데이트는 계속 작동합니다."
     IDS_PSW_MODE_TEST_TIP  "테스트 환경: 프로덕션 스토어가 아닙니다. 데이터는 언제든지 초기화될 수 있습니다."
     IDS_PSW_MODE_BETA_DISC  "베타 기간: Add-on Store와 카탈로그는 시범 운영 중입니다(베타). 기능, 콘텐츠 및 절차는 언제든지 변경되거나 중단될 수 있습니다. 오류, 중단 및 장애가 발생할 수 있으며 가용성은 보장되지 않습니다. 시간이 중요한 프로세스나 비즈니스에 중요한 프로세스에는 베타를 사용하지 말고 중요한 문서는 백업하세요."
+    IDS_PS_SUSPEND_ASK  "추가 기능 “%s”은(는) 일시적으로 사용이 중지되었습니다:\n\n%s\n\nAdd-on Store가 제거하지 않고 사용 중지합니다. 설정은 유지됩니다. 지금 사용 중지하시겠습니까? Windows에서 관리자 권한을 요청합니다."
+    IDS_PS_RESUME_ASK  "추가 기능 “%s”을(를) 다시 사용할 수 있습니다. 지금 다시 사용하도록 설정하시겠습니까? Windows에서 관리자 권한을 요청합니다."
+    IDS_PS_SUSPEND_FAILED  "추가 기능 “%s”의 상태를 전환할 수 없습니다(오류 %s). IT 부서에 문의하십시오."
+    IDS_PS_SUSPEND_RESTART  "완료되었습니다. 변경 내용을 적용하려면 지금 Power PDF를 다시 시작하시겠습니까?"
+    IDS_PS_SUSPEND_POLICY  "추가 기능 “%s”은(는) 일시적으로 사용이 중지되었습니다:\n\n%s\n\n이 PC에서는 추가 기능 설치 및 제거가 꺼져 있어 Add-on Store가 사용 중지할 수 없습니다. IT 부서에 문의하십시오."
+    IDS_PSW_SUSP_BANNER  "일시적으로 사용 중지됨: %s"
+    IDS_PSW_SUSP_OFF_BTN  "지금 사용 중지"
+    IDS_PSW_SUSP_ON_BTN  "다시 사용"
+    IDS_PSW_SUSP_PAUSED  "일시 중지됨, 업데이트 없음"
+    IDS_PSW_SUSP_DISABLED  "사용 중지"
+    IDS_PSW_SUSP_OFF  "꺼짐"
+    IDS_PSW_SUSP_BACK  "다시 사용 가능"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -4030,6 +4270,18 @@ BEGIN
     IDS_PSW_MODE_MAINT_NOTE  "صيانة: التقييمات والبلاغات متوقفة مؤقتًا. يستمر تثبيت الوظائف الإضافية وتحديثها في العمل."
     IDS_PSW_MODE_TEST_TIP  "بيئة اختبار: ليست متجر الإنتاج. قد تتم إعادة تعيين البيانات في أي وقت."
     IDS_PSW_MODE_BETA_DISC  "المرحلة التجريبية: يخضع Add-on Store وكتالوجه للتجربة (نسخة تجريبية). قد تتغير الوظائف والمحتوى والإجراءات أو تتوقف في أي وقت. قد تحدث أخطاء وانقطاعات وأعطال؛ ولا يوجد ضمان للتوفر. يُرجى عدم استخدام النسخة التجريبية في العمليات الحساسة للوقت أو الحرجة للأعمال، والاحتفاظ بنسخ احتياطية من المستندات المهمة."
+    IDS_PS_SUSPEND_ASK  "الوظيفة الإضافية «%s» خارج الخدمة مؤقتًا:\n\n%s\n\nيوقف Add-on Store تشغيلها دون إزالتها، وتبقى إعداداتك كما هي. هل تريد إيقاف تشغيلها الآن؟ سيطلب Windows حقوق المسؤول."
+    IDS_PS_RESUME_ASK  "الوظيفة الإضافية «%s» متاحة من جديد. هل تريد تشغيلها مرة أخرى الآن؟ سيطلب Windows حقوق المسؤول."
+    IDS_PS_SUSPEND_FAILED  "تعذر تبديل حالة الوظيفة الإضافية «%s» (الخطأ %s). يرجى التواصل مع قسم تقنية المعلومات."
+    IDS_PS_SUSPEND_RESTART  "تم. هل تريد إعادة تشغيل Power PDF الآن ليسري التغيير؟"
+    IDS_PS_SUSPEND_POLICY  "الوظيفة الإضافية «%s» خارج الخدمة مؤقتًا:\n\n%s\n\nتثبيت الوظائف الإضافية وإزالتها متوقف على هذا الكمبيوتر، لذلك لا يستطيع Add-on Store إيقاف تشغيلها. يرجى التواصل مع قسم تقنية المعلومات."
+    IDS_PSW_SUSP_BANNER  "خارج الخدمة مؤقتًا: %s"
+    IDS_PSW_SUSP_OFF_BTN  "إيقاف التشغيل الآن"
+    IDS_PSW_SUSP_ON_BTN  "التشغيل مرة أخرى"
+    IDS_PSW_SUSP_PAUSED  "متوقفة مؤقتًا، بلا تحديثات"
+    IDS_PSW_SUSP_DISABLED  "خارج الخدمة"
+    IDS_PSW_SUSP_OFF  "متوقفة"
+    IDS_PSW_SUSP_BACK  "متاحة من جديد"
 END
 
 /////////////////////////////////////////////////////////////////////////////

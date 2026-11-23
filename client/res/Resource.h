@@ -200,6 +200,18 @@
 #define IDS_PSW_MODE_MAINT_NOTE 396
 #define IDS_PSW_MODE_TEST_TIP   397
 #define IDS_PSW_MODE_BETA_DISC  398
+#define IDS_PS_SUSPEND_ASK      399
+#define IDS_PS_RESUME_ASK       400
+#define IDS_PS_SUSPEND_FAILED   401
+#define IDS_PS_SUSPEND_RESTART  402
+#define IDS_PS_SUSPEND_POLICY   403
+#define IDS_PSW_SUSP_BANNER     404
+#define IDS_PSW_SUSP_OFF_BTN    405
+#define IDS_PSW_SUSP_ON_BTN     406
+#define IDS_PSW_SUSP_PAUSED     407
+#define IDS_PSW_SUSP_DISABLED   408
+#define IDS_PSW_SUSP_OFF        409
+#define IDS_PSW_SUSP_BACK       410
 #define IDR_HELP_HTML           262   // C2.1.0: the central help page
 #define IDB_HELP                254
 #define IDB_HELP16              255

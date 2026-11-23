@@ -9,6 +9,7 @@
 #include "version.h"
 #include "logging.h"
 #include "blocklist.h"
+#include "suspend.h"
 #include "access.h"
 #include "http.h"
 #include "hostversion.h"
@@ -39,6 +40,8 @@ const UINT WM_PS_BLOCKED = WM_APP + 78;    // lParam = std::vector<PSBlocked>*
 const UINT kBlockEveryMs = 4 * 60 * 60 * 1000;
 const UINT_PTR kAccessTimer = 5;           // allowed license mode (C1.5.0): 3 s after start, then every 4 h
 const UINT WM_PS_ACCESS = WM_APP + 79;     // wParam = 1 allowed, 0 not
+const UINT_PTR kSuspendTimer = 7;          // add-ons out of service (C2.3.0): 30 s after start, then every 4 h
+const UINT WM_PS_SUSPENDED = WM_APP + 80;  // lParam = std::vector<PSSuspended>*
 volatile LONG g_checkRunning = 0;
 
 // What the update check found (C1.7.0): every pending update as "id@version" and its display name.
@@ -255,6 +258,25 @@ LRESULT CALLBACK LinkWndProc(HWND h, UINT msg, WPARAM wp, LPARAM lp)
         }
         return 0;
     }
+    if (msg == WM_TIMER && wp == kSuspendTimer)
+    {
+        SetTimer(h, kSuspendTimer, kBlockEveryMs, NULL);
+        PSSuspendCheckStart(h, WM_PS_SUSPENDED);
+        return 0;
+    }
+    if (msg == WM_PS_SUSPENDED)
+    {
+        PSSuspendTakeResult(lp);
+        if (PSSuspendHasWork(true))   // only what was not asked yet: no polling after a "No"
+        {
+            // ask over the Power PDF main window, not while a modal dialog of Power PDF or the store window is open
+            HWND main = NULL;
+            EnumWindows(FindMain, (LPARAM)&main);
+            if (main && IsWindowEnabled(main) && !PSStoreDialogOpen()) PSOfferSuspendChanges(main, false);
+            else SetTimer(h, kSuspendTimer, 60 * 1000, NULL);
+        }
+        return 0;
+    }
     if (msg == WM_TIMER && wp == kStartupTimer)
     {
         // Power PDF was started by the link helper: wait until its main
@@ -307,6 +329,7 @@ void PSLinkInit()
         SetTimer(g_linkWnd, kUpdateTimer, 15000, NULL);
     // security blocks are checked regardless of the update badge setting
     SetTimer(g_linkWnd, kBlockTimer, 20000, NULL);
+    SetTimer(g_linkWnd, kSuspendTimer, 30000, NULL);
     SetTimer(g_linkWnd, kAccessTimer, 3000, NULL);
 }
 

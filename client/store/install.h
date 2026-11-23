@@ -53,6 +53,12 @@ void PSReleaseInstallations(const std::vector<std::wstring>& packageIds);
 // 4 also when the plug-in has no store manifest (never installed by the store).
 int PSUninstallPackage(const std::wstring& zxtName, HWND owner);
 
+// C2.3.0: switches add-ons off (out of service: Plug-Ins\<name>.zxt -> <name>.zxt.suspended) or on again
+// with ONE elevated step for all of them (pair: zxt name, true = off); manifest, data folder and settings
+// stay. Return codes like PSUninstallPackages (3 = UAC declined); done[i] = add-on i is in the wanted
+// state now. A name that is not a store add-on fails on its own, the others are still switched (suspend.h).
+int PSSetAddonsSuspended(const std::vector<std::pair<std::wstring, bool>>& changes, HWND owner, std::vector<bool>* done = nullptr);
+
 // Self-update of the store client: downloads the client package (hash
 // verified), asks the user, then starts a helper that waits for Power PDF to
 // exit, installs the MSI (/passive, elevates itself) and starts Power PDF

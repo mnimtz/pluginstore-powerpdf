@@ -40,6 +40,7 @@ a { color: var(--head); }
   <li>Probleme und Vorschläge an den Entwickler eines Add-ons melden, mit Anhängen und auf Wunsch dem Protokoll.</li>
   <li>Add-ons mit Sterne-Bewertungen versehen.</li>
   <li>Gesperrte Add-ons erkennen und deren Entfernung anbieten.</li>
+  <li>Add-ons, die der Store vorübergehend außer Betrieb nimmt, ab- und wieder einschalten, ohne sie zu entfernen.</li>
 </ul>
 <h2 id="overview-and-terms-terms">Begriffe</h2>
 <table>
@@ -217,6 +218,7 @@ a { color: var(--head); }
 <table>
   <tr><th>Hinweis</th><th>Bedeutung und was tun</th></tr>
   <tr><td>Vom Add-on Store aus Sicherheitsgründen gesperrt, bitte entfernen: …</td><td>Die Administratoren des Store haben diese Version gesperrt. <b>Jetzt entfernen</b> entfernt sie (Administrator-Bestätigung). Der Client prüft die Sperrliste 20 Sekunden nach dem Start und danach alle 4 Stunden und fragt je Sitzung einmal; eine Sperre gilt auch, wenn der Server später nicht erreichbar ist.</td></tr>
+  <tr><td>Vorübergehend außer Betrieb: …</td><td>Die Store-Betreiber haben diese Add-ons vorübergehend außer Betrieb genommen. <i>pausiert, keine Updates</i>: sie laufen weiter. <i>außer Betrieb</i>: <b>Jetzt abschalten</b> schaltet sie ab, ohne sie zu entfernen (Administrator-Bestätigung); die Einstellungen bleiben. <i>wieder verfügbar</i>: <b>Wieder einschalten</b>. Der Client prüft die Liste 30 Sekunden nach dem Start und danach alle 4 Stunden und fragt je Sitzung einmal; ist der Server nicht erreichbar, wird nichts umgeschaltet.</td></tr>
   <tr><td>Add-ons aus einer früheren Power-PDF-Installation (…) fehlen in dieser: …</td><td>Nach dem Wechsel auf eine neue Power-PDF-Version findet der Client Add-ons im alten Programmordner. <b>Hier installieren</b> installiert sie nacheinander, am Ende kommt eine Frage nach dem Neustart. <b>Später</b> blendet den Hinweis für diese Add-ons aus.</td></tr>
   <tr><td>Nicht mehr angeboten</td><td>Das Add-on ist installiert, steht aber nicht mehr im Katalog, zum Beispiel weil der zugehörige Kundencode entfernt wurde. Sie können es weiter entfernen.</td></tr>
   <tr><td>Benötigt Power PDF … oder neuer</td><td>Das Add-on braucht eine neuere Version von Power PDF. Aktualisieren Sie zuerst Power PDF.</td></tr>
@@ -236,7 +238,7 @@ a { color: var(--head); }
   <tr><td>Einmal auf jedes neue Update hinweisen</td><td>Der einmalige Hinweis aus Kapitel <a href="#updates">Updates</a> (Standard: an).</td></tr>
   <tr><td>Ausführliches Protokoll</td><td>Schreibt mehr Einzelheiten in <code>%TEMP%\PluginStore.log</code>, für die Fehlersuche.</td></tr>
 </table>
-<p>Unten steht die Version des Client, zum Beispiel „Add-on-Store-Client Version 2.2.2“.</p>
+<p>Unten steht die Version des Client, zum Beispiel „Add-on-Store-Client Version 2.3.0“.</p>
 
 <h1 id="links-from-the-website-manual-installation">Links von der Website, manuelle Installation</h1>
 <h2 id="links-from-the-website-manual-installation-install-in-power-pdf">„In Power PDF installieren“</h2>
@@ -300,7 +302,7 @@ a { color: var(--head); }
 <h2 id="for-administrators-privacy">Datenschutz</h2>
 <p>Der Client sendet keine Dokumente und keine Namen von Benutzern oder Computern. Mit jeder Anfrage gehen technische Angaben an den Store-Server:</p>
 <ul>
-  <li>die Programmkennung mit den Versionen von Client, Power PDF und Windows und der Prozessorarchitektur, zum Beispiel <code>AddonStore-PowerPDF/2.2.2 (PowerPDF …; Windows …; x64)</code>;</li>
+  <li>die Programmkennung mit den Versionen von Client, Power PDF und Windows und der Prozessorarchitektur, zum Beispiel <code>AddonStore-PowerPDF/2.3.0 (PowerPDF …; Windows …; x64)</code>;</li>
   <li>die Lizenzart von Power PDF (<code>cloud</code>, <code>serial</code> oder <code>unknown</code>), damit der Store prüfen kann, ob er genutzt werden darf;</li>
   <li>nur mit Kundencode: die Codes und eine zufällige Installationskennung dieses Benutzers; der Server speichert nur einen Prüfwert davon je Lieferung.</li>
 </ul>
@@ -360,6 +362,9 @@ a { color: var(--head); }
   <tr><td>Es sind Updates verfügbar: … Add-on Store jetzt öffnen?</td><td>Einmaliger Hinweis auf neue Updates.</td><td><b>Ja</b> öffnet <b>Verfügbare Updates</b>.</td></tr>
   <tr><td>Das Add-on „…“ (Version …) wurde vom Add-on Store aus Sicherheitsgründen gesperrt: … Jetzt entfernen?</td><td>Sicherheitssperre.</td><td><b>Ja</b> und Administrator-Bestätigung.</td></tr>
   <tr><td>Gesperrte Add-ons entfernt. Power PDF jetzt neu starten, …?</td><td>Entfernen erfolgreich.</td><td>Neu starten.</td></tr>
+  <tr><td>Das Add-on „…“ ist vorübergehend außer Betrieb: … Jetzt abschalten?</td><td>Der Store hat es außer Betrieb genommen.</td><td><b>Ja</b> und Administrator-Bestätigung; ab dem nächsten Start wird es nicht mehr geladen.</td></tr>
+  <tr><td>Das Add-on „…“ ist wieder verfügbar. Jetzt wieder einschalten?</td><td>Wieder in Betrieb.</td><td><b>Ja</b> und Administrator-Bestätigung.</td></tr>
+  <tr><td>Erledigt. Power PDF jetzt neu starten, damit die Änderung wirkt?</td><td>Ab- oder eingeschaltet.</td><td>Neu starten.</td></tr>
   <tr><td>Das Add-on „…“ konnte nicht entfernt werden (Fehler …). Bitte wenden Sie sich an Ihre IT.</td><td>Entfernen gescheitert.</td><td>IT einschalten.</td></tr>
 </table>
 <h2 id="all-messages-in-the-setup">Im Setup</h2>
@@ -436,6 +441,7 @@ a { color: var(--head); }
 <h1 id="version-history">Versionsgeschichte</h1>
 <table>
   <tr><th>Version</th><th>Was ist neu</th></tr>
+  <tr><td>2.3.0</td><td>Außer Betrieb: Nehmen die Store-Betreiber ein Add-on vorübergehend außer Betrieb, schaltet der Add-on Store es nach Ihrer Bestätigung ab, ohne es zu entfernen, und wieder ein, sobald es verfügbar ist. Ihre Einstellungen bleiben erhalten.</td></tr>
   <tr><td>2.2.2</td><td>Die Kapitel stehen ohne Nummern, und Verweise auf andere Kapitel sind Links, die direkt dorthin führen.</td></tr>
   <tr><td>2.1.1</td><td>Die Hilfe ist zuverlässiger: große Bilder, Suche mit Enter, englische Hilfe in arabischer Oberfläche und Hinweise bei offenen Fenstern.</td></tr>
   <tr><td>2.1.0</td><td>Gemeinsame Hilfe für alle installierten Add-ons mit Suche: Knopf <b>Hilfe</b> im Register Erweiterte Funktionen, Hilfe-Knopf und F1 im Store-Fenster und in den Add-ons; die Hilfe des Store in sechs Sprachen.</td></tr>
@@ -463,6 +469,6 @@ a { color: var(--head); }
   <tr><td>0.5.0</td><td>Bewertungen, Problem melden, Bildschirmfotos.</td></tr>
   <tr><td>0.4.0</td><td>Modernes Store-Fenster.</td></tr>
 </table>
-<p>Add-on Store 2.2.2 · Tungsten Automation · Dieses Handbuch beschreibt den Client für Tungsten Power PDF.</p>
+<p>Add-on Store 2.3.0 · Tungsten Automation · Dieses Handbuch beschreibt den Client für Tungsten Power PDF.</p>
 </body>
 </html>

@@ -357,6 +357,9 @@ int PSInstallPackage(const PSCatalogEntry& e, HWND owner)
         L"      $target=Join-Path $plugins ($name+'.zxt')\r\n" +
         L"      if (Test-Path -LiteralPath $target) { try { Remove-Item -LiteralPath $target -Force } catch { Rename-Item -LiteralPath $target ($name+'.zxt.old-'+[guid]::NewGuid().ToString('N')) } }\r\n" +
         L"      Copy-Item -LiteralPath $bin -Destination $target -Force\r\n" +
+        // C2.3.0: a copy the store had switched off (out of service) is replaced by the new one
+        L"      $susp=Join-Path $plugins ($name+'.zxt.suspended')\r\n" +
+        L"      if (Test-Path -LiteralPath $susp) { try { Remove-Item -LiteralPath $susp -Force } catch { Rename-Item -LiteralPath $susp ($name+'.zxt.old-'+[guid]::NewGuid().ToString('N')) } }\r\n" +
         L"      $data=Join-Path $plugins $name\r\n" +
         L"      New-Item -ItemType Directory -Force -Path $data | Out-Null\r\n" +
         L"      Copy-Item -LiteralPath (Join-Path $tmp 'manifest.json') -Destination (Join-Path $data 'manifest.json') -Force\r\n" +
@@ -711,6 +714,10 @@ int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner, s
         L"  try {\r\n" +
         L"    $zxt=Join-Path $plugins ($name + '.zxt')\r\n" +
         L"    if (Test-Path -LiteralPath $zxt) { try { Remove-Item -LiteralPath $zxt -Force } catch { Rename-Item -LiteralPath $zxt ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
+        // C2.3.0: also a copy the store had switched off (out of service)
+        L"    $susp=Join-Path $plugins ($name + '.zxt.suspended')\r\n" +
+        // still loaded when switched off in this session: moved aside like the .zxt above (review C2.3.0)
+        L"    if (Test-Path -LiteralPath $susp) { try { Remove-Item -LiteralPath $susp -Force } catch { Rename-Item -LiteralPath $susp ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
         L"    $data=Join-Path $plugins $name\r\n" +
         L"    Clear-Bin (Join-Path $data 'bin')\r\n" +
         L"    if (Test-Path -LiteralPath $data) { Remove-Item -LiteralPath $data -Recurse -Force }\r\n" +
@@ -740,5 +747,83 @@ int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner, s
     }
 
     FPLogW(L"[Store] uninstall %s -> %d", names.c_str(), result);
+    return result;
+}
+
+// C2.3.0: switch add-ons off (out of service) or on again with ONE elevated step. Off renames
+// Plug-Ins\<name>.zxt to <name>.zxt.suspended (a loaded DLL can be renamed), so Power PDF does not
+// load it from the next start on; on renames it back. Manifest, data folder and HKCU settings stay.
+// Return codes like PSUninstallPackages; done[i] = add-on i is in the wanted state now. Off and on for
+// several add-ons in ONE elevated step (review C2.3.0: never two UAC prompts); a name that is not a store
+// add-on fails on its own, the others are still switched.
+int PSSetAddonsSuspended(const std::vector<std::pair<std::wstring, bool>>& changes, HWND owner, std::vector<bool>* done)
+{
+    if (done) done->assign(changes.size(), false);
+    if (changes.size() > 29) return 4;   // one exit-code bit per add-on
+    if (PSPolicyNoInstall())
+    {
+        FPLogW(L"[Store] switching add-ons blocked by policy DisableInstall");
+        return 7;
+    }
+    if (changes.empty()) return 0;
+    std::wstring pluginsDir = PluginsDir();
+    if (pluginsDir.empty()) return 5;
+    std::wstring items, offs, names;
+    std::vector<size_t> index;   // position in the script -> position in changes
+    for (size_t i = 0; i < changes.size(); ++i)
+    {
+        const std::wstring& z = changes[i].first;
+        // only add-ons with a store manifest, never one of Power PDF's own plug-ins or the store itself
+        if (!PSIsValidZxtName(z) || _wcsicmp(z.c_str(), L"PluginStore") == 0 ||
+            !cspath::FileExists(pluginsDir + L"\\" + z + L"\\manifest.json"))
+        {
+            FPLogW(L"[Store] switch: %s is not a store add-on here, skipped", z.c_str());
+            continue;
+        }
+        // two parallel arrays: @(@('a',$true)) would be flattened by PowerShell into 'a',$true
+        items += (items.empty() ? L"" : L",") + PsQuote(z);
+        offs += (offs.empty() ? L"" : L",") + std::wstring(changes[i].second ? L"$true" : L"$false");
+        names += (names.empty() ? L"" : L",") + z + (changes[i].second ? L":off" : L":on");
+        index.push_back(i);
+    }
+    if (index.empty()) return 4;
+    // a file that is still loaded (switched off earlier in this session) cannot be deleted: moved aside as
+    // *.zxt.old-<guid>, which the next store operation sweeps
+    std::wstring script = std::wstring() +
+        L"$ErrorActionPreference='Stop'\r\n" +
+        L"$plugins=" + PsQuote(pluginsDir) + L"\r\n" +
+        L"function Drop-File($path, $name) { try { Remove-Item -LiteralPath $path -Force } catch { Rename-Item -LiteralPath $path ($name + '.zxt.old-' + [guid]::NewGuid().ToString('N')) } }\r\n" +
+        L"$names=@(" + items + L")\r\n" +
+        L"$offs=@(" + offs + L")\r\n" +
+        L"$failed=0\r\n" +
+        L"for ($i=0; $i -lt $names.Count; $i++) {\r\n" +
+        L"  try {\r\n" +
+        L"    $name=$names[$i]; $off=$offs[$i]\r\n" +
+        L"    $zxt=Join-Path $plugins ($name + '.zxt')\r\n" +
+        L"    $susp=Join-Path $plugins ($name + '.zxt.suspended')\r\n" +
+        L"    if ($off) {\r\n" +
+        L"      if (Test-Path -LiteralPath $zxt) {\r\n" +
+        L"        if (Test-Path -LiteralPath $susp) { Drop-File $susp $name }\r\n" +
+        L"        Rename-Item -LiteralPath $zxt ($name + '.zxt.suspended')\r\n" +
+        L"      }\r\n" +
+        L"      if (Test-Path -LiteralPath $zxt) { throw 'still there' }\r\n" +
+        L"    } else {\r\n" +
+        // a newer copy installed meanwhile wins; the switched-off one goes
+        L"      if (Test-Path -LiteralPath $susp) { if (Test-Path -LiteralPath $zxt) { Drop-File $susp $name } else { Rename-Item -LiteralPath $susp ($name + '.zxt') } }\r\n" +
+        L"      if (-not (Test-Path -LiteralPath $zxt)) { throw 'missing' }\r\n" +
+        L"    }\r\n" +
+        L"  } catch { $failed = $failed -bor (1 -shl $i) }\r\n" +
+        L"}\r\n" +
+        L"exit ($failed -shl 1)\r\n";
+    DWORD code = 1;
+    int result;
+    if (!RunElevated(script, owner, 60000, &code)) { result = 3; code = 0xFFFFFFFF; }
+    else result = code == 0 && index.size() == changes.size() ? 0 : 4;
+    for (size_t k = 0; k < index.size(); ++k)
+    {
+        bool ok = result != 3 && (code & 1u) == 0 && (code & (1u << (k + 1))) == 0;
+        if (done) (*done)[index[k]] = ok;
+    }
+    FPLogW(L"[Store] switch %s -> %d", names.c_str(), result);
     return result;
 }

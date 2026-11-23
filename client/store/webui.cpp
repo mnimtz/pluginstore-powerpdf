@@ -14,6 +14,7 @@
 #include "clocale.h"
 #include "hostversion.h"
 #include "blocklist.h"
+#include "suspend.h"
 #include "helpwin.h"
 #include "Resource.h"
 #include "version.h"
@@ -670,6 +671,10 @@ protected:
             { L"codeBad", IDS_PSO_CODE_BAD },
             { L"migrateText", IDS_PSW_MIGRATE_TEXT }, { L"migrateBtn", IDS_PSW_MIGRATE_BTN }, { L"migrateDone", IDS_PSW_MIGRATE_DONE },
             { L"blockedText", IDS_PSW_BLOCKED_BANNER }, { L"blockedBtn", IDS_PSW_BLOCKED_BTN },
+            // C2.3.0: add-ons out of service
+            { L"suspText", IDS_PSW_SUSP_BANNER }, { L"suspOffBtn", IDS_PSW_SUSP_OFF_BTN }, { L"suspOnBtn", IDS_PSW_SUSP_ON_BTN },
+            { L"suspPaused", IDS_PSW_SUSP_PAUSED }, { L"suspDisabled", IDS_PSW_SUSP_DISABLED }, { L"suspOff", IDS_PSW_SUSP_OFF },
+            { L"suspBack", IDS_PSW_SUSP_BACK },
             { L"attach", IDS_PSW_ATTACH }, { L"attachHint", IDS_PSW_ATTACH_HINT }, { L"attachRefused", IDS_PSW_ATTACH_REFUSED },
             { L"reportStore", IDS_PSW_REPORT_STORE }, { L"noUi", IDS_PSW_NO_UI },
               { L"connects", IDS_PSW_CONNECTS }, { L"connProvider", IDS_PSW_CONN_PROVIDER },
@@ -792,6 +797,14 @@ protected:
                 b += (b.empty() ? L"" : L",") + std::wstring(L"{\"name\":") + Json(x.name) + L",\"version\":" + Json(x.version) +
                      L",\"reason\":" + Json(x.reason) + L"}";
             if (!b.empty()) j += L",\"blocked\":[" + b + L"]";
+        }
+        // installed add-ons out of service, or switched off by the store (C2.3.0)
+        {
+            std::wstring b;
+            for (const auto& x : PSSuspendedInstalled())
+                b += (b.empty() ? L"" : L",") + std::wstring(L"{\"name\":") + Json(x.name) + L",\"level\":" + Json(x.level) +
+                     L",\"reason\":" + Json(x.reason) + L",\"off\":" + (x.off && !x.on ? L"true" : L"false") + L"}";
+            if (!b.empty()) j += L",\"suspended\":[" + b + L"],\"suspendWork\":" + (PSSuspendHasWork() && !PSPolicyNoInstall() ? L"true" : L"false");
         }
         if (m_hasSelfUpdate)
             j += L",\"self\":{\"version\":" + Json(m_self.version) + L",\"installed\":" + Json(FP_VERSION_W) +
@@ -1348,6 +1361,7 @@ protected:
         else if (cmd == L"refresh") { LoadCatalog(false); ServerModeRefresh(); }
         else if (cmd == L"migrateDismiss") MigrateDismiss();
         else if (cmd == L"removeBlocked" && !m_jobRunning) { PSOfferBlockedRemoval(m_hWnd, true); LoadCatalog(false); }
+        else if (cmd == L"applySuspended" && !m_jobRunning) { PSOfferSuspendChanges(m_hWnd, true); LoadCatalog(false); }
         else if (cmd == L"install" || cmd == L"uninstall")
         {
             // The page waits behind a progress dialog until a "result" arrives: every

@@ -40,6 +40,7 @@ a { color: var(--head); }
   <li>Il transmet les problèmes et les suggestions au développeur d’un module, avec des pièces jointes et, si vous le souhaitez, le journal.</li>
   <li>Il vous permet d’évaluer les modules avec des étoiles.</li>
   <li>Il détecte les modules bloqués et propose de les supprimer.</li>
+  <li>Il désactive puis réactive les modules que le store met temporairement hors service, sans les supprimer.</li>
 </ul>
 <h2 id="overview-and-terms-terms">Termes</h2>
 <table>
@@ -217,6 +218,7 @@ a { color: var(--head); }
 <table>
   <tr><th>Indication</th><th>Signification et marche à suivre</th></tr>
   <tr><td>Bloqué par l'Add-on Store pour une raison de sécurité, veuillez supprimer : …</td><td>Les administrateurs du store ont bloqué cette version. <b>Supprimer maintenant</b> la supprime (autorisation d’administrateur). Le client vérifie la liste de blocage 20 secondes après le démarrage, puis toutes les 4 heures, et pose la question une fois par session ; un blocage reste valable même si le serveur devient injoignable par la suite.</td></tr>
+  <tr><td>Temporairement hors service : …</td><td>Les gestionnaires du store ont mis ces modules temporairement hors service. <i>en pause, pas de mises à jour</i> : ils continuent de fonctionner. <i>hors service</i> : <b>Désactiver maintenant</b> les désactive sans les supprimer (confirmation administrateur) ; les paramètres sont conservés. <i>de nouveau disponible</i> : <b>Réactiver</b>. Le client vérifie la liste 30 secondes après le démarrage puis toutes les 4 heures et demande une fois par session ; un serveur injoignable ne bascule rien.</td></tr>
   <tr><td>Des modules d'une installation précédente de Power PDF (…) manquent dans celle-ci : …</td><td>Après le passage à une nouvelle version de Power PDF, le client trouve des modules dans l’ancien dossier du programme. <b>Installer ici</b> les installe l’un après l’autre, avec une seule question de redémarrage à la fin. <b>Plus tard</b> masque l’indication pour ces modules.</td></tr>
   <tr><td>Plus proposé</td><td>Le module est installé mais ne figure plus dans le catalogue, par exemple parce que son code client a été supprimé. Vous pouvez toujours le supprimer.</td></tr>
   <tr><td>Nécessite Power PDF … ou ultérieur</td><td>Le module nécessite une version plus récente de Power PDF. Mettez d’abord Power PDF à jour.</td></tr>
@@ -236,7 +238,7 @@ a { color: var(--head); }
   <tr><td>M'avertir une fois de chaque nouvelle mise à jour</td><td>L’avertissement unique du chapitre <a href="#updates">Mises à jour</a> (par défaut : activé).</td></tr>
   <tr><td>Journalisation détaillée</td><td>Écrit davantage de détails dans <code>%TEMP%\PluginStore.log</code>, pour le dépannage.</td></tr>
 </table>
-<p>En bas figure la version du client, par exemple « Client Add-on Store version 2.2.2 ».</p>
+<p>En bas figure la version du client, par exemple « Client Add-on Store version 2.3.0 ».</p>
 
 <h1 id="links-from-the-website-manual-installation">Liens depuis le site web, installation manuelle</h1>
 <h2 id="links-from-the-website-manual-installation-install-in-power-pdf">« Installer dans Power PDF »</h2>
@@ -300,7 +302,7 @@ a { color: var(--head); }
 <h2 id="for-administrators-privacy">Confidentialité</h2>
 <p>Le client n’envoie aucun document, ni aucun nom d’utilisateur ou d’ordinateur. Chaque requête transmet des données techniques au serveur du store :</p>
 <ul>
-  <li>l’identifiant du programme avec les versions du client, de Power PDF et de Windows ainsi que l’architecture du processeur, par exemple <code>AddonStore-PowerPDF/2.2.2 (PowerPDF …; Windows …; x64)</code> ;</li>
+  <li>l’identifiant du programme avec les versions du client, de Power PDF et de Windows ainsi que l’architecture du processeur, par exemple <code>AddonStore-PowerPDF/2.3.0 (PowerPDF …; Windows …; x64)</code> ;</li>
   <li>le mode de licence de Power PDF (<code>cloud</code>, <code>serial</code> ou <code>unknown</code>), afin que le store puisse vérifier s’il peut être utilisé ;</li>
   <li>uniquement avec un code client : les codes et un identifiant d’installation aléatoire de cet utilisateur ; le serveur n’en conserve qu’une valeur de contrôle par livraison.</li>
 </ul>
@@ -360,6 +362,9 @@ a { color: var(--head); }
   <tr><td>Des mises à jour sont disponibles : … Ouvrir l'Add-on Store maintenant ?</td><td>Avertissement unique sur les nouvelles mises à jour.</td><td><b>Oui</b> ouvre <b>Mises à jour disponibles</b>.</td></tr>
   <tr><td>Le module « … » (version …) a été bloqué par l'Add-on Store pour une raison de sécurité : … Le supprimer maintenant ?</td><td>Blocage de sécurité.</td><td><b>Oui</b>, puis autorisation d’administrateur.</td></tr>
   <tr><td>Modules bloqués supprimés. Redémarrer Power PDF maintenant … ?</td><td>Suppression réussie.</td><td>Redémarrez.</td></tr>
+  <tr><td>Le module « … » est temporairement hors service : … Le désactiver maintenant ?</td><td>Le store l'a mis hors service.</td><td><b>Oui</b> et confirmation administrateur ; il n'est plus chargé à partir du prochain démarrage.</td></tr>
+  <tr><td>Le module « … » est de nouveau disponible. Le réactiver maintenant ?</td><td>De nouveau en service.</td><td><b>Oui</b> et confirmation administrateur.</td></tr>
+  <tr><td>Terminé. Redémarrer Power PDF maintenant pour appliquer la modification ?</td><td>Désactivé ou réactivé.</td><td>Redémarrer.</td></tr>
   <tr><td>Le module « … » n'a pas pu être supprimé (erreur …). Contactez votre service informatique.</td><td>Échec de la suppression.</td><td>Faites appel au service informatique.</td></tr>
 </table>
 <h2 id="all-messages-in-the-setup">Dans le programme d’installation</h2>
@@ -436,6 +441,7 @@ a { color: var(--head); }
 <h1 id="version-history">Historique des versions</h1>
 <table>
   <tr><th>Version</th><th>Nouveautés</th></tr>
+  <tr><td>2.3.0</td><td>Hors service : lorsque les gestionnaires du store mettent temporairement un module hors service, l'Add-on Store le désactive après votre confirmation, sans le supprimer, puis le réactive dès qu'il est de nouveau disponible. Vos paramètres sont conservés.</td></tr>
   <tr><td>2.2.2</td><td>Les chapitres n'affichent plus de numéros, et les renvois vers d'autres chapitres sont des liens qui y mènent directement.</td></tr>
   <tr><td>2.1.1</td><td>L’aide est plus fiable : grandes images, recherche avec Entrée, aide en anglais dans un Power PDF en arabe et messages lorsque des fenêtres sont ouvertes.</td></tr>
   <tr><td>2.1.0</td><td>Aide commune à tous les modules installés, avec recherche : bouton <b>Aide</b> dans l’onglet Fonctions avancées, bouton d’aide et F1 dans la fenêtre du store et dans les modules ; l’aide du store en six langues.</td></tr>
@@ -463,6 +469,6 @@ a { color: var(--head); }
   <tr><td>0.5.0</td><td>Évaluations, signalements de problèmes, captures d’écran.</td></tr>
   <tr><td>0.4.0</td><td>Fenêtre moderne du store.</td></tr>
 </table>
-<p>Add-on Store 2.2.2 · Tungsten Automation · Ce manuel décrit le client pour Tungsten Power PDF.</p>
+<p>Add-on Store 2.3.0 · Tungsten Automation · Ce manuel décrit le client pour Tungsten Power PDF.</p>
 </body>
 </html>

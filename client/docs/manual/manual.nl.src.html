@@ -55,6 +55,7 @@
   <li>Stuurt problemen en suggesties naar de ontwikkelaar van een add-on, met bijlagen en, als u dat wilt, het logboek.</li>
   <li>Laat u add-ons met sterren beoordelen.</li>
   <li>Herkent geblokkeerde add-ons en biedt aan ze te verwijderen.</li>
+  <li>Schakelt add-ons die de store tijdelijk buiten gebruik stelt uit en weer in, zonder ze te verwijderen.</li>
 </ul>
 <h2>Begrippen</h2>
 <table>
@@ -232,6 +233,7 @@
 <table>
   <tr><th>Melding</th><th>Betekenis en wat u moet doen</th></tr>
   <tr><td>Om veiligheidsredenen geblokkeerd door de Add-on Store, verwijder: …</td><td>De beheerders van de store hebben deze versie geblokkeerd. <b>Nu verwijderen</b> verwijdert de add-on (goedkeuring door een beheerder). De client controleert de blokkeerlijst 20 seconden na het starten en daarna elke 4 uur en vraagt het eenmaal per sessie; een blokkering blijft ook gelden als de server later niet bereikbaar is.</td></tr>
+  <tr><td>Tijdelijk buiten gebruik: …</td><td>De beheerders van de store hebben deze add-ons tijdelijk buiten gebruik gesteld. <i>gepauzeerd, geen updates</i>: ze blijven werken. <i>buiten gebruik</i>: <b>Nu uitschakelen</b> schakelt ze uit zonder ze te verwijderen (bevestiging door een beheerder); de instellingen blijven behouden. <i>weer beschikbaar</i>: <b>Weer inschakelen</b>. De client controleert de lijst 30 seconden na het starten en daarna elke 4 uur en vraagt eenmaal per sessie; een onbereikbare server schakelt niets om.</td></tr>
   <tr><td>Invoegtoepassingen uit een eerdere Power PDF-installatie (…) ontbreken in deze: …</td><td>Na een overstap naar een nieuwe versie van Power PDF vindt de client add-ons in de oude programmamap. <b>Hier installeren</b> installeert ze een voor een, met één vraag om opnieuw te starten aan het eind. <b>Later</b> verbergt de melding voor deze add-ons.</td></tr>
   <tr><td>Niet meer aangeboden</td><td>De add-on is geïnstalleerd, maar staat niet meer in de catalogus, bijvoorbeeld omdat de bijbehorende klantcode is verwijderd. U kunt de add-on nog steeds verwijderen.</td></tr>
   <tr><td>Vereist Power PDF … of hoger</td><td>De add-on heeft een nieuwere versie van Power PDF nodig. Werk eerst Power PDF bij.</td></tr>
@@ -375,6 +377,9 @@
   <tr><td>Er zijn updates beschikbaar: … De Add-on Store nu openen?</td><td>Eenmalige melding over nieuwe updates.</td><td><b>Ja</b> opent <b>Beschikbare updates</b>.</td></tr>
   <tr><td>De invoegtoepassing "…" (versie …) is om veiligheidsredenen door de Add-on Store geblokkeerd: … Nu verwijderen?</td><td>Beveiligingsblokkering.</td><td><b>Ja</b> en goedkeuring door een beheerder.</td></tr>
   <tr><td>Geblokkeerde invoegtoepassingen verwijderd. Power PDF nu opnieuw starten …?</td><td>Verwijdering geslaagd.</td><td>Opnieuw starten.</td></tr>
+  <tr><td>De invoegtoepassing "…" is tijdelijk buiten gebruik: … Nu uitschakelen?</td><td>De store heeft haar buiten gebruik gesteld.</td><td><b>Ja</b> en bevestiging door een beheerder; vanaf de volgende start wordt ze niet meer geladen.</td></tr>
+  <tr><td>De invoegtoepassing "…" is weer beschikbaar. Nu weer inschakelen?</td><td>Weer in gebruik.</td><td><b>Ja</b> en bevestiging door een beheerder.</td></tr>
+  <tr><td>Klaar. Power PDF nu opnieuw starten zodat de wijziging van kracht wordt?</td><td>Uit- of ingeschakeld.</td><td>Opnieuw starten.</td></tr>
   <tr><td>De invoegtoepassing "…" kon niet worden verwijderd (fout …). Neem contact op met uw IT-afdeling.</td><td>Verwijdering mislukt.</td><td>Schakel de IT-afdeling in.</td></tr>
 </table>
 <h2>Tijdens de installatie</h2>
@@ -451,6 +456,7 @@
 <h1>19 Versiegeschiedenis</h1>
 <table>
   <tr><th>Versie</th><th>Wat is er nieuw</th></tr>
+  <tr><td>2.3.0</td><td>Buiten gebruik: als de beheerders van de store een invoegtoepassing tijdelijk buiten gebruik stellen, schakelt de Add-on Store haar na uw bevestiging uit zonder haar te verwijderen, en weer in zodra ze beschikbaar is. Uw instellingen blijven behouden.</td></tr>
   <tr><td>2.2.2</td><td>De hoofdstukken tonen geen nummers meer en verwijzingen naar andere hoofdstukken zijn links die er direct naartoe gaan.</td></tr>
   <tr><td>2.1.1</td><td>De help is betrouwbaarder: grote afbeeldingen, zoeken met Enter, Engelse help in een Arabische Power PDF en meldingen bij geopende vensters.</td></tr>
   <tr><td>2.1.0</td><td>Eén gemeenschappelijke help voor alle geïnstalleerde add-ons, met zoekfunctie: knop <b>Help</b> op het tabblad Geavanceerde functies, Help-knop en F1 in het storevenster en in de add-ons; de help van de store in zes talen.</td></tr>

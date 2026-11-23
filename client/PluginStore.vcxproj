@@ -129,6 +129,8 @@
     <ClInclude Include="common\layoutpatch.h" />
     <ClInclude Include="store\oldinstalls.h" />
     <ClInclude Include="store\blocklist.h" />
+    <ClInclude Include="store\suspend.h" />
+    <ClInclude Include="store\suspendcore.h" />
     <ClInclude Include="store\access.h" />
     <ClInclude Include="store\inventory.h" />
     <ClInclude Include="common\loc.h" />
@@ -174,6 +176,7 @@
     <ClCompile Include="store\signature.cpp" />
     <ClCompile Include="store\link.cpp" />
     <ClCompile Include="store\blocklist.cpp" />
+    <ClCompile Include="store\suspend.cpp" />
     <ClCompile Include="store\access.cpp" />
     <ClCompile Include="store\inventory.cpp" />
     <ClCompile Include="store\webui.cpp" />

@@ -55,6 +55,7 @@
   <li>Invia problemi e suggerimenti allo sviluppatore di un componente aggiuntivo, con allegati e, se vuoi, il log.</li>
   <li>Ti permette di valutare i componenti aggiuntivi con le stelle.</li>
   <li>Riconosce i componenti aggiuntivi bloccati e propone di rimuoverli.</li>
+  <li>Disattiva e riattiva i componenti aggiuntivi che lo store mette temporaneamente fuori servizio, senza rimuoverli.</li>
 </ul>
 <h2>Termini</h2>
 <table>
@@ -232,6 +233,7 @@
 <table>
   <tr><th>Indicazione</th><th>Significato e cosa fare</th></tr>
   <tr><td>Bloccato da Add-on Store per motivi di sicurezza, rimuovere: …</td><td>Gli amministratori dello store hanno bloccato questa versione. <b>Rimuovi ora</b> la rimuove (autorizzazione dell’amministratore). Il client controlla l’elenco dei blocchi 20 secondi dopo l’avvio e poi ogni 4 ore e chiede una volta per sessione; un blocco resta valido anche se in seguito il server non è raggiungibile.</td></tr>
+  <tr><td>Temporaneamente fuori servizio: …</td><td>I gestori dello store hanno messo temporaneamente fuori servizio questi componenti. <i>in pausa, nessun aggiornamento</i>: continuano a funzionare. <i>fuori servizio</i>: <b>Disattiva ora</b> li disattiva senza rimuoverli (conferma dell'amministratore); le impostazioni restano. <i>di nuovo disponibile</i>: <b>Riattiva</b>. Il client controlla l'elenco 30 secondi dopo l'avvio e poi ogni 4 ore e chiede una volta per sessione; se il server non è raggiungibile non cambia nulla.</td></tr>
   <tr><td>Componenti aggiuntivi di un'installazione precedente di Power PDF (…) mancano in questa: …</td><td>Dopo il passaggio a una nuova versione di Power PDF il client trova componenti aggiuntivi nella vecchia cartella del programma. <b>Installa qui</b> li installa uno dopo l’altro, con una sola domanda di riavvio alla fine. <b>Più tardi</b> nasconde l’indicazione per questi componenti aggiuntivi.</td></tr>
   <tr><td>Non più offerto</td><td>Il componente aggiuntivo è installato ma non è più presente nel catalogo, ad esempio perché il relativo codice cliente è stato rimosso. Puoi comunque rimuoverlo.</td></tr>
   <tr><td>Richiede Power PDF … o successivo</td><td>Il componente aggiuntivo richiede una versione più recente di Power PDF. Aggiorna prima Power PDF.</td></tr>
@@ -375,6 +377,9 @@
   <tr><td>Sono disponibili aggiornamenti: … Aprire ora l'Add-on Store?</td><td>Avviso unico sui nuovi aggiornamenti.</td><td><b>Sì</b> apre <b>Aggiornamenti disponibili</b>.</td></tr>
   <tr><td>Il componente aggiuntivo "…" (versione …) è stato bloccato da Add-on Store per motivi di sicurezza: … Rimuoverlo ora?</td><td>Blocco di sicurezza.</td><td><b>Sì</b> e autorizzazione dell’amministratore.</td></tr>
   <tr><td>Componenti bloccati rimossi. Riavviare ora Power PDF …?</td><td>Rimozione riuscita.</td><td>Riavvia.</td></tr>
+  <tr><td>Il componente aggiuntivo "…" è temporaneamente fuori servizio: … Disattivarlo ora?</td><td>Lo store lo ha messo fuori servizio.</td><td><b>Sì</b> e conferma dell'amministratore; dal prossimo avvio non viene più caricato.</td></tr>
+  <tr><td>Il componente aggiuntivo "…" è di nuovo disponibile. Riattivarlo ora?</td><td>Di nuovo in servizio.</td><td><b>Sì</b> e conferma dell'amministratore.</td></tr>
+  <tr><td>Fatto. Riavviare ora Power PDF perché la modifica abbia effetto?</td><td>Disattivato o riattivato.</td><td>Riavvia.</td></tr>
   <tr><td>Impossibile rimuovere il componente aggiuntivo "…" (errore …). Contatta il reparto IT.</td><td>Rimozione non riuscita.</td><td>Coinvolgi il reparto IT.</td></tr>
 </table>
 <h2>Durante l’installazione</h2>
@@ -451,6 +456,7 @@
 <h1>19 Cronologia delle versioni</h1>
 <table>
   <tr><th>Versione</th><th>Novità</th></tr>
+  <tr><td>2.3.0</td><td>Fuori servizio: quando i gestori dello store mettono temporaneamente fuori servizio un componente aggiuntivo, Add-on Store lo disattiva dopo la tua conferma, senza rimuoverlo, e lo riattiva quando è di nuovo disponibile. Le impostazioni restano.</td></tr>
   <tr><td>2.2.2</td><td>I capitoli non mostrano più numeri e i rimandi ad altri capitoli sono link che portano direttamente lì.</td></tr>
   <tr><td>2.1.1</td><td>La guida è più affidabile: immagini grandi, ricerca con Invio, guida in inglese in un Power PDF in arabo e avvisi con finestre aperte.</td></tr>
   <tr><td>2.1.0</td><td>Una guida comune per tutti i componenti aggiuntivi installati, con ricerca: pulsante <b>Guida</b> nella scheda Funzioni avanzate, pulsante della guida e F1 nella finestra dello store e nei componenti aggiuntivi; la guida dello store in sei lingue.</td></tr>

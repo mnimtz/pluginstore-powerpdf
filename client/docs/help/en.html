@@ -40,6 +40,7 @@ a { color: var(--head); }
   <li>Sends problems and suggestions to the developer of an add-on, with attachments and, if you like, the log.</li>
   <li>Lets you rate add-ons with stars.</li>
   <li>Detects blocked add-ons and offers to remove them.</li>
+  <li>Switches add-ons that the store takes out of service for now off and on again, without removing them.</li>
 </ul>
 <h2 id="overview-and-terms-terms">Terms</h2>
 <table>
@@ -217,6 +218,7 @@ a { color: var(--head); }
 <table>
   <tr><th>Note</th><th>Meaning and what to do</th></tr>
   <tr><td>Blocked by the Add-on Store for a security reason, please remove: …</td><td>The store administrators blocked this version. <b>Remove now</b> removes it (administrator approval). The client checks the block list 20 seconds after start and every 4 hours after that and asks once per session; a block holds also when the server is unreachable later.</td></tr>
+  <tr><td>Out of service for now: …</td><td>The store operators took these add-ons out of service for now. <i>paused, no updates</i>: they keep running. <i>out of service</i>: <b>Switch off now</b> switches them off without removing them (administrator confirmation); settings stay. <i>available again</i>: <b>Switch on again</b>. The client checks the list 30 seconds after the start and then every 4 hours and asks once per session; an unreachable server switches nothing.</td></tr>
   <tr><td>Add-ons from an earlier Power PDF installation (…) are missing in this one: …</td><td>After a move to a new Power PDF version the client finds add-ons in the old program folder. <b>Install here</b> installs them one after the other, with one restart question at the end. <b>Later</b> hides the note for these add-ons.</td></tr>
   <tr><td>No longer offered</td><td>The add-on is installed but no longer in the catalog, for example because its customer code was removed. You can still remove it.</td></tr>
   <tr><td>Requires Power PDF … or later</td><td>The add-on needs a newer version of Power PDF. Update Power PDF first.</td></tr>
@@ -236,7 +238,7 @@ a { color: var(--head); }
   <tr><td>Notify me once about each new update</td><td>The one-time notice from chapter <a href="#updates">Updates</a> (default: on).</td></tr>
   <tr><td>Verbose logging</td><td>Writes more details to <code>%TEMP%\PluginStore.log</code>, for troubleshooting.</td></tr>
 </table>
-<p>At the bottom is the version of the client, for example "Add-on Store client version 2.2.2".</p>
+<p>At the bottom is the version of the client, for example "Add-on Store client version 2.3.0".</p>
 
 <h1 id="links-from-the-website-manual-installation">Links from the website, manual installation</h1>
 <h2 id="links-from-the-website-manual-installation-install-in-power-pdf">"Install in Power PDF"</h2>
@@ -300,7 +302,7 @@ a { color: var(--head); }
 <h2 id="for-administrators-privacy">Privacy</h2>
 <p>The client sends no documents and no names of users or computers. Every request carries technical data to the store server:</p>
 <ul>
-  <li>the program identifier with the versions of client, Power PDF and Windows and the processor architecture, for example <code>AddonStore-PowerPDF/2.2.2 (PowerPDF …; Windows …; x64)</code>;</li>
+  <li>the program identifier with the versions of client, Power PDF and Windows and the processor architecture, for example <code>AddonStore-PowerPDF/2.3.0 (PowerPDF …; Windows …; x64)</code>;</li>
   <li>the license mode of Power PDF (<code>cloud</code>, <code>serial</code> or <code>unknown</code>), so the store can check whether it may be used;</li>
   <li>only with a customer code: the codes and a random installation id of this user; the server stores only a check value of it per delivery.</li>
 </ul>
@@ -360,6 +362,9 @@ a { color: var(--head); }
   <tr><td>Updates are available: … Open the Add-on Store now?</td><td>One-time notice about new updates.</td><td><b>Yes</b> opens <b>Available updates</b>.</td></tr>
   <tr><td>The add-on “…” (version …) was blocked by the Add-on Store for a security reason: … Remove it now?</td><td>Security block.</td><td><b>Yes</b> and administrator approval.</td></tr>
   <tr><td>Blocked add-ons removed. Restart Power PDF now …?</td><td>Removal succeeded.</td><td>Restart.</td></tr>
+  <tr><td>The add-on “…” is out of service for now: … Switch it off now?</td><td>The store took it out of service.</td><td><b>Yes</b> and administrator confirmation; it is no longer loaded from the next start on.</td></tr>
+  <tr><td>The add-on “…” is available again. Switch it on again now?</td><td>Back in service.</td><td><b>Yes</b> and administrator confirmation.</td></tr>
+  <tr><td>Done. Restart Power PDF now so the change takes effect?</td><td>Switched off or on.</td><td>Restart.</td></tr>
   <tr><td>The add-on “…” could not be removed (error …). Please contact your IT department.</td><td>Removal failed.</td><td>Involve IT.</td></tr>
 </table>
 <h2 id="all-messages-in-the-setup">In the setup</h2>
@@ -436,6 +441,7 @@ a { color: var(--head); }
 <h1 id="version-history">Version history</h1>
 <table>
   <tr><th>Version</th><th>What's new</th></tr>
+  <tr><td>2.3.0</td><td>Out of service: when the store operators take an add-on out of service for now, the Add-on Store switches it off after you confirm, without removing it, and on again once it is available. Your settings stay.</td></tr>
   <tr><td>2.2.2</td><td>The chapters no longer show numbers, and references to other chapters are links that take you straight there.</td></tr>
   <tr><td>2.1.1</td><td>The help is more reliable: large pictures, search with Enter, English help in an Arabic Power PDF and notices while windows are open.</td></tr>
   <tr><td>2.1.0</td><td>One help for all installed add-ons, with search: <b>Help</b> button on the Enhanced Features tab, Help button and F1 in the store window and in the add-ons; the store's help in six languages.</td></tr>
@@ -463,6 +469,6 @@ a { color: var(--head); }
   <tr><td>0.5.0</td><td>Ratings, problem reports, screenshots.</td></tr>
   <tr><td>0.4.0</td><td>Modern store window.</td></tr>
 </table>
-<p>Add-on Store 2.2.2 · Tungsten Automation · This manual describes the client for Tungsten Power PDF.</p>
+<p>Add-on Store 2.3.0 · Tungsten Automation · This manual describes the client for Tungsten Power PDF.</p>
 </body>
 </html>
