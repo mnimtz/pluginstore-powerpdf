@@ -383,6 +383,7 @@ public class BackupService
             finally { AddonStore.Web.Data.CacheKeeper.Hold(); }
             CatalogUi.Invalidate();   // S1.13.2: the cached catalog belongs to the old database
             SettingsService.ClearCache();   // S2.0.4: so do the cached settings
+            GitScan.SuspensionService.Invalidate();   // S2.8.0: and the add-ons out of service
 
             foreach (var (_, root) in folders) SwapContents(root + ".restore", root);
         }

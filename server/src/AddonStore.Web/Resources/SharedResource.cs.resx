@@ -1771,4 +1771,205 @@
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Tato akce je během údržby pozastavena. Zkuste to prosím později; vaše zadání nebylo uloženo.</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>Zpět do katalogu</value></data>
   <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>Hodnota správce může minimum pouze zvýšit: samotný balíček vyžaduje novější verzi Power PDF.</value></data>
+  <data name="Out of service" xml:space="preserve"><value>Mimo provoz</value></data>
+  <data name="Git &amp; Veracode" xml:space="preserve"><value>Git &amp; Veracode</value></data>
+  <data name="Add-ons are built and scanned in their git repositories; the store connects to the git server, shows the scan results and keeps the emergency brake for every add-on." xml:space="preserve"><value>Doplňky se sestavují a skenují ve svých repozitářích git; obchod se připojuje k serveru git, zobrazuje výsledky skenů a pro každý doplněk drží nouzovou brzdu.</value></data>
+  <data name="{0} add-ons are out of service or paused." xml:space="preserve"><value>Doplňky mimo provoz nebo pozastavené: {0}.</value></data>
+  <data name="Take out of service" xml:space="preserve"><value>Vyřadit z provozu</value></data>
+  <data name="The review date of at least one add-on out of service has come." xml:space="preserve"><value>Nastalo datum kontroly alespoň jednoho doplňku mimo provoz.</value></data>
+  <data name="Git connection" xml:space="preserve"><value>Připojení ke gitu</value></data>
+  <data name="Last webhook" xml:space="preserve"><value>Poslední webhook</value></data>
+  <data name="Veracode" xml:space="preserve"><value>Veracode</value></data>
+  <data name="not configured" xml:space="preserve"><value>nenakonfigurováno</value></data>
+  <data name="Linked add-ons" xml:space="preserve"><value>Propojené doplňky</value></data>
+  <data name="Automatic approval" xml:space="preserve"><value>Automatické schválení</value></data>
+  <data name="Step 1 of the concept: connect, link, receive webhooks, take out of service. Importing built and scanned versions, scans on a schedule, deadlines and automatic approval follow in the next steps; their settings can already be prepared here." xml:space="preserve"><value>Krok 1 konceptu: připojení, propojení, příjem webhooků, vyřazení z provozu. Import sestavených a naskenovaných verzí, plánované skeny, lhůty a automatické schválení následují v dalších krocích; jejich nastavení lze připravit již zde.</value></data>
+  <data name="Any git server with a GitHub API: GitHub.com now, the company's GitHub Enterprise later. Changing the server only means changing these values." xml:space="preserve"><value>Libovolný server git s rozhraním GitHub API: nyní GitHub.com, později firemní GitHub Enterprise. Změna serveru znamená pouze změnu těchto hodnot.</value></data>
+  <data name="Connection active (webhooks are accepted, repositories can be listed)" xml:space="preserve"><value>Připojení aktivní (webhooky jsou přijímány, repozitáře lze vypsat)</value></data>
+  <data name="Git server" xml:space="preserve"><value>Server git</value></data>
+  <data name="API address" xml:space="preserve"><value>Adresa API</value></data>
+  <data name="GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3" xml:space="preserve"><value>GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3</value></data>
+  <data name="Sign-in" xml:space="preserve"><value>Přihlášení</value></data>
+  <data name="GitHub App (recommended)" xml:space="preserve"><value>GitHub App (doporučeno)</value></data>
+  <data name="Fine-grained token" xml:space="preserve"><value>Token s podrobnými oprávněními</value></data>
+  <data name="GitHub App" xml:space="preserve"><value>GitHub App</value></data>
+  <data name="App ID" xml:space="preserve"><value>App ID</value></data>
+  <data name="Installation ID" xml:space="preserve"><value>ID instalace</value></data>
+  <data name="Private key (.pem)" xml:space="preserve"><value>Privátní klíč (.pem)</value></data>
+  <data name="Remove the stored key" xml:space="preserve"><value>Odebrat uložený klíč</value></data>
+  <data name="Rights the app needs: Contents read, Actions read and write, Metadata read, Pull requests read and write." xml:space="preserve"><value>Oprávnění, která aplikace potřebuje: Contents (čtení), Actions (čtení a zápis), Metadata (čtení), Pull requests (čtení a zápis).</value></data>
+  <data name="Remove the stored token" xml:space="preserve"><value>Odebrat uložený token</value></data>
+  <data name="Owner (optional)" xml:space="preserve"><value>Vlastník (volitelné)</value></data>
+  <data name="Only repositories of this user or organisation are offered for links." xml:space="preserve"><value>K propojení se nabízejí pouze repozitáře tohoto uživatele nebo organizace.</value></data>
+  <data name="Webhook" xml:space="preserve"><value>Webhook</value></data>
+  <data name="The git server reports finished workflow runs and releases here. Enter address and secret in the webhook settings of the GitHub App or organisation (content type application/json)." xml:space="preserve"><value>Server git sem hlásí dokončená spuštění pracovních postupů a vydání. Zadejte adresu a tajný klíč v nastavení webhooku aplikace GitHub App nebo organizace (typ obsahu application/json).</value></data>
+  <data name="Secret" xml:space="preserve"><value>Tajný klíč</value></data>
+  <data name="created on {0}" xml:space="preserve"><value>vytvořeno {0}</value></data>
+  <data name="not created yet" xml:space="preserve"><value>zatím nevytvořeno</value></data>
+  <data name="Create a new secret? The old one stops working at once." xml:space="preserve"><value>Vytvořit nový tajný klíč? Starý okamžitě přestane fungovat.</value></data>
+  <data name="Create a webhook secret?" xml:space="preserve"><value>Vytvořit tajný klíč webhooku?</value></data>
+  <data name="New secret" xml:space="preserve"><value>Nový tajný klíč</value></data>
+  <data name="Create secret" xml:space="preserve"><value>Vytvořit tajný klíč</value></data>
+  <data name="The workflow in each repository runs the Veracode policy scan. Here the store learns which result counts and, optionally, checks it with Veracode itself." xml:space="preserve"><value>Pracovní postup v každém repozitáři spouští sken zásad Veracode. Zde obchod určuje, který výsledek platí, a volitelně jej ověří přímo u Veracode.</value></data>
+  <data name="Result" xml:space="preserve"><value>Výsledek</value></data>
+  <data name="From the workflow (the store asks the git server which run it came from)" xml:space="preserve"><value>Z pracovního postupu (obchod se serveru git zeptá, ze kterého spuštění pochází)</value></data>
+  <data name="In addition, check the policy status with Veracode" xml:space="preserve"><value>Navíc ověřit stav zásad u Veracode</value></data>
+  <data name="Region" xml:space="preserve"><value>Oblast</value></data>
+  <data name="Commercial" xml:space="preserve"><value>Komerční</value></data>
+  <data name="Europe" xml:space="preserve"><value>Evropa</value></data>
+  <data name="US Federal" xml:space="preserve"><value>US Federal</value></data>
+  <data name="API ID" xml:space="preserve"><value>API ID</value></data>
+  <data name="Read only is enough (role Results API). Veracode credentials expire after a year by default." xml:space="preserve"><value>Stačí pouze čtení (role Results API). Přihlašovací údaje Veracode ve výchozím nastavení vyprší po roce.</value></data>
+  <data name="Expected policy" xml:space="preserve"><value>Očekávaná zásada</value></data>
+  <data name="Scan on a schedule: day" xml:space="preserve"><value>Plánovaný sken: den</value></data>
+  <data name="Hour" xml:space="preserve"><value>Hodina</value></data>
+  <data name="The live version of each linked add-on is scanned again on this day, so new rules or aged components show up without a code change." xml:space="preserve"><value>Živá verze každého propojeného doplňku se v tento den znovu naskenuje, takže nová pravidla nebo zastaralé komponenty se projeví bez změny kódu.</value></data>
+  <data name="Link an add-on" xml:space="preserve"><value>Propojit doplněk</value></data>
+  <data name="Change link" xml:space="preserve"><value>Změnit propojení</value></data>
+  <data name="Which repository builds and scans which add-on. Repositories with several add-ons use a folder and their own tag pattern." xml:space="preserve"><value>Který repozitář sestavuje a skenuje který doplněk. Repozitáře s více doplňky používají složku a vlastní vzor tagů.</value></data>
+  <data name="Load repositories from the git server" xml:space="preserve"><value>Načíst repozitáře ze serveru git</value></data>
+  <data name="{0} repositories" xml:space="preserve"><value>Repozitáře: {0}</value></data>
+  <data name="Add-on Store server" xml:space="preserve"><value>Server Add-on Store</value></data>
+  <data name="Add-on Store client" xml:space="preserve"><value>Klient Add-on Store</value></data>
+  <data name="Repository (owner/name)" xml:space="preserve"><value>Repozitář (owner/name)</value></data>
+  <data name="Folder (optional)" xml:space="preserve"><value>Složka (volitelné)</value></data>
+  <data name="Tag pattern" xml:space="preserve"><value>Vzor tagů</value></data>
+  <data name="Workflow file" xml:space="preserve"><value>Soubor pracovního postupu</value></data>
+  <data name="Automatic approval for this add-on" xml:space="preserve"><value>Automatické schválení pro tento doplněk</value></data>
+  <data name="As the global rule" xml:space="preserve"><value>Podle globálního pravidla</value></data>
+  <data name="Never" xml:space="preserve"><value>Nikdy</value></data>
+  <data name="Automatically to beta" xml:space="preserve"><value>Automaticky do beta verze</value></data>
+  <data name="Automatically live" xml:space="preserve"><value>Automaticky do živé verze</value></data>
+  <data name="The store server and client are never approved automatically." xml:space="preserve"><value>Server a klient obchodu se nikdy neschvalují automaticky.</value></data>
+  <data name="No add-on is linked yet." xml:space="preserve"><value>Zatím není propojen žádný doplněk.</value></data>
+  <data name="Repository" xml:space="preserve"><value>Repozitář</value></data>
+  <data name="Tags" xml:space="preserve"><value>Tagy</value></data>
+  <data name="Workflow" xml:space="preserve"><value>Pracovní postup</value></data>
+  <data name="Change" xml:space="preserve"><value>Změnit</value></data>
+  <data name="Remove this link?" xml:space="preserve"><value>Odebrat toto propojení?</value></data>
+  <data name="After a person has approved an add-on once, later versions from its linked repository can be approved by the store itself, for example when a Veracode finding was fixed. Every automatic approval is logged, mailed to the admins and can be taken back." xml:space="preserve"><value>Jakmile člověk doplněk jednou schválí, může pozdější verze z propojeného repozitáře schvalovat obchod sám, například po opravě nálezu Veracode. Každé automatické schválení se zaznamená, odešle e-mailem správcům a lze jej vzít zpět.</value></data>
+  <data name="Approve automatically" xml:space="preserve"><value>Schvalovat automaticky</value></data>
+  <data name="Stage" xml:space="preserve"><value>Fáze</value></data>
+  <data name="Always required" xml:space="preserve"><value>Vždy vyžadováno</value></data>
+  <data name="A person has approved an earlier version of the add-on." xml:space="preserve"><value>Člověk schválil dřívější verzi doplňku.</value></data>
+  <data name="The version comes from the linked repository, with a matching tag, from the stored workflow." xml:space="preserve"><value>Verze pochází z propojeného repozitáře, s odpovídajícím tagem, z uloženého pracovního postupu.</value></data>
+  <data name="The Veracode policy is passed." xml:space="preserve"><value>Zásada Veracode je splněna.</value></data>
+  <data name="The store's checks find no errors, and no new online services, third-party components, licenses or rights since the last approved version." xml:space="preserve"><value>Kontroly obchodu nenacházejí žádné chyby ani nové online služby, komponenty třetích stran, licence nebo oprávnění od poslední schválené verze.</value></data>
+  <data name="Optional conditions" xml:space="preserve"><value>Volitelné podmínky</value></data>
+  <data name="The AI review aid recommends approval" xml:space="preserve"><value>Asistent kontroly s AI doporučuje schválení</value></data>
+  <data name="Warnings are allowed only when the last approved version had them too" xml:space="preserve"><value>Varování jsou povolena pouze tehdy, pokud je měla i poslední schválená verze</value></data>
+  <data name="Only patch and minor versions (never a new major version)" xml:space="preserve"><value>Pouze opravné a dílčí verze (nikdy nová hlavní verze)</value></data>
+  <data name="Only versions that fix a finding of a scheduled scan" xml:space="preserve"><value>Pouze verze, které opravují nález plánovaného skenu</value></data>
+  <data name="Never automatic: the store client and add-ons without a link." xml:space="preserve"><value>Nikdy automaticky: klient obchodu a doplňky bez propojení.</value></data>
+  <data name="Deadlines" xml:space="preserve"><value>Lhůty</value></data>
+  <data name="When a scan finds something new in a live version, a deadline starts. The developer and the admins are reminded before it ends." xml:space="preserve"><value>Když sken najde v živé verzi něco nového, začne běžet lhůta. Vývojář a správci dostanou připomenutí před jejím koncem.</value></data>
+  <data name="Deadline (days)" xml:space="preserve"><value>Lhůta (dny)</value></data>
+  <data name="Reminders (days before the end)" xml:space="preserve"><value>Připomenutí (dny před koncem)</value></data>
+  <data name="When the deadline has passed" xml:space="preserve"><value>Po uplynutí lhůty</value></data>
+  <data name="Only warn" xml:space="preserve"><value>Pouze varovat</value></data>
+  <data name="Mark the add-on in the catalog (findings open)" xml:space="preserve"><value>Označit doplněk v katalogu (otevřené nálezy)</value></data>
+  <data name="Pause the add-on" xml:space="preserve"><value>Pozastavit doplněk</value></data>
+  <data name="Pause, then take out of service" xml:space="preserve"><value>Pozastavit, poté vyřadit z provozu</value></data>
+  <data name="Take out of service after (days after pausing)" xml:space="preserve"><value>Vyřadit z provozu po (dny od pozastavení)</value></data>
+  <data name="For a problem that is too big or cannot be solved quickly. Works for every add-on, linked or not." xml:space="preserve"><value>Pro problém, který je příliš velký nebo jej nelze rychle vyřešit. Funguje pro každý doplněk, propojený i nepropojený.</value></data>
+  <data name="no new installations or updates; installed copies keep running." xml:space="preserve"><value>žádné nové instalace ani aktualizace; nainstalované kopie dál běží.</value></data>
+  <data name="in addition, store clients from 2.3.0 switch installed copies off at the next Power PDF start, without removing them; settings stay." xml:space="preserve"><value>navíc klienti obchodu od verze 2.3.0 při příštím spuštění Power PDF nainstalované kopie vypnou, aniž by je odebrali; nastavení zůstane.</value></data>
+  <data name="the strongest step (on the plug-in page): clients ask to remove the add-on." xml:space="preserve"><value>nejsilnější stupeň (na stránce zásuvného modulu): klienti požádají o odebrání doplňku.</value></data>
+  <data name="Choose…" xml:space="preserve"><value>Vyberte…</value></data>
+  <data name="Level" xml:space="preserve"><value>Úroveň</value></data>
+  <data name="Review date (optional)" xml:space="preserve"><value>Datum kontroly (volitelné)</value></data>
+  <data name="Tell customers with a delivery of this add-on (their contact address)" xml:space="preserve"><value>Informovat zákazníky, kterým byl tento doplněk dodán (na jejich kontaktní adresu)</value></data>
+  <data name="As an emergency user you may take an add-on out of service or raise the level. Putting it back into service is up to the admins." xml:space="preserve"><value>Jako nouzový uživatel můžete doplněk vyřadit z provozu nebo zvýšit úroveň. Vrácení do provozu je na správcích.</value></data>
+  <data name="Add-ons out of service" xml:space="preserve"><value>Doplňky mimo provoz</value></data>
+  <data name="No add-on is out of service." xml:space="preserve"><value>Žádný doplněk není mimo provoz.</value></data>
+  <data name="Review date" xml:space="preserve"><value>Datum kontroly</value></data>
+  <data name="told" xml:space="preserve"><value>informováno</value></data>
+  <data name="Put this add-on back into service?" xml:space="preserve"><value>Vrátit tento doplněk do provozu?</value></data>
+  <data name="Back into service" xml:space="preserve"><value>Vrátit do provozu</value></data>
+  <data name="Withdraw version {0} and go back to the earlier one?" xml:space="preserve"><value>Stáhnout verzi {0} a vrátit se k dřívější?</value></data>
+  <data name="Back to the last good version" xml:space="preserve"><value>Zpět na poslední dobrou verzi</value></data>
+  <data name="Emergency users" xml:space="preserve"><value>Nouzoví uživatelé</value></data>
+  <data name="They may take add-ons out of service (and raise the level), nothing else: no approvals, no putting back. Admins always may." xml:space="preserve"><value>Mohou vyřazovat doplňky z provozu (a zvyšovat úroveň), nic jiného: žádná schválení, žádné vracení. Správci mohou vždy.</value></data>
+  <data name="No other active users." xml:space="preserve"><value>Žádní další aktivní uživatelé.</value></data>
+  <data name="Tell customers by default" xml:space="preserve"><value>Ve výchozím nastavení informovat zákazníky</value></data>
+  <data name="This add-on is out of service." xml:space="preserve"><value>Tento doplněk je mimo provoz.</value></data>
+  <data name="This add-on is paused." xml:space="preserve"><value>Tento doplněk je pozastaven.</value></data>
+  <data name="Enter the API address of the git server." xml:space="preserve"><value>Zadejte adresu API serveru git.</value></data>
+  <data name="The App ID is a number." xml:space="preserve"><value>App ID je číslo.</value></data>
+  <data name="The installation ID is a number." xml:space="preserve"><value>ID instalace je číslo.</value></data>
+  <data name="The owner is the name of a user or organisation, e.g. tungsten-automation." xml:space="preserve"><value>Vlastník je název uživatele nebo organizace, např. tungsten-automation.</value></data>
+  <data name="Paste the whole .pem file of the GitHub App (it starts with -----BEGIN)." xml:space="preserve"><value>Vložte celý soubor .pem aplikace GitHub App (začíná na -----BEGIN).</value></data>
+  <data name="The token is one line without spaces." xml:space="preserve"><value>Token je jeden řádek bez mezer.</value></data>
+  <data name="New webhook secret created. Copy it now; it is not shown again." xml:space="preserve"><value>Byl vytvořen nový tajný klíč webhooku. Zkopírujte jej nyní; znovu se nezobrazí.</value></data>
+  <data name="The API ID has letters, digits and hyphens." xml:space="preserve"><value>API ID obsahuje písmena, číslice a spojovníky.</value></data>
+  <data name="The API key is a hex string (as Veracode shows it when it is created)." xml:space="preserve"><value>Klíč API je šestnáctkový řetězec (jak jej Veracode zobrazí při vytvoření).</value></data>
+  <data name="The policy name has at most 100 characters." xml:space="preserve"><value>Název zásady má nejvýše 100 znaků.</value></data>
+  <data name="The deadline lies between 1 and 365 days." xml:space="preserve"><value>Lhůta je v rozmezí 1 až 365 dní.</value></data>
+  <data name="Between 0 and 180 days." xml:space="preserve"><value>V rozmezí 0 až 180 dní.</value></data>
+  <data name="The review date lies between today and one year from now." xml:space="preserve"><value>Datum kontroly musí být mezi dneškem a dnem za jeden rok.</value></data>
+  <data name="Add-on links" xml:space="preserve"><value>Propojení doplňků</value></data>
+  <data name="The connection test failed." xml:space="preserve"><value>Test připojení se nezdařil.</value></data>
+  <data name="Only admins and emergency users take add-ons out of service." xml:space="preserve"><value>Doplňky mohou vyřazovat z provozu pouze správci a nouzoví uživatelé.</value></data>
+  <data name="Choose paused or out of service." xml:space="preserve"><value>Vyberte pozastaveno nebo mimo provoz.</value></data>
+  <data name="Give a reason (3 to 300 characters); users see it." xml:space="preserve"><value>Uveďte důvod (3 až 300 znaků); uživatelé jej uvidí.</value></data>
+  <data name="Unknown add-on." xml:space="preserve"><value>Neznámý doplněk.</value></data>
+  <data name="The store client itself cannot be taken out of service." xml:space="preserve"><value>Samotného klienta obchodu nelze vyřadit z provozu.</value></data>
+  <data name="This add-on has a security block; that already takes it out of the store." xml:space="preserve"><value>Tento doplněk má bezpečnostní blokaci; ta jej již z obchodu odstraňuje.</value></data>
+  <data name="Emergency users may raise the level, not lower it; ask an admin." xml:space="preserve"><value>Nouzoví uživatelé mohou úroveň zvýšit, ne snížit; požádejte správce.</value></data>
+  <data name="Changes saved." xml:space="preserve"><value>Změny uloženy.</value></data>
+  <data name="Only admins put an add-on back into service." xml:space="preserve"><value>Doplněk mohou vrátit do provozu pouze správci.</value></data>
+  <data name="This add-on is not out of service." xml:space="preserve"><value>Tento doplněk není mimo provoz.</value></data>
+  <data name="Add-on back in service." xml:space="preserve"><value>Doplněk je opět v provozu.</value></data>
+  <data name="Only admins go back to an earlier version." xml:space="preserve"><value>K dřívější verzi se mohou vrátit pouze správci.</value></data>
+  <data name="Not for the store client." xml:space="preserve"><value>Neplatí pro klienta obchodu.</value></data>
+  <data name="This add-on has no live version." xml:space="preserve"><value>Tento doplněk nemá živou verzi.</value></data>
+  <data name="There is no earlier version approved for live to go back to." xml:space="preserve"><value>Neexistuje žádná dřívější verze schválená pro živý provoz, ke které by se dalo vrátit.</value></data>
+  <data name="The earlier version cannot be restored." xml:space="preserve"><value>Dřívější verzi nelze obnovit.</value></data>
+  <data name="The newest version cannot be withdrawn." xml:space="preserve"><value>Nejnovější verzi nelze stáhnout.</value></data>
+  <data name="Back to version {0}: it is live again, {1} is withdrawn." xml:space="preserve"><value>Zpět na verzi {0}: je opět živá, verze {1} je stažena.</value></data>
+  <data name="Choose an add-on." xml:space="preserve"><value>Vyberte doplněk.</value></data>
+  <data name="Enter the repository as owner/name." xml:space="preserve"><value>Zadejte repozitář ve tvaru owner/name.</value></data>
+  <data name="The folder is a relative path inside the repository, e.g. measuretools." xml:space="preserve"><value>Složka je relativní cesta uvnitř repozitáře, např. measuretools.</value></data>
+  <data name="The tag pattern uses letters, digits, . _ - / and *, e.g. v* or measuretools-v*." xml:space="preserve"><value>Vzor tagů používá písmena, číslice, . _ - / a *, např. v* nebo measuretools-v*.</value></data>
+  <data name="The workflow is a file under .github/workflows/ ending in .yml." xml:space="preserve"><value>Pracovní postup je soubor v .github/workflows/ s příponou .yml.</value></data>
+  <data name="The store itself is never approved automatically." xml:space="preserve"><value>Samotný obchod se nikdy neschvaluje automaticky.</value></data>
+  <data name="This link no longer exists." xml:space="preserve"><value>Toto propojení již neexistuje.</value></data>
+  <data name="This add-on is already linked; change the existing link." xml:space="preserve"><value>Tento doplněk je již propojen; změňte stávající propojení.</value></data>
+  <data name="Enter the API address as https://host/... without user name or password." xml:space="preserve"><value>Zadejte adresu API ve tvaru https://host/... bez uživatelského jména a hesla.</value></data>
+  <data name="Only https is allowed (http only for localhost)." xml:space="preserve"><value>Povoleno je pouze https (http pouze pro localhost).</value></data>
+  <data name="App ID, installation ID and private key are needed." xml:space="preserve"><value>Je potřeba App ID, ID instalace a privátní klíč.</value></data>
+  <data name="Enter a token." xml:space="preserve"><value>Zadejte token.</value></data>
+  <data name="The git server did not answer in time." xml:space="preserve"><value>Server git neodpověděl včas.</value></data>
+  <data name="The git server cannot be reached at this address." xml:space="preserve"><value>Server git na této adrese není dostupný.</value></data>
+  <data name="The address answered, but not like a GitHub API." xml:space="preserve"><value>Adresa odpověděla, ale ne jako GitHub API.</value></data>
+  <data name="The private key cannot be read. Paste the whole .pem file of the GitHub App." xml:space="preserve"><value>Privátní klíč nelze přečíst. Vložte celý soubor .pem aplikace GitHub App.</value></data>
+  <data name="The git server refused the app: check the App ID and the private key." xml:space="preserve"><value>Server git aplikaci odmítl: zkontrolujte App ID a privátní klíč.</value></data>
+  <data name="The git server refused the sign-in: the token is wrong or has expired." xml:space="preserve"><value>Server git odmítl přihlášení: token je chybný nebo vypršel.</value></data>
+  <data name="The git server refused access (403): the token or app lacks rights, or a rate limit applies." xml:space="preserve"><value>Server git odepřel přístup (403): token nebo aplikace nemá oprávnění, nebo platí omezení počtu požadavků.</value></data>
+  <data name="The installation was not found: check the installation ID (the app must be installed in the organisation)." xml:space="preserve"><value>Instalace nebyla nalezena: zkontrolujte ID instalace (aplikace musí být nainstalována v organizaci).</value></data>
+  <data name="Nothing found at this address: check the API address (GitHub Enterprise Server: https://host/api/v3)." xml:space="preserve"><value>Na této adrese nebylo nic nalezeno: zkontrolujte adresu API (GitHub Enterprise Server: https://host/api/v3).</value></data>
+  <data name="The address redirects elsewhere; the store does not follow redirects with credentials. Enter the final API address." xml:space="preserve"><value>Adresa přesměrovává jinam; obchod nesleduje přesměrování s přihlašovacími údaji. Zadejte konečnou adresu API.</value></data>
+  <data name="The installation ID is a number (shown in the address of the app's installation page)." xml:space="preserve"><value>ID instalace je číslo (zobrazené v adrese stránky instalace aplikace).</value></data>
+  <data name="Enter the API ID and the API key." xml:space="preserve"><value>Zadejte API ID a klíč API.</value></data>
+  <data name="Veracode refused the sign-in: API ID or key is wrong, expired, or belongs to another region." xml:space="preserve"><value>Veracode odmítl přihlášení: API ID nebo klíč je chybný, vypršel nebo patří do jiné oblasti.</value></data>
+  <data name="Signed in, but the account may not read application profiles (role: Results API or Reviewer)." xml:space="preserve"><value>Přihlášeno, ale účet nesmí číst profily aplikací (role: Results API nebo Reviewer).</value></data>
+  <data name="Veracode did not answer in time." xml:space="preserve"><value>Veracode neodpověděl včas.</value></data>
+  <data name="Veracode cannot be reached from the server." xml:space="preserve"><value>Veracode není ze serveru dostupný.</value></data>
+  <data name="Veracode answered with something unexpected." xml:space="preserve"><value>Veracode odpověděl něčím neočekávaným.</value></data>
+  <data name="Add-on taken out of service, back in service, or its review date has come" xml:space="preserve"><value>Doplněk vyřazen z provozu, vrácen do provozu nebo nastalo jeho datum kontroly</value></data>
+  <data name="Admins, owner, customers with a delivery" xml:space="preserve"><value>Správci, vlastník, zákazníci s dodávkou</value></data>
+  <data name="Add-on taken out of service." xml:space="preserve"><value>Doplněk vyřazen z provozu.</value></data>
+  <data name="Add-on paused." xml:space="preserve"><value>Doplněk pozastaven.</value></data>
+  <data name="Link saved." xml:space="preserve"><value>Propojení uloženo.</value></data>
+  <data name="Link removed." xml:space="preserve"><value>Propojení odebráno.</value></data>
+  <data name="Sunday" xml:space="preserve"><value>Neděle</value></data>
+  <data name="Monday" xml:space="preserve"><value>Pondělí</value></data>
+  <data name="Tuesday" xml:space="preserve"><value>Úterý</value></data>
+  <data name="Wednesday" xml:space="preserve"><value>Středa</value></data>
+  <data name="Thursday" xml:space="preserve"><value>Čtvrtek</value></data>
+  <data name="Friday" xml:space="preserve"><value>Pátek</value></data>
+  <data name="Saturday" xml:space="preserve"><value>Sobota</value></data>
+  <data name="Someone else changed this add-on at the same moment. Look at the list and try again." xml:space="preserve"><value>Někdo jiný změnil tento doplněk ve stejném okamžiku. Prohlédněte si seznam a zkuste to znovu.</value></data>
+  <data name="Saved. The git server changed, so the stored key and token were removed; enter them for the new server." xml:space="preserve"><value>Uloženo. Server git se změnil, proto byly uložený klíč a token odstraněny; zadejte je pro nový server.</value></data>
+  <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>Změna záznamu: "Změnit" vyplní formulář výše jeho úrovní, důvodem a datem kontroly.</value></data>
 </root>

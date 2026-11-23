@@ -329,6 +329,8 @@ public class VersionActionService
             await _db.ShareStats.Where(s => s.PackageId == packageId).ExecuteDeleteAsync();
             await _db.FederationIntakes.Where(i => i.PackageId == packageId).ExecuteDeleteAsync();
             await _db.FederationHandovers.Where(h => h.PackageId == packageId).ExecuteDeleteAsync();
+            await _db.AddonSuspensions.Where(s => s.PackageId == packageId).ExecuteDeleteAsync();   // S2.8.0
+            await _db.GitScanLinks.Where(l => l.Target == packageId).ExecuteDeleteAsync();
             await _db.PackageVersions.Where(v => v.PackageId == packageId).ExecuteDeleteAsync();
             await _db.Packages.Where(p => p.Id == packageId).ExecuteDeleteAsync();
             if (!await _db.RetiredPackages.AnyAsync(r => r.Id == packageId))
@@ -341,6 +343,7 @@ public class VersionActionService
         }
         _db.ChangeTracker.Clear();
         CatalogUi.Invalidate();
+        GitScan.SuspensionService.Invalidate();
 
         // package and source files: the add-on's own folder in the package storage, nothing outside it
         var removedFiles = "files removed";

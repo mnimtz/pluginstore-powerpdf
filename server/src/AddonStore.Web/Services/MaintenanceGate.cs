@@ -19,7 +19,21 @@ public static class MaintenanceGate
     {
         "/Account/Login", "/Account/Logout", "/signin-oidc",
         "/api/packages/validate", "/api/client/inventory", "/api/deliveries/release",
+        // S2.8.0: git webhooks are not sent again by the git server; checked by their signature, they only write the event log
+        "/api/git/webhook",
     };
+    // S2.8.0: the emergency brake works in maintenance too (the handler itself checks admin or emergency user)
+    private static readonly System.Text.RegularExpressions.Regex SuspendPath = new(@"^/api/packages/[A-Za-z0-9._-]{1,200}/suspend\z",
+        System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(100));
+
+    /// <summary>Taking an add-on out of service (POST only), by API or on the Git &amp; Veracode page.</summary>
+    public static bool IsEmergencyBrake(HttpRequest r)
+    {
+        if (!HttpMethods.IsPost(r.Method)) return false;
+        var p = (r.Path.Value ?? "").TrimEnd('/');
+        if (string.Equals(p, "/Admin/GitScan", StringComparison.OrdinalIgnoreCase) && string.Equals(r.Query["handler"], "Suspend", StringComparison.OrdinalIgnoreCase)) return true;
+        try { return SuspendPath.IsMatch(p); } catch (System.Text.RegularExpressions.RegexMatchTimeoutException) { return false; }
+    }
     private static readonly System.Text.RegularExpressions.Regex ClickPath = new(@"^/a/[A-Za-z0-9._-]{1,120}/click\z",
         System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(100));
 
@@ -42,7 +56,7 @@ public static class MaintenanceGate
 
     public static async Task Middleware(HttpContext ctx, Func<Task> next)
     {
-        if (!IsWrite(ctx.Request.Method) || IsOpen(ctx.Request.Path)) { await next(); return; }
+        if (!IsWrite(ctx.Request.Method) || IsOpen(ctx.Request.Path) || IsEmergencyBrake(ctx.Request)) { await next(); return; }
         var settings = ctx.RequestServices.GetRequiredService<SettingsService>();
         var config = ctx.RequestServices.GetRequiredService<IConfiguration>();
         if (await ServerMode.GetAsync(settings, config) != ServerMode.Maintenance) { await next(); return; }

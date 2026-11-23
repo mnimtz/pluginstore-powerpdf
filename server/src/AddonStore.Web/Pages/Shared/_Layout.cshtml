@@ -54,7 +54,7 @@
     string On(params string[] prefixes) => At(prefixes) ? "active" : "";
     var backS = Uri.EscapeDataString(Context.Request.Path + Context.Request.QueryString);
     // S1.18.0: problem reports, Send to and the audit log live under Settings for admins
-    var settingsArea = isAdminS && At("/Admin/Settings", "/Admin/Backup", "/Admin/Categories", "/Admin/Rules", "/Issues", "/Admin/SendTo", "/Admin/Audit");
+    var settingsArea = isAdminS && At("/Admin/Settings", "/Admin/Backup", "/Admin/Categories", "/Admin/Rules", "/Issues", "/Admin/SendTo", "/Admin/Audit", "/Admin/GitScan");
     var deliveryArea = At("/Customers", "/Customer", "/Templates", "/Admin/Inventory");
     var helpArea = At("/Docs", "/Admin/Docs", "/Developer") || (!isAdminS && At("/Admin/Rules"));
 }
@@ -200,6 +200,7 @@ else if (serverMode == "maintenance")
                     {
                         <a class="sub @On("/Admin/SendTo")" href="/Admin/SendTo">@L["Send to"]</a>
                     }
+                    <a class="sub @On("/Admin/GitScan")" href="/Admin/GitScan">@L["Git & Veracode"]</a>
                     <a class="sub @On("/Admin/Audit")" href="/Admin/Audit">@L["Audit"]</a>
                     @foreach (var (key, label) in AddonStore.Web.Pages.Admin.SettingsModel.Views)
                     {
@@ -272,6 +273,7 @@ else
                             {
                                 <a class="@On("/Admin/SendTo")" href="/Admin/SendTo">@L["Send to"]</a>
                             }
+                            <a class="@On("/Admin/GitScan")" href="/Admin/GitScan">@L["Git & Veracode"]</a>
                             <a class="@On("/Admin/Audit")" href="/Admin/Audit">@L["Audit"]</a>
                             <hr />
                             <a class="@On("/Admin/Backup")" href="/Admin/Backup">@L["Backup and restore"]</a>

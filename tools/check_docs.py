@@ -15,13 +15,16 @@ SOURCES = ['Validation/PackageValidator.cs', 'Validation/ReportView.cs', 'Servic
            'Services/PackageMetaService.cs', 'Services/CategoryService.cs', 'Services/SourceService.cs',
            'Services/CustomerService.cs', 'Services/TemplateService.cs', 'Program.cs',
            'Services/SendToService.cs', 'Api/SendToEndpoints.cs',
-           'Services/FederationService.cs', 'Services/FederationService.Handover.cs', 'Services/FederationService.Mirror.cs', 'Api/FederationEndpoints.cs']   # UAT environments (S1.21.0)
+           'Services/FederationService.cs', 'Services/FederationService.Handover.cs', 'Services/FederationService.Mirror.cs', 'Api/FederationEndpoints.cs',   # UAT environments (S1.21.0)
+           'Api/GitScanEndpoints.cs']   # Git & Veracode (S2.8.0)
 EXTRA_CODES = {'CLIENT_ADMIN_ONLY', 'VERSION_EXISTS', 'VALIDATION_FAILED', 'NOT_OWNER', 'LIVE_VERSION',
                'TOKEN_INVALID', 'TOKEN_REVOKED', 'USER_NOT_ACTIVE', 'NO_PACKAGE',
                'METADATA_INVALID', 'PACKAGE_NOT_FOUND', 'SOURCE_REJECTED', 'SOURCE_MISSING', 'ADMIN_ONLY',
                'QUERY_INVALID', 'VERSION_NOT_FOUND', 'AI_REVIEW_MISSING', 'AI_OFF', 'AI_FAILED',
                'CUSTOMER_INVALID', 'CUSTOMER_NOT_FOUND', 'DELIVERY_NOT_FOUND', 'DELIVERY_EXISTS', 'DELIVERY_INVALID',
-               'PROMOTE_NOTHING', 'CODE_NOT_FOUND', 'VISIBILITY_INVALID', 'VISIBILITY_KEPT', 'CSRF_CHECK', 'RATE_LIMITED', 'BUNDLE_INVALID', 'BLOCK_INVALID'}
+               'PROMOTE_NOTHING', 'CODE_NOT_FOUND', 'VISIBILITY_INVALID', 'VISIBILITY_KEPT', 'CSRF_CHECK', 'RATE_LIMITED', 'BUNDLE_INVALID', 'BLOCK_INVALID',
+               'ADDON_SUSPENDED', 'SUSPEND_INVALID', 'NOT_SUSPENDED', 'ROLLBACK_NOT_POSSIBLE', 'SIGNATURE_INVALID', 'PAYLOAD_TOO_LARGE',
+               'SUSPEND_BODY_INVALID', 'REVIEW_DATE_INVALID', 'SUSPEND_FORBIDDEN', 'DELIVERY_ID_MISSING'}
 
 code = ''
 for rel in SOURCES:
@@ -101,6 +104,10 @@ with open(os.path.join(ROOT, 'Api', 'FederationEndpoints.cs'), encoding='utf-8')
 routes |= {(m.upper(), norm('/api/federation' + p)) for m, p in re.findall(r'fed\.Map(Get|Post|Put|Patch|Delete)\("([^"]*)"', federation)}
 routes |= {(m.upper(), norm('/api/admin/uat' + p)) for m, p in re.findall(r'adm\.Map(Get|Post|Put|Patch|Delete)\("([^"]*)"', federation)}
 routes |= {(m.upper(), norm('/api/packages' + p)) for m, p in re.findall(r'pkgs\.Map(Get|Post|Put|Patch|Delete)\("([^"]*)"', federation)}
+# Git & Veracode (S2.8.0): absolute routes app.Map...("/api/...") in Api/GitScanEndpoints.cs
+with open(os.path.join(ROOT, 'Api', 'GitScanEndpoints.cs'), encoding='utf-8') as f:
+    gitscan = f.read()
+routes |= {(m.upper(), norm(p)) for m, p in re.findall(r'app\.Map(Get|Post|Put|Patch|Delete)\("(/api/[^"]*)"', gitscan)}
 described = {(m.upper(), norm(p)) for m, p in re.findall(r'new\("(get|post|put|patch|delete|head)", "([^"]+)"', openapi)}
 undocumented = sorted(f'{m} {p}' for m, p in routes - described)
 if undocumented:

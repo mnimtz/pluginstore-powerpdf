@@ -203,6 +203,10 @@ public static class ApiEndpoints
                     "GET  /api/blocked                security blocks: sha256(package id), version or *, reason (format=tsv for the client)",
                     "POST|DELETE /api/packages/{id}/{version}/block  block a version for a security reason {reason} (admins)",
                     "POST|DELETE /api/packages/{id}/block  block the whole add-on {reason} (admins)",
+                    "GET  /api/suspended              add-ons out of service (S2.8.0): sha256(package id), level paused|disabled, reason (format=tsv for the client)",
+                    "POST|DELETE /api/packages/{id}/suspend  take out of service {level, reason, reviewAt?, notifyCustomers?} (admins, emergency users) / back into service (admins)",
+                    "POST /api/packages/{id}/rollback  back to the last good version: newest live version withdrawn, the earlier one live (admins)",
+                    "POST /api/git/webhook            webhook of the linked git server (signature X-Hub-Signature-256; set up under Git & Veracode)",
                     "GET  /api/tools/make-ppak.ps1    offline packer: .ppak and the upload package (.ppak + source ZIP) for a manual upload on the website"
                 }.Concat(SendToService.DocsVisible
                     ? new[] { "*    /api/sendto/*                Send to: device API of the Send to add-on (see the agent guide, section Send to)" }
@@ -390,10 +394,11 @@ public static class ApiEndpoints
                 {
                     var cctx = await Services.CatalogUi.Context.LoadAsync(db);
                     var deliveredIds = new HashSet<string>();
+                    var suspendedIds = await Services.GitScan.SuspensionService.IdsAsync(db);   // S2.8.0
                     foreach (var g in grants)
                     {
                         var (v, ch) = CustomerService.Pick(g, beta);
-                        if (v is null || (!binOk && Services.CatalogUi.HasBin(v)) || !deliveredIds.Add(v.PackageId)) continue;
+                        if (v is null || suspendedIds.Contains(v.PackageId) || (!binOk && Services.CatalogUi.HasBin(v)) || !deliveredIds.Add(v.PackageId)) continue;
                         items.RemoveAll(i => i.Id == v.PackageId);   // a delivery overrides the public entry
                         items.Add(Services.CatalogUi.Item(cctx, v, ch, culture, g.Customer.Name));
                     }
@@ -1687,6 +1692,11 @@ public static class ApiEndpoints
             // waiting for review (S1.6.0): the people who check it, a private delivery or the developer's test code
             if (v.Status == VersionStatus.Submitted && !staff && !await customers.MayGetSubmittedAsync(ctx, pkgRow, version))
                 return NotFound("VERSION_NOT_FOUND", $"No downloadable version {version} of '{id}'.");
+            // S2.8.0: out of service: only the people who check it and the developer's test code
+            if (!staff && (await Services.GitScan.SuspensionService.AllAsync(db)).TryGetValue(id, out var susp) && !await customers.IsTestVersionAsync(ctx, id, version))
+                return Results.Json(new { ok = false, error = new { code = "ADDON_SUSPENDED",
+                    message = $"{id} is temporarily {(susp.Level == "disabled" ? "out of service" : "paused")}: {susp.Reason}",
+                    hint = "The store admins take it back into service once the problem is solved." } }, statusCode: 403);
             if (!staff && id != SubmissionService.ClientPackageId && !await customers.IsTestVersionAsync(ctx, id, version))
             {
                 var held = await customers.GrantsAsync(ctx);
@@ -2025,8 +2035,10 @@ public static class ApiEndpoints
         tests ??= new();
         if (signing is not null) await signing.EnsureLoadedAsync();
         // S2.0.6: the light rows from memory (LightVersions)
+        // S2.8.0: add-ons out of service are not offered (the developer's test code still gets them, to test a fix)
+        var suspended = await Services.GitScan.SuspensionService.IdsAsync(db);
         var all = (await AddonStore.Web.Data.LightVersions.AllAsync(db))
-            .Where(v => v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta)).ToList();
+            .Where(v => (v.Status == VersionStatus.Live || (includeBeta && v.Status == VersionStatus.Beta)) && !suspended.Contains(v.PackageId)).ToList();
         var cmp = new SemVerComparer();
         var result = new List<object>();
         var ownerRows = await db.Packages.Include(p => p.Owner).ToListAsync();
@@ -2066,7 +2078,7 @@ public static class ApiEndpoints
         foreach (var g in grants ?? new())
         {
             var (v, ch) = CustomerService.Pick(g, includeBeta);
-            if (v is not null && delivered.Add(v.PackageId)) result.Add(Entry(v, ch, g.Customer.Name));
+            if (v is not null && !suspended.Contains(v.PackageId) && delivered.Add(v.PackageId)) result.Add(Entry(v, ch, g.Customer.Name));
         }
         foreach (var t in tests) result.Add(Entry(t.Version, t.Channel, t.Label));   // developer test code (S1.6.0)
         return result;

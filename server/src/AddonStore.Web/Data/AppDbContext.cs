@@ -49,6 +49,10 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<FederationPairingCode> FederationPairingCodes => Set<FederationPairingCode>();
     public DbSet<FederationIntake> FederationIntakes => Set<FederationIntake>();          // S1.22.0 (E2)
     public DbSet<FederationHandover> FederationHandovers => Set<FederationHandover>();
+    // "Git & Veracode" (S2.8.0, Data/GitScanEntities.cs)
+    public DbSet<AddonSuspension> AddonSuspensions => Set<AddonSuspension>();
+    public DbSet<GitScanLink> GitScanLinks => Set<GitScanLink>();
+    public DbSet<GitScanEvent> GitScanEvents => Set<GitScanEvent>();
 
     // S1.17.3: inside an explicit transaction SaveChanges returns before the commit, so a catalog loaded in between
     // still read the old rows under the new generation; the commit of such a transaction starts one more generation
@@ -135,5 +139,8 @@ public class AppDbContext : IdentityDbContext<AppUser>
         b.Entity<SendToBlock>().HasIndex(x => new { x.BlockerId, x.BlockedId }).IsUnique();
         b.Entity<SendToEnvelope>().HasIndex(e => e.RecipientDeviceId);
         b.Entity<SendToEnvelope>().HasIndex(e => e.TransferId);
+        b.Entity<AddonSuspension>().HasKey(x => x.PackageId);
+        b.Entity<GitScanLink>().HasIndex(l => l.Target).IsUnique();
+        b.Entity<GitScanEvent>().HasIndex(e => e.At);
     }
 }

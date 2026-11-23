@@ -98,6 +98,7 @@ public class NotificationService
         ("CustomerDelivery", "Customer delivery created or changed by a developer", "Admins"),
         ("BackupFailed",    "Automatic backup failed",          "Admins"),
         ("PowerPdfUpdate",  "New Power PDF update or major version detected", "Admins"),
+        ("AddonSuspended",  "Add-on taken out of service, back in service, or its review date has come", "Admins, owner, customers with a delivery"),
     };
 
     private readonly IAppEmailSender _mail;

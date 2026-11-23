@@ -39,6 +39,8 @@ public static class ManualInstall
                         db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private" && p.BlockedAt == null))
             .Select(v => new { v.Id, v.PackageId, v.Version }).ToListAsync();
         var cmp = new SemVerComparer();
+        var suspended = await GitScan.SuspensionService.IdsAsync(db);   // S2.8.0: no manual installation while out of service
+        lives = lives.Where(v => !suspended.Contains(v.PackageId)).ToList();
         return lives.GroupBy(v => v.PackageId)
             .ToDictionary(g => g.Key, g => g.OrderByDescending(v => v.Version, cmp).Select(v => (v.Id, v.Version)).First());
     }

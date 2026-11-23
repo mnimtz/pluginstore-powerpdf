@@ -1771,4 +1771,205 @@
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>此操作在维护期间暂停。请稍后重试；您输入的内容未保存。</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>返回目录</value></data>
   <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>管理员设置的值只能提高最低版本：程序包本身要求更高的 Power PDF 版本。</value></data>
+  <data name="Out of service" xml:space="preserve"><value>已停用</value></data>
+  <data name="Git &amp; Veracode" xml:space="preserve"><value>Git 与 Veracode</value></data>
+  <data name="Add-ons are built and scanned in their git repositories; the store connects to the git server, shows the scan results and keeps the emergency brake for every add-on." xml:space="preserve"><value>加载项在各自的 git 仓库中构建和扫描；商店连接 git 服务器，显示扫描结果，并为每个加载项保留紧急制动。</value></data>
+  <data name="{0} add-ons are out of service or paused." xml:space="preserve"><value>{0} 个加载项已停用或已暂停。</value></data>
+  <data name="Take out of service" xml:space="preserve"><value>停用</value></data>
+  <data name="The review date of at least one add-on out of service has come." xml:space="preserve"><value>至少有一个已停用加载项的复查日期已到。</value></data>
+  <data name="Git connection" xml:space="preserve"><value>Git 连接</value></data>
+  <data name="Last webhook" xml:space="preserve"><value>上次 Webhook</value></data>
+  <data name="Veracode" xml:space="preserve"><value>Veracode</value></data>
+  <data name="not configured" xml:space="preserve"><value>未配置</value></data>
+  <data name="Linked add-ons" xml:space="preserve"><value>已关联的加载项</value></data>
+  <data name="Automatic approval" xml:space="preserve"><value>自动审批</value></data>
+  <data name="Step 1 of the concept: connect, link, receive webhooks, take out of service. Importing built and scanned versions, scans on a schedule, deadlines and automatic approval follow in the next steps; their settings can already be prepared here." xml:space="preserve"><value>方案第 1 步：连接、关联、接收 Webhook、停用。导入已构建和扫描的版本、定时扫描、期限和自动审批将在后续步骤中提供；其设置现在已可在此处预先准备。</value></data>
+  <data name="Any git server with a GitHub API: GitHub.com now, the company's GitHub Enterprise later. Changing the server only means changing these values." xml:space="preserve"><value>任何提供 GitHub API 的 git 服务器：现在是 GitHub.com，以后是公司的 GitHub Enterprise。更换服务器只需更改这些值。</value></data>
+  <data name="Connection active (webhooks are accepted, repositories can be listed)" xml:space="preserve"><value>连接已启用（接受 Webhook，可列出仓库）</value></data>
+  <data name="Git server" xml:space="preserve"><value>Git 服务器</value></data>
+  <data name="API address" xml:space="preserve"><value>API 地址</value></data>
+  <data name="GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3" xml:space="preserve"><value>GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3</value></data>
+  <data name="Sign-in" xml:space="preserve"><value>登录</value></data>
+  <data name="GitHub App (recommended)" xml:space="preserve"><value>GitHub App（推荐）</value></data>
+  <data name="Fine-grained token" xml:space="preserve"><value>细粒度令牌</value></data>
+  <data name="GitHub App" xml:space="preserve"><value>GitHub App</value></data>
+  <data name="App ID" xml:space="preserve"><value>App ID</value></data>
+  <data name="Installation ID" xml:space="preserve"><value>安装 ID</value></data>
+  <data name="Private key (.pem)" xml:space="preserve"><value>私钥 (.pem)</value></data>
+  <data name="Remove the stored key" xml:space="preserve"><value>删除已存储的密钥</value></data>
+  <data name="Rights the app needs: Contents read, Actions read and write, Metadata read, Pull requests read and write." xml:space="preserve"><value>应用所需权限：Contents 读取，Actions 读取和写入，Metadata 读取，Pull requests 读取和写入。</value></data>
+  <data name="Remove the stored token" xml:space="preserve"><value>删除已存储的令牌</value></data>
+  <data name="Owner (optional)" xml:space="preserve"><value>所有者（可选）</value></data>
+  <data name="Only repositories of this user or organisation are offered for links." xml:space="preserve"><value>仅提供此用户或组织的仓库用于关联。</value></data>
+  <data name="Webhook" xml:space="preserve"><value>Webhook</value></data>
+  <data name="The git server reports finished workflow runs and releases here. Enter address and secret in the webhook settings of the GitHub App or organisation (content type application/json)." xml:space="preserve"><value>git 服务器在此报告已完成的工作流运行和发布。请在 GitHub App 或组织的 Webhook 设置中输入地址和密钥（内容类型 application/json）。</value></data>
+  <data name="Secret" xml:space="preserve"><value>密钥</value></data>
+  <data name="created on {0}" xml:space="preserve"><value>创建于 {0}</value></data>
+  <data name="not created yet" xml:space="preserve"><value>尚未创建</value></data>
+  <data name="Create a new secret? The old one stops working at once." xml:space="preserve"><value>要创建新密钥吗？旧密钥将立即失效。</value></data>
+  <data name="Create a webhook secret?" xml:space="preserve"><value>要创建 Webhook 密钥吗？</value></data>
+  <data name="New secret" xml:space="preserve"><value>新密钥</value></data>
+  <data name="Create secret" xml:space="preserve"><value>创建密钥</value></data>
+  <data name="The workflow in each repository runs the Veracode policy scan. Here the store learns which result counts and, optionally, checks it with Veracode itself." xml:space="preserve"><value>每个仓库中的工作流运行 Veracode 策略扫描。商店在此了解以哪个结果为准，并可选择通过 Veracode 本身进行核实。</value></data>
+  <data name="Result" xml:space="preserve"><value>结果</value></data>
+  <data name="From the workflow (the store asks the git server which run it came from)" xml:space="preserve"><value>来自工作流（商店向 git 服务器查询其来源运行）</value></data>
+  <data name="In addition, check the policy status with Veracode" xml:space="preserve"><value>此外，向 Veracode 核实策略状态</value></data>
+  <data name="Region" xml:space="preserve"><value>区域</value></data>
+  <data name="Commercial" xml:space="preserve"><value>商业</value></data>
+  <data name="Europe" xml:space="preserve"><value>欧洲</value></data>
+  <data name="US Federal" xml:space="preserve"><value>美国联邦</value></data>
+  <data name="API ID" xml:space="preserve"><value>API ID</value></data>
+  <data name="Read only is enough (role Results API). Veracode credentials expire after a year by default." xml:space="preserve"><value>只读权限即可（角色 Results API）。Veracode 凭据默认一年后过期。</value></data>
+  <data name="Expected policy" xml:space="preserve"><value>预期策略</value></data>
+  <data name="Scan on a schedule: day" xml:space="preserve"><value>定时扫描：星期</value></data>
+  <data name="Hour" xml:space="preserve"><value>小时</value></data>
+  <data name="The live version of each linked add-on is scanned again on this day, so new rules or aged components show up without a code change." xml:space="preserve"><value>每个已关联加载项的正式版本会在这一天重新扫描，这样无需更改代码即可发现新规则或老化组件带来的问题。</value></data>
+  <data name="Link an add-on" xml:space="preserve"><value>关联加载项</value></data>
+  <data name="Change link" xml:space="preserve"><value>更改关联</value></data>
+  <data name="Which repository builds and scans which add-on. Repositories with several add-ons use a folder and their own tag pattern." xml:space="preserve"><value>哪个仓库构建和扫描哪个加载项。包含多个加载项的仓库使用文件夹和各自的标签模式。</value></data>
+  <data name="Load repositories from the git server" xml:space="preserve"><value>从 git 服务器加载仓库</value></data>
+  <data name="{0} repositories" xml:space="preserve"><value>{0} 个仓库</value></data>
+  <data name="Add-on Store server" xml:space="preserve"><value>Add-on Store 服务器</value></data>
+  <data name="Add-on Store client" xml:space="preserve"><value>Add-on Store 客户端</value></data>
+  <data name="Repository (owner/name)" xml:space="preserve"><value>仓库 (owner/name)</value></data>
+  <data name="Folder (optional)" xml:space="preserve"><value>文件夹（可选）</value></data>
+  <data name="Tag pattern" xml:space="preserve"><value>标签模式</value></data>
+  <data name="Workflow file" xml:space="preserve"><value>工作流文件</value></data>
+  <data name="Automatic approval for this add-on" xml:space="preserve"><value>此加载项的自动审批</value></data>
+  <data name="As the global rule" xml:space="preserve"><value>按全局规则</value></data>
+  <data name="Never" xml:space="preserve"><value>从不</value></data>
+  <data name="Automatically to beta" xml:space="preserve"><value>自动发布到 Beta</value></data>
+  <data name="Automatically live" xml:space="preserve"><value>自动发布到正式版</value></data>
+  <data name="The store server and client are never approved automatically." xml:space="preserve"><value>商店服务器和客户端从不自动审批。</value></data>
+  <data name="No add-on is linked yet." xml:space="preserve"><value>尚未关联任何加载项。</value></data>
+  <data name="Repository" xml:space="preserve"><value>仓库</value></data>
+  <data name="Tags" xml:space="preserve"><value>标签</value></data>
+  <data name="Workflow" xml:space="preserve"><value>工作流</value></data>
+  <data name="Change" xml:space="preserve"><value>更改</value></data>
+  <data name="Remove this link?" xml:space="preserve"><value>要删除此关联吗？</value></data>
+  <data name="After a person has approved an add-on once, later versions from its linked repository can be approved by the store itself, for example when a Veracode finding was fixed. Every automatic approval is logged, mailed to the admins and can be taken back." xml:space="preserve"><value>在有人审批过某个加载项一次后，其关联仓库的后续版本可由商店自动审批，例如在修复了 Veracode 发现的问题后。每次自动审批都会被记录、通过邮件通知管理员，并且可以撤回。</value></data>
+  <data name="Approve automatically" xml:space="preserve"><value>自动审批</value></data>
+  <data name="Stage" xml:space="preserve"><value>阶段</value></data>
+  <data name="Always required" xml:space="preserve"><value>始终必需</value></data>
+  <data name="A person has approved an earlier version of the add-on." xml:space="preserve"><value>已有人审批过该加载项的早期版本。</value></data>
+  <data name="The version comes from the linked repository, with a matching tag, from the stored workflow." xml:space="preserve"><value>该版本来自关联仓库，具有匹配的标签，并由已存储的工作流生成。</value></data>
+  <data name="The Veracode policy is passed." xml:space="preserve"><value>已通过 Veracode 策略。</value></data>
+  <data name="The store's checks find no errors, and no new online services, third-party components, licenses or rights since the last approved version." xml:space="preserve"><value>商店检查未发现错误，且自上次审批版本以来没有新的在线服务、第三方组件、许可证或权限。</value></data>
+  <data name="Optional conditions" xml:space="preserve"><value>可选条件</value></data>
+  <data name="The AI review aid recommends approval" xml:space="preserve"><value>AI 审查助手建议批准</value></data>
+  <data name="Warnings are allowed only when the last approved version had them too" xml:space="preserve"><value>仅当上次审批的版本也有警告时才允许警告</value></data>
+  <data name="Only patch and minor versions (never a new major version)" xml:space="preserve"><value>仅限补丁版本和次要版本（绝不包括新的主要版本）</value></data>
+  <data name="Only versions that fix a finding of a scheduled scan" xml:space="preserve"><value>仅限修复定时扫描所发现问题的版本</value></data>
+  <data name="Never automatic: the store client and add-ons without a link." xml:space="preserve"><value>从不自动：商店客户端和未关联的加载项。</value></data>
+  <data name="Deadlines" xml:space="preserve"><value>期限</value></data>
+  <data name="When a scan finds something new in a live version, a deadline starts. The developer and the admins are reminded before it ends." xml:space="preserve"><value>当扫描在正式版本中发现新问题时，期限开始计算。期限结束前会提醒开发者和管理员。</value></data>
+  <data name="Deadline (days)" xml:space="preserve"><value>期限（天）</value></data>
+  <data name="Reminders (days before the end)" xml:space="preserve"><value>提醒（结束前天数）</value></data>
+  <data name="When the deadline has passed" xml:space="preserve"><value>期限过后</value></data>
+  <data name="Only warn" xml:space="preserve"><value>仅警告</value></data>
+  <data name="Mark the add-on in the catalog (findings open)" xml:space="preserve"><value>在目录中标记该加载项（存在未解决的问题）</value></data>
+  <data name="Pause the add-on" xml:space="preserve"><value>暂停该加载项</value></data>
+  <data name="Pause, then take out of service" xml:space="preserve"><value>暂停，然后停用</value></data>
+  <data name="Take out of service after (days after pausing)" xml:space="preserve"><value>停用时间（暂停后天数）</value></data>
+  <data name="For a problem that is too big or cannot be solved quickly. Works for every add-on, linked or not." xml:space="preserve"><value>适用于问题过大或无法快速解决的情况。适用于每个加载项，无论是否已关联。</value></data>
+  <data name="no new installations or updates; installed copies keep running." xml:space="preserve"><value>不再提供新安装或更新；已安装的副本继续运行。</value></data>
+  <data name="in addition, store clients from 2.3.0 switch installed copies off at the next Power PDF start, without removing them; settings stay." xml:space="preserve"><value>此外，2.3.0 及以上版本的商店客户端会在下次启动 Power PDF 时关闭已安装的副本，但不会将其删除；设置保留。</value></data>
+  <data name="the strongest step (on the plug-in page): clients ask to remove the add-on." xml:space="preserve"><value>最强级别（在插件页面上）：客户端会请求删除该加载项。</value></data>
+  <data name="Choose…" xml:space="preserve"><value>请选择…</value></data>
+  <data name="Level" xml:space="preserve"><value>级别</value></data>
+  <data name="Review date (optional)" xml:space="preserve"><value>复查日期（可选）</value></data>
+  <data name="Tell customers with a delivery of this add-on (their contact address)" xml:space="preserve"><value>通知已交付此加载项的客户（其联系地址）</value></data>
+  <data name="As an emergency user you may take an add-on out of service or raise the level. Putting it back into service is up to the admins." xml:space="preserve"><value>作为紧急用户，您可以停用加载项或提高级别。恢复使用由管理员负责。</value></data>
+  <data name="Add-ons out of service" xml:space="preserve"><value>已停用的加载项</value></data>
+  <data name="No add-on is out of service." xml:space="preserve"><value>没有已停用的加载项。</value></data>
+  <data name="Review date" xml:space="preserve"><value>复查日期</value></data>
+  <data name="told" xml:space="preserve"><value>已通知</value></data>
+  <data name="Put this add-on back into service?" xml:space="preserve"><value>要恢复使用此加载项吗？</value></data>
+  <data name="Back into service" xml:space="preserve"><value>恢复使用</value></data>
+  <data name="Withdraw version {0} and go back to the earlier one?" xml:space="preserve"><value>要撤回版本 {0} 并回退到早期版本吗？</value></data>
+  <data name="Back to the last good version" xml:space="preserve"><value>回退到上一个正常版本</value></data>
+  <data name="Emergency users" xml:space="preserve"><value>紧急用户</value></data>
+  <data name="They may take add-ons out of service (and raise the level), nothing else: no approvals, no putting back. Admins always may." xml:space="preserve"><value>他们可以停用加载项（并提高级别），除此之外别无权限：不能审批，不能恢复使用。管理员始终可以。</value></data>
+  <data name="No other active users." xml:space="preserve"><value>没有其他活动用户。</value></data>
+  <data name="Tell customers by default" xml:space="preserve"><value>默认通知客户</value></data>
+  <data name="This add-on is out of service." xml:space="preserve"><value>此加载项已停用。</value></data>
+  <data name="This add-on is paused." xml:space="preserve"><value>此加载项已暂停。</value></data>
+  <data name="Enter the API address of the git server." xml:space="preserve"><value>请输入 git 服务器的 API 地址。</value></data>
+  <data name="The App ID is a number." xml:space="preserve"><value>App ID 是一个数字。</value></data>
+  <data name="The installation ID is a number." xml:space="preserve"><value>安装 ID 是一个数字。</value></data>
+  <data name="The owner is the name of a user or organisation, e.g. tungsten-automation." xml:space="preserve"><value>所有者是用户或组织的名称，例如 tungsten-automation。</value></data>
+  <data name="Paste the whole .pem file of the GitHub App (it starts with -----BEGIN)." xml:space="preserve"><value>请粘贴 GitHub App 的完整 .pem 文件（以 -----BEGIN 开头）。</value></data>
+  <data name="The token is one line without spaces." xml:space="preserve"><value>令牌为一行，不含空格。</value></data>
+  <data name="New webhook secret created. Copy it now; it is not shown again." xml:space="preserve"><value>已创建新的 Webhook 密钥。请立即复制；它不会再次显示。</value></data>
+  <data name="The API ID has letters, digits and hyphens." xml:space="preserve"><value>API ID 包含字母、数字和连字符。</value></data>
+  <data name="The API key is a hex string (as Veracode shows it when it is created)." xml:space="preserve"><value>API 密钥是一个十六进制字符串（与 Veracode 创建时显示的一致）。</value></data>
+  <data name="The policy name has at most 100 characters." xml:space="preserve"><value>策略名称最多 100 个字符。</value></data>
+  <data name="The deadline lies between 1 and 365 days." xml:space="preserve"><value>期限介于 1 到 365 天之间。</value></data>
+  <data name="Between 0 and 180 days." xml:space="preserve"><value>介于 0 到 180 天之间。</value></data>
+  <data name="The review date lies between today and one year from now." xml:space="preserve"><value>复查日期介于今天和一年后之间。</value></data>
+  <data name="Add-on links" xml:space="preserve"><value>加载项关联</value></data>
+  <data name="The connection test failed." xml:space="preserve"><value>连接测试失败。</value></data>
+  <data name="Only admins and emergency users take add-ons out of service." xml:space="preserve"><value>只有管理员和紧急用户可以停用加载项。</value></data>
+  <data name="Choose paused or out of service." xml:space="preserve"><value>请选择已暂停或已停用。</value></data>
+  <data name="Give a reason (3 to 300 characters); users see it." xml:space="preserve"><value>请提供原因（3 到 300 个字符）；用户可以看到。</value></data>
+  <data name="Unknown add-on." xml:space="preserve"><value>未知加载项。</value></data>
+  <data name="The store client itself cannot be taken out of service." xml:space="preserve"><value>商店客户端本身无法停用。</value></data>
+  <data name="This add-on has a security block; that already takes it out of the store." xml:space="preserve"><value>此加载项已被安全封锁；这已将其从商店中移除。</value></data>
+  <data name="Emergency users may raise the level, not lower it; ask an admin." xml:space="preserve"><value>紧急用户可以提高级别，但不能降低；请联系管理员。</value></data>
+  <data name="Changes saved." xml:space="preserve"><value>更改已保存。</value></data>
+  <data name="Only admins put an add-on back into service." xml:space="preserve"><value>只有管理员可以恢复使用加载项。</value></data>
+  <data name="This add-on is not out of service." xml:space="preserve"><value>此加载项未停用。</value></data>
+  <data name="Add-on back in service." xml:space="preserve"><value>加载项已恢复使用。</value></data>
+  <data name="Only admins go back to an earlier version." xml:space="preserve"><value>只有管理员可以回退到早期版本。</value></data>
+  <data name="Not for the store client." xml:space="preserve"><value>不适用于商店客户端。</value></data>
+  <data name="This add-on has no live version." xml:space="preserve"><value>此加载项没有正式版本。</value></data>
+  <data name="There is no earlier version approved for live to go back to." xml:space="preserve"><value>没有可回退的已批准正式发布的早期版本。</value></data>
+  <data name="The earlier version cannot be restored." xml:space="preserve"><value>无法恢复早期版本。</value></data>
+  <data name="The newest version cannot be withdrawn." xml:space="preserve"><value>无法撤回最新版本。</value></data>
+  <data name="Back to version {0}: it is live again, {1} is withdrawn." xml:space="preserve"><value>已回退到版本 {0}：该版本重新上线，{1} 已撤回。</value></data>
+  <data name="Choose an add-on." xml:space="preserve"><value>请选择一个加载项。</value></data>
+  <data name="Enter the repository as owner/name." xml:space="preserve"><value>请以 owner/name 格式输入仓库。</value></data>
+  <data name="The folder is a relative path inside the repository, e.g. measuretools." xml:space="preserve"><value>文件夹是仓库内的相对路径，例如 measuretools。</value></data>
+  <data name="The tag pattern uses letters, digits, . _ - / and *, e.g. v* or measuretools-v*." xml:space="preserve"><value>标签模式可使用字母、数字、. _ - / 和 *，例如 v* 或 measuretools-v*。</value></data>
+  <data name="The workflow is a file under .github/workflows/ ending in .yml." xml:space="preserve"><value>工作流是 .github/workflows/ 下以 .yml 结尾的文件。</value></data>
+  <data name="The store itself is never approved automatically." xml:space="preserve"><value>商店本身从不自动审批。</value></data>
+  <data name="This link no longer exists." xml:space="preserve"><value>此关联已不存在。</value></data>
+  <data name="This add-on is already linked; change the existing link." xml:space="preserve"><value>此加载项已关联；请更改现有关联。</value></data>
+  <data name="Enter the API address as https://host/... without user name or password." xml:space="preserve"><value>请以 https://host/... 格式输入 API 地址，不含用户名或密码。</value></data>
+  <data name="Only https is allowed (http only for localhost)." xml:space="preserve"><value>仅允许 https（http 仅限 localhost）。</value></data>
+  <data name="App ID, installation ID and private key are needed." xml:space="preserve"><value>需要 App ID、安装 ID 和私钥。</value></data>
+  <data name="Enter a token." xml:space="preserve"><value>请输入令牌。</value></data>
+  <data name="The git server did not answer in time." xml:space="preserve"><value>git 服务器未及时响应。</value></data>
+  <data name="The git server cannot be reached at this address." xml:space="preserve"><value>无法通过此地址访问 git 服务器。</value></data>
+  <data name="The address answered, but not like a GitHub API." xml:space="preserve"><value>该地址有响应，但不像 GitHub API。</value></data>
+  <data name="The private key cannot be read. Paste the whole .pem file of the GitHub App." xml:space="preserve"><value>无法读取私钥。请粘贴 GitHub App 的完整 .pem 文件。</value></data>
+  <data name="The git server refused the app: check the App ID and the private key." xml:space="preserve"><value>git 服务器拒绝了该应用：请检查 App ID 和私钥。</value></data>
+  <data name="The git server refused the sign-in: the token is wrong or has expired." xml:space="preserve"><value>git 服务器拒绝了登录：令牌错误或已过期。</value></data>
+  <data name="The git server refused access (403): the token or app lacks rights, or a rate limit applies." xml:space="preserve"><value>git 服务器拒绝访问 (403)：令牌或应用缺少权限，或受到速率限制。</value></data>
+  <data name="The installation was not found: check the installation ID (the app must be installed in the organisation)." xml:space="preserve"><value>未找到安装：请检查安装 ID（应用必须已安装在组织中）。</value></data>
+  <data name="Nothing found at this address: check the API address (GitHub Enterprise Server: https://host/api/v3)." xml:space="preserve"><value>此地址下未找到任何内容：请检查 API 地址（GitHub Enterprise Server: https://host/api/v3）。</value></data>
+  <data name="The address redirects elsewhere; the store does not follow redirects with credentials. Enter the final API address." xml:space="preserve"><value>该地址重定向到其他位置；商店不会携带凭据跟随重定向。请输入最终的 API 地址。</value></data>
+  <data name="The installation ID is a number (shown in the address of the app's installation page)." xml:space="preserve"><value>安装 ID 是一个数字（显示在应用安装页面的地址中）。</value></data>
+  <data name="Enter the API ID and the API key." xml:space="preserve"><value>请输入 API ID 和 API 密钥。</value></data>
+  <data name="Veracode refused the sign-in: API ID or key is wrong, expired, or belongs to another region." xml:space="preserve"><value>Veracode 拒绝了登录：API ID 或密钥错误、已过期或属于其他区域。</value></data>
+  <data name="Signed in, but the account may not read application profiles (role: Results API or Reviewer)." xml:space="preserve"><value>已登录，但该账户可能无权读取应用程序配置文件（角色：Results API 或 Reviewer）。</value></data>
+  <data name="Veracode did not answer in time." xml:space="preserve"><value>Veracode 未及时响应。</value></data>
+  <data name="Veracode cannot be reached from the server." xml:space="preserve"><value>无法从服务器访问 Veracode。</value></data>
+  <data name="Veracode answered with something unexpected." xml:space="preserve"><value>Veracode 返回了意外的响应。</value></data>
+  <data name="Add-on taken out of service, back in service, or its review date has come" xml:space="preserve"><value>加载项已停用、已恢复使用或其复查日期已到</value></data>
+  <data name="Admins, owner, customers with a delivery" xml:space="preserve"><value>管理员、所有者、已交付的客户</value></data>
+  <data name="Add-on taken out of service." xml:space="preserve"><value>加载项已停用。</value></data>
+  <data name="Add-on paused." xml:space="preserve"><value>加载项已暂停。</value></data>
+  <data name="Link saved." xml:space="preserve"><value>关联已保存。</value></data>
+  <data name="Link removed." xml:space="preserve"><value>关联已删除。</value></data>
+  <data name="Sunday" xml:space="preserve"><value>星期日</value></data>
+  <data name="Monday" xml:space="preserve"><value>星期一</value></data>
+  <data name="Tuesday" xml:space="preserve"><value>星期二</value></data>
+  <data name="Wednesday" xml:space="preserve"><value>星期三</value></data>
+  <data name="Thursday" xml:space="preserve"><value>星期四</value></data>
+  <data name="Friday" xml:space="preserve"><value>星期五</value></data>
+  <data name="Saturday" xml:space="preserve"><value>星期六</value></data>
+  <data name="Someone else changed this add-on at the same moment. Look at the list and try again." xml:space="preserve"><value>其他人在同一时间更改了此加载项。请查看列表后重试。</value></data>
+  <data name="Saved. The git server changed, so the stored key and token were removed; enter them for the new server." xml:space="preserve"><value>已保存。Git 服务器已更改，因此已删除存储的密钥和令牌；请为新服务器重新输入。</value></data>
+  <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>更改条目："更改"会用其级别、原因和复查日期填写上方表单。</value></data>
 </root>

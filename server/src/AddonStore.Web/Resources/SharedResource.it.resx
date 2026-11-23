@@ -1771,4 +1771,205 @@
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Questa azione è sospesa durante la manutenzione. Riprova più tardi; i dati inseriti non sono stati salvati.</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>Torna al catalogo</value></data>
   <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>Un valore dell'amministratore può solo alzare il minimo: il pacchetto stesso richiede una versione di Power PDF più recente.</value></data>
+  <data name="Out of service" xml:space="preserve"><value>Fuori servizio</value></data>
+  <data name="Git &amp; Veracode" xml:space="preserve"><value>Git &amp; Veracode</value></data>
+  <data name="Add-ons are built and scanned in their git repositories; the store connects to the git server, shows the scan results and keeps the emergency brake for every add-on." xml:space="preserve"><value>Gli add-on vengono compilati e analizzati nei loro repository git; lo Store si connette al server git, mostra i risultati delle scansioni e mantiene il freno di emergenza per ogni add-on.</value></data>
+  <data name="{0} add-ons are out of service or paused." xml:space="preserve"><value>{0} add-on sono fuori servizio o in pausa.</value></data>
+  <data name="Take out of service" xml:space="preserve"><value>Mettere fuori servizio</value></data>
+  <data name="The review date of at least one add-on out of service has come." xml:space="preserve"><value>È arrivata la data di revisione di almeno un add-on fuori servizio.</value></data>
+  <data name="Git connection" xml:space="preserve"><value>Connessione git</value></data>
+  <data name="Last webhook" xml:space="preserve"><value>Ultimo webhook</value></data>
+  <data name="Veracode" xml:space="preserve"><value>Veracode</value></data>
+  <data name="not configured" xml:space="preserve"><value>non configurato</value></data>
+  <data name="Linked add-ons" xml:space="preserve"><value>Add-on collegati</value></data>
+  <data name="Automatic approval" xml:space="preserve"><value>Approvazione automatica</value></data>
+  <data name="Step 1 of the concept: connect, link, receive webhooks, take out of service. Importing built and scanned versions, scans on a schedule, deadlines and automatic approval follow in the next steps; their settings can already be prepared here." xml:space="preserve"><value>Fase 1 del concetto: connettere, collegare, ricevere webhook, mettere fuori servizio. L'importazione delle versioni compilate e analizzate, le scansioni pianificate, i termini e l'approvazione automatica seguiranno nelle prossime fasi; le relative impostazioni possono già essere preparate qui.</value></data>
+  <data name="Any git server with a GitHub API: GitHub.com now, the company's GitHub Enterprise later. Changing the server only means changing these values." xml:space="preserve"><value>Qualsiasi server git con un'API GitHub: ora GitHub.com, in seguito il GitHub Enterprise dell'azienda. Cambiare server significa solo modificare questi valori.</value></data>
+  <data name="Connection active (webhooks are accepted, repositories can be listed)" xml:space="preserve"><value>Connessione attiva (i webhook vengono accettati, i repository possono essere elencati)</value></data>
+  <data name="Git server" xml:space="preserve"><value>Server git</value></data>
+  <data name="API address" xml:space="preserve"><value>Indirizzo API</value></data>
+  <data name="GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3" xml:space="preserve"><value>GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3</value></data>
+  <data name="Sign-in" xml:space="preserve"><value>Accesso</value></data>
+  <data name="GitHub App (recommended)" xml:space="preserve"><value>GitHub App (consigliata)</value></data>
+  <data name="Fine-grained token" xml:space="preserve"><value>Token a granularità fine</value></data>
+  <data name="GitHub App" xml:space="preserve"><value>GitHub App</value></data>
+  <data name="App ID" xml:space="preserve"><value>ID app</value></data>
+  <data name="Installation ID" xml:space="preserve"><value>ID installazione</value></data>
+  <data name="Private key (.pem)" xml:space="preserve"><value>Chiave privata (.pem)</value></data>
+  <data name="Remove the stored key" xml:space="preserve"><value>Rimuovere la chiave salvata</value></data>
+  <data name="Rights the app needs: Contents read, Actions read and write, Metadata read, Pull requests read and write." xml:space="preserve"><value>Diritti necessari all'app: Contents in lettura, Actions in lettura e scrittura, Metadata in lettura, Pull requests in lettura e scrittura.</value></data>
+  <data name="Remove the stored token" xml:space="preserve"><value>Rimuovere il token salvato</value></data>
+  <data name="Owner (optional)" xml:space="preserve"><value>Proprietario (facoltativo)</value></data>
+  <data name="Only repositories of this user or organisation are offered for links." xml:space="preserve"><value>Per i collegamenti vengono proposti solo i repository di questo utente o di questa organizzazione.</value></data>
+  <data name="Webhook" xml:space="preserve"><value>Webhook</value></data>
+  <data name="The git server reports finished workflow runs and releases here. Enter address and secret in the webhook settings of the GitHub App or organisation (content type application/json)." xml:space="preserve"><value>Il server git segnala qui le esecuzioni di workflow completate e le release. Inserisca indirizzo e segreto nelle impostazioni webhook della GitHub App o dell'organizzazione (tipo di contenuto application/json).</value></data>
+  <data name="Secret" xml:space="preserve"><value>Segreto</value></data>
+  <data name="created on {0}" xml:space="preserve"><value>creato il {0}</value></data>
+  <data name="not created yet" xml:space="preserve"><value>non ancora creato</value></data>
+  <data name="Create a new secret? The old one stops working at once." xml:space="preserve"><value>Creare un nuovo segreto? Quello vecchio smette subito di funzionare.</value></data>
+  <data name="Create a webhook secret?" xml:space="preserve"><value>Creare un segreto webhook?</value></data>
+  <data name="New secret" xml:space="preserve"><value>Nuovo segreto</value></data>
+  <data name="Create secret" xml:space="preserve"><value>Creare il segreto</value></data>
+  <data name="The workflow in each repository runs the Veracode policy scan. Here the store learns which result counts and, optionally, checks it with Veracode itself." xml:space="preserve"><value>Il workflow di ogni repository esegue la scansione delle policy Veracode. Qui lo Store apprende quale risultato conta e, facoltativamente, lo verifica presso Veracode stesso.</value></data>
+  <data name="Result" xml:space="preserve"><value>Risultato</value></data>
+  <data name="From the workflow (the store asks the git server which run it came from)" xml:space="preserve"><value>Dal workflow (lo Store chiede al server git da quale esecuzione proviene)</value></data>
+  <data name="In addition, check the policy status with Veracode" xml:space="preserve"><value>Verificare inoltre lo stato della policy presso Veracode</value></data>
+  <data name="Region" xml:space="preserve"><value>Regione</value></data>
+  <data name="Commercial" xml:space="preserve"><value>Commerciale</value></data>
+  <data name="Europe" xml:space="preserve"><value>Europa</value></data>
+  <data name="US Federal" xml:space="preserve"><value>US Federal</value></data>
+  <data name="API ID" xml:space="preserve"><value>ID API</value></data>
+  <data name="Read only is enough (role Results API). Veracode credentials expire after a year by default." xml:space="preserve"><value>È sufficiente la sola lettura (ruolo Results API). Per impostazione predefinita le credenziali Veracode scadono dopo un anno.</value></data>
+  <data name="Expected policy" xml:space="preserve"><value>Policy prevista</value></data>
+  <data name="Scan on a schedule: day" xml:space="preserve"><value>Scansione pianificata: giorno</value></data>
+  <data name="Hour" xml:space="preserve"><value>Ora</value></data>
+  <data name="The live version of each linked add-on is scanned again on this day, so new rules or aged components show up without a code change." xml:space="preserve"><value>In questo giorno la versione live di ogni add-on collegato viene analizzata di nuovo, così nuove regole o componenti obsoleti emergono senza modifiche al codice.</value></data>
+  <data name="Link an add-on" xml:space="preserve"><value>Collegare un add-on</value></data>
+  <data name="Change link" xml:space="preserve"><value>Modificare il collegamento</value></data>
+  <data name="Which repository builds and scans which add-on. Repositories with several add-ons use a folder and their own tag pattern." xml:space="preserve"><value>Quale repository compila e analizza quale add-on. I repository con più add-on usano una cartella e un proprio modello di tag.</value></data>
+  <data name="Load repositories from the git server" xml:space="preserve"><value>Caricare i repository dal server git</value></data>
+  <data name="{0} repositories" xml:space="preserve"><value>{0} repository</value></data>
+  <data name="Add-on Store server" xml:space="preserve"><value>Server Add-on Store</value></data>
+  <data name="Add-on Store client" xml:space="preserve"><value>Client Add-on Store</value></data>
+  <data name="Repository (owner/name)" xml:space="preserve"><value>Repository (owner/name)</value></data>
+  <data name="Folder (optional)" xml:space="preserve"><value>Cartella (facoltativa)</value></data>
+  <data name="Tag pattern" xml:space="preserve"><value>Modello di tag</value></data>
+  <data name="Workflow file" xml:space="preserve"><value>File di workflow</value></data>
+  <data name="Automatic approval for this add-on" xml:space="preserve"><value>Approvazione automatica per questo add-on</value></data>
+  <data name="As the global rule" xml:space="preserve"><value>Come la regola globale</value></data>
+  <data name="Never" xml:space="preserve"><value>Mai</value></data>
+  <data name="Automatically to beta" xml:space="preserve"><value>Automaticamente in beta</value></data>
+  <data name="Automatically live" xml:space="preserve"><value>Automaticamente live</value></data>
+  <data name="The store server and client are never approved automatically." xml:space="preserve"><value>Il server e il client dello Store non vengono mai approvati automaticamente.</value></data>
+  <data name="No add-on is linked yet." xml:space="preserve"><value>Nessun add-on ancora collegato.</value></data>
+  <data name="Repository" xml:space="preserve"><value>Repository</value></data>
+  <data name="Tags" xml:space="preserve"><value>Tag</value></data>
+  <data name="Workflow" xml:space="preserve"><value>Workflow</value></data>
+  <data name="Change" xml:space="preserve"><value>Modifica</value></data>
+  <data name="Remove this link?" xml:space="preserve"><value>Rimuovere questo collegamento?</value></data>
+  <data name="After a person has approved an add-on once, later versions from its linked repository can be approved by the store itself, for example when a Veracode finding was fixed. Every automatic approval is logged, mailed to the admins and can be taken back." xml:space="preserve"><value>Dopo che una persona ha approvato un add-on una volta, lo Store stesso può approvare le versioni successive provenienti dal repository collegato, ad esempio quando un rilievo Veracode è stato corretto. Ogni approvazione automatica viene registrata, inviata via e-mail agli amministratori e può essere revocata.</value></data>
+  <data name="Approve automatically" xml:space="preserve"><value>Approvare automaticamente</value></data>
+  <data name="Stage" xml:space="preserve"><value>Fase</value></data>
+  <data name="Always required" xml:space="preserve"><value>Sempre richiesto</value></data>
+  <data name="A person has approved an earlier version of the add-on." xml:space="preserve"><value>Una persona ha approvato una versione precedente dell'add-on.</value></data>
+  <data name="The version comes from the linked repository, with a matching tag, from the stored workflow." xml:space="preserve"><value>La versione proviene dal repository collegato, con un tag corrispondente, dal workflow memorizzato.</value></data>
+  <data name="The Veracode policy is passed." xml:space="preserve"><value>La policy Veracode è superata.</value></data>
+  <data name="The store's checks find no errors, and no new online services, third-party components, licenses or rights since the last approved version." xml:space="preserve"><value>I controlli dello Store non trovano errori, né nuovi servizi online, componenti di terze parti, licenze o diritti rispetto all'ultima versione approvata.</value></data>
+  <data name="Optional conditions" xml:space="preserve"><value>Condizioni facoltative</value></data>
+  <data name="The AI review aid recommends approval" xml:space="preserve"><value>L'assistente di revisione IA consiglia l'approvazione</value></data>
+  <data name="Warnings are allowed only when the last approved version had them too" xml:space="preserve"><value>Gli avvisi sono consentiti solo se li aveva anche l'ultima versione approvata</value></data>
+  <data name="Only patch and minor versions (never a new major version)" xml:space="preserve"><value>Solo versioni patch e minor (mai una nuova versione major)</value></data>
+  <data name="Only versions that fix a finding of a scheduled scan" xml:space="preserve"><value>Solo versioni che correggono un rilievo di una scansione pianificata</value></data>
+  <data name="Never automatic: the store client and add-ons without a link." xml:space="preserve"><value>Mai automatica: il client dello Store e gli add-on senza collegamento.</value></data>
+  <data name="Deadlines" xml:space="preserve"><value>Termini</value></data>
+  <data name="When a scan finds something new in a live version, a deadline starts. The developer and the admins are reminded before it ends." xml:space="preserve"><value>Quando una scansione trova qualcosa di nuovo in una versione live, inizia a decorrere un termine. Lo sviluppatore e gli amministratori ricevono un promemoria prima della scadenza.</value></data>
+  <data name="Deadline (days)" xml:space="preserve"><value>Termine (giorni)</value></data>
+  <data name="Reminders (days before the end)" xml:space="preserve"><value>Promemoria (giorni prima della scadenza)</value></data>
+  <data name="When the deadline has passed" xml:space="preserve"><value>Alla scadenza del termine</value></data>
+  <data name="Only warn" xml:space="preserve"><value>Solo avvisare</value></data>
+  <data name="Mark the add-on in the catalog (findings open)" xml:space="preserve"><value>Segnalare l'add-on nel catalogo (rilievi aperti)</value></data>
+  <data name="Pause the add-on" xml:space="preserve"><value>Mettere in pausa l'add-on</value></data>
+  <data name="Pause, then take out of service" xml:space="preserve"><value>Mettere in pausa, poi fuori servizio</value></data>
+  <data name="Take out of service after (days after pausing)" xml:space="preserve"><value>Mettere fuori servizio dopo (giorni dalla pausa)</value></data>
+  <data name="For a problem that is too big or cannot be solved quickly. Works for every add-on, linked or not." xml:space="preserve"><value>Per un problema troppo grande o non risolvibile rapidamente. Funziona per ogni add-on, collegato o no.</value></data>
+  <data name="no new installations or updates; installed copies keep running." xml:space="preserve"><value>nessuna nuova installazione o aggiornamento; le copie installate continuano a funzionare.</value></data>
+  <data name="in addition, store clients from 2.3.0 switch installed copies off at the next Power PDF start, without removing them; settings stay." xml:space="preserve"><value>inoltre, i client dello Store dalla versione 2.3.0 disattivano le copie installate al successivo avvio di Power PDF, senza rimuoverle; le impostazioni restano.</value></data>
+  <data name="the strongest step (on the plug-in page): clients ask to remove the add-on." xml:space="preserve"><value>il livello più alto (nella pagina del plug-in): i client chiedono di rimuovere l'add-on.</value></data>
+  <data name="Choose…" xml:space="preserve"><value>Scegliere…</value></data>
+  <data name="Level" xml:space="preserve"><value>Livello</value></data>
+  <data name="Review date (optional)" xml:space="preserve"><value>Data di revisione (facoltativa)</value></data>
+  <data name="Tell customers with a delivery of this add-on (their contact address)" xml:space="preserve"><value>Informare i clienti che hanno ricevuto una consegna di questo add-on (al loro indirizzo di contatto)</value></data>
+  <data name="As an emergency user you may take an add-on out of service or raise the level. Putting it back into service is up to the admins." xml:space="preserve"><value>Come utente di emergenza può mettere fuori servizio un add-on o alzarne il livello. La rimessa in servizio spetta agli amministratori.</value></data>
+  <data name="Add-ons out of service" xml:space="preserve"><value>Add-on fuori servizio</value></data>
+  <data name="No add-on is out of service." xml:space="preserve"><value>Nessun add-on è fuori servizio.</value></data>
+  <data name="Review date" xml:space="preserve"><value>Data di revisione</value></data>
+  <data name="told" xml:space="preserve"><value>informati</value></data>
+  <data name="Put this add-on back into service?" xml:space="preserve"><value>Rimettere in servizio questo add-on?</value></data>
+  <data name="Back into service" xml:space="preserve"><value>Rimettere in servizio</value></data>
+  <data name="Withdraw version {0} and go back to the earlier one?" xml:space="preserve"><value>Ritirare la versione {0} e tornare a quella precedente?</value></data>
+  <data name="Back to the last good version" xml:space="preserve"><value>Tornare all'ultima versione valida</value></data>
+  <data name="Emergency users" xml:space="preserve"><value>Utenti di emergenza</value></data>
+  <data name="They may take add-ons out of service (and raise the level), nothing else: no approvals, no putting back. Admins always may." xml:space="preserve"><value>Possono mettere fuori servizio gli add-on (e alzarne il livello), nient'altro: niente approvazioni, niente rimessa in servizio. Gli amministratori possono sempre farlo.</value></data>
+  <data name="No other active users." xml:space="preserve"><value>Nessun altro utente attivo.</value></data>
+  <data name="Tell customers by default" xml:space="preserve"><value>Informare i clienti per impostazione predefinita</value></data>
+  <data name="This add-on is out of service." xml:space="preserve"><value>Questo add-on è fuori servizio.</value></data>
+  <data name="This add-on is paused." xml:space="preserve"><value>Questo add-on è in pausa.</value></data>
+  <data name="Enter the API address of the git server." xml:space="preserve"><value>Inserisca l'indirizzo API del server git.</value></data>
+  <data name="The App ID is a number." xml:space="preserve"><value>L'ID app è un numero.</value></data>
+  <data name="The installation ID is a number." xml:space="preserve"><value>L'ID installazione è un numero.</value></data>
+  <data name="The owner is the name of a user or organisation, e.g. tungsten-automation." xml:space="preserve"><value>Il proprietario è il nome di un utente o di un'organizzazione, ad es. tungsten-automation.</value></data>
+  <data name="Paste the whole .pem file of the GitHub App (it starts with -----BEGIN)." xml:space="preserve"><value>Incolli l'intero file .pem della GitHub App (inizia con -----BEGIN).</value></data>
+  <data name="The token is one line without spaces." xml:space="preserve"><value>Il token è una sola riga senza spazi.</value></data>
+  <data name="New webhook secret created. Copy it now; it is not shown again." xml:space="preserve"><value>Nuovo segreto webhook creato. Lo copi ora; non verrà più mostrato.</value></data>
+  <data name="The API ID has letters, digits and hyphens." xml:space="preserve"><value>L'ID API contiene lettere, cifre e trattini.</value></data>
+  <data name="The API key is a hex string (as Veracode shows it when it is created)." xml:space="preserve"><value>La chiave API è una stringa esadecimale (come la mostra Veracode al momento della creazione).</value></data>
+  <data name="The policy name has at most 100 characters." xml:space="preserve"><value>Il nome della policy ha al massimo 100 caratteri.</value></data>
+  <data name="The deadline lies between 1 and 365 days." xml:space="preserve"><value>Il termine è compreso tra 1 e 365 giorni.</value></data>
+  <data name="Between 0 and 180 days." xml:space="preserve"><value>Tra 0 e 180 giorni.</value></data>
+  <data name="The review date lies between today and one year from now." xml:space="preserve"><value>La data di revisione è compresa tra oggi e un anno da oggi.</value></data>
+  <data name="Add-on links" xml:space="preserve"><value>Collegamenti degli add-on</value></data>
+  <data name="The connection test failed." xml:space="preserve"><value>Il test di connessione non è riuscito.</value></data>
+  <data name="Only admins and emergency users take add-ons out of service." xml:space="preserve"><value>Solo gli amministratori e gli utenti di emergenza mettono fuori servizio gli add-on.</value></data>
+  <data name="Choose paused or out of service." xml:space="preserve"><value>Scelga in pausa o fuori servizio.</value></data>
+  <data name="Give a reason (3 to 300 characters); users see it." xml:space="preserve"><value>Indichi un motivo (da 3 a 300 caratteri); gli utenti lo vedono.</value></data>
+  <data name="Unknown add-on." xml:space="preserve"><value>Add-on sconosciuto.</value></data>
+  <data name="The store client itself cannot be taken out of service." xml:space="preserve"><value>Il client dello Store stesso non può essere messo fuori servizio.</value></data>
+  <data name="This add-on has a security block; that already takes it out of the store." xml:space="preserve"><value>Questo add-on ha un blocco di sicurezza, che lo rimuove già dallo Store.</value></data>
+  <data name="Emergency users may raise the level, not lower it; ask an admin." xml:space="preserve"><value>Gli utenti di emergenza possono alzare il livello, non abbassarlo; si rivolga a un amministratore.</value></data>
+  <data name="Changes saved." xml:space="preserve"><value>Modifiche salvate.</value></data>
+  <data name="Only admins put an add-on back into service." xml:space="preserve"><value>Solo gli amministratori rimettono in servizio un add-on.</value></data>
+  <data name="This add-on is not out of service." xml:space="preserve"><value>Questo add-on non è fuori servizio.</value></data>
+  <data name="Add-on back in service." xml:space="preserve"><value>Add-on rimesso in servizio.</value></data>
+  <data name="Only admins go back to an earlier version." xml:space="preserve"><value>Solo gli amministratori tornano a una versione precedente.</value></data>
+  <data name="Not for the store client." xml:space="preserve"><value>Non per il client dello Store.</value></data>
+  <data name="This add-on has no live version." xml:space="preserve"><value>Questo add-on non ha una versione live.</value></data>
+  <data name="There is no earlier version approved for live to go back to." xml:space="preserve"><value>Non esiste una versione precedente approvata per il live a cui tornare.</value></data>
+  <data name="The earlier version cannot be restored." xml:space="preserve"><value>La versione precedente non può essere ripristinata.</value></data>
+  <data name="The newest version cannot be withdrawn." xml:space="preserve"><value>La versione più recente non può essere ritirata.</value></data>
+  <data name="Back to version {0}: it is live again, {1} is withdrawn." xml:space="preserve"><value>Ritorno alla versione {0}: è di nuovo live, {1} è ritirata.</value></data>
+  <data name="Choose an add-on." xml:space="preserve"><value>Scelga un add-on.</value></data>
+  <data name="Enter the repository as owner/name." xml:space="preserve"><value>Inserisca il repository come owner/name.</value></data>
+  <data name="The folder is a relative path inside the repository, e.g. measuretools." xml:space="preserve"><value>La cartella è un percorso relativo all'interno del repository, ad es. measuretools.</value></data>
+  <data name="The tag pattern uses letters, digits, . _ - / and *, e.g. v* or measuretools-v*." xml:space="preserve"><value>Il modello di tag usa lettere, cifre, . _ - / e *, ad es. v* o measuretools-v*.</value></data>
+  <data name="The workflow is a file under .github/workflows/ ending in .yml." xml:space="preserve"><value>Il workflow è un file in .github/workflows/ con estensione .yml.</value></data>
+  <data name="The store itself is never approved automatically." xml:space="preserve"><value>Lo Store stesso non viene mai approvato automaticamente.</value></data>
+  <data name="This link no longer exists." xml:space="preserve"><value>Questo collegamento non esiste più.</value></data>
+  <data name="This add-on is already linked; change the existing link." xml:space="preserve"><value>Questo add-on è già collegato; modifichi il collegamento esistente.</value></data>
+  <data name="Enter the API address as https://host/... without user name or password." xml:space="preserve"><value>Inserisca l'indirizzo API come https://host/... senza nome utente né password.</value></data>
+  <data name="Only https is allowed (http only for localhost)." xml:space="preserve"><value>È consentito solo https (http solo per localhost).</value></data>
+  <data name="App ID, installation ID and private key are needed." xml:space="preserve"><value>Sono necessari ID app, ID installazione e chiave privata.</value></data>
+  <data name="Enter a token." xml:space="preserve"><value>Inserisca un token.</value></data>
+  <data name="The git server did not answer in time." xml:space="preserve"><value>Il server git non ha risposto in tempo.</value></data>
+  <data name="The git server cannot be reached at this address." xml:space="preserve"><value>Il server git non è raggiungibile a questo indirizzo.</value></data>
+  <data name="The address answered, but not like a GitHub API." xml:space="preserve"><value>L'indirizzo ha risposto, ma non come un'API GitHub.</value></data>
+  <data name="The private key cannot be read. Paste the whole .pem file of the GitHub App." xml:space="preserve"><value>Impossibile leggere la chiave privata. Incolli l'intero file .pem della GitHub App.</value></data>
+  <data name="The git server refused the app: check the App ID and the private key." xml:space="preserve"><value>Il server git ha rifiutato l'app: controlli l'ID app e la chiave privata.</value></data>
+  <data name="The git server refused the sign-in: the token is wrong or has expired." xml:space="preserve"><value>Il server git ha rifiutato l'accesso: il token è errato o scaduto.</value></data>
+  <data name="The git server refused access (403): the token or app lacks rights, or a rate limit applies." xml:space="preserve"><value>Il server git ha negato l'accesso (403): al token o all'app mancano diritti, oppure si applica un limite di frequenza.</value></data>
+  <data name="The installation was not found: check the installation ID (the app must be installed in the organisation)." xml:space="preserve"><value>Installazione non trovata: controlli l'ID installazione (l'app deve essere installata nell'organizzazione).</value></data>
+  <data name="Nothing found at this address: check the API address (GitHub Enterprise Server: https://host/api/v3)." xml:space="preserve"><value>Nulla trovato a questo indirizzo: controlli l'indirizzo API (GitHub Enterprise Server: https://host/api/v3).</value></data>
+  <data name="The address redirects elsewhere; the store does not follow redirects with credentials. Enter the final API address." xml:space="preserve"><value>L'indirizzo reindirizza altrove; lo Store non segue i reindirizzamenti con credenziali. Inserisca l'indirizzo API finale.</value></data>
+  <data name="The installation ID is a number (shown in the address of the app's installation page)." xml:space="preserve"><value>L'ID installazione è un numero (visibile nell'indirizzo della pagina di installazione dell'app).</value></data>
+  <data name="Enter the API ID and the API key." xml:space="preserve"><value>Inserisca l'ID API e la chiave API.</value></data>
+  <data name="Veracode refused the sign-in: API ID or key is wrong, expired, or belongs to another region." xml:space="preserve"><value>Veracode ha rifiutato l'accesso: ID API o chiave errati, scaduti o appartenenti a un'altra regione.</value></data>
+  <data name="Signed in, but the account may not read application profiles (role: Results API or Reviewer)." xml:space="preserve"><value>Accesso eseguito, ma l'account non può leggere i profili applicazione (ruolo: Results API o Reviewer).</value></data>
+  <data name="Veracode did not answer in time." xml:space="preserve"><value>Veracode non ha risposto in tempo.</value></data>
+  <data name="Veracode cannot be reached from the server." xml:space="preserve"><value>Veracode non è raggiungibile dal server.</value></data>
+  <data name="Veracode answered with something unexpected." xml:space="preserve"><value>Veracode ha risposto in modo inatteso.</value></data>
+  <data name="Add-on taken out of service, back in service, or its review date has come" xml:space="preserve"><value>Add-on messo fuori servizio, rimesso in servizio o data di revisione raggiunta</value></data>
+  <data name="Admins, owner, customers with a delivery" xml:space="preserve"><value>Amministratori, proprietario, clienti con una consegna</value></data>
+  <data name="Add-on taken out of service." xml:space="preserve"><value>Add-on messo fuori servizio.</value></data>
+  <data name="Add-on paused." xml:space="preserve"><value>Add-on messo in pausa.</value></data>
+  <data name="Link saved." xml:space="preserve"><value>Collegamento salvato.</value></data>
+  <data name="Link removed." xml:space="preserve"><value>Collegamento rimosso.</value></data>
+  <data name="Sunday" xml:space="preserve"><value>Domenica</value></data>
+  <data name="Monday" xml:space="preserve"><value>Lunedì</value></data>
+  <data name="Tuesday" xml:space="preserve"><value>Martedì</value></data>
+  <data name="Wednesday" xml:space="preserve"><value>Mercoledì</value></data>
+  <data name="Thursday" xml:space="preserve"><value>Giovedì</value></data>
+  <data name="Friday" xml:space="preserve"><value>Venerdì</value></data>
+  <data name="Saturday" xml:space="preserve"><value>Sabato</value></data>
+  <data name="Someone else changed this add-on at the same moment. Look at the list and try again." xml:space="preserve"><value>Qualcun altro ha modificato questo componente aggiuntivo nello stesso momento. Controlli l'elenco e riprovi.</value></data>
+  <data name="Saved. The git server changed, so the stored key and token were removed; enter them for the new server." xml:space="preserve"><value>Salvato. Il server git è cambiato, quindi la chiave e il token salvati sono stati rimossi; li inserisca per il nuovo server.</value></data>
+  <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>Modificare una voce: "Modifica" compila il modulo sopra con livello, motivo e data di revisione.</value></data>
 </root>

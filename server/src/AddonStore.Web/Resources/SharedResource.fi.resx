@@ -1771,4 +1771,205 @@
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Tämä toiminto on keskeytetty huollon ajaksi. Yritä myöhemmin uudelleen; syöttämiäsi tietoja ei tallennettu.</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>Takaisin luetteloon</value></data>
   <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>Ylläpitäjän arvo voi vain nostaa vähimmäisversiota: paketti itse vaatii uudemman Power PDF -version.</value></data>
+  <data name="Out of service" xml:space="preserve"><value>Poissa käytöstä</value></data>
+  <data name="Git &amp; Veracode" xml:space="preserve"><value>Git &amp; Veracode</value></data>
+  <data name="Add-ons are built and scanned in their git repositories; the store connects to the git server, shows the scan results and keeps the emergency brake for every add-on." xml:space="preserve"><value>Lisäosat koostetaan ja skannataan niiden git-tietovarastoissa; kauppa muodostaa yhteyden git-palvelimeen, näyttää skannaustulokset ja ylläpitää hätäjarrua jokaiselle lisäosalle.</value></data>
+  <data name="{0} add-ons are out of service or paused." xml:space="preserve"><value>{0} lisäosaa on poissa käytöstä tai keskeytetty.</value></data>
+  <data name="Take out of service" xml:space="preserve"><value>Poista käytöstä</value></data>
+  <data name="The review date of at least one add-on out of service has come." xml:space="preserve"><value>Ainakin yhden käytöstä poistetun lisäosan tarkistuspäivä on koittanut.</value></data>
+  <data name="Git connection" xml:space="preserve"><value>Git-yhteys</value></data>
+  <data name="Last webhook" xml:space="preserve"><value>Viimeisin webhook</value></data>
+  <data name="Veracode" xml:space="preserve"><value>Veracode</value></data>
+  <data name="not configured" xml:space="preserve"><value>ei määritetty</value></data>
+  <data name="Linked add-ons" xml:space="preserve"><value>Linkitetyt lisäosat</value></data>
+  <data name="Automatic approval" xml:space="preserve"><value>Automaattinen hyväksyntä</value></data>
+  <data name="Step 1 of the concept: connect, link, receive webhooks, take out of service. Importing built and scanned versions, scans on a schedule, deadlines and automatic approval follow in the next steps; their settings can already be prepared here." xml:space="preserve"><value>Konseptin vaihe 1: yhdistä, linkitä, vastaanota webhookit, poista käytöstä. Koostettujen ja skannattujen versioiden tuonti, ajastetut skannaukset, määräajat ja automaattinen hyväksyntä tulevat seuraavissa vaiheissa; niiden asetukset voi valmistella jo täällä.</value></data>
+  <data name="Any git server with a GitHub API: GitHub.com now, the company's GitHub Enterprise later. Changing the server only means changing these values." xml:space="preserve"><value>Mikä tahansa git-palvelin, jossa on GitHub API: nyt GitHub.com, myöhemmin yrityksen GitHub Enterprise. Palvelimen vaihtaminen tarkoittaa vain näiden arvojen muuttamista.</value></data>
+  <data name="Connection active (webhooks are accepted, repositories can be listed)" xml:space="preserve"><value>Yhteys aktiivinen (webhookit hyväksytään, tietovarastot voidaan luetella)</value></data>
+  <data name="Git server" xml:space="preserve"><value>Git-palvelin</value></data>
+  <data name="API address" xml:space="preserve"><value>API-osoite</value></data>
+  <data name="GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3" xml:space="preserve"><value>GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3</value></data>
+  <data name="Sign-in" xml:space="preserve"><value>Kirjautuminen</value></data>
+  <data name="GitHub App (recommended)" xml:space="preserve"><value>GitHub App (suositus)</value></data>
+  <data name="Fine-grained token" xml:space="preserve"><value>Tarkasti rajattu token</value></data>
+  <data name="GitHub App" xml:space="preserve"><value>GitHub App</value></data>
+  <data name="App ID" xml:space="preserve"><value>App ID</value></data>
+  <data name="Installation ID" xml:space="preserve"><value>Asennuksen ID</value></data>
+  <data name="Private key (.pem)" xml:space="preserve"><value>Yksityinen avain (.pem)</value></data>
+  <data name="Remove the stored key" xml:space="preserve"><value>Poista tallennettu avain</value></data>
+  <data name="Rights the app needs: Contents read, Actions read and write, Metadata read, Pull requests read and write." xml:space="preserve"><value>Sovelluksen tarvitsemat oikeudet: Contents luku, Actions luku ja kirjoitus, Metadata luku, Pull requests luku ja kirjoitus.</value></data>
+  <data name="Remove the stored token" xml:space="preserve"><value>Poista tallennettu token</value></data>
+  <data name="Owner (optional)" xml:space="preserve"><value>Omistaja (valinnainen)</value></data>
+  <data name="Only repositories of this user or organisation are offered for links." xml:space="preserve"><value>Linkitettäväksi tarjotaan vain tämän käyttäjän tai organisaation tietovarastoja.</value></data>
+  <data name="Webhook" xml:space="preserve"><value>Webhook</value></data>
+  <data name="The git server reports finished workflow runs and releases here. Enter address and secret in the webhook settings of the GitHub App or organisation (content type application/json)." xml:space="preserve"><value>Git-palvelin ilmoittaa tänne valmistuneet työnkulkuajot ja julkaisut. Syötä osoite ja salaisuus GitHub Appin tai organisaation webhook-asetuksiin (sisältötyyppi application/json).</value></data>
+  <data name="Secret" xml:space="preserve"><value>Salaisuus</value></data>
+  <data name="created on {0}" xml:space="preserve"><value>luotu {0}</value></data>
+  <data name="not created yet" xml:space="preserve"><value>ei vielä luotu</value></data>
+  <data name="Create a new secret? The old one stops working at once." xml:space="preserve"><value>Luodaanko uusi salaisuus? Vanha lakkaa toimimasta heti.</value></data>
+  <data name="Create a webhook secret?" xml:space="preserve"><value>Luodaanko webhook-salaisuus?</value></data>
+  <data name="New secret" xml:space="preserve"><value>Uusi salaisuus</value></data>
+  <data name="Create secret" xml:space="preserve"><value>Luo salaisuus</value></data>
+  <data name="The workflow in each repository runs the Veracode policy scan. Here the store learns which result counts and, optionally, checks it with Veracode itself." xml:space="preserve"><value>Kunkin tietovaraston työnkulku suorittaa Veracoden käytäntöskannauksen. Tässä kauppa saa tietää, mikä tulos lasketaan, ja tarkistaa sen valinnaisesti myös Veracodelta.</value></data>
+  <data name="Result" xml:space="preserve"><value>Tulos</value></data>
+  <data name="From the workflow (the store asks the git server which run it came from)" xml:space="preserve"><value>Työnkulusta (kauppa kysyy git-palvelimelta, mistä ajosta se tuli)</value></data>
+  <data name="In addition, check the policy status with Veracode" xml:space="preserve"><value>Tarkista lisäksi käytännön tila Veracodelta</value></data>
+  <data name="Region" xml:space="preserve"><value>Alue</value></data>
+  <data name="Commercial" xml:space="preserve"><value>Kaupallinen</value></data>
+  <data name="Europe" xml:space="preserve"><value>Eurooppa</value></data>
+  <data name="US Federal" xml:space="preserve"><value>US Federal</value></data>
+  <data name="API ID" xml:space="preserve"><value>API ID</value></data>
+  <data name="Read only is enough (role Results API). Veracode credentials expire after a year by default." xml:space="preserve"><value>Pelkkä lukuoikeus riittää (rooli Results API). Veracoden tunnistetiedot vanhenevat oletuksena vuoden kuluttua.</value></data>
+  <data name="Expected policy" xml:space="preserve"><value>Odotettu käytäntö</value></data>
+  <data name="Scan on a schedule: day" xml:space="preserve"><value>Ajastettu skannaus: päivä</value></data>
+  <data name="Hour" xml:space="preserve"><value>Tunti</value></data>
+  <data name="The live version of each linked add-on is scanned again on this day, so new rules or aged components show up without a code change." xml:space="preserve"><value>Kunkin linkitetyn lisäosan julkaistu versio skannataan uudelleen tänä päivänä, jotta uudet säännöt tai vanhentuneet komponentit tulevat esiin ilman koodimuutosta.</value></data>
+  <data name="Link an add-on" xml:space="preserve"><value>Linkitä lisäosa</value></data>
+  <data name="Change link" xml:space="preserve"><value>Muuta linkitystä</value></data>
+  <data name="Which repository builds and scans which add-on. Repositories with several add-ons use a folder and their own tag pattern." xml:space="preserve"><value>Mikä tietovarasto koostaa ja skannaa minkäkin lisäosan. Useita lisäosia sisältävät tietovarastot käyttävät kansiota ja omaa tagimalliaan.</value></data>
+  <data name="Load repositories from the git server" xml:space="preserve"><value>Lataa tietovarastot git-palvelimelta</value></data>
+  <data name="{0} repositories" xml:space="preserve"><value>{0} tietovarastoa</value></data>
+  <data name="Add-on Store server" xml:space="preserve"><value>Add-on Store -palvelin</value></data>
+  <data name="Add-on Store client" xml:space="preserve"><value>Add-on Store -asiakasohjelma</value></data>
+  <data name="Repository (owner/name)" xml:space="preserve"><value>Tietovarasto (owner/name)</value></data>
+  <data name="Folder (optional)" xml:space="preserve"><value>Kansio (valinnainen)</value></data>
+  <data name="Tag pattern" xml:space="preserve"><value>Tagimalli</value></data>
+  <data name="Workflow file" xml:space="preserve"><value>Työnkulkutiedosto</value></data>
+  <data name="Automatic approval for this add-on" xml:space="preserve"><value>Tämän lisäosan automaattinen hyväksyntä</value></data>
+  <data name="As the global rule" xml:space="preserve"><value>Yleisen säännön mukaan</value></data>
+  <data name="Never" xml:space="preserve"><value>Ei koskaan</value></data>
+  <data name="Automatically to beta" xml:space="preserve"><value>Automaattisesti betaan</value></data>
+  <data name="Automatically live" xml:space="preserve"><value>Automaattisesti julkaistuksi</value></data>
+  <data name="The store server and client are never approved automatically." xml:space="preserve"><value>Kaupan palvelinta ja asiakasohjelmaa ei koskaan hyväksytä automaattisesti.</value></data>
+  <data name="No add-on is linked yet." xml:space="preserve"><value>Yhtään lisäosaa ei ole vielä linkitetty.</value></data>
+  <data name="Repository" xml:space="preserve"><value>Tietovarasto</value></data>
+  <data name="Tags" xml:space="preserve"><value>Tagit</value></data>
+  <data name="Workflow" xml:space="preserve"><value>Työnkulku</value></data>
+  <data name="Change" xml:space="preserve"><value>Muuta</value></data>
+  <data name="Remove this link?" xml:space="preserve"><value>Poistetaanko tämä linkitys?</value></data>
+  <data name="After a person has approved an add-on once, later versions from its linked repository can be approved by the store itself, for example when a Veracode finding was fixed. Every automatic approval is logged, mailed to the admins and can be taken back." xml:space="preserve"><value>Kun henkilö on kerran hyväksynyt lisäosan, kauppa voi itse hyväksyä sen linkitetyn tietovaraston myöhemmät versiot, esimerkiksi kun Veracoden havainto on korjattu. Jokainen automaattinen hyväksyntä kirjataan lokiin, lähetetään sähköpostilla järjestelmänvalvojille ja voidaan perua.</value></data>
+  <data name="Approve automatically" xml:space="preserve"><value>Hyväksy automaattisesti</value></data>
+  <data name="Stage" xml:space="preserve"><value>Vaihe</value></data>
+  <data name="Always required" xml:space="preserve"><value>Aina pakollinen</value></data>
+  <data name="A person has approved an earlier version of the add-on." xml:space="preserve"><value>Henkilö on hyväksynyt lisäosan aiemman version.</value></data>
+  <data name="The version comes from the linked repository, with a matching tag, from the stored workflow." xml:space="preserve"><value>Versio tulee linkitetystä tietovarastosta, vastaavalla tagilla, tallennetusta työnkulusta.</value></data>
+  <data name="The Veracode policy is passed." xml:space="preserve"><value>Veracode-käytännön vaatimukset täyttyvät.</value></data>
+  <data name="The store's checks find no errors, and no new online services, third-party components, licenses or rights since the last approved version." xml:space="preserve"><value>Kaupan tarkistukset eivät löydä virheitä eivätkä uusia verkkopalveluja, kolmannen osapuolen komponentteja, lisenssejä tai oikeuksia viimeksi hyväksytyn version jälkeen.</value></data>
+  <data name="Optional conditions" xml:space="preserve"><value>Valinnaiset ehdot</value></data>
+  <data name="The AI review aid recommends approval" xml:space="preserve"><value>Tekoälyn tarkastusapu suosittelee hyväksyntää</value></data>
+  <data name="Warnings are allowed only when the last approved version had them too" xml:space="preserve"><value>Varoitukset sallitaan vain, jos viimeksi hyväksytyssä versiossa oli niitä myös</value></data>
+  <data name="Only patch and minor versions (never a new major version)" xml:space="preserve"><value>Vain patch- ja minor-versiot (ei koskaan uutta major-versiota)</value></data>
+  <data name="Only versions that fix a finding of a scheduled scan" xml:space="preserve"><value>Vain versiot, jotka korjaavat ajastetun skannauksen havainnon</value></data>
+  <data name="Never automatic: the store client and add-ons without a link." xml:space="preserve"><value>Ei koskaan automaattisesti: kauppaohjelma ja lisäosat ilman linkitystä.</value></data>
+  <data name="Deadlines" xml:space="preserve"><value>Määräajat</value></data>
+  <data name="When a scan finds something new in a live version, a deadline starts. The developer and the admins are reminded before it ends." xml:space="preserve"><value>Kun skannaus löytää jotain uutta julkaistusta versiosta, määräaika alkaa. Kehittäjää ja järjestelmänvalvojia muistutetaan ennen sen päättymistä.</value></data>
+  <data name="Deadline (days)" xml:space="preserve"><value>Määräaika (päivää)</value></data>
+  <data name="Reminders (days before the end)" xml:space="preserve"><value>Muistutukset (päivää ennen päättymistä)</value></data>
+  <data name="When the deadline has passed" xml:space="preserve"><value>Kun määräaika on umpeutunut</value></data>
+  <data name="Only warn" xml:space="preserve"><value>Vain varoitus</value></data>
+  <data name="Mark the add-on in the catalog (findings open)" xml:space="preserve"><value>Merkitse lisäosa luetteloon (avoimia havaintoja)</value></data>
+  <data name="Pause the add-on" xml:space="preserve"><value>Keskeytä lisäosa</value></data>
+  <data name="Pause, then take out of service" xml:space="preserve"><value>Keskeytä ja poista sitten käytöstä</value></data>
+  <data name="Take out of service after (days after pausing)" xml:space="preserve"><value>Poista käytöstä (päivää keskeyttämisen jälkeen)</value></data>
+  <data name="For a problem that is too big or cannot be solved quickly. Works for every add-on, linked or not." xml:space="preserve"><value>Ongelmaan, joka on liian suuri tai jota ei voi ratkaista nopeasti. Toimii kaikille lisäosille, linkitetyille ja linkittämättömille.</value></data>
+  <data name="no new installations or updates; installed copies keep running." xml:space="preserve"><value>ei uusia asennuksia eikä päivityksiä; asennetut kopiot toimivat edelleen.</value></data>
+  <data name="in addition, store clients from 2.3.0 switch installed copies off at the next Power PDF start, without removing them; settings stay." xml:space="preserve"><value>lisäksi kauppaohjelmat versiosta 2.3.0 alkaen poistavat asennetut kopiot käytöstä Power PDF:n seuraavassa käynnistyksessä poistamatta niitä; asetukset säilyvät.</value></data>
+  <data name="the strongest step (on the plug-in page): clients ask to remove the add-on." xml:space="preserve"><value>vahvin taso (laajennuksen sivulla): asiakasohjelmat pyytävät poistamaan lisäosan.</value></data>
+  <data name="Choose…" xml:space="preserve"><value>Valitse…</value></data>
+  <data name="Level" xml:space="preserve"><value>Taso</value></data>
+  <data name="Review date (optional)" xml:space="preserve"><value>Tarkistuspäivä (valinnainen)</value></data>
+  <data name="Tell customers with a delivery of this add-on (their contact address)" xml:space="preserve"><value>Ilmoita asiakkaille, joille tämä lisäosa on toimitettu (heidän yhteysosoitteeseensa)</value></data>
+  <data name="As an emergency user you may take an add-on out of service or raise the level. Putting it back into service is up to the admins." xml:space="preserve"><value>Hätäkäyttäjänä voit poistaa lisäosan käytöstä tai nostaa tasoa. Käyttöön palauttaminen kuuluu järjestelmänvalvojille.</value></data>
+  <data name="Add-ons out of service" xml:space="preserve"><value>Käytöstä poistetut lisäosat</value></data>
+  <data name="No add-on is out of service." xml:space="preserve"><value>Yhtään lisäosaa ei ole poistettu käytöstä.</value></data>
+  <data name="Review date" xml:space="preserve"><value>Tarkistuspäivä</value></data>
+  <data name="told" xml:space="preserve"><value>ilmoitettu</value></data>
+  <data name="Put this add-on back into service?" xml:space="preserve"><value>Palautetaanko tämä lisäosa käyttöön?</value></data>
+  <data name="Back into service" xml:space="preserve"><value>Palauta käyttöön</value></data>
+  <data name="Withdraw version {0} and go back to the earlier one?" xml:space="preserve"><value>Peruutetaanko versio {0} ja palataanko aiempaan?</value></data>
+  <data name="Back to the last good version" xml:space="preserve"><value>Palaa viimeiseen toimivaan versioon</value></data>
+  <data name="Emergency users" xml:space="preserve"><value>Hätäkäyttäjät</value></data>
+  <data name="They may take add-ons out of service (and raise the level), nothing else: no approvals, no putting back. Admins always may." xml:space="preserve"><value>He voivat poistaa lisäosia käytöstä (ja nostaa tasoa), ei muuta: ei hyväksyntöjä, ei käyttöön palauttamista. Järjestelmänvalvojat voivat aina.</value></data>
+  <data name="No other active users." xml:space="preserve"><value>Ei muita aktiivisia käyttäjiä.</value></data>
+  <data name="Tell customers by default" xml:space="preserve"><value>Ilmoita asiakkaille oletuksena</value></data>
+  <data name="This add-on is out of service." xml:space="preserve"><value>Tämä lisäosa on poissa käytöstä.</value></data>
+  <data name="This add-on is paused." xml:space="preserve"><value>Tämä lisäosa on keskeytetty.</value></data>
+  <data name="Enter the API address of the git server." xml:space="preserve"><value>Anna git-palvelimen API-osoite.</value></data>
+  <data name="The App ID is a number." xml:space="preserve"><value>App ID on numero.</value></data>
+  <data name="The installation ID is a number." xml:space="preserve"><value>Asennuksen ID on numero.</value></data>
+  <data name="The owner is the name of a user or organisation, e.g. tungsten-automation." xml:space="preserve"><value>Omistaja on käyttäjän tai organisaation nimi, esim. tungsten-automation.</value></data>
+  <data name="Paste the whole .pem file of the GitHub App (it starts with -----BEGIN)." xml:space="preserve"><value>Liitä GitHub Appin koko .pem-tiedosto (se alkaa -----BEGIN).</value></data>
+  <data name="The token is one line without spaces." xml:space="preserve"><value>Token on yksi rivi ilman välilyöntejä.</value></data>
+  <data name="New webhook secret created. Copy it now; it is not shown again." xml:space="preserve"><value>Uusi webhook-salaisuus luotu. Kopioi se nyt; sitä ei näytetä uudelleen.</value></data>
+  <data name="The API ID has letters, digits and hyphens." xml:space="preserve"><value>API ID sisältää kirjaimia, numeroita ja yhdysmerkkejä.</value></data>
+  <data name="The API key is a hex string (as Veracode shows it when it is created)." xml:space="preserve"><value>API-avain on heksadesimaalimerkkijono (kuten Veracode sen näyttää luotaessa).</value></data>
+  <data name="The policy name has at most 100 characters." xml:space="preserve"><value>Käytännön nimessä on enintään 100 merkkiä.</value></data>
+  <data name="The deadline lies between 1 and 365 days." xml:space="preserve"><value>Määräajan pituus on 1–365 päivää.</value></data>
+  <data name="Between 0 and 180 days." xml:space="preserve"><value>0–180 päivää.</value></data>
+  <data name="The review date lies between today and one year from now." xml:space="preserve"><value>Tarkistuspäivä on tämän päivän ja vuoden päästä olevan päivän välillä.</value></data>
+  <data name="Add-on links" xml:space="preserve"><value>Lisäosien linkitykset</value></data>
+  <data name="The connection test failed." xml:space="preserve"><value>Yhteystesti epäonnistui.</value></data>
+  <data name="Only admins and emergency users take add-ons out of service." xml:space="preserve"><value>Vain järjestelmänvalvojat ja hätäkäyttäjät poistavat lisäosia käytöstä.</value></data>
+  <data name="Choose paused or out of service." xml:space="preserve"><value>Valitse keskeytetty tai poissa käytöstä.</value></data>
+  <data name="Give a reason (3 to 300 characters); users see it." xml:space="preserve"><value>Anna syy (3–300 merkkiä); käyttäjät näkevät sen.</value></data>
+  <data name="Unknown add-on." xml:space="preserve"><value>Tuntematon lisäosa.</value></data>
+  <data name="The store client itself cannot be taken out of service." xml:space="preserve"><value>Itse kauppaohjelmaa ei voi poistaa käytöstä.</value></data>
+  <data name="This add-on has a security block; that already takes it out of the store." xml:space="preserve"><value>Tällä lisäosalla on tietoturvaesto; se poistaa sen jo kaupasta.</value></data>
+  <data name="Emergency users may raise the level, not lower it; ask an admin." xml:space="preserve"><value>Hätäkäyttäjät voivat nostaa tasoa mutta eivät laskea sitä; pyydä järjestelmänvalvojaa.</value></data>
+  <data name="Changes saved." xml:space="preserve"><value>Muutokset tallennettu.</value></data>
+  <data name="Only admins put an add-on back into service." xml:space="preserve"><value>Vain järjestelmänvalvojat palauttavat lisäosan käyttöön.</value></data>
+  <data name="This add-on is not out of service." xml:space="preserve"><value>Tämä lisäosa ei ole poissa käytöstä.</value></data>
+  <data name="Add-on back in service." xml:space="preserve"><value>Lisäosa palautettu käyttöön.</value></data>
+  <data name="Only admins go back to an earlier version." xml:space="preserve"><value>Vain järjestelmänvalvojat palaavat aiempaan versioon.</value></data>
+  <data name="Not for the store client." xml:space="preserve"><value>Ei kauppaohjelmalle.</value></data>
+  <data name="This add-on has no live version." xml:space="preserve"><value>Tällä lisäosalla ei ole julkaistua versiota.</value></data>
+  <data name="There is no earlier version approved for live to go back to." xml:space="preserve"><value>Julkaistavaksi hyväksyttyä aiempaa versiota, johon palata, ei ole.</value></data>
+  <data name="The earlier version cannot be restored." xml:space="preserve"><value>Aiempaa versiota ei voi palauttaa.</value></data>
+  <data name="The newest version cannot be withdrawn." xml:space="preserve"><value>Uusinta versiota ei voi peruuttaa.</value></data>
+  <data name="Back to version {0}: it is live again, {1} is withdrawn." xml:space="preserve"><value>Palattu versioon {0}: se on taas julkaistu, {1} on peruutettu.</value></data>
+  <data name="Choose an add-on." xml:space="preserve"><value>Valitse lisäosa.</value></data>
+  <data name="Enter the repository as owner/name." xml:space="preserve"><value>Anna tietovarasto muodossa owner/name.</value></data>
+  <data name="The folder is a relative path inside the repository, e.g. measuretools." xml:space="preserve"><value>Kansio on suhteellinen polku tietovaraston sisällä, esim. measuretools.</value></data>
+  <data name="The tag pattern uses letters, digits, . _ - / and *, e.g. v* or measuretools-v*." xml:space="preserve"><value>Tagimallissa käytetään kirjaimia, numeroita, . _ - / ja *, esim. v* tai measuretools-v*.</value></data>
+  <data name="The workflow is a file under .github/workflows/ ending in .yml." xml:space="preserve"><value>Työnkulku on .github/workflows/-kansiossa oleva tiedosto, jonka pääte on .yml.</value></data>
+  <data name="The store itself is never approved automatically." xml:space="preserve"><value>Itse kauppaa ei koskaan hyväksytä automaattisesti.</value></data>
+  <data name="This link no longer exists." xml:space="preserve"><value>Tätä linkitystä ei ole enää olemassa.</value></data>
+  <data name="This add-on is already linked; change the existing link." xml:space="preserve"><value>Tämä lisäosa on jo linkitetty; muuta olemassa olevaa linkitystä.</value></data>
+  <data name="Enter the API address as https://host/... without user name or password." xml:space="preserve"><value>Anna API-osoite muodossa https://host/... ilman käyttäjänimeä tai salasanaa.</value></data>
+  <data name="Only https is allowed (http only for localhost)." xml:space="preserve"><value>Vain https on sallittu (http vain localhost-osoitteelle).</value></data>
+  <data name="App ID, installation ID and private key are needed." xml:space="preserve"><value>App ID, asennuksen ID ja yksityinen avain tarvitaan.</value></data>
+  <data name="Enter a token." xml:space="preserve"><value>Anna token.</value></data>
+  <data name="The git server did not answer in time." xml:space="preserve"><value>Git-palvelin ei vastannut ajoissa.</value></data>
+  <data name="The git server cannot be reached at this address." xml:space="preserve"><value>Git-palvelinta ei tavoiteta tästä osoitteesta.</value></data>
+  <data name="The address answered, but not like a GitHub API." xml:space="preserve"><value>Osoite vastasi, mutta ei GitHub API:n tavoin.</value></data>
+  <data name="The private key cannot be read. Paste the whole .pem file of the GitHub App." xml:space="preserve"><value>Yksityistä avainta ei voi lukea. Liitä GitHub Appin koko .pem-tiedosto.</value></data>
+  <data name="The git server refused the app: check the App ID and the private key." xml:space="preserve"><value>Git-palvelin hylkäsi sovelluksen: tarkista App ID ja yksityinen avain.</value></data>
+  <data name="The git server refused the sign-in: the token is wrong or has expired." xml:space="preserve"><value>Git-palvelin hylkäsi kirjautumisen: token on väärä tai vanhentunut.</value></data>
+  <data name="The git server refused access (403): the token or app lacks rights, or a rate limit applies." xml:space="preserve"><value>Git-palvelin esti pääsyn (403): tokenilta tai sovellukselta puuttuu oikeuksia, tai pyyntörajoitus on voimassa.</value></data>
+  <data name="The installation was not found: check the installation ID (the app must be installed in the organisation)." xml:space="preserve"><value>Asennusta ei löytynyt: tarkista asennuksen ID (sovelluksen on oltava asennettuna organisaatioon).</value></data>
+  <data name="Nothing found at this address: check the API address (GitHub Enterprise Server: https://host/api/v3)." xml:space="preserve"><value>Tästä osoitteesta ei löytynyt mitään: tarkista API-osoite (GitHub Enterprise Server: https://host/api/v3).</value></data>
+  <data name="The address redirects elsewhere; the store does not follow redirects with credentials. Enter the final API address." xml:space="preserve"><value>Osoite ohjaa muualle; kauppa ei seuraa uudelleenohjauksia tunnistetietojen kanssa. Anna lopullinen API-osoite.</value></data>
+  <data name="The installation ID is a number (shown in the address of the app's installation page)." xml:space="preserve"><value>Asennuksen ID on numero (näkyy sovelluksen asennussivun osoitteessa).</value></data>
+  <data name="Enter the API ID and the API key." xml:space="preserve"><value>Anna API ID ja API-avain.</value></data>
+  <data name="Veracode refused the sign-in: API ID or key is wrong, expired, or belongs to another region." xml:space="preserve"><value>Veracode hylkäsi kirjautumisen: API ID tai avain on väärä, vanhentunut tai kuuluu toiselle alueelle.</value></data>
+  <data name="Signed in, but the account may not read application profiles (role: Results API or Reviewer)." xml:space="preserve"><value>Kirjautuminen onnistui, mutta tili ei saa lukea sovellusprofiileja (rooli: Results API tai Reviewer).</value></data>
+  <data name="Veracode did not answer in time." xml:space="preserve"><value>Veracode ei vastannut ajoissa.</value></data>
+  <data name="Veracode cannot be reached from the server." xml:space="preserve"><value>Veracodea ei tavoiteta palvelimelta.</value></data>
+  <data name="Veracode answered with something unexpected." xml:space="preserve"><value>Veracode vastasi odottamattomasti.</value></data>
+  <data name="Add-on taken out of service, back in service, or its review date has come" xml:space="preserve"><value>Lisäosa poistettu käytöstä, palautettu käyttöön tai sen tarkistuspäivä on koittanut</value></data>
+  <data name="Admins, owner, customers with a delivery" xml:space="preserve"><value>Järjestelmänvalvojat, omistaja, asiakkaat, joille on toimitettu</value></data>
+  <data name="Add-on taken out of service." xml:space="preserve"><value>Lisäosa poistettu käytöstä.</value></data>
+  <data name="Add-on paused." xml:space="preserve"><value>Lisäosa keskeytetty.</value></data>
+  <data name="Link saved." xml:space="preserve"><value>Linkitys tallennettu.</value></data>
+  <data name="Link removed." xml:space="preserve"><value>Linkitys poistettu.</value></data>
+  <data name="Sunday" xml:space="preserve"><value>Sunnuntai</value></data>
+  <data name="Monday" xml:space="preserve"><value>Maanantai</value></data>
+  <data name="Tuesday" xml:space="preserve"><value>Tiistai</value></data>
+  <data name="Wednesday" xml:space="preserve"><value>Keskiviikko</value></data>
+  <data name="Thursday" xml:space="preserve"><value>Torstai</value></data>
+  <data name="Friday" xml:space="preserve"><value>Perjantai</value></data>
+  <data name="Saturday" xml:space="preserve"><value>Lauantai</value></data>
+  <data name="Someone else changed this add-on at the same moment. Look at the list and try again." xml:space="preserve"><value>Joku muu muutti tätä lisäosaa samalla hetkellä. Tarkista luettelo ja yritä uudelleen.</value></data>
+  <data name="Saved. The git server changed, so the stored key and token were removed; enter them for the new server." xml:space="preserve"><value>Tallennettu. Git-palvelin vaihtui, joten tallennettu avain ja tunnus poistettiin; anna ne uutta palvelinta varten.</value></data>
+  <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>Merkinnän muuttaminen: "Muuta" täyttää yllä olevan lomakkeen sen tasolla, syyllä ja tarkistuspäivällä.</value></data>
 </root>

@@ -2,12 +2,17 @@
 @using AddonStore.Web.Data
 @using AddonStore.Web.Services
 @model AddonStore.Web.Pages.PluginModel
+@inject AddonStore.Web.Data.AppDbContext GitScanDb
+@inject AddonStore.Web.Services.GitScan.SuspensionService GitScanSuspend
 @{
     var pkg = Model.Pkg!;
     ViewData["Title"] = Model.Name;
     var lang = AddonStore.Web.Services.Lang.Current;
     var me = Model.Me!;
     var offeredLive = Model.Versions.FirstOrDefault(x => x.Status == VersionStatus.Live)?.Id;
+    // S2.8.0: out of service (Git & Veracode, "Take out of service")
+    var suspended = (await AddonStore.Web.Services.GitScan.SuspensionService.AllAsync(GitScanDb)).TryGetValue(pkg.Id, out var susp);
+    var mayStop = pkg.Id != "com.tungsten.pluginstore" && pkg.BlockedAt is null && (Model.IsAdmin || await GitScanSuspend.IsEmergencyUserAsync(me));
 }
 
 <p style="margin:0 0 6px"><a href="/Dashboard">← @L[Model.IsAdmin ? "All plug-ins" : "My plug-ins"]</a></p>
@@ -22,6 +27,12 @@
 {
     <div class="alert error"><b>@L["This add-on is blocked for a security reason."]</b> @pkg.BlockReason
         <small>(@pkg.BlockedBy · @Time.Fmt(pkg.BlockedAt.Value, false))</small></div>
+}
+@if (suspended)
+{
+    <div class="alert error"><b>@L[susp.Level == "disabled" ? "This add-on is out of service." : "This add-on is paused."]</b> @susp.Reason
+        <small>(@Time.Fmt(susp.Since, false))</small>
+        @if (mayStop) { <a href="/Admin/GitScan?view=suspend">@L["Take out of service"] →</a> }</div>
 }
 @if (Model.SourceFindings.Count > 0)
 {
@@ -89,6 +100,10 @@
                       data-confirm="@L["Take this plug-in out of the store? All live and beta versions are withdrawn; installed copies keep working."]">
                     <button type="submit" class="btn small danger">@L["Take out of the store"]</button>
                 </form>
+            }
+            @if (mayStop && !suspended)
+            {
+                <a class="btn small danger" href="/Admin/GitScan?view=suspend&id=@Uri.EscapeDataString(pkg.Id)">@L["Take out of service"]</a>
             }
             @if (Model.IsAdmin && pkg.Id != "com.tungsten.pluginstore")
             {

@@ -1464,6 +1464,33 @@ setting, and asks its user to remove a blocked add-on that is installed. Lifting
 a block (`DELETE` on the same address) leaves the versions withdrawn until an
 admin restores them; the owner and the staff are told by mail.
 
+## Taking an add-on out of service (S2.8.0)
+
+For a problem that is too big or cannot be solved quickly, but is no reason for
+a security block, admins (and the emergency users they name under Settings,
+Git & Veracode) take an add-on out of service:
+`POST {{baseUrl}}/api/packages/{id}/suspend` with
+`{"level": "paused"|"disabled", "reason": "3 to 300 characters", "reviewAt": "yyyy-mm-dd", "notifyCustomers": true}`.
+
+- `paused`: no new installations or updates (catalog, customer deliveries,
+  manual ZIP, downloads answer `ADDON_SUSPENDED`); installed copies keep
+  running. The developer's test code still gets the add-on, so a fix can be
+  tested, and new versions can be uploaded as usual.
+- `disabled`: in addition, store clients from 2.3.0 switch installed copies off
+  at the next Power PDF start, without removing them (settings stay), and on
+  again when the add-on is back in service. The list is
+  `GET {{baseUrl}}/api/suspended` (SHA-256 of the lowercase package id, level,
+  reason; `format=tsv` for the client).
+- Emergency users may take out and raise the level, nothing else (the reason
+  and review date of an existing entry stay as the admins set them), never
+  lower it or put an add-on back. `DELETE` on the same address puts it back
+  (admins). Taking out also works while the store is in maintenance.
+- `POST {{baseUrl}}/api/packages/{id}/rollback` (admins) goes back to the last
+  good version: the newest live version is withdrawn and the earlier live one
+  takes its place (restored first when it was withdrawn).
+- Owner, admins and, with `notifyCustomers`, the contacts of customers with a
+  delivery of the add-on are told by mail; everything is in the audit trail.
+
 ## Package signatures
 
 Every catalog entry carries a signature of the server (ECDSA P-256 over
@@ -1888,6 +1915,16 @@ be free of warnings before review. Info is for information only.
 | TLS_CHECK_DISABLED | error | The source switches off HTTPS certificate validation (ignore flags, curl/OpenSSL verify off, accept-all callbacks). |
 | PACKAGE_BLOCKED | error | The add-on is blocked by the store admins for a security reason; it takes no uploads. |
 | BLOCK_INVALID | error (400) | A block request without a reason (3 to 300 characters), or for something that cannot be blocked. |
+| ADDON_SUSPENDED | 403 | The add-on is out of service for now (paused or disabled); downloads resume once the admins put it back. |
+| SUSPEND_INVALID | 400 | A request to take an add-on out of service without a valid level, reason (3 to 300 characters) or review date (today to one year), for the store client, or for a blocked add-on. |
+| NOT_SUSPENDED | 404 | The add-on is not out of service. |
+| ROLLBACK_NOT_POSSIBLE | 409 | There is no live version, or no earlier version approved for live to go back to. |
+| SUSPEND_BODY_INVALID | 400 | The body of a suspend request is not the JSON object `{"level", "reason", "reviewAt", "notifyCustomers"}`. |
+| REVIEW_DATE_INVALID | 400 | `reviewAt` is not a date such as 2026-12-31. |
+| SUSPEND_FORBIDDEN | 403 | Only admins and the emergency users named under Git & Veracode take add-ons out of service. |
+| SIGNATURE_INVALID | 401 | A git webhook delivery without a valid `X-Hub-Signature-256` (HMAC-SHA256 of the body with the webhook secret). |
+| PAYLOAD_TOO_LARGE | 413 | A git webhook delivery larger than 1 MB. |
+| DELIVERY_ID_MISSING | 400 | A signed git webhook delivery without the header `X-GitHub-Delivery`; every delivery is taken once, by its id and by its body. |
 | PE_HARDENING | warning | Built without ASLR (/DYNAMICBASE) or DEP (/NXCOMPAT). |
 | PE_EXPLOIT_MITIGATIONS | warning | A .zxt or bin/ DLL is built without Control Flow Guard (/guard:cf), stack buffer checks (/GS), CET shadow stack compatibility (/CETCOMPAT) or 64-bit ASLR (/HIGHENTROPYVA); see "Code security". |
 | PE_UNSAFE_FUNCTIONS | warning | The binary imports copy or format functions without a buffer size (strcpy, wcscat, sprintf, gets, lstrcpy, StrCpy, wsprintf ...; CWE-120). |

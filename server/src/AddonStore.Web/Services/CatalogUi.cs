@@ -153,6 +153,8 @@ public static class CatalogUi
     {
         // S2.0.6: the light rows from memory (LightVersions), only the package visibility from the database
         var publicIds = (await db.Packages.AsNoTracking().Where(p => p.Visibility != "private").Select(p => p.Id).ToListAsync()).ToHashSet();
+        // S2.8.0: add-ons out of service (paused or disabled) are not offered, neither for installation nor as update
+        publicIds.ExceptWith(await GitScan.SuspensionService.IdsAsync(db));
         var every = await AddonStore.Web.Data.LightVersions.AllAsync(db);
         // S2.3.0: first release per add-on: the earliest reviewed version that was ever approved (withdrawn ones count)
         var first = every.Where(v => v.ReviewedAt is not null && v.Status is VersionStatus.Live or VersionStatus.Beta or VersionStatus.Withdrawn)

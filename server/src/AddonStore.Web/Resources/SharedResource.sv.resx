@@ -1771,4 +1771,205 @@
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Den här åtgärden är pausad under underhållet. Försök igen senare; det du angav har inte sparats.</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>Tillbaka till katalogen</value></data>
   <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>Ett administratörsvärde kan bara höja lägstanivån: paketet självt kräver en nyare version av Power PDF.</value></data>
+  <data name="Out of service" xml:space="preserve"><value>Ur drift</value></data>
+  <data name="Git &amp; Veracode" xml:space="preserve"><value>Git &amp; Veracode</value></data>
+  <data name="Add-ons are built and scanned in their git repositories; the store connects to the git server, shows the scan results and keeps the emergency brake for every add-on." xml:space="preserve"><value>Tillägg byggs och skannas i sina git-lagringsplatser; butiken ansluter till git-servern, visar skanningsresultaten och har nödbromsen för varje tillägg.</value></data>
+  <data name="{0} add-ons are out of service or paused." xml:space="preserve"><value>{0} tillägg är ur drift eller pausade.</value></data>
+  <data name="Take out of service" xml:space="preserve"><value>Ta ur drift</value></data>
+  <data name="The review date of at least one add-on out of service has come." xml:space="preserve"><value>Granskningsdatumet för minst ett tillägg ur drift har kommit.</value></data>
+  <data name="Git connection" xml:space="preserve"><value>Git-anslutning</value></data>
+  <data name="Last webhook" xml:space="preserve"><value>Senaste webhook</value></data>
+  <data name="Veracode" xml:space="preserve"><value>Veracode</value></data>
+  <data name="not configured" xml:space="preserve"><value>inte konfigurerat</value></data>
+  <data name="Linked add-ons" xml:space="preserve"><value>Länkade tillägg</value></data>
+  <data name="Automatic approval" xml:space="preserve"><value>Automatiskt godkännande</value></data>
+  <data name="Step 1 of the concept: connect, link, receive webhooks, take out of service. Importing built and scanned versions, scans on a schedule, deadlines and automatic approval follow in the next steps; their settings can already be prepared here." xml:space="preserve"><value>Steg 1 i konceptet: ansluta, länka, ta emot webhooks, ta ur drift. Import av byggda och skannade versioner, schemalagda skanningar, tidsfrister och automatiskt godkännande följer i nästa steg; deras inställningar kan redan förberedas här.</value></data>
+  <data name="Any git server with a GitHub API: GitHub.com now, the company's GitHub Enterprise later. Changing the server only means changing these values." xml:space="preserve"><value>Valfri git-server med ett GitHub API: nu GitHub.com, senare företagets GitHub Enterprise. Att byta server innebär bara att ändra dessa värden.</value></data>
+  <data name="Connection active (webhooks are accepted, repositories can be listed)" xml:space="preserve"><value>Anslutning aktiv (webhooks tas emot, lagringsplatser kan listas)</value></data>
+  <data name="Git server" xml:space="preserve"><value>Git-server</value></data>
+  <data name="API address" xml:space="preserve"><value>API-adress</value></data>
+  <data name="GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3" xml:space="preserve"><value>GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3</value></data>
+  <data name="Sign-in" xml:space="preserve"><value>Inloggning</value></data>
+  <data name="GitHub App (recommended)" xml:space="preserve"><value>GitHub App (rekommenderas)</value></data>
+  <data name="Fine-grained token" xml:space="preserve"><value>Finkornig token</value></data>
+  <data name="GitHub App" xml:space="preserve"><value>GitHub App</value></data>
+  <data name="App ID" xml:space="preserve"><value>App ID</value></data>
+  <data name="Installation ID" xml:space="preserve"><value>Installations-ID</value></data>
+  <data name="Private key (.pem)" xml:space="preserve"><value>Privat nyckel (.pem)</value></data>
+  <data name="Remove the stored key" xml:space="preserve"><value>Ta bort den sparade nyckeln</value></data>
+  <data name="Rights the app needs: Contents read, Actions read and write, Metadata read, Pull requests read and write." xml:space="preserve"><value>Behörigheter som appen behöver: Contents läsa, Actions läsa och skriva, Metadata läsa, Pull requests läsa och skriva.</value></data>
+  <data name="Remove the stored token" xml:space="preserve"><value>Ta bort den sparade token</value></data>
+  <data name="Owner (optional)" xml:space="preserve"><value>Ägare (valfritt)</value></data>
+  <data name="Only repositories of this user or organisation are offered for links." xml:space="preserve"><value>Endast lagringsplatser för den här användaren eller organisationen erbjuds för länkning.</value></data>
+  <data name="Webhook" xml:space="preserve"><value>Webhook</value></data>
+  <data name="The git server reports finished workflow runs and releases here. Enter address and secret in the webhook settings of the GitHub App or organisation (content type application/json)." xml:space="preserve"><value>Git-servern rapporterar avslutade arbetsflödeskörningar och releaser hit. Ange adress och hemlighet i webhook-inställningarna för GitHub App eller organisationen (innehållstyp application/json).</value></data>
+  <data name="Secret" xml:space="preserve"><value>Hemlighet</value></data>
+  <data name="created on {0}" xml:space="preserve"><value>skapad {0}</value></data>
+  <data name="not created yet" xml:space="preserve"><value>inte skapad än</value></data>
+  <data name="Create a new secret? The old one stops working at once." xml:space="preserve"><value>Vill du skapa en ny hemlighet? Den gamla slutar fungera direkt.</value></data>
+  <data name="Create a webhook secret?" xml:space="preserve"><value>Vill du skapa en webhook-hemlighet?</value></data>
+  <data name="New secret" xml:space="preserve"><value>Ny hemlighet</value></data>
+  <data name="Create secret" xml:space="preserve"><value>Skapa hemlighet</value></data>
+  <data name="The workflow in each repository runs the Veracode policy scan. Here the store learns which result counts and, optionally, checks it with Veracode itself." xml:space="preserve"><value>Arbetsflödet i varje lagringsplats kör Veracodes policyskanning. Här får butiken veta vilket resultat som gäller och kontrollerar det vid behov hos Veracode själv.</value></data>
+  <data name="Result" xml:space="preserve"><value>Resultat</value></data>
+  <data name="From the workflow (the store asks the git server which run it came from)" xml:space="preserve"><value>Från arbetsflödet (butiken frågar git-servern vilken körning det kom från)</value></data>
+  <data name="In addition, check the policy status with Veracode" xml:space="preserve"><value>Kontrollera dessutom policystatus hos Veracode</value></data>
+  <data name="Region" xml:space="preserve"><value>Region</value></data>
+  <data name="Commercial" xml:space="preserve"><value>Kommersiell</value></data>
+  <data name="Europe" xml:space="preserve"><value>Europa</value></data>
+  <data name="US Federal" xml:space="preserve"><value>US Federal</value></data>
+  <data name="API ID" xml:space="preserve"><value>API ID</value></data>
+  <data name="Read only is enough (role Results API). Veracode credentials expire after a year by default." xml:space="preserve"><value>Läsbehörighet räcker (roll Results API). Veracode-autentiseringsuppgifter upphör som standard att gälla efter ett år.</value></data>
+  <data name="Expected policy" xml:space="preserve"><value>Förväntad policy</value></data>
+  <data name="Scan on a schedule: day" xml:space="preserve"><value>Schemalagd skanning: dag</value></data>
+  <data name="Hour" xml:space="preserve"><value>Klockslag</value></data>
+  <data name="The live version of each linked add-on is scanned again on this day, so new rules or aged components show up without a code change." xml:space="preserve"><value>Den publicerade versionen av varje länkat tillägg skannas igen denna dag, så att nya regler eller åldrade komponenter syns utan kodändring.</value></data>
+  <data name="Link an add-on" xml:space="preserve"><value>Länka ett tillägg</value></data>
+  <data name="Change link" xml:space="preserve"><value>Ändra länk</value></data>
+  <data name="Which repository builds and scans which add-on. Repositories with several add-ons use a folder and their own tag pattern." xml:space="preserve"><value>Vilken lagringsplats som bygger och skannar vilket tillägg. Lagringsplatser med flera tillägg använder en mapp och ett eget taggmönster.</value></data>
+  <data name="Load repositories from the git server" xml:space="preserve"><value>Läs in lagringsplatser från git-servern</value></data>
+  <data name="{0} repositories" xml:space="preserve"><value>{0} lagringsplatser</value></data>
+  <data name="Add-on Store server" xml:space="preserve"><value>Add-on Store-server</value></data>
+  <data name="Add-on Store client" xml:space="preserve"><value>Add-on Store-klient</value></data>
+  <data name="Repository (owner/name)" xml:space="preserve"><value>Lagringsplats (owner/name)</value></data>
+  <data name="Folder (optional)" xml:space="preserve"><value>Mapp (valfritt)</value></data>
+  <data name="Tag pattern" xml:space="preserve"><value>Taggmönster</value></data>
+  <data name="Workflow file" xml:space="preserve"><value>Arbetsflödesfil</value></data>
+  <data name="Automatic approval for this add-on" xml:space="preserve"><value>Automatiskt godkännande för det här tillägget</value></data>
+  <data name="As the global rule" xml:space="preserve"><value>Enligt den globala regeln</value></data>
+  <data name="Never" xml:space="preserve"><value>Aldrig</value></data>
+  <data name="Automatically to beta" xml:space="preserve"><value>Automatiskt till beta</value></data>
+  <data name="Automatically live" xml:space="preserve"><value>Automatiskt publicerad</value></data>
+  <data name="The store server and client are never approved automatically." xml:space="preserve"><value>Butikens server och klient godkänns aldrig automatiskt.</value></data>
+  <data name="No add-on is linked yet." xml:space="preserve"><value>Inget tillägg är länkat än.</value></data>
+  <data name="Repository" xml:space="preserve"><value>Lagringsplats</value></data>
+  <data name="Tags" xml:space="preserve"><value>Taggar</value></data>
+  <data name="Workflow" xml:space="preserve"><value>Arbetsflöde</value></data>
+  <data name="Change" xml:space="preserve"><value>Ändra</value></data>
+  <data name="Remove this link?" xml:space="preserve"><value>Vill du ta bort den här länken?</value></data>
+  <data name="After a person has approved an add-on once, later versions from its linked repository can be approved by the store itself, for example when a Veracode finding was fixed. Every automatic approval is logged, mailed to the admins and can be taken back." xml:space="preserve"><value>När en person har godkänt ett tillägg en gång kan senare versioner från dess länkade lagringsplats godkännas av butiken själv, till exempel när ett Veracode-fynd har åtgärdats. Varje automatiskt godkännande loggas, skickas per e-post till administratörerna och kan återkallas.</value></data>
+  <data name="Approve automatically" xml:space="preserve"><value>Godkänn automatiskt</value></data>
+  <data name="Stage" xml:space="preserve"><value>Fas</value></data>
+  <data name="Always required" xml:space="preserve"><value>Krävs alltid</value></data>
+  <data name="A person has approved an earlier version of the add-on." xml:space="preserve"><value>En person har godkänt en tidigare version av tillägget.</value></data>
+  <data name="The version comes from the linked repository, with a matching tag, from the stored workflow." xml:space="preserve"><value>Versionen kommer från den länkade lagringsplatsen, med en matchande tagg, från det sparade arbetsflödet.</value></data>
+  <data name="The Veracode policy is passed." xml:space="preserve"><value>Veracode-policyn är godkänd.</value></data>
+  <data name="The store's checks find no errors, and no new online services, third-party components, licenses or rights since the last approved version." xml:space="preserve"><value>Butikens kontroller hittar inga fel och inga nya onlinetjänster, tredjepartskomponenter, licenser eller behörigheter sedan den senast godkända versionen.</value></data>
+  <data name="Optional conditions" xml:space="preserve"><value>Valfria villkor</value></data>
+  <data name="The AI review aid recommends approval" xml:space="preserve"><value>AI-granskningshjälpen rekommenderar godkännande</value></data>
+  <data name="Warnings are allowed only when the last approved version had them too" xml:space="preserve"><value>Varningar tillåts bara om den senast godkända versionen också hade dem</value></data>
+  <data name="Only patch and minor versions (never a new major version)" xml:space="preserve"><value>Endast patch- och minor-versioner (aldrig en ny major-version)</value></data>
+  <data name="Only versions that fix a finding of a scheduled scan" xml:space="preserve"><value>Endast versioner som åtgärdar ett fynd från en schemalagd skanning</value></data>
+  <data name="Never automatic: the store client and add-ons without a link." xml:space="preserve"><value>Aldrig automatiskt: butiksklienten och tillägg utan länk.</value></data>
+  <data name="Deadlines" xml:space="preserve"><value>Tidsfrister</value></data>
+  <data name="When a scan finds something new in a live version, a deadline starts. The developer and the admins are reminded before it ends." xml:space="preserve"><value>När en skanning hittar något nytt i en publicerad version startar en tidsfrist. Utvecklaren och administratörerna påminns innan den löper ut.</value></data>
+  <data name="Deadline (days)" xml:space="preserve"><value>Tidsfrist (dagar)</value></data>
+  <data name="Reminders (days before the end)" xml:space="preserve"><value>Påminnelser (dagar före slutet)</value></data>
+  <data name="When the deadline has passed" xml:space="preserve"><value>När tidsfristen har löpt ut</value></data>
+  <data name="Only warn" xml:space="preserve"><value>Endast varna</value></data>
+  <data name="Mark the add-on in the catalog (findings open)" xml:space="preserve"><value>Markera tillägget i katalogen (öppna fynd)</value></data>
+  <data name="Pause the add-on" xml:space="preserve"><value>Pausa tillägget</value></data>
+  <data name="Pause, then take out of service" xml:space="preserve"><value>Pausa och ta sedan ur drift</value></data>
+  <data name="Take out of service after (days after pausing)" xml:space="preserve"><value>Ta ur drift efter (dagar efter paus)</value></data>
+  <data name="For a problem that is too big or cannot be solved quickly. Works for every add-on, linked or not." xml:space="preserve"><value>För ett problem som är för stort eller inte kan lösas snabbt. Fungerar för alla tillägg, länkade eller inte.</value></data>
+  <data name="no new installations or updates; installed copies keep running." xml:space="preserve"><value>inga nya installationer eller uppdateringar; installerade kopior fortsätter att köras.</value></data>
+  <data name="in addition, store clients from 2.3.0 switch installed copies off at the next Power PDF start, without removing them; settings stay." xml:space="preserve"><value>dessutom stänger butiksklienter från 2.3.0 av installerade kopior vid nästa start av Power PDF, utan att ta bort dem; inställningarna finns kvar.</value></data>
+  <data name="the strongest step (on the plug-in page): clients ask to remove the add-on." xml:space="preserve"><value>den starkaste nivån (på plugin-sidan): klienterna ber om att tillägget tas bort.</value></data>
+  <data name="Choose…" xml:space="preserve"><value>Välj…</value></data>
+  <data name="Level" xml:space="preserve"><value>Nivå</value></data>
+  <data name="Review date (optional)" xml:space="preserve"><value>Granskningsdatum (valfritt)</value></data>
+  <data name="Tell customers with a delivery of this add-on (their contact address)" xml:space="preserve"><value>Informera kunder med en leverans av det här tillägget (deras kontaktadress)</value></data>
+  <data name="As an emergency user you may take an add-on out of service or raise the level. Putting it back into service is up to the admins." xml:space="preserve"><value>Som nödanvändare kan du ta ett tillägg ur drift eller höja nivån. Att sätta det i drift igen är administratörernas sak.</value></data>
+  <data name="Add-ons out of service" xml:space="preserve"><value>Tillägg ur drift</value></data>
+  <data name="No add-on is out of service." xml:space="preserve"><value>Inget tillägg är ur drift.</value></data>
+  <data name="Review date" xml:space="preserve"><value>Granskningsdatum</value></data>
+  <data name="told" xml:space="preserve"><value>informerade</value></data>
+  <data name="Put this add-on back into service?" xml:space="preserve"><value>Vill du sätta det här tillägget i drift igen?</value></data>
+  <data name="Back into service" xml:space="preserve"><value>I drift igen</value></data>
+  <data name="Withdraw version {0} and go back to the earlier one?" xml:space="preserve"><value>Vill du återkalla version {0} och gå tillbaka till den tidigare?</value></data>
+  <data name="Back to the last good version" xml:space="preserve"><value>Tillbaka till senaste fungerande version</value></data>
+  <data name="Emergency users" xml:space="preserve"><value>Nödanvändare</value></data>
+  <data name="They may take add-ons out of service (and raise the level), nothing else: no approvals, no putting back. Admins always may." xml:space="preserve"><value>De får ta tillägg ur drift (och höja nivån), inget annat: inga godkännanden, inget återinsättande. Administratörer får alltid.</value></data>
+  <data name="No other active users." xml:space="preserve"><value>Inga andra aktiva användare.</value></data>
+  <data name="Tell customers by default" xml:space="preserve"><value>Informera kunder som standard</value></data>
+  <data name="This add-on is out of service." xml:space="preserve"><value>Det här tillägget är ur drift.</value></data>
+  <data name="This add-on is paused." xml:space="preserve"><value>Det här tillägget är pausat.</value></data>
+  <data name="Enter the API address of the git server." xml:space="preserve"><value>Ange git-serverns API-adress.</value></data>
+  <data name="The App ID is a number." xml:space="preserve"><value>App ID är ett nummer.</value></data>
+  <data name="The installation ID is a number." xml:space="preserve"><value>Installations-ID är ett nummer.</value></data>
+  <data name="The owner is the name of a user or organisation, e.g. tungsten-automation." xml:space="preserve"><value>Ägaren är namnet på en användare eller organisation, t.ex. tungsten-automation.</value></data>
+  <data name="Paste the whole .pem file of the GitHub App (it starts with -----BEGIN)." xml:space="preserve"><value>Klistra in hela .pem-filen för GitHub App (den börjar med -----BEGIN).</value></data>
+  <data name="The token is one line without spaces." xml:space="preserve"><value>Token är en rad utan blanksteg.</value></data>
+  <data name="New webhook secret created. Copy it now; it is not shown again." xml:space="preserve"><value>Ny webhook-hemlighet skapad. Kopiera den nu; den visas inte igen.</value></data>
+  <data name="The API ID has letters, digits and hyphens." xml:space="preserve"><value>API ID består av bokstäver, siffror och bindestreck.</value></data>
+  <data name="The API key is a hex string (as Veracode shows it when it is created)." xml:space="preserve"><value>API-nyckeln är en hexadecimal sträng (som Veracode visar den när den skapas).</value></data>
+  <data name="The policy name has at most 100 characters." xml:space="preserve"><value>Policynamnet får ha högst 100 tecken.</value></data>
+  <data name="The deadline lies between 1 and 365 days." xml:space="preserve"><value>Tidsfristen ligger mellan 1 och 365 dagar.</value></data>
+  <data name="Between 0 and 180 days." xml:space="preserve"><value>Mellan 0 och 180 dagar.</value></data>
+  <data name="The review date lies between today and one year from now." xml:space="preserve"><value>Granskningsdatumet ligger mellan i dag och ett år framåt.</value></data>
+  <data name="Add-on links" xml:space="preserve"><value>Tilläggslänkar</value></data>
+  <data name="The connection test failed." xml:space="preserve"><value>Anslutningstestet misslyckades.</value></data>
+  <data name="Only admins and emergency users take add-ons out of service." xml:space="preserve"><value>Endast administratörer och nödanvändare tar tillägg ur drift.</value></data>
+  <data name="Choose paused or out of service." xml:space="preserve"><value>Välj pausad eller ur drift.</value></data>
+  <data name="Give a reason (3 to 300 characters); users see it." xml:space="preserve"><value>Ange en orsak (3 till 300 tecken); användarna ser den.</value></data>
+  <data name="Unknown add-on." xml:space="preserve"><value>Okänt tillägg.</value></data>
+  <data name="The store client itself cannot be taken out of service." xml:space="preserve"><value>Själva butiksklienten kan inte tas ur drift.</value></data>
+  <data name="This add-on has a security block; that already takes it out of the store." xml:space="preserve"><value>Det här tillägget har en säkerhetsspärr; den tar redan bort det från butiken.</value></data>
+  <data name="Emergency users may raise the level, not lower it; ask an admin." xml:space="preserve"><value>Nödanvändare får höja nivån, inte sänka den; fråga en administratör.</value></data>
+  <data name="Changes saved." xml:space="preserve"><value>Ändringarna har sparats.</value></data>
+  <data name="Only admins put an add-on back into service." xml:space="preserve"><value>Endast administratörer sätter ett tillägg i drift igen.</value></data>
+  <data name="This add-on is not out of service." xml:space="preserve"><value>Det här tillägget är inte ur drift.</value></data>
+  <data name="Add-on back in service." xml:space="preserve"><value>Tillägget är i drift igen.</value></data>
+  <data name="Only admins go back to an earlier version." xml:space="preserve"><value>Endast administratörer går tillbaka till en tidigare version.</value></data>
+  <data name="Not for the store client." xml:space="preserve"><value>Inte för butiksklienten.</value></data>
+  <data name="This add-on has no live version." xml:space="preserve"><value>Det här tillägget har ingen publicerad version.</value></data>
+  <data name="There is no earlier version approved for live to go back to." xml:space="preserve"><value>Det finns ingen tidigare version godkänd för publicering att gå tillbaka till.</value></data>
+  <data name="The earlier version cannot be restored." xml:space="preserve"><value>Den tidigare versionen kan inte återställas.</value></data>
+  <data name="The newest version cannot be withdrawn." xml:space="preserve"><value>Den senaste versionen kan inte återkallas.</value></data>
+  <data name="Back to version {0}: it is live again, {1} is withdrawn." xml:space="preserve"><value>Tillbaka till version {0}: den är publicerad igen, {1} är återkallad.</value></data>
+  <data name="Choose an add-on." xml:space="preserve"><value>Välj ett tillägg.</value></data>
+  <data name="Enter the repository as owner/name." xml:space="preserve"><value>Ange lagringsplatsen som owner/name.</value></data>
+  <data name="The folder is a relative path inside the repository, e.g. measuretools." xml:space="preserve"><value>Mappen är en relativ sökväg i lagringsplatsen, t.ex. measuretools.</value></data>
+  <data name="The tag pattern uses letters, digits, . _ - / and *, e.g. v* or measuretools-v*." xml:space="preserve"><value>Taggmönstret använder bokstäver, siffror, . _ - / och *, t.ex. v* eller measuretools-v*.</value></data>
+  <data name="The workflow is a file under .github/workflows/ ending in .yml." xml:space="preserve"><value>Arbetsflödet är en fil under .github/workflows/ som slutar på .yml.</value></data>
+  <data name="The store itself is never approved automatically." xml:space="preserve"><value>Själva butiken godkänns aldrig automatiskt.</value></data>
+  <data name="This link no longer exists." xml:space="preserve"><value>Den här länken finns inte längre.</value></data>
+  <data name="This add-on is already linked; change the existing link." xml:space="preserve"><value>Det här tillägget är redan länkat; ändra den befintliga länken.</value></data>
+  <data name="Enter the API address as https://host/... without user name or password." xml:space="preserve"><value>Ange API-adressen som https://host/... utan användarnamn eller lösenord.</value></data>
+  <data name="Only https is allowed (http only for localhost)." xml:space="preserve"><value>Endast https tillåts (http endast för localhost).</value></data>
+  <data name="App ID, installation ID and private key are needed." xml:space="preserve"><value>App ID, installations-ID och privat nyckel krävs.</value></data>
+  <data name="Enter a token." xml:space="preserve"><value>Ange en token.</value></data>
+  <data name="The git server did not answer in time." xml:space="preserve"><value>Git-servern svarade inte i tid.</value></data>
+  <data name="The git server cannot be reached at this address." xml:space="preserve"><value>Git-servern kan inte nås på den här adressen.</value></data>
+  <data name="The address answered, but not like a GitHub API." xml:space="preserve"><value>Adressen svarade, men inte som ett GitHub API.</value></data>
+  <data name="The private key cannot be read. Paste the whole .pem file of the GitHub App." xml:space="preserve"><value>Den privata nyckeln kan inte läsas. Klistra in hela .pem-filen för GitHub App.</value></data>
+  <data name="The git server refused the app: check the App ID and the private key." xml:space="preserve"><value>Git-servern avvisade appen: kontrollera App ID och den privata nyckeln.</value></data>
+  <data name="The git server refused the sign-in: the token is wrong or has expired." xml:space="preserve"><value>Git-servern avvisade inloggningen: token är fel eller har gått ut.</value></data>
+  <data name="The git server refused access (403): the token or app lacks rights, or a rate limit applies." xml:space="preserve"><value>Git-servern nekade åtkomst (403): token eller appen saknar behörigheter, eller så gäller en hastighetsgräns.</value></data>
+  <data name="The installation was not found: check the installation ID (the app must be installed in the organisation)." xml:space="preserve"><value>Installationen hittades inte: kontrollera installations-ID (appen måste vara installerad i organisationen).</value></data>
+  <data name="Nothing found at this address: check the API address (GitHub Enterprise Server: https://host/api/v3)." xml:space="preserve"><value>Inget hittades på den här adressen: kontrollera API-adressen (GitHub Enterprise Server: https://host/api/v3).</value></data>
+  <data name="The address redirects elsewhere; the store does not follow redirects with credentials. Enter the final API address." xml:space="preserve"><value>Adressen omdirigerar till en annan plats; butiken följer inte omdirigeringar med autentiseringsuppgifter. Ange den slutliga API-adressen.</value></data>
+  <data name="The installation ID is a number (shown in the address of the app's installation page)." xml:space="preserve"><value>Installations-ID är ett nummer (visas i adressen till appens installationssida).</value></data>
+  <data name="Enter the API ID and the API key." xml:space="preserve"><value>Ange API ID och API-nyckeln.</value></data>
+  <data name="Veracode refused the sign-in: API ID or key is wrong, expired, or belongs to another region." xml:space="preserve"><value>Veracode avvisade inloggningen: API ID eller nyckel är fel, har gått ut eller hör till en annan region.</value></data>
+  <data name="Signed in, but the account may not read application profiles (role: Results API or Reviewer)." xml:space="preserve"><value>Inloggad, men kontot får inte läsa applikationsprofiler (roll: Results API eller Reviewer).</value></data>
+  <data name="Veracode did not answer in time." xml:space="preserve"><value>Veracode svarade inte i tid.</value></data>
+  <data name="Veracode cannot be reached from the server." xml:space="preserve"><value>Veracode kan inte nås från servern.</value></data>
+  <data name="Veracode answered with something unexpected." xml:space="preserve"><value>Veracode svarade med något oväntat.</value></data>
+  <data name="Add-on taken out of service, back in service, or its review date has come" xml:space="preserve"><value>Tillägg tas ur drift, sätts i drift igen eller når sitt granskningsdatum</value></data>
+  <data name="Admins, owner, customers with a delivery" xml:space="preserve"><value>Administratörer, ägare, kunder med en leverans</value></data>
+  <data name="Add-on taken out of service." xml:space="preserve"><value>Tillägget har tagits ur drift.</value></data>
+  <data name="Add-on paused." xml:space="preserve"><value>Tillägget har pausats.</value></data>
+  <data name="Link saved." xml:space="preserve"><value>Länken har sparats.</value></data>
+  <data name="Link removed." xml:space="preserve"><value>Länken har tagits bort.</value></data>
+  <data name="Sunday" xml:space="preserve"><value>Söndag</value></data>
+  <data name="Monday" xml:space="preserve"><value>Måndag</value></data>
+  <data name="Tuesday" xml:space="preserve"><value>Tisdag</value></data>
+  <data name="Wednesday" xml:space="preserve"><value>Onsdag</value></data>
+  <data name="Thursday" xml:space="preserve"><value>Torsdag</value></data>
+  <data name="Friday" xml:space="preserve"><value>Fredag</value></data>
+  <data name="Saturday" xml:space="preserve"><value>Lördag</value></data>
+  <data name="Someone else changed this add-on at the same moment. Look at the list and try again." xml:space="preserve"><value>Någon annan ändrade detta tillägg i samma ögonblick. Titta i listan och försök igen.</value></data>
+  <data name="Saved. The git server changed, so the stored key and token were removed; enter them for the new server." xml:space="preserve"><value>Sparat. Git-servern har ändrats, så den sparade nyckeln och token har tagits bort; ange dem för den nya servern.</value></data>
+  <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>Ändra en post: "Ändra" fyller i formuläret ovan med nivå, orsak och granskningsdatum.</value></data>
 </root>

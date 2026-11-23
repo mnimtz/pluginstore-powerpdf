@@ -1,0 +1,477 @@
+@page
+@model AddonStore.Web.Pages.Admin.GitScanModel
+@{
+    ViewData["Title"] = "Git & Veracode";
+    var v = Model.CurrentView;
+    string Level(string l) => l == "disabled" ? L["Out of service"].Value : L["Paused"].Value;
+}
+
+@if (Model.IsAdmin)
+{
+    <p style="margin:0 0 6px"><a href="/Admin/Settings">← @L["Settings"]</a></p>
+}
+<h1>@L["Git & Veracode"]</h1>
+<p class="lead">@L["Add-ons are built and scanned in their git repositories; the store connects to the git server, shows the scan results and keeps the emergency brake for every add-on."]</p>
+
+<div class="report-layout side-carried">
+<nav class="report-nav" aria-label="@L["Sections"]">
+    @foreach (var (key, label) in AddonStore.Web.Pages.Admin.GitScanModel.Views)
+    {
+        if (!Model.IsAdmin && key != "suspend") { continue; }
+        <a href="/Admin/GitScan@(key == "overview" ? "" : "?view=" + key)" class="@(v == key ? "active" : "")" aria-current="@(v == key ? "page" : null)">@L[label]</a>
+    }
+</nav>
+<div class="report-main">
+
+@if (Model.Notice is not null)
+{
+    <div class="alert @Model.NoticeKind" role="status">@(Model.NoticeArgs.Length > 0 ? L[Model.Notice, Model.NoticeArgs] : L[Model.Notice])
+        @if (Model.TestLines.Count > 1)
+        {
+            <ul style="margin:6px 0 0">
+                @foreach (var line in Model.TestLines.Skip(1)) { <li>@line</li> }
+            </ul>
+        }
+        else if (Model.TestLines.Count == 1 && Model.NoticeKind == "error")
+        {
+            <br /><span>@L[Model.TestLines[0]]</span>
+        }
+    </div>
+}
+
+@if (v == "overview")
+{
+    var gt = AddonStore.Web.Pages.Admin.GitScanModel.ParseTest(Model.Git.LastTest);
+    var vt = AddonStore.Web.Pages.Admin.GitScanModel.ParseTest(Model.Vc.LastTest);
+    var provider = AddonStore.Web.Services.GitScan.GitProviders.Find(Model.Git.Provider)!;
+    if (Model.Suspensions.Count > 0)
+    {
+        <div class="alert error">@L["{0} add-ons are out of service or paused.", Model.Suspensions.Count] <a href="/Admin/GitScan?view=suspend">@L["Take out of service"] →</a></div>
+    }
+    @if (Model.Suspensions.Any(s => s.ReviewAt is { } r && r <= DateTime.UtcNow))
+    {
+        <div class="alert error">@L["The review date of at least one add-on out of service has come."]</div>
+    }
+    <div class="table-wrap" style="max-width:720px">
+    <table class="no-rtable">
+        <tr><th>@L["Git connection"]</th><td>
+            @if (!Model.Git.Enabled) { <span class="badge disabled">@L["off"]</span> }
+            else { <span class="badge active">@L["on"]</span> }
+            @provider.Label · <code>@Model.Git.ApiUrl</code>
+            @if (gt.At is not null) { <br /><span style="font-size:.85rem">@L["Last test"]: @Time.Fmt(gt.At) · @(gt.Ok ? L["passed"] : L["failed"])</span> }
+        </td></tr>
+        <tr><th>@L["Last webhook"]</th><td>@Time.Fmt(Model.Git.LastWebhookAt)</td></tr>
+        <tr><th>@L["Veracode"]</th><td>
+            @(Model.Vc.HasApiKey ? L["configured"] : L["not configured"])
+            @if (vt.At is not null) { <br /><span style="font-size:.85rem">@L["Last test"]: @Time.Fmt(vt.At) · @(vt.Ok ? L["passed"] : L["failed"])</span> }
+        </td></tr>
+        <tr><th>@L["Linked add-ons"]</th><td>@Model.Links.Count</td></tr>
+        <tr><th>@L["Automatic approval"]</th><td>@(Model.Auto.Enabled ? L["on"] : L["off"])</td></tr>
+        <tr><th>@L["Out of service"]</th><td>@Model.Suspensions.Count(s => s.Level == "disabled") · @L["Paused"]: @Model.Suspensions.Count(s => s.Level == "paused")</td></tr>
+    </table>
+    </div>
+    <div class="alert" style="max-width:720px;margin-top:14px">@L["Step 1 of the concept: connect, link, receive webhooks, take out of service. Importing built and scanned versions, scans on a schedule, deadlines and automatic approval follow in the next steps; their settings can already be prepared here."]</div>
+}
+
+@if (v == "git")
+{
+    var g = Model.Git;
+    var provider = AddonStore.Web.Services.GitScan.GitProviders.Find(g.Provider)!;
+    <div class="card" style="max-width:760px">
+        <h2 style="margin-top:0">@L["Git connection"]</h2>
+        <p>@L["Any git server with a GitHub API: GitHub.com now, the company's GitHub Enterprise later. Changing the server only means changing these values."]</p>
+        <form method="post" asp-page-handler="Git" class="stack" style="max-width:none">
+            <label class="check"><input type="checkbox" name="enabled" value="true" @(g.Enabled ? "checked" : "") /> @L["Connection active (webhooks are accepted, repositories can be listed)"]</label>
+            <div>
+                <label>@L["Git server"]</label>
+                <select name="provider">
+                    @foreach (var p in AddonStore.Web.Services.GitScan.GitProviders.All)
+                    {
+                        <option value="@p.Key" selected="@(p.Key == g.Provider)">@p.Label</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label>@L["API address"]</label>
+                <input type="text" name="apiUrl" value="@g.ApiUrl" placeholder="@provider.ApiUrlHint" autocomplete="off" />
+                <small>@L["GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3"]</small>
+            </div>
+            <div>
+                <label>@L["Sign-in"]</label>
+                <select name="authMode">
+                    <option value="app" selected="@(g.AuthMode == "app")">@L["GitHub App (recommended)"]</option>
+                    <option value="token" selected="@(g.AuthMode == "token")">@L["Fine-grained token"]</option>
+                </select>
+            </div>
+            <fieldset style="border:1px solid var(--tun-gray-200);padding:10px 14px">
+                <legend>@L["GitHub App"]</legend>
+                <div><label>@L["App ID"]</label><input type="text" name="appId" value="@g.AppId" inputmode="numeric" autocomplete="off" /></div>
+                <div><label>@L["Installation ID"]</label><input type="text" name="installationId" value="@g.InstallationId" inputmode="numeric" autocomplete="off" /></div>
+                <div>
+                    <label>@L["Private key (.pem)"]</label>
+                    <textarea name="appKey" rows="3" autocomplete="off" spellcheck="false" placeholder="@(g.HasAppKey ? "••••••••  (" + L["configured"].Value + ")" : "-----BEGIN RSA PRIVATE KEY-----")"></textarea>
+                    @if (g.HasAppKey) { <label class="check"><input type="checkbox" name="clearAppKey" value="true" /> @L["Remove the stored key"]</label> }
+                </div>
+                <small>@L["Rights the app needs: Contents read, Actions read and write, Metadata read, Pull requests read and write."]</small>
+            </fieldset>
+            <fieldset style="border:1px solid var(--tun-gray-200);padding:10px 14px">
+                <legend>@L["Fine-grained token"]</legend>
+                <input type="password" name="token" autocomplete="off" placeholder="@(g.HasToken ? "••••••••  (" + L["configured"].Value + ")" : "github_pat_...")" />
+                @if (g.HasToken) { <label class="check"><input type="checkbox" name="clearToken" value="true" /> @L["Remove the stored token"]</label> }
+            </fieldset>
+            <div>
+                <label>@L["Owner (optional)"]</label>
+                <input type="text" name="owner" value="@g.Owner" placeholder="tungsten-automation" autocomplete="off" />
+                <small>@L["Only repositories of this user or organisation are offered for links."]</small>
+            </div>
+            <div><button type="submit" class="btn">@L["Save"]</button></div>
+        </form>
+        <form method="post" asp-page-handler="GitTest" style="margin-top:10px"><button type="submit" class="btn secondary">@L["Test connection"]</button></form>
+    </div>
+
+    <div class="card" style="max-width:760px;margin-top:16px">
+        <h2 style="margin-top:0">@L["Webhook"]</h2>
+        <p>@L["The git server reports finished workflow runs and releases here. Enter address and secret in the webhook settings of the GitHub App or organisation (content type application/json)."]</p>
+        <div><label>@L["Address"]</label><input type="text" readonly value="@Model.WebhookUrl" /></div>
+        @if (Model.NewSecret is not null)
+        {
+            <div style="margin-top:8px"><label>@L["Secret"]</label><input type="text" readonly value="@Model.NewSecret" /></div>
+        }
+        else
+        {
+            <p style="font-size:.88rem">@L["Secret"]: @(g.HasWebhookSecret ? L["created on {0}", Time.Fmt(g.WebhookSecretAt)] : L["not created yet"])</p>
+        }
+        <form method="post" asp-page-handler="WebhookSecret" data-confirm="@L[g.HasWebhookSecret ? "Create a new secret? The old one stops working at once." : "Create a webhook secret?"]">
+            <button type="submit" class="btn secondary">@L[g.HasWebhookSecret ? "New secret" : "Create secret"]</button>
+        </form>
+    </div>
+}
+
+@if (v == "veracode")
+{
+    var c = Model.Vc;
+    <div class="card" style="max-width:760px">
+        <h2 style="margin-top:0">@L["Veracode"]</h2>
+        <p>@L["The workflow in each repository runs the Veracode policy scan. Here the store learns which result counts and, optionally, checks it with Veracode itself."]</p>
+        <form method="post" asp-page-handler="Veracode" class="stack" style="max-width:none">
+            <div>
+                <label>@L["Result"]</label>
+                <select name="mode">
+                    <option value="workflow" selected="@(c.Mode == "workflow")">@L["From the workflow (the store asks the git server which run it came from)"]</option>
+                    <option value="verify" selected="@(c.Mode == "verify")">@L["In addition, check the policy status with Veracode"]</option>
+                </select>
+            </div>
+            <div>
+                <label>@L["Region"]</label>
+                <select name="region">
+                    <option value="com" selected="@(c.Region == "com")">@L["Commercial"] (api.veracode.com)</option>
+                    <option value="eu" selected="@(c.Region == "eu")">@L["Europe"] (api.veracode.eu)</option>
+                    <option value="us" selected="@(c.Region == "us")">@L["US Federal"] (api.veracode.us)</option>
+                </select>
+            </div>
+            <div><label>@L["API ID"]</label><input type="text" name="apiId" value="@c.ApiId" autocomplete="off" /></div>
+            <div>
+                <label>@L["API key"]</label>
+                <input type="password" name="apiKey" autocomplete="off" placeholder="@(c.HasApiKey ? "••••••••  (" + L["configured"].Value + ")" : "")" />
+                @if (c.HasApiKey) { <label class="check"><input type="checkbox" name="clearKey" value="true" /> @L["Remove the stored key"]</label> }
+                <small>@L["Read only is enough (role Results API). Veracode credentials expire after a year by default."]</small>
+            </div>
+            <div><label>@L["Expected policy"]</label><input type="text" name="policy" value="@c.Policy" placeholder="Veracode Recommended High" /></div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+                <div>
+                    <label>@L["Scan on a schedule: day"]</label>
+                    <select name="scanDay">
+                        @{ var days = new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" }; }
+                        @for (var d = 0; d < 7; d++) { <option value="@d" selected="@(c.ScanDay == d)">@L[days[d]]</option> }
+                    </select>
+                </div>
+                <div>
+                    <label>@L["Hour"]</label>
+                    <select name="scanHour">
+                        @for (var h = 0; h < 24; h++) { <option value="@h" selected="@(c.ScanHour == h)">@h.ToString("00"):00</option> }
+                    </select>
+                </div>
+            </div>
+            <small>@L["The live version of each linked add-on is scanned again on this day, so new rules or aged components show up without a code change."]</small>
+            <div><button type="submit" class="btn">@L["Save"]</button></div>
+        </form>
+        <form method="post" asp-page-handler="VeracodeTest" style="margin-top:10px"><button type="submit" class="btn secondary">@L["Test connection"]</button></form>
+    </div>
+}
+
+@if (v == "links")
+{
+    var editing = Model.Edit is { } eid ? Model.Links.FirstOrDefault(l => l.Id == eid) : null;
+    <div class="card" style="max-width:900px">
+        <h2 style="margin-top:0">@L[editing is null ? "Link an add-on" : "Change link"]</h2>
+        <p>@L["Which repository builds and scans which add-on. Repositories with several add-ons use a folder and their own tag pattern."]</p>
+        @if (Model.Git.Enabled)
+        {
+            <p><a href="/Admin/GitScan?view=links&repos=true@(editing is null ? "" : "&edit=" + editing.Id)">@L["Load repositories from the git server"]</a>
+            @if (Model.Repos) { <span>· @L["{0} repositories", Model.RepoList.Count]</span> }</p>
+        }
+        <form method="post" asp-page-handler="Link" class="stack" style="max-width:none">
+            @if (editing is not null) { <input type="hidden" name="id" value="@editing.Id" /> }
+            <div>
+                <label>@L["Add-on"]</label>
+                <select name="target">
+                    <option value="@AddonStore.Web.Services.GitScan.GitScanService.ServerTarget" selected="@(editing?.Target == AddonStore.Web.Services.GitScan.GitScanService.ServerTarget)">@L["Add-on Store server"]</option>
+                    <option value="@AddonStore.Web.Services.SubmissionService.ClientPackageId" selected="@(editing?.Target == AddonStore.Web.Services.SubmissionService.ClientPackageId)">@L["Add-on Store client"] (@AddonStore.Web.Services.SubmissionService.ClientPackageId)</option>
+                    @foreach (var id in Model.PackageIds)
+                    {
+                        <option value="@id" selected="@(editing?.Target == id)">@id</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label>@L["Repository (owner/name)"]</label>
+                <input type="text" name="repo" value="@editing?.Repo" list="gitscan-repos" placeholder="tungsten-automation/measuretools" autocomplete="off" />
+                <datalist id="gitscan-repos">@foreach (var r in Model.RepoList) { <option value="@r"></option> }</datalist>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+                <div style="flex:1;min-width:180px"><label>@L["Folder (optional)"]</label><input type="text" name="path" value="@editing?.Path" placeholder="measuretools" /></div>
+                <div style="flex:1;min-width:180px"><label>@L["Tag pattern"]</label><input type="text" name="tagPattern" value="@(editing?.TagPattern ?? "v*")" /></div>
+            </div>
+            <div><label>@L["Workflow file"]</label><input type="text" name="workflow" value="@(editing?.Workflow ?? ".github/workflows/addon-release.yml")" /></div>
+            <div>
+                <label>@L["Automatic approval for this add-on"]</label>
+                <select name="autoRelease">
+                    <option value="default" selected="@(editing is null || editing.AutoRelease == "default")">@L["As the global rule"]</option>
+                    <option value="off" selected="@(editing?.AutoRelease == "off")">@L["Never"]</option>
+                    <option value="beta" selected="@(editing?.AutoRelease == "beta")">@L["Automatically to beta"]</option>
+                    <option value="live" selected="@(editing?.AutoRelease == "live")">@L["Automatically live"]</option>
+                </select>
+                <small>@L["The store server and client are never approved automatically."]</small>
+            </div>
+            <div style="display:flex;gap:8px">
+                <button type="submit" class="btn">@L["Save"]</button>
+                @if (editing is not null) { <a class="btn secondary" href="/Admin/GitScan?view=links">@L["Cancel"]</a> }
+            </div>
+        </form>
+    </div>
+
+    <h2 style="margin-top:22px">@L["Linked add-ons"]</h2>
+    @if (Model.Links.Count == 0)
+    {
+        <p>@L["No add-on is linked yet."]</p>
+    }
+    else
+    {
+        <div class="table-wrap">
+        <table>
+            <tr><th>@L["Add-on"]</th><th>@L["Repository"]</th><th>@L["Tags"]</th><th>@L["Workflow"]</th><th>@L["Automatic approval"]</th><th>@L["Actions"]</th></tr>
+            @foreach (var l in AddonStore.Web.Services.Paging.Items(Model.Links, ViewContext.HttpContext.Request, "links"))
+            {
+                <tr>
+                    <td>@(l.Target == AddonStore.Web.Services.GitScan.GitScanService.ServerTarget ? L["Add-on Store server"].Value : l.Target)</td>
+                    <td><code>@l.Repo@(l.Path.Length > 0 ? "/" + l.Path : "")</code></td>
+                    <td><code>@l.TagPattern</code></td>
+                    <td><code>@l.Workflow</code></td>
+                    <td>@(l.AutoRelease switch { "off" => L["Never"], "beta" => L["Automatically to beta"], "live" => L["Automatically live"], _ => L["As the global rule"] })</td>
+                    <td style="display:flex;gap:6px;flex-wrap:wrap">
+                        <a class="btn small secondary" href="/Admin/GitScan?view=links&edit=@l.Id">@L["Change"]</a>
+                        <form method="post" asp-page-handler="LinkDelete" data-confirm="@L["Remove this link?"]">
+                            <input type="hidden" name="id" value="@l.Id" />
+                            <button type="submit" class="btn small danger">@L["Remove"]</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
+        <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("links", Model.Links.Count)' />
+        </div>
+    }
+}
+
+@if (v == "release")
+{
+    var a = Model.Auto;
+    <div class="card" style="max-width:760px">
+        <h2 style="margin-top:0">@L["Automatic approval"]</h2>
+        <p>@L["After a person has approved an add-on once, later versions from its linked repository can be approved by the store itself, for example when a Veracode finding was fixed. Every automatic approval is logged, mailed to the admins and can be taken back."]</p>
+        <form method="post" asp-page-handler="Release" class="stack" style="max-width:none">
+            <label class="check"><input type="checkbox" name="enabled" value="true" @(a.Enabled ? "checked" : "") /> @L["Approve automatically"]</label>
+            <div>
+                <label>@L["Stage"]</label>
+                <select name="stage">
+                    <option value="beta" selected="@(a.Stage == "beta")">@L["Beta"]</option>
+                    <option value="live" selected="@(a.Stage == "live")">@L["Live"]</option>
+                </select>
+            </div>
+            <p style="margin:6px 0 0"><b>@L["Always required"]</b></p>
+            <ul style="margin:0">
+                <li>@L["A person has approved an earlier version of the add-on."]</li>
+                <li>@L["The version comes from the linked repository, with a matching tag, from the stored workflow."]</li>
+                <li>@L["The Veracode policy is passed."]</li>
+                <li>@L["The store's checks find no errors, and no new online services, third-party components, licenses or rights since the last approved version."]</li>
+            </ul>
+            <p style="margin:6px 0 0"><b>@L["Optional conditions"]</b></p>
+            <label class="check"><input type="checkbox" name="needAi" value="true" @(a.NeedAi ? "checked" : "") /> @L["The AI review aid recommends approval"]</label>
+            <label class="check"><input type="checkbox" name="knownWarnings" value="true" @(a.KnownWarnings ? "checked" : "") /> @L["Warnings are allowed only when the last approved version had them too"]</label>
+            <label class="check"><input type="checkbox" name="patchMinorOnly" value="true" @(a.PatchMinorOnly ? "checked" : "") /> @L["Only patch and minor versions (never a new major version)"]</label>
+            <label class="check"><input type="checkbox" name="afterFindingOnly" value="true" @(a.AfterFindingOnly ? "checked" : "") /> @L["Only versions that fix a finding of a scheduled scan"]</label>
+            <p style="font-size:.88rem">@L["Never automatic: the store client and add-ons without a link."]</p>
+            <div><button type="submit" class="btn">@L["Save"]</button></div>
+        </form>
+    </div>
+}
+
+@if (v == "deadlines")
+{
+    var d = Model.Deadline;
+    <div class="card" style="max-width:760px">
+        <h2 style="margin-top:0">@L["Deadlines"]</h2>
+        <p>@L["When a scan finds something new in a live version, a deadline starts. The developer and the admins are reminded before it ends."]</p>
+        <form method="post" asp-page-handler="Deadlines" class="stack" style="max-width:none">
+            <div><label>@L["Deadline (days)"]</label><input type="number" name="days" min="1" max="365" value="@d.Days" /></div>
+            <div><label>@L["Reminders (days before the end)"]</label><input type="text" name="reminders" value="@d.Reminders" placeholder="30,7,1" /></div>
+            <div>
+                <label>@L["When the deadline has passed"]</label>
+                <select name="action">
+                    <option value="warn" selected="@(d.Action == "warn")">@L["Only warn"]</option>
+                    <option value="mark" selected="@(d.Action == "mark")">@L["Mark the add-on in the catalog (findings open)"]</option>
+                    <option value="pause" selected="@(d.Action == "pause")">@L["Pause the add-on"]</option>
+                    <option value="disable" selected="@(d.Action == "disable")">@L["Pause, then take out of service"]</option>
+                </select>
+            </div>
+            <div><label>@L["Take out of service after (days after pausing)"]</label><input type="number" name="disableAfterDays" min="0" max="180" value="@d.DisableAfterDays" /></div>
+            <div><button type="submit" class="btn">@L["Save"]</button></div>
+        </form>
+    </div>
+}
+
+@if (v == "suspend")
+{
+    <div class="card" style="max-width:900px">
+        <h2 style="margin-top:0">@L["Take out of service"]</h2>
+        <p>@L["For a problem that is too big or cannot be solved quickly. Works for every add-on, linked or not."]</p>
+        <ul style="margin:0 0 10px">
+            <li><b>@L["Paused"]</b>: @L["no new installations or updates; installed copies keep running."]</li>
+            <li><b>@L["Out of service"]</b>: @L["in addition, store clients from 2.3.0 switch installed copies off at the next Power PDF start, without removing them; settings stay."]</li>
+            <li><b>@L["Security block"]</b>: @L["the strongest step (on the plug-in page): clients ask to remove the add-on."]</li>
+        </ul>
+        <form method="post" asp-page-handler="Suspend" class="stack" style="max-width:none">
+            <div>
+                <label>@L["Add-on"]</label>
+                <select name="packageId" required>
+                    <option value="">@L["Choose…"]</option>
+                    @foreach (var id in Model.PackageIds)
+                    {
+                        <option value="@id" selected="@(Model.Id == id)">@id</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label>@L["Level"]</label>
+                <select name="level">
+                    <option value="paused" selected="@(Model.Current?.Level == "paused")">@L["Paused"]</option>
+                    <option value="disabled" selected="@(Model.Current?.Level == "disabled")">@L["Out of service"]</option>
+                </select>
+            </div>
+            <div><label>@L["Reason (users see it)"]</label><input type="text" name="reason" maxlength="300" required value="@Model.Current?.Reason" /></div>
+            <div><label>@L["Review date (optional)"]</label><input type="date" name="reviewAt" value="@Model.CurrentReviewLocal" /></div>
+            <label class="check"><input type="checkbox" name="notifyCustomers" value="true" @(Model.NotifyCustomersDefault ? "checked" : "") /> @L["Tell customers with a delivery of this add-on (their contact address)"]</label>
+            <div><button type="submit" class="btn danger">@L["Take out of service"]</button></div>
+        </form>
+        @if (!Model.IsAdmin)
+        {
+            <p style="font-size:.88rem;margin-top:10px">@L["As an emergency user you may take an add-on out of service or raise the level. Putting it back into service is up to the admins."]</p>
+        }
+    </div>
+
+    <h2 style="margin-top:22px">@L["Add-ons out of service"]</h2>
+    @if (Model.Suspensions.Count == 0)
+    {
+        <p>@L["No add-on is out of service."]</p>
+    }
+    else
+    {
+        <div class="table-wrap">
+        <table>
+            <tr><th>@L["Add-on"]</th><th>@L["Level"]</th><th>@L["Reason"]</th><th>@L["Since"]</th><th>@L["Review date"]</th><th>@L["Deliveries"]</th><th>@L["Actions"]</th></tr>
+            @foreach (var s in AddonStore.Web.Services.Paging.Items(Model.Suspensions, ViewContext.HttpContext.Request, "suspended"))
+            {
+                var due = s.ReviewAt is { } ra && ra <= DateTime.UtcNow;
+                <tr>
+                    <td><a href="/Plugin?id=@Uri.EscapeDataString(s.PackageId)">@s.PackageId</a></td>
+                    <td><span class="badge @(s.Level == "disabled" ? "rejected" : "beta")">@Level(s.Level)</span></td>
+                    <td>@s.Reason</td>
+                    <td>@Time.Fmt(s.CreatedAt, false) · @s.CreatedBy</td>
+                    <td>@if (s.ReviewAt is null) { <span>-</span> } else { <span style="@(due ? "color:#B00020;font-weight:600" : "")">@Time.Fmt(s.ReviewAt, false)</span> }</td>
+                    <td>@Model.DeliveryCounts.GetValueOrDefault(s.PackageId)@(s.CustomersNotified ? " · " + L["told"].Value : "")</td>
+                    <td style="display:flex;gap:6px;flex-wrap:wrap">
+                        @if (Model.IsAdmin)
+                        {
+                            <form method="post" asp-page-handler="Resume" data-confirm="@L["Put this add-on back into service?"]">
+                                <input type="hidden" name="packageId" value="@s.PackageId" />
+                                <button type="submit" class="btn small">@L["Back into service"]</button>
+                            </form>
+                            @if (Model.NewestLive.ContainsKey(s.PackageId))
+                            {
+                                <form method="post" asp-page-handler="Rollback" data-confirm="@L["Withdraw version {0} and go back to the earlier one?", Model.NewestLive[s.PackageId]]">
+                                    <input type="hidden" name="packageId" value="@s.PackageId" />
+                                    <button type="submit" class="btn small secondary">@L["Back to the last good version"]</button>
+                                </form>
+                            }
+                        }
+                        <a class="btn small secondary" href="/Admin/GitScan?view=suspend&id=@Uri.EscapeDataString(s.PackageId)">@L["Change"]</a>
+                    </td>
+                </tr>
+            }
+        </table>
+        <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("suspended", Model.Suspensions.Count)' />
+        </div>
+        <p style="font-size:.88rem">@L["Changing an entry: \"Change\" fills the form above with its level, reason and review date."]</p>
+    }
+
+    @if (Model.IsAdmin)
+    {
+        <div class="card" style="max-width:760px;margin-top:18px">
+            <h2 style="margin-top:0">@L["Emergency users"]</h2>
+            <p>@L["They may take add-ons out of service (and raise the level), nothing else: no approvals, no putting back. Admins always may."]</p>
+            <form method="post" asp-page-handler="Emergency" class="stack" style="max-width:none">
+                @if (Model.UserRows.Count == 0)
+                {
+                    <p>@L["No other active users."]</p>
+                }
+                @foreach (var u in Model.UserRows)
+                {
+                    <label class="check"><input type="checkbox" name="userIds" value="@u.Id" @(u.Emergency ? "checked" : "") /> @u.Name <span style="color:var(--tun-slate)">(@L[u.Role])</span></label>
+                }
+                <label class="check"><input type="checkbox" name="notifyCustomersDefault" value="true" @(Model.NotifyCustomersDefault ? "checked" : "") /> @L["Tell customers by default"]</label>
+                <div><button type="submit" class="btn">@L["Save"]</button></div>
+            </form>
+        </div>
+    }
+}
+
+@if (v == "log")
+{
+    @if (Model.Events.Count == 0)
+    {
+        <p>@L["Nothing received yet."]</p>
+    }
+    else
+    {
+        <div class="table-wrap">
+        <table>
+            <tr><th>@L["Date"]</th><th>@L["Source"]</th><th>@L["Event"]</th><th>@L["Repository"]</th><th>@L["Result"]</th><th>@L["Details"]</th></tr>
+            @foreach (var e in AddonStore.Web.Services.Paging.Items(Model.Events, ViewContext.HttpContext.Request, "events"))
+            {
+                <tr>
+                    <td>@Time.Fmt(e.At)</td>
+                    <td>@e.Source</td>
+                    <td>@e.Event</td>
+                    <td>@e.Repo</td>
+                    <td>@e.Result</td>
+                    <td>@e.Detail</td>
+                </tr>
+            }
+        </table>
+        <partial name="_Pager" model='new AddonStore.Web.Services.PagerModel("events", Model.Events.Count)' />
+        </div>
+    }
+}
+
+</div>
+</div>

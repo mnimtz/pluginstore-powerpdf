@@ -42,6 +42,8 @@ public partial class FederationService
             .Where(v => (v.Status == VersionStatus.Live || v.Status == VersionStatus.Beta) && v.BlockedAt == null && v.PackageId != SubmissionService.ClientPackageId
                         && _db.Packages.Any(p => p.Id == v.PackageId && p.Visibility != "private" && p.BlockedAt == null))
             .ToListAsync();
+        var suspended = await GitScan.SuspensionService.IdsAsync(_db);   // S2.8.0: not mirrored while out of service
+        versions = versions.Where(v => !suspended.Contains(v.PackageId)).ToList();
         var set = new List<PackageVersion>();
         foreach (var g in versions.GroupBy(v => v.PackageId))
         {

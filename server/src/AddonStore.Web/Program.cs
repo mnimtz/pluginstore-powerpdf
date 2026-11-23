@@ -146,6 +146,7 @@ builder.Services.AddRazorPages(o =>
         o.Conventions.AuthorizePage("/Admin/Backup", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/Categories", "PageAdmin");
         o.Conventions.AuthorizePage("/Admin/SendTo", "PageAdmin");
+        o.Conventions.AuthorizePage("/Admin/GitScan", "PageUser");    // S2.8.0: admins; emergency users only "Take out of service"
         o.Conventions.AuthorizePage("/Admin/Uat", "PageAdmin");      // UAT environments (S1.21.0)   // "Send to" (S1.17.0 draft)
         o.Conventions.AuthorizePage("/Admin/Rules", "PageUser");        // read: everyone signed in; edit: admins (S1.0.9)
         o.Conventions.AuthorizePage("/Admin/Docs", "PageUser");         // every document in one place (S1.0.12)
@@ -225,6 +226,16 @@ builder.Services.AddScoped<IAppEmailSender, ResendEmailSender>();
 builder.Services.AddScoped<SendToStorage>();
 builder.Services.AddScoped<SendToService>();
 builder.Services.AddHostedService<SendToMaintenance>();
+// "Git & Veracode" (S2.8.0, docs/konzept-git-veracode.md): own settings page, own tables, emergency brake
+builder.Services.AddScoped<AddonStore.Web.Services.GitScan.GitScanConfig>();
+builder.Services.AddScoped<AddonStore.Web.Services.GitScan.GitScanService>();
+builder.Services.AddScoped<AddonStore.Web.Services.GitScan.SuspensionService>();
+builder.Services.AddHostedService<AddonStore.Web.Services.GitScan.GitScanWorker>();
+// never follow redirects: the credentials would go to the new host
+builder.Services.AddHttpClient(AddonStore.Web.Services.GitScan.GitScanService.HttpName, c => { c.Timeout = TimeSpan.FromSeconds(20); c.MaxResponseContentBufferSize = 8 * 1024 * 1024; })
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
+builder.Services.AddHttpClient(AddonStore.Web.Services.GitScan.VeracodeClient.HttpName, c => { c.Timeout = TimeSpan.FromSeconds(20); c.MaxResponseContentBufferSize = 8 * 1024 * 1024; })
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { AllowAutoRedirect = false });
 // UAT environments (S1.21.0, docs/concepts/master-child.md): no redirects, short timeout, the service limits the answer size
 builder.Services.AddScoped<FederationService>();
 builder.Services.AddHostedService<FederationStatusWorker>();   // E3: state of handed-over versions (UAT only)
@@ -444,6 +455,7 @@ app.MapRazorPages();
 app.MapEntraSignIn();
 app.MapApi();
 app.MapSendTo();
+app.MapGitScan();
 app.MapFederation();
 
 app.Run();

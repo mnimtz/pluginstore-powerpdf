@@ -1771,4 +1771,205 @@
   <data name="This action is paused during the maintenance. Please try again later; your entry has not been saved." xml:space="preserve"><value>Ez a művelet a karbantartás idejére szünetel. Kérjük, próbálja újra később; a bevitt adatok nem lettek mentve.</value></data>
   <data name="Back to the catalog" xml:space="preserve"><value>Vissza a katalógushoz</value></data>
   <data name="An admin value can only raise the minimum: the package itself requires a higher Power PDF version." xml:space="preserve"><value>A rendszergazdai érték csak emelheti a minimumot: maga a csomag újabb Power PDF-verziót igényel.</value></data>
+  <data name="Out of service" xml:space="preserve"><value>Üzemen kívül</value></data>
+  <data name="Git &amp; Veracode" xml:space="preserve"><value>Git &amp; Veracode</value></data>
+  <data name="Add-ons are built and scanned in their git repositories; the store connects to the git server, shows the scan results and keeps the emergency brake for every add-on." xml:space="preserve"><value>A bővítmények a saját git-tárházukban készülnek és kerülnek vizsgálatra; az áruház csatlakozik a git-kiszolgálóhoz, megjeleníti a vizsgálati eredményeket, és minden bővítményhez fenntartja a vészféket.</value></data>
+  <data name="{0} add-ons are out of service or paused." xml:space="preserve"><value>Üzemen kívüli vagy szüneteltetett bővítmények: {0}.</value></data>
+  <data name="Take out of service" xml:space="preserve"><value>Üzemen kívül helyezés</value></data>
+  <data name="The review date of at least one add-on out of service has come." xml:space="preserve"><value>Legalább egy üzemen kívüli bővítmény felülvizsgálati dátuma elérkezett.</value></data>
+  <data name="Git connection" xml:space="preserve"><value>Git-kapcsolat</value></data>
+  <data name="Last webhook" xml:space="preserve"><value>Utolsó webhook</value></data>
+  <data name="Veracode" xml:space="preserve"><value>Veracode</value></data>
+  <data name="not configured" xml:space="preserve"><value>nincs konfigurálva</value></data>
+  <data name="Linked add-ons" xml:space="preserve"><value>Összekapcsolt bővítmények</value></data>
+  <data name="Automatic approval" xml:space="preserve"><value>Automatikus jóváhagyás</value></data>
+  <data name="Step 1 of the concept: connect, link, receive webhooks, take out of service. Importing built and scanned versions, scans on a schedule, deadlines and automatic approval follow in the next steps; their settings can already be prepared here." xml:space="preserve"><value>A koncepció 1. lépése: csatlakozás, összekapcsolás, webhookok fogadása, üzemen kívül helyezés. Az elkészült és vizsgált verziók importálása, az ütemezett vizsgálatok, a határidők és az automatikus jóváhagyás a következő lépésekben jön; ezek beállításai már itt előkészíthetők.</value></data>
+  <data name="Any git server with a GitHub API: GitHub.com now, the company's GitHub Enterprise later. Changing the server only means changing these values." xml:space="preserve"><value>Bármely GitHub API-val rendelkező git-kiszolgáló: most a GitHub.com, később a vállalati GitHub Enterprise. A kiszolgáló cseréje csak ezen értékek módosítását jelenti.</value></data>
+  <data name="Connection active (webhooks are accepted, repositories can be listed)" xml:space="preserve"><value>A kapcsolat aktív (a webhookok fogadása működik, a tárházak listázhatók)</value></data>
+  <data name="Git server" xml:space="preserve"><value>Git-kiszolgáló</value></data>
+  <data name="API address" xml:space="preserve"><value>API-cím</value></data>
+  <data name="GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3" xml:space="preserve"><value>GitHub.com: https://api.github.com · GitHub Enterprise Server: https://host/api/v3</value></data>
+  <data name="Sign-in" xml:space="preserve"><value>Bejelentkezés</value></data>
+  <data name="GitHub App (recommended)" xml:space="preserve"><value>GitHub App (ajánlott)</value></data>
+  <data name="Fine-grained token" xml:space="preserve"><value>Részletes jogosultságú token</value></data>
+  <data name="GitHub App" xml:space="preserve"><value>GitHub App</value></data>
+  <data name="App ID" xml:space="preserve"><value>App ID</value></data>
+  <data name="Installation ID" xml:space="preserve"><value>Telepítési ID</value></data>
+  <data name="Private key (.pem)" xml:space="preserve"><value>Privát kulcs (.pem)</value></data>
+  <data name="Remove the stored key" xml:space="preserve"><value>A tárolt kulcs eltávolítása</value></data>
+  <data name="Rights the app needs: Contents read, Actions read and write, Metadata read, Pull requests read and write." xml:space="preserve"><value>Az alkalmazás szükséges jogosultságai: Contents (olvasás), Actions (olvasás és írás), Metadata (olvasás), Pull requests (olvasás és írás).</value></data>
+  <data name="Remove the stored token" xml:space="preserve"><value>A tárolt token eltávolítása</value></data>
+  <data name="Owner (optional)" xml:space="preserve"><value>Tulajdonos (nem kötelező)</value></data>
+  <data name="Only repositories of this user or organisation are offered for links." xml:space="preserve"><value>Összekapcsoláshoz csak ennek a felhasználónak vagy szervezetnek a tárházai jelennek meg.</value></data>
+  <data name="Webhook" xml:space="preserve"><value>Webhook</value></data>
+  <data name="The git server reports finished workflow runs and releases here. Enter address and secret in the webhook settings of the GitHub App or organisation (content type application/json)." xml:space="preserve"><value>A git-kiszolgáló ide jelenti a befejezett munkafolyamat-futtatásokat és kiadásokat. Adja meg a címet és a titkos kulcsot a GitHub App vagy a szervezet webhook-beállításaiban (tartalomtípus: application/json).</value></data>
+  <data name="Secret" xml:space="preserve"><value>Titkos kulcs</value></data>
+  <data name="created on {0}" xml:space="preserve"><value>létrehozva: {0}</value></data>
+  <data name="not created yet" xml:space="preserve"><value>még nincs létrehozva</value></data>
+  <data name="Create a new secret? The old one stops working at once." xml:space="preserve"><value>Új titkos kulcsot hoz létre? A régi azonnal érvényét veszti.</value></data>
+  <data name="Create a webhook secret?" xml:space="preserve"><value>Létrehozza a webhook titkos kulcsát?</value></data>
+  <data name="New secret" xml:space="preserve"><value>Új titkos kulcs</value></data>
+  <data name="Create secret" xml:space="preserve"><value>Titkos kulcs létrehozása</value></data>
+  <data name="The workflow in each repository runs the Veracode policy scan. Here the store learns which result counts and, optionally, checks it with Veracode itself." xml:space="preserve"><value>Az egyes tárházak munkafolyamata futtatja a Veracode szabályzatvizsgálatot. Itt határozza meg az áruház, melyik eredmény számít, és igény szerint magánál a Veracode-nál is ellenőrzi.</value></data>
+  <data name="Result" xml:space="preserve"><value>Eredmény</value></data>
+  <data name="From the workflow (the store asks the git server which run it came from)" xml:space="preserve"><value>A munkafolyamatból (az áruház megkérdezi a git-kiszolgálót, melyik futtatásból származik)</value></data>
+  <data name="In addition, check the policy status with Veracode" xml:space="preserve"><value>Ezenkívül a szabályzat állapotának ellenőrzése a Veracode-nál</value></data>
+  <data name="Region" xml:space="preserve"><value>Régió</value></data>
+  <data name="Commercial" xml:space="preserve"><value>Kereskedelmi</value></data>
+  <data name="Europe" xml:space="preserve"><value>Európa</value></data>
+  <data name="US Federal" xml:space="preserve"><value>US Federal</value></data>
+  <data name="API ID" xml:space="preserve"><value>API ID</value></data>
+  <data name="Read only is enough (role Results API). Veracode credentials expire after a year by default." xml:space="preserve"><value>Elég a csak olvasási jog (Results API szerepkör). A Veracode hitelesítő adatai alapértelmezés szerint egy év után lejárnak.</value></data>
+  <data name="Expected policy" xml:space="preserve"><value>Elvárt szabályzat</value></data>
+  <data name="Scan on a schedule: day" xml:space="preserve"><value>Ütemezett vizsgálat: nap</value></data>
+  <data name="Hour" xml:space="preserve"><value>Óra</value></data>
+  <data name="The live version of each linked add-on is scanned again on this day, so new rules or aged components show up without a code change." xml:space="preserve"><value>Minden összekapcsolt bővítmény élő verzióját ezen a napon újra megvizsgálja a rendszer, így az új szabályok vagy elavult összetevők kódmódosítás nélkül is kiderülnek.</value></data>
+  <data name="Link an add-on" xml:space="preserve"><value>Bővítmény összekapcsolása</value></data>
+  <data name="Change link" xml:space="preserve"><value>Összekapcsolás módosítása</value></data>
+  <data name="Which repository builds and scans which add-on. Repositories with several add-ons use a folder and their own tag pattern." xml:space="preserve"><value>Melyik tárház melyik bővítményt készíti és vizsgálja. A több bővítményt tartalmazó tárházak mappát és saját címkemintát használnak.</value></data>
+  <data name="Load repositories from the git server" xml:space="preserve"><value>Tárházak betöltése a git-kiszolgálóról</value></data>
+  <data name="{0} repositories" xml:space="preserve"><value>{0} tárház</value></data>
+  <data name="Add-on Store server" xml:space="preserve"><value>Add-on Store kiszolgáló</value></data>
+  <data name="Add-on Store client" xml:space="preserve"><value>Add-on Store kliens</value></data>
+  <data name="Repository (owner/name)" xml:space="preserve"><value>Tárház (owner/name)</value></data>
+  <data name="Folder (optional)" xml:space="preserve"><value>Mappa (nem kötelező)</value></data>
+  <data name="Tag pattern" xml:space="preserve"><value>Címkeminta</value></data>
+  <data name="Workflow file" xml:space="preserve"><value>Munkafolyamat-fájl</value></data>
+  <data name="Automatic approval for this add-on" xml:space="preserve"><value>Automatikus jóváhagyás ehhez a bővítményhez</value></data>
+  <data name="As the global rule" xml:space="preserve"><value>A globális szabály szerint</value></data>
+  <data name="Never" xml:space="preserve"><value>Soha</value></data>
+  <data name="Automatically to beta" xml:space="preserve"><value>Automatikusan bétába</value></data>
+  <data name="Automatically live" xml:space="preserve"><value>Automatikusan élesbe</value></data>
+  <data name="The store server and client are never approved automatically." xml:space="preserve"><value>Az áruház kiszolgálója és kliense soha nem kap automatikus jóváhagyást.</value></data>
+  <data name="No add-on is linked yet." xml:space="preserve"><value>Még nincs összekapcsolt bővítmény.</value></data>
+  <data name="Repository" xml:space="preserve"><value>Tárház</value></data>
+  <data name="Tags" xml:space="preserve"><value>Címkék</value></data>
+  <data name="Workflow" xml:space="preserve"><value>Munkafolyamat</value></data>
+  <data name="Change" xml:space="preserve"><value>Módosítás</value></data>
+  <data name="Remove this link?" xml:space="preserve"><value>Eltávolítja ezt az összekapcsolást?</value></data>
+  <data name="After a person has approved an add-on once, later versions from its linked repository can be approved by the store itself, for example when a Veracode finding was fixed. Every automatic approval is logged, mailed to the admins and can be taken back." xml:space="preserve"><value>Miután egy személy egyszer jóváhagyott egy bővítményt, az összekapcsolt tárházból származó későbbi verziókat az áruház maga is jóváhagyhatja, például egy Veracode-lelet javítása után. Minden automatikus jóváhagyás naplózásra kerül, a rendszergazdák e-mailt kapnak róla, és visszavonható.</value></data>
+  <data name="Approve automatically" xml:space="preserve"><value>Jóváhagyás automatikusan</value></data>
+  <data name="Stage" xml:space="preserve"><value>Fázis</value></data>
+  <data name="Always required" xml:space="preserve"><value>Mindig kötelező</value></data>
+  <data name="A person has approved an earlier version of the add-on." xml:space="preserve"><value>Egy személy jóváhagyta a bővítmény egy korábbi verzióját.</value></data>
+  <data name="The version comes from the linked repository, with a matching tag, from the stored workflow." xml:space="preserve"><value>A verzió az összekapcsolt tárházból, egyező címkével, a tárolt munkafolyamatból származik.</value></data>
+  <data name="The Veracode policy is passed." xml:space="preserve"><value>A Veracode szabályzat teljesül.</value></data>
+  <data name="The store's checks find no errors, and no new online services, third-party components, licenses or rights since the last approved version." xml:space="preserve"><value>Az áruház ellenőrzései nem találnak hibát, és az utolsó jóváhagyott verzió óta nincs új online szolgáltatás, külső összetevő, licenc vagy jogosultság.</value></data>
+  <data name="Optional conditions" xml:space="preserve"><value>Választható feltételek</value></data>
+  <data name="The AI review aid recommends approval" xml:space="preserve"><value>Az AI-alapú ellenőrzési segéd a jóváhagyást javasolja</value></data>
+  <data name="Warnings are allowed only when the last approved version had them too" xml:space="preserve"><value>Figyelmeztetések csak akkor megengedettek, ha az utolsó jóváhagyott verzióban is voltak</value></data>
+  <data name="Only patch and minor versions (never a new major version)" xml:space="preserve"><value>Csak javító és alverziók (soha nem új főverzió)</value></data>
+  <data name="Only versions that fix a finding of a scheduled scan" xml:space="preserve"><value>Csak olyan verziók, amelyek egy ütemezett vizsgálat leletét javítják</value></data>
+  <data name="Never automatic: the store client and add-ons without a link." xml:space="preserve"><value>Soha nem automatikus: az áruház kliense és az összekapcsolás nélküli bővítmények.</value></data>
+  <data name="Deadlines" xml:space="preserve"><value>Határidők</value></data>
+  <data name="When a scan finds something new in a live version, a deadline starts. The developer and the admins are reminded before it ends." xml:space="preserve"><value>Ha egy vizsgálat valami újat talál egy élő verzióban, határidő indul. A fejlesztő és a rendszergazdák emlékeztetőt kapnak a lejárat előtt.</value></data>
+  <data name="Deadline (days)" xml:space="preserve"><value>Határidő (nap)</value></data>
+  <data name="Reminders (days before the end)" xml:space="preserve"><value>Emlékeztetők (nappal a lejárat előtt)</value></data>
+  <data name="When the deadline has passed" xml:space="preserve"><value>A határidő lejárta után</value></data>
+  <data name="Only warn" xml:space="preserve"><value>Csak figyelmeztetés</value></data>
+  <data name="Mark the add-on in the catalog (findings open)" xml:space="preserve"><value>A bővítmény megjelölése a katalógusban (nyitott leletek)</value></data>
+  <data name="Pause the add-on" xml:space="preserve"><value>A bővítmény szüneteltetése</value></data>
+  <data name="Pause, then take out of service" xml:space="preserve"><value>Szüneteltetés, majd üzemen kívül helyezés</value></data>
+  <data name="Take out of service after (days after pausing)" xml:space="preserve"><value>Üzemen kívül helyezés ennyi idő után (nappal a szüneteltetés után)</value></data>
+  <data name="For a problem that is too big or cannot be solved quickly. Works for every add-on, linked or not." xml:space="preserve"><value>Túl nagy vagy gyorsan meg nem oldható problémák esetére. Minden bővítménynél működik, akár összekapcsolt, akár nem.</value></data>
+  <data name="no new installations or updates; installed copies keep running." xml:space="preserve"><value>nincs új telepítés vagy frissítés; a telepített példányok tovább futnak.</value></data>
+  <data name="in addition, store clients from 2.3.0 switch installed copies off at the next Power PDF start, without removing them; settings stay." xml:space="preserve"><value>ezenkívül a 2.3.0-s vagy újabb áruházkliensek a következő Power PDF-indításkor kikapcsolják a telepített példányokat, eltávolítás nélkül; a beállítások megmaradnak.</value></data>
+  <data name="the strongest step (on the plug-in page): clients ask to remove the add-on." xml:space="preserve"><value>a legerősebb fokozat (a beépülő modul oldalán): a kliensek kérik a bővítmény eltávolítását.</value></data>
+  <data name="Choose…" xml:space="preserve"><value>Válasszon…</value></data>
+  <data name="Level" xml:space="preserve"><value>Szint</value></data>
+  <data name="Review date (optional)" xml:space="preserve"><value>Felülvizsgálat dátuma (nem kötelező)</value></data>
+  <data name="Tell customers with a delivery of this add-on (their contact address)" xml:space="preserve"><value>Értesítés azoknak az ügyfeleknek, akik megkapták ezt a bővítményt (a kapcsolattartási címükre)</value></data>
+  <data name="As an emergency user you may take an add-on out of service or raise the level. Putting it back into service is up to the admins." xml:space="preserve"><value>Vészhelyzeti felhasználóként üzemen kívül helyezhet egy bővítményt, vagy emelheti a szintet. Az üzembe való visszahelyezés a rendszergazdák feladata.</value></data>
+  <data name="Add-ons out of service" xml:space="preserve"><value>Üzemen kívüli bővítmények</value></data>
+  <data name="No add-on is out of service." xml:space="preserve"><value>Nincs üzemen kívüli bővítmény.</value></data>
+  <data name="Review date" xml:space="preserve"><value>Felülvizsgálat dátuma</value></data>
+  <data name="told" xml:space="preserve"><value>értesítve</value></data>
+  <data name="Put this add-on back into service?" xml:space="preserve"><value>Visszahelyezi üzembe ezt a bővítményt?</value></data>
+  <data name="Back into service" xml:space="preserve"><value>Visszahelyezés üzembe</value></data>
+  <data name="Withdraw version {0} and go back to the earlier one?" xml:space="preserve"><value>Visszavonja a(z) {0} verziót, és visszatér a korábbira?</value></data>
+  <data name="Back to the last good version" xml:space="preserve"><value>Vissza az utolsó jó verzióra</value></data>
+  <data name="Emergency users" xml:space="preserve"><value>Vészhelyzeti felhasználók</value></data>
+  <data name="They may take add-ons out of service (and raise the level), nothing else: no approvals, no putting back. Admins always may." xml:space="preserve"><value>Üzemen kívül helyezhetnek bővítményeket (és emelhetik a szintet), mást nem: nincs jóváhagyás, nincs visszahelyezés. A rendszergazdák mindig megtehetik.</value></data>
+  <data name="No other active users." xml:space="preserve"><value>Nincs más aktív felhasználó.</value></data>
+  <data name="Tell customers by default" xml:space="preserve"><value>Ügyfelek értesítése alapértelmezés szerint</value></data>
+  <data name="This add-on is out of service." xml:space="preserve"><value>Ez a bővítmény üzemen kívül van.</value></data>
+  <data name="This add-on is paused." xml:space="preserve"><value>Ez a bővítmény szüneteltetve van.</value></data>
+  <data name="Enter the API address of the git server." xml:space="preserve"><value>Adja meg a git-kiszolgáló API-címét.</value></data>
+  <data name="The App ID is a number." xml:space="preserve"><value>Az App ID egy szám.</value></data>
+  <data name="The installation ID is a number." xml:space="preserve"><value>A telepítési ID egy szám.</value></data>
+  <data name="The owner is the name of a user or organisation, e.g. tungsten-automation." xml:space="preserve"><value>A tulajdonos egy felhasználó vagy szervezet neve, pl. tungsten-automation.</value></data>
+  <data name="Paste the whole .pem file of the GitHub App (it starts with -----BEGIN)." xml:space="preserve"><value>Illessze be a GitHub App teljes .pem fájlját (-----BEGIN sorral kezdődik).</value></data>
+  <data name="The token is one line without spaces." xml:space="preserve"><value>A token egyetlen sor szóközök nélkül.</value></data>
+  <data name="New webhook secret created. Copy it now; it is not shown again." xml:space="preserve"><value>Új webhook titkos kulcs létrehozva. Másolja ki most; többé nem jelenik meg.</value></data>
+  <data name="The API ID has letters, digits and hyphens." xml:space="preserve"><value>Az API ID betűket, számjegyeket és kötőjeleket tartalmaz.</value></data>
+  <data name="The API key is a hex string (as Veracode shows it when it is created)." xml:space="preserve"><value>Az API-kulcs hexadecimális karakterlánc (ahogy a Veracode a létrehozáskor megjeleníti).</value></data>
+  <data name="The policy name has at most 100 characters." xml:space="preserve"><value>A szabályzat neve legfeljebb 100 karakter lehet.</value></data>
+  <data name="The deadline lies between 1 and 365 days." xml:space="preserve"><value>A határidő 1 és 365 nap között lehet.</value></data>
+  <data name="Between 0 and 180 days." xml:space="preserve"><value>0 és 180 nap között.</value></data>
+  <data name="The review date lies between today and one year from now." xml:space="preserve"><value>A felülvizsgálat dátuma a mai nap és az egy év múlva esedékes nap közé eshet.</value></data>
+  <data name="Add-on links" xml:space="preserve"><value>Bővítmény-összekapcsolások</value></data>
+  <data name="The connection test failed." xml:space="preserve"><value>A kapcsolat tesztelése sikertelen.</value></data>
+  <data name="Only admins and emergency users take add-ons out of service." xml:space="preserve"><value>Bővítményeket csak rendszergazdák és vészhelyzeti felhasználók helyezhetnek üzemen kívül.</value></data>
+  <data name="Choose paused or out of service." xml:space="preserve"><value>Válassza a szüneteltetett vagy az üzemen kívüli állapotot.</value></data>
+  <data name="Give a reason (3 to 300 characters); users see it." xml:space="preserve"><value>Adjon meg indoklást (3 és 300 karakter között); a felhasználók látják.</value></data>
+  <data name="Unknown add-on." xml:space="preserve"><value>Ismeretlen bővítmény.</value></data>
+  <data name="The store client itself cannot be taken out of service." xml:space="preserve"><value>Magát az áruházklienst nem lehet üzemen kívül helyezni.</value></data>
+  <data name="This add-on has a security block; that already takes it out of the store." xml:space="preserve"><value>Ennek a bővítménynek biztonsági tiltása van; ez már eltávolítja az áruházból.</value></data>
+  <data name="Emergency users may raise the level, not lower it; ask an admin." xml:space="preserve"><value>A vészhelyzeti felhasználók emelhetik a szintet, de nem csökkenthetik; forduljon egy rendszergazdához.</value></data>
+  <data name="Changes saved." xml:space="preserve"><value>A módosítások mentve.</value></data>
+  <data name="Only admins put an add-on back into service." xml:space="preserve"><value>Bővítményt csak rendszergazdák helyezhetnek vissza üzembe.</value></data>
+  <data name="This add-on is not out of service." xml:space="preserve"><value>Ez a bővítmény nincs üzemen kívül.</value></data>
+  <data name="Add-on back in service." xml:space="preserve"><value>A bővítmény újra üzemben.</value></data>
+  <data name="Only admins go back to an earlier version." xml:space="preserve"><value>Korábbi verzióra csak rendszergazdák térhetnek vissza.</value></data>
+  <data name="Not for the store client." xml:space="preserve"><value>Az áruházkliensre nem vonatkozik.</value></data>
+  <data name="This add-on has no live version." xml:space="preserve"><value>Ennek a bővítménynek nincs élő verziója.</value></data>
+  <data name="There is no earlier version approved for live to go back to." xml:space="preserve"><value>Nincs korábbi, élesre jóváhagyott verzió, amelyre vissza lehetne térni.</value></data>
+  <data name="The earlier version cannot be restored." xml:space="preserve"><value>A korábbi verzió nem állítható vissza.</value></data>
+  <data name="The newest version cannot be withdrawn." xml:space="preserve"><value>A legújabb verzió nem vonható vissza.</value></data>
+  <data name="Back to version {0}: it is live again, {1} is withdrawn." xml:space="preserve"><value>Vissza a(z) {0} verzióra: újra élő, a(z) {1} visszavonva.</value></data>
+  <data name="Choose an add-on." xml:space="preserve"><value>Válasszon egy bővítményt.</value></data>
+  <data name="Enter the repository as owner/name." xml:space="preserve"><value>Adja meg a tárházat owner/name formában.</value></data>
+  <data name="The folder is a relative path inside the repository, e.g. measuretools." xml:space="preserve"><value>A mappa egy relatív elérési út a tárházon belül, pl. measuretools.</value></data>
+  <data name="The tag pattern uses letters, digits, . _ - / and *, e.g. v* or measuretools-v*." xml:space="preserve"><value>A címkeminta betűket, számjegyeket, . _ - / és * karaktereket használ, pl. v* vagy measuretools-v*.</value></data>
+  <data name="The workflow is a file under .github/workflows/ ending in .yml." xml:space="preserve"><value>A munkafolyamat egy .yml végű fájl a .github/workflows/ alatt.</value></data>
+  <data name="The store itself is never approved automatically." xml:space="preserve"><value>Magát az áruházat soha nem hagyja jóvá automatikusan a rendszer.</value></data>
+  <data name="This link no longer exists." xml:space="preserve"><value>Ez az összekapcsolás már nem létezik.</value></data>
+  <data name="This add-on is already linked; change the existing link." xml:space="preserve"><value>Ez a bővítmény már össze van kapcsolva; módosítsa a meglévő összekapcsolást.</value></data>
+  <data name="Enter the API address as https://host/... without user name or password." xml:space="preserve"><value>Adja meg az API-címet https://host/... formában, felhasználónév és jelszó nélkül.</value></data>
+  <data name="Only https is allowed (http only for localhost)." xml:space="preserve"><value>Csak https engedélyezett (http csak localhost esetén).</value></data>
+  <data name="App ID, installation ID and private key are needed." xml:space="preserve"><value>Az App ID, a telepítési ID és a privát kulcs szükséges.</value></data>
+  <data name="Enter a token." xml:space="preserve"><value>Adjon meg egy tokent.</value></data>
+  <data name="The git server did not answer in time." xml:space="preserve"><value>A git-kiszolgáló nem válaszolt időben.</value></data>
+  <data name="The git server cannot be reached at this address." xml:space="preserve"><value>A git-kiszolgáló ezen a címen nem érhető el.</value></data>
+  <data name="The address answered, but not like a GitHub API." xml:space="preserve"><value>A cím válaszolt, de nem úgy, mint egy GitHub API.</value></data>
+  <data name="The private key cannot be read. Paste the whole .pem file of the GitHub App." xml:space="preserve"><value>A privát kulcs nem olvasható. Illessze be a GitHub App teljes .pem fájlját.</value></data>
+  <data name="The git server refused the app: check the App ID and the private key." xml:space="preserve"><value>A git-kiszolgáló elutasította az alkalmazást: ellenőrizze az App ID-t és a privát kulcsot.</value></data>
+  <data name="The git server refused the sign-in: the token is wrong or has expired." xml:space="preserve"><value>A git-kiszolgáló elutasította a bejelentkezést: a token hibás vagy lejárt.</value></data>
+  <data name="The git server refused access (403): the token or app lacks rights, or a rate limit applies." xml:space="preserve"><value>A git-kiszolgáló megtagadta a hozzáférést (403): a tokennek vagy az alkalmazásnak nincs elég jogosultsága, vagy sebességkorlát érvényes.</value></data>
+  <data name="The installation was not found: check the installation ID (the app must be installed in the organisation)." xml:space="preserve"><value>A telepítés nem található: ellenőrizze a telepítési ID-t (az alkalmazásnak telepítve kell lennie a szervezetben).</value></data>
+  <data name="Nothing found at this address: check the API address (GitHub Enterprise Server: https://host/api/v3)." xml:space="preserve"><value>Ezen a címen nem található semmi: ellenőrizze az API-címet (GitHub Enterprise Server: https://host/api/v3).</value></data>
+  <data name="The address redirects elsewhere; the store does not follow redirects with credentials. Enter the final API address." xml:space="preserve"><value>A cím máshová irányít át; az áruház nem követi a hitelesítő adatokkal járó átirányításokat. Adja meg a végleges API-címet.</value></data>
+  <data name="The installation ID is a number (shown in the address of the app's installation page)." xml:space="preserve"><value>A telepítési ID egy szám (az alkalmazás telepítési oldalának címében látható).</value></data>
+  <data name="Enter the API ID and the API key." xml:space="preserve"><value>Adja meg az API ID-t és az API-kulcsot.</value></data>
+  <data name="Veracode refused the sign-in: API ID or key is wrong, expired, or belongs to another region." xml:space="preserve"><value>A Veracode elutasította a bejelentkezést: az API ID vagy a kulcs hibás, lejárt, vagy másik régióhoz tartozik.</value></data>
+  <data name="Signed in, but the account may not read application profiles (role: Results API or Reviewer)." xml:space="preserve"><value>Bejelentkezve, de a fiók nem olvashat alkalmazásprofilokat (szerepkör: Results API vagy Reviewer).</value></data>
+  <data name="Veracode did not answer in time." xml:space="preserve"><value>A Veracode nem válaszolt időben.</value></data>
+  <data name="Veracode cannot be reached from the server." xml:space="preserve"><value>A Veracode nem érhető el a kiszolgálóról.</value></data>
+  <data name="Veracode answered with something unexpected." xml:space="preserve"><value>A Veracode váratlan választ adott.</value></data>
+  <data name="Add-on taken out of service, back in service, or its review date has come" xml:space="preserve"><value>Bővítmény üzemen kívül helyezve, újra üzemben, vagy elérkezett a felülvizsgálati dátuma</value></data>
+  <data name="Admins, owner, customers with a delivery" xml:space="preserve"><value>Rendszergazdák, tulajdonos, szállítással rendelkező ügyfelek</value></data>
+  <data name="Add-on taken out of service." xml:space="preserve"><value>Bővítmény üzemen kívül helyezve.</value></data>
+  <data name="Add-on paused." xml:space="preserve"><value>Bővítmény szüneteltetve.</value></data>
+  <data name="Link saved." xml:space="preserve"><value>Összekapcsolás mentve.</value></data>
+  <data name="Link removed." xml:space="preserve"><value>Összekapcsolás eltávolítva.</value></data>
+  <data name="Sunday" xml:space="preserve"><value>Vasárnap</value></data>
+  <data name="Monday" xml:space="preserve"><value>Hétfő</value></data>
+  <data name="Tuesday" xml:space="preserve"><value>Kedd</value></data>
+  <data name="Wednesday" xml:space="preserve"><value>Szerda</value></data>
+  <data name="Thursday" xml:space="preserve"><value>Csütörtök</value></data>
+  <data name="Friday" xml:space="preserve"><value>Péntek</value></data>
+  <data name="Saturday" xml:space="preserve"><value>Szombat</value></data>
+  <data name="Someone else changed this add-on at the same moment. Look at the list and try again." xml:space="preserve"><value>Valaki más ugyanabban a pillanatban módosította ezt a bővítményt. Nézze meg a listát, és próbálja újra.</value></data>
+  <data name="Saved. The git server changed, so the stored key and token were removed; enter them for the new server." xml:space="preserve"><value>Mentve. A git-kiszolgáló megváltozott, ezért a tárolt kulcs és token törölve lett; adja meg őket az új kiszolgálóhoz.</value></data>
+  <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>Bejegyzés módosítása: a "Módosítás" kitölti a fenti űrlapot a szinttel, az indokkal és az ellenőrzési dátummal.</value></data>
 </root>

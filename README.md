@@ -645,6 +645,27 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Git & Veracode, step 1 (S2.8.0, Nov 23, 2026):** one new admin page, Settings > Git & Veracode
+(`Pages/Admin/GitScan`, services in `Services/GitScan/`, own tables `AddonSuspensions`, `GitScanLinks`,
+`GitScanEvents`), so the module stays out of the rest of the server. Concept and later steps:
+`docs/konzept-git-veracode.md`.
+- *Git connection*, not fixed to one server: GitHub.com or GitHub Enterprise Server (API address), sign-in as a
+  GitHub App (JWT built with .NET's RSA, short-lived installation token) or with a fine-grained token, optional
+  owner filter, connection test, webhook `POST /api/git/webhook` (HMAC-SHA256 signature checked before anything
+  else, each delivery id once, at most 1 MB). Secrets are stored encrypted with the data protection keys and never
+  shown again; the HTTP clients never follow redirects with credentials.
+- *Veracode* (prepared): region, API ID and key (HMAC sign-in after Veracode's own sample), expected policy, day and
+  hour of the scans on a schedule, connection test.
+- *Add-on links*: add-on, the store server or the store client -> repository, folder, tag pattern, workflow file and
+  automatic approval per add-on (the store itself never automatically). Settings for *automatic approval* and
+  *deadlines* are stored; they take effect with the import of built and scanned versions in the next step.
+- *Take out of service*, for every add-on: `paused` (no installations, updates, manual ZIP or downloads,
+  `ADDON_SUSPENDED`; installed copies keep running; the developer's test code still gets it) or `disabled` (in
+  addition, store clients from 2.3.0 switch installed copies off at the next start, list `GET /api/suspended`).
+  Review date with a daily reminder, mail to owner and admins and optionally to the contacts of customers with a
+  delivery, "back to the last good version" (`POST /api/packages/{id}/rollback`), emergency users who may only take
+  out or raise the level. API `POST|DELETE /api/packages/{id}/suspend`; the plug-in page shows the state and a button.
+
 **Review fixes (S2.7.1, Nov 22, 2026):** the maintenance gate opens exact paths only (a package id such as
 `validator.tools` opened writes before); the admin minimum Power PDF version only raises (the higher of it and each
 version's own, everywhere; a lower value is refused); the help check follows the client's parser exactly (UTF-8 BOM,
