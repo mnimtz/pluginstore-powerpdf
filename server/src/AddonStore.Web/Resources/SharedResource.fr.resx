@@ -1972,4 +1972,6 @@
   <data name="Someone else changed this add-on at the same moment. Look at the list and try again." xml:space="preserve"><value>Quelqu'un d'autre a modifié ce module complémentaire au même moment. Consultez la liste et réessayez.</value></data>
   <data name="Saved. The git server changed, so the stored key and token were removed; enter them for the new server." xml:space="preserve"><value>Enregistré. Le serveur git a changé : la clé et le jeton enregistrés ont donc été supprimés ; saisissez-les pour le nouveau serveur.</value></data>
   <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>Modifier une entrée : « Modifier » remplit le formulaire ci-dessus avec son niveau, son motif et sa date de révision.</value></data>
+  <data name="This add-on is already out of service. Use &quot;Change&quot; in the list to see and change its entry." xml:space="preserve"><value>Ce module complémentaire est déjà hors service. Utilisez « Modifier » dans la liste pour voir et modifier son entrée.</value></data>
+  <data name="The database is busy. Try again in a moment." xml:space="preserve"><value>La base de données est occupée. Réessayez dans un instant.</value></data>
 </root>

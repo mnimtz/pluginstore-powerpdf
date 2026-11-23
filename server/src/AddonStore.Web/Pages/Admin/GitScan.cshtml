@@ -26,15 +26,22 @@
 @if (Model.Notice is not null)
 {
     <div class="alert @Model.NoticeKind" role="status">@(Model.NoticeArgs.Length > 0 ? L[Model.Notice, Model.NoticeArgs] : L[Model.Notice])
-        @if (Model.TestLines.Count > 1)
+        @* passed: the first line is "Connection works." (the notice says it); failed: the first line is the reason *@
+        @if (Model.TestLines.Count > 0 && Model.NoticeKind == "error")
+        {
+            <br /><span>@L[Model.TestLines[0]]</span>
+            @if (Model.TestLines.Count > 1)
+            {
+                <ul style="margin:6px 0 0">
+                    @foreach (var line in Model.TestLines.Skip(1)) { <li>@line</li> }
+                </ul>
+            }
+        }
+        else if (Model.TestLines.Count > 1)
         {
             <ul style="margin:6px 0 0">
                 @foreach (var line in Model.TestLines.Skip(1)) { <li>@line</li> }
             </ul>
-        }
-        else if (Model.TestLines.Count == 1 && Model.NoticeKind == "error")
-        {
-            <br /><span>@L[Model.TestLines[0]]</span>
         }
     </div>
 }
@@ -351,6 +358,7 @@
             <li><b>@L["Security block"]</b>: @L["the strongest step (on the plug-in page): clients ask to remove the add-on."]</li>
         </ul>
         <form method="post" asp-page-handler="Suspend" class="stack" style="max-width:none">
+            @if (Model.Current is not null) { <input type="hidden" name="change" value="true" /> }
             <div>
                 <label>@L["Add-on"]</label>
                 <select name="packageId" required>

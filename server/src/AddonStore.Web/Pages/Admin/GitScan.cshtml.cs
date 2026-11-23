@@ -117,9 +117,12 @@ public class GitScanModel : PageModel
         // review S2.8.0: stored credentials never go to another host; with a new host they have to be entered again
         var before = await _config.GitAsync();
         var hostChanged = !string.Equals(HostOf(before.ApiUrl), HostOf(url), StringComparison.OrdinalIgnoreCase);
-        if (hostChanged && (before.HasAppKey || before.HasToken) && key.Length == 0 && tok.Length == 0)
+        // each stored secret that is not entered anew goes (review S2.8.0: also when only one of them is entered)
+        var droppedOld = hostChanged && ((before.HasAppKey && key.Length == 0) || (before.HasToken && tok.Length == 0));
+        if (hostChanged)
         {
-            clearAppKey = true; clearToken = true;
+            if (key.Length == 0) clearAppKey = true;
+            if (tok.Length == 0) clearToken = true;
         }
         await _config.SetAsync(GitScanConfig.EnabledKey, enabled ? "on" : "off");
         await _config.SetAsync(GitScanConfig.ProviderKey, p.Key);
@@ -135,7 +138,7 @@ public class GitScanModel : PageModel
         await _audit.LogAsync(me!.DisplayName, "settings.changed", "GitScan.Git",
             $"{(enabled ? "on" : "off")}; {p.Key}; {url}; {(authMode == "token" ? "token" : "app")}; owner {(owner.Length > 0 ? owner : "-")}" +
             (key.Length > 0 ? "; app key replaced" : clearAppKey ? "; app key removed" : "") + (tok.Length > 0 ? "; token replaced" : clearToken ? "; token removed" : ""));
-        return await Done(hostChanged && (before.HasAppKey || before.HasToken) && key.Length == 0 && tok.Length == 0
+        return await Done(droppedOld
             ? "Saved. The git server changed, so the stored key and token were removed; enter them for the new server." : "Settings saved.", true);
     }
 
@@ -257,7 +260,8 @@ public class GitScanModel : PageModel
 
     // ---- take out of service --------------------------------------------------------------------------------
 
-    public async Task<IActionResult> OnPostSuspendAsync(string? packageId, string? level, string? reason, string? reviewAt, bool notifyCustomers)
+    /// <param name="change">true when the form was opened with "Change" and showed the stored values (an empty date then clears it)</param>
+    public async Task<IActionResult> OnPostSuspendAsync(string? packageId, string? level, string? reason, string? reviewAt, bool notifyCustomers, bool change)
     {
         var me = await MeAsync();
         if (!IsAdmin && !IsEmergency) return Forbid();
@@ -270,7 +274,8 @@ public class GitScanModel : PageModel
                 return await Done("The review date lies between today and one year from now.", false);
             review = _time.ToUtc(local.AddHours(8));   // 08:00 local time of the store
         }
-        var r = await _suspend.SuspendAsync(packageId ?? "", level ?? "", reason, review, notifyCustomers, me!, IsAdmin);
+        var r = await _suspend.SuspendAsync(packageId ?? "", level ?? "", reason, review, clearReview: change && review is null,
+                                            notifyCustomers, me!, IsAdmin, mustBeNew: !change);
         Id = r.Ok ? null : packageId;
         return await Done(r.Message, r.Ok, r.Args);
     }

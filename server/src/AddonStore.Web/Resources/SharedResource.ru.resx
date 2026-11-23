@@ -1972,4 +1972,6 @@
   <data name="Someone else changed this add-on at the same moment. Look at the list and try again." xml:space="preserve"><value>Кто-то другой изменил это дополнение в тот же момент. Просмотрите список и повторите попытку.</value></data>
   <data name="Saved. The git server changed, so the stored key and token were removed; enter them for the new server." xml:space="preserve"><value>Сохранено. Сервер git изменился, поэтому сохраненные ключ и токен удалены; введите их для нового сервера.</value></data>
   <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>Изменение записи: кнопка "Изменить" заполняет форму выше уровнем, причиной и датой проверки.</value></data>
+  <data name="This add-on is already out of service. Use &quot;Change&quot; in the list to see and change its entry." xml:space="preserve"><value>Это дополнение уже выведено из эксплуатации. Используйте "Изменить" в списке, чтобы просмотреть и изменить запись.</value></data>
+  <data name="The database is busy. Try again in a moment." xml:space="preserve"><value>База данных занята. Повторите попытку через мгновение.</value></data>
 </root>

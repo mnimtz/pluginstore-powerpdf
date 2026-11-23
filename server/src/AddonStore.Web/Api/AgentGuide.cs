@@ -1471,6 +1471,8 @@ a security block, admins (and the emergency users they name under Settings,
 Git & Veracode) take an add-on out of service:
 `POST {{baseUrl}}/api/packages/{id}/suspend` with
 `{"level": "paused"|"disabled", "reason": "3 to 300 characters", "reviewAt": "yyyy-mm-dd", "notifyCustomers": true}`.
+For an add-on that is already out of service the same call changes the entry: `reviewAt` omitted keeps the
+stored review date, `"clearReviewAt": true` removes it.
 
 - `paused`: no new installations or updates (catalog, customer deliveries,
   manual ZIP, downloads answer `ADDON_SUSPENDED`); installed copies keep
@@ -1480,7 +1482,9 @@ Git & Veracode) take an add-on out of service:
   at the next Power PDF start, without removing them (settings stay), and on
   again when the add-on is back in service. The list is
   `GET {{baseUrl}}/api/suspended` (SHA-256 of the lowercase package id, level,
-  reason; `format=tsv` for the client).
+  reason, `since` in UTC; `format=tsv` for the client, first line
+  `# hash<TAB>level<TAB>reason`). A deleted add-on that was out of service stays
+  in the list, so clients never switch it on again.
 - Emergency users may take out and raise the level, nothing else (the reason
   and review date of an existing entry stay as the admins set them), never
   lower it or put an add-on back. `DELETE` on the same address puts it back
@@ -1924,6 +1928,8 @@ be free of warnings before review. Info is for information only.
 | SUSPEND_FORBIDDEN | 403 | Only admins and the emergency users named under Git & Veracode take add-ons out of service. |
 | SIGNATURE_INVALID | 401 | A git webhook delivery without a valid `X-Hub-Signature-256` (HMAC-SHA256 of the body with the webhook secret). |
 | PAYLOAD_TOO_LARGE | 413 | A git webhook delivery larger than 1 MB. |
+| SUSPEND_CONFLICT | 409 | Someone else changed the same add-on at the same moment, or the database was busy; look at the list and send it again. |
+| WEBHOOK_BUSY | 503 | The store could not record a git webhook delivery just now; the git server may send it again. |
 | DELIVERY_ID_MISSING | 400 | A signed git webhook delivery without the header `X-GitHub-Delivery`; every delivery is taken once, by its id and by its body. |
 | PE_HARDENING | warning | Built without ASLR (/DYNAMICBASE) or DEP (/NXCOMPAT). |
 | PE_EXPLOIT_MITIGATIONS | warning | A .zxt or bin/ DLL is built without Control Flow Guard (/guard:cf), stack buffer checks (/GS), CET shadow stack compatibility (/CETCOMPAT) or 64-bit ASLR (/HIGHENTROPYVA); see "Code security". |

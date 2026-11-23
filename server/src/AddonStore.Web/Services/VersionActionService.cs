@@ -329,7 +329,9 @@ public class VersionActionService
             await _db.ShareStats.Where(s => s.PackageId == packageId).ExecuteDeleteAsync();
             await _db.FederationIntakes.Where(i => i.PackageId == packageId).ExecuteDeleteAsync();
             await _db.FederationHandovers.Where(h => h.PackageId == packageId).ExecuteDeleteAsync();
-            await _db.AddonSuspensions.Where(s => s.PackageId == packageId).ExecuteDeleteAsync();   // S2.8.0
+            // S2.8.0: a paused entry goes; a "disabled" one stays, so store clients never switch the deleted add-on on
+            // again (its id cannot come back, see RetiredPackages)
+            await _db.AddonSuspensions.Where(s => s.PackageId == packageId && s.Level != "disabled").ExecuteDeleteAsync();
             await _db.GitScanLinks.Where(l => l.Target == packageId).ExecuteDeleteAsync();
             await _db.PackageVersions.Where(v => v.PackageId == packageId).ExecuteDeleteAsync();
             await _db.Packages.Where(p => p.Id == packageId).ExecuteDeleteAsync();

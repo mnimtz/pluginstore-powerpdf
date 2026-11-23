@@ -97,17 +97,23 @@ public class SuspensionService
 
     public record Outcome(bool Ok, string Message, object[]? Args = null);
 
-    /// <summary>Takes an add-on out of service, or changes the level, reason or review date of one that is.</summary>
-    public async Task<Outcome> SuspendAsync(string packageId, string level, string? reason, DateTime? reviewAt, bool notifyCustomers,
-                                            AppUser actor, bool isAdmin)
+    /// <summary>
+    /// Takes an add-on out of service, or changes the level, reason or review date of one that is. reviewAt null keeps
+    /// the stored date of an existing entry; clearReview removes it (admins). mustBeNew (the page's plain form): an add-on
+    /// that is already out of service is changed only through "Change", which shows the stored values first (review S2.8.0).
+    /// </summary>
+    public async Task<Outcome> SuspendAsync(string packageId, string level, string? reason, DateTime? reviewAt, bool clearReview, bool notifyCustomers,
+                                            AppUser actor, bool isAdmin, bool mustBeNew = false)
     {
         packageId = (packageId ?? "").Trim();
         reason = (reason ?? "").Trim();
         var emergency = !isAdmin && await IsEmergencyUserAsync(actor);
         if (!isAdmin && !emergency) return new(false, "Only admins and emergency users take add-ons out of service.");
         if (!Levels.Contains(level)) return new(false, "Choose paused or out of service.");
+        // users see the reason: no control characters, no bidi overrides (like the catalog TSV, audit S1.3.1)
+        reason = new string(reason.Where(ch => !(ch is >= '‪' and <= '‮') && !(ch is >= '⁦' and <= '⁩'))
+                                  .Select(ch => char.IsControl(ch) ? ' ' : ch).ToArray()).Trim();
         if (reason.Length is < 3 or > MaxReason) return new(false, "Give a reason (3 to 300 characters); users see it.");
-        if (reason.Any(ch => char.IsControl(ch))) reason = new string(reason.Select(ch => char.IsControl(ch) ? ' ' : ch).ToArray());
         if (reviewAt is { } ra && (ra < DateTime.UtcNow.Date.AddDays(-1) || ra > DateTime.UtcNow.AddYears(1).AddDays(1)))   // a date: today counts in every time zone
             return new(false, "The review date lies between today and one year from now.");
         var pkg = await _db.Packages.Include(p => p.Owner).FirstOrDefaultAsync(p => p.Id == packageId);
@@ -117,6 +123,7 @@ public class SuspensionService
 
         var row = await _db.AddonSuspensions.FirstOrDefaultAsync(s => s.PackageId == pkg.Id);
         var isNew = row is null;
+        if (!isNew && mustBeNew) return new(false, "This add-on is already out of service. Use \"Change\" in the list to see and change its entry.");
         // emergency users only take out or raise the level; reason, review date and lower levels stay with the admins
         if (row is not null && emergency && Array.IndexOf(Levels, level) <= Array.IndexOf(Levels, row.Level))
             return new(false, "Emergency users may raise the level, not lower it; ask an admin.");
@@ -129,32 +136,42 @@ public class SuspensionService
         else { row.ChangedAt = DateTime.UtcNow; row.ChangedBy = actor.DisplayName; }
         row.Level = level;
         if (isNew || !emergency) row.Reason = reason;                       // an emergency user raising the level keeps the admin's reason
-        if (isNew || !emergency || reviewAt is not null) row.ReviewAt = reviewAt;
+        // the review date: set when given; an existing one stays unless an admin clears it; emergency users never touch it
+        if (isNew) row.ReviewAt = reviewAt;
+        else if (!emergency && reviewAt is not null) row.ReviewAt = reviewAt;
+        else if (!emergency && clearReview) row.ReviewAt = null;
         row.LastReminderAt = null;
         try { await _db.SaveChangesAsync(); }
-        catch (DbUpdateException)
+        catch (DbUpdateException e) when (e.InnerException is Microsoft.Data.Sqlite.SqliteException { SqliteErrorCode: 19 } || e is DbUpdateConcurrencyException)
         {
             _db.ChangeTracker.Clear();   // the same add-on taken out at the same moment by someone else (review S2.8.0)
             return new(false, "Someone else changed this add-on at the same moment. Look at the list and try again.");
         }
+        catch (DbUpdateException)
+        {
+            _db.ChangeTracker.Clear();
+            return new(false, "The database is busy. Try again in a moment.");
+        }
         Invalidate();
+        await AllAsync(_db);   // the fallback copy (fail closed) contains the change at once
         await _audit.LogAsync(actor.DisplayName, isNew ? "addon.suspended" : "addon.suspension.changed", pkg.Id,
-            $"{(wasLevel is null ? "" : wasLevel + " -> ")}{level}; review {(reviewAt?.ToString("yyyy-MM-dd") ?? "-")}; {(emergency ? "emergency user; " : "")}{reason}");
+            $"{(wasLevel is null ? "" : wasLevel + " -> ")}{level}; review {(row.ReviewAt?.ToString("yyyy-MM-dd") ?? "-")}; {(emergency ? "emergency user; " : "")}{row.Reason}");
 
         var levelText = level == "disabled" ? "taken out of service" : "paused";
         var effect = level == "disabled"
             ? "No new installations or updates. Store clients from version 2.3.0 switch installed copies off at the next Power PDF start, without removing them."
             : "No new installations or updates. Installed copies keep running.";
-        var html = $"<p><b>{Enc(actor.DisplayName)}</b> {levelText} <b>{Enc(pkg.Id)}</b>.</p><p>Reason: {Enc(reason)}</p><p>{effect}</p>";
+        var html = $"<p><b>{Enc(actor.DisplayName)}</b> {levelText} <b>{Enc(pkg.Id)}</b>.</p><p>Reason: {Enc(row.Reason)}</p><p>{effect}</p>";
         if (pkg.Owner is { } owner && owner.Id != actor.Id)
             await _notify.NotifyUserAsync("StatusChange", owner, $"[Add-on Store] {pkg.Id} {levelText}", html + await _notify.PluginLinkAsync(pkg.Id));
         await _notify.NotifyStaffAsync("AddonSuspended", $"[Add-on Store] {pkg.Id} {levelText}", html);
         var told = 0;
-        if (notifyCustomers && (isNew || wasLevel != level)) told = await TellCustomersAsync(pkg.Id, level, reason);
-        if (told > 0)
+        if (notifyCustomers && (isNew || wasLevel != level)) told = await TellCustomersAsync(pkg.Id, level, row.Reason);
+        if (told > 0 && !row.CustomersNotified)
         {
             row.CustomersNotified = true;
-            await _db.SaveChangesAsync();
+            // the suspension itself is saved already: a busy database here must not look like a failure
+            try { await _db.SaveChangesAsync(); } catch (DbUpdateException) { _db.ChangeTracker.Clear(); }
         }
         return isNew
             ? new(true, level == "disabled" ? "Add-on taken out of service." : "Add-on paused.")
@@ -168,8 +185,14 @@ public class SuspensionService
         var row = await _db.AddonSuspensions.FirstOrDefaultAsync(s => s.PackageId == packageId);
         if (row is null) return new(false, "This add-on is not out of service.");
         _db.AddonSuspensions.Remove(row);
-        await _db.SaveChangesAsync();
+        try { await _db.SaveChangesAsync(); }
+        catch (DbUpdateException)   // put back at the same moment by another admin, or the database busy
+        {
+            _db.ChangeTracker.Clear();
+            return new(false, "Someone else changed this add-on at the same moment. Look at the list and try again.");
+        }
         Invalidate();
+        await AllAsync(_db);
         await _audit.LogAsync(actor.DisplayName, "addon.resumed", packageId, $"was {row.Level} since {row.CreatedAt:yyyy-MM-dd}");
         var pkg = await _db.Packages.Include(p => p.Owner).FirstOrDefaultAsync(p => p.Id == packageId);
         var html = $"<p><b>{Enc(actor.DisplayName)}</b> put <b>{Enc(packageId)}</b> back into service. It is offered again" +
@@ -235,6 +258,8 @@ public class SuspensionService
     /// <summary>Customers with a delivery of the add-on, to their contact address, in their language (German or English).</summary>
     private async Task<int> TellCustomersAsync(string packageId, string level, string reason)
     {
+        // the event switch "Add-on taken out of service ..." covers every recipient it names, customers included
+        if (!await _notify.IsEnabledAsync("AddonSuspended")) return 0;
         var customers = await _db.Deliveries.Where(d => d.PackageId == packageId && d.Status == "active")
             .Join(_db.Customers.Where(c => c.Status == "active" && c.ContactEmail != null && c.ContactEmail != ""), d => d.CustomerId, c => c.Id, (d, c) => c)
             .Distinct().ToListAsync();
@@ -255,8 +280,7 @@ public class SuspensionService
                 _ => ($"[Add-on Store] {packageId} temporarily paused",
                     $"<p>The add-on <b>{Enc(packageId)}</b> is temporarily paused: no new installations or updates. Installed copies keep running.</p><p>Reason: {Enc(reason)}</p>"),
             };
-            await _notify.SendDirectAsync(c.ContactEmail!.Trim(), subject, body, "AddonSuspended");
-            sent++;
+            if ((await _notify.SendDirectAsync(c.ContactEmail!.Trim(), subject, body, "AddonSuspended")).Sent) sent++;   // only mails that went out count
         }
         if (sent > 0) await _audit.LogAsync("system", "addon.suspension.customers", packageId, $"{level}; {sent} customer contacts told");
         return sent;

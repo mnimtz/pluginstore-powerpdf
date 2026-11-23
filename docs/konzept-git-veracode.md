@@ -2,7 +2,7 @@
 
 Stand: Nov 23, 2026.
 
-**Umsetzung:** Schritt 1 und der Server-Teil von 1a sind mit S2.8.0 gebaut (Einstellungsseite, generische Git-Verbindung, Veracode-Vorbereitung, Verknüpfungen, Webhook-Empfang, Notbremse mit Pausiert/Außer Betrieb/Zurück auf letzte gute Version, Notfall-Nutzer). Offen: Client-Teil von 1a (Store-Client 2.3.0 schaltet "Außer Betrieb" beim Start ab), 1b und die Schritte 2 bis 5.
+**Umsetzung:** Schritt 1 und der Server-Teil von 1a sind mit S2.8.0 gebaut (Einstellungsseite, generische Git-Verbindung, Veracode-Vorbereitung, Verknüpfungen, Webhook-Empfang, Notbremse mit Pausiert/Außer Betrieb/Zurück auf letzte gute Version, Notfall-Nutzer). Der Client-Teil von 1a ist mit dem Store-Client 2.3.0 gebaut (Abschalten und Wiedereinschalten mit einer Administrator-Bestätigung, Hinweisleiste im Store-Fenster), S2.8.1 enthält die Korrekturen aus dem Code-Check. Offen: Freigabe und Upload von Client 2.3.0, 1b und die Schritte 2 bis 5.
 
 Entscheidungen Marcus (Nov 23, 2026): nichts fest auf ein Git, alles wird später eingetragen; Veracode-Zugang gibt es noch nicht (vorbereitend); Ziel ist später das Firmen-GitHub; Notfall-Rolle ja, Kunden-Admins benachrichtigen ja.
 

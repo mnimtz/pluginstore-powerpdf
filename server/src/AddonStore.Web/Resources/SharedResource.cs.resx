@@ -1972,4 +1972,6 @@
   <data name="Someone else changed this add-on at the same moment. Look at the list and try again." xml:space="preserve"><value>Někdo jiný změnil tento doplněk ve stejném okamžiku. Prohlédněte si seznam a zkuste to znovu.</value></data>
   <data name="Saved. The git server changed, so the stored key and token were removed; enter them for the new server." xml:space="preserve"><value>Uloženo. Server git se změnil, proto byly uložený klíč a token odstraněny; zadejte je pro nový server.</value></data>
   <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>Změna záznamu: "Změnit" vyplní formulář výše jeho úrovní, důvodem a datem kontroly.</value></data>
+  <data name="This add-on is already out of service. Use &quot;Change&quot; in the list to see and change its entry." xml:space="preserve"><value>Tento doplněk je již mimo provoz. Pomocí "Změnit" v seznamu záznam zobrazíte a změníte.</value></data>
+  <data name="The database is busy. Try again in a moment." xml:space="preserve"><value>Databáze je zaneprázdněná. Zkuste to za chvíli znovu.</value></data>
 </root>

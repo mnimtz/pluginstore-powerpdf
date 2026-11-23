@@ -1972,4 +1972,6 @@
   <data name="Someone else changed this add-on at the same moment. Look at the list and try again." xml:space="preserve"><value>Iemand anders heeft deze add-on op hetzelfde moment gewijzigd. Bekijk de lijst en probeer het opnieuw.</value></data>
   <data name="Saved. The git server changed, so the stored key and token were removed; enter them for the new server." xml:space="preserve"><value>Opgeslagen. De git-server is gewijzigd, daarom zijn de opgeslagen sleutel en het token verwijderd; voer ze in voor de nieuwe server.</value></data>
   <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>Een vermelding wijzigen: "Wijzigen" vult het formulier hierboven met het niveau, de reden en de controledatum.</value></data>
+  <data name="This add-on is already out of service. Use &quot;Change&quot; in the list to see and change its entry." xml:space="preserve"><value>Deze add-on is al buiten gebruik. Gebruik "Wijzigen" in de lijst om de vermelding te bekijken en te wijzigen.</value></data>
+  <data name="The database is busy. Try again in a moment." xml:space="preserve"><value>De database is bezet. Probeer het zo meteen opnieuw.</value></data>
 </root>

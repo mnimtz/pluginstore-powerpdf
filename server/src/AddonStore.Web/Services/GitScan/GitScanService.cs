@@ -109,7 +109,12 @@ public class GitScanService
         }
         else { row.UpdatedAt = DateTime.UtcNow; row.UpdatedBy = actor; }
         row.Target = target; row.Repo = repo; row.Path = path; row.TagPattern = tag; row.Workflow = wf; row.AutoRelease = auto;
-        await _db.SaveChangesAsync();
+        try { await _db.SaveChangesAsync(); }
+        catch (DbUpdateException)   // linked at the same moment by another admin (unique target), or the database busy
+        {
+            _db.ChangeTracker.Clear();
+            return (false, "This add-on is already linked; change the existing link.");
+        }
         await _audit.LogAsync(actor, isNew ? "gitscan.link.created" : "gitscan.link.changed", target,
             $"{repo}{(path.Length > 0 ? "/" + path : "")}; tags {tag}; {wf}; automatic approval {auto}");
         return (true, isNew ? "Link saved." : "Changes saved.");
@@ -175,7 +180,9 @@ public class GitScanService
         var result = evt == "ping" ? "accepted" : linked ? "recorded" : "ignored";
         if (!linked && evt != "ping" && repo.Length > 0) detail = (detail.Length > 0 ? detail + "; " : "") + "repository not linked";
         try { await LogEventAsync("webhook", evt, delivery, repo, result, detail, bodyHash); }
-        catch (DbUpdateException) { _db.ChangeTracker.Clear(); return new(200, "duplicate"); }   // the same delivery at the same moment
+        // the same delivery at the same moment (unique index); anything else (database busy): 503, the git server may send it again
+        catch (DbUpdateException e) when (e.InnerException is Microsoft.Data.Sqlite.SqliteException { SqliteErrorCode: 19 }) { _db.ChangeTracker.Clear(); return new(200, "duplicate"); }
+        catch (DbUpdateException) { _db.ChangeTracker.Clear(); return new(503, "busy"); }
         await _config.SetAsync(GitScanConfig.LastWebhookKey, DateTime.UtcNow.ToString("O"));
         return new(evt == "ping" ? 200 : 202, result);
     }
@@ -193,10 +200,16 @@ public class GitScanService
     /// <summary>Keeps the newest <see cref="MaxEvents"/> entries and nothing older than 180 days (background worker).</summary>
     public async Task<int> PruneAsync()
     {
-        var cutoff = DateTime.UtcNow.AddDays(-180);
-        var removed = await _db.GitScanEvents.Where(e => e.At < cutoff).ExecuteDeleteAsync();
-        var keepFrom = await _db.GitScanEvents.OrderByDescending(e => e.Id).Skip(MaxEvents).Select(e => (int?)e.Id).FirstOrDefaultAsync();
-        if (keepFrom is { } k) removed += await _db.GitScanEvents.Where(e => e.Id <= k).ExecuteDeleteAsync();
+        // accepted deliveries are the memory of the duplicate check (id and body): kept a year, at most 20,000;
+        // tests and refused deliveries: 180 days, at most MaxEvents (review S2.8.0)
+        var now = DateTime.UtcNow;
+        var yearAgo = now.AddDays(-365);
+        var halfYearAgo = now.AddDays(-180);
+        var removed = await _db.GitScanEvents.Where(e => (e.Source == "webhook" && e.At < yearAgo) || (e.Source != "webhook" && e.At < halfYearAgo)).ExecuteDeleteAsync();
+        var keepOther = await _db.GitScanEvents.Where(e => e.Source != "webhook").OrderByDescending(e => e.Id).Skip(MaxEvents).Select(e => (int?)e.Id).FirstOrDefaultAsync();
+        if (keepOther is { } k1) removed += await _db.GitScanEvents.Where(e => e.Source != "webhook" && e.Id <= k1).ExecuteDeleteAsync();
+        var keepHooks = await _db.GitScanEvents.Where(e => e.Source == "webhook").OrderByDescending(e => e.Id).Skip(20000).Select(e => (int?)e.Id).FirstOrDefaultAsync();
+        if (keepHooks is { } k2) removed += await _db.GitScanEvents.Where(e => e.Source == "webhook" && e.Id <= k2).ExecuteDeleteAsync();
         return removed;
     }
 

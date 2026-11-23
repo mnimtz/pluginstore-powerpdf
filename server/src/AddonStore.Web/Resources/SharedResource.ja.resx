@@ -1972,4 +1972,6 @@
   <data name="Someone else changed this add-on at the same moment. Look at the list and try again." xml:space="preserve"><value>他のユーザーが同時にこのアドオンを変更しました。一覧を確認して、もう一度お試しください。</value></data>
   <data name="Saved. The git server changed, so the stored key and token were removed; enter them for the new server." xml:space="preserve"><value>保存しました。Git サーバーが変更されたため、保存されていたキーとトークンは削除されました。新しいサーバー用に入力してください。</value></data>
   <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>エントリの変更: [変更] で、上のフォームにそのレベル、理由、確認日が入力されます。</value></data>
+  <data name="This add-on is already out of service. Use &quot;Change&quot; in the list to see and change its entry." xml:space="preserve"><value>このアドインはすでに提供停止中です。一覧の [変更] でエントリを確認して変更してください。</value></data>
+  <data name="The database is busy. Try again in a moment." xml:space="preserve"><value>データベースがビジー状態です。しばらくしてからもう一度お試しください。</value></data>
 </root>

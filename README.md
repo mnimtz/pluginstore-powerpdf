@@ -221,6 +221,7 @@ built with the Power PDF Plugin SDK):
 - A fresh MSI installation (not an update) clears leftovers of removed plugins
   from the shared *Enhanced Features* tab once per user; installed plugins add
   their groups again on their next start.
+- **Out of service** (client 2.3.0+, server S2.8.0): 30 seconds after the start and every 4 hours the client reads `GET /api/suspended?format=tsv` (only an answer with the header line `# hash<TAB>level<TAB>reason` counts; anything else, like a proxy page, changes nothing). For an installed add-on at level `disabled` it asks to switch it off: one elevated step renames `Plug-Ins\<zxt>.zxt` to `<zxt>.zxt.suspended` (a loaded DLL can be renamed), manifest, data folder and settings stay. When the add-on is no longer listed (or only paused) it offers to switch it on again. Off and on for several add-ons share one UAC prompt; a declined prompt is asked again in the next session. Install and uninstall move a leftover `.zxt.suspended` aside. The store window shows a banner with the state and a button. Logic in `store/suspendcore.h` (tested in `client/tests/suspend_tests.cpp`), the rest in `store/suspend.cpp`.
 - **Operating mode badge** (client 2.2.0+, server S2.4.0/S2.6.0): the store window shows the server's mode next to the title: a red "Beta" pill, a yellow "Maintenance" pill with a wrench plus a notice that ratings and reports pause while installing and updating keep working, a blue "Test" pill with a flask. The client reads `serverMode` from `GET /api/client/access` (start, every 4 h) and `GET /api/ping` (each time the window opens or refreshes), keeps it in HKCU `ServerMode` and ignores unknown values (`store/servermode.h`, tested in `client/tests/servermode_tests.cpp`). In beta the notes start with the beta conditions.
 - **Central help** (client 2.1.0+): one help window for every installed add-on
   and the store itself, opened with *Help* (own group `FeaturePack::AddonStoreHelp`,
@@ -644,6 +645,8 @@ listed with their reasons in `.trivyignore`.
 
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
+
+**Review fixes (S2.8.1, Nov 23, 2026):** the plain "Take out of service" form never overwrites an existing entry (only "Change", which shows level, reason and date first); an omitted review date keeps the stored one, `clearReviewAt` removes it, emergency users never change it; a deleted add-on that was `disabled` stays in `/api/suspended` so clients never switch it on again; a new git host removes every stored secret not entered anew; webhook: only a real duplicate (unique index) counts as one, a busy database answers 503 `WEBHOOK_BUSY`, body hashes unique and kept a year; reasons without bidi overrides, `since` in UTC; customer mails follow the notification switch and count only mails that went out; conflicts answer 409 `SUSPEND_CONFLICT`.
 
 **Git & Veracode, step 1 (S2.8.0, Nov 23, 2026):** one new admin page, Settings > Git & Veracode
 (`Pages/Admin/GitScan`, services in `Services/GitScan/`, own tables `AddonSuspensions`, `GitScanLinks`,

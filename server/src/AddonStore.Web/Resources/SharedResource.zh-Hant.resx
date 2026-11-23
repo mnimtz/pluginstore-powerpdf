@@ -1972,4 +1972,6 @@
   <data name="Someone else changed this add-on at the same moment. Look at the list and try again." xml:space="preserve"><value>其他人在同一時間變更了此增益集。請查看清單後再試一次。</value></data>
   <data name="Saved. The git server changed, so the stored key and token were removed; enter them for the new server." xml:space="preserve"><value>已儲存。Git 伺服器已變更，因此已移除儲存的金鑰和權杖；請為新伺服器重新輸入。</value></data>
   <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>變更項目：「變更」會以其層級、原因和複查日期填入上方表單。</value></data>
+  <data name="This add-on is already out of service. Use &quot;Change&quot; in the list to see and change its entry." xml:space="preserve"><value>此增益集已停止服務。請使用清單中的「變更」檢視並變更其項目。</value></data>
+  <data name="The database is busy. Try again in a moment." xml:space="preserve"><value>資料庫忙碌中。請稍後再試。</value></data>
 </root>

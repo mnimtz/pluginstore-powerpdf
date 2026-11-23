@@ -76,6 +76,8 @@ public static class GitScanSchema
         "ALTER TABLE GitScanEvents ADD COLUMN BodyHash TEXT NOT NULL DEFAULT ''",
         "CREATE INDEX IF NOT EXISTS IX_GitScanEvents_At ON GitScanEvents (At)",
         "CREATE UNIQUE INDEX IF NOT EXISTS IX_GitScanEvents_Delivery ON GitScanEvents (DeliveryId) WHERE Source = 'webhook'",
-        "CREATE INDEX IF NOT EXISTS IX_GitScanEvents_BodyHash ON GitScanEvents (BodyHash)",
+        // review S2.8.0: unique, so two replays of one signed body at the same moment cannot both pass
+        "DROP INDEX IF EXISTS IX_GitScanEvents_BodyHash",
+        "CREATE UNIQUE INDEX IF NOT EXISTS IX_GitScanEvents_BodyHashU ON GitScanEvents (BodyHash) WHERE Source = 'webhook' AND BodyHash <> ''",
     };
 }
