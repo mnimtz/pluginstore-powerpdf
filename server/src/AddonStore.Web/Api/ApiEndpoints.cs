@@ -197,6 +197,8 @@ public static class ApiEndpoints
                     "GET  /api/packages/{id}/icon[?v=version]  catalog icon (PNG), of the given or the newest released version",
                     "GET  /api/devkit                 SDK documentation and developer kit files",
                     "GET  /api/sdk/pluginstore_bin.h  loader header for the add-on's own DLLs in bin/ (MIT)",
+                    "GET  /api/sdk/aiservices.h       interface of the AI Plug-in: shared AI connection for your add-on (MIT; guide section 'Using the AI Plug-in from your add-on')",
+                    "GET  /api/sdk/aiservices_client.h  helper class AISClient for the AI Plug-in (MIT)",
                     "GET  /api/agent-guide/checklist  every hard rule on one short page (HTML: /agent-guide/checklist)",
                     "GET  /api/rules                  every rule grouped by area, with the store's own rules (house rules, stricter warnings)",
                     "GET  /api/agent-guide/manual-upload  package format, step-by-step creation and the one-file manual upload",
@@ -1808,8 +1810,11 @@ public static class ApiEndpoints
                 data = new
                 {
                     files,
+                    // S2.8.4: the store's own SDK files, always there (also when this folder is empty)
+                    sdk = new[] { "pluginstore_bin.h", "addonhelp.h", "aiservices.h", "aiservices_client.h" }
+                        .Select(n => new { name = n, url = $"{Base(ctx)}/api/sdk/{n}" }).ToArray(),
                     hint = files.Length == 0
-                        ? "The developer kit is empty on this instance; an admin can add SDK docs, knowledge files and templates."
+                        ? "No extra developer kit files on this instance. The store's own SDK files are always available: GET /api/sdk/pluginstore_bin.h, /api/sdk/addonhelp.h, /api/sdk/aiservices.h, /api/sdk/aiservices_client.h; how to use them is in GET /api/agent-guide."
                         : "Fetch a file via GET /api/devkit/{path}."
                 }
             });
@@ -1819,8 +1824,13 @@ public static class ApiEndpoints
         api.MapGet("/sdk/{name}", (string name, IWebHostEnvironment env) =>
         {
             // S2.7.0: also addonhelp.h, the HFT of the central help (identical to client/common/addonhelp.h)
-            var file = name switch { "pluginstore_bin.h" => "pluginstore_bin.h", "addonhelp.h" => "addonhelp.h", _ => null };
-            if (file is null) return NotFound("FILE_NOT_FOUND", $"No SDK file '{name}'. Available: pluginstore_bin.h, addonhelp.h.");
+            // S2.8.4: also aiservices.h and aiservices_client.h, the interface of the AI Plug-in (identical to AiCore/include)
+            var file = name switch
+            {
+                "pluginstore_bin.h" => "pluginstore_bin.h", "addonhelp.h" => "addonhelp.h",
+                "aiservices.h" => "aiservices.h", "aiservices_client.h" => "aiservices_client.h", _ => null,
+            };
+            if (file is null) return NotFound("FILE_NOT_FOUND", $"No SDK file '{name}'. Available: pluginstore_bin.h, addonhelp.h, aiservices.h, aiservices_client.h.");
             // S1.26.0: the path is built from the constant, the request only selects it
             var full = Path.Combine(env.WebRootPath, "sdk", file);
             return File.Exists(full) ? Results.File(full, "text/plain; charset=utf-8", file) : NotFound("FILE_NOT_FOUND", $"No SDK file '{file}'.");

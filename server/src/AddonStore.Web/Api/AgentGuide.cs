@@ -148,8 +148,11 @@ bearer token and JSON; nothing in it depends on one vendor. Set yourself up once
 1. `GET {{baseUrl}}/api` lists all endpoints; `GET {{baseUrl}}/api/openapi.json`
    describes them as OpenAPI 3.1; `GET {{baseUrl}}/llms.txt` is the short index.
 2. `GET {{baseUrl}}/api/me` with your token verifies authentication.
-3. `GET {{baseUrl}}/api/devkit` lists SDK documentation, knowledge files and
-   templates you can download (Plugin SDK docs, known pitfalls, project template).
+3. `GET {{baseUrl}}/api/devkit` lists extra SDK documentation, knowledge files and
+   templates of this instance (may be empty) and always the store's own SDK
+   files under `GET {{baseUrl}}/api/sdk/{name}`: `pluginstore_bin.h` (own DLLs),
+   `addonhelp.h` (central help), `aiservices.h` + `aiservices_client.h` (AI for
+   your add-on through the AI Plug-in, see "Using the AI Plug-in from your add-on").
 4. `GET {{baseUrl}}/api/schema/manifest` is the schema for manifest.json.
 5. `GET {{baseUrl}}/api/rules` lists every rule grouped by area, with the
    rules this store adds (house rules, warnings it treats as errors). The
@@ -326,6 +329,106 @@ your start page; the result 0 means "no help here". Without the store client
   example `1.3.0`, or `1.3` for a version ending in `.0`).
 - HELP_PRESENT (info) shows the reviewer the languages and whether the help
   changed since the previous version.
+
+## Using the AI Plug-in from your add-on (shared AI connection)
+
+Need AI in your add-on (summaries, questions about a document, extracting
+fields, classification, similarity search)? Do not build your own AI
+connection: use the store's **AI Plug-in** (package `com.tungsten.aiservices`).
+The customer sets up provider, models and key once in the AI Plug-in (OpenAI,
+Google Gemini, Anthropic Claude, OpenAI-compatible services such as Mistral or
+OpenRouter, or a local Ollama). Your add-on sends requests through it and never
+sees a key, needs no HTTP library and no key handling. Admins control which
+add-ons may use AI and see the usage per add-on.
+
+**Files** (MIT, header-only, nothing to link):
+
+    GET {{baseUrl}}/api/sdk/aiservices.h          the interface: HFT "TungstenAIServices", version 1 (frozen)
+    GET {{baseUrl}}/api/sdk/aiservices_client.h   helper class AISClient (include after PIHeaders.h)
+
+The headers are commented in detail (structures, status codes, limits).
+Quick start:
+
+```cpp
+#include "stdafx.h"              // includes PIHeaders.h
+#include "aiservices_client.h"
+
+static AISClient g_ai;           // one per add-on; looks the HFT up lazily
+
+void UpdateAiUi()                // when your settings or AI button are shown
+{
+    if (!g_ai.Available()) { /* hint: "Install the AI Plug-in from the Add-on Store" */ return; }
+    AISCaps caps;
+    bool usable = g_ai.GetCaps("MyAddon", AIS_MODEL_DEFAULT, &caps) == AIS_OK && (caps.flags & AIS_CAP_PERMITTED);
+}
+
+static void AISAPI OnDone(const AISResponse* r, void* clientData)   // UI thread, exactly once
+{
+    if (r->status == AIS_OK) Show(r->text);   // copy now: pointers are valid only in the callback
+    else ShowError(r->status, r->error);      // r->error is readable for users
+}
+
+void OnSummarizeClicked(HWND owner, const std::string& text)        // on a user action only
+{
+    if (g_ai.RequestPermission("MyAddon", "My Add-on", "Summarize changes", owner) != AIS_OK) return;
+    AISRequest rq = AISClient::MakeRequest("MyAddon", "Summarize changes");
+    rq.system = "Answer briefly.";
+    rq.user = text.c_str();                  // copied by the call
+    rq.maxOutputTokens = 500;
+    AISJob job = 0;
+    if (g_ai.Submit(rq, &OnDone, nullptr, &job) != AIS_OK) { /* show the status */ }
+}
+```
+
+Rules:
+
+- Call every function on the **UI thread** only (other threads get
+  `AIS_INVALID_ARGUMENT`). Look the HFT up when first needed, never rely on it
+  in `PluginInit`: plug-in start order is not guaranteed (`AISClient` does this).
+- No requests during start-up; wait for a user action.
+- Every `Submit` / `Embed` that returns `AIS_OK` calls its callback exactly
+  once on the UI thread, also after `Cancel` (`AIS_CANCELLED`). Keep
+  `clientData` valid until then; when your dialog closes first, `Cancel` and
+  ignore the callback. Copy what you keep: response pointers end with the callback.
+- Strings are UTF-8. Plug-in id: your add-on's name (letters, digits, `.`, `-`,
+  `_`, at most 64), the same in every call; users and admins see it. `purpose`
+  is mandatory, short plain text (at most 200 bytes), for example "Summarize changes".
+- **Permission:** the user or admin decides per add-on. Call
+  `RequestPermission` when the user starts an AI function (a dialog with your
+  name and purpose appears once). A refusal is stored; then you get
+  `AIS_NOT_PERMITTED`.
+- Check the capabilities before you rely on them: `AIS_CAP_VISION` (JPEG/PNG),
+  `AIS_CAP_PDF` (PDF attachments; otherwise render pages as images),
+  `AIS_CAP_JSON_SCHEMA` (structured answers via `jsonSchema`; `r->text` is then
+  valid JSON), `AIS_CAP_EMBEDDINGS` (`Embed`; not every provider has it),
+  `AIS_CAP_LOCAL` (local model, data stays on the PC), plus `contextTokens` and
+  `maxOutputTokens` (0 = unknown).
+- Limits: 32 attachments, 20 MB each, 50 MB together; 4 requests at a time
+  (`AIS_BUSY` beyond); `maxOutputTokens` 0 = 2048, at most 65536; timeout
+  300 s by default, at most 900 s. Model classes `AIS_MODEL_FAST`,
+  `AIS_MODEL_THOROUGH` (mapped by the admin; without a mapping every class uses
+  the standard model). Conversations: you keep the history and send it each time.
+- Status reactions: `AIS_DISABLED` grey out AI options without an error;
+  `AIS_NOT_CONFIGURED` / `AIS_NOT_PERMITTED` / `AIS_AUTH_FAILED` show a hint with
+  "Open AI settings" (`g_ai.ShowSettings(owner)`); `AIS_NOT_SUPPORTED` use a
+  fallback or hide the function; `AIS_RATE_LIMITED`, `AIS_BUSY` try later;
+  network/provider/response errors show `error`. Retries on 429/5xx are done by
+  the AI Plug-in.
+
+What the store expects:
+
+- Your add-on **works fully without the AI Plug-in** (`Available()` false: hide
+  or disable AI options and say how to get it). AI adds to a function; it never
+  replaces a basic one.
+- Compliance: your binary connects to no AI service itself, so do not list AI
+  provider hosts in `complianceAudit.externalServices`. Write in
+  `complianceAudit.method` which content your add-on sends to the AI provider
+  configured in the AI Plug-in, and when.
+- Privacy: send only what the task needs; tell users before the first use that
+  a cloud provider receives the content (unless `AIS_CAP_LOCAL`); let users see
+  and check AI results before they are applied.
+- Test with the AI Plug-in installed from the store and set up with any
+  provider; a local Ollama works without a key.
 
 ## Pre-flight checklist (mandatory: every hard rule)
 
@@ -2216,6 +2319,7 @@ coding assistant working here; the store API is plain HTTPS + JSON
 - [manifest.json schema]({{baseUrl}}/api/schema/manifest): JSON Schema of the package manifest
 - [AGENTS.md]({{baseUrl}}/api/agents-md): project instructions for coding assistants (Codex, Copilot, Cursor, Gemini CLI)
 - [Claude Code skill]({{baseUrl}}/api/skill): the same workflow as SKILL.md
+- [AI Plug-in interface]({{baseUrl}}/api/sdk/aiservices.h) and [helper]({{baseUrl}}/api/sdk/aiservices_client.h): AI for your add-on through the store's AI Plug-in (guide section "Using the AI Plug-in from your add-on")
 
 ## API
 
@@ -2226,7 +2330,7 @@ coding assistant working here; the store API is plain HTTPS + JSON
 
 ## Optional
 
-- [Developer kit]({{baseUrl}}/api/devkit): Plugin SDK documentation, known pitfalls, project template
+- [Developer kit]({{baseUrl}}/api/devkit): extra SDK documentation of this instance (may be empty) and the store's own SDK files (/api/sdk/...)
 """;
 
     private static string Workflow(string baseUrl) => $$"""
