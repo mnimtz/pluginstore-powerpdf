@@ -9,7 +9,9 @@
       (one administrator step, from an admin-only staging folder),
     - adds the add-on's group to the shared "Enhanced Features" tab of the user's
       ribbon layout (user step; Power PDF merges it only into a profile that does
-      not know the shared tab yet), for other users at their next sign-in,
+      not know the shared tab yet), for other users at their next sign-in; an
+      approved add-on with "ribbonTab": "accessibility" gets it in Power PDF's
+      own Accessibility tab instead (S2.8.3),
     - registers an entry under "Apps and features" for the removal.
 
   install.bat / uninstall.bat start it; /quiet (or -Quiet) runs without questions,
@@ -262,10 +264,109 @@ function Get-LayoutName([string]$text) {
     return Get-Attr $text.Substring($p, $gt - $p) 'name'
 }
 
-# Adds the groups (and buttons missing from a group) to the shared tab of the viewer layout; $null = unchanged.
+# Inserts the buttons of $g missing from the group copy that starts at $grp; $null = unchanged.
+function Add-MissingButtons([string]$text, $g, [int]$grp, [string]$nl) {
+    $open = $text.IndexOf('>', $grp, $Ord)
+    if ($open -lt 0 -or $text[$open - 1] -eq '/') { return $null }   # a self-closing group is left alone
+    $grpEnd = $text.IndexOf('</PFFGroup>', $open, $Ord); if ($grpEnd -lt 0) { return $null }
+    $changed = $false
+    foreach ($b in $g.Buttons) {
+        $needle = '<PFFButton name="' + $b[0] + '"'
+        $f = $text.IndexOf($needle, $open, $Ord)
+        if ($f -ge 0 -and $f -lt $grpEnd) { continue }
+        $ins = $needle + ' IconMode="' + $b[1] + '"/>' + $nl
+        $text = $text.Insert($grpEnd, $ins); $grpEnd += $ins.Length
+        $changed = $true
+    }
+    if ($changed) { return $text } else { return $null }
+}
+
+function New-GroupBlock($g, [string]$nl) {
+    $block = '<PFFGroup name="' + $g.Name + '" GroupType="PFFTitleBlock">' + $nl
+    foreach ($b in $g.Buttons) { $block += '<PFFButton name="' + $b[0] + '" IconMode="' + $b[1] + '"/>' + $nl }
+    return $block + '</PFFGroup>' + $nl
+}
+
+# S2.8.3 (store client 2.3.1): an approved add-on with "ribbonTab": "accessibility" gets its group in Power PDF's own
+# Accessibility tab, right after the "Fonts" group (at the end of the tab without it), and off the shared tab.
+$AccessTab = 'tool::accessibility'
+$AccessAnchor = 'group::accessibility::fonts'
+
+# The content of <toolbar name="<name>">: @(open, end), or $null when missing, self-closing or malformed.
+function Get-ToolbarSpan([string]$text, [string]$name) {
+    $tb = $text.IndexOf('<toolbar name="' + $name + '"', $Ord); if ($tb -lt 0) { return $null }
+    $gt = $text.IndexOf('>', $tb, $Ord); if ($gt -lt 0 -or $text[$gt - 1] -eq '/') { return $null }
+    $end = $text.IndexOf('</toolbar>', $gt, $Ord); if ($end -lt 0) { return $null }
+    $next = $text.IndexOf('<toolbar ', $gt, $Ord); if ($next -ge 0 -and $next -lt $end) { return $null }
+    return , @(($gt + 1), $end)
+}
+
+# The first group of that name in [from, to): @(start, end), or $null.
+function Get-GroupSpan([string]$text, [string]$name, [int]$from, [int]$to) {
+    $g = $text.IndexOf('<PFFGroup name="' + $name + '"', $from, $Ord); if ($g -lt 0 -or $g -ge $to) { return $null }
+    $gt = $text.IndexOf('>', $g, $Ord); if ($gt -lt 0 -or $gt -ge $to) { return $null }
+    if ($text[$gt - 1] -eq '/') { return , @($g, ($gt + 1)) }
+    $c = $text.IndexOf('</PFFGroup>', $gt, $Ord); if ($c -lt 0 -or $c -ge $to) { return $null }
+    return , @($g, ($c + 11))
+}
+
+# Every copy of the group out of one tab (a group on lines of its own with its indentation and line break).
+function Remove-GroupFromToolbar([string]$text, [string]$toolbar, [string]$name) {
+    for ($i = 0; $i -lt 50; $i++) {
+        $tb = Get-ToolbarSpan $text $toolbar; if (-not $tb) { break }
+        $gs = Get-GroupSpan $text $name $tb[0] $tb[1]; if (-not $gs) { break }
+        $start = $gs[0]; $end = $gs[1]
+        while ($start -gt $tb[0] -and " `t".IndexOf($text[$start - 1]) -ge 0) { $start-- }
+        if ($start -eq $tb[0] -or $text[$start - 1] -eq "`n") {
+            if ($end -lt $tb[1] -and $text[$end] -eq "`r") { $end++ }
+            if ($end -lt $tb[1] -and $text[$end] -eq "`n") { $end++ }
+        } else { $start = $gs[0] }
+        $text = $text.Remove($start, $end - $start)
+    }
+    return $text
+}
+
+# Handled = $false: the profile has no Accessibility tab, the group goes to the shared tab like any other.
+function Add-AccessGroup([string]$text, $g, [string]$nl) {
+    if (-not (Get-ToolbarSpan $text $AccessTab)) { return @{ Handled = $false; Text = $null } }
+    $orig = $text
+    $text = Remove-GroupFromToolbar $text 'FeaturePack' $g.Name
+    $acc = Get-ToolbarSpan $text $AccessTab
+    $gs = Get-GroupSpan $text $g.Name $acc[0] $acc[1]
+    if ($gs) { $at = $gs[0] } else { $at = $text.IndexOf('<PFFGroup name="' + $g.Name + '"', $Ord) }   # elsewhere: the user's place
+    if ($at -ge 0) {
+        $new = Add-MissingButtons $text $g $at $nl; if ($null -ne $new) { $text = $new }
+    } else {
+        $at = $acc[1]
+        $an = Get-GroupSpan $text $AccessAnchor $acc[0] $acc[1]
+        if ($an) {
+            $at = $an[1]
+            if ($at -lt $acc[1] -and $text[$at] -eq "`r") { $at++ }
+            if ($at -lt $acc[1] -and $text[$at] -eq "`n") { $at++ }
+            elseif ($at -eq $an[1]) { $text = $text.Insert($at, $nl); $at += $nl.Length }
+        }
+        $text = $text.Insert($at, (New-GroupBlock $g $nl))
+    }
+    if ($text -ceq $orig) { return @{ Handled = $true; Text = $null } }
+    return @{ Handled = $true; Text = $text }
+}
+
+# Adds the groups (and buttons missing from a group) to the shared tab of the viewer layout, groups of
+# "ribbonTab": "accessibility" add-ons to Power PDF's Accessibility tab; $null = unchanged.
 function Add-Groups([string]$text, $groups, [string]$nl) {
     if ($groups.Count -eq 0 -or (Get-LayoutName $text) -ne 'Publish') { return $null }
     $changed = $false
+    $shared = @()
+    foreach ($g in $groups) {
+        if ($g.Access) {
+            $r = Add-AccessGroup $text $g $nl
+            if ($null -ne $r.Text) { $text = $r.Text; $changed = $true }
+            if ($r.Handled) { continue }
+        }
+        $shared += , $g
+    }
+    if ($shared.Count -eq 0) { if ($changed) { return $text } else { return $null } }
+    $groups = $shared
     if ($text.IndexOf('<toolbar name="FeaturePack"', $Ord) -lt 0) {
         $at = $text.IndexOf('<toolbar name="AddonStore"', $Ord)
         if ($at -lt 0) { $top = $text.IndexOf('<Top', $Ord); if ($top -ge 0) { $at = $text.IndexOf('</Top>', $top, $Ord) } }
@@ -285,23 +386,12 @@ function Add-Groups([string]$text, $groups, [string]$nl) {
         $grpTag = '<PFFGroup name="' + $g.Name + '"'
         $grp = $text.IndexOf($grpTag, $Ord)
         if ($grp -lt 0) {
-            $block = $grpTag + ' GroupType="PFFTitleBlock">' + $nl
-            foreach ($b in $g.Buttons) { $block += '<PFFButton name="' + $b[0] + '" IconMode="' + $b[1] + '"/>' + $nl }
-            $text = $text.Insert($tbEnd, $block + '</PFFGroup>' + $nl)
+            $text = $text.Insert($tbEnd, (New-GroupBlock $g $nl))
             $changed = $true
             continue
         }
-        $open = $text.IndexOf('>', $grp, $Ord)
-        if ($open -lt 0 -or $text[$open - 1] -eq '/') { continue }   # a self-closing group is left alone
-        $grpEnd = $text.IndexOf('</PFFGroup>', $open, $Ord); if ($grpEnd -lt 0) { continue }
-        foreach ($b in $g.Buttons) {
-            $needle = '<PFFButton name="' + $b[0] + '"'
-            $f = $text.IndexOf($needle, $open, $Ord)
-            if ($f -ge 0 -and $f -lt $grpEnd) { continue }
-            $ins = $needle + ' IconMode="' + $b[1] + '"/>' + $nl
-            $text = $text.Insert($grpEnd, $ins); $grpEnd += $ins.Length
-            $changed = $true
-        }
+        $new = Add-MissingButtons $text $g $grp $nl
+        if ($null -ne $new) { $text = $new; $changed = $true }
     }
     if ($changed) { return $text } else { return $null }
 }
@@ -338,7 +428,12 @@ function Get-OwnGroups([string]$plugins, [string]$name) {
     $own = Join-Path $plugins "$name\UILayout\Publish Mode.xml"
     if (-not (Test-Path -LiteralPath $own)) { return @() }
     $l = Read-Layout $own; if (-not $l) { return @() }
-    return @(Get-AddonGroups $l.Text)
+    $groups = @(Get-AddonGroups $l.Text)
+    # S2.8.3: "ribbonTab": "accessibility" (approved add-ons; the server refuses it for every other)
+    $m = Get-InstalledManifest $plugins $name
+    $access = $null -ne $m -and ([string]$m.ribbonTab) -ceq 'accessibility'
+    foreach ($g in $groups) { $g.Access = $access }
+    return $groups
 }
 
 function Update-UserLayout([string]$plugins, [string]$name, [bool]$remove, $groups = $null) {

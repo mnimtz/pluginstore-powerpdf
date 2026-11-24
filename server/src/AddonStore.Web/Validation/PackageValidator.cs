@@ -71,6 +71,46 @@ public class PackageValidator
         "TypeWriter","TextField","AccessmblyToolBar"
     };
 
+    /// <summary>S2.8.3: add-ons whose ribbon group may sit in Power PDF's own "Accessibility" tab
+    /// (toolbar tool::accessibility) instead of the shared tab. An exception Marcus approved per add-on.</summary>
+    internal static readonly HashSet<string> AccessibilityTabAllowList = new(StringComparer.Ordinal)
+    {
+        "com.tungsten.accessibilityreview",
+    };
+
+    /// <summary>S2.8.3: manifest field "ribbonTab" ("shared" when absent, or "accessibility").
+    /// Returns the effective value ("shared" whenever the field is not accepted).</summary>
+    internal static string CheckRibbonTab(ValidationReport report, JsonElement root, string packageId, string atomNamespace, bool noUi)
+    {
+        if (!root.TryGetProperty("ribbonTab", out var el)) return "shared";
+        var tab = el.ValueKind == JsonValueKind.String ? el.GetString() ?? "" : null;
+        if (tab is null || (tab != "shared" && tab != "accessibility"))
+        {
+            var shown = (tab ?? el.ValueKind.ToString()).Replace('\n', ' ').Replace('\r', ' ');
+            if (shown.Length > 40) shown = shown[..40] + "...";
+            report.Error("RIBBON_TAB_INVALID", $"Manifest field 'ribbonTab' is '{shown}'.",
+                "Leave 'ribbonTab' out (or use \"shared\") for the shared tab; \"accessibility\" is an approved exception for single add-ons.");
+            return "shared";
+        }
+        if (tab == "shared") return "shared";
+        if (noUi || !atomNamespace.StartsWith("FeaturePack::", StringComparison.Ordinal) || atomNamespace.Length <= "FeaturePack::".Length
+            || atomNamespace.IndexOf("::", "FeaturePack::".Length, StringComparison.Ordinal) >= 0)
+        {
+            report.Error("RIBBON_TAB_NAMESPACE", "\"ribbonTab\": \"accessibility\" needs one ribbon group 'FeaturePack::<Name>'.",
+                "Set \"ribbonAtomNamespace\": \"FeaturePack::<Name>\" and ship the group in UILayout/Publish Mode.xml on <toolbar name=\"FeaturePack\">; the store client moves it into the Accessibility tab.");
+            return "shared";
+        }
+        if (!AccessibilityTabAllowList.Contains(packageId))
+        {
+            report.Error("RIBBON_TAB_NOT_ALLOWED", "This add-on may not place its group in Power PDF's Accessibility tab.",
+                "Every store add-on uses the shared tab 'Enhanced Features'. The Accessibility tab is an exception the store administrator approves per add-on; remove 'ribbonTab' or ask for approval.");
+            return "shared";
+        }
+        report.Info("RIBBON_TAB_ACCESSIBILITY", $"The group '{atomNamespace}' appears in Power PDF's tab 'Accessibility' (approved exception).",
+            "Keep the group on <toolbar name=\"FeaturePack\"> in Publish Mode.xml: store clients from 2.3.1 on move it into the Accessibility tab, older ones show it on the shared tab.");
+        return "accessibility";
+    }
+
     /// <summary>True when the namespace is not on the shared tab, i.e. the add-on brings its own tab.</summary>
     public static bool IsOwnTabNamespace(string ns) =>
         ns.Length > 0 && ns != "FeaturePack" && !ns.StartsWith("FeaturePack::", StringComparison.Ordinal)
@@ -488,6 +528,7 @@ public class PackageValidator
                 bool clientOwnTab = manifest.Id == "com.tungsten.pluginstore" &&
                                     manifest.AtomNamespace.StartsWith("AddonStore::", StringComparison.Ordinal);
                 manifest.OwnTab = manifest.AtomNamespace.Length > 0 && !clientOwnTab && IsOwnTabNamespace(manifest.AtomNamespace);
+                manifest.RibbonTab = CheckRibbonTab(report, root, manifest.Id, manifest.AtomNamespace, manifest.NoUi);   // S2.8.3
                 if (manifest.OwnTab && ReservedToolbars.Contains(TabOf(manifest.AtomNamespace)))
                     report.Error("OWN_TAB_RESERVED", $"The ribbon tab '{TabOf(manifest.AtomNamespace)}' belongs to Power PDF or the store.",
                         "Choose your own tab atom (e.g. 'CustomerSign'), or use a group on the shared tab ('FeaturePack::MyPlugin').");

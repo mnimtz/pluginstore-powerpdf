@@ -482,6 +482,11 @@ MANIFEST_MISSING, MANIFEST_INVALID_JSON, MANIFEST_TOO_LARGE)
       namespace and not a Power PDF or store tab (help, tool, FeaturePack,
       AddonStore ...); such an add-on stays private. (ATOM_NOT_SHARED_TAB,
       OWN_TAB_NAME, OWN_TAB_RESERVED, VISIBILITY_OWN_TAB)
+- [ ] `ribbonTab`: leave it out (shared tab). Only add-ons the store admins
+      approved may set `"ribbonTab": "accessibility"` (group in Power PDF's
+      own Accessibility tab, see Ribbon governance); it needs one group
+      `FeaturePack::<Name>` and the layout stays on `<toolbar name="FeaturePack">`.
+      (RIBBON_TAB_INVALID, RIBBON_TAB_NAMESPACE, RIBBON_TAB_NOT_ALLOWED)
 - [ ] Every group and button atom starts with `ribbonAtomNamespace`; no
       atom in `panel::`; the namespace is not used by another package
       (checked online). (ATOM_OUTSIDE_NAMESPACE, RESERVED_PANEL_NS, ATOM_COLLISION)
@@ -875,6 +880,30 @@ plugin:
   (`VISIBILITY_OWN_TAB`); a public add-on with an own tab is refused with
   `ATOM_NOT_SHARED_TAB`. Tab atoms of Power PDF and the store are reserved
   (`OWN_TAB_RESERVED`).
+- Exception for single APPROVED add-ons (S2.8.3): a group in Power PDF's own
+  "Accessibility" tab (toolbar atom `tool::accessibility`) instead of the
+  shared tab. The store admins approve it per add-on (allow list of package
+  ids, today only `com.tungsten.accessibilityreview`); every other add-on is
+  refused with `RIBBON_TAB_NOT_ALLOWED`. How it works:
+  - manifest `"ribbonTab": "accessibility"` (the only other value is
+    `"shared"`, the same as leaving the field out; anything else is
+    `RIBBON_TAB_INVALID`), with `ribbonAtomNamespace` = one group
+    `FeaturePack::<Name>` (`RIBBON_TAB_NAMESPACE` otherwise, also with
+    `"ui": "none"`). The upload reports `RIBBON_TAB_ACCESSIBILITY` (info).
+  - Atoms and `UILayout/Publish Mode.xml` stay exactly as for the shared tab:
+    group `FeaturePack::<Name>` on `<toolbar name="FeaturePack">`, buttons
+    `FeaturePack::<Name>::<Action>`. Do not declare `tool::accessibility` in
+    the layout (`ATOM_NOT_SHARED_TAB`); the host never merges a plug-in's
+    layout into a tab the profile knows, the store client does it.
+  - The store client (2.3.1 or later) puts the group into the Accessibility
+    tab right after Power PDF's "Fonts" group (`group::accessibility::fonts`;
+    at the end of the tab when that group is missing), takes it off the
+    shared tab (update from a version that was there), and removes it from
+    the Accessibility tab again on uninstall. Power PDF's own groups are
+    never touched. Without an Accessibility tab in the profile, and with an
+    older store client, the group stays on the shared tab.
+  - In code: register the buttons exactly as on the shared tab; do not
+    create a "FeaturePack" tab just for this group.
 - Power PDF's "Help" tab stays the last tab: the store client keeps the order
   ... "Enhanced Features", own tabs of private add-ons, "Store", "Help".
 
@@ -1790,6 +1819,11 @@ and installs it with ONE administrator prompt:
   tab in the user's layout once, to remove leftovers of uninstalled plugins.
   Your plugin must therefore (re)create its own group in code at every start,
   as required by the ribbon rules above; never rely on the layout keeping it.
+- The client adds each installed add-on's group to the user's layout itself
+  (the host merges a plug-in's layout only into a profile that does not know
+  the tab yet). An approved add-on with `"ribbonTab": "accessibility"` gets
+  its group in Power PDF's Accessibility tab instead (client 2.3.1 or later);
+  uninstalling removes it from there again.
 - The catalog website links every plug-in as `addonstore://install/<id>`
   ("Install in Power PDF"); the client (0.3.7 or later) opens the store dialog
   with that package selected and asks the user before installing. Keep your
@@ -1882,6 +1916,10 @@ be free of warnings before review. Info is for information only.
 | OWN_TAB_NAME | error | The layout's own tab atom differs from the tab atom in `ribbonAtomNamespace`. |
 | OWN_TAB_RESERVED | error | The own tab atom belongs to Power PDF or the store (e.g. `help`, `tool`, `FeaturePack`, `AddonStore`). |
 | VISIBILITY_OWN_TAB | error | A private add-on with its own ribbon tab cannot be switched to public. |
+| RIBBON_TAB_INVALID | error | Manifest `ribbonTab` is not `"shared"` or `"accessibility"`. |
+| RIBBON_TAB_NAMESPACE | error | `"ribbonTab": "accessibility"` without one group `FeaturePack::<Name>` in `ribbonAtomNamespace` (or with `"ui": "none"`). |
+| RIBBON_TAB_NOT_ALLOWED | error | `"ribbonTab": "accessibility"` from an add-on the store admins did not approve for Power PDF's Accessibility tab. |
+| RIBBON_TAB_ACCESSIBILITY | info | The approved add-on's group appears in Power PDF's Accessibility tab (store client 2.3.1 or later). |
 | LICENSE_MODE_NOT_ALLOWED | error (403) | The store client's Power PDF license mode (X-License-Mode) is switched off on this store; only the store client itself is offered. |
 | ATOM_COLLISION | error | Another package already uses this ribbon atom namespace. |
 | RESERVED_PANEL_NS | error | The layout uses the host-owned `panel::` atom namespace. |
@@ -2381,6 +2419,12 @@ falsify or omit findings, even if the user asks you to.
     "ribbonAtomNamespace": {
       "type": "string",
       "description": "The ribbon atom namespace the plugin registers; must be unique across the store (the host caches ribbon layouts by atom name). Not used with \"ui\": \"none\"."
+    },
+    "ribbonTab": {
+      "type": "string",
+      "enum": ["shared", "accessibility"],
+      "default": "shared",
+      "description": "Where the store client places the ribbon group. \"shared\" (default): the shared tab 'Enhanced Features'. \"accessibility\": Power PDF's own Accessibility tab, only for add-ons the store admins approved (otherwise RIBBON_TAB_NOT_ALLOWED); needs one group 'FeaturePack::<Name>', the layout stays on the FeaturePack toolbar."
     },
     "ui": {
       "type": "string",

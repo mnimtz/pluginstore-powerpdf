@@ -221,6 +221,7 @@ built with the Power PDF Plugin SDK):
 - A fresh MSI installation (not an update) clears leftovers of removed plugins
   from the shared *Enhanced Features* tab once per user; installed plugins add
   their groups again on their next start.
+- **Accessibility tab** (client 2.3.1+, server S2.8.3): for an installed add-on whose manifest says `"ribbonTab": "accessibility"` (approved by the server, see Ribbon governance) `fplayout::EnsureAccessGroup` (`client/common/layoutpatch.h`) puts its group into Power PDF's own `tool::accessibility` tab right after `group::accessibility::fonts` (at the end of the tab without it), rebuilt from checked atoms like every add-on group, and takes it off the shared tab (update from a version that was there). On uninstall `RemoveGoneFromAccessTab` takes groups of add-ons that are gone out of that tab again (an add-on switched off stays); Power PDF's own groups are never touched. Without that tab in the profile the group goes to the shared tab. The manual ZIP (`AddonSetup.ps1`) does the same. Tests: `client/tests/layout_access_test.cpp`.
 - **Out of service** (client 2.3.0+, server S2.8.0): 30 seconds after the start and every 4 hours the client reads `GET /api/suspended?format=tsv` (only an answer with the header line `# hash<TAB>level<TAB>reason` counts; anything else, like a proxy page, changes nothing). For an installed add-on at level `disabled` it asks to switch it off: one elevated step renames `Plug-Ins\<zxt>.zxt` to `<zxt>.zxt.suspended` (a loaded DLL can be renamed), manifest, data folder and settings stay. When the add-on is no longer listed (or only paused) it offers to switch it on again. Off and on for several add-ons share one UAC prompt; a declined prompt is asked again in the next session. Install and uninstall move a leftover `.zxt.suspended` aside. The store window shows a banner with the state and a button. Logic in `store/suspendcore.h` (tested in `client/tests/suspend_tests.cpp`), the rest in `store/suspend.cpp`.
 - **Operating mode badge** (client 2.2.0+, server S2.4.0/S2.6.0): the store window shows the server's mode next to the title: a red "Beta" pill, a yellow "Maintenance" pill with a wrench plus a notice that ratings and reports pause while installing and updating keep working, a blue "Test" pill with a flask. The client reads `serverMode` from `GET /api/client/access` (start, every 4 h) and `GET /api/ping` (each time the window opens or refreshes), keeps it in HKCU `ServerMode` and ignores unknown values (`store/servermode.h`, tested in `client/tests/servermode_tests.cpp`). In beta the notes start with the beta conditions.
 - **Central help** (client 2.1.0+): one help window for every installed add-on
@@ -387,7 +388,12 @@ LICENSES.md            third-party licenses (MIT/BSD/Apache-2.0/CC0-1.0 only): f
 only their own group `FeaturePack::<YourName>`. The validator checks this.
 Exception: a **private** customer add-on may bring its own tab
 (`ribbonAtomNamespace` = tab atom, e.g. `CustomerSign`); it then stays private
-(switching it to public is refused). Every manifest names `author` and
+(switching it to public is refused). Second exception (S2.8.3): add-ons the store
+admins approved (allow list, today only Smart Accessibility,
+`com.tungsten.accessibilityreview`) may set `"ribbonTab": "accessibility"`; the
+store client (2.3.1+) then puts their group `FeaturePack::<Name>` into Power PDF's
+own *Accessibility* tab (`tool::accessibility`, after the *Fonts* group). The
+layout and atoms stay those of the shared tab. Every manifest names `author` and
 `contactEmail` (mandatory since S1.4.1).
 
 **Manual upload package (S1.0.7):** when an AI assistant cannot reach the store
@@ -645,6 +651,8 @@ listed with their reasons in `.trivyignore`.
 
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
+
+**Smart Accessibility in the Accessibility tab (S2.8.3, Nov 24, 2026):** new manifest field `ribbonTab` (`"shared"`, the default, or `"accessibility"`). Only add-ons on the server's allow list (`PackageValidator.AccessibilityTabAllowList`, today `com.tungsten.accessibilityreview`, approved by Marcus after a live test in Power PDF 2025.3) may use `"accessibility"`; their group `FeaturePack::<Name>` then appears in Power PDF's own *Accessibility* tab (store client 2.3.1+, manual ZIP). New codes `RIBBON_TAB_INVALID`, `RIBBON_TAB_NAMESPACE`, `RIBBON_TAB_NOT_ALLOWED` (errors) and `RIBBON_TAB_ACCESSIBILITY` (info). Server test `RibbonTabTests`.
 
 **Review aid sees the source of an upload package (S2.8.2, Nov 24, 2026):** the automatic AI review aid could run in the second between storing a new version and storing the source ZIP of the same upload package, and then said "source code not deposited". The submission (API, web upload form, UAT handover and mirror) now holds the version back from the AI worker until its source step has ended (stored or rejected; in memory, lapses after 10 minutes), and the worker builds the aid again when the source of a version waiting for review was stored after its aid (also a later `PUT .../source`). Server test `ReviewAidSourceTests`.
 

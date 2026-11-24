@@ -41,6 +41,8 @@ public class ParsedManifest
     public string Visibility { get; set; } = "public";
     /// <summary>The add-on brings its own ribbon tab (namespace not on "FeaturePack"); private add-ons only.</summary>
     public bool OwnTab { get; set; }
+    /// <summary>Manifest "ribbonTab" (S2.8.3): "shared" (default) or "accessibility" (approved add-ons only).</summary>
+    public string RibbonTab { get; set; } = "shared";
     /// <summary>Manifest "ui": "none" (S1.1.1): an add-on without ribbon buttons, e.g. an engine for Power PDF features.</summary>
     public bool NoUi { get; set; }
     /// <summary>File names of the add-on's own DLLs in bin/ (S1.4.0), as declared in files.bin.</summary>
