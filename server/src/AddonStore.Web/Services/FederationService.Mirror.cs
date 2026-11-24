@@ -266,13 +266,14 @@ public partial class FederationService
                         string FileHash(string p) { using var s = File.OpenRead(p); return Convert.ToHexString(SHA256.HashData(s)).ToLowerInvariant(); }
                         if (FileHash(bundle.PpakPath) != S("sha256").ToLowerInvariant()) { result.Add(new(id, version, "failed", "SHA-256 differs")); continue; }
                         var isNew = !await _db.Packages.AnyAsync(p => p.Id == id);
-                        var sub = await submissions.SubmitAsync(bundle.PpakPath, actor, "mirror", notify: false);
+                        var sub = await submissions.SubmitAsync(bundle.PpakPath, actor, "mirror", notify: false, sourceFollows: bundle.SourcePath is not null);
                         if (sub.Version is not { } nv)
                         {
                             result.Add(new(id, version, "failed", sub.ErrorCode ?? sub.Report.Findings.FirstOrDefault(f => f.Severity == "error")?.Code ?? "refused"));
                             continue;
                         }
-                        if (bundle.SourcePath is not null) await sources.UploadAsync(nv, bundle.SourcePath, actor, true);
+                        try { if (bundle.SourcePath is not null) await sources.UploadAsync(nv, bundle.SourcePath, actor, true); }
+                        finally { ReviewHold.Release(nv.PackageId, nv.Version); }   // S2.8.2
                         var tracked = await _db.PackageVersions.FirstAsync(x => x.Id == nv.Id);
                         tracked.Status = status == "live" ? VersionStatus.Live : VersionStatus.Beta;
                         tracked.ReviewedById = actor.Id;

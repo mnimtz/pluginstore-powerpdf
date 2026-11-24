@@ -111,7 +111,7 @@ public class DashboardModel : PageModel
                     return;
                 }
             }
-            var result = await _svc.SubmitAsync(bundle?.PpakPath ?? tmp, user, "web");
+            var result = await _svc.SubmitAsync(bundle?.PpakPath ?? tmp, user, "web", sourceFollows: bundle?.SourcePath is not null);
             Findings = result.Report.Findings;
             if (result.ErrorCode == "CLIENT_ADMIN_ONLY")
             {
@@ -146,7 +146,9 @@ public class DashboardModel : PageModel
                 }
                 else
                 {
-                    var report = await _sources.UploadAsync(result.Version, bundle.SourcePath, user, User.IsInRole("Admin"));
+                    ValidationReport report;
+                    try { report = await _sources.UploadAsync(result.Version, bundle.SourcePath, user, User.IsInRole("Admin")); }
+                    finally { ReviewHold.Release(result.Version.PackageId, result.Version.Version); }   // S2.8.2
                     SourceFindings = report.Findings.ToList();
                     SourceNotice = report.Passed
                         ? "Source code from the upload package stored at this version."

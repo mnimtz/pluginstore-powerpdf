@@ -55,7 +55,9 @@ public class SubmissionService
     private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, SemaphoreSlim> Locks = new();
 
     /// <param name="notify">false: no staff mail and no receipt (a UAT mirroring production's released versions, S1.24.0)</param>
-    public async Task<SubmissionResult> SubmitAsync(string zipPath, AppUser user, string via, bool notify = true)
+    /// <param name="sourceFollows">true: an upload package whose source ZIP the caller stores next; the new version is held
+    /// back from the automatic review aid (<see cref="ReviewHold"/>) until the caller releases it (S2.8.2)</param>
+    public async Task<SubmissionResult> SubmitAsync(string zipPath, AppUser user, string via, bool notify = true, bool sourceFollows = false)
     {
         // S2.7.0: the UAT mirror and the bundled store client copy versions released elsewhere (help rule: warning only)
         var validator = new PackageValidator(_db, _categories, StorageRoot) { ReleasedElsewhere = via is "mirror" or "bundle" };
@@ -67,7 +69,7 @@ public class SubmissionService
 
         var gate = Locks.GetOrAdd(manifest.Id, _ => new SemaphoreSlim(1, 1));
         await gate.WaitAsync();
-        try { return await SubmitCheckedAsync(zipPath, user, via, report, manifest, notify); }
+        try { return await SubmitCheckedAsync(zipPath, user, via, report, manifest, notify, sourceFollows); }
         finally { gate.Release(); }
     }
 
@@ -83,7 +85,7 @@ public class SubmissionService
                 : $"Version {manifest.Version} already exists with different content. Bump 'version' in the manifest and upload again.");
     }
 
-    private async Task<SubmissionResult> SubmitCheckedAsync(string zipPath, AppUser user, string via, ValidationReport report, ParsedManifest manifest, bool notify = true)
+    private async Task<SubmissionResult> SubmitCheckedAsync(string zipPath, AppUser user, string via, ValidationReport report, ParsedManifest manifest, bool notify = true, bool sourceFollows = false)
     {
 
         // The store client has its own lane: only admins publish it, and a new
@@ -138,6 +140,7 @@ public class SubmissionService
             ValidationReportJson = report.ToJson(),
             RulesSnapshotJson = Validation.RuleCatalog.SnapshotJson(),   // the rules it was checked against (S1.3.0)
         };
+        if (sourceFollows) ReviewHold.Hold(manifest.Id, manifest.Version);   // before the row can be saved (the audit log below saves too)
         _db.PackageVersions.Add(version);
         if (manifest.NewCategoryNames is not null)
             await _categories.CreateAsync(manifest.Category, manifest.NewCategoryNames, user, manifest.Id);

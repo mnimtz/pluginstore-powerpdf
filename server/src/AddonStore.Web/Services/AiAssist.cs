@@ -225,6 +225,42 @@ public class AiAssist
     {
         language = ReviewLanguage(language);
         var cfg = await _ai.ConfigAsync();
+        // S2.8.2: the aid describes the version as stored at this moment (a source stored after it makes the
+        // worker build it again); the caller's copy may be older than the source upload of the same submission
+        var asOf = DateTime.UtcNow;
+        v = await _db.PackageVersions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == v.Id, ct) ?? v;
+        var input = await ReviewInputAsync(v, cfg.ReviewSource, ct);
+
+        var lang = ReviewLanguages[language];
+        var r = await _ai.JsonAsync(
+            "You help an administrator of the Add-on Store for Tungsten Power PDF decide whether to approve a new plug-in " +
+            "version. Summarize what changed compared with the previous version, judge whether the developer's changelog " +
+            "matches the changes, and list concerns: new network access or hosts, new third-party code or licenses, " +
+            "credentials, file or registry operations outside the plug-in's own data, process launches, obfuscation, " +
+            "and anything that contradicts the compliance statement. " + SecurityLens +
+            "Judge as well whether the add-on's help text covers the user-visible changes of this version (new functions, " +
+            "changed settings or messages) and names the version in its history; when it does not, or there is no help, " +
+            "add a low concern that the help needs an update and say what is missing. " +
+            "Be concrete and short. The administrator decides; " +
+            $"you only advise. Write all text in {lang}. " + Untrusted,
+            input, ReviewSchema, true, ct);
+        if (r is not { } e) return false;
+        var target = await _db.PackageVersions.FirstAsync(x => x.Id == v.Id, ct);
+        target.AiReviewJson = EnforceRecommendation(e);
+        target.AiReviewAt = asOf;   // S2.8.2: when the facts were read, so a source stored during the AI call counts as newer
+        target.AiReviewModel = cfg.Provider + "/" + cfg.Model;
+        target.AiReviewLang = language;
+        target.AiReviewTranslationsJson = null;   // translations belonged to the previous text
+        await _db.SaveChangesAsync(ct);
+        return true;
+    }
+
+    /// <summary>
+    /// The facts and manifests the review aid is built from (S2.8.2: separate from the AI call, so the
+    /// server tests can check them). <paramref name="reviewSource"/>: send changed source lines.
+    /// </summary>
+    internal async Task<string> ReviewInputAsync(PackageVersion v, bool reviewSource, CancellationToken ct = default)
+    {
         var cmp = new SemVerComparer();
         var older = (await _db.PackageVersions.AsNoTracking()
                 .Where(x => x.PackageId == v.PackageId && x.Id != v.Id && x.Status != VersionStatus.Rejected).ToListAsync(ct))
@@ -271,7 +307,7 @@ public class AiAssist
             var hostsOld = oldSrc is null ? new HashSet<string>() : Hosts(oldSrc.Values);
             facts.Append("Web hosts referenced in the source:\n<data>\n").Append(Data(string.Join(", ", hostsNew.Take(40))))
                  .Append("; new since the previous version: ").Append(Data(string.Join(", ", hostsNew.Except(hostsOld).Take(40)))).Append("\n</data>\n");
-            if (cfg.ReviewSource)
+            if (reviewSource)
             {
                 var budget = 60000;
                 var diff = new StringBuilder();
@@ -320,29 +356,7 @@ public class AiAssist
                     .Append(Data(part.Length == 0 ? "(no new text: the changelog is the same as before)" : part)).Append("\n</data>\n");
         manifest.Append("New manifest:\n<data>\n").Append(Data(ManifestDigest(v.ManifestJson))).Append("\n</data>\n");
         if (prev is not null) manifest.Append("Previous manifest:\n<data>\n").Append(Data(ManifestDigest(prev.ManifestJson))).Append("\n</data>\n");
-
-        var lang = ReviewLanguages[language];
-        var r = await _ai.JsonAsync(
-            "You help an administrator of the Add-on Store for Tungsten Power PDF decide whether to approve a new plug-in " +
-            "version. Summarize what changed compared with the previous version, judge whether the developer's changelog " +
-            "matches the changes, and list concerns: new network access or hosts, new third-party code or licenses, " +
-            "credentials, file or registry operations outside the plug-in's own data, process launches, obfuscation, " +
-            "and anything that contradicts the compliance statement. " + SecurityLens +
-            "Judge as well whether the add-on's help text covers the user-visible changes of this version (new functions, " +
-            "changed settings or messages) and names the version in its history; when it does not, or there is no help, " +
-            "add a low concern that the help needs an update and say what is missing. " +
-            "Be concrete and short. The administrator decides; " +
-            $"you only advise. Write all text in {lang}. " + Untrusted,
-            facts.ToString() + manifest, ReviewSchema, true, ct);
-        if (r is not { } e) return false;
-        var target = await _db.PackageVersions.FirstAsync(x => x.Id == v.Id, ct);
-        target.AiReviewJson = EnforceRecommendation(e);
-        target.AiReviewAt = DateTime.UtcNow;
-        target.AiReviewModel = cfg.Provider + "/" + cfg.Model;
-        target.AiReviewLang = language;
-        target.AiReviewTranslationsJson = null;   // translations belonged to the previous text
-        await _db.SaveChangesAsync(ct);
-        return true;
+        return facts.ToString() + manifest;
     }
 
     private static readonly Regex HelpTag = new("<[^>]{0,2000}>", RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1));
@@ -719,15 +733,11 @@ public sealed class AiWorker : BackgroundService
                     }
                     if (cfg.Review && cfg.ReviewAuto)
                     {
-                        var since = DateTime.UtcNow.AddDays(-14);
-                        foreach (var v in await db.PackageVersions.AsNoTracking()
-                                     .Where(v => v.AiReviewAt == null && v.SubmittedAt > since &&
-                                                 (v.Status == VersionStatus.Beta || v.Status == VersionStatus.Submitted) &&
-                                                 v.PackageId != SubmissionService.ClientPackageId)
-                                     .OrderBy(v => v.Id).Take(6).ToListAsync(stop))
+                        foreach (var v in await DueForReviewAsync(db, DateTime.UtcNow, stop))
                         {
-                            if (GiveUp("rv" + v.Id)) continue;
-                            if (!await assist.ReviewAsync(v, cfg.ReviewLanguage, stop)) { Failed("rv" + v.Id); break; }
+                            var key = $"rv{v.Id}:{v.SourceUploadedAt?.Ticks}";   // a new source gets new attempts
+                            if (GiveUp(key)) continue;
+                            if (!await assist.ReviewAsync(v, cfg.ReviewLanguage, stop)) { Failed(key); break; }
                         }
                     }
                 }
@@ -736,4 +746,44 @@ public sealed class AiWorker : BackgroundService
             try { await Task.Delay(TimeSpan.FromMinutes(1), stop); } catch (TaskCanceledException) { break; }
         }
     }
+
+    /// <summary>
+    /// Versions waiting for review (submitted or beta, not the store client) that need an automatic review aid:
+    /// none yet, or (S2.8.2) the source code was stored after the aid was built. A version whose upload package
+    /// is still storing its source (<see cref="ReviewHold"/>) waits for the next round.
+    /// </summary>
+    internal static async Task<List<PackageVersion>> DueForReviewAsync(AppDbContext db, DateTime now, CancellationToken ct = default)
+    {
+        var since = now.AddDays(-14);
+        var rows = await db.PackageVersions.AsNoTracking()
+            .Where(v => (v.AiReviewAt == null || (v.SourceUploadedAt != null && v.SourceUploadedAt > v.AiReviewAt)) &&
+                        (v.SubmittedAt > since || (v.SourceUploadedAt != null && v.SourceUploadedAt > since)) &&
+                        (v.Status == VersionStatus.Beta || v.Status == VersionStatus.Submitted) &&
+                        v.PackageId != SubmissionService.ClientPackageId)
+            .OrderBy(v => v.Id).Take(12).ToListAsync(ct);
+        return rows.Where(v => !ReviewHold.IsHeld(v.PackageId, v.Version, now)).Take(6).ToList();
+    }
+}
+
+/// <summary>
+/// S2.8.2: an upload package (.ppak + source ZIP) stores the version first and its source a moment later.
+/// Between the two the automatic review aid must not run, or it reports "source not deposited". The submission
+/// holds the version from just before it is stored until its source step has ended (stored or rejected).
+/// In memory: one server process; a hold that is never released (a crash in between) lapses after 10 minutes.
+/// </summary>
+public static class ReviewHold
+{
+    private static readonly TimeSpan Lapse = TimeSpan.FromMinutes(10);
+    private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, DateTime> Held = new(StringComparer.OrdinalIgnoreCase);
+    private static string Key(string id, string version) => id + "\n" + version;
+
+    public static void Hold(string id, string version)
+    {
+        var now = DateTime.UtcNow;
+        foreach (var lapsed in Held.Where(h => now - h.Value >= Lapse).Select(h => h.Key).ToList()) Held.TryRemove(lapsed, out _);
+        Held[Key(id, version)] = now;
+    }
+    public static void Release(string id, string version) => Held.TryRemove(Key(id, version), out _);
+    public static bool IsHeld(string id, string version, DateTime now) =>
+        Held.TryGetValue(Key(id, version), out var since) && now - since < Lapse;
 }

@@ -624,7 +624,7 @@ public static class ApiEndpoints
                             findings = pre.Findings
                         }, statusCode: 422);
                 }
-                var result = await svc.SubmitAsync(bundle?.PpakPath ?? tmp, user, via);
+                var result = await svc.SubmitAsync(bundle?.PpakPath ?? tmp, user, via, sourceFollows: bundle?.SourcePath is not null);
 
                 if (result.ErrorCode == "CLIENT_ADMIN_ONLY")
                     return Results.Json(new
@@ -657,8 +657,13 @@ public static class ApiEndpoints
 
                 var v = result.Version;
                 var policy = await sources.PolicyAsync();
-                ValidationReport? sourceReport = bundle?.SourcePath is { } sp
-                    ? await sources.UploadAsync(v, sp, user, ctx.User.IsInRole("Admin")) : null;
+                ValidationReport? sourceReport;
+                try
+                {
+                    sourceReport = bundle?.SourcePath is { } sp
+                        ? await sources.UploadAsync(v, sp, user, ctx.User.IsInRole("Admin")) : null;
+                }
+                finally { ReviewHold.Release(v.PackageId, v.Version); }   // S2.8.2: the review aid may run now, with the source
                 return Results.Json(new
                 {
                     ok = true,

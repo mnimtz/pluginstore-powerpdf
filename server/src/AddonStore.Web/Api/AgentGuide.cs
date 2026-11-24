@@ -1256,6 +1256,10 @@ ar; default en); the
 response names it in `language`. Review aids created in the portal or
 automatically use the language an admin set in Admin > Settings (English by
 default); reviewers can show a stored aid in another language there.
+The automatic aid of an upload package is built after its source ZIP is
+stored (or rejected). When you upload the source later with
+`PUT .../source` while the version waits for review, the store builds the
+automatic aid again with the source (server S2.8.2).
 Reviewers decide; the aid only advises. Write
 a precise changelog and keep network hosts and third-party code declared in
 the manifest: the aid compares them with the code.

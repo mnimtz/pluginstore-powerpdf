@@ -646,6 +646,8 @@ listed with their reasons in `.trivyignore`.
 **Review queue card head (S1.29.1):** each waiting version opens with the add-on itself: its icon, the
 name as a heading, id and version, and the short description; the submitter block follows below.
 
+**Review aid sees the source of an upload package (S2.8.2, Nov 24, 2026):** the automatic AI review aid could run in the second between storing a new version and storing the source ZIP of the same upload package, and then said "source code not deposited". The submission (API, web upload form, UAT handover and mirror) now holds the version back from the AI worker until its source step has ended (stored or rejected; in memory, lapses after 10 minutes), and the worker builds the aid again when the source of a version waiting for review was stored after its aid (also a later `PUT .../source`). Server test `ReviewAidSourceTests`.
+
 **Review fixes (S2.8.1, Nov 23, 2026):** the plain "Take out of service" form never overwrites an existing entry (only "Change", which shows level, reason and date first); an omitted review date keeps the stored one, `clearReviewAt` removes it, emergency users never change it; a deleted add-on that was `disabled` stays in `/api/suspended` so clients never switch it on again; a new git host removes every stored secret not entered anew; webhook: only a real duplicate (unique index) counts as one, a busy database answers 503 `WEBHOOK_BUSY`, body hashes unique and kept a year; reasons without bidi overrides, `since` in UTC; customer mails follow the notification switch and count only mails that went out; conflicts answer 409 `SUSPEND_CONFLICT`.
 
 **Git & Veracode, step 1 (S2.8.0, Nov 23, 2026):** one new admin page, Settings > Git & Veracode

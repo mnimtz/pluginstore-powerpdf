@@ -127,19 +127,23 @@ public partial class FederationService
                     return await RejectIntakeAsync(row, child, "The source code did not pass the checks of production.", srcReport.Findings);
             }
 
-            var result = await submissions.SubmitAsync(bundle.PpakPath, uploader, "uat:" + child.Name);
+            var result = await submissions.SubmitAsync(bundle.PpakPath, uploader, "uat:" + child.Name, sourceFollows: bundle.SourcePath is not null);
             if (result.Version is not { } v)
                 return await RejectIntakeAsync(row, child, result.ErrorCode is { } ec ? $"Refused by production ({ec})." : "The package did not pass the checks of production.",
                                                result.Report.Findings);
-            if (v.PackageId != row.PackageId || v.Version != row.Version || v.Sha256 != row.Sha256)
+            try
             {
-                // cannot happen with matching hashes; never keep a version that differs from the announcement
-                v.Status = VersionStatus.Rejected;
-                await _db.SaveChangesAsync();
-                return await RejectIntakeAsync(row, child, "The package names another id or version than announced.");
+                if (v.PackageId != row.PackageId || v.Version != row.Version || v.Sha256 != row.Sha256)
+                {
+                    // cannot happen with matching hashes; never keep a version that differs from the announcement
+                    v.Status = VersionStatus.Rejected;
+                    await _db.SaveChangesAsync();
+                    return await RejectIntakeAsync(row, child, "The package names another id or version than announced.");
+                }
+                if (bundle.SourcePath is not null)
+                    await sources.UploadAsync(v, bundle.SourcePath, uploader, await users.IsInRoleAsync(uploader, "Admin"));
             }
-            if (bundle.SourcePath is not null)
-                await sources.UploadAsync(v, bundle.SourcePath, uploader, await users.IsInRoleAsync(uploader, "Admin"));
+            finally { ReviewHold.Release(v.PackageId, v.Version); }   // S2.8.2: the review aid may run now, with the source
 
             var tracked = await _db.PackageVersions.FirstAsync(x => x.Id == v.Id);
             tracked.OriginChildId = child.Id;
