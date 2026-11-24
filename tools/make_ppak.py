@@ -90,7 +90,7 @@ def main():
     }
     # License declaration is the author's own statement; never invent defaults.
     # author/contactEmail: shown in the catalog (mandatory since S1.4.1, checked above).
-    for key in ('thirdParty', 'complianceAudit', 'author', 'contactEmail', 'elevation', 'providers'):   # elevation: S1.11.0, providers: S1.19.0
+    for key in ('thirdParty', 'complianceAudit', 'author', 'contactEmail', 'elevation', 'providers', 'ribbonTab'):   # elevation: S1.11.0, providers: S1.19.0, ribbonTab: S2.8.3
         if key in spec:
             manifest[key] = spec[key]
     # "private": a customer add-on that never appears in the catalog (only
