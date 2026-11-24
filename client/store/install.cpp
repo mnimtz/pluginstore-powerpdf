@@ -745,6 +745,12 @@ int PSUninstallPackages(const std::vector<std::wstring>& zxtNames, HWND owner, s
         std::wstring key = L"Software\\Kofax\\PDF\\Tungsten Power PDF\\" + zxtNames[i];
         RegDeleteTreeW(HKEY_CURRENT_USER, key.c_str());
     }
+    // C2.3.1: a removed add-on's group goes out of Power PDF's Accessibility tab right away (user context)
+    if (result == 0)
+    {
+        int fixed = fplayout::ApplyButtons(pluginsDir, kPSRegKey);
+        if (fixed > 0) FPLogW(L"[Store] ribbon layout updated after removal (%d file(s))", fixed);
+    }
 
     FPLogW(L"[Store] uninstall %s -> %d", names.c_str(), result);
     return result;

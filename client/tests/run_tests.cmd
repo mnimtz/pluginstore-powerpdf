@@ -35,6 +35,9 @@ cl /nologo /EHsc /std:c++17 /W4 /WX /permissive- /DUNICODE /D_UNICODE /Fo"%HERE%
 rem C2.1.0: the "Help" group on the shared tab of the user layout
 cl /nologo /EHsc /std:c++17 /W4 /WX /permissive- /DUNICODE /D_UNICODE /Fo"%HERE%out\\" /Fe"%HERE%out\layout_help_test.exe" "%HERE%layout_help_test.cpp" advapi32.lib || exit /b 1
 "%HERE%out\layout_help_test.exe" || exit /b 1
+rem C2.3.1: groups of "ribbonTab": "accessibility" add-ons in Power PDF's Accessibility tab
+cl /nologo /EHsc /std:c++17 /W4 /WX /permissive- /DUNICODE /D_UNICODE /Fo"%HERE%out\\" /Fe"%HERE%out\layout_access_test.exe" "%HERE%layout_access_test.cpp" advapi32.lib || exit /b 1
+"%HERE%out\layout_access_test.exe" || exit /b 1
 rem C2.1.0: the help page with a mock host in Edge headless (needs ui\help.html from build.cmd)
 if exist "%HERE%..\ui\help.html" ( python -I "%HERE%help_page_test.py" || exit /b 1 )
 rem optional code signing step (signing\sign.py): configuration checks and command lines, signs nothing

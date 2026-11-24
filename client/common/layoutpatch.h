@@ -595,7 +595,8 @@ inline int ResetSharedTabOnFreshInstall(const wchar_t* regKey)
 // hidden. So the store adds each installed add-on's group itself.
 // The group is rebuilt from checked atom names, never copied as text, so a
 // layout file cannot place anything else into the user's ribbon.
-struct AddonGroup { std::wstring name; std::vector<std::wstring> buttons; std::vector<std::wstring> modes; std::wstring addon; };
+// accessTab (C2.3.1): the add-on's manifest says "ribbonTab": "accessibility" (see EnsureAccessGroup).
+struct AddonGroup { std::wstring name; std::vector<std::wstring> buttons; std::vector<std::wstring> modes; std::wstring addon; bool accessTab = false; };
 
 // C2.1.0: the store's own group on the shared tab, "Help" for every installed add-on (central help).
 // It goes through the same path as an add-on's group (so a user who removed it keeps it removed) and
@@ -677,9 +678,34 @@ inline void AddonGroupsFrom(const std::wstring& text, std::vector<AddonGroup>& o
     }
 }
 
+// C2.3.1: value of a plain "key": "value" in an add-on's installed manifest.json (the store writes it from a
+// package the server checked); empty when absent, not a plain short string, or escaped. A key that only appears
+// inside another string value is escaped there (\"key\") and never matches.
+inline std::wstring ManifestString(const std::wstring& json, const wchar_t* key)
+{
+    const std::wstring needle = std::wstring(L"\"") + key + L"\"";
+    for (size_t k = json.find(needle); k != std::wstring::npos; k = json.find(needle, k + 1))
+    {
+        if (k > 0 && json[k - 1] == L'\\') continue;
+        size_t p = k + needle.size();
+        while (p < json.size() && iswspace(json[p])) ++p;
+        if (p >= json.size() || json[p] != L':') continue;     // the text "key" as a value, not a key
+        ++p;
+        while (p < json.size() && iswspace(json[p])) ++p;
+        if (p >= json.size() || json[p] != L'"') return std::wstring();
+        size_t e = json.find(L'"', p + 1);
+        if (e == std::wstring::npos || e - p - 1 > 64) return std::wstring();
+        std::wstring v = json.substr(p + 1, e - p - 1);
+        return v.find(L'\\') == std::wstring::npos ? v : std::wstring();
+    }
+    return std::wstring();
+}
+
 // Every add-on in Plug-Ins that the store installed: <Name>.zxt next to a folder
 // <Name> with manifest.json and UILayout\Publish Mode.xml.
-inline std::vector<AddonGroup> InstalledAddonGroups(const std::wstring& pluginsDir)
+// suspended (C2.3.1): the group names of add-ons the store switched off (<Name>.zxt.suspended, C2.3.0); they are
+// not added, but they still count as installed (their group is not removed from the Accessibility tab).
+inline std::vector<AddonGroup> InstalledAddonGroups(const std::wstring& pluginsDir, std::vector<std::wstring>* suspended = nullptr)
 {
     std::vector<AddonGroup> out;
     if (pluginsDir.empty()) return out;
@@ -691,23 +717,173 @@ inline std::vector<AddonGroup> InstalledAddonGroups(const std::wstring& pluginsD
         std::wstring name = fd.cFileName;
         if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) || name.empty() || name[0] == L'.') continue;
         std::wstring dir = pluginsDir + L"\\" + name;
-        if (GetFileAttributesW((pluginsDir + L"\\" + name + L".zxt").c_str()) == INVALID_FILE_ATTRIBUTES ||
-            GetFileAttributesW((dir + L"\\manifest.json").c_str()) == INVALID_FILE_ATTRIBUTES) continue;
+        if (GetFileAttributesW((dir + L"\\manifest.json").c_str()) == INVALID_FILE_ATTRIBUTES) continue;
+        const bool on = GetFileAttributesW((pluginsDir + L"\\" + name + L".zxt").c_str()) != INVALID_FILE_ATTRIBUTES;
+        const bool off = !on && GetFileAttributesW((pluginsDir + L"\\" + name + L".zxt.suspended").c_str()) != INVALID_FILE_ATTRIBUTES;
+        if (!on && !(off && suspended)) continue;
         std::wstring text; bool utf16 = false;
-        size_t before = out.size();
-        if (ReadTextFile(dir + L"\\UILayout\\Publish Mode.xml", text, utf16)) AddonGroupsFrom(text, out);
-        for (size_t i = before; i < out.size(); ++i) out[i].addon = name;
+        std::vector<AddonGroup> mine;
+        if (ReadTextFile(dir + L"\\UILayout\\Publish Mode.xml", text, utf16)) AddonGroupsFrom(text, mine);
+        std::wstring manifest; bool mUtf16 = false;
+        const bool access = !mine.empty() && ReadTextFile(dir + L"\\manifest.json", manifest, mUtf16) &&
+                            ManifestString(manifest, L"ribbonTab") == L"accessibility";
+        for (auto& g : mine)
+        {
+            if (off) { if (suspended->size() < 200) suspended->push_back(g.name); continue; }
+            g.addon = name;
+            g.accessTab = access;
+            if (out.size() < 200) out.push_back(g);
+        }
     } while (FindNextFileW(h, &fd));
     FindClose(h);
     return out;
 }
 
+// Inserts the buttons of g missing from the group copy that starts at grp. Returns true when text changed.
+inline bool EnsureGroupButtons(std::wstring& text, const AddonGroup& g, size_t grp)
+{
+    size_t open = text.find(L'>', grp);
+    if (open == std::wstring::npos || text[open - 1] == L'/') return false;   // a self-closing group is left alone
+    size_t grpEnd = text.find(L"</PFFGroup>", open);
+    if (grpEnd == std::wstring::npos) return false;
+    bool changed = false;
+    for (size_t i = 0; i < g.buttons.size(); ++i)
+    {
+        std::wstring needle = L"<PFFButton name=\"" + g.buttons[i] + L"\"";
+        size_t f = text.find(needle, open);
+        if (f != std::wstring::npos && f < grpEnd) continue;
+        std::wstring ins = needle + L" IconMode=\"" + g.modes[i] + L"\"/>\n";
+        text.insert(grpEnd, ins);
+        grpEnd += ins.size();
+        changed = true;
+    }
+    return changed;
+}
+
+inline std::wstring GroupBlock(const AddonGroup& g)
+{
+    std::wstring block = L"<PFFGroup name=\"" + g.name + L"\" GroupType=\"PFFTitleBlock\">\n";
+    for (size_t i = 0; i < g.buttons.size(); ++i)
+        block += L"<PFFButton name=\"" + g.buttons[i] + L"\" IconMode=\"" + g.modes[i] + L"\"/>\n";
+    return block + L"</PFFGroup>\n";
+}
+
+// --- C2.3.1: a group in Power PDF's own "Accessibility" tab -----------------------------------------------------
+// Manifest "ribbonTab": "accessibility" (server S2.8.3, only add-ons the store admins approved; today Smart
+// Accessibility). The add-on keeps its group on the shared tab in its own Publish Mode.xml (an older store client
+// shows it there), and the store puts it into the built-in tab right after Power PDF's "Fonts" group. Live test
+// Nov 24, 2026 (Power PDF 2025.3): the unchanged FeaturePack:: atoms render there with titles and icons. Like the
+// shared tab, the host never merges a plug-in's layout into a tab the profile already knows, so the store does it.
+static const wchar_t kAccessToolbar[] = L"tool::accessibility";
+static const wchar_t kAccessAnchor[] = L"group::accessibility::fonts";
+
+// The content of <toolbar name="<name>" ...> ... </toolbar>: open = just after the start tag, end = at </toolbar>.
+// False when the tab is missing, self-closing or malformed (another <toolbar before its end).
+inline bool ToolbarSpan(const std::wstring& text, const wchar_t* name, size_t& open, size_t& end)
+{
+    size_t tb = text.find(std::wstring(L"<toolbar name=\"") + name + L"\"");
+    if (tb == std::wstring::npos) return false;
+    size_t gt = text.find(L'>', tb);
+    if (gt == std::wstring::npos || text[gt - 1] == L'/') return false;
+    end = text.find(L"</toolbar>", gt);
+    if (end == std::wstring::npos) return false;
+    size_t next = text.find(L"<toolbar ", gt);
+    if (next != std::wstring::npos && next < end) return false;
+    open = gt + 1;
+    return true;
+}
+
+// The first <PFFGroup name="<name>" in [from, to): g = its start, gEnd = just after </PFFGroup> (or "/>").
+inline bool GroupIn(const std::wstring& text, const std::wstring& name, size_t from, size_t to, size_t& g, size_t& gEnd)
+{
+    g = text.find(L"<PFFGroup name=\"" + name + L"\"", from);
+    if (g == std::wstring::npos || g >= to) return false;
+    size_t gt = text.find(L'>', g);
+    if (gt == std::wstring::npos || gt >= to) return false;
+    if (text[gt - 1] == L'/') { gEnd = gt + 1; return true; }
+    size_t c = text.find(L"</PFFGroup>", gt);
+    if (c == std::wstring::npos || c >= to) return false;
+    gEnd = c + wcslen(L"</PFFGroup>");
+    return true;
+}
+
+// Removes every copy of the group from the content of one tab. A group on lines of its own goes with its
+// indentation and line break, so a group the store inserted comes out byte for byte as it went in.
+inline bool RemoveGroupFromToolbar(std::wstring& text, const wchar_t* toolbar, const std::wstring& name)
+{
+    bool changed = false;
+    for (int guard = 0; guard < 50; ++guard)
+    {
+        size_t open, end, g, gEnd;
+        if (!ToolbarSpan(text, toolbar, open, end) || !GroupIn(text, name, open, end, g, gEnd)) break;
+        size_t start = g;
+        while (start > open && (text[start - 1] == L' ' || text[start - 1] == L'\t')) --start;
+        if (start == open || text[start - 1] == L'\n')
+        {
+            if (gEnd < end && text[gEnd] == L'\r') ++gEnd;
+            if (gEnd < end && text[gEnd] == L'\n') ++gEnd;
+        }
+        else start = g;
+        text.erase(start, gEnd - start);
+        changed = true;
+    }
+    return changed;
+}
+
+// The group of an add-on with "ribbonTab": "accessibility": out of the shared tab (an update from a version on the
+// shared tab, or the host merged the add-on's own layout into a fresh profile), into tool::accessibility after the
+// "Fonts" group (at the end of the tab when that group is missing). A copy the user placed on another tab stays
+// there. handled = false when the profile has no Accessibility tab: the caller then treats it like a shared group.
+inline bool EnsureAccessGroup(std::wstring& text, const AddonGroup& g, bool& handled)
+{
+    size_t open, end;
+    handled = ToolbarSpan(text, kAccessToolbar, open, end);
+    if (!handled) return false;
+    bool changed = RemoveGroupFromToolbar(text, L"FeaturePack", g.name);
+    if (!ToolbarSpan(text, kAccessToolbar, open, end)) return changed;
+    size_t gs, ge;
+    if (GroupIn(text, g.name, open, end, gs, ge)) return EnsureGroupButtons(text, g, gs) || changed;
+    size_t elsewhere = text.find(L"<PFFGroup name=\"" + g.name + L"\"");
+    if (elsewhere != std::wstring::npos) return EnsureGroupButtons(text, g, elsewhere) || changed;
+    size_t at = end;
+    if (GroupIn(text, kAccessAnchor, open, end, gs, ge))
+    {
+        at = ge;
+        if (at < end && text[at] == L'\r') ++at;
+        if (at < end && text[at] == L'\n') ++at;
+        else if (at == ge) { text.insert(at, L"\n"); ++at; }
+    }
+    text.insert(at, GroupBlock(g));
+    return true;
+}
+
+// Uninstall: removes from tool::accessibility the store groups whose add-on is gone (names the caller lists: store
+// add-on groups this profile has seen, minus the installed and switched-off ones). Power PDF's own groups
+// (group::accessibility::...) and every other name stay. Returns true when text changed.
+inline bool RemoveGoneFromAccessTab(std::wstring& text, const std::vector<std::wstring>& gone)
+{
+    if (LayoutName(text) != L"Publish") return false;
+    bool changed = false;
+    for (const auto& n : gone)
+        if (IsAtomName(n) && RemoveGroupFromToolbar(text, kAccessToolbar, n)) changed = true;
+    return changed;
+}
+
 // Adds the groups (and buttons missing from a group) to the shared tab of the
-// viewer layout. Returns true when text changed.
+// viewer layout; groups of "ribbonTab": "accessibility" add-ons go to Power PDF's
+// Accessibility tab (C2.3.1). Returns true when text changed.
 inline bool EnsureAddonGroups(std::wstring& text, const std::vector<AddonGroup>& groups)
 {
     if (groups.empty() || LayoutName(text) != L"Publish") return false;
     bool changed = false;
+    std::vector<const AddonGroup*> shared;
+    for (const auto& g : groups)
+    {
+        bool handled = false;
+        if (g.accessTab && EnsureAccessGroup(text, g, handled)) changed = true;
+        if (!handled) shared.push_back(&g);
+    }
+    if (shared.empty()) return changed;
     if (text.find(L"<toolbar name=\"FeaturePack\"") == std::wstring::npos)
     {
         size_t at = text.find(std::wstring(L"<toolbar name=\"") + kStoreToolbar + L"\"");
@@ -730,36 +906,19 @@ inline bool EnsureAddonGroups(std::wstring& text, const std::vector<AddonGroup>&
         text.replace(slash, gt + 1 - slash, L">\n</toolbar>");
         changed = true;
     }
-    for (const auto& g : groups)
+    for (const AddonGroup* pg : shared)
     {
+        const AddonGroup& g = *pg;
         size_t tbEnd = text.find(L"</toolbar>", tb);
         if (tbEnd == std::wstring::npos) break;
-        std::wstring grpTag = std::wstring(L"<PFFGroup name=\"") + g.name + L"\"";
-        size_t grp = text.find(grpTag);
+        size_t grp = text.find(std::wstring(L"<PFFGroup name=\"") + g.name + L"\"");
         if (grp == std::wstring::npos)
         {
-            std::wstring block = grpTag + L" GroupType=\"PFFTitleBlock\">\n";
-            for (size_t i = 0; i < g.buttons.size(); ++i)
-                block += L"<PFFButton name=\"" + g.buttons[i] + L"\" IconMode=\"" + g.modes[i] + L"\"/>\n";
-            block += L"</PFFGroup>\n";
-            text.insert(tbEnd, block);
+            text.insert(tbEnd, GroupBlock(g));
             changed = true;
             continue;
         }
-        size_t open = text.find(L'>', grp);
-        if (open == std::wstring::npos || text[open - 1] == L'/') continue;   // a self-closing group is left alone
-        size_t grpEnd = text.find(L"</PFFGroup>", open);
-        if (grpEnd == std::wstring::npos) continue;
-        for (size_t i = 0; i < g.buttons.size(); ++i)
-        {
-            std::wstring needle = L"<PFFButton name=\"" + g.buttons[i] + L"\"";
-            size_t f = text.find(needle, open);
-            if (f != std::wstring::npos && f < grpEnd) continue;
-            std::wstring ins = needle + L" IconMode=\"" + g.modes[i] + L"\"/>\n";
-            text.insert(grpEnd, ins);
-            grpEnd += ins.size();
-            changed = true;
-        }
+        if (EnsureGroupButtons(text, g, grp)) changed = true;
     }
     return changed;
 }
@@ -787,10 +946,29 @@ inline int ApplyButtons(const std::wstring& pluginsDir = std::wstring(), const w
     int written = 0;
     std::vector<std::wstring> files;
     CollectLayoutFiles(UserLayoutDir(), files);
-    std::vector<AddonGroup> addons = InstalledAddonGroups(pluginsDir);
+    std::vector<std::wstring> suspended;
+    std::vector<AddonGroup> addons = InstalledAddonGroups(pluginsDir, &suspended);
     addons.push_back(HelpCenterGroup());   // C2.1.0
     std::wstring known = KnownGroups(regKey);
     const std::wstring knownBefore = known;
+    // C2.3.1: store groups this profile has seen whose add-on is gone (uninstalled); only their copies in
+    // Power PDF's Accessibility tab are removed (the shared tab keeps today's behaviour)
+    std::vector<std::wstring> gone;
+    const DWORD pluginsAttr = pluginsDir.empty() ? INVALID_FILE_ATTRIBUTES : GetFileAttributesW(pluginsDir.c_str());
+    if (pluginsAttr != INVALID_FILE_ATTRIBUTES && (pluginsAttr & FILE_ATTRIBUTE_DIRECTORY))   // never on a folder we cannot see
+    {
+        std::wstring installed = L";";
+        for (const auto& g : addons) installed += g.name + L";";
+        for (const auto& n : suspended) installed += n + L";";
+        for (size_t p = 1; p < known.size(); )
+        {
+            size_t e = known.find(L';', p);
+            if (e == std::wstring::npos) break;
+            std::wstring n = known.substr(p, e - p);
+            if (!n.empty() && installed.find(L";" + n + L";") == std::wstring::npos && gone.size() < 200) gone.push_back(n);
+            p = e + 1;
+        }
+    }
     {
         std::wstring all;
         for (size_t i = 0; i < files.size(); ++i) { std::wstring t; bool u = false; if (ReadTextFile(files[i], t, u)) all += t; }
@@ -825,6 +1003,7 @@ inline int ApplyButtons(const std::wstring& pluginsDir = std::wstring(), const w
         if (PatchButtons(text)) changed = true;
         if (EnsureHelpGroup(text)) changed = true;   // C1.7.0
         if (CleanLeftPanel(text)) changed = true;   // never touch the native <Left> bar; strip old entries
+        if (RemoveGoneFromAccessTab(text, gone)) changed = true;   // C2.3.1: uninstalled, out of the Accessibility tab
         if (EnsureAddonGroups(text, addons)) changed = true;   // C1.9.4: groups the host never merged
         if (MoveGroupToEnd(text, kHelpCenterDef)) changed = true;   // C2.1.0: "Help" last on the shared tab
         if (!changed) continue;

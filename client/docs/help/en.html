@@ -238,7 +238,7 @@ a { color: var(--head); }
   <tr><td>Notify me once about each new update</td><td>The one-time notice from chapter <a href="#updates">Updates</a> (default: on).</td></tr>
   <tr><td>Verbose logging</td><td>Writes more details to <code>%TEMP%\PluginStore.log</code>, for troubleshooting.</td></tr>
 </table>
-<p>At the bottom is the version of the client, for example "Add-on Store client version 2.3.0".</p>
+<p>At the bottom is the version of the client, for example "Add-on Store client version 2.3.1".</p>
 
 <h1 id="links-from-the-website-manual-installation">Links from the website, manual installation</h1>
 <h2 id="links-from-the-website-manual-installation-install-in-power-pdf">"Install in Power PDF"</h2>
@@ -302,7 +302,7 @@ a { color: var(--head); }
 <h2 id="for-administrators-privacy">Privacy</h2>
 <p>The client sends no documents and no names of users or computers. Every request carries technical data to the store server:</p>
 <ul>
-  <li>the program identifier with the versions of client, Power PDF and Windows and the processor architecture, for example <code>AddonStore-PowerPDF/2.3.0 (PowerPDF …; Windows …; x64)</code>;</li>
+  <li>the program identifier with the versions of client, Power PDF and Windows and the processor architecture, for example <code>AddonStore-PowerPDF/2.3.1 (PowerPDF …; Windows …; x64)</code>;</li>
   <li>the license mode of Power PDF (<code>cloud</code>, <code>serial</code> or <code>unknown</code>), so the store can check whether it may be used;</li>
   <li>only with a customer code: the codes and a random installation id of this user; the server stores only a check value of it per delivery.</li>
 </ul>
@@ -441,6 +441,7 @@ a { color: var(--head); }
 <h1 id="version-history">Version history</h1>
 <table>
   <tr><th>Version</th><th>What's new</th></tr>
+  <tr><td>2.3.1</td><td>Add-ons for accessibility checks, such as Smart Accessibility, can now place their buttons in Power PDF's own Accessibility tab, next to the built-in checks. When you remove such an add-on, its buttons leave that tab again.</td></tr>
   <tr><td>2.3.0</td><td>Out of service: when the store operators take an add-on out of service for now, the Add-on Store switches it off after you confirm, without removing it, and on again once it is available. Your settings stay.</td></tr>
   <tr><td>2.2.2</td><td>The chapters no longer show numbers, and references to other chapters are links that take you straight there.</td></tr>
   <tr><td>2.1.1</td><td>The help is more reliable: large pictures, search with Enter, English help in an Arabic Power PDF and notices while windows are open.</td></tr>
@@ -469,6 +470,6 @@ a { color: var(--head); }
   <tr><td>0.5.0</td><td>Ratings, problem reports, screenshots.</td></tr>
   <tr><td>0.4.0</td><td>Modern store window.</td></tr>
 </table>
-<p>Add-on Store 2.3.0 · Tungsten Automation · This manual describes the client for Tungsten Power PDF.</p>
+<p>Add-on Store 2.3.1 · Tungsten Automation · This manual describes the client for Tungsten Power PDF.</p>
 </body>
 </html>
