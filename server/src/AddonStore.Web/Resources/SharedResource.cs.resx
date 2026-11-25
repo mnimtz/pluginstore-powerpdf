@@ -1974,4 +1974,15 @@
   <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>Změna záznamu: "Změnit" vyplní formulář výše jeho úrovní, důvodem a datem kontroly.</value></data>
   <data name="This add-on is already out of service. Use &quot;Change&quot; in the list to see and change its entry." xml:space="preserve"><value>Tento doplněk je již mimo provoz. Pomocí "Změnit" v seznamu záznam zobrazíte a změníte.</value></data>
   <data name="The database is busy. Try again in a moment." xml:space="preserve"><value>Databáze je zaneprázdněná. Zkuste to za chvíli znovu.</value></data>
+  <data name="A code of your own never unlocks private add-ons. For the private add-ons of this customer create a generated code." xml:space="preserve"><value>Vlastní kód nikdy neodemkne soukromé doplňky. Pro soukromé doplňky tohoto zákazníka vytvořte vygenerovaný kód.</value></data>
+  <data name="Code of your own (optional), e.g. FINANCE" xml:space="preserve"><value>Vlastní kód (volitelné), např. FINANCE</value></data>
+  <data name="code of your own" xml:space="preserve"><value>vlastní kód</value></data>
+  <data name="Code of your own: a readable word such as FINANCE for a campaign or a theme, 5 to 32 letters and digits. Everybody who enters it in the store window sees the deliveries of this customer, so it is only possible while the customer receives public add-ons only; it never unlocks private ones. Tip: limit the catalog to the deliveries." xml:space="preserve"><value>Vlastní kód: čitelné slovo, například FINANCE, pro kampaň nebo téma, 5 až 32 písmen a číslic. Každý, kdo ho zadá v okně obchodu, uvidí dodávky tohoto zákazníka, proto je možný jen tehdy, když zákazník dostává výhradně veřejné doplňky; soukromé nikdy neodemkne. Tip: Omezte katalog na dodávky.</value></data>
+  <data name="A code of your own uses letters A to Z, digits and hyphens." xml:space="preserve"><value>Vlastní kód obsahuje písmena A až Z, číslice a spojovníky.</value></data>
+  <data name="A code of your own has 5 to 32 letters and digits." xml:space="preserve"><value>Vlastní kód má 5 až 32 písmen a číslic.</value></data>
+  <data name="A code of your own contains at least one letter." xml:space="preserve"><value>Vlastní kód obsahuje alespoň jedno písmeno.</value></data>
+  <data name="This customer receives private add-ons. A code of your own can be guessed, so it is only possible for customers with public add-ons only." xml:space="preserve"><value>Tento zákazník dostává soukromé doplňky. Vlastní kód lze uhodnout, proto je možný jen pro zákazníky s výhradně veřejnými doplňky.</value></data>
+  <data name="This customer already has this code." xml:space="preserve"><value>Tento zákazník už tento kód má.</value></data>
+  <data name="This code is already in use. Choose another one." xml:space="preserve"><value>Tento kód se už používá. Zvolte jiný.</value></data>
+  <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>Vlastní kód volí jen administrátoři, a to jen pro celého zákazníka.</value></data>
 </root>

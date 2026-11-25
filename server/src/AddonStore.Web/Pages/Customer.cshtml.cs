@@ -15,6 +15,9 @@ public class CustomerModel : PageModel
     private readonly CustomerService _customers;
 
     public record CodeRow(CustomerCode Code, string? Plain, bool Valid, string Scope);
+    /// <summary>S2.8.5: a valid code of the admin's own choice while private add-ons are delivered (those it does not unlock).</summary>
+    public bool ManualWithPrivate { get; private set; }
+    public bool IsAdmin => User.IsInRole("Admin");
     public record DeliveryRow(Delivery Delivery, string Name, string Visibility, List<string> Versions,
                               string? BetaResolved, string? LiveResolved, bool Effective, List<DeliverySeat> Seats, int SeatCount);
     /// <summary>Installations listed per delivery on the page (the newest); the API pages through all (S1.4.3).</summary>
@@ -101,6 +104,8 @@ public class CustomerModel : PageModel
             var scope = c.DeliveryId is null ? "" : Deliveries.FirstOrDefault(d => d.Delivery.Id == c.DeliveryId)?.Name ?? $"#{c.DeliveryId}";
             return new CodeRow(c, CanManage && valid ? _customers.Reveal(c) : null, valid, scope);
         }).ToList();
+        var privateIds = (await _db.Packages.AsNoTracking().Where(p => p.Visibility == "private").Select(p => p.Id).ToListAsync()).ToHashSet();
+        ManualWithPrivate = Codes.Any(r => r.Valid && r.Code.Manual) && deliveries.Any(d => d.Status != "ended" && privateIds.Contains(d.PackageId));
 
         // add-ons to deliver (S1.12.0: public ones too, e.g. for a customer whose catalog is limited to its deliveries;
         // S1.11.0: one waiting for its first approval too, the delivery then follows "newest")
@@ -141,11 +146,18 @@ public class CustomerModel : PageModel
         return RedirectToPage("/Customers", new { deleted = true });
     }
 
-    public Task<IActionResult> OnPostCodeAsync(int id, int? deliveryId, int transitionDays) =>
+    public Task<IActionResult> OnPostCodeAsync(int id, int? deliveryId, int transitionDays, string? ownCode) =>
         ActAsync(id, async me =>
         {
             if (deliveryId is int did && !await _db.Deliveries.AnyAsync(d => d.Id == did && d.CustomerId == id))
                 return (false, "This action is not allowed for this version.");
+            // S2.8.5: admins may choose the customer code themselves (e.g. FINANCE for a campaign)
+            if (!string.IsNullOrWhiteSpace(ownCode))
+            {
+                if (!User.IsInRole("Admin") || deliveryId is not null) return (false, "Only admins choose a code of their own, and only for the whole customer.");
+                var r = await _customers.CreateManualCodeAsync(id, ownCode, me.DisplayName, transitionDays);
+                return (r.Ok, r.Ok ? "New code created." : r.Message);
+            }
             await _customers.CreateCodeAsync(id, deliveryId, me.DisplayName, transitionDays);
             return (true, "New code created.");
         });

@@ -1974,4 +1974,15 @@
   <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>更改条目："更改"会用其级别、原因和复查日期填写上方表单。</value></data>
   <data name="This add-on is already out of service. Use &quot;Change&quot; in the list to see and change its entry." xml:space="preserve"><value>此加载项已停止服务。请使用列表中的"更改"查看并更改其条目。</value></data>
   <data name="The database is busy. Try again in a moment." xml:space="preserve"><value>数据库正忙。请稍后重试。</value></data>
+  <data name="A code of your own never unlocks private add-ons. For the private add-ons of this customer create a generated code." xml:space="preserve"><value>自定义代码永远不会解锁私有加载项。请为此客户的私有加载项创建系统生成的代码。</value></data>
+  <data name="Code of your own (optional), e.g. FINANCE" xml:space="preserve"><value>自定义代码（可选），例如 FINANCE</value></data>
+  <data name="code of your own" xml:space="preserve"><value>自定义代码</value></data>
+  <data name="Code of your own: a readable word such as FINANCE for a campaign or a theme, 5 to 32 letters and digits. Everybody who enters it in the store window sees the deliveries of this customer, so it is only possible while the customer receives public add-ons only; it never unlocks private ones. Tip: limit the catalog to the deliveries." xml:space="preserve"><value>自定义代码：用于营销活动或主题的易读单词，例如 FINANCE，由 5 到 32 个字母和数字组成。任何人在商店窗口中输入该代码后都能看到此客户的交付，因此仅当客户只接收公开加载项时才可使用；它永远不会解锁私有加载项。提示：将目录限制为交付内容。</value></data>
+  <data name="A code of your own uses letters A to Z, digits and hyphens." xml:space="preserve"><value>自定义代码使用字母 A 到 Z、数字和连字符。</value></data>
+  <data name="A code of your own has 5 to 32 letters and digits." xml:space="preserve"><value>自定义代码包含 5 到 32 个字母和数字。</value></data>
+  <data name="A code of your own contains at least one letter." xml:space="preserve"><value>自定义代码至少包含一个字母。</value></data>
+  <data name="This customer receives private add-ons. A code of your own can be guessed, so it is only possible for customers with public add-ons only." xml:space="preserve"><value>此客户接收私有加载项。自定义代码可能被猜到，因此仅适用于只接收公开加载项的客户。</value></data>
+  <data name="This customer already has this code." xml:space="preserve"><value>此客户已有此代码。</value></data>
+  <data name="This code is already in use. Choose another one." xml:space="preserve"><value>此代码已被使用。请另选一个。</value></data>
+  <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>只有管理员可以选择自定义代码，且仅限整个客户。</value></data>
 </root>

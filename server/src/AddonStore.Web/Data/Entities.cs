@@ -391,6 +391,8 @@ public class CustomerCode
     public DateTime? ExpiresAt { get; set; }               // set when replaced: old code keeps working until then
     public DateTime? RevokedAt { get; set; }
     public DateTime? LastUsedAt { get; set; }
+    /// <summary>S2.8.5: chosen by an admin (a readable word such as FINANCE, e.g. for a marketing campaign), not random.</summary>
+    public bool Manual { get; set; }
 }
 
 /// <summary>An add-on delivered to a customer, with a beta and a live stage.</summary>

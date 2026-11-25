@@ -1974,4 +1974,15 @@
   <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>Ändra en post: "Ändra" fyller i formuläret ovan med nivå, orsak och granskningsdatum.</value></data>
   <data name="This add-on is already out of service. Use &quot;Change&quot; in the list to see and change its entry." xml:space="preserve"><value>Detta tillägg är redan ur drift. Använd "Ändra" i listan för att se och ändra posten.</value></data>
   <data name="The database is busy. Try again in a moment." xml:space="preserve"><value>Databasen är upptagen. Försök igen om en stund.</value></data>
+  <data name="A code of your own never unlocks private add-ons. For the private add-ons of this customer create a generated code." xml:space="preserve"><value>En egen kod låser aldrig upp privata tillägg. Skapa en genererad kod för den här kundens privata tillägg.</value></data>
+  <data name="Code of your own (optional), e.g. FINANCE" xml:space="preserve"><value>Egen kod (valfritt), t.ex. FINANCE</value></data>
+  <data name="code of your own" xml:space="preserve"><value>egen kod</value></data>
+  <data name="Code of your own: a readable word such as FINANCE for a campaign or a theme, 5 to 32 letters and digits. Everybody who enters it in the store window sees the deliveries of this customer, so it is only possible while the customer receives public add-ons only; it never unlocks private ones. Tip: limit the catalog to the deliveries." xml:space="preserve"><value>Egen kod: ett läsbart ord som FINANCE för en kampanj eller ett tema, 5 till 32 bokstäver och siffror. Alla som anger den i butiksfönstret ser den här kundens leveranser, så den är bara möjlig så länge kunden endast får offentliga tillägg; den låser aldrig upp privata. Tips: Begränsa katalogen till leveranserna.</value></data>
+  <data name="A code of your own uses letters A to Z, digits and hyphens." xml:space="preserve"><value>En egen kod använder bokstäverna A till Z, siffror och bindestreck.</value></data>
+  <data name="A code of your own has 5 to 32 letters and digits." xml:space="preserve"><value>En egen kod har 5 till 32 bokstäver och siffror.</value></data>
+  <data name="A code of your own contains at least one letter." xml:space="preserve"><value>En egen kod innehåller minst en bokstav.</value></data>
+  <data name="This customer receives private add-ons. A code of your own can be guessed, so it is only possible for customers with public add-ons only." xml:space="preserve"><value>Den här kunden får privata tillägg. En egen kod kan gissas, så den är bara möjlig för kunder med endast offentliga tillägg.</value></data>
+  <data name="This customer already has this code." xml:space="preserve"><value>Den här kunden har redan den här koden.</value></data>
+  <data name="This code is already in use. Choose another one." xml:space="preserve"><value>Den här koden används redan. Välj en annan.</value></data>
+  <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>Endast administratörer väljer en egen kod, och endast för hela kunden.</value></data>
 </root>

@@ -1974,4 +1974,15 @@
   <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>エントリの変更: [変更] で、上のフォームにそのレベル、理由、確認日が入力されます。</value></data>
   <data name="This add-on is already out of service. Use &quot;Change&quot; in the list to see and change its entry." xml:space="preserve"><value>このアドインはすでに提供停止中です。一覧の [変更] でエントリを確認して変更してください。</value></data>
   <data name="The database is busy. Try again in a moment." xml:space="preserve"><value>データベースがビジー状態です。しばらくしてからもう一度お試しください。</value></data>
+  <data name="A code of your own never unlocks private add-ons. For the private add-ons of this customer create a generated code." xml:space="preserve"><value>独自コードで非公開アドインが利用可能になることはありません。この顧客の非公開アドインには、生成されたコードを作成してください。</value></data>
+  <data name="Code of your own (optional), e.g. FINANCE" xml:space="preserve"><value>独自コード (省略可)、例: FINANCE</value></data>
+  <data name="code of your own" xml:space="preserve"><value>独自コード</value></data>
+  <data name="Code of your own: a readable word such as FINANCE for a campaign or a theme, 5 to 32 letters and digits. Everybody who enters it in the store window sees the deliveries of this customer, so it is only possible while the customer receives public add-ons only; it never unlocks private ones. Tip: limit the catalog to the deliveries." xml:space="preserve"><value>独自コード: キャンペーンやテーマ用の FINANCE のような読みやすい単語で、5 ～ 32 文字の英数字です。ストア ウィンドウでこのコードを入力したユーザーは誰でもこの顧客の配信を表示できるため、顧客が公開アドインのみを受け取っている間だけ使用できます。非公開アドインが利用可能になることはありません。ヒント: カタログを配信に限定してください。</value></data>
+  <data name="A code of your own uses letters A to Z, digits and hyphens." xml:space="preserve"><value>独自コードには A ～ Z の文字、数字、ハイフンを使用します。</value></data>
+  <data name="A code of your own has 5 to 32 letters and digits." xml:space="preserve"><value>独自コードは 5 ～ 32 文字の英数字です。</value></data>
+  <data name="A code of your own contains at least one letter." xml:space="preserve"><value>独自コードには少なくとも 1 文字の英字が含まれます。</value></data>
+  <data name="This customer receives private add-ons. A code of your own can be guessed, so it is only possible for customers with public add-ons only." xml:space="preserve"><value>この顧客は非公開アドインを受け取っています。独自コードは推測される可能性があるため、公開アドインのみを受け取る顧客にのみ使用できます。</value></data>
+  <data name="This customer already has this code." xml:space="preserve"><value>この顧客にはすでにこのコードがあります。</value></data>
+  <data name="This code is already in use. Choose another one." xml:space="preserve"><value>このコードはすでに使用されています。別のコードを選択してください。</value></data>
+  <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>独自コードを選択できるのは管理者のみで、顧客全体に対してのみ設定できます。</value></data>
 </root>

@@ -1974,4 +1974,15 @@
   <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>تغيير إدخال: يملأ "تغيير" النموذج أعلاه بمستواه وسببه وتاريخ المراجعة.</value></data>
   <data name="This add-on is already out of service. Use &quot;Change&quot; in the list to see and change its entry." xml:space="preserve"><value>هذه الوظيفة الإضافية خارج الخدمة بالفعل. استخدم "تغيير" في القائمة لعرض الإدخال وتغييره.</value></data>
   <data name="The database is busy. Try again in a moment." xml:space="preserve"><value>قاعدة البيانات مشغولة. حاول مرة أخرى بعد لحظة.</value></data>
+  <data name="A code of your own never unlocks private add-ons. For the private add-ons of this customer create a generated code." xml:space="preserve"><value>لا يفتح الرمز المخصص الوظائف الإضافية الخاصة أبدًا. أنشئ رمزًا مُولَّدًا للوظائف الإضافية الخاصة بهذا العميل.</value></data>
+  <data name="Code of your own (optional), e.g. FINANCE" xml:space="preserve"><value>رمز مخصص (اختياري)، مثل FINANCE</value></data>
+  <data name="code of your own" xml:space="preserve"><value>رمز مخصص</value></data>
+  <data name="Code of your own: a readable word such as FINANCE for a campaign or a theme, 5 to 32 letters and digits. Everybody who enters it in the store window sees the deliveries of this customer, so it is only possible while the customer receives public add-ons only; it never unlocks private ones. Tip: limit the catalog to the deliveries." xml:space="preserve"><value>رمز مخصص: كلمة مقروءة مثل FINANCE لحملة أو موضوع، من 5 إلى 32 حرفًا ورقمًا. يرى كل من يدخله في نافذة المتجر عمليات التسليم الخاصة بهذا العميل، لذلك لا يمكن استخدامه إلا ما دام العميل يتلقى وظائف إضافية عامة فقط؛ ولا يفتح الوظائف الإضافية الخاصة أبدًا. تلميح: اقصر الكتالوج على عمليات التسليم.</value></data>
+  <data name="A code of your own uses letters A to Z, digits and hyphens." xml:space="preserve"><value>يستخدم الرمز المخصص الأحرف من A إلى Z والأرقام والواصلات.</value></data>
+  <data name="A code of your own has 5 to 32 letters and digits." xml:space="preserve"><value>يتكون الرمز المخصص من 5 إلى 32 حرفًا ورقمًا.</value></data>
+  <data name="A code of your own contains at least one letter." xml:space="preserve"><value>يحتوي الرمز المخصص على حرف واحد على الأقل.</value></data>
+  <data name="This customer receives private add-ons. A code of your own can be guessed, so it is only possible for customers with public add-ons only." xml:space="preserve"><value>يتلقى هذا العميل وظائف إضافية خاصة. يمكن تخمين الرمز المخصص، لذلك لا يمكن استخدامه إلا للعملاء الذين يتلقون وظائف إضافية عامة فقط.</value></data>
+  <data name="This customer already has this code." xml:space="preserve"><value>لدى هذا العميل هذا الرمز بالفعل.</value></data>
+  <data name="This code is already in use. Choose another one." xml:space="preserve"><value>هذا الرمز مستخدم بالفعل. اختر رمزًا آخر.</value></data>
+  <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>يختار المسؤولون فقط رمزًا مخصصًا، وللعميل بأكمله فقط.</value></data>
 </root>

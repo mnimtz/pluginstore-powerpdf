@@ -1974,4 +1974,15 @@
   <data name="Changing an entry: &quot;Change&quot; fills the form above with its level, reason and review date." xml:space="preserve"><value>항목 변경: "변경"을 누르면 위 양식에 해당 수준, 사유 및 검토 날짜가 채워집니다.</value></data>
   <data name="This add-on is already out of service. Use &quot;Change&quot; in the list to see and change its entry." xml:space="preserve"><value>이 추가 기능은 이미 사용 중지되었습니다. 목록의 "변경"을 사용하여 항목을 확인하고 변경하십시오.</value></data>
   <data name="The database is busy. Try again in a moment." xml:space="preserve"><value>데이터베이스가 사용 중입니다. 잠시 후 다시 시도하십시오.</value></data>
+  <data name="A code of your own never unlocks private add-ons. For the private add-ons of this customer create a generated code." xml:space="preserve"><value>사용자 지정 코드로는 비공개 추가 기능을 사용할 수 없습니다. 이 고객의 비공개 추가 기능에는 생성된 코드를 만드세요.</value></data>
+  <data name="Code of your own (optional), e.g. FINANCE" xml:space="preserve"><value>사용자 지정 코드(선택 사항), 예: FINANCE</value></data>
+  <data name="code of your own" xml:space="preserve"><value>사용자 지정 코드</value></data>
+  <data name="Code of your own: a readable word such as FINANCE for a campaign or a theme, 5 to 32 letters and digits. Everybody who enters it in the store window sees the deliveries of this customer, so it is only possible while the customer receives public add-ons only; it never unlocks private ones. Tip: limit the catalog to the deliveries." xml:space="preserve"><value>사용자 지정 코드: 캠페인이나 테마용으로 FINANCE처럼 읽기 쉬운 단어이며, 5~32자의 문자와 숫자로 구성됩니다. 스토어 창에서 이 코드를 입력하는 사람은 누구나 이 고객의 배포를 볼 수 있으므로 고객이 공개 추가 기능만 받는 동안에만 사용할 수 있으며, 비공개 추가 기능은 절대 사용할 수 없습니다. 팁: 카탈로그를 배포로 제한하세요.</value></data>
+  <data name="A code of your own uses letters A to Z, digits and hyphens." xml:space="preserve"><value>사용자 지정 코드에는 A~Z 문자, 숫자, 하이픈을 사용합니다.</value></data>
+  <data name="A code of your own has 5 to 32 letters and digits." xml:space="preserve"><value>사용자 지정 코드는 5~32자의 문자와 숫자로 구성됩니다.</value></data>
+  <data name="A code of your own contains at least one letter." xml:space="preserve"><value>사용자 지정 코드에는 문자가 하나 이상 포함되어야 합니다.</value></data>
+  <data name="This customer receives private add-ons. A code of your own can be guessed, so it is only possible for customers with public add-ons only." xml:space="preserve"><value>이 고객은 비공개 추가 기능을 받습니다. 사용자 지정 코드는 추측될 수 있으므로 공개 추가 기능만 받는 고객에게만 사용할 수 있습니다.</value></data>
+  <data name="This customer already has this code." xml:space="preserve"><value>이 고객에게는 이미 이 코드가 있습니다.</value></data>
+  <data name="This code is already in use. Choose another one." xml:space="preserve"><value>이 코드는 이미 사용 중입니다. 다른 코드를 선택하세요.</value></data>
+  <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>사용자 지정 코드는 관리자만 선택할 수 있으며 고객 전체에 대해서만 지정할 수 있습니다.</value></data>
 </root>

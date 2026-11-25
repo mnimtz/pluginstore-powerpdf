@@ -1468,7 +1468,7 @@ own personal test code shows it.
     GET   {{baseUrl}}/api/customers/{cid}                   customer with codes (shown to creator/admin) and deliveries
     PATCH {{baseUrl}}/api/customers/{cid}                   same fields, "status": "active"|"paused", "restrictCatalog": true|false
     DELETE {{baseUrl}}/api/customers/{cid}                  delete with all codes and deliveries (creator/admin)
-    POST  {{baseUrl}}/api/customers/{cid}/codes             {"deliveryId"?: 12, "transitionDays"?: 14}
+    POST  {{baseUrl}}/api/customers/{cid}/codes             {"deliveryId"?: 12, "transitionDays"?: 14, "code"?: "FINANCE" (admins)}
     DELETE {{baseUrl}}/api/customers/{cid}/codes/{codeId}   revoke a code
     POST  {{baseUrl}}/api/customers/{cid}/deliveries        {"packageId", "beta": {"mode", "version"}, "live": {...}, "startsAt"?, "endsAt"?, "ownCode"?}
     PATCH {{baseUrl}}/api/deliveries/{did}                  stages, "startsAt"/"endsAt" (or "clearDates": true), "status": "active"|"paused"|"ended"
@@ -1479,6 +1479,17 @@ own personal test code shows it.
     DELETE {{baseUrl}}/api/templates/{tid}                  delete; the deliveries made from it end
     POST  {{baseUrl}}/api/customers/{cid}/templates         {"templateId"}: assign a template to the customer
     DELETE {{baseUrl}}/api/customers/{cid}/templates/{tid}  remove it again
+
+**Codes of your own (S2.8.5, admins).** Instead of a generated code an admin
+can choose a readable customer-wide code, for example `FINANCE` for a campaign
+or a theme: send `"code"` (letters, digits and hyphens; 5 to 32 letters and
+digits, at least one letter; case and hyphens do not count, like every code).
+Everybody who enters it in the store window gets the customer's deliveries;
+with `restrictCatalog` they see exactly those add-ons. Because such a word can
+be guessed, it is refused while the customer receives private add-ons
+(`CODE_PRIVATE_DELIVERY`) and it never unlocks a private add-on delivered
+later; generated codes keep doing that. `CODE_TAKEN`: the code is in use;
+`CODE_INVALID`: wrong format or with `deliveryId`.
 
 Delivery templates (S1.13.0) are named sets of add-ons, public and private
 mixed; per add-on `version` empty = the newest approved version, else that
@@ -2183,6 +2194,9 @@ be free of warnings before review. Info is for information only.
 | SERVER_MAINTENANCE | error (503) | The store is in maintenance; changes pause for everybody except admins. Wait for `Retry-After` (or `until`), or poll `GET /api/ping` until `serverMode` is no longer `maintenance`. |
 | VISIBILITY_INVALID | error | `visibility` must be `public` or `private` (manifest or PATCH; the store client is always public). |
 | VISIBILITY_KEPT | info | The manifest asks for another visibility than the package has; visibility only changes in the portal or with PATCH. |
+| CODE_INVALID | 400/409 | A code of your own (admins) needs letters, digits and hyphens, 5 to 32 letters and digits with at least one letter, and is always customer-wide (no `deliveryId`). |
+| CODE_TAKEN | 409 | The code of your own is already in use (by this or another customer). |
+| CODE_PRIVATE_DELIVERY | 409 | The customer receives private add-ons; a readable code of your own could be guessed and is not possible then. |
 | CUSTOMER_INVALID | error (400) | Customer: name 1 to 120 characters, valid email, two-letter language, status active or paused. |
 | CUSTOMER_NOT_FOUND | error (404) | No such customer, or not yours. |
 | DELIVERY_NOT_FOUND | error (404) | No such delivery, or not yours. |

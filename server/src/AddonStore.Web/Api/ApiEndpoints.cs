@@ -1322,9 +1322,20 @@ public static class ApiEndpoints
             if (!CustomerService.CanManage(ctx.User, c, user.Id)) return Fail("NOT_OWNER", "Only the creator of the customer or an admin can create codes.", 403);
             if (body?.DeliveryId is int did && !await db.Deliveries.AnyAsync(d => d.Id == did && d.CustomerId == cid))
                 return NotFound("DELIVERY_NOT_FOUND", $"No delivery {did} for customer {cid}.");
+            // S2.8.5: "code": a code of the admin's own choice (e.g. FINANCE), customer-wide, public add-ons only
+            if (!string.IsNullOrWhiteSpace(body?.Code))
+            {
+                if (!ctx.User.IsInRole("Admin")) return Fail("ADMIN_ONLY", "Only admins choose a code of their own.", 403);
+                if (body.DeliveryId is not null) return Fail("CODE_INVALID", "A code of your own is always for the whole customer; leave out deliveryId.", 400);
+                var m = await cs.CreateManualCodeAsync(cid, body.Code, user.DisplayName, body.TransitionDays ?? 14);
+                if (!m.Ok)
+                    return Fail(m.Message.StartsWith("This code is already") || m.Message.StartsWith("This customer already") ? "CODE_TAKEN"
+                                : m.Message.StartsWith("This customer receives private") ? "CODE_PRIVATE_DELIVERY" : "CODE_INVALID", m.Message, 409);
+                return Results.Json(new { ok = true, data = new { id = m.Entity!.Id, scope = "customer", deliveryId = (int?)null, code = m.Plain, manual = true } }, statusCode: 201);
+            }
             var (code, plain) = await cs.CreateCodeAsync(cid, body?.DeliveryId, user.DisplayName, body?.TransitionDays ?? 14);
             return Results.Json(new { ok = true, data = new { id = code.Id, scope = code.DeliveryId is null ? "customer" : "delivery",
-                deliveryId = code.DeliveryId, code = plain } }, statusCode: 201);
+                deliveryId = code.DeliveryId, code = plain, manual = false } }, statusCode: 201);
         }).RequireAuthorization("ApiOrCookie");
 
         api.MapDelete("/customers/{cid:int}/codes/{codeId:int}", async (int cid, int codeId, HttpContext ctx, AppDbContext db,
@@ -2197,7 +2208,7 @@ public record TemplateItemBody(string? PackageId, string? Version);
 public record TemplateBody(string? Name, string? Description, bool? RestrictCatalog, List<TemplateItemBody>? Items);
 public record AssignBody(int? TemplateId);
 /// <summary>POST /api/customers/{cid}/codes: deliveryId null = code for all deliveries of the customer</summary>
-public record CodeBody(int? DeliveryId, int? TransitionDays);
+public record CodeBody(int? DeliveryId, int? TransitionDays, string? Code = null);
 public record StageBody(string? Mode, string? Version);
 /// <summary>POST /api/customers/{cid}/deliveries and PATCH /api/deliveries/{did}</summary>
 public record DeliveryBody(string? PackageId, StageBody? Beta, StageBody? Live, DateTime? StartsAt, DateTime? EndsAt,

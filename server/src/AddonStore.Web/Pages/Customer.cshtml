@@ -51,6 +51,7 @@
                         else if (!r.Valid) { <span class="badge withdrawn">@L["expired"]</span> }
                         else if (r.Code.ExpiresAt is not null) { <span class="badge pending">@L["valid until {0}", Time.Fmt(r.Code.ExpiresAt)]</span> }
                         else { <span class="badge live">@L["valid"]</span> }
+                        @if (r.Code.Manual) { <br /><span class="muted">@L["code of your own"]</span> }
                     </td>
                     <td>
                         @if (Model.CanManage && r.Valid)
@@ -69,7 +70,15 @@
     }
     @if (Model.CanManage)
     {
+        @if (Model.ManualWithPrivate)
+        {
+            <div class="alert error" style="margin-top:10px">@L["A code of your own never unlocks private add-ons. For the private add-ons of this customer create a generated code."]</div>
+        }
         <form method="post" asp-page-handler="Code" asp-route-id="@c.Id" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px">
+            @if (Model.IsAdmin)
+            {
+                <input type="text" name="ownCode" maxlength="64" placeholder="@L["Code of your own (optional), e.g. FINANCE"]" style="width:auto;min-width:240px" autocomplete="off" />
+            }
             <button type="submit" class="btn small">@L["New customer code"]</button>
             <label style="margin:0;font-weight:400">@L["Previous code stays valid for"]</label>
             <select name="transitionDays" style="width:auto">
@@ -78,6 +87,10 @@
                 <option value="30">30 @L["days"]</option>
             </select>
         </form>
+        @if (Model.IsAdmin)
+        {
+            <p class="small muted" style="margin:6px 0 0">@L["Code of your own: a readable word such as FINANCE for a campaign or a theme, 5 to 32 letters and digits. Everybody who enters it in the store window sees the deliveries of this customer, so it is only possible while the customer receives public add-ons only; it never unlocks private ones. Tip: limit the catalog to the deliveries."]</p>
+        }
     }
 </div>
 

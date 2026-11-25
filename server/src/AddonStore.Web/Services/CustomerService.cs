@@ -70,6 +70,64 @@ public class CustomerService
     private static bool CodeValid(CustomerCode c, DateTime now) =>
         c.RevokedAt is null && (c.ExpiresAt is null || c.ExpiresAt > now);
 
+    public const int ManualMin = 5, ManualMax = 32;
+
+    /// <summary>
+    /// S2.8.5: a code an admin chooses (e.g. FINANCE for a campaign): letters, digits and hyphens, 5 to 32 letters and
+    /// digits (hyphens and case do not count, like every code), at least one letter. Null = fine, else the reason.
+    /// </summary>
+    public static string? CheckManualCode(string? raw)
+    {
+        var t = (raw ?? "").Trim();
+        if (t.Length == 0 || t.Length > 64 || t.Any(ch => !(char.IsAsciiLetterOrDigit(ch) || ch == '-')))
+            return "A code of your own uses letters A to Z, digits and hyphens.";
+        var n = Normalize(t);
+        if (n.Length is < ManualMin or > ManualMax) return "A code of your own has 5 to 32 letters and digits.";
+        if (!n.Any(char.IsAsciiLetter)) return "A code of your own contains at least one letter.";
+        return null;
+    }
+
+    public record ManualOutcome(bool Ok, string Message, CustomerCode? Entity = null, string? Plain = null);
+
+    /// <summary>
+    /// S2.8.5: the customer-wide code chosen by an admin. Only for customers who receive public add-ons only: a readable
+    /// word can be guessed, so it must never unlock a private add-on. Unique over all codes; a revoked or expired row with
+    /// the same code is taken over (the code hash is unique in the table).
+    /// </summary>
+    public async Task<ManualOutcome> CreateManualCodeAsync(int customerId, string raw, string actor, int transitionDays = 14)
+    {
+        if (CheckManualCode(raw) is { } why) return new(false, why);
+        var plain = raw.Trim().ToUpperInvariant();
+        var hash = Hash(plain);
+        var now = DateTime.UtcNow;
+        var hasPrivate = await _db.Deliveries.AnyAsync(d => d.CustomerId == customerId && d.Status != "ended" &&
+                                                            _db.Packages.Any(p => p.Id == d.PackageId && p.Visibility == "private"));
+        if (hasPrivate)
+            return new(false, "This customer receives private add-ons. A code of your own can be guessed, so it is only possible for customers with public add-ons only.");
+        var existing = await _db.CustomerCodes.FirstOrDefaultAsync(c => c.CodeHash == hash);
+        if (existing is not null && CodeValid(existing, now))
+            return new(false, existing.CustomerId == customerId ? "This customer already has this code." : "This code is already in use. Choose another one.");
+        foreach (var old in await _db.CustomerCodes.Where(c => c.CustomerId == customerId && c.DeliveryId == null && c.RevokedAt == null &&
+                                                               (existing == null || c.Id != existing.Id)).ToListAsync())
+            if (old.ExpiresAt is null || old.ExpiresAt > now)
+                old.ExpiresAt = now.AddDays(Math.Clamp(transitionDays, 0, 365));
+        var entity = existing ?? new CustomerCode();
+        var tookOver = existing is not null;
+        entity.CustomerId = customerId; entity.DeliveryId = null; entity.CodeHash = hash; entity.CodeProtected = _protector.Protect(plain);
+        entity.Prefix = plain.Length > 4 ? plain[..4] : plain; entity.CreatedBy = actor; entity.CreatedAt = now;
+        entity.ExpiresAt = null; entity.RevokedAt = null; entity.LastUsedAt = null; entity.Manual = true;
+        if (!tookOver) _db.CustomerCodes.Add(entity);
+        try { await _db.SaveChangesAsync(); }
+        catch (DbUpdateException)
+        {
+            _db.ChangeTracker.Clear();
+            return new(false, "This code is already in use. Choose another one.");
+        }
+        await _audit.LogAsync(actor, "customer.code.created", $"customer {customerId}",
+            $"code of your own {plain}, transition {transitionDays} days" + (tookOver ? "; took over an expired or revoked row" : ""));
+        return new(true, "Code created.", entity, plain);
+    }
+
     /// <summary>
     /// Creates a code for the customer (deliveryId null) or for one delivery.
     /// An existing valid code of the same scope keeps working for
@@ -450,7 +508,8 @@ public class CustomerService
         var raw = ctx.Request.Headers[HeaderName].ToString();
         if (string.IsNullOrWhiteSpace(raw)) return (new(), new());
         var hashes = raw.Split(new[] { ';', ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(Normalize).Where(c => c.Length == 20).Distinct().Take(10).Select(Hash).ToList();
+            // 20 = a generated code; S2.8.5: also a code an admin chose (5 to 32 letters and digits)
+            .Select(Normalize).Where(c => c.Length == 20 || c.Length is >= ManualMin and <= ManualMax).Distinct().Take(10).Select(Hash).ToList();
         if (hashes.Count == 0) return (new(), new());
         var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
         var key = "custcode-fail:" + ip + ":" + DateTime.UtcNow.ToString("yyyyMMddHH", System.Globalization.CultureInfo.InvariantCulture);
@@ -596,6 +655,11 @@ public class CustomerService
 
         var pkgIds = allowed.Select(d => d.PackageId).Distinct().ToList();
         var pkgs = await _db.Packages.Where(p => pkgIds.Contains(p.Id)).ToDictionaryAsync(p => p.Id);
+        // S2.8.5: a code an admin chose is readable and can be guessed: it never unlocks a private add-on, only a
+        // generated code does (also when a private delivery was added after the code)
+        allowed = allowed.Where(d => !(pkgs.TryGetValue(d.PackageId, out var pk) && pk.Visibility == "private") ||
+                                     codes.Any(c => !c.Manual && c.CustomerId == d.CustomerId && (c.DeliveryId is null || c.DeliveryId == d.Id)))
+                         .ToList();
         var byTemplate = await TemplateService.RestrictedByTemplateAsync(_db, customers.Keys.ToList());
         var result = new List<Granted>();
         foreach (var d in allowed)
