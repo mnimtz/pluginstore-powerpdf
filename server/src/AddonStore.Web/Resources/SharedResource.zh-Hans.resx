@@ -2020,4 +2020,7 @@
   <data name="Banner image removed." xml:space="preserve"><value>横幅图片已删除。</value></data>
   <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>无法保存横幅图片。请稍后重试。</value></data>
   <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>无法保存徽标。请稍后重试。</value></data>
+  <data name="Add the customer code in Power PDF" xml:space="preserve"><value>在 Power PDF 中添加客户代码</value></data>
+  <data name="Nothing happened? This button needs the Add-on Store for Power PDF, version 2.4.0 or later, on this computer. Install it with the download on this page, then click the button again." xml:space="preserve"><value>没有反应?此按钮需要此计算机上安装 Power PDF 版 Add-on Store 2.4.0 或更高版本。请使用本页的下载进行安装,然后再次单击。</value></data>
+  <data name="Installed with this download, the Add-on Store suggests the customer code by itself." xml:space="preserve"><value>使用此下载安装后,Add-on Store 会自动建议该客户代码。</value></data>
 </root>

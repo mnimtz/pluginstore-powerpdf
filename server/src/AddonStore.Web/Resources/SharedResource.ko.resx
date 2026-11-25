@@ -2020,4 +2020,7 @@
   <data name="Banner image removed." xml:space="preserve"><value>배너 이미지를 제거했습니다.</value></data>
   <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>배너 이미지를 저장할 수 없습니다. 잠시 후 다시 시도하세요.</value></data>
   <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>로고를 저장할 수 없습니다. 잠시 후 다시 시도하세요.</value></data>
+  <data name="Add the customer code in Power PDF" xml:space="preserve"><value>Power PDF에서 고객 코드 추가</value></data>
+  <data name="Nothing happened? This button needs the Add-on Store for Power PDF, version 2.4.0 or later, on this computer. Install it with the download on this page, then click the button again." xml:space="preserve"><value>아무 일도 일어나지 않았나요? 이 단추를 사용하려면 이 컴퓨터에 Power PDF용 Add-on Store 버전 2.4.0 이상이 필요합니다. 이 페이지의 다운로드로 설치한 다음 다시 클릭하세요.</value></data>
+  <data name="Installed with this download, the Add-on Store suggests the customer code by itself." xml:space="preserve"><value>이 다운로드로 설치하면 Add-on Store가 고객 코드를 자동으로 제안합니다.</value></data>
 </root>

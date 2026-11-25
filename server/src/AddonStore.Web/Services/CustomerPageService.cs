@@ -174,6 +174,19 @@ public class CustomerPageService
         return FindFile(FileOf(c, k));
     }
 
+    /// <summary>
+    /// S2.8.8: file name of the store client's installer. With a well-formed code word (the rule of codes of your own,
+    /// e.g. FINANCE) "AddonStore-Code-FINANCE.msi": the store client 2.4.0 or later fills that code in once after
+    /// installing (the user adds it). Anything else gives the plain "AddonStore-{version}.msi".
+    /// </summary>
+    public static string InstallerName(string? code, string version)
+    {
+        var c = (code ?? "").Trim();
+        if (c.Length > 0 && c.Length <= 64 && CustomerService.CheckManualCode(c) is null)
+            return $"AddonStore-Code-{c.Replace("-", "").ToUpperInvariant()}.msi";
+        return $"AddonStore-{version}.msi";
+    }
+
     public record Page(Customer Customer, List<CatalogItem> Items, string? Code);
 
     /// <summary>The public page of a slug, or null (unknown, off, or the customer paused).</summary>

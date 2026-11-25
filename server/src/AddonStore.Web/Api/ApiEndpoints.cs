@@ -87,7 +87,9 @@ public static class ApiEndpoints
             var fromPkg = ctx.Request.Query["pkg"].ToString();
             if (fromPkg.Length > 0 && await db.Packages.AnyAsync(p => p.Id == fromPkg))
                 await share.CountAsync(fromPkg, ctx.Request.Query["ref"].ToString(), "client");
-            return Results.File(cached, "application/x-msi", $"AddonStore-{pick.Version}.msi");
+            // S2.8.8: from a customer page with its code of its own: "AddonStore-Code-FINANCE.msi"; the store client (C2.4.0)
+            // reads the code from the name once and fills it in. Only the format is checked: no answer tells whether a code exists.
+            return Results.File(cached, "application/x-msi", CustomerPageService.InstallerName(ctx.Request.Query["code"].ToString(), pick.Version));
         });
 
         // llms.txt (llmstxt.org): entry point for any language model or AI assistant.

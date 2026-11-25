@@ -31,7 +31,23 @@
     }
     @if (Model.ClientVersion is not null)
     {
-        <p class="desktop-only custpage-cta"><a class="btn cta" href="/download/pluginstore.msi">@L["Download"]: Add-on Store @L["for Power PDF"] v@(Model.ClientVersion)</a></p>
+        // S2.8.8: with the code of its own on the page, the installer is named after it ("AddonStore-Code-FINANCE.msi")
+        // and a link hands the code to an installed store client (2.4.0 or later); the user adds it there
+        var codeQ = v.Code is null ? "" : "?code=" + Uri.EscapeDataString(v.Code);
+        <p class="desktop-only custpage-cta">
+            <a class="btn cta" href="/download/pluginstore.msi@(codeQ)">@L["Download"]: Add-on Store @L["for Power PDF"] v@(Model.ClientVersion)</a>
+            @if (v.Code is not null)
+            {
+                <a class="btn secondary win-only install custpage-codelink" href="addonstore://code/@Uri.EscapeDataString(v.Code)">@L["Add the customer code in Power PDF"]</a>
+                <span class="client-hint" hidden>
+                    @L["Nothing happened? This button needs the Add-on Store for Power PDF, version 2.4.0 or later, on this computer. Install it with the download on this page, then click the button again."]
+                </span>
+            }
+        </p>
+        @if (v.Code is not null)
+        {
+            <p class="small desktop-only custpage-dlnote">@L["Installed with this download, the Add-on Store suggests the customer code by itself."]</p>
+        }
     }
 </div>
 
@@ -89,12 +105,14 @@ else
     @@media (max-width:700px){ .custpage-head.has-banner > .custpage-veil{background:rgba(0,40,84,.82)} .custpage-head.has-banner{min-height:200px} }
     .custpage-intro{white-space:pre-line;max-width:760px}
     .custpage-code{font-weight:600;margin-top:6px}
-    .custpage-cta{margin-top:10px}
+    .custpage-cta{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .custpage-cta .client-hint{flex-basis:100%;font-size:.85rem}
+    .custpage-dlnote{margin:6px 0 0;opacity:.9}
     .custpage-all{margin-top:18px}
 </style>
 <script nonce="@ViewContext.HttpContext.Items["CspNonce"]">
     // Without a registered addonstore:// handler the browser does nothing: show how to get the client (as on the catalog).
-    document.querySelectorAll('.pkg-actions a.install').forEach(function (a) {
+    document.querySelectorAll('a.install').forEach(function (a) {   // S2.8.8: also the customer code link in the head
         a.addEventListener('click', function () {
             var hint = a.parentNode.querySelector('.client-hint'), left = false;
             function gone() { left = true; }

@@ -27,6 +27,18 @@ public class CustomerPageTests
     [InlineData("download", false)]
     public void Slugs(string slug, bool ok) => Assert.Equal(ok, CustomerPageService.CheckSlug(slug) is null);
 
+    [Theory]
+    [InlineData("FINANCE", "AddonStore-Code-FINANCE.msi")]
+    [InlineData("finance", "AddonStore-Code-FINANCE.msi")]
+    [InlineData("Finance-2026", "AddonStore-Code-FINANCE2026.msi")]
+    [InlineData("", "AddonStore-2.4.0.msi")]
+    [InlineData(null, "AddonStore-2.4.0.msi")]
+    [InlineData("FIN", "AddonStore-2.4.0.msi")]                 // not a code of your own
+    [InlineData("../../evil", "AddonStore-2.4.0.msi")]
+    [InlineData("FINANCE\"x", "AddonStore-2.4.0.msi")]
+    [InlineData("FINANZÄMTER", "AddonStore-2.4.0.msi")]
+    public void InstallerName(string? code, string name) => Assert.Equal(name, CustomerPageService.InstallerName(code, "2.4.0"));   // S2.8.8
+
     [Fact]
     public void PictureLimits()
     {

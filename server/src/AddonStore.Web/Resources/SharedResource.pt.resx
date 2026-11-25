@@ -2020,4 +2020,7 @@
   <data name="Banner image removed." xml:space="preserve"><value>Imagem de banner removida.</value></data>
   <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>Não foi possível guardar a imagem de banner. Tente novamente dentro de momentos.</value></data>
   <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>Não foi possível guardar o logótipo. Tente novamente dentro de momentos.</value></data>
+  <data name="Add the customer code in Power PDF" xml:space="preserve"><value>Adicionar o código de cliente no Power PDF</value></data>
+  <data name="Nothing happened? This button needs the Add-on Store for Power PDF, version 2.4.0 or later, on this computer. Install it with the download on this page, then click the button again." xml:space="preserve"><value>Nada aconteceu? Este botão precisa do Add-on Store para Power PDF, versão 2.4.0 ou posterior, neste computador. Instale-o com o download desta página e clique novamente.</value></data>
+  <data name="Installed with this download, the Add-on Store suggests the customer code by itself." xml:space="preserve"><value>Instalado com este download, o Add-on Store sugere o código de cliente sozinho.</value></data>
 </root>

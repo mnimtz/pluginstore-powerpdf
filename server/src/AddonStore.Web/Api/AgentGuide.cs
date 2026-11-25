@@ -1512,7 +1512,12 @@ win. Logos (`LOGO_INVALID` otherwise): PNG or JPEG, at most 1 MB, served at
 active. A banner image (S2.8.7, `BANNER_INVALID` otherwise: PNG or JPEG, at most
 2 MB, landscape such as 1500 x 1000 pixels) fills the head of the page behind
 the name and intro, darkened on the side of the text; served at
-`{{baseUrl}}/customer-banner/<id>` under the same rule. When someone who is no admin renames a customer with a public page,
+`{{baseUrl}}/customer-banner/<id>` under the same rule. With `showCode` (S2.8.8) the
+page offers the installer as `{{baseUrl}}/download/pluginstore.msi?code=FINANCE`,
+saved as `AddonStore-Code-FINANCE.msi` (only the format of the code is checked),
+and a link `addonstore://code/FINANCE`; the store client 2.4.0 or later fills
+that code in once after installing, or when the link is clicked, and the user
+adds it. When someone who is no admin renames a customer with a public page,
 the page goes off until an admin switches it on again.
 
 Delivery templates (S1.13.0) are named sets of add-ons, public and private
