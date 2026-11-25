@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>Un altro cliente usa già questo nome di pagina.</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>L'introduzione ha al massimo 600 caratteri.</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>La cartella dei loghi non è disponibile.</value></data>
+  <data name="Banner image" xml:space="preserve"><value>Immagine del banner</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>Carica immagine del banner</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>Rimuovere l'immagine del banner?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>Rimuovi immagine del banner</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG o JPEG, al massimo 2 MB, in formato orizzontale (ad es. 1500 × 1000 pixel); occupa tutta l'intestazione della pagina, scurita sul lato del testo perché nome e introduzione restino leggibili.</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>L'immagine del banner è un file PNG o JPEG di al massimo 2 MB.</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>Immagine del banner salvata.</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>Immagine del banner rimossa.</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>Impossibile salvare l'immagine del banner. Riprova tra un attimo.</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>Impossibile salvare il logo. Riprova tra un attimo.</value></data>
 </root>

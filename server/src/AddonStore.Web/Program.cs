@@ -438,6 +438,9 @@ app.MapGet("/set-shell", (string? mode, string? returnUrl, HttpContext ctx) =>
 CustomerPageService.LogosDir = Path.Combine(dataDir, "logos");
 app.MapGet("/customer-logo/{id:int}", async (int id, CustomerPageService pages) =>
     await pages.PublicLogoAsync(id) is { } logo ? Results.File(logo.Path, logo.Type) : Results.NotFound());
+// S2.8.7: the banner image of such a page, under the same rule
+app.MapGet("/customer-banner/{id:int}", async (int id, CustomerPageService pages) =>
+    await pages.PublicPictureAsync(id, CustomerPageService.Picture.Banner) is { } banner ? Results.File(banner.Path, banner.Type) : Results.NotFound());
 
 // Avatars live under data/avatars and are uploaded on the profile page.
 // The folder is fixed at start-up from the data folder (not from handler parameters, which

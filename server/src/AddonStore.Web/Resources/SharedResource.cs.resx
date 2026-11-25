@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>Tento název stránky už má jiný zákazník.</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>Úvod má nejvýše 600 znaků.</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>Složka pro loga není k dispozici.</value></data>
+  <data name="Banner image" xml:space="preserve"><value>Obrázek banneru</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>Nahrát obrázek banneru</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>Odebrat obrázek banneru?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>Odebrat obrázek banneru</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG nebo JPEG, nejvýše 2 MB, na šířku (např. 1500 × 1000 pixelů); vyplní záhlaví stránky a na straně textu je ztmavený, aby název a úvod zůstaly čitelné.</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>Obrázek banneru je soubor PNG nebo JPEG o velikosti nejvýše 2 MB.</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>Obrázek banneru uložen.</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>Obrázek banneru odebrán.</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>Obrázek banneru se nepodařilo uložit. Zkuste to za chvíli znovu.</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>Logo se nepodařilo uložit. Zkuste to za chvíli znovu.</value></data>
 </root>

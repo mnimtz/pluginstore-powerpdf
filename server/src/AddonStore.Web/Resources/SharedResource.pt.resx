@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>Outro cliente já tem este nome de página.</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>A introdução tem no máximo 600 caracteres.</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>A pasta de logótipos não está disponível.</value></data>
+  <data name="Banner image" xml:space="preserve"><value>Imagem de banner</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>Carregar imagem de banner</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>Remover a imagem de banner?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>Remover imagem de banner</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG ou JPEG, no máximo 2 MB, em formato paisagem (p. ex. 1500 × 1000 pixels); ocupa todo o cabeçalho da página, escurecida do lado do texto para que o nome e a introdução fiquem legíveis.</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>A imagem de banner é um ficheiro PNG ou JPEG de no máximo 2 MB.</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>Imagem de banner guardada.</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>Imagem de banner removida.</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>Não foi possível guardar a imagem de banner. Tente novamente dentro de momentos.</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>Não foi possível guardar o logótipo. Tente novamente dentro de momentos.</value></data>
 </root>

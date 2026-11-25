@@ -110,7 +110,7 @@ public class BackupService
                 // Send to transfers (rows and the encrypted blocks in their own blob container).
                 // UAT environments (S1.21.0): paired UATs, pairing code hashes and the federation keys are in
                 // pluginstore.db (keys protected by keys/); the replay list of nonces lives only in memory.
-                contents = new[] { "pluginstore.db", "packages/ (packages and source code)", "avatars/", "logos/ (customer page logos, S2.8.6)", "devkit/",
+                contents = new[] { "pluginstore.db", "packages/ (packages and source code)", "avatars/", "logos/ (customer page logos and banner images, S2.8.6/S2.8.7)", "devkit/",
                                    "keys/ (data protection key ring for encrypted settings such as the AI key and the UAT federation keys)" }
             };
 

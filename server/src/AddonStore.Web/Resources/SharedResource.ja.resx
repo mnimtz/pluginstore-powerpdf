@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>このページ名は既に別の顧客が使用しています。</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>紹介文は 600 文字以内です。</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>ロゴ フォルダーを利用できません。</value></data>
+  <data name="Banner image" xml:space="preserve"><value>バナー画像</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>バナー画像をアップロード</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>バナー画像を削除しますか?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>バナー画像を削除</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG または JPEG、最大 2 MB、横長 (例: 1500 × 1000 ピクセル)。ページのヘッダー全体に表示され、名前と紹介文が読みやすいよう文字側が暗くなります。</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>バナー画像は最大 2 MB の PNG または JPEG ファイルです。</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>バナー画像を保存しました。</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>バナー画像を削除しました。</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>バナー画像を保存できませんでした。しばらくしてからもう一度お試しください。</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>ロゴを保存できませんでした。しばらくしてからもう一度お試しください。</value></data>
 </root>

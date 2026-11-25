@@ -9,7 +9,13 @@
 }
 
 @* S2.8.6: the customer's own catalog page: logo, its name as heading, intro, its public add-ons *@
-<div class="hero hero-compact custpage-head">
+<div class="hero hero-compact custpage-head@(c.BannerFile is not null ? " has-banner" : "")">
+    @if (c.BannerFile is not null)
+    {
+        @* S2.8.7: the banner image fills the head; a navy veil on the side of the text keeps it readable *@
+        <img class="custpage-banner" src="/customer-banner/@c.Id?v=@(c.BannerUpdatedAt?.Ticks ?? 0)" alt="" />
+        <span class="custpage-veil" aria-hidden="true"></span>
+    }
     @if (c.LogoFile is not null)
     {
         <img class="custpage-logo" src="/customer-logo/@c.Id?v=@(c.LogoUpdatedAt?.Ticks ?? 0)" alt="@c.Name" />
@@ -73,6 +79,14 @@ else
     .custpage-head{text-align:start}
     /* a white plate: a dark logo with a transparent background stays visible on the dark head */
     .custpage-logo{display:block;max-height:88px;max-width:min(320px,80%);width:auto;height:auto;object-fit:contain;margin:0 0 14px;background:#fff;padding:8px 10px;border-radius:8px;box-sizing:content-box}
+    /* S2.8.7: banner image across the head, without the flow lines; the text stays in a navy veil at its start */
+    .custpage-head.has-banner{background-image:none;min-height:240px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+    .custpage-head.has-banner > *{position:relative;z-index:2}
+    .custpage-head.has-banner > .custpage-banner{position:absolute;inset:0;z-index:0;width:100%;height:100%;max-width:none;object-fit:cover;border-radius:inherit}
+    .custpage-head.has-banner > .custpage-veil{position:absolute;inset:0;z-index:1;max-width:none;border-radius:inherit;
+        background:linear-gradient(90deg,rgba(0,40,84,.94) 0%,rgba(0,40,84,.86) 38%,rgba(0,40,84,.35) 72%,rgba(0,40,84,.1) 100%)}
+    [dir=rtl] .custpage-head.has-banner > .custpage-veil{background:linear-gradient(270deg,rgba(0,40,84,.94) 0%,rgba(0,40,84,.86) 38%,rgba(0,40,84,.35) 72%,rgba(0,40,84,.1) 100%)}
+    @@media (max-width:700px){ .custpage-head.has-banner > .custpage-veil{background:rgba(0,40,84,.82)} .custpage-head.has-banner{min-height:200px} }
     .custpage-intro{white-space:pre-line;max-width:760px}
     .custpage-code{font-weight:600;margin-top:6px}
     .custpage-cta{margin-top:10px}

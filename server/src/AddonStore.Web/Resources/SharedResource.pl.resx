@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>Inny klient ma już tę nazwę strony.</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>Wstęp może mieć maksymalnie 600 znaków.</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>Folder logo jest niedostępny.</value></data>
+  <data name="Banner image" xml:space="preserve"><value>Obraz banera</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>Prześlij obraz banera</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>Usunąć obraz banera?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>Usuń obraz banera</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG lub JPEG, maksymalnie 2 MB, w poziomie (np. 1500 × 1000 pikseli); wypełnia nagłówek strony i jest przyciemniony po stronie tekstu, aby nazwa i wstęp pozostały czytelne.</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>Obraz banera to plik PNG lub JPEG o rozmiarze maksymalnie 2 MB.</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>Obraz banera zapisany.</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>Obraz banera usunięty.</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>Nie udało się zapisać obrazu banera. Spróbuj ponownie za chwilę.</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>Nie udało się zapisać logo. Spróbuj ponownie za chwilę.</value></data>
 </root>

@@ -105,6 +105,8 @@ public static class OpenApiDoc
         new("put", "/api/customers/{cid}/page", "setCustomerPage", "The customer's own catalog page /{slug} (admins): body {\"slug\", \"enabled\", \"showCode\", \"intro\"}. Only public add-ons of its deliveries; off until enabled; showCode names only a code of its own.", "admin", new[] { "cid:path:customer id" }),
         new("put", "/api/customers/{cid}/logo", "setCustomerLogo", "Logo of the customer page (admins): PNG or JPEG body, at most 1 MB.", "admin", new[] { "cid:path:customer id" }),
         new("delete", "/api/customers/{cid}/logo", "removeCustomerLogo", "Remove the logo of the customer page (admins).", "admin", new[] { "cid:path:customer id" }),
+        new("put", "/api/customers/{cid}/banner", "setCustomerBanner", "Banner image of the customer page, a photo across its head (admins): PNG or JPEG body, at most 2 MB.", "admin", new[] { "cid:path:customer id" }),
+        new("delete", "/api/customers/{cid}/banner", "removeCustomerBanner", "Remove the banner image of the customer page (admins).", "admin", new[] { "cid:path:customer id" }),
         new("delete", "/api/customers/{cid}/codes/{codeId}", "revokeCustomerCode", "Revoke a code.", "token", new[] { "cid:path:customer id", "codeId:path:code id" }),
         new("post", "/api/customers/{cid}/deliveries", "createDelivery", "Deliver an add-on to the customer with a beta and a live stage.", "token", new[] { "cid:path:customer id" }, Body: "delivery"),
         new("get", "/api/templates", "listTemplates", "Delivery templates (S1.13.0): named sets of add-ons with their version rule, the number of customers using each.", "token", Array.Empty<string>()),

@@ -155,6 +155,8 @@ public static class SchemaUpgrade
             "ALTER TABLE Customers ADD COLUMN PageIntro TEXT NULL",
             "ALTER TABLE Customers ADD COLUMN LogoFile TEXT NULL",
             "ALTER TABLE Customers ADD COLUMN LogoUpdatedAt TEXT NULL",
+            "ALTER TABLE Customers ADD COLUMN BannerFile TEXT NULL",        // S2.8.7: banner image of the customer page
+            "ALTER TABLE Customers ADD COLUMN BannerUpdatedAt TEXT NULL",
             "CREATE UNIQUE INDEX IF NOT EXISTS IX_Customers_PageSlug ON Customers (PageSlug) WHERE PageSlug IS NOT NULL",
             "CREATE TABLE IF NOT EXISTS Deliveries (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, CustomerId INTEGER NOT NULL, " +
                 "PackageId TEXT NOT NULL, BetaMode TEXT NOT NULL, BetaVersion TEXT NULL, LiveMode TEXT NOT NULL, LiveVersion TEXT NULL, " +

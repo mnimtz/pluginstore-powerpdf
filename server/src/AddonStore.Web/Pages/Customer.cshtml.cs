@@ -55,31 +55,46 @@ public class CustomerModel : PageModel
         });
 
     public Task<IActionResult> OnPostLogoAsync(int id, IFormFile? logo, [FromServices] CustomerPageService pages) =>
+        UploadAsync(id, logo, CustomerPageService.Picture.Logo, pages);
+
+    public Task<IActionResult> OnPostLogoRemoveAsync(int id, [FromServices] CustomerPageService pages) =>
+        RemoveAsync(id, CustomerPageService.Picture.Logo, pages);
+
+    /// <summary>The logo for admins, also while the page is off (the public address serves only pages that are on).</summary>
+    public Task<IActionResult> OnGetLogoPreviewAsync(int id) => PreviewAsync(id, CustomerPageService.Picture.Logo);
+
+    // S2.8.7: the banner image, a photo across the head of the page
+    public Task<IActionResult> OnPostBannerAsync(int id, IFormFile? banner, [FromServices] CustomerPageService pages) =>
+        UploadAsync(id, banner, CustomerPageService.Picture.Banner, pages);
+
+    public Task<IActionResult> OnPostBannerRemoveAsync(int id, [FromServices] CustomerPageService pages) =>
+        RemoveAsync(id, CustomerPageService.Picture.Banner, pages);
+
+    public Task<IActionResult> OnGetBannerPreviewAsync(int id) => PreviewAsync(id, CustomerPageService.Picture.Banner);
+
+    private Task<IActionResult> UploadAsync(int id, IFormFile? file, CustomerPageService.Picture kind, CustomerPageService pages) =>
         ActAsync(id, async me =>
         {
             if (!User.IsInRole("Admin")) return (false, "Only admins set up the customer page.");
-            if (logo is null || logo.Length == 0 || logo.Length > CustomerPageService.MaxLogoBytes) return (false, "The logo is a PNG or JPEG file of at most 1 MB.");
+            if (file is null || file.Length == 0 || file.Length > CustomerPageService.MaxBytes(kind)) return (false, CustomerPageService.RuleText(kind));
             using var ms = new MemoryStream();
-            await logo.CopyToAsync(ms);
-            var r = await pages.SaveLogoAsync(Cust!, ms.ToArray(), me.DisplayName);
+            await file.CopyToAsync(ms);
+            var r = await pages.SavePictureAsync(Cust!, kind, ms.ToArray(), me.DisplayName);
             return (r.Ok, r.Message);
         });
 
-    public Task<IActionResult> OnPostLogoRemoveAsync(int id, [FromServices] CustomerPageService pages) =>
+    private Task<IActionResult> RemoveAsync(int id, CustomerPageService.Picture kind, CustomerPageService pages) =>
         ActAsync(id, async me =>
         {
             if (!User.IsInRole("Admin")) return (false, "Only admins set up the customer page.");
-            await pages.RemoveLogoAsync(Cust!, me.DisplayName);
-            return (true, "Logo removed.");
+            await pages.RemovePictureAsync(Cust!, kind, me.DisplayName);
+            return (true, kind == CustomerPageService.Picture.Logo ? "Logo removed." : "Banner image removed.");
         });
 
-    /// <summary>The logo for admins, also while the page is off (the public address serves only pages that are on).</summary>
-    public async Task<IActionResult> OnGetLogoPreviewAsync(int id)
+    private async Task<IActionResult> PreviewAsync(int id, CustomerPageService.Picture kind)
     {
-        if (!User.IsInRole("Admin") || !await LoadAsync(id) || Cust!.LogoFile is null || CustomerPageService.LogosDir.Length == 0) return NotFound();
-        var dir = CustomerPageService.LogosDir;
-        var file = Directory.Exists(dir) ? Directory.EnumerateFiles(dir).FirstOrDefault(f => Path.GetFileName(f) == Cust.LogoFile) : null;
-        return file is null ? NotFound() : PhysicalFile(file, file.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ? "image/png" : "image/jpeg");
+        if (!User.IsInRole("Admin") || !await LoadAsync(id)) return NotFound();
+        return CustomerPageService.FindFile(CustomerPageService.FileOf(Cust!, kind)) is { } f ? PhysicalFile(f.Path, f.Type) : NotFound();
     }
 
     /// <summary>Public address of the customer page on this host (https, the host of the request).</summary>

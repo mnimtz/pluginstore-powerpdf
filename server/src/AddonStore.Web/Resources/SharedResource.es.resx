@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>Otro cliente ya tiene este nombre de página.</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>La introducción tiene como máximo 600 caracteres.</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>La carpeta de logotipos no está disponible.</value></data>
+  <data name="Banner image" xml:space="preserve"><value>Imagen de cabecera</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>Subir imagen de cabecera</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>¿Quitar la imagen de cabecera?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>Quitar imagen de cabecera</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG o JPEG, como máximo 2 MB, en formato horizontal (p. ej. 1500 × 1000 píxeles); ocupa toda la cabecera de la página, oscurecida en el lado del texto para que el nombre y la introducción se lean bien.</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>La imagen de cabecera es un archivo PNG o JPEG de 2 MB como máximo.</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>Imagen de cabecera guardada.</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>Imagen de cabecera quitada.</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>No se pudo guardar la imagen de cabecera. Inténtelo de nuevo en un momento.</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>No se pudo guardar el logotipo. Inténtelo de nuevo en un momento.</value></data>
 </root>

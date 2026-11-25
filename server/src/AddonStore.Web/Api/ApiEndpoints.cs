@@ -1365,36 +1365,43 @@ public static class ApiEndpoints
                 url = c.PageSlug is null ? null : $"{Base(ctx)}/{c.PageSlug}" } });
         }).RequireAuthorization("BearerOnly");
 
-        api.MapPut("/customers/{cid:int}/logo", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerPageService pages) =>
+        // S2.8.6 logo, S2.8.7 banner image: the same rules, each with its own size limit and error code
+        foreach (var (route, kind, code, field) in new[] { ("/customers/{cid:int}/logo", CustomerPageService.Picture.Logo, "LOGO_INVALID", "logo"),
+                                                         ("/customers/{cid:int}/banner", CustomerPageService.Picture.Banner, "BANNER_INVALID", "banner") })
         {
-            var user = await RequireUserAsync(ctx, users);
-            if (user is null) return Unauthorized();
-            if (!ctx.User.IsInRole("Admin")) return Fail("ADMIN_ONLY", "Only admins set up customer pages.", 403);
-            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
-            if (c is null) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
-            if (ctx.Request.ContentLength is > CustomerPageService.MaxLogoBytes) return Fail("LOGO_INVALID", "The logo is a PNG or JPEG file of at most 1 MB.", 400);
-            using var ms = new MemoryStream();
-            var buf = new byte[16384];
-            int n;
-            while ((n = await ctx.Request.Body.ReadAsync(buf, ctx.RequestAborted)) > 0)
+            api.MapPut(route, async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerPageService pages) =>
             {
-                if (ms.Length + n > CustomerPageService.MaxLogoBytes) return Fail("LOGO_INVALID", "The logo is a PNG or JPEG file of at most 1 MB.", 400);
-                ms.Write(buf, 0, n);
-            }
-            var r = await pages.SaveLogoAsync(c, ms.ToArray(), user.DisplayName);
-            return r.Ok ? Results.Json(new { ok = true, data = new { id = cid, logo = c.LogoFile } }) : Fail("LOGO_INVALID", r.Message, 400);
-        }).RequireAuthorization("BearerOnly");
+                var user = await RequireUserAsync(ctx, users);
+                if (user is null) return Unauthorized();
+                if (!ctx.User.IsInRole("Admin")) return Fail("ADMIN_ONLY", "Only admins set up customer pages.", 403);
+                var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+                if (c is null) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+                var max = CustomerPageService.MaxBytes(kind);
+                if (ctx.Request.ContentLength > max) return Fail(code, CustomerPageService.RuleText(kind), 400);
+                using var ms = new MemoryStream();
+                var buf = new byte[16384];
+                int n;
+                while ((n = await ctx.Request.Body.ReadAsync(buf, ctx.RequestAborted)) > 0)
+                {
+                    if (ms.Length + n > max) return Fail(code, CustomerPageService.RuleText(kind), 400);
+                    ms.Write(buf, 0, n);
+                }
+                var r = await pages.SavePictureAsync(c, kind, ms.ToArray(), user.DisplayName);
+                return r.Ok ? Results.Json(new Dictionary<string, object?> { ["ok"] = true, ["data"] = new Dictionary<string, object?> { ["id"] = cid, [field] = CustomerPageService.FileOf(c, kind) } })
+                            : Fail(code, r.Message, 400);
+            }).RequireAuthorization("BearerOnly");
 
-        api.MapDelete("/customers/{cid:int}/logo", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerPageService pages) =>
-        {
-            var user = await RequireUserAsync(ctx, users);
-            if (user is null) return Unauthorized();
-            if (!ctx.User.IsInRole("Admin")) return Fail("ADMIN_ONLY", "Only admins set up customer pages.", 403);
-            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
-            if (c is null) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
-            await pages.RemoveLogoAsync(c, user.DisplayName);
-            return Results.Json(new { ok = true, data = new { id = cid, logo = (string?)null } });
-        }).RequireAuthorization("BearerOnly");
+            api.MapDelete(route, async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerPageService pages) =>
+            {
+                var user = await RequireUserAsync(ctx, users);
+                if (user is null) return Unauthorized();
+                if (!ctx.User.IsInRole("Admin")) return Fail("ADMIN_ONLY", "Only admins set up customer pages.", 403);
+                var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+                if (c is null) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+                await pages.RemovePictureAsync(c, kind, user.DisplayName);
+                return Results.Json(new Dictionary<string, object?> { ["ok"] = true, ["data"] = new Dictionary<string, object?> { ["id"] = cid, [field] = null } });
+            }).RequireAuthorization("BearerOnly");
+        }
 
         api.MapPost("/customers/{cid:int}/deliveries", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users,
                                                                CustomerService cs, DeliveryBody body) =>

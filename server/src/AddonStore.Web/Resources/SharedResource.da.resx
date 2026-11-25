@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>En anden kunde har allerede dette sidenavn.</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>Introen må højst have 600 tegn.</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>Logomappen er ikke tilgængelig.</value></data>
+  <data name="Banner image" xml:space="preserve"><value>Bannerbillede</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>Upload bannerbillede</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>Fjern bannerbilledet?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>Fjern bannerbillede</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG eller JPEG, højst 2 MB, i liggende format (f.eks. 1500 × 1000 pixel); fylder sidens top og er gjort mørkere i tekstsiden, så navn og introduktion forbliver læsbare.</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>Bannerbilledet er en PNG- eller JPEG-fil på højst 2 MB.</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>Bannerbillede gemt.</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>Bannerbillede fjernet.</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>Bannerbilledet kunne ikke gemmes. Prøv igen om lidt.</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>Logoet kunne ikke gemmes. Prøv igen om lidt.</value></data>
 </root>

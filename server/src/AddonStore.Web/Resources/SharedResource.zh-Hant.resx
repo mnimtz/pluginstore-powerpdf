@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>其他客戶已在使用此頁面名稱。</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>簡介最多 600 個字元。</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>標誌資料夾無法使用。</value></data>
+  <data name="Banner image" xml:space="preserve"><value>橫幅圖片</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>上傳橫幅圖片</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>要移除橫幅圖片嗎?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>移除橫幅圖片</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG 或 JPEG,最大 2 MB,橫向格式(例如 1500 × 1000 像素);鋪滿頁面頂部,文字一側會變暗,讓名稱和簡介清楚易讀。</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>橫幅圖片是最大 2 MB 的 PNG 或 JPEG 檔案。</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>橫幅圖片已儲存。</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>橫幅圖片已移除。</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>無法儲存橫幅圖片。請稍後再試。</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>無法儲存標誌。請稍後再試。</value></data>
 </root>

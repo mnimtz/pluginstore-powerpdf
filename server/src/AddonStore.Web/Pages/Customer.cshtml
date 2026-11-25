@@ -134,6 +134,23 @@
             </form>
         }
         <small>@L["PNG or JPEG, at most 1 MB; shown fitted in the head of the page."]</small>
+        @* S2.8.7: a photo across the head of the page *@
+        <h3>@L["Banner image"]</h3>
+        @if (c.BannerFile is not null)
+        {
+            <p><img src="/Customer?handler=BannerPreview&amp;id=@c.Id&amp;v=@(c.BannerUpdatedAt?.Ticks ?? 0)" alt="" style="width:100%;max-width:420px;aspect-ratio:3/1;object-fit:cover;border:1px solid var(--tun-gray-200);border-radius:6px" /></p>
+        }
+        <form method="post" asp-page-handler="Banner" asp-route-id="@c.Id" enctype="multipart/form-data" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <input type="file" name="banner" accept="image/png,image/jpeg" />
+            <button type="submit" class="btn small">@L["Upload banner image"]</button>
+        </form>
+        @if (c.BannerFile is not null)
+        {
+            <form method="post" asp-page-handler="BannerRemove" asp-route-id="@c.Id" style="margin-top:8px" data-confirm="@L["Remove the banner image?"]">
+                <button type="submit" class="btn small secondary">@L["Remove banner image"]</button>
+            </form>
+        }
+        <small>@L["PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable."]</small>
     </div>
 }
 

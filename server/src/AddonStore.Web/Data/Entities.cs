@@ -380,6 +380,9 @@ public class Customer
     /// <summary>Logo file in data/logos ("12.png" or "12.jpg"); null = none.</summary>
     public string? LogoFile { get; set; }
     public DateTime? LogoUpdatedAt { get; set; }
+    /// <summary>S2.8.7: banner image (a photo across the head of the page) in data/logos ("12-banner.jpg"); null = none.</summary>
+    public string? BannerFile { get; set; }
+    public DateTime? BannerUpdatedAt { get; set; }
 }
 
 /// <summary>

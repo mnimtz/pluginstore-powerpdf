@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>Toisella asiakkaalla on jo tämä sivun nimi.</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>Johdannossa on enintään 600 merkkiä.</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>Logokansio ei ole käytettävissä.</value></data>
+  <data name="Banner image" xml:space="preserve"><value>Bannerikuva</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>Lataa bannerikuva</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>Poistetaanko bannerikuva?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>Poista bannerikuva</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG tai JPEG, enintään 2 MB, vaakasuuntainen (esim. 1500 × 1000 pikseliä); täyttää sivun yläosan ja on tekstin puolelta tummennettu, jotta nimi ja johdanto pysyvät luettavina.</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>Bannerikuva on enintään 2 MB:n PNG- tai JPEG-tiedosto.</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>Bannerikuva tallennettu.</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>Bannerikuva poistettu.</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>Bannerikuvaa ei voitu tallentaa. Yritä hetken kuluttua uudelleen.</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>Logoa ei voitu tallentaa. Yritä hetken kuluttua uudelleen.</value></data>
 </root>

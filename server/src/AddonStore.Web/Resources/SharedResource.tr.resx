@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>Bu sayfa adı zaten başka bir müşteriye ait.</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>Giriş metni en fazla 600 karakter olabilir.</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>Logo klasörü kullanılamıyor.</value></data>
+  <data name="Banner image" xml:space="preserve"><value>Banner görseli</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>Banner görseli yükle</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>Banner görseli kaldırılsın mı?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>Banner görselini kaldır</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG veya JPEG, en fazla 2 MB, yatay biçimde (ör. 1500 × 1000 piksel); sayfanın üst bölümünü kaplar ve ad ile giriş metni okunur kalsın diye metin tarafında koyulaştırılır.</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>Banner görseli en fazla 2 MB boyutunda bir PNG veya JPEG dosyasıdır.</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>Banner görseli kaydedildi.</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>Banner görseli kaldırıldı.</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>Banner görseli kaydedilemedi. Biraz sonra yeniden deneyin.</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>Logo kaydedilemedi. Biraz sonra yeniden deneyin.</value></data>
 </root>

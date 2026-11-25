@@ -1472,6 +1472,7 @@ own personal test code shows it.
     DELETE {{baseUrl}}/api/customers/{cid}/codes/{codeId}   revoke a code
     PUT   {{baseUrl}}/api/customers/{cid}/page              {"slug": "finance", "enabled": true, "showCode": false, "intro"?}: own catalog page (admins)
     PUT|DELETE {{baseUrl}}/api/customers/{cid}/logo         the page's logo: PNG or JPEG body, at most 1 MB (admins)
+    PUT|DELETE {{baseUrl}}/api/customers/{cid}/banner       the page's banner image (a photo across the head): PNG or JPEG body, at most 2 MB (admins)
     POST  {{baseUrl}}/api/customers/{cid}/deliveries        {"packageId", "beta": {"mode", "version"}, "live": {...}, "startsAt"?, "endsAt"?, "ownCode"?}
     PATCH {{baseUrl}}/api/deliveries/{did}                  stages, "startsAt"/"endsAt" (or "clearDates": true), "status": "active"|"paused"|"ended"
     POST  {{baseUrl}}/api/deliveries/{did}/promote          the version of the beta stage becomes the live version
@@ -1508,7 +1509,10 @@ Slugs: 2 to 40 lower-case letters, digits and hyphens, unique
 `admin`, `api`, `a`, `docs` (`PAGE_INVALID`); the store's own addresses always
 win. Logos (`LOGO_INVALID` otherwise): PNG or JPEG, at most 1 MB, served at
 `{{baseUrl}}/customer-logo/<id>` only while the page is on and the customer
-active. When someone who is no admin renames a customer with a public page,
+active. A banner image (S2.8.7, `BANNER_INVALID` otherwise: PNG or JPEG, at most
+2 MB, landscape such as 1500 x 1000 pixels) fills the head of the page behind
+the name and intro, darkened on the side of the text; served at
+`{{baseUrl}}/customer-banner/<id>` under the same rule. When someone who is no admin renames a customer with a public page,
 the page goes off until an admin switches it on again.
 
 Delivery templates (S1.13.0) are named sets of add-ons, public and private
@@ -2220,6 +2224,7 @@ be free of warnings before review. Info is for information only.
 | PAGE_INVALID | 400 | Customer page: slug of 2 to 40 lower-case letters, digits and hyphens that is not a store address, intro at most 600 characters. |
 | PAGE_SLUG_TAKEN | 409 | Another customer already has this page name. |
 | LOGO_INVALID | 400 | The customer page logo is a PNG or JPEG file of at most 1 MB. |
+| BANNER_INVALID | 400 | The customer page banner image is a PNG or JPEG file of at most 2 MB. |
 | CUSTOMER_INVALID | error (400) | Customer: name 1 to 120 characters, valid email, two-letter language, status active or paused. |
 | CUSTOMER_NOT_FOUND | error (404) | No such customer, or not yours. |
 | DELIVERY_NOT_FOUND | error (404) | No such delivery, or not yours. |

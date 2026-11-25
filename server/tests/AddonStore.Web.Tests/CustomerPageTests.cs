@@ -23,6 +23,17 @@ public class CustomerPageTests
     [InlineData("a", false)]
     [InlineData("docs", false)]
     [InlineData("customer-logo", false)]
+    [InlineData("customer-banner", false)]   // S2.8.7
     [InlineData("download", false)]
     public void Slugs(string slug, bool ok) => Assert.Equal(ok, CustomerPageService.CheckSlug(slug) is null);
+
+    [Fact]
+    public void PictureLimits()
+    {
+        // S2.8.7: the logo stays at 1 MB, a banner photo may have 2 MB (the brand photos have up to about 1.2 MB)
+        Assert.Equal(1024 * 1024, CustomerPageService.MaxBytes(CustomerPageService.Picture.Logo));
+        Assert.Equal(2 * 1024 * 1024, CustomerPageService.MaxBytes(CustomerPageService.Picture.Banner));
+        Assert.Contains("1 MB", CustomerPageService.RuleText(CustomerPageService.Picture.Logo));
+        Assert.Contains("2 MB", CustomerPageService.RuleText(CustomerPageService.Picture.Banner));
+    }
 }

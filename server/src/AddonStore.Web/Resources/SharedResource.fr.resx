@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>Un autre client utilise déjà ce nom de page.</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>L'introduction comporte au maximum 600 caractères.</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>Le dossier des logos n'est pas disponible.</value></data>
+  <data name="Banner image" xml:space="preserve"><value>Image de bannière</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>Charger l'image de bannière</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>Supprimer l'image de bannière ?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>Supprimer l'image de bannière</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG ou JPEG, 2 MB au maximum, au format paysage (p. ex. 1500 × 1000 pixels) ; affichée sur toute la largeur de l'en-tête, assombrie du côté du texte pour que le nom et l'introduction restent lisibles.</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>L'image de bannière est un fichier PNG ou JPEG de 2 MB au maximum.</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>Image de bannière enregistrée.</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>Image de bannière supprimée.</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>Impossible d'enregistrer l'image de bannière. Réessayez dans un instant.</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>Impossible d'enregistrer le logo. Réessayez dans un instant.</value></data>
 </root>

@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>Это имя страницы уже есть у другого клиента.</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>Вступление содержит не более 600 символов.</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>Папка логотипов недоступна.</value></data>
+  <data name="Banner image" xml:space="preserve"><value>Изображение баннера</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>Загрузить изображение баннера</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>Удалить изображение баннера?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>Удалить изображение баннера</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG или JPEG, не более 2 MB, в альбомной ориентации (например, 1500 × 1000 пикселей); заполняет шапку страницы и затемнено со стороны текста, чтобы название и вступление оставались читаемыми.</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>Изображение баннера: файл PNG или JPEG размером не более 2 MB.</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>Изображение баннера сохранено.</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>Изображение баннера удалено.</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>Не удалось сохранить изображение баннера. Повторите попытку чуть позже.</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>Не удалось сохранить логотип. Повторите попытку чуть позже.</value></data>
 </root>

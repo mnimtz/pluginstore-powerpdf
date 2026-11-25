@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>يستخدم عميل آخر اسم الصفحة هذا بالفعل.</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>لا تتجاوز المقدمة 600 حرف.</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>مجلد الشعارات غير متاح.</value></data>
+  <data name="Banner image" xml:space="preserve"><value>صورة اللافتة</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>تحميل صورة اللافتة</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>هل تريد إزالة صورة اللافتة؟</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>إزالة صورة اللافتة</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG أو JPEG، بحد أقصى 2 MB، بالاتجاه الأفقي (مثل 1500 × 1000 بكسل)؛ تملأ رأس الصفحة وتكون أغمق في جهة النص ليبقى الاسم والمقدمة مقروءين.</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>صورة اللافتة ملف PNG أو JPEG بحد أقصى 2 MB.</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>تم حفظ صورة اللافتة.</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>تمت إزالة صورة اللافتة.</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>تعذر حفظ صورة اللافتة. حاول مرة أخرى بعد قليل.</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>تعذر حفظ الشعار. حاول مرة أخرى بعد قليل.</value></data>
 </root>

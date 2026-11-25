@@ -2010,4 +2010,14 @@
   <data name="Another customer already has this page name." xml:space="preserve"><value>Ezt az oldalnevet már egy másik ügyfél használja.</value></data>
   <data name="The intro has at most 600 characters." xml:space="preserve"><value>A bevezető legfeljebb 600 karakter lehet.</value></data>
   <data name="The logo folder is not available." xml:space="preserve"><value>A logók mappája nem érhető el.</value></data>
+  <data name="Banner image" xml:space="preserve"><value>Bannerkép</value></data>
+  <data name="Upload banner image" xml:space="preserve"><value>Bannerkép feltöltése</value></data>
+  <data name="Remove the banner image?" xml:space="preserve"><value>Eltávolítja a bannerképet?</value></data>
+  <data name="Remove banner image" xml:space="preserve"><value>Bannerkép eltávolítása</value></data>
+  <data name="PNG or JPEG, at most 2 MB, in landscape format (e.g. 1500 × 1000 pixels); shown across the head of the page, darkened at the side of the text so name and intro stay readable." xml:space="preserve"><value>PNG vagy JPEG, legfeljebb 2 MB, fekvő formátumban (pl. 1500 × 1000 képpont); kitölti az oldal fejlécét, és a szöveg oldalán sötétített, hogy a név és a bevezető olvasható maradjon.</value></data>
+  <data name="The banner image is a PNG or JPEG file of at most 2 MB." xml:space="preserve"><value>A bannerkép legfeljebb 2 MB-os PNG- vagy JPEG-fájl.</value></data>
+  <data name="Banner image saved." xml:space="preserve"><value>Bannerkép mentve.</value></data>
+  <data name="Banner image removed." xml:space="preserve"><value>Bannerkép eltávolítva.</value></data>
+  <data name="The banner image could not be saved. Try again in a moment." xml:space="preserve"><value>A bannerképet nem sikerült menteni. Próbálja újra egy pillanat múlva.</value></data>
+  <data name="The logo could not be saved. Try again in a moment." xml:space="preserve"><value>A logót nem sikerült menteni. Próbálja újra egy pillanat múlva.</value></data>
 </root>

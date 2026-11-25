@@ -12,7 +12,7 @@ namespace AddonStore.Web.Services;
 /// </summary>
 public class CustomerPageService
 {
-    public const int MaxIntro = 600, MaxLogoBytes = 1024 * 1024;
+    public const int MaxIntro = 600, MaxLogoBytes = 1024 * 1024, MaxBannerBytes = 2 * 1024 * 1024;
     /// <summary>Folder of the logos, fixed at start-up from the data folder (Program.cs), never from a request.</summary>
     public static string LogosDir { get; set; } = "";
 
@@ -25,7 +25,7 @@ public class CustomerPageService
     public static readonly HashSet<string> Reserved = new(StringComparer.OrdinalIgnoreCase)
     {
         "a", "c", "account", "admin", "api", "app", "avatar", "avatars", "catalog", "catalogentry", "css", "customer", "customer-logo",
-        "customers", "dashboard", "developer", "devkit", "disclaimer", "docs", "dossier", "download", "downloads", "error", "favicon",
+        "customer-banner", "customers", "dashboard", "developer", "devkit", "disclaimer", "docs", "dossier", "download", "downloads", "error", "favicon",
         "fonts", "help", "home", "img", "images", "index", "insights", "issues", "js", "lib", "llms", "login", "logout", "logos",
         "maintenance", "plugin", "plugins", "privacy", "profile", "register", "reports", "robots", "sdk", "search", "sendto", "settings",
         "setup", "signin-oidc", "signout", "sitemap", "start", "static", "store", "support", "templates", "terms", "uat", "agent-guide",
@@ -72,65 +72,106 @@ public class CustomerPageService
         return new(true, "Settings saved.");
     }
 
-    /// <summary>A PNG or JPEG logo (checked by its first bytes, at most 1 MB), stored as data/logos/{id}.png|jpg.</summary>
-    public async Task<Outcome> SaveLogoAsync(Customer c, byte[] data, string actor)
+    /// <summary>S2.8.7: the two pictures of a page: the logo (fitted on a white plate) and the banner image (a photo across the head).</summary>
+    public enum Picture { Logo, Banner }
+
+    public static int MaxBytes(Picture k) => k == Picture.Logo ? MaxLogoBytes : MaxBannerBytes;
+    public static string RuleText(Picture k) => k == Picture.Logo
+        ? "The logo is a PNG or JPEG file of at most 1 MB."
+        : "The banner image is a PNG or JPEG file of at most 2 MB.";
+    /// <summary>File name without extension: "12" for the logo, "12-banner" for the banner image.</summary>
+    private static string Stem(int customerId, Picture k) => k == Picture.Logo ? customerId.ToString() : customerId + "-banner";
+
+    public static string? FileOf(Customer c, Picture k) => k == Picture.Logo ? c.LogoFile : c.BannerFile;
+
+    private static void Set(Customer c, Picture k, string? file)
     {
-        if (data.Length == 0 || data.Length > MaxLogoBytes) return new(false, "The logo is a PNG or JPEG file of at most 1 MB.");
+        if (k == Picture.Logo) { c.LogoFile = file; c.LogoUpdatedAt = DateTime.UtcNow; }
+        else { c.BannerFile = file; c.BannerUpdatedAt = DateTime.UtcNow; }
+    }
+
+    /// <summary>A PNG or JPEG logo (checked by its first bytes, at most 1 MB), stored as data/logos/{id}.png|jpg.</summary>
+    public Task<Outcome> SaveLogoAsync(Customer c, byte[] data, string actor) => SavePictureAsync(c, Picture.Logo, data, actor);
+
+    /// <summary>
+    /// S2.8.7: a PNG or JPEG banner image (at most 2 MB), stored as data/logos/{id}-banner.png|jpg: in the logo folder,
+    /// so backup and restore take it along without a folder of its own.
+    /// </summary>
+    public Task<Outcome> SaveBannerAsync(Customer c, byte[] data, string actor) => SavePictureAsync(c, Picture.Banner, data, actor);
+
+    public async Task<Outcome> SavePictureAsync(Customer c, Picture k, byte[] data, string actor)
+    {
+        if (data.Length == 0 || data.Length > MaxBytes(k)) return new(false, RuleText(k));
         var ext = IsPng(data) ? ".png" : IsJpeg(data) ? ".jpg" : null;
-        if (ext is null) return new(false, "The logo is a PNG or JPEG file of at most 1 MB.");
+        if (ext is null) return new(false, RuleText(k));
         if (LogosDir.Length == 0) return new(false, "The logo folder is not available.");
         Directory.CreateDirectory(LogosDir);
-        var name = c.Id + ext;
+        var stem = Stem(c.Id, k);
+        var name = stem + ext;
         try
         {
-            // written next to it first, then moved over: a page loading the old logo at this moment does not break the upload
-            var tmp = Path.Combine(LogosDir, $".{c.Id}-{Guid.NewGuid():N}.tmp");
+            // written next to it first, then moved over: a page loading the old picture at this moment does not break the upload
+            var tmp = Path.Combine(LogosDir, $".{stem}-{Guid.NewGuid():N}.tmp");
             await File.WriteAllBytesAsync(tmp, data);
             File.Move(tmp, Path.Combine(LogosDir, name), overwrite: true);
-            var other = Path.Combine(LogosDir, c.Id + (ext == ".png" ? ".jpg" : ".png"));
+            var other = Path.Combine(LogosDir, stem + (ext == ".png" ? ".jpg" : ".png"));
             if (File.Exists(other)) { try { File.Delete(other); } catch (IOException) { } }
         }
         catch (Exception e) when (e is IOException or UnauthorizedAccessException)
         {
-            return new(false, "The logo could not be saved. Try again in a moment.");
+            return new(false, k == Picture.Logo ? "The logo could not be saved. Try again in a moment." : "The banner image could not be saved. Try again in a moment.");
         }
-        c.LogoFile = name;
-        c.LogoUpdatedAt = DateTime.UtcNow;
+        Set(c, k, name);
         await _db.SaveChangesAsync();
-        await _audit.LogAsync(actor, "customer.logo.updated", $"customer {c.Id}", $"{ext[1..]}, {data.Length} bytes");
-        return new(true, "Logo saved.");
+        await _audit.LogAsync(actor, k == Picture.Logo ? "customer.logo.updated" : "customer.banner.updated", $"customer {c.Id}", $"{ext[1..]}, {data.Length} bytes");
+        return new(true, k == Picture.Logo ? "Logo saved." : "Banner image saved.");
     }
 
-    public async Task RemoveLogoAsync(Customer c, string actor)
+    public Task RemoveLogoAsync(Customer c, string actor) => RemovePictureAsync(c, Picture.Logo, actor);
+    public Task RemoveBannerAsync(Customer c, string actor) => RemovePictureAsync(c, Picture.Banner, actor);
+
+    public async Task RemovePictureAsync(Customer c, Picture k, string actor)
     {
-        DeleteLogoFiles(c.Id);
-        c.LogoFile = null;
-        c.LogoUpdatedAt = DateTime.UtcNow;
+        DeleteFiles(c.Id, k);
+        Set(c, k, null);
         await _db.SaveChangesAsync();
-        await _audit.LogAsync(actor, "customer.logo.removed", $"customer {c.Id}");
+        await _audit.LogAsync(actor, k == Picture.Logo ? "customer.logo.removed" : "customer.banner.removed", $"customer {c.Id}");
     }
 
-    /// <summary>Removes the customer's logo files (also when the customer is deleted).</summary>
+    /// <summary>Removes the customer's logo and banner files (also when the customer is deleted).</summary>
     public static void DeleteLogoFiles(int customerId)
+    {
+        DeleteFiles(customerId, Picture.Logo);
+        DeleteFiles(customerId, Picture.Banner);
+    }
+
+    private static void DeleteFiles(int customerId, Picture k)
     {
         if (LogosDir.Length == 0) return;
         foreach (var ext in new[] { ".png", ".jpg" })
         {
-            var p = Path.Combine(LogosDir, customerId + ext);
+            var p = Path.Combine(LogosDir, Stem(customerId, k) + ext);
             try { if (File.Exists(p)) File.Delete(p); } catch (IOException) { }
         }
     }
 
+    /// <summary>The file of a picture: the path comes from the folder listing, the request only selects the customer.</summary>
+    public static (string Path, string Type)? FindFile(string? fileName)
+    {
+        if (fileName is null || LogosDir.Length == 0 || !Directory.Exists(LogosDir)) return null;
+        var file = Directory.EnumerateFiles(LogosDir).FirstOrDefault(f => Path.GetFileName(f) == fileName);
+        return file is null ? null : (file, file.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ? "image/png" : "image/jpeg");
+    }
+
     /// <summary>The file of a logo the public may see: only of a customer whose page is on.</summary>
-    public async Task<(string Path, string Type)?> PublicLogoAsync(int customerId)
+    public Task<(string Path, string Type)?> PublicLogoAsync(int customerId) => PublicPictureAsync(customerId, Picture.Logo);
+
+    /// <summary>A picture the public may see: only of an active customer whose page is on.</summary>
+    public async Task<(string Path, string Type)?> PublicPictureAsync(int customerId, Picture k)
     {
         var c = await _db.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == customerId);
-        if (c is null || !c.PageEnabled || c.Status != "active" || c.PageSlug is null || c.LogoFile is null || LogosDir.Length == 0) return null;
-        // the path comes from the folder listing; the request only selects the customer
-        var file = Directory.Exists(LogosDir)
-            ? Directory.EnumerateFiles(LogosDir).FirstOrDefault(f => Path.GetFileName(f) == c.LogoFile)
-            : null;
-        return file is null ? null : (file, file.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ? "image/png" : "image/jpeg");
+        if (c is null || !c.PageEnabled || c.Status != "active" || c.PageSlug is null) return null;
+        return FindFile(FileOf(c, k));
     }
 
     public record Page(Customer Customer, List<CatalogItem> Items, string? Code);
