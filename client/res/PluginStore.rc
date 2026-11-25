@@ -300,6 +300,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "out of service"
     IDS_PSW_SUSP_OFF  "switched off"
     IDS_PSW_SUSP_BACK  "available again"
+    IDS_PSW_CODE_MORE  "%s and %s more"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -499,6 +500,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "außer Betrieb"
     IDS_PSW_SUSP_OFF  "abgeschaltet"
     IDS_PSW_SUSP_BACK  "wieder verfügbar"
+    IDS_PSW_CODE_MORE  "%s und %s weitere"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -698,6 +700,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "hors service"
     IDS_PSW_SUSP_OFF  "désactivé"
     IDS_PSW_SUSP_BACK  "de nouveau disponible"
+    IDS_PSW_CODE_MORE  "%s et %s autres"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -897,6 +900,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "fuori servizio"
     IDS_PSW_SUSP_OFF  "disattivato"
     IDS_PSW_SUSP_BACK  "di nuovo disponibile"
+    IDS_PSW_CODE_MORE  "%s e altri %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1096,6 +1100,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "fuera de servicio"
     IDS_PSW_SUSP_OFF  "desactivado"
     IDS_PSW_SUSP_BACK  "disponible de nuevo"
+    IDS_PSW_CODE_MORE  "%s y %s más"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1295,6 +1300,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "buiten gebruik"
     IDS_PSW_SUSP_OFF  "uitgeschakeld"
     IDS_PSW_SUSP_BACK  "weer beschikbaar"
+    IDS_PSW_CODE_MORE  "%s en %s andere"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1494,6 +1500,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "fora de serviço"
     IDS_PSW_SUSP_OFF  "desativado"
     IDS_PSW_SUSP_BACK  "disponível novamente"
+    IDS_PSW_CODE_MORE  "%s e mais %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1693,6 +1700,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "ude af drift"
     IDS_PSW_SUSP_OFF  "slået fra"
     IDS_PSW_SUSP_BACK  "tilgængeligt igen"
+    IDS_PSW_CODE_MORE  "%s og %s mere"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1892,6 +1900,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "poissa käytöstä"
     IDS_PSW_SUSP_OFF  "poistettu käytöstä"
     IDS_PSW_SUSP_BACK  "taas saatavilla"
+    IDS_PSW_CODE_MORE  "%s ja %s muuta"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2091,6 +2100,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "ute av drift"
     IDS_PSW_SUSP_OFF  "slått av"
     IDS_PSW_SUSP_BACK  "tilgjengelig igjen"
+    IDS_PSW_CODE_MORE  "%s og %s til"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2290,6 +2300,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "ur drift"
     IDS_PSW_SUSP_OFF  "avstängt"
     IDS_PSW_SUSP_BACK  "tillgängligt igen"
+    IDS_PSW_CODE_MORE  "%s och %s till"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2489,6 +2500,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "wyłączony z użytku"
     IDS_PSW_SUSP_OFF  "wyłączony"
     IDS_PSW_SUSP_BACK  "znowu dostępny"
+    IDS_PSW_CODE_MORE  "%s i %s więcej"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2688,6 +2700,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "mimo provoz"
     IDS_PSW_SUSP_OFF  "vypnuto"
     IDS_PSW_SUSP_BACK  "opět k dispozici"
+    IDS_PSW_CODE_MORE  "%s a %s další"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2887,6 +2900,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "nem üzemel"
     IDS_PSW_SUSP_OFF  "kikapcsolva"
     IDS_PSW_SUSP_BACK  "újra elérhető"
+    IDS_PSW_CODE_MORE  "%s és további %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3086,6 +3100,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "выведено из эксплуатации"
     IDS_PSW_SUSP_OFF  "отключено"
     IDS_PSW_SUSP_BACK  "снова доступно"
+    IDS_PSW_CODE_MORE  "%s и ещё %s"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3285,6 +3300,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "hizmet dışı"
     IDS_PSW_SUSP_OFF  "devre dışı"
     IDS_PSW_SUSP_BACK  "yeniden kullanılabilir"
+    IDS_PSW_CODE_MORE  "%s ve %s tane daha"
 END
 
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
@@ -3482,6 +3498,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "停止服务"
     IDS_PSW_SUSP_OFF  "已停用"
     IDS_PSW_SUSP_BACK  "重新可用"
+    IDS_PSW_CODE_MORE  "%s 等另外 %s 个"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3682,6 +3699,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "停止服務"
     IDS_PSW_SUSP_OFF  "已停用"
     IDS_PSW_SUSP_BACK  "重新可用"
+    IDS_PSW_CODE_MORE  "%s 等另外 %s 個"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3882,6 +3900,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "提供停止"
     IDS_PSW_SUSP_OFF  "無効"
     IDS_PSW_SUSP_BACK  "再び利用可能"
+    IDS_PSW_CODE_MORE  "%s ほか %s 件"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -4082,6 +4101,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "사용 중지"
     IDS_PSW_SUSP_OFF  "꺼짐"
     IDS_PSW_SUSP_BACK  "다시 사용 가능"
+    IDS_PSW_CODE_MORE  "%s 외 %s개"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -4282,6 +4302,7 @@ BEGIN
     IDS_PSW_SUSP_DISABLED  "خارج الخدمة"
     IDS_PSW_SUSP_OFF  "متوقفة"
     IDS_PSW_SUSP_BACK  "متاحة من جديد"
+    IDS_PSW_CODE_MORE  "%s و%s أخرى"
 END
 
 /////////////////////////////////////////////////////////////////////////////

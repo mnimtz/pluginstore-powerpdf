@@ -891,10 +891,16 @@ function codeDialog(message, ok, keepInput) {
     var names = addonNames(inf.packages);
     if (names.length) {
       var seat = {}; (inf.installs || []).forEach(function (s) { seat[s.package] = s; });
-      who.appendChild(el("div", "codeaddons", (inf.packages || []).map(function (id, i) {
-        var s = seat[id];   // installations of the delivery (C1.4.1): 3/10, or 3/∞ when unlimited
-        return names[i] + (s ? " (" + fmt(S.seats, s.used + "/" + (s.max == null ? "∞" : s.max)) + ")" : "");
-      }).join(", ")));
+      // installations of the delivery (C1.4.1) only where there is a limit (C2.3.2: "0/∞" told nothing, e.g. for a
+      // campaign code such as FINANCE); more than 4 add-ons: the first 4 and "and N more", the whole list as tooltip
+      var parts = (inf.packages || []).map(function (id, i) {
+        var s = seat[id];
+        return names[i] + (s && s.max != null ? " (" + fmt(S.seats, s.used + "/" + s.max) + ")" : "");
+      });
+      var line = parts.length > 4 && S.codeMore ? fmt(S.codeMore, parts.slice(0, 4).join(", "), parts.length - 4) : parts.join(", ");
+      var ad = el("div", "codeaddons", line);
+      if (parts.length > 4) ad.title = parts.join("\n");
+      who.appendChild(ad);
     }
     row.appendChild(who);
     if (!code.locked) {

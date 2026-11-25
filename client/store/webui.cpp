@@ -681,7 +681,7 @@ protected:
               { L"connNote", IDS_PSW_CONN_NOTE }, { L"connData", IDS_PSW_CONN_DATA }, { L"newsTitle", IDS_PSW_NEWS_TITLE }, { L"newsOk", IDS_PSW_NEWS_OK },
             { L"codeList", IDS_PSW_CODE_LIST }, { L"codeAdd", IDS_PSW_CODE_ADD }, { L"codeNone", IDS_PSW_CODE_NONE },
             { L"codeAsk", IDS_PSW_CODE_ASK }, { L"codeAskAddons", IDS_PSW_CODE_ASK_ADDONS }, { L"codeInvalid", IDS_PSW_CODE_INVALID },
-            { L"orphan", IDS_PSW_ORPHAN }, { L"orphanPill", IDS_PSW_ORPHAN_PILL }, { L"seats", IDS_PSW_SEATS },
+            { L"orphan", IDS_PSW_ORPHAN }, { L"orphanPill", IDS_PSW_ORPHAN_PILL }, { L"seats", IDS_PSW_SEATS }, { L"codeMore", IDS_PSW_CODE_MORE },
             { L"secInstalled", IDS_PSW_SEC_INSTALLED }, { L"secUpdates", IDS_PSW_SEC_UPDATES }, { L"secMore", IDS_PSW_SEC_MORE },
             { L"ppUpdate", IDS_PSW_PP_UPDATE }, { L"ppNews", IDS_PSW_PP_NEWS }, { L"ppHide", IDS_PSW_PP_HIDE },
             { L"ppInstallHint", IDS_PSW_PP_INSTALL_HINT },
