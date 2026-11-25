@@ -21,6 +21,14 @@ public class ManualCodeTests
     [InlineData("", false)]
     public void Rules(string code, bool ok) => Assert.Equal(ok, CustomerService.CheckManualCode(code) is null);
 
+    [Theory]
+    [InlineData("203.0.113.7", "203.0.113.7")]
+    [InlineData("::ffff:203.0.113.7", "203.0.113.7")]                                   // IPv4 in IPv6 form counts as IPv4
+    [InlineData("2001:db8:1234:5678:aaaa:bbbb:cccc:dddd", "20010db812345678::/64")]
+    [InlineData("2001:db8:1234:5678::1", "20010db812345678::/64")]                     // same /64: one counter
+    public void GuessingLimitCountsIpv6PerNetwork(string ip, string key) =>
+        Assert.Equal(key, CustomerService.GuessKey(System.Net.IPAddress.Parse(ip)));
+
     [Fact]
     public void SameHashAsTheClientSends()
     {

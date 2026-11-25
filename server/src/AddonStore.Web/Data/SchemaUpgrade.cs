@@ -148,6 +148,14 @@ public static class SchemaUpgrade
             "ALTER TABLE CustomerCodes ADD COLUMN Manual INTEGER NOT NULL DEFAULT 0",   // S2.8.5: a code an admin chose (e.g. FINANCE)
             // limit a customer's catalog to its deliveries (S1.12.0); after CREATE TABLE Customers
             "ALTER TABLE Customers ADD COLUMN RestrictCatalog INTEGER NOT NULL DEFAULT 0",  // S1.12.0
+            // S2.8.6: the customer's own catalog page (/finance) with logo
+            "ALTER TABLE Customers ADD COLUMN PageSlug TEXT NULL",
+            "ALTER TABLE Customers ADD COLUMN PageEnabled INTEGER NOT NULL DEFAULT 0",
+            "ALTER TABLE Customers ADD COLUMN PageShowCode INTEGER NOT NULL DEFAULT 0",
+            "ALTER TABLE Customers ADD COLUMN PageIntro TEXT NULL",
+            "ALTER TABLE Customers ADD COLUMN LogoFile TEXT NULL",
+            "ALTER TABLE Customers ADD COLUMN LogoUpdatedAt TEXT NULL",
+            "CREATE UNIQUE INDEX IF NOT EXISTS IX_Customers_PageSlug ON Customers (PageSlug) WHERE PageSlug IS NOT NULL",
             "CREATE TABLE IF NOT EXISTS Deliveries (Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, CustomerId INTEGER NOT NULL, " +
                 "PackageId TEXT NOT NULL, BetaMode TEXT NOT NULL, BetaVersion TEXT NULL, LiveMode TEXT NOT NULL, LiveVersion TEXT NULL, " +
                 "StartsAt TEXT NULL, EndsAt TEXT NULL, Status TEXT NOT NULL, CreatedBy TEXT NOT NULL, CreatedAt TEXT NOT NULL, " +

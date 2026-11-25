@@ -1470,6 +1470,8 @@ own personal test code shows it.
     DELETE {{baseUrl}}/api/customers/{cid}                  delete with all codes and deliveries (creator/admin)
     POST  {{baseUrl}}/api/customers/{cid}/codes             {"deliveryId"?: 12, "transitionDays"?: 14, "code"?: "FINANCE" (admins)}
     DELETE {{baseUrl}}/api/customers/{cid}/codes/{codeId}   revoke a code
+    PUT   {{baseUrl}}/api/customers/{cid}/page              {"slug": "finance", "enabled": true, "showCode": false, "intro"?}: own catalog page (admins)
+    PUT|DELETE {{baseUrl}}/api/customers/{cid}/logo         the page's logo: PNG or JPEG body, at most 1 MB (admins)
     POST  {{baseUrl}}/api/customers/{cid}/deliveries        {"packageId", "beta": {"mode", "version"}, "live": {...}, "startsAt"?, "endsAt"?, "ownCode"?}
     PATCH {{baseUrl}}/api/deliveries/{did}                  stages, "startsAt"/"endsAt" (or "clearDates": true), "status": "active"|"paused"|"ended"
     POST  {{baseUrl}}/api/deliveries/{did}/promote          the version of the beta stage becomes the live version
@@ -1488,8 +1490,26 @@ Everybody who enters it in the store window gets the customer's deliveries;
 with `restrictCatalog` they see exactly those add-ons. Because such a word can
 be guessed, it is refused while the customer receives private add-ons
 (`CODE_PRIVATE_DELIVERY`) and it never unlocks a private add-on delivered
-later; generated codes keep doing that. `CODE_TAKEN`: the code is in use;
-`CODE_INVALID`: wrong format or with `deliveryId`.
+later; generated codes keep doing that. A code of your own and a generated
+customer code work side by side: a new code only replaces older codes of the
+same kind. The same customer may use an ended code of its own again at once;
+another customer only 30 days after it ended. `CODE_TAKEN` (409): the code is
+in use; `CODE_INVALID` (400): wrong format or with `deliveryId`. The guessing
+limit counts per address (IPv6 per /64 network).
+
+**Customer pages (S2.8.6, admins).** A customer can get its own catalog page
+at `{{baseUrl}}/<slug>`, for example `/finance`: its logo, its name as the
+heading, an optional intro (at most 600 characters) and only the **public**
+add-ons of its current deliveries (private, blocked, paused or unreleased ones
+never appear). The page is off until `enabled` is set; with `showCode` it names
+the customer's code of its own (for example FINANCE), never a generated code.
+Slugs: 2 to 40 lower-case letters, digits and hyphens, unique
+(`PAGE_SLUG_TAKEN`), not one of the store's own first path segments such as
+`admin`, `api`, `a`, `docs` (`PAGE_INVALID`); the store's own addresses always
+win. Logos (`LOGO_INVALID` otherwise): PNG or JPEG, at most 1 MB, served at
+`{{baseUrl}}/customer-logo/<id>` only while the page is on and the customer
+active. When someone who is no admin renames a customer with a public page,
+the page goes off until an admin switches it on again.
 
 Delivery templates (S1.13.0) are named sets of add-ons, public and private
 mixed; per add-on `version` empty = the newest approved version, else that
@@ -2194,9 +2214,12 @@ be free of warnings before review. Info is for information only.
 | SERVER_MAINTENANCE | error (503) | The store is in maintenance; changes pause for everybody except admins. Wait for `Retry-After` (or `until`), or poll `GET /api/ping` until `serverMode` is no longer `maintenance`. |
 | VISIBILITY_INVALID | error | `visibility` must be `public` or `private` (manifest or PATCH; the store client is always public). |
 | VISIBILITY_KEPT | info | The manifest asks for another visibility than the package has; visibility only changes in the portal or with PATCH. |
-| CODE_INVALID | 400/409 | A code of your own (admins) needs letters, digits and hyphens, 5 to 32 letters and digits with at least one letter, and is always customer-wide (no `deliveryId`). |
+| CODE_INVALID | 400 | A code of your own (admins) needs letters, digits and hyphens, 5 to 32 letters and digits with at least one letter, and is always customer-wide (no `deliveryId`). |
 | CODE_TAKEN | 409 | The code of your own is already in use (by this or another customer). |
 | CODE_PRIVATE_DELIVERY | 409 | The customer receives private add-ons; a readable code of your own could be guessed and is not possible then. |
+| PAGE_INVALID | 400 | Customer page: slug of 2 to 40 lower-case letters, digits and hyphens that is not a store address, intro at most 600 characters. |
+| PAGE_SLUG_TAKEN | 409 | Another customer already has this page name. |
+| LOGO_INVALID | 400 | The customer page logo is a PNG or JPEG file of at most 1 MB. |
 | CUSTOMER_INVALID | error (400) | Customer: name 1 to 120 characters, valid email, two-letter language, status active or paused. |
 | CUSTOMER_NOT_FOUND | error (404) | No such customer, or not yours. |
 | DELIVERY_NOT_FOUND | error (404) | No such delivery, or not yours. |

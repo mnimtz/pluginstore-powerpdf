@@ -1985,4 +1985,29 @@
   <data name="This customer already has this code." xml:space="preserve"><value>此客戶已有此代碼。</value></data>
   <data name="This code is already in use. Choose another one." xml:space="preserve"><value>此代碼已在使用中。請另選一個。</value></data>
   <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>只有管理員可以選擇自訂代碼，且僅適用於整個客戶。</value></data>
+  <data name="In the Add-on Store window in Power PDF, enter the customer code {0} to see exactly these add-ons." xml:space="preserve"><value>在 Power PDF 的 Add-on Store 視窗中輸入客戶代碼 {0}，即可準確看到這些增益集。</value></data>
+  <data name="No add-ons on this page yet." xml:space="preserve"><value>此頁面上尚無增益集。</value></data>
+  <data name="All add-ons in the Add-on Store" xml:space="preserve"><value>Add-on Store 中的所有增益集</value></data>
+  <data name="Customer page" xml:space="preserve"><value>客戶頁面</value></data>
+  <data name="An own catalog page with the logo, the customer's name as heading and only the public add-ons of its deliveries, e.g. for a campaign or a brochure. Private add-ons never appear on it. Off until you switch it on." xml:space="preserve"><value>專屬的目錄頁面，包含標誌、作為標題的客戶名稱，且只顯示該客戶交付中的公開增益集，例如用於行銷活動或宣傳手冊。私人增益集絕不會出現在此頁面上。在您開啟之前保持關閉。</value></data>
+  <data name="Public at" xml:space="preserve"><value>公開位址</value></data>
+  <data name="Page name (address)" xml:space="preserve"><value>頁面名稱 (位址)</value></data>
+  <data name="Lower-case letters, digits and hyphens; the page is then at /finance on this store." xml:space="preserve"><value>小寫字母、數字和連字號；頁面隨後位於此商店的 /finance。</value></data>
+  <data name="Intro (optional)" xml:space="preserve"><value>簡介 (選用)</value></data>
+  <data name="Page public" xml:space="preserve"><value>頁面公開</value></data>
+  <data name="Name the customer's code of its own on the page (never a generated code)" xml:space="preserve"><value>在頁面上顯示客戶自己的代碼 (絕不顯示產生的代碼)</value></data>
+  <data name="Logo" xml:space="preserve"><value>標誌</value></data>
+  <data name="Upload logo" xml:space="preserve"><value>上傳標誌</value></data>
+  <data name="Remove the logo?" xml:space="preserve"><value>要移除標誌嗎？</value></data>
+  <data name="Remove logo" xml:space="preserve"><value>移除標誌</value></data>
+  <data name="PNG or JPEG, at most 1 MB; shown fitted in the head of the page." xml:space="preserve"><value>PNG 或 JPEG，最大 1 MB；在頁面頁首中自動調整顯示。</value></data>
+  <data name="Only admins set up the customer page." xml:space="preserve"><value>只有管理員可以設定客戶頁面。</value></data>
+  <data name="The logo is a PNG or JPEG file of at most 1 MB." xml:space="preserve"><value>標誌必須是不超過 1 MB 的 PNG 或 JPEG 檔案。</value></data>
+  <data name="Logo removed." xml:space="preserve"><value>標誌已移除。</value></data>
+  <data name="Logo saved." xml:space="preserve"><value>標誌已儲存。</value></data>
+  <data name="The page name has 2 to 40 lower-case letters, digits and hyphens, e.g. finance." xml:space="preserve"><value>頁面名稱由 2 到 40 個小寫字母、數字和連字號組成，例如 finance。</value></data>
+  <data name="This page name belongs to the store itself. Choose another one." xml:space="preserve"><value>此頁面名稱屬於商店本身。請另選一個。</value></data>
+  <data name="Another customer already has this page name." xml:space="preserve"><value>其他客戶已在使用此頁面名稱。</value></data>
+  <data name="The intro has at most 600 characters." xml:space="preserve"><value>簡介最多 600 個字元。</value></data>
+  <data name="The logo folder is not available." xml:space="preserve"><value>標誌資料夾無法使用。</value></data>
 </root>

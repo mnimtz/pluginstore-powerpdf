@@ -94,6 +94,49 @@
     }
 </div>
 
+@if (Model.IsAdmin)
+{
+    @* S2.8.6: the customer's own catalog page, e.g. www.power-pdf.de/finance *@
+    <div class="card" id="customer-page">
+        <h2 style="margin-top:0">@L["Customer page"]</h2>
+        <p class="small muted">@L["An own catalog page with the logo, the customer's name as heading and only the public add-ons of its deliveries, e.g. for a campaign or a brochure. Private add-ons never appear on it. Off until you switch it on."]</p>
+        @if (c.PageEnabled && c.PageSlug is not null)
+        {
+            <p>@L["Public at"] <a href="/@c.PageSlug" target="_blank" rel="noopener">@Model.PageUrl(c.PageSlug)</a></p>
+        }
+        <form method="post" asp-page-handler="Page" asp-route-id="@c.Id" class="stack" style="max-width:640px">
+            <div>
+                <label>@L["Page name (address)"]</label>
+                <input type="text" name="pageSlug" value="@c.PageSlug" maxlength="40" placeholder="finance" autocomplete="off" />
+                <small>@L["Lower-case letters, digits and hyphens; the page is then at /finance on this store."]</small>
+            </div>
+            <div>
+                <label>@L["Intro (optional)"]</label>
+                <textarea name="pageIntro" rows="3" maxlength="600">@c.PageIntro</textarea>
+            </div>
+            <label class="check"><input type="checkbox" name="pageEnabled" value="true" @(c.PageEnabled ? "checked" : "") /> @L["Page public"]</label>
+            <label class="check"><input type="checkbox" name="pageShowCode" value="true" @(c.PageShowCode ? "checked" : "") /> @L["Name the customer's code of its own on the page (never a generated code)"]</label>
+            <div><button type="submit" class="btn small">@L["Save"]</button></div>
+        </form>
+        <h3>@L["Logo"]</h3>
+        @if (c.LogoFile is not null)
+        {
+            <p><img src="/Customer?handler=LogoPreview&amp;id=@c.Id&amp;v=@(c.LogoUpdatedAt?.Ticks ?? 0)" alt="" style="max-height:72px;max-width:280px;object-fit:contain;background:#fff;border:1px solid var(--tun-gray-200);padding:6px" /></p>
+        }
+        <form method="post" asp-page-handler="Logo" asp-route-id="@c.Id" enctype="multipart/form-data" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <input type="file" name="logo" accept="image/png,image/jpeg" />
+            <button type="submit" class="btn small">@L["Upload logo"]</button>
+        </form>
+        @if (c.LogoFile is not null)
+        {
+            <form method="post" asp-page-handler="LogoRemove" asp-route-id="@c.Id" style="margin-top:8px" data-confirm="@L["Remove the logo?"]">
+                <button type="submit" class="btn small secondary">@L["Remove logo"]</button>
+            </form>
+        }
+        <small>@L["PNG or JPEG, at most 1 MB; shown fitted in the head of the page."]</small>
+    </div>
+}
+
 <div class="card">
     <h2 style="margin-top:0">@L["Delivery templates"]</h2>
     <p class="small muted">@L["The add-ons of an assigned template are delivered to this customer and follow every change of the template. Manual deliveries below stay possible; for the same add-on the manual one counts."] <a href="/Templates">@L["Manage templates"] →</a></p>

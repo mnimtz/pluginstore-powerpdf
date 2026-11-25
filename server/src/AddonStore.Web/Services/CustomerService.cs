@@ -87,30 +87,47 @@ public class CustomerService
         return null;
     }
 
-    public record ManualOutcome(bool Ok, string Message, CustomerCode? Entity = null, string? Plain = null);
+    /// <summary>Code: CODE_INVALID (format), CODE_TAKEN, CODE_PRIVATE_DELIVERY; null when Ok.</summary>
+    public record ManualOutcome(bool Ok, string Message, CustomerCode? Entity = null, string? Plain = null, string? Code = null);
+
+    /// <summary>A code of one customer that expired or was revoked is free for another customer only after this many days
+    /// (review S2.8.5: workstations still sending it must not see another customer's deliveries the next day).</summary>
+    public const int ManualReuseDays = 30;
 
     /// <summary>
     /// S2.8.5: the customer-wide code chosen by an admin. Only for customers who receive public add-ons only: a readable
-    /// word can be guessed, so it must never unlock a private add-on. Unique over all codes; a revoked or expired row with
-    /// the same code is taken over (the code hash is unique in the table).
+    /// word can be guessed, so it must never unlock a private add-on. Unique over all codes. The same customer may use an
+    /// expired or revoked code of its own again; another customer only after ManualReuseDays (the old row is replaced).
     /// </summary>
     public async Task<ManualOutcome> CreateManualCodeAsync(int customerId, string raw, string actor, int transitionDays = 14)
     {
-        if (CheckManualCode(raw) is { } why) return new(false, why);
+        if (CheckManualCode(raw) is { } why) return new(false, why, Code: "CODE_INVALID");
         var plain = raw.Trim().ToUpperInvariant();
         var hash = Hash(plain);
         var now = DateTime.UtcNow;
         var hasPrivate = await _db.Deliveries.AnyAsync(d => d.CustomerId == customerId && d.Status != "ended" &&
                                                             _db.Packages.Any(p => p.Id == d.PackageId && p.Visibility == "private"));
         if (hasPrivate)
-            return new(false, "This customer receives private add-ons. A code of your own can be guessed, so it is only possible for customers with public add-ons only.");
+            return new(false, "This customer receives private add-ons. A code of your own can be guessed, so it is only possible for customers with public add-ons only.", Code: "CODE_PRIVATE_DELIVERY");
         var existing = await _db.CustomerCodes.FirstOrDefaultAsync(c => c.CodeHash == hash);
         if (existing is not null && CodeValid(existing, now))
-            return new(false, existing.CustomerId == customerId ? "This customer already has this code." : "This code is already in use. Choose another one.");
-        foreach (var old in await _db.CustomerCodes.Where(c => c.CustomerId == customerId && c.DeliveryId == null && c.RevokedAt == null &&
+            return new(false, existing.CustomerId == customerId ? "This customer already has this code." : "This code is already in use. Choose another one.", Code: "CODE_TAKEN");
+        var replaced = false;
+        if (existing is not null && existing.CustomerId != customerId)
+        {
+            var endedAt = existing.RevokedAt ?? existing.ExpiresAt ?? now;
+            if (endedAt > now.AddDays(-ManualReuseDays)) return new(false, "This code is already in use. Choose another one.", Code: "CODE_TAKEN");
+            _db.CustomerCodes.Remove(existing);   // long ended: the row of the other customer goes, a new one follows
+            replaced = true;
+            await _audit.LogAsync(actor, "customer.code.reused", $"customer {existing.CustomerId}", $"ended code {plain} given to customer {customerId}");
+            existing = null;
+        }
+        // review S2.8.5: only codes of the same kind replace each other (a generated code keeps working next to it)
+        foreach (var old in await _db.CustomerCodes.Where(c => c.CustomerId == customerId && c.DeliveryId == null && c.RevokedAt == null && c.Manual &&
                                                                (existing == null || c.Id != existing.Id)).ToListAsync())
             if (old.ExpiresAt is null || old.ExpiresAt > now)
                 old.ExpiresAt = now.AddDays(Math.Clamp(transitionDays, 0, 365));
+        if (replaced) await _db.SaveChangesAsync();   // the removed row first: the code hash is unique
         var entity = existing ?? new CustomerCode();
         var tookOver = existing is not null;
         entity.CustomerId = customerId; entity.DeliveryId = null; entity.CodeHash = hash; entity.CodeProtected = _protector.Protect(plain);
@@ -121,10 +138,10 @@ public class CustomerService
         catch (DbUpdateException)
         {
             _db.ChangeTracker.Clear();
-            return new(false, "This code is already in use. Choose another one.");
+            return new(false, "This code is already in use. Choose another one.", Code: "CODE_TAKEN");
         }
         await _audit.LogAsync(actor, "customer.code.created", $"customer {customerId}",
-            $"code of your own {plain}, transition {transitionDays} days" + (tookOver ? "; took over an expired or revoked row" : ""));
+            $"code of your own {plain}, transition {transitionDays} days" + (tookOver ? "; took over its own ended row" : replaced ? "; replaced a long ended row of another customer" : ""));
         return new(true, "Code created.", entity, plain);
     }
 
@@ -136,8 +153,9 @@ public class CustomerService
     public async Task<(CustomerCode Entity, string Plain)> CreateCodeAsync(int customerId, int? deliveryId, string actor, int transitionDays = 14)
     {
         var now = DateTime.UtcNow;
+        // review S2.8.5: a code of the admin's own choice (Manual) keeps working next to a new generated one
         foreach (var old in await _db.CustomerCodes.Where(c => c.CustomerId == customerId && c.DeliveryId == deliveryId &&
-                                                               c.RevokedAt == null).ToListAsync())
+                                                               c.RevokedAt == null && !c.Manual).ToListAsync())
             if (old.ExpiresAt is null || old.ExpiresAt > now)
                 old.ExpiresAt = now.AddDays(Math.Clamp(transitionDays, 0, 365));
         var plain = NewCode();
@@ -206,9 +224,16 @@ public class CustomerService
     }
 
     public async Task UpdateCustomerAsync(Customer c, string? name, string? contactName, string? email, string? language, string? note,
-                                          string? status, string actor, bool? restrictCatalog = null)
+                                          string? status, string actor, bool? restrictCatalog = null, bool byAdmin = false)
     {
         if (restrictCatalog is { } rc) c.RestrictCatalog = rc;
+        // review S2.8.6: the name is the heading of a public customer page; changed by someone who is no admin, the page
+        // goes off until an admin switches it on again
+        if (!string.IsNullOrWhiteSpace(name) && name.Trim() != c.Name && c.PageEnabled && !byAdmin)
+        {
+            c.PageEnabled = false;
+            await _audit.LogAsync(actor, "customer.page.updated", $"customer {c.Id}", "page switched off: name changed by a non-admin");
+        }
         if (!string.IsNullOrWhiteSpace(name)) c.Name = name.Trim();
         c.ContactName = Clean(contactName, 120);
         c.ContactEmail = Clean(email, 200);
@@ -228,6 +253,7 @@ public class CustomerService
     {
         var codes = await _db.CustomerCodes.Where(x => x.CustomerId == c.Id).ToListAsync();
         var deliveries = await _db.Deliveries.Where(x => x.CustomerId == c.Id).ToListAsync();
+        CustomerPageService.DeleteLogoFiles(c.Id);   // S2.8.6
         _db.CustomerCodes.RemoveRange(codes);
         var deliveryIds = deliveries.Select(d => d.Id).ToList();
         _db.DeliverySeats.RemoveRange(_db.DeliverySeats.Where(s => deliveryIds.Contains(s.DeliveryId)));   // S1.4.2
@@ -511,7 +537,7 @@ public class CustomerService
             // 20 = a generated code; S2.8.5: also a code an admin chose (5 to 32 letters and digits)
             .Select(Normalize).Where(c => c.Length == 20 || c.Length is >= ManualMin and <= ManualMax).Distinct().Take(10).Select(Hash).ToList();
         if (hashes.Count == 0) return (new(), new());
-        var ip = GeoService.ClientIp(ctx)?.ToString() ?? "";
+        var ip = GuessKey(GeoService.ClientIp(ctx));
         var key = "custcode-fail:" + ip + ":" + DateTime.UtcNow.ToString("yyyyMMddHH", System.Globalization.CultureInfo.InvariantCulture);
         var state = _cache.GetOrCreate(key, e => { e.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1); return new CodeAttempts(); })!;
         lock (state)
@@ -540,6 +566,19 @@ public class CustomerService
         if (blockNow)
             await _audit.LogAsync("system", "customer.code.blocked", ip, $"{MaxFailedPerHour} unknown customer codes within an hour; new codes from this address are ignored for the hour");
         return (codes, tests);
+    }
+
+    /// <summary>
+    /// The address the guessing limit counts per (review S2.8.5): IPv4 as it is, IPv6 by its /64 network, since one
+    /// client usually holds a whole /64 and could otherwise try codes from endless addresses.
+    /// </summary>
+    public static string GuessKey(System.Net.IPAddress? ip)
+    {
+        if (ip is null) return "";
+        if (ip.IsIPv4MappedToIPv6) ip = ip.MapToIPv4();
+        if (ip.AddressFamily != System.Net.Sockets.AddressFamily.InterNetworkV6) return ip.ToString();
+        var b = ip.GetAddressBytes();
+        return Convert.ToHexString(b, 0, 8).ToLowerInvariant() + "::/64";
     }
 
     // ------------------------------------------------------- developer test codes (S1.6.0)
@@ -689,7 +728,10 @@ public class CustomerService
         var ids = packageIds.ToList();
         var customerIds = codes.Select(c => c.CustomerId).Distinct().ToList();
         var deliveries = await _db.Deliveries.Where(d => customerIds.Contains(d.CustomerId) && ids.Contains(d.PackageId)).ToListAsync();
-        return deliveries.Where(d => codes.Any(c => c.CustomerId == d.CustomerId && (c.DeliveryId is null || c.DeliveryId == d.Id))).ToList();
+        // review S2.8.5: like the grants, a code of the admin's own choice does not reach private add-ons
+        var privateIds = (await _db.Packages.Where(p => ids.Contains(p.Id) && p.Visibility == "private").Select(p => p.Id).ToListAsync()).ToHashSet();
+        return deliveries.Where(d => codes.Any(c => (!c.Manual || !privateIds.Contains(d.PackageId)) &&
+                                                    c.CustomerId == d.CustomerId && (c.DeliveryId is null || c.DeliveryId == d.Id))).ToList();
     }
 
     /// <summary>Valid code(s), the customer name(s) and the add-ons they unlock now (ids, S1.4.2).</summary>

@@ -1985,4 +1985,29 @@
   <data name="This customer already has this code." xml:space="preserve"><value>Den här kunden har redan den här koden.</value></data>
   <data name="This code is already in use. Choose another one." xml:space="preserve"><value>Den här koden används redan. Välj en annan.</value></data>
   <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>Endast administratörer väljer en egen kod, och endast för hela kunden.</value></data>
+  <data name="In the Add-on Store window in Power PDF, enter the customer code {0} to see exactly these add-ons." xml:space="preserve"><value>Ange kundkoden {0} i fönstret Add-on Store i Power PDF för att se just dessa tillägg.</value></data>
+  <data name="No add-ons on this page yet." xml:space="preserve"><value>Inga tillägg på den här sidan än.</value></data>
+  <data name="All add-ons in the Add-on Store" xml:space="preserve"><value>Alla tillägg i Add-on Store</value></data>
+  <data name="Customer page" xml:space="preserve"><value>Kundsida</value></data>
+  <data name="An own catalog page with the logo, the customer's name as heading and only the public add-ons of its deliveries, e.g. for a campaign or a brochure. Private add-ons never appear on it. Off until you switch it on." xml:space="preserve"><value>En egen katalogsida med logotypen, kundens namn som rubrik och endast de offentliga tilläggen från kundens leveranser, t.ex. för en kampanj eller en broschyr. Privata tillägg visas aldrig där. Av tills du slår på den.</value></data>
+  <data name="Public at" xml:space="preserve"><value>Offentlig på</value></data>
+  <data name="Page name (address)" xml:space="preserve"><value>Sidnamn (adress)</value></data>
+  <data name="Lower-case letters, digits and hyphens; the page is then at /finance on this store." xml:space="preserve"><value>Små bokstäver, siffror och bindestreck; sidan finns sedan på /finance i den här butiken.</value></data>
+  <data name="Intro (optional)" xml:space="preserve"><value>Inledning (valfri)</value></data>
+  <data name="Page public" xml:space="preserve"><value>Sidan offentlig</value></data>
+  <data name="Name the customer's code of its own on the page (never a generated code)" xml:space="preserve"><value>Visa kundens egen kod på sidan (aldrig en genererad kod)</value></data>
+  <data name="Logo" xml:space="preserve"><value>Logotyp</value></data>
+  <data name="Upload logo" xml:space="preserve"><value>Ladda upp logotyp</value></data>
+  <data name="Remove the logo?" xml:space="preserve"><value>Ta bort logotypen?</value></data>
+  <data name="Remove logo" xml:space="preserve"><value>Ta bort logotyp</value></data>
+  <data name="PNG or JPEG, at most 1 MB; shown fitted in the head of the page." xml:space="preserve"><value>PNG eller JPEG, högst 1 MB; visas anpassad i sidhuvudet.</value></data>
+  <data name="Only admins set up the customer page." xml:space="preserve"><value>Endast administratörer konfigurerar kundsidan.</value></data>
+  <data name="The logo is a PNG or JPEG file of at most 1 MB." xml:space="preserve"><value>Logotypen ska vara en PNG- eller JPEG-fil på högst 1 MB.</value></data>
+  <data name="Logo removed." xml:space="preserve"><value>Logotypen har tagits bort.</value></data>
+  <data name="Logo saved." xml:space="preserve"><value>Logotypen har sparats.</value></data>
+  <data name="The page name has 2 to 40 lower-case letters, digits and hyphens, e.g. finance." xml:space="preserve"><value>Sidnamnet har 2 till 40 små bokstäver, siffror och bindestreck, t.ex. finance.</value></data>
+  <data name="This page name belongs to the store itself. Choose another one." xml:space="preserve"><value>Det här sidnamnet tillhör själva butiken. Välj ett annat.</value></data>
+  <data name="Another customer already has this page name." xml:space="preserve"><value>En annan kund har redan det här sidnamnet.</value></data>
+  <data name="The intro has at most 600 characters." xml:space="preserve"><value>Inledningen får ha högst 600 tecken.</value></data>
+  <data name="The logo folder is not available." xml:space="preserve"><value>Logotypmappen är inte tillgänglig.</value></data>
 </root>

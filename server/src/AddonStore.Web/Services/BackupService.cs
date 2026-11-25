@@ -52,6 +52,8 @@ public class BackupService
     }
 
     private string AvatarsRoot => Path.Combine(DataRoot, "avatars");
+    // S2.8.6: logos of the customers' own catalog pages
+    private string LogosRoot => Path.Combine(DataRoot, "logos");
     // Data protection key ring (Program.cs): decrypts stored secrets such as the AI API key.
     private string KeysRoot => Path.Combine(DataRoot, "keys");
     public string SafetyRoot => Path.Combine(DataRoot, "backups");
@@ -108,7 +110,7 @@ public class BackupService
                 // Send to transfers (rows and the encrypted blocks in their own blob container).
                 // UAT environments (S1.21.0): paired UATs, pairing code hashes and the federation keys are in
                 // pluginstore.db (keys protected by keys/); the replay list of nonces lives only in memory.
-                contents = new[] { "pluginstore.db", "packages/ (packages and source code)", "avatars/", "devkit/",
+                contents = new[] { "pluginstore.db", "packages/ (packages and source code)", "avatars/", "logos/ (customer page logos, S2.8.6)", "devkit/",
                                    "keys/ (data protection key ring for encrypted settings such as the AI key and the UAT federation keys)" }
             };
 
@@ -117,6 +119,7 @@ public class BackupService
             zip.CreateEntryFromFile(tmpDb, "pluginstore.db", CompressionLevel.Optimal);
             AddFolder(zip, PackagesRoot, "packages");
             AddFolder(zip, AvatarsRoot, "avatars");
+            AddFolder(zip, LogosRoot, "logos");
             AddFolder(zip, DevkitRoot, "devkit");
             AddFolder(zip, KeysRoot, "keys");
             var e = zip.CreateEntry("backup.json");
@@ -358,7 +361,7 @@ public class BackupService
     private void Apply(string zipPath, byte[]? decryptedKeys)
     {
         var dbPath = DbPath;
-        var folders = new[] { ("packages/", PackagesRoot), ("avatars/", AvatarsRoot), ("devkit/", DevkitRoot) };
+        var folders = new[] { ("packages/", PackagesRoot), ("avatars/", AvatarsRoot), ("logos/", LogosRoot), ("devkit/", DevkitRoot) };
         var stagedDb = dbPath + ".restore";
         using var zip = ZipFile.OpenRead(zipPath);
         try

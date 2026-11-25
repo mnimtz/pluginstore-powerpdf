@@ -1985,4 +1985,29 @@
   <data name="This customer already has this code." xml:space="preserve"><value>Bu müşteri bu koda zaten sahip.</value></data>
   <data name="This code is already in use. Choose another one." xml:space="preserve"><value>Bu kod zaten kullanılıyor. Başka bir kod seçin.</value></data>
   <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>Kendi kodunu yalnızca yöneticiler seçer ve yalnızca müşterinin tamamı için.</value></data>
+  <data name="In the Add-on Store window in Power PDF, enter the customer code {0} to see exactly these add-ons." xml:space="preserve"><value>Tam olarak bu eklentileri görmek için Power PDF'teki Add-on Store penceresinde {0} müşteri kodunu girin.</value></data>
+  <data name="No add-ons on this page yet." xml:space="preserve"><value>Bu sayfada henüz eklenti yok.</value></data>
+  <data name="All add-ons in the Add-on Store" xml:space="preserve"><value>Add-on Store'daki tüm eklentiler</value></data>
+  <data name="Customer page" xml:space="preserve"><value>Müşteri sayfası</value></data>
+  <data name="An own catalog page with the logo, the customer's name as heading and only the public add-ons of its deliveries, e.g. for a campaign or a brochure. Private add-ons never appear on it. Off until you switch it on." xml:space="preserve"><value>Logo, başlık olarak müşterinin adı ve yalnızca müşterinin teslimatlarındaki herkese açık eklentilerle kendine ait bir katalog sayfası; örneğin bir kampanya veya broşür için. Özel eklentiler bu sayfada hiçbir zaman görünmez. Siz açana kadar kapalıdır.</value></data>
+  <data name="Public at" xml:space="preserve"><value>Herkese açık adres</value></data>
+  <data name="Page name (address)" xml:space="preserve"><value>Sayfa adı (adres)</value></data>
+  <data name="Lower-case letters, digits and hyphens; the page is then at /finance on this store." xml:space="preserve"><value>Küçük harfler, rakamlar ve kısa çizgiler; sayfa bu durumda bu mağazada /finance adresinde yer alır.</value></data>
+  <data name="Intro (optional)" xml:space="preserve"><value>Giriş metni (isteğe bağlı)</value></data>
+  <data name="Page public" xml:space="preserve"><value>Sayfa herkese açık</value></data>
+  <data name="Name the customer's code of its own on the page (never a generated code)" xml:space="preserve"><value>Müşterinin kendine ait kodunu sayfada belirt (asla oluşturulan bir kod değil)</value></data>
+  <data name="Logo" xml:space="preserve"><value>Logo</value></data>
+  <data name="Upload logo" xml:space="preserve"><value>Logo yükle</value></data>
+  <data name="Remove the logo?" xml:space="preserve"><value>Logo kaldırılsın mı?</value></data>
+  <data name="Remove logo" xml:space="preserve"><value>Logoyu kaldır</value></data>
+  <data name="PNG or JPEG, at most 1 MB; shown fitted in the head of the page." xml:space="preserve"><value>PNG veya JPEG, en fazla 1 MB; sayfanın üst kısmında sığdırılarak gösterilir.</value></data>
+  <data name="Only admins set up the customer page." xml:space="preserve"><value>Müşteri sayfasını yalnızca yöneticiler ayarlar.</value></data>
+  <data name="The logo is a PNG or JPEG file of at most 1 MB." xml:space="preserve"><value>Logo en fazla 1 MB boyutunda bir PNG veya JPEG dosyası olmalıdır.</value></data>
+  <data name="Logo removed." xml:space="preserve"><value>Logo kaldırıldı.</value></data>
+  <data name="Logo saved." xml:space="preserve"><value>Logo kaydedildi.</value></data>
+  <data name="The page name has 2 to 40 lower-case letters, digits and hyphens, e.g. finance." xml:space="preserve"><value>Sayfa adı 2 ile 40 arasında küçük harf, rakam ve kısa çizgiden oluşur, örn. finance.</value></data>
+  <data name="This page name belongs to the store itself. Choose another one." xml:space="preserve"><value>Bu sayfa adı mağazanın kendisine aittir. Başka bir ad seçin.</value></data>
+  <data name="Another customer already has this page name." xml:space="preserve"><value>Bu sayfa adı zaten başka bir müşteriye ait.</value></data>
+  <data name="The intro has at most 600 characters." xml:space="preserve"><value>Giriş metni en fazla 600 karakter olabilir.</value></data>
+  <data name="The logo folder is not available." xml:space="preserve"><value>Logo klasörü kullanılamıyor.</value></data>
 </root>

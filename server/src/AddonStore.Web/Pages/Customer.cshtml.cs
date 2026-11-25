@@ -44,6 +44,47 @@ public class CustomerModel : PageModel
     public Dictionary<int, string> TemplateNames { get; private set; } = new();
     public bool RestrictedByTemplate { get; private set; }
 
+    // ---- S2.8.6: the customer's own catalog page (admins) ------------------------------------------------
+    public Task<IActionResult> OnPostPageAsync(int id, string? pageSlug, bool pageEnabled, bool pageShowCode, string? pageIntro,
+                                               [FromServices] CustomerPageService pages) =>
+        ActAsync(id, async me =>
+        {
+            if (!User.IsInRole("Admin")) return (false, "Only admins set up the customer page.");
+            var r = await pages.SaveAsync(Cust!, pageSlug, pageEnabled, pageShowCode, pageIntro, me.DisplayName);
+            return (r.Ok, r.Message);
+        });
+
+    public Task<IActionResult> OnPostLogoAsync(int id, IFormFile? logo, [FromServices] CustomerPageService pages) =>
+        ActAsync(id, async me =>
+        {
+            if (!User.IsInRole("Admin")) return (false, "Only admins set up the customer page.");
+            if (logo is null || logo.Length == 0 || logo.Length > CustomerPageService.MaxLogoBytes) return (false, "The logo is a PNG or JPEG file of at most 1 MB.");
+            using var ms = new MemoryStream();
+            await logo.CopyToAsync(ms);
+            var r = await pages.SaveLogoAsync(Cust!, ms.ToArray(), me.DisplayName);
+            return (r.Ok, r.Message);
+        });
+
+    public Task<IActionResult> OnPostLogoRemoveAsync(int id, [FromServices] CustomerPageService pages) =>
+        ActAsync(id, async me =>
+        {
+            if (!User.IsInRole("Admin")) return (false, "Only admins set up the customer page.");
+            await pages.RemoveLogoAsync(Cust!, me.DisplayName);
+            return (true, "Logo removed.");
+        });
+
+    /// <summary>The logo for admins, also while the page is off (the public address serves only pages that are on).</summary>
+    public async Task<IActionResult> OnGetLogoPreviewAsync(int id)
+    {
+        if (!User.IsInRole("Admin") || !await LoadAsync(id) || Cust!.LogoFile is null || CustomerPageService.LogosDir.Length == 0) return NotFound();
+        var dir = CustomerPageService.LogosDir;
+        var file = Directory.Exists(dir) ? Directory.EnumerateFiles(dir).FirstOrDefault(f => Path.GetFileName(f) == Cust.LogoFile) : null;
+        return file is null ? NotFound() : PhysicalFile(file, file.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ? "image/png" : "image/jpeg");
+    }
+
+    /// <summary>Public address of the customer page on this host (https, the host of the request).</summary>
+    public string PageUrl(string slug) => $"{(Request.Host.Host is "localhost" or "127.0.0.1" ? Request.Scheme : "https")}://{Request.Host}/{slug}";
+
     public Task<IActionResult> OnPostAssignTemplateAsync(int id, int templateId) =>
         ActAsync(id, async me => await _templates.AssignAsync(Cust!, templateId, me) is null
             ? (true, "Template assigned. Its add-ons are delivered now.") : (false, "This action is not allowed for this version."));
@@ -133,7 +174,7 @@ public class CustomerModel : PageModel
         ActAsync(id, async me =>
         {
             if (CustomerService.CheckCustomer(name, contactEmail, language) is not null) return (false, "Please check name and email address.");
-            await _customers.UpdateCustomerAsync(Cust!, name, contactName, contactEmail, language, note, status, me.DisplayName, restrictCatalog);
+            await _customers.UpdateCustomerAsync(Cust!, name, contactName, contactEmail, language, note, status, me.DisplayName, restrictCatalog, User.IsInRole("Admin"));
             return (true, "Settings saved.");
         });
 

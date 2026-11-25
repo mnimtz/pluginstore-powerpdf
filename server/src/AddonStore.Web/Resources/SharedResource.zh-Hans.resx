@@ -1985,4 +1985,29 @@
   <data name="This customer already has this code." xml:space="preserve"><value>此客户已有此代码。</value></data>
   <data name="This code is already in use. Choose another one." xml:space="preserve"><value>此代码已被使用。请另选一个。</value></data>
   <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>只有管理员可以选择自定义代码，且仅限整个客户。</value></data>
+  <data name="In the Add-on Store window in Power PDF, enter the customer code {0} to see exactly these add-ons." xml:space="preserve"><value>在 Power PDF 的 Add-on Store 窗口中输入客户代码 {0}，即可准确看到这些加载项。</value></data>
+  <data name="No add-ons on this page yet." xml:space="preserve"><value>此页面上还没有加载项。</value></data>
+  <data name="All add-ons in the Add-on Store" xml:space="preserve"><value>Add-on Store 中的所有加载项</value></data>
+  <data name="Customer page" xml:space="preserve"><value>客户页面</value></data>
+  <data name="An own catalog page with the logo, the customer's name as heading and only the public add-ons of its deliveries, e.g. for a campaign or a brochure. Private add-ons never appear on it. Off until you switch it on." xml:space="preserve"><value>专属的目录页面，包含徽标、作为标题的客户名称，并且只显示该客户交付中的公开加载项，例如用于营销活动或宣传册。私有加载项绝不会显示在此页面上。在您开启之前保持关闭。</value></data>
+  <data name="Public at" xml:space="preserve"><value>公开地址</value></data>
+  <data name="Page name (address)" xml:space="preserve"><value>页面名称（地址）</value></data>
+  <data name="Lower-case letters, digits and hyphens; the page is then at /finance on this store." xml:space="preserve"><value>小写字母、数字和连字符；页面随后位于此商店的 /finance。</value></data>
+  <data name="Intro (optional)" xml:space="preserve"><value>简介（可选）</value></data>
+  <data name="Page public" xml:space="preserve"><value>页面公开</value></data>
+  <data name="Name the customer's code of its own on the page (never a generated code)" xml:space="preserve"><value>在页面上显示客户自己的代码（绝不显示生成的代码）</value></data>
+  <data name="Logo" xml:space="preserve"><value>徽标</value></data>
+  <data name="Upload logo" xml:space="preserve"><value>上传徽标</value></data>
+  <data name="Remove the logo?" xml:space="preserve"><value>删除徽标？</value></data>
+  <data name="Remove logo" xml:space="preserve"><value>删除徽标</value></data>
+  <data name="PNG or JPEG, at most 1 MB; shown fitted in the head of the page." xml:space="preserve"><value>PNG 或 JPEG，最大 1 MB；在页面页眉中自适应显示。</value></data>
+  <data name="Only admins set up the customer page." xml:space="preserve"><value>只有管理员可以设置客户页面。</value></data>
+  <data name="The logo is a PNG or JPEG file of at most 1 MB." xml:space="preserve"><value>徽标必须是不超过 1 MB 的 PNG 或 JPEG 文件。</value></data>
+  <data name="Logo removed." xml:space="preserve"><value>徽标已删除。</value></data>
+  <data name="Logo saved." xml:space="preserve"><value>徽标已保存。</value></data>
+  <data name="The page name has 2 to 40 lower-case letters, digits and hyphens, e.g. finance." xml:space="preserve"><value>页面名称由 2 到 40 个小写字母、数字和连字符组成，例如 finance。</value></data>
+  <data name="This page name belongs to the store itself. Choose another one." xml:space="preserve"><value>此页面名称属于商店本身。请另选一个。</value></data>
+  <data name="Another customer already has this page name." xml:space="preserve"><value>另一个客户已在使用此页面名称。</value></data>
+  <data name="The intro has at most 600 characters." xml:space="preserve"><value>简介最多 600 个字符。</value></data>
+  <data name="The logo folder is not available." xml:space="preserve"><value>徽标文件夹不可用。</value></data>
 </root>

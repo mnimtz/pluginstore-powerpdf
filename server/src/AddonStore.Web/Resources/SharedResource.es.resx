@@ -1985,4 +1985,29 @@
   <data name="This customer already has this code." xml:space="preserve"><value>Este cliente ya tiene este código.</value></data>
   <data name="This code is already in use. Choose another one." xml:space="preserve"><value>Este código ya está en uso. Elija otro.</value></data>
   <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>Solo los administradores eligen un código propio, y solo para todo el cliente.</value></data>
+  <data name="In the Add-on Store window in Power PDF, enter the customer code {0} to see exactly these add-ons." xml:space="preserve"><value>En la ventana Add-on Store de Power PDF, introduzca el código de cliente {0} para ver exactamente estos complementos.</value></data>
+  <data name="No add-ons on this page yet." xml:space="preserve"><value>Todavía no hay complementos en esta página.</value></data>
+  <data name="All add-ons in the Add-on Store" xml:space="preserve"><value>Todos los complementos del Add-on Store</value></data>
+  <data name="Customer page" xml:space="preserve"><value>Página del cliente</value></data>
+  <data name="An own catalog page with the logo, the customer's name as heading and only the public add-ons of its deliveries, e.g. for a campaign or a brochure. Private add-ons never appear on it. Off until you switch it on." xml:space="preserve"><value>Una página de catálogo propia con el logotipo, el nombre del cliente como título y solo los complementos públicos de sus entregas, p. ej. para una campaña o un folleto. Los complementos privados nunca aparecen en ella. Desactivada hasta que usted la active.</value></data>
+  <data name="Public at" xml:space="preserve"><value>Pública en</value></data>
+  <data name="Page name (address)" xml:space="preserve"><value>Nombre de la página (dirección)</value></data>
+  <data name="Lower-case letters, digits and hyphens; the page is then at /finance on this store." xml:space="preserve"><value>Letras minúsculas, cifras y guiones; la página estará entonces en /finance de esta tienda.</value></data>
+  <data name="Intro (optional)" xml:space="preserve"><value>Introducción (opcional)</value></data>
+  <data name="Page public" xml:space="preserve"><value>Página pública</value></data>
+  <data name="Name the customer's code of its own on the page (never a generated code)" xml:space="preserve"><value>Mostrar en la página el código propio del cliente (nunca un código generado)</value></data>
+  <data name="Logo" xml:space="preserve"><value>Logotipo</value></data>
+  <data name="Upload logo" xml:space="preserve"><value>Subir logotipo</value></data>
+  <data name="Remove the logo?" xml:space="preserve"><value>¿Quitar el logotipo?</value></data>
+  <data name="Remove logo" xml:space="preserve"><value>Quitar logotipo</value></data>
+  <data name="PNG or JPEG, at most 1 MB; shown fitted in the head of the page." xml:space="preserve"><value>PNG o JPEG, máximo 1 MB; se muestra ajustado en la cabecera de la página.</value></data>
+  <data name="Only admins set up the customer page." xml:space="preserve"><value>Solo los administradores configuran la página del cliente.</value></data>
+  <data name="The logo is a PNG or JPEG file of at most 1 MB." xml:space="preserve"><value>El logotipo debe ser un archivo PNG o JPEG de 1 MB como máximo.</value></data>
+  <data name="Logo removed." xml:space="preserve"><value>Logotipo quitado.</value></data>
+  <data name="Logo saved." xml:space="preserve"><value>Logotipo guardado.</value></data>
+  <data name="The page name has 2 to 40 lower-case letters, digits and hyphens, e.g. finance." xml:space="preserve"><value>El nombre de la página tiene de 2 a 40 letras minúsculas, cifras y guiones, p. ej. finance.</value></data>
+  <data name="This page name belongs to the store itself. Choose another one." xml:space="preserve"><value>Este nombre de página pertenece a la propia tienda. Elija otro.</value></data>
+  <data name="Another customer already has this page name." xml:space="preserve"><value>Otro cliente ya tiene este nombre de página.</value></data>
+  <data name="The intro has at most 600 characters." xml:space="preserve"><value>La introducción tiene como máximo 600 caracteres.</value></data>
+  <data name="The logo folder is not available." xml:space="preserve"><value>La carpeta de logotipos no está disponible.</value></data>
 </root>

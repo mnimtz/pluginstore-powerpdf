@@ -371,6 +371,15 @@ public class Customer
     public DateTime? LastSeenAt { get; set; }             // last catalog request with one of its codes
     /// <summary>S1.12.0: its codes show only its deliveries (and store client updates), not the public catalog.</summary>
     public bool RestrictCatalog { get; set; }
+    /// <summary>S2.8.6: own catalog page at /{PageSlug} (e.g. /finance) with the public add-ons of its deliveries; admins.</summary>
+    public string? PageSlug { get; set; }
+    public bool PageEnabled { get; set; }
+    /// <summary>The page names the customer's code of its own (e.g. FINANCE); a generated code is never shown.</summary>
+    public bool PageShowCode { get; set; }
+    public string? PageIntro { get; set; }
+    /// <summary>Logo file in data/logos ("12.png" or "12.jpg"); null = none.</summary>
+    public string? LogoFile { get; set; }
+    public DateTime? LogoUpdatedAt { get; set; }
 }
 
 /// <summary>

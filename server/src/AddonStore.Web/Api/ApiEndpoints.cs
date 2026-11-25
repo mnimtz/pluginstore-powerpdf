@@ -1221,7 +1221,7 @@ public static class ApiEndpoints
                 body.Status is not (null or "active" or "paused"))
                 return Fail("CUSTOMER_INVALID", "Check name, contactEmail, language and status (active or paused).", 400);
             await cs.UpdateCustomerAsync(c, body.Name, body.ContactName ?? c.ContactName, body.ContactEmail ?? c.ContactEmail,
-                body.Language, body.Note ?? c.Note, body.Status, user.DisplayName, body.RestrictCatalog);
+                body.Language, body.Note ?? c.Note, body.Status, user.DisplayName, body.RestrictCatalog, ctx.User.IsInRole("Admin"));
             return Results.Json(new { ok = true, data = await cs.DescribeAsync(c, true, UiLang(ctx)) });
         }).RequireAuthorization("ApiOrCookie");
 
@@ -1328,9 +1328,7 @@ public static class ApiEndpoints
                 if (!ctx.User.IsInRole("Admin")) return Fail("ADMIN_ONLY", "Only admins choose a code of their own.", 403);
                 if (body.DeliveryId is not null) return Fail("CODE_INVALID", "A code of your own is always for the whole customer; leave out deliveryId.", 400);
                 var m = await cs.CreateManualCodeAsync(cid, body.Code, user.DisplayName, body.TransitionDays ?? 14);
-                if (!m.Ok)
-                    return Fail(m.Message.StartsWith("This code is already") || m.Message.StartsWith("This customer already") ? "CODE_TAKEN"
-                                : m.Message.StartsWith("This customer receives private") ? "CODE_PRIVATE_DELIVERY" : "CODE_INVALID", m.Message, 409);
+                if (!m.Ok) return Fail(m.Code ?? "CODE_INVALID", m.Message, m.Code is "CODE_INVALID" or null ? 400 : 409);
                 return Results.Json(new { ok = true, data = new { id = m.Entity!.Id, scope = "customer", deliveryId = (int?)null, code = m.Plain, manual = true } }, statusCode: 201);
             }
             var (code, plain) = await cs.CreateCodeAsync(cid, body?.DeliveryId, user.DisplayName, body?.TransitionDays ?? 14);
@@ -1350,6 +1348,53 @@ public static class ApiEndpoints
                 ? Results.Json(new { ok = true, data = new { id = codeId, revoked = true } })
                 : NotFound("CODE_NOT_FOUND", $"No code {codeId} for customer {cid}.");
         }).RequireAuthorization("ApiOrCookie");
+
+        // S2.8.6: the customer's own catalog page (/{slug}) and its logo; admins
+        api.MapPut("/customers/{cid:int}/page", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users,
+                                                       CustomerPageService pages, PageBody? body) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            if (!ctx.User.IsInRole("Admin")) return Fail("ADMIN_ONLY", "Only admins set up customer pages.", 403);
+            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+            if (c is null) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+            if (body is null) return Fail("PAGE_INVALID", "Send {\"slug\": \"finance\", \"enabled\": true, \"showCode\": false, \"intro\": \"...\"}.", 400);
+            var r = await pages.SaveAsync(c, body.Slug, body.Enabled ?? false, body.ShowCode ?? false, body.Intro, user.DisplayName);
+            if (!r.Ok) return Fail(r.Message.StartsWith("Another customer") ? "PAGE_SLUG_TAKEN" : "PAGE_INVALID", r.Message, r.Message.StartsWith("Another customer") ? 409 : 400);
+            return Results.Json(new { ok = true, data = new { id = cid, slug = c.PageSlug, enabled = c.PageEnabled, showCode = c.PageShowCode,
+                url = c.PageSlug is null ? null : $"{Base(ctx)}/{c.PageSlug}" } });
+        }).RequireAuthorization("BearerOnly");
+
+        api.MapPut("/customers/{cid:int}/logo", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerPageService pages) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            if (!ctx.User.IsInRole("Admin")) return Fail("ADMIN_ONLY", "Only admins set up customer pages.", 403);
+            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+            if (c is null) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+            if (ctx.Request.ContentLength is > CustomerPageService.MaxLogoBytes) return Fail("LOGO_INVALID", "The logo is a PNG or JPEG file of at most 1 MB.", 400);
+            using var ms = new MemoryStream();
+            var buf = new byte[16384];
+            int n;
+            while ((n = await ctx.Request.Body.ReadAsync(buf, ctx.RequestAborted)) > 0)
+            {
+                if (ms.Length + n > CustomerPageService.MaxLogoBytes) return Fail("LOGO_INVALID", "The logo is a PNG or JPEG file of at most 1 MB.", 400);
+                ms.Write(buf, 0, n);
+            }
+            var r = await pages.SaveLogoAsync(c, ms.ToArray(), user.DisplayName);
+            return r.Ok ? Results.Json(new { ok = true, data = new { id = cid, logo = c.LogoFile } }) : Fail("LOGO_INVALID", r.Message, 400);
+        }).RequireAuthorization("BearerOnly");
+
+        api.MapDelete("/customers/{cid:int}/logo", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users, CustomerPageService pages) =>
+        {
+            var user = await RequireUserAsync(ctx, users);
+            if (user is null) return Unauthorized();
+            if (!ctx.User.IsInRole("Admin")) return Fail("ADMIN_ONLY", "Only admins set up customer pages.", 403);
+            var c = await db.Customers.FirstOrDefaultAsync(x => x.Id == cid);
+            if (c is null) return NotFound("CUSTOMER_NOT_FOUND", $"No customer {cid}.");
+            await pages.RemoveLogoAsync(c, user.DisplayName);
+            return Results.Json(new { ok = true, data = new { id = cid, logo = (string?)null } });
+        }).RequireAuthorization("BearerOnly");
 
         api.MapPost("/customers/{cid:int}/deliveries", async (int cid, HttpContext ctx, AppDbContext db, UserManager<AppUser> users,
                                                                CustomerService cs, DeliveryBody body) =>
@@ -2209,6 +2254,7 @@ public record TemplateBody(string? Name, string? Description, bool? RestrictCata
 public record AssignBody(int? TemplateId);
 /// <summary>POST /api/customers/{cid}/codes: deliveryId null = code for all deliveries of the customer</summary>
 public record CodeBody(int? DeliveryId, int? TransitionDays, string? Code = null);
+public record PageBody(string? Slug, bool? Enabled, bool? ShowCode, string? Intro);   // S2.8.6
 public record StageBody(string? Mode, string? Version);
 /// <summary>POST /api/customers/{cid}/deliveries and PATCH /api/deliveries/{did}</summary>
 public record DeliveryBody(string? PackageId, StageBody? Beta, StageBody? Live, DateTime? StartsAt, DateTime? EndsAt,

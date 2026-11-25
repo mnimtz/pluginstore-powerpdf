@@ -1985,4 +1985,29 @@
   <data name="This customer already has this code." xml:space="preserve"><value>Ez az ügyfél már rendelkezik ezzel a kóddal.</value></data>
   <data name="This code is already in use. Choose another one." xml:space="preserve"><value>Ez a kód már használatban van. Válasszon másikat.</value></data>
   <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>Saját kódot csak adminisztrátorok választhatnak, és csak a teljes ügyfélre.</value></data>
+  <data name="In the Add-on Store window in Power PDF, enter the customer code {0} to see exactly these add-ons." xml:space="preserve"><value>A Power PDF Add-on Store ablakában adja meg a(z) {0} ügyfélkódot, és pontosan ezeket a bővítményeket fogja látni.</value></data>
+  <data name="No add-ons on this page yet." xml:space="preserve"><value>Ezen az oldalon még nincsenek bővítmények.</value></data>
+  <data name="All add-ons in the Add-on Store" xml:space="preserve"><value>Az Add-on Store összes bővítménye</value></data>
+  <data name="Customer page" xml:space="preserve"><value>Ügyféloldal</value></data>
+  <data name="An own catalog page with the logo, the customer's name as heading and only the public add-ons of its deliveries, e.g. for a campaign or a brochure. Private add-ons never appear on it. Off until you switch it on." xml:space="preserve"><value>Saját katalógusoldal a logóval, az ügyfél nevével címsorként és csak az ügyfél kiszállításainak nyilvános bővítményeivel, pl. kampányhoz vagy brosúrához. Privát bővítmények soha nem jelennek meg rajta. Kikapcsolva, amíg be nem kapcsolja.</value></data>
+  <data name="Public at" xml:space="preserve"><value>Nyilvános cím:</value></data>
+  <data name="Page name (address)" xml:space="preserve"><value>Oldalnév (cím)</value></data>
+  <data name="Lower-case letters, digits and hyphens; the page is then at /finance on this store." xml:space="preserve"><value>Kisbetűk, számjegyek és kötőjelek; az oldal ezután ennek az áruháznak a /finance címén érhető el.</value></data>
+  <data name="Intro (optional)" xml:space="preserve"><value>Bevezető (opcionális)</value></data>
+  <data name="Page public" xml:space="preserve"><value>Oldal nyilvános</value></data>
+  <data name="Name the customer's code of its own on the page (never a generated code)" xml:space="preserve"><value>Az ügyfél saját kódjának megadása az oldalon (soha nem generált kód)</value></data>
+  <data name="Logo" xml:space="preserve"><value>Logó</value></data>
+  <data name="Upload logo" xml:space="preserve"><value>Logó feltöltése</value></data>
+  <data name="Remove the logo?" xml:space="preserve"><value>Eltávolítja a logót?</value></data>
+  <data name="Remove logo" xml:space="preserve"><value>Logó eltávolítása</value></data>
+  <data name="PNG or JPEG, at most 1 MB; shown fitted in the head of the page." xml:space="preserve"><value>PNG vagy JPEG, legfeljebb 1 MB; az oldal fejlécében igazítva jelenik meg.</value></data>
+  <data name="Only admins set up the customer page." xml:space="preserve"><value>Az ügyféloldalt csak rendszergazdák állíthatják be.</value></data>
+  <data name="The logo is a PNG or JPEG file of at most 1 MB." xml:space="preserve"><value>A logónak legfeljebb 1 MB méretű PNG- vagy JPEG-fájlnak kell lennie.</value></data>
+  <data name="Logo removed." xml:space="preserve"><value>Logó eltávolítva.</value></data>
+  <data name="Logo saved." xml:space="preserve"><value>Logó mentve.</value></data>
+  <data name="The page name has 2 to 40 lower-case letters, digits and hyphens, e.g. finance." xml:space="preserve"><value>Az oldalnév 2–40 kisbetűből, számjegyből és kötőjelből áll, pl. finance.</value></data>
+  <data name="This page name belongs to the store itself. Choose another one." xml:space="preserve"><value>Ez az oldalnév magához az áruházhoz tartozik. Válasszon másikat.</value></data>
+  <data name="Another customer already has this page name." xml:space="preserve"><value>Ezt az oldalnevet már egy másik ügyfél használja.</value></data>
+  <data name="The intro has at most 600 characters." xml:space="preserve"><value>A bevezető legfeljebb 600 karakter lehet.</value></data>
+  <data name="The logo folder is not available." xml:space="preserve"><value>A logók mappája nem érhető el.</value></data>
 </root>

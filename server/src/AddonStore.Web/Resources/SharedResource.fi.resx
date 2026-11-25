@@ -1985,4 +1985,29 @@
   <data name="This customer already has this code." xml:space="preserve"><value>Asiakkaalla on jo tämä koodi.</value></data>
   <data name="This code is already in use. Choose another one." xml:space="preserve"><value>Tämä koodi on jo käytössä. Valitse toinen.</value></data>
   <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>Vain järjestelmänvalvojat valitsevat oman koodin, ja vain koko asiakkaalle.</value></data>
+  <data name="In the Add-on Store window in Power PDF, enter the customer code {0} to see exactly these add-ons." xml:space="preserve"><value>Syötä Power PDF:n Add-on Store -ikkunassa asiakaskoodi {0}, niin näet juuri nämä lisäosat.</value></data>
+  <data name="No add-ons on this page yet." xml:space="preserve"><value>Tällä sivulla ei ole vielä lisäosia.</value></data>
+  <data name="All add-ons in the Add-on Store" xml:space="preserve"><value>Kaikki Add-on Store -kaupan lisäosat</value></data>
+  <data name="Customer page" xml:space="preserve"><value>Asiakassivu</value></data>
+  <data name="An own catalog page with the logo, the customer's name as heading and only the public add-ons of its deliveries, e.g. for a campaign or a brochure. Private add-ons never appear on it. Off until you switch it on." xml:space="preserve"><value>Oma luettelosivu, jossa on logo, asiakkaan nimi otsikkona ja vain asiakkaan toimitusten julkiset lisäosat, esim. kampanjaa tai esitettä varten. Yksityiset lisäosat eivät koskaan näy sillä. Pois käytöstä, kunnes otat sen käyttöön.</value></data>
+  <data name="Public at" xml:space="preserve"><value>Julkinen osoitteessa</value></data>
+  <data name="Page name (address)" xml:space="preserve"><value>Sivun nimi (osoite)</value></data>
+  <data name="Lower-case letters, digits and hyphens; the page is then at /finance on this store." xml:space="preserve"><value>Pieniä kirjaimia, numeroita ja yhdysmerkkejä; sivu on sitten tämän kaupan osoitteessa /finance.</value></data>
+  <data name="Intro (optional)" xml:space="preserve"><value>Johdanto (valinnainen)</value></data>
+  <data name="Page public" xml:space="preserve"><value>Sivu julkinen</value></data>
+  <data name="Name the customer's code of its own on the page (never a generated code)" xml:space="preserve"><value>Näytä sivulla asiakkaan oma koodi (ei koskaan luotua koodia)</value></data>
+  <data name="Logo" xml:space="preserve"><value>Logo</value></data>
+  <data name="Upload logo" xml:space="preserve"><value>Lataa logo</value></data>
+  <data name="Remove the logo?" xml:space="preserve"><value>Poistetaanko logo?</value></data>
+  <data name="Remove logo" xml:space="preserve"><value>Poista logo</value></data>
+  <data name="PNG or JPEG, at most 1 MB; shown fitted in the head of the page." xml:space="preserve"><value>PNG tai JPEG, enintään 1 MB; näytetään sovitettuna sivun yläosaan.</value></data>
+  <data name="Only admins set up the customer page." xml:space="preserve"><value>Vain ylläpitäjät määrittävät asiakassivun.</value></data>
+  <data name="The logo is a PNG or JPEG file of at most 1 MB." xml:space="preserve"><value>Logon on oltava enintään 1 MB:n PNG- tai JPEG-tiedosto.</value></data>
+  <data name="Logo removed." xml:space="preserve"><value>Logo poistettu.</value></data>
+  <data name="Logo saved." xml:space="preserve"><value>Logo tallennettu.</value></data>
+  <data name="The page name has 2 to 40 lower-case letters, digits and hyphens, e.g. finance." xml:space="preserve"><value>Sivun nimessä on 2–40 pientä kirjainta, numeroa ja yhdysmerkkiä, esim. finance.</value></data>
+  <data name="This page name belongs to the store itself. Choose another one." xml:space="preserve"><value>Tämä sivun nimi kuuluu itse kaupalle. Valitse toinen.</value></data>
+  <data name="Another customer already has this page name." xml:space="preserve"><value>Toisella asiakkaalla on jo tämä sivun nimi.</value></data>
+  <data name="The intro has at most 600 characters." xml:space="preserve"><value>Johdannossa on enintään 600 merkkiä.</value></data>
+  <data name="The logo folder is not available." xml:space="preserve"><value>Logokansio ei ole käytettävissä.</value></data>
 </root>

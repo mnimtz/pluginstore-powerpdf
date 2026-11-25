@@ -1985,4 +1985,29 @@
   <data name="This customer already has this code." xml:space="preserve"><value>لدى هذا العميل هذا الرمز بالفعل.</value></data>
   <data name="This code is already in use. Choose another one." xml:space="preserve"><value>هذا الرمز مستخدم بالفعل. اختر رمزًا آخر.</value></data>
   <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>يختار المسؤولون فقط رمزًا مخصصًا، وللعميل بأكمله فقط.</value></data>
+  <data name="In the Add-on Store window in Power PDF, enter the customer code {0} to see exactly these add-ons." xml:space="preserve"><value>في نافذة Add-on Store داخل Power PDF، أدخل رمز العميل {0} لعرض هذه الوظائف الإضافية تحديدًا.</value></data>
+  <data name="No add-ons on this page yet." xml:space="preserve"><value>لا توجد وظائف إضافية في هذه الصفحة بعد.</value></data>
+  <data name="All add-ons in the Add-on Store" xml:space="preserve"><value>جميع الوظائف الإضافية في Add-on Store</value></data>
+  <data name="Customer page" xml:space="preserve"><value>صفحة العميل</value></data>
+  <data name="An own catalog page with the logo, the customer's name as heading and only the public add-ons of its deliveries, e.g. for a campaign or a brochure. Private add-ons never appear on it. Off until you switch it on." xml:space="preserve"><value>صفحة كتالوج خاصة تضم الشعار واسم العميل عنوانًا والوظائف الإضافية العامة فقط من عمليات التسليم الخاصة به، مثلًا لحملة أو كتيب. لا تظهر الوظائف الإضافية الخاصة فيها أبدًا. تبقى معطلة حتى تقوم بتفعيلها.</value></data>
+  <data name="Public at" xml:space="preserve"><value>عامة على العنوان</value></data>
+  <data name="Page name (address)" xml:space="preserve"><value>اسم الصفحة (العنوان)</value></data>
+  <data name="Lower-case letters, digits and hyphens; the page is then at /finance on this store." xml:space="preserve"><value>أحرف صغيرة وأرقام وشرطات؛ تكون الصفحة بعد ذلك على /finance في هذا المتجر.</value></data>
+  <data name="Intro (optional)" xml:space="preserve"><value>المقدمة (اختياري)</value></data>
+  <data name="Page public" xml:space="preserve"><value>الصفحة عامة</value></data>
+  <data name="Name the customer's code of its own on the page (never a generated code)" xml:space="preserve"><value>إظهار رمز العميل الخاص به على الصفحة (وليس رمزًا مُنشأً تلقائيًا أبدًا)</value></data>
+  <data name="Logo" xml:space="preserve"><value>الشعار</value></data>
+  <data name="Upload logo" xml:space="preserve"><value>تحميل الشعار</value></data>
+  <data name="Remove the logo?" xml:space="preserve"><value>هل تريد إزالة الشعار؟</value></data>
+  <data name="Remove logo" xml:space="preserve"><value>إزالة الشعار</value></data>
+  <data name="PNG or JPEG, at most 1 MB; shown fitted in the head of the page." xml:space="preserve"><value>PNG أو JPEG، بحد أقصى 1 MB؛ يُعرض بحجم مناسب في رأس الصفحة.</value></data>
+  <data name="Only admins set up the customer page." xml:space="preserve"><value>يقتصر إعداد صفحة العميل على المسؤولين.</value></data>
+  <data name="The logo is a PNG or JPEG file of at most 1 MB." xml:space="preserve"><value>يجب أن يكون الشعار ملف PNG أو JPEG لا يتجاوز 1 MB.</value></data>
+  <data name="Logo removed." xml:space="preserve"><value>تمت إزالة الشعار.</value></data>
+  <data name="Logo saved." xml:space="preserve"><value>تم حفظ الشعار.</value></data>
+  <data name="The page name has 2 to 40 lower-case letters, digits and hyphens, e.g. finance." xml:space="preserve"><value>يتكون اسم الصفحة من 2 إلى 40 حرفًا صغيرًا أو رقمًا أو شرطة، مثل finance.</value></data>
+  <data name="This page name belongs to the store itself. Choose another one." xml:space="preserve"><value>اسم الصفحة هذا محجوز للمتجر نفسه. اختر اسمًا آخر.</value></data>
+  <data name="Another customer already has this page name." xml:space="preserve"><value>يستخدم عميل آخر اسم الصفحة هذا بالفعل.</value></data>
+  <data name="The intro has at most 600 characters." xml:space="preserve"><value>لا تتجاوز المقدمة 600 حرف.</value></data>
+  <data name="The logo folder is not available." xml:space="preserve"><value>مجلد الشعارات غير متاح.</value></data>
 </root>

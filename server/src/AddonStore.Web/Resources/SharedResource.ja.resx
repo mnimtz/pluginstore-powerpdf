@@ -1985,4 +1985,29 @@
   <data name="This customer already has this code." xml:space="preserve"><value>この顧客にはすでにこのコードがあります。</value></data>
   <data name="This code is already in use. Choose another one." xml:space="preserve"><value>このコードはすでに使用されています。別のコードを選択してください。</value></data>
   <data name="Only admins choose a code of their own, and only for the whole customer." xml:space="preserve"><value>独自コードを選択できるのは管理者のみで、顧客全体に対してのみ設定できます。</value></data>
+  <data name="In the Add-on Store window in Power PDF, enter the customer code {0} to see exactly these add-ons." xml:space="preserve"><value>Power PDF の Add-on Store ウィンドウで顧客コード {0} を入力すると、まさにこれらのアドインが表示されます。</value></data>
+  <data name="No add-ons on this page yet." xml:space="preserve"><value>このページにはまだアドインがありません。</value></data>
+  <data name="All add-ons in the Add-on Store" xml:space="preserve"><value>Add-on Store のすべてのアドイン</value></data>
+  <data name="Customer page" xml:space="preserve"><value>顧客ページ</value></data>
+  <data name="An own catalog page with the logo, the customer's name as heading and only the public add-ons of its deliveries, e.g. for a campaign or a brochure. Private add-ons never appear on it. Off until you switch it on." xml:space="preserve"><value>ロゴ、見出しとしての顧客名、その顧客への配信に含まれる公開アドインだけを載せた専用のカタログ ページです。キャンペーンやパンフレットなどに使えます。非公開アドインは表示されません。オンにするまではオフです。</value></data>
+  <data name="Public at" xml:space="preserve"><value>公開 URL</value></data>
+  <data name="Page name (address)" xml:space="preserve"><value>ページ名 (アドレス)</value></data>
+  <data name="Lower-case letters, digits and hyphens; the page is then at /finance on this store." xml:space="preserve"><value>小文字、数字、ハイフンを使用します。ページはこのストアの /finance で公開されます。</value></data>
+  <data name="Intro (optional)" xml:space="preserve"><value>紹介文 (オプション)</value></data>
+  <data name="Page public" xml:space="preserve"><value>ページを公開</value></data>
+  <data name="Name the customer's code of its own on the page (never a generated code)" xml:space="preserve"><value>顧客独自のコードをページに表示する (生成されたコードは表示しない)</value></data>
+  <data name="Logo" xml:space="preserve"><value>ロゴ</value></data>
+  <data name="Upload logo" xml:space="preserve"><value>ロゴをアップロード</value></data>
+  <data name="Remove the logo?" xml:space="preserve"><value>ロゴを削除しますか?</value></data>
+  <data name="Remove logo" xml:space="preserve"><value>ロゴを削除</value></data>
+  <data name="PNG or JPEG, at most 1 MB; shown fitted in the head of the page." xml:space="preserve"><value>PNG または JPEG、最大 1 MB。ページのヘッダーに合わせて表示されます。</value></data>
+  <data name="Only admins set up the customer page." xml:space="preserve"><value>顧客ページを設定できるのは管理者だけです。</value></data>
+  <data name="The logo is a PNG or JPEG file of at most 1 MB." xml:space="preserve"><value>ロゴは 1 MB 以下の PNG または JPEG ファイルにしてください。</value></data>
+  <data name="Logo removed." xml:space="preserve"><value>ロゴを削除しました。</value></data>
+  <data name="Logo saved." xml:space="preserve"><value>ロゴを保存しました。</value></data>
+  <data name="The page name has 2 to 40 lower-case letters, digits and hyphens, e.g. finance." xml:space="preserve"><value>ページ名には小文字、数字、ハイフンを 2 から 40 文字使用します (例: finance)。</value></data>
+  <data name="This page name belongs to the store itself. Choose another one." xml:space="preserve"><value>このページ名はストア自体で使用されています。別の名前を選んでください。</value></data>
+  <data name="Another customer already has this page name." xml:space="preserve"><value>このページ名は既に別の顧客が使用しています。</value></data>
+  <data name="The intro has at most 600 characters." xml:space="preserve"><value>紹介文は 600 文字以内です。</value></data>
+  <data name="The logo folder is not available." xml:space="preserve"><value>ロゴ フォルダーを利用できません。</value></data>
 </root>

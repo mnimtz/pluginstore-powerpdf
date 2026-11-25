@@ -227,6 +227,7 @@ builder.Services.AddScoped<SendToStorage>();
 builder.Services.AddScoped<SendToService>();
 builder.Services.AddHostedService<SendToMaintenance>();
 // "Git & Veracode" (S2.8.0, docs/konzept-git-veracode.md): own settings page, own tables, emergency brake
+builder.Services.AddScoped<CustomerPageService>();   // S2.8.6: customer catalog pages (/finance)
 builder.Services.AddScoped<AddonStore.Web.Services.GitScan.GitScanConfig>();
 builder.Services.AddScoped<AddonStore.Web.Services.GitScan.GitScanService>();
 builder.Services.AddScoped<AddonStore.Web.Services.GitScan.SuspensionService>();
@@ -432,6 +433,11 @@ app.MapGet("/set-shell", (string? mode, string? returnUrl, HttpContext ctx) =>
     if (!sidebar && target.StartsWith("/Start", StringComparison.OrdinalIgnoreCase)) target = "/Dashboard";
     return Results.LocalRedirect(target);
 });
+
+// S2.8.6: logos of the customers' own catalog pages; only of a page that is on
+CustomerPageService.LogosDir = Path.Combine(dataDir, "logos");
+app.MapGet("/customer-logo/{id:int}", async (int id, CustomerPageService pages) =>
+    await pages.PublicLogoAsync(id) is { } logo ? Results.File(logo.Path, logo.Type) : Results.NotFound());
 
 // Avatars live under data/avatars and are uploaded on the profile page.
 // The folder is fixed at start-up from the data folder (not from handler parameters, which
