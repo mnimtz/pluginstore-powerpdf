@@ -240,6 +240,13 @@
                 </RegistryKey>
               </RegistryKey>
             </Component>
+            <!-- C2.4.0: the MSI keeps its own path (OriginalDatabase). Downloaded from a customer page as
+                 AddonStore-Code-FINANCE.msi, the client offers that code word once per user (filled in, never added
+                 without the user). Any other file name offers nothing. -->
+            <Component Id="cmpInstallSource" Guid="{8A00414D-99EF-4ECB-BA60-F50280F94FAB}" Win64="yes">
+              <RegistryValue Root="HKLM" Key="SOFTWARE\Kofax\PDF\Tungsten Power PDF\PluginStore" Name="InstallSource"
+                             Type="string" Value="[OriginalDatabase]" KeyPath="yes" />
+            </Component>
             <!-- C2.1.0: the client's own help for the central help (client\docs\help, built by docs\manual\build_help.py) -->
             <Directory Id="PSDOCSDIR" Name="docs">
               <Directory Id="HELPDIR" Name="help">
@@ -414,6 +421,7 @@
       <ComponentRef Id="cmpPlugin" />
       <ComponentRef Id="cmpFreshInstall" />
       <ComponentRef Id="cmpLink" />
+      <ComponentRef Id="cmpInstallSource" />
       <ComponentRef Id="cmpLayout" />
       <ComponentRef Id="cmpPublish" />
       <ComponentRef Id="cmpDeu" />

@@ -19,6 +19,9 @@ cl /nologo /EHsc /std:c++17 /W4 /WX /permissive- /Fo"%HERE%out\\" /Fe"%HERE%out\
 rem C2.3.0: the out-of-service list (/api/suspended) and what to switch
 cl /nologo /EHsc /std:c++17 /W4 /WX /permissive- /Fo"%HERE%out\\" /Fe"%HERE%out\suspend_tests.exe" "%HERE%suspend_tests.cpp" || exit /b 1
 "%HERE%out\suspend_tests.exe" || exit /b 1
+rem C2.4.0: code words from the store website (addonstore://code/..., AddonStore-Code-<CODE>.msi)
+cl /nologo /EHsc /std:c++17 /W4 /WX /permissive- /DUNICODE /D_UNICODE /Fo"%HERE%out\\" /Fe"%HERE%out\linkcode_tests.exe" "%HERE%linkcode_tests.cpp" || exit /b 1
+"%HERE%out\linkcode_tests.exe" || exit /b 1
 rem the log file with a long TEMP: the plug-in's own logging.cpp, copied next to the test output so
 rem that its "stdafx.h" resolves to stubs\stdafx.h (no MFC, no Power PDF SDK)
 copy /Y "%HERE%..\common\logging.cpp" "%HERE%out\logging_under_test.cpp" >nul || exit /b 1

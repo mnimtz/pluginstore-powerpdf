@@ -2,7 +2,8 @@
 //
 // Windows starts this helper with the clicked URL, e.g.
 //   addonstore://install/com.tungsten.smartbookmarks
-// It only passes a validated package id on to the Add-on Store client inside
+//   addonstore://code/FINANCE                 (C2.4.0: a code word from a customer page)
+// It only passes a validated package id or code word on to the Add-on Store client inside
 // Power PDF (see client/store/link.h); it never downloads or installs
 // anything itself. The client shows the package and asks the user first.
 
@@ -11,6 +12,7 @@
 #include <shellapi.h>
 #include <string>
 #include "../store/link.h"
+#include "../store/linkcode.h"
 
 #pragma comment(lib, "shell32.lib")
 #pragma comment(lib, "advapi32.lib")
@@ -71,6 +73,8 @@ int WINAPI wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)
     int argc = 0;
     LPWSTR* argv = CommandLineToArgvW(GetCommandLineW(), &argc);
     std::wstring id = (argv && argc >= 2) ? ParseId(argv[1]) : std::wstring();
+    // C2.4.0: addonstore://code/FINANCE from a customer page: the client fills in its code dialog, the user adds it
+    if (id.empty() && argv && argc >= 2) id = pslink::PendingForCode(pslink::CodeFromUrl(argv[1]), false);
     if (argv) LocalFree(argv);
     if (id.empty()) return 1;
 

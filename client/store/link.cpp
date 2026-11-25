@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "link.h"
+#include "linkcode.h"
 #include "dialog.h"
 #include "settings.h"
 #include "catalog.h"
@@ -136,7 +137,36 @@ std::wstring TakePending()
         return std::wstring();
     RegDeleteKeyValueW(HKEY_CURRENT_USER, kPSRegKey, PS_LINK_PENDING_VALUE);
     std::wstring id = buf;
-    return PSLinkIsValidId(id) ? id : std::wstring();
+    // C2.4.0: or a code word ("code:FINANCE" from a link, "dlcode:FINANCE" from the installer's name)
+    return PSLinkIsValidId(id) ? id : pslink::PreselectFromPending(id);
+}
+
+// C2.4.0: the store client installed from "AddonStore-Code-FINANCE.msi" (customer page www.power-pdf.de/finance):
+// the MSI keeps its own path in HKLM (InstallSource). Once per user and code word, the store window opens at the
+// next start with the code filled in; the user adds it. Nothing happens under a code policy or with the code there.
+void OfferDownloadCode()
+{
+    wchar_t src[1024] = { 0 };
+    DWORD sz = sizeof(src);
+    // 64-bit client (x64, ARM64): the 64-bit registry view the MSI writes
+    if (RegGetValueW(HKEY_LOCAL_MACHINE, kPSRegKey, L"InstallSource", RRF_RT_REG_SZ, NULL, src, &sz) != ERROR_SUCCESS)
+        return;
+    std::wstring code = pslink::CodeFromInstallerPath(src);
+    if (code.empty()) return;
+    wchar_t told[64] = { 0 };
+    sz = sizeof(told);
+    if (RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, L"DownloadCodeOffered", RRF_RT_REG_SZ, NULL, told, &sz) == ERROR_SUCCESS &&
+        pslink::SameCode(told, code))
+        return;
+    sz = 0;
+    LSTATUS pending = RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, PS_LINK_PENDING_VALUE, RRF_RT_REG_SZ, NULL, NULL, &sz);
+    if (pending == ERROR_SUCCESS || pending == ERROR_MORE_DATA) return;   // a link request waits: it goes first, ask next time
+    RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, L"DownloadCodeOffered", REG_SZ, code.c_str(), (DWORD)((code.size() + 1) * sizeof(wchar_t)));
+    if (PSCustomerCodeLocked()) return;
+    for (const auto& c : PSCustomerCodes()) if (pslink::SameCode(c, code)) return;
+    std::wstring v = pslink::PendingForCode(code, true);
+    RegSetKeyValueW(HKEY_CURRENT_USER, kPSRegKey, PS_LINK_PENDING_VALUE, REG_SZ, v.c_str(), (DWORD)((v.size() + 1) * sizeof(wchar_t)));
+    FPLogW(L"[Store] code word from the installer's name offered");
 }
 
 // The Power PDF main window of this process, to bring it to the front.
@@ -162,7 +192,9 @@ void OpenPending()
     std::wstring id = TakePending();
     if (id.empty()) return;
     if (!PSStoreAllowed()) { FPLogW(L"[Store] link request ignored: store not allowed for this license"); return; }
-    FPLogW(L"[Store] link request for %s", id.c_str());
+    // C2.4.0: a code word is never written to the log, only that one came
+    if (id.compare(0, 2, L"::") == 0) FPLogW(L"[Store] link request with a code word");
+    else FPLogW(L"[Store] link request for %s", id.c_str());
 
     HWND main = NULL;
     EnumWindows(FindMain, (LPARAM)&main);
@@ -320,6 +352,7 @@ void PSLinkInit()
     // The helper uses PostMessage from a normal user process into ours.
     ChangeWindowMessageFilterEx(g_linkWnd, g_openMsg, MSGFLT_ALLOW, NULL);
 
+    OfferDownloadCode();   // C2.4.0: may leave a request for the startup timer below
     wchar_t buf[8];
     DWORD sz = sizeof(buf);
     LSTATUS rc = RegGetValueW(HKEY_CURRENT_USER, kPSRegKey, PS_LINK_PENDING_VALUE, RRF_RT_REG_SZ, NULL, buf, &sz);

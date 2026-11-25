@@ -213,6 +213,9 @@
 #define IDS_PSW_SUSP_OFF        409
 #define IDS_PSW_SUSP_BACK       410
 #define IDS_PSW_CODE_MORE       411
+#define IDS_PSW_CODE_OFFER_LINK 412
+#define IDS_PSW_CODE_OFFER_DL   413
+#define IDS_PSW_CODE_OFFER_HAVE 414
 #define IDR_HELP_HTML           262   // C2.1.0: the central help page
 #define IDB_HELP                254
 #define IDB_HELP16              255

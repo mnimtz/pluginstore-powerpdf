@@ -213,6 +213,7 @@ a { color: var(--head); }
 </ol>
 <p><b>Codes client sur cet ordinateur</b> répertorie chaque code (abrégé) avec l’organisation, les modules débloqués et, lorsque la livraison est limitée, les installations utilisées, par exemple « Installations : 3/10 ». Jusqu’à 10 codes sont possibles.</p>
 <p><b>Supprimer le code</b> demande « Supprimer le code client de … ? ». Les modules fournis uniquement avec ce code sont également supprimés de Power PDF (une seule confirmation administrateur) ; si celle-ci est refusée, le code est conservé. Lorsque le service informatique définit les codes par stratégie, la boîte de dialogue indique « Votre service informatique gère le code client sur cet ordinateur. » et rien ne peut être modifié.</p>
+<p><b>Code client depuis un site web :</b> certaines pages client du store (par exemple www.power-pdf.de/finance) indiquent un code client. Le bouton <b>Ajouter le code client dans Power PDF</b> ouvre la fenêtre du store avec ce code déjà saisi. Si vous installez l'Add-on Store avec le téléchargement d'une telle page, la fenêtre du store s'ouvre une fois au prochain démarrage de Power PDF avec le code déjà saisi. Dans les deux cas, vous ajoutez vous-même le code avec <b>Ajouter un code</b> ; rien n'est ajouté sans vous.</p>
 
 <h1 id="further-notes-in-the-window">Autres indications dans la fenêtre</h1>
 <table>
@@ -238,7 +239,7 @@ a { color: var(--head); }
   <tr><td>M'avertir une fois de chaque nouvelle mise à jour</td><td>L’avertissement unique du chapitre <a href="#updates">Mises à jour</a> (par défaut : activé).</td></tr>
   <tr><td>Journalisation détaillée</td><td>Écrit davantage de détails dans <code>%TEMP%\PluginStore.log</code>, pour le dépannage.</td></tr>
 </table>
-<p>En bas figure la version du client, par exemple « Client Add-on Store version 2.3.2 ».</p>
+<p>En bas figure la version du client, par exemple « Client Add-on Store version 2.4.0 ».</p>
 
 <h1 id="links-from-the-website-manual-installation">Liens depuis le site web, installation manuelle</h1>
 <h2 id="links-from-the-website-manual-installation-install-in-power-pdf">« Installer dans Power PDF »</h2>
@@ -302,7 +303,7 @@ a { color: var(--head); }
 <h2 id="for-administrators-privacy">Confidentialité</h2>
 <p>Le client n’envoie aucun document, ni aucun nom d’utilisateur ou d’ordinateur. Chaque requête transmet des données techniques au serveur du store :</p>
 <ul>
-  <li>l’identifiant du programme avec les versions du client, de Power PDF et de Windows ainsi que l’architecture du processeur, par exemple <code>AddonStore-PowerPDF/2.3.2 (PowerPDF …; Windows …; x64)</code> ;</li>
+  <li>l’identifiant du programme avec les versions du client, de Power PDF et de Windows ainsi que l’architecture du processeur, par exemple <code>AddonStore-PowerPDF/2.4.0 (PowerPDF …; Windows …; x64)</code> ;</li>
   <li>le mode de licence de Power PDF (<code>cloud</code>, <code>serial</code> ou <code>unknown</code>), afin que le store puisse vérifier s’il peut être utilisé ;</li>
   <li>uniquement avec un code client : les codes et un identifiant d’installation aléatoire de cet utilisateur ; le serveur n’en conserve qu’une valeur de contrôle par livraison.</li>
 </ul>
@@ -441,6 +442,7 @@ a { color: var(--head); }
 <h1 id="version-history">Historique des versions</h1>
 <table>
   <tr><th>Version</th><th>Nouveautés</th></tr>
+  <tr><td>2.4.0</td><td>Codes client depuis un site web : le bouton d'une page client du store, ou l'Add-on Store installé avec son téléchargement, ouvre la fenêtre du store avec le code client déjà saisi. Vous l'ajoutez vous-même.</td></tr>
   <tr><td>2.3.2</td><td>Codes client : pour un code avec de nombreux modules, la liste affiche les quatre premiers et « et N autres » (la liste complète au survol), et les installations uniquement lorsqu'il y a une limite.</td></tr>
   <tr><td>2.3.1</td><td>Les modules de contrôle d'accessibilité, comme Smart Accessibility, peuvent désormais placer leurs boutons dans l'onglet Accessibilité de Power PDF, à côté des contrôles intégrés. Si vous supprimez un tel module, ses boutons quittent à nouveau cet onglet.</td></tr>
   <tr><td>2.3.0</td><td>Hors service : lorsque les gestionnaires du store mettent temporairement un module hors service, l'Add-on Store le désactive après votre confirmation, sans le supprimer, puis le réactive dès qu'il est de nouveau disponible. Vos paramètres sont conservés.</td></tr>
@@ -471,6 +473,6 @@ a { color: var(--head); }
   <tr><td>0.5.0</td><td>Évaluations, signalements de problèmes, captures d’écran.</td></tr>
   <tr><td>0.4.0</td><td>Fenêtre moderne du store.</td></tr>
 </table>
-<p>Add-on Store 2.3.2 · Tungsten Automation · Ce manuel décrit le client pour Tungsten Power PDF.</p>
+<p>Add-on Store 2.4.0 · Tungsten Automation · Ce manuel décrit le client pour Tungsten Power PDF.</p>
 </body>
 </html>

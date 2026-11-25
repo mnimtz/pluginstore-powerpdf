@@ -18,6 +18,7 @@
 #include "helpwin.h"
 #include "Resource.h"
 #include "version.h"
+#include "linkcode.h"
 #include <wrl.h>
 #include <wrl/event.h>
 #include <shlobj.h>
@@ -702,10 +703,24 @@ protected:
                          L",\"installLocked\":" + (PSPolicyNoInstall() ? L"true" : L"false") +
                          L",\"serverMode\":" + Json(PSServerMode()) +   // C2.2.0: last known; ServerModeRefresh asks again
                          (m_preselect == kPSUpdatesView ? L",\"mode\":\"updates\"" : L"") +
-                         L",\"code\":" + CodesJson() + L",\"strings\":{";
+                         L",\"code\":" + CodesJson() + OfferJson() + L",\"strings\":{";
         for (size_t i = 0; i < _countof(strings); ++i)
             j += (i ? L"," : L"") + Json(strings[i].key) + L":" + Json(FPLoc(strings[i].id));
         Send(j + L"}}");
+    }
+
+    // C2.4.0: a code word from a customer page (link) or from the installer's name: the code dialog opens with it
+    // filled in and says where it came from; the user adds it with "Add" (or sees that it is there already)
+    std::wstring OfferJson()
+    {
+        std::wstring code;
+        bool fromDownload = false;
+        if (!pslink::OfferFromPreselect(m_preselect, code, fromDownload)) return std::wstring();
+        bool have = false;
+        for (const auto& c : PSCustomerCodes()) if (pslink::SameCode(c, code)) have = true;
+        UINT id = have ? IDS_PSW_CODE_OFFER_HAVE : fromDownload ? IDS_PSW_CODE_OFFER_DL : IDS_PSW_CODE_OFFER_LINK;
+        return L",\"offer\":{\"code\":" + Json(code) + L",\"have\":" + (have ? L"true" : L"false") +
+               L",\"text\":" + Json(FPLocFormat(id, { code })) + L"}";
     }
 
     // --- network work runs on worker threads; results come back as WM_ASYNC ---
@@ -809,7 +824,7 @@ protected:
         if (m_hasSelfUpdate)
             j += L",\"self\":{\"version\":" + Json(m_self.version) + L",\"installed\":" + Json(FP_VERSION_W) +
                  L",\"changelog\":" + Json(m_self.changelog) + L"}";
-        if (r.flag && !m_preselect.empty() && m_preselect != kClientId && m_preselect != kPSUpdatesView)
+        if (r.flag && !m_preselect.empty() && m_preselect != kClientId && m_preselect.compare(0, 2, L"::") != 0)   // C2.4.0: "::" = view or code word
         {
             j += L",\"select\":" + Json(m_preselect) + L",\"selectMissing\":" + Json(Fmt(IDS_PSD_LINK_NOTFOUND, m_preselect));
             m_preselect.clear();

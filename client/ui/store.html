@@ -492,6 +492,7 @@ var mode = "store", ppu = null;   // C1.9.0: "updates" = only what waits for an 
 var catalogLoaded = false;          // C1.9.2: the updates view says "nothing to update" only once the catalog is there
 // customer codes (C0.8.0; a list since C1.4.1): list = [{code, name}], info[code] = {valid, customer, packages}
 var code = { has: false, locked: false, customer: "", open: false, list: [], info: {} };
+var codeOffer = "";   // C2.4.0: a code word from a customer page or the installer's name, filled in once
 var author = "", authorList = "";   // C1.9.16: only the add-ons of one author
 var CUST = "customer";   // chip key of the delivered add-ons (no category slug can look like this)
 function customerName() {
@@ -915,7 +916,7 @@ function codeDialog(message, ok, keepInput) {
   if (!code.locked) {
     f.appendChild(el("p", "", S.codeIntro));
     input = el("input"); input.type = "text"; input.maxLength = 64; input.autocomplete = "off"; input.spellcheck = false;
-    input.id = "codeIn"; input.value = typed;
+    input.id = "codeIn"; input.value = typed || codeOffer; codeOffer = "";
     input.placeholder = "XXXX-XXXX-XXXX-XXXX-XXXX";
     input.onkeydown = function (e) { if (e.key === "Enter") apply(); };
     f.appendChild(input);
@@ -1125,6 +1126,13 @@ function apply(m) {
     if (m.code) { code.locked = !!m.code.locked; setCodes(m.code); }
     $("codeBtn").onclick = function () { code.msg = ""; codeDialog(); post({ cmd: "codeInfo" }); };
     codeButton();
+    // C2.4.0: the code dialog with the offered code word filled in; adding it stays the user's click
+    if (m.offer && m.offer.code) {
+      codeOffer = code.locked || m.offer.have ? "" : m.offer.code;
+      code.msg = code.locked ? "" : m.offer.text; code.msgOk = true;   // kept when the code details arrive
+      codeDialog(code.msg, true);
+      post({ cmd: "codeInfo" });
+    }
     $("lock").style.display = locked ? "flex" : "none"; $("lock").textContent = S.installLocked || "";
     $("storeBtn").textContent = S.updStore || "";
     $("storeBtn").onclick = function () { setMode("store"); };

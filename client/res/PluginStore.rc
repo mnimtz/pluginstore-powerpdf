@@ -301,6 +301,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "switched off"
     IDS_PSW_SUSP_BACK  "available again"
     IDS_PSW_CODE_MORE  "%s and %s more"
+    IDS_PSW_CODE_OFFER_LINK  "The website suggests the customer code %s. Add it to see the add-ons that go with it."
+    IDS_PSW_CODE_OFFER_DL  "The Add-on Store was installed with the customer code %s. Add it to see the add-ons that go with it."
+    IDS_PSW_CODE_OFFER_HAVE  "The customer code %s is already active."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -501,6 +504,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "abgeschaltet"
     IDS_PSW_SUSP_BACK  "wieder verfügbar"
     IDS_PSW_CODE_MORE  "%s und %s weitere"
+    IDS_PSW_CODE_OFFER_LINK  "Die Webseite schlägt den Kundencode %s vor. Fügen Sie ihn hinzu, um die zugehörigen Add-ons zu sehen."
+    IDS_PSW_CODE_OFFER_DL  "Der Add-on Store wurde mit dem Kundencode %s installiert. Fügen Sie ihn hinzu, um die zugehörigen Add-ons zu sehen."
+    IDS_PSW_CODE_OFFER_HAVE  "Der Kundencode %s ist bereits aktiv."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -701,6 +707,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "désactivé"
     IDS_PSW_SUSP_BACK  "de nouveau disponible"
     IDS_PSW_CODE_MORE  "%s et %s autres"
+    IDS_PSW_CODE_OFFER_LINK  "Le site web propose le code client %s. Ajoutez-le pour voir les modules complémentaires associés."
+    IDS_PSW_CODE_OFFER_DL  "L'Add-on Store a été installé avec le code client %s. Ajoutez-le pour voir les modules complémentaires associés."
+    IDS_PSW_CODE_OFFER_HAVE  "Le code client %s est déjà actif."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -901,6 +910,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "disattivato"
     IDS_PSW_SUSP_BACK  "di nuovo disponibile"
     IDS_PSW_CODE_MORE  "%s e altri %s"
+    IDS_PSW_CODE_OFFER_LINK  "Il sito web propone il codice cliente %s. Aggiungilo per vedere i componenti aggiuntivi associati."
+    IDS_PSW_CODE_OFFER_DL  "L'Add-on Store è stato installato con il codice cliente %s. Aggiungilo per vedere i componenti aggiuntivi associati."
+    IDS_PSW_CODE_OFFER_HAVE  "Il codice cliente %s è già attivo."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1101,6 +1113,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "desactivado"
     IDS_PSW_SUSP_BACK  "disponible de nuevo"
     IDS_PSW_CODE_MORE  "%s y %s más"
+    IDS_PSW_CODE_OFFER_LINK  "El sitio web propone el código de cliente %s. Agréguelo para ver los complementos asociados."
+    IDS_PSW_CODE_OFFER_DL  "El Add-on Store se instaló con el código de cliente %s. Agréguelo para ver los complementos asociados."
+    IDS_PSW_CODE_OFFER_HAVE  "El código de cliente %s ya está activo."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1301,6 +1316,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "uitgeschakeld"
     IDS_PSW_SUSP_BACK  "weer beschikbaar"
     IDS_PSW_CODE_MORE  "%s en %s andere"
+    IDS_PSW_CODE_OFFER_LINK  "De website stelt de klantcode %s voor. Voeg deze toe om de bijbehorende add-ons te zien."
+    IDS_PSW_CODE_OFFER_DL  "De Add-on Store is geïnstalleerd met de klantcode %s. Voeg deze toe om de bijbehorende add-ons te zien."
+    IDS_PSW_CODE_OFFER_HAVE  "De klantcode %s is al actief."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1501,6 +1519,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "desativado"
     IDS_PSW_SUSP_BACK  "disponível novamente"
     IDS_PSW_CODE_MORE  "%s e mais %s"
+    IDS_PSW_CODE_OFFER_LINK  "O site sugere o código de cliente %s. Adicione-o para ver os complementos correspondentes."
+    IDS_PSW_CODE_OFFER_DL  "O Add-on Store foi instalado com o código de cliente %s. Adicione-o para ver os complementos correspondentes."
+    IDS_PSW_CODE_OFFER_HAVE  "O código de cliente %s já está ativo."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1701,6 +1722,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "slået fra"
     IDS_PSW_SUSP_BACK  "tilgængeligt igen"
     IDS_PSW_CODE_MORE  "%s og %s mere"
+    IDS_PSW_CODE_OFFER_LINK  "Websiden foreslår kundekoden %s. Tilføj den for at se de tilhørende tilføjelsesprogrammer."
+    IDS_PSW_CODE_OFFER_DL  "Add-on Store blev installeret med kundekoden %s. Tilføj den for at se de tilhørende tilføjelsesprogrammer."
+    IDS_PSW_CODE_OFFER_HAVE  "Kundekoden %s er allerede aktiv."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1901,6 +1925,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "poistettu käytöstä"
     IDS_PSW_SUSP_BACK  "taas saatavilla"
     IDS_PSW_CODE_MORE  "%s ja %s muuta"
+    IDS_PSW_CODE_OFFER_LINK  "Verkkosivusto ehdottaa asiakaskoodia %s. Lisää se, niin näet siihen kuuluvat lisäosat."
+    IDS_PSW_CODE_OFFER_DL  "Add-on Store asennettiin asiakaskoodilla %s. Lisää se, niin näet siihen kuuluvat lisäosat."
+    IDS_PSW_CODE_OFFER_HAVE  "Asiakaskoodi %s on jo käytössä."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2101,6 +2128,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "slått av"
     IDS_PSW_SUSP_BACK  "tilgjengelig igjen"
     IDS_PSW_CODE_MORE  "%s og %s til"
+    IDS_PSW_CODE_OFFER_LINK  "Nettsiden foreslår kundekoden %s. Legg den til for å se tilleggene som hører til."
+    IDS_PSW_CODE_OFFER_DL  "Add-on Store ble installert med kundekoden %s. Legg den til for å se tilleggene som hører til."
+    IDS_PSW_CODE_OFFER_HAVE  "Kundekoden %s er allerede aktiv."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2301,6 +2331,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "avstängt"
     IDS_PSW_SUSP_BACK  "tillgängligt igen"
     IDS_PSW_CODE_MORE  "%s och %s till"
+    IDS_PSW_CODE_OFFER_LINK  "Webbplatsen föreslår kundkoden %s. Lägg till den för att se tilläggen som hör till."
+    IDS_PSW_CODE_OFFER_DL  "Add-on Store installerades med kundkoden %s. Lägg till den för att se tilläggen som hör till."
+    IDS_PSW_CODE_OFFER_HAVE  "Kundkoden %s är redan aktiv."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2501,6 +2534,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "wyłączony"
     IDS_PSW_SUSP_BACK  "znowu dostępny"
     IDS_PSW_CODE_MORE  "%s i %s więcej"
+    IDS_PSW_CODE_OFFER_LINK  "Witryna proponuje kod klienta %s. Dodaj go, aby zobaczyć powiązane dodatki."
+    IDS_PSW_CODE_OFFER_DL  "Add-on Store zainstalowano z kodem klienta %s. Dodaj go, aby zobaczyć powiązane dodatki."
+    IDS_PSW_CODE_OFFER_HAVE  "Kod klienta %s jest już aktywny."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2701,6 +2737,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "vypnuto"
     IDS_PSW_SUSP_BACK  "opět k dispozici"
     IDS_PSW_CODE_MORE  "%s a %s další"
+    IDS_PSW_CODE_OFFER_LINK  "Web navrhuje kód zákazníka %s. Přidejte ho a uvidíte doplňky, které k němu patří."
+    IDS_PSW_CODE_OFFER_DL  "Add-on Store byl nainstalován s kódem zákazníka %s. Přidejte ho a uvidíte doplňky, které k němu patří."
+    IDS_PSW_CODE_OFFER_HAVE  "Kód zákazníka %s je již aktivní."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2901,6 +2940,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "kikapcsolva"
     IDS_PSW_SUSP_BACK  "újra elérhető"
     IDS_PSW_CODE_MORE  "%s és további %s"
+    IDS_PSW_CODE_OFFER_LINK  "A webhely a(z) %s ügyfélkódot javasolja. Adja hozzá, és megjelennek a hozzá tartozó bővítmények."
+    IDS_PSW_CODE_OFFER_DL  "Az Add-on Store a(z) %s ügyfélkóddal lett telepítve. Adja hozzá, és megjelennek a hozzá tartozó bővítmények."
+    IDS_PSW_CODE_OFFER_HAVE  "A(z) %s ügyfélkód már aktív."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3101,6 +3143,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "отключено"
     IDS_PSW_SUSP_BACK  "снова доступно"
     IDS_PSW_CODE_MORE  "%s и ещё %s"
+    IDS_PSW_CODE_OFFER_LINK  "Сайт предлагает код клиента %s. Добавьте его, чтобы увидеть относящиеся к нему надстройки."
+    IDS_PSW_CODE_OFFER_DL  "Add-on Store установлен с кодом клиента %s. Добавьте его, чтобы увидеть относящиеся к нему надстройки."
+    IDS_PSW_CODE_OFFER_HAVE  "Код клиента %s уже активен."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3301,6 +3346,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "devre dışı"
     IDS_PSW_SUSP_BACK  "yeniden kullanılabilir"
     IDS_PSW_CODE_MORE  "%s ve %s tane daha"
+    IDS_PSW_CODE_OFFER_LINK  "Web sitesi %s müşteri kodunu öneriyor. İlgili eklentileri görmek için ekleyin."
+    IDS_PSW_CODE_OFFER_DL  "Add-on Store, %s müşteri koduyla yüklendi. İlgili eklentileri görmek için ekleyin."
+    IDS_PSW_CODE_OFFER_HAVE  "%s müşteri kodu zaten etkin."
 END
 
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
@@ -3499,6 +3547,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "已停用"
     IDS_PSW_SUSP_BACK  "重新可用"
     IDS_PSW_CODE_MORE  "%s 等另外 %s 个"
+    IDS_PSW_CODE_OFFER_LINK  "网站建议使用客户代码 %s。添加后即可看到相应的加载项。"
+    IDS_PSW_CODE_OFFER_DL  "Add-on Store 安装时带有客户代码 %s。添加后即可看到相应的加载项。"
+    IDS_PSW_CODE_OFFER_HAVE  "客户代码 %s 已启用。"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3700,6 +3751,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "已停用"
     IDS_PSW_SUSP_BACK  "重新可用"
     IDS_PSW_CODE_MORE  "%s 等另外 %s 個"
+    IDS_PSW_CODE_OFFER_LINK  "網站建議使用客戶代碼 %s。新增後即可看到相應的增益集。"
+    IDS_PSW_CODE_OFFER_DL  "Add-on Store 安裝時附有客戶代碼 %s。新增後即可看到相應的增益集。"
+    IDS_PSW_CODE_OFFER_HAVE  "客戶代碼 %s 已啟用。"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -3901,6 +3955,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "無効"
     IDS_PSW_SUSP_BACK  "再び利用可能"
     IDS_PSW_CODE_MORE  "%s ほか %s 件"
+    IDS_PSW_CODE_OFFER_LINK  "Web サイトが顧客コード %s を提案しています。追加すると、対応するアドオンが表示されます。"
+    IDS_PSW_CODE_OFFER_DL  "Add-on Store は顧客コード %s 付きでインストールされました。追加すると、対応するアドオンが表示されます。"
+    IDS_PSW_CODE_OFFER_HAVE  "顧客コード %s は既に有効です。"
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -4102,6 +4159,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "꺼짐"
     IDS_PSW_SUSP_BACK  "다시 사용 가능"
     IDS_PSW_CODE_MORE  "%s 외 %s개"
+    IDS_PSW_CODE_OFFER_LINK  "웹사이트에서 고객 코드 %s을(를) 제안합니다. 추가하면 해당 추가 기능이 표시됩니다."
+    IDS_PSW_CODE_OFFER_DL  "Add-on Store가 고객 코드 %s와(과) 함께 설치되었습니다. 추가하면 해당 추가 기능이 표시됩니다."
+    IDS_PSW_CODE_OFFER_HAVE  "고객 코드 %s은(는) 이미 활성화되어 있습니다."
 END
 
 /////////////////////////////////////////////////////////////////////////////
@@ -4303,6 +4363,9 @@ BEGIN
     IDS_PSW_SUSP_OFF  "متوقفة"
     IDS_PSW_SUSP_BACK  "متاحة من جديد"
     IDS_PSW_CODE_MORE  "%s و%s أخرى"
+    IDS_PSW_CODE_OFFER_LINK  "يقترح الموقع رمز العميل %s. أضفه لترى الوظائف الإضافية المرتبطة به."
+    IDS_PSW_CODE_OFFER_DL  "تم تثبيت Add-on Store مع رمز العميل %s. أضفه لترى الوظائف الإضافية المرتبطة به."
+    IDS_PSW_CODE_OFFER_HAVE  "رمز العميل %s نشط بالفعل."
 END
 
 /////////////////////////////////////////////////////////////////////////////
